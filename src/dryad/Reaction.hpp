@@ -61,7 +61,7 @@ namespace dryad {
      */
     Reaction linearise( ToleranceConvergence convergence = {} ) const noexcept {
 
-      CrossSection xs = this->crossSection().linearise();
+      CrossSection xs = this->crossSection().linearise( convergence );
 
       return Reaction( this->identifier(), std::move( xs ) );
     }
@@ -71,9 +71,10 @@ namespace dryad {
      *
      *  @param[in] convergence   the linearisation convergence criterion (default 0.1 %)
      */
-    void inplaceLinearise( ToleranceConvergence convergence = {} ) noexcept {
+    void lineariseInplace( ToleranceConvergence convergence = {} ) noexcept {
 
       this->xs_ = this->xs_.linearise( convergence );
+      this->linearised_ = true;
     }
   };
 
