@@ -5,6 +5,7 @@
 #include <vector>
 
 // other includes
+#include "dryad/type-aliases.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
 namespace njoy {
@@ -19,9 +20,6 @@ namespace dryad {
   class CrossSection : protected scion::math::InterpolationTable< double, double > {
 
   public:
-
-    using Interpolation = scion::interpolation::InterpolationType;
-    using Tolerance = scion::linearisation::ToleranceConvergence< double, double >;
 
     /* constructor */
     #include "dryad/CrossSection/src/ctor.hpp"
@@ -59,7 +57,7 @@ namespace dryad {
      *
      *  @param[in] convergence   the linearisation convergence criterion (default 0.1 %)
      */
-    CrossSection linearise( Tolerance convergence = Tolerance() ) const {
+    CrossSection linearise( ToleranceConvergence convergence = {} ) const {
 
       return CrossSection( InterpolationTable::linearise( convergence ) );
     }
