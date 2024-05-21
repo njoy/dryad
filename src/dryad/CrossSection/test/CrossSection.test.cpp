@@ -63,7 +63,7 @@ SCENARIO( "CrossSection" ) {
 
       THEN( "a CrossSection can be linearised" ) {
 
-        CrossSection linear = chunk.linearise( ToleranceConvergence( 0.001 ) );
+        CrossSection linear = chunk.linearise();
 
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );

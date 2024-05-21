@@ -28,3 +28,4 @@ endfunction()
 
 add_subdirectory( src/dryad/CrossSection/test )
 add_subdirectory( src/dryad/Reaction/test )
+add_subdirectory( src/dryad/ProjectileTarget/test )

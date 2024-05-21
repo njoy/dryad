@@ -14,8 +14,6 @@ namespace dryad {
   /**
    *  @class
    *  @brief A cross section table
-   *
-   *  Assumptions: energies are given in eV and cross section values in barn.
    */
   class CrossSection : protected scion::math::InterpolationTable< double, double > {
 
@@ -53,13 +51,13 @@ namespace dryad {
     using InterpolationTable::operator();
 
     /**
-     *  @brief Return a linearised CrossSection
+     *  @brief Return a linearised cross section table
      *
-     *  @param[in] convergence   the linearisation convergence criterion (default 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
-    CrossSection linearise( ToleranceConvergence convergence = {} ) const {
+    CrossSection linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return CrossSection( InterpolationTable::linearise( convergence ) );
+      return CrossSection( InterpolationTable::linearise( tolerance ) );
     }
 
     //! @todo add arithmetic

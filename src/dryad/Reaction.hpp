@@ -14,7 +14,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief A reaction
+   *  @brief The data associated to a single reaction
    */
   class Reaction {
 
@@ -39,7 +39,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the energy values
+     *  @brief Return the cross section
      */
     const CrossSection& crossSection() const noexcept {
 
@@ -47,7 +47,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the data is linearised
+     *  @brief Return whether or not the reaction data is linearised
      */
     bool isLinearised() const noexcept {
 
@@ -55,13 +55,13 @@ namespace dryad {
     }
 
     /**
-     *  @brief Linearise the reaction data and return a new reaction
+     *  @brief Linearise the reaction data and return a new reaction object
      *
-     *  @param[in] convergence   the linearisation convergence criterion (default 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
-    Reaction linearise( ToleranceConvergence convergence = {} ) const noexcept {
+    Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
 
-      CrossSection xs = this->crossSection().linearise( convergence );
+      CrossSection xs = this->crossSection().linearise( tolerance );
 
       return Reaction( this->identifier(), std::move( xs ) );
     }
@@ -69,7 +69,7 @@ namespace dryad {
     /**
      *  @brief Linearise the reaction data inplace
      *
-     *  @param[in] convergence   the linearisation convergence criterion (default 0.1 %)
+     *  @param[in] tolerance   the linearisation tolerance
      */
     void lineariseInplace( ToleranceConvergence convergence = {} ) noexcept {
 
