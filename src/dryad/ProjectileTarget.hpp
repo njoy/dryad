@@ -64,6 +64,37 @@ namespace dryad {
 
       return this->linearised_;
     }
+
+    /**
+     *  @brief Linearise the data and return a new ProjectileTarget object
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    ProjectileTarget linearise( ToleranceConvergence tolerance = {} ) const noexcept {
+
+      std::vector< Reaction > reactions;
+      for ( auto&& reaction : this->reactions() ) {
+
+        reactions.emplace_back( reaction.linearise( tolerance ) );
+      }
+
+      return ProjectileTarget( this->projectileIdentifier(), this->targetIdentifier(),
+                               std::move( reactions ) );
+    }
+
+    /**
+     *  @brief Linearise the data inplace
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
+
+      for ( auto&& reaction : this->reactions_ ) {
+
+        reaction.lineariseInplace( tolerance );
+      }
+      this->linearised_ = true;
+    }
   };
 
 } // dryad namespace

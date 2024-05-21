@@ -44,10 +44,8 @@ SCENARIO( "Reaction" ) {
       THEN( "a Reaction can be linearised inplace" ) {
 
         Reaction copy = chunk; // we'll do this test on a copy
-        CHECK( false == copy.isLinearised() );
-
+        verifyChunk( copy );
         copy.lineariseInplace();
-
         verifyLinearisedChunk( copy );
       } // THEN
     } // WHEN

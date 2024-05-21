@@ -71,9 +71,9 @@ namespace dryad {
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    void lineariseInplace( ToleranceConvergence convergence = {} ) noexcept {
+    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
 
-      this->xs_ = this->xs_.linearise( convergence );
+      this->xs_ = this->xs_.linearise( tolerance );
       this->linearised_ = true;
     }
   };
