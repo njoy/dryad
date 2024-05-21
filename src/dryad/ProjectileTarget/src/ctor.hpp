@@ -7,7 +7,7 @@
  *  @param linearised   a flag indicating whether or not the data is
  *                      linearised
  */
-ProjectileTarget( NuclideID&& projectile, NuclideID&& target,
+ProjectileTarget( ParticleID&& projectile, ParticleID&& target,
                   std::vector< Reaction >&& reactions,
                   bool linearised ) :
     projectile_id_( std::move( projectile ) ),
@@ -30,7 +30,7 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param target       the target identifier
  *  @param reactions    the reaction data
  */
-ProjectileTarget( NuclideID projectile, NuclideID target,
+ProjectileTarget( ParticleID projectile, ParticleID target,
                   std::vector< Reaction > reactions ) :
     ProjectileTarget( std::move( projectile ),
                       std::move( target ),

@@ -6,7 +6,7 @@
 
 // other includes
 #include "dryad/type-aliases.hpp"
-#include "dryad/NuclideID.hpp"
+#include "dryad/ParticleID.hpp"
 #include "dryad/Reaction.hpp"
 
 namespace njoy {
@@ -19,8 +19,8 @@ namespace dryad {
   class ProjectileTarget {
 
     /* fields */
-    NuclideID projectile_id_;
-    NuclideID target_id_;
+    ParticleID projectile_id_;
+    ParticleID target_id_;
 
     std::vector< Reaction > reactions_;
 
@@ -36,7 +36,7 @@ namespace dryad {
     /**
      *  @brief Return the projectile identifier
      */
-    const NuclideID& projectileIdentifier() const noexcept {
+    const ParticleID& projectileIdentifier() const noexcept {
 
       return this->projectile_id_;
     }
@@ -44,7 +44,7 @@ namespace dryad {
     /**
      *  @brief Return the target identifier
      */
-    const NuclideID& targetIdentifier() const noexcept {
+    const ParticleID& targetIdentifier() const noexcept {
 
       return this->target_id_;
     }

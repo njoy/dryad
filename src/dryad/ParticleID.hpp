@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_NUCLIDEID
-#define NJOY_DRYAD_NUCLIDEID
+#ifndef NJOY_DRYAD_PARTICLEID
+#define NJOY_DRYAD_PARTICLEID
 
 // system includes
 #include <string>
@@ -9,7 +9,7 @@
 namespace njoy {
 namespace dryad {
 
-  using NuclideID = std::string;
+  using ParticleID = std::string;
 
 } // dryad namespace
 } // njoy namespace
