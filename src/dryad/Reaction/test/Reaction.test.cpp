@@ -20,14 +20,16 @@ SCENARIO( "Reaction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ReactionID id( "n,Fe56->n,Fe56" );
+      ReactionID id( "n,Fe56->n,Fe56_e1" );
+      double mass_q = 0;
+      double reaction_q = -1;
       CrossSection xs( { 1., 2., 2., 3., 4. },
                        { 4., 3., 4., 3., 2. },
                        { 1, 4 },
                        { InterpolationType::LinearLinear,
                          InterpolationType::LinearLog } );
 
-      Reaction chunk( std::move( id ), std::move( xs ) );
+      Reaction chunk( std::move( id ), mass_q, reaction_q, std::move( xs ) );
 
       THEN( "a Reaction can be constructed and members can be tested" ) {
 
@@ -55,7 +57,11 @@ SCENARIO( "Reaction" ) {
 void verifyChunk( const Reaction& chunk ) {
 
   // reaction identifier
-  CHECK( ReactionID( "n,Fe56->n,Fe56" ) == chunk.identifier() );
+  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
+
+  // q values
+  CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue() ) );
+  CHECK_THAT( -1, WithinRel( chunk.reactionQValue() ) );
 
   // cross section
   CHECK( 5 == chunk.crossSection().numberPoints() );
@@ -87,7 +93,7 @@ void verifyChunk( const Reaction& chunk ) {
 void verifyLinearisedChunk( const Reaction& chunk ) {
 
   // reaction identifier
-  CHECK( ReactionID( "n,Fe56->n,Fe56" ) == chunk.identifier() );
+  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
 
   // cross section
   CHECK( 12 == chunk.crossSection().numberPoints() );
