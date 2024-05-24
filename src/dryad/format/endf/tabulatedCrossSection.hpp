@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/boundaries.hpp"
+#include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/interpolants.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 #include "ENDFtk/section/3.hpp"

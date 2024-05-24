@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/boundaries.hpp"
+#include "dryad/format/endf/createBoundaries.hpp"
 
 // other includes
 
