@@ -6,6 +6,9 @@
 #include "dryad/ReactionID.hpp"
 
 // components
-#include "dryad/CrossSection.hpp"
+#include "dryad/TabulatedCrossSection.hpp"
 #include "dryad/Reaction.hpp"
 #include "dryad/ProjectileTarget.hpp"
+
+// formats
+#include "dryad/format/endf.hpp"
