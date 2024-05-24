@@ -29,3 +29,5 @@ endfunction()
 add_subdirectory( src/dryad/TabulatedCrossSection/test )
 add_subdirectory( src/dryad/Reaction/test )
 add_subdirectory( src/dryad/ProjectileTarget/test )
+
+add_subdirectory( src/dryad/format/endf/test )
