@@ -28,7 +28,8 @@ namespace endf {
       case 5 : return InterpolationType::LogLog;
       default : {
 
-        Log::error( "Cannot convert ENDF interpolation type {}", interpolant );
+        Log::error( "Cannot convert or handle ENDF interpolation type {}",
+                    interpolant );
         throw std::exception();
       }
     }

@@ -28,8 +28,8 @@ namespace endf {
     if ( mf1mt451.subLibrary() == 10 ) {
 
       ParticleID projectile( "n" );
-      ParticleID target = std::to_string( static_cast< int >( mf1mt451.ZA() ) ) + "_e"
-                        + std::to_string( mf1mt451.excitedLevel() );
+      ParticleID target = std::to_string( static_cast< int >( mf1mt451.ZA() ) )
+                        + "_e" + std::to_string( mf1mt451.excitedLevel() );
 
       std::vector< Reaction > reactions = endf::reactions( material );
 

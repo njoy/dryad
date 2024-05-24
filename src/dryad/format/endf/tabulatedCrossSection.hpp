@@ -49,11 +49,12 @@ namespace endf {
   TabulatedCrossSection
   tabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
 
-    if ( tree.sectionNumber() != 3 ) {
+    if ( tree.fileNumber() != 3 ) {
 
-      Log::error( "The ENDF MAT{} MF{} MT{} section does not contain a tabulated "
-                  "cross section", tree.materialNumber(), tree.fileNumber(),
-                  tree.sectionNumber() );
+      Log::error( "ENDF MAT{} MF{} MT{} - the section does not contain a "
+                  "tabulated cross section", tree.materialNumber(),
+                  tree.fileNumber(), tree.sectionNumber() );
+      throw std::exception();
     }
 
     return tabulatedCrossSection( tree.parse< 3 >() );
