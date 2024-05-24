@@ -1,1 +1,1 @@
-add_cpp_test( CrossSection CrossSection.test.cpp )
+add_cpp_test( TabulatedCrossSection TabulatedCrossSection.test.cpp )

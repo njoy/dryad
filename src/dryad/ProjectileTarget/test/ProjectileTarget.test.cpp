@@ -26,9 +26,11 @@ SCENARIO( "ProjectileTarget" ) {
       std::vector< Reaction > reactions = {
 
         Reaction( ReactionID( "n,Fe56->n,Fe56" ), 0, 0,
-                  CrossSection( { 1e-5, 20. }, { 1000., 10. }, InterpolationType::LogLinear ) ),
+                  TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
+                                           InterpolationType::LogLinear ) ),
         Reaction( ReactionID( "n,Fe56->n,Fe56_e1" ), 0, -1,
-                  CrossSection( { 1., 20. }, { 0., 100. }, InterpolationType::LinearLinear ) ),
+                  TabulatedCrossSection( { 1., 20. }, { 0., 100. },
+                                           InterpolationType::LinearLinear ) ),
       };
 
       ProjectileTarget chunk( std::move( projectile ), std::move( target ),

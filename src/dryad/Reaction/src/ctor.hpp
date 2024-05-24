@@ -9,7 +9,7 @@
  *                      linearised
  */
 Reaction( ReactionID&& id, double mass_q, double reaction_q,
-          CrossSection&& xs, bool linearised ) :
+          TabulatedCrossSection&& xs, bool linearised ) :
     id_( std::move( id ) ), mass_difference_qvalue_( mass_q ),
     reaction_qvalue_( reaction_q ), xs_( std::move( xs ) ),
     linearised_( linearised ) {}
@@ -30,7 +30,8 @@ Reaction& operator=( Reaction&& ) = default;
  *  @param reaction_q   the reaction Q value
  *  @param xs   the cross section of the reaction
  */
-Reaction( ReactionID id, double mass_q, double reaction_q, CrossSection xs ) :
+Reaction( ReactionID id, double mass_q, double reaction_q,
+          TabulatedCrossSection xs ) :
     Reaction( std::move( id ),
               mass_q,
               reaction_q,

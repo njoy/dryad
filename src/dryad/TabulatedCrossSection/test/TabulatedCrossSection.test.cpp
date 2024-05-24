@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/CrossSection.hpp"
+#include "dryad/TabulatedCrossSection.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "CrossSection" ) {
+SCENARIO( "TabulatedCrossSection" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
 
@@ -20,9 +20,9 @@ SCENARIO( "CrossSection" ) {
       const std::vector< double > energies = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
 
-      CrossSection chunk( std::move( energies ), std::move( values ) );
+      TabulatedCrossSection chunk( std::move( energies ), std::move( values ) );
 
-      THEN( "a CrossSection can be constructed and members can be tested" ) {
+      THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
@@ -43,7 +43,7 @@ SCENARIO( "CrossSection" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a CrossSection can be evaluated" ) {
+      THEN( "a TabulatedCrossSection can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -61,9 +61,9 @@ SCENARIO( "CrossSection" ) {
         CHECK_THAT( 1.5, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "a CrossSection can be linearised" ) {
+      THEN( "a TabulatedCrossSection can be linearised" ) {
 
-        CrossSection linear = chunk.linearise();
+        TabulatedCrossSection linear = chunk.linearise();
 
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -100,10 +100,10 @@ SCENARIO( "CrossSection" ) {
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      CrossSection chunk( std::move( energies ), std::move( values ),
+      TabulatedCrossSection chunk( std::move( energies ), std::move( values ),
                                      interpolant );
 
-      THEN( "a CrossSection can be constructed and members can be tested" ) {
+      THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
         // the constructor will detect the jump and add interpolation regions
         // as required
@@ -128,7 +128,7 @@ SCENARIO( "CrossSection" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a CrossSection can be evaluated" ) {
+      THEN( "a TabulatedCrossSection can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -146,9 +146,9 @@ SCENARIO( "CrossSection" ) {
         CHECK_THAT( 2.5, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "a CrossSection can be linearised" ) {
+      THEN( "a TabulatedCrossSection can be linearised" ) {
 
-        CrossSection linear = chunk.linearise();
+        TabulatedCrossSection linear = chunk.linearise();
 
         CHECK( 5 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -194,11 +194,11 @@ SCENARIO( "CrossSection" ) {
         InterpolationType::LinearLog
       };
 
-      CrossSection chunk( std::move( energies ), std::move( values ),
+      TabulatedCrossSection chunk( std::move( energies ), std::move( values ),
                           std::move( boundaries ),
                           std::move( interpolants ) );
 
-      THEN( "a CrossSection can be constructed and members can be tested" ) {
+      THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -221,7 +221,7 @@ SCENARIO( "CrossSection" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a CrossSection can be evaluated" ) {
+      THEN( "a TabulatedCrossSection can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -241,9 +241,9 @@ SCENARIO( "CrossSection" ) {
         CHECK_THAT( 1.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "a CrossSection can be linearised" ) {
+      THEN( "a TabulatedCrossSection can be linearised" ) {
 
-        CrossSection linear = chunk.linearise();
+        TabulatedCrossSection linear = chunk.linearise();
 
         CHECK( 18 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -313,10 +313,10 @@ SCENARIO( "CrossSection" ) {
         InterpolationType::LinearLog
       };
 
-      CrossSection chunk( std::move( energies ), std::move( values ),
+      TabulatedCrossSection chunk( std::move( energies ), std::move( values ),
                           std::move( boundaries ), std::move( interpolants ) );
 
-      THEN( "a CrossSection can be constructed and members can be tested" ) {
+      THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
@@ -339,7 +339,7 @@ SCENARIO( "CrossSection" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a CrossSection can be evaluated" ) {
+      THEN( "a TabulatedCrossSection can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -359,9 +359,9 @@ SCENARIO( "CrossSection" ) {
         CHECK_THAT( 2.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "a CrossSection can be linearised" ) {
+      THEN( "a TabulatedCrossSection can be linearised" ) {
 
-        CrossSection linear = chunk.linearise();
+        TabulatedCrossSection linear = chunk.linearise();
 
         CHECK( 12 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );

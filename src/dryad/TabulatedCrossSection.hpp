@@ -15,7 +15,8 @@ namespace dryad {
    *  @class
    *  @brief A cross section table
    */
-  class TabulatedCrossSection : protected scion::math::InterpolationTable< double, double > {
+  class TabulatedCrossSection :
+      protected scion::math::InterpolationTable< double, double > {
 
   public:
 

@@ -23,11 +23,11 @@ SCENARIO( "Reaction" ) {
       ReactionID id( "n,Fe56->n,Fe56_e1" );
       double mass_q = 0;
       double reaction_q = -1;
-      CrossSection xs( { 1., 2., 2., 3., 4. },
-                       { 4., 3., 4., 3., 2. },
-                       { 1, 4 },
-                       { InterpolationType::LinearLinear,
-                         InterpolationType::LinearLog } );
+      TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
+                                { 4., 3., 4., 3., 2. },
+                                { 1, 4 },
+                                { InterpolationType::LinearLinear,
+                                  InterpolationType::LinearLog } );
 
       Reaction chunk( std::move( id ), mass_q, reaction_q, std::move( xs ) );
 

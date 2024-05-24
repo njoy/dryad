@@ -9,7 +9,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/ReactionID.hpp"
-#include "dryad/CrossSection.hpp"
+#include "dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,10 +23,10 @@ namespace dryad {
     /* fields */
     ReactionID id_;
 
-    std::optional< double > mass_difference_qvalue_;
+    double mass_difference_qvalue_;
     double reaction_qvalue_;
 
-    CrossSection xs_;
+    TabulatedCrossSection xs_;
     bool linearised_;
 
   public:
@@ -52,7 +52,7 @@ namespace dryad {
      *  and the final atomic mass (the residual mass and all reactor product
      *  masses). All particles involved are supposed to be in the ground state.
      */
-    const std::optional< double >& massDifferenceQValue() const noexcept {
+    const double& massDifferenceQValue() const noexcept {
 
       return this->mass_difference_qvalue_;
     }
@@ -68,7 +68,7 @@ namespace dryad {
     /**
      *  @brief Return the cross section
      */
-    const CrossSection& crossSection() const noexcept {
+    const TabulatedCrossSection& crossSection() const noexcept {
 
       return this->xs_;
     }
@@ -88,7 +88,7 @@ namespace dryad {
      */
     Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
 
-      CrossSection xs = this->crossSection().linearise( tolerance );
+      TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
 
       return Reaction( this->identifier(), this->massDifferenceQValue(),
                        this->reactionQValue(), std::move( xs ) );
