@@ -15,12 +15,12 @@ namespace dryad {
    *  @class
    *  @brief A cross section table
    */
-  class CrossSection : protected scion::math::InterpolationTable< double, double > {
+  class TabulatedCrossSection : protected scion::math::InterpolationTable< double, double > {
 
   public:
 
     /* constructor */
-    #include "dryad/CrossSection/src/ctor.hpp"
+    #include "dryad/TabulatedCrossSection/src/ctor.hpp"
 
     /* methods */
 
@@ -55,9 +55,9 @@ namespace dryad {
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    CrossSection linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedCrossSection linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return CrossSection( InterpolationTable::linearise( tolerance ) );
+      return TabulatedCrossSection( InterpolationTable::linearise( tolerance ) );
     }
 
     //! @todo add arithmetic

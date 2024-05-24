@@ -2,6 +2,8 @@
 #define NJOY_DRYAD_REACTION
 
 // system includes
+#include <optional>
+#include <variant>
 #include <vector>
 
 // other includes
@@ -21,7 +23,7 @@ namespace dryad {
     /* fields */
     ReactionID id_;
 
-    double mass_difference_qvalue_;
+    std::optional< double > mass_difference_qvalue_;
     double reaction_qvalue_;
 
     CrossSection xs_;
@@ -46,24 +48,17 @@ namespace dryad {
      *  @brief Return the mass difference Q value
      *
      *  The mass difference Q value is defined as the energy equivalence of the
-     *  difference in the initial mass (the projectile and target mass) and the
-     *  final mass (the residual nucleus mass and all reactor product masses).
-     *  mass of the residual nucleus in the ground state and masses of all other
-     *  reaction products. The masses used have to be the atomic mass values
-     *  (not the nuclear masses).
+     *  difference in the initial atomic mass (the projectile and target mass)
+     *  and the final atomic mass (the residual mass and all reactor product
+     *  masses). All particles involved are supposed to be in the ground state.
      */
-    double massDifferenceQValue() const noexcept {
+    const std::optional< double >& massDifferenceQValue() const noexcept {
 
       return this->mass_difference_qvalue_;
     }
 
     /**
      *  @brief Return the reaction Q value
-     *
-     *  The reaction Q value is defined as the mass difference Q value minus
-     *  the difference in the excitation energy of the target and residual
-     *  nucleus. When both the target and residual nucleus are in the ground
-     *  state, the reaction Q value is equal to the mass difference Q value.
      */
     double reactionQValue() const noexcept {
 
