@@ -6,11 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "tools/std20/ranges.hpp"
-#include "dryad/type-aliases.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
 #include "dryad/format/endf/boundaries.hpp"
 #include "dryad/format/endf/interpolants.hpp"
+#include "dryad/TabulatedCrossSection.hpp"
 #include "ENDFtk/section/3.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
