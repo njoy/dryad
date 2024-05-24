@@ -21,7 +21,7 @@ namespace endf {
    *  @brief Create a TabulatedCrossSection from a parsed ENDF MF3 section
    */
   TabulatedCrossSection
-  tabulatedCrossSection( const ENDFtk::section::Type< 3 >& section ) {
+  createTabulatedCrossSection( const ENDFtk::section::Type< 3 >& section ) {
 
     try {
 
@@ -32,8 +32,8 @@ namespace endf {
       return TabulatedCrossSection(
                std::vector< double >( energies.begin(), energies.end() ),
                std::vector< double >( values.begin(), values.end() ),
-               endf::boundaries( boundaries ),
-               endf::interpolants( interpolants ) );
+               createBoundaries( boundaries ),
+               createInterpolants( interpolants ) );
     }
     catch ( ... ) {
 
@@ -47,7 +47,7 @@ namespace endf {
    *  @brief Create a TabulatedCrossSection from an unparsed ENDF MF3 section
    */
   TabulatedCrossSection
-  tabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
+  createTabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
 
     if ( tree.fileNumber() != 3 ) {
 
@@ -57,7 +57,7 @@ namespace endf {
       throw std::exception();
     }
 
-    return tabulatedCrossSection( tree.parse< 3 >() );
+    return createTabulatedCrossSection( tree.parse< 3 >() );
   }
 
 } // endf namespace

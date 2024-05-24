@@ -25,7 +25,7 @@ SCENARIO( "tabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::tabulatedCrossSection( section );
+        auto chunk = format::endf::createTabulatedCrossSection( section );
 
         verifyChunk( chunk );
       } // THEN
@@ -35,7 +35,7 @@ SCENARIO( "tabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::tabulatedCrossSection( section.parse< 3 >() );
+        auto chunk = format::endf::createTabulatedCrossSection( section.parse< 3 >() );
 
         verifyChunk( chunk );
       } // THEN

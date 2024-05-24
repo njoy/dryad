@@ -20,7 +20,7 @@ namespace endf {
   /**
    *  @brief Create a ProjectileTarget from an unparsed ENDF material
    */
-  ProjectileTarget projectileTarget( const ENDFtk::tree::Material& material ) {
+  ProjectileTarget createProjectileTarget( const ENDFtk::tree::Material& material ) {
 
     auto mf1mt451 = material.section( 1, 451 ).parse< 1, 451 >();
 
@@ -31,7 +31,7 @@ namespace endf {
       ParticleID target = std::to_string( static_cast< int >( mf1mt451.ZA() ) )
                         + "_e" + std::to_string( mf1mt451.excitedLevel() );
 
-      std::vector< Reaction > reactions = endf::reactions( material );
+      std::vector< Reaction > reactions = createReactions( material );
 
       return ProjectileTarget( std::move( projectile ), std::move( target ),
                                std::move( reactions ) );

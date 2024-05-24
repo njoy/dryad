@@ -27,7 +27,7 @@ SCENARIO( "projectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget H1 = format::endf::projectileTarget( material );
+        ProjectileTarget H1 = format::endf::createProjectileTarget( material );
 
         CHECK( ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( ParticleID( "1001_e0" ) == H1.targetIdentifier() );

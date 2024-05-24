@@ -27,13 +27,13 @@ SCENARIO( "reaction" ) {
 
       THEN( "a Reaction can be created" ) {
 
-        Reaction total = format::endf::reaction( material, 1 );
+        Reaction total = format::endf::createReaction( material, 1 );
         verifyTotalReaction( total );
 
-        Reaction elastic = format::endf::reaction( material, 2 );
+        Reaction elastic = format::endf::createReaction( material, 2 );
         verifyElasticReaction( elastic );
 
-        Reaction capture = format::endf::reaction( material, 102 );
+        Reaction capture = format::endf::createReaction( material, 102 );
         verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
@@ -42,7 +42,7 @@ SCENARIO( "reaction" ) {
 
       THEN( "all reactions can be created" ) {
 
-        std::vector< Reaction > reactions = format::endf::reactions( material );
+        std::vector< Reaction > reactions = format::endf::createReactions( material );
 
         auto total = reactions[0];
         verifyTotalReaction( total );

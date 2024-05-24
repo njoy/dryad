@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Convert an ENDF boundary index to a normal boundary index
    */
-  std::size_t boundary( int boundary ) {
+  std::size_t createBoundary( int boundary ) {
 
     if ( boundary < 1 ) {
 
@@ -31,13 +31,13 @@ namespace endf {
    *  @brief Convert a range of ENDF boundary indices to normal boundary indeces
    */
   template < typename Range >
-  auto boundaries( const Range& boundaries )
+  auto createBoundaries( const Range& boundaries )
   -> std::enable_if_t< njoy::tools::std20::ranges::range< Range >,
                        std::vector< std::size_t > > {
 
     std::vector< std::size_t > converted( boundaries.size() );
     std::transform( boundaries.begin(), boundaries.end(),
-                    converted.begin(), &boundary );
+                    converted.begin(), &createBoundary );
     return converted;
   }
 

@@ -19,7 +19,7 @@ namespace endf {
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
    */
-  Reaction reaction( const ENDFtk::tree::Material& material, int mt ) {
+  Reaction createReaction( const ENDFtk::tree::Material& material, int mt ) {
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -28,7 +28,7 @@ namespace endf {
       ReactionID id = std::to_string( mt );
       double mass_q = section.massDifferenceQValue();
       double reaction_q = section.reactionQValue();
-      TabulatedCrossSection xs = tabulatedCrossSection( section );
+      TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
       return Reaction( std::move( id ), mass_q, reaction_q, std::move( xs ) );
     }
@@ -42,13 +42,14 @@ namespace endf {
   /**
    *  @brief Create every Reaction from an unparsed ENDF material
    */
-  std::vector< Reaction > reactions( const ENDFtk::tree::Material& material ) {
+  std::vector< Reaction >
+  createReactions( const ENDFtk::tree::Material& material ) {
 
     std::vector< Reaction > reactions;
     reactions.reserve( material.file( 3 ).sectionNumbers().size() );
     for ( auto mt : material.file( 3 ).sectionNumbers() ) {
 
-      reactions.emplace_back( reaction( material, mt ) );
+      reactions.emplace_back( createReaction( material, mt ) );
     }
     return reactions;
   }

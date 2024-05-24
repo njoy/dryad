@@ -19,17 +19,17 @@ SCENARIO( "interpolants" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( InterpolationType::Histogram    == format::endf::interpolant( 1 ) );
-        CHECK( InterpolationType::LinearLinear == format::endf::interpolant( 2 ) );
-        CHECK( InterpolationType::LinearLog    == format::endf::interpolant( 3 ) );
-        CHECK( InterpolationType::LogLinear    == format::endf::interpolant( 4 ) );
-        CHECK( InterpolationType::LogLog       == format::endf::interpolant( 5 ) );
+        CHECK( InterpolationType::Histogram    == format::endf::createInterpolant( 1 ) );
+        CHECK( InterpolationType::LinearLinear == format::endf::createInterpolant( 2 ) );
+        CHECK( InterpolationType::LinearLog    == format::endf::createInterpolant( 3 ) );
+        CHECK( InterpolationType::LogLinear    == format::endf::createInterpolant( 4 ) );
+        CHECK( InterpolationType::LogLog       == format::endf::createInterpolant( 5 ) );
       } // THEN
 
       THEN( "an exception is thrown for an unknown or unsupported type" ) {
 
-        CHECK_THROWS( format::endf::interpolant( 0 ) );
-        CHECK_THROWS( format::endf::interpolant( 6 ) );
+        CHECK_THROWS( format::endf::createInterpolant( 0 ) );
+        CHECK_THROWS( format::endf::createInterpolant( 6 ) );
       } // THEN
     } // WHEN
 
@@ -38,7 +38,7 @@ SCENARIO( "interpolants" ) {
       THEN( "it can be converted" ) {
 
         std::vector< std::size_t > interpolants = { 1, 2, 3, 4, 5 };
-        auto converted = format::endf::interpolants( interpolants );
+        auto converted = format::endf::createInterpolants( interpolants );
 
         CHECK( InterpolationType::Histogram    == converted[0] );
         CHECK( InterpolationType::LinearLinear == converted[1] );
@@ -50,7 +50,7 @@ SCENARIO( "interpolants" ) {
       THEN( "an exception is thrown for an unknown or unsupported type" ) {
 
         std::vector< int > interpolants = { 0, 1, 2, 3, 4, 5, 6 };
-        CHECK_THROWS( format::endf::interpolants( interpolants ) );
+        CHECK_THROWS( format::endf::createInterpolants( interpolants ) );
       } // THEN
     } // WHEN
   } // GIVEN

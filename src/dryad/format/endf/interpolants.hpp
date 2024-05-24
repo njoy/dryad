@@ -17,7 +17,7 @@ namespace endf {
   /**
    *  @brief Convert an ENDF interpolation type
    */
-  InterpolationType interpolant( int interpolant ) {
+  InterpolationType createInterpolant( int interpolant ) {
 
     switch ( interpolant ) {
 
@@ -39,13 +39,13 @@ namespace endf {
    *  @brief Convert a range of ENDF interpolation type
    */
   template < typename Range >
-  auto interpolants( const Range& interpolants )
+  auto createInterpolants( const Range& interpolants )
   -> std::enable_if_t< njoy::tools::std20::ranges::range< Range >,
                        std::vector< InterpolationType > > {
 
     std::vector< InterpolationType > converted( interpolants.size() );
     std::transform( interpolants.begin(), interpolants.end(),
-                    converted.begin(), &interpolant );
+                    converted.begin(), &createInterpolant );
     return converted;
   }
 
