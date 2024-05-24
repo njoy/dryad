@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/tabulatedCrossSection.hpp"
+#include "dryad/format/endf/createTabulatedCrossSection.hpp"
 #include "dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
