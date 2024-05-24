@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_INTERPOLANTS
-#define NJOY_DRYAD_FORMAT_ENDF_INTERPOLANTS
+#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEINTERPOLANT
+#define NJOY_DRYAD_FORMAT_ENDF_CREATEINTERPOLANT
 
 // system includes
 #include <vector>
@@ -33,20 +33,6 @@ namespace endf {
         throw std::exception();
       }
     }
-  }
-
-  /**
-   *  @brief Convert a range of ENDF interpolation type
-   */
-  template < typename Range >
-  auto createInterpolants( const Range& interpolants )
-  -> std::enable_if_t< njoy::tools::std20::ranges::range< Range >,
-                       std::vector< InterpolationType > > {
-
-    std::vector< InterpolationType > converted( interpolants.size() );
-    std::transform( interpolants.begin(), interpolants.end(),
-                    converted.begin(), &createInterpolant );
-    return converted;
   }
 
 } // endf namespace

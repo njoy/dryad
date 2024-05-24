@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/interpolants.hpp"
+#include "dryad/format/endf/createInterpolants.hpp"
 
 // other includes
 
@@ -14,24 +14,6 @@ using namespace njoy::dryad;
 SCENARIO( "interpolants" ) {
 
   GIVEN( "ENDF interpolation types" ) {
-
-    WHEN( "a single interpolation type is given" ) {
-
-      THEN( "it can be converted" ) {
-
-        CHECK( InterpolationType::Histogram    == format::endf::createInterpolant( 1 ) );
-        CHECK( InterpolationType::LinearLinear == format::endf::createInterpolant( 2 ) );
-        CHECK( InterpolationType::LinearLog    == format::endf::createInterpolant( 3 ) );
-        CHECK( InterpolationType::LogLinear    == format::endf::createInterpolant( 4 ) );
-        CHECK( InterpolationType::LogLog       == format::endf::createInterpolant( 5 ) );
-      } // THEN
-
-      THEN( "an exception is thrown for an unknown or unsupported type" ) {
-
-        CHECK_THROWS( format::endf::createInterpolant( 0 ) );
-        CHECK_THROWS( format::endf::createInterpolant( 6 ) );
-      } // THEN
-    } // WHEN
 
     WHEN( "a range of interpolation types is given" ) {
 
