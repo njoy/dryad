@@ -25,10 +25,10 @@ Reaction& operator=( Reaction&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param id   the reaction identifier
+ *  @param id           the reaction identifier
  *  @param mass_q       the mass difference Q value
  *  @param reaction_q   the reaction Q value
- *  @param xs   the cross section of the reaction
+ *  @param xs           the cross section of the reaction
  */
 Reaction( ReactionID id, double mass_q, double reaction_q,
           TabulatedCrossSection xs ) :
