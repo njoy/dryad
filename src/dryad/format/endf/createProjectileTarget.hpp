@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/reaction.hpp"
+#include "dryad/format/endf/createReactions.hpp"
 #include "dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"

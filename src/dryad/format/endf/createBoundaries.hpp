@@ -15,7 +15,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Convert a range of ENDF boundary indices to normal boundary indeces
+   *  @brief Create boundary indices from ENDF boundary indices
    */
   template < typename Range >
   auto createBoundaries( const Range& boundaries )

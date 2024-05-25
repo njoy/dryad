@@ -14,7 +14,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Convert an ENDF boundary index to a normal boundary index
+   *  @brief Create a boundary index from an ENDF boundary index
    */
   std::size_t createBoundary( int boundary ) {
 

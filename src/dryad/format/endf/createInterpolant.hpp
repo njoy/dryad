@@ -15,7 +15,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Convert an ENDF interpolation type
+   *  @brief Create an interpolation type from an ENDF interpolation type
    */
   InterpolationType createInterpolant( int interpolant ) {
 

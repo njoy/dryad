@@ -39,21 +39,6 @@ namespace endf {
     }
   }
 
-  /**
-   *  @brief Create every Reaction from an unparsed ENDF material
-   */
-  std::vector< Reaction >
-  createReactions( const ENDFtk::tree::Material& material ) {
-
-    std::vector< Reaction > reactions;
-    reactions.reserve( material.file( 3 ).sectionNumbers().size() );
-    for ( auto mt : material.file( 3 ).sectionNumbers() ) {
-
-      reactions.emplace_back( createReaction( material, mt ) );
-    }
-    return reactions;
-  }
-
 } // endf namespace
 } // format namespace
 } // dryad namespace

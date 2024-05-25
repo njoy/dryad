@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/projectileTarget.hpp"
+#include "dryad/format/endf/createReaction.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
@@ -16,31 +16,24 @@ void verifyTotalReaction( const Reaction& );
 void verifyElasticReaction( const Reaction& );
 void verifyCaptureReaction( const Reaction& );
 
-SCENARIO( "projectileTarget" ) {
+SCENARIO( "reaction" ) {
 
   GIVEN( "ENDF materials" ) {
 
     auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
     auto material = tape.materials().front();
 
-    WHEN( "a single ENDF materials is given" ) {
+    WHEN( "a single ENDF material and MT number is given" ) {
 
-      THEN( "it can be converted" ) {
+      THEN( "a Reaction can be created" ) {
 
-        ProjectileTarget H1 = format::endf::createProjectileTarget( material );
-
-        CHECK( ParticleID( "n" ) == H1.projectileIdentifier() );
-        CHECK( ParticleID( "1001_e0" ) == H1.targetIdentifier() );
-
-        CHECK( false == H1.isLinearised() );
-
-        auto total = H1.reactions()[0];
+        Reaction total = format::endf::createReaction( material, 1 );
         verifyTotalReaction( total );
 
-        auto elastic = H1.reactions()[1];
+        Reaction elastic = format::endf::createReaction( material, 2 );
         verifyElasticReaction( elastic );
 
-        auto capture = H1.reactions()[2];
+        Reaction capture = format::endf::createReaction( material, 102 );
         verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
