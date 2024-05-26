@@ -8,6 +8,9 @@
 namespace python = pybind11;
 
 // declarations
+void wrapTabulatedCrossSection( python::module&, python::module& );
+void wrapReaction( python::module&, python::module& );
+void wrapProjectileTarget( python::module&, python::module& );
 
 /**
  *  @brief dryad python bindings
@@ -17,4 +20,21 @@ namespace python = pybind11;
  */
 PYBIND11_MODULE( dryad, module ) {
 
+  auto scion_interpolation = python::module::import( "scion.interpolation" );
+  auto scion_linearisation = python::module::import( "scion.linearisation" );
+
+  module.attr( "InterpolationType" ) = scion_interpolation.attr( "InterpolationType" );
+  module.attr( "ToleranceConvergence" ) = scion_linearisation.attr( "ToleranceConvergence" );
+
+  // create the views submodule
+  python::module viewmodule = module.def_submodule(
+
+    "sequence",
+    "sequence - dryad sequences (internal use only)"
+  );
+
+  // wrap components
+  wrapTabulatedCrossSection( module, viewmodule );
+  wrapReaction( module, viewmodule );
+  wrapProjectileTarget( module, viewmodule );
 }

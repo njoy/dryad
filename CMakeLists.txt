@@ -36,6 +36,7 @@ cmake_dependent_option(
   "NOT ${subproject}" OFF
 )
 if ( dryad.python )
+  set( require.scion.python CACHE BOOL ON )
   set( require.ENDFtk.python CACHE BOOL ON )
 endif()
 
@@ -94,10 +95,13 @@ if( dryad.python )
 
   pybind11_add_module( dryad.python
       python/src/dryad.python.cpp
+      python/src/TabulatedCrossSection.python.cpp
+      python/src/Reaction.python.cpp
+      python/src/ProjectileTarget.python.cpp
       )
 
   target_link_libraries( dryad.python PRIVATE dryad )
-  add_dependencies( dryad.python ENDFtk.python )
+  add_dependencies( dryad.python ENDFtk.python scion.python )
   target_include_directories( dryad.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/src )
   target_compile_options( dryad.python PRIVATE "-fvisibility=hidden" )
   set_target_properties( dryad.python PROPERTIES OUTPUT_NAME dryad )
@@ -108,6 +112,7 @@ if( dryad.python )
 
   list( APPEND DRYAD_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR} )
   list( APPEND ENDFTK_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/endftk-build )
+  list( APPEND SCION_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build )
 
   if( dryad.tests )
     include( cmake/unit_testing_python.cmake )

@@ -41,8 +41,22 @@ namespace dryad {
       return this->y();
     }
 
-    using InterpolationTable::x;
-    using InterpolationTable::y;
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const noexcept {
+
+      return this->x().front();
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const noexcept {
+
+      return this->x().back();
+    }
+
     using InterpolationTable::boundaries;
     using InterpolationTable::interpolants;
     using InterpolationTable::numberPoints;

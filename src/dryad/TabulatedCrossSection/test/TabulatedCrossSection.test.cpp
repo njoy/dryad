@@ -24,6 +24,8 @@ SCENARIO( "TabulatedCrossSection" ) {
 
       THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
         CHECK( 4 == chunk.energies().size() );
@@ -101,12 +103,14 @@ SCENARIO( "TabulatedCrossSection" ) {
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
       TabulatedCrossSection chunk( std::move( energies ), std::move( values ),
-                                     interpolant );
+                                   interpolant );
 
       THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
         // the constructor will detect the jump and add interpolation regions
         // as required
+        CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
@@ -194,12 +198,15 @@ SCENARIO( "TabulatedCrossSection" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedCrossSection chunk( std::move( energies ), std::move( values ),
-                          std::move( boundaries ),
-                          std::move( interpolants ) );
+      TabulatedCrossSection chunk( std::move( energies ),
+                                   std::move( values ),
+                                   std::move( boundaries ),
+                                   std::move( interpolants ) );
 
       THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
         CHECK( 4 == chunk.energies().size() );
@@ -313,11 +320,15 @@ SCENARIO( "TabulatedCrossSection" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedCrossSection chunk( std::move( energies ), std::move( values ),
-                          std::move( boundaries ), std::move( interpolants ) );
+      TabulatedCrossSection chunk( std::move( energies ),
+                                   std::move( values ),
+                                   std::move( boundaries ),
+                                   std::move( interpolants ) );
 
       THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
+        CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
