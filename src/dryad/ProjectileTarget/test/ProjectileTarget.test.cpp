@@ -67,6 +67,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 
   // reactions
   auto reaction = chunk.reactions()[0];
+  CHECK( ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue() ) );
   CHECK_THAT( 0, WithinRel( reaction.reactionQValue() ) );
   CHECK( 2 == reaction.crossSection().numberPoints() );
@@ -83,6 +84,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LogLinear == reaction.crossSection().interpolants()[0] );
   CHECK( false == reaction.crossSection().isLinearised() );
   reaction = chunk.reactions()[1];
+  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue() ) );
   CHECK_THAT( -1, WithinRel( reaction.reactionQValue() ) );
   CHECK( 2 == reaction.crossSection().numberPoints() );

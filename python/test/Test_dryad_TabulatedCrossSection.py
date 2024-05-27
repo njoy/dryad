@@ -8,8 +8,8 @@ import sys
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 
-class Test_scion_math_InterpolationTable( unittest.TestCase ) :
-    """Unit test for the InterpolationTable class."""
+class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
+    """Unit test for the TabulatedCrossSection class."""
 
     def test_component( self ) :
 
@@ -335,33 +335,33 @@ class Test_scion_math_InterpolationTable( unittest.TestCase ) :
 
         # the data is given explicitly for data without boundaries
         chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                   values = [ 4., 3., 2., 1. ],
-                                   interpolant = InterpolationType.LinearLinear )
+                                       values = [ 4., 3., 2., 1. ],
+                                       interpolant = InterpolationType.LinearLinear )
 
         verify_chunk1( self, chunk )
 
         # the data is given explicitly for data without boundaries and a jump
         chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 3., 4. ],
-                                   values = [ 4., 3., 4., 3., 2. ],
-                                   interpolant = InterpolationType.LinearLinear )
+                                       values = [ 4., 3., 4., 3., 2. ],
+                                       interpolant = InterpolationType.LinearLinear )
 
         verify_chunk2( self, chunk )
 
         # the data is given explicitly for data without a jump
         chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                   values = [ 4., 3., 2., 1. ],
-                                   boundaries = [ 1, 3 ],
-                                   interpolants = [ InterpolationType.LinearLinear,
-                                                    InterpolationType.LinearLog ] )
+                                       values = [ 4., 3., 2., 1. ],
+                                       boundaries = [ 1, 3 ],
+                                       interpolants = [ InterpolationType.LinearLinear,
+                                                        InterpolationType.LinearLog ] )
 
         verify_chunk3( self, chunk )
 
         # the data is given explicitly for data with a jump
         chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 3., 4. ],
-                                   values = [ 4., 3., 4., 3., 2. ],
-                                   boundaries = [ 1, 4 ],
-                                   interpolants = [ InterpolationType.LinearLinear,
-                                                    InterpolationType.LinearLog ] )
+                                       values = [ 4., 3., 4., 3., 2. ],
+                                       boundaries = [ 1, 4 ],
+                                       interpolants = [ InterpolationType.LinearLinear,
+                                                        InterpolationType.LinearLog ] )
 
         verify_chunk4( self, chunk )
 
