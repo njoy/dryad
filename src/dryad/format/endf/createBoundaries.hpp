@@ -7,7 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/std20/ranges.hpp"
-#include "dryad/format/endf/createBoundary.hpp"
+#include "dryad/format/createIndex.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -24,7 +24,7 @@ namespace endf {
 
     std::vector< std::size_t > converted( boundaries.size() );
     std::transform( boundaries.begin(), boundaries.end(),
-                    converted.begin(), &createBoundary );
+                    converted.begin(), &createIndex );
     return converted;
   }
 
