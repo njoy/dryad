@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/ProjectileTarget.hpp"
+#include "dryad/format/endf/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -85,5 +86,19 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     "Arguments:\n"
     "    self        the reaction\n"
     "    tolerance   the linearisation tolerance"
+  )
+  .def_static(
+
+    "from_endf_file",
+    [] ( const std::string& filename ) -> Component {
+
+      return njoy::dryad::format::endf::createProjectileTargetFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create a ProjectileTarget from an ENDF file\n\n"
+    "If there are multiple materials in the ENDF file, only the first material\n"
+    "will be transformed into a ProjectileTarget.\n\n"
+    "Arguments:\n"
+    "    filename   the ENDF file name"
   );
 }

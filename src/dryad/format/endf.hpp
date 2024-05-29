@@ -7,3 +7,5 @@
 #include "dryad/format/endf/createReaction.hpp"
 #include "dryad/format/endf/createReactions.hpp"
 #include "dryad/format/endf/createProjectileTarget.hpp"
+
+#include "dryad/format/endf/fromFile.hpp"
