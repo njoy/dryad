@@ -31,6 +31,11 @@ SCENARIO( "projectileTarget" ) {
 
         CHECK( false == H1.isLinearised() );
 
+        CHECK( true == H1.hasReaction( ReactionID( "1" ) ) );
+        CHECK( true == H1.hasReaction( ReactionID( "2" ) ) );
+        CHECK( true == H1.hasReaction( ReactionID( "102" ) ) );
+        CHECK( false == H1.hasReaction( ReactionID( "some unknown reaction" ) ) );
+
         auto total = H1.reactions()[0];
         verifyTotalReaction( total );
 
@@ -38,6 +43,15 @@ SCENARIO( "projectileTarget" ) {
         verifyElasticReaction( elastic );
 
         auto capture = H1.reactions()[2];
+        verifyCaptureReaction( capture );
+
+        total = H1.reaction( ReactionID( "1" ) );
+        verifyTotalReaction( total );
+
+        elastic = H1.reaction( ReactionID( "2" ) );
+        verifyElasticReaction( elastic );
+
+        capture = H1.reaction( ReactionID( "102" ) );
         verifyCaptureReaction( capture );
       } // THEN
     } // WHEN

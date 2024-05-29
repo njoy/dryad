@@ -59,6 +59,24 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     &Component::reactions,
     "The reactions"
   )
+  .def(
+
+    "has_reaction",
+    &Component::hasReaction,
+    "Return whether or not a reaction is present\n\n"
+    "Arguments:\n"
+    "    self   the ProjectileTarget\n"
+    "    id     the the reaction identifier"
+  )
+  .def(
+
+    "reaction",
+    &Component::reaction,
+    "Return the requested reaction\n\n"
+    "Arguments:\n"
+    "    self   the ProjectileTarget\n"
+    "    id     the the reaction identifier"
+  )
   .def_property_readonly(
 
     "is_linearised",
@@ -73,7 +91,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the data and return a new object\n\n"
     "Arguments:\n"
-    "    self        the reaction\n"
+    "    self        the ProjectileTarget\n"
     "    tolerance   the linearisation tolerance"
   )
   .def(
@@ -84,7 +102,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the data inplace\n\n"
     "Arguments:\n"
-    "    self        the reaction\n"
+    "    self        the ProjectileTarget\n"
     "    tolerance   the linearisation tolerance"
   )
   .def_static(

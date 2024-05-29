@@ -58,6 +58,42 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not a given reaction is present
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    bool hasReaction( const ReactionID& id ) const {
+
+      auto iter = std::find_if( this->reactions().begin(),
+                                this->reactions().end(),
+                                [&id] ( auto&& reaction )
+                                      { return reaction.identifier() == id; } );
+      return iter != this->reactions().end();
+    }
+
+    /**
+     *  @brief Return the requested reaction
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    const Reaction& reaction( const ReactionID& id ) const {
+
+      auto iter = std::find_if( this->reactions().begin(),
+                                this->reactions().end(),
+                                [&id] ( auto&& reaction )
+                                      { return reaction.identifier() == id; } );
+      if ( iter != this->reactions().end() ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested reaction \'{}\' could not be found", id );
+        throw std::exception();
+      }
+    }
+
+    /**
      *  @brief Return whether or not the data is linearised
      */
     bool isLinearised() const noexcept {
