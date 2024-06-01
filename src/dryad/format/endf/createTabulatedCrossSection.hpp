@@ -10,6 +10,7 @@
 #include "dryad/format/endf/createInterpolants.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 #include "ENDFtk/section/3.hpp"
+#include "ENDFtk/section/23.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
 namespace njoy {
@@ -18,10 +19,13 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a TabulatedCrossSection from a parsed ENDF MF3 section
+   *  @brief Create a TabulatedCrossSection from a parsed ENDF section
    */
-  TabulatedCrossSection
-  createTabulatedCrossSection( const ENDFtk::section::Type< 3 >& section ) {
+  template < typename Section >
+  auto createTabulatedCrossSection( const Section& section )
+  -> std::enable_if_t< ( std::is_same_v< Section, ENDFtk::section::Type< 3 > > ||
+                         std::is_same_v< Section, ENDFtk::section::Type< 23 > > ),
+                       TabulatedCrossSection > {
 
     try {
 
@@ -49,15 +53,18 @@ namespace endf {
   TabulatedCrossSection
   createTabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
 
-    if ( tree.fileNumber() != 3 ) {
+    switch ( tree.fileNumber() ) {
 
-      Log::error( "ENDF MAT{} MF{} MT{} - the section does not contain a "
-                  "tabulated cross section", tree.materialNumber(),
-                  tree.fileNumber(), tree.sectionNumber() );
-      throw std::exception();
+      case  3 : return createTabulatedCrossSection( tree.parse< 3 >() );
+      case 23 : return createTabulatedCrossSection( tree.parse< 23 >() );
+      default : {
+
+        Log::error( "ENDF MAT{} MF{} MT{} - the section does not contain a "
+                    "tabulated cross section", tree.materialNumber(),
+                    tree.fileNumber(), tree.sectionNumber() );
+        throw std::exception();
+      }
     }
-
-    return createTabulatedCrossSection( tree.parse< 3 >() );
   }
 
 } // endf namespace
