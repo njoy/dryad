@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEBOUNDARY
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEBOUNDARY
+#ifndef NJOY_DRYAD_FORMAT_CREATEINDEX
+#define NJOY_DRYAD_FORMAT_CREATEINDEX
 
 // system includes
 #include <vector>
@@ -15,14 +15,14 @@ namespace format {
   /**
    *  @brief Create an index from a one-based index
    */
-  std::size_t createIndex( int boundary ) {
+  std::size_t createIndex( int index ) {
 
-    if ( boundary < 1 ) {
+    if ( index < 1 ) {
 
-      Log::error( "This is not a one-based index, found {}", boundary );
+      Log::error( "This is not a one-based index, found {}", index );
       throw std::exception();
     }
-    return static_cast< std::size_t >( boundary ) - 1;
+    return static_cast< std::size_t >( index ) - 1;
   }
 
 } // format namespace

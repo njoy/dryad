@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/format/endf/createParticleID.hpp"
 #include "dryad/format/endf/createReactions.hpp"
 #include "dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
@@ -24,23 +25,14 @@ namespace endf {
 
     auto mf1mt451 = material.section( 1, 451 ).parse< 1, 451 >();
 
-    // currently incident neutron only
-    if ( mf1mt451.subLibrary() == 10 ) {
+    ParticleID projectile = createParticleID( mf1mt451.subLibrary() );
+    ParticleID target = std::to_string( static_cast< int >( mf1mt451.ZA() ) )
+                      + "_e" + std::to_string( mf1mt451.excitedLevel() );
 
-      ParticleID projectile( "n" );
-      ParticleID target = std::to_string( static_cast< int >( mf1mt451.ZA() ) )
-                        + "_e" + std::to_string( mf1mt451.excitedLevel() );
+    std::vector< Reaction > reactions = createReactions( material );
 
-      std::vector< Reaction > reactions = createReactions( material );
-
-      return ProjectileTarget( std::move( projectile ), std::move( target ),
-                               std::move( reactions ) );
-    }
-    else {
-
-      Log::error( "ENDF material does not represent a ProjectileTarget" );
-      throw std::exception();
-    }
+    return ProjectileTarget( std::move( projectile ), std::move( target ),
+                             std::move( reactions ) );
   }
 
 } // endf namespace
