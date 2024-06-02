@@ -9,6 +9,7 @@ from dryad import ProjectileTarget
 from dryad import Reaction
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
+from dryad import InteractionType
 
 class Test_dryad_Reaction( unittest.TestCase ) :
     """Unit test for the Reaction class."""
@@ -20,6 +21,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # identifiers
             self.assertEqual( "n", chunk.projectile_identifier )
             self.assertEqual( "Fe56", chunk.target_identifier )
+
+            # interaction type
+            self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
             # reactions are present
             self.assertEqual( True, chunk.has_reaction( "n,Fe56->n,Fe56" ) )
@@ -107,6 +111,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( "n", chunk.projectile_identifier )
             self.assertEqual( "Fe56", chunk.target_identifier )
 
+            # interaction type
+            self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
+
             # reactions
             reaction = chunk.reactions[0]
             self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
@@ -152,7 +159,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
         # the data is given explicitly
         chunk = ProjectileTarget(
-                    projectile = "n", target = "Fe56",
+                    projectile = "n", target = "Fe56", type = InteractionType.Nuclear,
                     reactions = [ Reaction( "n,Fe56->n,Fe56", 0, 0,
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                    InterpolationType.LogLinear ) ),

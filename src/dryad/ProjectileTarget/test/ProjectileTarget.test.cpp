@@ -23,6 +23,8 @@ SCENARIO( "ProjectileTarget" ) {
       ParticleID projectile( "n" );
       ParticleID target( "Fe56" );
 
+      InteractionType type = InteractionType::Nuclear;
+
       std::vector< Reaction > reactions = {
 
         Reaction( ReactionID( "n,Fe56->n,Fe56" ), 0, 0,
@@ -34,7 +36,7 @@ SCENARIO( "ProjectileTarget" ) {
       };
 
       ProjectileTarget chunk( std::move( projectile ), std::move( target ),
-                              std::move( reactions ) );
+                              type, std::move( reactions ) );
 
       THEN( "a ProjectileTarget can be constructed and members can be tested" ) {
 
@@ -64,6 +66,9 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   // identifiers
   CHECK( ParticleID( "n" ) == chunk.projectileIdentifier() );
   CHECK( ParticleID( "Fe56" ) == chunk.targetIdentifier() );
+
+  // interaction type
+  CHECK( InteractionType::Nuclear == chunk.interactionType() );
 
   // reactions are present
   CHECK( true == chunk.hasReaction( ReactionID( "n,Fe56->n,Fe56" ) ) );

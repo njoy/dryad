@@ -32,6 +32,8 @@ SCENARIO( "projectileTarget" ) {
         CHECK( ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( ParticleID( "1001_e0" ) == H1.targetIdentifier() );
 
+        CHECK( InteractionType::Nuclear == H1.interactionType() );
+
         CHECK( false == H1.isLinearised() );
 
         CHECK( true == H1.hasReaction( ReactionID( "1" ) ) );

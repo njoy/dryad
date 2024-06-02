@@ -53,6 +53,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the interaction type
+     */
+    const InteractionType& interactionType() const noexcept {
+
+      return this->interaction_;
+    }
+
+    /**
      *  @brief Return the reactions
      */
     const std::vector< Reaction >& reactions() const noexcept {
@@ -118,7 +126,7 @@ namespace dryad {
       }
 
       return ProjectileTarget( this->projectileIdentifier(), this->targetIdentifier(),
-                               std::move( reactions ) );
+                               this->interactionType(), std::move( reactions ) );
     }
 
     /**

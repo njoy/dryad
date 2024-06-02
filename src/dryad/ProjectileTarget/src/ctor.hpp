@@ -8,10 +8,12 @@
  *                      linearised
  */
 ProjectileTarget( ParticleID&& projectile, ParticleID&& target,
+                  InteractionType type,
                   std::vector< Reaction >&& reactions,
                   bool linearised ) :
     projectile_id_( std::move( projectile ) ),
     target_id_( std::move( target ) ),
+    interaction_( type ),
     reactions_( std::move( reactions ) ),
     linearised_( linearised ) {}
 
@@ -31,9 +33,11 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param reactions    the reaction data
  */
 ProjectileTarget( ParticleID projectile, ParticleID target,
+                  InteractionType type,
                   std::vector< Reaction > reactions ) :
     ProjectileTarget( std::move( projectile ),
                       std::move( target ),
+                      type,
                       std::move( reactions ),
                       std::all_of( reactions.begin(), reactions.end(),
                                    [] ( auto&& reaction )

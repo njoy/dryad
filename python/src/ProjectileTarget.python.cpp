@@ -16,6 +16,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
   using ParticleID = njoy::dryad::ParticleID;
   using Reaction = njoy::dryad::Reaction;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
+  using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
 
@@ -31,14 +32,16 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
   component
   .def(
 
-    python::init< ParticleID, ParticleID, std::vector< Reaction > >(),
+    python::init< ParticleID, ParticleID, InteractionType,
+                  std::vector< Reaction > >(),
     python::arg( "projectile" ), python::arg( "target" ),
-    python::arg( "reactions" ),
+    python::arg( "type" ), python::arg( "reactions" ),
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
     "    self         the reaction\n"
     "    projectile   the particle identifier\n"
     "    target       the target identifier\n"
+    "    type         the interaction type\n"
     "    reactions    the reaction data"
   )
   .def_property_readonly(
@@ -52,6 +55,12 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     "target_identifier",
     &Component::targetIdentifier,
     "The target identifier"
+  )
+  .def_property_readonly(
+
+    "interaction_type",
+    &Component::interactionType,
+    "The interaction type (atomic or nuclear)"
   )
   .def_property_readonly(
 
