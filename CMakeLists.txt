@@ -96,6 +96,7 @@ if( dryad.python )
 
   pybind11_add_module( dryad.python
       python/src/dryad.python.cpp
+      python/src/InteractionType.python.cpp
       python/src/TabulatedCrossSection.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp
