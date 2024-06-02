@@ -19,7 +19,15 @@ SCENARIO( "createParticleID" ) {
 
       THEN( "it can be converted" ) {
 
+        CHECK( ParticleID( "g" ) == format::endf::createParticleID( 0 ) );
+        CHECK( ParticleID( "g" ) == format::endf::createParticleID( 3 ) );
         CHECK( ParticleID( "n" ) == format::endf::createParticleID( 10 ) );
+        CHECK( ParticleID( "e-" ) == format::endf::createParticleID( 113 ) );
+        CHECK( ParticleID( "p" ) == format::endf::createParticleID( 10010 ) );
+        CHECK( ParticleID( "d" ) == format::endf::createParticleID( 10020 ) );
+        CHECK( ParticleID( "t" ) == format::endf::createParticleID( 10030 ) );
+        CHECK( ParticleID( "he3" ) == format::endf::createParticleID( 20030 ) );
+        CHECK( ParticleID( "a" ) == format::endf::createParticleID( 20040 ) );
       } // THEN
 
       THEN( "an exception is thrown for an unknown or unsupported sublibrary type" ) {

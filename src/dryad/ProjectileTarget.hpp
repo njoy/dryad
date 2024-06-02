@@ -6,6 +6,7 @@
 
 // other includes
 #include "dryad/type-aliases.hpp"
+#include "dryad/InteractionType.hpp"
 #include "dryad/ParticleID.hpp"
 #include "dryad/Reaction.hpp"
 
@@ -21,6 +22,8 @@ namespace dryad {
     /* fields */
     ParticleID projectile_id_;
     ParticleID target_id_;
+
+    InteractionType interaction_;
 
     std::vector< Reaction > reactions_;
 

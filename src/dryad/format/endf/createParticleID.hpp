@@ -21,9 +21,9 @@ namespace endf {
     switch ( sublibrary ) {
 
       case     0 : return ParticleID( "g" );
-      case     3 : return ParticleID( "photoatomic" );
+      case     3 : return ParticleID( "g" );
       case    10 : return ParticleID( "n" );
-      case   113 : return ParticleID( "e" );
+      case   113 : return ParticleID( "e-" );
       case 10010 : return ParticleID( "p" );
       case 10020 : return ParticleID( "d" );
       case 10030 : return ParticleID( "t" );
