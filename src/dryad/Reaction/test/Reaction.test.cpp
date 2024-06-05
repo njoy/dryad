@@ -60,8 +60,8 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
 
   // q values
-  CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue() ) );
-  CHECK_THAT( -1, WithinRel( chunk.reactionQValue() ) );
+  CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue().value() ) );
+  CHECK_THAT( -1, WithinRel( chunk.reactionQValue().value() ) );
 
   // cross section
   CHECK( 5 == chunk.crossSection().numberPoints() );

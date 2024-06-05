@@ -23,8 +23,8 @@ namespace dryad {
     /* fields */
     ReactionID id_;
 
-    double mass_difference_qvalue_;
-    double reaction_qvalue_;
+    std::optional< double > mass_difference_qvalue_;
+    std::optional< double > reaction_qvalue_;
 
     TabulatedCrossSection xs_;
     bool linearised_;
@@ -52,7 +52,7 @@ namespace dryad {
      *  and the final atomic mass (the residual mass and all reactor product
      *  masses). All particles involved are supposed to be in the ground state.
      */
-    const double& massDifferenceQValue() const noexcept {
+    const std::optional< double >& massDifferenceQValue() const noexcept {
 
       return this->mass_difference_qvalue_;
     }
@@ -60,7 +60,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction Q value
      */
-    double reactionQValue() const noexcept {
+    std::optional< double > reactionQValue() const noexcept {
 
       return this->reaction_qvalue_;
     }

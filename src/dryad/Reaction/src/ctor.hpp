@@ -8,7 +8,8 @@
  *  @param linearised   a flag indicating whether or not the data is
  *                      linearised
  */
-Reaction( ReactionID&& id, double mass_q, double reaction_q,
+Reaction( ReactionID&& id, std::optional< double >&& mass_q, 
+          std::optional< double >&& reaction_q,
           TabulatedCrossSection&& xs, bool linearised ) :
     id_( std::move( id ) ), mass_difference_qvalue_( mass_q ),
     reaction_qvalue_( reaction_q ), xs_( std::move( xs ) ),
@@ -30,10 +31,11 @@ Reaction& operator=( Reaction&& ) = default;
  *  @param reaction_q   the reaction Q value
  *  @param xs           the cross section of the reaction
  */
-Reaction( ReactionID id, double mass_q, double reaction_q,
+Reaction( ReactionID id, std::optional< double > mass_q, 
+          std::optional< double > reaction_q,
           TabulatedCrossSection xs ) :
     Reaction( std::move( id ),
-              mass_q,
-              reaction_q,
+              std::move( mass_q ),
+              std::move( reaction_q ),
               std::move( xs ),
               xs.isLinearised() ? true : false ) {}
