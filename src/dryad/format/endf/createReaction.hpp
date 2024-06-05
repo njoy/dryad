@@ -27,11 +27,16 @@ namespace endf {
 
       ReactionID id = std::to_string( mt );
       ReactionType type = ReactionType::Primary;
-      double mass_q = section.massDifferenceQValue();
-      double reaction_q = section.reactionQValue();
+      std::optional< double > mass_q = std::nullopt;
+      std::optional< double > reaction_q = std::nullopt;
+      if ( type == ReactionType::Primary ) {
+
+        mass_q = section.massDifferenceQValue();
+        reaction_q = section.reactionQValue();
+      }
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
-      return Reaction( std::move( id ), std::move( type ), std::move( xs ), 
+      return Reaction( std::move( id ), std::move( type ), std::move( xs ),
                        std::move( mass_q ), std::move( reaction_q ) );
     }
     else {

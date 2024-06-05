@@ -1,8 +1,8 @@
-add_cpp_test( format.endf.createBoundaries      createBoundaries.test.cpp )
-add_cpp_test( format.endf.createInterpolant     createInterpolant.test.cpp )
-add_cpp_test( format.endf.createInterpolants    createInterpolants.test.cpp )
-add_cpp_test( format.endf.createParticleID      createParticleID.test.cpp )
-add_cpp_test( format.endf.createInteractionType createInteractionType.test.cpp )
+add_cpp_test( format.endf.createBoundaries           createBoundaries.test.cpp )
+add_cpp_test( format.endf.createInterpolant          createInterpolant.test.cpp )
+add_cpp_test( format.endf.createInterpolants         createInterpolants.test.cpp )
+add_cpp_test( format.endf.createProjectileIdentifier createProjectileIdentifier.test.cpp )
+add_cpp_test( format.endf.createInteractionType      createInteractionType.test.cpp )
 
 add_cpp_test( format.endf.createTabulatedCrossSection     createTabulatedCrossSection.test.cpp )
 add_cpp_test( format.endf.createReaction                  createReaction.test.cpp )

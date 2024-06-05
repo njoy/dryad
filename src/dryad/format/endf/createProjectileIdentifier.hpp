@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create the projectile identifier
    */
-  ParticleID createParticleID( int sublibrary ) {
+  ParticleID createProjectileIdentifier( int sublibrary ) {
 
     switch ( sublibrary ) {
 
