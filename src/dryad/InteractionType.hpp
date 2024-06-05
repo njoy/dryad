@@ -8,10 +8,17 @@
 namespace njoy {
 namespace dryad {
 
+/**
+ *  @enum
+ *  @brief The interaction types
+ *
+ *  This enum is used to differentiate between how the projectile interacts with
+ *  the target. We currently distinguish nuclear and atomic interactions.
+ */
 enum class InteractionType : short {
 
-  Atomic = 1,
-  Nuclear = 2
+  Atomic = 1,  /**< The projectile-target interaction is atomic */
+  Nuclear = 2  /**< The projectile-target interaction is nuclear */
 };
 
 } // dryad namespace

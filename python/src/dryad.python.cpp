@@ -7,8 +7,11 @@
 // namespace aliases
 namespace python = pybind11;
 
-// declarations
+// declarations - enumerators
 void wrapInteractionType( python::module&, python::module& );
+void wrapReactionType( python::module&, python::module& );
+
+// declarations - components
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapReaction( python::module&, python::module& );
 void wrapProjectileTarget( python::module&, python::module& );
@@ -34,8 +37,11 @@ PYBIND11_MODULE( dryad, module ) {
     "sequence - dryad sequences (internal use only)"
   );
 
-  // wrap components
+  // wrap enumerators
   wrapInteractionType( module, viewmodule );
+  wrapReactionType( module, viewmodule );
+
+  // wrap components
   wrapTabulatedCrossSection( module, viewmodule );
   wrapReaction( module, viewmodule );
   wrapProjectileTarget( module, viewmodule );
