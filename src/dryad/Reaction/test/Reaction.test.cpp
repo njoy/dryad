@@ -13,23 +13,26 @@ using namespace njoy::dryad;
 
 void verifyChunk( const Reaction& );
 void verifyLinearisedChunk( const Reaction& );
+void verifySummationChunk( const Reaction& );
 
 SCENARIO( "Reaction" ) {
 
-  GIVEN( "valid data for a reaction" ) {
+  GIVEN( "valid data for a primary reaction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
       ReactionID id( "n,Fe56->n,Fe56_e1" );
-      double mass_q = 0;
-      double reaction_q = -1;
+      ReactionType type = ReactionType::Primary;
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
                                 { 1, 4 },
                                 { InterpolationType::LinearLinear,
                                   InterpolationType::LinearLog } );
+      double mass_q = 0;
+      double reaction_q = -1;
 
-      Reaction chunk( std::move( id ), mass_q, reaction_q, std::move( xs ) );
+      Reaction chunk( std::move( id ), std::move( type ), std::move( xs ), 
+                      mass_q, reaction_q );
 
       THEN( "a Reaction can be constructed and members can be tested" ) {
 
@@ -52,12 +55,51 @@ SCENARIO( "Reaction" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "valid data for a summation reaction" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      ReactionID id( "n,Fe56->total" );
+      ReactionType type = ReactionType::Summation;
+      TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
+                                { 4., 3., 4., 3., 2. },
+                                { 1, 4 },
+                                { InterpolationType::LinearLinear,
+                                  InterpolationType::LinearLog } );
+
+      Reaction chunk( std::move( id ), std::move( type ), std::move( xs ) );
+
+      THEN( "a Reaction can be constructed and members can be tested" ) {
+
+        verifySummationChunk( chunk );
+      } // THEN
+
+      THEN( "a Reaction can be linearised" ) {
+
+        Reaction linear = chunk.linearise();
+
+        verifyLinearisedChunk( linear );
+      } // THEN
+
+      THEN( "a Reaction can be linearised inplace" ) {
+
+        Reaction copy = chunk; // we'll do this test on a copy
+        verifySummationChunk( copy );
+        copy.lineariseInplace();
+        verifyLinearisedChunk( copy );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const Reaction& chunk ) {
 
   // reaction identifier
   CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
+
+  // reaction type
+  CHECK( ReactionType::Primary == chunk.type() );
 
   // q values
   CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue().value() ) );
@@ -91,9 +133,6 @@ void verifyChunk( const Reaction& chunk ) {
 }
 
 void verifyLinearisedChunk( const Reaction& chunk ) {
-
-  // reaction identifier
-  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
 
   // cross section
   CHECK( 12 == chunk.crossSection().numberPoints() );
@@ -134,4 +173,43 @@ void verifyLinearisedChunk( const Reaction& chunk ) {
 
   // metadata
   CHECK( true == chunk.isLinearised() );
+}
+
+void verifySummationChunk( const Reaction& chunk ) {
+
+  // reaction identifier
+  CHECK( ReactionID( "n,Fe56->total" ) == chunk.identifier() );
+
+  // reaction type
+  CHECK( ReactionType::Summation == chunk.type() );
+
+  // q values
+  CHECK( std::nullopt == chunk.massDifferenceQValue() );
+  CHECK( std::nullopt == chunk.reactionQValue() );
+
+  // cross section
+  CHECK( 5 == chunk.crossSection().numberPoints() );
+  CHECK( 2 == chunk.crossSection().numberRegions() );
+  CHECK( 5 == chunk.crossSection().energies().size() );
+  CHECK( 5 == chunk.crossSection().values().size() );
+  CHECK( 2 == chunk.crossSection().boundaries().size() );
+  CHECK( 2 == chunk.crossSection().interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.crossSection().energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.crossSection().energies()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.crossSection().energies()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.crossSection().energies()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.crossSection().energies()[4] ) );
+  CHECK_THAT( 4., WithinRel( chunk.crossSection().values()[0] ) );
+  CHECK_THAT( 3., WithinRel( chunk.crossSection().values()[1] ) );
+  CHECK_THAT( 4., WithinRel( chunk.crossSection().values()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.crossSection().values()[3] ) );
+  CHECK_THAT( 2., WithinRel( chunk.crossSection().values()[4] ) );
+  CHECK( 1 == chunk.crossSection().boundaries()[0] );
+  CHECK( 4 == chunk.crossSection().boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[0] );
+  CHECK( InterpolationType::LinearLog == chunk.crossSection().interpolants()[1] );
+  CHECK( false == chunk.crossSection().isLinearised() );
+
+  // metadata
+  CHECK( false == chunk.isLinearised() );
 }

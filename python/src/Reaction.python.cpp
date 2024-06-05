@@ -13,6 +13,7 @@ void wrapReaction( python::module& module, python::module& ) {
   // type aliases
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::ReactionID;
+  using ReactionType = njoy::dryad::ReactionType;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -30,22 +31,31 @@ void wrapReaction( python::module& module, python::module& ) {
   component
   .def(
 
-    python::init< ReactionID, double, double, TabulatedCrossSection >(),
-    python::arg( "id" ), python::arg( "mass_q" ),
-    python::arg( "reaction_q" ), python::arg( "xs" ),
+    python::init< ReactionID, ReactionType, TabulatedCrossSection, 
+                  std::optional< double >, std::optional< double > >(),
+    python::arg( "id" ), python::arg( "type" ), python::arg( "xs" ),
+    python::arg( "mass_q" ) = std::nullopt,
+    python::arg( "reaction_q" ) = std::nullopt,
     "Initialise the reaction\n\n"
     "Arguments:\n"
     "    self         the reaction\n"
     "    id           the reaction identifier\n"
-    "    mass_q       the mass difference Q value\n"
-    "    reaction_q   the reaction Q value\n"
-    "    xs           the cross section of the reaction"
+    "    type         the reaction type\n"
+    "    xs           the cross section of the reaction\n"
+    "    mass_q       the mass difference Q value (optional)\n"
+    "    reaction_q   the reaction Q value (optional)\n"
   )
   .def_property_readonly(
 
     "identifier",
     &Component::identifier,
     "The reaction identifier"
+  )
+  .def_property_readonly(
+
+    "type",
+    &Component::type,
+    "The reaction type"
   )
   .def_property_readonly(
 

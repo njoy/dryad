@@ -8,6 +8,7 @@ import sys
 from dryad import Reaction
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
+from dryad import ReactionType
 
 class Test_dryad_Reaction( unittest.TestCase ) :
     """Unit test for the Reaction class."""
@@ -18,6 +19,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
             # reaction identifier
             self.assertEqual( 'n,Fe56->n,Fe56_e1', chunk.identifier )
+
+            # reaction type
+            self.assertEqual( ReactionType.Primary, chunk.type )
 
             # q values
             self.assertAlmostEqual( 0, chunk.mass_difference_qvalue )
@@ -49,10 +53,45 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # metadata
             self.assertEqual( False, chunk.is_linearised )
 
-        def verify_linearised_chunk( self, chunk ) :
+        def verify_summation_chunk( self, chunk ) :
 
             # reaction identifier
-            self.assertEqual( 'n,Fe56->n,Fe56_e1', chunk.identifier )
+            self.assertEqual( 'n,Fe56->total', chunk.identifier )
+
+            # reaction type
+            self.assertEqual( ReactionType.Summation, chunk.type )
+
+            # q values
+            self.assertEqual( None, chunk.mass_difference_qvalue )
+            self.assertEqual( None, chunk.reaction_qvalue )
+
+            # cross section
+            self.assertEqual( 5, chunk.cross_section.number_points )
+            self.assertEqual( 2, chunk.cross_section.number_regions )
+            self.assertEqual( 5, len( chunk.cross_section.energies ) )
+            self.assertEqual( 5, len( chunk.cross_section.values ) )
+            self.assertEqual( 2, len( chunk.cross_section.boundaries ) )
+            self.assertEqual( 2, len( chunk.cross_section.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.cross_section.energies[0] )
+            self.assertAlmostEqual( 2., chunk.cross_section.energies[1] )
+            self.assertAlmostEqual( 2., chunk.cross_section.energies[2] )
+            self.assertAlmostEqual( 3., chunk.cross_section.energies[3] )
+            self.assertAlmostEqual( 4., chunk.cross_section.energies[4] )
+            self.assertAlmostEqual( 4., chunk.cross_section.values[0] )
+            self.assertAlmostEqual( 3., chunk.cross_section.values[1] )
+            self.assertAlmostEqual( 4., chunk.cross_section.values[2] )
+            self.assertAlmostEqual( 3., chunk.cross_section.values[3] )
+            self.assertAlmostEqual( 2., chunk.cross_section.values[4] )
+            self.assertEqual( 1, chunk.cross_section.boundaries[0] )
+            self.assertEqual( 4, chunk.cross_section.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.cross_section.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.cross_section.interpolants[1] )
+            self.assertEqual( False, chunk.cross_section.is_linearised )
+
+            # metadata
+            self.assertEqual( False, chunk.is_linearised )
+
+        def verify_linearised_chunk( self, chunk ) :
 
             # cross section
             self.assertEqual( 12, chunk.cross_section.number_points )
@@ -95,7 +134,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( True, chunk.is_linearised )
 
         # the data is given explicitly
-        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1', mass_q = 0, reaction_q = -1,
+        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1', type = ReactionType.Primary, 
+                          mass_q = 0, reaction_q = -1,
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
                                                        [ 1, 4 ],
@@ -103,6 +143,40 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                                          InterpolationType.LinearLog ] ) )
 
         verify_chunk( self, chunk )
+
+        # it can be linearised
+        linear = chunk.linearise()
+
+        verify_linearised_chunk( self, linear )
+
+        # it can be linearised
+        copy = chunk
+        verify_chunk( self, copy )
+        copy.linearise_inplace()
+
+        verify_linearised_chunk( self, copy )
+
+        # the data is given explicitly for a summation reaction
+        chunk = Reaction( id = 'n,Fe56->total', type = ReactionType.Summation,
+                          xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
+                                                       [ 4., 3., 4., 3., 2. ],
+                                                       [ 1, 4 ],
+                                                       [ InterpolationType.LinearLinear,
+                                                         InterpolationType.LinearLog ] ) )
+
+        verify_summation_chunk( self, chunk )
+
+        # it can be linearised
+        linear = chunk.linearise()
+
+        verify_linearised_chunk( self, linear )
+
+        # it can be linearised
+        copy = chunk
+        verify_summation_chunk( self, copy )
+        copy.linearise_inplace()
+
+        verify_linearised_chunk( self, copy )
 
 if __name__ == '__main__' :
 

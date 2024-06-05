@@ -66,6 +66,7 @@ SCENARIO( "projectileTarget" ) {
 void verifyTotalReaction( const Reaction& total ) {
 
   CHECK( ReactionID( "1" ) == total.identifier() );
+  CHECK( ReactionType::Primary == total.type() );
   CHECK( false == total.isLinearised() );
   CHECK_THAT( 0, WithinRel( total.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( total.reactionQValue().value() ) );
@@ -91,6 +92,7 @@ void verifyTotalReaction( const Reaction& total ) {
 void verifyElasticReaction( const Reaction& elastic ) {
 
   CHECK( ReactionID( "2" ) == elastic.identifier() );
+  CHECK( ReactionType::Primary == elastic.type() );
   CHECK( true == elastic.isLinearised() );
   CHECK_THAT( 0, WithinRel( elastic.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( elastic.reactionQValue().value() ) );
@@ -112,7 +114,7 @@ void verifyElasticReaction( const Reaction& elastic ) {
 void verifyCaptureReaction( const Reaction& capture ) {
 
   CHECK( ReactionID( "102" ) == capture.identifier() );
-  CHECK( false == capture.isLinearised() );
+  CHECK( ReactionType::Primary == capture.type() );
   CHECK_THAT( 2.224648e+6, WithinRel( capture.massDifferenceQValue().value() ) );
   CHECK_THAT( 2.224648e+6, WithinRel( capture.reactionQValue().value() ) );
   CHECK( false == capture.crossSection().isLinearised() );

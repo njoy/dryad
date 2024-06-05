@@ -9,6 +9,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/ReactionID.hpp"
+#include "dryad/ReactionType.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
@@ -22,6 +23,8 @@ namespace dryad {
 
     /* fields */
     ReactionID id_;
+
+    ReactionType type_;
 
     std::optional< double > mass_difference_qvalue_;
     std::optional< double > reaction_qvalue_;
@@ -42,6 +45,14 @@ namespace dryad {
     const ReactionID& identifier() const noexcept {
 
       return this->id_;
+    }
+
+    /**
+     *  @brief Return the reaction type
+     */
+    const ReactionType& type() const noexcept {
+
+      return this->type_;
     }
 
     /**
@@ -90,8 +101,8 @@ namespace dryad {
 
       TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
 
-      return Reaction( this->identifier(), this->massDifferenceQValue(),
-                       this->reactionQValue(), std::move( xs ) );
+      return Reaction( this->identifier(), this->type(), std::move( xs ), 
+                       this->massDifferenceQValue(), this->reactionQValue() );
     }
 
     /**

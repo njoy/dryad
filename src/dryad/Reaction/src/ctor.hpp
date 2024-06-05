@@ -2,16 +2,18 @@
  *  @brief Constructor
  *
  *  @param id           the reaction identifier
+ *  @param type         the reaction type
+ *  @param xs           the cross section of the reaction
  *  @param mass_q       the mass difference Q value
  *  @param reaction_q   the reaction Q value
- *  @param xs           the cross section of the reaction
  *  @param linearised   a flag indicating whether or not the data is
  *                      linearised
  */
-Reaction( ReactionID&& id, std::optional< double >&& mass_q, 
-          std::optional< double >&& reaction_q,
-          TabulatedCrossSection&& xs, bool linearised ) :
-    id_( std::move( id ) ), mass_difference_qvalue_( mass_q ),
+Reaction( ReactionID&& id, ReactionType&& type,
+          TabulatedCrossSection&& xs, std::optional< double >&& mass_q, 
+          std::optional< double >&& reaction_q, bool linearised ) :
+    id_( std::move( id ) ), type_( std::move( type ) ), 
+    mass_difference_qvalue_( mass_q ),
     reaction_qvalue_( reaction_q ), xs_( std::move( xs ) ),
     linearised_( linearised ) {}
 
@@ -31,11 +33,14 @@ Reaction& operator=( Reaction&& ) = default;
  *  @param reaction_q   the reaction Q value
  *  @param xs           the cross section of the reaction
  */
-Reaction( ReactionID id, std::optional< double > mass_q, 
-          std::optional< double > reaction_q,
-          TabulatedCrossSection xs ) :
+Reaction( ReactionID id,
+          ReactionType type,
+          TabulatedCrossSection xs, 
+          std::optional< double > mass_q = std::nullopt, 
+          std::optional< double > reaction_q = std::nullopt ) :
     Reaction( std::move( id ),
+              std::move( type ),
+              std::move( xs ),
               std::move( mass_q ),
               std::move( reaction_q ),
-              std::move( xs ),
               xs.isLinearised() ? true : false ) {}

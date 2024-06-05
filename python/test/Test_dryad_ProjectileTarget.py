@@ -10,6 +10,7 @@ from dryad import Reaction
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import InteractionType
+from dryad import ReactionType
 
 class Test_dryad_Reaction( unittest.TestCase ) :
     """Unit test for the Reaction class."""
@@ -33,6 +34,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # reactions
             reaction = chunk.reactions[0]
             self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
+            self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( 0, reaction.reaction_qvalue )
             self.assertEqual( 2, reaction.cross_section.number_points )
@@ -50,6 +52,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( False, reaction.cross_section.is_linearised )
             reaction = chunk.reactions[1]
             self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
+            self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( -1, reaction.reaction_qvalue )
             self.assertEqual( 2, reaction.cross_section.number_points )
@@ -69,6 +72,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # reaction
             reaction = chunk.reaction( "n,Fe56->n,Fe56" )
             self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
+            self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( 0, reaction.reaction_qvalue )
             self.assertEqual( 2, reaction.cross_section.number_points )
@@ -86,6 +90,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( False, reaction.cross_section.is_linearised )
             reaction = chunk.reaction( "n,Fe56->n,Fe56_e1" )
             self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
+            self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( -1, reaction.reaction_qvalue )
             self.assertEqual( 2, reaction.cross_section.number_points )
@@ -117,6 +122,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # reactions
             reaction = chunk.reactions[0]
             self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
+            self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( 0, reaction.reaction_qvalue )
             self.assertEqual( 65, reaction.cross_section.number_points )
@@ -138,6 +144,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( True, reaction.cross_section.is_linearised )
             reaction = chunk.reactions[1]
             self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
+            self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( -1, reaction.reaction_qvalue )
             self.assertEqual( 2, reaction.cross_section.number_points )
@@ -160,12 +167,14 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         # the data is given explicitly
         chunk = ProjectileTarget(
                     projectile = "n", target = "Fe56", type = InteractionType.Nuclear,
-                    reactions = [ Reaction( "n,Fe56->n,Fe56", 0, 0,
+                    reactions = [ Reaction( "n,Fe56->n,Fe56", ReactionType.Primary,
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
-                                                                   InterpolationType.LogLinear ) ),
-                                  Reaction( "n,Fe56->n,Fe56_e1", 0, -1,
+                                                                   InterpolationType.LogLinear ), 
+                                            0, 0 ),
+                                  Reaction( "n,Fe56->n,Fe56_e1", ReactionType.Primary,
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
-                                                                   InterpolationType.LinearLinear ) ) ] )
+                                                                   InterpolationType.LinearLinear ), 
+                                  0, -1 ) ] )
 
         verify_chunk( self, chunk )
 

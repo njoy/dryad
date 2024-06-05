@@ -26,11 +26,13 @@ namespace endf {
       auto section = material.section( 3, mt ).parse< 3 >();
 
       ReactionID id = std::to_string( mt );
+      ReactionType type = ReactionType::Primary;
       double mass_q = section.massDifferenceQValue();
       double reaction_q = section.reactionQValue();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
-      return Reaction( std::move( id ), mass_q, reaction_q, std::move( xs ) );
+      return Reaction( std::move( id ), std::move( type ), std::move( xs ), 
+                       std::move( mass_q ), std::move( reaction_q ) );
     }
     else {
 
