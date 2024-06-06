@@ -2,6 +2,7 @@ add_cpp_test( format.endf.createBoundaries           createBoundaries.test.cpp )
 add_cpp_test( format.endf.createInterpolant          createInterpolant.test.cpp )
 add_cpp_test( format.endf.createInterpolants         createInterpolants.test.cpp )
 add_cpp_test( format.endf.createProjectileIdentifier createProjectileIdentifier.test.cpp )
+add_cpp_test( format.endf.createTargetIdentifier     createTargetIdentifier.test.cpp )
 add_cpp_test( format.endf.createInteractionType      createInteractionType.test.cpp )
 
 add_cpp_test( format.endf.createTabulatedCrossSection     createTabulatedCrossSection.test.cpp )

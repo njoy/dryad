@@ -95,8 +95,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
   .def(
 
     "linearise",
-    [] ( const Component& self, const ToleranceConvergence& tolerance )
-       { return self.linearise( tolerance ); },
+    &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the data and return a new object\n\n"
     "Arguments:\n"
@@ -106,8 +105,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
   .def(
 
     "linearise_inplace",
-    [] ( Component& self, const ToleranceConvergence& tolerance )
-       { return self.lineariseInplace( tolerance ); },
+    &Component::lineariseInplace,
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the data inplace\n\n"
     "Arguments:\n"

@@ -93,8 +93,7 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
   .def(
 
     "linearise",
-    [] ( const Component& self, const ToleranceConvergence& tolerance )
-       { return self.linearise( tolerance ); },
+    &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the cross section\n\n"
     "Arguments:\n"
@@ -118,21 +117,21 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
   .def_property_readonly(
 
     "number_points",
-    [] ( const Component& self )
+    [] ( const Component& self ) -> decltype(auto)
        { return self.numberPoints(); },
     "The number of points in the table"
   )
   .def_property_readonly(
 
     "number_regions",
-    [] ( const Component& self )
+    [] ( const Component& self ) -> decltype(auto)
        { return self.numberRegions(); },
     "The number of interpolation regions in the table"
   )
   .def_property_readonly(
 
     "is_linearised",
-    [] ( const Component& self )
+    [] ( const Component& self ) -> decltype(auto)
        { return self.isLinearised(); },
     "Flag indicating whether or not the data is linearised"
   );

@@ -71,7 +71,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction Q value
      */
-    std::optional< double > reactionQValue() const noexcept {
+    const std::optional< double >& reactionQValue() const noexcept {
 
       return this->reaction_qvalue_;
     }
@@ -101,7 +101,7 @@ namespace dryad {
 
       TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
 
-      return Reaction( this->identifier(), this->type(), std::move( xs ), 
+      return Reaction( this->identifier(), this->type(), std::move( xs ),
                        this->massDifferenceQValue(), this->reactionQValue() );
     }
 

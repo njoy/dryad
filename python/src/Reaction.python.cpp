@@ -31,7 +31,7 @@ void wrapReaction( python::module& module, python::module& ) {
   component
   .def(
 
-    python::init< ReactionID, ReactionType, TabulatedCrossSection, 
+    python::init< ReactionID, ReactionType, TabulatedCrossSection,
                   std::optional< double >, std::optional< double > >(),
     python::arg( "id" ), python::arg( "type" ), python::arg( "xs" ),
     python::arg( "mass_q" ) = std::nullopt,
@@ -84,8 +84,7 @@ void wrapReaction( python::module& module, python::module& ) {
   .def(
 
     "linearise",
-    [] ( const Component& self, const ToleranceConvergence& tolerance )
-       { return self.linearise( tolerance ); },
+    &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the reaction data and return a new reaction\n\n"
     "Arguments:\n"
@@ -95,8 +94,7 @@ void wrapReaction( python::module& module, python::module& ) {
   .def(
 
     "linearise_inplace",
-    [] ( Component& self, const ToleranceConvergence& tolerance )
-       { return self.lineariseInplace( tolerance ); },
+    &Component::lineariseInplace,
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the reaction data inplace\n\n"
     "Arguments:\n"

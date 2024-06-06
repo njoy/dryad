@@ -8,6 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/endf/createProjectileIdentifier.hpp"
+#include "dryad/format/endf/createTargetIdentifier.hpp"
 #include "dryad/format/endf/createInteractionType.hpp"
 #include "dryad/format/endf/createReactions.hpp"
 #include "dryad/ProjectileTarget.hpp"
@@ -27,9 +28,7 @@ namespace endf {
     auto mf1mt451 = material.section( 1, 451 ).parse< 1, 451 >();
 
     ParticleID projectile = createProjectileIdentifier( mf1mt451.subLibrary() );
-    ParticleID target = std::to_string( static_cast< int >( mf1mt451.ZA() ) )
-                      + "_e" + std::to_string( mf1mt451.excitedLevel() );
-
+    ParticleID target = createTargetIdentifier( mf1mt451.ZA(), mf1mt451.excitedLevel() );
     InteractionType type = createInteractionType( mf1mt451.subLibrary() );
 
     std::vector< Reaction > reactions = createReactions( material );
