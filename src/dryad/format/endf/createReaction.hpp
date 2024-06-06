@@ -39,9 +39,26 @@ namespace endf {
       return Reaction( std::move( id ), std::move( type ), std::move( xs ),
                        std::move( mass_q ), std::move( reaction_q ) );
     }
+    else if ( material.hasSection( 23, mt ) ) {
+
+      auto section = material.section( 23, mt ).parse< 23 >();
+
+      ReactionID id = std::to_string( mt );
+      ReactionType type = ReactionType::Primary;
+      std::optional< double > mass_q = std::nullopt;
+      std::optional< double > reaction_q = std::nullopt;
+      if ( type == ReactionType::Primary ) {
+
+        reaction_q = -section.subshellBindingEnergy();
+      }
+      TabulatedCrossSection xs = createTabulatedCrossSection( section );
+
+      return Reaction( std::move( id ), std::move( type ), std::move( xs ),
+                       std::move( mass_q ), std::move( reaction_q ) );
+    }
     else {
 
-      Log::error( "ENDF material does not have reaction data for MT{}", mt );
+      Log::error( "The material does not have reaction data for MT{}", mt );
       throw std::exception();
     }
   }

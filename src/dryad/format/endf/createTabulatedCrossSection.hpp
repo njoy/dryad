@@ -41,14 +41,14 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "MF3 MT{} - Error encountered while creating a tabulated "
-                 "cross section", section.sectionNumber() );
+      Log::info( "Error encountered while creating a tabulated "
+                 "cross section for MT{}", section.sectionNumber() );
       throw;
     }
   }
 
   /**
-   *  @brief Create a TabulatedCrossSection from an unparsed ENDF MF3 section
+   *  @brief Create a TabulatedCrossSection from an unparsed ENDF section
    */
   TabulatedCrossSection
   createTabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
@@ -59,7 +59,7 @@ namespace endf {
       case 23 : return createTabulatedCrossSection( tree.parse< 23 >() );
       default : {
 
-        Log::error( "ENDF MAT{} MF{} MT{} - the section does not contain a "
+        Log::error( "The MAT{} MF{} MT{} section does not define a "
                     "tabulated cross section", tree.materialNumber(),
                     tree.fileNumber(), tree.sectionNumber() );
         throw std::exception();

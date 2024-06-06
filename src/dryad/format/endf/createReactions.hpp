@@ -18,15 +18,23 @@ namespace endf {
 
   /**
    *  @brief Create every Reaction from an unparsed ENDF material
+   *
+   *  This function will produce reaction instances for each MT number defined in
+   *  MF3 or MF23 (if MF3 is not present in the file). If neither MF3 or MF23 are
+   *  present, the function will return an empty vector.
    */
   std::vector< Reaction >
   createReactions( const ENDFtk::tree::Material& material ) {
 
     std::vector< Reaction > reactions;
-    reactions.reserve( material.file( 3 ).sectionNumbers().size() );
-    for ( auto mt : material.file( 3 ).sectionNumbers() ) {
+    if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
 
-      reactions.emplace_back( createReaction( material, mt ) );
+      int source = material.hasFile( 3 ) ? 3 : 23;
+      reactions.reserve( material.file( source ).sectionNumbers().size() );
+      for ( auto mt : material.file( source ).sectionNumbers() ) {
+
+        reactions.emplace_back( createReaction( material, mt ) );
+      }
     }
     return reactions;
   }
