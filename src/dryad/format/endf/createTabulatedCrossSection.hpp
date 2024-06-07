@@ -6,6 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/format/createVector.hpp"
+#include "dryad/format/curateTabulatedData.hpp"
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
@@ -29,15 +31,18 @@ namespace endf {
 
     try {
 
-      auto energies = section.energies();
-      auto values = section.crossSections();
-      auto interpolants = section.interpolants();
-      auto boundaries = section.boundaries();
+      auto energies = createVector< double >( section.energies() );
+      auto values = createVector< double >( section.crossSections() );
+      auto boundaries = createBoundaries( section.boundaries() );
+      auto interpolants = createInterpolants( section.interpolants() );
+      if ( curateTabulatedData( energies, values, boundaries, interpolants ) ) {
+
+        Log::info( "Corrected issues encountered while creating a tabulated cross section for MT{}",
+                   section.sectionNumber() );
+      }
       return TabulatedCrossSection(
-               std::vector< double >( energies.begin(), energies.end() ),
-               std::vector< double >( values.begin(), values.end() ),
-               createBoundaries( boundaries ),
-               createInterpolants( interpolants ) );
+               std::move( energies ), std::move( values ),
+               std::move( boundaries ), std::move( interpolants ) );
     }
     catch ( ... ) {
 
