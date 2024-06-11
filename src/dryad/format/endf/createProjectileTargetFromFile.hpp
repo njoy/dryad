@@ -24,17 +24,10 @@ namespace endf {
    */
   ProjectileTarget createProjectileTargetFromFile( const std::string& filename ) {
 
-    try {
+    Log::info( "Reading ENDF file \'{}\'", filename );
 
-      std::vector< ProjectileTarget > targets;
-      auto tape = ENDFtk::tree::fromFile( filename );
-      return createProjectileTarget( tape.materials().front() );
-    }
-    catch ( ... ) {
-
-      Log::info( "Error countered while processing ENDF file \'{}\'", filename );
-      throw;
-    }
+    auto tape = ENDFtk::tree::fromFile( filename );
+    return createProjectileTarget( tape.materials().front() );
   }
 
 } // endf namespace

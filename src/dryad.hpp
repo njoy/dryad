@@ -5,6 +5,9 @@
 #include "dryad/ParticleID.hpp"
 #include "dryad/ReactionID.hpp"
 
+// components - resonances
+#include "dryad/resonances.hpp"
+
 // components
 #include "dryad/TabulatedCrossSection.hpp"
 #include "dryad/Reaction.hpp"

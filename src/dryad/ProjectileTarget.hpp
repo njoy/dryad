@@ -9,6 +9,7 @@
 #include "dryad/InteractionType.hpp"
 #include "dryad/ParticleID.hpp"
 #include "dryad/Reaction.hpp"
+#include "dryad/resonances/ResonanceParameters.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -25,6 +26,7 @@ namespace dryad {
 
     InteractionType interaction_;
 
+    std::optional< resonances::ResonanceParameters > resonances_;
     std::vector< Reaction > reactions_;
 
     bool linearised_;
@@ -58,6 +60,14 @@ namespace dryad {
     const InteractionType& interactionType() const noexcept {
 
       return this->interaction_;
+    }
+
+    /**
+     *  @brief Return the resonance parameter data
+     */
+    const std::optional< resonances::ResonanceParameters >& resonances() const noexcept {
+
+      return this->resonances_;
     }
 
     /**

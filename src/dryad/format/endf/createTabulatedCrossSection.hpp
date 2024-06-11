@@ -31,15 +31,12 @@ namespace endf {
 
     try {
 
+      Log::info( "Reading cross section data" );
       auto energies = createVector< double >( section.energies() );
       auto values = createVector< double >( section.crossSections() );
       auto boundaries = createBoundaries( section.boundaries() );
       auto interpolants = createInterpolants( section.interpolants() );
-      if ( curateTabulatedData( energies, values, boundaries, interpolants ) ) {
-
-        Log::info( "Corrected issues encountered while creating a tabulated cross section for MT{}",
-                   section.sectionNumber() );
-      }
+      curateTabulatedData( energies, values, boundaries, interpolants );
       return TabulatedCrossSection(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );

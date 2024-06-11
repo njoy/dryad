@@ -33,6 +33,7 @@ namespace endf {
       reactions.reserve( material.file( source ).sectionNumbers().size() );
       for ( auto mt : material.file( source ).sectionNumbers() ) {
 
+        Log::info( "Reading data for MT{}", mt );
         reactions.emplace_back( createReaction( material, mt ) );
       }
     }
