@@ -64,6 +64,12 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "resonances",
+    &Component::resonances,
+    "The resonance parameters"
+  )
+  .def_property_readonly(
+
     "reactions",
     &Component::reactions,
     "The reactions"

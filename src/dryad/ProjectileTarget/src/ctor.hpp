@@ -9,11 +9,13 @@
  */
 ProjectileTarget( ParticleID&& projectile, ParticleID&& target,
                   InteractionType type,
+                  std::optional< resonances::ResonanceParameters > resonances,
                   std::vector< Reaction >&& reactions,
                   bool linearised ) :
     projectile_id_( std::move( projectile ) ),
     target_id_( std::move( target ) ),
     interaction_( type ),
+    resonances_( std::move( resonances ) ),
     reactions_( std::move( reactions ) ),
     linearised_( linearised ) {}
 
@@ -38,6 +40,7 @@ ProjectileTarget( ParticleID projectile, ParticleID target,
     ProjectileTarget( std::move( projectile ),
                       std::move( target ),
                       type,
+                      std::nullopt,
                       std::move( reactions ),
                       std::all_of( reactions.begin(), reactions.end(),
                                    [] ( auto&& reaction )

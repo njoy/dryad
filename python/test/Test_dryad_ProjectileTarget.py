@@ -26,6 +26,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # interaction type
             self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
+            # resonance parameters are not present
+            self.assertEqual( None, chunk.resonances )
+
             # reactions are present
             self.assertEqual( True, chunk.has_reaction( "n,Fe56->n,Fe56" ) )
             self.assertEqual( True, chunk.has_reaction( "n,Fe56->n,Fe56_e1" ) )
@@ -119,6 +122,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # interaction type
             self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
+            # resonance parameters are not present
+            self.assertEqual( None, chunk.resonances )
+
             # reactions
             reaction = chunk.reactions[0]
             self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
@@ -169,11 +175,11 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                     projectile = "n", target = "Fe56", type = InteractionType.Nuclear,
                     reactions = [ Reaction( "n,Fe56->n,Fe56", ReactionType.Primary,
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
-                                                                   InterpolationType.LogLinear ), 
+                                                                   InterpolationType.LogLinear ),
                                             0, 0 ),
                                   Reaction( "n,Fe56->n,Fe56_e1", ReactionType.Primary,
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
-                                                                   InterpolationType.LinearLinear ), 
+                                                                   InterpolationType.LinearLinear ),
                                   0, -1 ) ] )
 
         verify_chunk( self, chunk )

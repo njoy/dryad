@@ -33,7 +33,7 @@ SCENARIO( "ProjectileTarget" ) {
                   0, 0 ),
         Reaction( ReactionID( "n,Fe56->n,Fe56_e1" ), ReactionType::Primary,
                   TabulatedCrossSection( { 1., 20. }, { 0., 100. },
-                                           InterpolationType::LinearLinear ), 
+                                           InterpolationType::LinearLinear ),
                   0, -1 )
       };
 
@@ -71,6 +71,9 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 
   // interaction type
   CHECK( InteractionType::Nuclear == chunk.interactionType() );
+
+  // resonances are not present
+  CHECK( std::nullopt == chunk.resonances() );
 
   // reactions are present
   CHECK( true == chunk.hasReaction( ReactionID( "n,Fe56->n,Fe56" ) ) );
@@ -160,6 +163,9 @@ void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
   // identifiers
   CHECK( ParticleID( "n" ) == chunk.projectileIdentifier() );
   CHECK( ParticleID( "Fe56" ) == chunk.targetIdentifier() );
+
+  // resonances are not present
+  CHECK( std::nullopt == chunk.resonances() );
 
   // reactions
   auto reaction = chunk.reactions()[0];
