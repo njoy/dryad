@@ -63,6 +63,529 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK_THAT( 1.5, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
+      THEN( "arithmetic operations can be performed" ) {
+
+        TabulatedCrossSection result( { 1., 4. }, { 0., 0. } );
+        TabulatedCrossSection same( { 1., 4. }, { 0., 3. } );
+        TabulatedCrossSection threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedCrossSection nonzerothreshold( { 2., 4. }, { 1., 3. } );
+        TabulatedCrossSection small( { 1., 3. }, { 0., 2. } );
+
+        chunk += 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk -= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk *= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk /= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = -chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk + 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = 2. + chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk - 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT(  2., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = 2. - chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0., WithinRel( result.values()[2] ) );
+        CHECK_THAT(  1., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk * 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = 2. * chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk / 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 1.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 0.5, WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        chunk += same;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk -= same;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2.0, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1.0, WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = chunk + same;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk - same;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        chunk += threshold;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 3.0, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3.0, WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk -= threshold;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2.0, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1.0, WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = chunk + threshold;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3.0, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 3.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3.0, WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk - threshold;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  3., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        chunk += nonzerothreshold;
+
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= nonzerothreshold;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2.0, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1.0, WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = chunk + nonzerothreshold;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - nonzerothreshold;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  3., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  2., WithinRel( result.values()[2] ) );
+        CHECK_THAT(  0., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        // this will add a second point at the lower end point
+        result = chunk + small;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1.0, WithinRel( result.values()[4] ) );
+        CHECK( 2 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        // this will add a second point at the lower end point
+        result = chunk - small;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 0.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1.0, WithinRel( result.values()[4] ) );
+        CHECK( 2 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+      } // THEN
+
       THEN( "a TabulatedCrossSection can be linearised" ) {
 
         TabulatedCrossSection linear = chunk.linearise();
@@ -148,6 +671,583 @@ SCENARIO( "TabulatedCrossSection" ) {
         CHECK_THAT( 3.5, WithinRel( chunk( 1.5 ) ) );
         CHECK_THAT( 3.5, WithinRel( chunk( 2.5 ) ) );
         CHECK_THAT( 2.5, WithinRel( chunk( 3.5 ) ) );
+      } // THEN
+
+      THEN( "arithmetic operations can be performed" ) {
+
+        TabulatedCrossSection result( { 1., 4. }, { 0., 0. } );
+        TabulatedCrossSection same( { 1., 4. }, { 0., 3. } );
+        TabulatedCrossSection threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedCrossSection nonzerothreshold( { 3., 4. }, { 1., 2. } );
+        TabulatedCrossSection small( { 1., 3. }, { 0., 2. } );
+
+        chunk += 2.;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= 2.;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk *= 2.;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk /= 2.;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = -chunk;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk + 2.;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = 2. + chunk;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - 2.;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 0., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = 2. - chunk;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK_THAT(  0., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk * 2.;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = 2. * chunk;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk / 2.;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        chunk += same;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 5., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= same;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = chunk + same;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - same;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.values()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.values()[2] ) );
+        CHECK_THAT(  1., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        chunk += threshold;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        chunk -= threshold;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = chunk + threshold;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        result = chunk - threshold;
+
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 0., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+
+        chunk += nonzerothreshold;
+
+        CHECK( 6 == chunk.energies().size() );
+        CHECK( 6 == chunk.values().size() );
+        CHECK( 3 == chunk.boundaries().size() );
+        CHECK( 3 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[5] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[5] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( 5 == chunk.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[2] );
+
+        chunk -= nonzerothreshold;
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+
+        result = chunk + nonzerothreshold;
+
+        CHECK( 6 == result.energies().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+
+        result = chunk - nonzerothreshold;
+
+        CHECK( 6 == result.energies().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 0., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+
+        // this will add a second point at the lower end point
+        result = chunk + small;
+
+        CHECK( 6 == result.energies().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 5., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
+
+        // this will add a second point at the lower end point
+        result = chunk - small;
+
+        CHECK( 6 == result.energies().size() );
+        CHECK( 6 == result.values().size() );
+        CHECK( 3 == result.boundaries().size() );
+        CHECK( 3 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[5] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 3., WithinRel( result.values()[4] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[5] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( 5 == result.boundaries()[2] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
       } // THEN
 
       THEN( "a TabulatedCrossSection can be linearised" ) {
@@ -246,6 +1346,32 @@ SCENARIO( "TabulatedCrossSection" ) {
         // values of x inside the x grid (lin-log piece)
         CHECK_THAT( 2.44966028678679, WithinRel( chunk( 2.5 ) ) );
         CHECK_THAT( 1.46416306545103, WithinRel( chunk( 3.5 ) ) );
+      } // THEN
+
+      THEN( "arithmetic operations cannot be performed" ) {
+
+        TabulatedCrossSection result( { 1., 4. }, { 0., 0. } );
+        TabulatedCrossSection right( { 1., 4. }, { 0., 0. } );
+
+        // scalar operations
+        CHECK_THROWS( chunk += 2. );
+        CHECK_THROWS( chunk -= 2. );
+        CHECK_THROWS( chunk *= 2. );
+        CHECK_THROWS( chunk /= 2. );
+        CHECK_THROWS( result = -chunk );
+        CHECK_THROWS( result = chunk + 2. );
+        CHECK_THROWS( result = chunk - 2. );
+        CHECK_THROWS( result = chunk * 2. );
+        CHECK_THROWS( result = chunk / 2. );
+        CHECK_THROWS( result = 2. + chunk );
+        CHECK_THROWS( result = 2. - chunk );
+        CHECK_THROWS( result = 2. * chunk );
+
+        // table operations
+        CHECK_THROWS( chunk += right );
+        CHECK_THROWS( chunk -= right );
+        CHECK_THROWS( result = chunk + right );
+        CHECK_THROWS( result = chunk - right );
       } // THEN
 
       THEN( "a TabulatedCrossSection can be linearised" ) {
@@ -368,6 +1494,32 @@ SCENARIO( "TabulatedCrossSection" ) {
         // values of x inside the x grid (lin-log piece)
         CHECK_THAT( 3.44966028678679, WithinRel( chunk( 2.5 ) ) );
         CHECK_THAT( 2.46416306545103, WithinRel( chunk( 3.5 ) ) );
+      } // THEN
+
+      THEN( "arithmetic operations cannot be performed" ) {
+
+        TabulatedCrossSection result( { 1., 4. }, { 0., 0. } );
+        TabulatedCrossSection right( { 1., 4. }, { 0., 0. } );
+
+        // scalar operations
+        CHECK_THROWS( chunk += 2. );
+        CHECK_THROWS( chunk -= 2. );
+        CHECK_THROWS( chunk *= 2. );
+        CHECK_THROWS( chunk /= 2. );
+        CHECK_THROWS( result = -chunk );
+        CHECK_THROWS( result = chunk + 2. );
+        CHECK_THROWS( result = chunk - 2. );
+        CHECK_THROWS( result = chunk * 2. );
+        CHECK_THROWS( result = chunk / 2. );
+        CHECK_THROWS( result = 2. + chunk );
+        CHECK_THROWS( result = 2. - chunk );
+        CHECK_THROWS( result = 2. * chunk );
+
+        // table operations
+        CHECK_THROWS( chunk += right );
+        CHECK_THROWS( chunk -= right );
+        CHECK_THROWS( result = chunk + right );
+        CHECK_THROWS( result = chunk - right );
       } // THEN
 
       THEN( "a TabulatedCrossSection can be linearised" ) {

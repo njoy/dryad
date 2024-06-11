@@ -1,6 +1,7 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/operators.h>
 
 // local includes
 #include "dryad/TabulatedCrossSection.hpp"
@@ -134,5 +135,21 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.isLinearised(); },
     "Flag indicating whether or not the data is linearised"
-  );
+  )
+  .def( -python::self )
+  .def( python::self + double() )
+  .def( python::self - double() )
+  .def( python::self * double() )
+  .def( python::self / double() )
+  .def( python::self + python::self )
+  .def( python::self - python::self )
+  .def( python::self += double() )
+  .def( python::self -= double() )
+  .def( python::self *= double() )
+  .def( python::self /= double() )
+  .def( python::self += python::self )
+  .def( python::self -= python::self )
+  .def( double() + python::self )
+  .def( double() - python::self )
+  .def( double() * python::self );
 }

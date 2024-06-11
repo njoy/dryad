@@ -75,17 +75,175 @@ namespace dryad {
       return TabulatedCrossSection( InterpolationTable::linearise( tolerance ) );
     }
 
-    //! @todo add arithmetic
-    // using InterpolationTable::operator+=;
-    // using InterpolationTable::operator-=;
-    // using InterpolationTable::operator*=;
-    // using InterpolationTable::operator/=;
-    //
-    // using InterpolationTable::operator+;
-    // using InterpolationTable::operator-;
-    // using InterpolationTable::operator*;
-    // using InterpolationTable::operator/;
+    /**
+     *  @brief Inplace scalar addition
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection& operator+=( double right ) {
+
+      InterpolationTable::operator+=( right );
+      return *this;
+    }
+
+    /**
+     *  @brief Inplace scalar subtraction
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection& operator-=( double right ) {
+
+      InterpolationTable::operator-=( right );
+      return *this;
+    }
+
+    /**
+     *  @brief Inplace scalar multiplication
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection& operator*=( double right ) {
+
+      InterpolationTable::operator*=( right );
+      return *this;
+    }
+
+    /**
+     *  @brief Inplace scalar division
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection& operator/=( double right ) {
+
+      InterpolationTable::operator/=( right );
+      return *this;
+    }
+
+    /**
+     *  @brief TabulatedCrossSection and scalar addition
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection operator+( double right ) const {
+
+      return InterpolationTable::operator+( right );
+    }
+
+    /**
+     *  @brief TabulatedCrossSection and scalar subtraction
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection operator-( double right ) const {
+
+      return InterpolationTable::operator-( right );
+    }
+
+    /**
+     *  @brief TabulatedCrossSection and scalar multiplication
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection operator*( double right ) const {
+
+      return InterpolationTable::operator*( right );
+    }
+
+    /**
+     *  @brief TabulatedCrossSection and scalar division
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedCrossSection operator/( double right ) const {
+
+      return InterpolationTable::operator/( right );
+    }
+
+    /**
+     *  @brief Unary minus
+     */
+    TabulatedCrossSection operator-() const {
+
+      return InterpolationTable::operator-();
+    }
+
+    /**
+     *  @brief Inplace TabulatedCrossSection addition
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedCrossSection& operator+=( const TabulatedCrossSection& right ) {
+
+      InterpolationTable::operator+=( right );
+      return *this;
+    }
+
+    /**
+     *  @brief Inplace TabulatedCrossSection subtraction
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedCrossSection& operator-=( const TabulatedCrossSection& right ) {
+
+      InterpolationTable::operator-=( right );
+      return *this;
+    }
+
+    /**
+     *  @brief TabulatedCrossSection and TabulatedCrossSection addition
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedCrossSection operator+( const TabulatedCrossSection& right ) const {
+
+      return InterpolationTable::operator+( right );
+    }
+
+    /**
+     *  @brief TabulatedCrossSection and TabulatedCrossSection subtraction
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedCrossSection operator-( const TabulatedCrossSection& right ) const {
+
+      return InterpolationTable::operator-( right );
+    }
   };
+
+  /**
+   *  @brief Scalar and TabulatedCrossSection addition
+   *
+   *  @param[in] left    the scalar
+   *  @param[in] right   the table
+   */
+  inline TabulatedCrossSection operator+( double left, const TabulatedCrossSection& right ) {
+
+    return right + left;
+  }
+
+  /**
+   *  @brief Scalar and TabulatedCrossSection subtraction
+   *
+   *  @param[in] left    the scalar
+   *  @param[in] right   the table
+   */
+  inline TabulatedCrossSection operator-( double left, const TabulatedCrossSection& right ) {
+
+    auto result = -right;
+    result += left;
+    return result;
+  }
+
+  /**
+   *  @brief Scalar and TabulatedCrossSection multiplication
+   *
+   *  @param[in] left    the scalar
+   *  @param[in] right   the table
+   */
+  inline TabulatedCrossSection operator*( double left, const TabulatedCrossSection& right ) {
+
+    return right * left;
+  }
 
 } // dryad namespace
 } // njoy namespace
