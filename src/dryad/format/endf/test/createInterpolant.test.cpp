@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "interpolants" ) {
+SCENARIO( "createInterpolant" ) {
 
   GIVEN( "ENDF interpolation types" ) {
 

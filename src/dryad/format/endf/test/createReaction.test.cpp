@@ -16,7 +16,7 @@ void verifyTotalReaction( const Reaction& );
 void verifyElasticReaction( const Reaction& );
 void verifyCaptureReaction( const Reaction& );
 
-SCENARIO( "reaction" ) {
+SCENARIO( "createReaction" ) {
 
   GIVEN( "ENDF materials" ) {
 

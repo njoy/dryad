@@ -15,7 +15,7 @@ using namespace njoy::dryad;
 void verifyNeutronChunk( const TabulatedCrossSection& );
 void verifyElectronChunk( const TabulatedCrossSection& );
 
-SCENARIO( "tabulatedCrossSection" ) {
+SCENARIO( "createTabulatedCrossSection" ) {
 
   GIVEN( "ENDF MF3 sections" ) {
 

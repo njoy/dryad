@@ -33,6 +33,8 @@ SCENARIO( "projectileTarget" ) {
 
         CHECK( false == H1.isLinearised() );
 
+        CHECK( std::nullopt == H1.resonances() );
+
         CHECK( true == H1.hasReaction( ReactionID( "1" ) ) );
         CHECK( true == H1.hasReaction( ReactionID( "2" ) ) );
         CHECK( true == H1.hasReaction( ReactionID( "102" ) ) );

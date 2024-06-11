@@ -14,7 +14,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create the projectile identifier
+   *  @brief Create the projectile identifier based of the sublibrary value
    */
   ParticleID createProjectileIdentifier( int sublibrary ) {
 

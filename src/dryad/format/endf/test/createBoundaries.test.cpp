@@ -11,16 +11,16 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "boundaries" ) {
+SCENARIO( "createBoundaries" ) {
 
-  GIVEN( "ENDF boudnary indeices" ) {
+  GIVEN( "ENDF boundary indices" ) {
 
     WHEN( "a range of boundary indices is given" ) {
 
       THEN( "it can be converted" ) {
 
         std::vector< int > boundaries = { 1, 2, 3, 4, 5 };
-        auto converted = format::endf::createBoundaries( boundaries );
+        std::vector< std::size_t > converted = format::endf::createBoundaries( boundaries );
 
         CHECK( 0 == converted[0] );
         CHECK( 1 == converted[1] );

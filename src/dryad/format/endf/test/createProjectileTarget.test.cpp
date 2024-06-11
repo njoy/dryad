@@ -16,7 +16,7 @@ void verifyTotalReaction( const Reaction& );
 void verifyElasticReaction( const Reaction& );
 void verifyCaptureReaction( const Reaction& );
 
-SCENARIO( "projectileTarget" ) {
+SCENARIO( "createProjectileTarget" ) {
 
   GIVEN( "ENDF materials" ) {
 
@@ -35,6 +35,8 @@ SCENARIO( "projectileTarget" ) {
         CHECK( InteractionType::Nuclear == H1.interactionType() );
 
         CHECK( false == H1.isLinearised() );
+
+        CHECK( std::nullopt == H1.resonances() );
 
         CHECK( true == H1.hasReaction( ReactionID( "1" ) ) );
         CHECK( true == H1.hasReaction( ReactionID( "2" ) ) );

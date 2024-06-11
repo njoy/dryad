@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "interpolants" ) {
+SCENARIO( "createInterpolants" ) {
 
   GIVEN( "ENDF interpolation types" ) {
 
@@ -20,7 +20,7 @@ SCENARIO( "interpolants" ) {
       THEN( "it can be converted" ) {
 
         std::vector< std::size_t > interpolants = { 1, 2, 3, 4, 5 };
-        auto converted = format::endf::createInterpolants( interpolants );
+        std::vector< InterpolationType > converted = format::endf::createInterpolants( interpolants );
 
         CHECK( InterpolationType::Histogram    == converted[0] );
         CHECK( InterpolationType::LinearLinear == converted[1] );

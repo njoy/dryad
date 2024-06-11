@@ -14,7 +14,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create the interaction type
+   *  @brief Create the interaction type based of the sublibrary value
    */
   InteractionType createInteractionType( int sublibrary ) {
 
