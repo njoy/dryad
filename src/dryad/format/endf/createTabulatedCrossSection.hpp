@@ -7,7 +7,6 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/createVector.hpp"
-#include "dryad/format/curateTabulatedData.hpp"
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
@@ -36,7 +35,6 @@ namespace endf {
       auto values = createVector< double >( section.crossSections() );
       auto boundaries = createBoundaries( section.boundaries() );
       auto interpolants = createInterpolants( section.interpolants() );
-      curateTabulatedData( energies, values, boundaries, interpolants );
       return TabulatedCrossSection(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
