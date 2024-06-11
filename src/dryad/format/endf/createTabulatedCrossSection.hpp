@@ -31,8 +31,8 @@ namespace endf {
     try {
 
       Log::info( "Reading cross section data" );
-      auto energies = createVector< double >( section.energies() );
-      auto values = createVector< double >( section.crossSections() );
+      auto energies = createVector( section.energies() );
+      auto values = createVector( section.crossSections() );
       auto boundaries = createBoundaries( section.boundaries() );
       auto interpolants = createInterpolants( section.interpolants() );
       return TabulatedCrossSection(
