@@ -1413,6 +1413,50 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
 
             self.assertEqual( True, linear.is_linearised )
 
+        def verify_chunk5( self, chunk ) :
+
+            # verify content
+            self.assertEqual( 5, len( chunk.energies ) )
+            self.assertEqual( 5, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.energies[0] )
+            self.assertAlmostEqual( 2., chunk.energies[1] )
+            self.assertAlmostEqual( 2., chunk.energies[2] )
+            self.assertAlmostEqual( 3., chunk.energies[3] )
+            self.assertAlmostEqual( 4., chunk.energies[4] )
+            self.assertAlmostEqual( 4., chunk.values[0] )
+            self.assertAlmostEqual( 3., chunk.values[1] )
+            self.assertAlmostEqual( 4., chunk.values[2] )
+            self.assertAlmostEqual( 3., chunk.values[3] )
+            self.assertAlmostEqual( 2., chunk.values[4] )
+            self.assertEqual( 1, chunk.boundaries[0] )    # <-- this is changed from 2 to 1
+            self.assertEqual( 4, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_linearised )
+
+        def verify_chunk6( self, chunk ) :
+
+            # verify content
+            self.assertEqual( 4, len( chunk.energies ) )
+            self.assertEqual( 4, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.energies[0] )
+            self.assertAlmostEqual( 2., chunk.energies[1] )
+            self.assertAlmostEqual( 3., chunk.energies[2] )
+            self.assertAlmostEqual( 4., chunk.energies[3] )      # <-- last point removed
+            self.assertAlmostEqual( 4., chunk.values[0] )
+            self.assertAlmostEqual( 3., chunk.values[1] )
+            self.assertAlmostEqual( 2., chunk.values[2] )
+            self.assertAlmostEqual( 1., chunk.values[3] )      # <-- last point removed
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 3, chunk.boundaries[1] )    # <-- boundary value reset
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_linearised )
+
         # the data is given explicitly for data without boundaries
         chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
                                        values = [ 4., 3., 2., 1. ],
@@ -1444,6 +1488,24 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
                                                         InterpolationType.LinearLog ] )
 
         verify_chunk4( self, chunk )
+
+        # the data is given explicitly with boundaries that point to the second x value in the jump
+        chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 3., 4. ],
+                                       values = [ 4., 3., 4., 3., 2. ],
+                                       boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
+                                       interpolants = [ InterpolationType.LinearLinear,
+                                                     InterpolationType.LinearLog ] )
+
+        verify_chunk5( self, chunk )
+
+        # the data is given explicitly with a jump at the end that goes to zero
+        chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4., 4. ], # <-- jump at end
+                                       values = [ 4., 3., 2., 1., 0. ], # <-- last value is zero
+                                       boundaries = [ 1, 4 ],      # <-- pointing to end
+                                       interpolants = [ InterpolationType.LinearLinear,
+                                                        InterpolationType.LinearLog ] )
+
+        verify_chunk6( self, chunk )
 
     def test_failures( self ) :
 

@@ -1570,4 +1570,196 @@ SCENARIO( "TabulatedCrossSection" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "non-linearised data with multiple regions with a jump and boundaries "
+         "that point to the second x value in the jump" ) {
+
+    // note: at construction time, the boundary value will be set to the first point in
+    //       the jump. As a result, the final data contained in this InterpolationTable is the
+    //       same as the previous test.
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > x = { 1., 2., 2., 3., 4. };
+      const std::vector< double > y = { 4., 3., 4., 3., 2. };
+      const std::vector< std::size_t > boundaries = { 2, 4 }; // <-- pointing to end of the jump
+      const std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLog
+      };
+
+      TabulatedCrossSection chunk( std::move( x ), std::move( y ),
+                                          std::move( boundaries ),
+                                          std::move( interpolants ) );
+
+      THEN( "a InterpolationTable can be constructed and members can be tested" ) {
+
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );           // <-- this is changed from 2 to 1
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "non-linearised data with multiple regions with a jump at the end that goes to zero" ) {
+
+    // note: at construction time, the last x and y value will be removed and the last
+    //       boundary value will be decremented by 1.
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > x = { 1., 2., 3., 4., 4. }; // <-- jump at end
+      const std::vector< double > y = { 4., 3., 2., 1., 0. }; // <-- last value is zero
+      const std::vector< std::size_t > boundaries = { 1, 4 }; // <-- pointing to end
+      const std::vector< InterpolationType > interpolants = {
+
+        InterpolationType::LinearLinear,
+        InterpolationType::LinearLog
+      };
+
+      TabulatedCrossSection chunk( std::move( x ), std::move( y ),
+                                   std::move( boundaries ),
+                                   std::move( interpolants ) );
+
+      THEN( "an InterpolationTable can be constructed and members can be tested" ) {
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) ); // <-- last point removed
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) ); // <-- last point removed
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );         // <-- boundary value reset
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "invalid data for an InterpolationTable object" ) {
+
+    WHEN( "there are not enough values in the x or y grid" ) {
+
+      std::vector< double > empty = {};
+      std::vector< double > one = { 1. };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( empty, empty ) );
+        CHECK_THROWS( TabulatedCrossSection( one, one ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x and y grid do not have the same number of points" ) {
+
+      std::vector< double > x = { 1., 2., 3., 4. };
+      std::vector< double > y = { 4., 3., 2. };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundaries and interpolants do not have the same size" ) {
+
+      std::vector< double > x = { 1., 2., 3., 4. };
+      std::vector< double > y = { 4., 3., 2., 1. };
+      std::vector< std::size_t > boundaries = { 3 };
+      std::vector< InterpolationType > interpolants = {};
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ),
+                                             std::move( boundaries ),
+                                             std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid is not sorted" ) {
+
+      std::vector< double > x = { 1., 3., 2., 4. };
+      std::vector< double > y = { 4., 3., 2., 1. };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid contains a triple x value" ) {
+
+      std::vector< double > x = { 1., 2., 2., 2., 3., 4. };
+      std::vector< double > y = { 4., 3., 3., 3., 2., 1. };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid has a jump at the beginning" ) {
+
+      std::vector< double > x = { 1., 1., 3., 4. };
+      std::vector< double > y = { 4., 3., 1., 4. };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid has a jump at the end" ) {
+
+      std::vector< double > x = { 1., 2., 4., 4. };
+      std::vector< double > y = { 4., 3., 1., 4. };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the last boundary does not point to the last point" ) {
+
+      std::vector< double > x = { 1., 2., 4., 4. };
+      std::vector< double > y = { 4., 3., 1., 4. };
+      std::vector< std::size_t > boundaries = { 2 };
+      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedCrossSection( std::move( x ), std::move( y ),
+                                             std::move( boundaries ),
+                                             std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
