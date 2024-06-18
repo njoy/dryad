@@ -30,6 +30,7 @@ namespace endf {
       ReactionType type = createReactionType( material, mt );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
+      std::vector< ReactionProduct > products = {};
       if ( type == ReactionType::Primary ) {
 
         mass_q = section.massDifferenceQValue();
@@ -38,7 +39,8 @@ namespace endf {
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
       return Reaction( std::move( id ), std::move( type ), std::move( xs ),
-                       std::move( mass_q ), std::move( reaction_q ) );
+                       std::move( products ), std::move( mass_q ),
+                       std::move( reaction_q ) );
     }
     else if ( material.hasSection( 23, mt ) ) {
 
@@ -48,6 +50,7 @@ namespace endf {
       ReactionType type = createReactionType( material, mt );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
+      std::vector< ReactionProduct > products = {};
       if ( type == ReactionType::Primary ) {
 
         reaction_q = -section.subshellBindingEnergy();
@@ -55,7 +58,8 @@ namespace endf {
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
       return Reaction( std::move( id ), std::move( type ), std::move( xs ),
-                       std::move( mass_q ), std::move( reaction_q ) );
+                       std::move( products ), std::move( mass_q ),
+                       std::move( reaction_q ) );
     }
     else {
 

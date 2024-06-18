@@ -10,6 +10,7 @@
 #include "dryad/type-aliases.hpp"
 #include "dryad/ReactionID.hpp"
 #include "dryad/ReactionType.hpp"
+#include "dryad/ReactionProduct.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
@@ -30,6 +31,8 @@ namespace dryad {
     std::optional< double > reaction_qvalue_;
 
     TabulatedCrossSection xs_;
+    std::vector< ReactionProduct > products_;
+
     bool linearised_;
 
   public:
@@ -85,6 +88,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the reaction products
+     */
+    const std::vector< ReactionProduct >& products() const noexcept {
+
+      return this->products_;
+    }
+
+    /**
      *  @brief Return whether or not the reaction data is linearised
      */
     bool isLinearised() const noexcept {
@@ -102,7 +113,8 @@ namespace dryad {
       TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
 
       return Reaction( this->identifier(), this->type(), std::move( xs ),
-                       this->massDifferenceQValue(), this->reactionQValue() );
+                       this->products(), this->massDifferenceQValue(),
+                       this->reactionQValue() );
     }
 
     /**

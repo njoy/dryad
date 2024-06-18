@@ -29,12 +29,21 @@ namespace endf {
     std::vector< Reaction > reactions;
     if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
 
+      constexpr std::array< int, 8 > derived = { 203, 204, 205, 206, 207, 251, 252, 253 };
+
       int source = material.hasFile( 3 ) ? 3 : 23;
       reactions.reserve( material.file( source ).sectionNumbers().size() );
       for ( auto mt : material.file( source ).sectionNumbers() ) {
 
-        Log::info( "Reading data for MT{}", mt );
-        reactions.emplace_back( createReaction( material, mt ) );
+        if ( ! std::binary_search( derived.begin(), derived.end(), mt ) ) {
+
+          Log::info( "Reading data for MT{}", mt );
+          reactions.emplace_back( createReaction( material, mt ) );
+        }
+        else {
+
+          Log::warning( "Skipping data for derived MT{}", mt );
+        }
       }
     }
     return reactions;

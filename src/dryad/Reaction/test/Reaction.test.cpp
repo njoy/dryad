@@ -30,9 +30,10 @@ SCENARIO( "Reaction" ) {
                                   InterpolationType::LinearLog } );
       double mass_q = 0;
       double reaction_q = -1;
+      std::vector< ReactionProduct > products = {};
 
-      Reaction chunk( std::move( id ), std::move( type ), std::move( xs ), 
-                      mass_q, reaction_q );
+      Reaction chunk( std::move( id ), std::move( type ), std::move( xs ),
+                      std::move( products ), mass_q, reaction_q );
 
       THEN( "a Reaction can be constructed and members can be tested" ) {
 

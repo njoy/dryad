@@ -30,10 +30,12 @@ SCENARIO( "ProjectileTarget" ) {
         Reaction( ReactionID( "n,Fe56->n,Fe56" ), ReactionType::Primary,
                   TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
                                            InterpolationType::LogLinear ),
+                  {},
                   0, 0 ),
         Reaction( ReactionID( "n,Fe56->n,Fe56_e1" ), ReactionType::Primary,
                   TabulatedCrossSection( { 1., 20. }, { 0., 100. },
                                            InterpolationType::LinearLinear ),
+                  {},
                   0, -1 )
       };
 

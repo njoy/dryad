@@ -20,7 +20,7 @@ namespace endf {
    */
   ReactionType createReactionType( const ENDFtk::tree::Material& material, int mt ) {
 
-    constexpr std::array< int, 442 > primary = {   2,   5,  17,  19,  20,  21,  22,  23,  24,  25,
+    constexpr std::array< int, 443 > primary = {   2,   5,  11, 17,  19,  20,  21,  22,  23,  24,  25,
                                                   28,  29,  30,  32,  33,  34,  35,  36,  37,  38,
                                                   41,  42,  44,  45,  50,  51,  52,  53,  54,  55,
                                                   56,  57,  58,  59,  60,  61,  62,  63,  64,  65,

@@ -176,11 +176,13 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                     reactions = [ Reaction( "n,Fe56->n,Fe56", ReactionType.Primary,
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                    InterpolationType.LogLinear ),
+                                            [],
                                             0, 0 ),
                                   Reaction( "n,Fe56->n,Fe56_e1", ReactionType.Primary,
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
                                                                    InterpolationType.LinearLinear ),
-                                  0, -1 ) ] )
+                                            [],
+                                            0, -1 ) ] )
 
         verify_chunk( self, chunk )
 
