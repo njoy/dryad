@@ -104,7 +104,7 @@ if( dryad.python )
       )
 
   target_link_libraries( dryad.python PRIVATE dryad )
-  add_dependencies( dryad.python ACEtk.python ENDFtk.python scion.python )
+  add_dependencies( dryad.python scion.python )
   target_include_directories( dryad.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/src )
   target_compile_options( dryad.python PRIVATE "-fvisibility=hidden" )
   set_target_properties( dryad.python PROPERTIES OUTPUT_NAME dryad )
@@ -114,8 +114,6 @@ if( dryad.python )
   message( STATUS "Building dryad's python API" )
 
   list( APPEND DRYAD_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR} )
-  list( APPEND ACETK_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/acetk-build )
-  list( APPEND ENDFTK_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/endftk-build )
   list( APPEND SCION_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build )
 
   if( dryad.tests )
