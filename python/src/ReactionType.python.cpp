@@ -27,5 +27,6 @@ void wrapReactionType( python::module& module, python::module& ) {
   // wrap the component
   component
   .value( "Primary",  Component::Primary )
-  .value( "Summation", Component::Summation );
+  .value( "Summation", Component::Summation )
+  .value( "Production", Component::Production );
 }

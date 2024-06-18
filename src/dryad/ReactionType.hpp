@@ -17,8 +17,9 @@ namespace dryad {
  */
 enum class ReactionType : short {
 
-  Primary = 1,  /**< The reaction is a primary independent reaction */
-  Summation = 2 /**< The reaction is a summation reaction */
+  Primary = 1,   /**< The reaction is a primary independent reaction */
+  Summation = 2, /**< The reaction is a pure summation reaction */
+  Production = 3 /**< The reaction is a production summation reaction */
 };
 
 } // dryad namespace

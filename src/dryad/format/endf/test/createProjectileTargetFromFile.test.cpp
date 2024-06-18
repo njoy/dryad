@@ -65,9 +65,10 @@ SCENARIO( "projectileTarget" ) {
 void verifyTotalReaction( const Reaction& total ) {
 
   CHECK( ReactionID( "1" ) == total.identifier() );
+  CHECK( ReactionType::Summation == total.type() );
   CHECK( false == total.isLinearised() );
-  CHECK_THAT( 0, WithinRel( total.massDifferenceQValue().value() ) );
-  CHECK_THAT( 0, WithinRel( total.reactionQValue().value() ) );
+  CHECK( std::nullopt == total.massDifferenceQValue() );
+  CHECK( std::nullopt == total.reactionQValue() );
   CHECK( false == total.crossSection().isLinearised() );
   CHECK( 153 == total.crossSection().numberPoints() );
   CHECK( 2 == total.crossSection().numberRegions() );
@@ -90,7 +91,10 @@ void verifyTotalReaction( const Reaction& total ) {
 void verifyElasticReaction( const Reaction& elastic ) {
 
   CHECK( ReactionID( "2" ) == elastic.identifier() );
+  CHECK( ReactionType::Primary == elastic.type() );
   CHECK( true == elastic.isLinearised() );
+  CHECK( std::nullopt != elastic.massDifferenceQValue() );
+  CHECK( std::nullopt != elastic.reactionQValue() );
   CHECK_THAT( 0, WithinRel( elastic.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( elastic.reactionQValue().value() ) );
   CHECK( true == elastic.crossSection().isLinearised() );
@@ -111,7 +115,9 @@ void verifyElasticReaction( const Reaction& elastic ) {
 void verifyCaptureReaction( const Reaction& capture ) {
 
   CHECK( ReactionID( "102" ) == capture.identifier() );
-  CHECK( false == capture.isLinearised() );
+  CHECK( ReactionType::Primary == capture.type() );
+  CHECK( std::nullopt != capture.massDifferenceQValue() );
+  CHECK( std::nullopt != capture.reactionQValue() );
   CHECK_THAT( 2.224648e+6, WithinRel( capture.massDifferenceQValue().value() ) );
   CHECK_THAT( 2.224648e+6, WithinRel( capture.reactionQValue().value() ) );
   CHECK( false == capture.crossSection().isLinearised() );

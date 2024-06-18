@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/format/endf/createReactionType.hpp"
 #include "dryad/format/endf/createTabulatedCrossSection.hpp"
 #include "dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
@@ -26,7 +27,7 @@ namespace endf {
       auto section = material.section( 3, mt ).parse< 3 >();
 
       ReactionID id = std::to_string( mt );
-      ReactionType type = ReactionType::Primary;
+      ReactionType type = createReactionType( material, mt );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
       if ( type == ReactionType::Primary ) {
@@ -44,7 +45,7 @@ namespace endf {
       auto section = material.section( 23, mt ).parse< 23 >();
 
       ReactionID id = std::to_string( mt );
-      ReactionType type = ReactionType::Primary;
+      ReactionType type = createReactionType( material, mt );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
       if ( type == ReactionType::Primary ) {

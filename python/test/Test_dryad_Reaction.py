@@ -134,7 +134,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( True, chunk.is_linearised )
 
         # the data is given explicitly
-        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1', type = ReactionType.Primary, 
+        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1', type = ReactionType.Primary,
                           mass_q = 0, reaction_q = -1,
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
