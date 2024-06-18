@@ -13,7 +13,7 @@ void wrapReactionProduct( python::module& module, python::module& ) {
   // type aliases
   using Component = njoy::dryad::ReactionProduct;
   using ParticleID = njoy::dryad::ParticleID;
-  using TabulatedMultiplicity = njoy::dryad::TabulatedMultiplicity;
+  using Multiplicity = njoy::dryad::ReactionProduct::Multiplicity;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
@@ -30,7 +30,7 @@ void wrapReactionProduct( python::module& module, python::module& ) {
   component
   .def(
 
-    python::init< ParticleID, TabulatedMultiplicity >(),
+    python::init< ParticleID, Multiplicity >(),
     python::arg( "id" ), python::arg( "multiplicity" ),
     "Initialise the reaction\n\n"
     "Arguments:\n"

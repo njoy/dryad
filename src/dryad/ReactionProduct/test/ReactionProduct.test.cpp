@@ -12,7 +12,6 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 
 void verifyChunk( const ReactionProduct& );
-void verifyLinearisedChunk( const ReactionProduct& );
 void verifyTabulatedChunk( const ReactionProduct& );
 void verifyTabulatedLinearisedChunk( const ReactionProduct& );
 
@@ -36,7 +35,7 @@ SCENARIO( "ReactionProduct" ) {
 
         ReactionProduct linear = chunk.linearise();
 
-        verifyLinearisedChunk( linear );
+        verifyChunk( linear );
       } // THEN
 
       THEN( "a ReactionProduct can be linearised inplace" ) {
@@ -44,7 +43,7 @@ SCENARIO( "ReactionProduct" ) {
         ReactionProduct copy = chunk; // we'll do this test on a copy
         verifyChunk( copy );
         copy.lineariseInplace();
-        verifyLinearisedChunk( copy );
+        verifyChunk( copy );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -86,20 +85,6 @@ SCENARIO( "ReactionProduct" ) {
 } // SCENARIO
 
 void verifyChunk( const ReactionProduct& chunk ) {
-
-  // ReactionProduct identifier
-  CHECK( ParticleID( "n" ) == chunk.identifier() );
-
-  // multiplicity
-  auto multiplicity = chunk.multiplicity();
-  CHECK( true == std::holds_alternative< int >( multiplicity ) );
-  CHECK( 1 == std::get< int >( multiplicity ) );
-
-  // metadata
-  CHECK( true == chunk.isLinearised() );
-}
-
-void verifyLinearisedChunk( const ReactionProduct& chunk ) {
 
   // ReactionProduct identifier
   CHECK( ParticleID( "n" ) == chunk.identifier() );
