@@ -2,9 +2,7 @@
 #define NJOY_DRYAD_REACTIONPRODUCT
 
 // system includes
-#include <optional>
 #include <variant>
-#include <vector>
 
 // other includes
 #include "dryad/type-aliases.hpp"
