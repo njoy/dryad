@@ -7,7 +7,16 @@
 // namespace aliases
 namespace python = pybind11;
 
-// declarations
+// declarations - enumerators
+void wrapInteractionType( python::module&, python::module& );
+void wrapReactionType( python::module&, python::module& );
+
+// declarations - components
+void wrapTabulatedCrossSection( python::module&, python::module& );
+void wrapTabulatedMultiplicity( python::module&, python::module& );
+void wrapReactionProduct( python::module&, python::module& );
+void wrapReaction( python::module&, python::module& );
+void wrapProjectileTarget( python::module&, python::module& );
 
 /**
  *  @brief dryad python bindings
@@ -17,4 +26,27 @@ namespace python = pybind11;
  */
 PYBIND11_MODULE( dryad, module ) {
 
+  auto scion_interpolation = python::module::import( "scion.interpolation" );
+  auto scion_linearisation = python::module::import( "scion.linearisation" );
+
+  module.attr( "InterpolationType" ) = scion_interpolation.attr( "InterpolationType" );
+  module.attr( "ToleranceConvergence" ) = scion_linearisation.attr( "ToleranceConvergence" );
+
+  // create the views submodule
+  python::module viewmodule = module.def_submodule(
+
+    "sequence",
+    "sequence - dryad sequences (internal use only)"
+  );
+
+  // wrap enumerators
+  wrapInteractionType( module, viewmodule );
+  wrapReactionType( module, viewmodule );
+
+  // wrap components
+  wrapTabulatedCrossSection( module, viewmodule );
+  wrapTabulatedMultiplicity( module, viewmodule );
+  wrapReactionProduct( module, viewmodule );
+  wrapReaction( module, viewmodule );
+  wrapProjectileTarget( module, viewmodule );
 }
