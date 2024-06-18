@@ -14,6 +14,7 @@ void wrapReactionType( python::module&, python::module& );
 // declarations - components
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
+void wrapReactionProduct( python::module&, python::module& );
 void wrapReaction( python::module&, python::module& );
 void wrapProjectileTarget( python::module&, python::module& );
 
@@ -45,6 +46,7 @@ PYBIND11_MODULE( dryad, module ) {
   // wrap components
   wrapTabulatedCrossSection( module, viewmodule );
   wrapTabulatedMultiplicity( module, viewmodule );
+  wrapReactionProduct( module, viewmodule );
   wrapReaction( module, viewmodule );
   wrapProjectileTarget( module, viewmodule );
 }

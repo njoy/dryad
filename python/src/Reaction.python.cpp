@@ -24,7 +24,7 @@ void wrapReaction( python::module& module, python::module& ) {
 
     module,
     "Reaction",
-    "A cross section table"
+    "The data associated to a single reaction"
   );
 
   // wrap the component

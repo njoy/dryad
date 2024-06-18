@@ -84,7 +84,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Linearise the reaction data inplace
+     *  @brief Linearise the reaction product data inplace
      *
      *  @param[in] tolerance   the linearisation tolerance
      */

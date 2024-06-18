@@ -100,6 +100,7 @@ if( dryad.python )
       python/src/ReactionType.python.cpp
       python/src/TabulatedCrossSection.python.cpp
       python/src/TabulatedMultiplicity.python.cpp
+      python/src/ReactionProduct.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp
       )
