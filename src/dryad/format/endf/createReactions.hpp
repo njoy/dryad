@@ -24,7 +24,8 @@ namespace endf {
    *  present, the function will return an empty vector.
    */
   std::vector< Reaction >
-  createReactions( const ENDFtk::tree::Material& material ) {
+  createReactions( const ParticleID& projectile, const ParticleID& target,
+                   const ENDFtk::tree::Material& material ) {
 
     std::vector< Reaction > reactions;
     if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
@@ -38,7 +39,7 @@ namespace endf {
         if ( ! std::binary_search( derived.begin(), derived.end(), mt ) ) {
 
           Log::info( "Reading data for MT{}", mt );
-          reactions.emplace_back( createReaction( material, mt ) );
+          reactions.emplace_back( createReaction( projectile, target, material, mt ) );
         }
         else {
 

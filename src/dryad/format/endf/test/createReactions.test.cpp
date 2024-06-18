@@ -27,7 +27,9 @@ SCENARIO( "createReactions" ) {
 
       THEN( "all reactions can be created" ) {
 
-        std::vector< Reaction > reactions = format::endf::createReactions( material );
+        ParticleID projectile( "n" );
+        ParticleID target( "H1" );
+        std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
 
         auto total = reactions[0];
         verifyTotalReaction( total );

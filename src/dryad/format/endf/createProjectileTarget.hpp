@@ -31,7 +31,7 @@ namespace endf {
     ParticleID target = createTargetIdentifier( mf1mt451.ZA(), mf1mt451.excitedLevel() );
     InteractionType type = createInteractionType( mf1mt451.subLibrary() );
 
-    std::vector< Reaction > reactions = createReactions( material );
+    std::vector< Reaction > reactions = createReactions( projectile, target, material );
 
     return ProjectileTarget( std::move( projectile ), std::move( target ),
                              type, std::move( reactions ) );

@@ -27,13 +27,16 @@ SCENARIO( "createReaction" ) {
 
       THEN( "a Reaction can be created" ) {
 
-        Reaction total = format::endf::createReaction( material, 1 );
+        ParticleID projectile( "n" );
+        ParticleID target( "H1" );
+
+        Reaction total = format::endf::createReaction( projectile, target, material, 1 );
         verifyTotalReaction( total );
 
-        Reaction elastic = format::endf::createReaction( material, 2 );
+        Reaction elastic = format::endf::createReaction( projectile, target, material, 2 );
         verifyElasticReaction( elastic );
 
-        Reaction capture = format::endf::createReaction( material, 102 );
+        Reaction capture = format::endf::createReaction( projectile, target, material, 102 );
         verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
