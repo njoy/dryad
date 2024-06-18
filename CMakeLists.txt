@@ -37,8 +37,6 @@ cmake_dependent_option(
 )
 if ( dryad.python )
   set( require.scion.python CACHE BOOL ON )
-  set( require.ENDFtk.python CACHE BOOL ON )
-  set( require.ACEtk.python CACHE BOOL ON )
 endif()
 
 ########################################################################
