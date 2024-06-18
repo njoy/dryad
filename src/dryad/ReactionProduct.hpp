@@ -5,6 +5,7 @@
 #include <variant>
 
 // other includes
+#include "tools/overload.hpp"
 #include "dryad/type-aliases.hpp"
 #include "dryad/ParticleID.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
@@ -18,8 +19,12 @@ namespace dryad {
    */
   class ReactionProduct {
 
+public:
+
     /* type aliases */
     using Multiplicity = std::variant< int, TabulatedMultiplicity >;
+
+private:
 
     /* fields */
     ParticleID id_;
@@ -56,6 +61,45 @@ namespace dryad {
     bool isLinearised() const noexcept {
 
       return this->linearised_;
+    }
+
+    /**
+     *  @brief Linearise the reaction product data and return a new reaction product
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    ReactionProduct linearise( ToleranceConvergence tolerance = {} ) const noexcept {
+
+      auto linearise = tools::overload{
+
+        [] ( int multiplicity ) -> Multiplicity
+           { return Multiplicity( multiplicity ); },
+        [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
+                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }
+      };
+
+      Multiplicity multiplicity = std::visit( linearise, this->multiplicity() );
+
+      return ReactionProduct( this->identifier(), std::move( multiplicity ) );
+    }
+
+    /**
+     *  @brief Linearise the reaction data inplace
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
+
+      auto linearise = tools::overload{
+
+        [] ( int multiplicity ) -> Multiplicity
+           { return Multiplicity( multiplicity ); },
+        [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
+                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }
+      };
+
+      this->multiplicity_ = std::visit( linearise, this->multiplicity() );
+      this->linearised_ = true;
     }
   };
 

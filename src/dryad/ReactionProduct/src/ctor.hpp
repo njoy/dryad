@@ -28,4 +28,10 @@ ReactionProduct& operator=( ReactionProduct&& ) = default;
 ReactionProduct( ParticleID id,
                  Multiplicity multiplicity ) :
     ReactionProduct( std::move( id ),
-                     std::move( multiplicity ), true ) {}
+                     std::move( multiplicity ),
+                     std::visit(
+                         tools::overload{
+                             [] ( int ) { return true; },
+                             [] ( const TabulatedMultiplicity& multiplicity )
+                                { return multiplicity.isLinearised(); } },
+                         multiplicity ) ) {}

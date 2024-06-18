@@ -12,10 +12,11 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 
 void verifyChunk( const ReactionProduct& );
+void verifyLinearisedChunk( const ReactionProduct& );
 
 SCENARIO( "ReactionProduct" ) {
 
-  GIVEN( "valid data for a ReactionProduct" ) {
+  GIVEN( "valid data for a ReactionProduct with an integer multiplicity" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -50,80 +51,26 @@ SCENARIO( "ReactionProduct" ) {
 void verifyChunk( const ReactionProduct& chunk ) {
 
   // ReactionProduct identifier
-  CHECK( ReactionProductID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
+  CHECK( ParticleID( "n" ) == chunk.identifier() );
 
-  // ReactionProduct type
-  CHECK( ReactionProductType::Primary == chunk.type() );
-
-  // q values
-  CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue().value() ) );
-  CHECK_THAT( -1, WithinRel( chunk.ReactionProductQValue().value() ) );
-
-  // cross section
-  CHECK( 5 == chunk.crossSection().numberPoints() );
-  CHECK( 2 == chunk.crossSection().numberRegions() );
-  CHECK( 5 == chunk.crossSection().energies().size() );
-  CHECK( 5 == chunk.crossSection().values().size() );
-  CHECK( 2 == chunk.crossSection().boundaries().size() );
-  CHECK( 2 == chunk.crossSection().interpolants().size() );
-  CHECK_THAT( 1., WithinRel( chunk.crossSection().energies()[0] ) );
-  CHECK_THAT( 2., WithinRel( chunk.crossSection().energies()[1] ) );
-  CHECK_THAT( 2., WithinRel( chunk.crossSection().energies()[2] ) );
-  CHECK_THAT( 3., WithinRel( chunk.crossSection().energies()[3] ) );
-  CHECK_THAT( 4., WithinRel( chunk.crossSection().energies()[4] ) );
-  CHECK_THAT( 4., WithinRel( chunk.crossSection().values()[0] ) );
-  CHECK_THAT( 3., WithinRel( chunk.crossSection().values()[1] ) );
-  CHECK_THAT( 4., WithinRel( chunk.crossSection().values()[2] ) );
-  CHECK_THAT( 3., WithinRel( chunk.crossSection().values()[3] ) );
-  CHECK_THAT( 2., WithinRel( chunk.crossSection().values()[4] ) );
-  CHECK( 1 == chunk.crossSection().boundaries()[0] );
-  CHECK( 4 == chunk.crossSection().boundaries()[1] );
-  CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[0] );
-  CHECK( InterpolationType::LinearLog == chunk.crossSection().interpolants()[1] );
-  CHECK( false == chunk.crossSection().isLinearised() );
+  // multiplicity
+  auto multiplicity = chunk.multiplicity();
+  CHECK( true == std::holds_alternative< int >( multiplicity ) );
+  CHECK( 1 == std::get< int >( multiplicity ) );
 
   // metadata
-  CHECK( false == chunk.isLinearised() );
+  CHECK( true == chunk.isLinearised() );
 }
 
 void verifyLinearisedChunk( const ReactionProduct& chunk ) {
 
-  // cross section
-  CHECK( 12 == chunk.crossSection().numberPoints() );
-  CHECK( 2 == chunk.crossSection().numberRegions() );
-  CHECK( 12 == chunk.crossSection().energies().size() );
-  CHECK( 12 == chunk.crossSection().values().size() );
-  CHECK( 2 == chunk.crossSection().boundaries().size() );
-  CHECK( 2 == chunk.crossSection().interpolants().size() );
-  CHECK_THAT( 1.   , WithinRel( chunk.crossSection().energies()[0] ) );
-  CHECK_THAT( 2.   , WithinRel( chunk.crossSection().energies()[1] ) );
-  CHECK_THAT( 2.   , WithinRel( chunk.crossSection().energies()[2] ) );
-  CHECK_THAT( 2.125, WithinRel( chunk.crossSection().energies()[3] ) );
-  CHECK_THAT( 2.25 , WithinRel( chunk.crossSection().energies()[4] ) );
-  CHECK_THAT( 2.5  , WithinRel( chunk.crossSection().energies()[5] ) );
-  CHECK_THAT( 2.75 , WithinRel( chunk.crossSection().energies()[6] ) );
-  CHECK_THAT( 3.   , WithinRel( chunk.crossSection().energies()[7] ) );
-  CHECK_THAT( 3.25 , WithinRel( chunk.crossSection().energies()[8] ) );
-  CHECK_THAT( 3.5  , WithinRel( chunk.crossSection().energies()[9] ) );
-  CHECK_THAT( 3.75 , WithinRel( chunk.crossSection().energies()[10] ) );
-  CHECK_THAT( 4.   , WithinRel( chunk.crossSection().energies()[11] ) );
-  CHECK_THAT( 4.              , WithinRel( chunk.crossSection().values()[0] ) );
-  CHECK_THAT( 3.              , WithinRel( chunk.crossSection().values()[1] ) );
-  CHECK_THAT( 4.              , WithinRel( chunk.crossSection().values()[2] ) );
-  CHECK_THAT( 3.85048128530886, WithinRel( chunk.crossSection().values()[3] ) );
-  CHECK_THAT( 3.70951129135145, WithinRel( chunk.crossSection().values()[4] ) );
-  CHECK_THAT( 3.44966028678679, WithinRel( chunk.crossSection().values()[5] ) );
-  CHECK_THAT( 3.21459646033567, WithinRel( chunk.crossSection().values()[6] ) );
-  CHECK_THAT( 3.              , WithinRel( chunk.crossSection().values()[7] ) );
-  CHECK_THAT( 2.72176678584324, WithinRel( chunk.crossSection().values()[8] ) );
-  CHECK_THAT( 2.46416306545103, WithinRel( chunk.crossSection().values()[9] ) );
-  CHECK_THAT( 2.22433973930853, WithinRel( chunk.crossSection().values()[10] ) );
-  CHECK_THAT( 2.              , WithinRel( chunk.crossSection().values()[11] ) );
-  CHECK( 1 == chunk.crossSection().boundaries()[0] );
-  CHECK( 11 == chunk.crossSection().boundaries()[1] );
-  CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[1] );
-  CHECK( true == chunk.crossSection().isLinearised() );
+  // ReactionProduct identifier
+  CHECK( ParticleID( "n" ) == chunk.identifier() );
+
+  // multiplicity
+  auto multiplicity = chunk.multiplicity();
+  CHECK( true == std::holds_alternative< int >( multiplicity ) );
+  CHECK( 1 == std::get< int >( multiplicity ) );
 
   // metadata
   CHECK( true == chunk.isLinearised() );
