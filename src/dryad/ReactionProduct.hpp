@@ -19,12 +19,12 @@ namespace dryad {
    */
   class ReactionProduct {
 
-public:
+  public:
 
     /* type aliases */
     using Multiplicity = std::variant< int, TabulatedMultiplicity >;
 
-private:
+  private:
 
     /* fields */
     ParticleID id_;
