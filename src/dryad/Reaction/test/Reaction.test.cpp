@@ -130,6 +130,7 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK( false == chunk.crossSection().isLinearised() );
 
   // metadata
+  CHECK( false == chunk.hasProducts() );
   CHECK( false == chunk.isLinearised() );
 }
 

@@ -39,6 +39,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
                 self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
                 self.assertEqual( ReactionType.Primary, reaction.type )
+                self.assertEqual( False, reaction.has_products )
+                self.assertEqual( False, reaction.is_linearised )
                 self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
                 self.assertAlmostEqual( 0, reaction.reaction_qvalue )
                 self.assertEqual( 2, reaction.cross_section.number_points )
@@ -60,6 +62,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
                 self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
                 self.assertEqual( ReactionType.Primary, reaction.type )
+                self.assertEqual( False, reaction.has_products )
+                self.assertEqual( True, reaction.is_linearised )
                 self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
                 self.assertAlmostEqual( -1, reaction.reaction_qvalue )
                 self.assertEqual( 2, reaction.cross_section.number_points )
@@ -95,6 +99,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             reaction = chunk.reactions[0]
             self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
             self.assertEqual( ReactionType.Primary, reaction.type )
+            self.assertEqual( False, reaction.has_products )
+            self.assertEqual( True, reaction.is_linearised )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( 0, reaction.reaction_qvalue )
             self.assertEqual( 65, reaction.cross_section.number_points )
@@ -117,6 +123,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             reaction = chunk.reactions[1]
             self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
             self.assertEqual( ReactionType.Primary, reaction.type )
+            self.assertEqual( False, reaction.has_products )
+            self.assertEqual( True, reaction.is_linearised )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
             self.assertAlmostEqual( -1, reaction.reaction_qvalue )
             self.assertEqual( 2, reaction.cross_section.number_points )
