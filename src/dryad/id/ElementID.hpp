@@ -179,7 +179,7 @@ namespace id {
     /**
      *  @brief Return the element number
      */
-    constexpr int number() const noexcept {
+    int number() const noexcept {
 
       return this->entry_->number();
     }
@@ -206,7 +206,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend constexpr auto operator==( const ElementID& left, const ElementID& right ) {
+    friend auto operator==( const ElementID& left, const ElementID& right ) {
 
       return left.number() == right.number();
     }
@@ -217,7 +217,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend constexpr auto operator!=( const ElementID& left, const ElementID& right ) {
+    friend auto operator!=( const ElementID& left, const ElementID& right ) {
 
       return ! ( left == right );
     }
@@ -228,7 +228,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend constexpr auto operator<( const ElementID& left, const ElementID& right ) {
+    friend auto operator<( const ElementID& left, const ElementID& right ) {
 
       return left.number() < right.number();
     }
@@ -239,7 +239,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend constexpr auto operator>( const ElementID& left, const ElementID& right ) {
+    friend auto operator>( const ElementID& left, const ElementID& right ) {
 
       return right < left;
     }
@@ -250,7 +250,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend constexpr auto operator<=( const ElementID& left, const ElementID& right ) {
+    friend auto operator<=( const ElementID& left, const ElementID& right ) {
 
       return ! ( right < left );
     }
@@ -261,7 +261,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend constexpr auto operator>=( const ElementID& left, const ElementID& right ) {
+    friend auto operator>=( const ElementID& left, const ElementID& right ) {
 
       return ! ( left < right );
     }
