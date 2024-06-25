@@ -26,6 +26,8 @@ endfunction()
 # Unit testing directories
 #######################################################################
 
+add_subdirectory( src/dryad/id/ElementID/test )
+
 add_subdirectory( src/dryad/TabulatedCrossSection/test )
 add_subdirectory( src/dryad/TabulatedMultiplicity/test )
 add_subdirectory( src/dryad/ReactionProduct/test )
