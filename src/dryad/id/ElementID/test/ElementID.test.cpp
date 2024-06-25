@@ -108,8 +108,9 @@ SCENARIO( "ElementID" ) {
     THEN( "an exception is thrown" ) {
 
       CHECK_THROWS( ElementID( "not an element name, symbol or alternative" ) );
+      CHECK_THROWS( ElementID( -1 ) );
       CHECK_THROWS( ElementID( 0 ) );
-      CHECK_THROWS( ElementID( 1000 ) );
+      CHECK_THROWS( ElementID( 119 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

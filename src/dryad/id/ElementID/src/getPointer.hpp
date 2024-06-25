@@ -5,7 +5,14 @@
  */
 static const Entry* getPointer( int number ) {
 
-  return std::addressof( element_dictionary.at( number ) );
+  try {
+
+    return std::addressof( element_dictionary.at( number ) );
+  }
+  catch ( ... ) {
+
+    throw std::out_of_range( "Not an element number: \'" + std::to_string( number ) + "\'" );
+  }
 }
 
 /**
@@ -15,5 +22,12 @@ static const Entry* getPointer( int number ) {
  */
 static const Entry* getPointer( const std::string& string ) {
 
-  return getPointer( conversion_dictionary.at( string ) );
+  try {
+
+    return getPointer( conversion_dictionary.at( string ) );
+  }
+  catch ( ... ) {
+
+    throw std::out_of_range( "Not an element symbol or name: \'" + string + "\'" );
+  }
 }
