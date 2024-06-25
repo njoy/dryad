@@ -179,7 +179,7 @@ namespace id {
     /**
      *  @brief Return the element number
      */
-    int number() const noexcept {
+    constexpr int number() const noexcept {
 
       return this->entry_->number();
     }
