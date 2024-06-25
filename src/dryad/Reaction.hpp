@@ -88,6 +88,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not the reaction has reaction products
+     */
+    bool hasProducts() const noexcept {
+
+      return this->products_.size() != 0;
+    }
+
+    /**
      *  @brief Return the reaction products
      */
     const std::vector< ReactionProduct >& products() const noexcept {

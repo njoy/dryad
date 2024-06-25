@@ -15,7 +15,7 @@ namespace format {
   /**
    *  @brief Create a vector from a range
    *
-   *  The range only need a begin and end iterator assocaited to it, The vector
+   *  The range only need a begin and end iterator associated to it, The vector
    *  that will be produced will use the underlying value type so no conversion
    *  or casting will occur.
    */

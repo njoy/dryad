@@ -47,6 +47,7 @@ void verifyTotalReaction( const Reaction& total ) {
 
   CHECK( ReactionID( "1" ) == total.identifier() );
   CHECK( ReactionType::Summation == total.type() );
+  CHECK( false == total.hasProducts() );
   CHECK( false == total.isLinearised() );
   CHECK( std::nullopt == total.massDifferenceQValue() );
   CHECK( std::nullopt == total.reactionQValue() );
@@ -73,6 +74,7 @@ void verifyElasticReaction( const Reaction& elastic ) {
 
   CHECK( ReactionID( "2" ) == elastic.identifier() );
   CHECK( ReactionType::Primary == elastic.type() );
+  CHECK( false == elastic.hasProducts() );
   CHECK( true == elastic.isLinearised() );
   CHECK( std::nullopt != elastic.massDifferenceQValue() );
   CHECK( std::nullopt != elastic.reactionQValue() );
@@ -97,6 +99,7 @@ void verifyCaptureReaction( const Reaction& capture ) {
 
   CHECK( ReactionID( "102" ) == capture.identifier() );
   CHECK( ReactionType::Primary == capture.type() );
+  CHECK( false == capture.hasProducts() );
   CHECK( false == capture.isLinearised() );
   CHECK( std::nullopt != capture.massDifferenceQValue() );
   CHECK( std::nullopt != capture.reactionQValue() );

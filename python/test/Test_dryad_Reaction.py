@@ -20,6 +20,10 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # reaction identifier
             self.assertEqual( 'n,Fe56->n,Fe56_e1', chunk.identifier )
 
+            # metadata
+            self.assertEqual( False, chunk.has_products )
+            self.assertEqual( False, chunk.is_linearised )
+
             # reaction type
             self.assertEqual( ReactionType.Primary, chunk.type )
 
@@ -58,6 +62,10 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # reaction identifier
             self.assertEqual( 'n,Fe56->total', chunk.identifier )
 
+            # metadata
+            self.assertEqual( False, chunk.has_products )
+            self.assertEqual( False, chunk.is_linearised )
+
             # reaction type
             self.assertEqual( ReactionType.Summation, chunk.type )
 
@@ -92,6 +100,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( False, chunk.is_linearised )
 
         def verify_linearised_chunk( self, chunk ) :
+
+            # metadata
+            self.assertEqual( True, chunk.is_linearised )
 
             # cross section
             self.assertEqual( 12, chunk.cross_section.number_points )
@@ -129,9 +140,6 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.cross_section.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.cross_section.interpolants[1] )
             self.assertEqual( True, chunk.cross_section.is_linearised )
-
-            # metadata
-            self.assertEqual( True, chunk.is_linearised )
 
         # the data is given explicitly
         chunk = Reaction( id = 'n,Fe56->n,Fe56_e1', type = ReactionType.Primary,

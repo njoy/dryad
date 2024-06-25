@@ -86,6 +86,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   auto reaction = chunk.reactions()[0];
   CHECK( ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( false == reaction.hasProducts() );
+  CHECK( false == reaction.isLinearised() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 2 == reaction.crossSection().numberPoints() );
@@ -105,6 +107,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( -1, WithinRel( reaction.reactionQValue().value() ) );
+  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.isLinearised() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
   CHECK( 2 == reaction.crossSection().energies().size() );
@@ -123,6 +127,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   reaction = chunk.reaction( ReactionID( "n,Fe56->n,Fe56" ) );
   CHECK( ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( false == reaction.hasProducts() );
+  CHECK( false == reaction.isLinearised() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 2 == reaction.crossSection().numberPoints() );
@@ -175,6 +181,8 @@ void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
   CHECK( ReactionType::Primary == reaction.type() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
+  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.isLinearised() );
   CHECK( 65 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
   CHECK( 65 == reaction.crossSection().energies().size() );
@@ -195,6 +203,8 @@ void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
   reaction = chunk.reactions()[1];
   CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.isLinearised() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( -1, WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 2 == reaction.crossSection().numberPoints() );
