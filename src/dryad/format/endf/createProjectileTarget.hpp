@@ -27,8 +27,8 @@ namespace endf {
 
     auto mf1mt451 = material.section( 1, 451 ).parse< 1, 451 >();
 
-    ParticleID projectile = createProjectileIdentifier( mf1mt451.subLibrary() );
-    ParticleID target = createTargetIdentifier( mf1mt451.ZA(), mf1mt451.excitedLevel() );
+    id::ParticleID projectile = createProjectileIdentifier( mf1mt451.subLibrary() );
+    id::ParticleID target = createTargetIdentifier( mf1mt451.ZA(), mf1mt451.excitedLevel() );
     InteractionType type = createInteractionType( mf1mt451.subLibrary() );
 
     std::vector< Reaction > reactions = createReactions( projectile, target, material );

@@ -21,7 +21,7 @@ SCENARIO( "Reaction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ReactionID id( "n,Fe56->n,Fe56_e1" );
+      id::ReactionID id( "n,Fe56->n,Fe56_e1" );
       ReactionType type = ReactionType::Primary;
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
@@ -61,7 +61,7 @@ SCENARIO( "Reaction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ReactionID id( "n,Fe56->total" );
+      id::ReactionID id( "n,Fe56->total" );
       ReactionType type = ReactionType::Summation;
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
@@ -97,7 +97,7 @@ SCENARIO( "Reaction" ) {
 void verifyChunk( const Reaction& chunk ) {
 
   // reaction identifier
-  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
 
   // reaction type
   CHECK( ReactionType::Primary == chunk.type() );
@@ -180,7 +180,7 @@ void verifyLinearisedChunk( const Reaction& chunk ) {
 void verifySummationChunk( const Reaction& chunk ) {
 
   // reaction identifier
-  CHECK( ReactionID( "n,Fe56->total" ) == chunk.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->total" ) == chunk.identifier() );
 
   // reaction type
   CHECK( ReactionType::Summation == chunk.type() );

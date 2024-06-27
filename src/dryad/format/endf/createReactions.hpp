@@ -25,7 +25,7 @@ namespace endf {
    *  present, the function will return an empty vector.
    */
   std::vector< Reaction >
-  createReactions( const ParticleID& projectile, const ParticleID& target,
+  createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
                    const ENDFtk::tree::Material& material ) {
 
     std::vector< Reaction > reactions;

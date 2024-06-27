@@ -8,7 +8,7 @@
 
 // other includes
 #include "dryad/type-aliases.hpp"
-#include "dryad/ReactionID.hpp"
+#include "dryad/id/ReactionID.hpp"
 #include "dryad/ReactionType.hpp"
 #include "dryad/ReactionProduct.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
@@ -23,7 +23,7 @@ namespace dryad {
   class Reaction {
 
     /* fields */
-    ReactionID id_;
+    id::ReactionID id_;
 
     ReactionType type_;
 
@@ -45,7 +45,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction identifier
      */
-    const ReactionID& identifier() const noexcept {
+    const id::ReactionID& identifier() const noexcept {
 
       return this->id_;
     }
