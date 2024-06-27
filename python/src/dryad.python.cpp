@@ -11,6 +11,9 @@ namespace python = pybind11;
 void wrapInteractionType( python::module&, python::module& );
 void wrapReactionType( python::module&, python::module& );
 
+// declarations - subpackages
+void wrapID( python::module&, python::module& );
+
 // declarations - components
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
@@ -42,6 +45,9 @@ PYBIND11_MODULE( dryad, module ) {
   // wrap enumerators
   wrapInteractionType( module, viewmodule );
   wrapReactionType( module, viewmodule );
+
+  // wrap subpackages
+  wrapID( module, viewmodule );
 
   // wrap components
   wrapTabulatedCrossSection( module, viewmodule );

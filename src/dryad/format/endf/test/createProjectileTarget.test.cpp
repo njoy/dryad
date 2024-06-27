@@ -29,8 +29,8 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H1 = format::endf::createProjectileTarget( material );
 
-        CHECK( ParticleID( "n" ) == H1.projectileIdentifier() );
-        CHECK( ParticleID( "1001_e0" ) == H1.targetIdentifier() );
+        CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
+        CHECK( id::ParticleID( "1001_e0" ) == H1.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == H1.interactionType() );
 
@@ -38,10 +38,10 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H1.resonances() );
 
-        CHECK( true == H1.hasReaction( ReactionID( "1" ) ) );
-        CHECK( true == H1.hasReaction( ReactionID( "2" ) ) );
-        CHECK( true == H1.hasReaction( ReactionID( "102" ) ) );
-        CHECK( false == H1.hasReaction( ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H1.hasReaction( id::ReactionID( "1" ) ) );
+        CHECK( true == H1.hasReaction( id::ReactionID( "2" ) ) );
+        CHECK( true == H1.hasReaction( id::ReactionID( "102" ) ) );
+        CHECK( false == H1.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         auto total = H1.reactions()[0];
         verifyTotalReaction( total );
@@ -52,13 +52,13 @@ SCENARIO( "createProjectileTarget" ) {
         auto capture = H1.reactions()[2];
         verifyCaptureReaction( capture );
 
-        total = H1.reaction( ReactionID( "1" ) );
+        total = H1.reaction( id::ReactionID( "1" ) );
         verifyTotalReaction( total );
 
-        elastic = H1.reaction( ReactionID( "2" ) );
+        elastic = H1.reaction( id::ReactionID( "2" ) );
         verifyElasticReaction( elastic );
 
-        capture = H1.reaction( ReactionID( "102" ) );
+        capture = H1.reaction( id::ReactionID( "102" ) );
         verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
@@ -67,7 +67,7 @@ SCENARIO( "createProjectileTarget" ) {
 
 void verifyTotalReaction( const Reaction& total ) {
 
-  CHECK( ReactionID( "1" ) == total.identifier() );
+  CHECK( id::ReactionID( "1" ) == total.identifier() );
   CHECK( ReactionType::Summation == total.type() );
   CHECK( false == total.hasProducts() );
   CHECK( false == total.isLinearised() );
@@ -94,7 +94,7 @@ void verifyTotalReaction( const Reaction& total ) {
 
 void verifyElasticReaction( const Reaction& elastic ) {
 
-  CHECK( ReactionID( "2" ) == elastic.identifier() );
+  CHECK( id::ReactionID( "2" ) == elastic.identifier() );
   CHECK( ReactionType::Primary == elastic.type() );
   CHECK( false == elastic.hasProducts() );
   CHECK( true == elastic.isLinearised() );
@@ -119,7 +119,7 @@ void verifyElasticReaction( const Reaction& elastic ) {
 
 void verifyCaptureReaction( const Reaction& capture ) {
 
-  CHECK( ReactionID( "102" ) == capture.identifier() );
+  CHECK( id::ReactionID( "102" ) == capture.identifier() );
   CHECK( ReactionType::Primary == capture.type() );
   CHECK( false == capture.hasProducts() );
   CHECK( false == capture.isLinearised() );

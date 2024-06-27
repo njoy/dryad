@@ -12,7 +12,7 @@ void wrapReactionProduct( python::module& module, python::module& ) {
 
   // type aliases
   using Component = njoy::dryad::ReactionProduct;
-  using ParticleID = njoy::dryad::ParticleID;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using Multiplicity = njoy::dryad::ReactionProduct::Multiplicity;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 

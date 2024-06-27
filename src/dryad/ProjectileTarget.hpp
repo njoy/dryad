@@ -7,8 +7,8 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/InteractionType.hpp"
-#include "dryad/ParticleID.hpp"
 #include "dryad/Reaction.hpp"
+#include "dryad/id/ParticleID.hpp"
 #include "dryad/resonances/ResonanceParameters.hpp"
 
 namespace njoy {
@@ -21,8 +21,8 @@ namespace dryad {
   class ProjectileTarget {
 
     /* fields */
-    ParticleID projectile_id_;
-    ParticleID target_id_;
+    id::ParticleID projectile_id_;
+    id::ParticleID target_id_;
 
     InteractionType interaction_;
 
@@ -41,7 +41,7 @@ namespace dryad {
     /**
      *  @brief Return the projectile identifier
      */
-    const ParticleID& projectileIdentifier() const noexcept {
+    const id::ParticleID& projectileIdentifier() const noexcept {
 
       return this->projectile_id_;
     }
@@ -49,7 +49,7 @@ namespace dryad {
     /**
      *  @brief Return the target identifier
      */
-    const ParticleID& targetIdentifier() const noexcept {
+    const id::ParticleID& targetIdentifier() const noexcept {
 
       return this->target_id_;
     }
@@ -83,7 +83,7 @@ namespace dryad {
      *
      *  @param[in] id   the reaction identifier
      */
-    bool hasReaction( const ReactionID& id ) const {
+    bool hasReaction( const id::ReactionID& id ) const {
 
       auto iter = std::find_if( this->reactions().begin(),
                                 this->reactions().end(),
@@ -97,7 +97,7 @@ namespace dryad {
      *
      *  @param[in] id   the reaction identifier
      */
-    const Reaction& reaction( const ReactionID& id ) const {
+    const Reaction& reaction( const id::ReactionID& id ) const {
 
       auto iter = std::find_if( this->reactions().begin(),
                                 this->reactions().end(),

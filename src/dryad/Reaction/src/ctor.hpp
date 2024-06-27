@@ -10,7 +10,7 @@
  *  @param linearised   a flag indicating whether or not the data is
  *                      linearised
  */
-Reaction( ReactionID&& id,
+Reaction( id::ReactionID&& id,
           ReactionType&& type,
           TabulatedCrossSection&& xs,
           std::vector< ReactionProduct >&& products,
@@ -41,7 +41,7 @@ Reaction& operator=( Reaction&& ) = default;
  *  @param mass_q       the mass difference Q value
  *  @param reaction_q   the reaction Q value
  */
-Reaction( ReactionID id,
+Reaction( id::ReactionID id,
           ReactionType type,
           TabulatedCrossSection xs,
           std::vector< ReactionProduct > products = {},

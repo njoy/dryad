@@ -19,15 +19,15 @@ SCENARIO( "createProjectileIdentifier" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( ParticleID( "g" ) == format::endf::createProjectileIdentifier( 0 ) );
-        CHECK( ParticleID( "g" ) == format::endf::createProjectileIdentifier( 3 ) );
-        CHECK( ParticleID( "n" ) == format::endf::createProjectileIdentifier( 10 ) );
-        CHECK( ParticleID( "e-" ) == format::endf::createProjectileIdentifier( 113 ) );
-        CHECK( ParticleID( "p" ) == format::endf::createProjectileIdentifier( 10010 ) );
-        CHECK( ParticleID( "d" ) == format::endf::createProjectileIdentifier( 10020 ) );
-        CHECK( ParticleID( "t" ) == format::endf::createProjectileIdentifier( 10030 ) );
-        CHECK( ParticleID( "he3" ) == format::endf::createProjectileIdentifier( 20030 ) );
-        CHECK( ParticleID( "a" ) == format::endf::createProjectileIdentifier( 20040 ) );
+        CHECK( id::ParticleID( "g" ) == format::endf::createProjectileIdentifier( 0 ) );
+        CHECK( id::ParticleID( "g" ) == format::endf::createProjectileIdentifier( 3 ) );
+        CHECK( id::ParticleID( "n" ) == format::endf::createProjectileIdentifier( 10 ) );
+        CHECK( id::ParticleID( "e-" ) == format::endf::createProjectileIdentifier( 113 ) );
+        CHECK( id::ParticleID( "p" ) == format::endf::createProjectileIdentifier( 10010 ) );
+        CHECK( id::ParticleID( "d" ) == format::endf::createProjectileIdentifier( 10020 ) );
+        CHECK( id::ParticleID( "t" ) == format::endf::createProjectileIdentifier( 10030 ) );
+        CHECK( id::ParticleID( "he3" ) == format::endf::createProjectileIdentifier( 20030 ) );
+        CHECK( id::ParticleID( "a" ) == format::endf::createProjectileIdentifier( 20040 ) );
       } // THEN
 
       THEN( "an exception is thrown for an unknown or unsupported sublibrary type" ) {

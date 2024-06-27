@@ -7,7 +7,7 @@
 // other includes
 #include "tools/overload.hpp"
 #include "dryad/type-aliases.hpp"
-#include "dryad/ParticleID.hpp"
+#include "dryad/id/ParticleID.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
 
 namespace njoy {
@@ -27,7 +27,7 @@ namespace dryad {
   private:
 
     /* fields */
-    ParticleID id_;
+    id::ParticleID id_;
 
     Multiplicity multiplicity_;
     bool linearised_;
@@ -42,7 +42,7 @@ namespace dryad {
     /**
      *  @brief Return the particle identifier for the reaction product
      */
-    const ParticleID& identifier() const noexcept {
+    const id::ParticleID& identifier() const noexcept {
 
       return this->id_;
     }

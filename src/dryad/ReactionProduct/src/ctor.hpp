@@ -6,7 +6,7 @@
  *  @param linearised     a flag indicating whether or not the data is
  *                        linearised
  */
-ReactionProduct( ParticleID&& id,
+ReactionProduct( id::ParticleID&& id,
                  Multiplicity&& multiplicity, bool linearised ) :
     id_( std::move( id ) ), multiplicity_( std::move( multiplicity ) ),
     linearised_( linearised ) {}
@@ -25,7 +25,7 @@ ReactionProduct& operator=( ReactionProduct&& ) = default;
  *  @param id             the reaction product identifier
  *  @param multiplicity   the reaction product multiplicity
  */
-ReactionProduct( ParticleID id,
+ReactionProduct( id::ParticleID id,
                  Multiplicity multiplicity ) :
     ReactionProduct( std::move( id ),
                      std::move( multiplicity ),

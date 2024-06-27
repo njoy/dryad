@@ -20,19 +20,19 @@ SCENARIO( "ProjectileTarget" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ParticleID projectile( "n" );
-      ParticleID target( "Fe56" );
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "Fe56" );
 
       InteractionType type = InteractionType::Nuclear;
 
       std::vector< Reaction > reactions = {
 
-        Reaction( ReactionID( "n,Fe56->n,Fe56" ), ReactionType::Primary,
+        Reaction( id::ReactionID( "n,Fe56->n,Fe56" ), ReactionType::Primary,
                   TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
                                            InterpolationType::LogLinear ),
                   {},
                   0, 0 ),
-        Reaction( ReactionID( "n,Fe56->n,Fe56_e1" ), ReactionType::Primary,
+        Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ), ReactionType::Primary,
                   TabulatedCrossSection( { 1., 20. }, { 0., 100. },
                                            InterpolationType::LinearLinear ),
                   {},
@@ -68,8 +68,8 @@ SCENARIO( "ProjectileTarget" ) {
 void verifyChunk( const ProjectileTarget& chunk ) {
 
   // identifiers
-  CHECK( ParticleID( "n" ) == chunk.projectileIdentifier() );
-  CHECK( ParticleID( "Fe56" ) == chunk.targetIdentifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
+  CHECK( id::ParticleID( "Fe56" ) == chunk.targetIdentifier() );
 
   // interaction type
   CHECK( InteractionType::Nuclear == chunk.interactionType() );
@@ -78,13 +78,13 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( std::nullopt == chunk.resonances() );
 
   // reactions are present
-  CHECK( true == chunk.hasReaction( ReactionID( "n,Fe56->n,Fe56" ) ) );
-  CHECK( true == chunk.hasReaction( ReactionID( "n,Fe56->n,Fe56_e1" ) ) );
-  CHECK( false == chunk.hasReaction( ReactionID( "some unknown reaction" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->n,Fe56" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ) ) );
+  CHECK( false == chunk.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
   // reactions
   auto reaction = chunk.reactions()[0];
-  CHECK( ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
   CHECK( false == reaction.hasProducts() );
   CHECK( false == reaction.isLinearised() );
@@ -104,7 +104,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LogLinear == reaction.crossSection().interpolants()[0] );
   CHECK( false == reaction.crossSection().isLinearised() );
   reaction = chunk.reactions()[1];
-  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( -1, WithinRel( reaction.reactionQValue().value() ) );
   CHECK( false == reaction.hasProducts() );
@@ -124,8 +124,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   // reaction
-  reaction = chunk.reaction( ReactionID( "n,Fe56->n,Fe56" ) );
-  CHECK( ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56" ) );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
   CHECK( false == reaction.hasProducts() );
   CHECK( false == reaction.isLinearised() );
@@ -144,8 +144,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LogLinear == reaction.crossSection().interpolants()[0] );
   CHECK( false == reaction.crossSection().isLinearised() );
-  reaction = chunk.reaction( ReactionID( "n,Fe56->n,Fe56_e1" ) );
-  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ) );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( -1, WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 2 == reaction.crossSection().numberPoints() );
@@ -169,15 +169,15 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
 
   // identifiers
-  CHECK( ParticleID( "n" ) == chunk.projectileIdentifier() );
-  CHECK( ParticleID( "Fe56" ) == chunk.targetIdentifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
+  CHECK( id::ParticleID( "Fe56" ) == chunk.targetIdentifier() );
 
   // resonances are not present
   CHECK( std::nullopt == chunk.resonances() );
 
   // reactions
   auto reaction = chunk.reactions()[0];
-  CHECK( ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
@@ -201,7 +201,7 @@ void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
   reaction = chunk.reactions()[1];
-  CHECK( ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );

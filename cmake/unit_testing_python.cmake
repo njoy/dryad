@@ -22,6 +22,8 @@ endfunction()
 
 message( STATUS "Adding dryad Python unit testing" )
 
+add_python_test( id.ElementID id/Test_dryad_id_ElementID.py )
+
 add_python_test( TabulatedCrossSection Test_dryad_TabulatedCrossSection.py )
 add_python_test( TabulatedMultiplicity Test_dryad_TabulatedMultiplicity.py )
 add_python_test( ReactionProduct       Test_dryad_ReactionProduct.py )

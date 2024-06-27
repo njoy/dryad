@@ -27,8 +27,8 @@ SCENARIO( "createReaction" ) {
 
       THEN( "a Reaction can be created" ) {
 
-        ParticleID projectile( "n" );
-        ParticleID target( "H1" );
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "H1" );
 
         Reaction total = format::endf::createReaction( projectile, target, material, 1 );
         verifyTotalReaction( total );
@@ -45,7 +45,7 @@ SCENARIO( "createReaction" ) {
 
 void verifyTotalReaction( const Reaction& total ) {
 
-  CHECK( ReactionID( "1" ) == total.identifier() );
+  CHECK( id::ReactionID( "1" ) == total.identifier() );
   CHECK( ReactionType::Summation == total.type() );
   CHECK( false == total.hasProducts() );
   CHECK( false == total.isLinearised() );
@@ -72,7 +72,7 @@ void verifyTotalReaction( const Reaction& total ) {
 
 void verifyElasticReaction( const Reaction& elastic ) {
 
-  CHECK( ReactionID( "2" ) == elastic.identifier() );
+  CHECK( id::ReactionID( "2" ) == elastic.identifier() );
   CHECK( ReactionType::Primary == elastic.type() );
   CHECK( false == elastic.hasProducts() );
   CHECK( true == elastic.isLinearised() );
@@ -97,7 +97,7 @@ void verifyElasticReaction( const Reaction& elastic ) {
 
 void verifyCaptureReaction( const Reaction& capture ) {
 
-  CHECK( ReactionID( "102" ) == capture.identifier() );
+  CHECK( id::ReactionID( "102" ) == capture.identifier() );
   CHECK( ReactionType::Primary == capture.type() );
   CHECK( false == capture.hasProducts() );
   CHECK( false == capture.isLinearised() );

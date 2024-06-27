@@ -12,7 +12,7 @@ void wrapReaction( python::module& module, python::module& ) {
 
   // type aliases
   using Component = njoy::dryad::Reaction;
-  using ReactionID = njoy::dryad::ReactionID;
+  using ReactionID = njoy::dryad::id::ReactionID;
   using ReactionType = njoy::dryad::ReactionType;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;

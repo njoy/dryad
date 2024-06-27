@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/ParticleID.hpp"
+#include "dryad/id/ParticleID.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create the target identifier
    */
-  ParticleID createTargetIdentifier( int za, int level ) {
+  id::ParticleID createTargetIdentifier( int za, int level ) {
 
     return std::to_string( za ) + "_e" + std::to_string( level );
   }
