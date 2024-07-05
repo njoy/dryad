@@ -5,6 +5,11 @@ include( FetchContent )
 # Declare project dependencies
 #######################################################################
 
+FetchContent_Declare( ACEtk
+    GIT_REPOSITORY  https://github.com/njoy/ACEtk.git
+    GIT_TAG         29684a986a9c3df1281cbadb73a83775acf9fb69 # tag: v1.0.0
+    )
+
 FetchContent_Declare( Catch2
     GIT_REPOSITORY  https://github.com/catchorg/Catch2
     GIT_TAG         3f0283de7a9c43200033da996ff9093be3ac84dc # tag: v3.3.2
@@ -37,7 +42,7 @@ FetchContent_Declare( range-v3
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  https://github.com/njoy/scion
-    GIT_TAG         d828ef47aa0d60daece9cdd5ff486d76aa6c8882 # develop
+    GIT_TAG         ba080204ee9c9db5dc1a453c552c68bcd50b4e9b
     )
 
 FetchContent_Declare( spdlog
@@ -55,6 +60,7 @@ FetchContent_Declare( tools
 #######################################################################
 
 FetchContent_MakeAvailable(
+    ACEtk
     eigen
     ENDFtk
     fast_float

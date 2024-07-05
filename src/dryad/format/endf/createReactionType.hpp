@@ -1,0 +1,106 @@
+#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEREACTIONTYPE
+#define NJOY_DRYAD_FORMAT_ENDF_CREATEREACTIONTYPE
+
+// system includes
+#include <vector>
+
+// other includes
+#include "tools/Log.hpp"
+#include "dryad/ReactionType.hpp"
+#include "ENDFtk/Material.hpp"
+#include "ENDFtk/tree/Material.hpp"
+
+namespace njoy {
+namespace dryad {
+namespace format {
+namespace endf {
+
+  /**
+   *  @brief Create the reaction type based of the mt number
+   */
+  ReactionType createReactionType( const ENDFtk::tree::Material& material, int mt ) {
+
+    constexpr std::array< int, 443 > primary = {   2,   5,  11, 17,  19,  20,  21,  22,  23,  24,  25,
+                                                  28,  29,  30,  32,  33,  34,  35,  36,  37,  38,
+                                                  41,  42,  44,  45,  50,  51,  52,  53,  54,  55,
+                                                  56,  57,  58,  59,  60,  61,  62,  63,  64,  65,
+                                                  66,  67,  68,  69,  70,  71,  72,  73,  74,  75,
+                                                  76,  77,  78,  79,  80,  81,  82,  83,  84,  85,
+                                                  86,  87,  88,  89,  90,  91, 102, 108, 109, 111,
+                                                 112, 113, 114, 115, 116, 117, 152, 153, 154, 155,
+                                                 156, 157, 158, 159, 160, 161, 162, 163, 164, 165,
+                                                 166, 167, 168, 169, 170, 171, 172, 173, 174, 175,
+                                                 176, 177, 178, 179, 180, 181, 182, 183, 184, 185,
+                                                 186, 187, 188, 189, 190, 191, 192, 193, 194, 195,
+                                                 196, 197, 198, 199, 200, 502, 504, 505, 506, 515,
+                                                 516, 517, 523, 525, 527, 528, 534, 535, 536, 537,
+                                                 538, 539, 540, 541, 542, 543, 544, 545, 546, 547,
+                                                 548, 549, 550, 551, 552, 553, 554, 555, 556, 557,
+                                                 558, 559, 560, 561, 562, 563, 564, 565, 566, 567,
+                                                 568, 569, 570, 571, 572,
+                                                 600, 601, 602, 603, 604, 605, 606, 607, 608, 609,
+                                                 610, 611, 612, 613, 614, 615, 616, 617, 618, 619,
+                                                 620, 621, 622, 623, 624, 625, 626, 627, 628, 629,
+                                                 630, 631, 632, 633, 634, 635, 636, 637, 638, 639,
+                                                 640, 641, 642, 643, 644, 645, 646, 647, 648, 649,
+                                                 650, 651, 652, 653, 654, 655, 656, 657, 658, 659,
+                                                 660, 661, 662, 663, 664, 665, 666, 667, 668, 669,
+                                                 670, 671, 672, 673, 674, 675, 676, 677, 678, 679,
+                                                 680, 681, 682, 683, 684, 685, 686, 687, 688, 689,
+                                                 690, 691, 692, 693, 694, 695, 696, 697, 698, 699,
+                                                 700, 701, 702, 703, 704, 705, 706, 707, 708, 709,
+                                                 710, 711, 712, 713, 714, 715, 716, 717, 718, 719,
+                                                 720, 721, 722, 723, 724, 725, 726, 727, 728, 729,
+                                                 730, 731, 732, 733, 734, 735, 736, 737, 738, 739,
+                                                 740, 741, 742, 743, 744, 745, 746, 747, 748, 749,
+                                                 750, 751, 752, 753, 754, 755, 756, 757, 758, 759,
+                                                 760, 761, 762, 763, 764, 765, 766, 767, 768, 769,
+                                                 770, 771, 772, 773, 774, 775, 776, 777, 778, 779,
+                                                 780, 781, 782, 783, 784, 785, 786, 787, 788, 789,
+                                                 790, 791, 792, 793, 794, 795, 796, 797, 798, 799,
+                                                 800, 801, 802, 803, 804, 805, 806, 807, 808, 809,
+                                                 810, 811, 812, 813, 814, 815, 816, 817, 818, 819,
+                                                 820, 821, 822, 823, 824, 825, 826, 827, 828, 829,
+                                                 830, 831, 832, 833, 834, 835, 836, 837, 838, 839,
+                                                 840, 841, 842, 843, 844, 845, 846, 847, 848, 849,
+                                                 875, 876, 877, 878, 879, 880, 881, 882, 883, 884,
+                                                 885, 886, 887, 888, 889, 890, 891 };
+
+    switch ( mt ) {
+
+      case     1 : return ReactionType::Summation;
+      case     3 : return ReactionType::Production;
+      case     4 : return ReactionType::Summation;
+      case    16 : return material.hasSection( 3, 875 ) ? ReactionType::Summation : ReactionType::Primary;
+      case    18 : return material.hasSection( 3, 19 ) ? ReactionType::Summation : ReactionType::Primary;
+      case    27 : return ReactionType::Summation;
+      case   101 : return ReactionType::Summation;
+      case   103 : return material.hasSection( 3, 600 ) ? ReactionType::Summation : ReactionType::Primary;
+      case   104 : return material.hasSection( 3, 650 ) ? ReactionType::Summation : ReactionType::Primary;
+      case   105 : return material.hasSection( 3, 700 ) ? ReactionType::Summation : ReactionType::Primary;
+      case   106 : return material.hasSection( 3, 750 ) ? ReactionType::Summation : ReactionType::Primary;
+      case   107 : return material.hasSection( 3, 800 ) ? ReactionType::Summation : ReactionType::Primary;
+      case   501 : return ReactionType::Summation;
+      case   522 : return ReactionType::Summation;
+      case   526 : return ReactionType::Summation;
+      default : {
+
+        if ( std::binary_search( primary.begin(), primary.end(), mt ) ) {
+
+          return ReactionType::Primary;
+        }
+        else {
+
+          Log::error( "{} does not define a legal ENDF reaction number", mt );
+          throw std::exception();
+        }
+      }
+    }
+  }
+
+} // endf namespace
+} // format namespace
+} // dryad namespace
+} // njoy namespace
+
+#endif

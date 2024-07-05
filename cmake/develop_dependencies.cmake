@@ -11,6 +11,12 @@ FetchContent_Declare( tools
     GIT_SHALLOW     TRUE
     )
 
+FetchContent_Declare( ACEtk
+    GIT_REPOSITORY  https://github.com/njoy/ACEtk.git
+    GIT_TAG         v1.0.0
+    GIT_SHALLOW     TRUE
+    )
+
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  https://github.com/njoy/ENDFtk.git
     GIT_TAG         v1.1.0
@@ -45,6 +51,7 @@ FetchContent_Declare( eigen
 #######################################################################
 
 FetchContent_MakeAvailable(
+    ACEtk
     ENDFtk
     scion
     tools
