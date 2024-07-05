@@ -42,7 +42,8 @@ void wrapTabulatedMultiplicity( python::module& module, python::module& ) {
     "    energies       the energy values\n"
     "    values         the multiplicity values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions"
+    "    interpolants   the interpolation types of the interpolation regions,\n"
+    "                   see InterpolationType for all interpolation types"
   )
   .def(
 
@@ -55,7 +56,8 @@ void wrapTabulatedMultiplicity( python::module& module, python::module& ) {
     "    self           the multiplicity table\n"
     "    energies       the energy values\n"
     "    values         the multiplicity values\n"
-    "    interpolant    the interpolation type (default lin-lin)"
+    "    interpolant    the interpolation type (default lin-lin),\n"
+    "                   see InterpolationType for all interpolation types"
   )
   .def_property_readonly(
 

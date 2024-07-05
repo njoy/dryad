@@ -25,7 +25,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
 
     module,
     "ProjectileTarget",
-    "A data associated to a given projectile and target"
+    "Data associated to a given projectile and target"
   );
 
   // wrap the component

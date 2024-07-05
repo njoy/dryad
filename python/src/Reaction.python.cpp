@@ -81,6 +81,18 @@ void wrapReaction( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "has_products",
+    &Component::hasProducts,
+    "Flag indicating whether or not there are reaction products defined"
+  )
+  .def_property_readonly(
+
+    "products",
+    &Component::products,
+    "The reaction products"
+  )
+  .def_property_readonly(
+
     "is_linearised",
     &Component::isLinearised,
     "Flag indicating whether or not the data is linearised"
