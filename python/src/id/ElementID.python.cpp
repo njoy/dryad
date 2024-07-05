@@ -33,7 +33,7 @@ void wrapElementID( python::module& module, python::module& ) {
 
     python::init< int >(),
     python::arg( "number" ),
-    "Initialise the reaction\n\n"
+    "Initialise the element identifier\n\n"
     "Arguments:\n"
     "    self     the reaction\n"
     "    number   the element number"
