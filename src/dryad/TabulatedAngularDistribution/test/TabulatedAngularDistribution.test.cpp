@@ -17,8 +17,8 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > cosines = { -1., 0., 1. };
-      const std::vector< double > values = { 0., 0.5, 1. };
+      const std::vector< double > cosines = { -1., 0., 0.5, 1. };
+      const std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
       TabulatedAngularDistribution chunk( std::move( cosines ), std::move( values ) );
 
@@ -26,19 +26,21 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
-        CHECK( 3 == chunk.numberPoints() );
+        CHECK( 4 == chunk.numberPoints() );
         CHECK( 1 == chunk.numberRegions() );
-        CHECK( 3 == chunk.cosines().size() );
-        CHECK( 3 == chunk.values().size() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
         CHECK( 1 == chunk.boundaries().size() );
         CHECK( 1 == chunk.interpolants().size() );
-        CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
-        CHECK_THAT(  0. , WithinRel( chunk.cosines()[1] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.cosines()[2] ) );
-        CHECK_THAT(  0. , WithinRel( chunk.values()[0] ) );
-        CHECK_THAT(  0.5, WithinRel( chunk.values()[1] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.values()[2] ) );
-        CHECK( 2 == chunk.boundaries()[0] );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
         CHECK( true == chunk.isLinearised() );
       } // THEN
@@ -59,394 +61,394 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT( 0.75, WithinRel( chunk(  0.5 ) ) );
       } // THEN
 
-//      THEN( "arithmetic operations can be performed" ) {
-//
-//        TabulatedAngularDistribution result( { 1., 4. }, { 0., 0. } );
-//        TabulatedAngularDistribution same( { 1., 4. }, { 0., 3. } );
-//        TabulatedAngularDistribution threshold( { 2., 4. }, { 0., 2. } );
-//        TabulatedAngularDistribution nonzerothreshold( { 2., 4. }, { 1., 3. } );
-//        TabulatedAngularDistribution small( { 1., 3. }, { 0., 2. } );
-//
-//        chunk += 2.;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 6., WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 5., WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        chunk -= 2.;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        chunk *= 2.;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        chunk /= 2.;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        result = -chunk;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT(  1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT(  2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT(  3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT(  4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
-//        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
-//        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = chunk + 2.;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = 2. + chunk;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 6., WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 5., WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 3., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = chunk - 2.;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT(  1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT(  2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT(  3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT(  4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT(  2., WithinRel( result.values()[0] ) );
-//        CHECK_THAT(  1., WithinRel( result.values()[1] ) );
-//        CHECK_THAT(  0., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = 2. - chunk;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT(  1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT(  2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT(  3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT(  4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( -2., WithinRel( result.values()[0] ) );
-//        CHECK_THAT( -1., WithinRel( result.values()[1] ) );
-//        CHECK_THAT(  0., WithinRel( result.values()[2] ) );
-//        CHECK_THAT(  1., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = chunk * 2.;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = 2. * chunk;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1., WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = chunk / 2.;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 2.0, WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 1.0, WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 0.5, WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        chunk += same;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        chunk -= same;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 2.0, WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 1.0, WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        result = chunk + same;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 4.0, WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 4.0, WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 4.0, WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 4.0, WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = chunk - same;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
-//        CHECK_THAT(  2., WithinRel( result.values()[1] ) );
-//        CHECK_THAT(  0., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( -2., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        chunk += threshold;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 3.0, WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 3.0, WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        chunk -= threshold;
-//
-//        CHECK( 4 == chunk.numberPoints() );
-//        CHECK( 1 == chunk.numberRegions() );
-//        CHECK( 4 == chunk.cosines().size() );
-//        CHECK( 4 == chunk.values().size() );
-//        CHECK( 1 == chunk.boundaries().size() );
-//        CHECK( 1 == chunk.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( chunk.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( chunk.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( chunk.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( chunk.cosines()[3] ) );
-//        CHECK_THAT( 4.0, WithinRel( chunk.values()[0] ) );
-//        CHECK_THAT( 3.0, WithinRel( chunk.values()[1] ) );
-//        CHECK_THAT( 2.0, WithinRel( chunk.values()[2] ) );
-//        CHECK_THAT( 1.0, WithinRel( chunk.values()[3] ) );
-//        CHECK( 3 == chunk.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-//
-//        result = chunk + threshold;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT( 4.0, WithinRel( result.values()[0] ) );
-//        CHECK_THAT( 3.0, WithinRel( result.values()[1] ) );
-//        CHECK_THAT( 3.0, WithinRel( result.values()[2] ) );
-//        CHECK_THAT( 3.0, WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
-//        result = chunk - threshold;
-//
-//        CHECK( 4 == result.numberPoints() );
-//        CHECK( 1 == result.numberRegions() );
-//        CHECK( 4 == result.cosines().size() );
-//        CHECK( 4 == result.values().size() );
-//        CHECK( 1 == result.boundaries().size() );
-//        CHECK( 1 == result.interpolants().size() );
-//        CHECK_THAT( 1. , WithinRel( result.cosines()[0] ) );
-//        CHECK_THAT( 2. , WithinRel( result.cosines()[1] ) );
-//        CHECK_THAT( 3. , WithinRel( result.cosines()[2] ) );
-//        CHECK_THAT( 4. , WithinRel( result.cosines()[3] ) );
-//        CHECK_THAT(  4., WithinRel( result.values()[0] ) );
-//        CHECK_THAT(  3., WithinRel( result.values()[1] ) );
-//        CHECK_THAT(  1., WithinRel( result.values()[2] ) );
-//        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
-//        CHECK( 3 == result.boundaries()[0] );
-//        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//
+      THEN( "arithmetic operations can be performed" ) {
+
+        TabulatedAngularDistribution result( { -1., 1. }, { 0., 0. } );
+        TabulatedAngularDistribution same( { -1., 1. }, { 1., 0. } );
+        TabulatedAngularDistribution threshold( { 0., 1. }, { 0., 2. } );
+        TabulatedAngularDistribution nonzerothreshold( { 0., 1. }, { 1., 1. } );
+        TabulatedAngularDistribution small( { -1., 0. }, { 0., 1. } );
+
+        chunk += 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  2.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  2.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  2.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  3.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk -= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk *= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  1.5, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  2. , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk /= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = -chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT( -0.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT( -0.75, WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk + 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  2.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  2.75, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  3.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = 2. + chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  2.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  2.75, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  3.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk - 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT( -2.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT( -1.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT( -1.25, WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = 2. - chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1.25, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk * 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0. , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1.5, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  2. , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = 2. * chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0. , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1.5, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  2. , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk / 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.   , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.   , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5  , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.   , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.   , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  0.25 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0.375, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  0.5  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        chunk += same;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk -= same;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = chunk + same;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[2] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk - same;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT( -1. , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0.5, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  1. , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        chunk += threshold;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  1.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  3.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        chunk -= threshold;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+        result = chunk + threshold;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1.75, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  3.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
+        result = chunk - threshold;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 1 == result.numberRegions() );
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 1 == result.boundaries().size() );
+        CHECK( 1 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT( -0.25, WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1.  , WithinRel( result.values()[3] ) );
+        CHECK( 3 == result.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+
 //        chunk += nonzerothreshold;
 //
 //        CHECK( 5 == chunk.numberPoints() );
@@ -580,36 +582,35 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 //        CHECK( 2 == result.boundaries()[0] );
 //        CHECK( 4 == result.boundaries()[1] );
 //        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
-//      } // THEN
-//
-//      THEN( "a TabulatedAngularDistribution can be linearised" ) {
-//
-//        TabulatedAngularDistribution linear = chunk.linearise();
-//
-//        CHECK( 4 == linear.numberPoints() );
-//        CHECK( 1 == linear.numberRegions() );
-//
-//        CHECK( 4 == linear.cosines().size() );
-//        CHECK( 4 == linear.values().size() );
-//        CHECK( 1 == linear.boundaries().size() );
-//        CHECK( 1 == linear.interpolants().size() );
-//
-//        CHECK( 3 == linear.boundaries()[0] );
-//
-//        CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
-//
-//        CHECK_THAT( 1., WithinRel( linear.cosines()[0] ) );
-//        CHECK_THAT( 2., WithinRel( linear.cosines()[1] ) );
-//        CHECK_THAT( 3., WithinRel( linear.cosines()[2] ) );
-//        CHECK_THAT( 4., WithinRel( linear.cosines()[3] ) );
-//
-//        CHECK_THAT( 4., WithinRel( linear.values()[0] ) );
-//        CHECK_THAT( 3., WithinRel( linear.values()[1] ) );
-//        CHECK_THAT( 2., WithinRel( linear.values()[2] ) );
-//        CHECK_THAT( 1., WithinRel( linear.values()[3] ) );
-//
-//        CHECK( true == linear.isLinearised() );
-//      } // THEN
+      } // THEN
+
+      THEN( "a TabulatedAngularDistribution can be linearised" ) {
+
+        TabulatedAngularDistribution linear = chunk.linearise();
+
+        CHECK( 4 == linear.numberPoints() );
+        CHECK( 1 == linear.numberRegions() );
+
+        CHECK( 4 == linear.cosines().size() );
+        CHECK( 4 == linear.values().size() );
+        CHECK( 1 == linear.boundaries().size() );
+        CHECK( 1 == linear.interpolants().size() );
+
+        CHECK( 3 == linear.boundaries()[0] );
+
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+
+        CHECK( true == linear.isLinearised() );
+      } // THEN
     } // WHEN
   } // GIVEN
 
