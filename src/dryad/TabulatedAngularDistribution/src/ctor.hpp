@@ -1,7 +1,7 @@
 private:
 
 /**
- *  @brief Constructor for probability data
+ *  @brief Private constructor
  *
  *  @param table   the interpolation table
  */

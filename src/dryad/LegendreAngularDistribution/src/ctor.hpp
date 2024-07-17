@@ -1,3 +1,15 @@
+private:
+
+/**
+ *  @brief Private constructor
+ *
+ *  @param series   the series expansion
+ */
+LegendreAngularDistribution( LegendreSeries< double, double > table ) :
+  LegendreSeries( std::move( table ) ) {}
+
+public:
+
 LegendreAngularDistribution( const LegendreAngularDistribution& ) = default;
 LegendreAngularDistribution( LegendreAngularDistribution&& ) = default;
 
