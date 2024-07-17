@@ -58,18 +58,6 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   table
-  .def_property_readonly(
-
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
-  )
-  .def_property_readonly(
-
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
-  )
   .def(
 
     "__call__",

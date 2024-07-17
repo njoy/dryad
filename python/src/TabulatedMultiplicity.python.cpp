@@ -70,6 +70,18 @@ void wrapTabulatedMultiplicity( python::module& module, python::module& ) {
     "values",
     &Component::values,
     "The multiplicity values"
+  )
+  .def_property_readonly(
+
+    "lower_energy_limit",
+    &Component::lowerEnergyLimit,
+    "The lower energy limit"
+  )
+  .def_property_readonly(
+
+    "upper_energy_limit",
+    &Component::upperEnergyLimit,
+    "The upper energy limit"
   );
 
   // add standard tabulated data definitions
