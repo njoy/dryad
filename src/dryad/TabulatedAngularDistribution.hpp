@@ -11,12 +11,17 @@
 namespace njoy {
 namespace dryad {
 
+  // forward declaration LegendreAngularDistribution
+  class LegendreAngularDistribution;
+
   /**
    *  @class
    *  @brief An angular distribution table
    */
   class TabulatedAngularDistribution :
       protected scion::math::InterpolationTable< double, double > {
+
+  friend LegendreAngularDistribution;
 
   public:
 
