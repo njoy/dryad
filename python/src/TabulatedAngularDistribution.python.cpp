@@ -82,6 +82,17 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
     "upper_cosine_limit",
     &Component::upperCosineLimit,
     "The upper cosine limit"
+  )
+  .def(
+
+    "__call__",
+    [] ( const Component& self, double cosine ) -> decltype(auto)
+       { return self( cosine ); },
+    python::arg( "cosine" ),
+    "Evaluate the table for a given cosine value\n\n"
+    "Arguments:\n"
+    "    self      the table\n"
+    "    cosine    the cosine value"
   );
 
   // add standard tabulated data definitions

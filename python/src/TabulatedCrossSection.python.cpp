@@ -82,6 +82,17 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
     "upper_energy_limit",
     &Component::upperEnergyLimit,
     "The upper energy limit"
+  )
+  .def(
+
+    "__call__",
+    [] ( const Component& self, double energy ) -> decltype(auto)
+       { return self( energy ); },
+    python::arg( "energy" ),
+    "Evaluate the table for a given energy value\n\n"
+    "Arguments:\n"
+    "    self      the table\n"
+    "    energy    the energy value"
   );
 
   // add standard tabulated data definitions

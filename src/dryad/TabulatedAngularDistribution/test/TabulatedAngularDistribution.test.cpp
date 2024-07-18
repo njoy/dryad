@@ -50,6 +50,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         // values of x in the x grid
         CHECK_THAT( 0. , WithinRel( chunk( -1. ) ) );
         CHECK_THAT( 0.5, WithinRel( chunk(  0. ) ) );
+        CHECK_THAT( 0.75, WithinRel( chunk( 0.5 ) ) );
         CHECK_THAT( 1. , WithinRel( chunk(  1. ) ) );
 
         // values of x outside the x grid
@@ -57,8 +58,8 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
 
         // values of x inside the x grid
-        CHECK_THAT( 0.25, WithinRel( chunk( -0.5 ) ) );
-        CHECK_THAT( 0.75, WithinRel( chunk(  0.5 ) ) );
+        CHECK_THAT( 0.25 , WithinRel( chunk( -0.5 ) ) );
+        CHECK_THAT( 0.875, WithinRel( chunk(  0.75 ) ) );
       } // THEN
 
       THEN( "arithmetic operations can be performed" ) {
@@ -857,11 +858,11 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT(  0. , WithinRel( result.cosines()[2] ) );
         CHECK_THAT(  0.5, WithinRel( result.cosines()[3] ) );
         CHECK_THAT(  1. , WithinRel( result.cosines()[4] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[0] ) );
-        CHECK_THAT( -1., WithinRel( result.values()[1] ) );
-        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
-        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
-        CHECK_THAT(  0., WithinRel( result.values()[4] ) );
+        CHECK_THAT( -2. , WithinRel( result.values()[0] ) );
+        CHECK_THAT( -1. , WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2. , WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1. , WithinRel( result.values()[3] ) );
+        CHECK_THAT(  0. , WithinRel( result.values()[4] ) );
         CHECK( 1 == result.boundaries()[0] );
         CHECK( 4 == result.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
@@ -962,11 +963,11 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT(  0. , WithinRel( chunk.cosines()[2] ) );
         CHECK_THAT(  0.5, WithinRel( chunk.cosines()[3] ) );
         CHECK_THAT(  1. , WithinRel( chunk.cosines()[4] ) );
-        CHECK_THAT(  4., WithinRel( chunk.values()[0] ) );
-        CHECK_THAT(  3., WithinRel( chunk.values()[1] ) );
-        CHECK_THAT(  4., WithinRel( chunk.values()[2] ) );
-        CHECK_THAT(  3., WithinRel( chunk.values()[3] ) );
-        CHECK_THAT(  2., WithinRel( chunk.values()[4] ) );
+        CHECK_THAT(  4. , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  3. , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  4. , WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  3. , WithinRel( chunk.values()[3] ) );
+        CHECK_THAT(  2. , WithinRel( chunk.values()[4] ) );
         CHECK( 1 == chunk.boundaries()[0] );
         CHECK( 4 == chunk.boundaries()[1] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
@@ -1582,11 +1583,11 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( 5 == chunk.values().size() );
         CHECK( 2 == chunk.boundaries().size() );
         CHECK( 2 == chunk.interpolants().size() );
-        CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
-        CHECK_THAT(  0. , WithinRel( chunk.cosines()[1] ) );
-        CHECK_THAT(  0. , WithinRel( chunk.cosines()[2] ) );
-        CHECK_THAT(  0.5, WithinRel( chunk.cosines()[3] ) );
-        CHECK_THAT(  1. , WithinRel( chunk.cosines()[4] ) );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[4] ) );
         CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
         CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
         CHECK_THAT(  1.  , WithinRel( chunk.values()[2] ) );
@@ -1609,7 +1610,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > x = { -1., 0., 0.5, 1., 1. }; // <-- jump at end
-      const std::vector< double > y = { 0., 0.5, 0.75, 1., 0.}; // <-- last value is zero
+      const std::vector< double > y = { 0., 0.5, 0.75, 1., 0. }; // <-- last value is zero
       const std::vector< std::size_t > boundaries = { 1, 4 };   // <-- pointing to end
       const std::vector< InterpolationType > interpolants = {
 

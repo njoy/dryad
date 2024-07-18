@@ -60,17 +60,6 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
   table
   .def(
 
-    "__call__",
-    [] ( const Component& self, double energy ) -> decltype(auto)
-       { return self( energy ); },
-    python::arg( "energy" ),
-    "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
-  )
-  .def(
-
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
