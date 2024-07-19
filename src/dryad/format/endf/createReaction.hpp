@@ -21,7 +21,7 @@ namespace endf {
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
    */
-  Reaction createReaction( const ParticleID& projectile, const ParticleID& target,
+  Reaction createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
                            const ENDFtk::tree::Material& material, int mt ) {
 
     if ( material.hasSection( 3, mt ) ) {
@@ -29,7 +29,7 @@ namespace endf {
       auto section = material.section( 3, mt ).parse< 3 >();
 
       // metadata and miscellaneous information
-      ReactionID id = std::to_string( mt );
+      id::ReactionID id = std::to_string( mt );
       ReactionType type = createReactionType( material, mt );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
@@ -59,7 +59,7 @@ namespace endf {
       auto section = material.section( 23, mt ).parse< 23 >();
 
       // metadata and miscellaneous information
-      ReactionID id = std::to_string( mt );
+      id::ReactionID id = std::to_string( mt );
       ReactionType type = createReactionType( material, mt );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;

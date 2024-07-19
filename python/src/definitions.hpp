@@ -12,6 +12,31 @@
 namespace python = pybind11;
 
 /**
+ *  @brief Add standard comparison definitions
+ *
+ *  This adds the following standard properties:
+ *    - operator==
+ *    - operator!=
+ *    - operator<
+ *    - operator>
+ *    - operator<=
+ *    - operator>=
+ *
+ *  @param[in] component   the component to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardComparisonDefinitions( PythonClass& component ) {
+
+  component
+  .def( python::self == python::self )
+  .def( python::self != python::self )
+  .def( python::self > python::self )
+  .def( python::self < python::self )
+  .def( python::self >= python::self )
+  .def( python::self <= python::self );
+}
+
+/**
  *  @brief Add standard tabulated data definitions
  *
  *  This adds the following standard properties:

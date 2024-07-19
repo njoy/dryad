@@ -13,7 +13,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
 
   // type aliases
   using Component = njoy::dryad::ProjectileTarget;
-  using ParticleID = njoy::dryad::ParticleID;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using Reaction = njoy::dryad::Reaction;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
   using InteractionType = njoy::dryad::InteractionType;

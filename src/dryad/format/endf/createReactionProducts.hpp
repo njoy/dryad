@@ -19,7 +19,7 @@ namespace endf {
    *  @brief Create a Reaction from an unparsed ENDF material
    */
   std::vector< ReactionProduct >
-  createReactionProducts( const ParticleID& projectile, const ParticleID& target,
+  createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
                           const ENDFtk::tree::Material& material, int mt ) {
 
     return {};

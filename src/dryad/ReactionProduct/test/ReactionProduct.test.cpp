@@ -21,7 +21,7 @@ SCENARIO( "ReactionProduct" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ParticleID id( "n" );
+      id::ParticleID id( "n" );
       int multiplicity = 1;
 
       ReactionProduct chunk( std::move( id ), std::move( multiplicity ) );
@@ -52,7 +52,7 @@ SCENARIO( "ReactionProduct" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ParticleID id( "n" );
+      id::ParticleID id( "n" );
       TabulatedMultiplicity multiplicity( { 1., 2., 2., 3., 4. },
                                           { 4., 3., 4., 3., 2. },
                                           { 1, 4 },
@@ -87,7 +87,7 @@ SCENARIO( "ReactionProduct" ) {
 void verifyChunk( const ReactionProduct& chunk ) {
 
   // ReactionProduct identifier
-  CHECK( ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
 
   // multiplicity
   auto multiplicity = chunk.multiplicity();
@@ -101,7 +101,7 @@ void verifyChunk( const ReactionProduct& chunk ) {
 void verifyTabulatedChunk( const ReactionProduct& chunk ) {
 
   // ReactionProduct identifier
-  CHECK( ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
 
   // multiplicity
   CHECK( true == std::holds_alternative< TabulatedMultiplicity >( chunk.multiplicity() ) );
@@ -135,7 +135,7 @@ void verifyTabulatedChunk( const ReactionProduct& chunk ) {
 void verifyTabulatedLinearisedChunk( const ReactionProduct& chunk ) {
 
   // ReactionProduct identifier
-  CHECK( ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
 
   // multiplicity
   CHECK( true == std::holds_alternative< TabulatedMultiplicity >( chunk.multiplicity() ) );
