@@ -575,6 +575,8 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             # verify content
             self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
             self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
+            self.assertEqual( 5, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
             self.assertEqual( 5, len( chunk.cosines ) )
             self.assertEqual( 5, len( chunk.values ) )
             self.assertEqual( 2, len( chunk.boundaries ) )
@@ -1300,6 +1302,8 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             # verify content
             self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
             self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
+            self.assertEqual( 5, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
             self.assertEqual( 5, len( chunk.cosines ) )
             self.assertEqual( 5, len( chunk.values ) )
             self.assertEqual( 2, len( chunk.boundaries ) )
@@ -1400,6 +1404,10 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
         def verify_chunk5( self, chunk ) :
 
             # verify content
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
+            self.assertEqual( 5, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
             self.assertEqual( 5, len( chunk.cosines ) )
             self.assertEqual( 5, len( chunk.values ) )
             self.assertEqual( 2, len( chunk.boundaries ) )
@@ -1423,6 +1431,10 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
         def verify_chunk6( self, chunk ) :
 
             # verify content
+            self.assertAlmostEqual( -1., chunk.lower_cosine_limit )
+            self.assertAlmostEqual(  1., chunk.upper_cosine_limit )
+            self.assertEqual( 4, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
             self.assertEqual( 4, len( chunk.cosines ) )
             self.assertEqual( 4, len( chunk.values ) )
             self.assertEqual( 2, len( chunk.boundaries ) )

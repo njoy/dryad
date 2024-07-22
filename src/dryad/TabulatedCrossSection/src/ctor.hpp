@@ -1,7 +1,7 @@
 private:
 
 /**
- *  @brief Constructor for cross section data
+ *  @brief Private constructor
  *
  *  @param table   the interpolation table
  */
