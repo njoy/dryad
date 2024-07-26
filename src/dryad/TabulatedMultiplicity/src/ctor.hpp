@@ -1,7 +1,7 @@
 private:
 
 /**
- *  @brief Constructor for cross section data
+ *  @brief Private constructor
  *
  *  @param table   the interpolation table
  */
@@ -32,7 +32,7 @@ TabulatedMultiplicity( std::vector< double > energies,
                       std::move( boundaries ), std::move( interpolants ) ) {}
 
 /**
- *  @brief Constructor for a cross section using a single interpolation zone
+ *  @brief Constructor for a multiplicity using a single interpolation zone
  *
  *  @param energies       the energy values
  *  @param values         the multiplicity values

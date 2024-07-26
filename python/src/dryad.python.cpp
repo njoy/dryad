@@ -15,6 +15,8 @@ void wrapReactionType( python::module&, python::module& );
 void wrapID( python::module&, python::module& );
 
 // declarations - components
+void wrapLegendreAngularDistribution( python::module&, python::module& );
+void wrapTabulatedAngularDistribution( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
 void wrapReactionProduct( python::module&, python::module& );
@@ -50,6 +52,8 @@ PYBIND11_MODULE( dryad, module ) {
   wrapID( module, viewmodule );
 
   // wrap components
+  wrapLegendreAngularDistribution( module, viewmodule );
+  wrapTabulatedAngularDistribution( module, viewmodule );
   wrapTabulatedCrossSection( module, viewmodule );
   wrapTabulatedMultiplicity( module, viewmodule );
   wrapReactionProduct( module, viewmodule );

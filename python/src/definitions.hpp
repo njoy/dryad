@@ -40,9 +40,6 @@ void addStandardComparisonDefinitions( PythonClass& component ) {
  *  @brief Add standard tabulated data definitions
  *
  *  This adds the following standard properties:
- *    - lower_energy_limit
- *    - upper_energy_limit
- *    - call operator
  *    - linearise
  *    - boundaries, interpolants
  *    - number_points, number_regions
@@ -58,29 +55,6 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   table
-  .def_property_readonly(
-
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
-  )
-  .def_property_readonly(
-
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
-  )
-  .def(
-
-    "__call__",
-    [] ( const Component& self, double energy ) -> decltype(auto)
-       { return self( energy ); },
-    python::arg( "energy" ),
-    "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
-  )
   .def(
 
     "linearise",
@@ -125,6 +99,65 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.isLinearised(); },
     "Flag indicating whether or not the table is linearised"
+  )
+  .def( -python::self )
+  .def( python::self + double() )
+  .def( python::self - double() )
+  .def( python::self * double() )
+  .def( python::self / double() )
+  .def( python::self + python::self )
+  .def( python::self - python::self )
+  .def( python::self += double() )
+  .def( python::self -= double() )
+  .def( python::self *= double() )
+  .def( python::self /= double() )
+  .def( python::self += python::self )
+  .def( python::self -= python::self )
+  .def( double() + python::self )
+  .def( double() - python::self )
+  .def( double() * python::self );
+}
+
+/**
+ *  @brief Add standard series expansion definitions
+ *
+ *  This adds the following standard properties:
+ *    - order and coefficients
+ *    - linearise
+ *    - arithmetic operators
+ *
+ *  @param[in] series   the series to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardSeriesDefinitions( PythonClass& table ) {
+
+  // type aliases
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
+
+  table
+  .def_property_readonly(
+
+    "coefficients",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.coefficients(); },
+    "The series coefficients"
+  )
+  .def_property_readonly(
+
+    "order",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.order(); },
+    "The series order"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the table\n\n"
+    "Arguments:\n"
+    "    self        the table\n"
+    "    tolerance   the linearisation tolerance"
   )
   .def( -python::self )
   .def( python::self + double() )
