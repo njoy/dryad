@@ -9,6 +9,7 @@
 // enumerators
 #include "dryad/InteractionType.hpp"
 #include "dryad/ReactionType.hpp"
+#include "dryad/ReferenceFrame.hpp"
 
 // components
 #include "dryad/TabulatedCrossSection.hpp"
