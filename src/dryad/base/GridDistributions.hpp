@@ -7,12 +7,10 @@
 // other includes
 #include "scion/math/InterpolationTableFunction.hpp"
 #include "dryad/type-aliases.hpp"
-#include "dryad/LegendreAngularDistribution.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
-#include "dryad/TabulatedEnergyDistribution.hpp"
 
 namespace njoy {
 namespace dryad {
+namespace base {
 
   /**
    *  @class
@@ -29,7 +27,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/GridDistributions/src/ctor.hpp"
+    #include "dryad/base/GridDistributions/src/ctor.hpp"
 
     /* methods */
 
@@ -57,6 +55,7 @@ namespace dryad {
     using Parent::operator();
   };
 
+} // base namespace
 } // dryad namespace
 } // njoy namespace
 

@@ -4,13 +4,13 @@
 // system includes
 
 // other includes
-#include "dryad/GridDistributions.hpp"
+#include "dryad/base/GridDistributions.hpp"
 #include "dryad/TabulatedEnergyDistribution.hpp"
 
 namespace njoy {
 namespace dryad {
 
-  using TabulatedEnergyDistributions = GridDistributions< TabulatedEnergyDistribution >;
+  using TabulatedEnergyDistributions = base::GridDistributions< TabulatedEnergyDistribution >;
 
 } // dryad namespace
 } // njoy namespace

@@ -4,13 +4,13 @@
 // system includes
 
 // other includes
-#include "dryad/GridDistributions.hpp"
+#include "dryad/base/GridDistributions.hpp"
 #include "dryad/LegendreAngularDistribution.hpp"
 
 namespace njoy {
 namespace dryad {
 
-  using LegendreAngularDistributions = GridDistributions< LegendreAngularDistribution >;
+  using LegendreAngularDistributions = base::GridDistributions< LegendreAngularDistribution >;
 
 } // dryad namespace
 } // njoy namespace
