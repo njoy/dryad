@@ -98,6 +98,7 @@ if( dryad.python )
       python/src/id/ElementID.python.cpp
       python/src/InteractionType.python.cpp
       python/src/ReactionType.python.cpp
+      python/src/ReferenceFrame.python.cpp
       python/src/TabulatedCrossSection.python.cpp
       python/src/TabulatedMultiplicity.python.cpp
       python/src/LegendreAngularDistribution.python.cpp
