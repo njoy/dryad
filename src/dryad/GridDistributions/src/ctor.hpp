@@ -29,4 +29,4 @@ GridDistributions( std::vector< double > grid,
 GridDistributions( std::vector< double > grid,
                    std::vector< Distribution > distributions,
                    InterpolationType interpolant = InterpolationType::LinearLinear ) :
-  Parent( std::move( energies ), std::move( distributions ), interpolant ) {}
+  Parent( std::move( grid ), std::move( distributions ), interpolant ) {}
