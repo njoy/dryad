@@ -95,148 +95,156 @@ SCENARIO( "TabulatedAngularDistributions" ) {
     } // WHEN
   } // GIVEN
 
-//  GIVEN( "invalid data for an InterpolationTableFunction object" ) {
-//
-//    WHEN( "there are not enough values in the x or f(y) grid" ) {
-//
-//      std::vector< double > xempty = {};
-//      std::vector< double > xone = { 1. };
-//      std::vector< InterpolationTable< double > > fempty = {};
-//      std::vector< InterpolationTable< double > > fone = { { { 1., 2. }, { 3., 4. } } };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( xempty, fempty ) );
-//        CHECK_THROWS( Table2D( xone, fone ) );
-//        CHECK_THROWS( Table2D( xempty, fone ) );
-//        CHECK_THROWS( Table2D( xone, fempty ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the x and f(y) grid do not have the same number of points" ) {
-//
-//      std::vector< double > x = { 1., 2., 3., 4. };
-//      std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } }
-//      };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the boundaries and interpolants do not have the same size" ) {
-//
-//      const std::vector< double > x = { 1., 2., 3., 4. };
-//      const std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
-//        { { -1., +1. }, { 0.1, 0.9 } }
-//      };
-//      std::vector< std::size_t > boundaries = { 3 };
-//      std::vector< InterpolationType > interpolants = {};
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ),
-//                                 std::move( boundaries ),
-//                                 std::move( interpolants ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the x grid is not sorted" ) {
-//
-//      const std::vector< double > x = { 1., 3., 2., 4. };
-//      const std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
-//        { { -1., +1. }, { 0.1, 0.9 } }
-//      };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the x grid contains a triple x value" ) {
-//
-//      const std::vector< double > x = { 1., 2., 2., 2., 4. };
-//      const std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
-//        { { -1., +1. }, { 0.1, 0.9 } },
-//        { { -1., +1. }, { 0.3, 0.7 } }
-//      };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the x grid has a jump at the beginning" ) {
-//
-//      const std::vector< double > x = { 1., 1., 3., 4. };
-//      const std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
-//        { { -1., +1. }, { 0.1, 0.9 } }
-//      };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the x grid has a jump at the end" ) {
-//
-//      const std::vector< double > x = { 1., 2., 4., 4. };
-//      const std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
-//        { { -1., +1. }, { 0.1, 0.9 } }
-//      };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the last boundary does not point to the last point" ) {
-//
-//      const std::vector< double > x = { 1., 2., 3., 4. };
-//      const std::vector< InterpolationTable< double > > f = {
-//
-//        { { -1., +1. }, { 0.5, 0.5 } },
-//        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
-//        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
-//        { { -1., +1. }, { 0.1, 0.9 } }
-//      };
-//      std::vector< std::size_t > boundaries = { 2 };
-//      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( Table2D( std::move( x ), std::move( f ),
-//                               std::move( boundaries ), std::move( interpolants ) ) );
-//      } // THEN
-//    } // WHEN
-//  } // GIVEN
+  GIVEN( "invalid data for an InterpolationTableFunction object" ) {
+
+    WHEN( "there are not enough values in the x or f(y) grid" ) {
+
+      std::vector< double > gempty = {};
+      std::vector< double > gone = { 1. };
+      std::vector< TabulatedAngularDistribution > dempty = {};
+      std::vector< TabulatedAngularDistribution > done = { { { -1., +1. }, { 0.5, 0.5 } } };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( gempty, dempty ) );
+        CHECK_THROWS( TabulatedAngularDistributions( gone, done ) );
+        CHECK_THROWS( TabulatedAngularDistributions( gempty, done ) );
+        CHECK_THROWS( TabulatedAngularDistributions( gone, dempty ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x and f(y) grid do not have the same number of points" ) {
+
+      std::vector< double > grid = { 1., 2., 3., 4. };
+      std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } }
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the boundaries and interpolants do not have the same size" ) {
+
+      const std::vector< double > grid = { 1., 2., 3., 4. };
+      const std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
+        { { -1., +1. }, { 0.1, 0.9 } }
+      };
+      std::vector< std::size_t > boundaries = { 3 };
+      std::vector< InterpolationType > interpolants = {};
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ),
+                                                    std::move( boundaries ),
+                                                    std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid is not sorted" ) {
+
+      const std::vector< double > grid = { 1., 3., 2., 4. };
+      const std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
+        { { -1., +1. }, { 0.1, 0.9 } }
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid contains a triple x value" ) {
+
+      const std::vector< double > grid = { 1., 2., 2., 2., 4. };
+      const std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., 0.5, +1. }, { 0.49, 0.5, 0.505, 0.51 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
+        { { -1., +1. }, { 0.1, 0.9 } }
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid has a jump at the beginning" ) {
+
+      const std::vector< double > grid = { 1., 1., 3., 4. };
+      const std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
+        { { -1., +1. }, { 0.1, 0.9 } }
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the x grid has a jump at the end" ) {
+
+      const std::vector< double > grid = { 1., 2., 4., 4. };
+      const std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
+        { { -1., +1. }, { 0.1, 0.9 } }
+      };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the last boundary does not point to the last point" ) {
+
+      const std::vector< double > grid = { 1., 2., 3., 4. };
+      const std::vector< TabulatedAngularDistribution > distributions = {
+
+        { { -1., +1. }, { 0.5, 0.5 } },
+        { { -1., 0., +1. }, { 0.49, 0.5, 0.51 } },
+        { { -1., 0., +1. }, { 0.4, 0.5, 0.6 } },
+        { { -1., +1. }, { 0.1, 0.9 } }
+      };
+      std::vector< std::size_t > boundaries = { 2 };
+      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
+                                                    std::move( distributions ),
+                                                    std::move( boundaries ),
+                                                    std::move( interpolants ) ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
