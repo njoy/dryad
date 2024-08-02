@@ -22,7 +22,7 @@ namespace dryad {
    *
    *  In this representation, there is no correlation given between the outgoing
    *  angle and energy of the reaction product. As a result, the angular and energy
-   *  distributions of the reaction product only depend on the incident energy of the
+   *  distributions of the reaction product depend only on the incident energy of the
    *  projectile.
    *
    *  For incident neutron data, this is used for reactions that have both MF4 and MF5
