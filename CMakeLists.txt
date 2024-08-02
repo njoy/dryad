@@ -96,6 +96,7 @@ if( dryad.python )
       python/src/dryad.python.cpp
       python/src/id.python.cpp
       python/src/id/ElementID.python.cpp
+      python/src/DistributionDataType.python.cpp
       python/src/InteractionType.python.cpp
       python/src/ReactionType.python.cpp
       python/src/ReferenceFrame.python.cpp
