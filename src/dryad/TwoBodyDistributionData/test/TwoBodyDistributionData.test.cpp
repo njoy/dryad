@@ -98,7 +98,7 @@ void verifyLegendreChunk( const TwoBodyDistributionData& chunk ) {
   CHECK( 1 == angle.boundaries().size() );
   CHECK( 1 == angle.interpolants().size() );
   CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
-  CHECK_THAT( 20., WithinRel( angle.grid()[1] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
   CHECK( 1 == angle.distributions()[0].coefficients().size() );
   CHECK( 2 == angle.distributions()[1].coefficients().size() );
   CHECK_THAT( 0.5 , WithinRel( angle.distributions()[0].coefficients()[0] ) );
@@ -123,7 +123,7 @@ void verifyTabulatedChunk( const TwoBodyDistributionData& chunk ) {
   CHECK( 1 == angle.boundaries().size() );
   CHECK( 1 == angle.interpolants().size() );
   CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
-  CHECK_THAT( 20., WithinRel( angle.grid()[1] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
   CHECK( 2 == angle.distributions()[0].cosines().size() );
   CHECK( 2 == angle.distributions()[0].values().size() );
   CHECK( 2 == angle.distributions()[1].cosines().size() );

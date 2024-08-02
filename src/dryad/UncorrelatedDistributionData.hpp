@@ -53,6 +53,8 @@ namespace dryad {
 
     /* constructor */
 
+    #include "dryad/UncorrelatedDistributionData/src/ctor.hpp"
+
     /* methods */
 
     /**

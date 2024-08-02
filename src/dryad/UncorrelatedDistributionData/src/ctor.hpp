@@ -13,7 +13,7 @@ UncorrelatedDistributionData& operator=( UncorrelatedDistributionData&& ) = defa
  */
 UncorrelatedDistributionData( ReferenceFrame frame,
                               AngularDistributions angle,
-                              EnergyDistributions angle ) :
+                              EnergyDistributions energy ) :
     frame_( std::move( frame ) ),
     angle_( std::move( angle ) ),
     energy_( std::move( energy ) ) {}
