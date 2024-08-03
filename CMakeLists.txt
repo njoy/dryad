@@ -103,8 +103,11 @@ if( dryad.python )
       python/src/TabulatedCrossSection.python.cpp
       python/src/TabulatedMultiplicity.python.cpp
       python/src/LegendreAngularDistribution.python.cpp
+      python/src/LegendreAngularDistributions.python.cpp
       python/src/TabulatedAngularDistribution.python.cpp
+      python/src/TabulatedAngularDistributions.python.cpp
       python/src/TabulatedEnergyDistribution.python.cpp
+      python/src/TabulatedEnergyDistributions.python.cpp
       python/src/ReactionProduct.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp
