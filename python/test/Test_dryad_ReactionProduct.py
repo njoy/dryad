@@ -24,8 +24,12 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
             self.assertEqual( True, isinstance( chunk.multiplicity, int ) )
             self.assertEqual( 1, chunk.multiplicity )
 
+            # distribution data
+            self.assertEqual( None, chunk.distribution_data )
+
             # metadata
             self.assertEqual( True, chunk.is_linearised )
+            self.assertEqual( False, chunk.has_distribution_data )
 
         def verify_tabulated_chunk( self, chunk ) :
 
@@ -56,8 +60,12 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLog, chunk.multiplicity.interpolants[1] )
             self.assertEqual( False, chunk.multiplicity.is_linearised )
 
+            # distribution data
+            self.assertEqual( None, chunk.distribution_data )
+
             # metadata
             self.assertEqual( False, chunk.is_linearised )
+            self.assertEqual( False, chunk.has_distribution_data )
 
         def verify_tabulated_linearised_chunk( self, chunk ) :
 
@@ -102,8 +110,12 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.multiplicity.interpolants[1] )
             self.assertEqual( True, chunk.multiplicity.is_linearised )
 
+            # distribution data
+            self.assertEqual( None, chunk.distribution_data )
+
             # metadata
             self.assertEqual( True, chunk.is_linearised )
+            self.assertEqual( False, chunk.has_distribution_data )
 
         # the data is given explicitly using an integer multiplicity
         chunk = ReactionProduct( id = 'n', multiplicity = 1 )
