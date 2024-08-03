@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_REACTIONPRODUCT
 
 // system includes
+#include <optional>
 #include <variant>
 
 // other includes
