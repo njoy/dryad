@@ -7,18 +7,19 @@
 // namespace aliases
 namespace python = pybind11;
 
+// declarations - identifiers
+void wrapID( python::module&, python::module& );
+
 // declarations - enumerators
 void wrapDistributionDataType( python::module&, python::module& );
 void wrapInteractionType( python::module&, python::module& );
 void wrapReactionType( python::module&, python::module& );
 void wrapReferenceFrame( python::module&, python::module& );
 
-// declarations - subpackages
-void wrapID( python::module&, python::module& );
-
 // declarations - components
 void wrapLegendreAngularDistribution( python::module&, python::module& );
 void wrapTabulatedAngularDistribution( python::module&, python::module& );
+void wrapTabulatedEnergyDistribution( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
 void wrapReactionProduct( python::module&, python::module& );
@@ -46,21 +47,26 @@ PYBIND11_MODULE( dryad, module ) {
     "sequence - dryad sequences (internal use only)"
   );
 
-  // wrap enumerators
+  // wrap components - identifiers
+  wrapID( module, viewmodule );
+
+  // wrap components - enumerators
   wrapDistributionDataType( module, viewmodule );
   wrapInteractionType( module, viewmodule );
   wrapReactionType( module, viewmodule );
   wrapReferenceFrame( module, viewmodule );
 
-  // wrap subpackages
-  wrapID( module, viewmodule );
-
-  // wrap components
+  // wrap components - reaction products
+  wrapTabulatedMultiplicity( module, viewmodule );
   wrapLegendreAngularDistribution( module, viewmodule );
   wrapTabulatedAngularDistribution( module, viewmodule );
-  wrapTabulatedCrossSection( module, viewmodule );
-  wrapTabulatedMultiplicity( module, viewmodule );
+  wrapTabulatedEnergyDistribution( module, viewmodule );
   wrapReactionProduct( module, viewmodule );
+
+  // wrap components - reactions
+  wrapTabulatedCrossSection( module, viewmodule );
   wrapReaction( module, viewmodule );
+
+  // wrap components - top level
   wrapProjectileTarget( module, viewmodule );
 }

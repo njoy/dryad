@@ -104,6 +104,7 @@ if( dryad.python )
       python/src/TabulatedMultiplicity.python.cpp
       python/src/LegendreAngularDistribution.python.cpp
       python/src/TabulatedAngularDistribution.python.cpp
+      python/src/TabulatedEnergyDistribution.python.cpp
       python/src/ReactionProduct.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp
