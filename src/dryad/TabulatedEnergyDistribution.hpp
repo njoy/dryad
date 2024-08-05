@@ -20,7 +20,12 @@ namespace dryad {
 
   public:
 
+    /* type aliases */
+    using InterpolationTable::XType;
+    using InterpolationTable::YType;
+
     /* constructor */
+
     #include "dryad/TabulatedEnergyDistribution/src/ctor.hpp"
 
     /* methods */

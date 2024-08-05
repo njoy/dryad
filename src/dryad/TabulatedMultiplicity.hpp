@@ -20,7 +20,12 @@ namespace dryad {
 
   public:
 
+    /* type aliases */
+    using InterpolationTable::XType;
+    using InterpolationTable::YType;
+
     /* constructor */
+
     #include "dryad/TabulatedMultiplicity/src/ctor.hpp"
 
     /* methods */
