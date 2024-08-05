@@ -28,16 +28,20 @@ endfunction()
 
 add_subdirectory( src/dryad/id/ElementID/test )
 
+add_subdirectory( src/dryad/TabulatedMultiplicity/test )
 add_subdirectory( src/dryad/LegendreAngularDistribution/test )
 add_subdirectory( src/dryad/LegendreAngularDistributions/test )
 add_subdirectory( src/dryad/TabulatedAngularDistribution/test )
 add_subdirectory( src/dryad/TabulatedAngularDistributions/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistribution/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistributions/test )
-add_subdirectory( src/dryad/TabulatedCrossSection/test )
-add_subdirectory( src/dryad/TabulatedMultiplicity/test )
+add_subdirectory( src/dryad/TwoBodyDistributionData/test )
+add_subdirectory( src/dryad/UncorrelatedDistributionData/test )
 add_subdirectory( src/dryad/ReactionProduct/test )
+
+add_subdirectory( src/dryad/TabulatedCrossSection/test )
 add_subdirectory( src/dryad/Reaction/test )
+
 add_subdirectory( src/dryad/ProjectileTarget/test )
 
 add_subdirectory( src/dryad/format/test )

@@ -37,34 +37,48 @@ void addStandardComparisonDefinitions( PythonClass& component ) {
 }
 
 /**
- *  @brief Add standard tabulated data definitions
+ *  @brief Add standard math definitions
  *
  *  This adds the following standard properties:
- *    - linearise
- *    - boundaries, interpolants
- *    - number_points, number_regions
- *    - is_linearised
  *    - arithmetic operators
  *
- *  @param[in] table   the table to which the definitions have to be added
+ *  @param[in] component   the component to which the definitions have to be added
  */
 template < typename Component, typename PythonClass >
-void addStandardTabulatedDefinitions( PythonClass& table ) {
+void addStandardMathOperatorDefinitions( PythonClass& component ) {
 
-  // type aliases
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
+  component
+  .def( -python::self )
+  .def( python::self + double() )
+  .def( python::self - double() )
+  .def( python::self * double() )
+  .def( python::self / double() )
+  .def( python::self + python::self )
+  .def( python::self - python::self )
+  .def( python::self += double() )
+  .def( python::self -= double() )
+  .def( python::self *= double() )
+  .def( python::self /= double() )
+  .def( python::self += python::self )
+  .def( python::self -= python::self )
+  .def( double() + python::self )
+  .def( double() - python::self )
+  .def( double() * python::self );
+}
 
-  table
-  .def(
+/**
+ *  @brief Add standard interpolation table definitions
+ *
+ *  This adds the following standard properties:
+ *    - boundaries, interpolants
+ *    - number_points, number_regions
+ *
+ *  @param[in] component   the component to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardInterpolationTableDefinitions( PythonClass& component ) {
 
-    "linearise",
-    &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the table\n\n"
-    "Arguments:\n"
-    "    self        the table\n"
-    "    tolerance   the linearisation tolerance"
-  )
+  component
   .def_property_readonly(
 
     "boundaries",
@@ -92,6 +106,37 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.numberRegions(); },
     "The number of interpolation regions in the table"
+  );
+}
+
+/**
+ *  @brief Add standard tabulated data definitions
+ *
+ *  This adds the following standard properties:
+ *    - linearise
+ *    - boundaries, interpolants
+ *    - number_points, number_regions
+ *    - is_linearised
+ *    - arithmetic operators
+ *
+ *  @param[in] component   the component to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardTabulatedDefinitions( PythonClass& component ) {
+
+  // type aliases
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
+
+  component
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the table\n\n"
+    "Arguments:\n"
+    "    self        the table\n"
+    "    tolerance   the linearisation tolerance"
   )
   .def_property_readonly(
 
@@ -99,23 +144,11 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.isLinearised(); },
     "Flag indicating whether or not the table is linearised"
-  )
-  .def( -python::self )
-  .def( python::self + double() )
-  .def( python::self - double() )
-  .def( python::self * double() )
-  .def( python::self / double() )
-  .def( python::self + python::self )
-  .def( python::self - python::self )
-  .def( python::self += double() )
-  .def( python::self -= double() )
-  .def( python::self *= double() )
-  .def( python::self /= double() )
-  .def( python::self += python::self )
-  .def( python::self -= python::self )
-  .def( double() + python::self )
-  .def( double() - python::self )
-  .def( double() * python::self );
+  );
+
+  // add math operators
+  addStandardInterpolationTableDefinitions< Component >( component );
+  addStandardMathOperatorDefinitions< Component >( component );
 }
 
 /**
@@ -126,15 +159,15 @@ void addStandardTabulatedDefinitions( PythonClass& table ) {
  *    - linearise
  *    - arithmetic operators
  *
- *  @param[in] series   the series to which the definitions have to be added
+ *  @param[in] component   the component to which the definitions have to be added
  */
 template < typename Component, typename PythonClass >
-void addStandardSeriesDefinitions( PythonClass& table ) {
+void addStandardSeriesDefinitions( PythonClass& component ) {
 
   // type aliases
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
-  table
+  component
   .def_property_readonly(
 
     "coefficients",
@@ -158,23 +191,10 @@ void addStandardSeriesDefinitions( PythonClass& table ) {
     "Arguments:\n"
     "    self        the table\n"
     "    tolerance   the linearisation tolerance"
-  )
-  .def( -python::self )
-  .def( python::self + double() )
-  .def( python::self - double() )
-  .def( python::self * double() )
-  .def( python::self / double() )
-  .def( python::self + python::self )
-  .def( python::self - python::self )
-  .def( python::self += double() )
-  .def( python::self -= double() )
-  .def( python::self *= double() )
-  .def( python::self /= double() )
-  .def( python::self += python::self )
-  .def( python::self -= python::self )
-  .def( double() + python::self )
-  .def( double() - python::self )
-  .def( double() * python::self );
+  );
+
+  // add math operators
+  addStandardMathOperatorDefinitions< Component >( component );
 }
 
 #endif

@@ -14,6 +14,7 @@ void wrapReactionProduct( python::module& module, python::module& ) {
   using Component = njoy::dryad::ReactionProduct;
   using ParticleID = njoy::dryad::id::ParticleID;
   using Multiplicity = njoy::dryad::ReactionProduct::Multiplicity;
+  using DistributionData = njoy::dryad::ReactionProduct::DistributionData;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
@@ -36,7 +37,18 @@ void wrapReactionProduct( python::module& module, python::module& ) {
     "Arguments:\n"
     "    self           the reaction\n"
     "    id             the reaction product identifier\n"
-    "    multiplicity   the multiplicity of the reaction product"
+    "    multiplicity   the reaction product multiplicity"
+  )
+  .def(
+
+    python::init< ParticleID, Multiplicity, DistributionData >(),
+    python::arg( "id" ), python::arg( "multiplicity" ), python::arg( "distribution" ),
+    "Initialise the reaction\n\n"
+    "Arguments:\n"
+    "    self           the reaction\n"
+    "    id             the reaction product identifier\n"
+    "    multiplicity   the reaction product multiplicity\n"
+    "    distribution   the reaction product distribution data"
   )
   .def_property_readonly(
 
@@ -52,9 +64,21 @@ void wrapReactionProduct( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "distribution_data",
+    &Component::distributionData,
+    "The distribution data"
+  )
+  .def_property_readonly(
+
     "is_linearised",
     &Component::isLinearised,
-    "Flag indicating whether or not the data is linearised"
+    "Flag indicating whether or not the reaction product is linearised"
+  )
+  .def_property_readonly(
+
+    "has_distribution_data",
+    &Component::hasDistributionData,
+    "Flag indicating whether or not the reaction product has distribution data"
   )
   .def(
 

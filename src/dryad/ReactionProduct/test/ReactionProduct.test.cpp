@@ -94,8 +94,12 @@ void verifyChunk( const ReactionProduct& chunk ) {
   CHECK( true == std::holds_alternative< int >( multiplicity ) );
   CHECK( 1 == std::get< int >( multiplicity ) );
 
+  // distribution data
+  CHECK( std::nullopt == chunk.distributionData() );
+
   // metadata
   CHECK( true == chunk.isLinearised() );
+  CHECK( false == chunk.hasDistributionData() );
 }
 
 void verifyTabulatedChunk( const ReactionProduct& chunk ) {
@@ -128,8 +132,12 @@ void verifyTabulatedChunk( const ReactionProduct& chunk ) {
   CHECK( InterpolationType::LinearLog == multiplicity.interpolants()[1] );
   CHECK( false == multiplicity.isLinearised() );
 
+  // distribution data
+  CHECK( std::nullopt == chunk.distributionData() );
+
   // metadata
   CHECK( false == chunk.isLinearised() );
+  CHECK( false == chunk.hasDistributionData() );
 }
 
 void verifyTabulatedLinearisedChunk( const ReactionProduct& chunk ) {
@@ -176,6 +184,10 @@ void verifyTabulatedLinearisedChunk( const ReactionProduct& chunk ) {
   CHECK( InterpolationType::LinearLinear == multiplicity.interpolants()[1] );
   CHECK( true == multiplicity.isLinearised() );
 
+  // distribution data
+  CHECK( std::nullopt == chunk.distributionData() );
+
   // metadata
   CHECK( true == chunk.isLinearised() );
+  CHECK( false == chunk.hasDistributionData() );
 }

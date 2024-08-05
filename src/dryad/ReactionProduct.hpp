@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_REACTIONPRODUCT
 
 // system includes
+#include <optional>
 #include <variant>
 
 // other includes
@@ -9,6 +10,8 @@
 #include "dryad/type-aliases.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
+#include "dryad/TwoBodyDistributionData.hpp"
+#include "dryad/UncorrelatedDistributionData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,6 +26,8 @@ namespace dryad {
 
     /* type aliases */
     using Multiplicity = std::variant< int, TabulatedMultiplicity >;
+    using DistributionData = std::variant< TwoBodyDistributionData,
+                                           UncorrelatedDistributionData >;
 
   private:
 
@@ -30,6 +35,7 @@ namespace dryad {
     id::ParticleID id_;
 
     Multiplicity multiplicity_;
+    std::optional< DistributionData > distribution_;
     bool linearised_;
 
   public:
@@ -56,11 +62,27 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the reaction product distribution data
+     */
+    const std::optional< DistributionData >& distributionData() const noexcept {
+
+      return this->distribution_;
+    }
+
+    /**
      *  @brief Return whether or not the reaction product data is linearised
      */
     bool isLinearised() const noexcept {
 
       return this->linearised_;
+    }
+
+    /**
+     *  @brief Return whether or not the reaction product has distribution data
+     */
+    bool hasDistributionData() const noexcept {
+
+      return this->distribution_.has_value();
     }
 
     /**
@@ -78,9 +100,12 @@ namespace dryad {
                      { return Multiplicity( multiplicity.linearise( tolerance ) ); }
       };
 
+      id::ParticleID id = this->identifier();
       Multiplicity multiplicity = std::visit( linearise, this->multiplicity() );
+      std::optional< DistributionData > distribution = this->distributionData();
 
-      return ReactionProduct( this->identifier(), std::move( multiplicity ) );
+      return ReactionProduct( std::move( id ), std::move( multiplicity ),
+                              std::move( distribution ), true );
     }
 
     /**

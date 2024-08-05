@@ -96,12 +96,18 @@ if( dryad.python )
       python/src/dryad.python.cpp
       python/src/id.python.cpp
       python/src/id/ElementID.python.cpp
+      python/src/DistributionDataType.python.cpp
       python/src/InteractionType.python.cpp
       python/src/ReactionType.python.cpp
+      python/src/ReferenceFrame.python.cpp
       python/src/TabulatedCrossSection.python.cpp
       python/src/TabulatedMultiplicity.python.cpp
       python/src/LegendreAngularDistribution.python.cpp
+      python/src/LegendreAngularDistributions.python.cpp
       python/src/TabulatedAngularDistribution.python.cpp
+      python/src/TabulatedAngularDistributions.python.cpp
+      python/src/TabulatedEnergyDistribution.python.cpp
+      python/src/TabulatedEnergyDistributions.python.cpp
       python/src/ReactionProduct.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp
