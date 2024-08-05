@@ -36,8 +36,9 @@ namespace endf {
       for ( const auto& product : section.reactionProducts() ) {
 
         id::ParticleID id = createProductIdentifier( product.productIdentifier() );
-        TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( id, product.multiplicity(), mt );
+        Log::info( "Reading reaction product for \'{}\'", id );
 
+        TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity(), mt );
         products.emplace_back( std::move( id ), std::move( multiplicity ) );
       }
     }
@@ -47,14 +48,15 @@ namespace endf {
       for ( const auto& product : section.reactionProducts() ) {
 
         id::ParticleID id = createProductIdentifier( product.productIdentifier() );
-        TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( id, product.multiplicity(), mt );
+        Log::info( "Reading reaction product for \'{}\'", id );
 
+        TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity(), mt );
         products.emplace_back( std::move( id ), std::move( multiplicity ) );
       }
     }
     else {
 
-      Log::error( "The material does not have reaction data for MT{}", mt );
+      Log::error( "The material does not have reaction products for MT{}", mt );
       throw std::exception();
     }
 

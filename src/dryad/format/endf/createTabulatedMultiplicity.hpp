@@ -23,14 +23,14 @@ namespace endf {
    *  @brief Create a TabulatedMultiplicity from a parsed ENDF multiplicity
    */
   template < typename Multiplicity >
-  auto createTabulatedMultiplicity( const id::ParticleID& product, const Multiplicity& multiplicity, int mt )
+  auto createTabulatedMultiplicity( const Multiplicity& multiplicity, int mt )
   -> std::enable_if_t< ( std::is_same_v< Multiplicity, ENDFtk::section::Type< 6 >::Multiplicity > ||
                          std::is_same_v< Multiplicity, ENDFtk::section::Type< 26 >::Multiplicity > ),
                        TabulatedMultiplicity > {
 
     try {
 
-      Log::info( "Reading multiplicity data for product \'{}\'", product );
+      Log::info( "Reading multiplicity data" );
       auto energies = createVector( multiplicity.energies() );
       auto values = createVector( multiplicity.multiplicities() );
       auto boundaries = createBoundaries( multiplicity.boundaries() );
