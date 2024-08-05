@@ -7,6 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/endf/createProductIdentifier.hpp"
+#include "dryad/format/endf/createReactionProduct.hpp"
 #include "dryad/format/endf/createTabulatedMultiplicity.hpp"
 #include "dryad/ReactionProduct.hpp"
 #include "ENDFtk/Material.hpp"
@@ -35,12 +36,12 @@ namespace endf {
       auto section = material.section( 6, mt ).parse< 6 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        id::ParticleID id = createProductIdentifier( product.productIdentifier(),
-                                                     product.productModifierFlag() );
-        Log::info( "Reading reaction product data for \'{}\'", id );
-
-        TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity(), mt );
-        products.emplace_back( std::move( id ), std::move( multiplicity ) );
+        bool multiple = std::count_if( section.reactionProducts().begin(),
+                                       section.reactionProducts().end(),
+                                       [&product] ( auto&& entry ) {
+                                         return product.productIdentifier() == entry.productIdentifier();
+                                       } ) > 1;
+        products.emplace_back( createReactionProduct( projectile, target, product, multiple ) );
       }
     }
     else if ( material.hasSection( 26, mt ) ) {
@@ -48,11 +49,7 @@ namespace endf {
       auto section = material.section( 26, mt ).parse< 26 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0 );
-        Log::info( "Reading reaction product data for \'{}\'", id );
-
-        TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity(), mt );
-        products.emplace_back( std::move( id ), std::move( multiplicity ) );
+        products.emplace_back( createReactionProduct( projectile, target, product ) );
       }
     }
     else {

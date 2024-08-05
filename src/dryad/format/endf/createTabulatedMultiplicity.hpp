@@ -23,7 +23,7 @@ namespace endf {
    *  @brief Create a TabulatedMultiplicity from a parsed ENDF multiplicity
    */
   template < typename Multiplicity >
-  auto createTabulatedMultiplicity( const Multiplicity& multiplicity, int mt )
+  auto createTabulatedMultiplicity( const Multiplicity& multiplicity )
   -> std::enable_if_t< ( std::is_same_v< Multiplicity, ENDFtk::section::Type< 6 >::Multiplicity > ||
                          std::is_same_v< Multiplicity, ENDFtk::section::Type< 26 >::Multiplicity > ),
                        TabulatedMultiplicity > {
@@ -41,8 +41,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating a tabulated "
-                 "multiplicity for MT{}", mt );
+      Log::info( "Error encountered while creating a tabulated multiplicity" );
       throw;
     }
   }

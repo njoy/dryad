@@ -22,13 +22,12 @@ SCENARIO( "createTabulatedMultiplicity" ) {
     auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
     auto section = tape.materials().front().section( 6, 102 ).parse< 6 >();
     auto multiplicity = section.reactionProduct( 0 ).multiplicity();
-    int mt = 102;
 
     WHEN( "a single parsed MF6 multiplicity is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity, mt );
+        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -40,13 +39,12 @@ SCENARIO( "createTabulatedMultiplicity" ) {
     auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
     auto section = tape.materials().front().section( 26, 527 ).parse< 26 >();
     auto multiplicity = section.reactionProduct( 11 ).multiplicity();
-    int mt = 102;
 
     WHEN( "a single parsed MF26 multiplicity is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity, mt );
+        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity );
 
         verifyElectronChunk( chunk );
       } // THEN

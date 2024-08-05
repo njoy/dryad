@@ -41,8 +41,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating a tabulated "
-                 "cross section for MT{}", section.sectionNumber() );
+      Log::info( "Error encountered while creating a tabulated cross section" );
       throw;
     }
   }
