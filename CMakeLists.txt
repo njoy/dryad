@@ -102,6 +102,7 @@ if( dryad.python )
       python/src/ReferenceFrame.python.cpp
       python/src/TabulatedCrossSection.python.cpp
       python/src/TabulatedMultiplicity.python.cpp
+      python/src/TabulatedAverageEnergy.python.cpp
       python/src/LegendreAngularDistribution.python.cpp
       python/src/LegendreAngularDistributions.python.cpp
       python/src/TabulatedAngularDistribution.python.cpp
