@@ -29,6 +29,7 @@ endfunction()
 add_subdirectory( src/dryad/id/ElementID/test )
 
 add_subdirectory( src/dryad/TabulatedMultiplicity/test )
+add_subdirectory( src/dryad/TabulatedAverageEnergy/test )
 add_subdirectory( src/dryad/LegendreAngularDistribution/test )
 add_subdirectory( src/dryad/LegendreAngularDistributions/test )
 add_subdirectory( src/dryad/TabulatedAngularDistribution/test )

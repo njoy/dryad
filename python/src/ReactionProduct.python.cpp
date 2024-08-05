@@ -64,6 +64,12 @@ void wrapReactionProduct( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    "average_energy",
+    &Component::averageEnergy,
+    "The average reaction product energy"
+  )
+  .def_property_readonly(
+
     "distribution_data",
     &Component::distributionData,
     "The distribution data"
@@ -73,6 +79,13 @@ void wrapReactionProduct( python::module& module, python::module& ) {
     "is_linearised",
     &Component::isLinearised,
     "Flag indicating whether or not the reaction product is linearised"
+  )
+  .def_property_readonly(
+
+    "has_average_energy",
+    &Component::hasAverageEnergy,
+    "Flag indicating whether or not the reaction product has average reaction "
+    "product energy data"
   )
   .def_property_readonly(
 

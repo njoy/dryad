@@ -95,10 +95,14 @@ void verifyChunk( const ReactionProduct& chunk ) {
   CHECK( 1 == std::get< int >( multiplicity ) );
 
   // distribution data
+  CHECK( std::nullopt == chunk.averageEnergy() );
+
+  // distribution data
   CHECK( std::nullopt == chunk.distributionData() );
 
   // metadata
   CHECK( true == chunk.isLinearised() );
+  CHECK( false == chunk.hasAverageEnergy() );
   CHECK( false == chunk.hasDistributionData() );
 }
 
@@ -133,10 +137,14 @@ void verifyTabulatedChunk( const ReactionProduct& chunk ) {
   CHECK( false == multiplicity.isLinearised() );
 
   // distribution data
+  CHECK( std::nullopt == chunk.averageEnergy() );
+
+  // distribution data
   CHECK( std::nullopt == chunk.distributionData() );
 
   // metadata
   CHECK( false == chunk.isLinearised() );
+  CHECK( false == chunk.hasAverageEnergy() );
   CHECK( false == chunk.hasDistributionData() );
 }
 
@@ -185,9 +193,13 @@ void verifyTabulatedLinearisedChunk( const ReactionProduct& chunk ) {
   CHECK( true == multiplicity.isLinearised() );
 
   // distribution data
+  CHECK( std::nullopt == chunk.averageEnergy() );
+
+  // distribution data
   CHECK( std::nullopt == chunk.distributionData() );
 
   // metadata
   CHECK( true == chunk.isLinearised() );
+  CHECK( false == chunk.hasAverageEnergy() );
   CHECK( false == chunk.hasDistributionData() );
 }
