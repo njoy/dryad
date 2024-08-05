@@ -8,6 +8,9 @@
 #include "tools/Log.hpp"
 #include "dryad/format/endf/createProductIdentifier.hpp"
 #include "dryad/format/endf/createTabulatedMultiplicity.hpp"
+#include "dryad/format/endf/createTabulatedEnergyDistributions.hpp"
+#include "dryad/format/endf/createTabulatedAngularDistributions.hpp"
+#include "dryad/format/endf/createTabulatedAverageEnergy.hpp"
 #include "dryad/ReactionProduct.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -31,13 +34,12 @@ namespace endf {
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
                          bool multiple ) {
 
-
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
                                                  product.productModifierFlag(),
                                                  multiple );
     Log::info( "Reading reaction product data for \'{}\'", id );
-
     TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity() );
+
     return ReactionProduct( std::move( id ), std::move( multiplicity ) );
   }
 
@@ -54,9 +56,39 @@ namespace endf {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0, false );
     Log::info( "Reading reaction product data for \'{}\'", id );
-
     TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity() );
-    return ReactionProduct( std::move( id ), std::move( multiplicity ) );
+
+    //! @todo what about the reference frames?
+
+    switch ( product.LAW() ) {
+
+      case 1 : {
+
+        auto data = std::get< ENDFtk::section::Type< 26 >::ContinuumEnergyAngle >( product.distribution() );
+        auto distribution = UncorrelatedDistributionData( ReferenceFrame::Laboratory,
+                                                          IsotropicAngularDistributions(),
+                                                          createTabulatedEnergyDistributions( data ) );
+        return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+      }
+      case 2 : {
+
+        auto data = std::get< ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering >( product.distribution() );
+        auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                                     createTabulatedAngularDistributions( data ) );
+        return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+      }
+      case 8 : {
+
+        auto data = std::get< ENDFtk::section::Type< 26 >::EnergyTransfer >( product.distribution() );
+        auto average = createTabulatedAverageEnergy( data );
+        return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( average ) );
+      }
+      default : {
+
+        Log::error( "This should be unreachable" );
+        throw std::exception();
+      }
+    }
   }
 
 } // endf namespace

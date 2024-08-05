@@ -41,7 +41,15 @@ namespace endf {
                                        [&product] ( auto&& entry ) {
                                          return product.productIdentifier() == entry.productIdentifier();
                                        } ) > 1;
-        products.emplace_back( createReactionProduct( projectile, target, product, multiple ) );
+        if ( mt != 18 ) {
+
+          products.emplace_back( createReactionProduct( projectile, target, product, multiple ) );
+        }
+        else {
+
+          //! @todo handle P(nu) case
+          Log::info( "Skipping P(nu) and P(nu_g) in MF6" );
+        }
       }
     }
     else if ( material.hasSection( 26, mt ) ) {
