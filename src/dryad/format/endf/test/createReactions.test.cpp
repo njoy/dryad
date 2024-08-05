@@ -50,8 +50,10 @@ void verifyTotalReaction( const Reaction& total ) {
   CHECK( ReactionType::Summation == total.type() );
   CHECK( false == total.hasProducts() );
   CHECK( false == total.isLinearised() );
+
   CHECK( std::nullopt == total.massDifferenceQValue() );
   CHECK( std::nullopt == total.reactionQValue() );
+
   CHECK( false == total.crossSection().isLinearised() );
   CHECK( 153 == total.crossSection().numberPoints() );
   CHECK( 2 == total.crossSection().numberRegions() );
@@ -69,6 +71,8 @@ void verifyTotalReaction( const Reaction& total ) {
   CHECK_THAT( 3.716477e+1, WithinRel( total.crossSection().values()[0] ) );
   CHECK_THAT( 2.118421e+1, WithinRel( total.crossSection().values()[8] ) );
   CHECK_THAT( 4.818679e-1, WithinRel( total.crossSection().values()[152] ) );
+
+  CHECK( 0 == total.products().size() );
 }
 
 void verifyElasticReaction( const Reaction& elastic ) {
@@ -77,10 +81,12 @@ void verifyElasticReaction( const Reaction& elastic ) {
   CHECK( ReactionType::Primary == elastic.type() );
   CHECK( false == elastic.hasProducts() );
   CHECK( true == elastic.isLinearised() );
+
   CHECK( std::nullopt != elastic.massDifferenceQValue() );
   CHECK( std::nullopt != elastic.reactionQValue() );
   CHECK_THAT( 0, WithinRel( elastic.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( elastic.reactionQValue().value() ) );
+
   CHECK( true == elastic.crossSection().isLinearised() );
   CHECK( 153 == elastic.crossSection().numberPoints() );
   CHECK( 1 == elastic.crossSection().numberRegions() );
@@ -94,18 +100,22 @@ void verifyElasticReaction( const Reaction& elastic ) {
   CHECK_THAT( 2e+7, WithinRel( elastic.crossSection().energies()[152] ) );
   CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
   CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
+
+  CHECK( 0 == elastic.products().size() );
 }
 
 void verifyCaptureReaction( const Reaction& capture ) {
 
   CHECK( id::ReactionID( "102" ) == capture.identifier() );
   CHECK( ReactionType::Primary == capture.type() );
-  CHECK( false == capture.hasProducts() );
+  CHECK( true == capture.hasProducts() );
   CHECK( false == capture.isLinearised() );
+
   CHECK( std::nullopt != capture.massDifferenceQValue() );
   CHECK( std::nullopt != capture.reactionQValue() );
   CHECK_THAT( 2.224648e+6, WithinRel( capture.massDifferenceQValue().value() ) );
   CHECK_THAT( 2.224648e+6, WithinRel( capture.reactionQValue().value() ) );
+
   CHECK( false == capture.crossSection().isLinearised() );
   CHECK( 153 == capture.crossSection().numberPoints() );
   CHECK( 2 == capture.crossSection().numberRegions() );
@@ -123,4 +133,10 @@ void verifyCaptureReaction( const Reaction& capture ) {
   CHECK_THAT( 1.672869e+1, WithinRel( capture.crossSection().values()[0] ) );
   CHECK_THAT( 4.950573e-4, WithinRel( capture.crossSection().values()[32] ) );
   CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
+
+  CHECK( 2 == capture.products().size() );
+  auto gamma = capture.products()[0];
+  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+  auto deuterium = capture.products()[1];
+  CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
 }
