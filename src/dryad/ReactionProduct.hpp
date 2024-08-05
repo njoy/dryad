@@ -10,6 +10,7 @@
 #include "dryad/type-aliases.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
+#include "dryad/TabulatedAverageEnergy.hpp"
 #include "dryad/TwoBodyDistributionData.hpp"
 #include "dryad/UncorrelatedDistributionData.hpp"
 
@@ -35,6 +36,7 @@ namespace dryad {
     id::ParticleID id_;
 
     Multiplicity multiplicity_;
+    std::optional< TabulatedAverageEnergy > average_energy_;
     std::optional< DistributionData > distribution_;
     bool linearised_;
 
@@ -62,6 +64,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the average reaction product energy
+     */
+    const std::optional< TabulatedAverageEnergy >& averageEnergy() const noexcept {
+
+      return this->average_energy_;
+    }
+
+    /**
      *  @brief Return the reaction product distribution data
      */
     const std::optional< DistributionData >& distributionData() const noexcept {
@@ -75,6 +85,15 @@ namespace dryad {
     bool isLinearised() const noexcept {
 
       return this->linearised_;
+    }
+
+    /**
+     *  @brief Return whether or not the reaction product has average reaction
+     *         product energy data
+     */
+    bool hasAverageEnergy() const noexcept {
+
+      return this->average_energy_.has_value();
     }
 
     /**
@@ -102,10 +121,12 @@ namespace dryad {
 
       id::ParticleID id = this->identifier();
       Multiplicity multiplicity = std::visit( linearise, this->multiplicity() );
+      std::optional< TabulatedAverageEnergy > averageEnergy = this->averageEnergy();
       std::optional< DistributionData > distribution = this->distributionData();
 
       return ReactionProduct( std::move( id ), std::move( multiplicity ),
-                              std::move( distribution ), true );
+                              std::move( averageEnergy ), std::move( distribution ),
+                              true );
     }
 
     /**
