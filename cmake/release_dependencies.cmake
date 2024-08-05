@@ -22,7 +22,7 @@ FetchContent_Declare( eigen
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  https://github.com/njoy/ENDFtk.git
-    GIT_TAG         3d077281d1ca862a3561cd0687de845239c9f463 # tag: v1.1.0
+    GIT_TAG         2a0aeda4642880148ce060f620e50378654d07c9
     )
 
 FetchContent_Declare( fast_float
