@@ -26,17 +26,18 @@ namespace endf {
 
     std::vector< ReactionProduct > products;
 
-    if ( material.hasSection( 4, mt ) ) {
+    if ( material.hasSection( 4, mt ) || material.hasSection( 5, mt ) ) {
 
-      Log::info( "Reading reaction product information from MF4 is not implemented yet" );
+      Log::info( "Reading reaction product data from MF4 and/or MF5 is not implemented yet" );
     }
     else if ( material.hasSection( 6, mt ) ) {
 
       auto section = material.section( 6, mt ).parse< 6 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        id::ParticleID id = createProductIdentifier( product.productIdentifier() );
-        Log::info( "Reading reaction product for \'{}\'", id );
+        id::ParticleID id = createProductIdentifier( product.productIdentifier(),
+                                                     product.productModifierFlag() );
+        Log::info( "Reading reaction product data for \'{}\'", id );
 
         TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity(), mt );
         products.emplace_back( std::move( id ), std::move( multiplicity ) );
@@ -47,8 +48,8 @@ namespace endf {
       auto section = material.section( 26, mt ).parse< 26 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        id::ParticleID id = createProductIdentifier( product.productIdentifier() );
-        Log::info( "Reading reaction product for \'{}\'", id );
+        id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0 );
+        Log::info( "Reading reaction product data for \'{}\'", id );
 
         TabulatedMultiplicity multiplicity = createTabulatedMultiplicity( product.multiplicity(), mt );
         products.emplace_back( std::move( id ), std::move( multiplicity ) );
