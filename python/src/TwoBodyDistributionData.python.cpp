@@ -47,8 +47,9 @@ void wrapTwoBodyDistributionData( python::module& module, python::module& ) {
   )
   .def_property_readonly(
 
+    // static constexpr function needs lambda
     "type",
-    &Component::type,
+    [] ( const Component& self ) { return self.type(); },
     "The distribution data type"
   )
   .def_property_readonly(

@@ -19,6 +19,17 @@ void wrapIsotropicAngularDistributions( python::module& module, python::module& 
   python::class_< Component > component(
 
     module,
-    "IsotropicAngularDistributions"
+    "IsotropicAngularDistributions",
+    "The angular distribution data is fully isotropic"
+  );
+
+  // wrap the component
+  component
+  .def(
+
+    python::init<>(),
+    "Initialise the component\n\n"
+    "Arguments:\n"
+    "    self   the component"
   );
 }
