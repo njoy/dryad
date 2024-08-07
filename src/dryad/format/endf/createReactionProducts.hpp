@@ -60,10 +60,13 @@ namespace endf {
         products.emplace_back( createReactionProduct( projectile, target, product ) );
       }
     }
+    else if ( material.hasSection( 27, mt ) ) {
+
+      Log::info( "Reading scattering functions and form factors for photons is not implemented yet" );
+    }
     else {
 
-      Log::error( "The material does not have reaction products for MT{}", mt );
-      throw std::exception();
+      Log::info( "The material does not have reaction products for MT{}", mt );
     }
 
     // std::sort( products.begin(), products.end(),
