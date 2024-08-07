@@ -48,7 +48,7 @@ namespace endf {
         else {
 
           //! @todo handle P(nu) case
-          Log::info( "Skipping P(nu) and P(nu_g) in MF6" );
+          Log::warning( "Skipping P(nu) and P(nu_g) in MF6" );
         }
       }
     }
@@ -57,12 +57,12 @@ namespace endf {
       auto section = material.section( 26, mt ).parse< 26 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        products.emplace_back( createReactionProduct( projectile, target, product ) );
+        products.emplace_back( createReactionProduct( projectile, target, product, mt ) );
       }
     }
     else if ( material.hasSection( 27, mt ) ) {
 
-      Log::info( "Reading scattering functions and form factors for photons is not implemented yet" );
+      Log::warning( "Reading scattering functions and form factors for photons is not implemented yet" );
     }
     else {
 

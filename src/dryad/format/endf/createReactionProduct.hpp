@@ -52,7 +52,8 @@ namespace endf {
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
-                         const ENDFtk::section::Type< 26 >::ReactionProduct& product ) {
+                         const ENDFtk::section::Type< 26 >::ReactionProduct& product,
+                         int mt ) {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0, false );
     Log::info( "Reading reaction product data for \'{}\'", id );
@@ -64,8 +65,8 @@ namespace endf {
 
       case 1 : {
 
-        // ENDF/B-VIII.0 erroneously uses 11 for the gamma identifier
-        if ( id == "e-" ) {
+        // ENDF/B-VIII.0 erroneously uses 11 for the gamma identifier in MF26 MT527
+        if ( ( mt == 527 ) && ( id == "e-" ) ) {
 
           id = createProductIdentifier( 0, 0, false );
           Log::warning( "Reaction product identifier changed from \'e-\' to \'g\'" );
