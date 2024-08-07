@@ -65,7 +65,7 @@ namespace endf {
       case 1 : {
 
         // MF26 LAW = 1 : NA must be 0 and LANG must be 1
-        auto data = std::get< ENDFtk::section::Type< 26 >::ContinuumEnergyAngle >( product.distribution() );
+        decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::ContinuumEnergyAngle >( product.distribution() );
         auto distribution = UncorrelatedDistributionData( ReferenceFrame::Laboratory,
                                                           IsotropicAngularDistributions(),
                                                           createTabulatedEnergyDistributions( data ) );
@@ -74,7 +74,7 @@ namespace endf {
       case 2 : {
 
         // MF26 LAW = 2 : Legendre coefficients are not allowed
-        auto data = std::get< ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering >( product.distribution() );
+        decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering >( product.distribution() );
         auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
                                                      createTabulatedAngularDistributions( data ) );
         return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
@@ -82,7 +82,7 @@ namespace endf {
       case 8 : {
 
         // MF26 LAW = 8 : energy transfer is given (converted to the average energy of the outgoing electron)
-        auto data = std::get< ENDFtk::section::Type< 26 >::EnergyTransfer >( product.distribution() );
+        decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::EnergyTransfer >( product.distribution() );
         auto average = createTabulatedAverageEnergy( data );
         return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( average ) );
       }

@@ -12,13 +12,13 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyTotalReaction( const Reaction& );
-void verifyElasticReaction( const Reaction& );
-void verifyCaptureReaction( const Reaction& );
+void verifyNeutronTotalReaction( const Reaction& );
+void verifyNeutronElasticReaction( const Reaction& );
+void verifyNeutronCaptureReaction( const Reaction& );
 
 SCENARIO( "createReactions" ) {
 
-  GIVEN( "ENDF materials" ) {
+  GIVEN( "ENDF materials - incident neutrons" ) {
 
     auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
     auto material = tape.materials().front();
@@ -32,19 +32,19 @@ SCENARIO( "createReactions" ) {
         std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
 
         auto total = reactions[0];
-        verifyTotalReaction( total );
+        verifyNeutronTotalReaction( total );
 
         auto elastic = reactions[1];
-        verifyElasticReaction( elastic );
+        verifyNeutronElasticReaction( elastic );
 
         auto capture = reactions[2];
-        verifyCaptureReaction( capture );
+        verifyNeutronCaptureReaction( capture );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyTotalReaction( const Reaction& total ) {
+void verifyNeutronTotalReaction( const Reaction& total ) {
 
   CHECK( id::ReactionID( "1" ) == total.identifier() );
   CHECK( ReactionType::Summation == total.type() );
@@ -75,7 +75,7 @@ void verifyTotalReaction( const Reaction& total ) {
   CHECK( 0 == total.products().size() );
 }
 
-void verifyElasticReaction( const Reaction& elastic ) {
+void verifyNeutronElasticReaction( const Reaction& elastic ) {
 
   CHECK( id::ReactionID( "2" ) == elastic.identifier() );
   CHECK( ReactionType::Primary == elastic.type() );
@@ -104,7 +104,7 @@ void verifyElasticReaction( const Reaction& elastic ) {
   CHECK( 0 == elastic.products().size() );
 }
 
-void verifyCaptureReaction( const Reaction& capture ) {
+void verifyNeutronCaptureReaction( const Reaction& capture ) {
 
   CHECK( id::ReactionID( "102" ) == capture.identifier() );
   CHECK( ReactionType::Primary == capture.type() );
