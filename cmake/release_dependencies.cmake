@@ -42,7 +42,7 @@ FetchContent_Declare( range-v3
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  https://github.com/njoy/scion
-    GIT_TAG         6079dc15153b1948c772835096662be65b062676
+    GIT_TAG         fd76c11780fcdde507f8952c8698085cf47b0369
     )
 
 FetchContent_Declare( spdlog
