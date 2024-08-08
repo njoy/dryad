@@ -17,6 +17,7 @@ void wrapReactionType( python::module&, python::module& );
 void wrapReferenceFrame( python::module&, python::module& );
 
 // declarations - components
+void wrapIsotropicAngularDistributions( python::module&, python::module& );
 void wrapLegendreAngularDistribution( python::module&, python::module& );
 void wrapLegendreAngularDistributions( python::module&, python::module& );
 void wrapTabulatedAngularDistribution( python::module&, python::module& );
@@ -26,6 +27,8 @@ void wrapTabulatedEnergyDistributions( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
 void wrapTabulatedAverageEnergy( python::module&, python::module& );
+void wrapTwoBodyDistributionData( python::module&, python::module& );
+void wrapUncorrelatedDistributionData( python::module&, python::module& );
 void wrapReactionProduct( python::module&, python::module& );
 void wrapReaction( python::module&, python::module& );
 void wrapProjectileTarget( python::module&, python::module& );
@@ -63,12 +66,15 @@ PYBIND11_MODULE( dryad, module ) {
   // wrap components - reaction products
   wrapTabulatedMultiplicity( module, viewmodule );
   wrapTabulatedAverageEnergy( module, viewmodule );
+  wrapIsotropicAngularDistributions( module, viewmodule );
   wrapLegendreAngularDistribution( module, viewmodule );
   wrapLegendreAngularDistributions( module, viewmodule );
   wrapTabulatedAngularDistribution( module, viewmodule );
   wrapTabulatedAngularDistributions( module, viewmodule );
   wrapTabulatedEnergyDistribution( module, viewmodule );
   wrapTabulatedEnergyDistributions( module, viewmodule );
+  wrapTwoBodyDistributionData( module, viewmodule );
+  wrapUncorrelatedDistributionData( module, viewmodule );
   wrapReactionProduct( module, viewmodule );
 
   // wrap components - reactions
