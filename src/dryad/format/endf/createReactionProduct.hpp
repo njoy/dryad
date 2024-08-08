@@ -49,6 +49,7 @@ namespace endf {
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] product      the MF26 reaction product data
+   *  @param[in] mt           the ENDF MT number
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
@@ -66,6 +67,7 @@ namespace endf {
       case 1 : {
 
         // ENDF/B-VIII.0 erroneously uses 11 for the gamma identifier in MF26 MT527
+        // LAW = 1 is only used for the outgoing gamma, the electron uses LAW = 8
         if ( ( mt == 527 ) && ( id == "e-" ) ) {
 
           id = createProductIdentifier( 0, 0, false );
