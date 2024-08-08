@@ -12,9 +12,8 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyNeutronTotalReaction( const Reaction& );
-void verifyNeutronElasticReaction( const Reaction& );
-void verifyNeutronCaptureReaction( const Reaction& );
+// include common test verification functions
+#include "test_verification_functions.hpp"
 
 SCENARIO( "createProjectileTarget" ) {
 
@@ -63,101 +62,78 @@ SCENARIO( "createProjectileTarget" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "ENDF materials - electro-atomic" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    auto material = tape.materials().front();
+
+    WHEN( "a single ENDF materials is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget H0 = format::endf::createProjectileTarget( material );
+
+        CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
+        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+
+        CHECK( InteractionType::Atomic == H0.interactionType() );
+
+        CHECK( true == H0.isLinearised() );
+
+        CHECK( std::nullopt == H0.resonances() );
+
+        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "525" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "526" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "527" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "528" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
+        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+        auto total = H0.reactions()[0];
+        verifyElectronTotalReaction( total );
+
+        auto ionisation = H0.reactions()[1];
+        verifyElectronTotalIonisationReaction( ionisation );
+
+        auto elastic = H0.reactions()[2];
+        verifyElectronElasticReaction( elastic );
+
+        auto telastic = H0.reactions()[3];
+        verifyElectronTotalElasticReaction( telastic );
+
+        auto bremsstrahlung = H0.reactions()[4];
+        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+
+        auto excitation = H0.reactions()[5];
+        verifyElectronExcitationReaction( excitation );
+
+        auto subionisation = H0.reactions()[6];
+        verifyElectronSubshellIonisationReaction( subionisation );
+
+        total = H0.reaction( id::ReactionID( "501" ) );
+        verifyElectronTotalReaction( total );
+
+        ionisation = H0.reaction( id::ReactionID( "522" ) );
+        verifyElectronTotalIonisationReaction( ionisation );
+
+        elastic = H0.reaction( id::ReactionID( "525" ) );
+        verifyElectronElasticReaction( elastic );
+
+        telastic = H0.reaction( id::ReactionID( "526" ) );
+        verifyElectronTotalElasticReaction( telastic );
+
+        bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
+        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+
+        excitation = H0.reaction( id::ReactionID( "528" ) );
+        verifyElectronExcitationReaction( excitation );
+
+        subionisation = H0.reaction( id::ReactionID( "534" ) );
+        verifyElectronSubshellIonisationReaction( subionisation );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
-
-void verifyNeutronTotalReaction( const Reaction& total ) {
-
-  CHECK( id::ReactionID( "1" ) == total.identifier() );
-  CHECK( ReactionType::Summation == total.type() );
-  CHECK( false == total.hasProducts() );
-  CHECK( false == total.isLinearised() );
-
-  CHECK( std::nullopt == total.massDifferenceQValue() );
-  CHECK( std::nullopt == total.reactionQValue() );
-
-  CHECK( false == total.crossSection().isLinearised() );
-  CHECK( 153 == total.crossSection().numberPoints() );
-  CHECK( 2 == total.crossSection().numberRegions() );
-  CHECK( 153 == total.crossSection().energies().size() );
-  CHECK( 153 == total.crossSection().values().size() );
-  CHECK( 2 == total.crossSection().boundaries().size() );
-  CHECK( 2 == total.crossSection().interpolants().size() );
-  CHECK( 8 == total.crossSection().boundaries()[0] );
-  CHECK( 152 == total.crossSection().boundaries()[1] );
-  CHECK( InterpolationType::LogLog == total.crossSection().interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == total.crossSection().interpolants()[1] );
-  CHECK_THAT( 1e-5, WithinRel( total.crossSection().energies()[0] ) );
-  CHECK_THAT( 5e-3, WithinRel( total.crossSection().energies()[8] ) );
-  CHECK_THAT( 2e+7, WithinRel( total.crossSection().energies()[152] ) );
-  CHECK_THAT( 3.716477e+1, WithinRel( total.crossSection().values()[0] ) );
-  CHECK_THAT( 2.118421e+1, WithinRel( total.crossSection().values()[8] ) );
-  CHECK_THAT( 4.818679e-1, WithinRel( total.crossSection().values()[152] ) );
-
-  CHECK( 0 == total.products().size() );
-}
-
-void verifyNeutronElasticReaction( const Reaction& elastic ) {
-
-  CHECK( id::ReactionID( "2" ) == elastic.identifier() );
-  CHECK( ReactionType::Primary == elastic.type() );
-  CHECK( false == elastic.hasProducts() );
-  CHECK( true == elastic.isLinearised() );
-
-  CHECK( std::nullopt != elastic.massDifferenceQValue() );
-  CHECK( std::nullopt != elastic.reactionQValue() );
-  CHECK_THAT( 0, WithinRel( elastic.massDifferenceQValue().value() ) );
-  CHECK_THAT( 0, WithinRel( elastic.reactionQValue().value() ) );
-
-  CHECK( true == elastic.crossSection().isLinearised() );
-  CHECK( 153 == elastic.crossSection().numberPoints() );
-  CHECK( 1 == elastic.crossSection().numberRegions() );
-  CHECK( 153 == elastic.crossSection().energies().size() );
-  CHECK( 153 == elastic.crossSection().values().size() );
-  CHECK( 1 == elastic.crossSection().boundaries().size() );
-  CHECK( 1 == elastic.crossSection().interpolants().size() );
-  CHECK( 152 == elastic.crossSection().boundaries()[0] );
-  CHECK( InterpolationType::LinearLinear == elastic.crossSection().interpolants()[0] );
-  CHECK_THAT( 1e-5, WithinRel( elastic.crossSection().energies()[0] ) );
-  CHECK_THAT( 2e+7, WithinRel( elastic.crossSection().energies()[152] ) );
-  CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
-  CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
-
-  CHECK( 0 == elastic.products().size() );
-}
-
-void verifyNeutronCaptureReaction( const Reaction& capture ) {
-
-  CHECK( id::ReactionID( "102" ) == capture.identifier() );
-  CHECK( ReactionType::Primary == capture.type() );
-  CHECK( true == capture.hasProducts() );
-  CHECK( false == capture.isLinearised() );
-
-  CHECK( std::nullopt != capture.massDifferenceQValue() );
-  CHECK( std::nullopt != capture.reactionQValue() );
-  CHECK_THAT( 2.224648e+6, WithinRel( capture.massDifferenceQValue().value() ) );
-  CHECK_THAT( 2.224648e+6, WithinRel( capture.reactionQValue().value() ) );
-
-  CHECK( false == capture.crossSection().isLinearised() );
-  CHECK( 153 == capture.crossSection().numberPoints() );
-  CHECK( 2 == capture.crossSection().numberRegions() );
-  CHECK( 153 == capture.crossSection().energies().size() );
-  CHECK( 153 == capture.crossSection().values().size() );
-  CHECK( 2 == capture.crossSection().boundaries().size() );
-  CHECK( 2 == capture.crossSection().interpolants().size() );
-  CHECK( 32 == capture.crossSection().boundaries()[0] );
-  CHECK( 152 == capture.crossSection().boundaries()[1] );
-  CHECK( InterpolationType::LogLog == capture.crossSection().interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == capture.crossSection().interpolants()[1] );
-  CHECK_THAT( 1e-5, WithinRel( capture.crossSection().energies()[0] ) );
-  CHECK_THAT( 1e+4, WithinRel( capture.crossSection().energies()[32] ) );
-  CHECK_THAT( 2e+7, WithinRel( capture.crossSection().energies()[152] ) );
-  CHECK_THAT( 1.672869e+1, WithinRel( capture.crossSection().values()[0] ) );
-  CHECK_THAT( 4.950573e-4, WithinRel( capture.crossSection().values()[32] ) );
-  CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
-
-  CHECK( 2 == capture.products().size() );
-  auto gamma = capture.products()[0];
-  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-  auto deuterium = capture.products()[1];
-  CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
-}
