@@ -15,6 +15,7 @@ add_cpp_test( format.endf.createTabulatedEnergyDistribution      createTabulated
 add_cpp_test( format.endf.createTabulatedEnergyDistributions     createTabulatedEnergyDistributions.test.cpp )
 add_cpp_test( format.endf.createTabulatedAverageEnergy           createTabulatedAverageEnergy.test.cpp )
 add_cpp_test( format.endf.createReactionProduct                  createReactionProduct.test.cpp )
+add_cpp_test( format.endf.createReactionProducts                 createReactionProducts.test.cpp )
 add_cpp_test( format.endf.createReaction                         createReaction.test.cpp )
 add_cpp_test( format.endf.createReactions                        createReactions.test.cpp )
 add_cpp_test( format.endf.createProjectileTarget                 createProjectileTarget.test.cpp )
