@@ -32,6 +32,8 @@ add_python_test( TabulatedAngularDistribution  Test_dryad_TabulatedAngularDistri
 add_python_test( TabulatedAngularDistributions Test_dryad_TabulatedAngularDistributions.py )
 add_python_test( TabulatedEnergyDistribution   Test_dryad_TabulatedEnergyDistribution.py )
 add_python_test( TabulatedEnergyDistributions  Test_dryad_TabulatedEnergyDistributions.py )
+add_python_test( TabulatedFormFactor           Test_dryad_TabulatedFormFactor.py )
+add_python_test( TabulatedScatteringFunction   Test_dryad_TabulatedScatteringFunction.py )
 add_python_test( TwoBodyDistributionData       Test_dryad_TwoBodyDistributionData.py )
 add_python_test( UncorrelatedDistributionData  Test_dryad_UncorrelatedDistributionData.py )
 add_python_test( ReactionProduct               Test_dryad_ReactionProduct.py )
