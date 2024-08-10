@@ -15,6 +15,8 @@
 #include "dryad/format/endf/createTabulatedEnergyDistribution.hpp"
 #include "dryad/format/endf/createTabulatedEnergyDistributions.hpp"
 #include "dryad/format/endf/createTabulatedAverageEnergy.hpp"
+#include "dryad/format/endf/createTabulatedFormFactor.hpp"
+#include "dryad/format/endf/createTabulatedScatteringFunction.hpp"
 #include "dryad/format/endf/createReactionProduct.hpp"
 #include "dryad/format/endf/createReactionProducts.hpp"
 #include "dryad/format/endf/createReaction.hpp"

@@ -14,6 +14,8 @@ add_cpp_test( format.endf.createTabulatedAngularDistributions    createTabulated
 add_cpp_test( format.endf.createTabulatedEnergyDistribution      createTabulatedEnergyDistribution.test.cpp )
 add_cpp_test( format.endf.createTabulatedEnergyDistributions     createTabulatedEnergyDistributions.test.cpp )
 add_cpp_test( format.endf.createTabulatedAverageEnergy           createTabulatedAverageEnergy.test.cpp )
+add_cpp_test( format.endf.createTabulatedFormFactor              createTabulatedFormFactor.test.cpp )
+add_cpp_test( format.endf.createTabulatedScatteringFunction      createTabulatedScatteringFunction.test.cpp )
 add_cpp_test( format.endf.createReactionProduct                  createReactionProduct.test.cpp )
 add_cpp_test( format.endf.createReactionProducts                 createReactionProducts.test.cpp )
 add_cpp_test( format.endf.createReaction                         createReaction.test.cpp )
