@@ -10,6 +10,14 @@ TabulatedScatteringFunction( InterpolationTable< double, double > table ) :
 
 public:
 
+//! @todo pybind11 variant needs default constructor workaround
+#ifdef PYBIND11
+/**
+ *  @brief Default constructor - only enabled for pybind11
+ */
+TabulatedScatteringFunction() = default;
+#endif
+
 TabulatedScatteringFunction( const TabulatedScatteringFunction& ) = default;
 TabulatedScatteringFunction( TabulatedScatteringFunction&& ) = default;
 

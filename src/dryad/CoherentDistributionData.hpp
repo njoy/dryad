@@ -59,6 +59,15 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not the coherent distribution data has an anomolous
+     *         form factor
+     */
+    bool hasAnomolousFormFactor() const noexcept {
+
+      return this->real_.has_value() || this->imaginary_.has_value();
+    }
+
+    /**
      *  @brief Return the scattering function
      */
     const TabulatedScatteringFunction& scatteringFunction() const noexcept {

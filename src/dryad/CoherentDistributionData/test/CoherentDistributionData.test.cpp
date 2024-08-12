@@ -56,6 +56,7 @@ void verifyChunkWithoutAnomolousFormFactor( const CoherentDistributionData& chun
 
   CHECK( DistributionDataType::Coherent == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
+  CHECK( false == chunk.hasAnomolousFormFactor() );
 
   CHECK_THAT( 0.  , WithinRel( chunk.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+6, WithinRel( chunk.scatteringFunction().upperInverseLengthLimit() ) );
@@ -79,6 +80,7 @@ void verifyChunkWithAnomolousFormFactor( const CoherentDistributionData& chunk )
 
   CHECK( DistributionDataType::Coherent == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
+  CHECK( true == chunk.hasAnomolousFormFactor() );
 
   CHECK_THAT( 0.  , WithinRel( chunk.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+6, WithinRel( chunk.scatteringFunction().upperInverseLengthLimit() ) );
