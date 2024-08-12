@@ -11,7 +11,7 @@ private:
 CoherentDistributionData( ReferenceFrame&& frame,
                           TabulatedScatteringFunction&& scattering,
                           std::optional< TabulatedFormFactor >&& real,
-                          std::optional< TabulatedFormFactor >&& imaginary > ) :
+                          std::optional< TabulatedFormFactor >&& imaginary ) :
     frame_( std::move( frame ) ), scattering_( std::move( scattering ) ),
     real_( std::move( real ) ), imaginary_( std::move( imaginary ) ) {}
 
@@ -55,4 +55,5 @@ CoherentDistributionData( ReferenceFrame frame,
                           TabulatedFormFactor real,
                           TabulatedFormFactor imaginary ) :
     CoherentDistributionData( std::move( frame ), std::move( scattering ),
-                              std::move( real ), std::move( imaginary ) ) {}
+                              std::make_optional( std::move( real ) ),
+                              std::make_optional( std::move( imaginary ) ) ) {}

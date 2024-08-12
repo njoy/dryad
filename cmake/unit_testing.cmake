@@ -40,6 +40,7 @@ add_subdirectory( src/dryad/TabulatedEnergyDistribution/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistributions/test )
 add_subdirectory( src/dryad/TwoBodyDistributionData/test )
 add_subdirectory( src/dryad/UncorrelatedDistributionData/test )
+add_subdirectory( src/dryad/CoherentDistributionData/test )
 add_subdirectory( src/dryad/IncoherentDistributionData/test )
 add_subdirectory( src/dryad/ReactionProduct/test )
 

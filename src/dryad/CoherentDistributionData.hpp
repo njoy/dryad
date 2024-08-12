@@ -26,7 +26,7 @@ namespace dryad {
    *  This corresponds with the coherent scattering function data given in
    *  MF27 MT502 and the form factors in MF27 MT505 and MT506.
    */
-  class IncoherentDistributionData {
+  class CoherentDistributionData {
 
     /* fields */
     ReferenceFrame frame_;
@@ -38,7 +38,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TwoBodyDistributionData/src/ctor.hpp"
+    #include "dryad/CoherentDistributionData/src/ctor.hpp"
 
     /* methods */
 
