@@ -10,6 +10,11 @@ TabulatedEnergyDistribution( InterpolationTable< double, double > table ) :
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+TabulatedEnergyDistribution() = default;
+
 TabulatedEnergyDistribution( const TabulatedEnergyDistribution& ) = default;
 TabulatedEnergyDistribution( TabulatedEnergyDistribution&& ) = default;
 

@@ -17,13 +17,10 @@ CoherentDistributionData( ReferenceFrame&& frame,
 
 public:
 
-//! @todo pybind11 variant needs default constructor workaround
-#ifdef PYBIND11
 /**
- *  @brief Default constructor - only enabled for pybind11
+ *  @brief Default constructor (for pybind11 purposes only)
  */
 CoherentDistributionData() = default;
-#endif
 
 CoherentDistributionData( const CoherentDistributionData& ) = default;
 CoherentDistributionData( CoherentDistributionData&& ) = default;

@@ -1,3 +1,8 @@
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+GridDistributions() = default;
+
 GridDistributions( const GridDistributions& ) = default;
 GridDistributions( GridDistributions&& ) = default;
 

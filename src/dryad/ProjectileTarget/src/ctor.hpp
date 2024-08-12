@@ -21,6 +21,11 @@ ProjectileTarget( id::ParticleID&& projectile, id::ParticleID&& target,
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+ProjectileTarget() = default;
+
 ProjectileTarget( const ProjectileTarget& ) = default;
 ProjectileTarget( ProjectileTarget&& ) = default;
 

@@ -10,6 +10,11 @@ TabulatedMultiplicity( InterpolationTable< double, double > table ) :
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+TabulatedMultiplicity() = default;
+
 TabulatedMultiplicity( const TabulatedMultiplicity& ) = default;
 TabulatedMultiplicity( TabulatedMultiplicity&& ) = default;
 
