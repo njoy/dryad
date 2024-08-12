@@ -70,7 +70,7 @@ namespace dryad {
 //
 //      double h = ;
 //      double c = ;
-//      return energy / h /c * std::sqrt( 0.5 * ( 1 - cosine ) );
+//      return energy / h / c * std::sqrt( 0.5 * ( 1 - cosine ) );
 //    }
 
     using InterpolationTable::boundaries;
