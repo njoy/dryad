@@ -39,7 +39,7 @@ void wrapTwoBodyDistributionData( python::module& module, python::module& ) {
 
     python::init< ReferenceFrame, AngularDistributions >(),
     python::arg( "frame" ), python::arg( "angle" ),
-    "Initialise the reaction\n\n"
+    "Initialise the two-body distribution data\n\n"
     "Arguments:\n"
     "    self    the reaction product distribution data\n"
     "    frame   the reference frame of the distribution data\n"

@@ -36,7 +36,7 @@ void wrapIncoherentDistributionData( python::module& module, python::module& ) {
 
     python::init< ReferenceFrame, TabulatedScatteringFunction >(),
     python::arg( "frame" ), python::arg( "scattering" ),
-    "Initialise the reaction\n\n"
+    "Initialise the incoherent distribution data\n\n"
     "Arguments:\n"
     "    self         the reaction product distribution data\n"
     "    frame        the reference frame of the distribution data\n"

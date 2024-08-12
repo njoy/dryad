@@ -37,11 +37,25 @@ void wrapCoherentDistributionData( python::module& module, python::module& ) {
 
     python::init< ReferenceFrame, TabulatedScatteringFunction >(),
     python::arg( "frame" ), python::arg( "scattering" ),
-    "Initialise the reaction\n\n"
+    "Initialise the coherent distribution data without anomolous form factors\n\n"
     "Arguments:\n"
     "    self         the reaction product distribution data\n"
     "    frame        the reference frame of the distribution data\n"
     "    scattering   the scattering function"
+  )
+  .def(
+
+    python::init< ReferenceFrame, TabulatedScatteringFunction,
+                  TabulatedFormFactor, TabulatedFormFactor >(),
+    python::arg( "frame" ), python::arg( "scattering" ),
+    python::arg( "real" ), python::arg( "imaginary" ),
+    "Initialise the coherent distribution data with anomolous form factors\n\n"
+    "Arguments:\n"
+    "    self         the reaction product distribution data\n"
+    "    frame        the reference frame of the distribution data\n"
+    "    scattering   the scattering function\n"
+    "    real         the real part of the anamolous form factor\n"
+    "    imaginary    the imaginary part of the anamolous form factor"
   )
   .def_property_readonly(
 
