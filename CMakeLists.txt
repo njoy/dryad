@@ -110,6 +110,8 @@ if( dryad.python )
       python/src/TabulatedAngularDistributions.python.cpp
       python/src/TabulatedEnergyDistribution.python.cpp
       python/src/TabulatedEnergyDistributions.python.cpp
+      python/src/TabulatedFormFactor.python.cpp
+      python/src/TabulatedScatteringFunction.python.cpp
       python/src/TwoBodyDistributionData.python.cpp
       python/src/UncorrelatedDistributionData.python.cpp
       python/src/ReactionProduct.python.cpp
