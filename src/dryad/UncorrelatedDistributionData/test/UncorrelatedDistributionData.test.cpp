@@ -34,7 +34,7 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
                                           std::move( energy ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "an UncorrelatedDistributionData can be constructed and members can be tested" ) {
 
         verifyIsotropicAndTabulatedChunk( chunk );
       } // THEN
@@ -61,7 +61,7 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
                                           std::move( energy ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "an UncorrelatedDistributionData can be constructed and members can be tested" ) {
 
         verifyLegendreAndTabulatedChunk( chunk );
       } // THEN
@@ -89,7 +89,7 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
                                           std::move( energy ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "an UncorrelatedDistributionData can be constructed and members can be tested" ) {
 
         verifyTabulatedAndTabulatedChunk( chunk );
       } // THEN

@@ -25,7 +25,7 @@ SCENARIO( "CoherentDistributionData" ) {
 
       CoherentDistributionData chunk( std::move( frame ), std::move( scattering ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "a CoherentDistributionData can be constructed and members can be tested" ) {
 
         verifyChunkWithoutAnomolousFormFactor( chunk );
       } // THEN
@@ -44,7 +44,7 @@ SCENARIO( "CoherentDistributionData" ) {
       CoherentDistributionData chunk( std::move( frame ), std::move( scattering ),
                                       std::move( real ), std::move( imaginary ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "a CoherentDistributionData can be constructed and members can be tested" ) {
 
         verifyChunkWithAnomolousFormFactor( chunk );
       } // THEN

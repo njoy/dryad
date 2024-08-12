@@ -24,7 +24,7 @@ SCENARIO( "IncoherentDistributionData" ) {
 
       IncoherentDistributionData chunk( std::move( frame ), std::move( scattering ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "an IncoherentDistributionData can be constructed and members can be tested" ) {
 
         verifyChunk( chunk );
       } // THEN
