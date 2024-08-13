@@ -76,4 +76,43 @@ SCENARIO( "createReaction" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "ENDF materials - photo-atomic" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    auto material = tape.materials().front();
+
+    WHEN( "a single ENDF material and MT number is given" ) {
+
+      THEN( "a Reaction can be created" ) {
+
+        id::ParticleID projectile( "g" );
+        id::ParticleID target( "H" );
+
+        Reaction total = format::endf::createReaction( projectile, target, material, 501 );
+        verifyPhotonTotalReaction( total );
+
+        Reaction coherent = format::endf::createReaction( projectile, target, material, 502 );
+        verifyPhotonCoherentReaction( coherent );
+
+        Reaction incoherent = format::endf::createReaction( projectile, target, material, 504 );
+        verifyPhotonIncoherentReaction( incoherent );
+
+        Reaction epairproduction = format::endf::createReaction( projectile, target, material, 515 );
+        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+
+        Reaction npairproduction = format::endf::createReaction( projectile, target, material, 517 );
+        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+
+        Reaction tpairproduction = format::endf::createReaction( projectile, target, material, 516 );
+        verifyPhotonTotalPairProductionReaction( tpairproduction );
+
+        Reaction ionisation = format::endf::createReaction( projectile, target, material, 534 );
+        verifyPhotonIonisationReaction( ionisation );
+
+        Reaction tionisation = format::endf::createReaction( projectile, target, material, 522 );
+        verifyPhotonTotalIonisationReaction( tionisation );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
