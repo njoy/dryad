@@ -13,6 +13,8 @@
 #include "dryad/TabulatedAverageEnergy.hpp"
 #include "dryad/TwoBodyDistributionData.hpp"
 #include "dryad/UncorrelatedDistributionData.hpp"
+#include "dryad/CoherentDistributionData.hpp"
+#include "dryad/IncoherentDistributionData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -28,7 +30,9 @@ namespace dryad {
     /* type aliases */
     using Multiplicity = std::variant< int, TabulatedMultiplicity >;
     using DistributionData = std::variant< TwoBodyDistributionData,
-                                           UncorrelatedDistributionData >;
+                                           UncorrelatedDistributionData,
+                                           CoherentDistributionData,
+                                           IncoherentDistributionData >;
 
   private:
 

@@ -62,7 +62,27 @@ namespace endf {
     }
     else if ( material.hasSection( 27, mt ) ) {
 
-      Log::warning( "Reading scattering functions and form factors for photons is not implemented yet" );
+      switch ( mt ) {
+
+        case 502 : {
+
+          auto section = material.section( 27, mt ).parse< 27 >();
+          std::optional< ENDFtk::section::Type< 27 > > real = std::nullopt;
+          std::optional< ENDFtk::section::Type< 27 > > imaginary = std::nullopt;
+          if ( material.hasSection( 27, 505 ) ) { real = material.section( 27, 505 ).parse< 27 >(); }
+          if ( material.hasSection( 27, 506 ) ) { real = material.section( 27, 506 ).parse< 27 >(); }
+          products.emplace_back( createReactionProduct( projectile, target, section, real, imaginary, mt ) );
+        }
+        case 504 : {
+
+          auto section = material.section( 27, mt ).parse< 27 >();
+          products.emplace_back( createReactionProduct( projectile, target, section, mt ) );
+        }
+        default : {
+
+          Log::info( "The material does not have reaction products for MT{}", mt );
+        }
+      }
     }
     else {
 
