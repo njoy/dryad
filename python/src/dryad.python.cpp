@@ -31,6 +31,8 @@ void wrapTabulatedFormFactor( python::module&, python::module& );
 void wrapTabulatedScatteringFunction( python::module&, python::module& );
 void wrapTwoBodyDistributionData( python::module&, python::module& );
 void wrapUncorrelatedDistributionData( python::module&, python::module& );
+void wrapCoherentDistributionData( python::module&, python::module& );
+void wrapIncoherentDistributionData( python::module&, python::module& );
 void wrapReactionProduct( python::module&, python::module& );
 void wrapReaction( python::module&, python::module& );
 void wrapProjectileTarget( python::module&, python::module& );
@@ -79,6 +81,8 @@ PYBIND11_MODULE( dryad, module ) {
   wrapTabulatedScatteringFunction( module, viewmodule );
   wrapTwoBodyDistributionData( module, viewmodule );
   wrapUncorrelatedDistributionData( module, viewmodule );
+  wrapCoherentDistributionData( module, viewmodule );
+  wrapIncoherentDistributionData( module, viewmodule );
   wrapReactionProduct( module, viewmodule );
 
   // wrap components - reactions

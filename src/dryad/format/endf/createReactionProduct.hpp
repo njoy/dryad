@@ -11,6 +11,8 @@
 #include "dryad/format/endf/createTabulatedEnergyDistributions.hpp"
 #include "dryad/format/endf/createTabulatedAngularDistributions.hpp"
 #include "dryad/format/endf/createTabulatedAverageEnergy.hpp"
+#include "dryad/format/endf/createTabulatedFormFactor.hpp"
+#include "dryad/format/endf/createTabulatedScatteringFunction.hpp"
 #include "dryad/ReactionProduct.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -102,6 +104,71 @@ namespace endf {
         throw std::exception();
       }
     }
+  }
+
+  /**
+   *  @brief Create a ReactionProduct from parsed ENDF MF27 MT502, MT505 and MT506
+   *         section
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] incoherent   the MF27 MT504 section
+   *  @param[in] real         the optional MF27 MT505 section
+   *  @param[in] imaginary    the optional MF27 MT506 section
+   *  @param[in] mt           the ENDF MT number
+   */
+  ReactionProduct
+  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+                         const ENDFtk::section::Type< 27 >& coherent,
+                         const std::optional< ENDFtk::section::Type< 27 > >& real,
+                         const std::optional< ENDFtk::section::Type< 27 > >& imaginary,
+                         int mt ) {
+
+    id::ParticleID id = createProductIdentifier( 0, 0, false );
+    Log::info( "Reading reaction product data for \'{}\'", id );
+    int multiplicity = 1;
+
+    //! @todo what about the reference frames?
+
+    if ( real.has_value() || imaginary.has_value() ) {
+
+      auto distribution = CoherentDistributionData( ReferenceFrame::CentreOfMass,
+                                                    createTabulatedScatteringFunction( coherent ),
+                                                    createTabulatedFormFactor( real.value() ),
+                                                    createTabulatedFormFactor( imaginary.value() ) );
+      return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+
+    }
+    else {
+
+      auto distribution = CoherentDistributionData( ReferenceFrame::CentreOfMass,
+                                                    createTabulatedScatteringFunction( coherent ) );
+      return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+    }
+  }
+
+  /**
+   *  @brief Create a ReactionProduct from a parsed ENDF MF27 MT504 section
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] incoherent   the MF27 MT504 section
+   *  @param[in] mt           the ENDF MT number
+   */
+  ReactionProduct
+  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+                         const ENDFtk::section::Type< 27 >& incoherent,
+                         int mt ) {
+
+    id::ParticleID id = createProductIdentifier( 0, 0, false );
+    Log::info( "Reading reaction product data for \'{}\'", id );
+    int multiplicity = 1;
+
+    //! @todo what about the reference frames?
+
+    auto distribution = IncoherentDistributionData( ReferenceFrame::CentreOfMass,
+                                                    createTabulatedScatteringFunction( incoherent ) );
+    return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
   }
 
 } // endf namespace

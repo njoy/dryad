@@ -114,6 +114,8 @@ if( dryad.python )
       python/src/TabulatedScatteringFunction.python.cpp
       python/src/TwoBodyDistributionData.python.cpp
       python/src/UncorrelatedDistributionData.python.cpp
+      python/src/CoherentDistributionData.python.cpp
+      python/src/IncoherentDistributionData.python.cpp
       python/src/ReactionProduct.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp

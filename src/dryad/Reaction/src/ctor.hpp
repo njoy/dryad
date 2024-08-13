@@ -26,6 +26,11 @@ Reaction( id::ReactionID&& id,
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+Reaction() = default;
+
 Reaction( const Reaction& ) = default;
 Reaction( Reaction&& ) = default;
 

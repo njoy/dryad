@@ -41,7 +41,7 @@ void wrapUncorrelatedDistributionData( python::module& module, python::module& )
 
     python::init< ReferenceFrame, AngularDistributions, EnergyDistributions >(),
     python::arg( "frame" ), python::arg( "angle" ), python::arg( "energy" ),
-    "Initialise the reaction\n\n"
+    "Initialise the uncorrelated distribution data\n\n"
     "Arguments:\n"
     "    self     the reaction product distribution data\n"
     "    frame    the reference frame of the distribution data\n"

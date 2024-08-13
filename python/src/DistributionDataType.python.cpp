@@ -27,5 +27,7 @@ void wrapDistributionDataType( python::module& module, python::module& ) {
   // wrap the component
   component
   .value( "TwoBody",      Component::TwoBody )
-  .value( "Uncorrelated", Component::Uncorrelated );
+  .value( "Uncorrelated", Component::Uncorrelated )
+  .value( "Coherent",     Component::Coherent )
+  .value( "Incoherent",   Component::Incoherent );
 }

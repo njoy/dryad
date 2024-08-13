@@ -36,6 +36,8 @@ add_python_test( TabulatedFormFactor           Test_dryad_TabulatedFormFactor.py
 add_python_test( TabulatedScatteringFunction   Test_dryad_TabulatedScatteringFunction.py )
 add_python_test( TwoBodyDistributionData       Test_dryad_TwoBodyDistributionData.py )
 add_python_test( UncorrelatedDistributionData  Test_dryad_UncorrelatedDistributionData.py )
+add_python_test( CoherentDistributionData      Test_dryad_CoherentDistributionData.py )
+add_python_test( IncoherentDistributionData    Test_dryad_IncoherentDistributionData.py )
 add_python_test( ReactionProduct               Test_dryad_ReactionProduct.py )
 
 add_python_test( TabulatedCrossSection         Test_dryad_TabulatedCrossSection.py )

@@ -7,6 +7,11 @@ ElementID( const Entry* pointer ) : entry_( pointer ) {}
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+ElementID() = default;
+
 ElementID( const ElementID& ) = default;
 ElementID( ElementID&& ) = default;
 

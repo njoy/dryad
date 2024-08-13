@@ -10,6 +10,11 @@ TabulatedCrossSection( InterpolationTable< double, double > table ) :
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+TabulatedCrossSection() = default;
+
 TabulatedCrossSection( const TabulatedCrossSection& ) = default;
 TabulatedCrossSection( TabulatedCrossSection&& ) = default;
 

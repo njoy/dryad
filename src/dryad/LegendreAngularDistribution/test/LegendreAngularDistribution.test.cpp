@@ -343,7 +343,8 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( LegendreAngularDistribution( {} ) );
+        std::vector< double > empty = {};
+        CHECK_THROWS( LegendreAngularDistribution( empty ) );
       } // THEN
     } // WHEN
   } // GIVEN
