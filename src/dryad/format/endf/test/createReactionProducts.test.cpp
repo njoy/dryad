@@ -14,6 +14,7 @@ using namespace njoy::dryad;
 
 void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct& );
 void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& );
+void verifyPhotonCoherentProduct( const ReactionProduct& );
 
 SCENARIO( "createReactionProducts" ) {
 
@@ -31,8 +32,29 @@ SCENARIO( "createReactionProducts" ) {
 
         std::vector< ReactionProduct > products = format::endf::createReactionProducts( projectile, target, material, 527 );
 
+        CHECK( 2 == products.size() );
         verifyElectronBremsstrahlungPhotonProduct( products[0] );
         verifyElectronBremsstrahlungElectronProduct( products[1] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF reaction products - photo-atomic interactions" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    auto material = tape.materials().front();
+
+    WHEN( "a single ENDF material is given" ) {
+
+      THEN( "a reaction products can be created" ) {
+
+        id::ParticleID projectile( "e-" );
+        id::ParticleID target( "H1" );
+
+        std::vector< ReactionProduct > products = format::endf::createReactionProducts( projectile, target, material, 502 );
+
+        CHECK( 1 == products.size() );
+        verifyPhotonCoherentProduct( products[0] );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -144,4 +166,83 @@ void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& chunk )
   CHECK_THAT(  1e+11       - 2.66810E+9, WithinRel( average.values()[81] ) );
 
   CHECK( std::nullopt == chunk.distributionData() );
+}
+
+void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
+
+  CHECK( id::ParticleID( "g" ) == chunk.identifier() );
+  CHECK( true == chunk.isLinearised() );
+  CHECK( false == chunk.hasAverageEnergy() );
+  CHECK( true == chunk.hasDistributionData() );
+
+  CHECK( true == std::holds_alternative< int >( chunk.multiplicity() ) );
+  auto multiplicity = std::get< int >( chunk.multiplicity() );
+  CHECK( 1 == multiplicity );
+
+  CHECK( std::nullopt == chunk.averageEnergy() );
+
+  CHECK( std::nullopt != chunk.distributionData() );
+  CHECK( true == std::holds_alternative< CoherentDistributionData >( chunk.distributionData().value() ) );
+  auto data = std::get< CoherentDistributionData >( chunk.distributionData().value() );
+
+  CHECK( DistributionDataType::Coherent == data.type() );
+  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+
+  CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
+  CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
+  CHECK( 1253 == data.scatteringFunction().inverseLengths().size() );
+  CHECK( 1253 == data.scatteringFunction().values().size() );
+  CHECK( 1 == data.scatteringFunction().boundaries().size() );
+  CHECK( 1 == data.scatteringFunction().interpolants().size() );
+  CHECK_THAT( 0.       , WithinRel( data.scatteringFunction().inverseLengths()[0] ) );
+  CHECK_THAT( 0.001    , WithinRel( data.scatteringFunction().inverseLengths()[1] ) );
+  CHECK_THAT( 512000000, WithinRel( data.scatteringFunction().inverseLengths()[1251] ) );
+  CHECK_THAT( 1e+9     , WithinRel( data.scatteringFunction().inverseLengths()[1252] ) );
+  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[0] ) );
+  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[1] ) );
+  CHECK_THAT( 1.1908E-37, WithinRel( data.scatteringFunction().values()[1251] ) );
+  CHECK_THAT( 8.1829e-39, WithinRel( data.scatteringFunction().values()[1252] ) );
+  CHECK( 1252 == data.scatteringFunction().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
+  CHECK( true == data.scatteringFunction().isLinearised() );
+
+  CHECK( std::nullopt != data.realAnomolousFormFactor() );
+  auto factor = data.realAnomolousFormFactor().value();
+  CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
+  CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
+  CHECK( 297 == factor.energies().size() );
+  CHECK( 297 == factor.values().size() );
+  CHECK( 1 == factor.boundaries().size() );
+  CHECK( 1 == factor.interpolants().size() );
+  CHECK_THAT( 1.        , WithinRel( factor.energies()[0] ) );
+  CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
+  CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
+  CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
+  CHECK( 296 == factor.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
+  CHECK( true == factor.isLinearised() );
+
+  CHECK( std::nullopt != data.imaginaryAnomolousFormFactor() );
+  factor = data.imaginaryAnomolousFormFactor().value();
+  CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
+  CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
+  CHECK( 297 == factor.energies().size() );
+  CHECK( 297 == factor.values().size() );
+  CHECK( 1 == factor.boundaries().size() );
+  CHECK( 1 == factor.interpolants().size() );
+  CHECK_THAT( 1.        , WithinRel( factor.energies()[0] ) );
+  CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
+  CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
+  CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
+  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
+  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
+  CHECK( 296 == factor.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
+  CHECK( true == factor.isLinearised() );
 }
