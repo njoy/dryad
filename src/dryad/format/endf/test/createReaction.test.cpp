@@ -101,17 +101,17 @@ SCENARIO( "createReaction" ) {
         Reaction epairproduction = format::endf::createReaction( projectile, target, material, 515 );
         verifyPhotonElectronFieldPairProductionReaction( epairproduction );
 
-        Reaction npairproduction = format::endf::createReaction( projectile, target, material, 517 );
-        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
-
         Reaction tpairproduction = format::endf::createReaction( projectile, target, material, 516 );
         verifyPhotonTotalPairProductionReaction( tpairproduction );
 
-        Reaction ionisation = format::endf::createReaction( projectile, target, material, 534 );
-        verifyPhotonIonisationReaction( ionisation );
+        Reaction npairproduction = format::endf::createReaction( projectile, target, material, 517 );
+        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
 
         Reaction tionisation = format::endf::createReaction( projectile, target, material, 522 );
         verifyPhotonTotalIonisationReaction( tionisation );
+
+        Reaction ionisation = format::endf::createReaction( projectile, target, material, 534 );
+        verifyPhotonIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN
