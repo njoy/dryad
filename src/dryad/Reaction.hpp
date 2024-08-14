@@ -130,10 +130,18 @@ namespace dryad {
     Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
 
       TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
+      if ( this->type() == ReactionType::Primary ) {
 
-      return Reaction( this->identifier(), this->type(), std::move( xs ),
-                       this->products(), this->massDifferenceQValue(),
-                       this->reactionQValue() );
+        return Reaction( this->identifier(), std::move( xs ),
+                         this->products(), this->massDifferenceQValue(),
+                         this->reactionQValue() );
+      }
+      else {
+
+        return Reaction( this->identifier(),
+                         this->partialReactionIdentifiers().value(),
+                         std::move( xs ) );
+      }
     }
 
     /**
