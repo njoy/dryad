@@ -62,16 +62,23 @@ namespace dryad {
       return this->x().back();
     }
 
-//! @todo add physical constants to scion or dryad
-//    /**
-//     *  @brief Return the inverse length value associated to an energy,cosine pair
-//     */
-//    double inverseLength( double energy, double cosine ) const noexcept {
-//
-//      double h = ;
-//      double c = ;
-//      return energy / h / c * std::sqrt( 0.5 * ( 1 - cosine ) );
-//    }
+    /**
+     *  @brief Return the inverse length value associated to an energy,cosine pair
+     *
+     *  @param energy   the incident photon energy
+     *  @param cosine   the outgoing photon cosine
+     */
+    double inverseLength( double energy, double cosine ) const noexcept {
+
+      //! @todo add physical constants to scion or dryad
+
+      const double h = 6.62607015e-34;       // Planck constant, unit: J s
+      const double c = 299792458;            // light speed, unit: m / s
+      const double e = 1.602176634e-19;      // elementary charge, unit: C
+      const double a = 1e-10;                // angstrom, unit: m
+      const double constant = a * e / h / c; // units: 1 / eV / angstrom
+      return constant * energy * std::sqrt( 0.5 * ( 1 - cosine ) );
+    }
 
     using InterpolationTable::boundaries;
     using InterpolationTable::interpolants;
@@ -80,6 +87,17 @@ namespace dryad {
     using InterpolationTable::isLinearised;
 
     using InterpolationTable::operator();
+
+    /**
+     *  @brief Evaluate the scattering function for an energy,cosine pair
+     *
+     *  @param energy   the incident photon energy
+     *  @param cosine   the outgoing photon cosine
+     */
+    double operator()( double energy, double cosine ) const {
+
+      return this->operator()( this->inverseLength( energy, cosine ) );
+    }
 
     /**
      *  @brief Return a linearised scattering function table

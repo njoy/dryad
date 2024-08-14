@@ -83,16 +83,38 @@ void wrapTabulatedScatteringFunction( python::module& module, python::module& ) 
     &Component::upperInverseLengthLimit,
     "The upper inverse length limit"
   )
+  .def_property_readonly(
+
+    "inverse_length",
+    &Component::inverseLength,
+    "The inverse length value associated to an energy,cosine pair\n\n"
+    "Arguments:\n"
+    "    self     the table\n"
+    "    energy   the incident photon energy\n"
+    "    cosine   the coutgoing photon osine"
+  )
   .def(
 
     "__call__",
     [] ( const Component& self, double inverse_length ) -> decltype(auto)
        { return self( inverse_length ); },
     python::arg( "inverse_length" ),
-    "Evaluate the table for a given energy value\n\n"
+    "Evaluate the table for a given inverse length value\n\n"
     "Arguments:\n"
     "    self              the table\n"
     "    inverse_length    the inverse length value"
+  )
+  .def(
+
+    "__call__",
+    [] ( const Component& self, double energy, double cosine ) -> decltype(auto)
+       { return self( energy, cosine ); },
+    python::arg( "energy" ), python::arg( "cosine" ),
+    "Evaluate the table for a given energy,cosine pair\n\n"
+    "Arguments:\n"
+    "    self     the table\n"
+    "    energy   the incident photon energy\n"
+    "    cosine   the coutgoing photon osine"
   );
 
   // add standard tabulated data definitions
