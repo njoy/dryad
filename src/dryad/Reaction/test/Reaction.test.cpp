@@ -22,7 +22,6 @@ SCENARIO( "Reaction" ) {
     WHEN( "the data is given explicitly" ) {
 
       id::ReactionID id( "n,Fe56->n,Fe56_e1" );
-      ReactionType type = ReactionType::Primary;
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
                                 { 1, 4 },
@@ -32,7 +31,7 @@ SCENARIO( "Reaction" ) {
       double reaction_q = -1;
       std::vector< ReactionProduct > products = {};
 
-      Reaction chunk( std::move( id ), std::move( type ), std::move( xs ),
+      Reaction chunk( std::move( id ), std::move( xs ),
                       std::move( products ), mass_q, reaction_q );
 
       THEN( "a Reaction can be constructed and members can be tested" ) {
@@ -62,14 +61,14 @@ SCENARIO( "Reaction" ) {
     WHEN( "the data is given explicitly" ) {
 
       id::ReactionID id( "n,Fe56->total" );
-      ReactionType type = ReactionType::Summation;
+      std::vector< id::ReactionID > partials = { "n,Fe56->elastic", "n,Fe56->2n,Fe55" };
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
                                 { 1, 4 },
                                 { InterpolationType::LinearLinear,
                                   InterpolationType::LinearLog } );
 
-      Reaction chunk( std::move( id ), std::move( type ), std::move( xs ) );
+      Reaction chunk( std::move( id ), std::move( partials ), std::move( xs ) );
 
       THEN( "a Reaction can be constructed and members can be tested" ) {
 
@@ -101,6 +100,9 @@ void verifyChunk( const Reaction& chunk ) {
 
   // reaction type
   CHECK( ReactionType::Primary == chunk.type() );
+
+  // partial identifiers
+  CHECK( std::nullopt == chunk.partialReactionIdentifiers() );
 
   // q values
   CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue().value() ) );
@@ -184,6 +186,13 @@ void verifySummationChunk( const Reaction& chunk ) {
 
   // reaction type
   CHECK( ReactionType::Summation == chunk.type() );
+
+  // partial identifiers
+  CHECK( std::nullopt != chunk.partialReactionIdentifiers() );
+  auto partials = chunk.partialReactionIdentifiers().value();
+  CHECK( 2 == partials.size() );
+  CHECK( id::ReactionID( "n,Fe56->elastic" ) == partials[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == partials[1] );
 
   // q values
   CHECK( std::nullopt == chunk.massDifferenceQValue() );
