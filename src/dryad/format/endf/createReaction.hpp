@@ -26,62 +26,63 @@ namespace endf {
 
     if ( material.hasSection( 3, mt ) ) {
 
-      auto section = material.section( 3, mt ).parse< 3 >();
-
       // metadata and miscellaneous information
       id::ReactionID id = std::to_string( mt );
       ReactionType type = createReactionType( material, mt );
-      std::optional< double > mass_q = std::nullopt;
-      std::optional< double > reaction_q = std::nullopt;
-      if ( type == ReactionType::Primary ) {
-
-        mass_q = section.massDifferenceQValue();
-        reaction_q = section.reactionQValue();
-      }
 
       // cross section
+      auto section = material.section( 3, mt ).parse< 3 >();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
-      // reaction products
-      std::vector< ReactionProduct > products = {};
       if ( type == ReactionType::Primary ) {
 
-        products = createReactionProducts( projectile, target, material, mt );
-      }
+        // Q values
+        std::optional< double > mass_q = section.massDifferenceQValue();
+        std::optional< double > reaction_q = section.massDifferenceQValue();
 
-      // return the reaction data
-      return Reaction( std::move( id ), std::move( type ), std::move( xs ),
-                       std::move( products ), std::move( mass_q ),
-                       std::move( reaction_q ) );
+        // reaction products
+        std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+
+        // return the reaction data
+        return Reaction( std::move( id ), std::move( xs ),
+                         std::move( products ), std::move( mass_q ),
+                         std::move( reaction_q ) );
+      }
+      else {
+
+        // return the reaction data
+        return Reaction( std::move( id ), {}, std::move( xs ) );
+      }
     }
     else if ( material.hasSection( 23, mt ) ) {
 
-      auto section = material.section( 23, mt ).parse< 23 >();
-
       // metadata and miscellaneous information
       id::ReactionID id = std::to_string( mt );
       ReactionType type = createReactionType( material, mt );
-      std::optional< double > mass_q = std::nullopt;
-      std::optional< double > reaction_q = std::nullopt;
-      if ( type == ReactionType::Primary ) {
-
-        reaction_q = -section.subshellBindingEnergy();
-      }
 
       // cross section
+      auto section = material.section( 23, mt ).parse< 23 >();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
-      // reaction products
-      std::vector< ReactionProduct > products = {};
       if ( type == ReactionType::Primary ) {
 
-        products = createReactionProducts( projectile, target, material, mt );
-      }
+        // q values
+        std::optional< double > mass_q = std::nullopt;
+        std::optional< double > reaction_q = -section.subshellBindingEnergy();
 
-      // return the reaction data
-      return Reaction( std::move( id ), std::move( type ), std::move( xs ),
-                       std::move( products ), std::move( mass_q ),
-                       std::move( reaction_q ) );
+        // reaction products
+        std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+
+        // return the reaction data
+        return Reaction( std::move( id ), std::move( xs ),
+                         std::move( products ), std::move( mass_q ),
+                         std::move( reaction_q ) );
+      }
+      else {
+
+        // return the reaction data
+        return Reaction( std::move( id ), {}, std::move( xs ) );
+      }
     }
     else {
 

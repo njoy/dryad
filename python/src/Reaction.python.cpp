@@ -32,25 +32,6 @@ void wrapReaction( python::module& module, python::module& ) {
   component
   .def(
 
-    python::init< ReactionID, ReactionType, TabulatedCrossSection,
-                  std::vector< ReactionProduct >,
-                  std::optional< double >, std::optional< double > >(),
-    python::arg( "id" ), python::arg( "type" ), python::arg( "xs" ),
-    python::arg( "products" ) = std::vector< ReactionProduct >{},
-    python::arg( "mass_q" ) = std::nullopt,
-    python::arg( "reaction_q" ) = std::nullopt,
-    "Initialise the reaction\n\n"
-    "Arguments:\n"
-    "    self         the reaction\n"
-    "    id           the reaction identifier\n"
-    "    type         the reaction type\n"
-    "    xs           the cross section of the reaction\n"
-    "    products     the reaction products\n"
-    "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)\n"
-  )
-  .def(
-
     python::init< ReactionID, TabulatedCrossSection,
                   std::vector< ReactionProduct >,
                   std::optional< double >, std::optional< double > >(),

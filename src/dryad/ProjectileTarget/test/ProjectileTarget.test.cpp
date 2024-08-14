@@ -27,12 +27,12 @@ SCENARIO( "ProjectileTarget" ) {
 
       std::vector< Reaction > reactions = {
 
-        Reaction( id::ReactionID( "n,Fe56->n,Fe56" ), ReactionType::Primary,
+        Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                   TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
                                            InterpolationType::LogLinear ),
                   {},
                   0, 0 ),
-        Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ), ReactionType::Primary,
+        Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
                   TabulatedCrossSection( { 1., 20. }, { 0., 100. },
                                            InterpolationType::LinearLinear ),
                   {},
