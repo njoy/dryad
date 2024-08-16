@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_ENDF_REACTIONIDENTIFIERS
 
 // system includes
+#include <map>
 #include <unordered_set>
 
 // other includes
@@ -24,11 +25,11 @@ namespace endf {
     };
     inline static const std::unordered_set< int > summation_or_primary_ = {
 
-       16,  18, 103, 104, 105, 106, 107
+       16,  18, 103, 104, 105, 106, 107, 526
     };
     inline static const std::unordered_set< int > summation_ = {
 
-        1,   3,   4,  27, 101, 501, 516, 522, 526
+        1,   3,   4,  27, 101, 501, 516, 522
     };
     inline static const std::unordered_set< int > primary_ = {
 
@@ -78,13 +79,61 @@ namespace endf {
       875, 876, 877, 878, 879, 880, 881, 882, 883, 884,
       885, 886, 887, 888, 889, 890, 891
     };
+    inline static const std::map< int, std::vector< int > > partials_ = {
+
+      //! @todo complete this list
+      {   1, {  } },
+      {   3, {  } },
+      {   4, {  } },
+      {  16, {  } },
+      {  18, { 19, 20, 21, 38 } },
+      {  27, {  } },
+      { 101, {  } },
+      { 103, { 600, 601, 602, 603, 604, 605, 606, 607, 608, 609,
+               610, 611, 612, 613, 614, 615, 616, 617, 618, 619,
+               620, 621, 622, 623, 624, 625, 626, 627, 628, 629,
+               630, 631, 632, 633, 634, 635, 636, 637, 638, 639,
+               640, 641, 642, 643, 644, 645, 646, 647, 648, 649 } },
+      { 104, { 650, 651, 652, 653, 654, 655, 656, 657, 658, 659,
+               660, 661, 662, 663, 664, 665, 666, 667, 668, 669,
+               670, 671, 672, 673, 674, 675, 676, 677, 678, 679,
+               680, 681, 682, 683, 684, 685, 686, 687, 688, 689,
+               690, 691, 692, 693, 694, 695, 696, 697, 698, 699 } },
+      { 105, { 700, 701, 702, 703, 704, 705, 706, 707, 708, 709,
+               710, 711, 712, 713, 714, 715, 716, 717, 718, 719,
+               720, 721, 722, 723, 724, 725, 726, 727, 728, 729,
+               730, 731, 732, 733, 734, 735, 736, 737, 738, 739,
+               740, 741, 742, 743, 744, 745, 746, 747, 748, 749 } },
+      { 106, { 750, 751, 752, 753, 754, 755, 756, 757, 758, 759,
+               760, 761, 762, 763, 764, 765, 766, 767, 768, 769,
+               770, 771, 772, 773, 774, 775, 776, 777, 778, 779,
+               780, 781, 782, 783, 784, 785, 786, 787, 788, 789,
+               790, 791, 792, 793, 794, 795, 796, 797, 798, 799 } },
+      { 107, { 800, 801, 802, 803, 804, 805, 806, 807, 808, 809,
+               810, 811, 812, 813, 814, 815, 816, 817, 818, 819,
+               820, 821, 822, 823, 824, 825, 826, 827, 828, 829,
+               830, 831, 832, 833, 834, 835, 836, 837, 838, 839,
+               840, 841, 842, 843, 844, 845, 846, 847, 848, 849 } },
+      { 501, { 502, 504, 515, 517, 525,      527, 528, 534, 535,
+               536, 537, 538, 539, 540, 541, 542, 543, 544, 545,
+               546, 547, 548, 549, 550, 551, 552, 553, 554, 555,
+               556, 557, 558, 559, 560, 561, 562, 563, 564, 565,
+               566, 567, 568, 569, 570, 571, 572 } },
+      { 516, { 515, 517 } },
+      { 522, { 534, 535, 536, 537, 538, 539, 540, 541, 542, 543,
+               544, 545, 546, 547, 548, 549, 550, 551, 552, 553,
+               554, 555, 556, 557, 558, 559, 560, 561, 562, 563,
+               564, 565, 566, 567, 568, 569, 570, 571, 572 } },
+      { 526, { 525 } }
+    };
 
   public:
 
     /**
-     *  @brief Return whther or not the MT number is valid
+     *  @brief Return whether or not the MT number is valid
      *
-     *  @param[in] mt   the MT number
+     *  @param[in] material   the ENDF material
+     *  @param[in] mt         the MT number
      */
     static bool isValid( const ENDFtk::tree::Material&, int mt ) {
 
@@ -105,9 +154,10 @@ namespace endf {
     }
 
     /**
-     *  @brief Return whther or not the MT number is for a derived reaction
+     *  @brief Return whether or not the MT number is for a derived reaction
      *
-     *  @param[in] mt   the MT number
+     *  @param[in] material   the ENDF material
+     *  @param[in] mt         the MT number
      */
     static bool isDerived( const ENDFtk::tree::Material&, int mt ) {
 
@@ -115,21 +165,23 @@ namespace endf {
     }
 
     /**
-     *  @brief Return whther or not the MT number is for a summation reaction
+     *  @brief Return whether or not the MT number is for a summation reaction
      *
-     *  @param[in] mt   the MT number
+     *  @param[in] material   the ENDF material
+     *  @param[in] mt         the MT number
      */
     static bool isSummation( const ENDFtk::tree::Material& material, int mt ) {
 
       switch ( mt ) {
 
-        case    16 : return material.hasSection( 3, 875 ) ? true : false;
-        case    18 : return material.hasSection( 3, 19 )  ? true : false;
-        case   103 : return material.hasSection( 3, 600 ) ? true : false;
-        case   104 : return material.hasSection( 3, 650 ) ? true : false;
-        case   105 : return material.hasSection( 3, 700 ) ? true : false;
-        case   106 : return material.hasSection( 3, 750 ) ? true : false;
-        case   107 : return material.hasSection( 3, 800 ) ? true : false;
+        case  16 : return material.hasSection( 3, 875 ) ? true : false;
+        case  18 : return material.hasSection( 3, 19 )  ? true : false;
+        case 103 : return material.hasSection( 3, 600 ) ? true : false;
+        case 104 : return material.hasSection( 3, 650 ) ? true : false;
+        case 105 : return material.hasSection( 3, 700 ) ? true : false;
+        case 106 : return material.hasSection( 3, 750 ) ? true : false;
+        case 107 : return material.hasSection( 3, 800 ) ? true : false;
+        case 526 : return material.hasSection( 23, 525 ) ? true : false;
         default : {
 
           return summation_.find( mt ) != summation_.end();
@@ -138,26 +190,58 @@ namespace endf {
     }
 
     /**
-     *  @brief Return whther or not the MT number is for a primary reaction
+     *  @brief Return whether or not the MT number is for a primary reaction
      *
-     *  @param[in] mt   the MT number
+     *  @param[in] material   the ENDF material
+     *  @param[in] mt         the MT number
      */
     static bool isPrimary( const ENDFtk::tree::Material& material, int mt ) {
 
       switch ( mt ) {
 
-        case    16 : return material.hasSection( 3, 875 ) ? false : true;
-        case    18 : return material.hasSection( 3, 19 )  ? false : true;
-        case   103 : return material.hasSection( 3, 600 ) ? false : true;
-        case   104 : return material.hasSection( 3, 650 ) ? false : true;
-        case   105 : return material.hasSection( 3, 700 ) ? false : true;
-        case   106 : return material.hasSection( 3, 750 ) ? false : true;
-        case   107 : return material.hasSection( 3, 800 ) ? false : true;
+        case  16 : return material.hasSection( 3, 875 ) ? false : true;
+        case  18 : return material.hasSection( 3, 19 )  ? false : true;
+        case 103 : return material.hasSection( 3, 600 ) ? false : true;
+        case 104 : return material.hasSection( 3, 650 ) ? false : true;
+        case 105 : return material.hasSection( 3, 700 ) ? false : true;
+        case 106 : return material.hasSection( 3, 750 ) ? false : true;
+        case 107 : return material.hasSection( 3, 800 ) ? false : true;
+        case 526 : return material.hasSection( 23, 525 ) ? false : true;
         default : {
 
           return primary_.find( mt ) != primary_.end();
         }
       }
+    }
+
+    /**
+     *  @brief Return the partial mt numbers for a summation mt number
+     *
+     *  @param[in] material   the ENDF material
+     *  @param[in] mt         the MT number
+     */
+    static std::vector< int > partials( const ENDFtk::tree::Material& material,
+                                        int mf, int mt ) {
+
+      std::vector< int > partials;
+      if ( isSummation( material, mt ) ) {
+
+        // create a vector of partial mt numbers that are present
+        std::copy_if( partials_.at( mt ).begin(), partials_.at( mt ).end(),
+                      std::back_inserter( partials ),
+                      [&material, mf] ( auto&& value ) { return material.hasSection( mf, value ); } );
+
+        // add deficiency mt number for total elastic in electro-atomic data
+        auto iter = std::lower_bound( partials.begin(), partials.end(), 525 );
+        if ( iter != partials.end() ) {
+
+          if ( *iter == 525 ) {
+
+            partials.insert( iter + 1, -526 );
+          }
+        }
+      }
+      return partials;
     }
   };
 

@@ -12,14 +12,14 @@
  */
 Reaction( id::ReactionID&& id,
           ReactionType&& type,
-          std::optional< std::vector< id::ReactionID > >&& summation,
+          std::optional< std::vector< id::ReactionID > >&& partials,
           TabulatedCrossSection&& xs,
           std::vector< ReactionProduct >&& products,
           std::optional< double >&& mass_q,
           std::optional< double >&& reaction_q,
           bool linearised ) :
     id_( std::move( id ) ), type_( std::move( type ) ),
-    partials_( std::move( summation ) ),
+    partials_( std::move( partials ) ),
     mass_difference_qvalue_( mass_q ),
     reaction_qvalue_( reaction_q ),
     xs_( std::move( xs ) ),
@@ -71,12 +71,15 @@ Reaction( id::ReactionID id,
  */
 Reaction( id::ReactionID id,
           std::vector< id::ReactionID > partials,
-          TabulatedCrossSection xs ) :
+          TabulatedCrossSection xs,
+          std::vector< ReactionProduct > products = {},
+          std::optional< double > mass_q = std::nullopt,
+          std::optional< double > reaction_q = std::nullopt ) :
     Reaction( std::move( id ),
               ReactionType::Summation,
               std::move( partials ),
               std::move( xs ),
-              {},
+              std::move( products ),
               std::nullopt,
               std::nullopt,
               xs.isLinearised() ? true : false ) {}

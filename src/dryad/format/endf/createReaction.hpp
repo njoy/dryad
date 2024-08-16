@@ -34,14 +34,25 @@ namespace endf {
       auto section = material.section( 3, mt ).parse< 3 >();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
+      // Q values
+      std::optional< double > mass_q = std::nullopt;
+      std::optional< double > reaction_q = std::nullopt;
+
+      // reaction products
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+
       if ( type == ReactionType::Primary ) {
 
         // Q values
-        std::optional< double > mass_q = section.massDifferenceQValue();
-        std::optional< double > reaction_q = section.massDifferenceQValue();
+        if ( mt == 18 ) {
 
-        // reaction products
-        std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+          //! @todo handle fission Q value defined on MT18 when no partials are defined
+        }
+        else {
+
+          mass_q = section.massDifferenceQValue();
+          reaction_q = section.massDifferenceQValue();
+        }
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( xs ),
@@ -50,8 +61,19 @@ namespace endf {
       }
       else {
 
+        if ( mt == 18 ) {
+
+          //! @todo handle fission Q value defined on MT18 if partials are defined
+        }
+
+        // partials
+        std::vector< int > endf_partials = ReactionIdentifiers::partials( material, 3, mt );
+        std::vector< id::ReactionID > partials( endf_partials.size() );
+        std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
+                        [] ( auto&& value ) { return std::to_string( value ); } );
+
         // return the reaction data
-        return Reaction( std::move( id ), {}, std::move( xs ) );
+        return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
       }
     }
     else if ( material.hasSection( 23, mt ) ) {
@@ -64,14 +86,17 @@ namespace endf {
       auto section = material.section( 23, mt ).parse< 23 >();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
+      // q values
+      std::optional< double > mass_q = std::nullopt;
+      std::optional< double > reaction_q = std::nullopt;
+
+      // reaction products
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+
       if ( type == ReactionType::Primary ) {
 
         // q values
-        std::optional< double > mass_q = std::nullopt;
-        std::optional< double > reaction_q = -section.subshellBindingEnergy();
-
-        // reaction products
-        std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+        reaction_q = -section.subshellBindingEnergy();
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( xs ),
@@ -80,8 +105,14 @@ namespace endf {
       }
       else {
 
+        // partials
+        std::vector< int > endf_partials = ReactionIdentifiers::partials( material, 23, mt );
+        std::vector< id::ReactionID > partials( endf_partials.size() );
+        std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
+                        [] ( auto&& value ) { return std::to_string( value ); } );
+
         // return the reaction data
-        return Reaction( std::move( id ), {}, std::move( xs ) );
+        return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
       }
     }
     else {

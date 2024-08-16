@@ -32,6 +32,8 @@ namespace endf {
     if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
 
       int source = material.hasFile( 3 ) ? 3 : 23;
+
+      // loop over the available reactions and create the reaction objects
       reactions.reserve( material.file( source ).sectionNumbers().size() );
       for ( auto mt : material.file( source ).sectionNumbers() ) {
 
@@ -44,6 +46,17 @@ namespace endf {
 
           Log::warning( "Skipping data for derived MT{}", mt );
         }
+      }
+
+      // calculate deficit reaction for elastic scattering in electro-atomic data
+      if ( material.hasSection( 23, 526 ) && ReactionIdentifiers::isSummation( material, 526 ) ) {
+
+        auto total = material.section( 23, 526 ).parse< 23 >();
+        TabulatedCrossSection deficit = createTabulatedCrossSection( total ).linearise();
+        auto partial = material.section( 23, 525 ).parse< 23 >();
+        deficit -= createTabulatedCrossSection( partial ).linearise();
+
+        reactions.push_back( Reaction( "-526", deficit, {}, std::nullopt, 0. ) );
       }
     }
     return reactions;
