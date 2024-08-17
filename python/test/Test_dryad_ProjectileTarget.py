@@ -147,12 +147,12 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         # the data is given explicitly
         chunk = ProjectileTarget(
                     projectile = "n", target = "Fe56", type = InteractionType.Nuclear,
-                    reactions = [ Reaction( "n,Fe56->n,Fe56", ReactionType.Primary,
+                    reactions = [ Reaction( "n,Fe56->n,Fe56",
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                    InterpolationType.LogLinear ),
                                             [],
                                             0, 0 ),
-                                  Reaction( "n,Fe56->n,Fe56_e1", ReactionType.Primary,
+                                  Reaction( "n,Fe56->n,Fe56_e1",
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
                                                                    InterpolationType.LinearLinear ),
                                             [],

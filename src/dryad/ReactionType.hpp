@@ -13,12 +13,20 @@ namespace dryad {
  *  @brief The reaction types
  *
  *  This enum is used to differentiate reaction types in the ProjectileTarget.
- *  We currently distinguish two types of reactions: primary and summation.
+ *  We currently distinguish four types of reactions: primary, summation,
+ *  production and incomplete
  */
 enum class ReactionType : short {
 
-  Primary = 1,   /**< The reaction is a primary independent reaction */
-  Summation = 2  /**< The reaction is a pure summation reaction */
+  /**
+   *  A primary independent reaction that contributes to the total cross section
+   */
+  Primary = 1,
+  /**
+   *  A summation reaction with or without reaction products that does not count
+   *  towards the total cross section
+   */
+  Summation = 2
 };
 
 } // dryad namespace
