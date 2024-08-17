@@ -6,6 +6,7 @@
 #include "dryad/format/endf/createTargetIdentifier.hpp"
 #include "dryad/format/endf/createProductIdentifier.hpp"
 #include "dryad/format/endf/createInteractionType.hpp"
+#include "dryad/format/endf/createReactionType.hpp"
 
 #include "dryad/format/endf/createTabulatedMultiplicity.hpp"
 #include "dryad/format/endf/createMultiplicity.hpp"

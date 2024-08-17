@@ -65,7 +65,7 @@ void wrapReaction( python::module& module, python::module& ) {
     "    xs          the cross section of the reaction\n"
     "    products     the reaction products\n"
     "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)\n
+    "    reaction_q   the reaction Q value (optional)"
   )
   .def_property_readonly(
 
