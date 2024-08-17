@@ -46,7 +46,7 @@ void wrapReaction( python::module& module, python::module& ) {
     "    xs           the cross section of the reaction\n"
     "    products     the reaction products\n"
     "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)\n"
+    "    reaction_q   the reaction Q value (optional)"
   )
   .def(
 
@@ -54,12 +54,18 @@ void wrapReaction( python::module& module, python::module& ) {
                   std::vector< ReactionID >,
                   TabulatedCrossSection >(),
     python::arg( "id" ), python::arg( "partials" ), python::arg( "xs" ),
+    python::arg( "products" ) = std::vector< ReactionProduct >{},
+    python::arg( "mass_q" ) = std::nullopt,
+    python::arg( "reaction_q" ) = std::nullopt,
     "Initialise a summation reaction\n\n"
     "Arguments:\n"
     "    self        the reaction\n"
     "    id          the reaction identifier\n"
     "    partials    the identifiers of the partials of the reaction\n"
-    "    xs          the cross section of the reaction"
+    "    xs          the cross section of the reaction\n"
+    "    products     the reaction products\n"
+    "    mass_q       the mass difference Q value (optional)\n"
+    "    reaction_q   the reaction Q value (optional)\n
   )
   .def_property_readonly(
 
