@@ -52,7 +52,9 @@ void wrapReaction( python::module& module, python::module& ) {
 
     python::init< ReactionID,
                   std::vector< ReactionID >,
-                  TabulatedCrossSection >(),
+                  TabulatedCrossSection,
+                  std::vector< ReactionProduct >,
+                  std::optional< double >, std::optional< double > >(),
     python::arg( "id" ), python::arg( "partials" ), python::arg( "xs" ),
     python::arg( "products" ) = std::vector< ReactionProduct >{},
     python::arg( "mass_q" ) = std::nullopt,
