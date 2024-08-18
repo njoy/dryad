@@ -50,4 +50,5 @@ add_subdirectory( src/dryad/Reaction/test )
 add_subdirectory( src/dryad/ProjectileTarget/test )
 
 add_subdirectory( src/dryad/format/test )
+add_subdirectory( src/dryad/format/ace/test )
 add_subdirectory( src/dryad/format/endf/test )

@@ -79,6 +79,7 @@ target_include_directories( dryad
 )
 target_link_libraries( dryad
   INTERFACE
+    njoy::ACEtk
     njoy::ENDFtk
     njoy::scion
     njoy::tools
