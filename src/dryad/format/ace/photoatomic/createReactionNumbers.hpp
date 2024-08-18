@@ -30,10 +30,10 @@ namespace photoatomic {
     // coherent scattering - MT502
     numbers.push_back( 502 );
 
-    // coherent scattering - MT504
+    // incoherent scattering - MT504
     numbers.push_back( 504 );
 
-    // coherent scattering - MT516 (sum of MT515 and MT517)
+    // pair production - MT516 (sum of MT515 and MT517)
     numbers.push_back( 516 );
 
     // photoelectric - MT522 (sum of MT534 and up)

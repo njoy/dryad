@@ -30,20 +30,20 @@ namespace electroatomic {
       // ionisation - MT522
       numbers.push_back( 522 );
 
-        // large angle elastic - MT525
-        numbers.push_back( 525 );
-
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
-        // total elastic - MT526
-        numbers.push_back( 526 );
+        // large angle elastic - MT525
+        numbers.push_back( 525 );
       }
 
+      // total elastic - MT526
+      numbers.push_back( 526 );
+
       // bremsstrahlung - MT527
-        numbers.push_back( 527 );
+      numbers.push_back( 527 );
 
       // excitation - MT528
-        numbers.push_back( 528 );
+      numbers.push_back( 528 );
 
       for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
