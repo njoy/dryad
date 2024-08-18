@@ -21,16 +21,17 @@ SCENARIO( "createReactionNumbers" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "reaction numbers can be derived" ) {
 
         auto numbers = format::ace::photoatomic::createReactionNumbers( table );
 
-        CHECK(    5 == numbers.size() );
-        CHECK(  501 == numbers[0] );
-        CHECK(  502 == numbers[1] );
-        CHECK(  504 == numbers[2] );
-        CHECK(  516 == numbers[3] );
-        CHECK(  522 == numbers[4] );
+        CHECK( 5 == numbers.size() );
+
+        CHECK( 501 == numbers[0] );
+        CHECK( 502 == numbers[1] );
+        CHECK( 504 == numbers[2] );
+        CHECK( 516 == numbers[3] );
+        CHECK( 522 == numbers[4] );
       } // THEN
     } // WHEN
 
@@ -38,17 +39,18 @@ SCENARIO( "createReactionNumbers" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "reaction numbers can be derived" ) {
 
         auto numbers = format::ace::photoatomic::createReactionNumbers( table );
 
-        CHECK(    6 == numbers.size() );
-        CHECK(  501 == numbers[0] );
-        CHECK(  502 == numbers[1] );
-        CHECK(  504 == numbers[2] );
-        CHECK(  516 == numbers[3] );
-        CHECK(  522 == numbers[4] );
-        CHECK(  534 == numbers[5] );
+        CHECK( 6 == numbers.size() );
+
+        CHECK( 501 == numbers[0] );
+        CHECK( 502 == numbers[1] );
+        CHECK( 504 == numbers[2] );
+        CHECK( 516 == numbers[3] );
+        CHECK( 522 == numbers[4] );
+        CHECK( 534 == numbers[5] );
       } // THEN
     } // WHEN
 
@@ -56,17 +58,18 @@ SCENARIO( "createReactionNumbers" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "reaction numbers can be derived" ) {
 
         auto numbers = format::ace::photoatomic::createReactionNumbers( table );
 
-        CHECK(    6 == numbers.size() );
-        CHECK(  501 == numbers[0] );
-        CHECK(  502 == numbers[1] );
-        CHECK(  504 == numbers[2] );
-        CHECK(  516 == numbers[3] );
-        CHECK(  522 == numbers[4] );
-        CHECK(  534 == numbers[5] );
+        CHECK( 6 == numbers.size() );
+
+        CHECK( 501 == numbers[0] );
+        CHECK( 502 == numbers[1] );
+        CHECK( 504 == numbers[2] );
+        CHECK( 516 == numbers[3] );
+        CHECK( 522 == numbers[4] );
+        CHECK( 534 == numbers[5] );
       } // THEN
     } // WHEN
   } // GIVEN

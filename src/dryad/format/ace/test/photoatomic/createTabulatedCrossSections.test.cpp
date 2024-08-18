@@ -21,7 +21,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "tabulated cross sections can be derived" ) {
 
         auto xs = format::ace::photoatomic::createTabulatedCrossSections( table );
 
@@ -119,7 +119,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "tabulated cross sections can be derived" ) {
 
         auto xs = format::ace::photoatomic::createTabulatedCrossSections( table );
 
@@ -234,7 +234,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "tabulated cross sections can be derived" ) {
 
         auto xs = format::ace::photoatomic::createTabulatedCrossSections( table );
 

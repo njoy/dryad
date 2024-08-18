@@ -21,11 +21,11 @@ SCENARIO( "createReactionNumbers" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "reaction numbers can be derived" ) {
 
         auto numbers = format::ace::electroatomic::createReactionNumbers( table );
 
-        CHECK(    0 == numbers.size() );
+        CHECK( 0 == numbers.size() );
       } // THEN
     } // WHEN
 
@@ -33,17 +33,18 @@ SCENARIO( "createReactionNumbers" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "reaction numbers can be derived" ) {
 
         auto numbers = format::ace::electroatomic::createReactionNumbers( table );
 
-        CHECK(    6 == numbers.size() );
-        CHECK(  501 == numbers[0] );
-        CHECK(  522 == numbers[1] );
-        CHECK(  526 == numbers[2] );
-        CHECK(  527 == numbers[3] );
-        CHECK(  528 == numbers[4] );
-        CHECK(  534 == numbers[5] );
+        CHECK( 6 == numbers.size() );
+
+        CHECK( 501 == numbers[0] );
+        CHECK( 522 == numbers[1] );
+        CHECK( 526 == numbers[2] );
+        CHECK( 527 == numbers[3] );
+        CHECK( 528 == numbers[4] );
+        CHECK( 534 == numbers[5] );
       } // THEN
     } // WHEN
 
@@ -51,11 +52,12 @@ SCENARIO( "createReactionNumbers" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
-      THEN( "it can be converted" ) {
+      THEN( "reaction numbers can be derived" ) {
 
         auto numbers = format::ace::electroatomic::createReactionNumbers( table );
 
-        CHECK(    8 == numbers.size() );
+        CHECK( 8 == numbers.size() );
+
         CHECK(  501 == numbers[0] );
         CHECK(  522 == numbers[1] );
         CHECK(  525 == numbers[2] );
