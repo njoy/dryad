@@ -13,6 +13,9 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
+// include common test verification functions
+#include "test_verification_functions.hpp"
+
 SCENARIO( "createReactions" ) {
 
   GIVEN( "instances of PhotoatomicTable" ) {
@@ -25,7 +28,22 @@ SCENARIO( "createReactions" ) {
 
         auto reactions = format::ace::photoatomic::createReactions( table );
 
-        CHECK( 0 == reactions.size() );
+        CHECK( 5 == reactions.size() );
+
+        auto total = reactions[0];
+        verifyMcplib84PhotonTotalReaction( total );
+
+        auto coherent = reactions[1];
+        verifyMcplib84PhotonCoherentReaction( coherent );
+
+        auto incoherent = reactions[2];
+        verifyMcplib84PhotonIncoherentReaction( incoherent );
+
+        auto pair = reactions[3];
+        verifyMcplib84PhotonPairProductionReaction( pair );
+
+        auto photoelectric = reactions[4];
+        verifyMcplib84PhotonTotalPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
 
@@ -37,7 +55,25 @@ SCENARIO( "createReactions" ) {
 
         auto reactions = format::ace::photoatomic::createReactions( table );
 
-        CHECK( 0 == reactions.size() );
+        CHECK( 6 == reactions.size() );
+
+        auto total = reactions[0];
+        verifyEprdata12PhotonTotalReaction( total );
+
+        auto coherent = reactions[1];
+        verifyEprdata12PhotonCoherentReaction( coherent );
+
+        auto incoherent = reactions[2];
+        verifyEprdata12PhotonIncoherentReaction( incoherent );
+
+        auto pair = reactions[3];
+        verifyEprdata12PhotonPairProductionReaction( pair );
+
+        auto tphotoelectric = reactions[4];
+        verifyEprdata12PhotonTotalPhotoElectricReaction( tphotoelectric );
+
+        auto photoelectric = reactions[5];
+        verifyEprdata12PhotonPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
 
@@ -49,7 +85,25 @@ SCENARIO( "createReactions" ) {
 
         auto reactions = format::ace::photoatomic::createReactions( table );
 
-        CHECK( 0 == reactions.size() );
+        CHECK( 6 == reactions.size() );
+
+        auto total = reactions[0];
+        verifyEprdata14PhotonTotalReaction( total );
+
+        auto coherent = reactions[1];
+        verifyEprdata14PhotonCoherentReaction( coherent );
+
+        auto incoherent = reactions[2];
+        verifyEprdata14PhotonIncoherentReaction( incoherent );
+
+        auto pair = reactions[3];
+        verifyEprdata14PhotonPairProductionReaction( pair );
+
+        auto tphotoelectric = reactions[4];
+        verifyEprdata14PhotonTotalPhotoElectricReaction( tphotoelectric );
+
+        auto photoelectric = reactions[5];
+        verifyEprdata14PhotonPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
   } // GIVEN
