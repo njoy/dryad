@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/ProjectileTarget.hpp"
+#include "dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
@@ -126,9 +127,24 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
       return njoy::dryad::format::endf::createProjectileTargetFromFile( filename );
     },
     python::arg( "filename" ),
-    "Create a ProjectileTarget from an ENDF file\n\n"
+    "Create ProjectileTarget data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a ProjectileTarget.\n\n"
+    "Arguments:\n"
+    "    filename   the ENDF file name"
+  )
+  .def_static(
+
+    "from_ace_file",
+    [] ( const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::ace::createProjectileTargetFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create ProjectileTarget data from an ACE file\n\n"
+    "Most files will produce a single ProjectileTarget. The exception here is the\n"
+    "photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two\n"
+    "ProjectileTarget for eprdata files.\n\n"
     "Arguments:\n"
     "    filename   the ENDF file name"
   );

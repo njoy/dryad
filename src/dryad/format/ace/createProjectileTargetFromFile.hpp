@@ -17,6 +17,10 @@ namespace ace {
   /**
    *  @brief Create a ProjectileTarget from an ACE file
    *
+   *  Most files will produce a single ProjectileTarget. The exception here is the
+   *  photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two
+   *  ProjectileTarget for eprdata files.
+   *
    *  @param[in] filename   the ACE file name
    */
   std::variant< ProjectileTarget, std::pair< ProjectileTarget, ProjectileTarget > >
