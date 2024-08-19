@@ -10,6 +10,7 @@
 #include "dryad/format/ace/photoatomic/createReactionNumbers.hpp"
 #include "dryad/format/ace/photoatomic/createPartialReactionNumbers.hpp"
 #include "dryad/format/ace/photoatomic/createTabulatedCrossSections.hpp"
+#include "dryad/format/ace/photoatomic/createReactionProducts.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -28,6 +29,7 @@ namespace photoatomic {
     auto numbers = createReactionNumbers( table );
     auto partialNumbers = createPartialReactionNumbers( table );
     auto xs = createTabulatedCrossSections( table );
+    auto products = createReactionProducts( table );
     auto size = numbers.size();
 
     for ( std::size_t index = 0; index < size; ++index ) {
@@ -35,7 +37,8 @@ namespace photoatomic {
       id::ReactionID id( std::to_string( numbers[index] ) );
       if ( partialNumbers[index].size() == 0 ) {
 
-        reactions.emplace_back( std::move( id ), std::move( xs[index] ) );
+        reactions.emplace_back( std::move( id ), std::move( xs[index] ),
+                                std::move( products[index] ) );
       }
       else {
 
@@ -44,7 +47,8 @@ namespace photoatomic {
                         partials.begin(),
                         [] ( auto&& number ) { return std::to_string( number ); } );
 
-        reactions.emplace_back( std::move( id ), std::move( partials ), std::move( xs[index] ) );
+        reactions.emplace_back( std::move( id ), std::move( partials ), std::move( xs[index] ),
+                                std::move( products[index] ) );
       }
     }
 
