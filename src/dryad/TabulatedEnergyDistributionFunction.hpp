@@ -15,7 +15,7 @@ namespace dryad {
    *  @class
    *  @brief An energy distribution table
    */
-  class TabulatedEnergyDistribution :
+  class TabulatedEnergyDistributionFunction :
       protected scion::math::InterpolationTable< double, double > {
 
   public:
@@ -26,7 +26,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedEnergyDistribution/src/ctor.hpp"
+    #include "dryad/TabulatedEnergyDistributionFunction/src/ctor.hpp"
 
     /* methods */
 
@@ -75,9 +75,9 @@ namespace dryad {
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedEnergyDistributionFunction linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return TabulatedEnergyDistribution( InterpolationTable::linearise( tolerance ) );
+      return TabulatedEnergyDistributionFunction( InterpolationTable::linearise( tolerance ) );
     }
 
     /**
@@ -85,7 +85,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution& operator+=( double right ) {
+    TabulatedEnergyDistributionFunction& operator+=( double right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
@@ -96,7 +96,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution& operator-=( double right ) {
+    TabulatedEnergyDistributionFunction& operator-=( double right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
@@ -107,7 +107,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution& operator*=( double right ) {
+    TabulatedEnergyDistributionFunction& operator*=( double right ) {
 
       InterpolationTable::operator*=( right );
       return *this;
@@ -118,48 +118,48 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution& operator/=( double right ) {
+    TabulatedEnergyDistributionFunction& operator/=( double right ) {
 
       InterpolationTable::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedEnergyDistribution and scalar addition
+     *  @brief TabulatedEnergyDistributionFunction and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution operator+( double right ) const {
+    TabulatedEnergyDistributionFunction operator+( double right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedEnergyDistribution and scalar subtraction
+     *  @brief TabulatedEnergyDistributionFunction and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution operator-( double right ) const {
+    TabulatedEnergyDistributionFunction operator-( double right ) const {
 
       return InterpolationTable::operator-( right );
     }
 
     /**
-     *  @brief TabulatedEnergyDistribution and scalar multiplication
+     *  @brief TabulatedEnergyDistributionFunction and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution operator*( double right ) const {
+    TabulatedEnergyDistributionFunction operator*( double right ) const {
 
       return InterpolationTable::operator*( right );
     }
 
     /**
-     *  @brief TabulatedEnergyDistribution and scalar division
+     *  @brief TabulatedEnergyDistributionFunction and scalar division
      *
      *  @param[in] right    the scalar
      */
-    TabulatedEnergyDistribution operator/( double right ) const {
+    TabulatedEnergyDistributionFunction operator/( double right ) const {
 
       return InterpolationTable::operator/( right );
     }
@@ -167,72 +167,78 @@ namespace dryad {
     /**
      *  @brief Unary minus
      */
-    TabulatedEnergyDistribution operator-() const {
+    TabulatedEnergyDistributionFunction operator-() const {
 
       return InterpolationTable::operator-();
     }
 
     /**
-     *  @brief Inplace TabulatedEnergyDistribution addition
+     *  @brief Inplace TabulatedEnergyDistributionFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedEnergyDistribution& operator+=( const TabulatedEnergyDistribution& right ) {
+    TabulatedEnergyDistributionFunction&
+    operator+=( const TabulatedEnergyDistributionFunction& right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace TabulatedEnergyDistribution subtraction
+     *  @brief Inplace TabulatedEnergyDistributionFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedEnergyDistribution& operator-=( const TabulatedEnergyDistribution& right ) {
+    TabulatedEnergyDistributionFunction&
+    operator-=( const TabulatedEnergyDistributionFunction& right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedEnergyDistribution and TabulatedEnergyDistribution addition
+     *  @brief TabulatedEnergyDistributionFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedEnergyDistribution operator+( const TabulatedEnergyDistribution& right ) const {
+    TabulatedEnergyDistributionFunction
+    operator+( const TabulatedEnergyDistributionFunction& right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedEnergyDistribution and TabulatedEnergyDistribution subtraction
+     *  @brief TabulatedEnergyDistributionFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedEnergyDistribution operator-( const TabulatedEnergyDistribution& right ) const {
+    TabulatedEnergyDistributionFunction
+    operator-( const TabulatedEnergyDistributionFunction& right ) const {
 
       return InterpolationTable::operator-( right );
     }
   };
 
   /**
-   *  @brief Scalar and TabulatedEnergyDistribution addition
+   *  @brief Scalar addition
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedEnergyDistribution operator+( double left, const TabulatedEnergyDistribution& right ) {
+  inline TabulatedEnergyDistributionFunction
+  operator+( double left, const TabulatedEnergyDistributionFunction& right ) {
 
     return right + left;
   }
 
   /**
-   *  @brief Scalar and TabulatedEnergyDistribution subtraction
+   *  @brief Scalar subtraction
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedEnergyDistribution operator-( double left, const TabulatedEnergyDistribution& right ) {
+  inline TabulatedEnergyDistributionFunction
+  operator-( double left, const TabulatedEnergyDistributionFunction& right ) {
 
     auto result = -right;
     result += left;
@@ -240,12 +246,13 @@ namespace dryad {
   }
 
   /**
-   *  @brief Scalar and TabulatedEnergyDistribution multiplication
+   *  @brief Scalar multiplication
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedEnergyDistribution operator*( double left, const TabulatedEnergyDistribution& right ) {
+  inline TabulatedEnergyDistributionFunction
+  operator*( double left, const TabulatedEnergyDistributionFunction& right ) {
 
     return right * left;
   }

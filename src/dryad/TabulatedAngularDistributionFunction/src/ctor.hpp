@@ -5,7 +5,7 @@ private:
  *
  *  @param table   the interpolation table
  */
-TabulatedAngularDistribution( InterpolationTable< double, double > table ) :
+TabulatedAngularDistributionFunction( InterpolationTable< double, double > table ) :
   InterpolationTable( std::move( table ) ) {}
 
 public:
@@ -13,13 +13,13 @@ public:
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-TabulatedAngularDistribution() = default;
+TabulatedAngularDistributionFunction() = default;
 
-TabulatedAngularDistribution( const TabulatedAngularDistribution& ) = default;
-TabulatedAngularDistribution( TabulatedAngularDistribution&& ) = default;
+TabulatedAngularDistributionFunction( const TabulatedAngularDistributionFunction& ) = default;
+TabulatedAngularDistributionFunction( TabulatedAngularDistributionFunction&& ) = default;
 
-TabulatedAngularDistribution& operator=( const TabulatedAngularDistribution& ) = default;
-TabulatedAngularDistribution& operator=( TabulatedAngularDistribution&& ) = default;
+TabulatedAngularDistributionFunction& operator=( const TabulatedAngularDistributionFunction& ) = default;
+TabulatedAngularDistributionFunction& operator=( TabulatedAngularDistributionFunction&& ) = default;
 
 /**
  *  @brief Constructor
@@ -29,10 +29,11 @@ TabulatedAngularDistribution& operator=( TabulatedAngularDistribution&& ) = defa
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
  */
-TabulatedAngularDistribution( std::vector< double > cosines,
-                              std::vector< double > values,
-                              std::vector< std::size_t > boundaries,
-                              std::vector< InterpolationType > interpolants ) :
+TabulatedAngularDistributionFunction(
+    std::vector< double > cosines,
+    std::vector< double > values,
+    std::vector< std::size_t > boundaries,
+    std::vector< InterpolationType > interpolants ) :
   InterpolationTable( std::move( cosines ), std::move( values ),
                       std::move( boundaries ), std::move( interpolants ) ) {}
 
@@ -43,7 +44,8 @@ TabulatedAngularDistribution( std::vector< double > cosines,
  *  @param values         the probability values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
-TabulatedAngularDistribution( std::vector< double > cosines,
-                              std::vector< double > values,
-                              InterpolationType interpolant = InterpolationType::LinearLinear ) :
+TabulatedAngularDistributionFunction(
+    std::vector< double > cosines,
+    std::vector< double > values,
+    InterpolationType interpolant = InterpolationType::LinearLinear ) :
   InterpolationTable( std::move( cosines ), std::move( values ), interpolant ) {}

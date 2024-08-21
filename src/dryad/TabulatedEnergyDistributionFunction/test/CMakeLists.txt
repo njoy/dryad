@@ -1,1 +1,1 @@
-add_cpp_test( TabulatedEnergyDistribution TabulatedEnergyDistribution.test.cpp )
+add_cpp_test( TabulatedEnergyDistributionFunction TabulatedEnergyDistributionFunction.test.cpp )

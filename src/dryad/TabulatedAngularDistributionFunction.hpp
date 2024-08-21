@@ -12,16 +12,16 @@ namespace njoy {
 namespace dryad {
 
   // forward declaration LegendreAngularDistribution
-  class LegendreAngularDistribution;
+  class LegendreAngularDistributionFunction;
 
   /**
    *  @class
    *  @brief An angular distribution table
    */
-  class TabulatedAngularDistribution :
+  class TabulatedAngularDistributionFunction :
       protected scion::math::InterpolationTable< double, double > {
 
-  friend LegendreAngularDistribution;
+  friend LegendreAngularDistributionFunction;
 
   public:
 
@@ -31,7 +31,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedAngularDistribution/src/ctor.hpp"
+    #include "dryad/TabulatedAngularDistributionFunction/src/ctor.hpp"
 
     /* methods */
 
@@ -80,9 +80,9 @@ namespace dryad {
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedAngularDistributionFunction linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return TabulatedAngularDistribution( InterpolationTable::linearise( tolerance ) );
+      return TabulatedAngularDistributionFunction( InterpolationTable::linearise( tolerance ) );
     }
 
     /**
@@ -90,7 +90,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution& operator+=( double right ) {
+    TabulatedAngularDistributionFunction& operator+=( double right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
@@ -101,7 +101,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution& operator-=( double right ) {
+    TabulatedAngularDistributionFunction& operator-=( double right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
@@ -112,7 +112,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution& operator*=( double right ) {
+    TabulatedAngularDistributionFunction& operator*=( double right ) {
 
       InterpolationTable::operator*=( right );
       return *this;
@@ -123,48 +123,48 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution& operator/=( double right ) {
+    TabulatedAngularDistributionFunction& operator/=( double right ) {
 
       InterpolationTable::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedAngularDistribution and scalar addition
+     *  @brief TabulatedAngularDistributionFunction and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution operator+( double right ) const {
+    TabulatedAngularDistributionFunction operator+( double right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistribution and scalar subtraction
+     *  @brief TabulatedAngularDistributionFunction and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution operator-( double right ) const {
+    TabulatedAngularDistributionFunction operator-( double right ) const {
 
       return InterpolationTable::operator-( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistribution and scalar multiplication
+     *  @brief TabulatedAngularDistributionFunction and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution operator*( double right ) const {
+    TabulatedAngularDistributionFunction operator*( double right ) const {
 
       return InterpolationTable::operator*( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistribution and scalar division
+     *  @brief TabulatedAngularDistributionFunction and scalar division
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistribution operator/( double right ) const {
+    TabulatedAngularDistributionFunction operator/( double right ) const {
 
       return InterpolationTable::operator/( right );
     }
@@ -172,72 +172,78 @@ namespace dryad {
     /**
      *  @brief Unary minus
      */
-    TabulatedAngularDistribution operator-() const {
+    TabulatedAngularDistributionFunction operator-() const {
 
       return InterpolationTable::operator-();
     }
 
     /**
-     *  @brief Inplace TabulatedAngularDistribution addition
+     *  @brief Inplace TabulatedAngularDistributionFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistribution& operator+=( const TabulatedAngularDistribution& right ) {
+    TabulatedAngularDistributionFunction&
+    operator+=( const TabulatedAngularDistributionFunction& right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace TabulatedAngularDistribution subtraction
+     *  @brief Inplace TabulatedAngularDistributionFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistribution& operator-=( const TabulatedAngularDistribution& right ) {
+    TabulatedAngularDistributionFunction&
+    operator-=( const TabulatedAngularDistributionFunction& right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedAngularDistribution and TabulatedAngularDistribution addition
+     *  @brief TabulatedAngularDistributionFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistribution operator+( const TabulatedAngularDistribution& right ) const {
+    TabulatedAngularDistributionFunction
+    operator+( const TabulatedAngularDistributionFunction& right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistribution and TabulatedAngularDistribution subtraction
+     *  @brief TabulatedAngularDistributionFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistribution operator-( const TabulatedAngularDistribution& right ) const {
+    TabulatedAngularDistributionFunction
+    operator-( const TabulatedAngularDistributionFunction& right ) const {
 
       return InterpolationTable::operator-( right );
     }
   };
 
   /**
-   *  @brief Scalar and TabulatedAngularDistribution addition
+   *  @brief Scalar addition
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedAngularDistribution operator+( double left, const TabulatedAngularDistribution& right ) {
+  inline TabulatedAngularDistributionFunction
+  operator+( double left, const TabulatedAngularDistributionFunction& right ) {
 
     return right + left;
   }
 
   /**
-   *  @brief Scalar and TabulatedAngularDistribution subtraction
+   *  @brief Scalar subtraction
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedAngularDistribution operator-( double left, const TabulatedAngularDistribution& right ) {
+  inline TabulatedAngularDistributionFunction
+  operator-( double left, const TabulatedAngularDistributionFunction& right ) {
 
     auto result = -right;
     result += left;
@@ -245,12 +251,13 @@ namespace dryad {
   }
 
   /**
-   *  @brief Scalar and TabulatedAngularDistribution multiplication
+   *  @brief Scalar multiplication
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedAngularDistribution operator*( double left, const TabulatedAngularDistribution& right ) {
+  inline TabulatedAngularDistributionFunction
+  operator*( double left, const TabulatedAngularDistributionFunction& right ) {
 
     return right * left;
   }

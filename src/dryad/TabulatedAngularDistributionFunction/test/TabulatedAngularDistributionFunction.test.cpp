@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedAngularDistribution.hpp"
+#include "dryad/TabulatedAngularDistributionFunction.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "TabulatedAngularDistribution" ) {
+SCENARIO( "TabulatedAngularDistributionFunction" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
 
@@ -20,9 +20,9 @@ SCENARIO( "TabulatedAngularDistribution" ) {
       const std::vector< double > cosines = { -1., 0., 0.5, 1. };
       const std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
-      TabulatedAngularDistribution chunk( std::move( cosines ), std::move( values ) );
+      TabulatedAngularDistributionFunction chunk( std::move( cosines ), std::move( values ) );
 
-      THEN( "a TabulatedAngularDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
@@ -45,7 +45,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be evaluated" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0. , WithinRel( chunk( -1. ) ) );
@@ -64,11 +64,11 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedAngularDistribution result( { -1., 1. }, { 0., 0. } );
-        TabulatedAngularDistribution same( { -1., 1. }, { 1., 0. } );
-        TabulatedAngularDistribution threshold( { 0., 1. }, { 0., 2. } );
-        TabulatedAngularDistribution nonzerothreshold( { 0., 1. }, { 1., 1. } );
-        TabulatedAngularDistribution small( { -1., 0. }, { 0., 1. } );
+        TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
+        TabulatedAngularDistributionFunction same( { -1., 1. }, { 1., 0. } );
+        TabulatedAngularDistributionFunction threshold( { 0., 1. }, { 0., 2. } );
+        TabulatedAngularDistributionFunction nonzerothreshold( { 0., 1. }, { 1., 1. } );
+        TabulatedAngularDistributionFunction small( { -1., 0. }, { 0., 1. } );
 
         chunk += 2.;
 
@@ -585,9 +585,9 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be linearised" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be linearised" ) {
 
-        TabulatedAngularDistribution linear = chunk.linearise();
+        TabulatedAngularDistributionFunction linear = chunk.linearise();
 
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -623,10 +623,10 @@ SCENARIO( "TabulatedAngularDistribution" ) {
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedAngularDistribution chunk( std::move( cosines ), std::move( values ),
+      TabulatedAngularDistributionFunction chunk( std::move( cosines ), std::move( values ),
                                    interpolant );
 
-      THEN( "a TabulatedAngularDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
         // the constructor will detect the jump and add interpolation regions
         // as required
@@ -653,7 +653,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be evaluated" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( -1. ) ) );
@@ -673,11 +673,11 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedAngularDistribution result( { -1., 1. }, { 0., 0. } );
-        TabulatedAngularDistribution same( { -1., 1. }, { 1., 0. } );
-        TabulatedAngularDistribution threshold( { 0., 1. }, { 0., 2. } );
-        TabulatedAngularDistribution nonzerothreshold( { 0.5, 1. }, { 1., 1. } );
-        TabulatedAngularDistribution small( { -1., 0.5 }, { 1., 1. } );
+        TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
+        TabulatedAngularDistributionFunction same( { -1., 1. }, { 1., 0. } );
+        TabulatedAngularDistributionFunction threshold( { 0., 1. }, { 0., 2. } );
+        TabulatedAngularDistributionFunction nonzerothreshold( { 0.5, 1. }, { 1., 1. } );
+        TabulatedAngularDistributionFunction small( { -1., 0.5 }, { 1., 1. } );
 
         chunk += 2.;
 
@@ -1248,9 +1248,9 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be linearised" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be linearised" ) {
 
-        TabulatedAngularDistribution linear = chunk.linearise();
+        TabulatedAngularDistributionFunction linear = chunk.linearise();
 
         CHECK( 5 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1296,12 +1296,12 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedAngularDistribution chunk( std::move( cosines ),
+      TabulatedAngularDistributionFunction chunk( std::move( cosines ),
                                           std::move( values ),
                                           std::move( boundaries ),
                                           std::move( interpolants ) );
 
-      THEN( "a TabulatedAngularDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
@@ -1326,7 +1326,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be evaluated" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0.  , WithinRel( chunk( -1. ) ) );
@@ -1346,8 +1346,8 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "arithmetic operations cannot be performed" ) {
 
-        TabulatedAngularDistribution result( { 1., 4. }, { 0., 0. } );
-        TabulatedAngularDistribution right( { 1., 4. }, { 0., 0. } );
+        TabulatedAngularDistributionFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedAngularDistributionFunction right( { 1., 4. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1370,9 +1370,9 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be linearised" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be linearised" ) {
 
-        TabulatedAngularDistribution linear = chunk.linearise();
+        TabulatedAngularDistributionFunction linear = chunk.linearise();
 
         CHECK( 14 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -1434,12 +1434,12 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedAngularDistribution chunk( std::move( cosines ),
+      TabulatedAngularDistributionFunction chunk( std::move( cosines ),
                                           std::move( values ),
                                           std::move( boundaries ),
                                           std::move( interpolants ) );
 
-      THEN( "a TabulatedAngularDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperCosineLimit() ) );
@@ -1464,7 +1464,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be evaluated" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0.  , WithinRel( chunk( -1. ) ) );
@@ -1484,8 +1484,8 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "arithmetic operations cannot be performed" ) {
 
-        TabulatedAngularDistribution result( { -1., 1. }, { 0., 0. } );
-        TabulatedAngularDistribution right( { -1., 1. }, { 0., 0. } );
+        TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
+        TabulatedAngularDistributionFunction right( { -1., 1. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1508,9 +1508,9 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedAngularDistribution can be linearised" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be linearised" ) {
 
-        TabulatedAngularDistribution linear = chunk.linearise();
+        TabulatedAngularDistributionFunction linear = chunk.linearise();
 
         CHECK( 11 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1573,7 +1573,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedAngularDistribution chunk( std::move( x ), std::move( y ),
+      TabulatedAngularDistributionFunction chunk( std::move( x ), std::move( y ),
                                           std::move( boundaries ),
                                           std::move( interpolants ) );
 
@@ -1618,7 +1618,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedAngularDistribution chunk( std::move( x ), std::move( y ),
+      TabulatedAngularDistributionFunction chunk( std::move( x ), std::move( y ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
@@ -1656,8 +1656,8 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( empty, empty ) );
-        CHECK_THROWS( TabulatedAngularDistribution( one, one ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( empty, empty ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( one, one ) );
       } // THEN
     } // WHEN
 
@@ -1668,7 +1668,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1681,7 +1681,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ),
                                                     std::move( boundaries ),
                                                     std::move( interpolants ) ) );
       } // THEN
@@ -1694,7 +1694,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1705,7 +1705,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1716,7 +1716,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1727,7 +1727,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1740,7 +1740,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedAngularDistribution( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ),
                                                     std::move( boundaries ),
                                                     std::move( interpolants ) ) );
       } // THEN

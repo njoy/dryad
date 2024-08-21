@@ -7,7 +7,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "scion/math/LegendreSeries.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
+#include "dryad/TabulatedAngularDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,7 +16,7 @@ namespace dryad {
    *  @class
    *  @brief An angular distribution table
    */
-  class LegendreAngularDistribution :
+  class LegendreAngularDistributionFunction :
       protected scion::math::LegendreSeries< double, double > {
 
   public:
@@ -27,7 +27,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/LegendreAngularDistribution/src/ctor.hpp"
+    #include "dryad/LegendreAngularDistributionFunction/src/ctor.hpp"
 
     /* methods */
 
@@ -51,9 +51,9 @@ namespace dryad {
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedAngularDistributionFunction linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return TabulatedAngularDistribution( LegendreSeries::linearise( tolerance ) );
+      return TabulatedAngularDistributionFunction( LegendreSeries::linearise( tolerance ) );
     }
 
     /**
@@ -61,7 +61,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution& operator+=( double right ) {
+    LegendreAngularDistributionFunction& operator+=( double right ) {
 
       LegendreSeries::operator+=( right );
       return *this;
@@ -72,7 +72,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution& operator-=( double right ) {
+    LegendreAngularDistributionFunction& operator-=( double right ) {
 
       LegendreSeries::operator-=( right );
       return *this;
@@ -83,7 +83,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution& operator*=( double right ) {
+    LegendreAngularDistributionFunction& operator*=( double right ) {
 
       LegendreSeries::operator*=( right );
       return *this;
@@ -94,48 +94,48 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution& operator/=( double right ) {
+    LegendreAngularDistributionFunction& operator/=( double right ) {
 
       LegendreSeries::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief LegendreAngularDistribution and scalar addition
+     *  @brief LegendreAngularDistributionFunction and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution operator+( double right ) const {
+    LegendreAngularDistributionFunction operator+( double right ) const {
 
       return LegendreSeries::operator+( right );
     }
 
     /**
-     *  @brief LegendreAngularDistribution and scalar subtraction
+     *  @brief LegendreAngularDistributionFunction and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution operator-( double right ) const {
+    LegendreAngularDistributionFunction operator-( double right ) const {
 
       return LegendreSeries::operator-( right );
     }
 
     /**
-     *  @brief LegendreAngularDistribution and scalar multiplication
+     *  @brief LegendreAngularDistributionFunction and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution operator*( double right ) const {
+    LegendreAngularDistributionFunction operator*( double right ) const {
 
       return LegendreSeries::operator*( right );
     }
 
     /**
-     *  @brief LegendreAngularDistribution and scalar division
+     *  @brief LegendreAngularDistributionFunction and scalar division
      *
      *  @param[in] right    the scalar
      */
-    LegendreAngularDistribution operator/( double right ) const {
+    LegendreAngularDistributionFunction operator/( double right ) const {
 
       return LegendreSeries::operator/( right );
     }
@@ -143,72 +143,78 @@ namespace dryad {
     /**
      *  @brief Unary minus
      */
-    LegendreAngularDistribution operator-() const {
+    LegendreAngularDistributionFunction operator-() const {
 
       return LegendreSeries::operator-();
     }
 
     /**
-     *  @brief Inplace LegendreAngularDistribution addition
+     *  @brief Inplace LegendreAngularDistributionFunction addition
      *
      *  @param[in] right    the table
      */
-    LegendreAngularDistribution& operator+=( const LegendreAngularDistribution& right ) {
+    LegendreAngularDistributionFunction&
+    operator+=( const LegendreAngularDistributionFunction& right ) {
 
       LegendreSeries::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace LegendreAngularDistribution subtraction
+     *  @brief Inplace LegendreAngularDistributionFunction subtraction
      *
      *  @param[in] right    the table
      */
-    LegendreAngularDistribution& operator-=( const LegendreAngularDistribution& right ) {
+    LegendreAngularDistributionFunction&
+    operator-=( const LegendreAngularDistributionFunction& right ) {
 
       LegendreSeries::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief LegendreAngularDistribution and LegendreAngularDistribution addition
+     *  @brief LegendreAngularDistributionFunction addition
      *
      *  @param[in] right    the table
      */
-    LegendreAngularDistribution operator+( const LegendreAngularDistribution& right ) const {
+    LegendreAngularDistributionFunction
+    operator+( const LegendreAngularDistributionFunction& right ) const {
 
       return LegendreSeries::operator+( right );
     }
 
     /**
-     *  @brief LegendreAngularDistribution and LegendreAngularDistribution subtraction
+     *  @brief LegendreAngularDistributionFunction subtraction
      *
      *  @param[in] right    the table
      */
-    LegendreAngularDistribution operator-( const LegendreAngularDistribution& right ) const {
+    LegendreAngularDistributionFunction
+    operator-( const LegendreAngularDistributionFunction& right ) const {
 
       return LegendreSeries::operator-( right );
     }
   };
 
   /**
-   *  @brief Scalar and LegendreAngularDistribution addition
+   *  @brief Scalar and LegendreAngularDistributionFunction addition
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline LegendreAngularDistribution operator+( double left, const LegendreAngularDistribution& right ) {
+  inline LegendreAngularDistributionFunction
+  operator+( double left, const LegendreAngularDistributionFunction& right ) {
 
     return right + left;
   }
 
   /**
-   *  @brief Scalar and LegendreAngularDistribution subtraction
+   *  @brief Scalar and LegendreAngularDistributionFunction subtraction
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline LegendreAngularDistribution operator-( double left, const LegendreAngularDistribution& right ) {
+  inline LegendreAngularDistributionFunction
+  operator-( double left, const LegendreAngularDistributionFunction& right ) {
 
     auto result = -right;
     result += left;
@@ -216,12 +222,13 @@ namespace dryad {
   }
 
   /**
-   *  @brief Scalar and LegendreAngularDistribution multiplication
+   *  @brief Scalar and LegendreAngularDistributionFunction multiplication
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline LegendreAngularDistribution operator*( double left, const LegendreAngularDistribution& right ) {
+  inline LegendreAngularDistributionFunction
+  operator*( double left, const LegendreAngularDistributionFunction& right ) {
 
     return right * left;
   }

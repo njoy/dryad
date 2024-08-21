@@ -5,7 +5,7 @@ private:
  *
  *  @param series   the series expansion
  */
-LegendreAngularDistribution( LegendreSeries< double, double > table ) :
+LegendreAngularDistributionFunction( LegendreSeries< double, double > table ) :
   LegendreSeries( std::move( table ) ) {}
 
 public:
@@ -13,13 +13,13 @@ public:
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-LegendreAngularDistribution() = default;
+LegendreAngularDistributionFunction() = default;
 
-LegendreAngularDistribution( const LegendreAngularDistribution& ) = default;
-LegendreAngularDistribution( LegendreAngularDistribution&& ) = default;
+LegendreAngularDistributionFunction( const LegendreAngularDistributionFunction& ) = default;
+LegendreAngularDistributionFunction( LegendreAngularDistributionFunction&& ) = default;
 
-LegendreAngularDistribution& operator=( const LegendreAngularDistribution& ) = default;
-LegendreAngularDistribution& operator=( LegendreAngularDistribution&& ) = default;
+LegendreAngularDistributionFunction& operator=( const LegendreAngularDistributionFunction& ) = default;
+LegendreAngularDistributionFunction& operator=( LegendreAngularDistributionFunction&& ) = default;
 
 /**
  *  @brief Constructor
@@ -27,5 +27,5 @@ LegendreAngularDistribution& operator=( LegendreAngularDistribution&& ) = defaul
  *  @param coefficients   the coefficients of the Legendre series (from
  *                        lowest to highest order coefficient)
  */
-LegendreAngularDistribution( std::vector< double > coefficients ) :
+LegendreAngularDistributionFunction( std::vector< double > coefficients ) :
   LegendreSeries( std::move( coefficients ) ) {}

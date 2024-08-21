@@ -5,7 +5,7 @@ private:
  *
  *  @param table   the interpolation table
  */
-TabulatedEnergyDistribution( InterpolationTable< double, double > table ) :
+TabulatedEnergyDistributionFunction( InterpolationTable< double, double > table ) :
   InterpolationTable( std::move( table ) ) {}
 
 public:
@@ -13,13 +13,13 @@ public:
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-TabulatedEnergyDistribution() = default;
+TabulatedEnergyDistributionFunction() = default;
 
-TabulatedEnergyDistribution( const TabulatedEnergyDistribution& ) = default;
-TabulatedEnergyDistribution( TabulatedEnergyDistribution&& ) = default;
+TabulatedEnergyDistributionFunction( const TabulatedEnergyDistributionFunction& ) = default;
+TabulatedEnergyDistributionFunction( TabulatedEnergyDistributionFunction&& ) = default;
 
-TabulatedEnergyDistribution& operator=( const TabulatedEnergyDistribution& ) = default;
-TabulatedEnergyDistribution& operator=( TabulatedEnergyDistribution&& ) = default;
+TabulatedEnergyDistributionFunction& operator=( const TabulatedEnergyDistributionFunction& ) = default;
+TabulatedEnergyDistributionFunction& operator=( TabulatedEnergyDistributionFunction&& ) = default;
 
 /**
  *  @brief Constructor
@@ -29,10 +29,11 @@ TabulatedEnergyDistribution& operator=( TabulatedEnergyDistribution&& ) = defaul
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
  */
-TabulatedEnergyDistribution( std::vector< double > energies,
-                             std::vector< double > values,
-                             std::vector< std::size_t > boundaries,
-                             std::vector< InterpolationType > interpolants ) :
+TabulatedEnergyDistributionFunction(
+    std::vector< double > energies,
+    std::vector< double > values,
+    std::vector< std::size_t > boundaries,
+    std::vector< InterpolationType > interpolants ) :
   InterpolationTable( std::move( energies ), std::move( values ),
                       std::move( boundaries ), std::move( interpolants ) ) {}
 
@@ -43,7 +44,8 @@ TabulatedEnergyDistribution( std::vector< double > energies,
  *  @param values         the probability values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
-TabulatedEnergyDistribution( std::vector< double > energies,
-                             std::vector< double > values,
-                             InterpolationType interpolant = InterpolationType::LinearLinear ) :
+TabulatedEnergyDistributionFunction(
+    std::vector< double > energies,
+    std::vector< double > values,
+    InterpolationType interpolant = InterpolationType::LinearLinear ) :
   InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
