@@ -13,7 +13,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief An energy distribution table
+   *  @brief An energy distribution function using tabulated data
    */
   class TabulatedEnergyDistributionFunction :
       protected scion::math::InterpolationTable< double, double > {

@@ -5,15 +5,15 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
+#include "dryad/TabulatedAngularDistributionFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedAngularDistribution( python::module& module, python::module& ) {
+void wrapTabulatedAngularDistributionFunction( python::module& module, python::module& ) {
 
   // type aliases
-  using Component = njoy::dryad::TabulatedAngularDistribution;
+  using Component = njoy::dryad::TabulatedAngularDistributionFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -23,8 +23,8 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
   python::class_< Component > component(
 
     module,
-    "TabulatedAngularDistribution",
-    "An angular distribution table"
+    "TabulatedAngularDistributionFunction",
+    "An angular distribution function using tabulated data"
   );
 
   // wrap the component

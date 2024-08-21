@@ -5,15 +5,15 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/LegendreAngularDistribution.hpp"
+#include "dryad/LegendreAngularDistributionFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapLegendreAngularDistribution( python::module& module, python::module& ) {
+void wrapLegendreAngularDistributionFunction( python::module& module, python::module& ) {
 
   // type aliases
-  using Component = njoy::dryad::LegendreAngularDistribution;
+  using Component = njoy::dryad::LegendreAngularDistributionFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -23,8 +23,8 @@ void wrapLegendreAngularDistribution( python::module& module, python::module& ) 
   python::class_< Component > component(
 
     module,
-    "LegendreAngularDistribution",
-    "An angular distribution table"
+    "LegendreAngularDistributionFunction",
+    "An angular distribution function using a Legendre expansion"
   );
 
   // wrap the component

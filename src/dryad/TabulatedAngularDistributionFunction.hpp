@@ -16,7 +16,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief An angular distribution table
+   *  @brief An angular distribution function using tabulated data
    */
   class TabulatedAngularDistributionFunction :
       protected scion::math::InterpolationTable< double, double > {

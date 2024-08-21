@@ -5,15 +5,15 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/TabulatedEnergyDistribution.hpp"
+#include "dryad/TabulatedEnergyDistributionFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) {
+void wrapTabulatedEnergyDistributionFunction( python::module& module, python::module& ) {
 
   // type aliases
-  using Component = njoy::dryad::TabulatedEnergyDistribution;
+  using Component = njoy::dryad::TabulatedEnergyDistributionFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -23,8 +23,8 @@ void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) 
   python::class_< Component > component(
 
     module,
-    "TabulatedEnergyDistribution",
-    "An energy distribution table"
+    "TabulatedEnergyDistributionFunction",
+    "An energy distribution function using tabulated data"
   );
 
   // wrap the component

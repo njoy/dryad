@@ -14,7 +14,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief An angular distribution table
+   *  @brief An angular distribution function using a Legendre expansion
    */
   class LegendreAngularDistributionFunction :
       protected scion::math::LegendreSeries< double, double > {
