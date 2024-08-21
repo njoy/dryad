@@ -99,11 +99,11 @@ void verifyLegendreChunk( const TwoBodyDistributionData& chunk ) {
   CHECK( 1 == angle.interpolants().size() );
   CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
   CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
-  CHECK( 1 == angle.distributions()[0].coefficients().size() );
-  CHECK( 2 == angle.distributions()[1].coefficients().size() );
-  CHECK_THAT( 0.5 , WithinRel( angle.distributions()[0].coefficients()[0] ) );
-  CHECK_THAT( 0.5 , WithinRel( angle.distributions()[1].coefficients()[0] ) );
-  CHECK_THAT( 0.1, WithinRel( angle.distributions()[1].coefficients()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 0.5, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.1, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
   CHECK( 1 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }
@@ -124,18 +124,18 @@ void verifyTabulatedChunk( const TwoBodyDistributionData& chunk ) {
   CHECK( 1 == angle.interpolants().size() );
   CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
   CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
-  CHECK( 2 == angle.distributions()[0].cosines().size() );
-  CHECK( 2 == angle.distributions()[0].values().size() );
-  CHECK( 2 == angle.distributions()[1].cosines().size() );
-  CHECK( 2 == angle.distributions()[1].values().size() );
-  CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].cosines()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].cosines()[1] ) );
-  CHECK_THAT(  0.5 , WithinRel( angle.distributions()[0].values()[0] ) );
-  CHECK_THAT(  0.5 , WithinRel( angle.distributions()[0].values()[1] ) );
-  CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].cosines()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].cosines()[1] ) );
-  CHECK_THAT(  0.4 , WithinRel( angle.distributions()[1].values()[0] ) );
-  CHECK_THAT(  0.6 , WithinRel( angle.distributions()[1].values()[1] ) );
+  CHECK( 2 == angle.distributions()[0].pdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[0].pdf().values().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.5 , WithinRel( angle.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.5 , WithinRel( angle.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.4 , WithinRel( angle.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.6 , WithinRel( angle.distributions()[1].pdf().values()[1] ) );
   CHECK( 1 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }
