@@ -53,7 +53,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Evaluate the pdf for a cosine value
+     *  @brief Evaluate the pdf of the distribution for a cosine value
      *
      *  @param cosine   the value to be evaluated
      */

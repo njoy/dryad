@@ -13,7 +13,7 @@ LegendreAngularDistribution& operator=( LegendreAngularDistribution&& ) = defaul
  *  @brief Constructor
  *
  *  @param coefficients   the coefficients of the Legendre series (from
- *                        lowest to highest order coefficient)
+ *                        lowest to highest order coefficient) for the pdf
  */
 LegendreAngularDistribution( std::vector< double > coefficients, bool cdf = false ) :
   pdf_( std::move( coefficients ) ), cdf_( std::nullopt ) {}

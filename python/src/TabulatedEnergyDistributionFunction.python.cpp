@@ -1,7 +1,6 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <pybind11/operators.h>
 
 // local includes
 #include "definitions.hpp"
@@ -36,9 +35,9 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module, python::mo
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the energy distribution table\n\n"
+    "Initialise the energy distribution function\n\n"
     "Arguments:\n"
-    "    self           the energy distribution table\n"
+    "    self           the energy distribution function\n"
     "    energies       the energy values\n"
     "    values         the cross section values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
@@ -51,9 +50,9 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module, python::mo
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the energy distribution table\n\n"
+    "Initialise the energy distribution function\n\n"
     "Arguments:\n"
-    "    self           the energy distribution table\n"
+    "    self           the energy distribution function\n"
     "    energies       the energy values\n"
     "    values         the cross section values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
