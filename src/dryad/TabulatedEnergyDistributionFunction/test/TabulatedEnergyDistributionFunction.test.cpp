@@ -1299,9 +1299,9 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
       };
 
       TabulatedEnergyDistributionFunction chunk( std::move( energies ),
-                                   std::move( values ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+                                                 std::move( values ),
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
       THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
@@ -1447,9 +1447,9 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
       };
 
       TabulatedEnergyDistributionFunction chunk( std::move( energies ),
-                                   std::move( values ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+                                                 std::move( values ),
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
       THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
@@ -1590,8 +1590,8 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
       };
 
       TabulatedEnergyDistributionFunction chunk( std::move( x ), std::move( y ),
-                                          std::move( boundaries ),
-                                          std::move( interpolants ) );
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
       THEN( "a InterpolationTable can be constructed and members can be tested" ) {
 
@@ -1635,8 +1635,8 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
       };
 
       TabulatedEnergyDistributionFunction chunk( std::move( x ), std::move( y ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
       THEN( "an InterpolationTable can be constructed and members can be tested" ) {
 
@@ -1698,8 +1698,8 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ),
-                                             std::move( boundaries ),
-                                             std::move( interpolants ) ) );
+                                                           std::move( boundaries ),
+                                                           std::move( interpolants ) ) );
       } // THEN
     } // WHEN
 
@@ -1757,8 +1757,8 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ),
-                                             std::move( boundaries ),
-                                             std::move( interpolants ) ) );
+                                                           std::move( boundaries ),
+                                                           std::move( interpolants ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

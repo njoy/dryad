@@ -5,12 +5,12 @@ import sys
 # third party imports
 
 # local imports
-from dryad import LegendreAngularDistribution
+from dryad import LegendreAngularDistributionFunction
 from dryad import InterpolationType
 from dryad import ToleranceConvergence
 
-class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
-    """Unit test for the LegendreAngularDistribution class."""
+class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
+    """Unit test for the LegendreAngularDistributionFunction class."""
 
     def test_component( self ) :
 
@@ -93,9 +93,9 @@ class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
             self.assertEqual( True, linear.is_linearised )
 
             # verify arithmetic operators
-            small = LegendreAngularDistribution( [ 3., 0., 1. ] )
-            equal = LegendreAngularDistribution( [ 3., 0., 0., 1. ] )
-            large = LegendreAngularDistribution( [ 3., 0., 0., 0., 1. ] )
+            small = LegendreAngularDistributionFunction( [ 3., 0., 1. ] )
+            equal = LegendreAngularDistributionFunction( [ 3., 0., 0., 1. ] )
+            large = LegendreAngularDistributionFunction( [ 3., 0., 0., 0., 1. ] )
 
             result = -chunk
             self.assertEqual( 3, result.order )
@@ -293,7 +293,7 @@ class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual(  -1.              , result.coefficients[4] )
 
         # the data is given explicitly
-        chunk = LegendreAngularDistribution( coefficients = [ -31./3., 73./5., -14./3., 2./5. ] )
+        chunk = LegendreAngularDistributionFunction( coefficients = [ -31./3., 73./5., -14./3., 2./5. ] )
 
         verify_chunk( self, chunk )
 
@@ -304,7 +304,7 @@ class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
         # the coefficient vector is empty
         with self.assertRaises( Exception ) :
 
-            chunk = LegendreAngularDistribution( coefficients = [] )
+            chunk = LegendreAngularDistributionFunction( coefficients = [] )
 
 if __name__ == '__main__' :
 

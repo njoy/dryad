@@ -1435,9 +1435,9 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       };
 
       TabulatedAngularDistributionFunction chunk( std::move( cosines ),
-                                          std::move( values ),
-                                          std::move( boundaries ),
-                                          std::move( interpolants ) );
+                                                  std::move( values ),
+                                                  std::move( boundaries ),
+                                                  std::move( interpolants ) );
 
       THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
@@ -1574,8 +1574,8 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       };
 
       TabulatedAngularDistributionFunction chunk( std::move( x ), std::move( y ),
-                                          std::move( boundaries ),
-                                          std::move( interpolants ) );
+                                                  std::move( boundaries ),
+                                                  std::move( interpolants ) );
 
       THEN( "a InterpolationTable can be constructed and members can be tested" ) {
 
@@ -1619,8 +1619,8 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       };
 
       TabulatedAngularDistributionFunction chunk( std::move( x ), std::move( y ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+                                                  std::move( boundaries ),
+                                                  std::move( interpolants ) );
 
       THEN( "an InterpolationTable can be constructed and members can be tested" ) {
 
@@ -1682,8 +1682,8 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ),
-                                                    std::move( boundaries ),
-                                                    std::move( interpolants ) ) );
+                                                            std::move( boundaries ),
+                                                            std::move( interpolants ) ) );
       } // THEN
     } // WHEN
 
@@ -1741,8 +1741,8 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributionFunction( std::move( x ), std::move( y ),
-                                                    std::move( boundaries ),
-                                                    std::move( interpolants ) ) );
+                                                            std::move( boundaries ),
+                                                            std::move( interpolants ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

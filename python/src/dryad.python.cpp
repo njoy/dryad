@@ -18,11 +18,14 @@ void wrapReferenceFrame( python::module&, python::module& );
 
 // declarations - components
 void wrapIsotropicAngularDistributions( python::module&, python::module& );
-void wrapLegendreAngularDistribution( python::module&, python::module& );
+void wrapLegendreAngularDistributionFunction( python::module&, python::module& );
+//void wrapLegendreAngularDistribution( python::module&, python::module& );
 void wrapLegendreAngularDistributions( python::module&, python::module& );
-void wrapTabulatedAngularDistribution( python::module&, python::module& );
+void wrapTabulatedAngularDistributionFunction( python::module&, python::module& );
+//void wrapTabulatedAngularDistribution( python::module&, python::module& );
 void wrapTabulatedAngularDistributions( python::module&, python::module& );
-void wrapTabulatedEnergyDistribution( python::module&, python::module& );
+void wrapTabulatedEnergyDistributionFunction( python::module&, python::module& );
+//void wrapTabulatedEnergyDistribution( python::module&, python::module& );
 void wrapTabulatedEnergyDistributions( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
@@ -71,11 +74,14 @@ PYBIND11_MODULE( dryad, module ) {
   wrapTabulatedMultiplicity( module, viewmodule );
   wrapTabulatedAverageEnergy( module, viewmodule );
   wrapIsotropicAngularDistributions( module, viewmodule );
-  wrapLegendreAngularDistribution( module, viewmodule );
+  wrapLegendreAngularDistributionFunction( module, viewmodule );
+//  wrapLegendreAngularDistribution( module, viewmodule );
   wrapLegendreAngularDistributions( module, viewmodule );
-  wrapTabulatedAngularDistribution( module, viewmodule );
+  wrapTabulatedAngularDistributionFunction( module, viewmodule );
+//  wrapTabulatedAngularDistribution( module, viewmodule );
   wrapTabulatedAngularDistributions( module, viewmodule );
-  wrapTabulatedEnergyDistribution( module, viewmodule );
+  wrapTabulatedEnergyDistributionFunction( module, viewmodule );
+//  wrapTabulatedEnergyDistribution( module, viewmodule );
   wrapTabulatedEnergyDistributions( module, viewmodule );
   wrapTabulatedFormFactor( module, viewmodule );
   wrapTabulatedScatteringFunction( module, viewmodule );
