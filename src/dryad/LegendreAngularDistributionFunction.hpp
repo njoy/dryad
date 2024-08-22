@@ -12,12 +12,50 @@
 namespace njoy {
 namespace dryad {
 
+  // forward declaration LegendreAngularDistribution
+  class LegendreAngularDistribution;
+
   /**
    *  @class
    *  @brief An angular distribution function using a Legendre expansion
    */
   class LegendreAngularDistributionFunction :
       protected scion::math::LegendreSeries< double, double > {
+
+  friend LegendreAngularDistribution;
+
+  protected:
+
+    /**
+     *  @brief Calculate the roots of the function so that f(x) = a
+     *
+     *  @param[in] a   the value of a (default is zero)
+     */
+    std::vector< double > roots( double a = 0. ) const {
+
+      std::vector< double > roots = LegendreSeries::roots( a );
+      roots.erase( roots.begin(), std::lower_bound( roots.begin(), roots.end(), -1. ) );
+      roots.erase( std::upper_bound( roots.begin(), roots.end(), +1. ), roots.end() );
+      return roots;
+    }
+
+    /**
+     *  @brief Return the derivative
+     */
+    LegendreAngularDistributionFunction derivative() const {
+
+      return LegendreSeries::derivative();
+    }
+
+    /**
+     *  @brief Return the primitive (or antiderivative)
+     *
+     *  @param[in] left    the left bound of the integral (default = 0)
+     */
+    LegendreAngularDistributionFunction primitive( double left = 0. ) const {
+
+      return LegendreSeries::primitive( left );
+    }
 
   public:
 

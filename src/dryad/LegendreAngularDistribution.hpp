@@ -62,6 +62,15 @@ namespace dryad {
       return this->pdf()( cosine );
     }
 
+    /**
+     *  @brief Calculate the associated cdf for the distribution
+     */
+    void calculateCdf() {
+
+      this->cdf_ = this->pdf().primitive( -1. );
+      this->cdf_.value() /= this->cdf_.value()( 1. );
+    }
+
 //    /**
 //     *  @brief Return a linearised angular distribution table
 //     *

@@ -11,7 +11,7 @@
 namespace njoy {
 namespace dryad {
 
-  // forward declaration LegendreAngularDistribution
+  // forward declaration LegendreAngularDistributionFunction
   class LegendreAngularDistributionFunction;
 
   /**
