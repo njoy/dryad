@@ -204,7 +204,8 @@ SCENARIO( "createProjectileTarget" ) {
         verifyEprdata14PhotonTotalPhotoElectricReaction( tphotoelectric );
 
         photoelectric = H0.reaction( id::ReactionID( "534" ) );
-        verifyEprdata14PhotonPhotoElectricReaction( photoelectric );      } // THEN
+        verifyEprdata14PhotonPhotoElectricReaction( photoelectric );
+      } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO

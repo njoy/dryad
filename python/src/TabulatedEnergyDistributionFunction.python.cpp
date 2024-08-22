@@ -4,15 +4,15 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
+#include "dryad/TabulatedEnergyDistributionFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedCrossSection( python::module& module, python::module& ) {
+void wrapTabulatedEnergyDistributionFunction( python::module& module, python::module& ) {
 
   // type aliases
-  using Component = njoy::dryad::TabulatedCrossSection;
+  using Component = njoy::dryad::TabulatedEnergyDistributionFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -22,8 +22,8 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedCrossSection",
-    "A cross section table"
+    "TabulatedEnergyDistributionFunction",
+    "An energy distribution function using tabulated data"
   );
 
   // wrap the component
@@ -35,9 +35,9 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the cross section table\n\n"
+    "Initialise the energy distribution function\n\n"
     "Arguments:\n"
-    "    self           the cross section table\n"
+    "    self           the energy distribution function\n"
     "    energies       the energy values\n"
     "    values         the cross section values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
@@ -50,9 +50,9 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the cross section table\n\n"
+    "Initialise the energy distribution function\n\n"
     "Arguments:\n"
-    "    self           the cross section table\n"
+    "    self           the energy distribution function\n"
     "    energies       the energy values\n"
     "    values         the cross section values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
@@ -68,7 +68,7 @@ void wrapTabulatedCrossSection( python::module& module, python::module& ) {
 
     "values",
     &Component::values,
-    "The cross section values"
+    "The probability values"
   )
   .def_property_readonly(
 

@@ -12,3 +12,5 @@ add_cpp_test( format.ace.photoatomic.createTabulatedCrossSections   photoatomic/
 add_cpp_test( format.ace.photoatomic.createReactionProducts         photoatomic/createReactionProducts.test.cpp )
 add_cpp_test( format.ace.photoatomic.createReactions                photoatomic/createReactions.test.cpp )
 add_cpp_test( format.ace.photoatomic.createProjectileTarget         photoatomic/createProjectileTarget.test.cpp )
+
+add_cpp_test( format.ace.createProjectileTargetFromFile             createProjectileTargetFromFile.test.cpp )

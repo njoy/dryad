@@ -60,34 +60,40 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
 void verifyNeutronChunk( const TabulatedAngularDistribution& chunk ) {
 
-  CHECK( false == chunk.isLinearised() );
-  CHECK( 2 == chunk.numberPoints() );
-  CHECK( 1 == chunk.numberRegions() );
-  CHECK( 2 == chunk.cosines().size() );
-  CHECK( 2 == chunk.values().size() );
-  CHECK( 1 == chunk.boundaries().size() );
-  CHECK( 1 == chunk.interpolants().size() );
-  CHECK( 1 == chunk.boundaries()[0] );
-  CHECK( InterpolationType::LogLinear == chunk.interpolants()[0] );
-  CHECK_THAT( -1., WithinRel( chunk.cosines()[0] ) );
-  CHECK_THAT(  1., WithinRel( chunk.cosines()[1] ) );
-  CHECK_THAT( 0.5, WithinRel( chunk.values()[0] ) );
-  CHECK_THAT( 0.5, WithinRel( chunk.values()[1] ) );
+  decltype(auto) pdf = chunk.pdf();
+  CHECK( false == pdf.isLinearised() );
+  CHECK( 2 == pdf.numberPoints() );
+  CHECK( 1 == pdf.numberRegions() );
+  CHECK( 2 == pdf.cosines().size() );
+  CHECK( 2 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK( 1 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LogLinear == pdf.interpolants()[0] );
+  CHECK_THAT( -1., WithinRel( pdf.cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( pdf.cosines()[1] ) );
+  CHECK_THAT( 0.5, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( pdf.values()[1] ) );
+
+  CHECK( std::nullopt == chunk.cdf() );
 }
 
 void verifyElectronChunk( const TabulatedAngularDistribution& chunk ) {
 
-  CHECK( true == chunk.isLinearised() );
-  CHECK( 2 == chunk.numberPoints() );
-  CHECK( 1 == chunk.numberRegions() );
-  CHECK( 2 == chunk.cosines().size() );
-  CHECK( 2 == chunk.values().size() );
-  CHECK( 1 == chunk.boundaries().size() );
-  CHECK( 1 == chunk.interpolants().size() );
-  CHECK( 1 == chunk.boundaries()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-  CHECK_THAT( -1.      , WithinRel( chunk.cosines()[0] ) );
-  CHECK_THAT(  0.999999, WithinRel( chunk.cosines()[1] ) );
-  CHECK_THAT( 0.5, WithinRel( chunk.values()[0] ) );
-  CHECK_THAT( 0.5, WithinRel( chunk.values()[1] ) );
+  decltype(auto) pdf = chunk.pdf();
+  CHECK( true == pdf.isLinearised() );
+  CHECK( 2 == pdf.numberPoints() );
+  CHECK( 1 == pdf.numberRegions() );
+  CHECK( 2 == pdf.cosines().size() );
+  CHECK( 2 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK( 1 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+  CHECK_THAT( -1.      , WithinRel( pdf.cosines()[0] ) );
+  CHECK_THAT(  0.999999, WithinRel( pdf.cosines()[1] ) );
+  CHECK_THAT( 0.5, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 0.5, WithinRel( pdf.values()[1] ) );
+
+  CHECK( std::nullopt == chunk.cdf() );
 }

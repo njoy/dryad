@@ -3,26 +3,32 @@
 
 // system includes
 #include <vector>
+#include <optional>
 
 // other includes
 #include "dryad/type-aliases.hpp"
-#include "scion/math/InterpolationTable.hpp"
+#include "dryad/TabulatedEnergyDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {
 
   /**
    *  @class
-   *  @brief An energy distribution table
+   *  @brief An energy distribution defined by a pdf and cdf using tabulated
+   *         data
    */
-  class TabulatedEnergyDistribution :
-      protected scion::math::InterpolationTable< double, double > {
+  class TabulatedEnergyDistribution {
+
+    /* fields */
+    TabulatedEnergyDistributionFunction pdf_;
+    std::optional< TabulatedEnergyDistributionFunction > cdf_;
 
   public:
 
     /* type aliases */
-    using InterpolationTable::XType;
-    using InterpolationTable::YType;
+
+    using XType = TabulatedEnergyDistributionFunction::XType;
+    using YType = TabulatedEnergyDistributionFunction::XType;
 
     /* constructor */
 
@@ -31,224 +37,216 @@ namespace dryad {
     /* methods */
 
     /**
-     *  @brief Return the energy values
+     *  @brief Return the probability distribution function (pdf) of the distribution
      */
-    const std::vector< double >& energies() const noexcept {
+    const TabulatedEnergyDistributionFunction& pdf() const noexcept {
 
-      return this->x();
+      return this->pdf_;
     }
 
     /**
-     *  @brief Return the probability values
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const std::vector< double >& values() const noexcept {
+    const std::optional< TabulatedEnergyDistributionFunction >& cdf() const noexcept {
 
-      return this->y();
+      return this->cdf_;
     }
 
     /**
-     *  @brief Return the lower energy limit
-     */
-    double lowerEnergyLimit() const noexcept {
-
-      return this->x().front();
-    }
-
-    /**
-     *  @brief Return the upper energy limit
-     */
-    double upperEnergyLimit() const noexcept {
-
-      return this->x().back();
-    }
-
-    using InterpolationTable::boundaries;
-    using InterpolationTable::interpolants;
-    using InterpolationTable::numberPoints;
-    using InterpolationTable::numberRegions;
-    using InterpolationTable::isLinearised;
-
-    using InterpolationTable::operator();
-
-    /**
-     *  @brief Return a linearised energy distribution table
+     *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param cosine   the value to be evaluated
      */
-    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+    double operator()( double cosine ) const {
 
-      return TabulatedEnergyDistribution( InterpolationTable::linearise( tolerance ) );
+      return this->pdf()( cosine );
     }
 
-    /**
-     *  @brief Inplace scalar addition
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution& operator+=( double right ) {
+//    /**
+//     *  @brief Return a linearised angular distribution table
+//     *
+//     *  @param[in] tolerance   the linearisation tolerance
+//     */
+//    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+//
+//    }
 
-      InterpolationTable::operator+=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace scalar subtraction
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution& operator-=( double right ) {
-
-      InterpolationTable::operator-=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace scalar multiplication
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution& operator*=( double right ) {
-
-      InterpolationTable::operator*=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace scalar division
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution& operator/=( double right ) {
-
-      InterpolationTable::operator/=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief TabulatedEnergyDistribution and scalar addition
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution operator+( double right ) const {
-
-      return InterpolationTable::operator+( right );
-    }
-
-    /**
-     *  @brief TabulatedEnergyDistribution and scalar subtraction
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution operator-( double right ) const {
-
-      return InterpolationTable::operator-( right );
-    }
-
-    /**
-     *  @brief TabulatedEnergyDistribution and scalar multiplication
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution operator*( double right ) const {
-
-      return InterpolationTable::operator*( right );
-    }
-
-    /**
-     *  @brief TabulatedEnergyDistribution and scalar division
-     *
-     *  @param[in] right    the scalar
-     */
-    TabulatedEnergyDistribution operator/( double right ) const {
-
-      return InterpolationTable::operator/( right );
-    }
-
-    /**
-     *  @brief Unary minus
-     */
-    TabulatedEnergyDistribution operator-() const {
-
-      return InterpolationTable::operator-();
-    }
-
-    /**
-     *  @brief Inplace TabulatedEnergyDistribution addition
-     *
-     *  @param[in] right    the table
-     */
-    TabulatedEnergyDistribution& operator+=( const TabulatedEnergyDistribution& right ) {
-
-      InterpolationTable::operator+=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace TabulatedEnergyDistribution subtraction
-     *
-     *  @param[in] right    the table
-     */
-    TabulatedEnergyDistribution& operator-=( const TabulatedEnergyDistribution& right ) {
-
-      InterpolationTable::operator-=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief TabulatedEnergyDistribution and TabulatedEnergyDistribution addition
-     *
-     *  @param[in] right    the table
-     */
-    TabulatedEnergyDistribution operator+( const TabulatedEnergyDistribution& right ) const {
-
-      return InterpolationTable::operator+( right );
-    }
-
-    /**
-     *  @brief TabulatedEnergyDistribution and TabulatedEnergyDistribution subtraction
-     *
-     *  @param[in] right    the table
-     */
-    TabulatedEnergyDistribution operator-( const TabulatedEnergyDistribution& right ) const {
-
-      return InterpolationTable::operator-( right );
-    }
+//    /**
+//     *  @brief Inplace scalar addition
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction& operator+=( double right ) {
+//
+//      LegendreSeries::operator+=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace scalar subtraction
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction& operator-=( double right ) {
+//
+//      LegendreSeries::operator-=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace scalar multiplication
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction& operator*=( double right ) {
+//
+//      LegendreSeries::operator*=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace scalar division
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction& operator/=( double right ) {
+//
+//      LegendreSeries::operator/=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief TabulatedEnergyDistributionFunction and scalar addition
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction operator+( double right ) const {
+//
+//      return LegendreSeries::operator+( right );
+//    }
+//
+//    /**
+//     *  @brief TabulatedEnergyDistributionFunction and scalar subtraction
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction operator-( double right ) const {
+//
+//      return LegendreSeries::operator-( right );
+//    }
+//
+//    /**
+//     *  @brief TabulatedEnergyDistributionFunction and scalar multiplication
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction operator*( double right ) const {
+//
+//      return LegendreSeries::operator*( right );
+//    }
+//
+//    /**
+//     *  @brief TabulatedEnergyDistributionFunction and scalar division
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    TabulatedEnergyDistributionFunction operator/( double right ) const {
+//
+//      return LegendreSeries::operator/( right );
+//    }
+//
+//    /**
+//     *  @brief Unary minus
+//     */
+//    TabulatedEnergyDistributionFunction operator-() const {
+//
+//      return LegendreSeries::operator-();
+//    }
+//
+//    /**
+//     *  @brief Inplace TabulatedEnergyDistributionFunction addition
+//     *
+//     *  @param[in] right    the table
+//     */
+//    TabulatedEnergyDistributionFunction&
+//    operator+=( const TabulatedEnergyDistributionFunction& right ) {
+//
+//      LegendreSeries::operator+=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace TabulatedEnergyDistributionFunction subtraction
+//     *
+//     *  @param[in] right    the table
+//     */
+//    TabulatedEnergyDistributionFunction&
+//    operator-=( const TabulatedEnergyDistributionFunction& right ) {
+//
+//      LegendreSeries::operator-=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief TabulatedEnergyDistributionFunction addition
+//     *
+//     *  @param[in] right    the table
+//     */
+//    TabulatedEnergyDistributionFunction
+//    operator+( const TabulatedEnergyDistributionFunction& right ) const {
+//
+//      return LegendreSeries::operator+( right );
+//    }
+//
+//    /**
+//     *  @brief TabulatedEnergyDistributionFunction subtraction
+//     *
+//     *  @param[in] right    the table
+//     */
+//    TabulatedEnergyDistributionFunction
+//    operator-( const TabulatedEnergyDistributionFunction& right ) const {
+//
+//      return LegendreSeries::operator-( right );
+//    }
   };
 
-  /**
-   *  @brief Scalar and TabulatedEnergyDistribution addition
-   *
-   *  @param[in] left    the scalar
-   *  @param[in] right   the table
-   */
-  inline TabulatedEnergyDistribution operator+( double left, const TabulatedEnergyDistribution& right ) {
-
-    return right + left;
-  }
-
-  /**
-   *  @brief Scalar and TabulatedEnergyDistribution subtraction
-   *
-   *  @param[in] left    the scalar
-   *  @param[in] right   the table
-   */
-  inline TabulatedEnergyDistribution operator-( double left, const TabulatedEnergyDistribution& right ) {
-
-    auto result = -right;
-    result += left;
-    return result;
-  }
-
-  /**
-   *  @brief Scalar and TabulatedEnergyDistribution multiplication
-   *
-   *  @param[in] left    the scalar
-   *  @param[in] right   the table
-   */
-  inline TabulatedEnergyDistribution operator*( double left, const TabulatedEnergyDistribution& right ) {
-
-    return right * left;
-  }
+//  /**
+//   *  @brief Scalar and TabulatedEnergyDistributionFunction addition
+//   *
+//   *  @param[in] left    the scalar
+//   *  @param[in] right   the table
+//   */
+//  inline TabulatedEnergyDistributionFunction
+//  operator+( double left, const TabulatedEnergyDistributionFunction& right ) {
+//
+//    return right + left;
+//  }
+//
+//  /**
+//   *  @brief Scalar and TabulatedEnergyDistributionFunction subtraction
+//   *
+//   *  @param[in] left    the scalar
+//   *  @param[in] right   the table
+//   */
+//  inline TabulatedEnergyDistributionFunction
+//  operator-( double left, const TabulatedEnergyDistributionFunction& right ) {
+//
+//    auto result = -right;
+//    result += left;
+//    return result;
+//  }
+//
+//  /**
+//   *  @brief Scalar and TabulatedEnergyDistributionFunction multiplication
+//   *
+//   *  @param[in] left    the scalar
+//   *  @param[in] right   the table
+//   */
+//  inline TabulatedEnergyDistributionFunction
+//  operator*( double left, const TabulatedEnergyDistributionFunction& right ) {
+//
+//    return right * left;
+//  }
 
 } // dryad namespace
 } // njoy namespace

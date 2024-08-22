@@ -3,27 +3,32 @@
 
 // system includes
 #include <vector>
+#include <optional>
 
 // other includes
 #include "dryad/type-aliases.hpp"
-#include "scion/math/LegendreSeries.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
+#include "dryad/LegendreAngularDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {
 
   /**
    *  @class
-   *  @brief An angular distribution table
+   *  @brief An angular distribution defined by a pdf and cdf using Legendre
+   *         expansions
    */
-  class LegendreAngularDistribution :
-      protected scion::math::LegendreSeries< double, double > {
+  class LegendreAngularDistribution {
+
+    /* fields */
+    LegendreAngularDistributionFunction pdf_;
+    std::optional< LegendreAngularDistributionFunction > cdf_;
 
   public:
 
     /* type aliases */
-    using LegendreSeries::XType;
-    using LegendreSeries::YType;
+
+    using XType = LegendreAngularDistributionFunction::XType;
+    using YType = LegendreAngularDistributionFunction::XType;
 
     /* constructor */
 
@@ -31,200 +36,217 @@ namespace dryad {
 
     /* methods */
 
-    using LegendreSeries::coefficients;
-
     /**
-     *  @brief Return the lower cosine limit
+     *  @brief Return the probability distribution function (pdf) of the distribution
      */
-    static constexpr double lowerCosineLimit() noexcept { return -1.0; }
+    const LegendreAngularDistributionFunction& pdf() const noexcept {
+
+      return this->pdf_;
+    }
 
     /**
-     *  @brief Return the upper cosine limit
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    static constexpr double upperCosineLimit() noexcept { return 1.0; }
+    const std::optional< LegendreAngularDistributionFunction >& cdf() const noexcept {
 
-    using LegendreSeries::operator();
-    using LegendreSeries::order;
+      return this->cdf_;
+    }
 
     /**
-     *  @brief Return a linearised angular distribution table
+     *  @brief Evaluate the pdf of the distribution for a cosine value
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param cosine   the value to be evaluated
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+    double operator()( double cosine ) const {
 
-      return TabulatedAngularDistribution( LegendreSeries::linearise( tolerance ) );
+      return this->pdf()( cosine );
     }
 
-    /**
-     *  @brief Inplace scalar addition
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution& operator+=( double right ) {
+//    /**
+//     *  @brief Return a linearised angular distribution table
+//     *
+//     *  @param[in] tolerance   the linearisation tolerance
+//     */
+//    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+//
+//    }
 
-      LegendreSeries::operator+=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace scalar subtraction
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution& operator-=( double right ) {
-
-      LegendreSeries::operator-=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace scalar multiplication
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution& operator*=( double right ) {
-
-      LegendreSeries::operator*=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace scalar division
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution& operator/=( double right ) {
-
-      LegendreSeries::operator/=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief LegendreAngularDistribution and scalar addition
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution operator+( double right ) const {
-
-      return LegendreSeries::operator+( right );
-    }
-
-    /**
-     *  @brief LegendreAngularDistribution and scalar subtraction
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution operator-( double right ) const {
-
-      return LegendreSeries::operator-( right );
-    }
-
-    /**
-     *  @brief LegendreAngularDistribution and scalar multiplication
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution operator*( double right ) const {
-
-      return LegendreSeries::operator*( right );
-    }
-
-    /**
-     *  @brief LegendreAngularDistribution and scalar division
-     *
-     *  @param[in] right    the scalar
-     */
-    LegendreAngularDistribution operator/( double right ) const {
-
-      return LegendreSeries::operator/( right );
-    }
-
-    /**
-     *  @brief Unary minus
-     */
-    LegendreAngularDistribution operator-() const {
-
-      return LegendreSeries::operator-();
-    }
-
-    /**
-     *  @brief Inplace LegendreAngularDistribution addition
-     *
-     *  @param[in] right    the table
-     */
-    LegendreAngularDistribution& operator+=( const LegendreAngularDistribution& right ) {
-
-      LegendreSeries::operator+=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief Inplace LegendreAngularDistribution subtraction
-     *
-     *  @param[in] right    the table
-     */
-    LegendreAngularDistribution& operator-=( const LegendreAngularDistribution& right ) {
-
-      LegendreSeries::operator-=( right );
-      return *this;
-    }
-
-    /**
-     *  @brief LegendreAngularDistribution and LegendreAngularDistribution addition
-     *
-     *  @param[in] right    the table
-     */
-    LegendreAngularDistribution operator+( const LegendreAngularDistribution& right ) const {
-
-      return LegendreSeries::operator+( right );
-    }
-
-    /**
-     *  @brief LegendreAngularDistribution and LegendreAngularDistribution subtraction
-     *
-     *  @param[in] right    the table
-     */
-    LegendreAngularDistribution operator-( const LegendreAngularDistribution& right ) const {
-
-      return LegendreSeries::operator-( right );
-    }
+//    /**
+//     *  @brief Inplace scalar addition
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction& operator+=( double right ) {
+//
+//      LegendreSeries::operator+=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace scalar subtraction
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction& operator-=( double right ) {
+//
+//      LegendreSeries::operator-=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace scalar multiplication
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction& operator*=( double right ) {
+//
+//      LegendreSeries::operator*=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace scalar division
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction& operator/=( double right ) {
+//
+//      LegendreSeries::operator/=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief LegendreAngularDistributionFunction and scalar addition
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction operator+( double right ) const {
+//
+//      return LegendreSeries::operator+( right );
+//    }
+//
+//    /**
+//     *  @brief LegendreAngularDistributionFunction and scalar subtraction
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction operator-( double right ) const {
+//
+//      return LegendreSeries::operator-( right );
+//    }
+//
+//    /**
+//     *  @brief LegendreAngularDistributionFunction and scalar multiplication
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction operator*( double right ) const {
+//
+//      return LegendreSeries::operator*( right );
+//    }
+//
+//    /**
+//     *  @brief LegendreAngularDistributionFunction and scalar division
+//     *
+//     *  @param[in] right    the scalar
+//     */
+//    LegendreAngularDistributionFunction operator/( double right ) const {
+//
+//      return LegendreSeries::operator/( right );
+//    }
+//
+//    /**
+//     *  @brief Unary minus
+//     */
+//    LegendreAngularDistributionFunction operator-() const {
+//
+//      return LegendreSeries::operator-();
+//    }
+//
+//    /**
+//     *  @brief Inplace LegendreAngularDistributionFunction addition
+//     *
+//     *  @param[in] right    the table
+//     */
+//    LegendreAngularDistributionFunction&
+//    operator+=( const LegendreAngularDistributionFunction& right ) {
+//
+//      LegendreSeries::operator+=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief Inplace LegendreAngularDistributionFunction subtraction
+//     *
+//     *  @param[in] right    the table
+//     */
+//    LegendreAngularDistributionFunction&
+//    operator-=( const LegendreAngularDistributionFunction& right ) {
+//
+//      LegendreSeries::operator-=( right );
+//      return *this;
+//    }
+//
+//    /**
+//     *  @brief LegendreAngularDistributionFunction addition
+//     *
+//     *  @param[in] right    the table
+//     */
+//    LegendreAngularDistributionFunction
+//    operator+( const LegendreAngularDistributionFunction& right ) const {
+//
+//      return LegendreSeries::operator+( right );
+//    }
+//
+//    /**
+//     *  @brief LegendreAngularDistributionFunction subtraction
+//     *
+//     *  @param[in] right    the table
+//     */
+//    LegendreAngularDistributionFunction
+//    operator-( const LegendreAngularDistributionFunction& right ) const {
+//
+//      return LegendreSeries::operator-( right );
+//    }
   };
 
-  /**
-   *  @brief Scalar and LegendreAngularDistribution addition
-   *
-   *  @param[in] left    the scalar
-   *  @param[in] right   the table
-   */
-  inline LegendreAngularDistribution operator+( double left, const LegendreAngularDistribution& right ) {
-
-    return right + left;
-  }
-
-  /**
-   *  @brief Scalar and LegendreAngularDistribution subtraction
-   *
-   *  @param[in] left    the scalar
-   *  @param[in] right   the table
-   */
-  inline LegendreAngularDistribution operator-( double left, const LegendreAngularDistribution& right ) {
-
-    auto result = -right;
-    result += left;
-    return result;
-  }
-
-  /**
-   *  @brief Scalar and LegendreAngularDistribution multiplication
-   *
-   *  @param[in] left    the scalar
-   *  @param[in] right   the table
-   */
-  inline LegendreAngularDistribution operator*( double left, const LegendreAngularDistribution& right ) {
-
-    return right * left;
-  }
+//  /**
+//   *  @brief Scalar and LegendreAngularDistributionFunction addition
+//   *
+//   *  @param[in] left    the scalar
+//   *  @param[in] right   the table
+//   */
+//  inline LegendreAngularDistributionFunction
+//  operator+( double left, const LegendreAngularDistributionFunction& right ) {
+//
+//    return right + left;
+//  }
+//
+//  /**
+//   *  @brief Scalar and LegendreAngularDistributionFunction subtraction
+//   *
+//   *  @param[in] left    the scalar
+//   *  @param[in] right   the table
+//   */
+//  inline LegendreAngularDistributionFunction
+//  operator-( double left, const LegendreAngularDistributionFunction& right ) {
+//
+//    auto result = -right;
+//    result += left;
+//    return result;
+//  }
+//
+//  /**
+//   *  @brief Scalar and LegendreAngularDistributionFunction multiplication
+//   *
+//   *  @param[in] left    the scalar
+//   *  @param[in] right   the table
+//   */
+//  inline LegendreAngularDistributionFunction
+//  operator*( double left, const LegendreAngularDistributionFunction& right ) {
+//
+//    return right * left;
+//  }
 
 } // dryad namespace
 } // njoy namespace

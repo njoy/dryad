@@ -5,14 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/LegendreAngularDistribution.hpp"
+#include "dryad/LegendreAngularDistributionFunction.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "LegendreAngularDistribution" ) {
+SCENARIO( "LegendreAngularDistributionFunction" ) {
 
   GIVEN( "Legendre coefficients for an expansion" ) {
 
@@ -20,9 +20,9 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       std::vector< double > coefficients = { -31./3., 73./5., -14./3., 2./5. };
 
-      LegendreAngularDistribution chunk( std::move( coefficients ) );
+      LegendreAngularDistributionFunction chunk( std::move( coefficients ) );
 
-      THEN( "a LegendreAngularDistribution can be constructed and members can "
+      THEN( "a LegendreAngularDistributionFunction can be constructed and members can "
             "be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerCosineLimit() ) );
@@ -37,17 +37,17 @@ SCENARIO( "LegendreAngularDistribution" ) {
         CHECK_THAT(   0.4             , WithinRel( chunk.coefficients()[3] ) );
       } // THEN
 
-      THEN( "a LegendreAngularDistribution can be evaluated" ) {
+      THEN( "a LegendreAngularDistributionFunction can be evaluated" ) {
 
         CHECK_THAT(  -8., WithinRel( chunk(  0. ) ) );
         CHECK_THAT(   0., WithinAbs( chunk(  1. ), 1e-12 ) );
         CHECK_THAT( -30., WithinRel( chunk( -1. ) ) );
       } // THEN
 
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
+      THEN( "a LegendreAngularDistributionFunction can be linearised" ) {
 
         ToleranceConvergence convergence( 0.01 );
-        TabulatedAngularDistribution linear = chunk.linearise( convergence );
+        TabulatedAngularDistributionFunction linear = chunk.linearise( convergence );
 
         CHECK( 21 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -110,10 +110,10 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        LegendreAngularDistribution small( { 3., 0., 1. } );
-        LegendreAngularDistribution equal( { 3., 0., 0., 1. } );
-        LegendreAngularDistribution large( { 3., 0., 0., 0., 1. } );
-        LegendreAngularDistribution result( { 0. } );
+        LegendreAngularDistributionFunction small( { 3., 0., 1. } );
+        LegendreAngularDistributionFunction equal( { 3., 0., 0., 1. } );
+        LegendreAngularDistributionFunction large( { 3., 0., 0., 0., 1. } );
+        LegendreAngularDistributionFunction result( { 0. } );
 
         result = -chunk;
 
@@ -344,7 +344,7 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "an exception is thrown" ) {
 
         std::vector< double > empty = {};
-        CHECK_THROWS( LegendreAngularDistribution( empty ) );
+        CHECK_THROWS( LegendreAngularDistributionFunction( empty ) );
       } // THEN
     } // WHEN
   } // GIVEN

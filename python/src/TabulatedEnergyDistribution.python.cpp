@@ -1,7 +1,6 @@
 // system includes
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <pybind11/operators.h>
 
 // local includes
 #include "definitions.hpp"
@@ -15,7 +14,6 @@ void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) 
   // type aliases
   using Component = njoy::dryad::TabulatedEnergyDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -24,7 +22,7 @@ void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) 
 
     module,
     "TabulatedEnergyDistribution",
-    "An energy distribution table"
+    "An energy distribution defined by a pdf and cdf using tabulated data"
   );
 
   // wrap the component
@@ -36,11 +34,11 @@ void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) 
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the energy distribution table\n\n"
+    "Initialise the energy distribution\n\n"
     "Arguments:\n"
-    "    self           the energy distribution table\n"
+    "    self           the energy distribution\n"
     "    energies       the energy values\n"
-    "    values         the cross section values\n"
+    "    values         the probability values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
     "    interpolants   the interpolation types of the interpolation regions,\n"
     "                   see InterpolationType for all interpolation types"
@@ -49,39 +47,27 @@ void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) 
 
     python::init< std::vector< double >, std::vector< double >,
                   InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the energy distribution table\n\n"
+    "Initialise the energy distribution\n\n"
     "Arguments:\n"
-    "    self           the energy distribution table\n"
+    "    self           the energy distribution\n"
     "    energies       the energy values\n"
-    "    values         the cross section values\n"
+    "    values         the probability values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
   .def_property_readonly(
 
-    "energies",
-    &Component::energies,
-    "The energy values"
+    "pdf",
+    &Component::pdf,
+    "The probability distribution function (pdf) of the distribution"
   )
   .def_property_readonly(
 
-    "values",
-    &Component::values,
-    "The probability values"
-  )
-  .def_property_readonly(
-
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
-  )
-  .def_property_readonly(
-
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
+    "cdf",
+    &Component::cdf,
+    "The cumulative distribution function (cdf) of the distribution"
   )
   .def(
 
@@ -89,12 +75,9 @@ void wrapTabulatedEnergyDistribution( python::module& module, python::module& ) 
     [] ( const Component& self, double energy ) -> decltype(auto)
        { return self( energy ); },
     python::arg( "energy" ),
-    "Evaluate the table for a given energy value\n\n"
+    "Evaluate the pdf of the distribution for a given energy value\n\n"
     "Arguments:\n"
-    "    self      the table\n"
+    "    self      the distribution\n"
     "    energy    the energy value"
   );
-
-  // add standard tabulated data definitions
-  addStandardTabulatedDefinitions< Component >( component );
 }

@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedEnergyDistribution.hpp"
+#include "dryad/TabulatedEnergyDistributionFunction.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "TabulatedEnergyDistribution" ) {
+SCENARIO( "TabulatedEnergyDistributionFunction" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
 
@@ -20,9 +20,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
       const std::vector< double > energies = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
 
-      TabulatedEnergyDistribution chunk( std::move( energies ), std::move( values ) );
+      TabulatedEnergyDistributionFunction chunk( std::move( energies ), std::move( values ) );
 
-      THEN( "a TabulatedEnergyDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
@@ -45,7 +45,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -65,11 +65,11 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedEnergyDistribution result( { 1., 4. }, { 0., 0. } );
-        TabulatedEnergyDistribution same( { 1., 4. }, { 0., 3. } );
-        TabulatedEnergyDistribution threshold( { 2., 4. }, { 0., 2. } );
-        TabulatedEnergyDistribution nonzerothreshold( { 2., 4. }, { 1., 3. } );
-        TabulatedEnergyDistribution small( { 1., 3. }, { 0., 2. } );
+        TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedEnergyDistributionFunction same( { 1., 4. }, { 0., 3. } );
+        TabulatedEnergyDistributionFunction threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedEnergyDistributionFunction nonzerothreshold( { 2., 4. }, { 1., 3. } );
+        TabulatedEnergyDistributionFunction small( { 1., 3. }, { 0., 2. } );
 
         chunk += 2.;
 
@@ -586,9 +586,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be linearised" ) {
 
-        TabulatedEnergyDistribution linear = chunk.linearise();
+        TabulatedEnergyDistributionFunction linear = chunk.linearise();
 
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -625,10 +625,10 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedEnergyDistribution chunk( std::move( energies ), std::move( values ),
+      TabulatedEnergyDistributionFunction chunk( std::move( energies ), std::move( values ),
                                    interpolant );
 
-      THEN( "a TabulatedEnergyDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
         // the constructor will detect the jump and add interpolation regions
         // as required
@@ -655,7 +655,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -675,11 +675,11 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedEnergyDistribution result( { 1., 4. }, { 0., 0. } );
-        TabulatedEnergyDistribution same( { 1., 4. }, { 0., 3. } );
-        TabulatedEnergyDistribution threshold( { 2., 4. }, { 0., 2. } );
-        TabulatedEnergyDistribution nonzerothreshold( { 3., 4. }, { 1., 2. } );
-        TabulatedEnergyDistribution small( { 1., 3. }, { 0., 2. } );
+        TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedEnergyDistributionFunction same( { 1., 4. }, { 0., 3. } );
+        TabulatedEnergyDistributionFunction threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedEnergyDistributionFunction nonzerothreshold( { 3., 4. }, { 1., 2. } );
+        TabulatedEnergyDistributionFunction small( { 1., 3. }, { 0., 2. } );
 
         chunk += 2.;
 
@@ -1250,9 +1250,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be linearised" ) {
 
-        TabulatedEnergyDistribution linear = chunk.linearise();
+        TabulatedEnergyDistributionFunction linear = chunk.linearise();
 
         CHECK( 5 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1298,12 +1298,12 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedEnergyDistribution chunk( std::move( energies ),
-                                   std::move( values ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+      TabulatedEnergyDistributionFunction chunk( std::move( energies ),
+                                                 std::move( values ),
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
-      THEN( "a TabulatedEnergyDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
@@ -1328,7 +1328,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -1350,8 +1350,8 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "arithmetic operations cannot be performed" ) {
 
-        TabulatedEnergyDistribution result( { 1., 4. }, { 0., 0. } );
-        TabulatedEnergyDistribution right( { 1., 4. }, { 0., 0. } );
+        TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedEnergyDistributionFunction right( { 1., 4. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1374,9 +1374,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be linearised" ) {
 
-        TabulatedEnergyDistribution linear = chunk.linearise();
+        TabulatedEnergyDistributionFunction linear = chunk.linearise();
 
         CHECK( 18 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -1446,12 +1446,12 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedEnergyDistribution chunk( std::move( energies ),
-                                   std::move( values ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+      TabulatedEnergyDistributionFunction chunk( std::move( energies ),
+                                                 std::move( values ),
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
-      THEN( "a TabulatedEnergyDistribution can be constructed and members can be tested" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerEnergyLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperEnergyLimit() ) );
@@ -1476,7 +1476,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -1498,8 +1498,8 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "arithmetic operations cannot be performed" ) {
 
-        TabulatedEnergyDistribution result( { 1., 4. }, { 0., 0. } );
-        TabulatedEnergyDistribution right( { 1., 4. }, { 0., 0. } );
+        TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedEnergyDistributionFunction right( { 1., 4. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1522,9 +1522,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be linearised" ) {
 
-        TabulatedEnergyDistribution linear = chunk.linearise();
+        TabulatedEnergyDistributionFunction linear = chunk.linearise();
 
         CHECK( 12 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1589,9 +1589,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedEnergyDistribution chunk( std::move( x ), std::move( y ),
-                                          std::move( boundaries ),
-                                          std::move( interpolants ) );
+      TabulatedEnergyDistributionFunction chunk( std::move( x ), std::move( y ),
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
       THEN( "a InterpolationTable can be constructed and members can be tested" ) {
 
@@ -1634,9 +1634,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedEnergyDistribution chunk( std::move( x ), std::move( y ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+      TabulatedEnergyDistributionFunction chunk( std::move( x ), std::move( y ),
+                                                 std::move( boundaries ),
+                                                 std::move( interpolants ) );
 
       THEN( "an InterpolationTable can be constructed and members can be tested" ) {
 
@@ -1672,8 +1672,8 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( empty, empty ) );
-        CHECK_THROWS( TabulatedEnergyDistribution( one, one ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( empty, empty ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( one, one ) );
       } // THEN
     } // WHEN
 
@@ -1684,7 +1684,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1697,9 +1697,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ),
-                                             std::move( boundaries ),
-                                             std::move( interpolants ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ),
+                                                           std::move( boundaries ),
+                                                           std::move( interpolants ) ) );
       } // THEN
     } // WHEN
 
@@ -1710,7 +1710,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1721,7 +1721,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1732,7 +1732,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1743,7 +1743,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -1756,9 +1756,9 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedEnergyDistribution( std::move( x ), std::move( y ),
-                                             std::move( boundaries ),
-                                             std::move( interpolants ) ) );
+        CHECK_THROWS( TabulatedEnergyDistributionFunction( std::move( x ), std::move( y ),
+                                                           std::move( boundaries ),
+                                                           std::move( interpolants ) ) );
       } // THEN
     } // WHEN
   } // GIVEN
