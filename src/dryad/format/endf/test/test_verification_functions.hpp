@@ -258,8 +258,8 @@ void verifyElectronElasticReaction( const Reaction& elastic ) {
   CHECK_THAT(   9.86945e+5 , WithinRel( angle.distributions()[15].pdf().values()[95] ) );
   CHECK( std::nullopt == angle.distributions()[0].cdf() );
   CHECK( std::nullopt == angle.distributions()[1].cdf() );
-  CHECK( std::nullopt == angle.distributions()[94].cdf() );
-  CHECK( std::nullopt == angle.distributions()[95].cdf() );
+  CHECK( std::nullopt == angle.distributions()[14].cdf() );
+  CHECK( std::nullopt == angle.distributions()[15].cdf() );
   CHECK( 15 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }
