@@ -103,6 +103,7 @@ if( dryad.python )
       python/src/ReferenceFrame.python.cpp
       python/src/TabulatedCrossSection.python.cpp
       python/src/TabulatedMultiplicity.python.cpp
+      python/src/TabulatedAverageCosine.python.cpp
       python/src/TabulatedAverageEnergy.python.cpp
       python/src/IsotropicAngularDistributions.python.cpp
       python/src/LegendreAngularDistributionFunction.python.cpp

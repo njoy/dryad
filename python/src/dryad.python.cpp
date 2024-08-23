@@ -29,6 +29,7 @@ void wrapTabulatedEnergyDistribution( python::module&, python::module& );
 void wrapTabulatedEnergyDistributions( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
+void wrapTabulatedAverageCosine( python::module&, python::module& );
 void wrapTabulatedAverageEnergy( python::module&, python::module& );
 void wrapTabulatedFormFactor( python::module&, python::module& );
 void wrapTabulatedScatteringFunction( python::module&, python::module& );
@@ -72,6 +73,7 @@ PYBIND11_MODULE( dryad, module ) {
 
   // wrap components - reaction products
   wrapTabulatedMultiplicity( module, viewmodule );
+  wrapTabulatedAverageCosine( module, viewmodule );
   wrapTabulatedAverageEnergy( module, viewmodule );
   wrapIsotropicAngularDistributions( module, viewmodule );
   wrapLegendreAngularDistributionFunction( module, viewmodule );
