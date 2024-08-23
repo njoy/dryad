@@ -49,6 +49,12 @@ void wrapLegendreAngularDistribution( python::module& module, python::module& ) 
     &Component::cdf,
     "The cumulative distribution function (cdf) of the distribution"
   )
+  .def_property_readonly(
+
+    "average_cosine",
+    &Component::averageCosine,
+    "The average cosine defined by the distribution"
+  )
   .def(
 
     "__call__",

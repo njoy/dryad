@@ -54,10 +54,21 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 0.1 , WithinRel( chunk.distributions()[2].pdf().coefficients()[1] ) );
         CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[3].pdf().coefficients()[0] ) );
         CHECK_THAT( 0.4 , WithinRel( chunk.distributions()[3].pdf().coefficients()[1] ) );
-        CHECK( std::nullopt == chunk.distributions()[0].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[1].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[2].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[3].cdf() );
+        CHECK( 2 == chunk.distributions()[0].cdf().coefficients().size() );
+        CHECK( 3 == chunk.distributions()[1].cdf().coefficients().size() );
+        CHECK( 3 == chunk.distributions()[2].cdf().coefficients().size() );
+        CHECK( 3 == chunk.distributions()[3].cdf().coefficients().size() );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[0].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[0].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.4966666666666666, WithinRel( chunk.distributions()[1].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[1].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.0033333333333333, WithinRel( chunk.distributions()[1].cdf().coefficients()[2] ) );
+        CHECK_THAT( 0.4666666666666666, WithinRel( chunk.distributions()[2].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[2].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.0333333333333333, WithinRel( chunk.distributions()[2].cdf().coefficients()[2] ) );
+        CHECK_THAT( 0.3666666666666666, WithinRel( chunk.distributions()[3].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[3].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.1333333333333333, WithinRel( chunk.distributions()[3].cdf().coefficients()[2] ) );
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
       } // THEN
@@ -78,6 +89,30 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 0.4975, WithinRel( chunk( 1.5, -0.5 ) ) );
         CHECK_THAT( 0.4725, WithinRel( chunk( 2.5, -0.5 ) ) );
         CHECK_THAT( 0.375 , WithinRel( chunk( 3.5, -0.5 ) ) );
+      } // THEN
+
+      THEN( "a TabulatedAverageCosine can be created" ) {
+
+        auto cosines = chunk.averageCosines();
+        CHECK_THAT( 1., WithinRel( cosines.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( cosines.upperEnergyLimit() ) );
+        CHECK( 4 == cosines.numberPoints() );
+        CHECK( 1 == cosines.numberRegions() );
+        CHECK( 4 == cosines.energies().size() );
+        CHECK( 4 == cosines.values().size() );
+        CHECK( 1 == cosines.boundaries().size() );
+        CHECK( 1 == cosines.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( cosines.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( cosines.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( cosines.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( cosines.energies()[3] ) );
+        CHECK_THAT( 0.  , WithinRel( cosines.values()[0] ) );
+        CHECK_THAT( 0.01, WithinRel( cosines.values()[1] ) );
+        CHECK_THAT( 0.1 , WithinRel( cosines.values()[2] ) );
+        CHECK_THAT( 0.4 , WithinRel( cosines.values()[3] ) );
+        CHECK( 3 == cosines.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
+        CHECK( true == cosines.isLinearised() );
       } // THEN
     } // WHEN
   } // GIVEN

@@ -152,6 +152,13 @@ void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& chunk 
   CHECK_THAT( 0.5, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
   CHECK_THAT( 0.5, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
   CHECK_THAT( 0.1, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 0.5               , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 0.5               , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.4666666666666666, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 0.5               , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0333333333333333, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
   CHECK( 1 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 

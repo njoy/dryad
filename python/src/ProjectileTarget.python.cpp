@@ -122,7 +122,7 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
   .def_static(
 
     "from_endf_file",
-    [] ( const std::string& filename ) -> Component {
+    [] ( const std::string& filename ) -> decltype(auto) {
 
       return njoy::dryad::format::endf::createProjectileTargetFromFile( filename );
     },

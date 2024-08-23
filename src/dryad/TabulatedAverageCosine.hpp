@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_TABULATEDANGULARDISTRIBUTIONFUNCTION
-#define NJOY_DRYAD_TABULATEDANGULARDISTRIBUTIONFUNCTION
+#ifndef NJOY_DRYAD_TABULATEDAVERAGECOSINE
+#define NJOY_DRYAD_TABULATEDAVERAGECOSINE
 
 // system includes
 #include <vector>
@@ -11,17 +11,12 @@
 namespace njoy {
 namespace dryad {
 
-  // forward declaration LegendreAngularDistributionFunction
-  class LegendreAngularDistributionFunction;
-
   /**
    *  @class
-   *  @brief An angular distribution function using tabulated data
+   *  @brief An average cosine table
    */
-  class TabulatedAngularDistributionFunction :
+  class TabulatedAverageCosine :
       protected scion::math::InterpolationTable< double, double > {
-
-  friend LegendreAngularDistributionFunction;
 
   public:
 
@@ -31,20 +26,20 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedAngularDistributionFunction/src/ctor.hpp"
+    #include "dryad/TabulatedAverageCosine/src/ctor.hpp"
 
     /* methods */
 
     /**
-     *  @brief Return the cosine values
+     *  @brief Return the energy values
      */
-    const std::vector< double >& cosines() const noexcept {
+    const std::vector< double >& energies() const noexcept {
 
       return this->x();
     }
 
     /**
-     *  @brief Return the probability values
+     *  @brief Return the average cosine values
      */
     const std::vector< double >& values() const noexcept {
 
@@ -52,17 +47,17 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the lower cosine limit
+     *  @brief Return the lower energy limit
      */
-    double lowerCosineLimit() const noexcept {
+    double lowerEnergyLimit() const noexcept {
 
       return this->x().front();
     }
 
     /**
-     *  @brief Return the upper cosine limit
+     *  @brief Return the upper energy limit
      */
-    double upperCosineLimit() const noexcept {
+    double upperEnergyLimit() const noexcept {
 
       return this->x().back();
     }
@@ -76,13 +71,13 @@ namespace dryad {
     using InterpolationTable::operator();
 
     /**
-     *  @brief Return a linearised angular distribution table
+     *  @brief Return a linearised cross section table
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedAngularDistributionFunction linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedAverageCosine linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return TabulatedAngularDistributionFunction( InterpolationTable::linearise( tolerance ) );
+      return TabulatedAverageCosine( InterpolationTable::linearise( tolerance ) );
     }
 
     /**
@@ -90,7 +85,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction& operator+=( double right ) {
+    TabulatedAverageCosine& operator+=( double right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
@@ -101,7 +96,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction& operator-=( double right ) {
+    TabulatedAverageCosine& operator-=( double right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
@@ -112,7 +107,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction& operator*=( double right ) {
+    TabulatedAverageCosine& operator*=( double right ) {
 
       InterpolationTable::operator*=( right );
       return *this;
@@ -123,48 +118,48 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction& operator/=( double right ) {
+    TabulatedAverageCosine& operator/=( double right ) {
 
       InterpolationTable::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedAngularDistributionFunction and scalar addition
+     *  @brief TabulatedAverageCosine and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction operator+( double right ) const {
+    TabulatedAverageCosine operator+( double right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistributionFunction and scalar subtraction
+     *  @brief TabulatedAverageCosine and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction operator-( double right ) const {
+    TabulatedAverageCosine operator-( double right ) const {
 
       return InterpolationTable::operator-( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistributionFunction and scalar multiplication
+     *  @brief TabulatedAverageCosine and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction operator*( double right ) const {
+    TabulatedAverageCosine operator*( double right ) const {
 
       return InterpolationTable::operator*( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistributionFunction and scalar division
+     *  @brief TabulatedAverageCosine and scalar division
      *
      *  @param[in] right    the scalar
      */
-    TabulatedAngularDistributionFunction operator/( double right ) const {
+    TabulatedAverageCosine operator/( double right ) const {
 
       return InterpolationTable::operator/( right );
     }
@@ -172,78 +167,72 @@ namespace dryad {
     /**
      *  @brief Unary minus
      */
-    TabulatedAngularDistributionFunction operator-() const {
+    TabulatedAverageCosine operator-() const {
 
       return InterpolationTable::operator-();
     }
 
     /**
-     *  @brief Inplace TabulatedAngularDistributionFunction addition
+     *  @brief Inplace TabulatedAverageCosine addition
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistributionFunction&
-    operator+=( const TabulatedAngularDistributionFunction& right ) {
+    TabulatedAverageCosine& operator+=( const TabulatedAverageCosine& right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace TabulatedAngularDistributionFunction subtraction
+     *  @brief Inplace TabulatedAverageCosine subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistributionFunction&
-    operator-=( const TabulatedAngularDistributionFunction& right ) {
+    TabulatedAverageCosine& operator-=( const TabulatedAverageCosine& right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedAngularDistributionFunction addition
+     *  @brief TabulatedAverageCosine and TabulatedAverageCosine addition
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistributionFunction
-    operator+( const TabulatedAngularDistributionFunction& right ) const {
+    TabulatedAverageCosine operator+( const TabulatedAverageCosine& right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedAngularDistributionFunction subtraction
+     *  @brief TabulatedAverageCosine and TabulatedAverageCosine subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedAngularDistributionFunction
-    operator-( const TabulatedAngularDistributionFunction& right ) const {
+    TabulatedAverageCosine operator-( const TabulatedAverageCosine& right ) const {
 
       return InterpolationTable::operator-( right );
     }
   };
 
   /**
-   *  @brief Scalar addition
+   *  @brief Scalar and TabulatedAverageCosine addition
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedAngularDistributionFunction
-  operator+( double left, const TabulatedAngularDistributionFunction& right ) {
+  inline TabulatedAverageCosine operator+( double left, const TabulatedAverageCosine& right ) {
 
     return right + left;
   }
 
   /**
-   *  @brief Scalar subtraction
+   *  @brief Scalar and TabulatedAverageCosine subtraction
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedAngularDistributionFunction
-  operator-( double left, const TabulatedAngularDistributionFunction& right ) {
+  inline TabulatedAverageCosine operator-( double left, const TabulatedAverageCosine& right ) {
 
     auto result = -right;
     result += left;
@@ -251,13 +240,12 @@ namespace dryad {
   }
 
   /**
-   *  @brief Scalar multiplication
+   *  @brief Scalar and TabulatedAverageCosine multiplication
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedAngularDistributionFunction
-  operator*( double left, const TabulatedAngularDistributionFunction& right ) {
+  inline TabulatedAverageCosine operator*( double left, const TabulatedAverageCosine& right ) {
 
     return right * left;
   }
