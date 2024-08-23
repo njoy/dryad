@@ -54,10 +54,21 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 0.1 , WithinRel( chunk.distributions()[2].pdf().coefficients()[1] ) );
         CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[3].pdf().coefficients()[0] ) );
         CHECK_THAT( 0.4 , WithinRel( chunk.distributions()[3].pdf().coefficients()[1] ) );
-        CHECK( std::nullopt == chunk.distributions()[0].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[1].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[2].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[3].cdf() );
+        CHECK( 2 == chunk.distributions()[0].cdf().coefficients().size() );
+        CHECK( 3 == chunk.distributions()[1].cdf().coefficients().size() );
+        CHECK( 3 == chunk.distributions()[2].cdf().coefficients().size() );
+        CHECK( 3 == chunk.distributions()[3].cdf().coefficients().size() );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[0].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[0].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.4966666666666666, WithinRel( chunk.distributions()[1].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[1].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.0033333333333333, WithinRel( chunk.distributions()[1].cdf().coefficients()[2] ) );
+        CHECK_THAT( 0.4666666666666666, WithinRel( chunk.distributions()[2].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[2].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.0333333333333333, WithinRel( chunk.distributions()[2].cdf().coefficients()[2] ) );
+        CHECK_THAT( 0.3666666666666666, WithinRel( chunk.distributions()[3].cdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5               , WithinRel( chunk.distributions()[3].cdf().coefficients()[1] ) );
+        CHECK_THAT( 0.1333333333333333, WithinRel( chunk.distributions()[3].cdf().coefficients()[2] ) );
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
       } // THEN

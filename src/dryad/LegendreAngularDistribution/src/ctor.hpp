@@ -14,13 +14,10 @@ LegendreAngularDistribution& operator=( LegendreAngularDistribution&& ) = defaul
  *
  *  @param coefficients   the coefficients of the distribution pdf represented by a
  *                        Legendre series (from lowest to highest order coefficient)
- *  @param cdf            flag to calculate the associated cdf
  */
-LegendreAngularDistribution( std::vector< double > coefficients, bool cdf = false ) :
-    pdf_( std::move( coefficients ) ), cdf_( std::nullopt ) {
+LegendreAngularDistribution( std::vector< double > coefficients ) :
+    pdf_( std::move( coefficients ) ), cdf_() {
 
-  if ( cdf ) {
-
-    this->calculateCdf();
-  }
+  this->pdf_.normalise();
+  this->cdf_ = this->pdf().primitive( -1. );
 }

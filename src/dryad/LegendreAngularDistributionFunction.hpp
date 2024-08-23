@@ -18,6 +18,11 @@ namespace dryad {
   /**
    *  @class
    *  @brief An angular distribution function using a Legendre expansion
+   *
+   *  Note: ENDF and GNDS Legendre expansions use an additional ( 2 * n + 1 ) / 2
+   *  factor for the coefficient of order n in MF4 and MF6 LAW=1 & LAW=2. This
+   *  distribution function assumes those factors are already integrated in the
+   *  coefficients.
    */
   class LegendreAngularDistributionFunction :
       protected scion::math::LegendreSeries< double, double > {
@@ -83,6 +88,14 @@ namespace dryad {
 
     using LegendreSeries::operator();
     using LegendreSeries::order;
+
+    /**
+     *  @brief Normalise the distribution function
+     */
+    void normalise() noexcept {
+
+      this->operator/=( 2. * this->coefficients().front() );
+    }
 
     /**
      *  @brief Return a linearised angular distribution table
