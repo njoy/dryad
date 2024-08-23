@@ -41,13 +41,15 @@ void wrapLegendreAngularDistributionFunction( python::module& module, python::mo
   .def_property_readonly(
 
     "lower_cosine_limit",
-    [] ( const Component& self ) { return self.lowerCosineLimit(); },
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.lowerCosineLimit(); },
     "The lower cosine limit"
   )
   .def_property_readonly(
 
     "upper_cosine_limit",
-    [] ( const Component& self ) { return self.upperCosineLimit(); },
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.upperCosineLimit(); },
     "The upper cosine limit"
   )
   .def(
