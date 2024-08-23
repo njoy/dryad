@@ -90,6 +90,30 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 0.4725, WithinRel( chunk( 2.5, -0.5 ) ) );
         CHECK_THAT( 0.375 , WithinRel( chunk( 3.5, -0.5 ) ) );
       } // THEN
+
+      THEN( "a TabulatedAverageCosine can be created" ) {
+
+        auto cosines = chunk.averageCosines();
+        CHECK_THAT( 1., WithinRel( cosines.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( cosines.upperEnergyLimit() ) );
+        CHECK( 4 == cosines.numberPoints() );
+        CHECK( 1 == cosines.numberRegions() );
+        CHECK( 4 == cosines.energies().size() );
+        CHECK( 4 == cosines.values().size() );
+        CHECK( 1 == cosines.boundaries().size() );
+        CHECK( 1 == cosines.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( cosines.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( cosines.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( cosines.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( cosines.energies()[3] ) );
+        CHECK_THAT( 0.  , WithinRel( cosines.values()[0] ) );
+        CHECK_THAT( 0.01, WithinRel( cosines.values()[1] ) );
+        CHECK_THAT( 0.1 , WithinRel( cosines.values()[2] ) );
+        CHECK_THAT( 0.4 , WithinRel( cosines.values()[3] ) );
+        CHECK( 3 == cosines.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
+        CHECK( true == cosines.isLinearised() );
+      } // THEN
     } // WHEN
   } // GIVEN
 

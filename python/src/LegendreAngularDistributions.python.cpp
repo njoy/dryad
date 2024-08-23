@@ -75,6 +75,12 @@ void wrapLegendreAngularDistributions( python::module& module, python::module& )
        { return self.distributions(); },
     "The associated distributions"
   )
+  .def_property_readonly(
+
+    "average_cosines",
+    &Component::averageCosines,
+    "The average cosine values"
+  )
   .def(
 
     "__call__",

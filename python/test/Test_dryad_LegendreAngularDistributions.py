@@ -69,6 +69,28 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 0.4725, chunk( 2.5, -0.5 ) )
             self.assertAlmostEqual( 0.375 , chunk( 3.5, -0.5 ) )
 
+            # verify average cosines
+            cosines = chunk.average_cosines
+            self.assertAlmostEqual( 1., cosines.lower_energy_limit )
+            self.assertAlmostEqual( 4., cosines.upper_energy_limit )
+            self.assertEqual( 4, cosines.number_points )
+            self.assertEqual( 1, cosines.number_regions )
+            self.assertEqual( 4, len( cosines.energies ) )
+            self.assertEqual( 4, len( cosines.values ) )
+            self.assertEqual( 1, len( cosines.boundaries ) )
+            self.assertEqual( 1, len( cosines.interpolants ) )
+            self.assertAlmostEqual( 1., cosines.energies[0] )
+            self.assertAlmostEqual( 2., cosines.energies[1] )
+            self.assertAlmostEqual( 3., cosines.energies[2] )
+            self.assertAlmostEqual( 4., cosines.energies[3] )
+            self.assertAlmostEqual( 0.  , cosines.values[0] )
+            self.assertAlmostEqual( 0.01, cosines.values[1] )
+            self.assertAlmostEqual( 0.1 , cosines.values[2] )
+            self.assertAlmostEqual( 0.4 , cosines.values[3] )
+            self.assertEqual( 3, cosines.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, cosines.interpolants[0] )
+            self.assertEqual( True, cosines.is_linearised )
+
         # the data is given explicitly
         chunk = LegendreAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                               distributions = [ LegendreAngularDistribution( [ 0.5 ] ),
