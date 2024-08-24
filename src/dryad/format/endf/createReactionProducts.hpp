@@ -29,7 +29,34 @@ namespace endf {
 
     if ( material.hasSection( 4, mt ) || material.hasSection( 5, mt ) ) {
 
-      Log::info( "Reading reaction product data from MF4 and/or MF5 is not implemented yet" );
+      switch ( mt ) {
+
+        case   2 : {
+
+          auto section = material.section( 4, mt ).parse< 4 >();
+          switch ( section.LTT() ) {
+
+            case   1 : {
+
+              using LegendreDistributions = ENDFtk::section::Type< 4 >::LegendreDistributions;
+              auto distributions = std::get< LegendreDistributions >( section.distributions() );
+              products.emplace_back( createReactionProduct( projectile, target, distributions ) );
+              break;
+            }
+            default : {
+
+              Log::info( "Any MF4 LTT different from 1 is not implemented yet" );
+              break;
+            }
+          }
+          break;
+        }
+        default : {
+
+          Log::info( "Reading reaction product data from MF4 and/or MF5 is not implemented yet" );
+          break;
+        }
+      }
     }
     else if ( material.hasSection( 6, mt ) ) {
 

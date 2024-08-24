@@ -10,6 +10,7 @@
 #include "dryad/format/endf/createMultiplicity.hpp"
 #include "dryad/format/endf/createTabulatedEnergyDistributions.hpp"
 #include "dryad/format/endf/createTabulatedAngularDistributions.hpp"
+#include "dryad/format/endf/createLegendreAngularDistributions.hpp"
 #include "dryad/format/endf/createTabulatedAverageEnergy.hpp"
 #include "dryad/format/endf/createTabulatedFormFactor.hpp"
 #include "dryad/format/endf/createTabulatedScatteringFunction.hpp"
@@ -21,6 +22,25 @@ namespace njoy {
 namespace dryad {
 namespace format {
 namespace endf {
+
+  /**
+   *  @brief Create a ReactionProduct from a parsed ENDF MF4 LegendreDistributions
+   *
+   *  @param[in] projectile      the projectile identifier
+   *  @param[in] target          the target identifier
+   *  @param[in] distributions   the MF4 LegendreDistributions
+   */
+  ReactionProduct
+  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+                         const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions ) {
+
+    id::ParticleID id = createProductIdentifier( 1, 0 );
+    Log::info( "Reading reaction product data for \'{}\'", id );
+    int multiplicity = 1;
+    auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                                 createLegendreAngularDistributions( distributions ) );
+    return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+  }
 
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF6 reaction product

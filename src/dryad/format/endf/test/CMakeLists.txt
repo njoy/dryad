@@ -10,6 +10,8 @@ add_cpp_test( format.endf.createReactionType         createReactionType.test.cpp
 add_cpp_test( format.endf.createTabulatedCrossSection            createTabulatedCrossSection.test.cpp )
 add_cpp_test( format.endf.createTabulatedMultiplicity            createTabulatedMultiplicity.test.cpp )
 add_cpp_test( format.endf.createMultiplicity                     createMultiplicity.test.cpp )
+add_cpp_test( format.endf.createLegendreAngularDistribution      createLegendreAngularDistribution.test.cpp )
+add_cpp_test( format.endf.createLegendreAngularDistributions     createLegendreAngularDistributions.test.cpp )
 add_cpp_test( format.endf.createTabulatedAngularDistribution     createTabulatedAngularDistribution.test.cpp )
 add_cpp_test( format.endf.createTabulatedAngularDistributions    createTabulatedAngularDistributions.test.cpp )
 add_cpp_test( format.endf.createTabulatedEnergyDistribution      createTabulatedEnergyDistribution.test.cpp )

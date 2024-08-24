@@ -11,6 +11,8 @@
 #include "dryad/format/endf/createTabulatedMultiplicity.hpp"
 #include "dryad/format/endf/createMultiplicity.hpp"
 #include "dryad/format/endf/createTabulatedCrossSection.hpp"
+#include "dryad/format/endf/createLegendreAngularDistribution.hpp"
+#include "dryad/format/endf/createLegendreAngularDistributions.hpp"
 #include "dryad/format/endf/createTabulatedAngularDistribution.hpp"
 #include "dryad/format/endf/createTabulatedAngularDistributions.hpp"
 #include "dryad/format/endf/createTabulatedEnergyDistribution.hpp"
