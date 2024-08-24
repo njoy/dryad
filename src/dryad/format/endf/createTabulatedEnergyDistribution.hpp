@@ -10,12 +10,38 @@
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
 #include "dryad/TabulatedEnergyDistribution.hpp"
+#include "ENDFtk/section/6.hpp"
 #include "ENDFtk/section/26.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace format {
 namespace endf {
+
+  /**
+   *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF6 LAW = 1
+   *         LegendreCoefficients entry
+   */
+  TabulatedEnergyDistribution
+  createTabulatedEnergyDistribution(
+    const ENDFtk::section::Type< 6 >::ContinuumEnergyAngle::LegendreCoefficients& distribution ) {
+
+    //! @todo interpolants and boundaries on LegendreCoefficients for interpolation on
+    //!       outgoing energy?
+    //! @todo what is the interpolation type over the outgoing energy axis?
+
+    try {
+
+      auto energies = createVector( distribution.energies() );
+      auto values = createVector( distribution.totalEmissionProbabilities() );
+      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ) );
+    }
+    catch ( ... ) {
+
+      Log::info( "Error encountered while creating an energy distribution table" );
+      throw;
+    }
+  }
 
   /**
    *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF26 LAW = 1
@@ -44,7 +70,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating an average reaction product energy table" );
+      Log::info( "Error encountered while creating an energy distribution table" );
       throw;
     }
   }
