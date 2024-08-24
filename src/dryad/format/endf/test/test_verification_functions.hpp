@@ -347,10 +347,14 @@ void verifyElectronElasticReaction( const Reaction& elastic ) {
   CHECK_THAT(  1.25808e-11 , WithinRel( angle.distributions()[15].pdf().values()[1] ) );
   CHECK_THAT(   8.15658e+5 , WithinRel( angle.distributions()[15].pdf().values()[94] ) );
   CHECK_THAT(   9.86945e+5 , WithinRel( angle.distributions()[15].pdf().values()[95] ) );
-  CHECK( std::nullopt == angle.distributions()[0].cdf() );
-  CHECK( std::nullopt == angle.distributions()[1].cdf() );
-  CHECK( std::nullopt == angle.distributions()[14].cdf() );
-  CHECK( std::nullopt == angle.distributions()[15].cdf() );
+  CHECK( false == angle.distributions()[0].hasCdf() );
+  CHECK( false == angle.distributions()[1].hasCdf() );
+  CHECK( false == angle.distributions()[14].hasCdf() );
+  CHECK( false == angle.distributions()[15].hasCdf() );
+  CHECK_THROWS( angle.distributions()[0].cdf() );
+  CHECK_THROWS( angle.distributions()[1].cdf() );
+  CHECK_THROWS( angle.distributions()[14].cdf() );
+  CHECK_THROWS( angle.distributions()[15].cdf() );
   CHECK( 15 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }
@@ -480,10 +484,14 @@ void verifyElectronBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
   CHECK_THAT(  .246105000, WithinRel( energy.distributions()[9].pdf().values()[1] ) );
   CHECK_THAT( 9.06486E-16, WithinRel( energy.distributions()[9].pdf().values()[109] ) );
   CHECK_THAT( 5.16344E-16, WithinRel( energy.distributions()[9].pdf().values()[110] ) );
-  CHECK( std::nullopt == energy.distributions()[0].cdf() );
-  CHECK( std::nullopt == energy.distributions()[1].cdf() );
-  CHECK( std::nullopt == energy.distributions()[8].cdf() );
-  CHECK( std::nullopt == energy.distributions()[9].cdf() );
+  CHECK( false == chunk.distributions()[0].hasCdf() );
+  CHECK( false == chunk.distributions()[1].hasCdf() );
+  CHECK( false == chunk.distributions()[8].hasCdf() );
+  CHECK( false == chunk.distributions()[9].hasCdf() );
+  CHECK_THROWS( energy.distributions()[0].cdf() );
+  CHECK_THROWS( energy.distributions()[1].cdf() );
+  CHECK_THROWS( energy.distributions()[8].cdf() );
+  CHECK_THROWS( energy.distributions()[9].cdf() );
   CHECK( 9 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
   auto electron = bremsstrahlung.products()[1];
@@ -656,10 +664,14 @@ void verifyElectronSubshellIonisationReaction( const Reaction& subionisation ) {
   CHECK_THAT(  .143104000, WithinRel( energy.distributions()[7].pdf().values()[1] ) );
   CHECK_THAT( 3.10545E-21, WithinRel( energy.distributions()[7].pdf().values()[145] ) );
   CHECK_THAT(  2.7755E-21, WithinRel( energy.distributions()[7].pdf().values()[146] ) );
-  CHECK( std::nullopt == energy.distributions()[0].cdf() );
-  CHECK( std::nullopt == energy.distributions()[1].cdf() );
-  CHECK( std::nullopt == energy.distributions()[6].cdf() );
-  CHECK( std::nullopt == energy.distributions()[7].cdf() );
+  CHECK( false == energy.distributions()[0].hasCdf() );
+  CHECK( false == energy.distributions()[1].hasCdf() );
+  CHECK( false == energy.distributions()[6].hasCdf() );
+  CHECK( false == energy.distributions()[7].hasCdf() );
+  CHECK_THROWS( energy.distributions()[0].cdf() );
+  CHECK_THROWS( energy.distributions()[1].cdf() );
+  CHECK_THROWS( energy.distributions()[6].cdf() );
+  CHECK_THROWS( energy.distributions()[7].cdf() );
   CHECK( 7 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }

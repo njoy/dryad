@@ -75,7 +75,8 @@ void verifyNeutronChunk( const TabulatedAngularDistribution& chunk ) {
   CHECK_THAT( 0.5, WithinRel( pdf.values()[0] ) );
   CHECK_THAT( 0.5, WithinRel( pdf.values()[1] ) );
 
-  CHECK( std::nullopt == chunk.cdf() );
+  CHECK( false == chunk.hasCdf() );
+  CHECK_THROWS( chunk.cdf() );
 }
 
 void verifyElectronChunk( const TabulatedAngularDistribution& chunk ) {
@@ -95,5 +96,6 @@ void verifyElectronChunk( const TabulatedAngularDistribution& chunk ) {
   CHECK_THAT( 0.5, WithinRel( pdf.values()[0] ) );
   CHECK_THAT( 0.5, WithinRel( pdf.values()[1] ) );
 
-  CHECK( std::nullopt == chunk.cdf() );
+  CHECK( false == chunk.hasCdf() );
+  CHECK_THROWS( chunk.cdf() );
 }
