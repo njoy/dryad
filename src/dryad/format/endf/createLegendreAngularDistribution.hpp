@@ -26,8 +26,13 @@ namespace endf {
     try {
 
       auto coefficients = createVector( range );
-      if ( addOrderZero ) { coefficients.insert( coefficients.begin(), 1. ); }
-      for ( std::size_t index = 0; index < coefficients.size(); ++index ) {
+      std::size_t index = 0;
+      if ( addOrderZero ) {
+
+        coefficients.insert( coefficients.begin(), 0.5 );
+        index = 1;
+      }
+      for ( ; index < coefficients.size(); ++index ) {
 
         coefficients[index] *= 0.5 * ( 2 * index + 1 );
       }
