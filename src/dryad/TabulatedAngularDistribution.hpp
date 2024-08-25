@@ -45,14 +45,6 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the cumulative distribution function (cdf) is defined
-     */
-    bool hasCdf() const {
-
-      return this->cdf_.has_value();
-    }
-
-    /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
     const TabulatedAngularDistributionFunction& cdf() const {
@@ -66,6 +58,14 @@ namespace dryad {
         Log::error( "The calculation of the cdf is not implemented yet" );
         throw std::bad_optional_access();
       }
+    }
+
+    /**
+     *  @brief Return whether or not the cumulative distribution function (cdf) is defined
+     */
+    bool hasCdf() const {
+
+      return this->cdf_.has_value();
     }
 
     /**

@@ -51,6 +51,14 @@ void wrapLegendreAngularDistribution( python::module& module, python::module& ) 
   )
   .def_property_readonly(
 
+    "has_cdf",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.hasCdf(); },
+    "Flag to indicate whether or not the cumulative distribution function (cdf) "
+    "is defined"
+  )
+  .def_property_readonly(
+
     "average_cosine",
     &Component::averageCosine,
     "The average cosine defined by the distribution"
