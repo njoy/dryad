@@ -199,7 +199,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
         CHECK_THAT(         10., WithinRel( xs[2].energies()[0] ) );
         CHECK_THAT(       1e+11, WithinRel( xs[2].energies()[341] ) );
         CHECK_THAT( 2.748960e+8, WithinRel( xs[2].values()[0] ) );
-        CHECK_THAT( 4.33534e-10, WithinRel( xs[2].values()[341] ) );
+        CHECK_THAT( 1.311760e-5, WithinRel( xs[2].values()[341] ) );
         CHECK( 341 == xs[2].boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == xs[2].interpolants()[0] );
         CHECK( true == xs[2].isLinearised() );
@@ -281,10 +281,10 @@ SCENARIO( "createTabulatedCrossSections" ) {
         CHECK( 342 == xs[7].values().size() );
         CHECK( 1 == xs[7].boundaries().size() );
         CHECK( 1 == xs[7].interpolants().size() );
-        CHECK_THAT(              10., WithinRel( xs[7].energies()[0] ) );
-        CHECK_THAT(            1e+11, WithinRel( xs[7].energies()[341] ) );
-        CHECK_THAT(               0., WithinRel( xs[7].values()[0] ) );
-        CHECK_THAT( 12987.0999999996, WithinRel( xs[7].values()[341] ) );
+        CHECK_THAT(                   10., WithinRel( xs[7].energies()[0] ) );
+        CHECK_THAT(                 1e+11, WithinRel( xs[7].energies()[341] ) );
+        CHECK_THAT(                    0., WithinRel( xs[7].values()[0] ) );
+        CHECK_THAT( 12987.1 - 1.311760e-5, WithinRel( xs[7].values()[341] ) );
         CHECK( 341 == xs[7].boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == xs[7].interpolants()[0] );
         CHECK( true == xs[7].isLinearised() );

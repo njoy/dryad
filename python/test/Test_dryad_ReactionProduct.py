@@ -8,7 +8,6 @@ import sys
 from dryad import ReactionProduct
 from dryad import TabulatedMultiplicity
 from dryad import InterpolationType
-from dryad import ReactionType
 
 class Test_dryad_ReactionProduct( unittest.TestCase ) :
     """Unit test for the ReactionProduct class."""

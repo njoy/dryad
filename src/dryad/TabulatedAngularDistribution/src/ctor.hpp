@@ -41,3 +41,15 @@ TabulatedAngularDistribution(
     bool cdf = false ) :
   pdf_( std::move( cosines ), std::move( values ), interpolant ),
   cdf_( std::nullopt ) {}
+
+/**
+ *  @brief Constructor using a pdf and cdf
+ *
+ *  @param pdf   the pdf of the distribution
+ *  @param cdf   the cdf of the distribution
+ */
+TabulatedAngularDistribution(
+    TabulatedAngularDistributionFunction pdf,
+    TabulatedAngularDistributionFunction cdf ) :
+  pdf_( std::move( pdf ) ),
+  cdf_( std::move( cdf ) ) {}

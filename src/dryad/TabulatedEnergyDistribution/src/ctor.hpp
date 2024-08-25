@@ -40,3 +40,15 @@ TabulatedEnergyDistribution(
     InterpolationType interpolant = InterpolationType::LinearLinear ) :
   pdf_( std::move( energies ), std::move( values ), interpolant ),
   cdf_( std::nullopt ) {}
+
+/**
+ *  @brief Constructor using a pdf and cdf
+ *
+ *  @param pdf   the pdf of the distribution
+ *  @param cdf   the cdf of the distribution
+ */
+TabulatedEnergyDistribution(
+    TabulatedEnergyDistributionFunction pdf,
+    TabulatedEnergyDistributionFunction cdf ) :
+  pdf_( std::move( pdf ) ),
+  cdf_( std::move( cdf ) ) {}
