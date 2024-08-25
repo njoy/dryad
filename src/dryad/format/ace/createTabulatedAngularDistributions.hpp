@@ -25,8 +25,14 @@ namespace ace {
 
     try {
 
+      auto convertEnergy = [] ( auto&& energy ) {
+
+        return energy * 1e+6;
+      };
+
       Log::info( "Reading elastic scattering data" );
       auto grid = createVector( block.energies() );
+      std::transform( grid.begin(), grid.end(), grid.begin(), convertEnergy );
       std::vector< std::size_t > boundaries = { grid.size() - 1 };
       std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
       std::vector< TabulatedAngularDistribution > distributions;
