@@ -128,14 +128,14 @@ void verifyEprdata12ElectronBremsstrahlungReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 1 == reaction.products().size() );
+  CHECK( 2 == reaction.products().size() );
 }
 
 void verifyEprdata12ElectronExcitationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "528" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -159,7 +159,7 @@ void verifyEprdata12ElectronExcitationReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata12ElectronIonisationReaction( const Reaction& reaction ) {
@@ -359,14 +359,14 @@ void verifyEprdata14ElectronBremsstrahlungReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 1 == reaction.products().size() );
+  CHECK( 2 == reaction.products().size() );
 }
 
 void verifyEprdata14ElectronExcitationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "528" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -390,7 +390,7 @@ void verifyEprdata14ElectronExcitationReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata14ElectronIonisationReaction( const Reaction& reaction ) {

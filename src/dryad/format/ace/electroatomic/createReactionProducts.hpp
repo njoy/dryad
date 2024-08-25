@@ -7,6 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/ReactionProduct.hpp"
+#include "dryad/format/ace/createTabulatedAverageEnergy.hpp"
 #include "dryad/format/ace/createTabulatedAngularDistributions.hpp"
 #include "dryad/format/ace/createTabulatedEnergyDistributions.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
@@ -65,11 +66,15 @@ namespace electroatomic {
                                       IsotropicAngularDistributions(),
                                       createTabulatedEnergyDistributions(
                                         table.bremsstrahlungEnergyDistributionBlock().value() ) ) );
-      //! @todo add reaction products: e-
+      products.back().emplace_back(
+        id::ParticleID( "e-" ), 1,
+        createTabulatedAverageEnergy( table.electronEnergyAfterBremsstrahlungBlock().value() ) );
 
       // excitation - MT528
       products.push_back( {} );
-      //! @todo add reaction products: e-
+      products.back().emplace_back(
+        id::ParticleID( "e-" ), 1,
+        createTabulatedAverageEnergy( table.electronExcitationEnergyLossBlock().value() ) );
 
       for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
