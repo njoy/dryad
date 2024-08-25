@@ -45,7 +45,7 @@ namespace electroatomic {
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // large angle elastic - MT525
-        auto angle = createVector( table.electronElasticCrossSectionBlock()->transport() );
+        auto angle = createVector( table.electronCrossSectionBlock()->elastic() );
         xs.emplace_back( energies, std::move( angle ) );
 
         // total elastic - MT526

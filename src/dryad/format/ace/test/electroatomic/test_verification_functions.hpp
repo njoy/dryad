@@ -73,7 +73,7 @@ void verifyEprdata12ElectronTotalElasticReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "526" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -97,14 +97,14 @@ void verifyEprdata12ElectronTotalElasticReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata12ElectronBremsstrahlungReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "527" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -128,7 +128,7 @@ void verifyEprdata12ElectronBremsstrahlungReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata12ElectronExcitationReaction( const Reaction& reaction ) {
@@ -166,7 +166,7 @@ void verifyEprdata12ElectronIonisationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "534" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -190,7 +190,7 @@ void verifyEprdata12ElectronIonisationReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata14ElectronTotalReaction( const Reaction& reaction ) {
@@ -269,7 +269,7 @@ void verifyEprdata14ElectronLargeAngleElasticReaction( const Reaction& reaction 
 
   CHECK( id::ReactionID( "525" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -288,12 +288,12 @@ void verifyEprdata14ElectronLargeAngleElasticReaction( const Reaction& reaction 
   CHECK_THAT(         10., WithinRel( reaction.crossSection().energies()[0] ) );
   CHECK_THAT(       1e+11, WithinRel( reaction.crossSection().energies()[341] ) );
   CHECK_THAT( 2.748960e+8, WithinRel( reaction.crossSection().values()[0] ) );
-  CHECK_THAT( 4.33534e-10, WithinRel( reaction.crossSection().values()[341] ) );
+  CHECK_THAT( 1.311760e-5, WithinRel( reaction.crossSection().values()[341] ) );
   CHECK( 341 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata14ElectronTotalElasticReaction( const Reaction& reaction ) {
@@ -335,7 +335,7 @@ void verifyEprdata14ElectronBremsstrahlungReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "527" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -359,7 +359,7 @@ void verifyEprdata14ElectronBremsstrahlungReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata14ElectronExcitationReaction( const Reaction& reaction ) {
@@ -397,7 +397,7 @@ void verifyEprdata14ElectronIonisationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "534" ) == reaction.identifier() );
   CHECK( ReactionType::Primary == reaction.type() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
   CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
@@ -421,7 +421,7 @@ void verifyEprdata14ElectronIonisationReaction( const Reaction& reaction ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  CHECK( 0 == reaction.products().size() );
+  CHECK( 1 == reaction.products().size() );
 }
 
 void verifyEprdata14ElectronElasticReactionDeficit( const Reaction& reaction ) {
@@ -444,10 +444,10 @@ void verifyEprdata14ElectronElasticReactionDeficit( const Reaction& reaction ) {
   CHECK( 342 == reaction.crossSection().values().size() );
   CHECK( 1 == reaction.crossSection().boundaries().size() );
   CHECK( 1 == reaction.crossSection().interpolants().size() );
-  CHECK_THAT(              10., WithinRel( reaction.crossSection().energies()[0] ) );
-  CHECK_THAT(            1e+11, WithinRel( reaction.crossSection().energies()[341] ) );
-  CHECK_THAT(               0., WithinRel( reaction.crossSection().values()[0] ) );
-  CHECK_THAT( 12987.0999999996, WithinRel( reaction.crossSection().values()[341] ) );
+  CHECK_THAT(                   10., WithinRel( reaction.crossSection().energies()[0] ) );
+  CHECK_THAT(                 1e+11, WithinRel( reaction.crossSection().energies()[341] ) );
+  CHECK_THAT(                    0., WithinRel( reaction.crossSection().values()[0] ) );
+  CHECK_THAT( 12987.1 - 1.311760e-5, WithinRel( reaction.crossSection().values()[341] ) );
   CHECK( 341 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
