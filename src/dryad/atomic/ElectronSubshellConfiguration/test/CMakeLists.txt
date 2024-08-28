@@ -1,1 +1,1 @@
-add_cpp_test( ElectronSubshellConfiguration ElectronSubshellConfiguration.test.cpp )
+add_cpp_test( atomic.ElectronSubshellConfiguration ElectronSubshellConfiguration.test.cpp )

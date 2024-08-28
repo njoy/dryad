@@ -97,6 +97,8 @@ if( dryad.python )
       python/src/dryad.python.cpp
       python/src/id.python.cpp
       python/src/id/ElementID.python.cpp
+      python/src/atomic.python.cpp
+      python/src/atomic/ElectronSubshellConfiguration.python.cpp
       python/src/DistributionDataType.python.cpp
       python/src/InteractionType.python.cpp
       python/src/ReactionType.python.cpp
