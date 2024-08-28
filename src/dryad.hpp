@@ -2,6 +2,7 @@
 #include "dryad/type-aliases.hpp"
 
 // identifiers
+#include "dryad/ElectronSubshellID.hpp"
 #include "dryad/ElementID.hpp"
 #include "dryad/ParticleID.hpp"
 #include "dryad/ReactionID.hpp"
