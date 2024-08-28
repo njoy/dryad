@@ -9,7 +9,7 @@ namespace python = pybind11;
 
 namespace id {
 
-  // declarations - ACE data components
+  // declarations - identifiers
   void wrapElementID( python::module&, python::module& );
 }
 

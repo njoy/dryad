@@ -39,7 +39,7 @@ namespace atomic {
     /* methods */
 
     /**
-     *  @brief Return the reaction identifier
+     *  @brief Return the electron subshell identifier
      */
     const id::ElectronSubshellID& identifier() const noexcept {
 
