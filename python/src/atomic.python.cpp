@@ -9,6 +9,9 @@ namespace python = pybind11;
 
 namespace atomic {
 
+  // declarations - enumerators
+  void wrapTransitionType( python::module&, python::module& );
+
   // declarations - atomic data components
   void wrapElectronSubshellConfiguration( python::module&, python::module& );
 }
@@ -22,5 +25,9 @@ void wrapAtomic( python::module& module, python::module& viewmodule ) {
     "Atomic relaxation data components"
   );
 
+  // wrap components - enumerators
+  atomic::wrapTransitionType( submodule, viewmodule );
+
+  // declarations - atomic data components
   atomic::wrapElectronSubshellConfiguration( submodule, viewmodule );
 }
