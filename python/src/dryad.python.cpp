@@ -12,6 +12,7 @@ void wrapID( python::module&, python::module& );
 
 // declarations - atomic data
 void wrapAtomic( python::module&, python::module& );
+void wrapAtomicRelaxation( python::module&, python::module& );
 
 // declarations - enumerators
 void wrapDistributionDataType( python::module&, python::module& );
@@ -70,6 +71,7 @@ PYBIND11_MODULE( dryad, module ) {
 
   // wrap components - atomic data
   wrapAtomic( module, viewmodule );
+  wrapAtomicRelaxation( module, viewmodule );
 
   // wrap components - enumerators
   wrapDistributionDataType( module, viewmodule );
