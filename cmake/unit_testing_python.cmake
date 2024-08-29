@@ -24,6 +24,9 @@ message( STATUS "Adding dryad Python unit testing" )
 
 add_python_test( id.ElementID                          id/Test_dryad_id_ElementID.py )
 
+add_python_test( atomic.RadiativeTransitionData        atomic/Test_dryad_atomic_RadiativeTransitionData.py )
+add_python_test( atomic.NonRadiativeTransitionData     atomic/Test_dryad_atomic_NonRadiativeTransitionData.py )
+
 add_python_test( TabulatedMultiplicity                 Test_dryad_TabulatedMultiplicity.py )
 add_python_test( TabulatedAverageEnergy                Test_dryad_TabulatedAverageEnergy.py )
 add_python_test( TabulatedAverageCosine                Test_dryad_TabulatedAverageCosine.py )
