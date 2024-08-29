@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/atomic/RadiativeTransition.hpp"
+#include "dryad/atomic/RadiativeTransitionData.hpp"
 
 // other includes
 
@@ -12,10 +12,10 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::dryad::atomic;
 
-void verifyChunkWithoutTransitionEnergy( const RadiativeTransition& );
-void verifyChunkWithTransitionEnergy( const RadiativeTransition& );
+void verifyChunkWithoutTransitionEnergy( const RadiativeTransitionData& );
+void verifyChunkWithTransitionEnergy( const RadiativeTransitionData& );
 
-SCENARIO( "RadiativeTransition" ) {
+SCENARIO( "RadiativeTransitionData" ) {
 
   GIVEN( "valid data for a radiative transition" ) {
 
@@ -25,9 +25,9 @@ SCENARIO( "RadiativeTransition" ) {
       id::ElectronSubshellID originatingShell( "K" );
       double probability = 1e-3;
 
-      RadiativeTransition chunk( std::move( originatingShell ), std::move( probability ) );
+      RadiativeTransitionData chunk( std::move( originatingShell ), std::move( probability ) );
 
-      THEN( "an RadiativeTransition can be constructed and members can be tested" ) {
+      THEN( "an RadiativeTransitionData can be constructed and members can be tested" ) {
 
         verifyChunkWithoutTransitionEnergy( chunk );
       } // THEN
@@ -40,10 +40,10 @@ SCENARIO( "RadiativeTransition" ) {
       double probability = 1e-3;
       double energy = 550.;
 
-      RadiativeTransition chunk( std::move( originatingShell ), std::move( probability ),
-                        std::move( energy ) );
+      RadiativeTransitionData chunk( std::move( originatingShell ), std::move( probability ),
+                                     std::move( energy ) );
 
-      THEN( "an RadiativeTransition can be constructed and members can be tested" ) {
+      THEN( "an RadiativeTransitionData can be constructed and members can be tested" ) {
 
         verifyChunkWithTransitionEnergy( chunk );
       } // THEN
@@ -51,7 +51,7 @@ SCENARIO( "RadiativeTransition" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithoutTransitionEnergy( const RadiativeTransition& chunk ) {
+void verifyChunkWithoutTransitionEnergy( const RadiativeTransitionData& chunk ) {
 
   CHECK( TransitionType::Radiative == chunk.type() );
   CHECK( id::ElectronSubshellID( "K" ) == chunk.originatingShell() );
@@ -59,7 +59,7 @@ void verifyChunkWithoutTransitionEnergy( const RadiativeTransition& chunk ) {
   CHECK( std::nullopt == chunk.energy() );
 }
 
-void verifyChunkWithTransitionEnergy( const RadiativeTransition& chunk ) {
+void verifyChunkWithTransitionEnergy( const RadiativeTransitionData& chunk ) {
 
   CHECK( TransitionType::Radiative == chunk.type() );
   CHECK( id::ElectronSubshellID( "K" ) == chunk.originatingShell() );

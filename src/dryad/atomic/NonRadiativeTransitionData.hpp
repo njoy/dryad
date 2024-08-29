@@ -14,7 +14,7 @@ namespace atomic {
 
   /**
    *  @class
-   *  @brief A non-radiative transition in atomic relaxation
+   *  @brief Data for a non-radiative transition in atomic relaxation
    *
    *  In a non-radiative transition, an electron from another shell fills a
    *  vacancy in the current shell while another electron () is emitted. The
@@ -23,7 +23,7 @@ namespace atomic {
    *  which the electron filling the vacancy originated from and the subshell
    *  from which the emitted electron came from.
    */
-  class NonRadiativeTransition {
+  class NonRadiativeTransitionData {
 
     /* fields */
     id::ElectronSubshellID originating_shell_;
@@ -35,7 +35,7 @@ namespace atomic {
 
     /* constructor */
 
-    #include "dryad/atomic/NonRadiativeTransition/src/ctor.hpp"
+    #include "dryad/atomic/NonRadiativeTransitionData/src/ctor.hpp"
 
     /* methods */
 

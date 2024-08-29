@@ -1,13 +1,13 @@
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-NonRadiativeTransition() = default;
+NonRadiativeTransitionData() = default;
 
-NonRadiativeTransition( const NonRadiativeTransition& ) = default;
-NonRadiativeTransition( NonRadiativeTransition&& ) = default;
+NonRadiativeTransitionData( const NonRadiativeTransitionData& ) = default;
+NonRadiativeTransitionData( NonRadiativeTransitionData&& ) = default;
 
-NonRadiativeTransition& operator=( const NonRadiativeTransition& ) = default;
-NonRadiativeTransition& operator=( NonRadiativeTransition&& ) = default;
+NonRadiativeTransitionData& operator=( const NonRadiativeTransitionData& ) = default;
+NonRadiativeTransitionData& operator=( NonRadiativeTransitionData&& ) = default;
 
 /**
  *  @brief Constructor
@@ -18,9 +18,9 @@ NonRadiativeTransition& operator=( NonRadiativeTransition&& ) = default;
  *                            emitted electron originated
  *  @param probability        the probability of the transition
  */
-NonRadiativeTransition( id::ElectronSubshellID originating,
-                        id::ElectronSubshellID emitting,
-                        double probability ) :
+NonRadiativeTransitionData( id::ElectronSubshellID originating,
+                            id::ElectronSubshellID emitting,
+                            double probability ) :
   originating_shell_( std::move( originating ) ),
   emitting_shell_( std::move( emitting ) ),
   probability_( std::move( probability ) ),
@@ -36,9 +36,9 @@ NonRadiativeTransition( id::ElectronSubshellID originating,
  *  @param probability        the probability of the transition
  *  @param energy             the energy of the emitted particle
  */
-NonRadiativeTransition( id::ElectronSubshellID originating,
-                        id::ElectronSubshellID emitting,
-                        double probability, double energy ) :
+NonRadiativeTransitionData( id::ElectronSubshellID originating,
+                            id::ElectronSubshellID emitting,
+                            double probability, double energy ) :
   originating_shell_( std::move( originating ) ),
   emitting_shell_( std::move( emitting ) ),
   probability_( std::move( probability ) ),

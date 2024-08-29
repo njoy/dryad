@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/atomic/NonRadiativeTransition.hpp"
+#include "dryad/atomic/NonRadiativeTransitionData.hpp"
 
 // other includes
 
@@ -12,10 +12,10 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::dryad::atomic;
 
-void verifyChunkWithoutTransitionEnergy( const NonRadiativeTransition& );
-void verifyChunkWithTransitionEnergy( const NonRadiativeTransition& );
+void verifyChunkWithoutTransitionEnergy( const NonRadiativeTransitionData& );
+void verifyChunkWithTransitionEnergy( const NonRadiativeTransitionData& );
 
-SCENARIO( "NonRadiativeTransition" ) {
+SCENARIO( "NonRadiativeTransitionData" ) {
 
   GIVEN( "valid data for a non-radiative transition" ) {
 
@@ -26,10 +26,10 @@ SCENARIO( "NonRadiativeTransition" ) {
       id::ElectronSubshellID emittingShell( "L1" );
       double probability = 1e-3;
 
-      NonRadiativeTransition chunk( std::move( originatingShell ), std::move( emittingShell ),
-                                    std::move( probability ) );
+      NonRadiativeTransitionData chunk( std::move( originatingShell ), std::move( emittingShell ),
+                                        std::move( probability ) );
 
-      THEN( "an NonRadiativeTransition can be constructed and members can be tested" ) {
+      THEN( "an NonRadiativeTransitionData can be constructed and members can be tested" ) {
 
         verifyChunkWithoutTransitionEnergy( chunk );
       } // THEN
@@ -43,10 +43,10 @@ SCENARIO( "NonRadiativeTransition" ) {
       double probability = 1e-3;
       double energy = 550.;
 
-      NonRadiativeTransition chunk( std::move( originatingShell ), std::move( emittingShell ),
-                                    std::move( probability ), std::move( energy ) );
+      NonRadiativeTransitionData chunk( std::move( originatingShell ), std::move( emittingShell ),
+                                        std::move( probability ), std::move( energy ) );
 
-      THEN( "an NonRadiativeTransition can be constructed and members can be tested" ) {
+      THEN( "an NonRadiativeTransitionData can be constructed and members can be tested" ) {
 
         verifyChunkWithTransitionEnergy( chunk );
       } // THEN
@@ -54,7 +54,7 @@ SCENARIO( "NonRadiativeTransition" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithoutTransitionEnergy( const NonRadiativeTransition& chunk ) {
+void verifyChunkWithoutTransitionEnergy( const NonRadiativeTransitionData& chunk ) {
 
   CHECK( TransitionType::NonRadiative == chunk.type() );
   CHECK( id::ElectronSubshellID( "K" ) == chunk.originatingShell() );
@@ -63,7 +63,7 @@ void verifyChunkWithoutTransitionEnergy( const NonRadiativeTransition& chunk ) {
   CHECK( std::nullopt == chunk.energy() );
 }
 
-void verifyChunkWithTransitionEnergy( const NonRadiativeTransition& chunk ) {
+void verifyChunkWithTransitionEnergy( const NonRadiativeTransitionData& chunk ) {
 
   CHECK( TransitionType::NonRadiative == chunk.type() );
   CHECK( id::ElectronSubshellID( "K" ) == chunk.originatingShell() );

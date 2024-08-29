@@ -1,1 +1,1 @@
-add_cpp_test( atomic.RadiativeTransition RadiativeTransition.test.cpp )
+add_cpp_test( atomic.RadiativeTransitionData RadiativeTransitionData.test.cpp )

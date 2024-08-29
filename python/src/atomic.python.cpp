@@ -13,6 +13,8 @@ namespace atomic {
   void wrapTransitionType( python::module&, python::module& );
 
   // declarations - atomic data components
+  void wrapRadiativeTransitionData( python::module&, python::module& );
+  void wrapNonRadiativeTransitionData( python::module&, python::module& );
   void wrapElectronSubshellConfiguration( python::module&, python::module& );
 }
 
@@ -29,5 +31,7 @@ void wrapAtomic( python::module& module, python::module& viewmodule ) {
   atomic::wrapTransitionType( submodule, viewmodule );
 
   // declarations - atomic data components
+  atomic::wrapRadiativeTransitionData( submodule, viewmodule );
+  atomic::wrapNonRadiativeTransitionData( submodule, viewmodule );
   atomic::wrapElectronSubshellConfiguration( submodule, viewmodule );
 }

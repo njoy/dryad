@@ -14,7 +14,7 @@ namespace atomic {
 
   /**
    *  @class
-   *  @brief A radiative transition in atomic relaxation
+   *  @brief Data for a radiative transition in atomic relaxation
    *
    *  In a radiative transition, an electron from another shell fills a
    *  vacancy in the current shell while emitting a photon. The energy of
@@ -22,7 +22,7 @@ namespace atomic {
    *  between the subshell with the vacancy and the subshell from which the
    *  electron filling the vacancy originated from.
    */
-  class RadiativeTransition {
+  class RadiativeTransitionData {
 
     /* fields */
     id::ElectronSubshellID originating_shell_;
@@ -33,7 +33,7 @@ namespace atomic {
 
     /* constructor */
 
-    #include "dryad/atomic/RadiativeTransition/src/ctor.hpp"
+    #include "dryad/atomic/RadiativeTransitionData/src/ctor.hpp"
 
     /* methods */
 

@@ -2,9 +2,12 @@
 #define NJOY_DRYAD_ATOMIC_ElECTRONSUBSHELLCONFIGURATION
 
 // system includes
+#include <vector>
 
 // other includes
 #include "dryad/id/ElectronSubshellID.hpp"
+#include "dryad/atomic/RadiativeTransitionData.hpp"
+#include "dryad/atomic/NonRadiativeTransitionData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -19,7 +22,7 @@ namespace atomic {
    *    - the subshell binding energy (in eV)
    *    - the electron population, i.e. the number of electrons in the subshell
    *      when the atom is neutral (given as a floating point number)
-   *    - the decay modes or transitions that can fill a hole in this shell
+   *    - the transitions that can fill a vacancy in this shell
    */
   class ElectronSubshellConfiguration {
 
@@ -28,7 +31,8 @@ namespace atomic {
 
     double binding_energy_;
     double population_;
-    // std::vector<  > decay_modes_;
+    std::vector< RadiativeTransitionData > radiative_;
+    std::vector< NonRadiativeTransitionData > nonradiative_;
 
   public:
 
@@ -55,7 +59,7 @@ namespace atomic {
     }
 
     /**
-     *  @brief Return the subshell electron population when the atom is neutral
+     *  @brief Return the electron subshell population when the atom is neutral
      */
     double population() const noexcept {
 

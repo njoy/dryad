@@ -99,6 +99,8 @@ if( dryad.python )
       python/src/id/ElementID.python.cpp
       python/src/atomic.python.cpp
       python/src/atomic/TransitionType.python.cpp
+      python/src/atomic/RadiativeTransitionData.python.cpp
+      python/src/atomic/NonRadiativeTransitionData.python.cpp
       python/src/atomic/ElectronSubshellConfiguration.python.cpp
       python/src/DistributionDataType.python.cpp
       python/src/InteractionType.python.cpp
