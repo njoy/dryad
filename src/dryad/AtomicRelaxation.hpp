@@ -5,6 +5,7 @@
 #include <vector>
 
 // other includes
+#include "tools/Log.hpp"
 #include "dryad/id/ElementID.hpp"
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
 
@@ -45,6 +46,43 @@ namespace dryad {
     subshells() const noexcept {
 
       return this->subshells_;
+    }
+
+    /**
+     *  @brief Return whether or not a given subshell is present
+     *
+     *  @param[in] id   the subshell identifier
+     */
+    bool hasSubshell( const id::ElectronSubshellID& id ) const {
+
+      auto iter = std::find_if( this->subshells().begin(),
+                                this->subshells().end(),
+                                [&id] ( auto&& subshell )
+                                      { return subshell.identifier() == id; } );
+      return iter != this->subshells().end();
+    }
+
+    /**
+     *  @brief Return the requested subshell
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    const atomic::ElectronSubshellConfiguration&
+    subshell( const id::ElectronSubshellID& id ) const {
+
+      auto iter = std::find_if( this->subshells().begin(),
+                                this->subshells().end(),
+                                [&id] ( auto&& subshell )
+                                      { return subshell.identifier() == id; } );
+      if ( iter != this->subshells().end() ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested subshell \'{}\' could not be found", id );
+        throw std::exception();
+      }
     }
   };
 
