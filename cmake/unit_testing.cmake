@@ -29,6 +29,8 @@ endfunction()
 add_subdirectory( src/dryad/id/ElementID/test )
 
 add_subdirectory( src/dryad/atomic/ElectronSubshellConfiguration/test )
+add_subdirectory( src/dryad/atomic/RadiativeTransition/test )
+add_subdirectory( src/dryad/atomic/NonRadiativeTransition/test )
 
 add_subdirectory( src/dryad/TabulatedFormFactor/test )
 add_subdirectory( src/dryad/TabulatedScatteringFunction/test )
