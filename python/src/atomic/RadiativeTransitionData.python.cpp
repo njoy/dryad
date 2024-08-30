@@ -71,16 +71,17 @@ void wrapRadiativeTransitionData( python::module& module, python::module& ) {
     "The identifier of the subshell from which the electron filling the vacancy "
     "originated"
   )
-  .def_property_readonly(
+  .def_property(
 
     "probability",
-    &Component::probability,
+    python::overload_cast<>( &Component::probability, python::const_ ),
+    python::overload_cast< double >( &Component::probability ),
     "The transition probability"
   )
   .def_property_readonly(
 
     "energy",
-    &Component::energy,
+    python::overload_cast<>( &Component::energy, python::const_ ),
     "The energy of the emitted photon"
   );
 }
