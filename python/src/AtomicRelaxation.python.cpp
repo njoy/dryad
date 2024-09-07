@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/AtomicRelaxation.hpp"
+#include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -48,5 +49,37 @@ void wrapAtomicRelaxation( python::module& module, python::module& ) {
     "subshells",
     &Component::subshells,
     "The electron shell configuration data"
+  )
+  .def(
+
+    "has_subshell",
+    &Component::hasSubshell,
+    "Return whether or not a subshell is present\n\n"
+    "Arguments:\n"
+    "    self   the AtomicRelaxation data\n"
+    "    id     the electron subshell identifier"
+  )
+  .def(
+
+    "subshell",
+    &Component::subshell,
+    "Return the requested subshell\n\n"
+    "Arguments:\n"
+    "    self   the AtomicRelaxation data\n"
+    "    id     the electron subshell identifier"
+  )
+  .def_static(
+
+    "from_endf_file",
+    [] ( const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::endf::createAtomicRelaxationFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create AtomicRelaxation data from an ENDF file\n\n"
+    "If there are multiple materials in the ENDF file, only the first material\n"
+    "will be transformed into a AtomicRelaxation.\n\n"
+    "Arguments:\n"
+    "    filename   the ENDF file name"
   );
 }
