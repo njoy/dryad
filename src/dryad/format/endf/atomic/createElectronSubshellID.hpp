@@ -17,10 +17,9 @@ namespace atomic {
   /**
    *  @brief Create an ElectronSubshellID
    */
-  id::ElectronSubshellID createElectronSubshellID( double subshell ) {
+  id::ElectronSubshellID createElectronSubshellID( int subshell ) {
 
-    int number = static_cast< int >( std::round( subshell ) );
-    switch ( number ) {
+    switch ( subshell ) {
 
       case  1 : return "K";
       case  2 : return "L1";
@@ -63,7 +62,7 @@ namespace atomic {
       case 39 : return "Q3";
       default: {
 
-        Log::error( "Electron subshell number {} is not recognised", number );
+        Log::error( "Electron subshell number {} is not recognised", subshell );
         throw std::exception();
       }
     }

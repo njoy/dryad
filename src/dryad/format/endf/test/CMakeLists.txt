@@ -26,5 +26,8 @@ add_cpp_test( format.endf.createReactionProduct                  createReactionP
 add_cpp_test( format.endf.createReactionProducts                 createReactionProducts.test.cpp )
 add_cpp_test( format.endf.createReaction                         createReaction.test.cpp )
 add_cpp_test( format.endf.createReactions                        createReactions.test.cpp )
+
 add_cpp_test( format.endf.createProjectileTarget                 createProjectileTarget.test.cpp )
 add_cpp_test( format.endf.createProjectileTargetFromFile         createProjectileTargetFromFile.test.cpp )
+add_cpp_test( format.endf.createAtomicRelaxation                 createAtomicRelaxation.test.cpp )
+add_cpp_test( format.endf.createAtomicRelaxationFromFile         createAtomicRelaxationFromFile.test.cpp )
