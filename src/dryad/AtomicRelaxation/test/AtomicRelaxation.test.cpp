@@ -72,6 +72,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( true == k_shell.hasTransitions() );
   CHECK( 2 == k_shell.numberRadiativeTransitions() );
   CHECK( 6 == k_shell.numberNonRadiativeTransitions() );
+  CHECK( 8 == k_shell.numberTransitions() );
   CHECK( 2 == k_shell.radiativeTransitions().size() );
   CHECK( 6 == k_shell.nonRadiativeTransitions().size() );
   CHECK( atomic::TransitionType::Radiative == k_shell.radiativeTransitions()[0].type() );
@@ -124,6 +125,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( false == l1_shell.hasTransitions() );
   CHECK( 0 == l1_shell.numberRadiativeTransitions() );
   CHECK( 0 == l1_shell.numberNonRadiativeTransitions() );
+  CHECK( 0 == l1_shell.numberTransitions() );
   CHECK( 0 == l1_shell.radiativeTransitions().size() );
   CHECK( 0 == l1_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l1_shell.totalRadiativeProbability() ) );
@@ -138,6 +140,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( false == l2_shell.hasTransitions() );
   CHECK( 0 == l2_shell.numberRadiativeTransitions() );
   CHECK( 0 == l2_shell.numberNonRadiativeTransitions() );
+  CHECK( 0 == l2_shell.numberTransitions() );
   CHECK( 0 == l2_shell.radiativeTransitions().size() );
   CHECK( 0 == l2_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l2_shell.totalRadiativeProbability() ) );
@@ -152,6 +155,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( false == l3_shell.hasTransitions() );
   CHECK( 0 == l3_shell.numberRadiativeTransitions() );
   CHECK( 0 == l3_shell.numberNonRadiativeTransitions() );
+  CHECK( 0 == l3_shell.numberTransitions() );
   CHECK( 0 == l3_shell.radiativeTransitions().size() );
   CHECK( 0 == l3_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l3_shell.totalRadiativeProbability() ) );
@@ -166,6 +170,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( true == k_shell.hasTransitions() );
   CHECK( 2 == k_shell.numberRadiativeTransitions() );
   CHECK( 6 == k_shell.numberNonRadiativeTransitions() );
+  CHECK( 8 == k_shell.numberTransitions() );
   CHECK( 2 == k_shell.radiativeTransitions().size() );
   CHECK( 6 == k_shell.nonRadiativeTransitions().size() );
   CHECK( atomic::TransitionType::Radiative == k_shell.radiativeTransitions()[0].type() );
@@ -218,6 +223,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( false == l1_shell.hasTransitions() );
   CHECK( 0 == l1_shell.numberRadiativeTransitions() );
   CHECK( 0 == l1_shell.numberNonRadiativeTransitions() );
+  CHECK( 0 == l1_shell.numberTransitions() );
   CHECK( 0 == l1_shell.radiativeTransitions().size() );
   CHECK( 0 == l1_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l1_shell.totalRadiativeProbability() ) );
@@ -232,6 +238,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( false == l2_shell.hasTransitions() );
   CHECK( 0 == l2_shell.numberRadiativeTransitions() );
   CHECK( 0 == l2_shell.numberNonRadiativeTransitions() );
+  CHECK( 0 == l2_shell.numberTransitions() );
   CHECK( 0 == l2_shell.radiativeTransitions().size() );
   CHECK( 0 == l2_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l2_shell.totalRadiativeProbability() ) );
@@ -246,6 +253,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( false == l3_shell.hasTransitions() );
   CHECK( 0 == l3_shell.numberRadiativeTransitions() );
   CHECK( 0 == l3_shell.numberNonRadiativeTransitions() );
+  CHECK( 0 == l3_shell.numberTransitions() );
   CHECK( 0 == l3_shell.radiativeTransitions().size() );
   CHECK( 0 == l3_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l3_shell.totalRadiativeProbability() ) );

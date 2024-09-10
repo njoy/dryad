@@ -84,6 +84,7 @@ void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& chunk )
 
   CHECK( 0 == chunk.numberRadiativeTransitions() );
   CHECK( 0 == chunk.numberNonRadiativeTransitions() );
+  CHECK( 0 == chunk.numberTransitions() );
   CHECK( 0 == chunk.radiativeTransitions().size() );
   CHECK( 0 == chunk.nonRadiativeTransitions().size() );
 
@@ -103,6 +104,7 @@ void verifyChunkWithTransitions( const ElectronSubshellConfiguration& chunk ) {
 
   CHECK( 2 == chunk.numberRadiativeTransitions() );
   CHECK( 6 == chunk.numberNonRadiativeTransitions() );
+  CHECK( 8 == chunk.numberTransitions() );
   CHECK( 2 == chunk.radiativeTransitions().size() );
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
