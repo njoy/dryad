@@ -1,0 +1,105 @@
+ ENDF/B-VIII.1                                                         0  0
+ 8000.00000 15.8619530         -1          0          0          0 800 1451
+ 0.0        0.0                 0          0          0          6 800 1451
+ 0.0        1.0000E+11          1          0          6          8 800 1451
+ 0.0        0.0                 0          0         75          2 800 1451
+  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                        800 1451
+ NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830    800 1451
+---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1             800 1451
+----- ATOMIC RELAXATION DATA                                       800 1451
+------ ENDF-6                                                      800 1451
+================================================================== 800 1451
+The Livermore Evaluated Atomic Data Library (EADL) in the          800 1451
+ENDF-6 Format. Translated from the Livermore ENDL format           800 1451
+to the ENDF-6 Format.                                              800 1451
+================================================================== 800 1451
+  Contents                                                         800 1451
+================================================================== 800 1451
+  MF/MT    Description                                             800 1451
+================================================================== 800 1451
+  28/533   Atomic Relaxation Data for Electrons and Photons        800 1451
+================================================================== 800 1451
+  Warning                                                          800 1451
+================================================================== 800 1451
+  MF/MT combinations used to define ALL electron interaction data  800 1451
+  are newly defined MF/MT numbers for ENDF/B-VI that did not exist 800 1451
+  in earlier versions of ENDF/B.                                   800 1451
+================================================================== 800 1451
+  Definition of Data                                               800 1451
+================================================================== 800 1451
+  Atomic Relaxation Data for Electrons and Photons                 800 1451
+================================================================== 800 1451
+1) An atom can be ionized by a photon or an electron interaction.  800 1451
+2) The atomic relaxation data included here describes how a        800 1451
+   singly ionized atom returns to neutrality, by emitting photons  800 1451
+   (x-rays) and/or electrons (Auger, Coster-Kronig).               800 1451
+3) Data is given to define the transition probabilities between    800 1451
+   subshells for radiative (x-ray emission) and non-radiative      800 1451
+   (Auger, Coster-Kronig) transitions.                             800 1451
+4) The complete spectrum of emitted photons and electrons can be   800 1451
+   calculated using the data included here, e.g., see ref. 2,      800 1451
+   below, for am example of a computer code that analytically      800 1451
+   calculates these spectra.                                       800 1451
+================================================================== 800 1451
+  References                                                       800 1451
+================================================================== 800 1451
+1) S.T. Perkins, D.E. Cullen, etal., "Tables and Graphs of Atomic  800 1451
+   Subshell and Relaxation Data Derived from the LLNL Evaluated    800 1451
+   Atomic Data Library (EADL), Z = 1 - 100", UCRL-50400, Vol. 30,  800 1451
+   Lawrence Livermore National Laboratory (1991).                  800 1451
+2) D.E. Cullen "Program RELAX: A Code Designed to Calculate X-Ray  800 1451
+   and Electron Emission Spectra as Singly Charged Atoms Relax     800 1451
+   Back to Neutrality", UCRL-ID-110438, Lawrence Livermore         800 1451
+   National Laboratory (1992).                                     800 1451
+3) D.E. Cullen "A Survey of Atomic Binding Energies for use        800 1451
+   in EPICS2017" ,IAEA-NDS-224, (2017), Nuclear Data Section,      800 1451
+   IAEA, Vienna, Austria                                           800 1451
+4) D.E. Cullen,"EPICS2017: April 2019 Status Report",              800 1451
+   IAEA-NDS-228, April 2019, Nuclear Data Section,                 800 1451
+   IAEA, Vienna, Austria.                                          800 1451
+5) D.E. Cullen,"EPICS2023: August 2023 Status Report",             800 1451
+   IAEA-NDS-242, August 2023, Nuclear Data Section,                800 1451
+   IAEA, Vienna, Austria.                                          800 1451
+                                                                   800 1451
+  These are the primary references to the contents of this library 800 1451
+  and they contain a complete list of references to the sources    800 1451
+  of data used in this library, methods of evaluation, accuracy    800 1451
+  of the data, etc.                                                800 1451
+================================================================== 800 1451
+  History                                                          800 1451
+================================================================== 800 1451
+ (1) November, 1991 - Initial release in the ENDL format.          800 1451
+ (2) November, 2001 - Initial release in the ENDF-6 format.        800 1451
+ (3) September,2014 - Insure Standard C, C++, FORTRAN Format       800 1451
+ (4) September,2014 - Updated based on recently publshed data      800 1451
+ (5) September,2017 - New Binding Energies (see: ref.3)            800 1451
+                      Same Transition Probabilities                800 1451
+ (6) August,   2023 - Reformatted, but data same as 2017 version   800 1451
+================================================================== 800 1451
+ ***************** Program FIXUP (Version 2023-2) **************** 800 1451
+ **************** Program DICTIN (VERSION 2023-1) **************** 800 1451
+                                1        451         81          0 800 1451
+                               28        533         17          0 800 1451
+                                                                   800 1  0
+                                                                   800 0  0
+ 8000.00000 15.8619530          0          0          4          0 80028533
+ 1.00000000 0.0                 0          0         54          8 80028533
+ 538.000000 2.00000000 0.0        0.0        0.0        0.0        80028533
+ 3.00000000 0.0        523.090000 .001907680 0.0        0.0        80028533
+ 4.00000000 0.0        523.130000 .003800270 0.0        0.0        80028533
+ 2.00000000 2.00000000 478.820000 .178644000 0.0        0.0        80028533
+ 2.00000000 3.00000000 493.860000 .116224000 0.0        0.0        80028533
+ 2.00000000 4.00000000 493.900000 .230418000 0.0        0.0        80028533
+ 3.00000000 3.00000000 508.900000 .011082200 0.0        0.0        80028533
+ 3.00000000 4.00000000 508.940000 .291115000 0.0        0.0        80028533
+ 4.00000000 4.00000000 508.980000 .166809000 0.0        0.0        80028533
+ 2.00000000 0.0                 0          0          6          0 80028533
+ 28.4800000 2.00000000 0.0        0.0        0.0        0.0        80028533
+ 3.00000000 0.0                 0          0          6          0 80028533
+ 13.6200000 1.33000000 0.0        0.0        0.0        0.0        80028533
+ 4.00000000 0.0                 0          0          6          0 80028533
+ 13.6200000 2.67000000 0.0        0.0        0.0        0.0        80028533
+                                                                   80028  0
+                                                                   800 0  0
+                                                                     0 0  0
+                                                                    -1 0  0

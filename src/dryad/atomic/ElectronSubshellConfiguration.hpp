@@ -91,6 +91,14 @@ namespace atomic {
     }
 
     /**
+     *  @brief Return the number of available transitions
+     */
+    std::size_t numberTransitions() const noexcept {
+
+      return this->numberRadiativeTransitions() + this->numberNonRadiativeTransitions();
+    }
+
+    /**
      *  @brief Return whether or not radiative transitions are available
      */
     bool hasRadiativeTransitions() const noexcept {

@@ -81,8 +81,8 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     &Component::hasReaction,
     "Return whether or not a reaction is present\n\n"
     "Arguments:\n"
-    "    self   the ProjectileTarget\n"
-    "    id     the the reaction identifier"
+    "    self   the ProjectileTarget data\n"
+    "    id     the reaction identifier"
   )
   .def(
 
@@ -90,8 +90,8 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     &Component::reaction,
     "Return the requested reaction\n\n"
     "Arguments:\n"
-    "    self   the ProjectileTarget\n"
-    "    id     the the reaction identifier"
+    "    self   the ProjectileTarget data\n"
+    "    id     the reaction identifier"
   )
   .def_property_readonly(
 

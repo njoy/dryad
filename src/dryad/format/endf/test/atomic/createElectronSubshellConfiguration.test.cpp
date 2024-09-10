@@ -4,95 +4,39 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
 
 // other includes
+#include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::atomic;
 
-void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& );
-void verifyChunkWithTransitions( const ElectronSubshellConfiguration& );
+void verifyChunk( const atomic::ElectronSubshellConfiguration& );
 
-SCENARIO( "ElectronSubshellConfiguration" ) {
+SCENARIO( "createElectronSubshellConfiguration" ) {
 
-  GIVEN( "valid data for a subshell configuration with transitions" ) {
+  GIVEN( "ENDF MF28 SubshellData" ) {
 
-    WHEN( "the data is given explicitly" ) {
+    using SubshellData = njoy::ENDFtk::section::Type< 28 >::SubshellData;
 
-      id::ElectronSubshellID id( "K" );
-      double energy = 538;
-      double population = 2.;
+    auto tape = njoy::ENDFtk::tree::fromFile( "atom-008_O_000.endf" );
+    auto section = tape.materials().front().section( 28, 533 ).parse< 28 >();
 
-      ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
-                                           std::move( population ) );
+    WHEN( "a single parsed MF4 LegendreCoefficients is given" ) {
 
-      THEN( "an ElectronSubshellConfiguration can be constructed and members "
-            "can be tested" ) {
+      THEN( "it can be converted" ) {
 
-        verifyChunkWithoutTransitions( chunk );
-      } // THEN
-    } // WHEN
-  } // GIVEN
+        auto subshell = section.subshells()[0];
+        auto chunk = format::endf::atomic::createElectronSubshellConfiguration( subshell );
 
-  GIVEN( "valid data for a subshell configuration with transitions" ) {
-
-    WHEN( "the data is given explicitly" ) {
-
-      id::ElectronSubshellID id( "K" );
-      double energy = 538;
-      double population = 2.;
-      std::vector< RadiativeTransitionData > radiative = {
-
-        RadiativeTransitionData( "L2", 0.00190768, 523.09 ),
-        RadiativeTransitionData( "L3", 0.00380027, 523.13 )
-      };
-      std::vector< NonRadiativeTransitionData > nonradiative = {
-
-        NonRadiativeTransitionData( "L1", "L1", 0.178644, 478.82 ),
-        NonRadiativeTransitionData( "L1", "L2", 0.116224, 493.86 ),
-        NonRadiativeTransitionData( "L1", "L3", 0.230418, 493.9 ),
-        NonRadiativeTransitionData( "L2", "L2", 0.0110822, 508.9 ),
-        NonRadiativeTransitionData( "L2", "L3", 0.291115, 508.94 ),
-        NonRadiativeTransitionData( "L3", "L3", 0.166809, 508.98 )
-      };
-
-      ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
-                                           std::move( population ),
-                                           std::move( radiative ),
-                                           std::move( nonradiative ) );
-
-      THEN( "an ElectronSubshellConfiguration can be constructed and members "
-            "can be tested" ) {
-
-        verifyChunkWithTransitions( chunk );
+        verifyChunk( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& chunk ) {
-
-  CHECK( id::ElectronSubshellID( "K" ) == chunk.identifier() );
-  CHECK_THAT( 538, WithinRel( chunk.bindingEnergy() ) );
-  CHECK_THAT( 2. , WithinRel( chunk.population() ) );
-
-  CHECK( false == chunk.hasRadiativeTransitions() );
-  CHECK( false == chunk.hasNonRadiativeTransitions() );
-  CHECK( false == chunk.hasTransitions() );
-
-  CHECK( 0 == chunk.numberRadiativeTransitions() );
-  CHECK( 0 == chunk.numberNonRadiativeTransitions() );
-  CHECK( 0 == chunk.numberTransitions() );
-  CHECK( 0 == chunk.radiativeTransitions().size() );
-  CHECK( 0 == chunk.nonRadiativeTransitions().size() );
-
-  CHECK_THAT( 0., WithinRel( chunk.totalRadiativeProbability() ) );
-  CHECK_THAT( 0., WithinRel( chunk.totalNonRadiativeProbability() ) );
-}
-
-void verifyChunkWithTransitions( const ElectronSubshellConfiguration& chunk ) {
+void verifyChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
 
   CHECK( id::ElectronSubshellID( "K" ) == chunk.identifier() );
   CHECK_THAT( 538, WithinRel( chunk.bindingEnergy() ) );
@@ -108,8 +52,8 @@ void verifyChunkWithTransitions( const ElectronSubshellConfiguration& chunk ) {
   CHECK( 2 == chunk.radiativeTransitions().size() );
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
-  CHECK( TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
-  CHECK( TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );
+  CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
+  CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );
   CHECK( id::ElectronSubshellID( "L2" ) == chunk.radiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == chunk.radiativeTransitions()[1].originatingShell() );
   CHECK_THAT( 0.00190768, WithinRel( chunk.radiativeTransitions()[0].probability() ) );
@@ -117,12 +61,12 @@ void verifyChunkWithTransitions( const ElectronSubshellConfiguration& chunk ) {
   CHECK_THAT( 523.09, WithinRel( chunk.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 523.13, WithinRel( chunk.radiativeTransitions()[1].energy().value() ) );
 
-  CHECK( TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[0].type() );
-  CHECK( TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[1].type() );
-  CHECK( TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[2].type() );
-  CHECK( TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[3].type() );
-  CHECK( TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[4].type() );
-  CHECK( TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[5].type() );
+  CHECK( atomic::TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[0].type() );
+  CHECK( atomic::TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[1].type() );
+  CHECK( atomic::TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[2].type() );
+  CHECK( atomic::TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[3].type() );
+  CHECK( atomic::TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[4].type() );
+  CHECK( atomic::TransitionType::NonRadiative == chunk.nonRadiativeTransitions()[5].type() );
   CHECK( id::ElectronSubshellID( "L1" ) == chunk.nonRadiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L1" ) == chunk.nonRadiativeTransitions()[1].originatingShell() );
   CHECK( id::ElectronSubshellID( "L1" ) == chunk.nonRadiativeTransitions()[2].originatingShell() );

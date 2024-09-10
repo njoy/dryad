@@ -96,6 +96,12 @@ void wrapElectronSubshellConfiguration( python::module& module, python::module& 
   )
   .def_property_readonly(
 
+    "number_transitions",
+    &Component::numberTransitions,
+    "The number of available transitions"
+  )
+  .def_property_readonly(
+
     "has_radiative_transitions",
     &Component::hasRadiativeTransitions,
     "Flag to indicate whether or not radiative transitions are available"

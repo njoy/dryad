@@ -80,7 +80,7 @@ void wrapRadiativeTransitionData( python::module& module, python::module& ) {
   .def_property_readonly(
 
     "energy",
-    &Component::energy,
+    python::overload_cast<>( &Component::energy, python::const_ ),
     "The energy of the emitted photon"
   );
 }

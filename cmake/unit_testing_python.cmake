@@ -52,3 +52,4 @@ add_python_test( TabulatedCrossSection                 Test_dryad_TabulatedCross
 add_python_test( Reaction                              Test_dryad_Reaction.py )
 
 add_python_test( ProjectileTarget                      Test_dryad_ProjectileTarget.py )
+add_python_test( AtomicRelaxation                      Test_dryad_AtomicRelaxation.py )

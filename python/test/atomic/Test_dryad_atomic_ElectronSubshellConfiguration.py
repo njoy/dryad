@@ -27,6 +27,7 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
 
             self.assertEqual( 0, chunk.number_radiative_transitions )
             self.assertEqual( 0, chunk.number_non_radiative_transitions )
+            self.assertEqual( 0, chunk.number_transitions )
             self.assertEqual( 0, len( chunk.radiative_transitions ) )
             self.assertEqual( 0, len( chunk.non_radiative_transitions ) )
 
@@ -45,6 +46,7 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
 
             self.assertEqual( 2, chunk.number_radiative_transitions )
             self.assertEqual( 6, chunk.number_non_radiative_transitions )
+            self.assertEqual( 8, chunk.number_transitions )
             self.assertEqual( 2, len( chunk.radiative_transitions ) )
             self.assertEqual( 6, len( chunk.non_radiative_transitions ) )
 

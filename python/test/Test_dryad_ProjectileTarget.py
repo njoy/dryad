@@ -12,8 +12,8 @@ from dryad import InterpolationType
 from dryad import InteractionType
 from dryad import ReactionType
 
-class Test_dryad_Reaction( unittest.TestCase ) :
-    """Unit test for the Reaction class."""
+class Test_dryad_ProjectileTarget( unittest.TestCase ) :
+    """Unit test for the ProjectileTarget class."""
 
     def test_component( self ) :
 
