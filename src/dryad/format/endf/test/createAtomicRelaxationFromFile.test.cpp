@@ -51,6 +51,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
 
   CHECK( 2 == shell_k.numberRadiativeTransitions() );
   CHECK( 6 == shell_k.numberNonRadiativeTransitions() );
+  CHECK( 8 == shell_k.numberTransitions() );
   CHECK( 2 == shell_k.radiativeTransitions().size() );
   CHECK( 6 == shell_k.nonRadiativeTransitions().size() );
 
@@ -108,6 +109,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
 
   CHECK( 0 == shell_l1.numberRadiativeTransitions() );
   CHECK( 0 == shell_l1.numberNonRadiativeTransitions() );
+  CHECK( 0 == shell_l1.numberTransitions() );
   CHECK( 0 == shell_l1.radiativeTransitions().size() );
   CHECK( 0 == shell_l1.nonRadiativeTransitions().size() );
 
@@ -122,6 +124,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
 
   CHECK( 0 == shell_l2.numberRadiativeTransitions() );
   CHECK( 0 == shell_l2.numberNonRadiativeTransitions() );
+  CHECK( 0 == shell_l2.numberTransitions() );
   CHECK( 0 == shell_l2.radiativeTransitions().size() );
   CHECK( 0 == shell_l2.nonRadiativeTransitions().size() );
 
@@ -136,6 +139,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
 
   CHECK( 0 == shell_l3.numberRadiativeTransitions() );
   CHECK( 0 == shell_l3.numberNonRadiativeTransitions() );
+  CHECK( 0 == shell_l3.numberTransitions() );
   CHECK( 0 == shell_l3.radiativeTransitions().size() );
   CHECK( 0 == shell_l3.nonRadiativeTransitions().size() );
 }

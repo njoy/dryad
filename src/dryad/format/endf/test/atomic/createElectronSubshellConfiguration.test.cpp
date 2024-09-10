@@ -48,6 +48,7 @@ void verifyChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
 
   CHECK( 2 == chunk.numberRadiativeTransitions() );
   CHECK( 6 == chunk.numberNonRadiativeTransitions() );
+  CHECK( 8 == chunk.numberTransitions() );
   CHECK( 2 == chunk.radiativeTransitions().size() );
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
