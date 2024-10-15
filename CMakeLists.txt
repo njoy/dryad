@@ -2,7 +2,7 @@
 # Preamble
 ########################################################################
 
-cmake_minimum_required( VERSION 3.14 )
+cmake_minimum_required( VERSION 3.27 )
 
 set( subproject OFF )
 if( DEFINED PROJECT_NAME )
@@ -30,41 +30,34 @@ cmake_dependent_option(
   "Build the dryad unit tests and integrate with ctest" ON
   "BUILD_TESTING AND NOT ${subproject}" OFF
 )
+
 cmake_dependent_option(
   dryad.python
   "Build dryad python bindings" ON
-  "NOT ${subproject}" OFF
+  "NOT ${subproject} OR DEFINED require.dryad.python " OFF
 )
+
 if ( dryad.python )
-  set( require.scion.python CACHE BOOL ON )
+  set( require.tools.python CACHE BOOL ON )
 endif()
+
+option( dryad.installation "Install dryad" ON )
 
 ########################################################################
 # Dependencies
 ########################################################################
 
-set( REPOSITORIES "release"
-    CACHE STRING
-    "Options for where to fetch repositories: develop, release, local"
-    )
-
-message( STATUS "Using ${REPOSITORIES} repositories" )
-
-if( REPOSITORIES STREQUAL "develop" )
-    include( cmake/develop_dependencies.cmake )
-
-elseif( REPOSITORIES STREQUAL "release" )
-    include( cmake/release_dependencies.cmake )
-
-elseif( REPOSITORIES STREQUAL "local" )
-    include( cmake/local_dependencies.cmake )
-
-endif()
-
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/.cmake)
+include( cmake/dependencies.cmake )
 
 ########################################################################
 # Project targets
 ########################################################################
+
+string( CONCAT prefix
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>"
+  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # dryad : library
@@ -72,11 +65,9 @@ endif()
 
 add_library( dryad INTERFACE )
 add_library( njoy::dryad ALIAS dryad )
-target_include_directories( dryad
-  INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-)
+
+target_include_directories( dryad INTERFACE ${prefix} )
+
 target_link_libraries( dryad
   INTERFACE
     njoy::ACEtk
@@ -89,61 +80,70 @@ target_link_libraries( dryad
 # dryad : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+if (dryad.python AND NOT TARGET njoy::scion.python)
+  message(WARNING "njoy::scion was not built with python enabled.  Disabling build of dryad's python API.")
+  set(dryad.python OFF)
+endif()
+
 if( dryad.python )
 
   FetchContent_MakeAvailable( pybind11 )
 
   pybind11_add_module( dryad.python
-      python/src/dryad.python.cpp
-      python/src/id.python.cpp
-      python/src/id/ElementID.python.cpp
-      python/src/atomic.python.cpp
-      python/src/atomic/TransitionType.python.cpp
-      python/src/atomic/RadiativeTransitionData.python.cpp
-      python/src/atomic/NonRadiativeTransitionData.python.cpp
-      python/src/atomic/ElectronSubshellConfiguration.python.cpp
-      python/src/DistributionDataType.python.cpp
-      python/src/InteractionType.python.cpp
-      python/src/ReactionType.python.cpp
-      python/src/ReferenceFrame.python.cpp
-      python/src/TabulatedCrossSection.python.cpp
-      python/src/TabulatedMultiplicity.python.cpp
-      python/src/TabulatedAverageCosine.python.cpp
-      python/src/TabulatedAverageEnergy.python.cpp
-      python/src/IsotropicAngularDistributions.python.cpp
-      python/src/LegendreAngularDistributionFunction.python.cpp
-      python/src/LegendreAngularDistribution.python.cpp
-      python/src/LegendreAngularDistributions.python.cpp
-      python/src/TabulatedAngularDistributionFunction.python.cpp
-      python/src/TabulatedAngularDistribution.python.cpp
-      python/src/TabulatedAngularDistributions.python.cpp
-      python/src/TabulatedEnergyDistributionFunction.python.cpp
-      python/src/TabulatedEnergyDistribution.python.cpp
-      python/src/TabulatedEnergyDistributions.python.cpp
-      python/src/TabulatedFormFactor.python.cpp
-      python/src/TabulatedScatteringFunction.python.cpp
-      python/src/TwoBodyDistributionData.python.cpp
-      python/src/UncorrelatedDistributionData.python.cpp
-      python/src/CoherentDistributionData.python.cpp
-      python/src/IncoherentDistributionData.python.cpp
-      python/src/ReactionProduct.python.cpp
-      python/src/Reaction.python.cpp
-      python/src/ProjectileTarget.python.cpp
-      python/src/AtomicRelaxation.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/dryad.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/id.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/id/ElementID.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/TransitionType.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/RadiativeTransitionData.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/NonRadiativeTransitionData.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/ElectronSubshellConfiguration.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/DistributionDataType.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/InteractionType.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReactionType.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReferenceFrame.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedCrossSection.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedMultiplicity.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAverageCosine.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAverageEnergy.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/IsotropicAngularDistributions.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/LegendreAngularDistributionFunction.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/LegendreAngularDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/LegendreAngularDistributions.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributionFunction.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributions.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributionFunction.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributions.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedFormFactor.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedScatteringFunction.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TwoBodyDistributionData.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UncorrelatedDistributionData.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/CoherentDistributionData.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/IncoherentDistributionData.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReactionProduct.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/Reaction.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ProjectileTarget.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/AtomicRelaxation.python.cpp
       )
 
-  target_link_libraries( dryad.python PRIVATE dryad )
-  add_dependencies( dryad.python scion.python )
+  target_link_libraries( dryad.python PRIVATE njoy::dryad )
+  add_dependencies( dryad.python njoy::scion.python )
   target_include_directories( dryad.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/src )
-  target_compile_options( dryad.python PRIVATE "-fvisibility=hidden" )
+  target_compile_options( dryad.python PRIVATE -fvisibility=hidden )
   set_target_properties( dryad.python PROPERTIES OUTPUT_NAME dryad )
   set_target_properties( dryad.python PROPERTIES COMPILE_DEFINITIONS "PYBIND11" )
   set_target_properties( dryad.python PROPERTIES POSITION_INDEPENDENT_CODE ON )
 
   message( STATUS "Building dryad's python API" )
 
-  list( APPEND DRYAD_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR} )
-  list( APPEND SCION_PYTHONPATH ${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build )
+  set( dryad_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}" )
+  # Append potential installation and build paths for scion python module
+  set( scion_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build" )
+  if (scion_DIR)
+    set( scion_PYTHONPATH "${scion_PYTHONPATH}:${scion_DIR}/../../../lib64" )
+  endif()
 
   if( dryad.tests )
     include( cmake/unit_testing_python.cmake )
@@ -151,8 +151,57 @@ if( dryad.python )
 
 endif()
 
-if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
-  if( dryad.tests )
-    include( cmake/unit_testing.cmake )
-  endif()
+if( dryad.tests )
+  include( cmake/unit_testing.cmake )
+endif()
+
+
+#######################################################################
+# Installation
+#######################################################################
+
+if(dryad.installation)
+    include(CMakePackageConfigHelpers)
+
+    install(TARGETS dryad EXPORT dryad-targets
+      ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+      LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+      RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    )
+
+    install(EXPORT dryad-targets
+      FILE "dryad-targets.cmake"
+      NAMESPACE njoy::
+      DESTINATION share/cmake/dryad
+    )
+
+    install(DIRECTORY src/
+      DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+      FILES_MATCHING PATTERN "*.hpp"
+      PATTERN "*test*" EXCLUDE
+    )
+
+    string(TOLOWER dryad lowercasePackageName)
+
+    write_basic_package_version_file("${lowercasePackageName}-config-version.cmake"
+      VERSION ${PROJECT_VERSION}
+      COMPATIBILITY AnyNewerVersion)
+
+    configure_package_config_file(
+      ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${lowercasePackageName}-config.cmake.in
+      ${PROJECT_BINARY_DIR}/${lowercasePackageName}-config.cmake
+      INSTALL_DESTINATION share/cmake/dryad
+    )
+
+    install(FILES
+      "${PROJECT_BINARY_DIR}/${lowercasePackageName}-config.cmake"
+      "${PROJECT_BINARY_DIR}/${lowercasePackageName}-config-version.cmake"
+      DESTINATION share/cmake/dryad
+    )
+
+    if(NOT subproject)
+      set(CPACK_PACKAGE_VENDOR "Los Alamos National Laboratory")
+      set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+      include(CPack)
+    endif()
 endif()
