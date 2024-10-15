@@ -38,7 +38,7 @@ cmake_dependent_option(
 )
 
 if ( dryad.python )
-  set( require.tools.python CACHE BOOL ON )
+  set( require.scion.python CACHE BOOL ON )
 endif()
 
 option( dryad.installation "Install dryad" ON )
@@ -127,6 +127,7 @@ if( dryad.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ProjectileTarget.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/AtomicRelaxation.python.cpp
       )
+  add_library( njoy::dryad.python ALIAS dryad.python )
 
   target_link_libraries( dryad.python PRIVATE njoy::dryad )
   add_dependencies( dryad.python njoy::scion.python )

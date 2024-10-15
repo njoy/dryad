@@ -3,12 +3,22 @@ include( FetchContent )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         662232049b7230da645d741dad413c5f1a5b3ab1  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         af689a48940f7bd7b12cecbe26361bfcadf41d92  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         2201b60c390c2cdf492ab37635b630353d838ede  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         4c761c909a43ed7e5cc0bdf293582105068a18bc  # NOT A RELEASED VERSION - CHANGE ME!
+    )
+
+FetchContent_Declare( ACEtk
+    GIT_REPOSITORY  ../../njoy/ACEtk
+    GIT_TAG         fe566baee19b99d56ba171c9993395f09c84cdb6  # tag: v1.2.0
+    )
+
+FetchContent_Declare( ENDFtk
+    GIT_REPOSITORY  ../../njoy/ENDFtk
+    GIT_TAG         de664a5f19b285bd4a139b65c0bf9030a3509285  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################
@@ -38,4 +48,6 @@ endif()
 FetchContent_MakeAvailable(
     tools
     scion
+    ACEtk
+    ENDFtk
     )
