@@ -144,12 +144,12 @@ void verifyElectronlargeAngleElasticElectronProduct( const ReactionProduct& chun
   CHECK_THAT(   9.86945e+5 , WithinRel( angle.distributions()[15].pdf().values()[95] ) );
   CHECK( false == angle.distributions()[0].hasCdf() );
   CHECK( false == angle.distributions()[1].hasCdf() );
-  CHECK( false == angle.distributions()[94].hasCdf() );
-  CHECK( false == angle.distributions()[95].hasCdf() );
+  CHECK( false == angle.distributions()[14].hasCdf() );
+  CHECK( false == angle.distributions()[15].hasCdf() );
   CHECK_THROWS( angle.distributions()[0].cdf() );
   CHECK_THROWS( angle.distributions()[1].cdf() );
-  CHECK_THROWS( angle.distributions()[94].cdf() );
-  CHECK_THROWS( angle.distributions()[95].cdf() );
+  CHECK_THROWS( angle.distributions()[14].cdf() );
+  CHECK_THROWS( angle.distributions()[15].cdf() );
   CHECK( 15 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }
