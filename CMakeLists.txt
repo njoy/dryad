@@ -139,11 +139,11 @@ if( dryad.python )
 
   message( STATUS "Building dryad's python API" )
 
-  set( dryad_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}" )
+  set( DRYAD_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}" )
   # Append potential installation and build paths for scion python module
-  set( scion_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build" )
+  set( SCION_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build" )
   if (scion_DIR)
-    set( scion_PYTHONPATH "${scion_PYTHONPATH}:${scion_DIR}/../../../lib64" )
+    set( SCION_PYTHONPATH "${SCION_PYTHONPATH}:${scion_DIR}/../../../lib64" )
   endif()
 
   if( dryad.tests )
