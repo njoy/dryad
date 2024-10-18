@@ -43,7 +43,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating an average reaction product energy table" );
+      Log::info( "Error encountered while creating a reaction product energy distribution" );
       throw;
     }
   }
