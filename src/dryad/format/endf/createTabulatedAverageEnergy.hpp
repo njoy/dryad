@@ -19,7 +19,8 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a TabulatedMultiplicity from a parsed ENDF multiplicity
+   *  @brief Create a TabulatedAverageEnergy from a parsed ENDF MF26
+   *         energy transfer component
    */
   TabulatedAverageEnergy
   createTabulatedAverageEnergy( const ENDFtk::section::Type< 26 >::EnergyTransfer& transfer ) {
