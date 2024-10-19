@@ -25,6 +25,7 @@ void wrapTabulatedEnergyDistribution( python::module&, python::module& );
 void wrapTabulatedEnergyDistributions( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
+void wrapTabulatedAverageEnergy( python::module&, python::module& );
 void wrapReactionProduct( python::module&, python::module& );
 void wrapReaction( python::module&, python::module& );
 void wrapProjectileTarget( python::module&, python::module& );
@@ -61,6 +62,7 @@ PYBIND11_MODULE( dryad, module ) {
 
   // wrap components - reaction products
   wrapTabulatedMultiplicity( module, viewmodule );
+  wrapTabulatedAverageEnergy( module, viewmodule );
   wrapLegendreAngularDistribution( module, viewmodule );
   wrapLegendreAngularDistributions( module, viewmodule );
   wrapTabulatedAngularDistribution( module, viewmodule );
