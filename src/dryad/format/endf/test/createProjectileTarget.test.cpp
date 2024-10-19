@@ -42,6 +42,8 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( true == H1.hasReaction( id::ReactionID( "102" ) ) );
         CHECK( false == H1.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
+        CHECK( 3 == H1.reactions().size() );
+
         auto total = H1.reactions()[0];
         verifyNeutronTotalReaction( total );
 
@@ -83,14 +85,17 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "525" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "526" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "527" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "528" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "501" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "522" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "525" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "526" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "527" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "528" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "534" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "-526" ) ) );
         CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+        CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
         verifyElectronTotalReaction( total );
@@ -113,6 +118,9 @@ SCENARIO( "createProjectileTarget" ) {
         auto subionisation = H0.reactions()[6];
         verifyElectronSubshellIonisationReaction( subionisation );
 
+        auto deficit = H0.reactions()[7];
+        verifyElectronElasticDeficitReaction( deficit );
+
         total = H0.reaction( id::ReactionID( "501" ) );
         verifyElectronTotalReaction( total );
 
@@ -133,6 +141,9 @@ SCENARIO( "createProjectileTarget" ) {
 
         subionisation = H0.reaction( id::ReactionID( "534" ) );
         verifyElectronSubshellIonisationReaction( subionisation );
+
+        deficit = H0.reaction( id::ReactionID( "-526" ) );
+        verifyElectronElasticDeficitReaction( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -157,15 +168,17 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "515" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "517" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "501" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "502" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "504" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "515" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "516" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "517" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "522" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "534" ) ) );
         CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+        CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
         verifyPhotonTotalReaction( total );

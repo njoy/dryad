@@ -26,6 +26,7 @@ namespace dryad {
     id::ReactionID id_;
 
     ReactionType type_;
+    std::optional< std::vector< id::ReactionID > > partials_;
 
     std::optional< double > mass_difference_qvalue_;
     std::optional< double > reaction_qvalue_;
@@ -56,6 +57,16 @@ namespace dryad {
     const ReactionType& type() const noexcept {
 
       return this->type_;
+    }
+
+    /**
+     *  @brief Return the summation reaction identifiers (not defined if this is
+     *         a primary reaction)
+     */
+    const std::optional< std::vector< id::ReactionID > >&
+    partialReactionIdentifiers() const noexcept {
+
+      return this->partials_;
     }
 
     /**
@@ -119,10 +130,18 @@ namespace dryad {
     Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
 
       TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
+      if ( this->type() == ReactionType::Primary ) {
 
-      return Reaction( this->identifier(), this->type(), std::move( xs ),
-                       this->products(), this->massDifferenceQValue(),
-                       this->reactionQValue() );
+        return Reaction( this->identifier(), std::move( xs ),
+                         this->products(), this->massDifferenceQValue(),
+                         this->reactionQValue() );
+      }
+      else {
+
+        return Reaction( this->identifier(),
+                         this->partialReactionIdentifiers().value(),
+                         std::move( xs ) );
+      }
     }
 
     /**

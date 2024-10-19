@@ -27,6 +27,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             # reaction type
             self.assertEqual( ReactionType.Primary, chunk.type )
 
+            # partial identifiers
+            self.assertEqual( None, chunk.partial_reaction_identifiers )
+
             # q values
             self.assertAlmostEqual( 0, chunk.mass_difference_qvalue )
             self.assertAlmostEqual( -1, chunk.reaction_qvalue )
@@ -68,6 +71,11 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
             # reaction type
             self.assertEqual( ReactionType.Summation, chunk.type )
+
+            # partial identifiers
+            self.assertEqual( 2, len( chunk.partial_reaction_identifiers ) )
+            self.assertEqual( 'n,Fe56->elastic', chunk.partial_reaction_identifiers[0] )
+            self.assertEqual( 'n,Fe56->2n,Fe56', chunk.partial_reaction_identifiers[1] )
 
             # q values
             self.assertEqual( None, chunk.mass_difference_qvalue )
@@ -142,7 +150,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( True, chunk.cross_section.is_linearised )
 
         # the data is given explicitly
-        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1', type = ReactionType.Primary,
+        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1',
                           mass_q = 0, reaction_q = -1,
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
@@ -165,7 +173,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         verify_linearised_chunk( self, copy )
 
         # the data is given explicitly for a summation reaction
-        chunk = Reaction( id = 'n,Fe56->total', type = ReactionType.Summation,
+        chunk = Reaction( id = 'n,Fe56->total',
+                          partials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe56' ],
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
                                                        [ 1, 4 ],

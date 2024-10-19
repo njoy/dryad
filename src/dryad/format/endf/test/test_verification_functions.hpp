@@ -5,6 +5,12 @@ void verifyNeutronTotalReaction( const Reaction& total ) {
   CHECK( false == total.hasProducts() );
   CHECK( false == total.isLinearised() );
 
+  CHECK( std::nullopt != total.partialReactionIdentifiers() );
+  auto partials = total.partialReactionIdentifiers().value();
+//  CHECK( 2 == partials.size() );
+//  CHECK( id::ReactionID( "2" ) == partials[0] );
+//  CHECK( id::ReactionID( "102" ) == partials[1] );
+
   CHECK( std::nullopt == total.massDifferenceQValue() );
   CHECK( std::nullopt == total.reactionQValue() );
 
@@ -102,6 +108,15 @@ void verifyElectronTotalReaction( const Reaction& total ) {
   CHECK( false == total.hasProducts() );
   CHECK( true == total.isLinearised() );
 
+  CHECK( std::nullopt != total.partialReactionIdentifiers() );
+  auto partials = total.partialReactionIdentifiers().value();
+  CHECK( 5 == partials.size() );
+  CHECK( id::ReactionID(  "525" ) == partials[0] );
+  CHECK( id::ReactionID( "-526" ) == partials[1] );
+  CHECK( id::ReactionID(  "527" ) == partials[2] );
+  CHECK( id::ReactionID(  "528" ) == partials[3] );
+  CHECK( id::ReactionID(  "534" ) == partials[4] );
+
   CHECK( std::nullopt == total.massDifferenceQValue() );
   CHECK( std::nullopt == total.reactionQValue() );
 
@@ -128,6 +143,11 @@ void verifyElectronTotalIonisationReaction( const Reaction& ionisation ) {
   CHECK( ReactionType::Summation == ionisation.type() );
   CHECK( false == ionisation.hasProducts() );
   CHECK( true == ionisation.isLinearised() );
+
+  CHECK( std::nullopt != ionisation.partialReactionIdentifiers() );
+  auto partials = ionisation.partialReactionIdentifiers().value();
+  CHECK( 1 == partials.size() );
+  CHECK( id::ReactionID( "534" ) == partials[0] );
 
   CHECK( std::nullopt == ionisation.massDifferenceQValue() );
   CHECK( std::nullopt == ionisation.reactionQValue() );
@@ -246,6 +266,12 @@ void verifyElectronTotalElasticReaction( const Reaction& telastic ) {
   CHECK( ReactionType::Summation == telastic.type() );
   CHECK( false == telastic.hasProducts() );
   CHECK( true == telastic.isLinearised() );
+
+  CHECK( std::nullopt != telastic.partialReactionIdentifiers() );
+  auto partials = telastic.partialReactionIdentifiers().value();
+  CHECK( 2 == partials.size() );
+  CHECK( id::ReactionID(  "525" ) == partials[0] );
+  CHECK( id::ReactionID( "-526" ) == partials[1] );
 
   CHECK( std::nullopt == telastic.massDifferenceQValue() );
   CHECK( std::nullopt == telastic.reactionQValue() );
@@ -542,6 +568,15 @@ void verifyPhotonTotalReaction( const Reaction& total ) {
   CHECK( false == total.hasProducts() );
   CHECK( true == total.isLinearised() );
 
+  CHECK( std::nullopt != total.partialReactionIdentifiers() );
+  auto partials = total.partialReactionIdentifiers().value();
+  CHECK( 5 == partials.size() );
+  CHECK( id::ReactionID( "502" ) == partials[0] );
+  CHECK( id::ReactionID( "504" ) == partials[1] );
+  CHECK( id::ReactionID( "515" ) == partials[2] );
+  CHECK( id::ReactionID( "517" ) == partials[3] );
+  CHECK( id::ReactionID( "534" ) == partials[4] );
+
   CHECK( std::nullopt == total.massDifferenceQValue() );
   CHECK( std::nullopt == total.reactionQValue() );
 
@@ -797,6 +832,12 @@ void verifyPhotonTotalPairProductionReaction( const Reaction& tpairproduction ) 
   CHECK( false == tpairproduction.hasProducts() );
   CHECK( true == tpairproduction.isLinearised() );
 
+  CHECK( std::nullopt != tpairproduction.partialReactionIdentifiers() );
+  auto partials = tpairproduction.partialReactionIdentifiers().value();
+  CHECK( 2 == partials.size() );
+  CHECK( id::ReactionID( "515" ) == partials[0] );
+  CHECK( id::ReactionID( "517" ) == partials[1] );
+
   CHECK( std::nullopt == tpairproduction.massDifferenceQValue() );
   CHECK( std::nullopt == tpairproduction.reactionQValue() );
 
@@ -852,6 +893,11 @@ void verifyPhotonTotalIonisationReaction( const Reaction& tionisation ) {
   CHECK( false == tionisation.hasProducts() );
   CHECK( true == tionisation.isLinearised() );
 
+  CHECK( std::nullopt != tionisation.partialReactionIdentifiers() );
+  auto partials = tionisation.partialReactionIdentifiers().value();
+  CHECK( 1 == partials.size() );
+  CHECK( id::ReactionID( "534" ) == partials[0] );
+
   CHECK( std::nullopt == tionisation.massDifferenceQValue() );
   CHECK( std::nullopt == tionisation.reactionQValue() );
 
@@ -870,4 +916,21 @@ void verifyPhotonTotalIonisationReaction( const Reaction& tionisation ) {
   CHECK_THAT( 7.7360E-15, WithinRel( tionisation.crossSection().values()[903] ) );
 
   CHECK( 0 == tionisation.products().size() );
+}
+
+void verifyElectronElasticDeficitReaction( const Reaction& deficit ) {
+
+  CHECK( id::ReactionID( "-526" ) == deficit.identifier() );
+  CHECK( ReactionType::Primary == deficit.type() );
+  CHECK( false == deficit.hasProducts() );
+  CHECK( true == deficit.isLinearised() );
+
+  CHECK( std::nullopt == deficit.partialReactionIdentifiers() );
+
+  CHECK( std::nullopt == deficit.massDifferenceQValue() );
+  CHECK( std::nullopt != deficit.reactionQValue() );
+
+  CHECK( true == deficit.crossSection().isLinearised() );
+
+  CHECK( 0 == deficit.products().size() );
 }
