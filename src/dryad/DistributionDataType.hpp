@@ -18,7 +18,9 @@ namespace dryad {
 enum class DistributionDataType : short {
 
   TwoBody,      /**< The distribution data is given as two body scattering */
-  Uncorrelated  /**< The distribution data is uncorrelated */
+  Uncorrelated, /**< The distribution data is uncorrelated */
+  Coherent,     /**< The distribution data is for coherent scattering for photoatomic interactions */
+  Incoherent    /**< The distribution data is for incoherent scattering for photoatomic interactions */
 };
 
 } // dryad namespace

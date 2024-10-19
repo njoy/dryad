@@ -19,6 +19,11 @@ ReactionProduct( id::ParticleID&& id,
 
 public:
 
+/**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+ReactionProduct() = default;
+
 ReactionProduct( const ReactionProduct& ) = default;
 ReactionProduct( ReactionProduct&& ) = default;
 

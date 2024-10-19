@@ -17,10 +17,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 1., 2., 3., 4. };
+      const std::vector< double > x = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
 
-      TabulatedScatteringFunction chunk( std::move( energies ), std::move( values ) );
+      TabulatedScatteringFunction chunk( std::move( x ), std::move( values ) );
 
       THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
 
@@ -621,11 +621,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 1., 2., 2., 3., 4. };
+      const std::vector< double > x = { 1., 2., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedScatteringFunction chunk( std::move( energies ), std::move( values ),
+      TabulatedScatteringFunction chunk( std::move( x ), std::move( values ),
                                    interpolant );
 
       THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
@@ -1289,7 +1289,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 1., 2., 3., 4. };
+      const std::vector< double > x = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
       const std::vector< std::size_t > boundaries = { 1, 3 };
       const std::vector< InterpolationType > interpolants = {
@@ -1298,7 +1298,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( energies ),
+      TabulatedScatteringFunction chunk( std::move( x ),
                                    std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
@@ -1437,7 +1437,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > energies = { 1., 2., 2., 3., 4. };
+      const std::vector< double > x = { 1., 2., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       const std::vector< std::size_t > boundaries = { 1, 4 };
       const std::vector< InterpolationType > interpolants = {
@@ -1446,7 +1446,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( energies ),
+      TabulatedScatteringFunction chunk( std::move( x ),
                                    std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );

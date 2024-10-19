@@ -26,7 +26,7 @@ SCENARIO( "TwoBodyDistributionData" ) {
 
       TwoBodyDistributionData chunk( std::move( frame ), std::move( angle ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "a TwoBodyDistributionData can be constructed and members can be tested" ) {
 
         verifyIsotropicChunk( chunk );
       } // THEN
@@ -46,7 +46,7 @@ SCENARIO( "TwoBodyDistributionData" ) {
 
       TwoBodyDistributionData chunk( std::move( frame ), std::move( angle ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "a TwoBodyDistributionData can be constructed and members can be tested" ) {
 
         verifyLegendreChunk( chunk );
       } // THEN
@@ -67,7 +67,7 @@ SCENARIO( "TwoBodyDistributionData" ) {
 
       TwoBodyDistributionData chunk( std::move( frame ), std::move( angle ) );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      THEN( "a TwoBodyDistributionData can be constructed and members can be tested" ) {
 
         verifyTabulatedChunk( chunk );
       } // THEN
