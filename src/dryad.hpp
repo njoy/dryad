@@ -15,6 +15,8 @@
 #include "dryad/resonances.hpp"
 
 // components - reaction products
+#include "dryad/TabulatedScatteringFunction.hpp"
+#include "dryad/TabulatedFormFactor.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
 #include "dryad/IsotropicAngularDistributions.hpp"
 #include "dryad/LegendreAngularDistribution.hpp"
