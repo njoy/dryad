@@ -102,7 +102,7 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
       std::vector< double > gempty = {};
       std::vector< double > gone = { 1. };
       std::vector< TabulatedEnergyDistribution > dempty = {};
-      std::vector< TabulatedEnergyDistribution > done = { { { -1., +1. }, { 0.5, 0.5 } } };
+      std::vector< TabulatedEnergyDistribution > done = { { { 0., 4. }, { 0.5, 0.5 } } };
 
       THEN( "an exception is thrown" ) {
 

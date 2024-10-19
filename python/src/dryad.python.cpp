@@ -7,16 +7,22 @@
 // namespace aliases
 namespace python = pybind11;
 
+// declarations - identifiers
+void wrapID( python::module&, python::module& );
+
 // declarations - enumerators
+void wrapDistributionDataType( python::module&, python::module& );
 void wrapInteractionType( python::module&, python::module& );
 void wrapReactionType( python::module&, python::module& );
-
-// declarations - subpackages
-void wrapID( python::module&, python::module& );
+void wrapReferenceFrame( python::module&, python::module& );
 
 // declarations - components
 void wrapLegendreAngularDistribution( python::module&, python::module& );
+void wrapLegendreAngularDistributions( python::module&, python::module& );
 void wrapTabulatedAngularDistribution( python::module&, python::module& );
+void wrapTabulatedAngularDistributions( python::module&, python::module& );
+void wrapTabulatedEnergyDistribution( python::module&, python::module& );
+void wrapTabulatedEnergyDistributions( python::module&, python::module& );
 void wrapTabulatedCrossSection( python::module&, python::module& );
 void wrapTabulatedMultiplicity( python::module&, python::module& );
 void wrapReactionProduct( python::module&, python::module& );
@@ -44,19 +50,29 @@ PYBIND11_MODULE( dryad, module ) {
     "sequence - dryad sequences (internal use only)"
   );
 
-  // wrap enumerators
-  wrapInteractionType( module, viewmodule );
-  wrapReactionType( module, viewmodule );
-
-  // wrap subpackages
+  // wrap components - identifiers
   wrapID( module, viewmodule );
 
-  // wrap components
-  wrapLegendreAngularDistribution( module, viewmodule );
-  wrapTabulatedAngularDistribution( module, viewmodule );
-  wrapTabulatedCrossSection( module, viewmodule );
+  // wrap components - enumerators
+  wrapDistributionDataType( module, viewmodule );
+  wrapInteractionType( module, viewmodule );
+  wrapReactionType( module, viewmodule );
+  wrapReferenceFrame( module, viewmodule );
+
+  // wrap components - reaction products
   wrapTabulatedMultiplicity( module, viewmodule );
+  wrapLegendreAngularDistribution( module, viewmodule );
+  wrapLegendreAngularDistributions( module, viewmodule );
+  wrapTabulatedAngularDistribution( module, viewmodule );
+  wrapTabulatedAngularDistributions( module, viewmodule );
+  wrapTabulatedEnergyDistribution( module, viewmodule );
+  wrapTabulatedEnergyDistributions( module, viewmodule );
   wrapReactionProduct( module, viewmodule );
+
+  // wrap components - reactions
+  wrapTabulatedCrossSection( module, viewmodule );
   wrapReaction( module, viewmodule );
+
+  // wrap components - top level
   wrapProjectileTarget( module, viewmodule );
 }
