@@ -90,7 +90,7 @@ void wrapTabulatedScatteringFunction( python::module& module, python::module& ) 
     "Arguments:\n"
     "    self     the table\n"
     "    energy   the incident photon energy\n"
-    "    cosine   the coutgoing photon osine"
+    "    cosine   the outgoing photon cosine"
   )
   .def(
 
@@ -113,7 +113,7 @@ void wrapTabulatedScatteringFunction( python::module& module, python::module& ) 
     "Arguments:\n"
     "    self     the table\n"
     "    energy   the incident photon energy\n"
-    "    cosine   the coutgoing photon osine"
+    "    cosine   the outgoing photon cosine"
   );
 
   // add standard tabulated data definitions
