@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_TABULATEDCROSSSECTION
-#define NJOY_DRYAD_FORMAT_ENDF_TABULATEDCROSSSECTION
+#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDCROSSSECTION
+#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDCROSSSECTION
 
 // system includes
 #include <vector>
@@ -41,8 +41,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating a tabulated "
-                 "cross section for MT{}", section.sectionNumber() );
+      Log::info( "Error encountered while creating a tabulated cross section" );
       throw;
     }
   }

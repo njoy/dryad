@@ -22,7 +22,7 @@ FetchContent_Declare( eigen
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  https://github.com/njoy/ENDFtk.git
-    GIT_TAG         3d077281d1ca862a3561cd0687de845239c9f463 # tag: v1.1.0
+    GIT_TAG         2a0aeda4642880148ce060f620e50378654d07c9
     )
 
 FetchContent_Declare( fast_float
@@ -42,7 +42,7 @@ FetchContent_Declare( range-v3
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  https://github.com/njoy/scion
-    GIT_TAG         6079dc15153b1948c772835096662be65b062676
+    GIT_TAG         fd76c11780fcdde507f8952c8698085cf47b0369
     )
 
 FetchContent_Declare( spdlog
