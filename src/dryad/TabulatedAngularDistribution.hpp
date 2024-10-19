@@ -25,7 +25,12 @@ namespace dryad {
 
   public:
 
+    /* type aliases */
+    using InterpolationTable::XType;
+    using InterpolationTable::YType;
+
     /* constructor */
+
     #include "dryad/TabulatedAngularDistribution/src/ctor.hpp"
 
     /* methods */

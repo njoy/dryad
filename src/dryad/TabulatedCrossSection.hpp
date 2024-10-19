@@ -20,7 +20,12 @@ namespace dryad {
 
   public:
 
+    /* type aliases */
+    using InterpolationTable::XType;
+    using InterpolationTable::YType;
+
     /* constructor */
+
     #include "dryad/TabulatedCrossSection/src/ctor.hpp"
 
     /* methods */

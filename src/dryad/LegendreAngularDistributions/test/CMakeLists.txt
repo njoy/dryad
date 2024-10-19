@@ -1,0 +1,1 @@
+add_cpp_test( LegendreAngularDistributions LegendreAngularDistributions.test.cpp )

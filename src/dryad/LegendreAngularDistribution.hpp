@@ -21,7 +21,12 @@ namespace dryad {
 
   public:
 
+    /* type aliases */
+    using LegendreSeries::XType;
+    using LegendreSeries::YType;
+
     /* constructor */
+
     #include "dryad/LegendreAngularDistribution/src/ctor.hpp"
 
     /* methods */
