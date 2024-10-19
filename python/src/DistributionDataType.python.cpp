@@ -20,7 +20,7 @@ void wrapDistributionDataType( python::module& module, python::module& ) {
 
     module,
     "DistributionDataType",
-    "The distribition data type for a reaction product",
+    "The distribution data type for a reaction product",
     python::arithmetic()
   );
 
