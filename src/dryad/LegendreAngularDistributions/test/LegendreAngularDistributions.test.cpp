@@ -106,10 +106,10 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 2., WithinRel( cosines.energies()[1] ) );
         CHECK_THAT( 3., WithinRel( cosines.energies()[2] ) );
         CHECK_THAT( 4., WithinRel( cosines.energies()[3] ) );
-        CHECK_THAT( 0.  , WithinRel( cosines.values()[0] ) );
-        CHECK_THAT( 0.01, WithinRel( cosines.values()[1] ) );
-        CHECK_THAT( 0.1 , WithinRel( cosines.values()[2] ) );
-        CHECK_THAT( 0.4 , WithinRel( cosines.values()[3] ) );
+        CHECK_THAT( 0.       , WithinRel( cosines.values()[0] ) );
+        CHECK_THAT( 0.02 / 3., WithinRel( cosines.values()[1] ) );
+        CHECK_THAT( 0.2 / 3. , WithinRel( cosines.values()[2] ) );
+        CHECK_THAT( 0.8 / 3. , WithinRel( cosines.values()[3] ) );
         CHECK( 3 == cosines.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
         CHECK( true == cosines.isLinearised() );

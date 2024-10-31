@@ -77,7 +77,7 @@ namespace dryad {
 
       return this->pdf().order() == 0
              ? 0.
-             : this->pdf().coefficients()[1];
+             : 2. * this->pdf().coefficients()[1] / 3.;
     }
 
 //    /**
