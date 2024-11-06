@@ -29,7 +29,10 @@ SCENARIO( "Reaction" ) {
                                   InterpolationType::LinearLog } );
       double mass_q = 0;
       double reaction_q = -1;
-      std::vector< ReactionProduct > products = {};
+      std::vector< ReactionProduct > products = {
+
+        ReactionProduct( id::ParticleID( "n" ), 1 )
+      };
 
       Reaction chunk( std::move( id ), std::move( xs ),
                       std::move( products ), mass_q, reaction_q );
@@ -132,9 +135,10 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK( false == chunk.crossSection().isLinearised() );
 
   // reaction products
-  CHECK( false == chunk.hasProducts() );
-  CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
-  CHECK( 0 == chunk.products().size() );
+  CHECK( true == chunk.hasProducts() );
+  CHECK( true == chunk.hasProduct( id::ParticleID( "n" ) ) );
+  CHECK( false == chunk.hasProduct( id::ParticleID( "g" ) ) );
+  CHECK( 1 == chunk.products().size() );
 
   // metadata
   CHECK( false == chunk.isLinearised() );
@@ -228,6 +232,7 @@ void verifySummationChunk( const Reaction& chunk ) {
   // reaction products
   CHECK( false == chunk.hasProducts() );
   CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
+  CHECK( false == chunk.hasProduct( id::ParticleID( "g" ) ) );
   CHECK( 0 == chunk.products().size() );
 
   // metadata
