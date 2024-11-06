@@ -131,8 +131,12 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK( InterpolationType::LinearLog == chunk.crossSection().interpolants()[1] );
   CHECK( false == chunk.crossSection().isLinearised() );
 
-  // metadata
+  // reaction products
   CHECK( false == chunk.hasProducts() );
+  CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
+  CHECK( 0 == chunk.products().size() );
+
+  // metadata
   CHECK( false == chunk.isLinearised() );
 }
 
@@ -220,6 +224,11 @@ void verifySummationChunk( const Reaction& chunk ) {
   CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[0] );
   CHECK( InterpolationType::LinearLog == chunk.crossSection().interpolants()[1] );
   CHECK( false == chunk.crossSection().isLinearised() );
+
+  // reaction products
+  CHECK( false == chunk.hasProducts() );
+  CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
+  CHECK( 0 == chunk.products().size() );
 
   // metadata
   CHECK( false == chunk.isLinearised() );
