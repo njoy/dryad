@@ -21,7 +21,10 @@ namespace dryad {
    *
    *  In this representation, a scattering function S(x,Z) and two optional form factor
    *  functions are defined which together with the Thompson cross section determine the
-   *  double differential cross section.
+   *  double differential cross section. The optional form factors are the real and 
+   *  complex part of the anomolous form factor. These are defined as optional because
+   *  photoatomic MCNP data files produced in 2024 or earlier do not contain these form 
+   *  factors even though the photoatomic ENDF evaluations define them.
    *
    *  This corresponds with the coherent scattering function data given in
    *  MF27 MT502 and the form factors in MF27 MT505 and MT506.
