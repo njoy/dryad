@@ -5,6 +5,7 @@
 // local includes
 #include "dryad/AtomicRelaxation.hpp"
 #include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+#include "dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -81,5 +82,17 @@ void wrapAtomicRelaxation( python::module& module, python::module& ) {
     "will be transformed into a AtomicRelaxation.\n\n"
     "Arguments:\n"
     "    filename   the ENDF file name"
+  )
+  .def_static(
+
+    "from_gnds_file",
+    [] ( const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::gnds::createAtomicRelaxationFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create AtomicRelaxation data from a GNDS file\n\n"
+    "Arguments:\n"
+    "    filename   the GNDS file name"
   );
 }
