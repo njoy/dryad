@@ -81,12 +81,16 @@ namespace endf {
     };
     inline static const std::map< int, std::vector< int > > partials_ = {
 
-      //! @todo complete this list
       {   1, {  } },
       {   3, {  } },
-      {   4, {  } },
-      {  16, {  } },
-      {  18, { 19, 20, 21, 38 } },
+      {   4, {  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,  
+                61,  62,  63,  64,  65,  66,  67,  68,  69,  70,  
+                71,  72,  73,  74,  75,  76,  77,  78,  79,  80,  
+                81,  82,  83,  84,  85,  86,  87,  88,  89,  90,  
+                91 } },
+      {  16, { 875, 876, 877, 878, 879, 880, 881, 882, 883, 884,
+               885, 886, 887, 888, 889, 890, 891 } },
+      {  18, {  19,  20,  21,  38 } },
       {  27, {  } },
       { 101, {  } },
       { 103, { 600, 601, 602, 603, 604, 605, 606, 607, 608, 609,
@@ -224,7 +228,14 @@ namespace endf {
                                         int mf, int mt ) {
 
       std::vector< int > partials;
-      if ( isSummation( material, mt ) ) {
+      if ( mf == 3 && mt == 1 ) {
+
+        auto sections = material.file( mf ).sectionNumbers();
+        std::copy_if( sections.begin(), sections.end(),
+                      std::back_inserter( partials ),
+                      [&material] ( auto&& value ) { return isPrimary( material, value ); } );
+      }
+      else if ( isSummation( material, mt ) ) {
 
         // create a vector of partial mt numbers that are present
         std::copy_if( partials_.at( mt ).begin(), partials_.at( mt ).end(),

@@ -7,9 +7,9 @@ void verifyNeutronTotalReaction( const Reaction& total ) {
 
   CHECK( std::nullopt != total.partialReactionIdentifiers() );
   auto partials = total.partialReactionIdentifiers().value();
-//  CHECK( 2 == partials.size() );
-//  CHECK( id::ReactionID( "2" ) == partials[0] );
-//  CHECK( id::ReactionID( "102" ) == partials[1] );
+  CHECK( 2 == partials.size() );
+  CHECK( id::ReactionID( "2" ) == partials[0] );
+  CHECK( id::ReactionID( "102" ) == partials[1] );
 
   CHECK( std::nullopt == total.massDifferenceQValue() );
   CHECK( std::nullopt == total.reactionQValue() );
