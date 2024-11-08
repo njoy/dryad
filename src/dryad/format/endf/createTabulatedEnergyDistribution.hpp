@@ -40,11 +40,7 @@ namespace endf {
 
       auto energies = createVector( distribution.energies() );
       auto values = createVector( distribution.totalEmissionProbabilities() );
-      std::vector< std::size_t > boundaries = { energies.size() - 1 };
-      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
-      return TabulatedEnergyDistribution(
-               std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ) );
     }
     catch ( ... ) {
 
