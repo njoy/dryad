@@ -5,6 +5,7 @@
 #include <vector>
 
 // other includes
+#include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/format/gnds/createInterpolationType.hpp"
 #include "dryad/format/gnds/readXYs1d.hpp"

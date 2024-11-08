@@ -10,6 +10,8 @@ add_cpp_test( format.gnds.readValues   readValues.test.cpp )
 add_cpp_test( format.gnds.readXYs1d    readXYs1d.test.cpp )
 
 add_cpp_test( format.gnds.createTabulatedCrossSection   createTabulatedCrossSection.test.cpp )
+add_cpp_test( format.gnds.createReaction                createReaction.test.cpp )
+add_cpp_test( format.gnds.createReactions               createReactions.test.cpp )
 
 #add_cpp_test( format.gnds.atomic.createElectronSubshellID              atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.gnds.atomic.createElectronSubshellConfiguration   atomic/createElectronSubshellConfiguration.test.cpp )

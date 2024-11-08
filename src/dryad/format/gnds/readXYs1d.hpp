@@ -23,7 +23,7 @@ namespace gnds {
                             std::vector< double >, std::string, 
                             std::string >;
   /**
-   *  @brief Read data from a GNDS XYs1D note
+   *  @brief Read data from a GNDS XYs1D node
    */
   XYs1d readXYs1D( const pugi::xml_node& xys1d ) {
 
