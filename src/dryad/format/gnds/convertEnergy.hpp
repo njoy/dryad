@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEENERGY
+#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTENERGY
+#define NJOY_DRYAD_FORMAT_GNDS_CONVERTENERGY
 
 // system includes
 #include <vector>
@@ -13,19 +13,22 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create an energy value in eV from a GNDS energy and unit
+   *  @brief Convert an energy value GNDS into eV
    */
-  double createEnergy( double energy, const std::string& unit ) {
+  void convertEnergy( double& energy, const std::string& unit ) {
 
-    if ( unit == "eV" ) {
+    if ( unit != "eV" ) {
 
-      return energy;
-    }
-    else {
+      if ( unit == "MeV" ) {
 
-      Log::error( "Cannot convert energy with unit \'{}\' to eV, "
-                  "contact dryad developers", unit );
-      throw std::exception();
+        energy *= 1e+6;
+      }
+      else {
+
+        Log::error( "Cannot convert energy with unit \'{}\' to eV, "
+                    "contact dryad developers", unit );
+        throw std::exception();
+      }
     }
   }
 

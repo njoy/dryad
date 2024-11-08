@@ -4,28 +4,32 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createEnergy.hpp"
+#include "dryad/format/gnds/convertEnergy.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "createEnergy" ) {
+SCENARIO( "convertEnergy" ) {
 
   GIVEN( "GNDS energy values and units" ) {
 
-    WHEN( "a range of boundary indices is given" ) {
+    WHEN( "a single energy value is given" ) {
 
       THEN( "it can be converted" ) {
 
+        double energy = 1000.; format::gnds::convertEnergy( energy, "eV" );
+        CHECK( 1000. == energy );
 
-        CHECK( 1000. == format::gnds::createEnergy( 1000., "eV" ) );
+        energy = 1000.; format::gnds::convertEnergy( energy, "MeV" );
+        CHECK( 1000e+6 == energy );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
-        CHECK_THROWS( format::gnds::createEnergy( 1000., "MeV" ) );
+        double energy = 1000.;
+        CHECK_THROWS( format::gnds::convertEnergy( energy, "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN
