@@ -32,22 +32,42 @@ void wrapReaction( python::module& module, python::module& ) {
   component
   .def(
 
-    python::init< ReactionID, ReactionType, TabulatedCrossSection,
+    python::init< ReactionID, TabulatedCrossSection,
                   std::vector< ReactionProduct >,
                   std::optional< double >, std::optional< double > >(),
-    python::arg( "id" ), python::arg( "type" ), python::arg( "xs" ),
+    python::arg( "id" ), python::arg( "xs" ),
     python::arg( "products" ) = std::vector< ReactionProduct >{},
     python::arg( "mass_q" ) = std::nullopt,
     python::arg( "reaction_q" ) = std::nullopt,
-    "Initialise the reaction\n\n"
+    "Initialise a primary reaction\n\n"
     "Arguments:\n"
     "    self         the reaction\n"
     "    id           the reaction identifier\n"
-    "    type         the reaction type\n"
     "    xs           the cross section of the reaction\n"
     "    products     the reaction products\n"
     "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)\n"
+    "    reaction_q   the reaction Q value (optional)"
+  )
+  .def(
+
+    python::init< ReactionID,
+                  std::vector< ReactionID >,
+                  TabulatedCrossSection,
+                  std::vector< ReactionProduct >,
+                  std::optional< double >, std::optional< double > >(),
+    python::arg( "id" ), python::arg( "partials" ), python::arg( "xs" ),
+    python::arg( "products" ) = std::vector< ReactionProduct >{},
+    python::arg( "mass_q" ) = std::nullopt,
+    python::arg( "reaction_q" ) = std::nullopt,
+    "Initialise a summation reaction\n\n"
+    "Arguments:\n"
+    "    self        the reaction\n"
+    "    id          the reaction identifier\n"
+    "    partials    the identifiers of the partials of the reaction\n"
+    "    xs          the cross section of the reaction\n"
+    "    products     the reaction products\n"
+    "    mass_q       the mass difference Q value (optional)\n"
+    "    reaction_q   the reaction Q value (optional)"
   )
   .def_property_readonly(
 
@@ -60,6 +80,13 @@ void wrapReaction( python::module& module, python::module& ) {
     "type",
     &Component::type,
     "The reaction type"
+  )
+  .def_property_readonly(
+
+    "partial_reaction_identifiers",
+    &Component::partialReactionIdentifiers,
+    "The summation reaction identifiers (not defined if this is a primary\n"
+    "reaction)"
   )
   .def_property_readonly(
 

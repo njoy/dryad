@@ -26,62 +26,94 @@ namespace endf {
 
     if ( material.hasSection( 3, mt ) ) {
 
-      auto section = material.section( 3, mt ).parse< 3 >();
-
       // metadata and miscellaneous information
       id::ReactionID id = std::to_string( mt );
       ReactionType type = createReactionType( material, mt );
-      std::optional< double > mass_q = std::nullopt;
-      std::optional< double > reaction_q = std::nullopt;
-      if ( type == ReactionType::Primary ) {
-
-        mass_q = section.massDifferenceQValue();
-        reaction_q = section.reactionQValue();
-      }
 
       // cross section
+      auto section = material.section( 3, mt ).parse< 3 >();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
+      // Q values
+      std::optional< double > mass_q = std::nullopt;
+      std::optional< double > reaction_q = std::nullopt;
+
       // reaction products
-      std::vector< ReactionProduct > products = {};
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+
       if ( type == ReactionType::Primary ) {
 
-        products = createReactionProducts( projectile, target, material, mt );
-      }
+        // Q values
+        if ( mt == 18 ) {
 
-      // return the reaction data
-      return Reaction( std::move( id ), std::move( type ), std::move( xs ),
-                       std::move( products ), std::move( mass_q ),
-                       std::move( reaction_q ) );
+          //! @todo handle fission Q value defined on MT18 when no partials are defined
+        }
+        else {
+
+          mass_q = section.massDifferenceQValue();
+          reaction_q = section.massDifferenceQValue();
+        }
+
+        // return the reaction data
+        return Reaction( std::move( id ), std::move( xs ),
+                         std::move( products ), std::move( mass_q ),
+                         std::move( reaction_q ) );
+      }
+      else {
+
+        if ( mt == 18 ) {
+
+          //! @todo handle fission Q value defined on MT18 if partials are defined
+        }
+
+        // partials
+        std::vector< int > endf_partials = ReactionIdentifiers::partials( material, 3, mt );
+        std::vector< id::ReactionID > partials( endf_partials.size() );
+        std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
+                        [] ( auto&& value ) { return std::to_string( value ); } );
+
+        // return the reaction data
+        return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+      }
     }
     else if ( material.hasSection( 23, mt ) ) {
 
-      auto section = material.section( 23, mt ).parse< 23 >();
-
       // metadata and miscellaneous information
       id::ReactionID id = std::to_string( mt );
       ReactionType type = createReactionType( material, mt );
-      std::optional< double > mass_q = std::nullopt;
-      std::optional< double > reaction_q = std::nullopt;
-      if ( type == ReactionType::Primary ) {
-
-        reaction_q = -section.subshellBindingEnergy();
-      }
 
       // cross section
+      auto section = material.section( 23, mt ).parse< 23 >();
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
+      // q values
+      std::optional< double > mass_q = std::nullopt;
+      std::optional< double > reaction_q = std::nullopt;
+
       // reaction products
-      std::vector< ReactionProduct > products = {};
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+
       if ( type == ReactionType::Primary ) {
 
-        products = createReactionProducts( projectile, target, material, mt );
-      }
+        // q values
+        reaction_q = -section.subshellBindingEnergy();
 
-      // return the reaction data
-      return Reaction( std::move( id ), std::move( type ), std::move( xs ),
-                       std::move( products ), std::move( mass_q ),
-                       std::move( reaction_q ) );
+        // return the reaction data
+        return Reaction( std::move( id ), std::move( xs ),
+                         std::move( products ), std::move( mass_q ),
+                         std::move( reaction_q ) );
+      }
+      else {
+
+        // partials
+        std::vector< int > endf_partials = ReactionIdentifiers::partials( material, 23, mt );
+        std::vector< id::ReactionID > partials( endf_partials.size() );
+        std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
+                        [] ( auto&& value ) { return std::to_string( value ); } );
+
+        // return the reaction data
+        return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+      }
     }
     else {
 

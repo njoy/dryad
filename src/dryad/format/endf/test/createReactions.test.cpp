@@ -30,6 +30,8 @@ SCENARIO( "createReactions" ) {
         id::ParticleID target( "H1" );
         std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
 
+        CHECK( 3 == reactions.size() );
+
         auto total = reactions[0];
         verifyNeutronTotalReaction( total );
 
@@ -51,9 +53,11 @@ SCENARIO( "createReactions" ) {
 
       THEN( "all reactions can be created" ) {
 
-        id::ParticleID projectile( "n" );
-        id::ParticleID target( "H1" );
+        id::ParticleID projectile( "e-" );
+        id::ParticleID target( "H0" );
         std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
+
+        CHECK( 8 == reactions.size() );
 
         auto total = reactions[0];
         verifyElectronTotalReaction( total );
@@ -75,6 +79,51 @@ SCENARIO( "createReactions" ) {
 
         auto subionisation = reactions[6];
         verifyElectronSubshellIonisationReaction( subionisation );
+
+        auto deficit = reactions[7];
+        verifyElectronElasticDeficitReaction( deficit );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF materials - photo-atomic" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    auto material = tape.materials().front();
+
+    WHEN( "a single ENDF material is given" ) {
+
+      THEN( "all reactions can be created" ) {
+
+        id::ParticleID projectile( "G" );
+        id::ParticleID target( "H0" );
+        std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
+
+        CHECK( 8 == reactions.size() );
+
+        auto total = reactions[0];
+        verifyPhotonTotalReaction( total );
+
+        auto coherent = reactions[1];
+        verifyPhotonCoherentReaction( coherent );
+
+        auto incoherent = reactions[2];
+        verifyPhotonIncoherentReaction( incoherent );
+
+        auto epairproduction = reactions[3];
+        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+
+        auto tpairproduction = reactions[4];
+        verifyPhotonTotalPairProductionReaction( tpairproduction );
+
+        auto npairproduction = reactions[5];
+        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+
+        auto tionisation = reactions[6];
+        verifyPhotonTotalIonisationReaction( tionisation );
+
+        auto ionisation = reactions[7];
+        verifyPhotonIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN
