@@ -97,6 +97,13 @@ namespace endf {
 
         // q values
         reaction_q = -section.subshellBindingEnergy();
+        if ( mt == 515 || mt == 517 ) {
+
+          // for pair production the photon needs 
+          // at minimum to be twice the electron rest mass energy
+          // i.e. 2 * 511 keV
+          reaction_q = -1.022e+6;
+        }
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( xs ),

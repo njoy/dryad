@@ -115,6 +115,42 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not a given reaction product is present
+     *
+     *  @param[in] id   the reaction product identifier
+     */
+    bool hasProduct( const id::ParticleID& id ) const {
+
+      auto iter = std::find_if( this->products().begin(),
+                                this->products().end(),
+                                [&id] ( auto&& product )
+                                      { return product.identifier() == id; } );
+      return iter != this->products().end();
+    }
+
+    /**
+     *  @brief Return the requested reaction product
+     *
+     *  @param[in] id   the reaction product identifier
+     */
+    const ReactionProduct& product( const id::ReactionID& id ) const {
+
+      auto iter = std::find_if( this->products().begin(),
+                                this->products().end(),
+                                [&id] ( auto&& product )
+                                      { return product.identifier() == id; } );
+      if ( iter != this->products().end() ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested reaction product \'{}\' could not be found", id );
+        throw std::exception();
+      }
+    }
+
+    /**
      *  @brief Return whether or not the reaction data is linearised
      */
     bool isLinearised() const noexcept {

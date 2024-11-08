@@ -1,13 +1,13 @@
- ENDF/B-VIII.1                                                         0  0
- 1000.00000 .999241400         -1          0          0          0 100 1451
+ $Rev:: 1453     $  $Date:: 2018-01-21#$                             1 0  0
+ 1000.00000 .999241400         -1          0          0          1 100 1451
  0.0        0.0                 0          0          0          6 100 1451
-5.438673E-4 1.0000E+11          1          0        113          8 100 1451
- 0.0        0.0                 0          0        143         12 100 1451
-  1-H -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                        100 1451
- NDS-IAEA-226         DIST-AUG24 REV1-NOV23            20240830    100 1451
----- ENDF/B-VIII.1    MATERIAL  100         REVISION 1             100 1451
------ ELECTRO-ATOMIC INTERACTION DATA                              100 1451
------- ENDF-6                                                      100 1451
+5.438673D-4 1.0000D+11          0          0        113          8 100 1451
+ 0.0        0.0                 0          0        130         12 100 1451
+  1-H -  0 NDS,IAEA   Eval-Dec17 D.E.Cullen                        100 1451
+ NDS-IAEA-226         DIST-FEB18                                   100 1451
+----ENDF/B-VIII.0     MATERIAL  100                                100 1451
+-----ELECTRO-ATOMIC DATA                                           100 1451
+------ENDF-6 FORMAT                                                100 1451
 ================================================================== 100 1451
 The Livermore Evaluated Electron Data Library (EEDL) in the        100 1451
 ENDF-6 Format. Translated from the Livermore ENDL format           100 1451
@@ -117,17 +117,6 @@ to the ENDF-6 Format.                                              100 1451
 5) D.E. Cullen "A Survey of Electron Cross Section Data for        100 1451
    use in EPICS2017" ,IAEA-NDS-226, (2017), Nuclear Data           100 1451
    Section, IAEA, Vienna, Austria                                  100 1451
-6) D.E. Cullen,"EPICS2017: April 2019 Status Report",              100 1451
-   IAEA-NDS-228, April 2019, Nuclear Data Section,                 100 1451
-   IAEA, Vienna, Austria.                                          100 1451
-7) D.E. Cullen,"EPICS2023: August 2023 Status Report",             100 1451
-   IAEA-NDS-242, August 2023, Nuclear Data Section,                100 1451
-   IAEA, Vienna, Austria.                                          100 1451
-                                                                   100 1451
-  These are the primary references to the contents of this library 100 1451
-  and they contain a complete list of references to the sources    100 1451
-  of data used in this library, methods of evaluation, accuracy    100 1451
-  of the data, etc.                                                100 1451
 ================================================================== 100 1451
   History                                                          100 1451
 ================================================================== 100 1451
@@ -136,17 +125,15 @@ to the ENDF-6 Format.                                              100 1451
  3) Sept. 2014 - Insure Standard C, C++, FORTRAN format            100 1451
  4)            - Corrected MF/MT=26/527 Electron Energy Loss       100 1451
  5)            - Updated based on recently published data          100 1451
- 6) Nov.  2017 - New Binding Energies (see, ref. 3)                100 1451
+ 5) Nov.  2017 - New Binding Energies (see, ref. 3)                100 1451
                - New Ionization Subshell Cross Sections            100 1451
                - New Total Scatter (MF/MT=23/526)                  100 1451
                - New Large Angle Scatter (MF/MT=23/525.26/525)     100 1451
                - New Total (MT=501) and Ionization (MT=522)        100 1451
                - ALL Cross Sections Lin-Lin Interpolable           100 1451
- 7) Aug.  2023 - MF/MT=26/527 Set ZAP=0 (photon),not 11 (electron) 100 1451
 ================================================================== 100 1451
- ***************** Program FIXUP (Version 2023-2) **************** 100 1451
- **************** Program DICTIN (VERSION 2023-1) **************** 100 1451
-                                1        451        159          0 100 1451
+ **************** Program DICTIN (VERSION 2017-1) **************** 100 1451
+                                1        451        146          0 100 1451
                                23        501        120          1 100 1451
                                23        522         15          1 100 1451
                                23        525         37          1 100 1451
@@ -846,7 +833,7 @@ to the ENDF-6 Format.                                              100 1451
  .999998700 583993.000 .999998900 815658.000 .999999000 986945.000 10026525
                                                                    10026  0
  1000.00000 .999241400          0          0          2          0 10026527
- 0.0       5.438673E-4          0          1          1          2 10026527
+ 11.00000005.438673E-4          0          1          1          2 10026527
           2          2                                             10026527
  10.0000000 1.00000000 1.0000E+11 1.00000000                       10026527
  0.0        0.0                 1          2          1         10 10026527

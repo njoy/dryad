@@ -42,7 +42,7 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertAlmostEqual( 0.75, chunk( cosine =  1. ) )
 
             # verify average cosine
-            self.assertAlmostEqual( 0.25, chunk.average_cosine )
+            self.assertAlmostEqual( 1. / 6., chunk.average_cosine )
 
         # the data is given explicitly using a normalised series
         chunk = LegendreAngularDistribution( coefficients = [ 0.5, 0.25 ] )

@@ -1,6 +1,11 @@
 cmake_minimum_required( VERSION 3.27 )
 include( FetchContent )
 
+FetchContent_Declare( pugixml
+    GIT_REPOSITORY  https://github.com/zeux/pugixml.git
+    GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14 
+    )
+
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
     GIT_TAG         0133415ba4f1801a6ee86c7c04eb0cf303aeb731  # NOT A RELEASED VERSION - CHANGE ME!
@@ -50,4 +55,5 @@ FetchContent_MakeAvailable(
     scion
     ACEtk
     ENDFtk
+    pugixml
     )

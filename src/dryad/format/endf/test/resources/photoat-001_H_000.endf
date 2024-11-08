@@ -1,13 +1,13 @@
- $Rev:: 1494     $  $Date:: 2018-02-01#$                             1 0  0
+ ENDF/B-VIII.1                                                         0  0
  1000.00000 .999242000         -1          0          0          3 100 1451
  0.0        0.0                 0          0          0          6 100 1451
- 0.0        1.0000E+11          0          0          3          8 100 1451
- 0.0        0.0                 0          0        147         13 100 1451
-  1-H -  0 NDS,IAEA   Eval-Dec17 D.E.Cullen, et al.                100 1451
- NDS-IAEA-225         DIST-FEB18                                   100 1451
-----ENDF/B-VIII.0     MATERIAL  100                                100 1451
+ 0.0        1.0000E+11          1          0          3          8 100 1451
+ 0.0        0.0                 1          0        152         13 100 1451
+  1-H -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen, et al.                100 1451
+ NDS-IAEA-225         DIST-AUG24 REV1-NOV23            20240830    100 1451
+---- ENDF/B-VIII.1    MATERIAL  100         REVISION 1             100 1451
 ----- PHOTO-ATOMIC INTERACTION DATA                                100 1451
------- ENDF/B-6                                                    100 1451
+------ ENDF-6                                                      100 1451
  ================================================================= 100 1451
  The Livermore Evaluated Photon Data Library (EPDL97) in the       100 1451
  ENDF-6 Format.                                                    100 1451
@@ -119,18 +119,21 @@
   GeV derived from the LLNL Evaluated Photon data library (EPDL),  100 1451
   UCRL-50400, Vol. 6, Rev. 4, Part A: Z = 1 to 50 and Part B:      100 1451
   Z = 51 to 100, Lawrence Livermore National Laboratory (1989)     100 1451
-                                                                   100 1451
   2) D.E. Cullen, J.H. Hubbell and L.D. Kissel, EPDL97: the        100 1451
   Evaluated Photon Data Library, '97 Version, UCRL-50400, Vol. 6,  100 1451
   Rev. 5, Lawrence Livermore National Laboratory (1997)            100 1451
-                                                                   100 1451
   3) D.E. Cullen "A Survey of Atomic Binding Energies for use      100 1451
   in EPICS2017" ,IAEA-NDS-224, (2017), Nuclear Data Section,       100 1451
   IAEA, Vienna, Austria                                            100 1451
-                                                                   100 1451
   4) D.E. Cullen "A Survey of Photon Cross Section Data for use    100 1451
   in EPICS2017" ,IAEA-NDS-225, (2017), Nuclear Data Section,       100 1451
   IAEA, Vienna, Austria                                            100 1451
+  5) D.E. Cullen,"EPICS2017: April 2019 Status Report",            100 1451
+  IAEA-NDS-228, April 2019, Nuclear Data Section,                  100 1451
+  IAEA, Vienna, Austria.                                           100 1451
+  6) D.E. Cullen,"EPICS2023: August 2023 Status Report",           100 1451
+  IAEA-NDS-242, August 2023, Nuclear Data Section,                 100 1451
+  IAEA, Vienna, Austria.                                           100 1451
                                                                    100 1451
   These are the primary references to the contents of this library 100 1451
   and they contain a complete list of references to the sources    100 1451
@@ -148,9 +151,11 @@
               - New Photoelectric and Coherent Cross Sections      100 1451
               - New Anomalous Scattering Factors (see, ref. 4)     100 1451
               - ALL Cross Sections Lin-Lin Interpolable            100 1451
+ 6) Aug. 2023 - Delete repeated points. Threshold start with XC=0. 100 1451
  ================================================================= 100 1451
- **************** Program DICTIN (VERSION 2017-1) **************** 100 1451
-                                1        451        164          3 100 1451
+ ***************** Program FIXUP (Version 2023-2) **************** 100 1451
+ **************** Program DICTIN (VERSION 2023-1) **************** 100 1451
+                                1        451        169          3 100 1451
                                23        501        677          3 100 1451
                                23        502        124          3 100 1451
                                23        504        135          3 100 1451

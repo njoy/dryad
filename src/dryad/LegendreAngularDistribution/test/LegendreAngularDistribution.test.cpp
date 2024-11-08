@@ -54,7 +54,7 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       THEN( "the average cosine can be calculated" ) {
 
-        CHECK_THAT( 0.25, WithinRel( chunk.averageCosine() ) );
+        CHECK_THAT( 1. / 6., WithinRel( chunk.averageCosine() ) );
       } // THEN
 
 //! @todo implement linearisation
@@ -104,7 +104,7 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       THEN( "the average cosine can be calculated" ) {
 
-        CHECK_THAT( 0.25, WithinRel( chunk.averageCosine() ) );
+        CHECK_THAT( 1. / 6., WithinRel( chunk.averageCosine() ) );
       } // THEN
 
 //! @todo implement linearisation

@@ -6,6 +6,7 @@ import sys
 
 # local imports
 from dryad import Reaction
+from dryad import ReactionProduct
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import ReactionType
@@ -21,7 +22,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( 'n,Fe56->n,Fe56_e1', chunk.identifier )
 
             # metadata
-            self.assertEqual( False, chunk.has_products )
+            self.assertEqual( True, chunk.has_products )
             self.assertEqual( False, chunk.is_linearised )
 
             # reaction type
@@ -56,6 +57,11 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.cross_section.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLog, chunk.cross_section.interpolants[1] )
             self.assertEqual( False, chunk.cross_section.is_linearised )
+
+            # reaction products
+            self.assertEqual( True, chunk.has_product( 'n' ) )
+            self.assertEqual( False, chunk.has_product( 'g' ) )
+            self.assertEqual( 1, len( chunk.products ) )
 
             # metadata
             self.assertEqual( False, chunk.is_linearised )
@@ -103,6 +109,11 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.cross_section.interpolants[0] )
             self.assertEqual( InterpolationType.LinearLog, chunk.cross_section.interpolants[1] )
             self.assertEqual( False, chunk.cross_section.is_linearised )
+
+            # reaction products
+            self.assertEqual( False, chunk.has_product( 'n' ) )
+            self.assertEqual( False, chunk.has_product( 'g' ) )
+            self.assertEqual( 0, len( chunk.products ) )
 
             # metadata
             self.assertEqual( False, chunk.is_linearised )
@@ -156,7 +167,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                                        [ 4., 3., 4., 3., 2. ],
                                                        [ 1, 4 ],
                                                        [ InterpolationType.LinearLinear,
-                                                         InterpolationType.LinearLog ] ) )
+                                                         InterpolationType.LinearLog ] ),
+                          products = [ ReactionProduct( 'n', 1 ) ] )
 
         verify_chunk( self, chunk )
 
