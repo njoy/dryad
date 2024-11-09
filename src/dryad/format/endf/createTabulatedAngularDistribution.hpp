@@ -32,12 +32,12 @@ namespace endf {
 
     try {
 
-      auto energies = createVector( distribution.cosines() );
+      auto cosines = createVector( distribution.cosines() );
       auto values = createVector( distribution.probabilities() );
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );
       return TabulatedAngularDistribution(
-               std::move( energies ), std::move( values ),
+               std::move( cosines ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
     catch ( ... ) {

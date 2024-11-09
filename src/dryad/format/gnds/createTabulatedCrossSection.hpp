@@ -61,14 +61,14 @@ namespace gnds {
               xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
 
           // read the current interpolation region
-          auto data = readXYs1D( xys1d );
+          auto data = readXYs1D( xys1d, units );
 
           // get the interpolation type
           auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
           // convert units - if necessary
-          convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) == "" ? units[0] : std::get< 3 >( data ) );
-          convertCrossSections( std::get< 4 >( data ), std::get< 5 >( data ) == "" ? units[1] : std::get< 5 >( data ) );
+          convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+          convertCrossSections( std::get< 4 >( data ), std::get< 5 >( data ) );
 
           // check for duplicate points at interpolation region boundaries
           std::size_t offset = 0;
@@ -90,7 +90,8 @@ namespace gnds {
       }
       else {
 
-        Log::error( "Expected either an XYs1d or regions1d for cross section data" );
+        Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes"
+                    "for cross section data" );
         throw std::exception();
       }
     }

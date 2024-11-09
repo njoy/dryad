@@ -23,6 +23,7 @@ namespace gnds {
                             std::vector< double >, std::string,
                             std::vector< double >, std::string, 
                             std::string >;
+
   /**
    *  @brief Read data from a GNDS XYs1D node
    */
@@ -85,6 +86,33 @@ namespace gnds {
     auto y = content | std20::views::drop( 1 )| std23::views::stride( 2 );
     std::get< 2 >( data ).insert( std::get< 2 >( data ).begin(), x.begin(), x.end() );
     std::get< 4 >( data ).insert( std::get< 4 >( data ).begin(), y.begin(), y.end() );
+  
+    return data;
+  }
+
+  /**
+   *  @brief Read data from a GNDS XYs1D node
+   */
+  XYs1d readXYs1D( const pugi::xml_node& xys1d,
+                   const std::vector< std::string > units ) {
+
+    XYs1d data = readXYs1D( xys1d );
+  
+    // get units for tabulated values
+    if ( units.size() > 0 ) {
+
+      if ( units.size() == 2 ) {
+
+        if ( std::get< 3 >( data ).size() == 0 ) { std::get< 3 >( data ) = units[0]; };
+        if ( std::get< 5 >( data ).size() == 0 ) { std::get< 5 >( data ) = units[1]; };
+      }
+      else {
+
+        if ( ! std::get< 1 >( data ).has_value() ) { std::get< 1 >( data ) = units[0]; };
+        if ( std::get< 3 >( data ).size() == 0 ) { std::get< 3 >( data ) = units[1]; };
+        if ( std::get< 5 >( data ).size() == 0 ) { std::get< 5 >( data ) = units[2]; };
+      }
+    }
   
     return data;
   }
