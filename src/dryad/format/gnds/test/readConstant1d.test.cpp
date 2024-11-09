@@ -34,6 +34,15 @@ SCENARIO( "readConstant1d" ) {
         verifyChunk( chunk );
       } // THEN
     } // WHEN
+
+    WHEN( "incorrect nodes are given" ) {
+
+      THEN( "exceptions are thrown" ) {
+
+        CHECK_THROWS( format::gnds::readConstant1d( constant1d.child( "axes" ) ) );      // wrong node
+        CHECK_THROWS( format::gnds::readConstant1d( constant1d.child( "undefined" ) ) ); // undefiend node
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
 

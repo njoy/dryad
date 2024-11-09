@@ -37,6 +37,15 @@ SCENARIO( "readLegendre" ) {
         verifyChunk( chunk );
       } // THEN
     } // WHEN
+
+    WHEN( "incorrect nodes are given" ) {
+
+      THEN( "exceptions are thrown" ) {
+
+        CHECK_THROWS( format::gnds::readLegendre( legendre.child( "values" ) ) );    // wrong node
+        CHECK_THROWS( format::gnds::readLegendre( legendre.child( "undefined" ) ) ); // undefined node
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
 

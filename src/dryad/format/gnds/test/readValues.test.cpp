@@ -34,6 +34,15 @@ SCENARIO( "readXYs1D" ) {
         verifyChunk( chunk );
       } // THEN
     } // WHEN
+
+    WHEN( "incorrect nodes are given" ) {
+
+      THEN( "exceptions are thrown" ) {
+
+        CHECK_THROWS( format::gnds::readValues( reactions ) );                      // wrong node
+        CHECK_THROWS( format::gnds::readValues( reactions.child( "undefined" ) ) ); // undefiend node
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
 

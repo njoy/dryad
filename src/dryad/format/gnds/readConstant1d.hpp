@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "dryad/format/gnds/readAxes.hpp"
+#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
@@ -21,16 +22,18 @@ namespace gnds {
    */
   Constant1d readConstant1d( const pugi::xml_node& constant1d ) {
 
-    Constant1d data( constant1d.attribute( "value" ).as_double(), "" );
+    throwExceptionOnWrongNode( constant1d, "constant1d" );
 
+    Constant1d data( constant1d.attribute( "value" ).as_double(), "" );
+  
     // get the unit for the constant
     auto axes = constant1d.child( "axes" );
     if ( axes ) {
-
+  
       auto units = readAxes( axes );
       data.second = units[1];
     }
-
+  
     return data;
   }
 

@@ -8,6 +8,7 @@
 #include "pugixml.hpp"
 #include "dryad/format/gnds/readAxes.hpp"
 #include "dryad/format/gnds/readValues.hpp"
+#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 #include "tools/std20/views.hpp"
 #include "tools/std23/views.hpp"
@@ -26,16 +27,18 @@ namespace gnds {
    */
   XYs1d readXYs1D( const pugi::xml_node& xys1d ) {
 
+    throwExceptionOnWrongNode( xys1d, "XYs1d" );
+  
     XYs1d data;
     std::get< 0 >( data ) = std::nullopt;
     std::get< 1 >( data ) = std::nullopt;
 
     using namespace njoy::tools;
-
+    
     // the axes and values nodes
     auto axes = xys1d.child( "axes" );
     auto values = xys1d.child( "values" );
-
+  
     // get units for tabulated values
     if ( axes ) {
 
@@ -52,7 +55,7 @@ namespace gnds {
         std::get< 5 >( data ) = units[2];
       }
     }
-
+  
     // check for the presence of an outerDomainValue
     auto outer = xys1d.attribute( "outerDomainValue" );
     if ( outer ) {
@@ -66,7 +69,7 @@ namespace gnds {
 
       std::get< 6 >( data ) = interpolation.as_string();
     }
-
+  
     // get tabulated values
     std::vector< double > content = readValues( values );
     if ( content.size() == 0 || content.size()%2 == 1 ) {
@@ -75,13 +78,13 @@ namespace gnds {
                   "found {} values", content.size() );
       throw std::exception();
     }
-
+  
     // move data to their respective vectors
     auto x = content | std23::views::stride( 2 );
     auto y = content | std20::views::drop( 1 )| std23::views::stride( 2 );
     std::get< 2 >( data ).insert( std::get< 2 >( data ).begin(), x.begin(), x.end() );
     std::get< 4 >( data ).insert( std::get< 4 >( data ).begin(), y.begin(), y.end() );
-
+  
     return data;
   }
 
