@@ -39,7 +39,7 @@ void verifyNeutronElasticReaction( const Reaction& elastic ) {
 
   CHECK( id::ReactionID( "2" ) == elastic.identifier() );
   CHECK( ReactionType::Primary == elastic.type() );
-//  CHECK( true == elastic.hasProducts() );
+  CHECK( true == elastic.hasProducts() );
   CHECK( true == elastic.isLinearised() );
 
   CHECK( std::nullopt == elastic.massDifferenceQValue() );
@@ -60,7 +60,7 @@ void verifyNeutronElasticReaction( const Reaction& elastic ) {
   CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
   CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
 
-//  CHECK( 1 == elastic.products().size() );
+  CHECK( 2 == elastic.products().size() );
 //  auto neutron = elastic.products()[0];
 //  CHECK( id::ParticleID( "n" ) == neutron.identifier() );
 //  CHECK( true == neutron.isLinearised() );
@@ -166,7 +166,7 @@ void verifyNeutronCaptureReaction( const Reaction& capture ) {
 
   CHECK( id::ReactionID( "102" ) == capture.identifier() );
   CHECK( ReactionType::Primary == capture.type() );
-//  CHECK( true == capture.hasProducts() );
+  CHECK( true == capture.hasProducts() );
   CHECK( false == capture.isLinearised() );
 
   CHECK( std::nullopt == capture.massDifferenceQValue() );
@@ -191,7 +191,7 @@ void verifyNeutronCaptureReaction( const Reaction& capture ) {
   CHECK_THAT( 4.950573e-4, WithinRel( capture.crossSection().values()[32] ) );
   CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
 
-//  CHECK( 2 == capture.products().size() );
+  CHECK( 2 == capture.products().size() );
 //  auto gamma = capture.products()[0];
 //  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
 //  auto deuterium = capture.products()[1];
@@ -270,7 +270,7 @@ void verifyElectronElasticReaction( const Reaction& elastic ) {
 
   CHECK( id::ReactionID( "525" ) == elastic.identifier() );
   CHECK( ReactionType::Primary == elastic.type() );
-//  CHECK( true == elastic.hasProducts() );
+  CHECK( true == elastic.hasProducts() );
   CHECK( true == elastic.isLinearised() );
 
   CHECK( std::nullopt == elastic.massDifferenceQValue() );
@@ -291,7 +291,7 @@ void verifyElectronElasticReaction( const Reaction& elastic ) {
   CHECK_THAT( 274896000., WithinRel( elastic.crossSection().values()[0] ) );
   CHECK_THAT( 1.31176e-5, WithinRel( elastic.crossSection().values()[100] ) );
 
-//  CHECK( 1 == elastic.products().size() );
+  CHECK( 2 == elastic.products().size() );
 //  auto photon = elastic.products()[0];
 //  CHECK( id::ParticleID( "e-" ) == photon.identifier() );
 //  CHECK( true == photon.isLinearised() );
@@ -402,7 +402,7 @@ void verifyElectronBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
 
   CHECK( id::ReactionID( "527" ) == bremsstrahlung.identifier() );
   CHECK( ReactionType::Primary == bremsstrahlung.type() );
-//  CHECK( true == bremsstrahlung.hasProducts() );
+  CHECK( true == bremsstrahlung.hasProducts() );
   CHECK( true == bremsstrahlung.isLinearised() );
 
   CHECK( std::nullopt == bremsstrahlung.massDifferenceQValue() );
@@ -423,7 +423,7 @@ void verifyElectronBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
   CHECK_THAT( 29.7832 , WithinRel( bremsstrahlung.crossSection().values()[0] ) );
   CHECK_THAT( 0.990621, WithinRel( bremsstrahlung.crossSection().values()[95] ) );
 
-//  CHECK( 2 == bremsstrahlung.products().size() );
+  CHECK( 3 == bremsstrahlung.products().size() );
 //  auto gamma = bremsstrahlung.products()[0];
 //  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
 //  CHECK( true == gamma.isLinearised() );
@@ -534,7 +534,7 @@ void verifyElectronExcitationReaction( const Reaction& subionisation ) {
 
   CHECK( id::ReactionID( "528" ) == subionisation.identifier() );
   CHECK( ReactionType::Primary == subionisation.type() );
-//  CHECK( true == subionisation.hasProducts() );
+  CHECK( true == subionisation.hasProducts() );
   CHECK( true == subionisation.isLinearised() );
 
   CHECK( std::nullopt == subionisation.massDifferenceQValue() );
@@ -555,7 +555,7 @@ void verifyElectronExcitationReaction( const Reaction& subionisation ) {
   CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
   CHECK_THAT( 81441.6, WithinRel( subionisation.crossSection().values()[169] ) );
 
-//  CHECK( 1 == subionisation.products().size() );
+  CHECK( 2 == subionisation.products().size() );
 //  auto electron = subionisation.products()[0];
 //  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 //  CHECK( true == electron.isLinearised() );
@@ -590,7 +590,7 @@ void verifyElectronSubshellIonisationReaction( const Reaction& subionisation ) {
 
   CHECK( id::ReactionID( "534" ) == subionisation.identifier() );
   CHECK( ReactionType::Primary == subionisation.type() );
-//  CHECK( true == subionisation.hasProducts() );
+  CHECK( true == subionisation.hasProducts() );
   CHECK( true == subionisation.isLinearised() );
 
   CHECK( std::nullopt == subionisation.massDifferenceQValue() );
@@ -611,7 +611,7 @@ void verifyElectronSubshellIonisationReaction( const Reaction& subionisation ) {
   CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
   CHECK_THAT( 82892.4, WithinRel( subionisation.crossSection().values()[34] ) );
 
-//  CHECK( 1 == subionisation.products().size() );
+  CHECK( 3 == subionisation.products().size() );
 //  auto electron = subionisation.products()[0];
 //  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 //  CHECK( true == electron.isLinearised() );
@@ -724,7 +724,7 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
 
   CHECK( id::ReactionID( "502" ) == coherent.identifier() );
   CHECK( ReactionType::Primary == coherent.type() );
-//  CHECK( true == coherent.hasProducts() );
+  CHECK( true == coherent.hasProducts() );
   CHECK( true == coherent.isLinearised() );
 
   CHECK( std::nullopt == coherent.massDifferenceQValue() );
@@ -745,7 +745,7 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   CHECK_THAT( 4.52522E-6, WithinRel( coherent.crossSection().values()[0] ) );
   CHECK_THAT( 4.6282E-16, WithinRel( coherent.crossSection().values()[360] ) );
 
-//  CHECK( 1 == coherent.products().size() );
+  CHECK( 2 == coherent.products().size() );
 //
 //  auto gamma = coherent.products()[0];
 //  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
@@ -829,7 +829,7 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
 
   CHECK( id::ReactionID( "504" ) == incoherent.identifier() );
   CHECK( ReactionType::Primary == incoherent.type() );
-//  CHECK( true == incoherent.hasProducts() );
+  CHECK( true == incoherent.hasProducts() );
   CHECK( true == incoherent.isLinearised() );
 
   CHECK( std::nullopt == incoherent.massDifferenceQValue() );
@@ -850,7 +850,7 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
   CHECK_THAT( 9.56230E-8, WithinRel( incoherent.crossSection().values()[0] ) );
   CHECK_THAT( 1.70420E-5, WithinRel( incoherent.crossSection().values()[395] ) );
 
-//  CHECK( 1 == incoherent.products().size() );
+  CHECK( 2 == incoherent.products().size() );
 //
 //  auto gamma = incoherent.products()[0];
 //  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
@@ -894,7 +894,7 @@ void verifyPhotonElectronFieldPairProductionReaction( const Reaction& epairprodu
 
   CHECK( id::ReactionID( "515" ) == epairproduction.identifier() );
   CHECK( ReactionType::Primary == epairproduction.type() );
-  CHECK( false == epairproduction.hasProducts() );
+  CHECK( true == epairproduction.hasProducts() );
   CHECK( true == epairproduction.isLinearised() );
 
   CHECK( std::nullopt == epairproduction.massDifferenceQValue() );
@@ -915,14 +915,14 @@ void verifyPhotonElectronFieldPairProductionReaction( const Reaction& epairprodu
   CHECK_THAT( 0.      , WithinRel( epairproduction.crossSection().values()[0] ) );
   CHECK_THAT( .0111   , WithinRel( epairproduction.crossSection().values()[216] ) );
 
-//  CHECK( 0 == epairproduction.products().size() );
+  CHECK( 4 == epairproduction.products().size() );
 }
 
 void verifyPhotonNuclearFieldPairProductionReaction( const Reaction& npairproduction ) {
 
   CHECK( id::ReactionID( "517" ) == npairproduction.identifier() );
   CHECK( ReactionType::Primary == npairproduction.type() );
-  CHECK( false == npairproduction.hasProducts() );
+  CHECK( true == npairproduction.hasProducts() );
   CHECK( true == npairproduction.isLinearised() );
 
   CHECK( std::nullopt == npairproduction.massDifferenceQValue() );
@@ -943,7 +943,7 @@ void verifyPhotonNuclearFieldPairProductionReaction( const Reaction& npairproduc
   CHECK_THAT( 0.      , WithinRel( npairproduction.crossSection().values()[0] ) );
   CHECK_THAT( .009601 , WithinRel( npairproduction.crossSection().values()[307] ) );
 
-  CHECK( 0 == npairproduction.products().size() );
+  CHECK( 3 == npairproduction.products().size() );
 }
 
 void verifyPhotonTotalPairProductionReaction( const Reaction& tpairproduction ) {
@@ -983,7 +983,7 @@ void verifyPhotonIonisationReaction( const Reaction& ionisation ) {
 
   CHECK( id::ReactionID( "534" ) == ionisation.identifier() );
   CHECK( ReactionType::Primary == ionisation.type() );
-  CHECK( false == ionisation.hasProducts() );
+  CHECK( true == ionisation.hasProducts() );
   CHECK( true == ionisation.isLinearised() );
 
   CHECK( std::nullopt == ionisation.massDifferenceQValue() );
@@ -1004,7 +1004,7 @@ void verifyPhotonIonisationReaction( const Reaction& ionisation ) {
   CHECK_THAT( 6318358.25, WithinRel( ionisation.crossSection().values()[0] ) );
   CHECK_THAT( 7.7360E-15, WithinRel( ionisation.crossSection().values()[903] ) );
 
-  CHECK( 0 == ionisation.products().size() );
+  CHECK( 2 == ionisation.products().size() );
 }
 
 void verifyPhotonTotalIonisationReaction( const Reaction& tionisation ) {
