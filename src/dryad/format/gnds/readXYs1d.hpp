@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_GNDS_READXYS1D
 
 // system includes
+#include <optional>
 #include <vector>
 
 // other includes

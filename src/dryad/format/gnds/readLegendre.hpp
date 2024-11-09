@@ -2,7 +2,7 @@
 #define NJOY_DRYAD_FORMAT_GNDS_READLEGENDRE
 
 // system includes
-#include <vector>
+#include <optional>
 
 // other includes
 #include "pugixml.hpp"

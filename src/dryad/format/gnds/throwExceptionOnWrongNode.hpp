@@ -2,7 +2,6 @@
 #define NJOY_DRYAD_FORMAT_GNDS_THROWEXCEPTIONONWRONGNODE
 
 // system includes
-#include <vector>
 
 // other includes
 #include "pugixml.hpp"
