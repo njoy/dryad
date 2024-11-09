@@ -21,7 +21,12 @@ namespace gnds {
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          pugi::xml_node suite, pugi::xml_node product ) {
 
-    id::ParticleID id( product.attribute( "pid" ).as_string() );
+    std::string pid( product.attribute( "pid" ).as_string() );
+    if ( pid == "photon" ) {
+
+      pid = "g";
+    }
+    id::ParticleID id( pid );
     int multiplicity = 1;
  
     return ReactionProduct( id, multiplicity );

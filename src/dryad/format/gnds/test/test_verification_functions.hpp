@@ -61,8 +61,9 @@ void verifyNeutronElasticReaction( const Reaction& elastic ) {
   CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
 
   CHECK( 2 == elastic.products().size() );
-//  auto neutron = elastic.products()[0];
-//  CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+
+  auto neutron = elastic.products()[0];
+  CHECK( id::ParticleID( "n" ) == neutron.identifier() );
 //  CHECK( true == neutron.isLinearised() );
 //  CHECK( false == neutron.hasAverageEnergy() );
 //  CHECK( true == neutron.hasDistributionData() );
@@ -160,6 +161,9 @@ void verifyNeutronElasticReaction( const Reaction& elastic ) {
 //  CHECK_THAT(  3.44900050e-06 , WithinRel( angle.distributions()[152].cdf().coefficients()[7] ) );
 //  CHECK( 152 == angle.boundaries()[0] );
 //  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+
+  auto h1 = elastic.products()[1];
+  CHECK( id::ParticleID( "H1" ) == h1.identifier() );
 }
 
 void verifyNeutronCaptureReaction( const Reaction& capture ) {
@@ -192,10 +196,12 @@ void verifyNeutronCaptureReaction( const Reaction& capture ) {
   CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
 
   CHECK( 2 == capture.products().size() );
-//  auto gamma = capture.products()[0];
-//  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-//  auto deuterium = capture.products()[1];
-//  CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
+
+  auto gamma = capture.products()[0];
+  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+
+  auto deuterium = capture.products()[1];
+  CHECK( id::ParticleID( "H2" ) == deuterium.identifier() );
 }
 
 void verifyElectronTotalReaction( const Reaction& total ) {
@@ -292,18 +298,19 @@ void verifyElectronElasticReaction( const Reaction& elastic ) {
   CHECK_THAT( 1.31176e-5, WithinRel( elastic.crossSection().values()[100] ) );
 
   CHECK( 2 == elastic.products().size() );
-//  auto photon = elastic.products()[0];
-//  CHECK( id::ParticleID( "e-" ) == photon.identifier() );
-//  CHECK( true == photon.isLinearised() );
-//  CHECK( false == photon.hasAverageEnergy() );
-//  CHECK( true == photon.hasDistributionData() );
-//  CHECK( true == std::holds_alternative< int >( photon.multiplicity() ) );
-//  auto multiplicity = std::get< int >( photon.multiplicity() );
+
+  auto electron = elastic.products()[0];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+//  CHECK( true == electron.isLinearised() );
+//  CHECK( false == electron.hasAverageEnergy() );
+//  CHECK( true == electron.hasDistributionData() );
+//  CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
+//  auto multiplicity = std::get< int >( electron.multiplicity() );
 //  CHECK( 1 == multiplicity );
-//  CHECK( std::nullopt == photon.averageEnergy() );
-//  CHECK( std::nullopt != photon.distributionData() );
-//  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( photon.distributionData().value() ) );
-//  auto data = std::get< TwoBodyDistributionData >( photon.distributionData().value() );
+//  CHECK( std::nullopt == electron.averageEnergy() );
+//  CHECK( std::nullopt != electron.distributionData() );
+//  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( electron.distributionData().value() ) );
+//  auto data = std::get< TwoBodyDistributionData >( electron.distributionData().value() );
 //  CHECK( DistributionDataType::TwoBody == data.type() );
 //  CHECK( true == std::holds_alternative< TabulatedAngularDistributions >( data.angle() ) );
 //  auto angle = std::get< TabulatedAngularDistributions >( data.angle() );
@@ -363,6 +370,9 @@ void verifyElectronElasticReaction( const Reaction& elastic ) {
 //  CHECK_THROWS( angle.distributions()[15].cdf() );
 //  CHECK( 15 == angle.boundaries()[0] );
 //  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+
+  auto hydrogen = elastic.products()[1];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyElectronTotalElasticReaction( const Reaction& telastic ) {
@@ -424,8 +434,9 @@ void verifyElectronBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
   CHECK_THAT( 0.990621, WithinRel( bremsstrahlung.crossSection().values()[95] ) );
 
   CHECK( 3 == bremsstrahlung.products().size() );
-//  auto gamma = bremsstrahlung.products()[0];
-//  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+
+  auto gamma = bremsstrahlung.products()[0];
+  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
 //  CHECK( true == gamma.isLinearised() );
 //  CHECK( false == gamma.hasAverageEnergy() );
 //  CHECK( true == gamma.hasDistributionData() );
@@ -528,6 +539,12 @@ void verifyElectronBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
 //  CHECK_THAT(  7.86876E+10 - 2.11850E+9, WithinRel( average.values()[80] ) );
 //  CHECK_THAT(  1e+11       - 2.66810E+9, WithinRel( average.values()[81] ) );
 //  CHECK( std::nullopt == electron.distributionData() );
+
+  auto electron = bremsstrahlung.products()[1];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto hydrogen = bremsstrahlung.products()[2];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyElectronExcitationReaction( const Reaction& subionisation ) {
@@ -556,8 +573,9 @@ void verifyElectronExcitationReaction( const Reaction& subionisation ) {
   CHECK_THAT( 81441.6, WithinRel( subionisation.crossSection().values()[169] ) );
 
   CHECK( 2 == subionisation.products().size() );
-//  auto electron = subionisation.products()[0];
-//  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto electron = subionisation.products()[0];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 //  CHECK( true == electron.isLinearised() );
 //  CHECK( true == electron.hasAverageEnergy() );
 //  CHECK( false == electron.hasDistributionData() );
@@ -584,6 +602,9 @@ void verifyElectronExcitationReaction( const Reaction& subionisation ) {
 //  CHECK_THAT(  9e+10       - 21.0777000, WithinRel( average.values()[168] ) );
 //  CHECK_THAT(  1e+11       - 21.0777000, WithinRel( average.values()[169] ) );
 //  CHECK( std::nullopt == electron.distributionData() );
+
+  auto hydrogen = subionisation.products()[1];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyElectronSubshellIonisationReaction( const Reaction& subionisation ) {
@@ -612,8 +633,9 @@ void verifyElectronSubshellIonisationReaction( const Reaction& subionisation ) {
   CHECK_THAT( 82892.4, WithinRel( subionisation.crossSection().values()[34] ) );
 
   CHECK( 3 == subionisation.products().size() );
-//  auto electron = subionisation.products()[0];
-//  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto electron = subionisation.products()[0];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 //  CHECK( true == electron.isLinearised() );
 //  CHECK( false == electron.hasAverageEnergy() );
 //  CHECK( true == electron.hasDistributionData() );
@@ -680,6 +702,12 @@ void verifyElectronSubshellIonisationReaction( const Reaction& subionisation ) {
 //  CHECK_THROWS( energy.distributions()[7].cdf() );
 //  CHECK( 7 == energy.boundaries()[0] );
 //  CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
+
+  electron = subionisation.products()[1];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto ion = subionisation.products()[2];
+  CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
 }
 
 void verifyPhotonTotalReaction( const Reaction& total ) {
@@ -746,9 +774,9 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   CHECK_THAT( 4.6282E-16, WithinRel( coherent.crossSection().values()[360] ) );
 
   CHECK( 2 == coherent.products().size() );
-//
-//  auto gamma = coherent.products()[0];
-//  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+
+  auto gamma = coherent.products()[0];
+  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
 //  CHECK( true == gamma.isLinearised() );
 //  CHECK( false == gamma.hasAverageEnergy() );
 //  CHECK( true == gamma.hasDistributionData() );
@@ -823,6 +851,9 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
 //  CHECK( 296 == factor.boundaries()[0] );
 //  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
 //  CHECK( true == factor.isLinearised() );
+
+  auto hydrogen = coherent.products()[1];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
@@ -851,9 +882,9 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
   CHECK_THAT( 1.70420E-5, WithinRel( incoherent.crossSection().values()[395] ) );
 
   CHECK( 2 == incoherent.products().size() );
-//
-//  auto gamma = incoherent.products()[0];
-//  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+
+  auto gamma = incoherent.products()[0];
+  CHECK( id::ParticleID( "g" ) == gamma.identifier() );
 //  CHECK( true == gamma.isLinearised() );
 //  CHECK( false == gamma.hasAverageEnergy() );
 //  CHECK( true == gamma.hasDistributionData() );
@@ -888,6 +919,9 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
 //  CHECK( 397 == data.scatteringFunction().boundaries()[0] );
 //  CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
 //  CHECK( true == data.scatteringFunction().isLinearised() );
+
+  auto hydrogen = incoherent.products()[1];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyPhotonElectronFieldPairProductionReaction( const Reaction& epairproduction ) {
@@ -916,6 +950,18 @@ void verifyPhotonElectronFieldPairProductionReaction( const Reaction& epairprodu
   CHECK_THAT( .0111   , WithinRel( epairproduction.crossSection().values()[216] ) );
 
   CHECK( 4 == epairproduction.products().size() );
+
+  auto electron = epairproduction.products()[0];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  electron = epairproduction.products()[1];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto antielectron = epairproduction.products()[2];
+  CHECK( id::ParticleID( "e-_anti" ) == antielectron.identifier() );
+
+  auto hydrogen = epairproduction.products()[3];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyPhotonNuclearFieldPairProductionReaction( const Reaction& npairproduction ) {
@@ -944,6 +990,15 @@ void verifyPhotonNuclearFieldPairProductionReaction( const Reaction& npairproduc
   CHECK_THAT( .009601 , WithinRel( npairproduction.crossSection().values()[307] ) );
 
   CHECK( 3 == npairproduction.products().size() );
+
+  auto electron = npairproduction.products()[0];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto antielectron = npairproduction.products()[1];
+  CHECK( id::ParticleID( "e-_anti" ) == antielectron.identifier() );
+
+  auto hydrogen = npairproduction.products()[2];
+  CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
 }
 
 void verifyPhotonTotalPairProductionReaction( const Reaction& tpairproduction ) {
@@ -1005,6 +1060,12 @@ void verifyPhotonIonisationReaction( const Reaction& ionisation ) {
   CHECK_THAT( 7.7360E-15, WithinRel( ionisation.crossSection().values()[903] ) );
 
   CHECK( 2 == ionisation.products().size() );
+
+  auto electron = ionisation.products()[0];
+  CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+
+  auto ion = ionisation.products()[1];
+  CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
 }
 
 void verifyPhotonTotalIonisationReaction( const Reaction& tionisation ) {
