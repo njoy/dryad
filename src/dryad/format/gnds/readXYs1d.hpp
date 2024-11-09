@@ -9,7 +9,6 @@
 #include "dryad/format/gnds/readAxes.hpp"
 #include "dryad/format/gnds/readValues.hpp"
 #include "tools/Log.hpp"
-#include "tools/disco/FreeFormatReal.hpp"
 #include "tools/std20/views.hpp"
 #include "tools/std23/views.hpp"
 
