@@ -10,6 +10,7 @@
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "dryad/format/gnds/createMultiplicity.hpp"
 #include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
+#include "dryad/format/gnds/createUncorrelatedDistributionData.hpp"
 #include "dryad/ReactionProduct.hpp"
 
 namespace njoy {
@@ -22,31 +23,50 @@ namespace gnds {
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
-                         pugi::xml_node suite, pugi::xml_node product ) {
+                         pugi::xml_node suite, pugi::xml_node product,
+                         const std::string& style = "eval" ) {
 
+    // check that this is a valid product node
     throwExceptionOnWrongNode( product, "product" );
+
+    // get the secondary particle identifier and adjust as required
     std::string pid( product.attribute( "pid" ).as_string() );
     if ( pid == "photon" ) {
 
       pid = "g";
     }
     id::ParticleID id( pid );
-    auto multiplicity = createMultiplicity( product.child( "multiplicity" ) );
 
+    // create the multiplicity
+    auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );
+
+    // get distribution
     auto distribution = product.child( "distribution" );
     if ( distribution ) {
 
-      auto first = distribution.first_child();
-      if ( strcmp( first.name(), "angularTwoBody" ) == 0 ) {
+      // get the first node of the requested style and act accordingly
+      auto node = distribution.find_child_by_attribute( "label", style.c_str() );
+      if ( strcmp( node.name(), "angularTwoBody" ) == 0 ) {
 
-        auto recoil = first.child( "recoil" );
+        // ignore recoil distributions for now
+        auto recoil = node.child( "recoil" );
         if ( ! recoil ) {
 
-          return ReactionProduct( id, multiplicity, createTwoBodyDistributionData( first ) );
+          return ReactionProduct( id, multiplicity, createTwoBodyDistributionData( node ) );
         }
       }
+      if ( strcmp( node.name(), "uncorrelated" ) == 0 ) {
+
+        return ReactionProduct( id, multiplicity, createUncorrelatedDistributionData( node ) );
+      }
+      else {
+
+        // for now, return a basic reaction product
+        return ReactionProduct( id, multiplicity );
+      }
     }
- 
+
+    // return a basic reaction product
     return ReactionProduct( id, multiplicity );
   }
 

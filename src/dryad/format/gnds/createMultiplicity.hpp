@@ -19,10 +19,14 @@ namespace gnds {
   /**
    *  @brief Create an integer or tabulated multiplicity from a parsed ENDF multiplicity
    */
-  std::variant< int, TabulatedMultiplicity > createMultiplicity( pugi::xml_node multiplicity ) {
+  std::variant< int, TabulatedMultiplicity > 
+  createMultiplicity( pugi::xml_node multiplicity, const std::string& style = "eval" ) {
 
+    // check that this is a valid multiplicity node
     throwExceptionOnWrongNode( multiplicity, "multiplicity" );
-    auto child = multiplicity.first_child();
+
+    // check the first child with the requested style and act accordingly
+    auto child = multiplicity.find_child_by_attribute( "label", style.c_str() );
     if ( strcmp( child.name(), "constant1d" ) == 0 ) {
 
       auto data = readConstant1dAsInteger( child );

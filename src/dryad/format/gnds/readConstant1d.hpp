@@ -15,16 +15,16 @@ namespace dryad {
 namespace format {
 namespace gnds {
 
-  using Constant1d = std::pair< double, std::string >;
-
   /**
-   *  @brief Read data from a GNDS constant1d node
+   *  @brief Read data from a GNDS constant1d node as a double
    */
-  Constant1d readConstant1d( const pugi::xml_node& constant1d ) {
+  std::pair< double, std::string > readConstant1dAsDouble( const pugi::xml_node& constant1d ) {
 
+    // check that this is a valid constant1d node
     throwExceptionOnWrongNode( constant1d, "constant1d" );
 
-    Constant1d data( constant1d.attribute( "value" ).as_double(), "" );
+    // initialise the data
+    std::pair< double, std::string > data( constant1d.attribute( "value" ).as_double(), "" );
   
     // get the unit for the constant
     auto axes = constant1d.child( "axes" );
@@ -43,9 +43,11 @@ namespace gnds {
   std::pair< int, std::string > 
   readConstant1dAsInteger( const pugi::xml_node& constant1d ) {
 
+    // check that this is a valid constant1d node
     throwExceptionOnWrongNode( constant1d, "constant1d" );
 
-    Constant1d data( constant1d.attribute( "value" ).as_int(), "" );
+    // initialise the data
+    std::pair< int, std::string > data( constant1d.attribute( "value" ).as_int(), "" );
   
     // get the unit for the constant
     auto axes = constant1d.child( "axes" );

@@ -20,16 +20,21 @@ namespace gnds {
    */
   std::vector< ReactionProduct >
   createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
-                          pugi::xml_node suite, pugi::xml_node data ) {
+                          pugi::xml_node suite, pugi::xml_node products,
+                         const std::string& style = "eval" ) {
 
-    std::vector< ReactionProduct > products;
-    for ( pugi::xml_node product = data.child( "product" ); product; 
+    // check that this is a valid products node
+    throwExceptionOnWrongNode( products, "products" );
+
+    // loop over product children
+    std::vector< ReactionProduct > data;
+    for ( pugi::xml_node product = products.child( "product" ); product; 
           product = product.next_sibling( "product" ) ) {
 
-      products.emplace_back( createReactionProduct( projectile, target, suite, product ) );
+      data.emplace_back( createReactionProduct( projectile, target, suite, product, style ) );
     }
 
-    return products;
+    return data;
   }
 
 } // gnds namespace

@@ -20,19 +20,24 @@ namespace gnds {
   /**
    *  @brief Create a TwoBodyDistributionData from a GNDS angularTwoBody node
    */
-  TwoBodyDistributionData createTwoBodyDistributionData( const pugi::xml_node& twobody ) {
+  TwoBodyDistributionData 
+  createTwoBodyDistributionData( const pugi::xml_node& twobody, 
+                                 const std::string& style = "eval" ) {
 
+    // check that this is a valid angularTwoBody node
+    throwExceptionOnWrongNode( twobody, "angularTwoBody" );
+
+    // get the reference frame
     auto frame = createReferenceFrame( twobody.attribute( "productFrame" ).as_string() );
-std::cout << twobody.name() << std::endl;
-    auto xys2d = twobody.child( "XYs2d" );
-    if ( xys2d ) {
 
-std::cout << "I am an XYs2d" << std::endl;
+    auto node = twobody.first_child();
+    if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
+
       // read the axes
-      auto units = readAxes( xys2d.child( "axes" ) );
+      auto units = readAxes( node.child( "axes" ) );
 
       // get the functions
-      auto function = xys2d.child( "function1ds" ).first_child();
+      auto function = node.child( "function1ds" ).first_child();
       if ( strcmp( function.name(), "Legendre" ) == 0 || 
            strcmp( function.name(), "XYs1d" ) == 0 ) {
 
@@ -72,21 +77,17 @@ std::cout << "I am an XYs2d" << std::endl;
         throw std::exception();
       }
     }
+    else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+
+      Log::error( "Mixed Legendre and tabulated angular distribution data is "
+                  "currently unsupported" );
+      throw std::exception();
+    }
     else {
 
-      auto regions1d = twobody.child( "regions1d" );
-      if ( regions1d ) {
-
-        Log::error( "Mixed Legendre and tabulated angular distribution data is "
-                    "currently unsupported" );
-        throw std::exception();
-      }
-      else {
-
-        Log::error( "Expected either an XYs2d node or regions1d node with XYs1d nodes "
-                    "for two body angular distribution data" );
-        throw std::exception();
-      }
+      Log::error( "Expected either an XYs2d node or regions1d node with XYs1d nodes "
+                  "for two body angular distribution data" );
+      throw std::exception();
     }
   }
 

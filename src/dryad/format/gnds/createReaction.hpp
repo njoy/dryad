@@ -8,7 +8,7 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/format/gnds/convertEnergy.hpp"
-#include "dryad/format/gnds/readConstant1d.hpp"
+#include "dryad/format/gnds/createQValue.hpp"
 #include "dryad/format/gnds/createReactionProducts.hpp"
 #include "dryad/format/gnds/createTabulatedCrossSection.hpp"
 #include "dryad/Reaction.hpp"
@@ -22,7 +22,8 @@ namespace gnds {
    *  @brief Create a Reaction from an unparsed ENDF material
    */
   Reaction createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                           pugi::xml_node suite, pugi::xml_node reaction ) {
+                           pugi::xml_node suite, pugi::xml_node reaction, 
+                           const std::string& style = "eval" ) {
 
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 
@@ -31,14 +32,12 @@ namespace gnds {
 
       // cross section
       auto section = reaction.child( "crossSection" );
-      TabulatedCrossSection xs = createTabulatedCrossSection( section );
+      TabulatedCrossSection xs = createTabulatedCrossSection( section, style );
 
       // Q values
       auto output = reaction.child( "outputChannel" );
-      auto q = readConstant1d( output.child( "Q" ).child( "constant1d" ) );
-      convertEnergy( q.first, q.second );
       std::optional< double > mass_q = std::nullopt;
-      std::optional< double > reaction_q = q.first;
+      std::optional< double > reaction_q = createQValue( output.child( "Q" ), style );
 
       // reaction products
       std::vector< ReactionProduct > products = 
