@@ -37,6 +37,27 @@ namespace gnds {
     return data;
   }
 
+  /**
+   *  @brief Read data from a GNDS constant1d node as an int
+   */
+  std::pair< int, std::string > 
+  readConstant1dAsInteger( const pugi::xml_node& constant1d ) {
+
+    throwExceptionOnWrongNode( constant1d, "constant1d" );
+
+    Constant1d data( constant1d.attribute( "value" ).as_int(), "" );
+  
+    // get the unit for the constant
+    auto axes = constant1d.child( "axes" );
+    if ( axes ) {
+  
+      auto units = readAxes( axes );
+      data.second = units[1];
+    }
+  
+    return data;
+  }
+
 } // gnds namespace
 } // format namespace
 } // dryad namespace

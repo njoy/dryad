@@ -20,16 +20,14 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedMultiplicity from a GNDS node
    */
-  TabulatedMultiplicity createTabulatedMultiplicity( const pugi::xml_node& xs ) {
-
-    Log::info( "Reading cross section data" );
+  TabulatedMultiplicity createTabulatedMultiplicity( const pugi::xml_node& multiplicity ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    auto xys1d = xs.child( "XYs1d" );
+    auto xys1d = multiplicity.child( "XYs1d" );
     if ( xys1d ) {
 
       // read the cross section data
@@ -49,7 +47,7 @@ namespace gnds {
     }
     else {
 
-      auto regions1d = xs.child( "regions1d" );
+      auto regions1d = multiplicity.child( "regions1d" );
       if ( regions1d ) {
 
         auto units = readAxes( regions1d.child( "axes" ) );
