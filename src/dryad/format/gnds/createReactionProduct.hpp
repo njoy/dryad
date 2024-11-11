@@ -21,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Create a ReactionProduct from an GNDS product node
    */
-  ReactionProduct
+  static ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          pugi::xml_node suite, pugi::xml_node product,
                          const std::string& style = "eval" ) {
@@ -36,6 +36,7 @@ namespace gnds {
       pid = "g";
     }
     id::ParticleID id( pid );
+    Log::info( "Reading reaction product data for \'{}\'", id );
 
     // create the multiplicity
     auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );

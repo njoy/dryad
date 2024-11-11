@@ -21,8 +21,8 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedEnergyDistribution from a GNDS XYs1d node
    */
-  std::pair< std::optional< double >, 
-             TabulatedEnergyDistribution >
+  static std::pair< std::optional< double >, 
+                    TabulatedEnergyDistribution >
   createTabulatedEnergyDistribution( pugi::xml_node node,
                                      const std::vector< std::string > units ) {
 

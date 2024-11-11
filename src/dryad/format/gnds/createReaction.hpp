@@ -21,9 +21,10 @@ namespace gnds {
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
    */
-  Reaction createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                           pugi::xml_node suite, pugi::xml_node reaction, 
-                           const std::string& style = "eval" ) {
+  static Reaction 
+  createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
+                  pugi::xml_node suite, pugi::xml_node reaction, 
+                  const std::string& style = "eval" ) {
 
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 

@@ -20,8 +20,8 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedAngularDistribution from a GNDS XYs1d node
    */
-  std::pair< std::optional< double >, 
-             TabulatedAngularDistribution >
+  static std::pair< std::optional< double >, 
+                    TabulatedAngularDistribution >
   createTabulatedAngularDistribution( pugi::xml_node node,
                                       const std::vector< std::string > units ) {
 

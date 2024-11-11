@@ -16,7 +16,7 @@ namespace gnds {
   /**
    *  @brief Create the reference frame
    */
-  ReferenceFrame createReferenceFrame( const std::string& frame ) {
+  static ReferenceFrame createReferenceFrame( const std::string& frame ) {
 
     if ( frame == "lab" ) {
 

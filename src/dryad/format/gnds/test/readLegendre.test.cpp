@@ -12,7 +12,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const format::gnds::Legendre& );
+void verifyChunk( const std::pair< std::optional< double >, std::vector< double > >& );
 
 SCENARIO( "readLegendre" ) {
 
@@ -49,7 +49,7 @@ SCENARIO( "readLegendre" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Legendre& chunk ) {
+void verifyChunk( const std::pair< std::optional< double >, std::vector< double > >& chunk ) {
 
   // outer domain value and unit
   CHECK( 1e-5 == chunk.first );

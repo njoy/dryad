@@ -18,7 +18,7 @@ namespace gnds {
   /**
    *  @brief Create every Reaction from a GNDS reaction suite
    */
-  std::vector< Reaction >
+  static std::vector< Reaction >
   createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
                    pugi::xml_node suite, const std::string& style = "eval" ) {
 

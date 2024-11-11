@@ -18,7 +18,8 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS values node
    */
-  std::vector< double > readValues( const pugi::xml_node& values ) {
+  static std::vector< double > 
+  readValues( const pugi::xml_node& values ) {
 
     throwExceptionOnWrongNode( values, "values" );
 

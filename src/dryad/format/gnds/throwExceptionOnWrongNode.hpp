@@ -15,7 +15,7 @@ namespace gnds {
   /**
    *  @brief Throw a node exception
    */
-  void throwExceptionOnWrongNode( const pugi::xml_node& node, const char* name ) {
+  static void throwExceptionOnWrongNode( const pugi::xml_node& node, const char* name ) {
 
     if ( node ) {
 

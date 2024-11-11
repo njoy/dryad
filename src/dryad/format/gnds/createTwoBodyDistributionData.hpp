@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TwoBodyDistributionData from a GNDS angularTwoBody node
    */
-  TwoBodyDistributionData 
+  static TwoBodyDistributionData 
   createTwoBodyDistributionData( const pugi::xml_node& twobody, 
                                  const std::string& style = "eval" ) {
 

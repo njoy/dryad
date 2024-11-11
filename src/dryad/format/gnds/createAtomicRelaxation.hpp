@@ -18,12 +18,12 @@ namespace gnds {
   /**
    *  @brief Create an AtomicRelaxation from an unparsed ENDF material
    */
-  AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document ) {
+  static AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document ) {
 
     //! @todo verify validity of the file
 
     pugi::xml_node element = document.child( "PoPs" ).child( "chemicalElements" ).
-                                 child( "chemicalElement" );
+                                      child( "chemicalElement" );
 
     if ( element ) {
 

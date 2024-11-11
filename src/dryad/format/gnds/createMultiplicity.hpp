@@ -19,7 +19,7 @@ namespace gnds {
   /**
    *  @brief Create an integer or tabulated multiplicity from a parsed ENDF multiplicity
    */
-  std::variant< int, TabulatedMultiplicity > 
+  static std::variant< int, TabulatedMultiplicity > 
   createMultiplicity( pugi::xml_node multiplicity, const std::string& style = "eval" ) {
 
     // check that this is a valid multiplicity node

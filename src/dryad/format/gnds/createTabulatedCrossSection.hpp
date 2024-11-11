@@ -21,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedCrossSection from a parsed ENDF section
    */
-  TabulatedCrossSection 
+  static TabulatedCrossSection 
   createTabulatedCrossSection( const pugi::xml_node& xs, 
                                const std::string& style = "eval" ) {
 
@@ -92,9 +92,15 @@ namespace gnds {
         interpolants.emplace_back( interpolant );
       }
     }
+    else if ( strcmp( node.name(), "resonancesWithBackground" ) == 0 ) {
+
+      auto resolved = node.child( "background" ).child( "resolvedRegion" );
+      auto unresolved = node.child( "background" ).child( "resolvedRegion" );
+      auto fast = node.child( "background" ).child( "fastRegion" );
+    }
     else {
 
-      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes"
+      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes "
                   "for cross section data" );
       throw std::exception();
     }

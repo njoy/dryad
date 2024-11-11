@@ -15,15 +15,15 @@ namespace dryad {
 namespace format {
 namespace gnds {
 
-  using Legendre = std::pair< std::optional< double >, std::vector< double > >;
   /**
    *  @brief Read data from a GNDS legendre node
    */
-  Legendre readLegendre( const pugi::xml_node& legendre ) {
+  static std::pair< std::optional< double >, std::vector< double > >
+  readLegendre( const pugi::xml_node& legendre ) {
 
     throwExceptionOnWrongNode( legendre, "Legendre" );
 
-    Legendre data;
+    std::pair< std::optional< double >, std::vector< double > > data;
     data.first = std::nullopt;
   
     // check for the presence of an outerDomainValue

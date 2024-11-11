@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a Q value from a GNDS q node
    */
-  double createQValue( pugi::xml_node q, const std::string& style = "eval" ) {
+  static double createQValue( pugi::xml_node q, const std::string& style = "eval" ) {
 
     // check that this is a valid q node
     throwExceptionOnWrongNode( q, "Q" );
