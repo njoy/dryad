@@ -16,7 +16,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create an AtomicRelaxation from an unparsed ENDF material
+   *  @brief Create an AtomicRelaxation from a GNDS xml document
    */
   static AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document ) {
 

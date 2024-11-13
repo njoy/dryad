@@ -18,7 +18,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a TabulatedMultiplicity from a GNDS node
+   *  @brief Create a TabulatedMultiplicity from a GNDS multiplicity node
    */
   static TabulatedMultiplicity 
   createTabulatedMultiplicity( const pugi::xml_node& multiplicity, 

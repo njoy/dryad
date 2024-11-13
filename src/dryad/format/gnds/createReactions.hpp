@@ -28,6 +28,8 @@ namespace gnds {
     std::vector< Reaction > reactions;
 
     // get the children that contain the reaction data
+    // there are primary reactions, summation reactions and incomplete reactions
+    //! @todo there also are production reactions (e.g. MT3)
     pugi::xml_node primaries = suite.child( "reactions" );
     pugi::xml_node sums = suite.child( "sums" ).child( "crossSectionSums" );
     pugi::xml_node incomplete = suite.child( "incompleteReactions" );

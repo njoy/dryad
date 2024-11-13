@@ -19,7 +19,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a Reaction from an unparsed ENDF material
+   *  @brief Create a Reaction from GNDS node (reaction or crossSectionSum)
    */
   static Reaction 
   createReaction( const id::ParticleID& projectile, const id::ParticleID& target,

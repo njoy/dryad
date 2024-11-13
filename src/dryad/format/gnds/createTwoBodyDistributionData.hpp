@@ -21,8 +21,7 @@ namespace gnds {
    *  @brief Create a TwoBodyDistributionData from a GNDS angularTwoBody node
    */
   static TwoBodyDistributionData 
-  createTwoBodyDistributionData( const pugi::xml_node& twobody, 
-                                 const std::string& style = "eval" ) {
+  createTwoBodyDistributionData( const pugi::xml_node& twobody ) {
 
     // check that this is a valid angularTwoBody node
     throwExceptionOnWrongNode( twobody, "angularTwoBody" );

@@ -67,7 +67,7 @@ namespace gnds {
       }
     }
 
-    // return a basic reaction product
+    // there is no distribution, return a basic reaction product
     return ReactionProduct( id, multiplicity );
   }
 

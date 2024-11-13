@@ -15,7 +15,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create an AtomicRelaxation from a GNDS file
+   *  @brief Create an AtomicRelaxation from a GNDS xml file
    *
    *  @param[in] filename   the GNDS file name
    */

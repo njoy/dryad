@@ -23,8 +23,7 @@ namespace gnds {
    *  @brief Create a UncorrelatedDistributionData from a GNDS uncorrelated node
    */
   static UncorrelatedDistributionData 
-  createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated, 
-                                      const std::string& style = "eval" ) {
+  createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated ) {
 
     // check that this is a valid uncorrelated node
     throwExceptionOnWrongNode( uncorrelated, "uncorrelated" );

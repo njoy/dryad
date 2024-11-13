@@ -16,7 +16,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a Reaction from an unparsed ENDF material
+   *  @brief Create a Reaction from a GNDS products node
    */
   static std::vector< ReactionProduct >
   createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,

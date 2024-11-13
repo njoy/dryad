@@ -19,7 +19,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a TabulatedCrossSection from a parsed ENDF section
+   *  @brief Create a TabulatedCrossSection from a GNDS node (XYs1d or regions1d)
    */
   static TabulatedCrossSection 
   createTabulatedCrossSection( const pugi::xml_node& xs, 
@@ -95,7 +95,7 @@ namespace gnds {
     else if ( strcmp( node.name(), "resonancesWithBackground" ) == 0 ) {
 
       auto resolved = node.child( "background" ).child( "resolvedRegion" );
-      auto unresolved = node.child( "background" ).child( "resolvedRegion" );
+      auto unresolved = node.child( "background" ).child( "unresolvedRegion" );
       auto fast = node.child( "background" ).child( "fastRegion" );
     }
     else {

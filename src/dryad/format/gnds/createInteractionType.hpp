@@ -14,7 +14,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create the interpolation type
+   *  @brief Create the interpolation type from a GNDS string value
    */
   static InteractionType createInteractionType( const std::string& type ) {
 

@@ -19,7 +19,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a ProjectileTarget from a GNDS reactionSuite
+   *  @brief Create a ProjectileTarget from a GNDS xml document
    */
   static ProjectileTarget 
   createProjectileTarget( const pugi::xml_document& document,
@@ -27,14 +27,22 @@ namespace gnds {
 
     auto suite = document.child( "reactionSuite" );
 
-    id::ParticleID projectile( suite.attribute( "projectile" ).as_string() );
-    id::ParticleID target( suite.attribute( "target" ).as_string() );
-    InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
+    if ( suite ) {
 
-    std::vector< Reaction > reactions = createReactions( projectile, target, suite, style );
+      id::ParticleID projectile( suite.attribute( "projectile" ).as_string() );
+      id::ParticleID target( suite.attribute( "target" ).as_string() );
+      InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
 
-    return ProjectileTarget( std::move( projectile ), std::move( target ),
-                             type, std::move( reactions ) );
+      std::vector< Reaction > reactions = createReactions( projectile, target, suite, style );
+
+      return ProjectileTarget( std::move( projectile ), std::move( target ),
+                               type, std::move( reactions ) );
+    }
+    else {
+
+      Log::error( "The GNDS file does not contain projectile-target data" );
+      throw std::exception();
+    }
   }
 
 } // gnds namespace

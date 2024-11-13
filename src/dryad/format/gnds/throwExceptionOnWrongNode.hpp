@@ -28,7 +28,7 @@ namespace gnds {
     }
     else {
 
-      Log::error( "The XML element does not define a GNDS axes node, the node is undefined" );
+      Log::error( "The XML element does not define a GNDS node, the node is undefined" );
       throw std::exception();
     }
   }

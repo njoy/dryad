@@ -19,6 +19,8 @@ namespace gnds {
 
   /**
    *  @brief Create a TabulatedAngularDistribution from a GNDS XYs1d node
+   * 
+   *  @todo is it possible to have a regions1d version?
    */
   static std::pair< std::optional< double >, 
                     TabulatedAngularDistribution >
