@@ -76,6 +76,10 @@ namespace gnds {
         throw std::exception();
       }
     }
+    else if ( strcmp( node.name(), "isotropic2d" ) == 0 ) {
+
+      return TwoBodyDistributionData( std::move( frame ), IsotropicAngularDistributions() );
+    }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
 
       Log::error( "Mixed Legendre and tabulated angular distribution data is "

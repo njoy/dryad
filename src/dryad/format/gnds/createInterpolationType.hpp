@@ -23,6 +23,10 @@ namespace gnds {
 
       return InterpolationType::LinearLinear;
     }
+    else if ( type == "flat" ) {
+
+      return InterpolationType::Histogram;
+    }
     else if ( type == "log-log" ) {
 
       return InterpolationType::LogLog;

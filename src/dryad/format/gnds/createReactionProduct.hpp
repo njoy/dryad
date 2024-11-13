@@ -49,16 +49,23 @@ namespace gnds {
       auto node = distribution.find_child_by_attribute( "label", style.c_str() );
       if ( strcmp( node.name(), "angularTwoBody" ) == 0 ) {
 
-        // ignore recoil distributions for now
+        // ignore recoil or regions2d distributions for now
         auto recoil = node.child( "recoil" );
-        if ( ! recoil ) {
+        auto regions2d = node.child( "regions2d" );
+        if ( ! recoil && ! regions2d ) {
 
           return ReactionProduct( id, multiplicity, createTwoBodyDistributionData( node ) );
         }
       }
       if ( strcmp( node.name(), "uncorrelated" ) == 0 ) {
 
-        return ReactionProduct( id, multiplicity, createUncorrelatedDistributionData( node ) );
+        // ignore discrete gamma distributions for now
+        auto discreteGamma = node.child( "energy" ).child( "discreteGamma" );
+        auto primaryGamma = node.child( "energy" ).child( "primaryGamma" );
+        if ( ! discreteGamma && ! primaryGamma ) {
+
+          return ReactionProduct( id, multiplicity, createUncorrelatedDistributionData( node ) );
+        }
       }
       else {
 

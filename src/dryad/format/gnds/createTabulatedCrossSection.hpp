@@ -3,7 +3,7 @@
 
 // system includes
 #include <vector>
-
+#include <iostream>
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
@@ -19,23 +19,16 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a TabulatedCrossSection from a GNDS node (XYs1d or regions1d)
+   *  @brief Create a TabulatedCrossSection from a GNDS XYs1d or regions1d node
    */
   static TabulatedCrossSection 
-  createTabulatedCrossSection( const pugi::xml_node& xs, 
-                               const std::string& style = "eval" ) {
-
-    Log::info( "Reading cross section data" );
+  createTabulatedCrossSectionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    // check that this is a valid q node
-    throwExceptionOnWrongNode( xs, "crossSection" );
-
-    auto node = xs.find_child_by_attribute( "label", style.c_str() );
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
       // read the cross section data
@@ -92,12 +85,6 @@ namespace gnds {
         interpolants.emplace_back( interpolant );
       }
     }
-    else if ( strcmp( node.name(), "resonancesWithBackground" ) == 0 ) {
-
-      auto resolved = node.child( "background" ).child( "resolvedRegion" );
-      auto unresolved = node.child( "background" ).child( "unresolvedRegion" );
-      auto fast = node.child( "background" ).child( "fastRegion" );
-    }
     else {
 
       Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes "
@@ -108,6 +95,101 @@ namespace gnds {
     return TabulatedCrossSection(
              std::move( energies ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
+  }
+
+  /**
+   *  @brief Create a TabulatedCrossSection from a GNDS cross section node
+   */
+  static TabulatedCrossSection 
+  createTabulatedCrossSection( const pugi::xml_node& xs, 
+                               const std::string& style = "eval" ) {
+
+    Log::info( "Reading cross section data" );
+
+    // check that this is a valid q node
+    throwExceptionOnWrongNode( xs, "crossSection" );
+
+    auto node = xs.find_child_by_attribute( "label", style.c_str() );
+    if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
+
+      // return a cross section
+      return createTabulatedCrossSectionFromNodes( node );
+    }
+    else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+
+      // return a cross section
+      return createTabulatedCrossSectionFromNodes( node );
+    }
+    else if ( strcmp( node.name(), "resonancesWithBackground" ) == 0 ) {
+
+      // get the resolved background data
+      auto resolved = node.child( "background" ).child( "resolvedRegion" );
+      auto result = createTabulatedCrossSectionFromNodes( resolved.first_child() );
+
+      // start to assemble the data together
+      std::vector< double > energies = result.energies();
+      std::vector< double > values = result.values();
+      std::vector< std::size_t > boundaries = result.boundaries();
+      std::vector< InterpolationType > interpolants = result.interpolants();
+
+      // get the unresolved background data
+      auto unresolved = node.child( "background" ).child( "unresolvedRegion" );
+      if ( unresolved ) {
+
+        result = createTabulatedCrossSectionFromNodes( unresolved.first_child() );
+
+        // check for duplicate points at interpolation region boundaries
+        std::size_t offset = 0;
+        if ( energies.back() == result.energies().front() &&
+             values.back() == result.values().front() ) {
+
+          offset = 1;
+        }
+
+        // add data
+        std::size_t size = energies.size();
+        energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() + offset );
+        values.insert( values.end(), result.values().begin() + offset, result.values().end() + offset );
+        for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
+
+          boundaries.emplace_back( result.boundaries()[i] - offset + size );
+          interpolants.emplace_back( result.interpolants()[i] );
+        }
+      }
+
+      // get the fast background data
+      auto fast = node.child( "background" ).child( "fastRegion" );
+
+      result = createTabulatedCrossSectionFromNodes( fast.first_child() );
+
+      // check for duplicate points at interpolation region boundaries
+      std::size_t offset = 0;
+      if ( energies.back() == result.energies().front() &&
+           values.back() == result.values().front() ) {
+
+        offset = 1;
+      }
+
+      // add data
+      std::size_t size = energies.size();
+      energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() + offset );
+      values.insert( values.end(), result.values().begin() + offset, result.values().end() + offset );
+      for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
+
+        boundaries.emplace_back( result.boundaries()[i] - offset + size );
+        interpolants.emplace_back( result.interpolants()[i] );
+      }
+
+      return TabulatedCrossSection(
+               std::move( energies ), std::move( values ),
+               std::move( boundaries ), std::move( interpolants ) );
+    }
+    else {
+
+      Log::error( "Expected either an XYs1d, regions1d (with XYs1d nodes) or a "
+                  "background node for cross section data" );
+      throw std::exception();
+    }
   }
 
 } // gnds namespace

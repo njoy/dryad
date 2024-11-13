@@ -131,7 +131,8 @@ namespace gnds {
       }
       else {
   
-        Log::error( "Expected an XYs2d node for uncorrelated energy distribution data" );
+        Log::error( "Expected an XYs2d node for uncorrelated energy distribution data, found \'{}\'",
+                    node.name() );
         throw std::exception();
       }
     }
