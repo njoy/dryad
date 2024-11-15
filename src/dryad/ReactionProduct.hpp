@@ -40,8 +40,8 @@ namespace dryad {
     id::ParticleID id_;
 
     Multiplicity multiplicity_;
-    std::optional< TabulatedAverageEnergy > average_energy_;
     std::optional< DistributionData > distribution_;
+    std::optional< TabulatedAverageEnergy > average_energy_;
     bool linearised_;
 
   public:
@@ -129,7 +129,7 @@ namespace dryad {
       std::optional< DistributionData > distribution = this->distributionData();
 
       return ReactionProduct( std::move( id ), std::move( multiplicity ),
-                              std::move( averageEnergy ), std::move( distribution ),
+                              std::move( distribution ), std::move( averageEnergy ),
                               true );
     }
 
