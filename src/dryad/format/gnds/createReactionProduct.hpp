@@ -8,6 +8,7 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "dryad/format/gnds/createParticleIdentifier.hpp"
 #include "dryad/format/gnds/createMultiplicity.hpp"
 #include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
 #include "dryad/format/gnds/createUncorrelatedDistributionData.hpp"
@@ -31,12 +32,7 @@ namespace gnds {
     throwExceptionOnWrongNode( product, "product" );
 
     // get the secondary particle identifier and adjust as required
-    std::string pid( product.attribute( "pid" ).as_string() );
-    if ( pid == "photon" ) {
-
-      pid = "g";
-    }
-    id::ParticleID id( pid );
+    id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
     Log::info( "Reading reaction product data for \'{}\'", id );
 
     // create the multiplicity
@@ -79,7 +75,7 @@ namespace gnds {
       average = createTabulatedAverageEnergy( node );
     }
 
-    return ReactionProduct( id, multiplicity, 
+    return ReactionProduct( id, multiplicity,
                             std::move( distribution ),
                             std::move( average ) );
   }
