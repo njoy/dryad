@@ -1,7 +1,9 @@
-add_cpp_test( format.gnds.convertEnergy          convertEnergy.test.cpp )
-add_cpp_test( format.gnds.convertCrossSections   convertEnergies.test.cpp )
-add_cpp_test( format.gnds.convertEnergies        convertEnergies.test.cpp )
+add_cpp_test( format.gnds.convertEnergy           convertEnergy.test.cpp )
+add_cpp_test( format.gnds.convertCrossSections    convertCrossSections.test.cpp )
+add_cpp_test( format.gnds.convertEnergies         convertEnergies.test.cpp )
+add_cpp_test( format.gnds.convertInverseLengths   convertInverseLengths.test.cpp )
 
+add_cpp_test( format.gnds.createInteractionType     createInteractionType.test.cpp )
 add_cpp_test( format.gnds.createInterpolationType   createInterpolationType.test.cpp )
 add_cpp_test( format.gnds.createReferenceFrame      createReferenceFrame.test.cpp )
 
