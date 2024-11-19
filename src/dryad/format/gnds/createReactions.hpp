@@ -38,7 +38,7 @@ namespace gnds {
     if ( primaries ) {
 
       // loop over reaction nodes
-      for ( pugi::xml_node reaction = primaries.child( "reaction" ); 
+      for ( pugi::xml_node reaction = primaries.child( "reaction" );
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
@@ -50,7 +50,7 @@ namespace gnds {
     if ( sums ) {
 
       // loop over crossSectionSum nodes
-      for ( pugi::xml_node reaction = sums.child( "crossSectionSum" ); 
+      for ( pugi::xml_node reaction = sums.child( "crossSectionSum" );
             reaction; reaction = reaction.next_sibling( "crossSectionSum" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
@@ -62,7 +62,7 @@ namespace gnds {
     if ( incomplete ) {
 
       // loop over reaction nodes
-     for ( pugi::xml_node reaction = incomplete.child( "reaction" ); 
+     for ( pugi::xml_node reaction = incomplete.child( "reaction" );
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
@@ -71,19 +71,19 @@ namespace gnds {
     }
 
     // sort by MT
-    std::sort( reactions.begin(), reactions.end(), 
-               [] ( auto&& left, auto&&right ) 
-                  { return std::stoi( left.identifier() ) < 
+    std::sort( reactions.begin(), reactions.end(),
+               [] ( auto&& left, auto&&right )
+                  { return std::stoi( left.identifier() ) <
                            std::stoi( right.identifier() ); } );
 
     // calculate deficit reaction for elastic scattering in electro-atomic data
     if ( projectile == id::ParticleID( "e-" ) ) {
 
-      auto total = std::find_if( reactions.begin(), reactions.end(), 
-                                 [] ( const auto& reaction ) 
+      auto total = std::find_if( reactions.begin(), reactions.end(),
+                                 [] ( const auto& reaction )
                                     { return reaction.identifier() == id::ReactionID( "501" ); } );
-      auto partial = std::find_if( reactions.begin(), reactions.end(), 
-                                   [] ( const auto& reaction ) 
+      auto partial = std::find_if( reactions.begin(), reactions.end(),
+                                   [] ( const auto& reaction )
                                       { return reaction.identifier() == id::ReactionID( "525" ); } );
       TabulatedCrossSection deficit = total->crossSection().linearise();
       deficit -= partial->crossSection().linearise();

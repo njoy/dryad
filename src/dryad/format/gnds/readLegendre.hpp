@@ -25,24 +25,24 @@ namespace gnds {
 
     std::pair< std::optional< double >, std::vector< double > > data;
     data.first = std::nullopt;
-  
+
     // check for the presence of an outerDomainValue
     auto outer = legendre.attribute( "outerDomainValue" );
     if ( outer ) {
-  
+
       data.first = outer.as_double();
     }
-  
+
     // get tabulated values
     auto values = legendre.child( "values" );
     data.second = readValues( values );
     if ( data.second.size() == 0 ) {
-  
+
       Log::error( "There should be at least one value in the GNDS Legendre node, "
                   "found {} values", data.second.size() );
       throw std::exception();
     }
-  
+
     return data;
   }
 

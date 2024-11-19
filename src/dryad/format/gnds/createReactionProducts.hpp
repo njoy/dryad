@@ -28,7 +28,7 @@ namespace gnds {
 
     // loop over product children
     std::vector< ReactionProduct > data;
-    for ( pugi::xml_node product = products.child( "product" ); product; 
+    for ( pugi::xml_node product = products.child( "product" ); product;
           product = product.next_sibling( "product" ) ) {
 
       data.emplace_back( createReactionProduct( projectile, target, suite, product, style ) );

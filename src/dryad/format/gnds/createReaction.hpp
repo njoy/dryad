@@ -21,9 +21,9 @@ namespace gnds {
   /**
    *  @brief Create a Reaction from GNDS node (reaction or crossSectionSum)
    */
-  static Reaction 
+  static Reaction
   createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                  pugi::xml_node suite, pugi::xml_node reaction, 
+                  pugi::xml_node suite, pugi::xml_node reaction,
                   const std::string& style = "eval" ) {
 
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
@@ -41,7 +41,7 @@ namespace gnds {
       std::optional< double > reaction_q = createQValue( output.child( "Q" ), style );
 
       // reaction products
-      std::vector< ReactionProduct > products = 
+      std::vector< ReactionProduct > products =
       createReactionProducts( projectile, target, suite, output.child( "products" ) );
 
       // special treatment for some incident electron data reactions
@@ -71,7 +71,7 @@ namespace gnds {
       // partial identifiers
       std::vector< id::ReactionID > partials;
       auto summands = reaction.child( "summands" );
-      for ( pugi::xml_node partial = summands.child( "add" ); 
+      for ( pugi::xml_node partial = summands.child( "add" );
             partial; partial = partial.next_sibling( "add" ) ) {
 
         std::string href = partial.attribute( "href" ).as_string();

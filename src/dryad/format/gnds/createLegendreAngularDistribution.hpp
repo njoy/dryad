@@ -20,8 +20,8 @@ namespace gnds {
    *  @brief Create a LegendreAngularDistribution from a GNDS legendre node
    */
   static
-  std::pair< std::optional< double >, 
-             LegendreAngularDistribution > 
+  std::pair< std::optional< double >,
+             LegendreAngularDistribution >
   createLegendreAngularDistribution( pugi::xml_node legendre,
                                      const std::vector< std::string > units ) {
 

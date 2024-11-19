@@ -21,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS XYs1d or regions1d node
    */
-  static TabulatedCrossSection 
+  static TabulatedCrossSection
   createTabulatedCrossSectionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;
@@ -54,7 +54,7 @@ namespace gnds {
 
       // loop over the children of function1ds
       pugi::xml_node function1ds = node.child( "function1ds" );
-      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" ); 
+      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" );
             xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
 
         // read the current interpolation region
@@ -100,8 +100,8 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS cross section node
    */
-  static TabulatedCrossSection 
-  createTabulatedCrossSection( const pugi::xml_node& xs, 
+  static TabulatedCrossSection
+  createTabulatedCrossSection( const pugi::xml_node& xs,
                                const std::string& style = "eval" ) {
 
     Log::info( "Reading cross section data" );

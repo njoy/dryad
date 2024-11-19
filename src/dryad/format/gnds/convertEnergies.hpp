@@ -21,7 +21,7 @@ namespace gnds {
 
       if ( unit == "MeV" ) {
 
-        std::for_each( energies.begin(), energies.end(), 
+        std::for_each( energies.begin(), energies.end(),
                       [] ( double& energy ) { energy *= 1e+6; } );
       }
       else {

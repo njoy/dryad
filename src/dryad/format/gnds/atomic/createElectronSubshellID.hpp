@@ -23,7 +23,7 @@ namespace atomic {
   }
 
   /**
-   *  @brief Create an ElectronSubshellID from a vacancy for 
+   *  @brief Create an ElectronSubshellID from a vacancy for
    *         a radiative transition
    */
   id::ElectronSubshellID createRadiativeTransitionElectronSubshellID( std::string vacancy ) {
@@ -34,7 +34,7 @@ namespace atomic {
   /**
    *  @brief Create ElectronSubshellIDs from vacancy for a non-radiative transition
    */
-  std::pair< id::ElectronSubshellID, id::ElectronSubshellID > 
+  std::pair< id::ElectronSubshellID, id::ElectronSubshellID >
   createNonRadiativeTransitionElectronSubshellID( std::string vacancies ) {
 
     auto iter = std::find( vacancies.begin(), vacancies.end(), ',' );
