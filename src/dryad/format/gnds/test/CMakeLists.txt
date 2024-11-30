@@ -15,6 +15,8 @@ add_cpp_test( format.gnds.readXYs1d        readXYs1d.test.cpp )
 add_cpp_test( format.gnds.readLegendre     readLegendre.test.cpp )
 
 add_cpp_test( format.gnds.createTabulatedCrossSection    createTabulatedCrossSection.test.cpp )
+add_cpp_test( format.gnds.createMultiplicity             createMultiplicity.test.cpp )
+add_cpp_test( format.gnds.createQValue                   createQValue.test.cpp )
 add_cpp_test( format.gnds.createTabulatedAverageEnergy   createTabulatedAverageEnergy.test.cpp )
 add_cpp_test( format.gnds.createReaction                 createReaction.test.cpp )
 add_cpp_test( format.gnds.createReactions                createReactions.test.cpp )
