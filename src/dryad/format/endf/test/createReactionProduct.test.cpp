@@ -60,8 +60,8 @@ SCENARIO( "createReactionProduct" ) {
       THEN( "a Reaction can be created" ) {
 
         auto coherent = tape.materials().front().section( 27, 502 ).parse< 27 >();
-        auto real = std::make_optional( tape.materials().front().section( 27, 505 ).parse< 27 >() );
-        auto imaginary = std::make_optional( tape.materials().front().section( 27, 506 ).parse< 27 >() );
+        auto real = std::make_optional( tape.materials().front().section( 27, 506 ).parse< 27 >() );
+        auto imaginary = std::make_optional( tape.materials().front().section( 27, 505 ).parse< 27 >() );
         auto incoherent = tape.materials().front().section( 27, 504 ).parse< 27 >();
 
         id::ParticleID projectile( "g" );
@@ -320,9 +320,9 @@ void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
   CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
   CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
   CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
-  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
-  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
-  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
+  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
   CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
   CHECK( 296 == factor.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
@@ -340,9 +340,9 @@ void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
   CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
   CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
   CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
-  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
-  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
-  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
   CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
   CHECK( 296 == factor.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
