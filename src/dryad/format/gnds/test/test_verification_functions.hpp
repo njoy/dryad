@@ -783,8 +783,8 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   auto multiplicity = std::get< int >( gamma.multiplicity() );
   CHECK( 1 == multiplicity );
 
-//  CHECK( std::nullopt == gamma.averageEnergy() );
-//
+  CHECK( std::nullopt == gamma.averageEnergy() );
+
 //  CHECK( std::nullopt != gamma.distributionData() );
 //  CHECK( true == std::holds_alternative< CoherentDistributionData >( gamma.distributionData().value() ) );
 //  auto data = std::get< CoherentDistributionData >( gamma.distributionData().value() );
@@ -891,8 +891,8 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
   auto multiplicity = std::get< int >( gamma.multiplicity() );
   CHECK( 1 == multiplicity );
 
-//  CHECK( std::nullopt == gamma.averageEnergy() );
-//
+  CHECK( std::nullopt == gamma.averageEnergy() );
+
 //  CHECK( std::nullopt != gamma.distributionData() );
 //  CHECK( true == std::holds_alternative< IncoherentDistributionData >( gamma.distributionData().value() ) );
 //  auto data = std::get< IncoherentDistributionData >( gamma.distributionData().value() );

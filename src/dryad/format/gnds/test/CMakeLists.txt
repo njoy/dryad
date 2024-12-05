@@ -14,6 +14,8 @@ add_cpp_test( format.gnds.readConstant1d   readLegendre.test.cpp )
 add_cpp_test( format.gnds.readXYs1d        readXYs1d.test.cpp )
 add_cpp_test( format.gnds.readLegendre     readLegendre.test.cpp )
 
+add_cpp_test( format.gnds.createTabulatedFormFactorFromNodes   createTabulatedFormFactorFromNodes.test.cpp )
+
 add_cpp_test( format.gnds.createTabulatedCrossSection         createTabulatedCrossSection.test.cpp )
 add_cpp_test( format.gnds.createMultiplicity                  createMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createQValue                        createQValue.test.cpp )
