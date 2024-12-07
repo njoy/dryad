@@ -194,7 +194,7 @@ void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
   auto data = std::get< CoherentDistributionData >( chunk.distributionData().value() );
 
   CHECK( DistributionDataType::Coherent == data.type() );
-  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
 
   CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );

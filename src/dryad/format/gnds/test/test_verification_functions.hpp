@@ -777,7 +777,7 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   CHECK( id::ParticleID( "g" ) == gamma.identifier() );
   CHECK( true == gamma.isLinearised() );
   CHECK( false == gamma.hasAverageEnergy() );
-//  CHECK( true == gamma.hasDistributionData() );
+  CHECK( true == gamma.hasDistributionData() );
 
   CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
   auto multiplicity = std::get< int >( gamma.multiplicity() );
@@ -785,70 +785,70 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
 
   CHECK( std::nullopt == gamma.averageEnergy() );
 
-//  CHECK( std::nullopt != gamma.distributionData() );
-//  CHECK( true == std::holds_alternative< CoherentDistributionData >( gamma.distributionData().value() ) );
-//  auto data = std::get< CoherentDistributionData >( gamma.distributionData().value() );
-//
-//  CHECK( DistributionDataType::Coherent == data.type() );
-//  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
-//
-//  CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
-//  CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
-//  CHECK( 1253 == data.scatteringFunction().inverseLengths().size() );
-//  CHECK( 1253 == data.scatteringFunction().values().size() );
-//  CHECK( 1 == data.scatteringFunction().boundaries().size() );
-//  CHECK( 1 == data.scatteringFunction().interpolants().size() );
-//  CHECK_THAT( 0.       , WithinRel( data.scatteringFunction().inverseLengths()[0] ) );
-//  CHECK_THAT( 0.001    , WithinRel( data.scatteringFunction().inverseLengths()[1] ) );
-//  CHECK_THAT( 512000000, WithinRel( data.scatteringFunction().inverseLengths()[1251] ) );
-//  CHECK_THAT( 1e+9     , WithinRel( data.scatteringFunction().inverseLengths()[1252] ) );
-//  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[0] ) );
-//  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[1] ) );
-//  CHECK_THAT( 1.1908E-37, WithinRel( data.scatteringFunction().values()[1251] ) );
-//  CHECK_THAT( 8.1829e-39, WithinRel( data.scatteringFunction().values()[1252] ) );
-//  CHECK( 1252 == data.scatteringFunction().boundaries()[0] );
-//  CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
-//  CHECK( true == data.scatteringFunction().isLinearised() );
-//
-//  CHECK( std::nullopt != data.realAnomolousFormFactor() );
-//  auto factor = data.realAnomolousFormFactor().value();
-//  CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
-//  CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
-//  CHECK( 297 == factor.energies().size() );
-//  CHECK( 297 == factor.values().size() );
-//  CHECK( 1 == factor.boundaries().size() );
-//  CHECK( 1 == factor.interpolants().size() );
-//  CHECK_THAT( 1.        , WithinRel( factor.energies()[0] ) );
-//  CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
-//  CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
-//  CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
-//  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
-//  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
-//  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
-//  CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
-//  CHECK( 296 == factor.boundaries()[0] );
-//  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
-//  CHECK( true == factor.isLinearised() );
-//
-//  CHECK( std::nullopt != data.imaginaryAnomolousFormFactor() );
-//  factor = data.imaginaryAnomolousFormFactor().value();
-//  CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
-//  CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
-//  CHECK( 297 == factor.energies().size() );
-//  CHECK( 297 == factor.values().size() );
-//  CHECK( 1 == factor.boundaries().size() );
-//  CHECK( 1 == factor.interpolants().size() );
-//  CHECK_THAT( 1.        , WithinRel( factor.energies()[0] ) );
-//  CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
-//  CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
-//  CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
-//  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
-//  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
-//  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
-//  CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
-//  CHECK( 296 == factor.boundaries()[0] );
-//  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
-//  CHECK( true == factor.isLinearised() );
+  CHECK( std::nullopt != gamma.distributionData() );
+  CHECK( true == std::holds_alternative< CoherentDistributionData >( gamma.distributionData().value() ) );
+  auto data = std::get< CoherentDistributionData >( gamma.distributionData().value() );
+
+  CHECK( DistributionDataType::Coherent == data.type() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
+
+  CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
+  CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
+  CHECK( 1253 == data.scatteringFunction().inverseLengths().size() );
+  CHECK( 1253 == data.scatteringFunction().values().size() );
+  CHECK( 1 == data.scatteringFunction().boundaries().size() );
+  CHECK( 1 == data.scatteringFunction().interpolants().size() );
+  CHECK_THAT( 0.       , WithinRel( data.scatteringFunction().inverseLengths()[0] ) );
+  CHECK_THAT( 0.001    , WithinRel( data.scatteringFunction().inverseLengths()[1] ) );
+  CHECK_THAT( 512000000, WithinRel( data.scatteringFunction().inverseLengths()[1251] ) );
+  CHECK_THAT( 1e+9     , WithinRel( data.scatteringFunction().inverseLengths()[1252] ) );
+  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[0] ) );
+  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[1] ) );
+  CHECK_THAT( 1.1908E-37, WithinRel( data.scatteringFunction().values()[1251] ) );
+  CHECK_THAT( 8.1829e-39, WithinRel( data.scatteringFunction().values()[1252] ) );
+  CHECK( 1252 == data.scatteringFunction().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
+  CHECK( true == data.scatteringFunction().isLinearised() );
+
+  CHECK( std::nullopt != data.realAnomolousFormFactor() );
+  auto factor = data.realAnomolousFormFactor().value();
+  CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
+  CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
+  CHECK( 297 == factor.energies().size() );
+  CHECK( 297 == factor.values().size() );
+  CHECK( 1 == factor.boundaries().size() );
+  CHECK( 1 == factor.interpolants().size() );
+  CHECK_THAT( 1.        , WithinRel( factor.energies()[0] ) );
+  CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
+  CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
+  CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
+  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
+  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
+  CHECK( 296 == factor.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
+  CHECK( true == factor.isLinearised() );
+
+  CHECK( std::nullopt != data.imaginaryAnomolousFormFactor() );
+  factor = data.imaginaryAnomolousFormFactor().value();
+  CHECK_THAT( 1.  , WithinRel( factor.lowerEnergyLimit() ) );
+  CHECK_THAT( 1e+7, WithinRel( factor.upperEnergyLimit() ) );
+  CHECK( 297 == factor.energies().size() );
+  CHECK( 297 == factor.values().size() );
+  CHECK( 1 == factor.boundaries().size() );
+  CHECK( 1 == factor.interpolants().size() );
+  CHECK_THAT( 1.        , WithinRel( factor.energies()[0] ) );
+  CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
+  CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
+  CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
+  CHECK( 296 == factor.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
+  CHECK( true == factor.isLinearised() );
 
   auto hydrogen = coherent.products()[1];
   CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
@@ -885,7 +885,7 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
   CHECK( id::ParticleID( "g" ) == gamma.identifier() );
   CHECK( true == gamma.isLinearised() );
   CHECK( false == gamma.hasAverageEnergy() );
-//  CHECK( true == gamma.hasDistributionData() );
+  CHECK( true == gamma.hasDistributionData() );
 
   CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
   auto multiplicity = std::get< int >( gamma.multiplicity() );
@@ -893,30 +893,30 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
 
   CHECK( std::nullopt == gamma.averageEnergy() );
 
-//  CHECK( std::nullopt != gamma.distributionData() );
-//  CHECK( true == std::holds_alternative< IncoherentDistributionData >( gamma.distributionData().value() ) );
-//  auto data = std::get< IncoherentDistributionData >( gamma.distributionData().value() );
-//
-//  CHECK( DistributionDataType::Incoherent == data.type() );
-//  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
-//
-//  CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
-//  CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
-//  CHECK( 398 == data.scatteringFunction().inverseLengths().size() );
-//  CHECK( 398 == data.scatteringFunction().values().size() );
-//  CHECK( 1 == data.scatteringFunction().boundaries().size() );
-//  CHECK( 1 == data.scatteringFunction().interpolants().size() );
-//  CHECK_THAT( 0.       , WithinRel( data.scatteringFunction().inverseLengths()[0] ) );
-//  CHECK_THAT( 1e-7     , WithinRel( data.scatteringFunction().inverseLengths()[1] ) );
-//  CHECK_THAT( 512000000, WithinRel( data.scatteringFunction().inverseLengths()[396] ) );
-//  CHECK_THAT( 1e+9     , WithinRel( data.scatteringFunction().inverseLengths()[397] ) );
-//  CHECK_THAT( 0.        , WithinRel( data.scatteringFunction().values()[0] ) );
-//  CHECK_THAT( 4.4097E-13, WithinRel( data.scatteringFunction().values()[1] ) );
-//  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[396] ) );
-//  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[397] ) );
-//  CHECK( 397 == data.scatteringFunction().boundaries()[0] );
-//  CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
-//  CHECK( true == data.scatteringFunction().isLinearised() );
+  CHECK( std::nullopt != gamma.distributionData() );
+  CHECK( true == std::holds_alternative< IncoherentDistributionData >( gamma.distributionData().value() ) );
+  auto data = std::get< IncoherentDistributionData >( gamma.distributionData().value() );
+
+  CHECK( DistributionDataType::Incoherent == data.type() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
+
+  CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
+  CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
+  CHECK( 398 == data.scatteringFunction().inverseLengths().size() );
+  CHECK( 398 == data.scatteringFunction().values().size() );
+  CHECK( 1 == data.scatteringFunction().boundaries().size() );
+  CHECK( 1 == data.scatteringFunction().interpolants().size() );
+  CHECK_THAT( 0.       , WithinRel( data.scatteringFunction().inverseLengths()[0] ) );
+  CHECK_THAT( 1e-7     , WithinRel( data.scatteringFunction().inverseLengths()[1] ) );
+  CHECK_THAT( 512000000, WithinRel( data.scatteringFunction().inverseLengths()[396] ) );
+  CHECK_THAT( 1e+9     , WithinRel( data.scatteringFunction().inverseLengths()[397] ) );
+  CHECK_THAT( 0.        , WithinRel( data.scatteringFunction().values()[0] ) );
+  CHECK_THAT( 4.4097E-13, WithinRel( data.scatteringFunction().values()[1] ) );
+  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[396] ) );
+  CHECK_THAT( 1.        , WithinRel( data.scatteringFunction().values()[397] ) );
+  CHECK( 397 == data.scatteringFunction().boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
+  CHECK( true == data.scatteringFunction().isLinearised() );
 
   auto hydrogen = incoherent.products()[1];
   CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );

@@ -84,7 +84,7 @@ namespace gnds {
     }
     else {
 
-      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes"
+      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes "
                   "for tabulated form factor data data" );
       throw std::exception();
     }

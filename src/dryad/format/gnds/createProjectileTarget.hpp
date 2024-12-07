@@ -3,7 +3,6 @@
 
 // system includes
 #include <vector>
-#include <iostream>
 
 // other includes
 #include "pugixml.hpp"

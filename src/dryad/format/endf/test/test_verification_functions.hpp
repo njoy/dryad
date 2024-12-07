@@ -766,7 +766,7 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   auto data = std::get< CoherentDistributionData >( gamma.distributionData().value() );
 
   CHECK( DistributionDataType::Coherent == data.type() );
-  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
 
   CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
@@ -871,7 +871,7 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
   auto data = std::get< IncoherentDistributionData >( gamma.distributionData().value() );
 
   CHECK( DistributionDataType::Incoherent == data.type() );
-  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
 
   CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
