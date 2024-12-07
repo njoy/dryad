@@ -16,7 +16,7 @@ void verifyChunk( const TabulatedFormFactor& );
 
 SCENARIO( "createTabulatedFormFactorFromNodes" ) {
 
-  GIVEN( "GNDS average energy node from photoatomic data" ) {
+  GIVEN( "GNDS form factor node from photoatomic data" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
@@ -27,7 +27,7 @@ SCENARIO( "createTabulatedFormFactorFromNodes" ) {
                                    child( "realAnomalousFactor" ).
                                    first_child();
 
-    WHEN( "a single average energy node is given" ) {
+    WHEN( "a single form factor node is given" ) {
 
       THEN( "it can be converted" ) {
 
