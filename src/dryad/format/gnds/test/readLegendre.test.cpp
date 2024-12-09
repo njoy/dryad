@@ -16,7 +16,7 @@ void verifyChunk( const std::pair< std::optional< double >, std::vector< double 
 
 SCENARIO( "readLegendre" ) {
 
-  GIVEN( "a GNDS xys1d xml nodes" ) {
+  GIVEN( "a GNDS Legendre xml nodes" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );

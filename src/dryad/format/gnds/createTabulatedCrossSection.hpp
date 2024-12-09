@@ -3,7 +3,7 @@
 
 // system includes
 #include <vector>
-#include <iostream>
+
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"

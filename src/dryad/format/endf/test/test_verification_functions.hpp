@@ -766,7 +766,7 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   auto data = std::get< CoherentDistributionData >( gamma.distributionData().value() );
 
   CHECK( DistributionDataType::Coherent == data.type() );
-  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
 
   CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
@@ -798,9 +798,9 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
   CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
   CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
-  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
-  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
-  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
+  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
   CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
   CHECK( 296 == factor.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
@@ -818,9 +818,9 @@ void verifyPhotonCoherentReaction( const Reaction& coherent ) {
   CHECK_THAT( 2.        , WithinRel( factor.energies()[1] ) );
   CHECK_THAT( 9549925.86, WithinRel( factor.energies()[295] ) );
   CHECK_THAT( 1e+7      , WithinRel( factor.energies()[296] ) );
-  CHECK_THAT( -1.00260813, WithinRel( factor.values()[0] ) );
-  CHECK_THAT( -1.01054501, WithinRel( factor.values()[1] ) );
-  CHECK_THAT( 2.8024E-11, WithinRel( factor.values()[295] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[0] ) );
+  CHECK_THAT( 0.        , WithinRel( factor.values()[1] ) );
+  CHECK_THAT( 8.9767E-15, WithinRel( factor.values()[295] ) );
   CHECK_THAT( 0.        , WithinRel( factor.values()[296] ) );
   CHECK( 296 == factor.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
@@ -871,7 +871,7 @@ void verifyPhotonIncoherentReaction( const Reaction& incoherent ) {
   auto data = std::get< IncoherentDistributionData >( gamma.distributionData().value() );
 
   CHECK( DistributionDataType::Incoherent == data.type() );
-  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( ReferenceFrame::Laboratory == data.frame() );
 
   CHECK_THAT( 0.  , WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
   CHECK_THAT( 1e+9, WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );

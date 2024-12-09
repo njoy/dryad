@@ -12,6 +12,8 @@
 #include "dryad/format/gnds/createMultiplicity.hpp"
 #include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
 #include "dryad/format/gnds/createUncorrelatedDistributionData.hpp"
+#include "dryad/format/gnds/createCoherentDistributionData.hpp"
+#include "dryad/format/gnds/createIncoherentDistributionData.hpp"
 #include "dryad/format/gnds/createTabulatedAverageEnergy.hpp"
 #include "dryad/ReactionProduct.hpp"
 
@@ -64,6 +66,22 @@ namespace gnds {
 
           distribution = createUncorrelatedDistributionData( node );
         }
+      }
+      else if ( strcmp( node.name(), "coherentPhotonScattering" ) == 0 ) {
+
+        // the data can be found in the double differential xs
+        node = product.parent().parent().parent().
+                       child( "doubleDifferentialCrossSection" ).
+                       find_child_by_attribute( "label", style.c_str() );
+        distribution = createCoherentDistributionData( node );
+      }
+      else if ( strcmp( node.name(), "incoherentPhotonScattering" ) == 0 ) {
+
+        // the data can be found in the double differential xs
+        node = product.parent().parent().parent().
+                       child( "doubleDifferentialCrossSection" ).
+                       find_child_by_attribute( "label", style.c_str() );
+        distribution = createIncoherentDistributionData( node );
       }
     }
 
