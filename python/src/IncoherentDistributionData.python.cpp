@@ -46,7 +46,8 @@ void wrapIncoherentDistributionData( python::module& module, python::module& ) {
 
     // static constexpr function needs lambda
     "type",
-    [] ( const Component& self ) { return self.type(); },
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.type(); },
     "The distribution data type"
   )
   .def_property_readonly(

@@ -26,8 +26,9 @@ add_python_test( id.ElementID                          id/Test_dryad_id_ElementI
 
 add_python_test( TabulatedMultiplicity                 Test_dryad_TabulatedMultiplicity.py )
 add_python_test( TabulatedAverageEnergy                Test_dryad_TabulatedAverageEnergy.py )
+add_python_test( TabulatedAverageCosine                Test_dryad_TabulatedAverageCosine.py )
 add_python_test( LegendreAngularDistributionFunction   Test_dryad_LegendreAngularDistributionFunction.py )
-#add_python_test( LegendreAngularDistribution           Test_dryad_LegendreAngularDistribution.py )
+add_python_test( LegendreAngularDistribution           Test_dryad_LegendreAngularDistribution.py )
 add_python_test( LegendreAngularDistributions          Test_dryad_LegendreAngularDistributions.py )
 add_python_test( TabulatedAngularDistributionFunction  Test_dryad_TabulatedAngularDistributionFunction.py )
 #add_python_test( TabulatedAngularDistribution          Test_dryad_TabulatedAngularDistribution.py )

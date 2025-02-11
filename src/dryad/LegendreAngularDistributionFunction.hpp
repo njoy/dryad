@@ -12,12 +12,55 @@
 namespace njoy {
 namespace dryad {
 
+  // forward declaration LegendreAngularDistribution
+  class LegendreAngularDistribution;
+
   /**
    *  @class
    *  @brief An angular distribution function using a Legendre expansion
+   *
+   *  Note: ENDF and GNDS Legendre expansions use an additional ( 2 * n + 1 ) / 2
+   *  factor for the coefficient of order n in MF4 and MF6 LAW=1 & LAW=2. This
+   *  distribution function assumes those factors are already integrated in the
+   *  coefficients.
    */
   class LegendreAngularDistributionFunction :
       protected scion::math::LegendreSeries< double, double > {
+
+  friend LegendreAngularDistribution;
+
+  protected:
+
+    /**
+     *  @brief Calculate the roots of the function so that f(x) = a
+     *
+     *  @param[in] a   the value of a (default is zero)
+     */
+    std::vector< double > roots( double a = 0. ) const {
+
+      std::vector< double > roots = LegendreSeries::roots( a );
+      roots.erase( roots.begin(), std::lower_bound( roots.begin(), roots.end(), -1. ) );
+      roots.erase( std::upper_bound( roots.begin(), roots.end(), +1. ), roots.end() );
+      return roots;
+    }
+
+    /**
+     *  @brief Return the derivative
+     */
+    LegendreAngularDistributionFunction derivative() const {
+
+      return LegendreSeries::derivative();
+    }
+
+    /**
+     *  @brief Return the primitive (or antiderivative)
+     *
+     *  @param[in] left    the left bound of the integral (default = 0)
+     */
+    LegendreAngularDistributionFunction primitive( double left = 0. ) const {
+
+      return LegendreSeries::primitive( left );
+    }
 
   public:
 
@@ -45,6 +88,14 @@ namespace dryad {
 
     using LegendreSeries::operator();
     using LegendreSeries::order;
+
+    /**
+     *  @brief Normalise the distribution function
+     */
+    void normalise() noexcept {
+
+      this->operator/=( 2. * this->coefficients().front() );
+    }
 
     /**
      *  @brief Return a linearised angular distribution table
