@@ -2,6 +2,9 @@
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
 
+#include "dryad/format/endf/atomic/createElectronSubshellID.hpp"
+#include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
+
 #include "dryad/format/endf/createProjectileIdentifier.hpp"
 #include "dryad/format/endf/createTargetIdentifier.hpp"
 #include "dryad/format/endf/createProductIdentifier.hpp"
@@ -24,5 +27,8 @@
 #include "dryad/format/endf/createReactionProducts.hpp"
 #include "dryad/format/endf/createReaction.hpp"
 #include "dryad/format/endf/createReactions.hpp"
+
 #include "dryad/format/endf/createProjectileTarget.hpp"
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "dryad/format/endf/createAtomicRelaxation.hpp"
+#include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"

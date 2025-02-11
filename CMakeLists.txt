@@ -129,6 +129,7 @@ if( dryad.python )
       python/src/ReactionProduct.python.cpp
       python/src/Reaction.python.cpp
       python/src/ProjectileTarget.python.cpp
+      python/src/AtomicRelaxation.python.cpp
       )
 
   target_link_libraries( dryad.python PRIVATE dryad )
