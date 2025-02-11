@@ -118,6 +118,24 @@ void wrapReaction( python::module& module, python::module& ) {
     &Component::products,
     "The reaction products"
   )
+  .def(
+
+    "has_product",
+    &Component::hasProduct,
+    "Return whether or not a reaction product is present\n\n"
+    "Arguments:\n"
+    "    self   the reaction\n"
+    "    id     the reaction product identifier"
+  )
+  .def(
+
+    "product",
+    &Component::product,
+    "Return the requested reaction product\n\n"
+    "Arguments:\n"
+    "    self   the reaction\n"
+    "    id     the reaction product identifier"
+  )
   .def_property_readonly(
 
     "is_linearised",
