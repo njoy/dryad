@@ -19,7 +19,7 @@ SCENARIO( "projectileTarget" ) {
 
   GIVEN( "ENDF materials - incident neutrons" ) {
 
-    WHEN( "a single ENDF materials is given" ) {
+    WHEN( "a single ENDF material is given" ) {
 
       THEN( "it can be converted" ) {
 
@@ -64,11 +64,94 @@ SCENARIO( "projectileTarget" ) {
 
   GIVEN( "ENDF materials - electro-atomic" ) {
 
-    WHEN( "a single ENDF materials is given" ) {
+    // two test are used:
+    // - ENDF/B-VIII.1 data (same as GNDS test files)
+    // - ENDF/B-VIII.0 data which used an electron instead of photon particle id
+    //   This test verifies that we can handle it. For ENDF/B-VIII.1 (see above)
+    //   the ENDF file was corrected.
+
+    WHEN( "a single ENDF material is given" ) {
 
       THEN( "it can be converted" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "e-001_H_000.endf" );
+
+        CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
+        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+
+        CHECK( InteractionType::Atomic == H0.interactionType() );
+
+        CHECK( true == H0.isLinearised() );
+
+        CHECK( std::nullopt == H0.resonances() );
+
+        CHECK( true == H0.hasReaction( id::ReactionID(  "501" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "522" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "525" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "526" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "527" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "528" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID(  "534" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "-526" ) ) );
+        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+        CHECK( 8 == H0.reactions().size() );
+
+        auto total = H0.reactions()[0];
+        verifyElectronTotalReaction( total );
+
+        auto ionisation = H0.reactions()[1];
+        verifyElectronTotalIonisationReaction( ionisation );
+
+        auto elastic = H0.reactions()[2];
+        verifyElectronElasticReaction( elastic );
+
+        auto telastic = H0.reactions()[3];
+        verifyElectronTotalElasticReaction( telastic );
+
+        auto bremsstrahlung = H0.reactions()[4];
+        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+
+        auto excitation = H0.reactions()[5];
+        verifyElectronExcitationReaction( excitation );
+
+        auto subionisation = H0.reactions()[6];
+        verifyElectronSubshellIonisationReaction( subionisation );
+
+        auto deficit = H0.reactions()[7];
+        verifyElectronElasticDeficitReaction( deficit );
+
+        total = H0.reaction( id::ReactionID( "501" ) );
+        verifyElectronTotalReaction( total );
+
+        ionisation = H0.reaction( id::ReactionID( "522" ) );
+        verifyElectronTotalIonisationReaction( ionisation );
+
+        elastic = H0.reaction( id::ReactionID( "525" ) );
+        verifyElectronElasticReaction( elastic );
+
+        telastic = H0.reaction( id::ReactionID( "526" ) );
+        verifyElectronTotalElasticReaction( telastic );
+
+        bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
+        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+
+        excitation = H0.reaction( id::ReactionID( "528" ) );
+        verifyElectronExcitationReaction( excitation );
+
+        subionisation = H0.reaction( id::ReactionID( "534" ) );
+        verifyElectronSubshellIonisationReaction( subionisation );
+
+        deficit = H0.reaction( id::ReactionID( "-526" ) );
+        verifyElectronElasticDeficitReaction( deficit );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single ENDF material is given - endf/B-VIII.0" ) {
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "e-001_H_000-endf80.endf" );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
