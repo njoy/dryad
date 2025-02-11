@@ -6,6 +6,7 @@
 
 // other includes
 #include "pugixml.hpp"
+#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
@@ -16,7 +17,10 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS axes node
    */
-  std::vector< std::string > readAxes( const pugi::xml_node& axes ) {
+  static std::vector< std::string > 
+  readAxes( const pugi::xml_node& axes ) {
+
+    throwExceptionOnWrongNode( axes, "axes" );
 
     std::vector< std::string > units;
 

@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "tools/disco/FreeFormatReal.hpp"
 
 namespace njoy {
@@ -17,7 +18,10 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS values node
    */
-  std::vector< double > readValues( const pugi::xml_node& values ) {
+  static std::vector< double > 
+  readValues( const pugi::xml_node& values ) {
+
+    throwExceptionOnWrongNode( values, "values" );
 
     using namespace njoy::tools;
 

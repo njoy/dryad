@@ -6,6 +6,7 @@
 #include "dryad/ProjectileTarget.hpp"
 #include "dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "dryad/format/gnds/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -132,6 +133,18 @@ void wrapProjectileTarget( python::module& module, python::module& ) {
     "will be transformed into a ProjectileTarget.\n\n"
     "Arguments:\n"
     "    filename   the ENDF file name"
+  )
+  .def_static(
+
+    "from_gnds_file",
+    [] ( const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::gnds::createProjectileTargetFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create ProjectileTarget data from a GNDS file\n\n"
+    "Arguments:\n"
+    "    filename   the GNDS file name"
   )
   .def_static(
 

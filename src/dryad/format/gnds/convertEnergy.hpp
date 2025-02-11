@@ -15,7 +15,7 @@ namespace gnds {
   /**
    *  @brief Convert an energy value GNDS into eV
    */
-  void convertEnergy( double& energy, const std::string& unit ) {
+  static void convertEnergy( double& energy, const std::string& unit ) {
 
     if ( unit != "eV" ) {
 

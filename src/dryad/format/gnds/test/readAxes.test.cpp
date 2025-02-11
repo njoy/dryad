@@ -48,6 +48,15 @@ SCENARIO( "readAxes" ) {
         verifyChunkWithIndex2( chunk );
       } // THEN
     } // WHEN
+
+    WHEN( "incorrect nodes are given" ) {
+
+      THEN( "exceptions are thrown" ) {
+
+        CHECK_THROWS( format::gnds::readAxes( reactions ) );                      // wrong node
+        CHECK_THROWS( format::gnds::readAxes( reactions.child( "undefined" ) ) ); // undefined node
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
 

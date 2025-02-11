@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "dryad/format/gnds/createReactionProduct.hpp"
 #include "dryad/ReactionProduct.hpp"
 
 namespace njoy {
@@ -15,15 +16,25 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a Reaction from an unparsed ENDF material
+   *  @brief Create a Reaction from a GNDS products node
    */
-  std::vector< ReactionProduct >
+  static std::vector< ReactionProduct >
   createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
-                          pugi::xml_node ) {
+                          pugi::xml_node suite, pugi::xml_node products,
+                         const std::string& style = "eval" ) {
 
-    std::vector< ReactionProduct > products;
+    // check that this is a valid products node
+    throwExceptionOnWrongNode( products, "products" );
 
-    return products;
+    // loop over product children
+    std::vector< ReactionProduct > data;
+    for ( pugi::xml_node product = products.child( "product" ); product; 
+          product = product.next_sibling( "product" ) ) {
+
+      data.emplace_back( createReactionProduct( projectile, target, suite, product, style ) );
+    }
+
+    return data;
   }
 
 } // gnds namespace

@@ -1,13 +1,13 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEATOMICRELAXATIONFROMFILE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEATOMICRELAXATIONFROMFILE
+#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPROJECTILETARGETFROMFILE
+#define NJOY_DRYAD_FORMAT_GNDS_CREATEPROJECTILETARGETFROMFILE
 
 // system includes
 #include <vector>
 
 // other includes
 #include "pugixml.hpp"
-#include "dryad/AtomicRelaxation.hpp"
-#include "dryad/format/gnds/createAtomicRelaxation.hpp"
+#include "dryad/ProjectileTarget.hpp"
+#include "dryad/format/gnds/createProjectileTarget.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -15,11 +15,11 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create an AtomicRelaxation from a GNDS xml file
+   *  @brief Create an ProjectileTarget from a GNDS file
    *
    *  @param[in] filename   the GNDS file name
    */
-  static AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename ) {
+  static ProjectileTarget createProjectileTargetFromFile( const std::string& filename ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
@@ -27,7 +27,7 @@ namespace gnds {
     pugi::xml_parse_result result = document.load_file( filename.c_str() );
     if ( document ) {
 
-      return createAtomicRelaxation( document );
+      return createProjectileTarget( document );
     }
     else {
 
