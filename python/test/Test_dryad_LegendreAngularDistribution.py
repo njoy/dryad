@@ -23,6 +23,8 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertAlmostEqual( 0.5 , pdf.coefficients[0] )
             self.assertAlmostEqual( 0.25, pdf.coefficients[1] )
 
+            self.assertEqual( True, chunk.has_cdf )
+
             cdf = chunk.cdf
             self.assertAlmostEqual( -1., cdf.lower_cosine_limit )
             self.assertAlmostEqual(  1., cdf.upper_cosine_limit )

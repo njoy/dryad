@@ -71,10 +71,14 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
         CHECK_THAT( 4.  , WithinRel( chunk.distributions()[3].pdf().energies()[1] ) );
         CHECK_THAT( 0.1 , WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
         CHECK_THAT( 0.9 , WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
-        CHECK( std::nullopt == chunk.distributions()[0].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[1].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[2].cdf() );
-        CHECK( std::nullopt == chunk.distributions()[3].cdf() );
+        CHECK( false == chunk.distributions()[0].hasCdf() );
+        CHECK( false == chunk.distributions()[1].hasCdf() );
+        CHECK( false == chunk.distributions()[2].hasCdf() );
+        CHECK( false == chunk.distributions()[3].hasCdf() );
+        CHECK_THROWS( chunk.distributions()[0].cdf() );
+        CHECK_THROWS( chunk.distributions()[1].cdf() );
+        CHECK_THROWS( chunk.distributions()[2].cdf() );
+        CHECK_THROWS( chunk.distributions()[3].cdf() );
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
       } // THEN

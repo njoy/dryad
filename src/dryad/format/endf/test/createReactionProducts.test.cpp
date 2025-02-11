@@ -130,10 +130,14 @@ void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct& chunk ) {
   CHECK_THAT(  .246105000, WithinRel( energy.distributions()[9].pdf().values()[1] ) );
   CHECK_THAT( 9.06486E-16, WithinRel( energy.distributions()[9].pdf().values()[109] ) );
   CHECK_THAT( 5.16344E-16, WithinRel( energy.distributions()[9].pdf().values()[110] ) );
-  CHECK( std::nullopt == energy.distributions()[0].cdf() );
-  CHECK( std::nullopt == energy.distributions()[1].cdf() );
-  CHECK( std::nullopt == energy.distributions()[8].cdf() );
-  CHECK( std::nullopt == energy.distributions()[9].cdf() );
+  CHECK( false == energy.distributions()[0].hasCdf() );
+  CHECK( false == energy.distributions()[1].hasCdf() );
+  CHECK( false == energy.distributions()[8].hasCdf() );
+  CHECK( false == energy.distributions()[9].hasCdf() );
+  CHECK_THROWS( energy.distributions()[0].cdf() );
+  CHECK_THROWS( energy.distributions()[1].cdf() );
+  CHECK_THROWS( energy.distributions()[8].cdf() );
+  CHECK_THROWS( energy.distributions()[9].cdf() );
   CHECK( 9 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }
