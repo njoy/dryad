@@ -51,12 +51,16 @@ namespace endf {
       // calculate deficit reaction for elastic scattering in electro-atomic data
       if ( material.hasSection( 23, 526 ) && ReactionIdentifiers::isSummation( material, 526 ) ) {
 
-        auto total = material.section( 23, 526 ).parse< 23 >();
-        TabulatedCrossSection deficit = createTabulatedCrossSection( total ).linearise();
-        auto partial = material.section( 23, 525 ).parse< 23 >();
-        deficit -= createTabulatedCrossSection( partial ).linearise();
+        auto total = std::find_if( reactions.begin(), reactions.end(), 
+                                   [] ( const auto& reaction ) 
+                                      { return reaction.identifier() == id::ReactionID( "501" ); } );
+        auto partial = std::find_if( reactions.begin(), reactions.end(), 
+                                     [] ( const auto& reaction ) 
+                                        { return reaction.identifier() == id::ReactionID( "525" ); } );
+        TabulatedCrossSection deficit = total->crossSection().linearise();
+        deficit -= partial->crossSection().linearise();
 
-        reactions.push_back( Reaction( "-526", deficit, {}, std::nullopt, 0. ) );
+        reactions.emplace_back( Reaction( "-526", deficit, {}, std::nullopt, 0. ) );
       }
     }
     return reactions;

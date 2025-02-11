@@ -8,9 +8,8 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
-#include "dryad/format/gnds/createEnergy.hpp"
+#include "dryad/format/gnds/convertEnergy.hpp"
 #include "dryad/format/gnds/atomic/createElectronSubshellID.hpp"
-#include "pugixml.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -31,7 +30,8 @@ namespace atomic {
     // energy and unit are attributes on the double node in the bindingEnergy node
     //! @todo we do not verify the eval style
     pugi::xml_node node = configuration.child( "bindingEnergy" ).child( "double" );
-    double energy = createEnergy( node.attribute( "value" ).as_double(), node.attribute( "unit" ).as_string() );
+    double energy = node.attribute( "value" ).as_double();
+    convertEnergy( energy, node.attribute( "unit" ).as_string() );
 
     // look for transitions
     pugi::xml_node decay = configuration.child( "decayData" );

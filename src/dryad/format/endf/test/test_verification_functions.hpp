@@ -901,7 +901,7 @@ void verifyPhotonElectronFieldPairProductionReaction( const Reaction& epairprodu
 
   CHECK( std::nullopt == epairproduction.massDifferenceQValue() );
   CHECK( std::nullopt != epairproduction.reactionQValue() );
-  CHECK_THAT( 0., WithinRel( epairproduction.reactionQValue().value() ) );
+  CHECK_THAT( -1.022e+6, WithinRel( epairproduction.reactionQValue().value() ) );
 
   CHECK( true == epairproduction.crossSection().isLinearised() );
   CHECK( 217 == epairproduction.crossSection().numberPoints() );
@@ -929,7 +929,7 @@ void verifyPhotonNuclearFieldPairProductionReaction( const Reaction& npairproduc
 
   CHECK( std::nullopt == npairproduction.massDifferenceQValue() );
   CHECK( std::nullopt != npairproduction.reactionQValue() );
-  CHECK_THAT( 0., WithinRel( npairproduction.reactionQValue().value() ) );
+  CHECK_THAT( -1.022e+6, WithinRel( npairproduction.reactionQValue().value() ) );
 
   CHECK( true == npairproduction.crossSection().isLinearised() );
   CHECK( 308 == npairproduction.crossSection().numberPoints() );

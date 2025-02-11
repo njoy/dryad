@@ -25,7 +25,16 @@ namespace gnds {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( filename.c_str() );
-    return createAtomicRelaxation( document );
+    if ( document ) {
+
+      return createAtomicRelaxation( document );
+    }
+    else {
+
+      Log::error( "The GNDS file \'{}\' does not exist or is not an XML file",
+                  filename );
+      throw std::exception();
+    }
   }
 
 } // gnds namespace
