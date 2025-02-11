@@ -152,7 +152,7 @@ namespace endf {
 
     if ( real.has_value() || imaginary.has_value() ) {
 
-      auto distribution = CoherentDistributionData( ReferenceFrame::CentreOfMass,
+      auto distribution = CoherentDistributionData( ReferenceFrame::Laboratory,
                                                     createTabulatedScatteringFunction( coherent ),
                                                     createTabulatedFormFactor( real.value() ),
                                                     createTabulatedFormFactor( imaginary.value() ) );
@@ -161,7 +161,7 @@ namespace endf {
     }
     else {
 
-      auto distribution = CoherentDistributionData( ReferenceFrame::CentreOfMass,
+      auto distribution = CoherentDistributionData( ReferenceFrame::Laboratory,
                                                     createTabulatedScatteringFunction( coherent ) );
       return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
     }
@@ -186,7 +186,7 @@ namespace endf {
 
     //! @todo what about the reference frames?
 
-    auto distribution = IncoherentDistributionData( ReferenceFrame::CentreOfMass,
+    auto distribution = IncoherentDistributionData( ReferenceFrame::Laboratory,
                                                     createTabulatedScatteringFunction( incoherent ) );
     return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
   }

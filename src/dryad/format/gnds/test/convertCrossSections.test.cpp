@@ -28,8 +28,8 @@ SCENARIO( "convertCrossSections" ) {
         xs = { 1., 1000. };
         format::gnds::convertCrossSections( xs, "Mb" );
         CHECK( 2 == xs.size() );
-        CHECK(    1. == xs[0] );
-        CHECK( 1000. == xs[1] );
+        CHECK(  1e+6 == xs[0] );
+        CHECK(  1e+9 == xs[1] );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {

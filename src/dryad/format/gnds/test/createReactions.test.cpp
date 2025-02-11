@@ -23,7 +23,7 @@ SCENARIO( "createReactions" ) {
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
 
-    WHEN( "a single ENDF material is given" ) {
+    WHEN( "a GNDS reaction suite is given" ) {
 
       THEN( "all reactions can be created" ) {
 
@@ -45,13 +45,13 @@ SCENARIO( "createReactions" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "ENDF materials - electro-atomic" ) {
+  GIVEN( "GNDS data - electro-atomic" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
 
-    WHEN( "a single ENDF material is given" ) {
+    WHEN( "a GNDS reaction suite is given" ) {
 
       THEN( "all reactions can be created" ) {
 
@@ -88,13 +88,13 @@ SCENARIO( "createReactions" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "ENDF materials - photo-atomic" ) {
+  GIVEN( "GNDS data - photo-atomic" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
 
-    WHEN( "a single ENDF material is given" ) {
+    WHEN( "a GNDS reaction suite is given" ) {
 
       THEN( "all reactions can be created" ) {
 

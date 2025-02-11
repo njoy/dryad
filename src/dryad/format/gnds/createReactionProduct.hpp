@@ -8,9 +8,13 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "dryad/format/gnds/createParticleIdentifier.hpp"
 #include "dryad/format/gnds/createMultiplicity.hpp"
 #include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
 #include "dryad/format/gnds/createUncorrelatedDistributionData.hpp"
+#include "dryad/format/gnds/createCoherentDistributionData.hpp"
+#include "dryad/format/gnds/createIncoherentDistributionData.hpp"
+#include "dryad/format/gnds/createTabulatedAverageEnergy.hpp"
 #include "dryad/ReactionProduct.hpp"
 
 namespace njoy {
@@ -30,23 +34,19 @@ namespace gnds {
     throwExceptionOnWrongNode( product, "product" );
 
     // get the secondary particle identifier and adjust as required
-    std::string pid( product.attribute( "pid" ).as_string() );
-    if ( pid == "photon" ) {
-
-      pid = "g";
-    }
-    id::ParticleID id( pid );
+    id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
     Log::info( "Reading reaction product data for \'{}\'", id );
 
     // create the multiplicity
     auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );
 
-    // get distribution
-    auto distribution = product.child( "distribution" );
-    if ( distribution ) {
+    // get distribution data
+    std::optional< ReactionProduct::DistributionData > distribution = std::nullopt;
+    auto node = product.child( "distribution" );
+    if ( node ) {
 
       // get the first node of the requested style and act accordingly
-      auto node = distribution.find_child_by_attribute( "label", style.c_str() );
+      node = node.find_child_by_attribute( "label", style.c_str() );
       if ( strcmp( node.name(), "angularTwoBody" ) == 0 ) {
 
         // ignore recoil or regions2d distributions for now
@@ -54,28 +54,48 @@ namespace gnds {
         auto regions2d = node.child( "regions2d" );
         if ( ! recoil && ! regions2d ) {
 
-          return ReactionProduct( id, multiplicity, createTwoBodyDistributionData( node ) );
+          distribution = createTwoBodyDistributionData( node );
         }
       }
-      if ( strcmp( node.name(), "uncorrelated" ) == 0 ) {
+      else if ( strcmp( node.name(), "uncorrelated" ) == 0 ) {
 
         // ignore discrete gamma distributions for now
         auto discreteGamma = node.child( "energy" ).child( "discreteGamma" );
         auto primaryGamma = node.child( "energy" ).child( "primaryGamma" );
         if ( ! discreteGamma && ! primaryGamma ) {
 
-          return ReactionProduct( id, multiplicity, createUncorrelatedDistributionData( node ) );
+          distribution = createUncorrelatedDistributionData( node );
         }
       }
-      else {
+      else if ( strcmp( node.name(), "coherentPhotonScattering" ) == 0 ) {
 
-        // for now, return a basic reaction product
-        return ReactionProduct( id, multiplicity );
+        // the data can be found in the double differential xs
+        node = product.parent().parent().parent().
+                       child( "doubleDifferentialCrossSection" ).
+                       find_child_by_attribute( "label", style.c_str() );
+        distribution = createCoherentDistributionData( node );
+      }
+      else if ( strcmp( node.name(), "incoherentPhotonScattering" ) == 0 ) {
+
+        // the data can be found in the double differential xs
+        node = product.parent().parent().parent().
+                       child( "doubleDifferentialCrossSection" ).
+                       find_child_by_attribute( "label", style.c_str() );
+        distribution = createIncoherentDistributionData( node );
       }
     }
 
-    // there is no distribution, return a basic reaction product
-    return ReactionProduct( id, multiplicity );
+    // get distribution data
+    std::optional< TabulatedAverageEnergy > average = std::nullopt;
+    node = product.child( "averageProductEnergy" );
+    if ( node ) {
+
+      average = createTabulatedAverageEnergy( node );
+    }
+
+    return ReactionProduct( id, multiplicity,
+                            std::move( distribution ),
+                            std::move( average ) );
   }
 
 } // gnds namespace
