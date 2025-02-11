@@ -24,6 +24,8 @@ namespace photoatomic {
 
     std::vector< TabulatedCrossSection > xs;
 
+    // photoatomic data is stored as log values, except when the value
+    // is exactly 0 (in which case it is zero)
     auto convertEnergy = [] ( auto&& energy ) {
 
       return energy == 0. ? energy : std::exp( energy ) * 1e+6;
