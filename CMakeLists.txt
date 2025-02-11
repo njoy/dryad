@@ -105,10 +105,13 @@ if( dryad.python )
       python/src/TabulatedMultiplicity.python.cpp
       python/src/TabulatedAverageEnergy.python.cpp
       python/src/IsotropicAngularDistributions.python.cpp
+      python/src/LegendreAngularDistributionFunction.python.cpp
       python/src/LegendreAngularDistribution.python.cpp
       python/src/LegendreAngularDistributions.python.cpp
+      python/src/TabulatedAngularDistributionFunction.python.cpp
       python/src/TabulatedAngularDistribution.python.cpp
       python/src/TabulatedAngularDistributions.python.cpp
+      python/src/TabulatedEnergyDistributionFunction.python.cpp
       python/src/TabulatedEnergyDistribution.python.cpp
       python/src/TabulatedEnergyDistributions.python.cpp
       python/src/TabulatedFormFactor.python.cpp

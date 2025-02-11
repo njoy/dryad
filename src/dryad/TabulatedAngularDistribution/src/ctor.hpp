@@ -1,15 +1,3 @@
-private:
-
-/**
- *  @brief Private constructor
- *
- *  @param table   the interpolation table
- */
-TabulatedAngularDistribution( InterpolationTable< double, double > table ) :
-  InterpolationTable( std::move( table ) ) {}
-
-public:
-
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
@@ -29,21 +17,27 @@ TabulatedAngularDistribution& operator=( TabulatedAngularDistribution&& ) = defa
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
  */
-TabulatedAngularDistribution( std::vector< double > cosines,
-                              std::vector< double > values,
-                              std::vector< std::size_t > boundaries,
-                              std::vector< InterpolationType > interpolants ) :
-  InterpolationTable( std::move( cosines ), std::move( values ),
-                      std::move( boundaries ), std::move( interpolants ) ) {}
+TabulatedAngularDistribution(
+    std::vector< double > cosines,
+    std::vector< double > values,
+    std::vector< std::size_t > boundaries,
+    std::vector< InterpolationType > interpolants,
+    bool cdf = false ) :
+  pdf_( std::move( cosines ), std::move( values ),
+        std::move( boundaries ), std::move( interpolants ) ),
+  cdf_( std::nullopt ) {}
 
 /**
- *  @brief Constructor for a probability using a single interpolation zone
+ *  @brief Constructor for a pdf using a single interpolation zone
  *
  *  @param cosines        the cosine values
  *  @param values         the probability values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
-TabulatedAngularDistribution( std::vector< double > cosines,
-                              std::vector< double > values,
-                              InterpolationType interpolant = InterpolationType::LinearLinear ) :
-  InterpolationTable( std::move( cosines ), std::move( values ), interpolant ) {}
+TabulatedAngularDistribution(
+    std::vector< double > cosines,
+    std::vector< double > values,
+    InterpolationType interpolant = InterpolationType::LinearLinear,
+    bool cdf = false ) :
+  pdf_( std::move( cosines ), std::move( values ), interpolant ),
+  cdf_( std::nullopt ) {}

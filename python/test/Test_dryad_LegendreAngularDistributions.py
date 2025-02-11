@@ -9,7 +9,7 @@ from dryad import LegendreAngularDistribution
 from dryad import LegendreAngularDistributions
 from dryad import InterpolationType
 
-class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
+class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
     """Unit test for the LegendreAngularDistribution class."""
 
     def test_component( self ) :
@@ -27,17 +27,21 @@ class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 2., chunk.grid[1] )
             self.assertAlmostEqual( 3., chunk.grid[2] )
             self.assertAlmostEqual( 4., chunk.grid[3] )
-            self.assertEqual( 1, len( chunk.distributions[0].coefficients ) )
-            self.assertEqual( 2, len( chunk.distributions[1].coefficients ) )
-            self.assertEqual( 2, len( chunk.distributions[2].coefficients ) )
-            self.assertEqual( 2, len( chunk.distributions[3].coefficients ) )
-            self.assertAlmostEqual( 0.5 , chunk.distributions[0].coefficients[0] )
-            self.assertAlmostEqual( 0.5 , chunk.distributions[1].coefficients[0] )
-            self.assertAlmostEqual( 0.01, chunk.distributions[1].coefficients[1] )
-            self.assertAlmostEqual( 0.5 , chunk.distributions[2].coefficients[0] )
-            self.assertAlmostEqual( 0.1 , chunk.distributions[2].coefficients[1] )
-            self.assertAlmostEqual( 0.5 , chunk.distributions[3].coefficients[0] )
-            self.assertAlmostEqual( 0.4 , chunk.distributions[3].coefficients[1] )
+            self.assertEqual( 1, len( chunk.distributions[0].pdf.coefficients ) )
+            self.assertEqual( 2, len( chunk.distributions[1].pdf.coefficients ) )
+            self.assertEqual( 2, len( chunk.distributions[2].pdf.coefficients ) )
+            self.assertEqual( 2, len( chunk.distributions[3].pdf.coefficients ) )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[0].pdf.coefficients[0] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[1].pdf.coefficients[0] )
+            self.assertAlmostEqual( 0.01, chunk.distributions[1].pdf.coefficients[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[2].pdf.coefficients[0] )
+            self.assertAlmostEqual( 0.1 , chunk.distributions[2].pdf.coefficients[1] )
+            self.assertAlmostEqual( 0.5 , chunk.distributions[3].pdf.coefficients[0] )
+            self.assertAlmostEqual( 0.4 , chunk.distributions[3].pdf.coefficients[1] )
+            self.assertEqual( None, chunk.distributions[0].cdf )
+            self.assertEqual( None, chunk.distributions[1].cdf )
+            self.assertEqual( None, chunk.distributions[2].cdf )
+            self.assertEqual( None, chunk.distributions[3].cdf )
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 

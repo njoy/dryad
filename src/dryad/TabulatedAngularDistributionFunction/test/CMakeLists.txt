@@ -1,0 +1,1 @@
+add_cpp_test( TabulatedAngularDistributionFunction TabulatedAngularDistributionFunction.test.cpp )

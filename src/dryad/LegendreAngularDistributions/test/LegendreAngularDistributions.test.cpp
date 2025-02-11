@@ -16,9 +16,6 @@ SCENARIO( "LegendreAngularDistributions" ) {
 
   GIVEN( "legendre series without boundaries and no jumps" ) {
 
-    // note : the Legendre coefficients were chosen so that this
-    //        test case linearises to the previous tabulated version.
-
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > energies = { 1., 2., 3., 4. };
@@ -46,17 +43,21 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
         CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
         CHECK_THAT( 4., WithinRel( chunk.grid()[3] ) );
-        CHECK( 1 == chunk.distributions()[0].coefficients().size() );
-        CHECK( 2 == chunk.distributions()[1].coefficients().size() );
-        CHECK( 2 == chunk.distributions()[2].coefficients().size() );
-        CHECK( 2 == chunk.distributions()[3].coefficients().size() );
-        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[0].coefficients()[0] ) );
-        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[1].coefficients()[0] ) );
-        CHECK_THAT( 0.01, WithinRel( chunk.distributions()[1].coefficients()[1] ) );
-        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[2].coefficients()[0] ) );
-        CHECK_THAT( 0.1 , WithinRel( chunk.distributions()[2].coefficients()[1] ) );
-        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[3].coefficients()[0] ) );
-        CHECK_THAT( 0.4 , WithinRel( chunk.distributions()[3].coefficients()[1] ) );
+        CHECK( 1 == chunk.distributions()[0].pdf().coefficients().size() );
+        CHECK( 2 == chunk.distributions()[1].pdf().coefficients().size() );
+        CHECK( 2 == chunk.distributions()[2].pdf().coefficients().size() );
+        CHECK( 2 == chunk.distributions()[3].pdf().coefficients().size() );
+        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[0].pdf().coefficients()[0] ) );
+        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[1].pdf().coefficients()[0] ) );
+        CHECK_THAT( 0.01, WithinRel( chunk.distributions()[1].pdf().coefficients()[1] ) );
+        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[2].pdf().coefficients()[0] ) );
+        CHECK_THAT( 0.1 , WithinRel( chunk.distributions()[2].pdf().coefficients()[1] ) );
+        CHECK_THAT( 0.5 , WithinRel( chunk.distributions()[3].pdf().coefficients()[0] ) );
+        CHECK_THAT( 0.4 , WithinRel( chunk.distributions()[3].pdf().coefficients()[1] ) );
+        CHECK( std::nullopt == chunk.distributions()[0].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[1].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[2].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[3].cdf() );
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
       } // THEN

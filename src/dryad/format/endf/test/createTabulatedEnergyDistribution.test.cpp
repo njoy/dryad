@@ -38,21 +38,24 @@ SCENARIO( "createTabulatedEnergyDistribution" ) {
 
 void verifyElectronChunk( const TabulatedEnergyDistribution& chunk ) {
 
-  CHECK( true == chunk.isLinearised() );
-  CHECK( 17 == chunk.numberPoints() );
-  CHECK( 1 == chunk.numberRegions() );
-  CHECK( 17 == chunk.energies().size() );
-  CHECK( 17 == chunk.values().size() );
-  CHECK( 1 == chunk.boundaries().size() );
-  CHECK( 1 == chunk.interpolants().size() );
-  CHECK( 16 == chunk.boundaries()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
-  CHECK_THAT(  0.1     , WithinRel( chunk.energies()[0] ) );
-  CHECK_THAT(  0.133352, WithinRel( chunk.energies()[1] ) );
-  CHECK_THAT(  9.9     , WithinRel( chunk.energies()[15] ) );
-  CHECK_THAT( 10.      , WithinRel( chunk.energies()[16] ) );
-  CHECK_THAT( 2.1394   , WithinRel( chunk.values()[0] ) );
-  CHECK_THAT( 1.60421  , WithinRel( chunk.values()[1] ) );
-  CHECK_THAT(  .0214392, WithinRel( chunk.values()[15] ) );
-  CHECK_THAT(  .0212245, WithinRel( chunk.values()[16] ) );
+  decltype(auto) pdf = chunk.pdf();
+  CHECK( true == pdf.isLinearised() );
+  CHECK( 17 == pdf.numberPoints() );
+  CHECK( 1 == pdf.numberRegions() );
+  CHECK( 17 == pdf.energies().size() );
+  CHECK( 17 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK( 16 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+  CHECK_THAT(  0.1     , WithinRel( pdf.energies()[0] ) );
+  CHECK_THAT(  0.133352, WithinRel( pdf.energies()[1] ) );
+  CHECK_THAT(  9.9     , WithinRel( pdf.energies()[15] ) );
+  CHECK_THAT( 10.      , WithinRel( pdf.energies()[16] ) );
+  CHECK_THAT( 2.1394   , WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 1.60421  , WithinRel( pdf.values()[1] ) );
+  CHECK_THAT(  .0214392, WithinRel( pdf.values()[15] ) );
+  CHECK_THAT(  .0212245, WithinRel( pdf.values()[16] ) );
+
+  CHECK( std::nullopt == chunk.cdf() );
 }

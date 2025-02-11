@@ -5,11 +5,11 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedCrossSection
+from dryad import TabulatedEnergyDistributionFunction
 from dryad import InterpolationType
 
-class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
-    """Unit test for the TabulatedCrossSection class."""
+class Test_dryad_TabulatedEnergyDistributionFunction( unittest.TestCase ) :
+    """Unit test for the TabulatedEnergyDistributionFunction class."""
 
     def test_component( self ) :
 
@@ -52,10 +52,10 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertAlmostEqual( 1.5, chunk( energy = 3.5 ) )
 
             # verify arithmetic operators
-            same = TabulatedCrossSection( [ 1., 4. ], [ 0., 3. ] )
-            threshold = TabulatedCrossSection( [ 2., 4. ], [ 0., 2. ] )
-            nonzerothreshold = TabulatedCrossSection( [ 2., 4. ], [ 1., 3. ] )
-            small = TabulatedCrossSection( [ 1., 3. ], [ 0., 2. ] )
+            same = TabulatedEnergyDistributionFunction( [ 1., 4. ], [ 0., 3. ] )
+            threshold = TabulatedEnergyDistributionFunction( [ 2., 4. ], [ 0., 2. ] )
+            nonzerothreshold = TabulatedEnergyDistributionFunction( [ 2., 4. ], [ 1., 3. ] )
+            small = TabulatedEnergyDistributionFunction( [ 1., 3. ], [ 0., 2. ] )
 
             result = -chunk
             self.assertEqual( 4, result.number_points )
@@ -613,10 +613,10 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertAlmostEqual( 2.5, chunk( energy = 3.5 ) )
 
             # verify arithmetic operators
-            same = TabulatedCrossSection( [ 1., 4. ], [ 0., 3. ] )
-            threshold = TabulatedCrossSection( [ 2., 4. ], [ 0., 2. ] )
-            nonzerothreshold = TabulatedCrossSection( [ 3., 4. ], [ 1., 2. ] )
-            small = TabulatedCrossSection( [ 1., 3. ], [ 0., 2. ] )
+            same = TabulatedEnergyDistributionFunction( [ 1., 4. ], [ 0., 3. ] )
+            threshold = TabulatedEnergyDistributionFunction( [ 2., 4. ], [ 0., 2. ] )
+            nonzerothreshold = TabulatedEnergyDistributionFunction( [ 3., 4. ], [ 1., 2. ] )
+            small = TabulatedEnergyDistributionFunction( [ 1., 3. ], [ 0., 2. ] )
 
             result = -chunk
             self.assertEqual( 5, len( result.energies ) )
@@ -1234,7 +1234,7 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertAlmostEqual( 1.46416306545103, chunk( energy = 3.5 ) )
 
             # verify arithmetic operators throw exceptions
-            temp = TabulatedCrossSection( [ 1., 4. ], [ 4., 1. ] )
+            temp = TabulatedEnergyDistributionFunction( [ 1., 4. ], [ 4., 1. ] )
             with self.assertRaises( Exception ) : result = -chunk
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
@@ -1350,7 +1350,7 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertAlmostEqual( 2.46416306545103, chunk( energy = 3.5 ) )
 
             # verify arithmetic operators throw exceptions
-            temp = TabulatedCrossSection( [ 1., 4. ], [ 4., 1. ] )
+            temp = TabulatedEnergyDistributionFunction( [ 1., 4. ], [ 4., 1. ] )
             with self.assertRaises( Exception ) : result = -chunk
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
@@ -1458,52 +1458,52 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertEqual( False, chunk.is_linearised )
 
         # the data is given explicitly for data without boundaries
-        chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                       values = [ 4., 3., 2., 1. ],
-                                       interpolant = InterpolationType.LinearLinear )
+        chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 3., 4. ],
+                                                     values = [ 4., 3., 2., 1. ],
+                                                     interpolant = InterpolationType.LinearLinear )
 
         verify_chunk1( self, chunk )
 
         # the data is given explicitly for data without boundaries and a jump
-        chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 3., 4. ],
-                                       values = [ 4., 3., 4., 3., 2. ],
-                                       interpolant = InterpolationType.LinearLinear )
+        chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 2., 3., 4. ],
+                                                     values = [ 4., 3., 4., 3., 2. ],
+                                                     interpolant = InterpolationType.LinearLinear )
 
         verify_chunk2( self, chunk )
 
         # the data is given explicitly for data without a jump
-        chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                       values = [ 4., 3., 2., 1. ],
-                                       boundaries = [ 1, 3 ],
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] )
+        chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 3., 4. ],
+                                                     values = [ 4., 3., 2., 1. ],
+                                                     boundaries = [ 1, 3 ],
+                                                     interpolants = [ InterpolationType.LinearLinear,
+                                                                      InterpolationType.LinearLog ] )
 
         verify_chunk3( self, chunk )
 
         # the data is given explicitly for data with a jump
-        chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 3., 4. ],
-                                       values = [ 4., 3., 4., 3., 2. ],
-                                       boundaries = [ 1, 4 ],
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] )
+        chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 2., 3., 4. ],
+                                                     values = [ 4., 3., 4., 3., 2. ],
+                                                     boundaries = [ 1, 4 ],
+                                                     interpolants = [ InterpolationType.LinearLinear,
+                                                                      InterpolationType.LinearLog ] )
 
         verify_chunk4( self, chunk )
 
         # the data is given explicitly with boundaries that point to the second x value in the jump
-        chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 3., 4. ],
-                                       values = [ 4., 3., 4., 3., 2. ],
-                                       boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                     InterpolationType.LinearLog ] )
+        chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 2., 3., 4. ],
+                                                     values = [ 4., 3., 4., 3., 2. ],
+                                                     boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
+                                                     interpolants = [ InterpolationType.LinearLinear,
+                                                                   InterpolationType.LinearLog ] )
 
         verify_chunk5( self, chunk )
 
         # the data is given explicitly with a jump at the end that goes to zero
-        chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4., 4. ], # <-- jump at end
-                                       values = [ 4., 3., 2., 1., 0. ], # <-- last value is zero
-                                       boundaries = [ 1, 4 ],      # <-- pointing to end
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] )
+        chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 3., 4., 4. ], # <-- jump at end
+                                                     values = [ 4., 3., 2., 1., 0. ], # <-- last value is zero
+                                                     boundaries = [ 1, 4 ],      # <-- pointing to end
+                                                     interpolants = [ InterpolationType.LinearLinear,
+                                                                      InterpolationType.LinearLog ] )
 
         verify_chunk6( self, chunk )
 
@@ -1514,57 +1514,57 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
         # there are not enough values in the x or y grid
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [], values = [] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [], values = [] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1. ], values = [ 4. ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1. ], values = [ 4. ] )
 
         # the x and y grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                           values = [ 4., 3., 2. ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 3., 4. ],
+                                                         values = [ 4., 3., 2. ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                           values = [ 4., 3., 2., 1. ],
-                                           boundaries = [ 3 ],
-                                           interpolants = [] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 3., 4. ],
+                                                         values = [ 4., 3., 2., 1. ],
+                                                         boundaries = [ 3 ],
+                                                         interpolants = [] )
 
         # the x grid is not sorted
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 3., 2., 4. ],
-                                           values = [ 4., 3., 2., 1. ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 3., 2., 4. ],
+                                                         values = [ 4., 3., 2., 1. ] )
 
         # the x grid contains a triple x value
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 2., 2., 2., 3., 4. ],
-                                           values = [ 4., 3., 3., 3., 2., 1. ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 2., 2., 3., 4. ],
+                                                         values = [ 4., 3., 3., 3., 2., 1. ] )
 
         # the x grid has a jump at the beginning
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 1., 3., 4. ],
-                                           values = [ 4., 3., 1., 4. ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 1., 3., 4. ],
+                                                         values = [ 4., 3., 1., 4. ] )
 
         # the x grid has a jump at the end
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 2., 4., 4. ],
-                                           values = [ 4., 3., 1., 4. ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 4., 4. ],
+                                                         values = [ 4., 3., 1., 4. ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedCrossSection( energies = [ 1., 2., 3., 4. ],
-                                           values = [ 4., 3., 2., 1. ],
-                                           boundaries = [ 2 ],
-                                           interpolants = [ InterpolationType.LinearLinear ] )
+            chunk = TabulatedEnergyDistributionFunction( energies = [ 1., 2., 3., 4. ],
+                                                         values = [ 4., 3., 2., 1. ],
+                                                         boundaries = [ 2 ],
+                                                         interpolants = [ InterpolationType.LinearLinear ] )
 
 if __name__ == '__main__' :
 

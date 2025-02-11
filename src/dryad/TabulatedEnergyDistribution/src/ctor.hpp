@@ -1,15 +1,3 @@
-private:
-
-/**
- *  @brief Private constructor
- *
- *  @param table   the interpolation table
- */
-TabulatedEnergyDistribution( InterpolationTable< double, double > table ) :
-  InterpolationTable( std::move( table ) ) {}
-
-public:
-
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
@@ -29,12 +17,15 @@ TabulatedEnergyDistribution& operator=( TabulatedEnergyDistribution&& ) = defaul
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
  */
-TabulatedEnergyDistribution( std::vector< double > energies,
-                             std::vector< double > values,
-                             std::vector< std::size_t > boundaries,
-                             std::vector< InterpolationType > interpolants ) :
-  InterpolationTable( std::move( energies ), std::move( values ),
-                      std::move( boundaries ), std::move( interpolants ) ) {}
+TabulatedEnergyDistribution(
+    std::vector< double > energies,
+    std::vector< double > values,
+    std::vector< std::size_t > boundaries,
+    std::vector< InterpolationType > interpolants,
+    bool cdf = false ) :
+  pdf_( std::move( energies ), std::move( values ),
+        std::move( boundaries ), std::move( interpolants ) ),
+  cdf_( std::nullopt ) {}
 
 /**
  *  @brief Constructor for an energy distirbution using a single interpolation zone
@@ -43,7 +34,9 @@ TabulatedEnergyDistribution( std::vector< double > energies,
  *  @param values         the probability values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
-TabulatedEnergyDistribution( std::vector< double > energies,
-                             std::vector< double > values,
-                             InterpolationType interpolant = InterpolationType::LinearLinear ) :
-  InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
+TabulatedEnergyDistribution(
+    std::vector< double > energies,
+    std::vector< double > values,
+    InterpolationType interpolant = InterpolationType::LinearLinear ) :
+  pdf_( std::move( energies ), std::move( values ), interpolant ),
+  cdf_( std::nullopt ) {}

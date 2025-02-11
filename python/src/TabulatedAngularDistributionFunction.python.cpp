@@ -4,16 +4,17 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
+#include "dryad/TabulatedAngularDistributionFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedAngularDistribution( python::module& module, python::module& ) {
+void wrapTabulatedAngularDistributionFunction( python::module& module, python::module& ) {
 
   // type aliases
-  using Component = njoy::dryad::TabulatedAngularDistribution;
+  using Component = njoy::dryad::TabulatedAngularDistributionFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -21,8 +22,8 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
   python::class_< Component > component(
 
     module,
-    "TabulatedAngularDistribution",
-    "An angular distribution defined by a pdf and cdf using tabulated data"
+    "TabulatedAngularDistributionFunction",
+    "An angular distribution function using tabulated data"
   );
 
   // wrap the component
@@ -34,9 +35,9 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
                   std::vector< InterpolationType > >(),
     python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the angular distribution\n\n"
+    "Initialise the angular distribution function\n\n"
     "Arguments:\n"
-    "    self           the angular distribution\n"
+    "    self           the angular distribution function\n"
     "    cosines        the cosine values\n"
     "    values         the probability values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
@@ -49,9 +50,9 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
                   InterpolationType >(),
     python::arg( "cosines" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the angular distribution\n\n"
+    "Initialise the angular distribution function\n\n"
     "Arguments:\n"
-    "    self           the angular distribution\n"
+    "    self           the angular distribution function\n"
     "    cosines        the cosine values\n"
     "    values         the probability values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
@@ -59,15 +60,27 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
   )
   .def_property_readonly(
 
-    "pdf",
-    &Component::pdf,
-    "The probability distribution function (pdf) of the distribution"
+    "cosines",
+    &Component::cosines,
+    "The cosine values"
   )
   .def_property_readonly(
 
-    "cdf",
-    &Component::cdf,
-    "The cumulative distribution function (cdf) of the distribution"
+    "values",
+    &Component::values,
+    "The probability values"
+  )
+  .def_property_readonly(
+
+    "lower_cosine_limit",
+    &Component::lowerCosineLimit,
+    "The lower cosine limit"
+  )
+  .def_property_readonly(
+
+    "upper_cosine_limit",
+    &Component::upperCosineLimit,
+    "The upper cosine limit"
   )
   .def(
 
@@ -75,9 +88,12 @@ void wrapTabulatedAngularDistribution( python::module& module, python::module& )
     [] ( const Component& self, double cosine ) -> decltype(auto)
        { return self( cosine ); },
     python::arg( "cosine" ),
-    "Evaluate the pdf of the distribution for a given cosine value\n\n"
+    "Evaluate the table for a given cosine value\n\n"
     "Arguments:\n"
-    "    self      the distribution\n"
+    "    self      the table\n"
     "    cosine    the cosine value"
   );
+
+  // add standard tabulated data definitions
+  addStandardTabulatedDefinitions< Component >( component );
 }
