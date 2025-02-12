@@ -25,11 +25,6 @@ namespace dryad {
 
   public:
 
-    /* type aliases */
-
-    using XType = TabulatedAngularDistributionFunction::XType;
-    using YType = TabulatedAngularDistributionFunction::XType;
-
     /* constructor */
 
     #include "dryad/TabulatedAngularDistribution/src/ctor.hpp"
