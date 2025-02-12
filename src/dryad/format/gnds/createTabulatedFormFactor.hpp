@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDAVERAGEENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDAVERAGEENERGY
+#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDFORMFACTOR
+#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDFORMFACTOR
 
 // system includes
 #include <vector>
@@ -8,9 +8,9 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/format/gnds/createInterpolationType.hpp"
-#include "dryad/format/gnds/readXYs1d.hpp"
 #include "dryad/format/gnds/convertEnergies.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
+#include "dryad/format/gnds/readXYs1d.hpp"
+#include "dryad/TabulatedFormFactor.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -18,24 +18,19 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a TabulatedAverageEnergy from a GNDS average node
+   *  @brief Create a TabulatedFormFactor from a GNDS node
    */
-  static TabulatedAverageEnergy
-  createTabulatedAverageEnergy( const pugi::xml_node& average,
-                                const std::string& style = "eval" ) {
+  static TabulatedFormFactor
+  createTabulatedFormFactor( pugi::xml_node node ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    // check that this is a valid average energy node
-    throwExceptionOnWrongNode( average, "averageProductEnergy" );
-
-    auto node = average.find_child_by_attribute( "label", style.c_str() );
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
-      // read the average energy data
+      // read the form factor data
       auto data = readXYs1D( node );
 
       // get the interpolation type
@@ -89,12 +84,11 @@ namespace gnds {
     }
     else {
 
-      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes"
-                  "for average energy data" );
+      Log::error( "Expected an XYs1d or regions1d node for tabulated form factor data" );
       throw std::exception();
     }
 
-    return TabulatedAverageEnergy(
+    return TabulatedFormFactor(
              std::move( energies ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }

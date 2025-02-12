@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TwoBodyDistributionData from a GNDS angularTwoBody node
    */
-  static TwoBodyDistributionData 
+  static TwoBodyDistributionData
   createTwoBodyDistributionData( const pugi::xml_node& twobody ) {
 
     // check that this is a valid angularTwoBody node
@@ -37,12 +37,12 @@ namespace gnds {
 
       // get the functions
       auto function = node.child( "function1ds" ).first_child();
-      if ( strcmp( function.name(), "Legendre" ) == 0 || 
+      if ( strcmp( function.name(), "Legendre" ) == 0 ||
            strcmp( function.name(), "XYs1d" ) == 0 ) {
 
         std::vector< double > grid;
         if ( strcmp( function.name(), "Legendre" ) == 0 ) {
-          
+
           std::vector< LegendreAngularDistribution > distributions;
           for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
@@ -51,8 +51,8 @@ namespace gnds {
             distributions.emplace_back( std::move( legendre.second ) );
           }
 
-          return TwoBodyDistributionData( 
-                   std::move( frame ), 
+          return TwoBodyDistributionData(
+                   std::move( frame ),
                    LegendreAngularDistributions( std::move( grid ), std::move( distributions ) ) );
         }
         else {
@@ -65,8 +65,8 @@ namespace gnds {
             distributions.emplace_back( std::move( tabulated.second ) );
           }
 
-          return TwoBodyDistributionData( 
-                   std::move( frame ), 
+          return TwoBodyDistributionData(
+                   std::move( frame ),
                    TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) ) );
         }
       }

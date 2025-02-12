@@ -3,27 +3,27 @@ include( FetchContent )
 
 FetchContent_Declare( pugixml
     GIT_REPOSITORY  https://github.com/zeux/pugixml.git
-    GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14 
+    GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14
     )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         0133415ba4f1801a6ee86c7c04eb0cf303aeb731  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         7124bbfc746a9fa0e37a2c1e4a8eb019ddec9f02  # tag: v0.4.1
     )
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         e4358e66736191587288cede32f783d06bd68a16  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         c93e4d55b5fc83beb54c0231c4d80cdba6acb6f0  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         cc588122d1aaedaae33dacf6f37fdfe6d59fad8b  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         23c8c48b74b1c42c4513e48d15a9ce83b97cfe48  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         c9fd0ef4dc707689501479ff870f3c73b8f40f46  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         3c2a79ae455415101bf802b4c44ed1db506af40b  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

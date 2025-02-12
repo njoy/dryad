@@ -61,7 +61,7 @@ namespace atomic {
         if ( products.find_child_by_attribute( "pid", "photon" ) ) {
 
           // get the originating shell id
-          id::ElectronSubshellID originating = 
+          id::ElectronSubshellID originating =
           createRadiativeTransitionElectronSubshellID( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
 
           // GNDS does not store the transition energy
@@ -70,7 +70,7 @@ namespace atomic {
         else {
 
           // get the originating and emitting shell id
-          auto pair = 
+          auto pair =
           createNonRadiativeTransitionElectronSubshellID( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
 
           // GNDS does not store the transition energy

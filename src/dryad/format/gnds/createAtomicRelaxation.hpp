@@ -31,7 +31,7 @@ namespace gnds {
 
       std::vector< dryad::atomic::ElectronSubshellConfiguration > subshells;
       pugi::xml_node shells = element.child( "atomic" ).child( "configurations" );
-      for ( pugi::xml_node subshell = shells.child( "configuration" ); 
+      for ( pugi::xml_node subshell = shells.child( "configuration" );
             subshell; subshell = subshell.next_sibling(  "configuration"  ) ) {
 
         subshells.push_back( gnds::atomic::createElectronSubshellConfiguration( subshell ) );

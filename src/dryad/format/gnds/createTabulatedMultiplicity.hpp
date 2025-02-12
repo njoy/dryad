@@ -20,8 +20,8 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedMultiplicity from a GNDS multiplicity node
    */
-  static TabulatedMultiplicity 
-  createTabulatedMultiplicity( const pugi::xml_node& multiplicity, 
+  static TabulatedMultiplicity
+  createTabulatedMultiplicity( const pugi::xml_node& multiplicity,
                                const std::string& style = "eval" ) {
 
     std::vector< double > energies;
@@ -57,7 +57,7 @@ namespace gnds {
 
       // loop over the children of function1ds
       pugi::xml_node function1ds = node.child( "function1ds" );
-      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" ); 
+      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" );
             xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
 
         // read the current interpolation region

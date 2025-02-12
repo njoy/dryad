@@ -20,10 +20,10 @@ namespace gnds {
 
   /**
    *  @brief Create a TabulatedEnergyDistribution from a GNDS XYs1d node
-   * 
+   *
    *  @todo is it possible to have a regions1d version?
    */
-  static std::pair< std::optional< double >, 
+  static std::pair< std::optional< double >,
                     TabulatedEnergyDistribution >
   createTabulatedEnergyDistribution( pugi::xml_node node,
                                      const std::vector< std::string > units ) {
@@ -63,7 +63,7 @@ namespace gnds {
       throw std::exception();
     }
 
-    return { std::move( outer ), 
+    return { std::move( outer ),
              TabulatedEnergyDistribution(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) ) };

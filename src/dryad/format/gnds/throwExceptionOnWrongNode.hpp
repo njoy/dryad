@@ -21,7 +21,7 @@ namespace gnds {
 
       if ( strcmp( node.name(), name ) != 0 ) {
 
-        Log::error( "The XML element does not define a GNDS {} node, found a \'{}\' node", 
+        Log::error( "The XML element does not define a GNDS {} node, found a \'{}\' node",
                     name, node.name() );
         throw std::exception();
       }

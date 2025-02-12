@@ -17,7 +17,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS axes node
    */
-  static std::vector< std::string > 
+  static std::vector< std::string >
   readAxes( const pugi::xml_node& axes ) {
 
     throwExceptionOnWrongNode( axes, "axes" );

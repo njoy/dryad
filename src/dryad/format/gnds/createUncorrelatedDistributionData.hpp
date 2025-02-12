@@ -22,7 +22,7 @@ namespace gnds {
   /**
    *  @brief Create a UncorrelatedDistributionData from a GNDS uncorrelated node
    */
-  static UncorrelatedDistributionData 
+  static UncorrelatedDistributionData
   createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated ) {
 
     // check that this is a valid uncorrelated node
@@ -35,62 +35,62 @@ namespace gnds {
     auto angle = uncorrelated.child( "angle" );
     UncorrelatedDistributionData::AngularDistributions angular;
     if ( angle ) {
-  
+
       auto node = angle.first_child();
       if ( strcmp( node.name(), "isotropic2d" ) == 0 ) {
 
         angular = IsotropicAngularDistributions();
       }
       else if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
-  
+
         // read the axes
         auto units = readAxes( node.child( "axes" ) );
-  
+
         // get the functions
         auto function = node.child( "function1ds" ).first_child();
-        if ( strcmp( function.name(), "Legendre" ) == 0 || 
+        if ( strcmp( function.name(), "Legendre" ) == 0 ||
              strcmp( function.name(), "XYs1d" ) == 0 ) {
-  
+
           std::vector< double > grid;
           if ( strcmp( function.name(), "Legendre" ) == 0 ) {
-            
+
             std::vector< LegendreAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "Legendre" ) ) {
-  
+
               auto legendre = createLegendreAngularDistribution( function, units );
               grid.push_back( legendre.first.value() );
               distributions.emplace_back( std::move( legendre.second ) );
             }
-  
+
             angular = LegendreAngularDistributions( std::move( grid ), std::move( distributions ) );
           }
           else {
-  
+
             std::vector< TabulatedAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
-  
+
               auto tabulated = createTabulatedAngularDistribution( function, units );
               grid.push_back( tabulated.first.value() );
               distributions.emplace_back( std::move( tabulated.second ) );
             }
-  
+
             angular = TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) );
           }
         }
         else {
-  
+
           Log::error( "Only Legendre or XYs1d nodes are allowed in an angular XYs2d" );
           throw std::exception();
         }
       }
       else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
-  
+
         Log::error( "Mixed Legendre and tabulated angular distribution data is "
                     "currently unsupported" );
         throw std::exception();
       }
       else {
-  
+
         Log::error( "Expected either an isotropic or XYs2d node "
                     "for uncorrelated angular distribution data" );
         throw std::exception();
@@ -104,33 +104,33 @@ namespace gnds {
 
       auto node = energy.first_child();
       if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
-  
+
         // read the axes
         auto units = readAxes( node.child( "axes" ) );
-  
+
         // get the functions
         auto function = node.child( "function1ds" ).first_child();
         if ( strcmp( function.name(), "XYs1d" ) == 0 ) {
-  
+
           std::vector< double > grid;
           std::vector< TabulatedEnergyDistribution > distributions;
           for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
-  
+
             auto tabulated = createTabulatedEnergyDistribution( function, units );
             grid.push_back( tabulated.first.value() );
             distributions.emplace_back( std::move( tabulated.second ) );
           }
-  
+
           energyd = TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
         }
         else {
-  
+
           Log::error( "Only XYs1d nodes are allowed in an energy XYs2d" );
           throw std::exception();
         }
       }
       else {
-  
+
         Log::error( "Expected an XYs2d node for uncorrelated energy distribution data, found \'{}\'",
                     node.name() );
         throw std::exception();

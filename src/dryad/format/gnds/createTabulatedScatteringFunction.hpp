@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDAVERAGEENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDAVERAGEENERGY
+#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDSCATTERINGFUNCTION
+#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDSCATTERINGFUNCTION
 
 // system includes
 #include <vector>
@@ -8,9 +8,9 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "dryad/format/gnds/createInterpolationType.hpp"
+#include "dryad/format/gnds/convertInverseLengths.hpp"
 #include "dryad/format/gnds/readXYs1d.hpp"
-#include "dryad/format/gnds/convertEnergies.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
+#include "dryad/TabulatedScatteringFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -18,36 +18,31 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create a TabulatedAverageEnergy from a GNDS average node
+   *  @brief Create a TabulatedScatteringFunction from a GNDS node
    */
-  static TabulatedAverageEnergy
-  createTabulatedAverageEnergy( const pugi::xml_node& average,
-                                const std::string& style = "eval" ) {
+  static TabulatedScatteringFunction
+  createTabulatedScatteringFunction( pugi::xml_node node ) {
 
-    std::vector< double > energies;
+    std::vector< double > x;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    // check that this is a valid average energy node
-    throwExceptionOnWrongNode( average, "averageProductEnergy" );
-
-    auto node = average.find_child_by_attribute( "label", style.c_str() );
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
-      // read the average energy data
+      // read the scattering function data
       auto data = readXYs1D( node );
 
       // get the interpolation type
       auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
       // convert units - if necessary
-      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+      convertInverseLengths( std::get< 2 >( data ), std::get< 3 >( data ) );
 
       // assign data
-      energies = std::move( std::get< 2 >( data ) );
+      x = std::move( std::get< 2 >( data ) );
       values = std::move( std::get< 4 >( data ) );
-      boundaries.emplace_back( energies.size() - 1 );
+      boundaries.emplace_back( x.size() - 1 );
       interpolants.emplace_back( interpolant );
     }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
@@ -67,13 +62,13 @@ namespace gnds {
         auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
         // convert units - if necessary
-        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+        convertInverseLengths( std::get< 2 >( data ), std::get< 3 >( data ) );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
-        if ( energies.size() > 0 ) {
+        if ( x.size() > 0 ) {
 
-          if ( energies.back() == std::get< 2 >( data ).front() &&
+          if ( x.back() == std::get< 2 >( data ).front() &&
                values.back() == std::get< 4 >( data ).front() ) {
 
             offset = 1;
@@ -81,21 +76,20 @@ namespace gnds {
         }
 
         // grow the data accordingly
-        energies.insert( energies.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
+        x.insert( x.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
         values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
-        boundaries.emplace_back( energies.size() - 1 );
+        boundaries.emplace_back( x.size() - 1 );
         interpolants.emplace_back( interpolant );
       }
     }
     else {
 
-      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes"
-                  "for average energy data" );
+      Log::error( "Expected an XYs1d or regions1d node for tabulated scattering function data" );
       throw std::exception();
     }
 
-    return TabulatedAverageEnergy(
-             std::move( energies ), std::move( values ),
+    return TabulatedScatteringFunction(
+             std::move( x ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }
 
