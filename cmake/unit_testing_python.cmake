@@ -12,7 +12,7 @@ function( add_python_test name source )
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
   set_tests_properties( ${test_name}
                         PROPERTIES ENVIRONMENT
-                        PYTHONPATH=${SCION_PYTHONPATH}:${DRYAD_PYTHONPATH}:$ENV{PYTHONPATH})
+                        PYTHONPATH=${DRYAD_PYTHONPATH}:$ENV{PYTHONPATH})
 
 endfunction()
 
