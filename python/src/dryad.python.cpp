@@ -7,6 +7,9 @@
 // namespace aliases
 namespace python = pybind11;
 
+// declarations - scion objects
+void wrapToleranceConvergence( python::module& );
+
 // declarations - identifiers
 void wrapID( python::module& );
 
@@ -54,9 +57,8 @@ void wrapProjectileTarget( python::module& );
  */
 PYBIND11_MODULE( dryad, module ) {
 
-  auto scion_linearisation = python::module::import( "scion.linearisation" );
-
-  module.attr( "ToleranceConvergence" ) = scion_linearisation.attr( "ToleranceConvergence" );
+  // wrap components - scion objects
+  wrapToleranceConvergence( module );
 
   // wrap components - identifiers
   wrapID( module );

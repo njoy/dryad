@@ -37,10 +37,6 @@ cmake_dependent_option(
   "NOT ${subproject} OR DEFINED require.dryad.python " OFF
 )
 
-if ( dryad.python )
-  set( require.scion.python CACHE BOOL ON )
-endif()
-
 option( dryad.installation "Install dryad" ON )
 
 ########################################################################
@@ -81,17 +77,13 @@ target_link_libraries( dryad
 # dryad : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if (dryad.python AND NOT TARGET njoy::scion.python)
-  message(WARNING "njoy::scion was not built with python enabled.  Disabling build of dryad's python API.")
-  set(dryad.python OFF)
-endif()
-
 if( dryad.python )
 
   FetchContent_MakeAvailable( pybind11 )
 
   pybind11_add_module( dryad.python
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/dryad.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ToleranceConvergence.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/id.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/id/ElementID.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic.python.cpp
@@ -132,7 +124,6 @@ if( dryad.python )
   add_library( njoy::dryad.python ALIAS dryad.python )
 
   target_link_libraries( dryad.python PRIVATE njoy::dryad )
-  add_dependencies( dryad.python njoy::scion.python )
   target_include_directories( dryad.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/src )
   target_compile_options( dryad.python PRIVATE -fvisibility=hidden )
   set_target_properties( dryad.python PROPERTIES OUTPUT_NAME dryad )
@@ -142,11 +133,6 @@ if( dryad.python )
   message( STATUS "Building dryad's python API" )
 
   set( DRYAD_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}" )
-  # Append potential installation and build paths for scion python module
-  set( SCION_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}/_deps/scion-build" )
-  if (scion_DIR)
-    set( SCION_PYTHONPATH "${SCION_PYTHONPATH}:${scion_DIR}/../../../lib64" )
-  endif()
 
   if( dryad.tests )
     include( cmake/unit_testing_python.cmake )
