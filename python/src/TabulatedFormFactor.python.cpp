@@ -9,7 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedFormFactor( python::module& module, python::module& ) {
+void wrapTabulatedFormFactor( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TabulatedFormFactor;

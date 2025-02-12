@@ -9,7 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapLegendreAngularDistributionFunction( python::module& module, python::module& ) {
+void wrapLegendreAngularDistributionFunction( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::LegendreAngularDistributionFunction;

@@ -9,7 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedAverageCosine( python::module& module, python::module& ) {
+void wrapTabulatedAverageCosine( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TabulatedAverageCosine;

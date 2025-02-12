@@ -8,7 +8,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapInteractionType( python::module& module, python::module& ) {
+void wrapInteractionType( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::InteractionType;

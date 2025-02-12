@@ -10,7 +10,7 @@ namespace python = pybind11;
 
 namespace atomic {
 
-void wrapTransitionType( python::module& module, python::module& ) {
+void wrapTransitionType( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::atomic::TransitionType;

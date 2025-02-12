@@ -9,7 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedScatteringFunction( python::module& module, python::module& ) {
+void wrapTabulatedScatteringFunction( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TabulatedScatteringFunction;
