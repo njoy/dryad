@@ -16,8 +16,6 @@ namespace dryad {
    *  @class
    *  @brief An angular distribution defined by a pdf and cdf using tabulated
    *         data
-   *
-   *  @todo complete this class
    */
   class TabulatedAngularDistribution {
 
@@ -26,6 +24,11 @@ namespace dryad {
     mutable std::optional< TabulatedAngularDistributionFunction > cdf_;
 
   public:
+
+    /* type aliases */
+
+    using XType = TabulatedAngularDistributionFunction::XType;
+    using YType = TabulatedAngularDistributionFunction::XType;
 
     /* constructor */
 
