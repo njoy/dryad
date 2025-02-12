@@ -47,7 +47,7 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
 
     python::init< std::vector< double >, std::vector< double >,
                   InterpolationType >(),
-    python::arg( "cosines" ), python::arg( "values" ),
+    python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     "Initialise the energy distribution\n\n"
     "Arguments:\n"
