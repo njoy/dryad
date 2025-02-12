@@ -21,7 +21,7 @@ namespace dryad {
 
     /* fields */
     TabulatedAngularDistributionFunction pdf_;
-    mutable std::optional< TabulatedAngularDistributionFunction > cdf_;
+    std::optional< TabulatedAngularDistributionFunction > cdf_;
 
   public:
 
@@ -76,6 +76,15 @@ namespace dryad {
     double operator()( double cosine ) const {
 
       return this->pdf()( cosine );
+    }
+
+    /**
+     *  @brief Return the average cosine defined by the distribution
+     */
+    double averageCosine() const {
+
+      Log::error( "The calculation of the average cosine is not implemented yet" );
+      throw std::exception();
     }
 
 //    /**

@@ -21,7 +21,7 @@ namespace dryad {
 
     /* fields */
     TabulatedEnergyDistributionFunction pdf_;
-    mutable std::optional< TabulatedEnergyDistributionFunction > cdf_;
+    std::optional< TabulatedEnergyDistributionFunction > cdf_;
 
   public:
 
