@@ -8,7 +8,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapReferenceFrame( python::module& module, python::module& ) {
+void wrapReferenceFrame( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::ReferenceFrame;

@@ -8,7 +8,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTwoBodyDistributionData( python::module& module, python::module& ) {
+void wrapTwoBodyDistributionData( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TwoBodyDistributionData;

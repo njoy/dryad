@@ -11,7 +11,7 @@ namespace python = pybind11;
 
 namespace atomic {
 
-void wrapNonRadiativeTransitionData( python::module& module, python::module& ) {
+void wrapNonRadiativeTransitionData( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::atomic::NonRadiativeTransitionData;

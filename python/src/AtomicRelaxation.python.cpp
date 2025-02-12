@@ -10,7 +10,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapAtomicRelaxation( python::module& module, python::module& ) {
+void wrapAtomicRelaxation( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::AtomicRelaxation;

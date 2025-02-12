@@ -8,7 +8,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapCoherentDistributionData( python::module& module, python::module& ) {
+void wrapCoherentDistributionData( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::CoherentDistributionData;

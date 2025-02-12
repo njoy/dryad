@@ -12,7 +12,7 @@ namespace python = pybind11;
 
 namespace id {
 
-void wrapElementID( python::module& module, python::module& ) {
+void wrapElementID( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::id::ElementID;

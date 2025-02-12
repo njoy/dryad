@@ -10,15 +10,15 @@ namespace python = pybind11;
 namespace atomic {
 
   // declarations - enumerators
-  void wrapTransitionType( python::module&, python::module& );
+  void wrapTransitionType( python::module& );
 
   // declarations - atomic data components
-  void wrapRadiativeTransitionData( python::module&, python::module& );
-  void wrapNonRadiativeTransitionData( python::module&, python::module& );
-  void wrapElectronSubshellConfiguration( python::module&, python::module& );
+  void wrapRadiativeTransitionData( python::module& );
+  void wrapNonRadiativeTransitionData( python::module& );
+  void wrapElectronSubshellConfiguration( python::module& );
 }
 
-void wrapAtomic( python::module& module, python::module& viewmodule ) {
+void wrapAtomic( python::module& module ) {
 
   // create the submodule
   python::module submodule = module.def_submodule(
@@ -28,10 +28,10 @@ void wrapAtomic( python::module& module, python::module& viewmodule ) {
   );
 
   // wrap components - enumerators
-  atomic::wrapTransitionType( submodule, viewmodule );
+  atomic::wrapTransitionType( submodule );
 
   // declarations - atomic data components
-  atomic::wrapRadiativeTransitionData( submodule, viewmodule );
-  atomic::wrapNonRadiativeTransitionData( submodule, viewmodule );
-  atomic::wrapElectronSubshellConfiguration( submodule, viewmodule );
+  atomic::wrapRadiativeTransitionData( submodule );
+  atomic::wrapNonRadiativeTransitionData( submodule );
+  atomic::wrapElectronSubshellConfiguration( submodule );
 }

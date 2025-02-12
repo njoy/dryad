@@ -11,7 +11,7 @@ namespace python = pybind11;
 
 namespace atomic {
 
-void wrapElectronSubshellConfiguration( python::module& module, python::module& ) {
+void wrapElectronSubshellConfiguration( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::atomic::ElectronSubshellConfiguration;

@@ -9,7 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedCrossSection( python::module& module, python::module& ) {
+void wrapTabulatedCrossSection( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TabulatedCrossSection;

@@ -13,17 +13,17 @@ FetchContent_Declare( tools
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         c93e4d55b5fc83beb54c0231c4d80cdba6acb6f0  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         eab5ad3b3344ee5d982cde1ebae52103aa6e694e  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         23c8c48b74b1c42c4513e48d15a9ce83b97cfe48  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         8e075b597dd0b9893536f0d0f23dcec11fd36c7c  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         3c2a79ae455415101bf802b4c44ed1db506af40b  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         4ed1dae3a12160ff1323b498525e568105436895  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

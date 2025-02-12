@@ -9,7 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
-void wrapTabulatedAngularDistributions( python::module& module, python::module& ) {
+void wrapTabulatedAngularDistributions( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TabulatedAngularDistributions;
