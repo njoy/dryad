@@ -13,10 +13,6 @@ void wrapToleranceConvergence( python::module& );
 // declarations - identifiers
 void wrapID( python::module& );
 
-// declarations - atomic data
-void wrapAtomic( python::module& );
-void wrapAtomicRelaxation( python::module& );
-
 // declarations - enumerators
 void wrapInterpolationType( python::module& );
 void wrapDistributionDataType( python::module& );
@@ -26,6 +22,10 @@ void wrapReferenceFrame( python::module& );
 
 // declarations - covariance data
 void wrapCovariance( python::module& );
+
+// declarations - atomic data
+void wrapAtomic( python::module& );
+void wrapAtomicRelaxation( python::module& );
 
 // declarations - components
 void wrapIsotropicAngularDistributions( python::module& );
@@ -66,16 +66,18 @@ PYBIND11_MODULE( dryad, module ) {
   // wrap components - identifiers
   wrapID( module );
 
-  // wrap components - atomic data
-  wrapAtomic( module );
-  wrapAtomicRelaxation( module );
-
   // wrap components - enumerators
   wrapInterpolationType( module );
   wrapDistributionDataType( module );
   wrapInteractionType( module );
   wrapReactionType( module );
   wrapReferenceFrame( module );
+
+  // wrap components - covariance data
+  wrapCovariance( module );
+
+  // wrap components - atomic data
+  wrapAtomic( module );
 
   // wrap components - reaction products
   wrapTabulatedMultiplicity( module );
@@ -105,4 +107,5 @@ PYBIND11_MODULE( dryad, module ) {
 
   // wrap components - top level
   wrapProjectileTarget( module );
+  wrapAtomicRelaxation( module );
 }

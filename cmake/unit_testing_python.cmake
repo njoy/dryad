@@ -28,6 +28,9 @@ add_python_test( atomic.RadiativeTransitionData        atomic/Test_dryad_atomic_
 add_python_test( atomic.NonRadiativeTransitionData     atomic/Test_dryad_atomic_NonRadiativeTransitionData.py )
 add_python_test( atomic.ElectronSubshellConfiguration  atomic/Test_dryad_atomic_ElectronSubshellConfiguration.py )
 
+add_python_test( covariance.matrix                     covariance/Test_dryad_covariance_matrix.py )
+add_python_test( covariance.CrossSectionMetaData       covariance/Test_dryad_covariance_CrossSectionMetaData.py )
+
 add_python_test( TabulatedMultiplicity                 Test_dryad_TabulatedMultiplicity.py )
 add_python_test( TabulatedAverageEnergy                Test_dryad_TabulatedAverageEnergy.py )
 add_python_test( TabulatedAverageCosine                Test_dryad_TabulatedAverageCosine.py )
