@@ -80,6 +80,7 @@ void wrapProjectileTarget( python::module& module ) {
 
     "has_reaction",
     &Component::hasReaction,
+    python::arg( "id" ),
     "Return whether or not a reaction is present\n\n"
     "Arguments:\n"
     "    self   the ProjectileTarget data\n"
@@ -89,6 +90,7 @@ void wrapProjectileTarget( python::module& module ) {
 
     "reaction",
     &Component::reaction,
+    python::arg( "id" ),
     "Return the requested reaction\n\n"
     "Arguments:\n"
     "    self   the ProjectileTarget data\n"
