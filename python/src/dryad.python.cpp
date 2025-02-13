@@ -24,6 +24,9 @@ void wrapInteractionType( python::module& );
 void wrapReactionType( python::module& );
 void wrapReferenceFrame( python::module& );
 
+// declarations - covariance data
+void wrapCovariance( python::module& );
+
 // declarations - components
 void wrapIsotropicAngularDistributions( python::module& );
 void wrapLegendreAngularDistributionFunction( python::module& );
