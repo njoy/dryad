@@ -6,6 +6,13 @@ FetchContent_Declare( pugixml
     GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14
     )
 
+FetchContent_Declare( eigen
+    GIT_REPOSITORY  https://gitlab.com/libeigen/eigen.git
+    GIT_TAG         d0bfdc1658ca0b4c659fd3702c351d2c2cdc876c # 3.4.1 branch on July 26, 2023
+    )
+# the next line prevents eigen from populating the .cmake/packages folder
+set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
+
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
     GIT_TAG         7124bbfc746a9fa0e37a2c1e4a8eb019ddec9f02  # tag: v0.4.1
@@ -51,9 +58,10 @@ if(dryad.tests)
 endif()
 
 FetchContent_MakeAvailable(
+    pugixml
+    eigen
     tools
     scion
     ACEtk
     ENDFtk
-    pugixml
     )

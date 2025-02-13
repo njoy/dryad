@@ -66,11 +66,12 @@ target_include_directories( dryad INTERFACE ${prefix} )
 
 target_link_libraries( dryad
   INTERFACE
+    pugixml
+    eigen
+    njoy::tools
+    njoy::scion
     njoy::ACEtk
     njoy::ENDFtk
-    njoy::scion
-    njoy::tools
-    pugixml
 )
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
