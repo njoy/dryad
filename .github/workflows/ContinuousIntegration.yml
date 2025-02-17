@@ -13,13 +13,13 @@ on:
 
 # ubuntu-22.04 is x64
 # macos-13 is intel
-# macos-14 is arm64 (M1)
+# macos-14 is arm64 (M1) - currently disabled (numpy install issue)
 jobs:
   build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ ubuntu-22.04, macos-13, macos-14 ]
+        os: [ ubuntu-22.04, macos-13 ]
         cxx: [ clang++, g++-12 ]
         build_type: [ Debug, Release ]
 
