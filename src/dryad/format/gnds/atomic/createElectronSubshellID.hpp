@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_GNDS_ATOMIC_CREATEELECTRONSUBSHELLID
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes

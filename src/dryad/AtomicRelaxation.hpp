@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_ATOMICRELAXATION
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes

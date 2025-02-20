@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_REACTION
 
 // system includes
+#include <algorithm>
 #include <optional>
 #include <variant>
 #include <vector>
