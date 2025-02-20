@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_PROJECTILETARGET
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes

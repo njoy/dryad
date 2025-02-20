@@ -15,22 +15,22 @@ set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         7124bbfc746a9fa0e37a2c1e4a8eb019ddec9f02  # tag: v0.4.1
+    GIT_TAG         204c0cf81eab97f51d3f8372c69fcdfd073ce60b  # tag: v0.4.2
     )
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         eab5ad3b3344ee5d982cde1ebae52103aa6e694e  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         a6bac01b587aed6eea469cffd79a448473f6098c  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         8e075b597dd0b9893536f0d0f23dcec11fd36c7c  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         5fdd3cf9c3082633c9edd229c4dc5d9d5577246f  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         4ed1dae3a12160ff1323b498525e568105436895  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         01745c4a715e0c9750674b5a9453eb4a25a4fd49  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################
@@ -40,7 +40,7 @@ FetchContent_Declare( ENDFtk
 if(dryad.python)
   FetchContent_Declare( pybind11
       GIT_REPOSITORY  ../../pybind/pybind11
-      GIT_TAG         5b0a6fc2017fcc176545afe3e09c9f9885283242 # tag: v2.10.4
+      GIT_TAG         a2e59f0e7065404b44dfe92a28aca47ba1378dc4 # tag: v2.13.6
       )
   FetchContent_MakeAvailable(
     pybind11
