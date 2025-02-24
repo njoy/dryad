@@ -14,6 +14,9 @@ namespace covariance {
 
   // declarations - metadata components
   void wrapCrossSectionMetaData( python::module& );
+
+  // declarations - covariance components
+  void wrapCrossSectionCovarianceBlock( python::module& );
 }
 
 void wrapCovariance( python::module& module ) {
@@ -30,4 +33,7 @@ void wrapCovariance( python::module& module ) {
 
   // declarations - metadata components
   covariance::wrapCrossSectionMetaData( submodule );
+
+  // declarations - covariance components
+  covariance::wrapCrossSectionCovarianceBlock( submodule );
 }

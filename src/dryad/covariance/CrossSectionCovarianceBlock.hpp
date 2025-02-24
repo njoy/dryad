@@ -14,7 +14,7 @@ namespace covariance {
 
   /**
    *  @class
-   *  @brief A cross section covariance covariance matrix block
+   *  @brief A cross section covariance matrix block
    */
   class CrossSectionCovarianceBlock :
     protected CovarianceBlock< CrossSectionMetaData > {
