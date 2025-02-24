@@ -143,6 +143,55 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
 
         print( '\n' )
 
+        # the matrix is not square for a diagonal covariance block
+        with self.assertRaises( Exception ) :
+
+            chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+                                                 energies = [ 1e-5, 1., 1e+6, 2e+7 ],
+                                                 covariances = numpy.array( [ [ 1., 2. ],
+                                                                              [ 3., 4. ],
+                                                                              [ 5., 6. ] ] ) )
+
+        # the matrix is not symmetric for a diagonal covariance block
+        with self.assertRaises( Exception ) :
+
+            chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+                                                 energies = [ 1e-5, 1., 1e+6, 2e+7 ],
+                                                 covariances = numpy.array( [ [ 1., 2., 3. ],
+                                                                              [ 2., 4., 6. ],
+                                                                              [ 100000., 6., 9. ] ] ) )
+
+        # the matrix order is not consistent with the energy boundaries for a diagonal covariance block
+        with self.assertRaises( Exception ) :
+
+            chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+                                                 energies = [ 1e-5, 1., 2e+7 ],
+                                                 covariances = numpy.array( [ [ 1., 2., 3. ],
+                                                                              [ 2., 4., 6. ],
+                                                                              [ 3., 6., 9. ] ] ) )
+
+        # the matrix order is not consistent with the energy boundaries for an off-diagonal covariance block (rows)
+        with self.assertRaises( Exception ) :
+
+            chunk = CrossSectionCovarianceBlock( row_projectile = 'n', row_target = 'U235', row_reaction = 'elastic',
+                                                 row_energies = [ 1e-5, 1., 2e+7 ],
+                                                 column_projectile = 'n', column_target = 'U238', column_reaction = 'fission',
+                                                 column_energies = [ 1e-5, 2., 2e+7 ],
+                                                 covariances = numpy.array( [ [ 1., 2. ],
+                                                                              [ 2., 4. ],
+                                                                              [ 3., 6. ] ] ) )
+
+        # the matrix order is not consistent with the energy boundaries for an off-diagonal covariance block (columns)
+        with self.assertRaises( Exception ) :
+
+            chunk = CrossSectionCovarianceBlock( row_projectile = 'n', row_target = 'U235', row_reaction = 'elastic',
+                                                 row_energies = [ 1e-5, 1., 1e+6, 2e+7 ],
+                                                 column_projectile = 'n', column_target = 'U238', column_reaction = 'fission',
+                                                 column_energies = [ 1e-5, 2e+7 ],
+                                                 covariances = numpy.array( [ [ 1., 2. ],
+                                                                              [ 2., 4. ],
+                                                                              [ 3., 6. ] ] ) )
+
 if __name__ == '__main__' :
 
     unittest.main()
