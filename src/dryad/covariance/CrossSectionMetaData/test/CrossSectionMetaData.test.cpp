@@ -18,16 +18,20 @@ SCENARIO( "CrossSectionMetaData" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      id::ParticleID nuclide( "U235" );
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "U235" );
       id::ReactionID reaction( "2" );
       std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
-      CrossSectionMetaData chunk( std::move( nuclide ), std::move( reaction ),
+      CrossSectionMetaData chunk( std::move( projectile ),
+                                  std::move( target ),
+                                  std::move( reaction ),
                                   std::move( energies ) );
 
       THEN( "a CrossSectionMetaData can be constructed and members can be tested" ) {
 
-        CHECK( "U235" == chunk.nuclideIdentifier() );
+        CHECK( "n" == chunk.projectileIdentifier() );
+        CHECK( "U235" == chunk.targetIdentifier() );
         CHECK( "2" == chunk.reactionIdentifier() );
 
         CHECK( 4 == chunk.energies().size() );
@@ -44,40 +48,49 @@ SCENARIO( "CrossSectionMetaData" ) {
 
     WHEN( "the energy grid does not have at least 2 elements" ) {
 
-      id::ParticleID nuclide( "U235" );
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "U235" );
       id::ReactionID reaction( "2" );
       std::vector< double > wrong = { 1e-5 };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionMetaData( std::move( nuclide ), std::move( reaction ),
-                                std::move( wrong ) ) );
+        CHECK_THROWS( CrossSectionMetaData( std::move( projectile ),
+                                            std::move( target ),
+                                            std::move( reaction ),
+                                            std::move( wrong ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the energy grid is not sorted" ) {
 
-      id::ParticleID nuclide( "U235" );
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "U235" );
       id::ReactionID reaction( "2" );
       std::vector< double > wrong = { 2e+7, 1e+6, 1., 1e-5 };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionMetaData( std::move( nuclide ), std::move( reaction ),
-                                std::move( wrong ) ) );
+        CHECK_THROWS( CrossSectionMetaData( std::move( projectile ),
+                                            std::move( target ),
+                                            std::move( reaction ),
+                                            std::move( wrong ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the energy grid has duplicate points" ) {
 
-      id::ParticleID nuclide( "U235" );
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "U235" );
       id::ReactionID reaction( "2" );
       std::vector< double > wrong = { 1e-5, 1., 1., 2e+7 };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionMetaData( std::move( nuclide ), std::move( reaction ),
-                                std::move( wrong ) ) );
+        CHECK_THROWS( CrossSectionMetaData( std::move( projectile ),
+                                            std::move( target ),
+                                            std::move( reaction ),
+                                            std::move( wrong ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

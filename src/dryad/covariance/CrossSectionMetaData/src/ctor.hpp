@@ -1,13 +1,18 @@
 /**
  *  @brief Constructor
  *
- *  @param[in] nuclide    the nuclide identifier
- *  @param[in] reaction   the reaction identifier
- *  @param[in] energies   the energy boundaries
+ *  @param[in] projectile   the projectile identifier
+ *  @param[in] target       the target identifier
+ *  @param[in] reaction     the reaction identifier
+ *  @param[in] energies     the energy boundaries
  */
-CrossSectionMetaData( id::ParticleID nuclide, id::ReactionID reaction,
+CrossSectionMetaData( id::ParticleID projectile,
+                      id::ParticleID target,
+                      id::ReactionID reaction,
                       std::vector< double > energies ) :
-  nuclide_( std::move( nuclide ) ), reaction_( std::move( reaction ) ),
+  projectile_id_( std::move( projectile ) ),
+  target_id_( std::move( target ) ),
+  reaction_id_( std::move( reaction ) ),
   energies_( std::move( energies ) ) {
 
   verifyEnergies( this->energies() );

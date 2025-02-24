@@ -16,14 +16,15 @@ namespace covariance {
 
   /**
    *  @class
-   *  @brief Metadata for the rows or columns of a covariance matrix block
-   *         for cross section data
+   *  @brief Metadata for the rows or columns of a cross section
+   *         covariance matrix block
    */
   class CrossSectionMetaData {
 
     /* fields */
-    id::ParticleID nuclide_;
-    id::ReactionID reaction_;
+    id::ParticleID projectile_id_;
+    id::ParticleID target_id_;
+    id::ReactionID reaction_id_;
     std::vector< double > energies_;
 
     /* auxiliary function */
@@ -37,24 +38,52 @@ namespace covariance {
     /* methods */
 
     /**
-     *  @brief Return the nuclide identifier
+     *  @brief Return the projectile identifier
      */
-    const id::ParticleID& nuclideIdentifier() const { return this->nuclide_; }
+    const id::ParticleID& projectileIdentifier() const noexcept {
+
+      return this->projectile_id_;
+    }
+
+    /**
+     *  @brief Return the target identifier
+     */
+    const id::ParticleID& targetIdentifier() const noexcept {
+
+      return this->target_id_;
+    }
 
     /**
      *  @brief Return the reaction identifier
      */
-    const id::ReactionID& reactionIdentifier() const { return this->reaction_; }
+    const id::ReactionID& reactionIdentifier() const noexcept {
+
+      return this->reaction_id_;
+    }
 
     /**
      *  @brief Return the energy group boundaries
      */
-    const std::vector< double >& energies() const { return this->energies_; }
+    const std::vector< double >& energies() const noexcept {
+
+      return this->energies_;
+    }
 
     /**
      *  @brief Return the number of energy groups
      */
-    std::size_t numberGroups() const { return this->energies().size() - 1; }
+    std::size_t numberGroups() const noexcept {
+
+      return this->energies().size() - 1;
+    }
+
+    /**
+     *  @brief Return the size
+     */
+    std::size_t size() const noexcept {
+
+      return this->numberGroups();
+    }
   };
 
 } // covariance namespace
