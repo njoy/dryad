@@ -32,20 +32,28 @@ void wrapCrossSectionMetaData( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, ReactionID, std::vector< double > >(),
-    python::arg( "nuclide" ), python::arg( "reaction" ), python::arg( "energies" ),
+    python::init< ParticleID, ParticleID, ReactionID, std::vector< double > >(),
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "reaction" ), python::arg( "energies" ),
     "Initialise the meta data\n\n"
     "Arguments:\n"
-    "    self       the meta data\n"
-    "    nuclide    the nuclide identifier\n"
-    "    reaction   the reaction identifier\n"
-    "    energies   the energy boundaries"
+    "    self         the meta data\n"
+    "    projectile   the projectile identifier\n"
+    "    target       the target identifier\n"
+    "    reaction     the reaction identifier\n"
+    "    energies     the energy boundaries"
   )
   .def_property_readonly(
 
-    "nuclide_identifier",
-    &Component::nuclideIdentifier,
-    "The nuclide identifier"
+    "projectile_identifier",
+    &Component::projectileIdentifier,
+    "The projectile identifier"
+  )
+  .def_property_readonly(
+
+    "target_identifier",
+    &Component::targetIdentifier,
+    "The target identifier"
   )
   .def_property_readonly(
 
