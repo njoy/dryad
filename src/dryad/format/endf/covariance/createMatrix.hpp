@@ -6,6 +6,7 @@
 // other includes
 #include "ENDFtk/section/CovariancePairs.hpp"
 #include "ENDFtk/section/SquareMatrix.hpp"
+#include "ENDFtk/section/RectangularMatrix.hpp"
 #include "dryad/covariance/matrix.hpp"
 
 namespace njoy {
@@ -145,6 +146,28 @@ namespace covariance {
         }
       }
     }
+    return matrix;
+  }
+
+  /**
+   *  @brief Create matrix data from an ENDF rectangular matrix component
+   */
+  dryad::covariance::Matrix< double >
+  createMatrix( const ENDFtk::section::RectangularMatrix& endf ) {
+
+    unsigned int rows = endf.numberRowEnergies() - 1;
+    unsigned int columns = endf.numberColumnEnergies() - 1;
+    dryad::covariance::Matrix< double > matrix( rows, columns );
+
+    unsigned int index = 0;
+    for ( unsigned int i = 0; i < rows; ++i ) {
+
+      for ( unsigned int j = 0; j < columns; ++j ) {
+
+        matrix( i, j ) = endf.values()[ index++ ];
+      }
+    }
+
     return matrix;
   }
 
