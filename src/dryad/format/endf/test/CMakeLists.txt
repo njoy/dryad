@@ -10,6 +10,8 @@ add_cpp_test( format.endf.createReactionType         createReactionType.test.cpp
 add_cpp_test( format.endf.atomic.createElectronSubshellID            atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration atomic/createElectronSubshellConfiguration.test.cpp )
 
+add_cpp_test( format.endf.covariance.createMatrix    covariance/createMatrix.test.cpp )
+
 add_cpp_test( format.endf.createTabulatedCrossSection            createTabulatedCrossSection.test.cpp )
 add_cpp_test( format.endf.createTabulatedMultiplicity            createTabulatedMultiplicity.test.cpp )
 add_cpp_test( format.endf.createMultiplicity                     createMultiplicity.test.cpp )

@@ -5,6 +5,8 @@
 #include "dryad/format/endf/atomic/createElectronSubshellID.hpp"
 #include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
 
+#include "dryad/format/endf/covariance/createMatrix.hpp"
+
 #include "dryad/format/endf/createProjectileIdentifier.hpp"
 #include "dryad/format/endf/createTargetIdentifier.hpp"
 #include "dryad/format/endf/createProductIdentifier.hpp"
