@@ -6,6 +6,7 @@
 #include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
 
 #include "dryad/format/endf/covariance/createMatrix.hpp"
+#include "dryad/format/endf/covariance/createCrossSectionCovarianceBlock.hpp"
 
 #include "dryad/format/endf/createProjectileIdentifier.hpp"
 #include "dryad/format/endf/createTargetIdentifier.hpp"
