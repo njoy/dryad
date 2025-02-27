@@ -2,10 +2,11 @@
 #define NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEBLOCK
 
 // system includes
+#include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/CrossSectionMetaData.hpp"
+#include "dryad/covariance/CrossSectionMetadata.hpp"
 #include "dryad/covariance/CovarianceBlock.hpp"
 
 namespace njoy {
@@ -17,7 +18,7 @@ namespace covariance {
    *  @brief A cross section covariance matrix block
    */
   class CrossSectionCovarianceBlock :
-    protected CovarianceBlock< CrossSectionMetaData > {
+    protected CovarianceBlock< CrossSectionMetadata > {
 
   public:
 
