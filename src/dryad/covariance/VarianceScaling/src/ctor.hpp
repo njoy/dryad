@@ -12,5 +12,5 @@ VarianceScaling( ScalingType type,
     energies_( std::move( energies ) ),
     factors_( std::move( factors ) ) {
 
-  verifySize( this->energies().size(), this->factors().size() );
+  verifySize( this->energies(), this->factors() );
 }

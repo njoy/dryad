@@ -24,6 +24,8 @@ SCENARIO( "VarianceScaling" ) {
 
     THEN( "a VarianceScaling can be constructed and members can be tested" ) {
 
+      CHECK( 3 == chunk.numberGroups() );
+
       CHECK( 4 == chunk.energies().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.energies()[0] ) );
       CHECK_THAT( 1.  , WithinRel( chunk.energies()[1] ) );
@@ -54,6 +56,32 @@ SCENARIO( "VarianceScaling" ) {
                                        std::move( factors ) ) );
         CHECK_THROWS( VarianceScaling( ScalingType::Inverse,
                                        std::move( zero ),
+                                       std::move( factors ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the energy values are not sorted" ) {
+
+      std::vector< double > energies = { 1., 1e-5, 1e+6, 2e+7 };
+      std::vector< double > factors = { .1, .2, .3 };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( VarianceScaling( ScalingType::Inverse,
+                                       std::move( energies ),
+                                       std::move( factors ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the energy values have duplicate values" ) {
+
+      std::vector< double > energies = { 1e-5, 1e-5, 1e+6, 2e+7 };
+      std::vector< double > factors = { .1, .2, .3 };
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( VarianceScaling( ScalingType::Inverse,
+                                       std::move( energies ),
                                        std::move( factors ) ) );
       } // THEN
     } // WHEN

@@ -2,6 +2,8 @@
 #define NJOY_DRYAD_COVARIANCE_SCALEDVARIANCE
 
 // system includes
+#include <algorithm>
+#include <vector>
 
 // other includes
 #include "tools/Log.hpp"
@@ -54,6 +56,14 @@ namespace covariance {
     const std::vector< double >& factors() const {
 
       return this->factors_;
+    }
+
+    /**
+     *  @brief Return the number of energy groups
+     */
+    std::size_t numberGroups() const noexcept {
+
+      return this->energies().size() - 1;
     }
 
     /**
