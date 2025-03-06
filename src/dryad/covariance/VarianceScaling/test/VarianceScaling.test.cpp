@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/ScaledVariance.hpp"
+#include "dryad/covariance/VarianceScaling.hpp"
 
 // other includes
 
@@ -13,16 +13,16 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "ScaledVariance" ) {
+SCENARIO( "VarianceScaling" ) {
 
-  GIVEN( "valid covariance data for a diagonal ScaledVariance" ) {
+  GIVEN( "valid covariance data for a diagonal VarianceScaling" ) {
 
     std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
     std::vector< double > factors = { .1, .2, .3 };
 
-    ScaledVariance chunk( ScalingType::Inverse, std::move( energies ), std::move( factors ) );
+    VarianceScaling chunk( ScalingType::Inverse, std::move( energies ), std::move( factors ) );
 
-    THEN( "a ScaledVariance can be constructed and members can be tested" ) {
+    THEN( "a VarianceScaling can be constructed and members can be tested" ) {
 
       CHECK( 4 == chunk.energies().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.energies()[0] ) );
@@ -39,7 +39,7 @@ SCENARIO( "ScaledVariance" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "invalid data for a ScaledVariance" ) {
+  GIVEN( "invalid data for a VarianceScaling" ) {
 
     WHEN( "the number of groups is zero or one" ) {
 
@@ -49,12 +49,12 @@ SCENARIO( "ScaledVariance" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( ScaledVariance( ScalingType::Inverse,
-                                      std::move( zero ),
-                                      std::move( factors ) ) );
-        CHECK_THROWS( ScaledVariance( ScalingType::Inverse,
-                                      std::move( zero ),
-                                      std::move( factors ) ) );
+        CHECK_THROWS( VarianceScaling( ScalingType::Inverse,
+                                       std::move( zero ),
+                                       std::move( factors ) ) );
+        CHECK_THROWS( VarianceScaling( ScalingType::Inverse,
+                                       std::move( zero ),
+                                       std::move( factors ) ) );
       } // THEN
     } // WHEN
 
@@ -65,9 +65,9 @@ SCENARIO( "ScaledVariance" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( ScaledVariance( ScalingType::Inverse,
-                                      std::move( energies ),
-                                      std::move( factors ) ) );
+        CHECK_THROWS( VarianceScaling( ScalingType::Inverse,
+                                       std::move( energies ),
+                                       std::move( factors ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

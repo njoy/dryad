@@ -21,7 +21,7 @@ namespace covariance {
    *  energy isubgroup that includes a portion of the energy interval over which the
    *  factor is defined.
    */
-  class ScaledVariance {
+  class VarianceScaling {
 
     /* fields - variance scaling group structure and factors */
     std::vector< double > energies_;
@@ -31,12 +31,12 @@ namespace covariance {
     ScalingType type_;
 
     /* auxiliary functions */
-    #include "dryad/covariance/ScaledVariance/src/verifySize.hpp"
+    #include "dryad/covariance/VarianceScaling/src/verifySize.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/ScaledVariance/src/ctor.hpp"
+    #include "dryad/covariance/VarianceScaling/src/ctor.hpp"
 
     /* methods */
 

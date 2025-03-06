@@ -5,12 +5,12 @@
  *  @param[in] energies    the energy boundaries
  *  @param[in] factors     the scaling factors
  */
-ScaledVariance( ScalingType type,
-                std::vector< double > energies,
-                std::vector< double > factors ) :
-  type_( std::move( type ) ),
-  energies_( std::move( energies ) ),
-  factors_( std::move( factors ) ) {
+VarianceScaling( ScalingType type,
+                 std::vector< double > energies,
+                 std::vector< double > factors ) :
+    type_( std::move( type ) ),
+    energies_( std::move( energies ) ),
+    factors_( std::move( factors ) ) {
 
   verifySize( this->energies().size(), this->factors().size() );
 }
