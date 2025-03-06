@@ -93,6 +93,7 @@ if( dryad.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/NonRadiativeTransitionData.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/ElectronSubshellConfiguration.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/ScalingType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/matrix.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/CrossSectionMetadata.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/CrossSectionCovarianceBlock.python.cpp
