@@ -11,6 +11,7 @@ add_cpp_test( format.endf.atomic.createElectronSubshellID            atomic/crea
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration atomic/createElectronSubshellConfiguration.test.cpp )
 
 add_cpp_test( format.endf.covariance.createMatrix                         covariance/createMatrix.test.cpp )
+add_cpp_test( format.endf.covariance.createVarianceScaling                covariance/createVarianceScaling.test.cpp )
 add_cpp_test( format.endf.covariance.createCrossSectionCovarianceBlock    covariance/createCrossSectionCovarianceBlock.test.cpp )
 
 add_cpp_test( format.endf.createTabulatedCrossSection            createTabulatedCrossSection.test.cpp )
