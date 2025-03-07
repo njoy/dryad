@@ -17,6 +17,7 @@ class Test_dryad_covariance_VarianceScaling( unittest.TestCase ) :
             # verify content
             self.assertEqual( 3, chunk.number_groups )
             self.assertEqual( 4, len( chunk.energies ) )
+            self.assertEqual( 3, len( chunk.factors ) )
             self.assertAlmostEqual( 1e-5, chunk.energies[0] )
             self.assertAlmostEqual( 1.  , chunk.energies[1] )
             self.assertAlmostEqual( 1e+6, chunk.energies[2] )

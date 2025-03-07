@@ -15,7 +15,8 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CrossSectionCovarianceBlock" ) {
 
-  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock" ) {
+  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock without "
+         "variance scaling information" ) {
 
     id::ParticleID projectile( "n" );
     id::ParticleID target( "U235" );
@@ -52,6 +53,9 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
       CHECK_THAT( 1.  , WithinRel( chunk.columnMetadata().energies()[1] ) );
       CHECK_THAT( 1e+6, WithinRel( chunk.columnMetadata().energies()[2] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[3] ) );
+
+      CHECK( false == chunk.hasVarianceScaling() );
+      CHECK( std::nullopt == chunk.varianceScaling() );
 
       CHECK( true == chunk.isRelativeBlock() );
       CHECK( false == chunk.isOffDiagonalBlock() );
@@ -119,6 +123,128 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock with "
+         "variance scaling information" ) {
+
+    id::ParticleID projectile( "n" );
+    id::ParticleID target( "U235" );
+    id::ReactionID reaction( "elastic" );
+    std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
+
+    Matrix< double > matrix( 3, 3 );
+    matrix << 1., 2., 3.,
+              2., 4., 6.,
+              3., 6., 9.;
+
+    bool relative = true;
+    VarianceScaling scaling( ScalingType::Inverse,
+                             { 1e-5, 5., 2e+7 }, { 0.001, 0.1 } );
+
+    CrossSectionCovarianceBlock chunk( std::move( projectile ), std::move( target ),
+                                       std::move( reaction ), std::move( energies ),
+                                       std::move( matrix ), relative, std::move( scaling ) );
+
+    THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
+
+     CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
+     CHECK( "U235" == chunk.rowMetadata().targetIdentifier() );
+     CHECK( "elastic" == chunk.rowMetadata().reactionIdentifier() );
+     CHECK( 4 == chunk.rowMetadata().energies().size() );
+     CHECK( 3 == chunk.rowMetadata().numberGroups() );
+     CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
+     CHECK_THAT( 1.  , WithinRel( chunk.rowMetadata().energies()[1] ) );
+     CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
+     CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
+
+     CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
+     CHECK( "U235" == chunk.columnMetadata().targetIdentifier() );
+     CHECK( "elastic" == chunk.columnMetadata().reactionIdentifier() );
+     CHECK( 4 == chunk.columnMetadata().energies().size() );
+     CHECK( 3 == chunk.columnMetadata().numberGroups() );
+     CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
+     CHECK_THAT( 1.  , WithinRel( chunk.columnMetadata().energies()[1] ) );
+     CHECK_THAT( 1e+6, WithinRel( chunk.columnMetadata().energies()[2] ) );
+     CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[3] ) );
+
+     CHECK( true == chunk.hasVarianceScaling() );
+     CHECK( std::nullopt != chunk.varianceScaling() );
+     auto scaling = chunk.varianceScaling().value();
+     CHECK( 2 == scaling.numberGroups() );
+     CHECK( 3 == scaling.energies().size() );
+     CHECK_THAT( 1e-5, WithinRel( scaling.energies()[0] ) );
+     CHECK_THAT( 5.  , WithinRel( scaling.energies()[1] ) );
+     CHECK_THAT( 2e+7, WithinRel( scaling.energies()[2] ) );
+     CHECK( 2 == scaling.factors().size() );
+     CHECK_THAT( 0.001, WithinRel( scaling.factors()[0] ) );
+     CHECK_THAT( 0.1  , WithinRel( scaling.factors()[1] ) );
+     CHECK( ScalingType::Inverse == scaling.type() );
+
+     CHECK( true == chunk.isRelativeBlock() );
+     CHECK( false == chunk.isOffDiagonalBlock() );
+     CHECK( true == chunk.isDiagonalBlock() );
+
+     CHECK( std::nullopt != chunk.covariances() );
+     CHECK( std::nullopt == chunk.standardDeviations() );
+     CHECK( std::nullopt == chunk.correlations() );
+     CHECK( std::nullopt == chunk.eigenvalues() );
+
+     CHECK( 3 == chunk.covariances().value().rows() );
+     CHECK( 3 == chunk.covariances().value().cols() );
+     CHECK( 1. == chunk.covariances().value()(0,0) );
+     CHECK( 2. == chunk.covariances().value()(0,1) );
+     CHECK( 3. == chunk.covariances().value()(0,2) );
+     CHECK( 2. == chunk.covariances().value()(1,0) );
+     CHECK( 4. == chunk.covariances().value()(1,1) );
+     CHECK( 6. == chunk.covariances().value()(1,2) );
+     CHECK( 3. == chunk.covariances().value()(2,0) );
+     CHECK( 6. == chunk.covariances().value()(2,1) );
+     CHECK( 9. == chunk.covariances().value()(2,2) );
+    } // THEN
+
+    chunk.calculateStandardDeviations();
+
+    THEN( "Standard deviations can be calculated" ) {
+
+     CHECK( std::nullopt != chunk.standardDeviations() );
+
+     CHECK( 3 == chunk.standardDeviations().value().size() );
+     CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
+     CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
+     CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
+    } // THEN
+
+    chunk.calculateCorrelations();
+
+    THEN( "Correlations can be calculated" ) {
+
+     CHECK( std::nullopt != chunk.correlations() );
+
+     CHECK( 3 == chunk.correlations().value().rows() );
+     CHECK( 3 == chunk.correlations().value().cols() );
+     CHECK( 1. == chunk.correlations().value()(0,0) );
+     CHECK( 1. == chunk.correlations().value()(0,1) );
+     CHECK( 1. == chunk.correlations().value()(0,2) );
+     CHECK( 1. == chunk.correlations().value()(1,0) );
+     CHECK( 1. == chunk.correlations().value()(1,1) );
+     CHECK( 1. == chunk.correlations().value()(1,2) );
+     CHECK( 1. == chunk.correlations().value()(2,0) );
+     CHECK( 1. == chunk.correlations().value()(2,1) );
+     CHECK( 1. == chunk.correlations().value()(2,2) );
+    } // THEN
+
+    chunk.calculateEigenvalues();
+
+    THEN( "Eigenvalues can be calculated" ) {
+
+     CHECK( std::nullopt != chunk.eigenvalues() );
+
+     CHECK( 3 == chunk.eigenvalues().value().size() );
+     CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
+     CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
+     CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[2] ) );
+    } // THEN
+  } // GIVEN
+
   GIVEN( "valid data for an off-diagonal CrossSectionCovarianceBlock" ) {
 
     id::ParticleID rowProjectile( "n" );
@@ -165,6 +291,8 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
       CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
       CHECK_THAT( 2.  , WithinRel( chunk.columnMetadata().energies()[1] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[2] ) );
+
+      CHECK( std::nullopt == chunk.varianceScaling() );
 
       CHECK( true == chunk.isRelativeBlock() );
       CHECK( true == chunk.isOffDiagonalBlock() );
