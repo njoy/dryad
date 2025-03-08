@@ -19,7 +19,7 @@ namespace covariance {
    *  @brief Metadata for the rows or columns of a cross section
    *         covariance matrix block
    */
-  class CrossSectionMetaData {
+  class CrossSectionMetadata {
 
     /* fields */
     id::ParticleID projectile_id_;
@@ -28,12 +28,12 @@ namespace covariance {
     std::vector< double > energies_;
 
     /* auxiliary function */
-    #include "dryad/covariance/CrossSectionMetaData/src/verifyEnergies.hpp"
+    #include "dryad/covariance/CrossSectionMetadata/src/verifyEnergies.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/CrossSectionMetaData/src/ctor.hpp"
+    #include "dryad/covariance/CrossSectionMetadata/src/ctor.hpp"
 
     /* methods */
 

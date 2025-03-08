@@ -11,6 +11,8 @@
 #include "dryad/covariance/CrossSectionCovarianceBlock.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/format/endf/covariance/createMatrix.hpp"
+#include "dryad/format/endf/covariance/createVarianceScaling.hpp"
+#include "ENDFtk/section/ReactionBlock.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -19,92 +21,117 @@ namespace endf {
 namespace covariance {
 
   /**
-   *  @brief Create a cross section covariance block from ENDF covariance pair data
+   *  @brief Create a cross section covariance block from an ENDF ReactionBlock
+   *         that defines an on-diagonal covariance block
    */
   dryad::covariance::CrossSectionCovarianceBlock
   createCrossSectionCovarianceBlock(
       const dryad::id::ParticleID& projectile,
       const dryad::id::ParticleID& target,
       const dryad::id::ReactionID& reaction,
-      const ENDFtk::section::CovariancePairs& block ) {
+      const ENDFtk::section::ReactionBlock& block ) {
 
-    std::vector< double > structure = createVector( block.firstArrayEnergies() );
-    return dryad::covariance::CrossSectionCovarianceBlock(
-               projectile, target, reaction, std::move( structure ),
-               createMatrix( block ), block.procedure() == 0 ? false : true );
-  }
+    if ( block.numberExplicit() == 0 ) {
 
-  /**
-   *  @brief Create an on-diagonal cross section covariance block from ENDF
-   *         square matrix data
-   */
-  dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock(
-      const dryad::id::ParticleID& projectile,
-      const dryad::id::ParticleID& target,
-      const dryad::id::ReactionID& reaction,
-      const ENDFtk::section::SquareMatrix& block ) {
+      Log::error( "No explicit covariance components are defined" );
+      throw std::exception();
+    }
 
-    std::vector< double > structure = createVector( block.energies() );
-    return dryad::covariance::CrossSectionCovarianceBlock(
-               projectile, target, reaction, std::move( structure ),
-               createMatrix( block ), true );
-  }
+    auto components = block.explicitCovariances();
 
-  /**
-   *  @brief Create an off-diagonal cross section covariance block from ENDF
-   *         square matrix data
-   */
-  dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock(
-      const dryad::id::ParticleID& rowProjectile,
-      const dryad::id::ParticleID& rowTarget,
-      const dryad::id::ReactionID& rowReaction,
-      const dryad::id::ParticleID& columnProjectile,
-      const dryad::id::ParticleID& columnTarget,
-      const dryad::id::ReactionID& columnReaction,
-      const ENDFtk::section::SquareMatrix& block ) {
+    bool relative = true;
+    std::vector< std::vector< double > > structures;
+    std::vector< dryad::covariance::Matrix< double > > matrices;
+    std::optional< dryad::covariance::VarianceScaling > scaling = std::nullopt;
 
-        std::vector< double > rowStructure = createVector( block.energies() );
-        std::vector< double > columnStructure = createVector( block.energies() );
-        return dryad::covariance::CrossSectionCovarianceBlock(
-               rowProjectile, rowTarget, rowReaction,
-               std::move( rowStructure ),
-               columnProjectile, columnTarget, columnReaction,
-               std::move( columnStructure ),
-               createMatrix( block ), true );
-  }
+    for ( const auto& component : components ) {
 
-  /**
-   *  @brief Create an on-diagonal cross section covariance block from ENDF
-   *         rectangular matrix data
-   */
-  dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock(
-      const dryad::id::ParticleID& projectile,
-      const dryad::id::ParticleID& target,
-      const dryad::id::ReactionID& reaction,
-      const ENDFtk::section::RectangularMatrix& block ) {
+      auto type = std::visit( [] ( const auto& component )
+                                 { return component.procedure(); },
+                              component );
 
-    if ( block.numberRowEnergies() == block.numberColumnEnergies() ) {
+      switch ( type ) {
 
-      if ( njoy::tools::std20::equal( block.rowEnergies(), block.columnEnergies() ) ) {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4: {
 
-        std::vector< double > structure = createVector( block.rowEnergies() );
-        return dryad::covariance::CrossSectionCovarianceBlock(
-                   projectile, target, reaction, std::move( structure ),
-                   createMatrix( block ), true );
+          // LB == 0 is for absolute covariances
+          if ( type == 0 ) {
+
+            relative = false;
+          }
+
+          // CovariancePairs that represent a matrix
+          auto block = std::get< ENDFtk::section::CovariancePairs >( component );
+
+          structures.emplace_back( createVector( block.firstArrayEnergies() ) );
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        case 8:
+        case 9: {
+
+          // CovariancePairs that represent a variance scaling
+
+          // there can be only one
+          if ( scaling.has_value() ) {
+
+            Log::error( "ENDF reaction covariance block has more than one variance "
+                        "scaling component." );
+            throw std::exception();
+          }
+
+          // read the scalong information
+          scaling = createVarianceScaling( std::get< ENDFtk::section::CovariancePairs >( component ) );
+          break;
+        }
+        case 5: {
+
+          // SquareMatrix
+          auto block = std::get< ENDFtk::section::SquareMatrix >( component );
+
+          structures.emplace_back( createVector( block.energies() ) );
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        case 6: {
+
+          // RectangularMatrix
+          auto block = std::get< ENDFtk::section::RectangularMatrix >( component );
+
+          structures.emplace_back( createVector( block.rowEnergies() ) );
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        default: {
+
+          Log::error( "Unknown ENDF covariance component: LB={}, contact a developer", type );
+          throw std::exception();
+        }
       }
     }
 
-    Log::error( "The covariance matrix provided by an ENDF rectangular matrix (LB=6) "
-                "is not a square matrix for an on-diagonal covariance block" );
-    throw std::exception();
+    if ( structures.size() == 1 ) {
+
+      return dryad::covariance::CrossSectionCovarianceBlock(
+                 dryad::covariance::CrossSectionMetadata( projectile, target, reaction,
+                                                          std::move( structures.front() ) ),
+                 std::move( matrices.front() ),
+                 relative, std::move( scaling ) );
+    }
+    else {
+
+      Log::error( "Not implemented yet, contact a developer" );
+      throw std::exception();
+    }
   }
 
   /**
-   *  @brief Create an off-diagonal cross section covariance block from ENDF
-   *         square matrix data
+   *  @brief Create a cross section covariance block from an ENDF ReactionBlock
+   *         that defines an off-diagonal covariance block
    */
   dryad::covariance::CrossSectionCovarianceBlock
   createCrossSectionCovarianceBlock(
@@ -114,16 +141,115 @@ namespace covariance {
       const dryad::id::ParticleID& columnProjectile,
       const dryad::id::ParticleID& columnTarget,
       const dryad::id::ReactionID& columnReaction,
-      const ENDFtk::section::RectangularMatrix& block ) {
+      const ENDFtk::section::ReactionBlock& block ) {
 
-        std::vector< double > rowStructure = createVector( block.rowEnergies() );
-        std::vector< double > columnStructure = createVector( block.columnEnergies() );
-        return dryad::covariance::CrossSectionCovarianceBlock(
-               rowProjectile, rowTarget, rowReaction,
-               std::move( rowStructure ),
-               columnProjectile, columnTarget, columnReaction,
-               std::move( columnStructure ),
-               createMatrix( block ), true );
+    if ( block.numberExplicit() == 0 ) {
+
+      Log::error( "No explicit covariance components are defined" );
+      throw std::exception();
+    }
+
+    auto components = block.explicitCovariances();
+
+    bool relative = true;
+    std::vector< std::vector< double > > rowStructures;
+    std::vector< std::vector< double > > columnStructures;
+    std::vector< dryad::covariance::Matrix< double > > matrices;
+
+    for ( const auto& component : components ) {
+
+      auto type = std::visit( [] ( const auto& component )
+                                 { return component.procedure(); },
+                              component );
+
+      switch ( type ) {
+
+        case 0:
+        case 1: {
+
+          // LB == 0 is for absolute covariances
+          if ( type == 0 ) {
+
+            relative = false;
+          }
+
+          // CovariancePairs that represent a matrix
+          auto block = std::get< ENDFtk::section::CovariancePairs >( component );
+
+          rowStructures.emplace_back( createVector( block.firstArrayEnergies() ) );
+          columnStructures.emplace_back( createVector( block.firstArrayEnergies() ) );
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        case 2:
+        case 3:
+        case 4: {
+
+          // CovariancePairs that represent a matrix
+          auto block = std::get< ENDFtk::section::CovariancePairs >( component );
+
+          if ( block.numberSecondPairs() == 0 ) {
+
+            rowStructures.emplace_back( createVector( block.firstArrayEnergies() ) );
+            columnStructures.emplace_back( createVector( block.firstArrayEnergies() ) );
+          }
+          else {
+
+            rowStructures.emplace_back( createVector( block.firstArrayEnergies() ) );
+            columnStructures.emplace_back( createVector( block.secondArrayEnergies() ) );
+          }
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        case 8:
+        case 9: {
+
+          Log::error( "Off-diagonal ENDF reaction covariance blocks cannot have "
+                      "variance scaling component." );
+          throw std::exception();
+        }
+        case 5: {
+
+          // SquareMatrix
+          auto block = std::get< ENDFtk::section::SquareMatrix >( component );
+
+          rowStructures.emplace_back( createVector( block.energies() ) );
+          columnStructures.emplace_back( createVector( block.energies() ) );
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        case 6: {
+
+          // RectangularMatrix
+          auto block = std::get< ENDFtk::section::RectangularMatrix >( component );
+
+          rowStructures.emplace_back( createVector( block.rowEnergies() ) );
+          columnStructures.emplace_back( createVector( block.columnEnergies() ) );
+          matrices.emplace_back( createMatrix( block ) );
+          break;
+        }
+        default: {
+
+          Log::error( "Unknown ENDF covariance component: LB={}, contact a developer", type );
+          throw std::exception();
+        }
+      }
+    }
+
+    if ( rowStructures.size() == 1 ) {
+
+      return dryad::covariance::CrossSectionCovarianceBlock(
+                 dryad::covariance::CrossSectionMetadata( rowProjectile, rowTarget, rowReaction,
+                                                          std::move( rowStructures.front() ) ),
+                 dryad::covariance::CrossSectionMetadata( columnProjectile, columnTarget, columnReaction,
+                                                          std::move( columnStructures.front() ) ),
+                 std::move( matrices.front() ), relative );
+    }
+    else {
+
+      Log::error( "Not implemented yet, contact a developer" );
+      throw std::exception();
+    }
   }
 
 } // covariance namespace
