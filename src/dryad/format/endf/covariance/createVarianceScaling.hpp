@@ -28,6 +28,12 @@ namespace covariance {
 
       std::vector< double > energies = createVector( block.firstArrayEnergies() );
       std::vector< double > factors = createVector( block.firstArrayFValues() );
+
+      if ( factors.back() != 0. ) {
+
+        Log::warning( "Variance scaling has non-zero factor beyond last energy value" );
+      }
+
       factors.pop_back();
       dryad::covariance::ScalingType type = block.LB() == 8
                                           ? dryad::covariance::ScalingType::Inverse
