@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/ReactionIdentifiers.hpp"
+#include "dryad/format/endf/ReactionInformation.hpp"
 #include "dryad/ReactionType.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -21,11 +21,11 @@ namespace endf {
    */
   ReactionType createReactionType( const ENDFtk::tree::Material& material, int mt ) {
 
-    if ( endf::ReactionIdentifiers::isPrimary( material, mt ) ) {
+    if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
       return ReactionType::Primary;
     }
-    else if ( endf::ReactionIdentifiers::isSummation( material, mt ) ) {
+    else if ( endf::ReactionInformation::isSummation( material, mt ) ) {
 
       return ReactionType::Summation;
     }

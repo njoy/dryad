@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_REACTIONIDENTIFIERS
-#define NJOY_DRYAD_FORMAT_ENDF_REACTIONIDENTIFIERS
+#ifndef NJOY_DRYAD_FORMAT_ENDF_REACTIONINFORMATION
+#define NJOY_DRYAD_FORMAT_ENDF_REACTIONINFORMATION
 
 // system includes
 #include <map>
@@ -15,9 +15,9 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief A class related to ENDF reaction identifiers
+   *  @brief A class related to ENDF reaction information
    */
-  class ReactionIdentifiers {
+  class ReactionInformation {
 
     inline static const std::unordered_set< int > derived_ = {
 

@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/format/endf/ReactionInformation.hpp"
 #include "dryad/format/endf/createReactionType.hpp"
 #include "dryad/format/endf/createTabulatedCrossSection.hpp"
 #include "dryad/format/endf/createReactionProducts.hpp"
@@ -67,7 +68,7 @@ namespace endf {
         }
 
         // partials
-        std::vector< int > endf_partials = ReactionIdentifiers::partials( material, 3, mt );
+        std::vector< int > endf_partials = ReactionInformation::partials( material, 3, mt );
         std::vector< id::ReactionID > partials( endf_partials.size() );
         std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
                         [] ( auto&& value ) { return std::to_string( value ); } );
@@ -99,7 +100,7 @@ namespace endf {
         reaction_q = -section.subshellBindingEnergy();
         if ( mt == 515 || mt == 517 ) {
 
-          // for pair production the photon needs 
+          // for pair production the photon needs
           // at minimum to be twice the electron rest mass energy
           // i.e. 2 * 511 keV
           reaction_q = -1.022e+6;
@@ -113,7 +114,7 @@ namespace endf {
       else {
 
         // partials
-        std::vector< int > endf_partials = ReactionIdentifiers::partials( material, 23, mt );
+        std::vector< int > endf_partials = ReactionInformation::partials( material, 23, mt );
         std::vector< id::ReactionID > partials( endf_partials.size() );
         std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
                         [] ( auto&& value ) { return std::to_string( value ); } );

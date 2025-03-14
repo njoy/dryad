@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/ReactionIdentifiers.hpp"
+#include "dryad/format/endf/ReactionInformation.hpp"
 #include "dryad/format/endf/createReaction.hpp"
 #include "dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
@@ -37,7 +37,7 @@ namespace endf {
       reactions.reserve( material.file( source ).sectionNumbers().size() );
       for ( auto mt : material.file( source ).sectionNumbers() ) {
 
-        if ( ! endf::ReactionIdentifiers::isDerived( material, mt ) ) {
+        if ( ! endf::ReactionInformation::isDerived( material, mt ) ) {
 
           Log::info( "Reading data for MT{}", mt );
           reactions.emplace_back( createReaction( projectile, target, material, mt ) );
@@ -49,13 +49,13 @@ namespace endf {
       }
 
       // calculate deficit reaction for elastic scattering in electro-atomic data
-      if ( material.hasSection( 23, 526 ) && ReactionIdentifiers::isSummation( material, 526 ) ) {
+      if ( material.hasSection( 23, 526 ) && ReactionInformation::isSummation( material, 526 ) ) {
 
-        auto total = std::find_if( reactions.begin(), reactions.end(), 
-                                   [] ( const auto& reaction ) 
+        auto total = std::find_if( reactions.begin(), reactions.end(),
+                                   [] ( const auto& reaction )
                                       { return reaction.identifier() == id::ReactionID( "501" ); } );
-        auto partial = std::find_if( reactions.begin(), reactions.end(), 
-                                     [] ( const auto& reaction ) 
+        auto partial = std::find_if( reactions.begin(), reactions.end(),
+                                     [] ( const auto& reaction )
                                         { return reaction.identifier() == id::ReactionID( "525" ); } );
         TabulatedCrossSection deficit = total->crossSection().linearise();
         deficit -= partial->crossSection().linearise();
