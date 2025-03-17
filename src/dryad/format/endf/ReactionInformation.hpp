@@ -88,7 +88,6 @@ namespace endf {
       {  89, Entry(  89, { 1, 0, 0, 0, 0, 0 } ) },  // z,n(39)
       {  90, Entry(  90, { 1, 0, 0, 0, 0, 0 } ) },  // z,n(40)
       {  91, Entry(  91, { 1, 0, 0, 0, 0, 0 } ) },  // z,n(continuum)
-      { 102, Entry( 102, { 0, 0, 0, 0, 0, 0 } ) },  // z,g
       { 103, Entry( 103, { 0, 1, 0, 0, 0, 0 } ) },  // z,p
       { 104, Entry( 104, { 0, 0, 1, 0, 0, 0 } ) },  // z,d
       { 105, Entry( 105, { 0, 0, 0, 1, 0, 0 } ) },  // z,t
@@ -421,6 +420,10 @@ namespace endf {
       { 891, Entry( 891, { 2, 0, 0, 0, 0, 0 } ) }   // z,2n(continuum)
     };
 
+    inline static const std::unordered_set< int > fission_ = {
+
+       18,  19,  20,  21,  38
+    };
     inline static const std::unordered_set< int > derived_ = {
 
       203, 204, 205, 206, 207, 251, 252, 253
@@ -538,10 +541,9 @@ namespace endf {
     /**
      *  @brief Return whether or not the MT number is valid
      *
-     *  @param[in] material   the ENDF material
      *  @param[in] mt         the MT number
      */
-    static bool isValid( const ENDFtk::tree::Material&, int mt ) {
+    static bool isValid( int mt ) {
 
       if ( ( mt > 0 ) && ( mt < 1000 ) ) {
 
@@ -560,12 +562,22 @@ namespace endf {
     }
 
     /**
+     *  @brief Return whether or not the MT number is for a fission reaction
+     *
+     *  @param[in] mt         the MT number
+     */
+    static bool isFission( int mt ) {
+
+      return fission_.find( mt ) != fission_.end();
+    }
+
+    /**
      *  @brief Return whether or not the MT number is for a derived reaction
      *
      *  @param[in] material   the ENDF material
      *  @param[in] mt         the MT number
      */
-    static bool isDerived( const ENDFtk::tree::Material&, int mt ) {
+    static bool isDerived( int mt ) {
 
       return derived_.find( mt ) != derived_.end();
     }
