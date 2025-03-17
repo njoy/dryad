@@ -424,7 +424,16 @@ namespace endf {
 
        18,  19,  20,  21,  38
     };
-    inline static const std::unordered_set< int > derived_ = {
+    inline static const std::unordered_set< int > atomic_ = {
+
+      501, 502, 504, 505, 506, 515, 516, 517, 522, 523,
+      525, 526, 527, 528, 534, 535, 536, 537, 538, 539,
+      540, 541, 542, 543, 544, 545, 546, 547, 548, 549,
+      550, 551, 552, 553, 554, 555, 556, 557, 558, 559,
+      560, 561, 562, 563, 564, 565, 566, 567, 568, 569,
+      570, 571, 572
+   };
+   inline static const std::unordered_set< int > derived_ = {
 
       203, 204, 205, 206, 207, 251, 252, 253
     };
@@ -569,6 +578,16 @@ namespace endf {
     static bool isFission( int mt ) {
 
       return fission_.find( mt ) != fission_.end();
+    }
+
+    /**
+     *  @brief Return whether or not the MT number is for an atomic reaction
+     *
+     *  @param[in] mt         the MT number
+     */
+    static bool isAtomic( int mt ) {
+
+      return atomic_.find( mt ) != atomic_.end();
     }
 
     /**

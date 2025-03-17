@@ -2817,6 +2817,84 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( false == ReactionInformation::isFission( 102 ) );
     }
 
+    THEN( "we an verify if the MT number is a valid atomic interaction" ) {
+
+      CHECK( false == ReactionInformation::isAtomic( 500 ) );
+      CHECK( true == ReactionInformation::isAtomic( 501 ) );
+      CHECK( true == ReactionInformation::isAtomic( 502 ) );
+      CHECK( false == ReactionInformation::isAtomic( 503 ) );
+      CHECK( true == ReactionInformation::isAtomic( 504 ) );
+      CHECK( true == ReactionInformation::isAtomic( 505 ) );
+      CHECK( true == ReactionInformation::isAtomic( 506 ) );
+      CHECK( false == ReactionInformation::isAtomic( 507 ) );
+      CHECK( false == ReactionInformation::isAtomic( 508 ) );
+      CHECK( false == ReactionInformation::isAtomic( 509 ) );
+      CHECK( false == ReactionInformation::isAtomic( 510 ) );
+      CHECK( false == ReactionInformation::isAtomic( 511 ) );
+      CHECK( false == ReactionInformation::isAtomic( 512 ) );
+      CHECK( false == ReactionInformation::isAtomic( 513 ) );
+      CHECK( false == ReactionInformation::isAtomic( 514 ) );
+      CHECK( true == ReactionInformation::isAtomic( 515 ) );
+      CHECK( true == ReactionInformation::isAtomic( 516 ) );
+      CHECK( true == ReactionInformation::isAtomic( 517 ) );
+      CHECK( false == ReactionInformation::isAtomic( 518 ) );
+      CHECK( false == ReactionInformation::isAtomic( 519 ) );
+      CHECK( false == ReactionInformation::isAtomic( 520 ) );
+      CHECK( false == ReactionInformation::isAtomic( 521 ) );
+      CHECK( true == ReactionInformation::isAtomic( 522 ) );
+      CHECK( true == ReactionInformation::isAtomic( 523 ) );
+      CHECK( false == ReactionInformation::isAtomic( 524 ) );
+      CHECK( true == ReactionInformation::isAtomic( 525 ) );
+      CHECK( true == ReactionInformation::isAtomic( 526 ) );
+      CHECK( true == ReactionInformation::isAtomic( 527 ) );
+      CHECK( true == ReactionInformation::isAtomic( 528 ) );
+      CHECK( false == ReactionInformation::isAtomic( 529 ) );
+      CHECK( false == ReactionInformation::isAtomic( 530 ) );
+      CHECK( false == ReactionInformation::isAtomic( 531 ) );
+      CHECK( false == ReactionInformation::isAtomic( 532 ) );
+      CHECK( false == ReactionInformation::isAtomic( 533 ) );
+      CHECK( true == ReactionInformation::isAtomic( 534 ) );
+      CHECK( true == ReactionInformation::isAtomic( 535 ) );
+      CHECK( true == ReactionInformation::isAtomic( 536 ) );
+      CHECK( true == ReactionInformation::isAtomic( 537 ) );
+      CHECK( true == ReactionInformation::isAtomic( 538 ) );
+      CHECK( true == ReactionInformation::isAtomic( 539 ) );
+      CHECK( true == ReactionInformation::isAtomic( 540 ) );
+      CHECK( true == ReactionInformation::isAtomic( 541 ) );
+      CHECK( true == ReactionInformation::isAtomic( 542 ) );
+      CHECK( true == ReactionInformation::isAtomic( 543 ) );
+      CHECK( true == ReactionInformation::isAtomic( 544 ) );
+      CHECK( true == ReactionInformation::isAtomic( 545 ) );
+      CHECK( true == ReactionInformation::isAtomic( 546 ) );
+      CHECK( true == ReactionInformation::isAtomic( 547 ) );
+      CHECK( true == ReactionInformation::isAtomic( 548 ) );
+      CHECK( true == ReactionInformation::isAtomic( 549 ) );
+      CHECK( true == ReactionInformation::isAtomic( 550 ) );
+      CHECK( true == ReactionInformation::isAtomic( 551 ) );
+      CHECK( true == ReactionInformation::isAtomic( 552 ) );
+      CHECK( true == ReactionInformation::isAtomic( 553 ) );
+      CHECK( true == ReactionInformation::isAtomic( 554 ) );
+      CHECK( true == ReactionInformation::isAtomic( 555 ) );
+      CHECK( true == ReactionInformation::isAtomic( 556 ) );
+      CHECK( true == ReactionInformation::isAtomic( 557 ) );
+      CHECK( true == ReactionInformation::isAtomic( 558 ) );
+      CHECK( true == ReactionInformation::isAtomic( 559 ) );
+      CHECK( true == ReactionInformation::isAtomic( 560 ) );
+      CHECK( true == ReactionInformation::isAtomic( 561 ) );
+      CHECK( true == ReactionInformation::isAtomic( 562 ) );
+      CHECK( true == ReactionInformation::isAtomic( 563 ) );
+      CHECK( true == ReactionInformation::isAtomic( 564 ) );
+      CHECK( true == ReactionInformation::isAtomic( 565 ) );
+      CHECK( true == ReactionInformation::isAtomic( 566 ) );
+      CHECK( true == ReactionInformation::isAtomic( 567 ) );
+      CHECK( true == ReactionInformation::isAtomic( 568 ) );
+      CHECK( true == ReactionInformation::isAtomic( 569 ) );
+      CHECK( true == ReactionInformation::isAtomic( 570 ) );
+      CHECK( true == ReactionInformation::isAtomic( 571 ) );
+      CHECK( true == ReactionInformation::isAtomic( 572 ) );
+      CHECK( false == ReactionInformation::isAtomic( 573 ) );
+    }
+
     THEN( "we an verify if the MT number is a valid reaction number" ) {
 
       CHECK( false == ReactionInformation::isValid( -1 ) );

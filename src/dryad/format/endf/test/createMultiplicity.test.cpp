@@ -19,7 +19,22 @@ void verifyElectronConstantChunk( const Multiplicity& );
 
 //! @todo look for an electron example where the multiplicity is tabulated?
 
-SCENARIO( "createTabulatedMultiplicity" ) {
+SCENARIO( "createMultiplicity" ) {
+
+  GIVEN( "integer multiplicities" ) {
+
+    WHEN( "a single parsed MF6 multiplicity with a constant value is given" ) {
+
+      int multiplicity = 2;
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = format::endf::createMultiplicity( multiplicity );
+
+        verifyNeutronConstantChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 
   GIVEN( "ENDF MF6 multiplicities" ) {
 

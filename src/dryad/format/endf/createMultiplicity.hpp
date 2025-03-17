@@ -17,6 +17,14 @@ namespace format {
 namespace endf {
 
   /**
+   *  @brief Create an integer multiplicity
+   */
+  std::variant< int, TabulatedMultiplicity > createMultiplicity( int multiplicity ) {
+
+    return multiplicity;
+  }
+
+  /**
    *  @brief Create an integer or tabulated multiplicity from a parsed ENDF multiplicity
    */
   template < typename Multiplicity >
