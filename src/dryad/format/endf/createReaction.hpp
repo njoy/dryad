@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_ENDF_CREATEREACTION
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
@@ -18,6 +19,25 @@ namespace njoy {
 namespace dryad {
 namespace format {
 namespace endf {
+
+  /**
+   *  @brief Add a reaction product if it is not in the list
+   */
+  void addProduct( const id::ParticleID& particle, int multiplicity,
+                   std::vector< ReactionProduct >& products ) {
+
+    if ( multiplicity != 0 ) {
+
+      auto iter = std::find_if( products.begin(), products.end(),
+                                [&particle] ( auto&& product )
+                                            { return product.identifier() == particle; } );
+      if ( iter == products.end() ) {
+
+        Log::info( "Adding '{}' as an expected reaction product", particle );
+        products.emplace_back( particle, multiplicity );
+      }
+    }
+  }
 
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
@@ -53,6 +73,17 @@ namespace endf {
 
           mass_q = section.massDifferenceQValue();
           reaction_q = section.massDifferenceQValue();
+        }
+
+        // add missing reaction products (n, p, d, t, h, a only)
+        if ( ReactionInformation::hasSecondaryParticles( mt ) ) {
+
+          addProduct( createProductIdentifier( 1, 0 ), ReactionInformation::neutrons( mt ), products );
+          addProduct( createProductIdentifier( 1001, 0 ), ReactionInformation::protons( mt ), products );
+          addProduct( createProductIdentifier( 1002, 0 ), ReactionInformation::deuterons( mt ), products );
+          addProduct( createProductIdentifier( 1003, 0 ), ReactionInformation::tritons( mt ), products );
+          addProduct( createProductIdentifier( 2003, 0 ), ReactionInformation::helions( mt ), products );
+          addProduct( createProductIdentifier( 2004, 0 ), ReactionInformation::alphas( mt ), products );
         }
 
         // return the reaction data
