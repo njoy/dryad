@@ -11,6 +11,7 @@ add_cpp_test( format.endf.atomic.createElectronSubshellID            atomic/crea
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration atomic/createElectronSubshellConfiguration.test.cpp )
 
 add_cpp_test( format.endf.createTabulatedCrossSection            createTabulatedCrossSection.test.cpp )
+add_cpp_test( format.endf.createPolynomialMultiplicity           createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.endf.createTabulatedMultiplicity            createTabulatedMultiplicity.test.cpp )
 add_cpp_test( format.endf.createMultiplicity                     createMultiplicity.test.cpp )
 add_cpp_test( format.endf.createLegendreAngularDistribution      createLegendreAngularDistribution.test.cpp )
