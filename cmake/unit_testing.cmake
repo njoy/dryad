@@ -40,6 +40,7 @@ add_subdirectory( src/dryad/AtomicRelaxation/test )
 
 add_subdirectory( src/dryad/TabulatedFormFactor/test )
 add_subdirectory( src/dryad/TabulatedScatteringFunction/test )
+add_subdirectory( src/dryad/PolynomialMultiplicity/test )
 add_subdirectory( src/dryad/TabulatedMultiplicity/test )
 add_subdirectory( src/dryad/TabulatedAverageCosine/test )
 add_subdirectory( src/dryad/TabulatedAverageEnergy/test )
