@@ -2806,7 +2806,7 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( 0 == ReactionInformation::alphas( 891 ) );
     } // THEN
 
-    THEN( "we an verify if the MT number is a valid fission number" ) {
+    THEN( "we can verify if the MT number is a valid fission number" ) {
 
       CHECK( false == ReactionInformation::isFission(   1 ) );
       CHECK( true == ReactionInformation::isFission(  18 ) );
@@ -2895,7 +2895,7 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( false == ReactionInformation::isAtomic( 573 ) );
     }
 
-    THEN( "we an verify if the MT number is a valid reaction number" ) {
+    THEN( "we can verify if the MT number is a valid reaction number" ) {
 
       CHECK( false == ReactionInformation::isValid( -1 ) );
       CHECK( false == ReactionInformation::isValid( 0 ) );
