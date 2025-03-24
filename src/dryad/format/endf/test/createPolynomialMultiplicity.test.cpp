@@ -18,11 +18,11 @@ SCENARIO( "createPolynomialMultiplicity" ) {
 
   GIVEN( "ENDF MF1 nubar polynomial multiplicities" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-090_Th_230.endf" );
+    auto tape = njoy::ENDFtk::tree::fromFile( "n-094_Pu_237-jeff33.endf" );
     auto section = tape.materials().front().section( 1, 452 ).parse< 1, 452 >();
     auto multiplicity = std::get< njoy::ENDFtk::section::PolynomialMultiplicity >( section.nubar() );
 
-    WHEN( "a single parsed MF6 multiplicity is given" ) {
+    WHEN( "a single parsed MF1 multiplicity is given" ) {
 
       THEN( "it can be converted" ) {
 
@@ -38,6 +38,6 @@ void verifyFissionChunk( const PolynomialMultiplicity& chunk ) {
 
   CHECK( 2 == chunk.coefficients().size() );
   CHECK( 1 == chunk.order() );
-  CHECK_THAT( 2.01, WithinRel( chunk.coefficients()[0] ) );
-  CHECK_THAT( 1e-7, WithinRel( chunk.coefficients()[1] ) );
+  CHECK_THAT(   2.824, WithinRel( chunk.coefficients()[0] ) );
+  CHECK_THAT( 1.42e-7, WithinRel( chunk.coefficients()[1] ) );
 }
