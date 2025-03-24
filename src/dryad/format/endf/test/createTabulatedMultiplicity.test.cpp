@@ -21,7 +21,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
   GIVEN( "ENDF MF1 nubar tabulated multiplicities" ) {
 
     auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_237.endf" );
-    auto section = tape.materials().front().section( 1, 452 ).parse< 1, 452 >();
+    auto section = tape.materials().front().section( 1, 456 ).parse< 1, 456 >();
     auto multiplicity = std::get< njoy::ENDFtk::section::TabulatedMultiplicity >( section.nubar() );
 
     WHEN( "a single parsed MF6 multiplicity is given" ) {
@@ -87,12 +87,12 @@ void verifyFissionChunk( const TabulatedMultiplicity& chunk ) {
   CHECK_THAT( 1.1e+7, WithinRel( chunk.energies()[3] ) );
   CHECK_THAT( 1.2e+7, WithinRel( chunk.energies()[4] ) );
   CHECK_THAT( 2.0e+7, WithinRel( chunk.energies()[5] ) );
-  CHECK_THAT( 2.635810, WithinRel( chunk.values()[0] ) );
-  CHECK_THAT( 3.235060, WithinRel( chunk.values()[1] ) );
-  CHECK_THAT( 3.683923, WithinRel( chunk.values()[2] ) );
-  CHECK_THAT( 4.331286, WithinRel( chunk.values()[3] ) );
-  CHECK_THAT( 4.473386, WithinRel( chunk.values()[4] ) );
-  CHECK_THAT( 5.527186, WithinRel( chunk.values()[5] ) );
+  CHECK_THAT( 2.625000, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT( 3.224250, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 3.677437, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 4.324800, WithinRel( chunk.values()[3] ) );
+  CHECK_THAT( 4.466900, WithinRel( chunk.values()[4] ) );
+  CHECK_THAT( 5.520700, WithinRel( chunk.values()[5] ) );
 }
 
 void verifyNeutronChunk( const TabulatedMultiplicity& chunk ) {

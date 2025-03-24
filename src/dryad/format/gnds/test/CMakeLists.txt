@@ -15,6 +15,7 @@ add_cpp_test( format.gnds.readLegendre       readLegendre.test.cpp )
 add_cpp_test( format.gnds.readPolynomial1d   readPolynomial1d.test.cpp )
 add_cpp_test( format.gnds.readXYs1d          readXYs1d.test.cpp )
 
+add_cpp_test( format.gnds.createTabulatedMultiplicity                  createTabulatedMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createTabulatedFormFactorFromNodes           createTabulatedFormFactorFromNodes.test.cpp )
 add_cpp_test( format.gnds.createTabulatedScatteringFunctionFromNodes   createTabulatedScatteringFunctionFromNodes.test.cpp )
 
