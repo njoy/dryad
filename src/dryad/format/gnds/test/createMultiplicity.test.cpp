@@ -11,8 +11,9 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using Multiplicity = std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >;
 
-void verifyChunk( const std::variant< int, TabulatedMultiplicity >& );
+void verifyChunk( const Multiplicity& );
 
 SCENARIO( "createMultiplicity" ) {
 
@@ -38,7 +39,7 @@ SCENARIO( "createMultiplicity" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const std::variant< int, TabulatedMultiplicity >& chunk ) {
+void verifyChunk( const Multiplicity& chunk ) {
 
   CHECK( true == std::holds_alternative< int >( chunk ) );
 

@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
-using Multiplicity = std::variant< int, TabulatedMultiplicity >;
+using Multiplicity = std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >;
 
 void verifyNeutronConstantChunk( const Multiplicity& );
 void verifyNeutronTabulatedChunk( const Multiplicity& );
