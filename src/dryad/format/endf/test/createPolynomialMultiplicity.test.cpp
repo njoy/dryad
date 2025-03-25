@@ -38,6 +38,10 @@ void verifyFissionChunk( const PolynomialMultiplicity& chunk ) {
 
   CHECK( 2 == chunk.coefficients().size() );
   CHECK( 1 == chunk.order() );
+
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 2e+7, WithinRel( chunk.upperEnergyLimit() ) );
+
   CHECK_THAT(   2.824, WithinRel( chunk.coefficients()[0] ) );
   CHECK_THAT( 1.42e-7, WithinRel( chunk.coefficients()[1] ) );
 }

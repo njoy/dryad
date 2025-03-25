@@ -16,7 +16,7 @@ void verifyFissionChunk( const TabulatedMultiplicity& );
 
 SCENARIO( "createTabulatedMultiplicity" ) {
 
-  GIVEN( "GNDS cross section node from incident neutron data" ) {
+  GIVEN( "GNDS multiplicity node from incident neutron data" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-093_Np_237.endf.gnds.xml" );

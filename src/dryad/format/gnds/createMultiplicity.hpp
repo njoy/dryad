@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "dryad/PolynomialMultiplicity.hpp"
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "dryad/format/gnds/createPolynomialMultiplicity.hpp"
 #include "dryad/format/gnds/createTabulatedMultiplicity.hpp"
 #include "dryad/format/gnds/readConstant1d.hpp"
 
@@ -32,6 +33,10 @@ namespace gnds {
 
       auto data = readConstant1dAsInteger( child );
       return data.first;
+    }
+    else if ( strcmp( child.name(), "polynomial1d" ) == 0 ) {
+
+      return createPolynomialMultiplicity( multiplicity );
     }
     else {
 

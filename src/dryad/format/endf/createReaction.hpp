@@ -10,6 +10,7 @@
 #include "dryad/format/endf/ReactionInformation.hpp"
 #include "dryad/format/endf/createReactionType.hpp"
 #include "dryad/format/endf/createTabulatedCrossSection.hpp"
+#include "dryad/format/endf/createMultiplicity.hpp"
 #include "dryad/format/endf/createReactionProducts.hpp"
 #include "dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
@@ -34,7 +35,7 @@ namespace endf {
       if ( iter == products.end() ) {
 
         Log::info( "Adding '{}' as an expected reaction product", particle );
-        products.emplace_back( particle, multiplicity );
+        products.emplace_back( particle, createMultiplicity( multiplicity ) );
       }
     }
   }
