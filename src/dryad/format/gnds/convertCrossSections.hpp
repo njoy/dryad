@@ -23,7 +23,7 @@ namespace gnds {
       if ( unit == "Mb" ) {
 
         std::for_each( xs.begin(), xs.end(),
-                      [] ( double& xs ) { xs *= 1e+6; } );
+                       [] ( double& xs ) { xs *= 1e+6; } );
       }
       else {
 
