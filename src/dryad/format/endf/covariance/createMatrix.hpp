@@ -39,6 +39,11 @@ namespace covariance {
         for ( unsigned int i = 0; i < size; ++i ) {
 
           matrix( i, i ) = endf.firstArrayFValues()[i];
+          for ( unsigned int j = i + 1; j < size; ++j ) {
+
+            matrix( i, j ) = 0.;
+            matrix( j, i ) = 0.;
+          }
         }
         return matrix;
       }
