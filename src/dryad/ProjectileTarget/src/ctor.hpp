@@ -1,13 +1,14 @@
 /**
  *  @brief Constructor
  *
- *  @param projectile   the particle identifier
+ *  @param projectile   the projectile identifier
  *  @param target       the target identifier
  *  @param reactions    the reaction data
  *  @param linearised   a flag indicating whether or not the data is
  *                      linearised
  */
-ProjectileTarget( id::ParticleID&& projectile, id::ParticleID&& target,
+ProjectileTarget( id::ParticleID&& projectile,
+                  id::ParticleID&& target,
                   InteractionType type,
                   std::optional< resonances::ResonanceParameters > resonances,
                   std::vector< Reaction >&& reactions,
@@ -35,11 +36,12 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param projectile   the particle identifier
+ *  @param projectile   the projectile identifier
  *  @param target       the target identifier
  *  @param reactions    the reaction data
  */
-ProjectileTarget( id::ParticleID projectile, id::ParticleID target,
+ProjectileTarget( id::ParticleID projectile,
+                  id::ParticleID target,
                   InteractionType type,
                   std::vector< Reaction > reactions ) :
     ProjectileTarget( std::move( projectile ),
