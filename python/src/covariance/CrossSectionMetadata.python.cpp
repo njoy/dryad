@@ -3,17 +3,17 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/covariance/CrossSectionMetaData.hpp"
+#include "dryad/covariance/CrossSectionMetadata.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace covariance {
 
-void wrapCrossSectionMetaData( python::module& module ) {
+void wrapCrossSectionMetadata( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::covariance::CrossSectionMetaData;
+  using Component = njoy::dryad::covariance::CrossSectionMetadata;
   using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
 
@@ -23,7 +23,7 @@ void wrapCrossSectionMetaData( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "CrossSectionMetaData",
+    "CrossSectionMetadata",
     "Metadata for the rows or columns of a covariance matrix block for "
     "cross section data"
   );
@@ -32,20 +32,28 @@ void wrapCrossSectionMetaData( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, ReactionID, std::vector< double > >(),
-    python::arg( "nuclide" ), python::arg( "reaction" ), python::arg( "energies" ),
+    python::init< ParticleID, ParticleID, ReactionID, std::vector< double > >(),
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "reaction" ), python::arg( "energies" ),
     "Initialise the meta data\n\n"
     "Arguments:\n"
-    "    self       the meta data\n"
-    "    nuclide    the nuclide identifier\n"
-    "    reaction   the reaction identifier\n"
-    "    energies   the energy boundaries"
+    "    self         the meta data\n"
+    "    projectile   the projectile identifier\n"
+    "    target       the target identifier\n"
+    "    reaction     the reaction identifier\n"
+    "    energies     the energy boundaries"
   )
   .def_property_readonly(
 
-    "nuclide_identifier",
-    &Component::nuclideIdentifier,
-    "The nuclide identifier"
+    "projectile_identifier",
+    &Component::projectileIdentifier,
+    "The projectile identifier"
+  )
+  .def_property_readonly(
+
+    "target_identifier",
+    &Component::targetIdentifier,
+    "The target identifier"
   )
   .def_property_readonly(
 

@@ -1,0 +1,1 @@
+add_cpp_test( covariance.CrossSectionCovarianceBlock CrossSectionCovarianceBlock.test.cpp )
