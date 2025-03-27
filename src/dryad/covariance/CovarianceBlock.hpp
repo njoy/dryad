@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_COVARIANCE_COVARIANCEBLOCK
 
 // system includes
+#include <optional>
 
 // other includes
 #include "tools/Log.hpp"
