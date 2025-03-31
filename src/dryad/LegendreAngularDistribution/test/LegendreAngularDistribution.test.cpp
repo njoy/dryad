@@ -25,6 +25,8 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
 
+        CHECK( true == chunk.hasCdf() );
+
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -57,14 +59,37 @@ SCENARIO( "LegendreAngularDistribution" ) {
         CHECK_THAT( 1. / 6., WithinRel( chunk.averageCosine() ) );
       } // THEN
 
-//! @todo implement linearisation
-//      THEN( "a LegendreAngularDistribution can be linearised" ) {
-//
-//      } // THEN
+      THEN( "a LegendreAngularDistribution can be linearised" ) {
+
+        auto linear = chunk.linearise();
+
+        CHECK( 2 == linear.pdf().numberPoints() );
+        CHECK( 1 == linear.pdf().numberRegions() );
+
+        CHECK( 2 == linear.pdf().cosines().size() );
+        CHECK( 2 == linear.pdf().values().size() );
+        CHECK( 1 == linear.pdf().boundaries().size() );
+        CHECK( 1 == linear.pdf().interpolants().size() );
+
+        CHECK( 1 == linear.pdf().boundaries()[0] );
+
+        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
+
+        CHECK_THAT( -1.0      , WithinRel( linear.pdf().cosines()[0] ) );
+        CHECK_THAT(  1.0      , WithinRel( linear.pdf().cosines()[1] ) );
+
+        CHECK_THAT( 0.25, WithinRel( linear.pdf().values()[0] ) );
+        CHECK_THAT( 0.75, WithinRel( linear.pdf().values()[1] ) );
+
+        CHECK( true == linear.pdf().isLinearised() );
+      } // THEN
     } // WHEN
   } // GIVEN
 
   GIVEN( "Legendre coefficients for an unnormalised expansion" ) {
+
+    // the resulting distribution will be normalised, test results are equal to
+    // the previous case
 
     WHEN( "the data is given explicitly" ) {
 
@@ -75,6 +100,8 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
 
+        CHECK( true == chunk.hasCdf() );
+
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -107,10 +134,30 @@ SCENARIO( "LegendreAngularDistribution" ) {
         CHECK_THAT( 1. / 6., WithinRel( chunk.averageCosine() ) );
       } // THEN
 
-//! @todo implement linearisation
-//      THEN( "a LegendreAngularDistribution can be linearised" ) {
-//
-//      } // THEN
+      THEN( "a LegendreAngularDistribution can be linearised" ) {
+
+        auto linear = chunk.linearise();
+
+        CHECK( 2 == linear.pdf().numberPoints() );
+        CHECK( 1 == linear.pdf().numberRegions() );
+
+        CHECK( 2 == linear.pdf().cosines().size() );
+        CHECK( 2 == linear.pdf().values().size() );
+        CHECK( 1 == linear.pdf().boundaries().size() );
+        CHECK( 1 == linear.pdf().interpolants().size() );
+
+        CHECK( 1 == linear.pdf().boundaries()[0] );
+
+        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
+
+        CHECK_THAT( -1.0      , WithinRel( linear.pdf().cosines()[0] ) );
+        CHECK_THAT(  1.0      , WithinRel( linear.pdf().cosines()[1] ) );
+
+        CHECK_THAT( 0.25, WithinRel( linear.pdf().values()[0] ) );
+        CHECK_THAT( 0.75, WithinRel( linear.pdf().values()[1] ) );
+
+        CHECK( true == linear.pdf().isLinearised() );
+      } // THEN
     } // WHEN
   } // GIVEN
 
