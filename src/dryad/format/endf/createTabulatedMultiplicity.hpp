@@ -6,11 +6,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ParticleID.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
+#include "ENDFtk/section/1/TabulatedMultiplicity.hpp"
 #include "ENDFtk/section/6.hpp"
 #include "ENDFtk/section/26.hpp"
 
@@ -24,7 +24,8 @@ namespace endf {
    */
   template < typename Multiplicity >
   auto createTabulatedMultiplicity( const Multiplicity& multiplicity )
-  -> std::enable_if_t< ( std::is_same_v< Multiplicity, ENDFtk::section::Type< 6 >::Multiplicity > ||
+  -> std::enable_if_t< ( std::is_same_v< Multiplicity, ENDFtk::section::TabulatedMultiplicity > ||
+                         std::is_same_v< Multiplicity, ENDFtk::section::Type< 6 >::Multiplicity > ||
                          std::is_same_v< Multiplicity, ENDFtk::section::Type< 26 >::Multiplicity > ),
                        TabulatedMultiplicity > {
 

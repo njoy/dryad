@@ -12,7 +12,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const format::gnds::Constant1d& );
+void verifyChunk( const format::gnds::RealConstant1d& );
 
 SCENARIO( "readConstant1d" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "readConstant1d" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readConstant1d( constant1d );
+        auto chunk = format::gnds::readConstant1dAsDouble( constant1d );
 
         verifyChunk( chunk );
       } // THEN
@@ -39,14 +39,14 @@ SCENARIO( "readConstant1d" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readConstant1d( constant1d.child( "axes" ) ) );      // wrong node
-        CHECK_THROWS( format::gnds::readConstant1d( constant1d.child( "undefined" ) ) ); // undefiend node
+        CHECK_THROWS( format::gnds::readConstant1dAsDouble( constant1d.child( "axes" ) ) );      // wrong node
+        CHECK_THROWS( format::gnds::readConstant1dAsDouble( constant1d.child( "undefined" ) ) ); // undefiend node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Constant1d& chunk ) {
+void verifyChunk( const format::gnds::RealConstant1d& chunk ) {
 
   CHECK( 2224648 == chunk.first );
   CHECK( "eV" == chunk.second );
