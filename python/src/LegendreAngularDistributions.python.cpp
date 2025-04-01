@@ -39,7 +39,7 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     python::arg( "boundaries" ), python::arg( "interpolants" ),
     "Initialise the angular distributions\n\n"
     "Arguments:\n"
-    "    self            the angular distribution table\n"
+    "    self            the angular distributions\n"
     "    grid            the grid values\n"
     "    distributions   the distributions\n"
     "    boundaries      the boundaries of the interpolation regions\n"
@@ -55,7 +55,7 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     "Initialise the angular distributions\n\n"
     "Arguments:\n"
-    "    self            the multiplicity table\n"
+    "    self            the angular distributions\n"
     "    grid            the grid values\n"
     "    distributions   the distributions\n"
     "    interpolant     the interpolation type (default lin-lin),\n"
@@ -75,12 +75,6 @@ void wrapLegendreAngularDistributions( python::module& module ) {
        { return self.distributions(); },
     "The associated distributions"
   )
-  .def_property_readonly(
-
-    "average_cosines",
-    &Component::averageCosines,
-    "The average cosine values"
-  )
   .def(
 
     "__call__",
@@ -89,9 +83,25 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     python::arg( "value" ), python::arg( "cosine" ),
     "Evaluate the angular distributions\n\n"
     "Arguments:\n"
-    "    self      the table\n"
+    "    self      the angular distributions\n"
     "    value     the grid value\n"
     "    cosine    the cosine value"
+  )
+  .def_property_readonly(
+
+    "average_cosines",
+    &Component::averageCosines,
+    "The average cosine values"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the angular distributions\n"
+    "    tolerance   the linearisation tolerance"
   );
 
   // add standard tabulated data definitions

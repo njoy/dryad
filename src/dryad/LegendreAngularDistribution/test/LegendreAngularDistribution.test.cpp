@@ -35,6 +35,8 @@ SCENARIO( "LegendreAngularDistribution" ) {
         CHECK_THAT( 0.5 , WithinRel( pdf.coefficients()[0] ) );
         CHECK_THAT( 0.25, WithinRel( pdf.coefficients()[1] ) );
 
+        CHECK_THAT( 1.0, WithinRel( pdf.integral() ) ); // normalised pdf
+
         auto cdf = chunk.cdf();
         CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
@@ -109,6 +111,8 @@ SCENARIO( "LegendreAngularDistribution" ) {
         CHECK( 2 == pdf.coefficients().size() );
         CHECK_THAT( 0.5 , WithinRel( pdf.coefficients()[0] ) );
         CHECK_THAT( 0.25, WithinRel( pdf.coefficients()[1] ) );
+
+        CHECK_THAT( 1.0, WithinRel( pdf.integral() ) ); // normalised pdf
 
         auto cdf = chunk.cdf();
         CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
