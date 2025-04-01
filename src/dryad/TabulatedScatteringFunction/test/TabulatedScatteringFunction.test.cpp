@@ -17,10 +17,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > x = { 1., 2., 3., 4. };
+      const std::vector< double > inverseLengths = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
 
-      TabulatedScatteringFunction chunk( std::move( x ), std::move( values ) );
+      TabulatedScatteringFunction chunk( std::move( inverseLengths ), std::move( values ) );
 
       THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
 
@@ -621,12 +621,12 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > x = { 1., 2., 2., 3., 4. };
+      const std::vector< double > inverseLengths = { 1., 2., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedScatteringFunction chunk( std::move( x ), std::move( values ),
-                                   interpolant );
+      TabulatedScatteringFunction chunk( std::move( inverseLengths ), std::move( values ),
+                                         interpolant );
 
       THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
 
@@ -1289,7 +1289,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > x = { 1., 2., 3., 4. };
+      const std::vector< double > inverseLengths = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
       const std::vector< std::size_t > boundaries = { 1, 3 };
       const std::vector< InterpolationType > interpolants = {
@@ -1298,10 +1298,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( x ),
-                                   std::move( values ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+      TabulatedScatteringFunction chunk( std::move( inverseLengths ),
+                                         std::move( values ),
+                                         std::move( boundaries ),
+                                         std::move( interpolants ) );
 
       THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
 
@@ -1348,7 +1348,144 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK_THAT( 1.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "arithmetic operations cannot be performed" ) {
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.inverseLengths().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.inverseLengths()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.inverseLengths()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.inverseLengths()[3] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        chunk /= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.inverseLengths().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.inverseLengths()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.inverseLengths()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = -chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.inverseLengths().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT(  4., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk * 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.inverseLengths().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = 2. * chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.inverseLengths().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk / 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.inverseLengths().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 1.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 0.5, WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+      } // THEN
+
+      THEN( "some arithmetic operations cannot be performed" ) {
 
         TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
         TabulatedScatteringFunction right( { 1., 4. }, { 0., 0. } );
@@ -1356,16 +1493,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         // scalar operations
         CHECK_THROWS( chunk += 2. );
         CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( chunk *= 2. );
-        CHECK_THROWS( chunk /= 2. );
-        CHECK_THROWS( result = -chunk );
         CHECK_THROWS( result = chunk + 2. );
         CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = chunk * 2. );
-        CHECK_THROWS( result = chunk / 2. );
         CHECK_THROWS( result = 2. + chunk );
         CHECK_THROWS( result = 2. - chunk );
-        CHECK_THROWS( result = 2. * chunk );
 
         // table operations
         CHECK_THROWS( chunk += right );
@@ -1437,7 +1568,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      const std::vector< double > x = { 1., 2., 2., 3., 4. };
+      const std::vector< double > inverseLengths = { 1., 2., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       const std::vector< std::size_t > boundaries = { 1, 4 };
       const std::vector< InterpolationType > interpolants = {
@@ -1446,10 +1577,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( x ),
-                                   std::move( values ),
-                                   std::move( boundaries ),
-                                   std::move( interpolants ) );
+      TabulatedScatteringFunction chunk( std::move( inverseLengths ),
+                                         std::move( values ),
+                                         std::move( boundaries ),
+                                         std::move( interpolants ) );
 
       THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
 
@@ -1496,6 +1627,155 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK_THAT( 2.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.inverseLengths().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.inverseLengths()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.inverseLengths()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.inverseLengths()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        chunk /= 2.;
+
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.inverseLengths().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.inverseLengths()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.inverseLengths()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.inverseLengths()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = -chunk;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.inverseLengths().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.inverseLengths()[4] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk * 2.;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.inverseLengths().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.inverseLengths()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = 2. * chunk;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.inverseLengths().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.inverseLengths()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk / 2.;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.inverseLengths().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.inverseLengths()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.inverseLengths()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.inverseLengths()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.inverseLengths()[4] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+      } // THEN
+
       THEN( "arithmetic operations cannot be performed" ) {
 
         TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
@@ -1504,16 +1784,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         // scalar operations
         CHECK_THROWS( chunk += 2. );
         CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( chunk *= 2. );
-        CHECK_THROWS( chunk /= 2. );
-        CHECK_THROWS( result = -chunk );
         CHECK_THROWS( result = chunk + 2. );
         CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = chunk * 2. );
-        CHECK_THROWS( result = chunk / 2. );
         CHECK_THROWS( result = 2. + chunk );
         CHECK_THROWS( result = 2. - chunk );
-        CHECK_THROWS( result = 2. * chunk );
 
         // table operations
         CHECK_THROWS( chunk += right );
@@ -1698,8 +1972,8 @@ SCENARIO( "TabulatedScatteringFunction" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedScatteringFunction( std::move( x ), std::move( y ),
-                                             std::move( boundaries ),
-                                             std::move( interpolants ) ) );
+                                                   std::move( boundaries ),
+                                                   std::move( interpolants ) ) );
       } // THEN
     } // WHEN
 
@@ -1757,8 +2031,8 @@ SCENARIO( "TabulatedScatteringFunction" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedScatteringFunction( std::move( x ), std::move( y ),
-                                             std::move( boundaries ),
-                                             std::move( interpolants ) ) );
+                                                   std::move( boundaries ),
+                                                   std::move( interpolants ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

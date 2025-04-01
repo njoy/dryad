@@ -1524,7 +1524,7 @@ class Test_dryad_TabulatedScatteringFunction( unittest.TestCase ) :
         with self.assertRaises( Exception ) :
 
             chunk = TabulatedScatteringFunction( inverse_lengths = [ 1., 2., 3., 4. ],
-                                         values = [ 4., 3., 2. ] )
+                                                 values = [ 4., 3., 2. ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :

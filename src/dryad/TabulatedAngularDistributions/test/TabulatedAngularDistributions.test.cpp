@@ -134,7 +134,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
+                                                     std::move( distributions ) ) );
       } // THEN
     } // WHEN
 
@@ -154,9 +154,9 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ),
-                                                    std::move( boundaries ),
-                                                    std::move( interpolants ) ) );
+                                                     std::move( distributions ),
+                                                     std::move( boundaries ),
+                                                     std::move( interpolants ) ) );
       } // THEN
     } // WHEN
 
@@ -174,7 +174,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
+                                                     std::move( distributions ) ) );
       } // THEN
     } // WHEN
 
@@ -193,7 +193,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
+                                                     std::move( distributions ) ) );
       } // THEN
     } // WHEN
 
@@ -211,7 +211,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
+                                                     std::move( distributions ) ) );
       } // THEN
     } // WHEN
 
@@ -229,7 +229,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
+                                                     std::move( distributions ) ) );
       } // THEN
     } // WHEN
 
@@ -249,9 +249,9 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "an exception is thrown" ) {
 
         CHECK_THROWS( TabulatedAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ),
-                                                    std::move( boundaries ),
-                                                    std::move( interpolants ) ) );
+                                                     std::move( distributions ),
+                                                     std::move( boundaries ),
+                                                     std::move( interpolants ) ) );
       } // THEN
     } // WHEN
   } // GIVEN
