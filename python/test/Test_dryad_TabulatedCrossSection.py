@@ -1233,24 +1233,145 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertAlmostEqual( 2.44966028678679, chunk( energy = 2.5 ) )
             self.assertAlmostEqual( 1.46416306545103, chunk( energy = 3.5 ) )
 
+            # verify arithmetic operators
+            result = -chunk
+            self.assertEqual( 4, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 4, len( result.energies ) )
+            self.assertEqual( 4, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 3., result.energies[2] )
+            self.assertAlmostEqual( 4., result.energies[3] )
+            self.assertAlmostEqual( -4., result.values[0] )
+            self.assertAlmostEqual( -3., result.values[1] )
+            self.assertAlmostEqual( -2., result.values[2] )
+            self.assertAlmostEqual( -1., result.values[3] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 3, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
+            chunk *= 2.
+            self.assertEqual( 4, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 4, len( chunk.energies ) )
+            self.assertEqual( 4, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.energies[0] )
+            self.assertAlmostEqual( 2., chunk.energies[1] )
+            self.assertAlmostEqual( 3., chunk.energies[2] )
+            self.assertAlmostEqual( 4., chunk.energies[3] )
+            self.assertAlmostEqual( 8., chunk.values[0] )
+            self.assertAlmostEqual( 6., chunk.values[1] )
+            self.assertAlmostEqual( 4., chunk.values[2] )
+            self.assertAlmostEqual( 2., chunk.values[3] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 3, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_linearised )
+
+            chunk /= 2.
+            self.assertEqual( 4, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 4, len( chunk.energies ) )
+            self.assertEqual( 4, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.energies[0] )
+            self.assertAlmostEqual( 2., chunk.energies[1] )
+            self.assertAlmostEqual( 3., chunk.energies[2] )
+            self.assertAlmostEqual( 4., chunk.energies[3] )
+            self.assertAlmostEqual( 4., chunk.values[0] )
+            self.assertAlmostEqual( 3., chunk.values[1] )
+            self.assertAlmostEqual( 2., chunk.values[2] )
+            self.assertAlmostEqual( 1., chunk.values[3] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 3, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_linearised )
+
+            result = chunk * 2.
+            self.assertEqual( 4, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 4, len( result.energies ) )
+            self.assertEqual( 4, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 3., result.energies[2] )
+            self.assertAlmostEqual( 4., result.energies[3] )
+            self.assertAlmostEqual( 8., result.values[0] )
+            self.assertAlmostEqual( 6., result.values[1] )
+            self.assertAlmostEqual( 4., result.values[2] )
+            self.assertAlmostEqual( 2., result.values[3] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 3, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
+            result = 2. * chunk
+            self.assertEqual( 4, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 4, len( result.energies ) )
+            self.assertEqual( 4, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 3., result.energies[2] )
+            self.assertAlmostEqual( 4., result.energies[3] )
+            self.assertAlmostEqual( 8., result.values[0] )
+            self.assertAlmostEqual( 6., result.values[1] )
+            self.assertAlmostEqual( 4., result.values[2] )
+            self.assertAlmostEqual( 2., result.values[3] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 3, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
+            result = chunk / 2.
+            self.assertEqual( 4, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 4, len( result.energies ) )
+            self.assertEqual( 4, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 3., result.energies[2] )
+            self.assertAlmostEqual( 4., result.energies[3] )
+            self.assertAlmostEqual( 2. , result.values[0] )
+            self.assertAlmostEqual( 1.5, result.values[1] )
+            self.assertAlmostEqual( 1. , result.values[2] )
+            self.assertAlmostEqual( 0.5, result.values[3] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 3, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
             # verify arithmetic operators throw exceptions
             temp = TabulatedCrossSection( [ 1., 4. ], [ 4., 1. ] )
-            with self.assertRaises( Exception ) : result = -chunk
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
-            with self.assertRaises( Exception ) : result = chunk * 2.
-            with self.assertRaises( Exception ) : result = chunk / 2.
             with self.assertRaises( Exception ) : result = chunk + temp
             with self.assertRaises( Exception ) : result = chunk - temp
             with self.assertRaises( Exception ) : chunk += 2.
             with self.assertRaises( Exception ) : chunk -= 2.
-            with self.assertRaises( Exception ) : chunk *= 2.
-            with self.assertRaises( Exception ) : chunk /= 2.
             with self.assertRaises( Exception ) : chunk += temp
             with self.assertRaises( Exception ) : chunk -= temp
             with self.assertRaises( Exception ) : result = 2. + chunk
             with self.assertRaises( Exception ) : result = 2. - chunk
-            with self.assertRaises( Exception ) : result = 2. * chunk
 
             # verify linearisation
             linear = chunk.linearise()
@@ -1349,24 +1470,157 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
             self.assertAlmostEqual( 3.44966028678679, chunk( energy = 2.5 ) )
             self.assertAlmostEqual( 2.46416306545103, chunk( energy = 3.5 ) )
 
+            # verify arithmetic operators
+            result = -chunk
+            self.assertEqual( 5, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 5, len( result.energies ) )
+            self.assertEqual( 5, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 2., result.energies[2] )
+            self.assertAlmostEqual( 3., result.energies[3] )
+            self.assertAlmostEqual( 4., result.energies[4] )
+            self.assertAlmostEqual( -4., result.values[0] )
+            self.assertAlmostEqual( -3., result.values[1] )
+            self.assertAlmostEqual( -4., result.values[2] )
+            self.assertAlmostEqual( -3., result.values[3] )
+            self.assertAlmostEqual( -2., result.values[4] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 4, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
+            chunk *= 2.
+            self.assertEqual( 5, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 5, len( chunk.energies ) )
+            self.assertEqual( 5, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.energies[0] )
+            self.assertAlmostEqual( 2., chunk.energies[1] )
+            self.assertAlmostEqual( 2., chunk.energies[2] )
+            self.assertAlmostEqual( 3., chunk.energies[3] )
+            self.assertAlmostEqual( 4., chunk.energies[4] )
+            self.assertAlmostEqual( 8., chunk.values[0] )
+            self.assertAlmostEqual( 6., chunk.values[1] )
+            self.assertAlmostEqual( 8., chunk.values[2] )
+            self.assertAlmostEqual( 6., chunk.values[3] )
+            self.assertAlmostEqual( 4., chunk.values[4] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 4, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_linearised )
+
+            chunk /= 2.
+            self.assertEqual( 5, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 5, len( chunk.energies ) )
+            self.assertEqual( 5, len( chunk.values ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.energies[0] )
+            self.assertAlmostEqual( 2., chunk.energies[1] )
+            self.assertAlmostEqual( 2., chunk.energies[2] )
+            self.assertAlmostEqual( 3., chunk.energies[3] )
+            self.assertAlmostEqual( 4., chunk.energies[4] )
+            self.assertAlmostEqual( 4., chunk.values[0] )
+            self.assertAlmostEqual( 3., chunk.values[1] )
+            self.assertAlmostEqual( 4., chunk.values[2] )
+            self.assertAlmostEqual( 3., chunk.values[3] )
+            self.assertAlmostEqual( 2., chunk.values[4] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 4, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, chunk.interpolants[1] )
+            self.assertEqual( False, chunk.is_linearised )
+
+            result = chunk * 2.
+            self.assertEqual( 5, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 5, len( result.energies ) )
+            self.assertEqual( 5, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 2., result.energies[2] )
+            self.assertAlmostEqual( 3., result.energies[3] )
+            self.assertAlmostEqual( 4., result.energies[4] )
+            self.assertAlmostEqual( 8., result.values[0] )
+            self.assertAlmostEqual( 6., result.values[1] )
+            self.assertAlmostEqual( 8., result.values[2] )
+            self.assertAlmostEqual( 6., result.values[3] )
+            self.assertAlmostEqual( 4., result.values[4] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 4, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
+            result = 2. * chunk
+            self.assertEqual( 5, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 5, len( result.energies ) )
+            self.assertEqual( 5, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 2., result.energies[2] )
+            self.assertAlmostEqual( 3., result.energies[3] )
+            self.assertAlmostEqual( 4., result.energies[4] )
+            self.assertAlmostEqual( 8., result.values[0] )
+            self.assertAlmostEqual( 6., result.values[1] )
+            self.assertAlmostEqual( 8., result.values[2] )
+            self.assertAlmostEqual( 6., result.values[3] )
+            self.assertAlmostEqual( 4., result.values[4] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 4, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
+            result = chunk / 2.
+            self.assertEqual( 5, result.number_points )
+            self.assertEqual( 2, result.number_regions )
+            self.assertEqual( 5, len( result.energies ) )
+            self.assertEqual( 5, len( result.values ) )
+            self.assertEqual( 2, len( result.boundaries ) )
+            self.assertEqual( 2, len( result.interpolants ) )
+            self.assertAlmostEqual( 1., result.energies[0] )
+            self.assertAlmostEqual( 2., result.energies[1] )
+            self.assertAlmostEqual( 2., result.energies[2] )
+            self.assertAlmostEqual( 3., result.energies[3] )
+            self.assertAlmostEqual( 4., result.energies[4] )
+            self.assertAlmostEqual( 2. , result.values[0] )
+            self.assertAlmostEqual( 1.5, result.values[1] )
+            self.assertAlmostEqual( 2. , result.values[2] )
+            self.assertAlmostEqual( 1.5, result.values[3] )
+            self.assertAlmostEqual( 1. , result.values[4] )
+            self.assertEqual( 1, result.boundaries[0] )
+            self.assertEqual( 4, result.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, result.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLog, result.interpolants[1] )
+            self.assertEqual( False, result.is_linearised )
+
             # verify arithmetic operators throw exceptions
             temp = TabulatedCrossSection( [ 1., 4. ], [ 4., 1. ] )
-            with self.assertRaises( Exception ) : result = -chunk
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
-            with self.assertRaises( Exception ) : result = chunk * 2.
-            with self.assertRaises( Exception ) : result = chunk / 2.
             with self.assertRaises( Exception ) : result = chunk + temp
             with self.assertRaises( Exception ) : result = chunk - temp
             with self.assertRaises( Exception ) : chunk += 2.
             with self.assertRaises( Exception ) : chunk -= 2.
-            with self.assertRaises( Exception ) : chunk *= 2.
-            with self.assertRaises( Exception ) : chunk /= 2.
             with self.assertRaises( Exception ) : chunk += temp
             with self.assertRaises( Exception ) : chunk -= temp
             with self.assertRaises( Exception ) : result = 2. + chunk
             with self.assertRaises( Exception ) : result = 2. - chunk
-            with self.assertRaises( Exception ) : result = 2. * chunk
 
             # verify linearisation
             linear = chunk.linearise()
