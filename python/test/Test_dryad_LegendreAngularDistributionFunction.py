@@ -32,6 +32,10 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertAlmostEqual(   0.0, chunk( cosine =  1. ) )
             self.assertAlmostEqual( -30.0, chunk( cosine = -1. ) )
 
+            # verify integration
+            self.assertAlmostEqual(  -62./3., chunk.integral )
+            self.assertAlmostEqual( 146./15., chunk.mean )
+
             # verify linearisation
             convergence = ToleranceConvergence( 0.01 )
             linear = chunk.linearise( convergence )
