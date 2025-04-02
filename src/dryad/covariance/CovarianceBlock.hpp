@@ -3,6 +3,7 @@
 
 // system includes
 #include <optional>
+#include <vector>
 
 // other includes
 #include "tools/Log.hpp"
@@ -20,12 +21,12 @@ namespace covariance {
    *  The only requirement on the Metadata template is that it has a size()
    *  function.
    */
-  template < typename MetaData >
+  template < typename Metadata >
   class CovarianceBlock {
 
     /* fields - meta data */
-    MetaData row_;
-    std::optional< MetaData > column_;
+    Metadata row_;
+    std::optional< Metadata > column_;
     bool relative_;
 
     /* fields - covariance matrix */
@@ -52,14 +53,14 @@ namespace covariance {
     /**
      *  @brief Return the row metadata
      */
-    const MetaData& rowMetadata() const { return this->row_; }
+    const Metadata& rowMetadata() const { return this->row_; }
 
     /**
      *  @brief Return the column metadata
      *
      *  This returns the row metadata if the covariance block is a diagonal block
      */
-    const MetaData& columnMetadata() const {
+    const Metadata& columnMetadata() const {
 
       if ( this->column_ ) {
 

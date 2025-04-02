@@ -2,20 +2,20 @@ cmake_minimum_required( VERSION 3.27 )
 include( FetchContent )
 
 FetchContent_Declare( pugixml
-    GIT_REPOSITORY  https://github.com/zeux/pugixml.git
+    GIT_REPOSITORY  ../../zeux/pugixml.git
     GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14
     )
 
 FetchContent_Declare( eigen
     GIT_REPOSITORY  ../../njoy/eigen
-    GIT_TAG         d0bfdc1658ca0b4c659fd3702c351d2c2cdc876c # 3.4.1 branch on July 26, 2023
+    GIT_TAG         d0bfdc1658ca0b4c659fd3702c351d2c2cdc876c  # 3.4.1 branch on July 26, 2023
     )
 # the next line prevents eigen from populating the .cmake/packages folder
 set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         204c0cf81eab97f51d3f8372c69fcdfd073ce60b  # tag: v0.4.2
+    GIT_TAG         07c6d7a4a4d2f685d91ede05d97b53cfcc9e47ae  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( scion
@@ -30,7 +30,7 @@ FetchContent_Declare( ACEtk
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         01745c4a715e0c9750674b5a9453eb4a25a4fd49  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         4ebaf25080c8e26452cb9329d54947095419a6d1  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

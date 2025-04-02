@@ -6,7 +6,7 @@
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-CovarianceBlock( MetaData metadata, Matrix< double > covariances, bool relative = true ) :
+CovarianceBlock( Metadata metadata, Matrix< double > covariances, bool relative = true ) :
   row_( std::move( metadata ) ), column_( std::nullopt ), relative_( relative ),
   covariances_( std::move( covariances ) ), sigmas_( std::nullopt ),
   correlations_( std::nullopt ) {
@@ -23,7 +23,7 @@ CovarianceBlock( MetaData metadata, Matrix< double > covariances, bool relative 
  *  @param[in] covariances       the covariance matrix
  *  @param[in] relative          the relative covariance flag
  */
-CovarianceBlock( MetaData rowMetadata, MetaData columnMetadata,
+CovarianceBlock( Metadata rowMetadata, Metadata columnMetadata,
                  Matrix< double > covariances, bool relative = true ) :
   row_( std::move( rowMetadata ) ), column_( std::move( columnMetadata ) ),
   relative_( relative ), covariances_( std::move( covariances ) ),

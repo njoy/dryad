@@ -14,7 +14,11 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief An angular distribution defined by a pdf and cdf using tabulated data
+   *  @brief An angular distribution defined by a pdf and cdf using tabulated
+   *         data
+   *
+   *  The pdf is assumed to be normalised to 1 upon construction and the
+   *  associated cdf is not calculated upon construction.
    */
   class TabulatedAngularDistribution {
 

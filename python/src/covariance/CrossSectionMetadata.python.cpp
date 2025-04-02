@@ -3,17 +3,17 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/covariance/CrossSectionMetaData.hpp"
+#include "dryad/covariance/CrossSectionMetadata.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace covariance {
 
-void wrapCrossSectionMetaData( python::module& module ) {
+void wrapCrossSectionMetadata( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::covariance::CrossSectionMetaData;
+  using Component = njoy::dryad::covariance::CrossSectionMetadata;
   using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
 
@@ -23,7 +23,7 @@ void wrapCrossSectionMetaData( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "CrossSectionMetaData",
+    "CrossSectionMetadata",
     "Metadata for the rows or columns of a covariance matrix block for "
     "cross section data"
   );

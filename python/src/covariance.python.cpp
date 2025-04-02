@@ -9,11 +9,15 @@ namespace python = pybind11;
 
 namespace covariance {
 
+  // declarations - enumerators
+  void wrapScalingType( python::module& );
+
   // declarations - matrices
   void wrapMatrixFunctions( python::module& );
 
   // declarations - metadata components
-  void wrapCrossSectionMetaData( python::module& );
+  void wrapCrossSectionMetadata( python::module& );
+  void wrapVarianceScaling( python::module& );
 
   // declarations - covariance components
   void wrapCrossSectionCovarianceBlock( python::module& );
@@ -28,11 +32,15 @@ void wrapCovariance( python::module& module ) {
     "Covariance data components"
   );
 
+  // wrap components - enumerators
+  covariance::wrapScalingType( submodule );
+
   // wrap components - matrices
   covariance::wrapMatrixFunctions( submodule );
 
   // declarations - metadata components
-  covariance::wrapCrossSectionMetaData( submodule );
+  covariance::wrapCrossSectionMetadata( submodule );
+  covariance::wrapVarianceScaling( submodule );
 
   // declarations - covariance components
   covariance::wrapCrossSectionCovarianceBlock( submodule );

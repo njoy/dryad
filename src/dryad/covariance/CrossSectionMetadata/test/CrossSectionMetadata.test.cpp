@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/covariance/CrossSectionMetaData.hpp"
+#include "dryad/covariance/CrossSectionMetadata.hpp"
 
 // other includes
 
@@ -12,9 +12,9 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "CrossSectionMetaData" ) {
+SCENARIO( "CrossSectionMetadata" ) {
 
-  GIVEN( "valid data for a CrossSectionMetaData" ) {
+  GIVEN( "valid data for a CrossSectionMetadata" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -23,12 +23,12 @@ SCENARIO( "CrossSectionMetaData" ) {
       id::ReactionID reaction( "2" );
       std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
-      CrossSectionMetaData chunk( std::move( projectile ),
+      CrossSectionMetadata chunk( std::move( projectile ),
                                   std::move( target ),
                                   std::move( reaction ),
                                   std::move( energies ) );
 
-      THEN( "a CrossSectionMetaData can be constructed and members can be tested" ) {
+      THEN( "a CrossSectionMetadata can be constructed and members can be tested" ) {
 
         CHECK( "n" == chunk.projectileIdentifier() );
         CHECK( "U235" == chunk.targetIdentifier() );
@@ -44,7 +44,7 @@ SCENARIO( "CrossSectionMetaData" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for a CrossSectionMetaData" ) {
+  GIVEN( "invalid data for a CrossSectionMetadata" ) {
 
     WHEN( "the energy grid does not have at least 2 elements" ) {
 
@@ -55,7 +55,7 @@ SCENARIO( "CrossSectionMetaData" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionMetaData( std::move( projectile ),
+        CHECK_THROWS( CrossSectionMetadata( std::move( projectile ),
                                             std::move( target ),
                                             std::move( reaction ),
                                             std::move( wrong ) ) );
@@ -71,7 +71,7 @@ SCENARIO( "CrossSectionMetaData" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionMetaData( std::move( projectile ),
+        CHECK_THROWS( CrossSectionMetadata( std::move( projectile ),
                                             std::move( target ),
                                             std::move( reaction ),
                                             std::move( wrong ) ) );
@@ -87,7 +87,7 @@ SCENARIO( "CrossSectionMetaData" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionMetaData( std::move( projectile ),
+        CHECK_THROWS( CrossSectionMetadata( std::move( projectile ),
                                             std::move( target ),
                                             std::move( reaction ),
                                             std::move( wrong ) ) );

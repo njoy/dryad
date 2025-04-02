@@ -18,6 +18,8 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
   using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
   using Matrix = njoy::dryad::covariance::Matrix< double >;
+  using CrossSectionMetadata = njoy::dryad::covariance::CrossSectionMetadata;
+  using VarianceScaling = njoy::dryad::covariance::VarianceScaling;
 
   // wrap views created by this component
 
@@ -33,11 +35,41 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
   component
   .def(
 
+    python::init< CrossSectionMetadata, Matrix, bool,
+                  std::optional< VarianceScaling > >(),
+    python::arg( "metadata" ), python::arg( "covariances" ),
+    python::arg( "relative" ) = true,
+    python::arg( "scaling" ) = std::nullopt,
+    "Initialise a diagonal cross section covariance block\n\n"
+    "Arguments:\n"
+    "    self          the covariance block\n"
+    "    metadata      the metadata associated with the covariance block\n"
+    "    covariances   the covariance matrix\n"
+    "    relative      the relative covariance flag (default is true)\n"
+    "    scaling       the variance scaling information (default is none)"
+  )
+  .def(
+
+    python::init< CrossSectionMetadata, CrossSectionMetadata, Matrix, bool >(),
+    python::arg( "row_metadata" ), python::arg( "column_metadata" ),
+    python::arg( "covariances" ), python::arg( "relative" ) = true,
+    "Initialise a diagonal cross section covariance block\n\n"
+    "Arguments:\n"
+    "    self               the covariance block\n"
+    "    row_metadata       the row metadata\n"
+    "    column_metadata    the column metadata\n"
+    "    covariances        the covariance matrix\n"
+    "    relative           the relative covariance flag (default is true)"
+  )
+  .def(
+
     python::init< ParticleID, ParticleID, ReactionID,
-                  std::vector< double >, Matrix, bool >(),
+                  std::vector< double >, Matrix, bool,
+                  std::optional< VarianceScaling > >(),
     python::arg( "projectile" ), python::arg( "target" ),
     python::arg( "reaction" ), python::arg( "energies" ),
     python::arg( "covariances" ), python::arg( "relative" ) = true,
+    python::arg( "scaling" ) = std::nullopt,
     "Initialise a diagonal cross section covariance block\n\n"
     "Arguments:\n"
     "    self          the covariance block\n"
@@ -46,8 +78,9 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
     "    reaction      the reaction identifier\n"
     "    energies      the energy boundaries\n"
     "    covariances   the covariance matrix\n"
-    "    relative      the relative covariance flag"
-     )
+    "    relative      the relative covariance flag (default is true)\n"
+    "    scaling       the variance scaling information (default is none)"
+  )
   .def(
 
     python::init< ParticleID, ParticleID, ReactionID, std::vector< double >,
@@ -85,6 +118,20 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.columnMetadata(); },
     "The column metadata"
+  )
+  .def_property_readonly(
+
+    "variance_scaling",
+    &Component::varianceScaling,
+    "The variance scaling information\n\n"
+    " If this type of information is given, it will be for an on-diagonal covariance block."
+  )
+  .def_property_readonly(
+
+    "has_variance_scaling",
+    &Component::hasVarianceScaling,
+    "Flag indicating whether or not the covariance block has variance scaling "
+    "information"
   )
   .def_property_readonly(
 
