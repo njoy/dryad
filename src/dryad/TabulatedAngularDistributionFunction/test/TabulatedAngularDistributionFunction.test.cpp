@@ -8,6 +8,11 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 
+// includes for test result generation
+// #include <iostream>
+// #include <iomanip>
+// #include "scion/integration/GaussLegendre/64.hpp"
+
 // convenience typedefs
 using namespace njoy::dryad;
 
@@ -60,6 +65,16 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // values of x inside the x grid
         CHECK_THAT( 0.25 , WithinRel( chunk( -0.5 ) ) );
         CHECK_THAT( 0.875, WithinRel( chunk(  0.75 ) ) );
+      } // THEN
+
+      THEN( "a TabulatedAngularDistributionFunction can be integrated" ) {
+
+        CHECK_THAT( 1., WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of a TabulatedAngularDistributionFunction can be calculated" ) {
+
+        CHECK_THAT( 1. / 3., WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "arithmetic operations can be performed" ) {
@@ -669,6 +684,28 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 3.5, WithinRel( chunk( -0.5 ) ) );
         CHECK_THAT( 3.5, WithinRel( chunk( 0.25 ) ) );
         CHECK_THAT( 2.5, WithinRel( chunk( 0.75 ) ) );
+      } // THEN
+
+      THEN( "an InterpolationTable can be integrated" ) {
+
+        // ( 4 + 3 ) / 2 + ( 4 + 2 ) / 2 = 6.5
+        CHECK_THAT( 6.5, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an InterpolationTable can be calculated" ) {
+
+        // region 1
+        // f(x) = 3 - x
+        // x f(x) = 3 x - x^2
+        // primitive = 3 x^2 / 2 - x^3 / 3
+        // integral = - 3 / 2 - 1 / 3 = - 11 / 6
+        // region 2
+        // f(x) = 4 - 2 x
+        // x f(x) = 4 x - 2 x^2
+        // primitive = 2 x^2 - 2 x^3 / 3
+        // integral = 2 - 2 / 3 = 4 / 3
+        // sum = - 11 / 6 + 4 / 3 = - 1 / 2
+        CHECK_THAT( -0.5, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "arithmetic operations can be performed" ) {
@@ -1344,6 +1381,27 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.86602540378444, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
+      THEN( "an InterpolationTable can be integrated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
+        // std::cout << std::setprecision(15) << integrator( chunk, -1.,  0. )
+        //                                     + integrator( chunk,  0.,  1. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.integral() << std::endl;
+        CHECK_THAT( 0.99279536989483, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an InterpolationTable can be calculated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
+        // auto functor = [&chunk] ( auto&& x ) { return x * chunk( x ); };
+        // std::cout << std::setprecision(15) << integrator( functor, -1.,  0. )
+        //                                     + integrator( functor,  0.,  1. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.mean() << std::endl;
+        CHECK_THAT( 0.330014509000453, WithinRel( chunk.mean() ) );
+      } // THEN
+
       THEN( "some arithmetic operations can be performed" ) {
 
         TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
@@ -1599,6 +1657,27 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.25, WithinRel( chunk( -0.5 ) ) );
         CHECK_THAT( 1.11803398874989, WithinRel( chunk( 0.25 ) ) );
         CHECK_THAT( 1.36930639376292, WithinRel( chunk( 0.75 ) ) );
+      } // THEN
+
+      THEN( "an InterpolationTable can be integrated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
+        // std::cout << std::setprecision(15) << integrator( chunk, -1., 0. )
+        //                                     + integrator( chunk,  0., 1. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.integral() << std::endl;
+        // CHECK_THAT( 1.49577938318395, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an InterpolationTable can be calculated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
+        // auto functor = [&chunk] ( auto&& x ) { return x * chunk( x ); };
+        // std::cout << std::setprecision(15) << integrator( functor, -1., 0. )
+        //                                     + integrator( functor,  0., 1. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.mean() << std::endl;
+        CHECK_THAT( 0.581321912933929, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "some arithmetic operations can be performed" ) {
