@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION 3.27 )
 include( FetchContent )
 
 FetchContent_Declare( pugixml
-    GIT_REPOSITORY  https://github.com/zeux/pugixml.git
+    GIT_REPOSITORY  ../../zeux/pugixml.git
     GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14
     )
 
