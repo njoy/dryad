@@ -60,7 +60,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       THEN( "the average cosine is not implemented yet" ) {
 
-        CHECK_THROWS( chunk.averageCosine() );
+        CHECK_THAT( 1. / 3., WithinRel( chunk.averageCosine() ) );
       } // THEN
 
 //! @todo implement linearisation

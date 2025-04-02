@@ -70,6 +70,17 @@ namespace dryad {
 
     using InterpolationTable::operator();
 
+    using InterpolationTable::integral;
+    using InterpolationTable::mean;
+
+    /**
+     *  @brief Normalise the distribution function
+     */
+    void normalise() noexcept {
+
+      this->operator/=( this->integral() );
+    }
+
     /**
      *  @brief Return a linearised energy distribution table
      *

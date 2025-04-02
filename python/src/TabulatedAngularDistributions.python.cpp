@@ -64,14 +64,22 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
   .def_property_readonly(
 
     "grid",
-    &Component::grid,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.grid(); },
     "The grid values for which distributions are given"
   )
   .def_property_readonly(
 
     "distributions",
-    &Component::distributions,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.distributions(); },
     "The associated distributions"
+  )
+  .def_property_readonly(
+
+    "average_cosines",
+    &Component::averageCosines,
+    "The average cosine values"
   )
   .def(
 

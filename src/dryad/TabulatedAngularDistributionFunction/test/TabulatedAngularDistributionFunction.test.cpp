@@ -624,7 +624,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
       TabulatedAngularDistributionFunction chunk( std::move( cosines ), std::move( values ),
-                                   interpolant );
+                                                  interpolant );
 
       THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
@@ -1297,9 +1297,9 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
       };
 
       TabulatedAngularDistributionFunction chunk( std::move( cosines ),
-                                          std::move( values ),
-                                          std::move( boundaries ),
-                                          std::move( interpolants ) );
+                                                  std::move( values ),
+                                                  std::move( boundaries ),
+                                                  std::move( interpolants ) );
 
       THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
@@ -1344,7 +1344,132 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.86602540378444, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "arithmetic operations cannot be performed" ) {
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  1.5 , WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  2.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        chunk /= 2.;
+
+        CHECK( 4 == chunk.cosines().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = -chunk;
+
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT( -0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT( -0.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT( -0.75, WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1.  , WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk * 2.;
+
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1.  , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1.5 , WithinRel( result.values()[2] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = 2. * chunk;
+
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1.  , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  1.5 , WithinRel( result.values()[2] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk / 2.;
+
+        CHECK( 4 == result.cosines().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1.  , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  0.   , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  0.25 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0.375, WithinRel( result.values()[2] ) );
+        CHECK_THAT(  0.5  , WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+      } // THEN
+
+      THEN( "some arithmetic operations cannot be performed" ) {
 
         TabulatedAngularDistributionFunction result( { 1., 4. }, { 0., 0. } );
         TabulatedAngularDistributionFunction right( { 1., 4. }, { 0., 0. } );
@@ -1352,16 +1477,10 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // scalar operations
         CHECK_THROWS( chunk += 2. );
         CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( chunk *= 2. );
-        CHECK_THROWS( chunk /= 2. );
-        CHECK_THROWS( result = -chunk );
         CHECK_THROWS( result = chunk + 2. );
         CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = chunk * 2. );
-        CHECK_THROWS( result = chunk / 2. );
         CHECK_THROWS( result = 2. + chunk );
         CHECK_THROWS( result = 2. - chunk );
-        CHECK_THROWS( result = 2. * chunk );
 
         // table operations
         CHECK_THROWS( chunk += right );
@@ -1482,7 +1601,144 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 1.36930639376292, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "arithmetic operations cannot be performed" ) {
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK( 5 == chunk.cosines().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.cosines()[4] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  2.  , WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  2.5 , WithinRel( chunk.values()[3] ) );
+        CHECK_THAT(  3.  , WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        chunk /= 2.;
+
+        CHECK( 5 == chunk.cosines().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0. , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.cosines()[4] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  1.0 , WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.25, WithinRel( chunk.values()[3] ) );
+        CHECK_THAT(  1.5 , WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = -chunk;
+
+        CHECK( 5 == result.cosines().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[4] ) );
+        CHECK_THAT( -0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT( -0.5 , WithinRel( result.values()[1] ) );
+        CHECK_THAT( -1.  , WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1.25, WithinRel( result.values()[3] ) );
+        CHECK_THAT( -1.5 , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = chunk * 2.;
+
+        CHECK( 5 == result.cosines().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[4] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1.  , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[2] ) );
+        CHECK_THAT(  2.5 , WithinRel( result.values()[3] ) );
+        CHECK_THAT(  3.  , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = 2. * chunk;
+
+        CHECK( 5 == result.cosines().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[4] ) );
+        CHECK_THAT(  0.  , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  1.  , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  2.  , WithinRel( result.values()[2] ) );
+        CHECK_THAT(  2.5 , WithinRel( result.values()[3] ) );
+        CHECK_THAT(  3.  , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = chunk / 2.;
+
+        CHECK( 5 == result.cosines().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( -1. , WithinRel( result.cosines()[0] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[1] ) );
+        CHECK_THAT(  0. , WithinRel( result.cosines()[2] ) );
+        CHECK_THAT(  0.5, WithinRel( result.cosines()[3] ) );
+        CHECK_THAT(  1. , WithinRel( result.cosines()[4] ) );
+        CHECK_THAT(  0.   , WithinRel( result.values()[0] ) );
+        CHECK_THAT(  0.25 , WithinRel( result.values()[1] ) );
+        CHECK_THAT(  0.5  , WithinRel( result.values()[2] ) );
+        CHECK_THAT(  0.625, WithinRel( result.values()[3] ) );
+        CHECK_THAT(  0.75 , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LogLinear == result.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+      } // THEN
+
+      THEN( "some arithmetic operations cannot be performed" ) {
 
         TabulatedAngularDistributionFunction result( { -1., 1. }, { 0., 0. } );
         TabulatedAngularDistributionFunction right( { -1., 1. }, { 0., 0. } );
@@ -1490,16 +1746,10 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // scalar operations
         CHECK_THROWS( chunk += 2. );
         CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( chunk *= 2. );
-        CHECK_THROWS( chunk /= 2. );
-        CHECK_THROWS( result = -chunk );
         CHECK_THROWS( result = chunk + 2. );
         CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = chunk * 2. );
-        CHECK_THROWS( result = chunk / 2. );
         CHECK_THROWS( result = 2. + chunk );
         CHECK_THROWS( result = 2. - chunk );
-        CHECK_THROWS( result = 2. * chunk );
 
         // table operations
         CHECK_THROWS( chunk += right );
