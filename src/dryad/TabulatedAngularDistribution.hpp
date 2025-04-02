@@ -93,8 +93,10 @@ namespace dryad {
      */
     TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
 
+      // no need to normalise the resulting pdf, the TabulatedAngularDistribution ctor
+      // will take care of normalisation
+
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( tolerance );
-      pdf.normalise();
       return TabulatedAngularDistribution( std::move( pdf ) );
     }
   };

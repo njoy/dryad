@@ -16,6 +16,9 @@ namespace dryad {
    *  @class
    *  @brief An energy distribution defined by a pdf and cdf using tabulated
    *         data
+   *
+   *  The pdf is assumed to be normalised to 1 upon construction and the
+   *  associated cdf is not calculated upon construction.
    */
   class TabulatedEnergyDistribution {
 
@@ -78,14 +81,24 @@ namespace dryad {
       return this->pdf()( cosine );
     }
 
-//    /**
-//     *  @brief Return a linearised angular distribution table
-//     *
-//     *  @param[in] tolerance   the linearisation tolerance
-//     */
-//    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-//
-//    }
+    /**
+     *  @brief Return the average energy defined by the distribution
+     */
+    double averageEnergy() const noexcept { return this->pdf().mean(); }
+
+    /**
+     *  @brief Return a linearised angular distribution table
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+
+      // no need to normalise the resulting pdf, the TabulatedEnergyDistribution ctor
+      // will take care of normalisation
+
+      TabulatedEnergyDistributionFunction pdf = this->pdf().linearise( tolerance );
+      return TabulatedEnergyDistribution( std::move( pdf ) );
+    }
   };
 
 } // dryad namespace
