@@ -92,6 +92,18 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "Arguments:\n"
     "    self      the table\n"
     "    energy    the energy value"
+  )
+  .def_property_readonly(
+
+    "integral",
+    [] ( const Component& self ) { return self.integral(); },
+    "The integral (zeroth order moment) of the distribution function over its domain"
+  )
+  .def_property_readonly(
+
+    "mean",
+    [] ( const Component& self ) { return self.mean(); },
+    "The mean (first order raw moment) of the distribution function over its domain"
   );
 
   // add standard tabulated data definitions

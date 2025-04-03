@@ -27,8 +27,8 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       TabulatedEnergyDistributions energy(
 
         { 1e-5, 20. },
-        { { { 1e-5, 20. }, { 0., 0. } },
-          { { 1e-5, 20. }, { 0., 1. } } }
+        { { { 0., 20. }, { 0., 0.1 } },
+          { { 0., 20. }, { 0.05, 0.05 } } }
       );
 
       UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
@@ -54,8 +54,8 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       TabulatedEnergyDistributions energy(
 
         { 1e-5, 20. },
-        { { { 1e-5, 20. }, { 0., 0. } },
-          { { 1e-5, 20. }, { 0., 1. } } }
+        { { { 0., 20. }, { 0., 0.1 } },
+          { { 0., 20. }, { 0.05, 0.05 } } }
       );
 
       UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
@@ -82,8 +82,8 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       TabulatedEnergyDistributions energy(
 
         { 1e-5, 20. },
-        { { { 1e-5, 20. }, { 0., 0. } },
-          { { 1e-5, 20. }, { 0., 1. } } }
+        { { { 0., 20. }, { 0., 0.1 } },
+          { { 0., 20. }, { 0.05, 0.05 } } }
       );
 
       UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
@@ -118,14 +118,14 @@ void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData& chunk
   CHECK( 2 == energy.distributions()[0].pdf().values().size() );
   CHECK( 2 == energy.distributions()[1].pdf().energies().size() );
   CHECK( 2 == energy.distributions()[1].pdf().values().size() );
-  CHECK_THAT( 1e-5, WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
-  CHECK_THAT( 20. , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
-  CHECK_THAT( 1e-5, WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
-  CHECK_THAT( 20. , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  1. , WithinRel( energy.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.1 , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
   CHECK( 1 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }
@@ -175,14 +175,14 @@ void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& chunk 
   CHECK( 2 == energy.distributions()[0].pdf().values().size() );
   CHECK( 2 == energy.distributions()[1].pdf().energies().size() );
   CHECK( 2 == energy.distributions()[1].pdf().values().size() );
-  CHECK_THAT( 1e-5, WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
-  CHECK_THAT( 20. , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
-  CHECK_THAT( 1e-5, WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
-  CHECK_THAT( 20. , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  1. , WithinRel( energy.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.1 , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
   CHECK( 1 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }
@@ -232,14 +232,14 @@ void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData& chunk
   CHECK( 2 == energy.distributions()[0].pdf().values().size() );
   CHECK( 2 == energy.distributions()[1].pdf().energies().size() );
   CHECK( 2 == energy.distributions()[1].pdf().values().size() );
-  CHECK_THAT( 1e-5, WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
-  CHECK_THAT( 20. , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
-  CHECK_THAT( 1e-5, WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
-  CHECK_THAT( 20. , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT(  0. , WithinRel( energy.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  1. , WithinRel( energy.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.1 , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
   CHECK( 1 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }

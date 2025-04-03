@@ -45,8 +45,13 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 0.25 , chunk( cosine = -0.5 ) )
             self.assertAlmostEqual( 0.875, chunk( cosine = 0.75 ) )
 
-        # the data is given explicitly using a normalised series
+        # the data is given explicitly using a normalised table
         chunk = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 0.5, 0.75, 1. ] )
+
+        verify_chunk( self, chunk )
+
+        # the data is given explicitly using a unnormalised table
+        chunk = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 1., 1.5, 2. ] )
 
         verify_chunk( self, chunk )
 
