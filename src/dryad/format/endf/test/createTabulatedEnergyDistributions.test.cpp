@@ -56,38 +56,49 @@ void verifyElectronChunk( const TabulatedEnergyDistributions& chunk ) {
   CHECK(  85 == chunk.distributions()[8].pdf().values().size() );
   CHECK( 111 == chunk.distributions()[9].pdf().energies().size() );
   CHECK( 111 == chunk.distributions()[9].pdf().values().size() );
-  CHECK_THAT(  0.1       , WithinRel( chunk.distributions()[0].pdf().energies()[0] ) );
-  CHECK_THAT(  0.133352  , WithinRel( chunk.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  9.9       , WithinRel( chunk.distributions()[0].pdf().energies()[15] ) );
-  CHECK_THAT( 10.        , WithinRel( chunk.distributions()[0].pdf().energies()[16] ) );
-  CHECK_THAT( 2.1394     , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT( 1.60421    , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
-  CHECK_THAT(  .0214392  , WithinRel( chunk.distributions()[0].pdf().values()[15] ) );
-  CHECK_THAT(  .0212245  , WithinRel( chunk.distributions()[0].pdf().values()[16] ) );
-  CHECK_THAT(  0.1       , WithinRel( chunk.distributions()[1].pdf().energies()[0] ) );
-  CHECK_THAT(  0.14608   , WithinRel( chunk.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT( 20.5286    , WithinRel( chunk.distributions()[1].pdf().energies()[17] ) );
-  CHECK_THAT( 20.736     , WithinRel( chunk.distributions()[1].pdf().energies()[18] ) );
-  CHECK_THAT( 1.84823    , WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT( 1.26507    , WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
-  CHECK_THAT(  .00885527 , WithinRel( chunk.distributions()[1].pdf().values()[17] ) );
-  CHECK_THAT(  .00876641 , WithinRel( chunk.distributions()[1].pdf().values()[18] ) );
-  CHECK_THAT( .100000000 , WithinRel( chunk.distributions()[8].pdf().energies()[0] ) );
-  CHECK_THAT( .128640000 , WithinRel( chunk.distributions()[8].pdf().energies()[1] ) );
-  CHECK_THAT(  9981470.  , WithinRel( chunk.distributions()[8].pdf().energies()[83] ) );
-  CHECK_THAT(  1e+7      , WithinRel( chunk.distributions()[8].pdf().energies()[84] ) );
-  CHECK_THAT( .608334000 , WithinRel( chunk.distributions()[8].pdf().values()[0] ) );
-  CHECK_THAT( .472898000 , WithinRel( chunk.distributions()[8].pdf().values()[1] ) );
-  CHECK_THAT( 9.28343e-12, WithinRel( chunk.distributions()[8].pdf().values()[83] ) );
-  CHECK_THAT( 5.8374e-12 , WithinRel( chunk.distributions()[8].pdf().values()[84] ) );
-  CHECK_THAT(  .100000000, WithinRel( chunk.distributions()[9].pdf().energies()[0] ) );
-  CHECK_THAT(  .148551000, WithinRel( chunk.distributions()[9].pdf().energies()[1] ) );
-  CHECK_THAT( 9.99082E+10, WithinRel( chunk.distributions()[9].pdf().energies()[109] ) );
-  CHECK_THAT(       1e+11, WithinRel( chunk.distributions()[9].pdf().energies()[110] ) );
-  CHECK_THAT(  .365591000, WithinRel( chunk.distributions()[9].pdf().values()[0] ) );
-  CHECK_THAT(  .246105000, WithinRel( chunk.distributions()[9].pdf().values()[1] ) );
-  CHECK_THAT( 9.06486E-16, WithinRel( chunk.distributions()[9].pdf().values()[109] ) );
-  CHECK_THAT( 5.16344E-16, WithinRel( chunk.distributions()[9].pdf().values()[110] ) );
+
+  // dryad normalises distributions upon construction
+  // the numbers in the tests given below are the values as found in the test
+  // file so they need to be normalised. the following values are the scaling
+  // factors that need to be applied (calculated by integrating the distributions
+  // in excel).
+  double scale00 = 1. / 0.99999998809250;
+  double scale01 = 1. / 0.99999998353900;
+  double scale08 = 1. / 0.99999973884057;
+  double scale09 = 1. / 0.99999993564706;
+
+  CHECK_THAT(             0.1       , WithinRel( chunk.distributions()[0].pdf().energies()[0] ) );
+  CHECK_THAT(             0.133352  , WithinRel( chunk.distributions()[0].pdf().energies()[1] ) );
+  CHECK_THAT(             9.9       , WithinRel( chunk.distributions()[0].pdf().energies()[15] ) );
+  CHECK_THAT(            10.        , WithinRel( chunk.distributions()[0].pdf().energies()[16] ) );
+  CHECK_THAT( scale00 *  2.1394     , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT( scale00 *  1.60421    , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT( scale00 *   .0214392  , WithinRel( chunk.distributions()[0].pdf().values()[15] ) );
+  CHECK_THAT( scale00 *   .0212245  , WithinRel( chunk.distributions()[0].pdf().values()[16] ) );
+  CHECK_THAT(            0.1        , WithinRel( chunk.distributions()[1].pdf().energies()[0] ) );
+  CHECK_THAT(            0.14608    , WithinRel( chunk.distributions()[1].pdf().energies()[1] ) );
+  CHECK_THAT(           20.5286     , WithinRel( chunk.distributions()[1].pdf().energies()[17] ) );
+  CHECK_THAT(           20.736      , WithinRel( chunk.distributions()[1].pdf().energies()[18] ) );
+  CHECK_THAT( scale01 *  1.84823    , WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( scale01 * 1.26507     , WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( scale01 *  .00885527  , WithinRel( chunk.distributions()[1].pdf().values()[17] ) );
+  CHECK_THAT( scale01 *  .00876641  , WithinRel( chunk.distributions()[1].pdf().values()[18] ) );
+  CHECK_THAT(           .100000000  , WithinRel( chunk.distributions()[8].pdf().energies()[0] ) );
+  CHECK_THAT(           .128640000  , WithinRel( chunk.distributions()[8].pdf().energies()[1] ) );
+  CHECK_THAT(            9981470.   , WithinRel( chunk.distributions()[8].pdf().energies()[83] ) );
+  CHECK_THAT(            1e+7       , WithinRel( chunk.distributions()[8].pdf().energies()[84] ) );
+  CHECK_THAT( scale08 * .608334000  , WithinRel( chunk.distributions()[8].pdf().values()[0] ) );
+  CHECK_THAT( scale08 * .472898000  , WithinRel( chunk.distributions()[8].pdf().values()[1] ) );
+  CHECK_THAT( scale08 * 9.28343e-12 , WithinRel( chunk.distributions()[8].pdf().values()[83] ) );
+  CHECK_THAT( scale08 * 5.8374e-12  , WithinRel( chunk.distributions()[8].pdf().values()[84] ) );
+  CHECK_THAT(            .100000000 , WithinRel( chunk.distributions()[9].pdf().energies()[0] ) );
+  CHECK_THAT(            .148551000 , WithinRel( chunk.distributions()[9].pdf().energies()[1] ) );
+  CHECK_THAT(           9.99082E+10 , WithinRel( chunk.distributions()[9].pdf().energies()[109] ) );
+  CHECK_THAT(                 1e+11 , WithinRel( chunk.distributions()[9].pdf().energies()[110] ) );
+  CHECK_THAT( scale09 *  .365591000 , WithinRel( chunk.distributions()[9].pdf().values()[0] ) );
+  CHECK_THAT( scale09 *  .246105000 , WithinRel( chunk.distributions()[9].pdf().values()[1] ) );
+  CHECK_THAT( scale09 * 9.06486E-16 , WithinRel( chunk.distributions()[9].pdf().values()[109] ) );
+  CHECK_THAT( scale09 * 5.16344E-16 , WithinRel( chunk.distributions()[9].pdf().values()[110] ) );
   CHECK( false == chunk.distributions()[0].hasCdf() );
   CHECK( false == chunk.distributions()[1].hasCdf() );
   CHECK( false == chunk.distributions()[8].hasCdf() );

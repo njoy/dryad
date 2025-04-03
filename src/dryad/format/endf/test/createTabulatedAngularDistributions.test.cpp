@@ -62,23 +62,23 @@ void verifyElectronChunk( const TabulatedAngularDistributions& chunk ) {
   // file so they need to be normalised. the following values are the scaling
   // factors that need to be applied (calculated by integrating the distributions
   // in excel).
-  double scale01 = 2. / 1.999999;
-  double scale02 = 1. / 1.00000016366000;
+  double scale00 = 2. / 1.999999;
+  double scale01 = 1. / 1.00000016366000;
   double scale14 = 1. / 1.00000048323214;
   double scale15 = 1. / 1.00000000937718;
 
   CHECK_THAT(           -1.         , WithinRel( chunk.distributions()[0].pdf().cosines()[0] ) );
   CHECK_THAT(            0.999999   , WithinRel( chunk.distributions()[0].pdf().cosines()[1] ) );
-  CHECK_THAT( scale01 *  0.5        , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT( scale01 *  0.5        , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT( scale00 *  0.5        , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT( scale00 *  0.5        , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
   CHECK_THAT(           -1.         , WithinRel( chunk.distributions()[1].pdf().cosines()[0] ) );
   CHECK_THAT(           -0.93       , WithinRel( chunk.distributions()[1].pdf().cosines()[1] ) );
   CHECK_THAT(            0.9962001  , WithinRel( chunk.distributions()[1].pdf().cosines()[28] ) );
   CHECK_THAT(            0.999999   , WithinRel( chunk.distributions()[1].pdf().cosines()[29] ) );
-  CHECK_THAT( scale02 *  0.00293923 , WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT( scale02 *  0.00314865 , WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
-  CHECK_THAT( scale02 * 42.358      , WithinRel( chunk.distributions()[1].pdf().values()[28] ) );
-  CHECK_THAT( scale02 * 62.1102     , WithinRel( chunk.distributions()[1].pdf().values()[29] ) );
+  CHECK_THAT( scale01 *  0.00293923 , WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT( scale01 *  0.00314865 , WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT( scale01 * 42.358      , WithinRel( chunk.distributions()[1].pdf().values()[28] ) );
+  CHECK_THAT( scale01 * 62.1102     , WithinRel( chunk.distributions()[1].pdf().values()[29] ) );
   CHECK_THAT(           -1.         , WithinRel( chunk.distributions()[14].pdf().cosines()[0] ) );
   CHECK_THAT(           -0.995      , WithinRel( chunk.distributions()[14].pdf().cosines()[1] ) );
   CHECK_THAT(            0.9999989  , WithinRel( chunk.distributions()[14].pdf().cosines()[93] ) );

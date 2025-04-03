@@ -48,14 +48,22 @@ void verifyElectronChunk( const TabulatedEnergyDistribution& chunk ) {
   CHECK( 1 == pdf.interpolants().size() );
   CHECK( 16 == pdf.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
-  CHECK_THAT(  0.1     , WithinRel( pdf.energies()[0] ) );
-  CHECK_THAT(  0.133352, WithinRel( pdf.energies()[1] ) );
-  CHECK_THAT(  9.9     , WithinRel( pdf.energies()[15] ) );
-  CHECK_THAT( 10.      , WithinRel( pdf.energies()[16] ) );
-  CHECK_THAT( 2.1394   , WithinRel( pdf.values()[0] ) );
-  CHECK_THAT( 1.60421  , WithinRel( pdf.values()[1] ) );
-  CHECK_THAT(  .0214392, WithinRel( pdf.values()[15] ) );
-  CHECK_THAT(  .0212245, WithinRel( pdf.values()[16] ) );
+
+  // dryad normalises distributions upon construction
+  // the numbers in the tests given below are the values as found in the test
+  // file so they need to be normalised. the following values are the scaling
+  // factors that need to be applied (calculated by integrating the distributions
+  // in excel).
+  double scale = 1. / 0.99999998809250;
+
+  CHECK_THAT(          0.1     , WithinRel( pdf.energies()[0] ) );
+  CHECK_THAT(          0.133352, WithinRel( pdf.energies()[1] ) );
+  CHECK_THAT(          9.9     , WithinRel( pdf.energies()[15] ) );
+  CHECK_THAT(         10.      , WithinRel( pdf.energies()[16] ) );
+  CHECK_THAT( scale * 2.1394   , WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( scale * 1.60421  , WithinRel( pdf.values()[1] ) );
+  CHECK_THAT( scale *  .0214392, WithinRel( pdf.values()[15] ) );
+  CHECK_THAT( scale *  .0212245, WithinRel( pdf.values()[16] ) );
 
   CHECK( false == chunk.hasCdf() );
   CHECK_THROWS( chunk.cdf() );
