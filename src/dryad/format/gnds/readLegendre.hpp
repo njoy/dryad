@@ -15,15 +15,16 @@ namespace dryad {
 namespace format {
 namespace gnds {
 
+  using Legendre = std::pair< std::optional< double >, std::vector< double > >;
+
   /**
    *  @brief Read data from a GNDS legendre node
    */
-  static std::pair< std::optional< double >, std::vector< double > >
-  readLegendre( const pugi::xml_node& legendre ) {
+  static Legendre readLegendre( const pugi::xml_node& legendre ) {
 
     throwExceptionOnWrongNode( legendre, "Legendre" );
 
-    std::pair< std::optional< double >, std::vector< double > > data;
+    Legendre data;
     data.first = std::nullopt;
 
     // check for the presence of an outerDomainValue
@@ -31,6 +32,26 @@ namespace gnds {
     if ( outer ) {
 
       data.first = outer.as_double();
+    }
+
+    // check for initial zeros
+    auto zeros = legendre.attribute( "lowerIndex" );
+    if ( zeros ) {
+
+      auto number = zeros.as_int();
+      if ( number > 0 ) {
+
+        data.second = std::vector< double >( number, 0 );
+      }
+    }
+
+    // check for domain
+    auto lower = legendre.attribute( "domainMin" );
+    auto upper = legendre.attribute( "domainMax" );
+    if ( lower || upper ) {
+
+      Log::error( "Found lower or upper domain limits, contact a developer" );
+      throw std::exception();
     }
 
     // get tabulated values

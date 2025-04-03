@@ -7,7 +7,9 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "dryad/PolynomialMultiplicity.hpp"
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "dryad/format/gnds/createPolynomialMultiplicity.hpp"
 #include "dryad/format/gnds/createTabulatedMultiplicity.hpp"
 #include "dryad/format/gnds/readConstant1d.hpp"
 
@@ -19,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Create an integer or tabulated multiplicity from a GNDS multiplicity node
    */
-  static std::variant< int, TabulatedMultiplicity >
+  static std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
   createMultiplicity( pugi::xml_node multiplicity, const std::string& style = "eval" ) {
 
     // check that this is a valid multiplicity node
@@ -31,6 +33,10 @@ namespace gnds {
 
       auto data = readConstant1dAsInteger( child );
       return data.first;
+    }
+    else if ( strcmp( child.name(), "polynomial1d" ) == 0 ) {
+
+      return createPolynomialMultiplicity( multiplicity );
     }
     else {
 
