@@ -56,6 +56,7 @@ namespace covariance {
     using CovarianceBlock::isOffDiagonalBlock;
     using CovarianceBlock::isDiagonalBlock;
     using CovarianceBlock::isRelativeBlock;
+    using CovarianceBlock::isAbsoluteBlock;
     using CovarianceBlock::covariances;
     using CovarianceBlock::standardDeviations;
     using CovarianceBlock::correlations;

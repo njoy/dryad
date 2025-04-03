@@ -40,6 +40,7 @@ SCENARIO( "CovarianceBlock" ) {
       CHECK( 3 == chunk.columnMetadata().size() );
 
       CHECK( true == chunk.isRelativeBlock() );
+      CHECK( false == chunk.isAbsoluteBlock() );
       CHECK( false == chunk.isOffDiagonalBlock() );
       CHECK( true == chunk.isDiagonalBlock() );
 
@@ -125,6 +126,7 @@ SCENARIO( "CovarianceBlock" ) {
       CHECK( 2 == chunk.columnMetadata().size() );
 
       CHECK( true == chunk.isRelativeBlock() );
+      CHECK( false == chunk.isAbsoluteBlock() );
       CHECK( true == chunk.isOffDiagonalBlock() );
       CHECK( false == chunk.isDiagonalBlock() );
 

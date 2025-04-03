@@ -142,6 +142,13 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
   )
   .def_property_readonly(
 
+    "is_absolute_block",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isAbsoluteBlock(); },
+    "Flag to indicate whether or not this covariance block is absolute or not"
+  )
+  .def_property_readonly(
+
     "is_off_diagonal_block",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isOffDiagonalBlock(); },
