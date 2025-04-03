@@ -18,7 +18,7 @@ namespace covariance {
    *  @brief Variance scaling information
    *
    *  Some ENDF evaluations provide variance scaling information for cross section
-   *  covariances. Each factor value for a given group characterizes an uncorrelated
+   *  covariances. Each factor value for a given group characterises an uncorrelated
    *  contribution to the absolute variance of the cross section averaged over any
    *  energy subgroup that includes a portion of the energy interval over which the
    *  factor is defined.
