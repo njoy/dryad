@@ -75,12 +75,6 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
        { return self.distributions(); },
     "The associated distributions"
   )
-  .def_property_readonly(
-
-    "average_energies",
-    &Component::averageEnergies,
-    "The average energy values"
-  )
   .def(
 
     "__call__",
@@ -92,6 +86,22 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     "    self      the table\n"
     "    value     the grid value\n"
     "    energy    the energy value"
+  )
+  .def_property_readonly(
+
+    "average_energies",
+    &Component::averageEnergies,
+    "The average energy values"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the angular distributions\n"
+    "    tolerance   the linearisation tolerance"
   );
 
   // add standard tabulated data definitions

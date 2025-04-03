@@ -75,12 +75,6 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
        { return self.distributions(); },
     "The associated distributions"
   )
-  .def_property_readonly(
-
-    "average_cosines",
-    &Component::averageCosines,
-    "The average cosine values"
-  )
   .def(
 
     "__call__",
@@ -92,6 +86,22 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     "    self      the table\n"
     "    value     the grid value\n"
     "    cosine    the cosine value"
+  )
+  .def_property_readonly(
+
+    "average_cosines",
+    &Component::averageCosines,
+    "The average cosine values"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the angular distributions\n"
+    "    tolerance   the linearisation tolerance"
   );
 
   // add standard tabulated data definitions
