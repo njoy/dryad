@@ -6,7 +6,7 @@
  *  @param[in] reaction     the reaction identifier
  *  @param[in] energies     the energy boundaries
  */
-CrossSectionMetaData( id::ParticleID projectile,
+CrossSectionMetadata( id::ParticleID projectile,
                       id::ParticleID target,
                       id::ReactionID reaction,
                       std::vector< double > energies ) :
