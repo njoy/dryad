@@ -11,12 +11,16 @@
 namespace njoy {
 namespace dryad {
 
+  class PolynomialMultiplicity;
+
   /**
    *  @class
    *  @brief A multiplicity table
    */
   class TabulatedMultiplicity :
       protected scion::math::InterpolationTable< double, double > {
+
+    friend PolynomialMultiplicity;
 
   public:
 

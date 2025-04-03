@@ -15,6 +15,7 @@ add_cpp_test( format.endf.covariance.createVarianceScaling                covari
 add_cpp_test( format.endf.covariance.createCrossSectionCovarianceBlock    covariance/createCrossSectionCovarianceBlock.test.cpp )
 
 add_cpp_test( format.endf.createTabulatedCrossSection            createTabulatedCrossSection.test.cpp )
+add_cpp_test( format.endf.createPolynomialMultiplicity           createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.endf.createTabulatedMultiplicity            createTabulatedMultiplicity.test.cpp )
 add_cpp_test( format.endf.createMultiplicity                     createMultiplicity.test.cpp )
 add_cpp_test( format.endf.createLegendreAngularDistribution      createLegendreAngularDistribution.test.cpp )
