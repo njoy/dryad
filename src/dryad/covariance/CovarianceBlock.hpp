@@ -97,6 +97,14 @@ namespace covariance {
     }
 
     /**
+     *  @brief Return whether or not this covariance block is absolute or not
+     */
+    bool isAbsoluteBlock() const {
+
+      return ! this->isRelativeBlock();
+    }
+
+    /**
      *  @brief Return the covariance matrix
      */
     const std::optional< Matrix< double > >& covariances() const {

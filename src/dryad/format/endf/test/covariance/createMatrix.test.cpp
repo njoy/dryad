@@ -236,7 +236,7 @@ SCENARIO( "createMatrix" ) {
     auto section = material.file( 33 ).section( 16 ).parse< 33 >();
     RectangularMatrix covariance = std::get< RectangularMatrix >( section.reactions()[1].explicitCovariances()[0] );
 
-    WHEN( "constructing a diagonal CovarianceBlock from a SquareMatrix" ) {
+    WHEN( "constructing a diagonal CovarianceBlock from a RectangularMatrix" ) {
 
       covariance::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 

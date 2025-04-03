@@ -49,6 +49,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertEqual( None, chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
+        self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
@@ -130,6 +131,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual(  0.1  , chunk.variance_scaling.factors[1] )
 
         self.assertEqual( True, chunk.is_relative_block )
+        self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
@@ -202,6 +204,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertEqual( None, chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
+        self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
@@ -282,6 +285,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual(  0.1  , chunk.variance_scaling.factors[1] )
 
         self.assertEqual( True, chunk.is_relative_block )
+        self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
@@ -357,6 +361,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertEqual( None, chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
+        self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( True, chunk.is_off_diagonal_block )
         self.assertEqual( False, chunk.is_diagonal_block )
 
@@ -420,6 +425,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertEqual( None, chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
+        self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( True, chunk.is_off_diagonal_block )
         self.assertEqual( False, chunk.is_diagonal_block )
 

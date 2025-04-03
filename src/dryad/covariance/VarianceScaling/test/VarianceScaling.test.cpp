@@ -86,7 +86,7 @@ SCENARIO( "VarianceScaling" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "the matrix is not symmetric for a diagonal covariance block" ) {
+    WHEN( "the number of groups and factors is not the same" ) {
 
       std::vector< double > energies = { 1e-5, 1., 2e+7 };
       std::vector< double > factors = { .1, .2, .3 };
