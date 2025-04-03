@@ -42,15 +42,17 @@ ReactionProduct( id::ParticleID id,
                  Multiplicity multiplicity,
                  std::optional< DistributionData > distribution,
                  std::optional< TabulatedAverageEnergy > averageEnergy ) :
-    ReactionProduct( std::move( id ), 
-                     std::move( multiplicity ), 
-                     std::move( distribution ), 
+    ReactionProduct( std::move( id ),
+                     std::move( multiplicity ),
+                     std::move( distribution ),
                      std::move( averageEnergy ),
                      std::visit(
                          tools::overload{
                              [] ( int ) { return true; },
                              [] ( const TabulatedMultiplicity& multiplicity )
-                                { return multiplicity.isLinearised(); } },
+                                { return multiplicity.isLinearised(); },
+                             [] ( const PolynomialMultiplicity& )
+                                { return false; } },
                          multiplicity ) ) {}
 
 /**

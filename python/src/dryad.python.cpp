@@ -39,6 +39,7 @@ void wrapTabulatedEnergyDistributionFunction( python::module& );
 void wrapTabulatedEnergyDistribution( python::module& );
 void wrapTabulatedEnergyDistributions( python::module& );
 void wrapTabulatedCrossSection( python::module& );
+void wrapPolynomialMultiplicity( python::module& );
 void wrapTabulatedMultiplicity( python::module& );
 void wrapTabulatedAverageCosine( python::module& );
 void wrapTabulatedAverageEnergy( python::module& );
@@ -80,6 +81,7 @@ PYBIND11_MODULE( dryad, module ) {
   wrapAtomic( module );
 
   // wrap components - reaction products
+  wrapPolynomialMultiplicity( module );
   wrapTabulatedMultiplicity( module );
   wrapTabulatedAverageCosine( module );
   wrapTabulatedAverageEnergy( module );

@@ -29,7 +29,7 @@ namespace gnds {
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    // check that this is a valid q node
+    // check that this is a valid multiplicity node
     throwExceptionOnWrongNode( multiplicity, "multiplicity" );
 
     auto node = multiplicity.find_child_by_attribute( "label", style.c_str() );

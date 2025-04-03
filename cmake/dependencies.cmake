@@ -7,7 +7,7 @@ FetchContent_Declare( pugixml
     )
 
 FetchContent_Declare( eigen
-    GIT_REPOSITORY  https://gitlab.com/libeigen/eigen.git
+    GIT_REPOSITORY  ../../njoy/eigen
     GIT_TAG         d0bfdc1658ca0b4c659fd3702c351d2c2cdc876c # 3.4.1 branch on July 26, 2023
     )
 # the next line prevents eigen from populating the .cmake/packages folder
@@ -20,7 +20,7 @@ FetchContent_Declare( tools
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         a6bac01b587aed6eea469cffd79a448473f6098c  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         1073840c04e94877dd52c10bc7cbf33314a09e00  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ACEtk

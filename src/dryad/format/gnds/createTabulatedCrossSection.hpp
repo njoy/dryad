@@ -106,7 +106,7 @@ namespace gnds {
 
     Log::info( "Reading cross section data" );
 
-    // check that this is a valid q node
+    // check that this is a valid crossSection node
     throwExceptionOnWrongNode( xs, "crossSection" );
 
     auto node = xs.find_child_by_attribute( "label", style.c_str() );

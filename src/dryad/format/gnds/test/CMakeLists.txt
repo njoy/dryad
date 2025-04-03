@@ -8,12 +8,15 @@ add_cpp_test( format.gnds.createInterpolationType    createInterpolationType.tes
 add_cpp_test( format.gnds.createReferenceFrame       createReferenceFrame.test.cpp )
 add_cpp_test( format.gnds.createParticleIdentifier   createParticleIdentifier.test.cpp )
 
-add_cpp_test( format.gnds.readAxes         readAxes.test.cpp )
-add_cpp_test( format.gnds.readValues       readValues.test.cpp )
-add_cpp_test( format.gnds.readConstant1d   readLegendre.test.cpp )
-add_cpp_test( format.gnds.readXYs1d        readXYs1d.test.cpp )
-add_cpp_test( format.gnds.readLegendre     readLegendre.test.cpp )
+add_cpp_test( format.gnds.readAxes           readAxes.test.cpp )
+add_cpp_test( format.gnds.readValues         readValues.test.cpp )
+add_cpp_test( format.gnds.readConstant1d     readConstant1d.test.cpp )
+add_cpp_test( format.gnds.readLegendre       readLegendre.test.cpp )
+add_cpp_test( format.gnds.readPolynomial1d   readPolynomial1d.test.cpp )
+add_cpp_test( format.gnds.readXYs1d          readXYs1d.test.cpp )
 
+add_cpp_test( format.gnds.createPolynomialMultiplicity                 createPolynomialMultiplicity.test.cpp )
+add_cpp_test( format.gnds.createTabulatedMultiplicity                  createTabulatedMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createTabulatedFormFactorFromNodes           createTabulatedFormFactorFromNodes.test.cpp )
 add_cpp_test( format.gnds.createTabulatedScatteringFunctionFromNodes   createTabulatedScatteringFunctionFromNodes.test.cpp )
 

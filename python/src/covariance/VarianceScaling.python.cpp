@@ -25,9 +25,9 @@ void wrapVarianceScaling( python::module& module ) {
     "VarianceScaling",
     "Variance scaling information\n\n"
     "Some ENDF evaluations provide variance scaling information for cross section\n"
-    "covariances.Each factor value for a given group characterises an uncorrelated\n"
+    "covariances. Each factor value for a given group characterizes an uncorrelated\n"
     "contribution to the absolute variance of the cross section averaged over any\n"
-    "energy isubgroup that includes a portion of the energy interval over which the\n"
+    "energy subgroup that includes a portion of the energy interval over which the\n"
     "factor is defined."
   );
 
@@ -37,7 +37,7 @@ void wrapVarianceScaling( python::module& module ) {
 
     python::init< ScalingType, std::vector< double >, std::vector< double > >(),
     python::arg( "type" ), python::arg( "energies" ), python::arg( "factors" ),
-    "Initialise the meta data\n\n"
+    "Initialise the metadata\n\n"
     "Arguments:\n"
     "    self        the variance scaling information\n"
     "    type        the scaling procedure type\n"

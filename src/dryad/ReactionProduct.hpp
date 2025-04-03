@@ -9,6 +9,7 @@
 #include "tools/overload.hpp"
 #include "dryad/type-aliases.hpp"
 #include "dryad/id/ParticleID.hpp"
+#include "dryad/PolynomialMultiplicity.hpp"
 #include "dryad/TabulatedMultiplicity.hpp"
 #include "dryad/TabulatedAverageEnergy.hpp"
 #include "dryad/TwoBodyDistributionData.hpp"
@@ -28,7 +29,7 @@ namespace dryad {
   public:
 
     /* type aliases */
-    using Multiplicity = std::variant< int, TabulatedMultiplicity >;
+    using Multiplicity = std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >;
     using DistributionData = std::variant< TwoBodyDistributionData,
                                            UncorrelatedDistributionData,
                                            CoherentDistributionData,
@@ -120,6 +121,8 @@ namespace dryad {
         [] ( int multiplicity ) -> Multiplicity
            { return Multiplicity( multiplicity ); },
         [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
+                     { return Multiplicity( multiplicity.linearise( tolerance ) ); },
+        [&tolerance] ( const PolynomialMultiplicity& multiplicity ) -> Multiplicity
                      { return Multiplicity( multiplicity.linearise( tolerance ) ); }
       };
 
@@ -145,8 +148,9 @@ namespace dryad {
         [] ( int multiplicity ) -> Multiplicity
            { return Multiplicity( multiplicity ); },
         [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }
-      };
+                     { return Multiplicity( multiplicity.linearise( tolerance ) ); },
+        [&tolerance] ( const PolynomialMultiplicity& multiplicity ) -> Multiplicity
+                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }      };
 
       this->multiplicity_ = std::visit( linearise, this->multiplicity() );
       this->linearised_ = true;

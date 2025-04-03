@@ -103,7 +103,7 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
     "    column_reaction      the column reaction identifier\n"
     "    column_energies      the column energy boundaries\n"
     "    covariances          the covariance matrix\n"
-    "    relative             the relative covariance flag"
+    "    relative             the relative covariance flag (default is true)"
      )
   .def_property_readonly(
 
