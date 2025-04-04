@@ -103,7 +103,7 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
     "    column_reaction      the column reaction identifier\n"
     "    column_energies      the column energy boundaries\n"
     "    covariances          the covariance matrix\n"
-    "    relative             the relative covariance flag"
+    "    relative             the relative covariance flag (default is true)"
      )
   .def_property_readonly(
 
@@ -139,6 +139,13 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.isRelativeBlock(); },
     "Flag to indicate whether or not this covariance block is relative or not"
+  )
+  .def_property_readonly(
+
+    "is_absolute_block",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isAbsoluteBlock(); },
+    "Flag to indicate whether or not this covariance block is absolute or not"
   )
   .def_property_readonly(
 

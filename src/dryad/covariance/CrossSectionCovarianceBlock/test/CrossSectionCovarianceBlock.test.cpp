@@ -58,6 +58,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
       CHECK( std::nullopt == chunk.varianceScaling() );
 
       CHECK( true == chunk.isRelativeBlock() );
+      CHECK( false == chunk.isAbsoluteBlock() );
       CHECK( false == chunk.isOffDiagonalBlock() );
       CHECK( true == chunk.isDiagonalBlock() );
 
@@ -180,6 +181,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
      CHECK( ScalingType::Inverse == scaling.type() );
 
      CHECK( true == chunk.isRelativeBlock() );
+     CHECK( false == chunk.isAbsoluteBlock() );
      CHECK( false == chunk.isOffDiagonalBlock() );
      CHECK( true == chunk.isDiagonalBlock() );
 
@@ -295,6 +297,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
       CHECK( std::nullopt == chunk.varianceScaling() );
 
       CHECK( true == chunk.isRelativeBlock() );
+      CHECK( false == chunk.isAbsoluteBlock() );
       CHECK( true == chunk.isOffDiagonalBlock() );
       CHECK( false == chunk.isDiagonalBlock() );
 

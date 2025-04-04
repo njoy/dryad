@@ -110,7 +110,9 @@ namespace covariance {
       default : {
 
         // unreachable code
-        throw std::runtime_error( "how did you get here?, contact a developer" );
+        Log::error( "Found LB={}, how did you get here?, contact a developer",
+                    endf.procedure() );
+        throw std::exception();
       }
     }
   }
