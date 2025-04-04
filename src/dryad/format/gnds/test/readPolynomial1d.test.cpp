@@ -16,7 +16,7 @@ void verifyChunk( const format::gnds::Polynomial1d& );
 
 SCENARIO( "readPolynomial1d" ) {
 
-  GIVEN( "a GNDS polynomial1d xml nodes" ) {
+  GIVEN( "a GNDS polynomial1d xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-094_Pu_237.jeff33.gnds.xml" );

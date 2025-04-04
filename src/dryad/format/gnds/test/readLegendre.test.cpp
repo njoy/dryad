@@ -16,7 +16,7 @@ void verifyChunk( const format::gnds::Legendre& );
 
 SCENARIO( "readLegendre" ) {
 
-  GIVEN( "a GNDS Legendre xml nodes" ) {
+  GIVEN( "a GNDS Legendre xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );

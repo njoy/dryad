@@ -15,7 +15,7 @@ void verifyChunkWithIndex2( const std::vector< std::string >& );
 
 SCENARIO( "readAxes" ) {
 
-  GIVEN( "a GNDS axes xml nodes" ) {
+  GIVEN( "a GNDS axes xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );

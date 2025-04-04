@@ -12,9 +12,9 @@ using namespace njoy::dryad;
 
 void verifyChunk( const format::gnds::Axis& );
 
-SCENARIO( "readAxes" ) {
+SCENARIO( "readAxis" ) {
 
-  GIVEN( "a GNDS axis xml nodes" ) {
+  GIVEN( "a GNDS axis xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
