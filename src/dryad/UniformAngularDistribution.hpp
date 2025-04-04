@@ -33,6 +33,9 @@ namespace dryad {
 
     /* type aliases */
 
+    using XType = double;
+    using YType = double;
+
     /* constructor */
 
     #include "dryad/UniformAngularDistribution/src/ctor.hpp"

@@ -1,0 +1,1 @@
+add_cpp_test( UniformAngularDistributions UniformAngularDistributions.test.cpp )

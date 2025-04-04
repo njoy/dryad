@@ -28,6 +28,9 @@ namespace dryad {
 
     /* type aliases */
 
+    using XType = double;
+    using YType = double;
+
     /* constructor */
 
     #include "dryad/UniformEnergyDistribution/src/ctor.hpp"
