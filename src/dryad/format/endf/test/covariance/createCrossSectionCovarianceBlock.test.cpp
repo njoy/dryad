@@ -66,6 +66,7 @@ SCENARIO( "createMatrix" ) {
 //        CHECK_THAT( 2.000000e+7, WithinRel( chunk.columnMetadata().energies()[8] ) );
 //
 //        CHECK( true == chunk.isRelativeBlock() );
+//        CHECK( false == chunk.isAbsoluteBlock() );
 //        CHECK( false == chunk.isOffDiagonalBlock() );
 //        CHECK( true == chunk.isDiagonalBlock() );
 //
@@ -196,6 +197,7 @@ SCENARIO( "createMatrix" ) {
 //        CHECK_THAT( 2.000000e+7, WithinRel( chunk.columnMetadata().energies()[6] ) );
 //
 //        CHECK( true == chunk.isRelativeBlock() );
+//        CHECK( false == chunk.isAbsoluteBlock() );
 //        CHECK( false == chunk.isOffDiagonalBlock() );
 //        CHECK( true == chunk.isDiagonalBlock() );
 //
@@ -316,6 +318,7 @@ SCENARIO( "createMatrix" ) {
         CHECK( njoy::dryad::covariance::ScalingType::Inverse == chunk.varianceScaling().value().type() );
 
         CHECK( true == chunk.isRelativeBlock() );
+        CHECK( false == chunk.isAbsoluteBlock() );
         CHECK( false == chunk.isOffDiagonalBlock() );
         CHECK( true == chunk.isDiagonalBlock() );
 
@@ -420,6 +423,7 @@ SCENARIO( "createMatrix" ) {
         CHECK( std::nullopt == chunk.varianceScaling() );
 
         CHECK( true == chunk.isRelativeBlock() );
+        CHECK( false == chunk.isAbsoluteBlock() );
         CHECK( false == chunk.isOffDiagonalBlock() );
         CHECK( true == chunk.isDiagonalBlock() );
 
@@ -529,6 +533,7 @@ SCENARIO( "createMatrix" ) {
         CHECK( std::nullopt == chunk.varianceScaling() );
 
         CHECK( true == chunk.isRelativeBlock() );
+        CHECK( false == chunk.isAbsoluteBlock() );
         CHECK( true == chunk.isOffDiagonalBlock() );
         CHECK( false == chunk.isDiagonalBlock() );
 
@@ -641,6 +646,7 @@ SCENARIO( "createMatrix" ) {
         CHECK( std::nullopt == chunk.varianceScaling() );
 
         CHECK( true == chunk.isRelativeBlock() );
+        CHECK( false == chunk.isAbsoluteBlock() );
         CHECK( true == chunk.isOffDiagonalBlock() );
         CHECK( false == chunk.isDiagonalBlock() );
 
