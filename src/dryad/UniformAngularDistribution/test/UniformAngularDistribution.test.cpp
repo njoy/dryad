@@ -72,10 +72,20 @@ SCENARIO( "UniformAngularDistribution" ) {
 
   GIVEN( "invalid data" ) {
 
-    WHEN( "" ) {
+    WHEN( "the values are empty for a discrete uniform distribution" ) {
 
-      THEN( "" ) {
+      THEN( "an exception is thrown" ) {
 
+        CHECK_THROWS( UniformAngularDistribution( {}, UniformDistributionType::Discrete ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "there are none or only one value for an interval uniform distribution" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( UniformAngularDistribution( {}, UniformDistributionType::Interval ) );
+        CHECK_THROWS( UniformAngularDistribution( { 1. }, UniformDistributionType::Interval ) );
       } // THEN
     } // WHEN
   } // GIVEN

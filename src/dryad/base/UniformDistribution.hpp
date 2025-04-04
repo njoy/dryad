@@ -7,6 +7,7 @@
 #include <vector>
 
 // other includes
+#include "tools/Log.hpp"
 #include "dryad/type-aliases.hpp"
 #include "dryad/UniformDistributionType.hpp"
 
@@ -30,6 +31,7 @@ namespace base {
     std::vector< double > values_;
 
     /* auxiliary functions */
+    #include "dryad/base/UniformDistribution/src/verifySize.hpp"
 
   public:
 

@@ -17,4 +17,7 @@ UniformDistribution& operator=( UniformDistribution&& ) = default;
  */
 UniformDistribution( std::vector< double > values,
                      UniformDistributionType type ) :
-  values_( std::move( values ) ), type_( std::move( type ) ) {}
+  values_( std::move( values ) ), type_( std::move( type ) ) {
+
+  verifySize( this->values_.size(), this->type() );
+}
