@@ -17,4 +17,4 @@ UniformAngularDistribution& operator=( UniformAngularDistribution&& ) = default;
  */
 UniformAngularDistribution( std::vector< double > cosines,
                             UniformDistributionType type ) :
-  cosines_( std::move( cosines ) ), type_( std::move( type ) ) {}
+  UniformDistribution( std::move( cosines ), std::move( type ) ) {}

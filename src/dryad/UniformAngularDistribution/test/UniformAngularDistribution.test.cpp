@@ -27,7 +27,7 @@ SCENARIO( "UniformAngularDistribution" ) {
             "be tested" ) {
 
         CHECK( UniformDistributionType::Discrete == chunk.type() );
-        CHECK( 3 == chunk.number() );
+        CHECK( 3 == chunk.numberCosines() );
 
         CHECK_THAT( -0.25, WithinRel( chunk.cosines()[0] ) );
         CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
@@ -54,7 +54,7 @@ SCENARIO( "UniformAngularDistribution" ) {
             "be tested" ) {
 
         CHECK( UniformDistributionType::Interval == chunk.type() );
-        CHECK( 4 == chunk.number() );
+        CHECK( 4 == chunk.numberCosines() );
 
         CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
         CHECK_THAT( -0.25, WithinRel( chunk.cosines()[1] ) );

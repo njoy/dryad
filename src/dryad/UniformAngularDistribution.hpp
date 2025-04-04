@@ -8,6 +8,7 @@
 
 // other includes
 #include "dryad/type-aliases.hpp"
+#include "dryad/base/UniformDistribution.hpp"
 #include "dryad/UniformDistributionType.hpp"
 
 namespace njoy {
@@ -22,11 +23,9 @@ namespace dryad {
    *  cosine intervals (e.g. as used in older incident neutron ACE
    *  files).
    */
-  class UniformAngularDistribution {
+  class UniformAngularDistribution : protected base::UniformDistribution {
 
     /* fields */
-    UniformDistributionType type_;
-    std::vector< double > cosines_;
 
     /* auxiliary functions */
 
@@ -40,35 +39,22 @@ namespace dryad {
 
     /* methods */
 
-    /**
-     *  @brief Return the distribution type
-     */
-    const UniformDistributionType& type() const noexcept {
-
-      return this->type_;
-    }
+    using UniformDistribution::type;
 
     /**
      *  @brief Return the cosine values for the distribution
      */
     const std::vector< double >& cosines() const noexcept {
 
-      return this->cosines_;
+      return this->values();
     }
 
     /**
-     *  @brief Return the number of discrete values or intervals
+     *  @brief Return the number of discrete cosines or intervals
      */
-    std::size_t number() const noexcept {
+    std::size_t numberCosines() const noexcept {
 
-      if ( this->type() == UniformDistributionType::Discrete ) {
-
-        return this->cosines().size();
-      }
-      else {
-
-        return this->cosines().size() - 1;
-      }
+      return this->number();
     }
 
     /**
@@ -76,13 +62,7 @@ namespace dryad {
      */
     double averageCosine() const noexcept {
 
-      double sum = std::accumulate( this->cosines().begin(), this->cosines().end(), 0. );
-      if ( this->type() == UniformDistributionType::Interval ) {
-
-        sum -= 0.5 * ( this->cosines().front() + this->cosines().back() );
-      }
-
-      return sum / static_cast< double >( this->number() );
+      return this->mean();
     }
   };
 
