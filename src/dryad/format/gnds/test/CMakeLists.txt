@@ -8,6 +8,7 @@ add_cpp_test( format.gnds.createInterpolationType    createInterpolationType.tes
 add_cpp_test( format.gnds.createReferenceFrame       createReferenceFrame.test.cpp )
 add_cpp_test( format.gnds.createParticleIdentifier   createParticleIdentifier.test.cpp )
 
+add_cpp_test( format.gnds.readAxis           readAxis.test.cpp )
 add_cpp_test( format.gnds.readAxes           readAxes.test.cpp )
 add_cpp_test( format.gnds.readValues         readValues.test.cpp )
 add_cpp_test( format.gnds.readConstant1d     readConstant1d.test.cpp )
