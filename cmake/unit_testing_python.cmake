@@ -42,6 +42,8 @@ add_python_test( LegendreAngularDistributions            Test_dryad_LegendreAngu
 add_python_test( TabulatedAngularDistributionFunction    Test_dryad_TabulatedAngularDistributionFunction.py )
 add_python_test( TabulatedAngularDistribution            Test_dryad_TabulatedAngularDistribution.py )
 add_python_test( TabulatedAngularDistributions           Test_dryad_TabulatedAngularDistributions.py )
+add_python_test( UniformAngularDistribution              Test_dryad_UniformAngularDistribution.py )
+add_python_test( UniformEnergyDistribution               Test_dryad_UniformEnergyDistribution.py )
 add_python_test( TabulatedEnergyDistributionFunction     Test_dryad_TabulatedEnergyDistributionFunction.py )
 add_python_test( TabulatedEnergyDistribution             Test_dryad_TabulatedEnergyDistribution.py )
 add_python_test( TabulatedEnergyDistributions            Test_dryad_TabulatedEnergyDistributions.py )

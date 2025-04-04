@@ -41,7 +41,7 @@ SCENARIO( "UniformAngularDistribution" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "Cosines for a discrete cosine distribution" ) {
+  GIVEN( "Cosines for a distribution of equally probable bins" ) {
 
     WHEN( "the data is given explicitly" ) {
 

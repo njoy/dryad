@@ -16,7 +16,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief A uniform or equally probably anergy distribution
+   *  @brief A uniform or equally probably energy distribution
    */
   class UniformEnergyDistribution : protected base::UniformDistribution {
 
