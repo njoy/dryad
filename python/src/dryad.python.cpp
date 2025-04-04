@@ -19,6 +19,7 @@ void wrapDistributionDataType( python::module& );
 void wrapInteractionType( python::module& );
 void wrapReactionType( python::module& );
 void wrapReferenceFrame( python::module& );
+void wrapUniformDistributionType( python::module& );
 
 // declarations - covariance data
 void wrapCovariance( python::module& );
@@ -73,6 +74,7 @@ PYBIND11_MODULE( dryad, module ) {
   wrapInteractionType( module );
   wrapReactionType( module );
   wrapReferenceFrame( module );
+  wrapUniformDistributionType( module );
 
   // wrap components - covariance data
   wrapCovariance( module );

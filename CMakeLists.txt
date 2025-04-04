@@ -103,6 +103,7 @@ if( dryad.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/InteractionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReactionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReferenceFrame.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformDistributionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedCrossSection.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/PolynomialMultiplicity.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedMultiplicity.python.cpp

@@ -17,6 +17,7 @@
 #include "dryad/resonances.hpp"
 
 // components - reaction products
+#include "dryad/UniformDistributionType.hpp"
 #include "dryad/CoherentDistributionData.hpp"
 #include "dryad/IncoherentDistributionData.hpp"
 #include "dryad/TabulatedScatteringFunction.hpp"
