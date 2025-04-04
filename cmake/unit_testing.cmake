@@ -27,6 +27,8 @@ endfunction()
 
 message( STATUS "Adding dryad C++ unit testing" )
 
+add_subdirectory( src/dryad/base/UniformDistribution/test )
+
 add_subdirectory( src/dryad/id/ElementID/test )
 
 add_subdirectory( src/dryad/atomic/ElectronSubshellConfiguration/test )
