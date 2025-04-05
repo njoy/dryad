@@ -168,6 +168,7 @@ SCENARIO( "UniformEnergyDistributions" ) {
         { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
         { { 1., 2. }, UniformDistributionType::Discrete },
         { { 3., 5., 7. }, UniformDistributionType::Discrete },
+        { { 3., 5., 7. }, UniformDistributionType::Discrete },
         { { 5., 10. }, UniformDistributionType::Discrete }
       };
 

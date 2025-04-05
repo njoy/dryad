@@ -117,10 +117,12 @@ if( dryad.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistribution.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributions.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformAngularDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformAngularDistributions.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributionFunction.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistribution.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributions.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformEnergyDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformEnergyDistributions.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedFormFactor.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedScatteringFunction.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TwoBodyDistributionData.python.cpp
