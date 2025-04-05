@@ -34,7 +34,7 @@ namespace gnds {
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = units[1];
+      data.second = std::get< 1 >( units[1] ).value();
     }
 
     return data;
@@ -56,7 +56,7 @@ namespace gnds {
     if ( axes ) {
 
       auto units = readAxes( axes );
-      data.second = units[1];
+      data.second = std::get< 1 >( units[1] ).value();
     }
 
     return data;

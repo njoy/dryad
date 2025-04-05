@@ -41,14 +41,14 @@ namespace gnds {
       auto units = readAxes( axes );
       if ( units.size() == 2 ) {
 
-        std::get< 5 >( data ) = units[0];
-        std::get< 6 >( data ) = units[1];
+        std::get< 5 >( data ) = std::get< 1 >( units[0] ).value();
+        std::get< 6 >( data ) = std::get< 1 >( units[1] ).value();
       }
       else {
 
-        std::get< 1 >( data ) = units[0];
-        std::get< 5 >( data ) = units[1];
-        std::get< 6 >( data ) = units[2];
+        std::get< 1 >( data ) = std::get< 1 >( units[0] ).value();
+        std::get< 5 >( data ) = std::get< 1 >( units[1] ).value();
+        std::get< 6 >( data ) = std::get< 1 >( units[2] ).value();
       }
     }
 

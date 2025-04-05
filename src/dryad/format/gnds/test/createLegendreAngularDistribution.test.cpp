@@ -8,6 +8,7 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include "pugixml.hpp"
+#include "dryad/format/gnds/readAxes.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -20,19 +21,21 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
-    pugi::xml_node legendre = document.child( "reactionSuite" ).child( "reactions" ).
-                                       find_child_by_attribute( "reaction", "ENDF_MT", "2" ).
-                                       child( "outputChannel" ).child( "products" ).
-                                       find_child_by_attribute( "product", "pid", "n" ).
-                                       child( "distribution" ).child( "angularTwoBody" ).
-                                       child( "XYs2d" ).child( "function1ds" ).
-                                       child( "Legendre" );
+    pugi::xml_node node = document.child( "reactionSuite" ).child( "reactions" ).
+                                   find_child_by_attribute( "reaction", "ENDF_MT", "2" ).
+                                   child( "outputChannel" ).child( "products" ).
+                                   find_child_by_attribute( "product", "pid", "n" ).
+                                   child( "distribution" ).child( "angularTwoBody" ).
+                                   child( "XYs2d" );
+
+    auto axes = format::gnds::readAxes( node.child( "axes" ) );
+    pugi::xml_node legendre = node.child( "function1ds" ).child( "Legendre" );
 
     WHEN( "a single average energy node is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createLegendreAngularDistribution( legendre, { "eV", "", "" } );
+        auto chunk = format::gnds::createLegendreAngularDistribution( legendre, axes );
 
         verifyChunk( chunk );
       } // THEN

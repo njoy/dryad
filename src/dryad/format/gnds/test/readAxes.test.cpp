@@ -10,8 +10,8 @@
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const std::vector< std::string >& );
-void verifyChunkWithIndex2( const std::vector< std::string >& );
+void verifyChunk( const format::gnds::Axes& );
+void verifyChunkWithIndex2( const format::gnds::Axes& );
 
 SCENARIO( "readAxes" ) {
 
@@ -60,17 +60,27 @@ SCENARIO( "readAxes" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const std::vector< std::string >& chunk ) {
+void verifyChunk( const format::gnds::Axes& chunk ) {
 
   CHECK( 2 == chunk.size() );
-  CHECK( "eV" == chunk[0] );
-  CHECK( "b"  == chunk[1] );
+  CHECK( 1  == std::get< 0 >( chunk[0] ).value() );
+  CHECK( 0  == std::get< 0 >( chunk[1] ).value() );
+  CHECK( "eV" == std::get< 1 >( chunk[0] ).value() );
+  CHECK( "b"  == std::get< 1 >( chunk[1] ).value() );
+  CHECK( std::nullopt == std::get< 2 >( chunk[0] ) );
+  CHECK( std::nullopt == std::get< 2 >( chunk[1] ) );
 }
 
-void verifyChunkWithIndex2( const std::vector< std::string >& chunk ) {
+void verifyChunkWithIndex2( const format::gnds::Axes& chunk ) {
 
   CHECK( 3 == chunk.size() );
-  CHECK( "eV" == chunk[0] );
-  CHECK( ""   == chunk[1] );
-  CHECK( ""   == chunk[2] );
+  CHECK( 2  == std::get< 0 >( chunk[0] ).value() );
+  CHECK( 1  == std::get< 0 >( chunk[1] ).value() );
+  CHECK( 0  == std::get< 0 >( chunk[2] ).value() );
+  CHECK( "eV" == std::get< 1 >( chunk[0] ).value() );
+  CHECK( ""   == std::get< 1 >( chunk[1] ).value() );
+  CHECK( ""   == std::get< 1 >( chunk[2] ).value() );
+  CHECK( std::nullopt == std::get< 2 >( chunk[0] ) );
+  CHECK( std::nullopt == std::get< 2 >( chunk[1] ) );
+  CHECK( std::nullopt == std::get< 2 >( chunk[2] ) );
 }

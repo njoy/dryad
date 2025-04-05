@@ -47,14 +47,14 @@ namespace gnds {
       auto units = readAxes( axes );
       if ( units.size() == 2 ) {
 
-        std::get< 3 >( data ) = units[0];
-        std::get< 5 >( data ) = units[1];
+        std::get< 3 >( data ) = std::get< 1 >( units[0] ).value();
+        std::get< 5 >( data ) = std::get< 1 >( units[1] ).value();
       }
       else {
 
-        std::get< 1 >( data ) = units[0];
-        std::get< 3 >( data ) = units[1];
-        std::get< 5 >( data ) = units[2];
+        std::get< 1 >( data ) = std::get< 1 >( units[0] ).value();
+        std::get< 3 >( data ) = std::get< 1 >( units[1] ).value();
+        std::get< 5 >( data ) = std::get< 1 >( units[2] ).value();
       }
     }
 
@@ -94,7 +94,7 @@ namespace gnds {
    *  @brief Read data from a GNDS XYs1D node
    */
   XYs1d readXYs1D( const pugi::xml_node& xys1d,
-                   const std::vector< std::string > units ) {
+                   const Axes& units ) {
 
     XYs1d data = readXYs1D( xys1d );
 
@@ -103,14 +103,14 @@ namespace gnds {
 
       if ( units.size() == 2 ) {
 
-        if ( std::get< 3 >( data ).size() == 0 ) { std::get< 3 >( data ) = units[0]; };
-        if ( std::get< 5 >( data ).size() == 0 ) { std::get< 5 >( data ) = units[1]; };
+        if ( std::get< 3 >( data ).size() == 0 ) { std::get< 3 >( data ) = std::get< 1 >( units[0] ).value(); };
+        if ( std::get< 5 >( data ).size() == 0 ) { std::get< 5 >( data ) = std::get< 1 >( units[1] ).value(); };
       }
       else {
 
-        if ( ! std::get< 1 >( data ).has_value() ) { std::get< 1 >( data ) = units[0]; };
-        if ( std::get< 3 >( data ).size() == 0 ) { std::get< 3 >( data ) = units[1]; };
-        if ( std::get< 5 >( data ).size() == 0 ) { std::get< 5 >( data ) = units[2]; };
+        if ( ! std::get< 1 >( data ).has_value() ) { std::get< 1 >( data ) = std::get< 1 >( units[0] ).value(); };
+        if ( std::get< 3 >( data ).size() == 0 ) { std::get< 3 >( data ) = std::get< 1 >( units[1] ).value(); };
+        if ( std::get< 5 >( data ).size() == 0 ) { std::get< 5 >( data ) = std::get< 1 >( units[2] ).value(); };
       }
     }
 
