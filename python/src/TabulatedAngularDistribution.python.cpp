@@ -14,6 +14,7 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::TabulatedAngularDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -86,5 +87,21 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "Arguments:\n"
     "    self      the distribution\n"
     "    cosine    the cosine value"
+  )
+  .def_property_readonly(
+
+    "average_cosine",
+    &Component::averageCosine,
+    "The average cosine defined by the distribution"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the angular distribution\n"
+    "    tolerance   the linearisation tolerance"
   );
 }

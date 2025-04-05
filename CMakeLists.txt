@@ -103,6 +103,7 @@ if( dryad.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/InteractionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReactionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReferenceFrame.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformDistributionType.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedCrossSection.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/PolynomialMultiplicity.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedMultiplicity.python.cpp
@@ -115,9 +116,13 @@ if( dryad.python )
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributionFunction.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistribution.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributions.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformAngularDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformAngularDistributions.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributionFunction.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistribution.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributions.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformEnergyDistribution.python.cpp
+      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformEnergyDistributions.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedFormFactor.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedScatteringFunction.python.cpp
       ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TwoBodyDistributionData.python.cpp

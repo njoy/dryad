@@ -6,6 +6,7 @@ import sys
 
 # local imports
 from dryad import TabulatedAngularDistribution
+from dryad import InterpolationType
 
 class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
     """Unit test for the TabulatedAngularDistribution class."""
@@ -44,6 +45,29 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             # verify evaluation - values of x inside the x grid (lin-lin piece)
             self.assertAlmostEqual( 0.25 , chunk( cosine = -0.5 ) )
             self.assertAlmostEqual( 0.875, chunk( cosine = 0.75 ) )
+
+            # verify average cosine
+            self.assertAlmostEqual( 1. / 3., chunk.average_cosine )
+
+            # verify linearisation
+            linear = chunk.linearise()
+            self.assertEqual( 4, linear.pdf.number_points )
+            self.assertEqual( 1, linear.pdf.number_regions )
+            self.assertEqual( 4, len( linear.pdf.cosines) )
+            self.assertEqual( 4, len( linear.pdf.values) )
+            self.assertEqual( 1, len( linear.pdf.boundaries) )
+            self.assertEqual( 1, len( linear.pdf.interpolants) )
+            self.assertEqual( 3, linear.pdf.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, linear.pdf.interpolants[0] )
+            self.assertAlmostEqual( -1. , linear.pdf.cosines[0] )
+            self.assertAlmostEqual(  0. , linear.pdf.cosines[1] )
+            self.assertAlmostEqual(  0.5, linear.pdf.cosines[2] )
+            self.assertAlmostEqual(  1. , linear.pdf.cosines[3] )
+            self.assertAlmostEqual( 0.  , linear.pdf.values[0] )
+            self.assertAlmostEqual( 0.5 , linear.pdf.values[1] )
+            self.assertAlmostEqual( 0.75, linear.pdf.values[2] )
+            self.assertAlmostEqual( 1.  , linear.pdf.values[3] )
+            self.assertEqual( True, linear.pdf.is_linearised )
 
         # the data is given explicitly using a normalised table
         chunk = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 0.5, 0.75, 1. ] )

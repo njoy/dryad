@@ -1,0 +1,1 @@
+add_cpp_test( UniformEnergyDistributions UniformEnergyDistributions.test.cpp )
