@@ -9,6 +9,7 @@ add_cpp_test( format.gnds.createReferenceFrame       createReferenceFrame.test.c
 add_cpp_test( format.gnds.createParticleIdentifier   createParticleIdentifier.test.cpp )
 
 add_cpp_test( format.gnds.readShape          readShape.test.cpp )
+add_cpp_test( format.gnds.resolveLink        resolveLink.test.cpp )
 add_cpp_test( format.gnds.readAxis           readAxis.test.cpp )
 add_cpp_test( format.gnds.readGrid           readGrid.test.cpp )
 add_cpp_test( format.gnds.readAxes           readAxes.test.cpp )

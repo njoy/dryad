@@ -8,11 +8,11 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include "pugixml.hpp"
-#include <iostream>
+
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const format::gnds::Grid& );
+void verifyChunk( const format::gnds::Grid&, int index );
 
 SCENARIO( "readAxes" ) {
 
@@ -25,15 +25,27 @@ SCENARIO( "readAxes" ) {
                                    child( "mixed" ).child( "shortRangeSelfScalingVariance" ).
                                    child( "gridded2d" ).child( "axes" );
 
-    WHEN( "a single GNDS grid node" ) {
+    WHEN( "a single GNDS grid node with a values node is used" ) {
 
-      pugi::xml_node grid = axes.child( "grid" );
+      pugi::xml_node grid = axes.find_child_by_attribute( "grid", "index", "2" );
 
       THEN( "it can be converted" ) {
 
         auto chunk = format::gnds::readGrid( grid );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, 2 );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single GNDS grid node with a link node is used" ) {
+
+      pugi::xml_node grid = axes.find_child_by_attribute( "grid", "index", "1" );
+
+      THEN( "it can be converted" ) {
+
+        auto chunk = format::gnds::readGrid( grid );
+
+        verifyChunk( chunk, 1 );
       } // THEN
     } // WHEN
 
@@ -48,9 +60,9 @@ SCENARIO( "readAxes" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Grid& chunk ) {
+void verifyChunk( const format::gnds::Grid& chunk, int index ) {
 
-  CHECK( 2     == std::get< 0 >( chunk ) );
+  CHECK( index == std::get< 0 >( chunk ) );
   CHECK( "eV"  == std::get< 1 >( chunk ) );
 
   CHECK( 13 == std::get< 2 >( chunk ).size() );

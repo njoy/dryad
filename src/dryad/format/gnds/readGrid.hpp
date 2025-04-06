@@ -9,6 +9,7 @@
 #include "pugixml.hpp"
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "dryad/format/gnds/readValues.hpp"
+#include "dryad/format/gnds/resolveLink.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
@@ -36,17 +37,19 @@ namespace gnds {
       auto link = grid.child( "link" );
       if ( link ) {
 
-        //! @todo resolve link to get to values node with the structure
+        // the link should point to another values
+        values = resolveLink( link );
       }
       else {
 
-        //! @todo throw exception
+        Log::error( "The grid node does not have a values or link node" );
+        throw std::exception();
       }
     }
 
     return { index ? std::make_optional( index.as_int() ) : std::nullopt,
              unit ? std::make_optional( unit.as_string() ) : std::nullopt,
-             values ? readValues( values ) : std::vector< double >{} };
+             readValues( values ) };
   }
 
 } // gnds namespace
