@@ -17,6 +17,7 @@ add_cpp_test( format.gnds.readConstant1d     readConstant1d.test.cpp )
 add_cpp_test( format.gnds.readLegendre       readLegendre.test.cpp )
 add_cpp_test( format.gnds.readPolynomial1d   readPolynomial1d.test.cpp )
 add_cpp_test( format.gnds.readXYs1d          readXYs1d.test.cpp )
+add_cpp_test( format.gnds.readArray          readArray.test.cpp )
 
 add_cpp_test( format.gnds.createPolynomialMultiplicity                 createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createTabulatedMultiplicity                  createTabulatedMultiplicity.test.cpp )
