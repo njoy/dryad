@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READAXIS
-#define NJOY_DRYAD_FORMAT_GNDS_READAXIS
+#ifndef NJOY_DRYAD_FORMAT_GNDS_READARRAY
+#define NJOY_DRYAD_FORMAT_GNDS_READARRAY
 
 // system includes
 #include <optional>
@@ -22,7 +22,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS axis node
    */
-  static covariance::Matrix< double > readArray( const pugi::xml_node& array ) {
+  static dryad::covariance::Matrix< double > readArray( const pugi::xml_node& array ) {
 
     throwExceptionOnWrongNode( array, "array" );
 
@@ -46,7 +46,7 @@ namespace gnds {
 
     if ( shape.size() == 2 ) {
 
-      covariance::Matrix< double > matrix( shape[0], shape[1] );
+      dryad::covariance::Matrix< double > matrix( shape[0], shape[1] );
       if ( compression.has_value() && compression.value() == "diagonal" ) {
 
         for ( unsigned int i = 0; i < matrix.rows(); ++i ) {

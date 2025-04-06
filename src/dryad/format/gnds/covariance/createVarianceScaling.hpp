@@ -10,6 +10,7 @@
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "dryad/format/gnds/covariance/createScalingType.hpp"
 #include "dryad/format/gnds/readAxes.hpp"
+#include "dryad/format/gnds/readArray.hpp"
 #include "dryad/format/gnds/convertEnergies.hpp"
 #include "dryad/covariance/VarianceScaling.hpp"
 
@@ -37,8 +38,16 @@ namespace covariance {
     std::vector< double > energies = std::move( std::get< 2 >( axes[0] ).value() );
     convertEnergies( energies, std::get< 1 >( axes[0] ).value() );
 
-    std::vector< double > factors = energies;
-    factors.pop_back();
+    // read the array
+    auto matrix = readArray( scaling.child( "gridded2d" ).child( "array" ) );
+    std::vector< double > factors;
+    factors.reserve( energies.size() - 1 );
+    for ( unsigned int i = 0; i < energies.size() - 1; ++i ) {
+
+      factors.push_back( matrix(i,i) );
+    }
+
+    //! @todo we may have to convert the array values
 
     return dryad::covariance::VarianceScaling( std::move( type ),
                                                std::move( energies ),
