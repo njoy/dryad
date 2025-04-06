@@ -16,7 +16,7 @@ void verifyChunk( const format::gnds::Grid& );
 
 SCENARIO( "readAxes" ) {
 
-  GIVEN( "a GNDS axis xml node" ) {
+  GIVEN( "a GNDS grid xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );

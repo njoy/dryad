@@ -36,7 +36,7 @@ namespace gnds {
         auto axis = readAxis( child );
         data.emplace_back( std::move( axis.first ), std::move( axis.second ), std::nullopt );
       }
-      else if ( strcmp( child.name(), "axis" ) == 0 ) {
+      else if ( strcmp( child.name(), "grid" ) == 0 ) {
 
         auto grid = readGrid( child );
         data.emplace_back( std::move( std::get< 0 >( grid ) ),

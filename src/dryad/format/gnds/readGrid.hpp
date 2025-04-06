@@ -29,11 +29,24 @@ namespace gnds {
 
     auto index = grid.attribute( "index" );
     auto unit = grid.attribute( "unit" );
-    auto values = readValues( grid.child( "values" ) );
+
+    auto values = grid.child( "values" );
+    if ( ! values ) {
+
+      auto link = grid.child( "link" );
+      if ( link ) {
+
+        //! @todo resolve link to get to values node with the structure
+      }
+      else {
+
+        //! @todo throw exception
+      }
+    }
 
     return { index ? std::make_optional( index.as_int() ) : std::nullopt,
              unit ? std::make_optional( unit.as_string() ) : std::nullopt,
-             std::move( values ) };
+             values ? readValues( values ) : std::vector< double >{} };
   }
 
 } // gnds namespace
