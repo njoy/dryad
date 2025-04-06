@@ -8,6 +8,7 @@ add_cpp_test( format.gnds.createInterpolationType    createInterpolationType.tes
 add_cpp_test( format.gnds.createReferenceFrame       createReferenceFrame.test.cpp )
 add_cpp_test( format.gnds.createParticleIdentifier   createParticleIdentifier.test.cpp )
 
+add_cpp_test( format.gnds.readShape          readShape.test.cpp )
 add_cpp_test( format.gnds.readAxis           readAxis.test.cpp )
 add_cpp_test( format.gnds.readGrid           readGrid.test.cpp )
 add_cpp_test( format.gnds.readAxes           readAxes.test.cpp )
@@ -33,7 +34,8 @@ add_cpp_test( format.gnds.createReactions                     createReactions.te
 #add_cpp_test( format.gnds.atomic.createElectronSubshellID              atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.gnds.atomic.createElectronSubshellConfiguration   atomic/createElectronSubshellConfiguration.test.cpp )
 
-add_cpp_test( format.gnds.covariance.createScalingType   covariance/createScalingType.test.cpp )
+add_cpp_test( format.gnds.covariance.createScalingType       covariance/createScalingType.test.cpp )
+add_cpp_test( format.gnds.covariance.createVarianceScaling   covariance/createVarianceScaling.test.cpp )
 
 add_cpp_test( format.gnds.createProjectileTarget           createProjectileTarget.test.cpp )
 add_cpp_test( format.gnds.createProjectileTargetFromFile   createProjectileTargetFromFile.test.cpp )
