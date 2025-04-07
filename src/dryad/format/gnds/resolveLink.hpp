@@ -43,12 +43,12 @@ namespace gnds {
         }
         else {
 
-          // node and attribute: name[@attribute=value]
+          // node and attribute: name[@attribute='value']
           std::string name( entry.begin(), iter );
           entry.erase( entry.begin(), iter + 2 ); // erase up to and including "[@""
           iter = std::find( entry.begin(), entry.end(), '=' );
           std::string attribute( entry.begin(), iter );
-          std::string value( iter + 2, entry.end() - 2 );
+          std::string value( iter + 2, entry.end() - 2 ); // the value is in '', and ignore the closing ]"
           node = node.find_child_by_attribute( name.c_str(), attribute.c_str(), value.c_str() );
         }
       }
