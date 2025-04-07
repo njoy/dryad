@@ -20,7 +20,7 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Read data from a GNDS axis node
+   *  @brief Read data from a GNDS array node
    */
   static dryad::covariance::Matrix< double > readArray( const pugi::xml_node& array ) {
 
@@ -33,6 +33,10 @@ namespace gnds {
     if ( attribute ) {
 
       compression = attribute.as_string();
+      if ( compression == "none" ) {
+
+        compression = std::nullopt;
+      }
     }
 
     std::optional< std::string > symmetry = std::nullopt;
@@ -40,6 +44,30 @@ namespace gnds {
     if ( attribute ) {
 
       symmetry = attribute.as_string();
+      if ( symmetry == "none" ) {
+
+        symmetry = std::nullopt;
+      }
+    }
+
+    std::optional< std::string > storage = std::nullopt;
+    attribute = array.attribute( "storageOrder" );
+    if ( attribute ) {
+
+      storage = attribute.as_string();
+      if ( storage == "row-major" ) {
+
+        storage = std::nullopt;
+      }
+    }
+
+    if ( storage.has_value() ) {
+
+      Log::error( "Array conversion currently only supports row-major, contact a developer" );
+      Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
+      Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
+      Log::info( "storageOrder: {}", storage.has_value() ? compression.value() : "row-major" );
+      throw std::exception();
     }
 
     auto data = readValues( array.child( "values" ) );
@@ -85,6 +113,26 @@ namespace gnds {
           }
         }
       }
+      else if ( !compression.has_value() && symmetry.has_value() &&
+                symmetry.value() == "upper" ) {
+
+        unsigned int index = 0;
+        for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
+
+          for ( unsigned int j = i; j < matrix.cols(); ++j ) {
+
+            if ( i == j ) {
+
+              matrix( i, j ) = data[index++];
+            }
+            else {
+
+              matrix( i, j ) = data[index++];
+              matrix( j, i ) = matrix( i, j );
+            }
+          }
+        }
+      }
       else if ( !compression.has_value() && !symmetry.has_value()  ) {
 
         unsigned int index = 0;
@@ -99,6 +147,9 @@ namespace gnds {
       else {
 
         Log::error( "Array conversion currently unsupported, contact a developer" );
+        Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
+        Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
+        Log::info( "storageOrder: {}", storage.has_value() ? compression.value() : "row-major" );
         throw std::exception();
       }
 
