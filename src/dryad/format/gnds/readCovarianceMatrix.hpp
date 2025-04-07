@@ -45,6 +45,8 @@ namespace gnds {
     std::get< 2 >( data ) = std::get< 2 >( axes[1] ).value();
     std::get< 3 >( data ) = readArray( covariance.child( "gridded2d" ).child( "array" ) );
 
+    //! @todo what about unit ro, column and covariance matrix units?
+
     return data;
   }
 
