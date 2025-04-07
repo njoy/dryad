@@ -2,10 +2,10 @@
 #include "dryad/type-aliases.hpp"
 
 // identifiers
-#include "dryad/ElectronSubshellID.hpp"
-#include "dryad/ElementID.hpp"
-#include "dryad/ParticleID.hpp"
-#include "dryad/ReactionID.hpp"
+#include "dryad/id/ElectronSubshellID.hpp"
+#include "dryad/id/ElementID.hpp"
+#include "dryad/id/ParticleID.hpp"
+#include "dryad/id/ReactionID.hpp"
 
 // enumerators
 #include "dryad/DistributionDataType.hpp"
