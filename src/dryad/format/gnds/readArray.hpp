@@ -85,6 +85,17 @@ namespace gnds {
           }
         }
       }
+      else if ( !compression.has_value() && !symmetry.has_value()  ) {
+
+        unsigned int index = 0;
+        for ( unsigned int i = 0; i < matrix.rows(); ++i ) {
+
+          for ( unsigned int j = 0; j < matrix.cols(); ++j ) {
+
+            matrix( i, j ) = data[index++];
+          }
+        }
+      }
       else {
 
         Log::error( "Array conversion currently unsupported, contact a developer" );
