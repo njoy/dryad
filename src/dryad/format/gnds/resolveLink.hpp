@@ -23,6 +23,18 @@ namespace gnds {
     pugi::xml_node node = link;
 
     std::string href = link.attribute( "href" ).as_string();
+
+    // move to the top level if this is an absolute path
+    if ( href.front() == '/' ) {
+
+      href.erase( href.begin() );
+      while ( node.parent() ) {
+
+        node = node.parent();
+      }
+    }
+
+    // read pieces of the path and act accordingly
     std::istringstream list( href );
     std::string entry;
     while ( std::getline( list, entry, '/' ) ) {
@@ -35,15 +47,16 @@ namespace gnds {
       else {
 
         // this should name a child, with potentially an attribute and value
+        // formatted like this: name[@attribute='value']
         auto iter = std::find( entry.begin(), entry.end(), '[' );
         if ( iter == entry.end() ) {
 
-          // just get the first child with the appropriate name
+          // name only
           node = node.child( entry.c_str() );
         }
         else {
 
-          // node and attribute: name[@attribute='value']
+          // name and attribute with value
           std::string name( entry.begin(), iter );
           entry.erase( entry.begin(), iter + 2 ); // erase up to and including "[@""
           iter = std::find( entry.begin(), entry.end(), '=' );
