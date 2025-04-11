@@ -17,7 +17,8 @@ namespace format {
 namespace gnds {
 
   using CovarianceMatrix = std::tuple< bool, std::vector< double >, std::vector< double >,
-                                       dryad::covariance::Matrix< double > >;
+                                       dryad::covariance::Matrix< double >,
+                                       std::string, std::string, std::string >;
 
   /**
    *  @brief Read data from a GNDS covarianceMatrix node
@@ -44,8 +45,9 @@ namespace gnds {
     std::get< 1 >( data ) = std::get< 2 >( axes[0] ).value();
     std::get< 2 >( data ) = std::get< 2 >( axes[1] ).value();
     std::get< 3 >( data ) = readArray( covariance.child( "gridded2d" ).child( "array" ) );
-
-    //! @todo what about unit ro, column and covariance matrix units?
+    std::get< 4 >( data ) = std::get< 1 >( axes[0] ).value();
+    std::get< 5 >( data ) = std::get< 1 >( axes[1] ).value();
+    std::get< 6 >( data ) = std::get< 1 >( axes[2] ).value();
 
     return data;
   }

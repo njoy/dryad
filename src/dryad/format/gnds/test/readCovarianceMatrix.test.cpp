@@ -76,6 +76,10 @@ SCENARIO( "readCovarianceMatrix" ) {
         CHECK_THAT( 4e-2  , WithinRel( std::get< 3 >( chunk )(5,5) ) );
         CHECK_THAT( 0.0225, WithinRel( std::get< 3 >( chunk )(6,6) ) );
         CHECK_THAT( 0     , WithinRel( std::get< 3 >( chunk )(7,7) ) );
+
+        CHECK( "eV" == std::get< 4 >( chunk ) );
+        CHECK( "eV" == std::get< 5 >( chunk ) );
+        CHECK( "" == std::get< 6 >( chunk ) );
       } // THEN
     } // WHEN
 
@@ -147,6 +151,10 @@ SCENARIO( "readCovarianceMatrix" ) {
         CHECK_THAT( 1.896700e-3, WithinRel( std::get< 3 >( chunk )(5,3) ) );
         CHECK_THAT( 1.726800e-3, WithinRel( std::get< 3 >( chunk )(5,4) ) );
         CHECK_THAT( 1.144800e-3, WithinRel( std::get< 3 >( chunk )(5,5) ) );
+
+        CHECK( "eV" == std::get< 4 >( chunk ) );
+        CHECK( "eV" == std::get< 5 >( chunk ) );
+        CHECK( "" == std::get< 6 >( chunk ) );
       } // THEN
     } // WHEN
 
@@ -217,6 +225,10 @@ SCENARIO( "readCovarianceMatrix" ) {
         CHECK_THAT(  1.559200e-3, WithinRel( std::get< 3 >( chunk )(5,3) ) );
         CHECK_THAT(  2.135100e-3, WithinRel( std::get< 3 >( chunk )(5,4) ) );
         CHECK_THAT(  2.953900e-3, WithinRel( std::get< 3 >( chunk )(5,5) ) );
+
+        CHECK( "eV" == std::get< 4 >( chunk ) );
+        CHECK( "eV" == std::get< 5 >( chunk ) );
+        CHECK( "" == std::get< 6 >( chunk ) );
       } // THEN
     } // WHEN
 
