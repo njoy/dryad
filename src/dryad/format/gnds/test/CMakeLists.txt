@@ -37,8 +37,9 @@ add_cpp_test( format.gnds.createReactions                     createReactions.te
 #add_cpp_test( format.gnds.atomic.createElectronSubshellID              atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.gnds.atomic.createElectronSubshellConfiguration   atomic/createElectronSubshellConfiguration.test.cpp )
 
-add_cpp_test( format.gnds.covariance.createScalingType       covariance/createScalingType.test.cpp )
-add_cpp_test( format.gnds.covariance.createVarianceScaling   covariance/createVarianceScaling.test.cpp )
+add_cpp_test( format.gnds.covariance.createScalingType                 covariance/createScalingType.test.cpp )
+add_cpp_test( format.gnds.covariance.createVarianceScaling             covariance/createVarianceScaling.test.cpp )
+add_cpp_test( format.gnds.covariance.createCrossSectionCovarianceBlock covariance/createCrossSectionCovarianceBlock.test.cpp )
 
 add_cpp_test( format.gnds.createProjectileTarget           createProjectileTarget.test.cpp )
 add_cpp_test( format.gnds.createProjectileTargetFromFile   createProjectileTargetFromFile.test.cpp )
