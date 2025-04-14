@@ -15,7 +15,7 @@ using namespace njoy::dryad;
 using namespace njoy::ENDFtk;
 using ReactionBlock = section::ReactionBlock;
 
-SCENARIO( "createMatrix" ) {
+SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
 //  GIVEN( "an instance of CovariancePairs using LB=0/1 (diagonal elements)" ) {
 //
