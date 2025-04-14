@@ -38,6 +38,10 @@
 #include "dryad/MultiEnergyDistributions.hpp"
 #include "dryad/TwoBodyDistributionData.hpp"
 #include "dryad/UncorrelatedDistributionData.hpp"
+#include "dryad/UniformAngularDistribution.hpp"
+#include "dryad/UniformAngularDistributions.hpp"
+#include "dryad/UniformEnergyDistribution.hpp"
+#include "dryad/UniformEnergyDistributions.hpp"
 #include "dryad/ReactionProduct.hpp"
 
 // components - reactions
@@ -53,3 +57,4 @@
 
 // formats
 #include "dryad/format/endf.hpp"
+#include "dryad/format/gnds.hpp"
