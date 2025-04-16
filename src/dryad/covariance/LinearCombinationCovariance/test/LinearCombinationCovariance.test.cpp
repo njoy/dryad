@@ -40,7 +40,7 @@ SCENARIO( "LinearCombinationCovariance" ) {
 
   GIVEN( "invalid data for a LinearCombinationCovariance" ) {
 
-    WHEN( "the number of reactions and coefficients is not consistent" ) {
+    WHEN( "the number of reactions and coefficients is not consistent or both are zero" ) {
 
       THEN( "an exception is thrown" ) {
 
