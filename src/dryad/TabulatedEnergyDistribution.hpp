@@ -87,7 +87,7 @@ namespace dryad {
     double averageEnergy() const noexcept { return this->pdf().mean(); }
 
     /**
-     *  @brief Return a linearised angular distribution table
+     *  @brief Return a linearised energy distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
      */

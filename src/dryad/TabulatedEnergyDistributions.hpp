@@ -53,7 +53,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return linearised angular distributions
+     *  @brief Return linearised energy distributions
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
