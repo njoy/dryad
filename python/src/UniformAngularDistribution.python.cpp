@@ -23,7 +23,7 @@ void wrapUniformAngularDistribution( python::module& module ) {
 
     module,
     "UniformAngularDistribution",
-    "A uniform or equally probably angular distribution"
+    "A uniform or equally probable angular distribution"
   );
 
   // wrap the component

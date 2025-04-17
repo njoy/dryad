@@ -12,7 +12,7 @@ UniformDistribution& operator=( UniformDistribution&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param values   the cosine values
+ *  @param values   the values
  *  @param type     the uniform distribution type
  */
 UniformDistribution( std::vector< double > values,
