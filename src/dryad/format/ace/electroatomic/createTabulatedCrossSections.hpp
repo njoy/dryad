@@ -78,7 +78,7 @@ namespace electroatomic {
 
         // elastic deficit
         std::vector< double > deficit = xs[3].values();
-        std::transform( deficit.begin(), deficit.end(), xs[2].values().begin(), deficit.begin(), std::minus() );
+        std::transform( deficit.begin(), deficit.end(), xs[2].values().begin(), deficit.begin(), std::minus<>() );
         xs.emplace_back( energies, std::move( deficit ) );
       }
     }
