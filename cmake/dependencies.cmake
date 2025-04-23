@@ -20,7 +20,7 @@ FetchContent_Declare( tools
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         41655781198f1b1fb53300cd59a1b02c7854216e  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         138c705f73fe2045cc51064ea9358af46779dbb6  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ACEtk
