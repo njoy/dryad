@@ -100,7 +100,7 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     python::arg( "tolerance" ) = ToleranceConvergence(),
     "Linearise the distribution\n\n"
     "Arguments:\n"
-    "    self        the angular distributions\n"
+    "    self        the energy distributions\n"
     "    tolerance   the linearisation tolerance"
   );
 
