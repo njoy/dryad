@@ -36,7 +36,7 @@ namespace gnds {
     }
     else {
 
-      std::get< 0 >( data ) = true;
+      std::get< 0 >( data ) = false;
     }
 
     // read the axes and the array
