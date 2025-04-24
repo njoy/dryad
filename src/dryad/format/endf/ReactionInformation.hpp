@@ -693,6 +693,7 @@ namespace endf {
             partials.push_back( section.MT() );
           }
         }
+        std::sort( partials.begin(), partials.end() );
       }
       else if ( isSummation( material, mt ) ) {
 
