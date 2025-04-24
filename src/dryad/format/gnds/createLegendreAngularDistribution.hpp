@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "dryad/format/gnds/readAxes.hpp"
 #include "dryad/format/gnds/readLegendre.hpp"
 #include "dryad/format/gnds/convertEnergy.hpp"
 #include "dryad/LegendreAngularDistribution.hpp"
@@ -22,8 +23,7 @@ namespace gnds {
   static
   std::pair< std::optional< double >,
              LegendreAngularDistribution >
-  createLegendreAngularDistribution( pugi::xml_node legendre,
-                                     const std::vector< std::string > units ) {
+  createLegendreAngularDistribution( pugi::xml_node legendre, const Axes& units ) {
 
     // read data from the node
     auto data = readLegendre( legendre );
@@ -35,7 +35,7 @@ namespace gnds {
     // convert outer domain value if necessary
     if ( data.first.has_value() ) {
 
-      convertEnergy( data.first.value(), units[0] );
+      convertEnergy( data.first.value(), std::get< 1 >( units[0] ).value() );
     }
 
     return { std::move( data.first ), LegendreAngularDistribution( std::move( data.second ) ) };

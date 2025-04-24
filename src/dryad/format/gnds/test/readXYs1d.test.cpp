@@ -17,7 +17,7 @@ void verifyChunkWithOuterDomain( const format::gnds::XYs1d& );
 
 SCENARIO( "readXYs1D" ) {
 
-  GIVEN( "a GNDS xys1d xml nodes" ) {
+  GIVEN( "a GNDS xys1d xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );

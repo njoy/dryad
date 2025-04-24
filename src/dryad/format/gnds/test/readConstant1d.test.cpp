@@ -16,7 +16,7 @@ void verifyChunk( const format::gnds::RealConstant1d& );
 
 SCENARIO( "readConstant1d" ) {
 
-  GIVEN( "a GNDS xys1d xml nodes" ) {
+  GIVEN( "a GNDS constant1d xml node" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );

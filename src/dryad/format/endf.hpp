@@ -1,3 +1,5 @@
+#include "dryad/format/endf/ReactionInformation.hpp"
+
 #include "dryad/format/endf/createInterpolant.hpp"
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
@@ -7,6 +9,7 @@
 
 #include "dryad/format/endf/covariance/createMatrix.hpp"
 #include "dryad/format/endf/covariance/createCrossSectionCovarianceBlock.hpp"
+#include "dryad/format/endf/covariance/createVarianceScaling.hpp"
 
 #include "dryad/format/endf/createProjectileIdentifier.hpp"
 #include "dryad/format/endf/createTargetIdentifier.hpp"

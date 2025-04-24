@@ -8,12 +8,18 @@ add_cpp_test( format.gnds.createInterpolationType    createInterpolationType.tes
 add_cpp_test( format.gnds.createReferenceFrame       createReferenceFrame.test.cpp )
 add_cpp_test( format.gnds.createParticleIdentifier   createParticleIdentifier.test.cpp )
 
-add_cpp_test( format.gnds.readAxes           readAxes.test.cpp )
-add_cpp_test( format.gnds.readValues         readValues.test.cpp )
-add_cpp_test( format.gnds.readConstant1d     readConstant1d.test.cpp )
-add_cpp_test( format.gnds.readLegendre       readLegendre.test.cpp )
-add_cpp_test( format.gnds.readPolynomial1d   readPolynomial1d.test.cpp )
-add_cpp_test( format.gnds.readXYs1d          readXYs1d.test.cpp )
+add_cpp_test( format.gnds.readShape            readShape.test.cpp )
+add_cpp_test( format.gnds.resolveLink          resolveLink.test.cpp )
+add_cpp_test( format.gnds.readAxis             readAxis.test.cpp )
+add_cpp_test( format.gnds.readGrid             readGrid.test.cpp )
+add_cpp_test( format.gnds.readAxes             readAxes.test.cpp )
+add_cpp_test( format.gnds.readValues           readValues.test.cpp )
+add_cpp_test( format.gnds.readConstant1d       readConstant1d.test.cpp )
+add_cpp_test( format.gnds.readLegendre         readLegendre.test.cpp )
+add_cpp_test( format.gnds.readPolynomial1d     readPolynomial1d.test.cpp )
+add_cpp_test( format.gnds.readXYs1d            readXYs1d.test.cpp )
+add_cpp_test( format.gnds.readArray            readArray.test.cpp )
+add_cpp_test( format.gnds.readCovarianceMatrix readCovarianceMatrix.test.cpp )
 
 add_cpp_test( format.gnds.createPolynomialMultiplicity                 createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createTabulatedMultiplicity                  createTabulatedMultiplicity.test.cpp )
@@ -30,6 +36,9 @@ add_cpp_test( format.gnds.createReactions                     createReactions.te
 
 #add_cpp_test( format.gnds.atomic.createElectronSubshellID              atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.gnds.atomic.createElectronSubshellConfiguration   atomic/createElectronSubshellConfiguration.test.cpp )
+
+add_cpp_test( format.gnds.covariance.createScalingType       covariance/createScalingType.test.cpp )
+add_cpp_test( format.gnds.covariance.createVarianceScaling   covariance/createVarianceScaling.test.cpp )
 
 add_cpp_test( format.gnds.createProjectileTarget           createProjectileTarget.test.cpp )
 add_cpp_test( format.gnds.createProjectileTargetFromFile   createProjectileTargetFromFile.test.cpp )
