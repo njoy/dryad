@@ -669,6 +669,7 @@ namespace endf {
      *  @brief Return the partial mt numbers for a summation mt number
      *
      *  @param[in] material   the ENDF material
+     *  @param[in] mf         the MF number
      *  @param[in] mt         the MT number
      */
     static std::vector< int > partials( const ENDFtk::tree::Material& material,
@@ -681,6 +682,17 @@ namespace endf {
         std::copy_if( sections.begin(), sections.end(),
                       std::back_inserter( partials ),
                       [&material] ( auto&& value ) { return isPrimary( material, value ); } );
+      }
+      else if ( mf == 33 && isLumpedCovariance( mt ) ) {
+
+        auto covariances = material.file( 33 ).parse< 33 >();
+        for ( const auto& section : covariances ) {
+
+          if ( section.lumpedCovarianceIndex() == mt ) {
+
+            partials.push_back( section.MT() );
+          }
+        }
       }
       else if ( isSummation( material, mt ) ) {
 

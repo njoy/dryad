@@ -5,6 +5,7 @@
 #include "dryad/format/endf/ReactionInformation.hpp"
 
 // other includes
+#include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using ReactionInformation = njoy::dryad::format::endf::ReactionInformation;
@@ -3365,6 +3366,21 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( true == ReactionInformation::isLumpedCovariance( 869 ) );
       CHECK( true == ReactionInformation::isLumpedCovariance( 870 ) );
       CHECK( false == ReactionInformation::isLumpedCovariance( 871 ) );
-    }
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "an ENDF material, mf and mt number" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
+    auto material = tape.materials().front();
+
+    THEN( "partial mt numbers can be obtained for lumped covariance reactions" ) {
+
+      auto partials = ReactionInformation::partials( material, 33, 851 );
+
+      CHECK( 2 == partials.size() );
+      CHECK( 16 == partials[0] );
+      CHECK( 24 == partials[1] );
+    } // THEN
   } // GIVEN
 } // SCENARIO
