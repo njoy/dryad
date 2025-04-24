@@ -14,7 +14,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "UniformEnergyDistribution" ) {
 
-  GIVEN( "Cosines for a discrete energy distribution" ) {
+  GIVEN( "Energies for a discrete energy distribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -41,7 +41,7 @@ SCENARIO( "UniformEnergyDistribution" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "Cosines for a discrete energy distribution" ) {
+  GIVEN( "Energies for an interval energy distribution" ) {
 
     WHEN( "the data is given explicitly" ) {
 

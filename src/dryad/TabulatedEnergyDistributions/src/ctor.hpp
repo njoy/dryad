@@ -25,7 +25,7 @@ TabulatedEnergyDistributions( std::vector< double > grid,
           std::move( boundaries ), std::move( interpolants ) ) {}
 
 /**
- *  @brief Constructor for angular distributions using a single interpolation zone
+ *  @brief Constructor for energy distributions using a single interpolation zone
  *
  *  @param grid            the grid values
  *  @param distributions   the associated distributions

@@ -16,7 +16,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief A uniform or equally probably angular distribution
+   *  @brief A uniform or equally probable angular distribution
    *
    *  The uniform distribution can be defined for discrete values
    *  (e.g. as used in inelastic thermal scattering ACE files) or

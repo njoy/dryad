@@ -60,27 +60,27 @@ SCENARIO( "UniformEnergyDistributions" ) {
 
       THEN( "average energies can be calculated" ) {
 
-        auto cosines = chunk.averageEnergies();
+        auto energies = chunk.averageEnergies();
 
-        CHECK_THAT( 1., WithinRel( cosines.lowerEnergyLimit() ) );
-        CHECK_THAT( 4., WithinRel( cosines.upperEnergyLimit() ) );
-        CHECK( 4 == cosines.numberPoints() );
-        CHECK( 1 == cosines.numberRegions() );
-        CHECK( 4 == cosines.energies().size() );
-        CHECK( 4 == cosines.values().size() );
-        CHECK( 1 == cosines.boundaries().size() );
-        CHECK( 1 == cosines.interpolants().size() );
-        CHECK_THAT( 1., WithinRel( cosines.energies()[0] ) );
-        CHECK_THAT( 2., WithinRel( cosines.energies()[1] ) );
-        CHECK_THAT( 3., WithinRel( cosines.energies()[2] ) );
-        CHECK_THAT( 4., WithinRel( cosines.energies()[3] ) );
-        CHECK_THAT( 2.875, WithinRel( cosines.values()[0] ) );
-        CHECK_THAT( 1.5  , WithinRel( cosines.values()[1] ) );
-        CHECK_THAT( 5.   , WithinRel( cosines.values()[2] ) );
-        CHECK_THAT( 7.5  , WithinRel( cosines.values()[3] ) );
-        CHECK( 3 == cosines.boundaries()[0] );
-        CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
-        CHECK( true == cosines.isLinearised() );
+        CHECK_THAT( 1., WithinRel( energies.lowerEnergyLimit() ) );
+        CHECK_THAT( 4., WithinRel( energies.upperEnergyLimit() ) );
+        CHECK( 4 == energies.numberPoints() );
+        CHECK( 1 == energies.numberRegions() );
+        CHECK( 4 == energies.energies().size() );
+        CHECK( 4 == energies.values().size() );
+        CHECK( 1 == energies.boundaries().size() );
+        CHECK( 1 == energies.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( energies.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( energies.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( energies.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( energies.energies()[3] ) );
+        CHECK_THAT( 2.875, WithinRel( energies.values()[0] ) );
+        CHECK_THAT( 1.5  , WithinRel( energies.values()[1] ) );
+        CHECK_THAT( 5.   , WithinRel( energies.values()[2] ) );
+        CHECK_THAT( 7.5  , WithinRel( energies.values()[3] ) );
+        CHECK( 3 == energies.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == energies.interpolants()[0] );
+        CHECK( true == energies.isLinearised() );
       } // THEN
     } // WHEN
   } // GIVEN

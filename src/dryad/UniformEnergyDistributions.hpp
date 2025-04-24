@@ -39,7 +39,7 @@ namespace dryad {
     // there is no call operator on the uniform distribution, so we do not expose operator()
 
     /**
-     *  @brief Return the average cosine values
+     *  @brief Return the average energy values
      */
     TabulatedAverageEnergy averageEnergies() const noexcept {
 

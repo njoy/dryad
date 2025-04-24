@@ -50,23 +50,23 @@ namespace gnds {
       }
     }
 
-    std::optional< std::string > storage = std::nullopt;
+    std::optional< std::string > order = std::nullopt;
     attribute = array.attribute( "storageOrder" );
     if ( attribute ) {
 
-      storage = attribute.as_string();
-      if ( storage == "row-major" ) {
+      order = attribute.as_string();
+      if ( order == "row-major" ) {
 
-        storage = std::nullopt;
+        order = std::nullopt;
       }
     }
 
-    if ( storage.has_value() ) {
+    if ( order.has_value() ) {
 
       Log::error( "Array conversion currently only supports row-major, contact a developer" );
       Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
       Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
-      Log::info( "storageOrder: {}", storage.has_value() ? compression.value() : "row-major" );
+      Log::info( "storageOrder: {}", order.has_value() ? order.value() : "row-major" );
       throw std::exception();
     }
 
@@ -149,7 +149,7 @@ namespace gnds {
         Log::error( "Array conversion currently unsupported, contact a developer" );
         Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
         Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
-        Log::info( "storageOrder: {}", storage.has_value() ? compression.value() : "row-major" );
+        Log::info( "storageOrder: {}", order.has_value() ? order.value() : "row-major" );
         throw std::exception();
       }
 

@@ -17,7 +17,7 @@ namespace base {
 
   /**
    *  @class
-   *  @brief A uniform or equally probably distribution
+   *  @brief A uniform or equally probable distribution
    *
    *  The uniform distribution can be defined for discrete values
    *  (e.g. as used in inelastic thermal scattering ACE files) or

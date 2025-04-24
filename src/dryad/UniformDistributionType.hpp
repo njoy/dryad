@@ -10,7 +10,7 @@ namespace dryad {
 
 /**
  *  @enum
- *  @brief The uniform distirbution types
+ *  @brief The uniform distribution types
  *
  *  This enum is used to differentiate uniform distribution types, either discrete
  *  values or intervals.

@@ -49,19 +49,19 @@ namespace photoatomic {
     // coherent scattering - MT504
     auto incoherent = createVector( table.principalCrossSectionBlock().incoherent() );
     std::transform( incoherent.begin(), incoherent.end(), incoherent.begin(), convertValue );
-    std::transform( incoherent.begin(), incoherent.end(), total.begin(), total.begin(), std::plus() );
+    std::transform( incoherent.begin(), incoherent.end(), total.begin(), total.begin(), std::plus<>() );
     xs.emplace_back( energies, std::move( incoherent ) );
 
     // pair production - MT516 (sum of MT515 and MT517)
     auto pair = createVector( table.principalCrossSectionBlock().pairproduction() );
     std::transform( pair.begin(), pair.end(), pair.begin(), convertValue );
-    std::transform( pair.begin(), pair.end(), total.begin(), total.begin(), std::plus() );
+    std::transform( pair.begin(), pair.end(), total.begin(), total.begin(), std::plus<>() );
     xs.emplace_back( energies, std::move( pair ) );
 
     // photoelectric - MT522 (sum of MT534 and up)
     auto photoelectric = createVector( table.principalCrossSectionBlock().photoelectric() );
     std::transform( photoelectric.begin(), photoelectric.end(), photoelectric.begin(), convertValue );
-    std::transform( photoelectric.begin(), photoelectric.end(), total.begin(), total.begin(), std::plus() );
+    std::transform( photoelectric.begin(), photoelectric.end(), total.begin(), total.begin(), std::plus<>() );
     xs.emplace_back( energies, std::move( photoelectric ) );
 
     // total - MT501
