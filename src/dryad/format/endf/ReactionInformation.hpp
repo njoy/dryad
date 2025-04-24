@@ -432,10 +432,15 @@ namespace endf {
       550, 551, 552, 553, 554, 555, 556, 557, 558, 559,
       560, 561, 562, 563, 564, 565, 566, 567, 568, 569,
       570, 571, 572
-   };
-   inline static const std::unordered_set< int > derived_ = {
+    };
+    inline static const std::unordered_set< int > derived_ = {
 
       203, 204, 205, 206, 207, 251, 252, 253
+    };
+    inline static const std::unordered_set< int > lumped_covariance_ = {
+
+      851, 852, 853, 854, 855, 856, 857, 858, 859, 860,
+      861, 862, 863, 864, 865, 866, 867, 868, 869, 870
     };
     inline static const std::unordered_set< int > summation_or_primary_ = {
 
@@ -593,12 +598,21 @@ namespace endf {
     /**
      *  @brief Return whether or not the MT number is for a derived reaction
      *
-     *  @param[in] material   the ENDF material
      *  @param[in] mt         the MT number
      */
     static bool isDerived( int mt ) {
 
       return derived_.find( mt ) != derived_.end();
+    }
+
+    /**
+     *  @brief Return whether or not the MT number is for a lumped covariance reaction
+     *
+     *  @param[in] mt         the MT number
+     */
+    static bool isLumpedCovariance( int mt ) {
+
+      return lumped_covariance_.find( mt ) != lumped_covariance_.end();
     }
 
     /**

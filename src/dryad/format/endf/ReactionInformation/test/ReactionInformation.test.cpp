@@ -3340,5 +3340,31 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( false == ReactionInformation::isValid( 1000 ) );
       CHECK( false == ReactionInformation::isValid( 1001 ) );
     } // THEN
+
+    THEN( "we an verify if the MT number is a valid lumped covariance reaction" ) {
+
+      CHECK( false == ReactionInformation::isLumpedCovariance( 850 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 851 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 852 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 853 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 854 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 855 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 856 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 857 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 858 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 859 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 860 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 861 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 862 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 863 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 864 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 865 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 866 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 867 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 868 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 869 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 870 ) );
+      CHECK( false == ReactionInformation::isLumpedCovariance( 871 ) );
+    }
   } // GIVEN
 } // SCENARIO
