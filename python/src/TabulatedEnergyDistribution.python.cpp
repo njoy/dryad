@@ -14,6 +14,7 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::TabulatedEnergyDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -86,5 +87,21 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "Arguments:\n"
     "    self      the distribution\n"
     "    energy    the energy value"
+  )
+  .def_property_readonly(
+
+    "average_energy",
+    &Component::averageEnergy,
+    "The average energy defined by the distribution"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the energy distribution\n"
+    "    tolerance   the linearisation tolerance"
   );
 }

@@ -27,6 +27,8 @@ endfunction()
 
 message( STATUS "Adding dryad C++ unit testing" )
 
+add_subdirectory( src/dryad/base/UniformDistribution/test )
+
 add_subdirectory( src/dryad/id/ElementID/test )
 
 add_subdirectory( src/dryad/atomic/ElectronSubshellConfiguration/test )
@@ -53,6 +55,10 @@ add_subdirectory( src/dryad/LegendreAngularDistributions/test )
 add_subdirectory( src/dryad/TabulatedAngularDistributionFunction/test )
 add_subdirectory( src/dryad/TabulatedAngularDistribution/test )
 add_subdirectory( src/dryad/TabulatedAngularDistributions/test )
+add_subdirectory( src/dryad/UniformAngularDistribution/test )
+add_subdirectory( src/dryad/UniformAngularDistributions/test )
+add_subdirectory( src/dryad/UniformEnergyDistribution/test )
+add_subdirectory( src/dryad/UniformEnergyDistributions/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistributionFunction/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistribution/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistributions/test )

@@ -19,6 +19,7 @@ void wrapDistributionDataType( python::module& );
 void wrapInteractionType( python::module& );
 void wrapReactionType( python::module& );
 void wrapReferenceFrame( python::module& );
+void wrapUniformDistributionType( python::module& );
 
 // declarations - covariance data
 void wrapCovariance( python::module& );
@@ -35,9 +36,13 @@ void wrapLegendreAngularDistributions( python::module& );
 void wrapTabulatedAngularDistributionFunction( python::module& );
 void wrapTabulatedAngularDistribution( python::module& );
 void wrapTabulatedAngularDistributions( python::module& );
+void wrapUniformAngularDistribution( python::module& );
+void wrapUniformAngularDistributions( python::module& );
 void wrapTabulatedEnergyDistributionFunction( python::module& );
 void wrapTabulatedEnergyDistribution( python::module& );
 void wrapTabulatedEnergyDistributions( python::module& );
+void wrapUniformEnergyDistribution( python::module& );
+void wrapUniformEnergyDistributions( python::module& );
 void wrapTabulatedCrossSection( python::module& );
 void wrapPolynomialMultiplicity( python::module& );
 void wrapTabulatedMultiplicity( python::module& );
@@ -73,6 +78,7 @@ PYBIND11_MODULE( dryad, module ) {
   wrapInteractionType( module );
   wrapReactionType( module );
   wrapReferenceFrame( module );
+  wrapUniformDistributionType( module );
 
   // wrap components - covariance data
   wrapCovariance( module );
@@ -92,9 +98,13 @@ PYBIND11_MODULE( dryad, module ) {
   wrapTabulatedAngularDistributionFunction( module );
   wrapTabulatedAngularDistribution( module );
   wrapTabulatedAngularDistributions( module );
+  wrapUniformAngularDistribution( module );
+  wrapUniformAngularDistributions( module );
   wrapTabulatedEnergyDistributionFunction( module );
   wrapTabulatedEnergyDistribution( module );
   wrapTabulatedEnergyDistributions( module );
+  wrapUniformEnergyDistribution( module );
+  wrapUniformEnergyDistributions( module );
   wrapTabulatedFormFactor( module );
   wrapTabulatedScatteringFunction( module );
   wrapTwoBodyDistributionData( module );
