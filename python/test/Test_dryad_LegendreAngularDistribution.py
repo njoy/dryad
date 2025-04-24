@@ -6,6 +6,7 @@ import sys
 
 # local imports
 from dryad import LegendreAngularDistribution
+from dryad import InterpolationType
 
 class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
     """Unit test for the LegendreAngularDistributionFunction class."""
@@ -15,6 +16,8 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # verify content
+            self.assertEqual( True, chunk.has_cdf )
+
             pdf = chunk.pdf
             self.assertAlmostEqual( -1., pdf.lower_cosine_limit )
             self.assertAlmostEqual(  1., pdf.upper_cosine_limit )
@@ -22,8 +25,6 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertEqual( 2, len( pdf.coefficients ) )
             self.assertAlmostEqual( 0.5 , pdf.coefficients[0] )
             self.assertAlmostEqual( 0.25, pdf.coefficients[1] )
-
-            self.assertEqual( True, chunk.has_cdf )
 
             cdf = chunk.cdf
             self.assertAlmostEqual( -1., cdf.lower_cosine_limit )
@@ -43,6 +44,22 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
 
             # verify average cosine
             self.assertAlmostEqual( 1. / 6., chunk.average_cosine )
+
+            # verify linearisation
+            linear = chunk.linearise()
+            self.assertEqual( 2, linear.pdf.number_points )
+            self.assertEqual( 1, linear.pdf.number_regions )
+            self.assertEqual( 2, len( linear.pdf.cosines) )
+            self.assertEqual( 2, len( linear.pdf.values) )
+            self.assertEqual( 1, len( linear.pdf.boundaries) )
+            self.assertEqual( 1, len( linear.pdf.interpolants) )
+            self.assertEqual( 1, linear.pdf.boundaries[0] )
+            self.assertEqual( InterpolationType.LinearLinear, linear.pdf.interpolants[0] )
+            self.assertAlmostEqual( -1.0, linear.pdf.cosines[0] )
+            self.assertAlmostEqual(  1.0, linear.pdf.cosines[1] )
+            self.assertAlmostEqual( 0.25, linear.pdf.values[0] )
+            self.assertAlmostEqual( 0.75, linear.pdf.values[1] )
+            self.assertEqual( True, linear.pdf.is_linearised )
 
         # the data is given explicitly using a normalised series
         chunk = LegendreAngularDistribution( coefficients = [ 0.5, 0.25 ] )

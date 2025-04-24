@@ -25,7 +25,10 @@ TabulatedEnergyDistribution(
     bool cdf = false ) :
   pdf_( std::move( energies ), std::move( values ),
         std::move( boundaries ), std::move( interpolants ) ),
-  cdf_( std::nullopt ) {}
+  cdf_( std::nullopt ) {
+
+  this->pdf_.normalise();
+}
 
 /**
  *  @brief Constructor for an energy distirbution using a single interpolation zone
@@ -39,7 +42,10 @@ TabulatedEnergyDistribution(
     std::vector< double > values,
     InterpolationType interpolant = InterpolationType::LinearLinear ) :
   pdf_( std::move( energies ), std::move( values ), interpolant ),
-  cdf_( std::nullopt ) {}
+  cdf_( std::nullopt ) {
+
+  this->pdf_.normalise();
+}
 
 /**
  *  @brief Constructor using a pdf and cdf
@@ -47,8 +53,23 @@ TabulatedEnergyDistribution(
  *  @param pdf   the pdf of the distribution
  *  @param cdf   the cdf of the distribution
  */
-TabulatedEnergyDistribution(
-    TabulatedEnergyDistributionFunction pdf,
-    TabulatedEnergyDistributionFunction cdf ) :
+TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf ) :
   pdf_( std::move( pdf ) ),
-  cdf_( std::move( cdf ) ) {}
+  cdf_( std::nullopt ) {
+
+  this->pdf_.normalise();
+}
+
+/**
+ *  @brief Constructor using a pdf and cdf
+ *
+ *  @param pdf   the pdf of the distribution
+ *  @param cdf   the cdf of the distribution
+ */
+TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf,
+                             TabulatedEnergyDistributionFunction cdf ) :
+  pdf_( std::move( pdf ) ),
+  cdf_( std::move( cdf ) ) {
+
+  this->pdf_.normalise();
+}

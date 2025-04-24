@@ -8,6 +8,11 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 
+// includes for test result generation
+// #include <iostream>
+// #include <iomanip>
+// #include "scion/integration/GaussLegendre/64.hpp"
+
 // convenience typedefs
 using namespace njoy::dryad;
 
@@ -61,6 +66,22 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
         CHECK_THAT( 3.5, WithinRel( chunk( 1.5 ) ) );
         CHECK_THAT( 2.5, WithinRel( chunk( 2.5 ) ) );
         CHECK_THAT( 1.5, WithinRel( chunk( 3.5 ) ) );
+      } // THEN
+
+      THEN( "an TabulatedEnergyDistributionFunction can be integrated" ) {
+
+        // ( 4 + 1 ) * 3 / 2 = 7.5
+        CHECK_THAT( 7.5, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an TabulatedEnergyDistributionFunction can be calculated" ) {
+
+        // f(x) = 5 - x
+        // x f(x) = 5 x - x^2
+        // primitive = 5 x^2 / 2 - x^3 / 3
+        // integral = 5 * 16 / 2 - 64 / 3 - 5 / 2 + 1 / 3
+        //          = 75 / 2 -  63 / 3 = 37.5 - 21
+        CHECK_THAT( 16.5, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "arithmetic operations can be performed" ) {
@@ -671,6 +692,30 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
         CHECK_THAT( 3.5, WithinRel( chunk( 1.5 ) ) );
         CHECK_THAT( 3.5, WithinRel( chunk( 2.5 ) ) );
         CHECK_THAT( 2.5, WithinRel( chunk( 3.5 ) ) );
+      } // THEN
+
+      THEN( "an TabulatedEnergyDistributionFunction can be integrated" ) {
+
+        // ( 4 + 3 ) / 2 + ( 4 + 2 ) * 2 / 2 = 9.5
+        CHECK_THAT( 9.5, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an TabulatedEnergyDistributionFunction can be calculated" ) {
+
+        // region 1
+        // f(x) = 5 - x
+        // x f(x) = 5 x - x^2
+        // primitive = 5 x^2 / 2 - x^3 / 3
+        // integral = 5 * 4 / 2 - 8 / 3 - 5 / 2 + 1 / 3
+        //          = 7.5 - 7 / 3
+        // region 2
+        // f(x) = 6 - x
+        // x f(x) = 6 x - x^2
+        // primitive = 3 x^2 - x^3 / 3
+        // integral = 48 - 64 / 3 - 12 + 2 / 3
+        //          = 36 - 62 / 3
+        // sum = 43.5 - 69 / 3 = 22.5
+        CHECK_THAT( 22.5, WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "arithmetic operations can be performed" ) {
@@ -1348,7 +1393,167 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
         CHECK_THAT( 1.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
-      THEN( "arithmetic operations cannot be performed" ) {
+      THEN( "an TabulatedEnergyDistributionFunction can be integrated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // integration::GaussLegendre< 64, double > integrator{};
+        // std::cout << std::setprecision(15) << integrator( chunk, 1.,  2. )
+        //                                     + integrator( chunk, 2.,  3. )
+        //                                     + integrator( chunk, 3.,  4. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.integral() << std::endl;
+        CHECK_THAT( 7.44236295915864, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an TabulatedEnergyDistributionFunction can be calculated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // integration::GaussLegendre< 64, double > integrator{};
+        // auto functor = [&chunk] ( auto&& x ) { return x * chunk( x ); };
+        // std::cout << std::setprecision(15) << integrator( functor, 1.,  2. )
+        //                                     + integrator( functor, 2.,  3. )
+        //                                     + integrator( functor, 3.,  4. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.mean() << std::endl;
+        CHECK_THAT( 16.332650114006, WithinRel( chunk.mean() ) );
+      } // THEN
+
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        chunk /= 2.;
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 4 == chunk.energies().size() );
+        CHECK( 4 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 1., WithinRel( chunk.values()[3] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 3 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = -chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT(  1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT(  2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT(  3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT(  4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -1., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk * 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = 2. * chunk;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 2., WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk / 2.;
+
+        CHECK( 4 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 4 == result.energies().size() );
+        CHECK( 4 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1. , WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2. , WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 3. , WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 4. , WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 2.0, WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 1.0, WithinRel( result.values()[2] ) );
+        CHECK_THAT( 0.5, WithinRel( result.values()[3] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 3 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+      } // THEN
+
+      THEN( "some arithmetic operations cannot be performed" ) {
 
         TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
         TabulatedEnergyDistributionFunction right( { 1., 4. }, { 0., 0. } );
@@ -1356,16 +1561,10 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
         // scalar operations
         CHECK_THROWS( chunk += 2. );
         CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( chunk *= 2. );
-        CHECK_THROWS( chunk /= 2. );
-        CHECK_THROWS( result = -chunk );
         CHECK_THROWS( result = chunk + 2. );
         CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = chunk * 2. );
-        CHECK_THROWS( result = chunk / 2. );
         CHECK_THROWS( result = 2. + chunk );
         CHECK_THROWS( result = 2. - chunk );
-        CHECK_THROWS( result = 2. * chunk );
 
         // table operations
         CHECK_THROWS( chunk += right );
@@ -1496,6 +1695,178 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
         CHECK_THAT( 2.46416306545103, WithinRel( chunk( 3.5 ) ) );
       } // THEN
 
+      THEN( "an TabulatedEnergyDistributionFunction can be integrated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // integration::GaussLegendre< 64, double > integrator{};
+        // std::cout << std::setprecision(15) << integrator( chunk, 1.,  2. )
+        //                                     + integrator( chunk, 2.,  3. )
+        //                                     + integrator( chunk, 3.,  4. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.integral() << std::endl;
+        CHECK_THAT( 9.44236295915864, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of an TabulatedEnergyDistributionFunction can be calculated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // integration::GaussLegendre< 64, double > integrator{};
+        // auto functor = [&chunk] ( auto&& x ) { return x * chunk( x ); };
+        // std::cout << std::setprecision(15) << integrator( functor, 1.,  2. )
+        //                                     + integrator( functor, 2.,  3. )
+        //                                     + integrator( functor, 3.,  4. ) << std::endl;
+        // std::cout << std::setprecision(15) << chunk.mean() << std::endl;
+        CHECK_THAT( 22.332650114006, WithinRel( chunk.mean() ) );
+      } // THEN
+
+      THEN( "some arithmetic operations can be performed" ) {
+
+        TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
+
+        chunk *= 2.;
+
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        chunk /= 2.;
+
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.energies().size() );
+        CHECK( 5 == chunk.values().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.energies()[4] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[0] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[1] ) );
+        CHECK_THAT( 4., WithinRel( chunk.values()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.values()[3] ) );
+        CHECK_THAT( 2., WithinRel( chunk.values()[4] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == chunk.interpolants()[1] );
+        CHECK( false == chunk.isLinearised() );
+
+        result = -chunk;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[0] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[1] ) );
+        CHECK_THAT( -4., WithinRel( result.values()[2] ) );
+        CHECK_THAT( -3., WithinRel( result.values()[3] ) );
+        CHECK_THAT( -2., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk * 2.;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = 2. * chunk;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[0] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[1] ) );
+        CHECK_THAT( 8., WithinRel( result.values()[2] ) );
+        CHECK_THAT( 6., WithinRel( result.values()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+
+        result = chunk / 2.;
+
+        CHECK( 5 == result.numberPoints() );
+        CHECK( 2 == result.numberRegions() );
+        CHECK( 5 == result.energies().size() );
+        CHECK( 5 == result.values().size() );
+        CHECK( 2 == result.boundaries().size() );
+        CHECK( 2 == result.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( result.energies()[0] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[1] ) );
+        CHECK_THAT( 2., WithinRel( result.energies()[2] ) );
+        CHECK_THAT( 3., WithinRel( result.energies()[3] ) );
+        CHECK_THAT( 4., WithinRel( result.energies()[4] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[0] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[1] ) );
+        CHECK_THAT( 2. , WithinRel( result.values()[2] ) );
+        CHECK_THAT( 1.5, WithinRel( result.values()[3] ) );
+        CHECK_THAT( 1. , WithinRel( result.values()[4] ) );
+        CHECK( 1 == result.boundaries()[0] );
+        CHECK( 4 == result.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
+        CHECK( InterpolationType::LinearLog == result.interpolants()[1] );
+        CHECK( false == result.isLinearised() );
+      } // THEN
+
       THEN( "arithmetic operations cannot be performed" ) {
 
         TabulatedEnergyDistributionFunction result( { 1., 4. }, { 0., 0. } );
@@ -1504,16 +1875,10 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
         // scalar operations
         CHECK_THROWS( chunk += 2. );
         CHECK_THROWS( chunk -= 2. );
-        CHECK_THROWS( chunk *= 2. );
-        CHECK_THROWS( chunk /= 2. );
-        CHECK_THROWS( result = -chunk );
         CHECK_THROWS( result = chunk + 2. );
         CHECK_THROWS( result = chunk - 2. );
-        CHECK_THROWS( result = chunk * 2. );
-        CHECK_THROWS( result = chunk / 2. );
         CHECK_THROWS( result = 2. + chunk );
         CHECK_THROWS( result = 2. - chunk );
-        CHECK_THROWS( result = 2. * chunk );
 
         // table operations
         CHECK_THROWS( chunk += right );
@@ -1575,7 +1940,7 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this InterpolationTable is the
+    //       the jump. As a result, the final data contained in this TabulatedEnergyDistributionFunction is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1593,7 +1958,7 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
                                                  std::move( boundaries ),
                                                  std::move( interpolants ) );
 
-      THEN( "a InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "a TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1638,7 +2003,7 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
                                                  std::move( boundaries ),
                                                  std::move( interpolants ) );
 
-      THEN( "an InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "an TabulatedEnergyDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -1663,7 +2028,7 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an InterpolationTable object" ) {
+  GIVEN( "invalid data for an TabulatedEnergyDistributionFunction object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 

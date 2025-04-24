@@ -43,14 +43,14 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
             self.assertEqual( 2, len( chunk.energy.distributions[0].pdf.values ) )
             self.assertEqual( 2, len( chunk.energy.distributions[1].pdf.energies ) )
             self.assertEqual( 2, len( chunk.energy.distributions[1].pdf.values ) )
-            self.assertAlmostEqual( 1e-5 , chunk.energy.distributions[0].pdf.energies[0] )
+            self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.energies[0] )
             self.assertAlmostEqual( 20.  , chunk.energy.distributions[0].pdf.energies[1] )
             self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.values[0] )
-            self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.values[1] )
-            self.assertAlmostEqual( 1e-5 , chunk.energy.distributions[1].pdf.energies[0] )
+            self.assertAlmostEqual(  0.1 , chunk.energy.distributions[0].pdf.values[1] )
+            self.assertAlmostEqual(  0.  , chunk.energy.distributions[1].pdf.energies[0] )
             self.assertAlmostEqual( 20.  , chunk.energy.distributions[1].pdf.energies[1] )
-            self.assertAlmostEqual(  0.  , chunk.energy.distributions[1].pdf.values[0] )
-            self.assertAlmostEqual(  1.  , chunk.energy.distributions[1].pdf.values[1] )
+            self.assertAlmostEqual(  0.05, chunk.energy.distributions[1].pdf.values[0] )
+            self.assertAlmostEqual(  0.05, chunk.energy.distributions[1].pdf.values[1] )
             self.assertEqual( False, chunk.energy.distributions[0].has_cdf )
             self.assertEqual( False, chunk.energy.distributions[1].has_cdf )
             self.assertEqual( 1, chunk.energy.boundaries[0] )
@@ -100,14 +100,14 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
             self.assertEqual( 2, len( chunk.energy.distributions[0].pdf.values ) )
             self.assertEqual( 2, len( chunk.energy.distributions[1].pdf.energies ) )
             self.assertEqual( 2, len( chunk.energy.distributions[1].pdf.values ) )
-            self.assertAlmostEqual( 1e-5 , chunk.energy.distributions[0].pdf.energies[0] )
+            self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.energies[0] )
             self.assertAlmostEqual( 20.  , chunk.energy.distributions[0].pdf.energies[1] )
             self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.values[0] )
-            self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.values[1] )
-            self.assertAlmostEqual( 1e-5 , chunk.energy.distributions[1].pdf.energies[0] )
+            self.assertAlmostEqual(  0.1 , chunk.energy.distributions[0].pdf.values[1] )
+            self.assertAlmostEqual(  0.  , chunk.energy.distributions[1].pdf.energies[0] )
             self.assertAlmostEqual( 20.  , chunk.energy.distributions[1].pdf.energies[1] )
-            self.assertAlmostEqual(  0.  , chunk.energy.distributions[1].pdf.values[0] )
-            self.assertAlmostEqual(  1.  , chunk.energy.distributions[1].pdf.values[1] )
+            self.assertAlmostEqual(  0.05, chunk.energy.distributions[1].pdf.values[0] )
+            self.assertAlmostEqual(  0.05, chunk.energy.distributions[1].pdf.values[1] )
             self.assertEqual( False, chunk.energy.distributions[0].has_cdf )
             self.assertEqual( False, chunk.energy.distributions[1].has_cdf )
             self.assertEqual( 1, chunk.energy.boundaries[0] )
@@ -157,14 +157,14 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
             self.assertEqual( 2, len( chunk.energy.distributions[0].pdf.values ) )
             self.assertEqual( 2, len( chunk.energy.distributions[1].pdf.energies ) )
             self.assertEqual( 2, len( chunk.energy.distributions[1].pdf.values ) )
-            self.assertAlmostEqual( 1e-5 , chunk.energy.distributions[0].pdf.energies[0] )
+            self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.energies[0] )
             self.assertAlmostEqual( 20.  , chunk.energy.distributions[0].pdf.energies[1] )
             self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.values[0] )
-            self.assertAlmostEqual(  0.  , chunk.energy.distributions[0].pdf.values[1] )
-            self.assertAlmostEqual( 1e-5 , chunk.energy.distributions[1].pdf.energies[0] )
+            self.assertAlmostEqual(  0.1 , chunk.energy.distributions[0].pdf.values[1] )
+            self.assertAlmostEqual(  0.  , chunk.energy.distributions[1].pdf.energies[0] )
             self.assertAlmostEqual( 20.  , chunk.energy.distributions[1].pdf.energies[1] )
-            self.assertAlmostEqual(  0.  , chunk.energy.distributions[1].pdf.values[0] )
-            self.assertAlmostEqual(  1.  , chunk.energy.distributions[1].pdf.values[1] )
+            self.assertAlmostEqual(  0.05, chunk.energy.distributions[1].pdf.values[0] )
+            self.assertAlmostEqual(  0.05, chunk.energy.distributions[1].pdf.values[1] )
             self.assertEqual( False, chunk.energy.distributions[0].has_cdf )
             self.assertEqual( False, chunk.energy.distributions[1].has_cdf )
             self.assertEqual( 1, chunk.energy.boundaries[0] )
@@ -175,8 +175,8 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
                                               angle = IsotropicAngularDistributions(),
                                               energy = TabulatedEnergyDistributions(
                                                          [ 1e-5, 20. ],
-                                                         [ TabulatedEnergyDistribution( [ 1e-5, 20. ], [ 0., 0. ] ),
-                                                           TabulatedEnergyDistribution( [ 1e-5, 20. ], [ 0., 1. ] ) ] ) )
+                                                         [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.1 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.05 ] ) ] ) )
 
         verify_isotropic_and_tabulated_chunk( self, chunk )
 
@@ -188,8 +188,8 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
                                                          LegendreAngularDistribution( [ 0.5, 0.1 ] ) ] ),
                                               energy = TabulatedEnergyDistributions(
                                                          [ 1e-5, 20. ],
-                                                         [ TabulatedEnergyDistribution( [ 1e-5, 20. ], [ 0., 0. ] ),
-                                                           TabulatedEnergyDistribution( [ 1e-5, 20. ], [ 0., 1. ] ) ] ) )
+                                                         [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.1 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.05 ] ) ] ) )
 
         verify_legendre_and_tabulated_chunk( self, chunk )
 
@@ -201,8 +201,8 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
                                                           TabulatedAngularDistribution( [ -1., +1. ], [ 0.4, 0.6 ] ) ] ),
                                               energy = TabulatedEnergyDistributions(
                                                          [ 1e-5, 20. ],
-                                                         [ TabulatedEnergyDistribution( [ 1e-5, 20. ], [ 0., 0. ] ),
-                                                           TabulatedEnergyDistribution( [ 1e-5, 20. ], [ 0., 1. ] ) ] ) )
+                                                         [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.1 ] ),
+                                                           TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.05 ] ) ] ) )
 
         verify_tabulated_and_tabulated_chunk( self, chunk )
 

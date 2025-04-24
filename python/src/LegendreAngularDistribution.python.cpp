@@ -14,6 +14,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::LegendreAngularDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -22,7 +23,10 @@ void wrapLegendreAngularDistribution( python::module& module ) {
 
     module,
     "LegendreAngularDistribution",
-    "An angular distribution defined by a pdf and cdf using Legendre expansions"
+    "An angular distribution defined by a pdf and cdf using a Legendre series\n"
+    "expansion\n\n"
+    "The pdf is normalised to 1 upon construction and the associated cdf is\n"
+    "calculated upon construction (after the pdf has been normalised)."
   );
 
   // wrap the component
@@ -57,12 +61,6 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Flag to indicate whether or not the cumulative distribution function (cdf) "
     "is defined"
   )
-  .def_property_readonly(
-
-    "average_cosine",
-    &Component::averageCosine,
-    "The average cosine defined by the distribution"
-  )
   .def(
 
     "__call__",
@@ -71,7 +69,23 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     python::arg( "cosine" ),
     "Evaluate the pdf of the distribution for a given cosine value\n\n"
     "Arguments:\n"
-    "    self      the distribution\n"
+    "    self      the angular distribution\n"
     "    cosine    the cosine value"
+  )
+  .def_property_readonly(
+
+    "average_cosine",
+    &Component::averageCosine,
+    "The average cosine defined by the distribution"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the angular distribution\n"
+    "    tolerance   the linearisation tolerance"
   );
 }

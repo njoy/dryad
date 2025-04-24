@@ -25,7 +25,10 @@ TabulatedAngularDistribution(
     bool cdf = false ) :
   pdf_( std::move( cosines ), std::move( values ),
         std::move( boundaries ), std::move( interpolants ) ),
-  cdf_( std::nullopt ) {}
+  cdf_( std::nullopt ) {
+
+  this->pdf_.normalise();
+}
 
 /**
  *  @brief Constructor for a pdf using a single interpolation zone
@@ -40,7 +43,10 @@ TabulatedAngularDistribution(
     InterpolationType interpolant = InterpolationType::LinearLinear,
     bool cdf = false ) :
   pdf_( std::move( cosines ), std::move( values ), interpolant ),
-  cdf_( std::nullopt ) {}
+  cdf_( std::nullopt ) {
+
+  this->pdf_.normalise();
+}
 
 /**
  *  @brief Constructor using a pdf and cdf
@@ -48,8 +54,23 @@ TabulatedAngularDistribution(
  *  @param pdf   the pdf of the distribution
  *  @param cdf   the cdf of the distribution
  */
-TabulatedAngularDistribution(
-    TabulatedAngularDistributionFunction pdf,
-    TabulatedAngularDistributionFunction cdf ) :
+TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf ) :
   pdf_( std::move( pdf ) ),
-  cdf_( std::move( cdf ) ) {}
+  cdf_( std::nullopt ) {
+
+  this->pdf_.normalise();
+}
+
+/**
+ *  @brief Constructor using a pdf and cdf
+ *
+ *  @param pdf   the pdf of the distribution
+ *  @param cdf   the cdf of the distribution
+ */
+TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
+                              TabulatedAngularDistributionFunction cdf ) :
+  pdf_( std::move( pdf ) ),
+  cdf_( std::move( cdf ) ) {
+
+  this->pdf_.normalise();
+}

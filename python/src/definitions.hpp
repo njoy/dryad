@@ -188,9 +188,9 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the table\n\n"
+    "Linearise the distribution function\n\n"
     "Arguments:\n"
-    "    self        the table\n"
+    "    self        the distribution function\n"
     "    tolerance   the linearisation tolerance"
   );
 

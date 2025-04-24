@@ -93,8 +93,8 @@ void verifyElectronChunk( const TabulatedAngularDistribution& chunk ) {
   CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
   CHECK_THAT( -1.      , WithinRel( pdf.cosines()[0] ) );
   CHECK_THAT(  0.999999, WithinRel( pdf.cosines()[1] ) );
-  CHECK_THAT( 0.5, WithinRel( pdf.values()[0] ) );
-  CHECK_THAT( 0.5, WithinRel( pdf.values()[1] ) );
+  CHECK_THAT( 1. / 1.999999, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 1. / 1.999999, WithinRel( pdf.values()[1] ) );
 
   CHECK( false == chunk.hasCdf() );
   CHECK_THROWS( chunk.cdf() );

@@ -84,20 +84,21 @@ namespace dryad {
     /**
      *  @brief Return the average cosine defined by the distribution
      */
-    double averageCosine() const {
+    double averageCosine() const noexcept { return this->pdf().mean(); }
 
-      Log::error( "The calculation of the average cosine is not implemented yet" );
-      throw std::exception();
+    /**
+     *  @brief Return a linearised angular distribution table
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
+
+      // no need to normalise the resulting pdf, the TabulatedAngularDistribution ctor
+      // will take care of normalisation
+
+      TabulatedAngularDistributionFunction pdf = this->pdf().linearise( tolerance );
+      return TabulatedAngularDistribution( std::move( pdf ) );
     }
-
-//    /**
-//     *  @brief Return a linearised angular distribution table
-//     *
-//     *  @param[in] tolerance   the linearisation tolerance
-//     */
-//    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-//
-//    }
   };
 
 } // dryad namespace

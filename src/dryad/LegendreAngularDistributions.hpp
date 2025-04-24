@@ -7,6 +7,7 @@
 #include "dryad/base/GridDistributions.hpp"
 #include "dryad/LegendreAngularDistribution.hpp"
 #include "dryad/TabulatedAverageCosine.hpp"
+#include "dryad/TabulatedAngularDistributions.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -37,25 +38,36 @@ namespace dryad {
     using Parent::numberRegions;
     using Parent::operator();
 
-//    /**
-//     *  @brief Return the LegendreAngularDistribution for a grid value
-//     */
-//    LegendreAngularDistribution operator()( double grid ) const noexcept {
-//
-//    }
-
     /**
      *  @brief Return the average cosine values
      */
     TabulatedAverageCosine averageCosines() const noexcept {
 
       std::vector< double > cosines;
+      cosines.reserve( this->numberPoints() );
       std::transform( this->distributions().begin(), this->distributions().end(),
                       std::back_inserter( cosines ),
                       [] ( auto&& distribution ) { return distribution.averageCosine(); } );
       return TabulatedAverageCosine( this->grid(), std::move( cosines ),
                                      this->boundaries(),
                                      this->interpolants() );
+    }
+
+    /**
+     *  @brief Return linearised angular distributions
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    TabulatedAngularDistributions linearise( ToleranceConvergence tolerance = {} ) const {
+
+      std::vector< TabulatedAngularDistribution > distributions;
+      distributions.reserve( this->numberPoints() );
+      std::transform( this->distributions().begin(), this->distributions().end(),
+                      std::back_inserter( distributions ),
+                      [&tolerance] ( auto&& distribution )
+                                   { return distribution.linearise( tolerance ); } );
+      return TabulatedAngularDistributions( this->grid(), std::move( distributions ),
+                                            this->boundaries(), this->interpolants() );
     }
   };
 

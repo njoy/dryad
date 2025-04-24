@@ -1233,22 +1233,16 @@ class Test_dryad_TabulatedAngularDistributionFunction( unittest.TestCase ) :
 
             # verify arithmetic operators throw exceptions
             temp = TabulatedAngularDistributionFunction( [ 1., 4. ], [ 4., 1. ] )
-            with self.assertRaises( Exception ) : result = -chunk
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
-            with self.assertRaises( Exception ) : result = chunk * 2.
-            with self.assertRaises( Exception ) : result = chunk / 2.
             with self.assertRaises( Exception ) : result = chunk + temp
             with self.assertRaises( Exception ) : result = chunk - temp
             with self.assertRaises( Exception ) : chunk += 2.
             with self.assertRaises( Exception ) : chunk -= 2.
-            with self.assertRaises( Exception ) : chunk *= 2.
-            with self.assertRaises( Exception ) : chunk /= 2.
             with self.assertRaises( Exception ) : chunk += temp
             with self.assertRaises( Exception ) : chunk -= temp
             with self.assertRaises( Exception ) : result = 2. + chunk
             with self.assertRaises( Exception ) : result = 2. - chunk
-            with self.assertRaises( Exception ) : result = 2. * chunk
 
             # verify linearisation
             linear = chunk.linearise()
@@ -1341,22 +1335,16 @@ class Test_dryad_TabulatedAngularDistributionFunction( unittest.TestCase ) :
 
             # verify arithmetic operators throw exceptions
             temp = TabulatedAngularDistributionFunction( [ 1., 4. ], [ 4., 1. ] )
-            with self.assertRaises( Exception ) : result = -chunk
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
-            with self.assertRaises( Exception ) : result = chunk * 2.
-            with self.assertRaises( Exception ) : result = chunk / 2.
             with self.assertRaises( Exception ) : result = chunk + temp
             with self.assertRaises( Exception ) : result = chunk - temp
             with self.assertRaises( Exception ) : chunk += 2.
             with self.assertRaises( Exception ) : chunk -= 2.
-            with self.assertRaises( Exception ) : chunk *= 2.
-            with self.assertRaises( Exception ) : chunk /= 2.
             with self.assertRaises( Exception ) : chunk += temp
             with self.assertRaises( Exception ) : chunk -= temp
             with self.assertRaises( Exception ) : result = 2. + chunk
             with self.assertRaises( Exception ) : result = 2. - chunk
-            with self.assertRaises( Exception ) : result = 2. * chunk
 
             # verify linearisation
             linear = chunk.linearise()

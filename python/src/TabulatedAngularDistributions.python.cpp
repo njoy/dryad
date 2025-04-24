@@ -64,13 +64,15 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
   .def_property_readonly(
 
     "grid",
-    &Component::grid,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.grid(); },
     "The grid values for which distributions are given"
   )
   .def_property_readonly(
 
     "distributions",
-    &Component::distributions,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.distributions(); },
     "The associated distributions"
   )
   .def(
@@ -84,6 +86,22 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     "    self      the table\n"
     "    value     the grid value\n"
     "    cosine    the cosine value"
+  )
+  .def_property_readonly(
+
+    "average_cosines",
+    &Component::averageCosines,
+    "The average cosine values"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the angular distributions\n"
+    "    tolerance   the linearisation tolerance"
   );
 
   // add standard tabulated data definitions

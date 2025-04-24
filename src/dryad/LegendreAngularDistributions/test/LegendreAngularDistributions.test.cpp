@@ -14,7 +14,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "LegendreAngularDistributions" ) {
 
-  GIVEN( "legendre series without boundaries and no jumps" ) {
+  GIVEN( "legendre series and energy values" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -73,7 +73,7 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
       } // THEN
 
-      THEN( "an InterpolationTableFunction can be evaluated" ) {
+      THEN( "a LegendreAngularDistributions can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0.5  , WithinRel( chunk( 1., -0.5 ) ) );
@@ -91,9 +91,10 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 0.375 , WithinRel( chunk( 3.5, -0.5 ) ) );
       } // THEN
 
-      THEN( "a TabulatedAverageCosine can be created" ) {
+      THEN( "average cosines can be calculated" ) {
 
         auto cosines = chunk.averageCosines();
+
         CHECK_THAT( 1., WithinRel( cosines.lowerEnergyLimit() ) );
         CHECK_THAT( 4., WithinRel( cosines.upperEnergyLimit() ) );
         CHECK( 4 == cosines.numberPoints() );
@@ -113,6 +114,56 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK( 3 == cosines.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == cosines.interpolants()[0] );
         CHECK( true == cosines.isLinearised() );
+      }
+
+      THEN( "a LegendreAngularDistributions can be linearised" ) {
+
+        auto linear = chunk.linearise();
+
+        CHECK( 4 == linear.numberPoints() );
+        CHECK( 1 == linear.numberRegions() );
+        CHECK( 4 == linear.grid().size() );
+        CHECK( 4 == linear.distributions().size() );
+        CHECK( 1 == linear.boundaries().size() );
+        CHECK( 1 == linear.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( linear.grid()[0] ) );
+        CHECK_THAT( 2., WithinRel( linear.grid()[1] ) );
+        CHECK_THAT( 3., WithinRel( linear.grid()[2] ) );
+        CHECK_THAT( 4., WithinRel( linear.grid()[3] ) );
+        CHECK( false == linear.distributions()[0].hasCdf() );
+        CHECK( false == linear.distributions()[1].hasCdf() );
+        CHECK( false == linear.distributions()[2].hasCdf() );
+        CHECK( false == linear.distributions()[3].hasCdf() );
+        CHECK( true == linear.distributions()[0].pdf().isLinearised() );
+        CHECK( true == linear.distributions()[1].pdf().isLinearised() );
+        CHECK( true == linear.distributions()[2].pdf().isLinearised() );
+        CHECK( true == linear.distributions()[3].pdf().isLinearised() );
+        CHECK( 2 == linear.distributions()[0].pdf().cosines().size() );
+        CHECK( 2 == linear.distributions()[1].pdf().cosines().size() );
+        CHECK( 2 == linear.distributions()[2].pdf().cosines().size() );
+        CHECK( 2 == linear.distributions()[3].pdf().cosines().size() );
+        CHECK( 2 == linear.distributions()[0].pdf().values().size() );
+        CHECK( 2 == linear.distributions()[1].pdf().values().size() );
+        CHECK( 2 == linear.distributions()[2].pdf().values().size() );
+        CHECK( 2 == linear.distributions()[3].pdf().values().size() );
+        CHECK_THAT( -1.0, WithinRel( linear.distributions()[0].pdf().cosines()[0] ) );
+        CHECK_THAT(  1.0, WithinRel( linear.distributions()[0].pdf().cosines()[1] ) );
+        CHECK_THAT( -1.0, WithinRel( linear.distributions()[1].pdf().cosines()[0] ) );
+        CHECK_THAT(  1.0, WithinRel( linear.distributions()[1].pdf().cosines()[1] ) );
+        CHECK_THAT( -1.0, WithinRel( linear.distributions()[2].pdf().cosines()[0] ) );
+        CHECK_THAT(  1.0, WithinRel( linear.distributions()[2].pdf().cosines()[1] ) );
+        CHECK_THAT( -1.0, WithinRel( linear.distributions()[3].pdf().cosines()[0] ) );
+        CHECK_THAT(  1.0, WithinRel( linear.distributions()[3].pdf().cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( linear.distributions()[0].pdf().values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( linear.distributions()[0].pdf().values()[1] ) );
+        CHECK_THAT(  0.49, WithinRel( linear.distributions()[1].pdf().values()[0] ) );
+        CHECK_THAT(  0.51, WithinRel( linear.distributions()[1].pdf().values()[1] ) );
+        CHECK_THAT(  0.4 , WithinRel( linear.distributions()[2].pdf().values()[0] ) );
+        CHECK_THAT(  0.6 , WithinRel( linear.distributions()[2].pdf().values()[1] ) );
+        CHECK_THAT(  0.1 , WithinRel( linear.distributions()[3].pdf().values()[0] ) );
+        CHECK_THAT(  0.9 , WithinRel( linear.distributions()[3].pdf().values()[1] ) );
+        CHECK( 3 == linear.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
       } // THEN
     } // WHEN
   } // GIVEN

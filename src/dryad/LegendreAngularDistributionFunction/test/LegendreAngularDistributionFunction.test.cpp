@@ -18,6 +18,8 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
+      // in this case, the distribution is unnormalised, and should remain unnormalised
+
       std::vector< double > coefficients = { -31./3., 73./5., -14./3., 2./5. };
 
       LegendreAngularDistributionFunction chunk( std::move( coefficients ) );
@@ -42,6 +44,16 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
         CHECK_THAT(  -8., WithinRel( chunk(  0. ) ) );
         CHECK_THAT(   0., WithinAbs( chunk(  1. ), 1e-12 ) );
         CHECK_THAT( -30., WithinRel( chunk( -1. ) ) );
+      } // THEN
+
+      THEN( "a LegendreAngularDistributionFunction can be integrated" ) {
+
+        CHECK_THAT( -62./3., WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the first raw moment of a LegendreAngularDistributionFunction can be calculated" ) {
+
+        CHECK_THAT( 146./15., WithinRel( chunk.mean() ) );
       } // THEN
 
       THEN( "a LegendreAngularDistributionFunction can be linearised" ) {
