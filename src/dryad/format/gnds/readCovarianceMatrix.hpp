@@ -17,7 +17,8 @@ namespace format {
 namespace gnds {
 
   using CovarianceMatrix = std::tuple< bool, std::vector< double >, std::vector< double >,
-                                       dryad::covariance::Matrix< double > >;
+                                       dryad::covariance::Matrix< double >,
+                                       std::string, std::string, std::string >;
 
   /**
    *  @brief Read data from a GNDS covarianceMatrix node
@@ -41,9 +42,12 @@ namespace gnds {
 
     // read the axes and the array
     auto axes = readAxes( covariance.child( "gridded2d" ).child( "axes" ) );
-    std::get< 1 >( data ) = std::get< 2 >( axes[0] ).value();
-    std::get< 2 >( data ) = std::get< 2 >( axes[1] ).value();
+    std::get< 1 >( data ) = std::move( std::get< 2 >( axes[0] ).value() );
+    std::get< 2 >( data ) = std::move( std::get< 2 >( axes[1] ).value() );
     std::get< 3 >( data ) = readArray( covariance.child( "gridded2d" ).child( "array" ) );
+    std::get< 4 >( data ) = std::move( std::get< 1 >( axes[0] ).value() );
+    std::get< 5 >( data ) = std::move( std::get< 1 >( axes[1] ).value() );
+    std::get< 6 >( data ) = std::move( std::get< 1 >( axes[2] ).value() );
 
     return data;
   }

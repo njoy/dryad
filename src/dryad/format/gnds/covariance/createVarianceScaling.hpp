@@ -12,6 +12,7 @@
 #include "dryad/format/gnds/readAxes.hpp"
 #include "dryad/format/gnds/readArray.hpp"
 #include "dryad/format/gnds/convertEnergies.hpp"
+#include "dryad/format/gnds/convertVarianceScalingFactors.hpp"
 #include "dryad/covariance/VarianceScaling.hpp"
 
 namespace njoy {
@@ -46,6 +47,7 @@ namespace covariance {
 
       factors.push_back( matrix(i,i) );
     }
+    convertVarianceScalingFactors( factors, std::get< 1 >( axes[2] ).value() );
 
     //! @todo we may have to convert the array values
 

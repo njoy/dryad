@@ -15,6 +15,7 @@
 #include "dryad/format/gnds/createCoherentDistributionData.hpp"
 #include "dryad/format/gnds/createIncoherentDistributionData.hpp"
 #include "dryad/format/gnds/createTabulatedAverageEnergy.hpp"
+#include "dryad/format/gnds/resolveLink.hpp"
 #include "dryad/ReactionProduct.hpp"
 
 namespace njoy {
@@ -69,18 +70,20 @@ namespace gnds {
       }
       else if ( strcmp( node.name(), "coherentPhotonScattering" ) == 0 ) {
 
-        // the data can be found in the double differential xs
-        node = product.parent().parent().parent().
-                       child( "doubleDifferentialCrossSection" ).
-                       find_child_by_attribute( "label", style.c_str() );
+        // the distribution can be linked to
+        if ( node.attribute( "href" ) ) {
+
+          node = resolveLink( node );
+        }
         distribution = createCoherentDistributionData( node );
       }
       else if ( strcmp( node.name(), "incoherentPhotonScattering" ) == 0 ) {
 
-        // the data can be found in the double differential xs
-        node = product.parent().parent().parent().
-                       child( "doubleDifferentialCrossSection" ).
-                       find_child_by_attribute( "label", style.c_str() );
+        // the distribution can be linked to
+        if ( node.attribute( "href" ) ) {
+
+          node = resolveLink( node );
+        }
         distribution = createIncoherentDistributionData( node );
       }
     }
