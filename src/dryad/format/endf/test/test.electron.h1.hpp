@@ -96,8 +96,7 @@ namespace h1 {
     CHECK_THAT( 274896000., WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 1.31176e-5, WithinRel( elastic.crossSection().values()[100] ) );
 
-    CHECK( 2 == elastic.products().size() );
-
+    CHECK( 1 == elastic.products().size() );
     auto electron = elastic.products()[0];
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
@@ -180,9 +179,6 @@ namespace h1 {
     CHECK_THROWS( angle.distributions()[15].cdf() );
     CHECK( 15 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
-
-    auto hydrogen = elastic.products()[1];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
   void verifyTotalElasticReaction( const Reaction& telastic ) {
@@ -243,8 +239,7 @@ namespace h1 {
     CHECK_THAT( 29.7832 , WithinRel( bremsstrahlung.crossSection().values()[0] ) );
     CHECK_THAT( 0.990621, WithinRel( bremsstrahlung.crossSection().values()[95] ) );
 
-    CHECK( 3 == bremsstrahlung.products().size() );
-
+    CHECK( 2 == bremsstrahlung.products().size() );
     auto gamma = bremsstrahlung.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
     CHECK( true == gamma.isLinearised() );
@@ -332,7 +327,6 @@ namespace h1 {
     CHECK_THROWS( energy.distributions()[9].cdf() );
     CHECK( 9 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
-
     auto electron = bremsstrahlung.products()[1];
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
@@ -361,9 +355,6 @@ namespace h1 {
     CHECK_THAT(  7.86876E+10 - 2.11850E+9, WithinRel( average.values()[80] ) );
     CHECK_THAT(  1e+11       - 2.66810E+9, WithinRel( average.values()[81] ) );
     CHECK( std::nullopt == electron.distributionData() );
-
-    auto hydrogen = bremsstrahlung.products()[2];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
   void verifyExcitationReaction( const Reaction& subionisation ) {
@@ -391,8 +382,7 @@ namespace h1 {
     CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
     CHECK_THAT( 81441.6, WithinRel( subionisation.crossSection().values()[169] ) );
 
-    CHECK( 2 == subionisation.products().size() );
-
+    CHECK( 1 == subionisation.products().size() );
     auto electron = subionisation.products()[0];
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
@@ -421,9 +411,6 @@ namespace h1 {
     CHECK_THAT(  9e+10       - 21.0777000, WithinRel( average.values()[168] ) );
     CHECK_THAT(  1e+11       - 21.0777000, WithinRel( average.values()[169] ) );
     CHECK( std::nullopt == electron.distributionData() );
-
-    auto hydrogen = subionisation.products()[1];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
   void verifySubshellIonisationReaction( const Reaction& subionisation ) {
@@ -451,8 +438,7 @@ namespace h1 {
     CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
     CHECK_THAT( 82892.4, WithinRel( subionisation.crossSection().values()[34] ) );
 
-    CHECK( 3 == subionisation.products().size() );
-
+    CHECK( 1 == subionisation.products().size() );
     auto electron = subionisation.products()[0];
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
@@ -532,12 +518,6 @@ namespace h1 {
     CHECK_THROWS( energy.distributions()[7].cdf() );
     CHECK( 7 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
-
-    electron = subionisation.products()[1];
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-
-    auto ion = subionisation.products()[2];
-    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
   }
 
   void verifyElasticDeficitReaction( const Reaction& deficit ) {

@@ -42,14 +42,14 @@ namespace h1 {
 
   void verifyElasticReaction( const Reaction& elastic ) {
 
-
     CHECK( id::ReactionID( "2" ) == elastic.identifier() );
     CHECK( ReactionType::Primary == elastic.type() );
     CHECK( true == elastic.hasProducts() );
     CHECK( true == elastic.isLinearised() );
 
-    CHECK( std::nullopt == elastic.massDifferenceQValue() );
+    CHECK( std::nullopt != elastic.massDifferenceQValue() );
     CHECK( std::nullopt != elastic.reactionQValue() );
+    CHECK_THAT( 0, WithinRel( elastic.massDifferenceQValue().value() ) );
     CHECK_THAT( 0, WithinRel( elastic.reactionQValue().value() ) );
 
     CHECK( true == elastic.crossSection().isLinearised() );
@@ -66,8 +66,7 @@ namespace h1 {
     CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
 
-    CHECK( 2 == elastic.products().size() );
-
+    CHECK( 1 == elastic.products().size() );
     auto neutron = elastic.products()[0];
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( true == neutron.isLinearised() );
@@ -167,9 +166,6 @@ namespace h1 {
     CHECK_THAT(  3.44900050e-06 , WithinRel( angle.distributions()[152].cdf().coefficients()[7] ) );
     CHECK( 152 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
-
-    auto h1 = elastic.products()[1];
-    CHECK( id::ParticleID( "H1" ) == h1.identifier() );
   }
 
   void verifyCaptureReaction( const Reaction& capture ) {
@@ -179,8 +175,9 @@ namespace h1 {
     CHECK( true == capture.hasProducts() );
     CHECK( false == capture.isLinearised() );
 
-    CHECK( std::nullopt == capture.massDifferenceQValue() );
+    CHECK( std::nullopt != capture.massDifferenceQValue() );
     CHECK( std::nullopt != capture.reactionQValue() );
+    CHECK_THAT( 2.224648e+6, WithinRel( capture.massDifferenceQValue().value() ) );
     CHECK_THAT( 2.224648e+6, WithinRel( capture.reactionQValue().value() ) );
 
     CHECK( false == capture.crossSection().isLinearised() );
@@ -202,12 +199,10 @@ namespace h1 {
     CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
 
     CHECK( 2 == capture.products().size() );
-
     auto gamma = capture.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-
     auto deuterium = capture.products()[1];
-    CHECK( id::ParticleID( "H2" ) == deuterium.identifier() );
+    CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
   }
 
 } // namespace h1

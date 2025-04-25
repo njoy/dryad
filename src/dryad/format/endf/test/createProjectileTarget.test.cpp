@@ -98,52 +98,52 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyElectronTotalReaction( total );
+        electron::h1::verifyTotalReaction( total );
 
         auto ionisation = H0.reactions()[1];
-        verifyElectronTotalIonisationReaction( ionisation );
+        electron::h1::verifyTotalIonisationReaction( ionisation );
 
         auto elastic = H0.reactions()[2];
-        verifyElectronElasticReaction( elastic );
+        electron::h1::verifyElasticReaction( elastic );
 
         auto telastic = H0.reactions()[3];
-        verifyElectronTotalElasticReaction( telastic );
+        electron::h1::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = H0.reactions()[4];
-        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = H0.reactions()[5];
-        verifyElectronExcitationReaction( excitation );
+        electron::h1::verifyExcitationReaction( excitation );
 
         auto subionisation = H0.reactions()[6];
-        verifyElectronSubshellIonisationReaction( subionisation );
+        electron::h1::verifySubshellIonisationReaction( subionisation );
 
         auto deficit = H0.reactions()[7];
-        verifyElectronElasticDeficitReaction( deficit );
+        electron::h1::verifyElasticDeficitReaction( deficit );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyElectronTotalReaction( total );
+        electron::h1::verifyTotalReaction( total );
 
         ionisation = H0.reaction( id::ReactionID( "522" ) );
-        verifyElectronTotalIonisationReaction( ionisation );
+        electron::h1::verifyTotalIonisationReaction( ionisation );
 
         elastic = H0.reaction( id::ReactionID( "525" ) );
-        verifyElectronElasticReaction( elastic );
+        electron::h1::verifyElasticReaction( elastic );
 
         telastic = H0.reaction( id::ReactionID( "526" ) );
-        verifyElectronTotalElasticReaction( telastic );
+        electron::h1::verifyTotalElasticReaction( telastic );
 
         bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
-        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
 
         excitation = H0.reaction( id::ReactionID( "528" ) );
-        verifyElectronExcitationReaction( excitation );
+        electron::h1::verifyExcitationReaction( excitation );
 
         subionisation = H0.reaction( id::ReactionID( "534" ) );
-        verifyElectronSubshellIonisationReaction( subionisation );
+        electron::h1::verifySubshellIonisationReaction( subionisation );
 
         deficit = H0.reaction( id::ReactionID( "-526" ) );
-        verifyElectronElasticDeficitReaction( deficit );
+        electron::h1::verifyElasticDeficitReaction( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -181,52 +181,52 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyPhotonTotalReaction( total );
+        photoatomic::h1::verifyTotalReaction( total );
 
         auto coherent = H0.reactions()[1];
-        verifyPhotonCoherentReaction( coherent );
+        photoatomic::h1::verifyCoherentReaction( coherent );
 
         auto incoherent = H0.reactions()[2];
-        verifyPhotonIncoherentReaction( incoherent );
+        photoatomic::h1::verifyIncoherentReaction( incoherent );
 
         auto epairproduction = H0.reactions()[3];
-        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
 
         auto tpairproduction = H0.reactions()[4];
-        verifyPhotonTotalPairProductionReaction( tpairproduction );
+        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
 
         auto npairproduction = H0.reactions()[5];
-        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         auto tionisation = H0.reactions()[6];
-        verifyPhotonTotalIonisationReaction( tionisation );
+        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
 
         auto ionisation = H0.reactions()[7];
-        verifyPhotonIonisationReaction( ionisation );
+        photoatomic::h1::verifyIonisationReaction( ionisation );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyPhotonTotalReaction( total );
+        photoatomic::h1::verifyTotalReaction( total );
 
         coherent = H0.reaction( id::ReactionID( "502" ) );
-        verifyPhotonCoherentReaction( coherent );
+        photoatomic::h1::verifyCoherentReaction( coherent );
 
         incoherent = H0.reaction( id::ReactionID( "504" ) );
-        verifyPhotonIncoherentReaction( incoherent );
+        photoatomic::h1::verifyIncoherentReaction( incoherent );
 
         epairproduction = H0.reaction( id::ReactionID( "515" ) );
-        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
 
         tpairproduction = H0.reaction( id::ReactionID( "516" ) );
-        verifyPhotonTotalPairProductionReaction( tpairproduction );
+        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
 
         npairproduction = H0.reaction( id::ReactionID( "517" ) );
-        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         tionisation = H0.reaction( id::ReactionID( "522" ) );
-        verifyPhotonTotalIonisationReaction( tionisation );
+        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
 
         ionisation = H0.reaction( id::ReactionID( "534" ) );
-        verifyPhotonIonisationReaction( ionisation );
+        photoatomic::h1::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN

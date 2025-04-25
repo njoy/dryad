@@ -66,7 +66,7 @@ namespace h1 {
     CHECK_THAT( 4.52522E-6, WithinRel( coherent.crossSection().values()[0] ) );
     CHECK_THAT( 4.6282E-16, WithinRel( coherent.crossSection().values()[360] ) );
 
-    CHECK( 2 == coherent.products().size() );
+    CHECK( 1 == coherent.products().size() );
 
     auto gamma = coherent.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
@@ -144,9 +144,6 @@ namespace h1 {
     CHECK( 296 == factor.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
     CHECK( true == factor.isLinearised() );
-
-    auto hydrogen = coherent.products()[1];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
   void verifyIncoherentReaction( const Reaction& incoherent ) {
@@ -174,7 +171,7 @@ namespace h1 {
     CHECK_THAT( 9.56230E-8, WithinRel( incoherent.crossSection().values()[0] ) );
     CHECK_THAT( 1.70420E-5, WithinRel( incoherent.crossSection().values()[395] ) );
 
-    CHECK( 2 == incoherent.products().size() );
+    CHECK( 1 == incoherent.products().size() );
 
     auto gamma = incoherent.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
@@ -212,16 +209,13 @@ namespace h1 {
     CHECK( 397 == data.scatteringFunction().boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
     CHECK( true == data.scatteringFunction().isLinearised() );
-
-    auto hydrogen = incoherent.products()[1];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
-    }
+  }
 
   void verifyElectronFieldPairProductionReaction( const Reaction& epairproduction ) {
 
     CHECK( id::ReactionID( "515" ) == epairproduction.identifier() );
     CHECK( ReactionType::Primary == epairproduction.type() );
-    CHECK( true == epairproduction.hasProducts() );
+    CHECK( false == epairproduction.hasProducts() );
     CHECK( true == epairproduction.isLinearised() );
 
     CHECK( std::nullopt == epairproduction.massDifferenceQValue() );
@@ -242,26 +236,14 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( epairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .0111   , WithinRel( epairproduction.crossSection().values()[216] ) );
 
-    CHECK( 4 == epairproduction.products().size() );
-
-    auto electron = epairproduction.products()[0];
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-
-    electron = epairproduction.products()[1];
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-
-    auto antielectron = epairproduction.products()[2];
-    CHECK( id::ParticleID( "e-_anti" ) == antielectron.identifier() );
-
-    auto hydrogen = epairproduction.products()[3];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( 0 == epairproduction.products().size() );
   }
 
   void verifyNuclearFieldPairProductionReaction( const Reaction& npairproduction ) {
 
     CHECK( id::ReactionID( "517" ) == npairproduction.identifier() );
     CHECK( ReactionType::Primary == npairproduction.type() );
-    CHECK( true == npairproduction.hasProducts() );
+    CHECK( false == npairproduction.hasProducts() );
     CHECK( true == npairproduction.isLinearised() );
 
     CHECK( std::nullopt == npairproduction.massDifferenceQValue() );
@@ -282,16 +264,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( npairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .009601 , WithinRel( npairproduction.crossSection().values()[307] ) );
 
-    CHECK( 3 == npairproduction.products().size() );
-
-    auto electron = npairproduction.products()[0];
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-
-    auto antielectron = npairproduction.products()[1];
-    CHECK( id::ParticleID( "e-_anti" ) == antielectron.identifier() );
-
-    auto hydrogen = npairproduction.products()[2];
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( 0 == npairproduction.products().size() );
   }
 
   void verifyTotalPairProductionReaction( const Reaction& tpairproduction ) {
@@ -331,7 +304,7 @@ namespace h1 {
 
     CHECK( id::ReactionID( "534" ) == ionisation.identifier() );
     CHECK( ReactionType::Primary == ionisation.type() );
-    CHECK( true == ionisation.hasProducts() );
+    CHECK( false == ionisation.hasProducts() );
     CHECK( true == ionisation.isLinearised() );
 
     CHECK( std::nullopt == ionisation.massDifferenceQValue() );
@@ -352,13 +325,7 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( ionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( ionisation.crossSection().values()[903] ) );
 
-    CHECK( 2 == ionisation.products().size() );
-
-    auto electron = ionisation.products()[0];
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-
-    auto ion = ionisation.products()[1];
-    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
+    CHECK( 0 == ionisation.products().size() );
   }
 
   void verifyTotalIonisationReaction( const Reaction& tionisation ) {
