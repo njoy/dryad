@@ -45,22 +45,22 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 3 == H1.reactions().size() );
 
         auto total = H1.reactions()[0];
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         auto elastic = H1.reactions()[1];
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         auto capture = H1.reactions()[2];
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
 
         total = H1.reaction( id::ReactionID( "1" ) );
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         elastic = H1.reaction( id::ReactionID( "2" ) );
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         capture = H1.reaction( id::ReactionID( "102" ) );
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
   } // GIVEN

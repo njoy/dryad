@@ -33,13 +33,13 @@ SCENARIO( "createReactions" ) {
         CHECK( 3 == reactions.size() );
 
         auto total = reactions[0];
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         auto elastic = reactions[1];
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         auto capture = reactions[2];
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
   } // GIVEN

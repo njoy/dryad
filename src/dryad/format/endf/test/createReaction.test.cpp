@@ -30,13 +30,13 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H1" );
 
         Reaction total = format::endf::createReaction( projectile, target, material, 1 );
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         Reaction elastic = format::endf::createReaction( projectile, target, material, 2 );
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         Reaction capture = format::endf::createReaction( projectile, target, material, 102 );
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
   } // GIVEN

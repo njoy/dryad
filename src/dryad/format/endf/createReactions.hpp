@@ -84,25 +84,22 @@ namespace endf {
 
           if ( endf::ReactionInformation::isLumpedCovariance( mt ) ) {
 
+            Log::info( "Reading data for MT{}", mt );
+
+            // metadata and miscellaneous information
+            id::ReactionID id = std::to_string( mt );
+            ReactionType type = ReactionType::Summation;
+
+            // partials
             std::vector< int > endf_partials = ReactionInformation::partials( material, 33, mt );
-            if ( endf_partials.size() > 1 ) {
+            std::vector< id::ReactionID > partials( endf_partials.size() );
+            std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
+                            [] ( auto&& value ) { return std::to_string( value ); } );
 
-              Log::info( "Reading data for MT{}", mt );
+            // cross section
+            TabulatedCrossSection xs = calculateSummationCrossSection( partials, reactions );
 
-              // metadata and miscellaneous information
-              id::ReactionID id = std::to_string( mt );
-              ReactionType type = ReactionType::Summation;
-
-              // partials
-              std::vector< id::ReactionID > partials( endf_partials.size() );
-              std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                              [] ( auto&& value ) { return std::to_string( value ); } );
-
-              // cross section
-              TabulatedCrossSection xs = calculateSummationCrossSection( partials, reactions );
-
-              reactions.emplace_back( std::move( id ), std::move( partials ), std::move( xs ) );
-            }
+            reactions.emplace_back( std::move( id ), std::move( partials ), std::move( xs ) );
           }
         }
       }
