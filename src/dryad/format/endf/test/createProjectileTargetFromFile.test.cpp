@@ -134,22 +134,22 @@ SCENARIO( "projectileTarget" ) {
         CHECK( 49 == Li7.reactions().size() );
 
         auto total = Li7.reactions()[0];
-//        verifyNeutronTotalReaction( total );
+        neutron::li7::verifyTotalReaction( total );
 
         auto elastic = Li7.reactions()[1];
-//        verifyNeutronElasticReaction( elastic );
+        neutron::li7::verifyElasticReaction( elastic );
 
         auto capture = Li7.reactions()[38];
-//        verifyNeutronCaptureReaction( capture );
+        neutron::li7::verifyCaptureReaction( capture );
 
         total = Li7.reaction( id::ReactionID( "1" ) );
-//        verifyNeutronTotalReaction( total );
+        neutron::li7::verifyTotalReaction( total );
 
         elastic = Li7.reaction( id::ReactionID( "2" ) );
-//        verifyNeutronElasticReaction( elastic );
+        neutron::li7::verifyElasticReaction( elastic );
 
         capture = Li7.reaction( id::ReactionID( "102" ) );
-//        verifyNeutronCaptureReaction( capture );
+        neutron::li7::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
   } // GIVEN
