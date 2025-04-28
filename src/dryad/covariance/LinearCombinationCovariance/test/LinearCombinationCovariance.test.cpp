@@ -17,10 +17,13 @@ SCENARIO( "LinearCombinationCovariance" ) {
 
   GIVEN( "valid covariance data for a diagonal LinearCombinationCovariance" ) {
 
+    double lower = 1e-5;
+    double upper = 2e+7;
     std::vector< id::ReactionID > reactions = { "2", "4", "16" };
     std::vector< double > coefficients = { .1, .2, .3 };
 
-    LinearCombinationCovariance chunk( std::move( reactions ), std::move( coefficients ) );
+    LinearCombinationCovariance chunk( std::move( lower ), std::move( upper ),
+                                       std::move( reactions ), std::move( coefficients ) );
 
     THEN( "a LinearCombinationCovariance can be constructed and members can be tested" ) {
 
@@ -44,9 +47,9 @@ SCENARIO( "LinearCombinationCovariance" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( LinearCombinationCovariance( {}, { .1, .2, .3 } ) );
-        CHECK_THROWS( LinearCombinationCovariance( { "2", "4", "16" }, {} ) );
-        CHECK_THROWS( LinearCombinationCovariance( {}, {} ) );
+        CHECK_THROWS( LinearCombinationCovariance( 1e-5, 2e+7, {}, { .1, .2, .3 } ) );
+        CHECK_THROWS( LinearCombinationCovariance( 1e-5, 2e+7, { "2", "4", "16" }, {} ) );
+        CHECK_THROWS( LinearCombinationCovariance( 1e-5, 2e+7, {}, {} ) );
       } // THEN
     } // WHEN
   } // GIVEN

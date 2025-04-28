@@ -31,14 +31,29 @@ void wrapLinearCombinationCovariance( python::module& module ) {
   component
   .def(
 
-    python::init< std::vector< ReactionID >, std::vector< double > >(),
-    python::arg( "reactions" ), python::arg( "coefficients" ), 
+    python::init< double, double, std::vector< ReactionID >, std::vector< double > >(),
+    python::arg( "lower" ), python::arg( "upper" ),
+    python::arg( "reactions" ), python::arg( "coefficients" ),
     "Initialise the derived covariance\n\n"
     "Arguments:\n"
     "    self           the derived covariance\n"
+    "    lower          the lower energy limit\n"
+    "    upper          the upper energy limit\n"
     "    reactions      the reactions in the linear combination\n"
     "    coefficients   the coefficients of the linear combination"
-     )
+  )
+  .def_property_readonly(
+
+    "lower_energy_limit",
+    &Component::lowerEnergyLimit,
+    "The lower energy limit"
+  )
+  .def_property_readonly(
+
+    "upper_energy_limit",
+    &Component::upperEnergyLimit,
+    "The upper energy limit"
+  )
   .def_property_readonly(
 
     "reactions",

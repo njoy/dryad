@@ -20,6 +20,8 @@ namespace covariance {
   class LinearCombinationCovariance {
 
     /* fields */
+    double lower_;
+    double upper_;
     std::vector< id::ReactionID > reactions_;
     std::vector< double > coefficients_;
 
@@ -32,6 +34,22 @@ namespace covariance {
     #include "dryad/covariance/LinearCombinationCovariance/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const noexcept {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const noexcept {
+
+      return this->upper_;
+    }
 
     /**
      *  @brief Return the reactions in the linear combination
