@@ -6,7 +6,7 @@ enable_testing()
 
 function( add_python_test name source )
 
-  set(PYTHONPATH_PARTS ${ACEtk_PYTHONPATH} $ENV{PYTHONPATH})
+  set(PYTHONPATH_PARTS ${dryad_PYTHONPATH} $ENV{PYTHONPATH})
   string( JOIN "${PATH_DELIM}" PYTHONPATH_VALUE ${PYTHONPATH_PARTS})
 
   set( test_name "dryad.python.${name}.test" )
