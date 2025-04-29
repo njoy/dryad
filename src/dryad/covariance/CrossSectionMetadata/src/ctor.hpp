@@ -1,4 +1,15 @@
 /**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+CrossSectionMetadata() = default;
+
+CrossSectionMetadata( const CrossSectionMetadata& ) = default;
+CrossSectionMetadata( CrossSectionMetadata&& ) = default;
+
+CrossSectionMetadata& operator=( const CrossSectionMetadata& ) = default;
+CrossSectionMetadata& operator=( CrossSectionMetadata&& ) = default;
+
+/**
  *  @brief Constructor
  *
  *  @param[in] projectile   the projectile identifier

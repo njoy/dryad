@@ -1,4 +1,15 @@
 /**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+CovarianceBlock() = default;
+
+CovarianceBlock( const CovarianceBlock& ) = default;
+CovarianceBlock( CovarianceBlock&& ) = default;
+
+CovarianceBlock& operator=( const CovarianceBlock& ) = default;
+CovarianceBlock& operator=( CovarianceBlock&& ) = default;
+
+/**
  *  @brief Constructor for a diagonal covariance block using a covariance
  *         matrix (relative or absolute)
  *
