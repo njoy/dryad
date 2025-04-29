@@ -3,7 +3,7 @@ include( FetchContent )
 
 FetchContent_Declare( pugixml
     GIT_REPOSITORY  ../../zeux/pugixml.git
-    GIT_TAG         db78afc2b7d8f043b4bc6b185635d949ea2ed2a8  # tag: v1.14
+    GIT_TAG         ee86beb30e4973f5feffe3ce63bfa4fbadf72f38  # tag: v1.15
     )
 
 FetchContent_Declare( eigen
