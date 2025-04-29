@@ -1,7 +1,23 @@
 include(CMakeFindDependencyMacro)
 
+if (NOT TARGET pugixml)
+    find_dependency(pugixml)
+endif()
+
+if (NOT TARGET eigen)
+    find_dependency(eigen)
+endif()
+
 if (NOT TARGET njoy::scion)
     find_dependency(scion)
 endif()
 
-include("${CMAKE_CURRENT_LIST_DIR}/ENDFtk-targets.cmake")
+if (NOT TARGET njoy::ENDFtk)
+    find_dependency(ENDFtk)
+endif()
+
+if (NOT TARGET njoy::ACEtk)
+    find_dependency(ACEtk)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/dryad-targets.cmake")
