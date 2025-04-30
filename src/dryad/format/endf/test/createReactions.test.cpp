@@ -19,10 +19,10 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "ENDF materials - incident neutrons" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
-    auto material = tape.materials().front();
+    WHEN( "a single ENDF material is given without lumped covariance reactions" ) {
 
-    WHEN( "a single ENDF material is given" ) {
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+      auto material = tape.materials().front();
 
       THEN( "all reactions can be created" ) {
 
@@ -40,6 +40,33 @@ SCENARIO( "createReactions" ) {
 
         auto capture = reactions[2];
         neutron::h1::verifyCaptureReaction( capture );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single ENDF material is given with lumped covariance reactions" ) {
+
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "all reactions can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Li7" );
+        std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
+
+        CHECK( 49 == reactions.size() );
+
+        auto total = reactions[0];
+        neutron::li7::verifyTotalReaction( total );
+
+        auto elastic = reactions[1];
+        neutron::li7::verifyElasticReaction( elastic );
+
+        auto capture = reactions[38];
+        neutron::li7::verifyCaptureReaction( capture );
+
+        auto lumped = reactions[40];
+        neutron::li7::verifyLumpedReaction851( lumped );
       } // THEN
     } // WHEN
   } // GIVEN
