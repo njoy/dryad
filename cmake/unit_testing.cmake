@@ -39,6 +39,7 @@ add_subdirectory( src/dryad/covariance/matrix/test )
 add_subdirectory( src/dryad/covariance/CovarianceBlock/test )
 add_subdirectory( src/dryad/covariance/CrossSectionMetadata/test )
 add_subdirectory( src/dryad/covariance/VarianceScaling/test )
+add_subdirectory( src/dryad/covariance/LinearCombinationCovariance/test )
 add_subdirectory( src/dryad/covariance/CrossSectionCovarianceBlock/test )
 
 add_subdirectory( src/dryad/AtomicRelaxation/test )

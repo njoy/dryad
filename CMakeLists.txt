@@ -78,85 +78,13 @@ target_link_libraries( dryad
 # dryad : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if( dryad.python )
-
-  FetchContent_MakeAvailable( pybind11 )
-
-  pybind11_add_module( dryad.python
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/dryad.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ToleranceConvergence.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/id.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/id/ElementID.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/TransitionType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/RadiativeTransitionData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/NonRadiativeTransitionData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/atomic/ElectronSubshellConfiguration.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/ScalingType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/matrix.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/CrossSectionMetadata.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/VarianceScaling.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/covariance/CrossSectionCovarianceBlock.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/InterpolationType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/DistributionDataType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/InteractionType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReactionType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReferenceFrame.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformDistributionType.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedCrossSection.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/PolynomialMultiplicity.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedMultiplicity.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAverageCosine.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAverageEnergy.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/IsotropicAngularDistributions.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/LegendreAngularDistributionFunction.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/LegendreAngularDistribution.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/LegendreAngularDistributions.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributionFunction.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistribution.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedAngularDistributions.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformAngularDistribution.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformAngularDistributions.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributionFunction.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistribution.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedEnergyDistributions.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformEnergyDistribution.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UniformEnergyDistributions.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedFormFactor.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TabulatedScatteringFunction.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/TwoBodyDistributionData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/UncorrelatedDistributionData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/CoherentDistributionData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/IncoherentDistributionData.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ReactionProduct.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/Reaction.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/ProjectileTarget.python.cpp
-      ${CMAKE_CURRENT_SOURCE_DIR}/python/src/AtomicRelaxation.python.cpp
-      )
-  add_library( njoy::dryad.python ALIAS dryad.python )
-
-  target_link_libraries( dryad.python PRIVATE njoy::dryad )
-  target_include_directories( dryad.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/python/src )
-  target_compile_options( dryad.python PRIVATE -fvisibility=hidden )
-  set_target_properties( dryad.python PROPERTIES OUTPUT_NAME dryad )
-  set_target_properties( dryad.python PROPERTIES COMPILE_DEFINITIONS "PYBIND11" )
-  set_target_properties( dryad.python PROPERTIES POSITION_INDEPENDENT_CODE ON )
-
-  message( STATUS "Building dryad's python API" )
-
-  set( DRYAD_PYTHONPATH "${CMAKE_CURRENT_BINARY_DIR}" )
-
-  if( dryad.tests )
-    include( cmake/unit_testing_python.cmake )
-  endif()
-
+if (dryad.python)
+  add_subdirectory(python)
 endif()
 
 if( dryad.tests )
   include( cmake/unit_testing.cmake )
 endif()
-
 
 #######################################################################
 # Installation
@@ -206,4 +134,14 @@ if(dryad.installation)
       set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
       include(CPack)
     endif()
+endif()
+
+########################################################################
+# Windows-specific setup
+########################################################################
+
+# enable Edit and Continue in Visual Studio (for debugging)
+if(MSVC)
+  target_compile_options(${PROJECT_NAME}  INTERFACE "/ZI")
+  target_link_options(${PROJECT_NAME} INTERFACE "/INCREMENTAL")
 endif()

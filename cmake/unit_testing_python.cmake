@@ -6,13 +6,16 @@ enable_testing()
 
 function( add_python_test name source )
 
+  set(PYTHONPATH_PARTS ${dryad_PYTHONPATH} $ENV{PYTHONPATH})
+  string( JOIN "${PATH_DELIM}" PYTHONPATH_VALUE ${PYTHONPATH_PARTS})
+
   set( test_name "dryad.python.${name}.test" )
   add_test( NAME ${test_name}
             COMMAND ${PYTHON_EXECUTABLE} -m unittest -v test/${source}
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
   set_tests_properties( ${test_name}
                         PROPERTIES ENVIRONMENT
-                        PYTHONPATH=${DRYAD_PYTHONPATH}:$ENV{PYTHONPATH})
+                        "PYTHONPATH=${PYTHONPATH_VALUE}")
 
 endfunction()
 
@@ -30,6 +33,7 @@ add_python_test( atomic.ElectronSubshellConfiguration    atomic/Test_dryad_atomi
 
 add_python_test( covariance.matrix                       covariance/Test_dryad_covariance_matrix.py )
 add_python_test( covariance.VarianceScaling              covariance/Test_dryad_covariance_VarianceScaling.py )
+add_python_test( covariance.LinearCombinationCovariance  covariance/Test_dryad_covariance_LinearCombinationCovariance.py )
 add_python_test( covariance.CrossSectionMetadata         covariance/Test_dryad_covariance_CrossSectionMetadata.py )
 add_python_test( covariance.CrossSectionCovarianceBlock  covariance/Test_dryad_covariance_CrossSectionCovarianceBlock.py )
 

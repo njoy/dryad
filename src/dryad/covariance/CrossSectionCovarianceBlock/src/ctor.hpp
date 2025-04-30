@@ -1,4 +1,15 @@
 /**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+CrossSectionCovarianceBlock() = default;
+
+CrossSectionCovarianceBlock( const CrossSectionCovarianceBlock& ) = default;
+CrossSectionCovarianceBlock( CrossSectionCovarianceBlock&& ) = default;
+
+CrossSectionCovarianceBlock& operator=( const CrossSectionCovarianceBlock& ) = default;
+CrossSectionCovarianceBlock& operator=( CrossSectionCovarianceBlock&& ) = default;
+
+/**
  *  @brief Constructor for a diagonal cross section covariance block
  *
  *  @param[in] metadata      the metadata associated with the covariance block
