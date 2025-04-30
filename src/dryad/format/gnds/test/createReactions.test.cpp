@@ -19,11 +19,11 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "GNDS data - incident neutrons" ) {
 
-    pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
-    pugi::xml_node suite = document.child( "reactionSuite" );
-
     WHEN( "a GNDS reaction suite is given" ) {
+
+      pugi::xml_document document;
+      pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+      pugi::xml_node suite = document.child( "reactionSuite" );
 
       THEN( "all reactions can be created" ) {
 
@@ -41,6 +41,34 @@ SCENARIO( "createReactions" ) {
 
         auto capture = reactions[2];
         neutron::h1::verifyCaptureReaction( capture );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a GNDS reaction suite is given" ) {
+
+      pugi::xml_document document;
+      pugi::xml_parse_result result = document.load_file( "n-003_Li_007.endf.gnds.xml" );
+      pugi::xml_node suite = document.child( "reactionSuite" );
+
+      THEN( "all reactions can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Li" );
+        std::vector< Reaction > reactions = format::gnds::createReactions( projectile, target, suite );
+
+        CHECK( 53 == reactions.size() );
+
+        auto total = reactions[0];
+        neutron::li7::verifyTotalReaction( total );
+
+        auto elastic = reactions[1];
+        neutron::li7::verifyElasticReaction( elastic );
+
+        auto capture = reactions[38];
+        neutron::li7::verifyCaptureReaction( capture );
+
+        auto lumped = reactions[44];
+        neutron::li7::verifyLumpedReaction851( lumped );
       } // THEN
     } // WHEN
   } // GIVEN

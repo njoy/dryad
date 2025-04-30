@@ -207,5 +207,42 @@ namespace li7 {
     CHECK( id::ParticleID( "g" ) == gamma3.identifier() );
   }
 
+  void verifyLumpedReaction851( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "851" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 2 == partials.size() );
+    CHECK( id::ReactionID( "16" ) == partials[0] );
+    CHECK( id::ReactionID( "24" ) == partials[1] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 29 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 29 == lumped.crossSection().energies().size() );
+    CHECK( 29 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 28 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 8.29288000e+06, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 8.5e+06       , WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.95e+7       , WithinRel( lumped.crossSection().energies()[27] ) );
+    CHECK_THAT( 2e+7          , WithinRel( lumped.crossSection().energies()[28] ) );
+    CHECK_THAT( 0.            , WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 3.44833400e-04, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 7.20042300e-02, WithinRel( lumped.crossSection().values()[27] ) );
+    CHECK_THAT( 7.52300000e-02, WithinRel( lumped.crossSection().values()[28] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
 } // namespace h1
 } // namespace neutron

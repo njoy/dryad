@@ -145,6 +145,9 @@ SCENARIO( "projectileTargetFromFile" ) {
         auto capture = Li7.reactions()[38];
         neutron::li7::verifyCaptureReaction( capture );
 
+        auto lumped = Li7.reactions()[44];
+        neutron::li7::verifyLumpedReaction851( lumped );
+
         total = Li7.reaction( id::ReactionID( "1" ) );
         neutron::li7::verifyTotalReaction( total );
 
@@ -153,6 +156,9 @@ SCENARIO( "projectileTargetFromFile" ) {
 
         capture = Li7.reaction( id::ReactionID( "102" ) );
         neutron::li7::verifyCaptureReaction( capture );
+
+        lumped = Li7.reaction( id::ReactionID( "851" ) );
+        neutron::li7::verifyLumpedReaction851( lumped );
       } // THEN
     } // WHEN
   } // GIVEN
