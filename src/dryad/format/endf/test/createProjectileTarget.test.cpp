@@ -157,6 +157,15 @@ SCENARIO( "createProjectileTarget" ) {
         lumped = Li7.reactions()[42];
         neutron::li7::verifyLumpedReaction853( lumped );
 
+        lumped = Li7.reactions()[43];
+        neutron::li7::verifyLumpedReaction854( lumped );
+
+        lumped = Li7.reactions()[44];
+        neutron::li7::verifyLumpedReaction855( lumped );
+
+        lumped = Li7.reactions()[45];
+        neutron::li7::verifyLumpedReaction856( lumped );
+
         total = Li7.reaction( id::ReactionID( "1" ) );
         neutron::li7::verifyTotalReaction( total );
 
@@ -174,6 +183,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         lumped = Li7.reaction( id::ReactionID( "853" ) );
         neutron::li7::verifyLumpedReaction853( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "854" ) );
+        neutron::li7::verifyLumpedReaction854( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "855" ) );
+        neutron::li7::verifyLumpedReaction855( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "856" ) );
+        neutron::li7::verifyLumpedReaction856( lumped );
       } // THEN
     } // WHEN
   } // GIVEN
