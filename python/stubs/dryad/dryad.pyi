@@ -790,9 +790,13 @@ class Reaction:
             reaction_q   the reaction Q value (optional)
         """
     @typing.overload
-    def __init__(self, id: str, partials: list[str], xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None) -> None:
+    def __init__(self, id: str, partials: list[str], xs: TabulatedCrossSection, products: list[ReactionProduct] = []) -> None:
         """
         Initialise a summation reaction
+        
+        Summation reactions do not have Q values associated to them. A cross section
+        weighted Q value can always be calculated using the the partial reactions
+        making up the summation reaction.
         
         Arguments:
             self        the reaction
@@ -800,8 +804,6 @@ class Reaction:
             partials    the identifiers of the partials of the reaction
             xs          the cross section of the reaction
             products     the reaction products
-            mass_q       the mass difference Q value (optional)
-            reaction_q   the reaction Q value (optional)
         """
     def has_product(self, arg0: str) -> bool:
         """

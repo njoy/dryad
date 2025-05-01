@@ -53,21 +53,19 @@ void wrapReaction( python::module& module ) {
     python::init< ReactionID,
                   std::vector< ReactionID >,
                   TabulatedCrossSection,
-                  std::vector< ReactionProduct >,
-                  std::optional< double >, std::optional< double > >(),
+                  std::vector< ReactionProduct > >(),
     python::arg( "id" ), python::arg( "partials" ), python::arg( "xs" ),
     python::arg( "products" ) = std::vector< ReactionProduct >{},
-    python::arg( "mass_q" ) = std::nullopt,
-    python::arg( "reaction_q" ) = std::nullopt,
     "Initialise a summation reaction\n\n"
+    "Summation reactions do not have Q values associated to them. A cross section\n"
+    "weighted Q value can always be calculated using the the partial reactions\n"
+    "making up the summation reaction.\n\n"
     "Arguments:\n"
     "    self        the reaction\n"
     "    id          the reaction identifier\n"
     "    partials    the identifiers of the partials of the reaction\n"
     "    xs          the cross section of the reaction\n"
-    "    products     the reaction products\n"
-    "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)"
+    "    products     the reaction products"
   )
   .def_property_readonly(
 
