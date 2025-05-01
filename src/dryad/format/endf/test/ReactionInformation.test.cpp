@@ -5,6 +5,7 @@
 #include "dryad/format/endf/ReactionInformation.hpp"
 
 // other includes
+#include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using ReactionInformation = njoy::dryad::format::endf::ReactionInformation;
@@ -3339,6 +3340,131 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( false == ReactionInformation::isValid( 999 ) );
       CHECK( false == ReactionInformation::isValid( 1000 ) );
       CHECK( false == ReactionInformation::isValid( 1001 ) );
+    } // THEN
+
+    THEN( "we an verify if the MT number is a valid lumped covariance reaction" ) {
+
+      CHECK( false == ReactionInformation::isLumpedCovariance( 850 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 851 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 852 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 853 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 854 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 855 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 856 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 857 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 858 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 859 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 860 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 861 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 862 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 863 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 864 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 865 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 866 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 867 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 868 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 869 ) );
+      CHECK( true == ReactionInformation::isLumpedCovariance( 870 ) );
+      CHECK( false == ReactionInformation::isLumpedCovariance( 871 ) );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "an ENDF material, mf and mt number" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
+    auto material = tape.materials().front();
+
+    THEN( "partial mt numbers can be obtained for the total reaction" ) {
+
+      auto partials = ReactionInformation::partials( material, 3, 1 );
+
+      CHECK(  38 == partials.size() );
+      CHECK(   2 == partials[0] );
+      CHECK(  16 == partials[1] );
+      CHECK(  24 == partials[2] );
+      CHECK(  25 == partials[3] );
+      CHECK(  51 == partials[4] );
+      CHECK(  52 == partials[5] );
+      CHECK(  53 == partials[6] );
+      CHECK(  54 == partials[7] );
+      CHECK(  55 == partials[8] );
+      CHECK(  56 == partials[9] );
+      CHECK(  57 == partials[10] );
+      CHECK(  58 == partials[11] );
+      CHECK(  59 == partials[12] );
+      CHECK(  60 == partials[13] );
+      CHECK(  61 == partials[14] );
+      CHECK(  62 == partials[15] );
+      CHECK(  63 == partials[16] );
+      CHECK(  64 == partials[17] );
+      CHECK(  65 == partials[18] );
+      CHECK(  66 == partials[19] );
+      CHECK(  67 == partials[20] );
+      CHECK(  68 == partials[21] );
+      CHECK(  69 == partials[22] );
+      CHECK(  70 == partials[23] );
+      CHECK(  71 == partials[24] );
+      CHECK(  72 == partials[25] );
+      CHECK(  73 == partials[26] );
+      CHECK(  74 == partials[27] );
+      CHECK(  75 == partials[28] );
+      CHECK(  76 == partials[29] );
+      CHECK(  77 == partials[30] );
+      CHECK(  78 == partials[31] );
+      CHECK(  79 == partials[32] );
+      CHECK(  80 == partials[33] );
+      CHECK(  81 == partials[34] );
+      CHECK(  82 == partials[35] );
+      CHECK( 102 == partials[36] );
+      CHECK( 104 == partials[37] );
+    } // THEN
+
+    THEN( "partial mt numbers can be obtained for a summation reaction" ) {
+
+      auto partials = ReactionInformation::partials( material, 3, 4 );
+
+      CHECK(  32 == partials.size() );
+      CHECK(  51 == partials[0] );
+      CHECK(  52 == partials[1] );
+      CHECK(  53 == partials[2] );
+      CHECK(  54 == partials[3] );
+      CHECK(  55 == partials[4] );
+      CHECK(  56 == partials[5] );
+      CHECK(  57 == partials[6] );
+      CHECK(  58 == partials[7] );
+      CHECK(  59 == partials[8] );
+      CHECK(  60 == partials[9] );
+      CHECK(  61 == partials[10] );
+      CHECK(  62 == partials[11] );
+      CHECK(  63 == partials[12] );
+      CHECK(  64 == partials[13] );
+      CHECK(  65 == partials[14] );
+      CHECK(  66 == partials[15] );
+      CHECK(  67 == partials[16] );
+      CHECK(  68 == partials[17] );
+      CHECK(  69 == partials[18] );
+      CHECK(  70 == partials[19] );
+      CHECK(  71 == partials[20] );
+      CHECK(  72 == partials[21] );
+      CHECK(  73 == partials[22] );
+      CHECK(  74 == partials[23] );
+      CHECK(  75 == partials[24] );
+      CHECK(  76 == partials[25] );
+      CHECK(  77 == partials[26] );
+      CHECK(  78 == partials[27] );
+      CHECK(  79 == partials[28] );
+      CHECK(  80 == partials[29] );
+      CHECK(  81 == partials[30] );
+      CHECK(  82 == partials[31] );
+    } // THEN
+
+    THEN( "partial mt numbers can be obtained for lumped covariance reactions" ) {
+
+      auto partials = ReactionInformation::partials( material, 33, 851 );
+
+      CHECK( 2 == partials.size() );
+      CHECK( 16 == partials[0] );
+      CHECK( 24 == partials[1] );
     } // THEN
   } // GIVEN
 } // SCENARIO

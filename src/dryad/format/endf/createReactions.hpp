@@ -18,6 +18,35 @@ namespace format {
 namespace endf {
 
   /**
+   *  @brief Calculate a summation cross section
+   */
+  TabulatedCrossSection
+  calculateSummationCrossSection( const std::vector< id::ReactionID >& partials,
+                                  const std::vector< Reaction >& reactions ) {
+
+    auto find_cross_section = [] ( const auto& id, const auto& reactions ) {
+
+      auto iter = std::find_if( reactions.begin(), reactions.end(),
+                                [ id ] ( auto&& reaction ) { return reaction.identifier() == id; } );
+      if ( iter == reactions.end() ) {
+
+        Log::error( "Missing partial reaction {}", id );
+        throw std::exception();
+      }
+
+      return iter->crossSection().linearise();
+    };
+
+    TabulatedCrossSection sum = find_cross_section( partials.front(), reactions );
+    for ( unsigned int i = 1; i < partials.size(); ++i ) {
+
+      sum += find_cross_section( partials[i], reactions );
+    }
+
+    return sum;
+  }
+
+  /**
    *  @brief Create every Reaction from an unparsed ENDF material
    *
    *  This function will produce reaction instances for each MT number defined in
@@ -45,6 +74,33 @@ namespace endf {
         else {
 
           Log::warning( "Skipping data for derived MT{}", mt );
+        }
+      }
+
+      // if the data has cross section covariance data, look for lumped covariances
+      if ( material.hasFile( 33 ) ) {
+
+        for ( auto mt : material.file( 33 ).sectionNumbers() ) {
+
+          if ( endf::ReactionInformation::isLumpedCovariance( mt ) ) {
+
+            Log::info( "Reading data for MT{}", mt );
+
+            // metadata and miscellaneous information
+            id::ReactionID id = std::to_string( mt );
+            ReactionType type = ReactionType::Summation;
+
+            // partials
+            std::vector< int > endf_partials = ReactionInformation::partials( material, 33, mt );
+            std::vector< id::ReactionID > partials( endf_partials.size() );
+            std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
+                            [] ( auto&& value ) { return std::to_string( value ); } );
+
+            // cross section
+            TabulatedCrossSection xs = calculateSummationCrossSection( partials, reactions );
+
+            reactions.emplace_back( std::move( id ), std::move( partials ), std::move( xs ) );
+          }
         }
       }
 

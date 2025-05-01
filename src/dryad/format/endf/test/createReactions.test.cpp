@@ -19,10 +19,10 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "ENDF materials - incident neutrons" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
-    auto material = tape.materials().front();
+    WHEN( "a single ENDF material is given without lumped covariance reactions" ) {
 
-    WHEN( "a single ENDF material is given" ) {
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+      auto material = tape.materials().front();
 
       THEN( "all reactions can be created" ) {
 
@@ -33,13 +33,40 @@ SCENARIO( "createReactions" ) {
         CHECK( 3 == reactions.size() );
 
         auto total = reactions[0];
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         auto elastic = reactions[1];
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         auto capture = reactions[2];
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single ENDF material is given with lumped covariance reactions" ) {
+
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "all reactions can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Li7" );
+        std::vector< Reaction > reactions = format::endf::createReactions( projectile, target, material );
+
+        CHECK( 49 == reactions.size() );
+
+        auto total = reactions[0];
+        neutron::li7::verifyTotalReaction( total );
+
+        auto elastic = reactions[1];
+        neutron::li7::verifyElasticReaction( elastic );
+
+        auto capture = reactions[38];
+        neutron::li7::verifyCaptureReaction( capture );
+
+        auto lumped = reactions[40];
+        neutron::li7::verifyLumpedReaction851( lumped );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -60,28 +87,28 @@ SCENARIO( "createReactions" ) {
         CHECK( 8 == reactions.size() );
 
         auto total = reactions[0];
-        verifyElectronTotalReaction( total );
+        electron::h1::verifyTotalReaction( total );
 
         auto ionisation = reactions[1];
-        verifyElectronTotalIonisationReaction( ionisation );
+        electron::h1::verifyTotalIonisationReaction( ionisation );
 
         auto elastic = reactions[2];
-        verifyElectronElasticReaction( elastic );
+        electron::h1::verifyElasticReaction( elastic );
 
         auto telastic = reactions[3];
-        verifyElectronTotalElasticReaction( telastic );
+        electron::h1::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = reactions[4];
-        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = reactions[5];
-        verifyElectronExcitationReaction( excitation );
+        electron::h1::verifyExcitationReaction( excitation );
 
         auto subionisation = reactions[6];
-        verifyElectronSubshellIonisationReaction( subionisation );
+        electron::h1::verifySubshellIonisationReaction( subionisation );
 
         auto deficit = reactions[7];
-        verifyElectronElasticDeficitReaction( deficit );
+        electron::h1::verifyElasticDeficitReaction( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -102,28 +129,28 @@ SCENARIO( "createReactions" ) {
         CHECK( 8 == reactions.size() );
 
         auto total = reactions[0];
-        verifyPhotonTotalReaction( total );
+        photoatomic::h1::verifyTotalReaction( total );
 
         auto coherent = reactions[1];
-        verifyPhotonCoherentReaction( coherent );
+        photoatomic::h1::verifyCoherentReaction( coherent );
 
         auto incoherent = reactions[2];
-        verifyPhotonIncoherentReaction( incoherent );
+        photoatomic::h1::verifyIncoherentReaction( incoherent );
 
         auto epairproduction = reactions[3];
-        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
 
         auto tpairproduction = reactions[4];
-        verifyPhotonTotalPairProductionReaction( tpairproduction );
+        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
 
         auto npairproduction = reactions[5];
-        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         auto tionisation = reactions[6];
-        verifyPhotonTotalIonisationReaction( tionisation );
+        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
 
         auto ionisation = reactions[7];
-        verifyPhotonIonisationReaction( ionisation );
+        photoatomic::h1::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN

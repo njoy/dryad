@@ -42,22 +42,123 @@ SCENARIO( "projectileTargetFromFile" ) {
         CHECK( 3 == H1.reactions().size() );
 
         auto total = H1.reactions()[0];
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         auto elastic = H1.reactions()[1];
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         auto capture = H1.reactions()[2];
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
 
         total = H1.reaction( id::ReactionID( "1" ) );
-        verifyNeutronTotalReaction( total );
+        neutron::h1::verifyTotalReaction( total );
 
         elastic = H1.reaction( id::ReactionID( "2" ) );
-        verifyNeutronElasticReaction( elastic );
+        neutron::h1::verifyElasticReaction( elastic );
 
         capture = H1.reaction( id::ReactionID( "102" ) );
-        verifyNeutronCaptureReaction( capture );
+        neutron::h1::verifyCaptureReaction( capture );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a GNDS XML document is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget Li7 = format::gnds::createProjectileTargetFromFile( "n-003_Li_007.endf.gnds.xml" );
+
+        CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
+        CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
+
+        CHECK( InteractionType::Nuclear == Li7.interactionType() );
+
+        CHECK( true == Li7.isLinearised() );
+
+        CHECK( std::nullopt == Li7.resonances() );
+
+        CHECK( true == Li7.hasReaction( id::ReactionID( "1" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "2" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "4" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "16" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "24" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "25" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "51" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "52" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "53" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "54" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "55" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "56" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "57" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "58" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "59" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "60" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "61" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "62" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "63" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "64" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "65" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "66" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "67" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "68" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "69" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "70" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "71" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "72" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "73" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "74" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "75" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "76" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "77" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "78" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "79" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "80" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "81" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "82" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "102" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "104" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "851" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "852" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "853" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "854" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "855" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "856" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "857" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "858" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "859" ) ) );
+        CHECK( false == Li7.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( false == Li7.hasReaction( id::ReactionID( "206" ) ) );
+
+        // GNDS contains the production cross sections
+        CHECK( true == Li7.hasReaction( id::ReactionID( "203" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "204" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "205" ) ) );
+        CHECK( true == Li7.hasReaction( id::ReactionID( "207" ) ) );
+
+        CHECK( 53 == Li7.reactions().size() );
+
+        auto total = Li7.reactions()[0];
+        neutron::li7::verifyTotalReaction( total );
+
+        auto elastic = Li7.reactions()[1];
+        neutron::li7::verifyElasticReaction( elastic );
+
+        auto capture = Li7.reactions()[38];
+        neutron::li7::verifyCaptureReaction( capture );
+
+        auto lumped = Li7.reactions()[44];
+        neutron::li7::verifyLumpedReaction851( lumped );
+
+        total = Li7.reaction( id::ReactionID( "1" ) );
+        neutron::li7::verifyTotalReaction( total );
+
+        elastic = Li7.reaction( id::ReactionID( "2" ) );
+        neutron::li7::verifyElasticReaction( elastic );
+
+        capture = Li7.reaction( id::ReactionID( "102" ) );
+        neutron::li7::verifyCaptureReaction( capture );
+
+        lumped = Li7.reaction( id::ReactionID( "851" ) );
+        neutron::li7::verifyLumpedReaction851( lumped );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -92,52 +193,52 @@ SCENARIO( "projectileTargetFromFile" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyElectronTotalReaction( total );
+        electron::h1::verifyTotalReaction( total );
 
         auto ionisation = H0.reactions()[1];
-        verifyElectronTotalIonisationReaction( ionisation );
+        electron::h1::verifyTotalIonisationReaction( ionisation );
 
         auto elastic = H0.reactions()[2];
-        verifyElectronElasticReaction( elastic );
+        electron::h1::verifyElasticReaction( elastic );
 
         auto telastic = H0.reactions()[3];
-        verifyElectronTotalElasticReaction( telastic );
+        electron::h1::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = H0.reactions()[4];
-        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = H0.reactions()[5];
-        verifyElectronExcitationReaction( excitation );
+        electron::h1::verifyExcitationReaction( excitation );
 
         auto subionisation = H0.reactions()[6];
-        verifyElectronSubshellIonisationReaction( subionisation );
+        electron::h1::verifySubshellIonisationReaction( subionisation );
 
         auto deficit = H0.reactions()[7];
-        verifyElectronElasticDeficitReaction( deficit );
+        electron::h1::verifyElasticDeficitReaction( deficit );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyElectronTotalReaction( total );
+        electron::h1::verifyTotalReaction( total );
 
         ionisation = H0.reaction( id::ReactionID( "522" ) );
-        verifyElectronTotalIonisationReaction( ionisation );
+        electron::h1::verifyTotalIonisationReaction( ionisation );
 
         elastic = H0.reaction( id::ReactionID( "525" ) );
-        verifyElectronElasticReaction( elastic );
+        electron::h1::verifyElasticReaction( elastic );
 
         telastic = H0.reaction( id::ReactionID( "526" ) );
-        verifyElectronTotalElasticReaction( telastic );
+        electron::h1::verifyTotalElasticReaction( telastic );
 
         bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
-        verifyElectronBremsstrahlungReaction( bremsstrahlung );
+        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
 
         excitation = H0.reaction( id::ReactionID( "528" ) );
-        verifyElectronExcitationReaction( excitation );
+        electron::h1::verifyExcitationReaction( excitation );
 
         subionisation = H0.reaction( id::ReactionID( "534" ) );
-        verifyElectronSubshellIonisationReaction( subionisation );
+        electron::h1::verifySubshellIonisationReaction( subionisation );
 
         deficit = H0.reaction( id::ReactionID( "-526" ) );
-        verifyElectronElasticDeficitReaction( deficit );
+        electron::h1::verifyElasticDeficitReaction( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -172,52 +273,52 @@ SCENARIO( "projectileTargetFromFile" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyPhotonTotalReaction( total );
+        photoatomic::h1::verifyTotalReaction( total );
 
         auto coherent = H0.reactions()[1];
-        verifyPhotonCoherentReaction( coherent );
+        photoatomic::h1::verifyCoherentReaction( coherent );
 
         auto incoherent = H0.reactions()[2];
-        verifyPhotonIncoherentReaction( incoherent );
+        photoatomic::h1::verifyIncoherentReaction( incoherent );
 
         auto epairproduction = H0.reactions()[3];
-        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
 
         auto tpairproduction = H0.reactions()[4];
-        verifyPhotonTotalPairProductionReaction( tpairproduction );
+        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
 
         auto npairproduction = H0.reactions()[5];
-        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         auto tionisation = H0.reactions()[6];
-        verifyPhotonTotalIonisationReaction( tionisation );
+        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
 
         auto ionisation = H0.reactions()[7];
-        verifyPhotonIonisationReaction( ionisation );
+        photoatomic::h1::verifyIonisationReaction( ionisation );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyPhotonTotalReaction( total );
+        photoatomic::h1::verifyTotalReaction( total );
 
         coherent = H0.reaction( id::ReactionID( "502" ) );
-        verifyPhotonCoherentReaction( coherent );
+        photoatomic::h1::verifyCoherentReaction( coherent );
 
         incoherent = H0.reaction( id::ReactionID( "504" ) );
-        verifyPhotonIncoherentReaction( incoherent );
+        photoatomic::h1::verifyIncoherentReaction( incoherent );
 
         epairproduction = H0.reaction( id::ReactionID( "515" ) );
-        verifyPhotonElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
 
         tpairproduction = H0.reaction( id::ReactionID( "516" ) );
-        verifyPhotonTotalPairProductionReaction( tpairproduction );
+        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
 
         npairproduction = H0.reaction( id::ReactionID( "517" ) );
-        verifyPhotonNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         tionisation = H0.reaction( id::ReactionID( "522" ) );
-        verifyPhotonTotalIonisationReaction( tionisation );
+        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
 
         ionisation = H0.reaction( id::ReactionID( "534" ) );
-        verifyPhotonIonisationReaction( ionisation );
+        photoatomic::h1::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN
