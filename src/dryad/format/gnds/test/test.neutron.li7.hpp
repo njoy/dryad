@@ -244,5 +244,80 @@ namespace li7 {
     CHECK( 0 == lumped.products().size() );
   }
 
+  void verifyLumpedReaction852( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "852" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 1 == partials.size() );
+    CHECK( id::ReactionID( "51" ) == partials[0] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 134 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 134 == lumped.crossSection().energies().size() );
+    CHECK( 134 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 133 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 5.46277000e+05, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 5.50000000e+05, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[132] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[133] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 5.90690000e-03, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 3.97335000e-02, WithinRel( lumped.crossSection().values()[132] ) );
+    CHECK_THAT( 3.93590000e-02, WithinRel( lumped.crossSection().values()[133] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction853( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "853" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 4 == partials.size() );
+    CHECK( id::ReactionID( "52" ) == partials[0] );
+    CHECK( id::ReactionID( "53" ) == partials[1] );
+    CHECK( id::ReactionID( "54" ) == partials[2] );
+    CHECK( id::ReactionID( "55" ) == partials[3] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 95 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 95 == lumped.crossSection().energies().size() );
+    CHECK( 95 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 94 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 3.14540000e+06, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 3.20000000e+06, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[93] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[94] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 9.67624500e-04, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 1.89748930e-03, WithinRel( lumped.crossSection().values()[93] ) );
+    CHECK_THAT( 1.77996460e-03, WithinRel( lumped.crossSection().values()[94] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
 } // namespace h1
 } // namespace neutron

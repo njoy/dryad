@@ -69,6 +69,12 @@ SCENARIO( "createReactions" ) {
 
         auto lumped = reactions[44];
         neutron::li7::verifyLumpedReaction851( lumped );
+
+        lumped = reactions[45];
+        neutron::li7::verifyLumpedReaction852( lumped );
+
+        lumped = reactions[46];
+        neutron::li7::verifyLumpedReaction853( lumped );
       } // THEN
     } // WHEN
   } // GIVEN
