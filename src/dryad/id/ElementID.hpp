@@ -29,6 +29,7 @@ namespace id {
     /* static fields */
     static inline const std::unordered_map< int, Entry > element_dictionary{
 
+      {   0, Entry{   0, ""  , ""             , {} } },
       {   1, Entry{   1, "H" , "Hydrogen"     , {} } },
       {   2, Entry{   2, "He", "Helium"       , {} } },
       {   3, Entry{   3, "Li", "Lithium"      , {} } },
@@ -179,7 +180,7 @@ namespace id {
     /**
      *  @brief Return the element number
      */
-    int number() const noexcept {
+    unsigned char number() const noexcept {
 
       return this->entry_->number();
     }

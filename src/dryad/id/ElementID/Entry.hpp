@@ -4,8 +4,10 @@
  */
 class Entry {
 
+  // unsigned char has a max value of 255
+
   /* fields */
-  int number_;
+  unsigned char number_;
   std::string symbol_;
   std::string name_;
   std::vector< std::string > alternatives_;
@@ -19,7 +21,7 @@ public:
     name_( std::move( name ) ), alternatives_( std::move( alternatives ) ) {}
 
   /* methods */
-  auto number() const { return this->number_; }
+  unsigned char number() const { return this->number_; }
   const std::string& symbol() const { return this->symbol_; }
   const std::string& name() const { return this->name_; }
   const std::vector< std::string >& alternatives() const { return this->alternatives_; }
