@@ -7,7 +7,7 @@ static const Entry* getPointer( int number ) {
 
   try {
 
-    return std::addressof( element_dictionary.at( number ) );
+    return std::addressof( elements.at( number ) );
   }
   catch ( ... ) {
 
@@ -24,7 +24,7 @@ static const Entry* getPointer( const std::string& string ) {
 
   try {
 
-    return getPointer( conversion_dictionary.at( string ) );
+    return conversion_dictionary.at( string );
   }
   catch ( ... ) {
 
