@@ -46,10 +46,11 @@ namespace id {
       return entries;
     }();
     static inline const std::unordered_map< std::string, const Entry* >
-    conversion_dictionary = [] ( const auto& vector ) {
+    conversion_dictionary = [] ( const auto& entries ) {
 
       std::unordered_map< std::string, const Entry* > conversion;
-      for ( const auto& entry : vector ) {
+      conversion[ "_e0" ] = std::addressof( entries.front() );
+      for ( const auto& entry : entries ) {
 
         const Entry* pointer = std::addressof( entry );
         conversion[ entry.symbol() ] = pointer;
