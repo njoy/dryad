@@ -1,26 +1,24 @@
 /**
- *  @brief Retrieve the pointer to the level information entry
+ *  @brief Retrieve the index to the level information entry
  *
  *  @param number    the level number
  */
-static const Entry* getPointer( int number ) {
+static std::size_t getIndex( int number ) {
 
-  try {
-
-    return std::addressof( entries.at( number ) );
-  }
-  catch ( ... ) {
+  if ( ( number < 0 ) || ( number >= entries.size() ) ) {
 
     throw std::out_of_range( "Not a level number: \'" + std::to_string( number ) + "\'" );
   }
+
+  return static_cast< std::size_t >( number );
 }
 
 /**
- *  @brief Retrieve the pointer to the level information entry
+ *  @brief Retrieve the index to the level information entry
  *
  *  @param string    the level symbol
  */
-static const Entry* getPointer( const std::string& string ) {
+static std::size_t getIndex( const std::string& string ) {
 
   try {
 
@@ -28,6 +26,6 @@ static const Entry* getPointer( const std::string& string ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "Not a level symbol: \'" + string + "\'" );
+    throw std::out_of_range( "Not an element symbol or name: \'" + string + "\'" );
   }
 }

@@ -1,13 +1,4 @@
 /**
- *  @brief Constructor
- *
- *  @param index    the index to the element information entry
- */
-ElementID( std::size_t index ) : index_( index ) {}
-
-public:
-
-/**
  *  @brief Default constructor (for pybind11 purposes only)
  */
 ElementID() = default;
@@ -30,4 +21,4 @@ ElementID( int number ) : index_( getIndex( number ) ) {}
  *
  *  @param string   the element identifier
  */
-ElementID( const std::string& string ) : ElementID( getIndex( string ) ) {}
+ElementID( const std::string& string ) : index_( getIndex( string ) ) {}

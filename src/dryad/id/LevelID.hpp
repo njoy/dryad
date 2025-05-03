@@ -45,24 +45,23 @@ namespace id {
       entries.emplace_back( continuum, "[continuum]" );
       return entries;
     }();
-    static inline const std::unordered_map< std::string, const Entry* >
+    static inline const std::unordered_map< std::string, std::size_t >
     conversion_dictionary = [] ( const auto& entries ) {
 
-      std::unordered_map< std::string, const Entry* > conversion;
-      conversion[ "_e0" ] = std::addressof( entries.front() );
-      for ( const auto& entry : entries ) {
+      std::unordered_map< std::string, std::size_t > conversion;
+      conversion[ "_e0" ] = 0;
+      for ( std::size_t index = 0; index < entries.size(); ++index ) {
 
-        const Entry* pointer = std::addressof( entry );
-        conversion[ entry.symbol() ] = pointer;
+        conversion[ entries[ index ].symbol() ] = index;
       }
       return conversion;
     }( entries );
 
     /* fields */
-    const Entry* entry_;
+    std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/LevelID/src/getPointer.hpp"
+    #include "dryad/id/LevelID/src/getIndex.hpp"
 
   public:
 
@@ -76,7 +75,7 @@ namespace id {
      */
     unsigned char number() const noexcept {
 
-      return this->entry_->number();
+      return entries[ this->index_ ].number();
     }
 
     /**
@@ -84,7 +83,7 @@ namespace id {
      */
     const std::string& symbol() const noexcept {
 
-      return this->entry_->symbol();
+      return entries[ this->index_ ].symbol();
     }
 
     /**
