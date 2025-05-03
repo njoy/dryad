@@ -2,7 +2,6 @@
 #define NJOY_ELEMENTARY_ELEMENTID
 
 // system includes
-#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
