@@ -1,27 +1,27 @@
 /**
  *  @class
- *  @brief Private helper class
+ *  @brief Private helper class to retrieve particle numbers, symbol and aliases
  */
 class Entry {
 
-  // unsigned char has a max value of 255
-
   /* fields */
-  unsigned char number_;
+  id::ElementID element_;
+  int a_;
+  int l_;
   std::string symbol_;
-  std::string name_;
+  std::optional< std::string > name_;
   std::vector< std::string > alternatives_;
 
 public:
 
   /* constructor */
-  Entry( unsigned char number, std::string symbol, std::string name,
+  Entry( int number, std::string symbol, std::string name,
          std::vector< std::string > alternatives ) :
     number_( number ), symbol_( std::move( symbol ) ),
     name_( std::move( name ) ), alternatives_( std::move( alternatives ) ) {}
 
   /* methods */
-  unsigned char number() const { return this->number_; }
+  auto number() const { return this->number_; }
   const std::string& symbol() const { return this->symbol_; }
   const std::string& name() const { return this->name_; }
   const std::vector< std::string >& alternatives() const { return this->alternatives_; }

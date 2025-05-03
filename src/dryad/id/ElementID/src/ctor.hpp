@@ -1,7 +1,7 @@
 /**
  *  @brief Constructor
  *
- *  @param pointer    the pointer to the element information
+ *  @param pointer    the pointer to the element information entry
  */
 ElementID( const Entry* pointer ) : entry_( pointer ) {}
 
