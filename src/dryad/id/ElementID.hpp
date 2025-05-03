@@ -149,28 +149,27 @@ namespace id {
       Entry{ 117, "Ts", "Tennessine"   , {} },
       Entry{ 118, "Og", "Oganesson"    , {} }
     };
-    static inline const std::unordered_map< std::string, const Entry* >
+    static inline const std::unordered_map< std::string, std::size_t >
     conversion_dictionary = [] ( const auto& entries ) {
 
-      std::unordered_map< std::string, const Entry* > conversion;
-      for ( const auto& entry : entries ) {
+      std::unordered_map< std::string, std::size_t > conversion;
+      for ( std::size_t index = 0; index < entries.size(); ++index ) {
 
-        const Entry* pointer = std::addressof( entry );
-        conversion[ entry.symbol() ] = pointer;
-        conversion[ entry.name() ] = pointer;
-        for ( const auto& alternative : entry.alternatives() ) {
+        conversion[ entries[ index ].symbol() ] = index;
+        conversion[ entries[ index ].name() ] = index;
+        for ( const auto& alternative : entries[ index ].alternatives() ) {
 
-          conversion[ alternative ] = pointer;
+          conversion[ alternative ] = index;
         }
       }
       return conversion;
     }( entries );
 
     /* fields */
-    const Entry* entry_;
+    std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/ElementID/src/getPointer.hpp"
+    #include "dryad/id/ElementID/src/getIndex.hpp"
 
   public:
 
@@ -184,7 +183,7 @@ namespace id {
      */
     unsigned char number() const noexcept {
 
-      return this->entry_->number();
+      return entries[ this->index_ ].number();
     }
 
     /**
@@ -192,7 +191,7 @@ namespace id {
      */
     const std::string& symbol() const noexcept {
 
-      return this->entry_->symbol();
+      return entries[ this->index_ ].symbol();
     }
 
     /**
@@ -200,7 +199,7 @@ namespace id {
      */
     const std::string& name() const noexcept {
 
-      return this->entry_->name();
+      return entries[ this->index_ ].name();
     }
 
     /**

@@ -1,9 +1,9 @@
 /**
  *  @brief Constructor
  *
- *  @param pointer    the pointer to the element information entry
+ *  @param index    the index to the element information entry
  */
-ElementID( const Entry* pointer ) : entry_( pointer ) {}
+ElementID( std::size_t index ) : index_( index ) {}
 
 public:
 
@@ -23,11 +23,11 @@ ElementID& operator=( ElementID&& ) = default;
  *
  *  @param number   the element number
  */
-ElementID( int number ) : ElementID( getPointer( number ) ) {}
+ElementID( int number ) : index_( getIndex( number ) ) {}
 
 /**
  *  @brief Constructor
  *
  *  @param string   the element identifier
  */
-ElementID( const std::string& string ) : ElementID( getPointer( string ) ) {}
+ElementID( const std::string& string ) : ElementID( getIndex( string ) ) {}
