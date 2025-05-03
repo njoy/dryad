@@ -24,7 +24,7 @@ void wrapElementID( python::module& module ) {
 
     module,
     "ElementID",
-    "The element identifier, with associated element symbol, name and aliases"
+    "The element identifier"
   );
 
   // wrap the component
@@ -35,7 +35,7 @@ void wrapElementID( python::module& module ) {
     python::arg( "number" ),
     "Initialise the element identifier\n\n"
     "Arguments:\n"
-    "    self     the reaction\n"
+    "    self     the identifier\n"
     "    number   the element number"
   )
   .def(
@@ -44,8 +44,8 @@ void wrapElementID( python::module& module ) {
     python::arg( "number" ),
     "Initialise the reaction\n\n"
     "Arguments:\n"
-    "    self     the reaction\n"
-    "    symbol   the element symbol or name"
+    "    self     the identifier\n"
+    "    symbol   the element symbol, name or alternative name"
   )
   .def_property_readonly(
 

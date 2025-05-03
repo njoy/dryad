@@ -27,7 +27,7 @@ namespace id {
     #include "dryad/id/ElementID/Entry.hpp"
 
     /* static fields */
-    static inline const std::vector< Entry > elements{
+    static inline const std::vector< Entry > entries{
 
       Entry{   0, ""  , ""             , {} },
       Entry{   1, "H" , "Hydrogen"     , {} },
@@ -150,10 +150,10 @@ namespace id {
       Entry{ 118, "Og", "Oganesson"    , {} }
     };
     static inline const std::unordered_map< std::string, const Entry* >
-    conversion_dictionary = [] ( const auto& dictionary ) {
+    conversion_dictionary = [] ( const auto& entries ) {
 
       std::unordered_map< std::string, const Entry* > conversion;
-      for ( const auto& entry : dictionary ) {
+      for ( const auto& entry : entries ) {
 
         const Entry* pointer = std::addressof( entry );
         conversion[ entry.symbol() ] = pointer;
@@ -164,7 +164,7 @@ namespace id {
         }
       }
       return conversion;
-    }( elements );
+    }( entries );
 
     /* fields */
     const Entry* entry_;

@@ -1,5 +1,5 @@
 /**
- *  @brief Retrieve the pointer to the element information
+ *  @brief Retrieve the pointer to the element information entry
  *
  *  @param number    the element number
  */
@@ -7,7 +7,7 @@ static const Entry* getPointer( int number ) {
 
   try {
 
-    return std::addressof( elements.at( number ) );
+    return std::addressof( entries.at( number ) );
   }
   catch ( ... ) {
 
@@ -16,9 +16,9 @@ static const Entry* getPointer( int number ) {
 }
 
 /**
- *  @brief Retrieve the pointer to the element information
+ *  @brief Retrieve the pointer to the element information entry
  *
- *  @param string    the element symbol or name
+ *  @param string    the element symbol, name or alternatives
  */
 static const Entry* getPointer( const std::string& string ) {
 

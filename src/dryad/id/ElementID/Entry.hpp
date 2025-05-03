@@ -15,7 +15,7 @@ class Entry {
 public:
 
   /* constructor */
-  Entry( int number, std::string symbol, std::string name,
+  Entry( unsigned char number, std::string symbol, std::string name,
          std::vector< std::string > alternatives ) :
     number_( number ), symbol_( std::move( symbol ) ),
     name_( std::move( name ) ), alternatives_( std::move( alternatives ) ) {}
