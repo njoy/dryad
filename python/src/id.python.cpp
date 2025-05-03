@@ -11,6 +11,7 @@ namespace id {
 
   // declarations - identifiers
   void wrapElementID( python::module& );
+  void wrapLevelID( python::module& );
 }
 
 void wrapID( python::module& module ) {
@@ -23,4 +24,5 @@ void wrapID( python::module& module ) {
   );
 
   id::wrapElementID( submodule );
+  id::wrapLevelID( submodule );
 }
