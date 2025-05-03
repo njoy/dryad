@@ -31,6 +31,7 @@ add_subdirectory( src/dryad/base/UniformDistribution/test )
 
 add_subdirectory( src/dryad/id/ElementID/test )
 add_subdirectory( src/dryad/id/LevelID/test )
+add_subdirectory( src/dryad/id/ParticleID/test )
 
 add_subdirectory( src/dryad/atomic/ElectronSubshellConfiguration/test )
 add_subdirectory( src/dryad/atomic/RadiativeTransitionData/test )

@@ -20,6 +20,6 @@ ParticleID( int za, int level = 0 ) : index_( getIndex( za, level ) ) {}
 /**
  *  @brief Constructor
  *
- *  @param string   the element identifier
+ *  @param particle   the particle identifier
  */
-ParticleID( const std::string& string ) : index_( getIndex( string ) ) {}
+ParticleID( const std::string& particle ) : index_( getIndex( particle ) ) {}

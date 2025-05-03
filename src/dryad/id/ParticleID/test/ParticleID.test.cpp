@@ -17,7 +17,7 @@ SCENARIO( "ParticleID" ) {
 
     THEN( "an ParticleID can be created" ) {
 
-      CHECK( 127 == ParticleID::size() ); // 127 pre-registered identifiers
+      std::size_t size = ParticleID::size();
 
       ParticleID id( "g" );
       CHECK( 0 == id.number() );
@@ -111,56 +111,56 @@ SCENARIO( "ParticleID" ) {
       CHECK( 2004 == id.number() );
       CHECK( "a" == id.symbol() );
 
-      CHECK( 127 == ParticleID::size() ); // 127 pre-registered identifiers
+      CHECK( size == ParticleID::size() );     // no additional identifiers
 
       id = ParticleID( 1001, 0 );
       CHECK( 1001000 == id.number() );
       CHECK( "H1" == id.symbol() );
 
-      CHECK( 128 == ParticleID::size() ); // registering H1
+      CHECK( size + 1 == ParticleID::size() ); // registering H1
 
       id = ParticleID( "H1" );
       CHECK( 1001000 == id.number() );
       CHECK( "H1" == id.symbol() );
 
-      CHECK( 128 == ParticleID::size() ); // H1 already registered
+      CHECK( size + 1 == ParticleID::size() ); // H1 already registered
 
       id = ParticleID( "H1_e0" );
       CHECK( 1001000 == id.number() );
       CHECK( "H1" == id.symbol() );
 
-      CHECK( 128 == ParticleID::size() ); // H1 already registered
+      CHECK( size + 1 == ParticleID::size() ); // H1 already registered
 
       id = ParticleID( 1001, 10 );
       CHECK( 1001010 == id.number() );
       CHECK( "H1_e10" == id.symbol() );
 
-      CHECK( 129 == ParticleID::size() ); // registering H1_e10
+      CHECK( size + 2 == ParticleID::size() ); // registering H1_e10
 
       id = ParticleID( "H1_e10" );
       CHECK( 1001010 == id.number() );
       CHECK( "H1_e10" == id.symbol() );
 
-      CHECK( 129 == ParticleID::size() ); // H1_e10 already registered
+      CHECK( size + 2 == ParticleID::size() ); // H1_e10 already registered
 
       id = ParticleID( 1001, njoy::dryad::id::LevelID::continuum );
       CHECK( 1001150 == id.number() );
       CHECK( "H1[continuum]" == id.symbol() );
 
-      CHECK( 130 == ParticleID::size() ); // registering H1[continuum]
+      CHECK( size + 3 == ParticleID::size() ); // registering H1[continuum]
 
       id = ParticleID( "H1[continuum]" );
       CHECK( 1001150 == id.number() );
       CHECK( "H1[continuum]" == id.symbol() );
 
-      CHECK( 130 == ParticleID::size() ); // H1[continuum] already registered
+      CHECK( size + 3 == ParticleID::size() ); // H1[continuum] already registered
     } // THEN
   } // GIVEN
 
   GIVEN( "valid ParticleID instances" ) {
 
-    ParticleID id1( 1001 );
-    ParticleID id2( 1001, 10 );
+    ParticleID id1( 92235 );
+    ParticleID id2( 92235, 10 );
 
     THEN( "instances can be compared" ) {
 
@@ -193,8 +193,8 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ ParticleID( 1001 ) ] == "1" );
-      CHECK( map[ ParticleID( 1001, 10 ) ] == "2" );
+      CHECK( map[ ParticleID( 92235 ) ] == "1" );
+      CHECK( map[ ParticleID( 92235, 10 ) ] == "2" );
     } // THEN
 
     THEN( "instances can be used as keys in a std::unordered_map" ) {
@@ -206,8 +206,8 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ ParticleID( 1001 ) ] == "1" );
-      CHECK( map[ ParticleID( 1001, 10 ) ] == "2" );
+      CHECK( map[ ParticleID( 92235 ) ] == "1" );
+      CHECK( map[ ParticleID( 92235, 10 ) ] == "2" );
     } // THEN
   } // GIVEN
 

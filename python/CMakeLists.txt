@@ -6,6 +6,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ElementID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/LevelID.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ParticleID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/TransitionType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/RadiativeTransitionData.python.cpp
