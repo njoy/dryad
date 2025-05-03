@@ -74,6 +74,9 @@ void wrapLevelID( python::module& module ) {
 
   // add standard comparison definitions
   addStandardComparisonDefinitions< Component >( component );
+
+  // add standard print definitions
+  addStandardPrintDefinitions< Component >( component );
 }
 
 } // namespace id

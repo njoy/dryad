@@ -42,6 +42,10 @@ class ElementID:
         ...
     def __ne__(self, arg0: ElementID) -> bool:
         ...
+    def __repr__(self) -> str:
+        """
+        Convenience function for printing the identifier
+        """
     @property
     def name(self) -> str:
         """
@@ -96,6 +100,10 @@ class LevelID:
         ...
     def __ne__(self, arg0: LevelID) -> bool:
         ...
+    def __repr__(self) -> str:
+        """
+        Convenience function for printing the identifier
+        """
     @property
     def number(self) -> int:
         """
