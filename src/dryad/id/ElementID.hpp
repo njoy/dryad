@@ -278,7 +278,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::ElementID > {
 
-    size_t operator()( const njoy::dryad::id::ElementID& key ) const {
+    size_t operator()( const njoy::dryad::id::ElementID& key ) const noexcept {
 
       return key.number();
     }

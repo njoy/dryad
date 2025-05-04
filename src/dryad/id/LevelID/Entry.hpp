@@ -17,6 +17,6 @@ public:
     number_( number ), symbol_( std::move( symbol ) ) {}
 
   /* methods */
-  unsigned char number() const { return this->number_; }
-  const std::string& symbol() const { return this->symbol_; }
+  unsigned char number() const noexcept { return this->number_; }
+  const std::string& symbol() const noexcept { return this->symbol_; }
 };

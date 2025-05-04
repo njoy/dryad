@@ -19,7 +19,7 @@ public:
     name_( std::move( name ) ) {}
 
   /* methods */
-  short number() const { return this->number_; }
-  const std::string& symbol() const { return this->symbol_; }
-  const std::string& name() const { return this->name_; }
+  short number() const noexcept { return this->number_; }
+  const std::string& symbol() const noexcept { return this->symbol_; }
+  const std::string& name() const noexcept { return this->name_; }
 };

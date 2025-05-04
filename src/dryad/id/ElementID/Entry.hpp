@@ -21,8 +21,8 @@ public:
     name_( std::move( name ) ), alternatives_( std::move( alternatives ) ) {}
 
   /* methods */
-  unsigned char number() const { return this->number_; }
-  const std::string& symbol() const { return this->symbol_; }
-  const std::string& name() const { return this->name_; }
-  const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+  unsigned char number() const noexcept { return this->number_; }
+  const std::string& symbol() const noexcept { return this->symbol_; }
+  const std::string& name() const noexcept { return this->name_; }
+  const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
 };

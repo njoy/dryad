@@ -1,8 +1,9 @@
 /**
  *  @brief Update registry
  *
- *  @param za      the za of the particle
- *  @param level   the particle level number (default is zero)
+ *  @param element   the particle element
+ *  @param mass      the particle mass number
+ *  @param level     the particle level
  */
 static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) {
 
@@ -38,16 +39,47 @@ static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) 
 }
 
 /**
+ *  @brief Update registry
+ *
+ *  @param element    the particle element
+ *  @param subshell   the particle subshell
+ */
+static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshell ) {
+
+  // the index for the new identifier
+  std::size_t index = entries.size();
+
+  int number = element.number() * 1000000 + subshell.number();
+  std::string symbol = element.symbol() + std::string( "{" ) + subshell.symbol() + std::string( "}" );
+  std::vector< std::string > alternatives = { element.symbol() + std::string( "{" ) + subshell.name() + std::string( "}" ) };
+
+  // create the data entry and set conversion
+  entries.emplace_back( number, std::move( element ),
+                        std::move( subshell ), std::move( symbol ),
+                        std::move( alternatives ) );
+
+  number_conversion_dictionary[ entries[ index ].number() ] = index;
+  string_conversion_dictionary[ entries[ index ].symbol() ] = index;
+  for ( const auto& alternative : entries[ index ].alternatives() ) {
+
+    string_conversion_dictionary[ alternative ] = index;
+  }
+
+  // return the index
+  return index;
+}
+
+/**
  *  @brief Retrieve the index to the particle information entry
  *
- *  @param za      the za of the particle
- *  @param level   the particle level number (default is zero)
+ *  @param za       the za of the particle
+ *  @param number   the particle level number or subshell number
  */
-static std::size_t getIndex( int za, int level ) {
+static std::size_t getIndex( int za, int number ) {
 
   try {
 
-    return number_conversion_dictionary.at( za * 1000 + level );
+    return number_conversion_dictionary.at( za * 1000 + number );
   }
   catch ( ... ) {
 
@@ -56,14 +88,34 @@ static std::size_t getIndex( int za, int level ) {
       // data entries
       int mass = za % 1000;
       ElementID element( ( za - mass ) / 1000 );
-      LevelID state( level );
 
-      // update registry and return the index
-      return updateRegistry( std::move( element ), std::move( mass ), std::move( state ) );
+      // look for state or subshell number
+      if ( number <= LevelID::continuum ) {
+
+        // determine the level
+        LevelID state( number );
+
+        // update registry and return the index
+        return updateRegistry( std::move( element ), std::move( mass ), std::move( state ) );
+      }
+      else if ( mass == 0 ) {
+
+        // determine the level
+        ElectronSubshellID subshell( number );
+
+        // update registry and return the index
+        return updateRegistry( std::move( element ), std::move( subshell ) );
+      }
+      else {
+
+        throw std::out_of_range( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
+                                 + std::to_string( number ) + "\' does not define a standard particle or ion" );
+      }
     }
     catch ( ... ) {
 
-      throw std::out_of_range( "Not a particle symbol or name: \'" + std::to_string( za ) + "\'" );
+      throw std::out_of_range( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
+      + std::to_string( number ) + "\' does not define a standard particle or ion" );
     }
   }
 }
@@ -93,6 +145,15 @@ static std::size_t getIndex( const std::string& string ) {
 
       // update registry and return the index
       return updateRegistry( std::move( element ), std::move( mass ), std::move( state ) );
+    }
+    else if ( std::regex_match( string, match, ion_id_regex ) ) {
+
+      // data entries
+      ElementID element( match[1] );
+      ElectronSubshellID subshell( match[2] );
+
+      // update registry and return the index
+      return updateRegistry( std::move( element ), std::move( subshell ) );
     }
 
     throw std::out_of_range( "Not a particle symbol or name: \'" + string + "\'" );

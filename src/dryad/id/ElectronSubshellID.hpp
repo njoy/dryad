@@ -212,7 +212,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::ElectronSubshellID > {
 
-    size_t operator()( const njoy::dryad::id::ElectronSubshellID& key ) const {
+    size_t operator()( const njoy::dryad::id::ElectronSubshellID& key ) const noexcept {
 
       return key.number();
     }

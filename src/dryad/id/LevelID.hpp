@@ -162,7 +162,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::LevelID > {
 
-    size_t operator()( const njoy::dryad::id::LevelID& key ) const {
+    size_t operator()( const njoy::dryad::id::LevelID& key ) const noexcept {
 
       return key.number();
     }
