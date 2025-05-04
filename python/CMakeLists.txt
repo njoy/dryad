@@ -4,6 +4,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ToleranceConvergence.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ElectronSubshellID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ElementID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/LevelID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ParticleID.python.cpp

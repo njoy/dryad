@@ -5,17 +5,17 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/id/ParticleID.hpp"
+#include "dryad/id/ElectronSubshellID.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace id {
 
-void wrapParticleID( python::module& module ) {
+void wrapElectronSubshellID( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::id::ParticleID;
+  using Component = njoy::dryad::id::ElectronSubshellID;
 
   // wrap views created by this component
 
@@ -23,48 +23,47 @@ void wrapParticleID( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "ParticleID",
-    "The particle identifier"
+    "ElectronSubshellID",
+    "The electron subshell identifier"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< int, int >(),
-    python::arg( "za" ), python::arg( "level" ) = 0,
-    "Initialise the particle identifier\n\n"
+    python::init< int >(),
+    python::arg( "number" ),
+    "Initialise the subshell identifier\n\n"
     "Arguments:\n"
-    "    self    the identifier\n"
-    "    za      the particle za number\n"
-    "    level   the particle level number (default is zero)"
-     )
+    "    self     the identifier\n"
+    "    number   the subshell number"
+  )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
-    "Initialise the particle identifier\n\n"
+    "Initialise the subshell identifier\n\n"
     "Arguments:\n"
     "    self     the identifier\n"
-    "    string   the particle symbol, name or alternative"
-  )
-  .def_static(
-
-    "size",
-    &Component::size,
-    "The number of currently registered identifiers"
+    "    string   the subshell symbol, name or alternative name"
   )
   .def_property_readonly(
 
     "number",
     &Component::number,
-    "The level number"
+    "The element number"
   )
   .def_property_readonly(
 
     "symbol",
     &Component::symbol,
-    "The level symbol"
+    "The element symbol"
+  )
+  .def_property_readonly(
+
+    "name",
+    &Component::name,
+    "The element name"
   )
   .def(
 

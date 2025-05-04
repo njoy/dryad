@@ -32,7 +32,7 @@ void wrapLevelID( python::module& module ) {
   .def(
 
     python::init< int >(),
-    python::arg( "level" ),
+    python::arg( "number" ),
     "Initialise the level identifier\n\n"
     "Arguments:\n"
     "    self     the identifier\n"
@@ -41,11 +41,11 @@ void wrapLevelID( python::module& module ) {
   .def(
 
     python::init< const std::string& >(),
-    python::arg( "level" ),
+    python::arg( "string" ),
     "Initialise the level identifier\n\n"
     "Arguments:\n"
     "    self     the identifier\n"
-    "    symbol   the level symbol"
+    "    string   the level symbol"
   )
   .def_property_readonly_static(
 

@@ -41,11 +41,11 @@ void wrapElementID( python::module& module ) {
   .def(
 
     python::init< const std::string& >(),
-    python::arg( "number" ),
-    "Initialise the reaction\n\n"
+    python::arg( "string" ),
+    "Initialise the element identifier\n\n"
     "Arguments:\n"
     "    self     the identifier\n"
-    "    symbol   the element symbol, name or alternative name"
+    "    string   the element symbol, name or alternative name"
   )
   .def_property_readonly(
 
