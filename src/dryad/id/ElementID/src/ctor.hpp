@@ -19,6 +19,6 @@ ElementID( int number ) : index_( getIndex( number ) ) {}
 /**
  *  @brief Constructor
  *
- *  @param string   the element identifier
+ *  @param string   the element identifier or element name
  */
 ElementID( const std::string& string ) : index_( getIndex( string ) ) {}
