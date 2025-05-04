@@ -2,6 +2,7 @@
 Covariance data components
 """
 from __future__ import annotations
+import dryad.id
 import numpy
 import typing
 __all__ = ['CrossSectionCovarianceBlock', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ScalingType', 'VarianceScaling', 'is_square', 'is_symmetric']
@@ -34,7 +35,7 @@ class CrossSectionCovarianceBlock:
             relative           the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, projectile: str, target: str, reaction: str, energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
+    def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: str, energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
         """
         Initialise a diagonal cross section covariance block
         
@@ -49,7 +50,7 @@ class CrossSectionCovarianceBlock:
             scaling       the variance scaling information (default is none)
         """
     @typing.overload
-    def __init__(self, row_projectile: str, row_target: str, row_reaction: str, row_energies: list[float], column_projectile: str, column_target: str, column_reaction: str, column_energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, row_projectile: dryad.id.ParticleID, row_target: dryad.id.ParticleID, row_reaction: str, row_energies: list[float], column_projectile: dryad.id.ParticleID, column_target: dryad.id.ParticleID, column_reaction: str, column_energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an off-diagonal cross section covariance block
         
@@ -172,7 +173,7 @@ class CrossSectionMetadata:
     """
     Metadata for the rows or columns of a covariance matrix block for cross section data
     """
-    def __init__(self, projectile: str, target: str, reaction: str, energies: list[float]) -> None:
+    def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: str, energies: list[float]) -> None:
         """
         Initialise the meta data
         
@@ -194,7 +195,7 @@ class CrossSectionMetadata:
         The number of energy groups
         """
     @property
-    def projectile_identifier(self) -> str:
+    def projectile_identifier(self) -> dryad.id.ParticleID:
         """
         The projectile identifier
         """
@@ -204,7 +205,7 @@ class CrossSectionMetadata:
         The reaction identifier
         """
     @property
-    def target_identifier(self) -> str:
+    def target_identifier(self) -> dryad.id.ParticleID:
         """
         The target identifier
         """
