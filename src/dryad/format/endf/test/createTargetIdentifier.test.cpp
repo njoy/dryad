@@ -19,7 +19,7 @@ SCENARIO( "createTargetIdentifier" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( id::ParticleID( "1001_e1" ) == format::endf::createTargetIdentifier( 1001, 1 ) );
+        CHECK( id::ParticleID( "H1_e1" ) == format::endf::createTargetIdentifier( 1001, 1 ) );
       } // THEN
     } // WHEN
   } // GIVEN

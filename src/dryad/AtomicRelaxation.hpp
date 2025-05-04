@@ -81,7 +81,7 @@ namespace dryad {
       }
       else {
 
-        Log::error( "The requested subshell \'{}\' could not be found", id );
+        Log::error( "The requested subshell \'{}\' could not be found", id.symbol() );
         throw std::exception();
       }
     }

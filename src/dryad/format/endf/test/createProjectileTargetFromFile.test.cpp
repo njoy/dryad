@@ -26,7 +26,7 @@ SCENARIO( "projectileTarget" ) {
         ProjectileTarget H1 = format::endf::createProjectileTargetFromFile( "n-001_H_001.endf" );
 
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
-        CHECK( id::ParticleID( "1001_e0" ) == H1.targetIdentifier() );
+        CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == H1.interactionType() );
 
@@ -68,7 +68,7 @@ SCENARIO( "projectileTarget" ) {
         ProjectileTarget Li7 = format::endf::createProjectileTargetFromFile( "n-003_Li_007.endf" );
 
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
-        CHECK( id::ParticleID( "3007_e0" ) == Li7.targetIdentifier() );
+        CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == Li7.interactionType() );
 
@@ -223,7 +223,7 @@ SCENARIO( "projectileTarget" ) {
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "e-001_H_000.endf" );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -300,7 +300,7 @@ SCENARIO( "projectileTarget" ) {
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "e-001_H_000-endf80.endf" );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -380,7 +380,7 @@ SCENARIO( "projectileTarget" ) {
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf" );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 

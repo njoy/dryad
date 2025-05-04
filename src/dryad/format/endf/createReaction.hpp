@@ -34,7 +34,7 @@ namespace endf {
                                             { return product.identifier() == particle; } );
       if ( iter == products.end() ) {
 
-        Log::info( "Adding '{}' as an expected reaction product", particle );
+        Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );
         products.emplace_back( particle, createMultiplicity( multiplicity ) );
       }
     }

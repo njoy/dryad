@@ -29,7 +29,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.84p" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -87,7 +87,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.12p" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -152,7 +152,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.14p" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 

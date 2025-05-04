@@ -251,7 +251,7 @@ namespace h1 {
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 
     auto antielectron = epairproduction.products()[2];
-    CHECK( id::ParticleID( "e-_anti" ) == antielectron.identifier() );
+    CHECK( id::ParticleID( "e+" ) == antielectron.identifier() );
 
     auto hydrogen = epairproduction.products()[3];
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
@@ -288,7 +288,7 @@ namespace h1 {
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 
     auto antielectron = npairproduction.products()[1];
-    CHECK( id::ParticleID( "e-_anti" ) == antielectron.identifier() );
+    CHECK( id::ParticleID( "e+" ) == antielectron.identifier() );
 
     auto hydrogen = npairproduction.products()[2];
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );

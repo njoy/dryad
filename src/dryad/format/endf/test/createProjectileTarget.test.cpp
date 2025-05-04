@@ -29,7 +29,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget H1 = format::endf::createProjectileTarget( material );
 
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
-        CHECK( id::ParticleID( "1001_e0" ) == H1.targetIdentifier() );
+        CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == H1.interactionType() );
 
@@ -74,7 +74,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget Li7 = format::endf::createProjectileTarget( material );
 
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
-        CHECK( id::ParticleID( "3007_e0" ) == Li7.targetIdentifier() );
+        CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == Li7.interactionType() );
 
@@ -226,7 +226,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget H0 = format::endf::createProjectileTarget( material );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -309,7 +309,7 @@ SCENARIO( "createProjectileTarget" ) {
         ProjectileTarget H0 = format::endf::createProjectileTarget( material );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000_e0" ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 

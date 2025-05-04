@@ -26,7 +26,7 @@ SCENARIO( "createProjectileIdentifier" ) {
         CHECK( id::ParticleID( "p" ) == format::endf::createProjectileIdentifier( 10010 ) );
         CHECK( id::ParticleID( "d" ) == format::endf::createProjectileIdentifier( 10020 ) );
         CHECK( id::ParticleID( "t" ) == format::endf::createProjectileIdentifier( 10030 ) );
-        CHECK( id::ParticleID( "he3" ) == format::endf::createProjectileIdentifier( 20030 ) );
+        CHECK( id::ParticleID( "h" ) == format::endf::createProjectileIdentifier( 20030 ) );
         CHECK( id::ParticleID( "a" ) == format::endf::createProjectileIdentifier( 20040 ) );
       } // THEN
 

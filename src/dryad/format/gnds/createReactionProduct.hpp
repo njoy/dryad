@@ -36,7 +36,7 @@ namespace gnds {
 
     // get the secondary particle identifier and adjust as required
     id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
-    Log::info( "Reading reaction product data for \'{}\'", id );
+    Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
 
     // create the multiplicity
     auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );

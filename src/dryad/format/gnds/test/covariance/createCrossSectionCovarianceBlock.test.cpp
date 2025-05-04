@@ -27,17 +27,17 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
     WHEN( "constructing a CovarianceBlock" ) {
 
-      id::ParticleID projectile = "n";
-      id::ParticleID target = "F19";
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "F19" );
 
       auto chunk = format::gnds::covariance::createCrossSectionCovarianceBlock(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
 
-        CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-        CHECK( "F19" == chunk.rowMetadata().targetIdentifier() );
-        CHECK( "16" == chunk.rowMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "F19" ) == chunk.rowMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "16"  )== chunk.rowMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.rowMetadata().energies().size() );
         CHECK( 6 == chunk.rowMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -48,9 +48,9 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
         CHECK_THAT( 1.800000e+7, WithinRel( chunk.rowMetadata().energies()[5] ) );
         CHECK_THAT( 2.000000e+7, WithinRel( chunk.rowMetadata().energies()[6] ) );
 
-        CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-        CHECK( "F19" == chunk.columnMetadata().targetIdentifier() );
-        CHECK( "16" == chunk.columnMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "F19" ) == chunk.columnMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "16"  )== chunk.columnMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.columnMetadata().energies().size() );
         CHECK( 6 == chunk.columnMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -144,20 +144,20 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
           pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
           pugi::xml_node covariance = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                                find_child_by_attribute( "covarianceSection", "label", "H2 + O18 [inclusive]" );
-      
+
     WHEN( "constructing a CovarianceBlock" ) {
 
-      id::ParticleID projectile = "n";
-      id::ParticleID target = "F19";
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "F19" );
 
       auto chunk = format::gnds::covariance::createCrossSectionCovarianceBlock(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
 
-        CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-        CHECK( "F19" == chunk.rowMetadata().targetIdentifier() );
-        CHECK( "104" == chunk.rowMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "F19" ) == chunk.rowMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "104"  )== chunk.rowMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.rowMetadata().energies().size() );
         CHECK( 6 == chunk.rowMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -168,9 +168,9 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
         CHECK_THAT( 1.500000e+7, WithinRel( chunk.rowMetadata().energies()[5] ) );
         CHECK_THAT( 2.000000e+7, WithinRel( chunk.rowMetadata().energies()[6] ) );
 
-        CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-        CHECK( "F19" == chunk.columnMetadata().targetIdentifier() );
-        CHECK( "104" == chunk.columnMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "F19" ) == chunk.columnMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "104"  )== chunk.columnMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.columnMetadata().energies().size() );
         CHECK( 6 == chunk.columnMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -251,17 +251,17 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
     WHEN( "constructing a CovarianceBlock" ) {
 
-      id::ParticleID projectile = "n";
-      id::ParticleID target = "F19";
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "F19" );
 
       auto chunk = format::gnds::covariance::createCrossSectionCovarianceBlock(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
 
-        CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-        CHECK( "F19" == chunk.rowMetadata().targetIdentifier() );
-        CHECK( "4" == chunk.rowMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "F19" ) == chunk.rowMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "4"  )== chunk.rowMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.rowMetadata().energies().size() );
         CHECK( 6 == chunk.rowMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -272,9 +272,9 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
         CHECK_THAT( 1.800000e+7, WithinRel( chunk.rowMetadata().energies()[5] ) );
         CHECK_THAT( 2.000000e+7, WithinRel( chunk.rowMetadata().energies()[6] ) );
 
-        CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-        CHECK( "F19" == chunk.columnMetadata().targetIdentifier() );
-        CHECK( "16" == chunk.columnMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "F19" ) == chunk.columnMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "16"  )== chunk.columnMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.columnMetadata().energies().size() );
         CHECK( 6 == chunk.columnMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -354,17 +354,17 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
     WHEN( "constructing a CovarianceBlock" ) {
 
-      id::ParticleID projectile = "n";
-      id::ParticleID target = "Ne22";
+      id::ParticleID projectile( "n" );
+      id::ParticleID target( "Ne22" );
 
       auto chunk = format::gnds::covariance::createCrossSectionCovarianceBlock(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
 
-        CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-        CHECK( "Ne22" == chunk.rowMetadata().targetIdentifier() );
-        CHECK( "16" == chunk.rowMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "Ne22" ) == chunk.rowMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "16"  )== chunk.rowMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.rowMetadata().energies().size() );
         CHECK( 6 == chunk.rowMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -375,9 +375,9 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
         CHECK_THAT( 2.500000e+7, WithinRel( chunk.rowMetadata().energies()[5] ) );
         CHECK_THAT( 2.900000e+7, WithinRel( chunk.rowMetadata().energies()[6] ) );
 
-        CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-        CHECK( "Ne22" == chunk.columnMetadata().targetIdentifier() );
-        CHECK( "51" == chunk.columnMetadata().reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+        CHECK( id::ParticleID( "Ne22" ) == chunk.columnMetadata().targetIdentifier() );
+        CHECK( id::ReactionID( "51"  )== chunk.columnMetadata().reactionIdentifier() );
         CHECK( 11 == chunk.columnMetadata().energies().size() );
         CHECK( 10 == chunk.columnMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );

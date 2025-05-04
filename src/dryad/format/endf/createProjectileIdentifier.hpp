@@ -27,7 +27,7 @@ namespace endf {
       case 10010 : return id::ParticleID( "p" );
       case 10020 : return id::ParticleID( "d" );
       case 10030 : return id::ParticleID( "t" );
-      case 20030 : return id::ParticleID( "he3" );
+      case 20030 : return id::ParticleID( "h" );
       case 20040 : return id::ParticleID( "a" );
       default : {
 
