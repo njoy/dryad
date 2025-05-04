@@ -173,7 +173,7 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 4 == ParticleID::size() ); // H1[continuum] already registered
 
-      id = ParticleID( 1000, 534 );
+      id = ParticleID( 1000, njoy::dryad::id::ElectronSubshellID::K );
       CHECK( 1000534 == id.number() );
       CHECK( "H{1s1/2}" == id.symbol() );
 
@@ -183,7 +183,13 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1000534 == id.number() );
       CHECK( "H{1s1/2}" == id.symbol() );
 
-      CHECK( size + 5 == ParticleID::size() ); // H1[continuum] already registered
+      CHECK( size + 5 == ParticleID::size() ); // H{1s1/2} already registered
+
+      id = ParticleID( "H{K}" );
+      CHECK( 1000534 == id.number() );
+      CHECK( "H{1s1/2}" == id.symbol() );
+
+      CHECK( size + 5 == ParticleID::size() ); // H{1s1/2} already registered
 
       id = ParticleID( "He{1s1/2}" );
       CHECK( 2000534 == id.number() );
@@ -191,7 +197,13 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 6 == ParticleID::size() ); // registering He{1s1/2} using a string
 
-      id = ParticleID( 2000, 534 );
+      id = ParticleID( "He{K}" );
+      CHECK( 2000534 == id.number() );
+      CHECK( "He{1s1/2}" == id.symbol() );
+
+      CHECK( size + 6 == ParticleID::size() ); // He{1s1/2} already registered
+
+      id = ParticleID( 2000, njoy::dryad::id::ElectronSubshellID::K );
       CHECK( 2000534 == id.number() );
       CHECK( "He{1s1/2}" == id.symbol() );
 
