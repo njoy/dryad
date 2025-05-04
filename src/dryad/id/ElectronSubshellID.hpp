@@ -22,59 +22,112 @@ namespace id {
    */
   class ElectronSubshellID {
 
+  public:
+
+    // the numbers representing the subshell
+    static constexpr short K   = 534;
+    static constexpr short L1  = 535;
+    static constexpr short L2  = 536;
+    static constexpr short L3  = 537;
+    static constexpr short M1  = 538;
+    static constexpr short M2  = 539;
+    static constexpr short M3  = 540;
+    static constexpr short M4  = 541;
+    static constexpr short M5  = 542;
+    static constexpr short N1  = 543;
+    static constexpr short N2  = 544;
+    static constexpr short N3  = 545;
+    static constexpr short N4  = 546;
+    static constexpr short N5  = 547;
+    static constexpr short N6  = 548;
+    static constexpr short N7  = 549;
+    static constexpr short O1  = 550;
+    static constexpr short O2  = 551;
+    static constexpr short O3  = 552;
+    static constexpr short O4  = 553;
+    static constexpr short O5  = 554;
+    static constexpr short O6  = 555;
+    static constexpr short O7  = 556;
+    static constexpr short O8  = 557;
+    static constexpr short O9  = 558;
+    static constexpr short P1  = 559;
+    static constexpr short P2  = 560;
+    static constexpr short P3  = 561;
+    static constexpr short P4  = 562;
+    static constexpr short P5  = 563;
+    static constexpr short P6  = 564;
+    static constexpr short P7  = 565;
+    static constexpr short P8  = 566;
+    static constexpr short P9  = 567;
+    static constexpr short P10 = 568;
+    static constexpr short P11 = 569;
+    static constexpr short Q1  = 570;
+    static constexpr short Q2  = 571;
+    static constexpr short Q3  = 572;
+    static constexpr short Q4  = 573;
+    static constexpr short Q5  = 574;
+    static constexpr short Q6  = 575;
+    static constexpr short Q7  = 576;
+    static constexpr short Q8  = 577;
+    static constexpr short Q9  = 578;
+    static constexpr short Q10 = 579;
+    static constexpr short Q11 = 580;
+
+  private:
+
     /* helper class */
     #include "dryad/id/ElectronSubshellID/Entry.hpp"
 
     /* static fields */
     static inline const std::vector< Entry > entries{
 
-      Entry{ 534, "1s1/2", "K" },
-      Entry{ 535, "2s1/2", "L1" },
-      Entry{ 536, "2p1/2", "L2" },
-      Entry{ 537, "2p3/2", "L3" },
-      Entry{ 538, "3s1/2", "M1" },
-      Entry{ 539, "3p1/2", "M2" },
-      Entry{ 540, "3p3/2", "M3" },
-      Entry{ 541, "3d3/2", "M4" },
-      Entry{ 542, "3d5/2", "M5" },
-      Entry{ 543, "4s1/2", "N1" },
-      Entry{ 544, "4p1/2", "N2" },
-      Entry{ 545, "4p3/2", "N3" },
-      Entry{ 546, "4d3/2", "N4" },
-      Entry{ 547, "4d5/2", "N5" },
-      Entry{ 548, "4f5/2", "N6" },
-      Entry{ 549, "4f7/2", "N7" },
-      Entry{ 550, "5s1/2", "O1" },
-      Entry{ 551, "5p1/2", "O2" },
-      Entry{ 552, "5p3/2", "O3" },
-      Entry{ 553, "5d3/2", "O4" },
-      Entry{ 554, "5d5/2", "O5" },
-      Entry{ 555, "5f5/2", "O6" },
-      Entry{ 556, "5f7/2", "O7" },
-      Entry{ 557, "5g7/2", "O8" },
-      Entry{ 558, "5g9/2", "O9" },
-      Entry{ 559, "6s1/2", "P1" },
-      Entry{ 560, "6p1/2", "P2" },
-      Entry{ 561, "6p3/2", "P3" },
-      Entry{ 562, "6d3/2", "P4" },
-      Entry{ 563, "6d5/2", "P5" },
-      Entry{ 564, "6f5/2", "P6" },
-      Entry{ 565, "6f7/2", "P7" },
-      Entry{ 566, "6g7/2", "P8" },
-      Entry{ 567, "6g9/2", "P9" },
-      Entry{ 568, "6h9/2", "P10" },
-      Entry{ 569, "6h11/2", "P11" },
-      Entry{ 570, "7s1/2", "Q1" },
-      Entry{ 571, "7p1/2", "Q2" },
-      Entry{ 572, "7p3/2", "Q3" },
-      Entry{ 573, "7d3/2", "Q4" },
-      Entry{ 574, "7d5/2", "Q5" },
-      Entry{ 575, "7f5/2", "Q6" },
-      Entry{ 576, "7f7/2", "Q7" },
-      Entry{ 577, "7g7/2", "Q8" },
-      Entry{ 578, "7g9/2", "Q9" },
-      Entry{ 579, "7h9/2", "Q10" },
-      Entry{ 580, "7h11/2", "Q11" }
+      Entry{ K  , "1s1/2" , "K"   },
+      Entry{ L1 , "2s1/2" , "L1"  },
+      Entry{ L2 , "2p1/2" , "L2"  },
+      Entry{ L3 , "2p3/2" , "L3"  },
+      Entry{ M1 , "3s1/2" , "M1"  },
+      Entry{ M2 , "3p1/2" , "M2"  },
+      Entry{ M3 , "3p3/2" , "M3"  },
+      Entry{ M4 , "3d3/2" , "M4"  },
+      Entry{ M5 , "3d5/2" , "M5"  },
+      Entry{ N1 , "4s1/2" , "N1"  },
+      Entry{ N2 , "4p1/2" , "N2"  },
+      Entry{ N3 , "4p3/2" , "N3"  },
+      Entry{ N4 , "4d3/2" , "N4"  },
+      Entry{ N5 , "4d5/2" , "N5"  },
+      Entry{ N6 , "4f5/2" , "N6"  },
+      Entry{ N7 , "4f7/2" , "N7"  },
+      Entry{ O1 , "5s1/2" , "O1"  },
+      Entry{ O2 , "5p1/2" , "O2"  },
+      Entry{ O3 , "5p3/2" , "O3"  },
+      Entry{ O4 , "5d3/2" , "O4"  },
+      Entry{ O5 , "5d5/2" , "O5"  },
+      Entry{ O6 , "5f5/2" , "O6"  },
+      Entry{ O7 , "5f7/2" , "O7"  },
+      Entry{ O8 , "5g7/2" , "O8"  },
+      Entry{ O9 , "5g9/2" , "O9"  },
+      Entry{ P1 , "6s1/2" , "P1"  },
+      Entry{ P2 , "6p1/2" , "P2"  },
+      Entry{ P3 , "6p3/2" , "P3"  },
+      Entry{ P4 , "6d3/2" , "P4"  },
+      Entry{ P5 , "6d5/2" , "P5"  },
+      Entry{ P6 , "6f5/2" , "P6"  },
+      Entry{ P7 , "6f7/2" , "P7"  },
+      Entry{ P8 , "6g7/2" , "P8"  },
+      Entry{ P9 , "6g9/2" , "P9"  },
+      Entry{ P10, "6h9/2" , "P10" },
+      Entry{ P11, "6h11/2", "P11" },
+      Entry{ Q1 , "7s1/2" , "Q1"  },
+      Entry{ Q2 , "7p1/2" , "Q2"  },
+      Entry{ Q3 , "7p3/2" , "Q3"  },
+      Entry{ Q4 , "7d3/2" , "Q4"  },
+      Entry{ Q5 , "7d5/2" , "Q5"  },
+      Entry{ Q6 , "7f5/2" , "Q6"  },
+      Entry{ Q7 , "7f7/2" , "Q7"  },
+      Entry{ Q8 , "7g7/2" , "Q8"  },
+      Entry{ Q9 , "7g9/2" , "Q9"  },
+      Entry{ Q10, "7h9/2" , "Q10" },
+      Entry{ Q11, "7h11/2", "Q11" }
     };
     static inline const std::unordered_map< std::string, std::size_t >
     string_conversion_dictionary = [] ( const auto& entries ) {

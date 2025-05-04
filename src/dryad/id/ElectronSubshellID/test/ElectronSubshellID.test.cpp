@@ -17,7 +17,7 @@ SCENARIO( "ElectronSubshellID" ) {
 
     THEN( "an ElectronSubshellID can be created" ) {
 
-      ElectronSubshellID id( 534 );
+      ElectronSubshellID id( ElectronSubshellID::K );
       CHECK( 534 == id.number() );
       CHECK( "1s1/2" == id.symbol() );
       CHECK( "K" == id.name() );
@@ -30,7 +30,7 @@ SCENARIO( "ElectronSubshellID" ) {
       CHECK( 534 == id.number() );
       CHECK( "K" == id.name() );
 
-      id = ElectronSubshellID( 535 );
+      id = ElectronSubshellID( ElectronSubshellID::L1 );
       CHECK( 535 == id.number() );
       CHECK( "2s1/2" == id.symbol() );
       CHECK( "L1" == id.name() );
@@ -47,8 +47,8 @@ SCENARIO( "ElectronSubshellID" ) {
 
   GIVEN( "valid ElectronSubshellID instances" ) {
 
-    ElectronSubshellID id1( 534 );
-    ElectronSubshellID id2( 535 );
+    ElectronSubshellID id1( ElectronSubshellID::K );
+    ElectronSubshellID id2( ElectronSubshellID::L1 );
 
     THEN( "instances can be compared" ) {
 
@@ -81,8 +81,8 @@ SCENARIO( "ElectronSubshellID" ) {
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ ElectronSubshellID( 534 ) ] == "1" );
-      CHECK( map[ ElectronSubshellID( 535 ) ] == "2" );
+      CHECK( map[ ElectronSubshellID( ElectronSubshellID::K ) ] == "1" );
+      CHECK( map[ ElectronSubshellID( ElectronSubshellID::L1 ) ] == "2" );
     } // THEN
 
     THEN( "instances can be used as keys in a std::unordered_map" ) {
@@ -94,8 +94,8 @@ SCENARIO( "ElectronSubshellID" ) {
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ ElectronSubshellID( 534 ) ] == "1" );
-      CHECK( map[ ElectronSubshellID( 535 ) ] == "2" );
+      CHECK( map[ ElectronSubshellID( ElectronSubshellID::K ) ] == "1" );
+      CHECK( map[ ElectronSubshellID( ElectronSubshellID::L1 ) ] == "2" );
     } // THEN
   } // GIVEN
 
