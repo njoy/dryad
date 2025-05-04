@@ -9,6 +9,7 @@ from dryad.covariance import CrossSectionCovarianceBlock
 from dryad.covariance import CrossSectionMetadata
 from dryad.covariance import ScalingType
 from dryad.covariance import VarianceScaling
+from dryad.id import ParticleID
 
 class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
     """Unit test for the CrossSectionCovarianceBlock class."""
@@ -18,15 +19,17 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # not using CrossSectionMetadata
 
         # the data is given explicitly - for a diagonal block without scaling
-        chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+        chunk = CrossSectionCovarianceBlock( projectile = ParticleID( 'n' ),
+                                             target = ParticleID( 'U235' ),
+                                             reaction = 'elastic',
                                              energies = [ 1e-5, 1., 1e+6, 2e+7 ],
                                              covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                           [ 2., 4., 6. ],
                                                                           [ 3., 6., 9. ] ] ) )
 
         # verify content
-        self.assertEqual( 'n', chunk.row_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.row_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.row_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.row_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.row_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.row_metadata.energies ) )
         self.assertEqual( 3, chunk.row_metadata.number_groups )
@@ -35,8 +38,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+6, chunk.row_metadata.energies[2] )
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
 
-        self.assertEqual( 'n', chunk.column_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.column_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.column_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.column_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.column_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.column_metadata.energies ) )
         self.assertEqual( 3, chunk.column_metadata.number_groups )
@@ -89,7 +92,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 14., chunk.eigenvalues[2] )
 
         # the data is given explicitly - for a diagonal block with scaling
-        chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+        chunk = CrossSectionCovarianceBlock( projectile = ParticleID( 'n' ),
+                                             target = ParticleID( 'U235' ),
+                                             reaction = 'elastic',
                                              energies = [ 1e-5, 1., 1e+6, 2e+7 ],
                                              covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                           [ 2., 4., 6. ],
@@ -100,8 +105,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
                                              relative = True )
 
         # verify content
-        self.assertEqual( 'n', chunk.row_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.row_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.row_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.row_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.row_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.row_metadata.energies ) )
         self.assertEqual( 3, chunk.row_metadata.number_groups )
@@ -110,8 +115,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+6, chunk.row_metadata.energies[2] )
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
 
-        self.assertEqual( 'n', chunk.column_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.column_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.column_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.column_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.column_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.column_metadata.energies ) )
         self.assertEqual( 3, chunk.column_metadata.number_groups )
@@ -173,15 +178,17 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # using CrossSectionMetadata
 
         # the data is given explicitly - for a diagonal block without scaling
-        chunk = CrossSectionCovarianceBlock( CrossSectionMetadata( 'n', 'U235', 'elastic',
-                                                                   energies = [ 1e-5, 1., 1e+6, 2e+7 ] ),
+        chunk = CrossSectionCovarianceBlock( CrossSectionMetadata( ParticleID( 'n' ),
+                                                                   ParticleID( 'U235' ),
+                                                                   'elastic',
+                                                                   [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                              covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                           [ 2., 4., 6. ],
                                                                           [ 3., 6., 9. ] ] ) )
 
         # verify content
-        self.assertEqual( 'n', chunk.row_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.row_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.row_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.row_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.row_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.row_metadata.energies ) )
         self.assertEqual( 3, chunk.row_metadata.number_groups )
@@ -190,8 +197,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+6, chunk.row_metadata.energies[2] )
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
 
-        self.assertEqual( 'n', chunk.column_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.column_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.column_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.column_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.column_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.column_metadata.energies ) )
         self.assertEqual( 3, chunk.column_metadata.number_groups )
@@ -244,7 +251,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 14., chunk.eigenvalues[2] )
 
         # the data is given explicitly - for a diagonal block with scaling
-        chunk = CrossSectionCovarianceBlock( CrossSectionMetadata( 'n', 'U235', 'elastic',
+        chunk = CrossSectionCovarianceBlock( CrossSectionMetadata( ParticleID( 'n' ),
+                                                                   ParticleID( 'U235' ),
+                                                                   'elastic',
                                                                    [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                              covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                           [ 2., 4., 6. ],
@@ -254,8 +263,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
                                                                         [ 0.001, 0.1 ] ) )
 
         # verify content
-        self.assertEqual( 'n', chunk.row_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.row_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.row_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.row_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.row_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.row_metadata.energies ) )
         self.assertEqual( 3, chunk.row_metadata.number_groups )
@@ -264,8 +273,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+6, chunk.row_metadata.energies[2] )
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
 
-        self.assertEqual( 'n', chunk.column_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.column_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.column_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.column_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.column_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.column_metadata.energies ) )
         self.assertEqual( 3, chunk.column_metadata.number_groups )
@@ -329,17 +338,21 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # not using CrossSectionMetadata
 
         # the data is given explicitly
-        chunk = CrossSectionCovarianceBlock( row_projectile = 'n', row_target = 'U235', row_reaction = 'elastic',
+        chunk = CrossSectionCovarianceBlock( row_projectile = ParticleID( 'n' ),
+                                             row_target = ParticleID( 'U235' ),
+                                             row_reaction = 'elastic',
                                              row_energies = [ 1e-5, 1., 1e+6, 2e+7 ],
-                                             column_projectile = 'n', column_target = 'U238', column_reaction = 'fission',
+                                             column_projectile = ParticleID( 'n' ),
+                                             column_target = ParticleID( 'U238' ),
+                                             column_reaction = 'fission',
                                              column_energies = [ 1e-5, 2., 2e+7 ],
                                              covariances = numpy.array( [ [ 1., 2. ],
                                                                           [ 2., 4. ],
                                                                           [ 3., 6. ] ] ) )
 
         # verify content
-        self.assertEqual( 'n', chunk.row_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.row_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.row_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.row_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.row_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.row_metadata.energies ) )
         self.assertEqual( 3, chunk.row_metadata.number_groups )
@@ -348,8 +361,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+6, chunk.row_metadata.energies[2] )
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
 
-        self.assertEqual( 'n', chunk.column_metadata.projectile_identifier )
-        self.assertEqual( 'U238', chunk.column_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.column_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U238' ), chunk.column_metadata.target_identifier )
         self.assertEqual( 'fission', chunk.column_metadata.reaction_identifier )
         self.assertEqual( 3, len( chunk.column_metadata.energies ) )
         self.assertEqual( 2, chunk.column_metadata.number_groups )
@@ -393,17 +406,21 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # using CrossSectionMetadata
 
         # the data is given explicitly
-        chunk = CrossSectionCovarianceBlock( row_metadata = CrossSectionMetadata( 'n', 'U235', 'elastic',
+        chunk = CrossSectionCovarianceBlock( row_metadata = CrossSectionMetadata( ParticleID( 'n' ),
+                                                                                  ParticleID( 'U235' ),
+                                                                                  'elastic',
                                                                                   [ 1e-5, 1., 1e+6, 2e+7 ] ),
-                                             column_metadata = CrossSectionMetadata( 'n', 'U238', 'fission',
+                                             column_metadata = CrossSectionMetadata( ParticleID( 'n' ),
+                                                                                    ParticleID( 'U238' ),
+                                                                                    'fission',
                                                                                      [ 1e-5, 2., 2e+7 ] ),
                                              covariances = numpy.array( [ [ 1., 2. ],
                                                                           [ 2., 4. ],
                                                                           [ 3., 6. ] ] ) )
 
         # verify content
-        self.assertEqual( 'n', chunk.row_metadata.projectile_identifier )
-        self.assertEqual( 'U235', chunk.row_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.row_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U235' ), chunk.row_metadata.target_identifier )
         self.assertEqual( 'elastic', chunk.row_metadata.reaction_identifier )
         self.assertEqual( 4, len( chunk.row_metadata.energies ) )
         self.assertEqual( 3, chunk.row_metadata.number_groups )
@@ -412,8 +429,8 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1e+6, chunk.row_metadata.energies[2] )
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
 
-        self.assertEqual( 'n', chunk.column_metadata.projectile_identifier )
-        self.assertEqual( 'U238', chunk.column_metadata.target_identifier )
+        self.assertEqual( ParticleID( 'n' ), chunk.column_metadata.projectile_identifier )
+        self.assertEqual( ParticleID( 'U238' ), chunk.column_metadata.target_identifier )
         self.assertEqual( 'fission', chunk.column_metadata.reaction_identifier )
         self.assertEqual( 3, len( chunk.column_metadata.energies ) )
         self.assertEqual( 2, chunk.column_metadata.number_groups )
@@ -461,7 +478,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # the matrix is not square for a diagonal covariance block
         with self.assertRaises( Exception ) :
 
-            chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+            chunk = CrossSectionCovarianceBlock( projectile = ParticleID( 'n' ),
+                                                 target = ParticleID( 'U235' ),
+                                                 reaction = 'elastic',
                                                  energies = [ 1e-5, 1., 1e+6, 2e+7 ],
                                                  covariances = numpy.array( [ [ 1., 2. ],
                                                                               [ 3., 4. ],
@@ -470,7 +489,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # the matrix is not symmetric for a diagonal covariance block
         with self.assertRaises( Exception ) :
 
-            chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+            chunk = CrossSectionCovarianceBlock( projectile = ParticleID( 'n' ),
+                                                 target = ParticleID( 'U235' ),
+                                                 reaction = 'elastic',
                                                  energies = [ 1e-5, 1., 1e+6, 2e+7 ],
                                                  covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                               [ 2., 4., 6. ],
@@ -479,7 +500,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # the matrix order is not consistent with the energy boundaries for a diagonal covariance block
         with self.assertRaises( Exception ) :
 
-            chunk = CrossSectionCovarianceBlock( projectile = 'n', target = 'U235', reaction = 'elastic',
+            chunk = CrossSectionCovarianceBlock( projectile = ParticleID( 'n' ),
+                                                 target = ParticleID( 'U235' ),
+                                                 reaction = 'elastic',
                                                  energies = [ 1e-5, 1., 2e+7 ],
                                                  covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                               [ 2., 4., 6. ],
@@ -488,9 +511,13 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # the matrix order is not consistent with the energy boundaries for an off-diagonal covariance block (rows)
         with self.assertRaises( Exception ) :
 
-            chunk = CrossSectionCovarianceBlock( row_projectile = 'n', row_target = 'U235', row_reaction = 'elastic',
+            chunk = CrossSectionCovarianceBlock( row_projectile = ParticleID( 'n' ),
+                                                 row_target = ParticleID( 'U235' ),
+                                                 row_reaction = 'elastic',
                                                  row_energies = [ 1e-5, 1., 2e+7 ],
-                                                 column_projectile = 'n', column_target = 'U238', column_reaction = 'fission',
+                                                 column_projectile = ParticleID( 'n' ),
+                                                 column_target = ParticleID( 'U238' ),
+                                                 column_reaction = 'fission',
                                                  column_energies = [ 1e-5, 2., 2e+7 ],
                                                  covariances = numpy.array( [ [ 1., 2. ],
                                                                               [ 2., 4. ],
@@ -499,9 +526,13 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         # the matrix order is not consistent with the energy boundaries for an off-diagonal covariance block (columns)
         with self.assertRaises( Exception ) :
 
-            chunk = CrossSectionCovarianceBlock( row_projectile = 'n', row_target = 'U235', row_reaction = 'elastic',
+            chunk = CrossSectionCovarianceBlock( row_projectile = ParticleID( 'n' ),
+                                                 row_target = ParticleID( 'U235' ),
+                                                 row_reaction = 'elastic',
                                                  row_energies = [ 1e-5, 1., 1e+6, 2e+7 ],
-                                                 column_projectile = 'n', column_target = 'U238', column_reaction = 'fission',
+                                                 column_projectile = ParticleID( 'n' ),
+                                                 column_target = ParticleID( 'U238' ),
+                                                 column_reaction = 'fission',
                                                  column_energies = [ 1e-5, 2e+7 ],
                                                  covariances = numpy.array( [ [ 1., 2. ],
                                                                               [ 2., 4. ],
