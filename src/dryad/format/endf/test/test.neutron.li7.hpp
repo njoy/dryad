@@ -69,7 +69,7 @@ namespace li7 {
     CHECK_THAT( 3.254     , WithinRel( total.crossSection().values()[0] ) );
     CHECK_THAT( 1.19328997, WithinRel( total.crossSection().values()[536] ) );
 
-    CHECK( 0 == total.products().size() );
+    CHECK( 0 == total.numberReactionProducts() );
   }
 
   void verifyElasticReaction( const Reaction& elastic ) {
@@ -98,8 +98,10 @@ namespace li7 {
     CHECK_THAT( .97     , WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( .8637753, WithinRel( elastic.crossSection().values()[178] ) );
 
-    CHECK( 1 == elastic.products().size() );
-    auto neutron = elastic.products()[0];
+    CHECK( 1 == elastic.numberReactionProducts() );
+    CHECK( 1 == elastic.numberProducts( id::ParticleID( "n" ) ) );
+
+    auto neutron = elastic.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
@@ -190,7 +192,7 @@ namespace li7 {
     CHECK_THAT( 4.067041E-6, WithinRel( capture.crossSection().values()[360] ) );
     CHECK_THAT( 4.E-6      , WithinRel( capture.crossSection().values()[361] ) );
 
-    CHECK( 0 == capture.products().size() );
+    CHECK( 0 == capture.numberReactionProducts() );
   }
 
   void verifyLumpedReaction851( const Reaction& lumped ) {
@@ -227,7 +229,7 @@ namespace li7 {
     CHECK_THAT( 7.20042300e-02, WithinRel( lumped.crossSection().values()[27] ) );
     CHECK_THAT( 7.52300000e-02, WithinRel( lumped.crossSection().values()[28] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction852( const Reaction& lumped ) {
@@ -263,7 +265,7 @@ namespace li7 {
     CHECK_THAT( 3.97335000e-02, WithinRel( lumped.crossSection().values()[132] ) );
     CHECK_THAT( 3.93590000e-02, WithinRel( lumped.crossSection().values()[133] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction853( const Reaction& lumped ) {
@@ -302,7 +304,7 @@ namespace li7 {
     CHECK_THAT( 1.89748930e-03, WithinRel( lumped.crossSection().values()[93] ) );
     CHECK_THAT( 1.77996460e-03, WithinRel( lumped.crossSection().values()[94] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction854( const Reaction& lumped ) {
@@ -338,7 +340,7 @@ namespace li7 {
     CHECK_THAT( .078823130, WithinRel( lumped.crossSection().values()[71] ) );
     CHECK_THAT( .078000000, WithinRel( lumped.crossSection().values()[72] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction855( const Reaction& lumped ) {
@@ -378,7 +380,7 @@ namespace li7 {
     CHECK_THAT( 9.16765500e-03, WithinRel( lumped.crossSection().values()[66] ) );
     CHECK_THAT( 8.56193900e-03, WithinRel( lumped.crossSection().values()[67] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction856( const Reaction& lumped ) {
@@ -418,7 +420,7 @@ namespace li7 {
     CHECK_THAT( 1.91613490e-02, WithinRel( lumped.crossSection().values()[46] ) );
     CHECK_THAT( 1.79659390e-02, WithinRel( lumped.crossSection().values()[47] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction857( const Reaction& lumped ) {
@@ -458,7 +460,7 @@ namespace li7 {
     CHECK_THAT( 2.38844240e-02, WithinRel( lumped.crossSection().values()[32] ) );
     CHECK_THAT( 2.27516480e-02, WithinRel( lumped.crossSection().values()[33] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction858( const Reaction& lumped ) {
@@ -498,7 +500,7 @@ namespace li7 {
     CHECK_THAT( 3.05346270e-02, WithinRel( lumped.crossSection().values()[21] ) );
     CHECK_THAT( 2.84387580e-02, WithinRel( lumped.crossSection().values()[22] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
   void verifyLumpedReaction859( const Reaction& lumped ) {
@@ -539,7 +541,7 @@ namespace li7 {
     CHECK_THAT( 3.55291340e-02, WithinRel( lumped.crossSection().values()[11] ) );
     CHECK_THAT( 3.76534200e-02, WithinRel( lumped.crossSection().values()[12] ) );
 
-    CHECK( 0 == lumped.products().size() );
+    CHECK( 0 == lumped.numberReactionProducts() );
   }
 
 } // namespace h1
