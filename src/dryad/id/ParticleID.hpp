@@ -201,6 +201,18 @@ namespace id {
     /* constructor */
     #include "dryad/id/ParticleID/src/ctor.hpp"
 
+    /* predefined identifiers */
+
+    static constexpr ParticleID photon() { return ParticleID{ static_cast< std::size_t >( 0 ) }; };
+    static constexpr ParticleID electron() { return ParticleID{ static_cast< std::size_t >( 1 ) }; };
+    static constexpr ParticleID positron() { return ParticleID{ static_cast< std::size_t >( 2 ) }; };
+    static constexpr ParticleID neutron() { return ParticleID{ static_cast< std::size_t >( 3 ) }; };
+    static constexpr ParticleID proton() { return ParticleID{ static_cast< std::size_t >( 4 ) }; };
+    static constexpr ParticleID deuteron() { return ParticleID{ static_cast< std::size_t >( 5 ) }; };
+    static constexpr ParticleID triton() { return ParticleID{ static_cast< std::size_t >( 6 ) }; };
+    static constexpr ParticleID helion() { return ParticleID{ static_cast< std::size_t >( 7 ) }; };
+    static constexpr ParticleID alpha() { return ParticleID{ static_cast< std::size_t >( 8 ) }; };
+
     /* methods */
 
     /**

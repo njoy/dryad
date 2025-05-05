@@ -35,6 +35,10 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.number() );
       CHECK( "g" == id.symbol() );
 
+      id = ParticleID::photon();
+      CHECK( 0 == id.number() );
+      CHECK( "g" == id.symbol() );
+
       id = ParticleID( "e-" );
       CHECK( 1 == id.number() );
       CHECK( "e-" == id.symbol() );
@@ -44,6 +48,10 @@ SCENARIO( "ParticleID" ) {
       CHECK( "e-" == id.symbol() );
 
       id = ParticleID( "beta-" );
+      CHECK( 1 == id.number() );
+      CHECK( "e-" == id.symbol() );
+
+      id = ParticleID::electron();
       CHECK( 1 == id.number() );
       CHECK( "e-" == id.symbol() );
 
@@ -63,11 +71,19 @@ SCENARIO( "ParticleID" ) {
       CHECK( 2 == id.number() );
       CHECK( "e+" == id.symbol() );
 
+      id = ParticleID::positron();
+      CHECK( 2 == id.number() );
+      CHECK( "e+" == id.symbol() );
+
       id = ParticleID( "n" );
       CHECK( 10 == id.number() );
       CHECK( "n" == id.symbol() );
 
       id = ParticleID( "neutron" );
+      CHECK( 10 == id.number() );
+      CHECK( "n" == id.symbol() );
+
+      id = ParticleID::neutron();
       CHECK( 10 == id.number() );
       CHECK( "n" == id.symbol() );
 
@@ -79,11 +95,19 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1001 == id.number() );
       CHECK( "p" == id.symbol() );
 
+      id = ParticleID::proton();
+      CHECK( 1001 == id.number() );
+      CHECK( "p" == id.symbol() );
+
       id = ParticleID( "d" );
       CHECK( 1002 == id.number() );
       CHECK( "d" == id.symbol() );
 
       id = ParticleID( "deuteron" );
+      CHECK( 1002 == id.number() );
+      CHECK( "d" == id.symbol() );
+
+      id = ParticleID::deuteron();
       CHECK( 1002 == id.number() );
       CHECK( "d" == id.symbol() );
 
@@ -95,6 +119,10 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1003 == id.number() );
       CHECK( "t" == id.symbol() );
 
+      id = ParticleID::triton();
+      CHECK( 1003 == id.number() );
+      CHECK( "t" == id.symbol() );
+
       id = ParticleID( "h" );
       CHECK( 2003 == id.number() );
       CHECK( "h" == id.symbol() );
@@ -103,11 +131,19 @@ SCENARIO( "ParticleID" ) {
       CHECK( 2003 == id.number() );
       CHECK( "h" == id.symbol() );
 
+      id = ParticleID::helion();
+      CHECK( 2003 == id.number() );
+      CHECK( "h" == id.symbol() );
+
       id = ParticleID( "a" );
       CHECK( 2004 == id.number() );
       CHECK( "a" == id.symbol() );
 
       id = ParticleID( "alpha" );
+      CHECK( 2004 == id.number() );
+      CHECK( "a" == id.symbol() );
+
+      id = ParticleID::alpha();
       CHECK( 2004 == id.number() );
       CHECK( "a" == id.symbol() );
 
