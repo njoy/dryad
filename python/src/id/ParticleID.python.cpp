@@ -54,6 +54,15 @@ void wrapParticleID( python::module& module ) {
     &Component::size,
     "The number of currently registered identifiers"
   )
+  .def_static( "photon",   &Component::photon,   "The particle identifier for photons" )
+  .def_static( "electron", &Component::electron, "The particle identifier for electrons" )
+  .def_static( "positron", &Component::positron, "The particle identifier for positrons" )
+  .def_static( "neutron",  &Component::neutron,  "The particle identifier for neutrons" )
+  .def_static( "proton",   &Component::proton,   "The particle identifier for protons" )
+  .def_static( "deuteron", &Component::deuteron, "The particle identifier for deuterons" )
+  .def_static( "triton",   &Component::triton,   "The particle identifier for tritons" )
+  .def_static( "helion",   &Component::helion,   "The particle identifier for helions" )
+  .def_static( "alpha",    &Component::alpha,    "The particle identifier for alphas" )
   .def_property_readonly(
 
     "number",

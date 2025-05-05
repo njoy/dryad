@@ -27,6 +27,10 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.number )
         self.assertEqual( 'g', id.symbol )
 
+        id = ParticleID.photon()
+        self.assertEqual( 0, id.number )
+        self.assertEqual( 'g', id.symbol )
+
         id = ParticleID( 'x-ray' )
         self.assertEqual( 0, id.number )
         self.assertEqual( 'g', id.symbol )
@@ -36,6 +40,10 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( 'e-', id.symbol )
 
         id = ParticleID( 'electron' )
+        self.assertEqual( 1, id.number )
+        self.assertEqual( 'e-', id.symbol )
+
+        id = ParticleID.electron()
         self.assertEqual( 1, id.number )
         self.assertEqual( 'e-', id.symbol )
 
@@ -55,11 +63,19 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.number )
         self.assertEqual( 'e+', id.symbol )
 
+        id = ParticleID.positron()
+        self.assertEqual( 2, id.number )
+        self.assertEqual( 'e+', id.symbol )
+
         id = ParticleID( 'n' )
         self.assertEqual( 10, id.number )
         self.assertEqual( 'n', id.symbol )
 
         id = ParticleID( 'neutron' )
+        self.assertEqual( 10, id.number )
+        self.assertEqual( 'n', id.symbol )
+
+        id = ParticleID.neutron()
         self.assertEqual( 10, id.number )
         self.assertEqual( 'n', id.symbol )
 
@@ -71,11 +87,19 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1001, id.number )
         self.assertEqual( 'p', id.symbol )
 
+        id = ParticleID.proton()
+        self.assertEqual( 1001, id.number )
+        self.assertEqual( 'p', id.symbol )
+
         id = ParticleID( 'd' )
         self.assertEqual( 1002, id.number )
         self.assertEqual( 'd', id.symbol )
 
         id = ParticleID( 'deuteron' )
+        self.assertEqual( 1002, id.number )
+        self.assertEqual( 'd', id.symbol )
+
+        id = ParticleID.deuteron()
         self.assertEqual( 1002, id.number )
         self.assertEqual( 'd', id.symbol )
 
@@ -87,6 +111,10 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1003, id.number )
         self.assertEqual( 't', id.symbol )
 
+        id = ParticleID.triton()
+        self.assertEqual( 1003, id.number )
+        self.assertEqual( 't', id.symbol )
+
         id = ParticleID( 'h' )
         self.assertEqual( 2003, id.number )
         self.assertEqual( 'h', id.symbol )
@@ -95,11 +123,19 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2003, id.number )
         self.assertEqual( 'h', id.symbol )
 
+        id = ParticleID.helion()
+        self.assertEqual( 2003, id.number )
+        self.assertEqual( 'h', id.symbol )
+
         id = ParticleID( 'a' )
         self.assertEqual( 2004, id.number )
         self.assertEqual( 'a', id.symbol )
 
         id = ParticleID( 'alpha' )
+        self.assertEqual( 2004, id.number )
+        self.assertEqual( 'a', id.symbol )
+
+        id = ParticleID.alpha()
         self.assertEqual( 2004, id.number )
         self.assertEqual( 'a', id.symbol )
 

@@ -223,9 +223,54 @@ class ParticleID:
     The particle identifier
     """
     @staticmethod
+    def alpha() -> ParticleID:
+        """
+        The particle identifier for alphas
+        """
+    @staticmethod
+    def deuteron() -> ParticleID:
+        """
+        The particle identifier for deuterons
+        """
+    @staticmethod
+    def electron() -> ParticleID:
+        """
+        The particle identifier for electrons
+        """
+    @staticmethod
+    def helion() -> ParticleID:
+        """
+        The particle identifier for helions
+        """
+    @staticmethod
+    def neutron() -> ParticleID:
+        """
+        The particle identifier for neutrons
+        """
+    @staticmethod
+    def photon() -> ParticleID:
+        """
+        The particle identifier for photons
+        """
+    @staticmethod
+    def positron() -> ParticleID:
+        """
+        The particle identifier for positrons
+        """
+    @staticmethod
+    def proton() -> ParticleID:
+        """
+        The particle identifier for protons
+        """
+    @staticmethod
     def size() -> int:
         """
         The number of currently registered identifiers
+        """
+    @staticmethod
+    def triton() -> ParticleID:
+        """
+        The particle identifier for tritons
         """
     def __eq__(self, arg0: ParticleID) -> bool:
         ...
