@@ -100,11 +100,19 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the number of reaction products
+     */
+    std::size_t numberReactionProducts() const noexcept {
+
+      return this->products_.size();
+    }
+
+    /**
      *  @brief Return whether or not the reaction has reaction products
      */
     bool hasProducts() const noexcept {
 
-      return this->products_.size() != 0;
+      return this->numberReactionProducts() != 0;
     }
 
     /**
@@ -116,37 +124,64 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not a given reaction product is present
+     *  @brief Return whether or not a given reaction product type is present
      *
-     *  @param[in] id   the reaction product identifier
+     *  @param[in] type   the reaction product type
      */
-    bool hasProduct( const id::ParticleID& id ) const {
+    bool hasProduct( const id::ParticleID& type ) const {
+
+      auto functor = [&type] ( auto&& product )
+                             { return product.identifier() == type; };
 
       auto iter = std::find_if( this->products().begin(),
                                 this->products().end(),
-                                [&id] ( auto&& product )
-                                      { return product.identifier() == id; } );
+                                functor );
       return iter != this->products().end();
     }
 
     /**
-     *  @brief Return the requested reaction product
+     *  @brief Return the number of reaction products of a given type
      *
-     *  @param[in] id   the reaction product identifier
+     *  @param[in] type   the reaction product type
      */
-    const ReactionProduct& product( const id::ReactionID& id ) const {
+    std::size_t numberProducts( const id::ParticleID& type ) const noexcept {
 
-      auto iter = std::find_if( this->products().begin(),
-                                this->products().end(),
-                                [&id] ( auto&& product )
-                                      { return product.identifier() == id; } );
+      auto functor = [&type] ( auto&& product )
+                             { return product.identifier() == type; };
+
+      return std::count_if( this->products().begin(),
+                            this->products().end(),
+                            functor );
+    }
+
+    /**
+     *  @brief Return a reaction product with a given type and index
+     *
+     *  @param[in] type    the reaction product type
+     *  @param[in] index   the reaction product index (default is zero)
+     */
+    const ReactionProduct& product( const id::ParticleID& type,
+                                    std::size_t index = 0 ) const {
+
+      auto functor = [&type] ( auto&& product )
+                             { return product.identifier() == type; };
+
+      auto iter = std::find_if( this->products().begin(), this->products().end(), functor );
+      std::size_t current = index;
+      while ( current != 0 && iter != this->products().end() ) {
+
+        iter = std::find_if( iter + 1, this->products().end(), functor );
+        --current;
+      }
+
       if ( iter != this->products().end() ) {
 
         return *iter;
       }
       else {
 
-        Log::error( "The requested reaction product \'{}\' could not be found", id );
+        Log::error( "There is no reaction product of type \'{}\' with index \'{}\' present",
+                    type.symbol(), index );
         throw std::exception();
       }
     }
