@@ -805,13 +805,13 @@ class Reaction:
             xs          the cross section of the reaction
             products     the reaction products
         """
-    def has_product(self, arg0: id.ParticleID) -> bool:
+    def has_product(self, type: id.ParticleID) -> bool:
         """
-        Return whether or not a reaction product is present
+        Return whether or not a reaction product type is present
         
         Arguments:
             self   the reaction
-            id     the reaction product identifier
+            type   the reaction product type
         """
     def linearise(self, tolerance: ToleranceConvergence = ...) -> Reaction:
         """
@@ -829,13 +829,18 @@ class Reaction:
             self        the reaction
             tolerance   the linearisation tolerance
         """
-    def product(self, arg0: str) -> ReactionProduct:
+    def number_products(self, type: id.ParticleID) -> int:
         """
-        Return the requested reaction product
+        The number of reaction products of a given type
+        """
+    def product(self, type: id.ParticleID, index: int = 0) -> ReactionProduct:
+        """
+        Return a reaction product with a given type and index
         
         Arguments:
-            self   the reaction
-            id     the reaction product identifier
+            self    the reaction
+            type    the reaction product type
+            index   the reaction product index (default is zero)
         """
     @property
     def cross_section(self) -> TabulatedCrossSection:
@@ -861,6 +866,11 @@ class Reaction:
     def mass_difference_qvalue(self) -> float | None:
         """
         The mass difference Q value
+        """
+    @property
+    def number_reaction_products(self) -> int:
+        """
+        The number of reaction products
         """
     @property
     def partial_reaction_identifiers(self) -> list[str] | None:
