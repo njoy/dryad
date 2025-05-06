@@ -23,8 +23,8 @@ static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) 
   }
 
   // create the data entry and set conversion
-  entries.emplace_back( number, std::move( element ), static_cast< char >( mass ),
-                        std::move( state ), std::move( symbol ),
+  entries.emplace_back( number, element.number(), static_cast< short >( mass ),
+                        state.number(), std::move( symbol ),
                         std::move( alternatives ) );
 
   number_conversion_dictionary[ entries[ index ].number() ] = index;
@@ -54,7 +54,7 @@ static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshel
   std::vector< std::string > alternatives = { element.symbol() + std::string( "{" ) + subshell.name() + std::string( "}" ) };
 
   // create the data entry and set conversion
-  entries.emplace_back( number, std::move( element ),
+  entries.emplace_back( number, element.number(),
                         std::move( subshell ), std::move( symbol ),
                         std::move( alternatives ) );
 

@@ -9,7 +9,7 @@ from dryad.id import ElementID
 class Test_dryad_id_ElementID( unittest.TestCase ) :
     """Unit test for the ElementID class."""
 
-    numbers = range( 0, 119 )
+    numbers = range( 1, 119 )
     symbols = [ '', 'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na',
                 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti',
                 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge',

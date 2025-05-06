@@ -283,14 +283,14 @@ class ParticleID:
         Hash function
         """
     @typing.overload
-    def __init__(self, za: int, level: int = 0) -> None:
+    def __init__(self, za: int, number: int = 0) -> None:
         """
         Initialise the particle identifier
         
         Arguments:
             self    the identifier
             za      the particle za number
-            level   the particle level number (default is zero)
+            level   the particle level number or subshell number (default is zero)
         """
     @typing.overload
     def __init__(self, string: str) -> None:
@@ -312,19 +312,14 @@ class ParticleID:
         Convenience function for printing the identifier
         """
     @property
-    def element(self) -> ElementID:
-        """
-        The particle's element
-        """
-    @property
-    def level(self) -> LevelID:
-        """
-        The particle's level
-        """
-    @property
-    def mass(self) -> int:
+    def a(self) -> int:
         """
         The particle's mass number
+        """
+    @property
+    def e(self) -> int:
+        """
+        The particle's level number
         """
     @property
     def number(self) -> int:
@@ -340,4 +335,9 @@ class ParticleID:
     def symbol(self) -> str:
         """
         The particle's symbol
+        """
+    @property
+    def z(self) -> int:
+        """
+        The particle's element number
         """

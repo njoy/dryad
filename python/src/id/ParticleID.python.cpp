@@ -32,12 +32,12 @@ void wrapParticleID( python::module& module ) {
   .def(
 
     python::init< int, int >(),
-    python::arg( "za" ), python::arg( "level" ) = 0,
+    python::arg( "za" ), python::arg( "number" ) = 0,
     "Initialise the particle identifier\n\n"
     "Arguments:\n"
     "    self    the identifier\n"
     "    za      the particle za number\n"
-    "    level   the particle level number (default is zero)"
+    "    level   the particle level number or subshell number (default is zero)"
      )
   .def(
 
@@ -77,21 +77,21 @@ void wrapParticleID( python::module& module ) {
   )
   .def_property_readonly(
 
-    "element",
-    &Component::element,
-    "The particle's element"
+    "z",
+    &Component::z,
+    "The particle's element number"
   )
   .def_property_readonly(
 
-    "mass",
-    &Component::mass,
+    "a",
+    &Component::a,
     "The particle's mass number"
   )
   .def_property_readonly(
 
-    "level",
-    &Component::level,
-    "The particle's level"
+    "e",
+    &Component::e,
+    "The particle's level number"
   )
   .def_property_readonly(
 

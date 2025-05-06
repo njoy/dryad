@@ -37,8 +37,8 @@ namespace id {
 
       // fundamental particles
       Entry{         0,   0, 0, 0, "g" , { "photon", "gamma", "x-ray" } },
-      Entry{         1,   0, 0, 0, "e-", { "electron", "beta-" } },
-      Entry{         2,   0, 0, 0, "e+", { "positron", "beta+", "e-_anti" } },
+      Entry{         1,  -1, 0, 0, "e-", { "electron", "beta-" } },
+      Entry{         2,   1, 0, 0, "e+", { "positron", "beta+", "e-_anti" } },
       Entry{        10,   0, 1, 0, "n" , { "neutron" } },
       Entry{      1001,   1, 1, 0, "p" , { "proton" } },
       Entry{      1002,   1, 2, 0, "d" , { "deuteron" } },
@@ -240,27 +240,27 @@ namespace id {
     }
 
     /**
-     *  @brief Return the particle's element
+     *  @brief Return the particle's element number
      */
-    const ElementID& element() const noexcept {
+    short z() const noexcept {
 
-      return entries[ this->index_ ].element();
+      return entries[ this->index_ ].z();
     }
 
     /**
      *  @brief Return the particle's mass number
      */
-    short mass() const noexcept {
+    short a() const noexcept {
 
-      return entries[ this->index_ ].mass();
+      return entries[ this->index_ ].a();
     }
 
     /**
-     *  @brief Return the particle's level
+     *  @brief Return the particle's level number
      */
-    const LevelID& level() const noexcept {
+    short e() const noexcept {
 
-      return entries[ this->index_ ].level();
+      return entries[ this->index_ ].e();
     }
 
     /**
