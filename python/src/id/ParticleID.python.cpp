@@ -35,9 +35,9 @@ void wrapParticleID( python::module& module ) {
     python::arg( "za" ), python::arg( "number" ) = 0,
     "Initialise the particle identifier\n\n"
     "Arguments:\n"
-    "    self    the identifier\n"
-    "    za      the particle za number\n"
-    "    level   the particle level number or subshell number (default is zero)"
+    "    self     the identifier\n"
+    "    za       the particle za number\n"
+    "    number   the particle level number or subshell number (default is zero)"
      )
   .def(
 

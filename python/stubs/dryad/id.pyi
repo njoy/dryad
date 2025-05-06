@@ -288,9 +288,9 @@ class ParticleID:
         Initialise the particle identifier
         
         Arguments:
-            self    the identifier
-            za      the particle za number
-            level   the particle level number or subshell number (default is zero)
+            self     the identifier
+            za       the particle za number
+            number   the particle level number or subshell number (default is zero)
         """
     @typing.overload
     def __init__(self, string: str) -> None:
