@@ -36,7 +36,7 @@ namespace h1 {
     CHECK_THAT( 274896030., WithinRel( total.crossSection().values()[0] ) );
     CHECK_THAT( 177322.091, WithinRel( total.crossSection().values()[348] ) );
 
-    CHECK( 0 == total.numberReactionProducts() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyTotalIonisationReaction( const Reaction& ionisation ) {
@@ -68,7 +68,7 @@ namespace h1 {
     CHECK_THAT( 0., WithinRel( ionisation.crossSection().values()[0] ) );
     CHECK_THAT( 82892.4, WithinRel( ionisation.crossSection().values()[34] ) );
 
-    CHECK( 0 == ionisation.numberReactionProducts() );
+    CHECK( 0 == ionisation.numberProducts() );
   }
 
   void verifyElasticReaction( const Reaction& elastic ) {
@@ -96,7 +96,7 @@ namespace h1 {
     CHECK_THAT( 274896000., WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 1.31176e-5, WithinRel( elastic.crossSection().values()[100] ) );
 
-    CHECK( 2 == elastic.numberReactionProducts() );
+    CHECK( 2 == elastic.numberProducts() );
     CHECK( 1 == elastic.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == elastic.numberProducts( id::ParticleID( "H" ) ) );
 
@@ -217,7 +217,7 @@ namespace h1 {
     CHECK_THAT( 274896000., WithinRel( telastic.crossSection().values()[0] ) );
     CHECK_THAT( 12987.1, WithinRel( telastic.crossSection().values()[100] ) );
 
-    CHECK( 0 == telastic.numberReactionProducts() );
+    CHECK( 0 == telastic.numberProducts() );
   }
 
   void verifyBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
@@ -245,7 +245,7 @@ namespace h1 {
     CHECK_THAT( 29.7832 , WithinRel( bremsstrahlung.crossSection().values()[0] ) );
     CHECK_THAT( 0.990621, WithinRel( bremsstrahlung.crossSection().values()[95] ) );
 
-    CHECK( 3 == bremsstrahlung.numberReactionProducts() );
+    CHECK( 3 == bremsstrahlung.numberProducts() );
     CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "g" ) ) );
     CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "H" ) ) );
@@ -396,7 +396,7 @@ namespace h1 {
     CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
     CHECK_THAT( 81441.6, WithinRel( subionisation.crossSection().values()[169] ) );
 
-    CHECK( 2 == subionisation.numberReactionProducts() );
+    CHECK( 2 == subionisation.numberProducts() );
     CHECK( 1 == subionisation.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == subionisation.numberProducts( id::ParticleID( "H" ) ) );
 
@@ -458,7 +458,7 @@ namespace h1 {
     CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
     CHECK_THAT( 82892.4, WithinRel( subionisation.crossSection().values()[34] ) );
 
-    CHECK( 3 == subionisation.numberReactionProducts() );
+    CHECK( 3 == subionisation.numberProducts() );
     CHECK( 2 == subionisation.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == subionisation.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
 
@@ -563,7 +563,7 @@ namespace h1 {
 
     CHECK( true == deficit.crossSection().isLinearised() );
 
-    CHECK( 0 == deficit.numberReactionProducts() );
+    CHECK( 0 == deficit.numberProducts() );
   }
 
 } // namespace h1

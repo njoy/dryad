@@ -13,6 +13,7 @@ void wrapReaction( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::id::ReactionID;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionType = njoy::dryad::ReactionType;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
@@ -116,16 +117,16 @@ void wrapReaction( python::module& module ) {
     &Component::products,
     "The reaction products"
   )
-  .def_property_readonly(
+  .def(
 
-    "number_reaction_products",
-    &Component::numberReactionProducts,
-    "The number of reaction products"
+    "number_products",
+    python::overload_cast<>( &Component::numberProducts, python::const_ ),
+    "The total number of reaction products"
   )
   .def(
 
     "number_products",
-    &Component::numberProducts,
+    python::overload_cast< const ParticleID& >( &Component::numberProducts, python::const_ ),
     python::arg( "type" ),
     "The number of reaction products of a given type"
   )

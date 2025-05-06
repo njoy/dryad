@@ -64,7 +64,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( True, chunk.has_product( ParticleID( 'g' ) ) )
             self.assertEqual( False, chunk.has_product( ParticleID( 'h' ) ) )
             self.assertEqual( 3, len( chunk.products ) )
-            self.assertEqual( 3, chunk.number_reaction_products )
+            self.assertEqual( 3, chunk.number_products() )
             self.assertEqual( 1, chunk.number_products( ParticleID( 'n' ) ) )
             self.assertEqual( 2, chunk.number_products( ParticleID( 'g' ) ) )
             self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ) ) )

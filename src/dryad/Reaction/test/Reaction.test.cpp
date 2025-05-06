@@ -141,7 +141,7 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK( true == chunk.hasProduct( id::ParticleID( "n" ) ) );
   CHECK( true == chunk.hasProduct( id::ParticleID( "g" ) ) );
   CHECK( false == chunk.hasProduct( id::ParticleID( "h" ) ) );
-  CHECK( 3 == chunk.numberReactionProducts() );
+  CHECK( 3 == chunk.numberProducts() );
   CHECK( 3 == chunk.products().size() );
   CHECK( 1 == chunk.numberProducts( id::ParticleID( "n" ) ) );
   CHECK( 2 == chunk.numberProducts( id::ParticleID( "g" ) ) );

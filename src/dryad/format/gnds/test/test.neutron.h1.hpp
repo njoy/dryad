@@ -37,7 +37,7 @@ namespace h1 {
     CHECK_THAT( 2.118421e+1, WithinRel( total.crossSection().values()[8] ) );
     CHECK_THAT( 4.818679e-1, WithinRel( total.crossSection().values()[152] ) );
 
-    CHECK( 0 == total.numberReactionProducts() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyElasticReaction( const Reaction& elastic ) {
@@ -66,7 +66,7 @@ namespace h1 {
     CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
 
-    CHECK( 2 == elastic.numberReactionProducts() );
+    CHECK( 2 == elastic.numberProducts() );
     CHECK( 1 == elastic.numberProducts( id::ParticleID( "n" ) ) );
     CHECK( 1 == elastic.numberProducts( id::ParticleID( "H1" ) ) );
 
@@ -203,7 +203,7 @@ namespace h1 {
     CHECK_THAT( 4.950573e-4, WithinRel( capture.crossSection().values()[32] ) );
     CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
 
-    CHECK( 2 == capture.numberReactionProducts() );
+    CHECK( 2 == capture.numberProducts() );
     CHECK( 1 == capture.numberProducts( id::ParticleID( "g" ) ) );
     CHECK( 1 == capture.numberProducts( id::ParticleID( "H2" ) ) );
 

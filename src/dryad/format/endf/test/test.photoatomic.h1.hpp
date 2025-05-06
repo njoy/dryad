@@ -38,7 +38,7 @@ namespace h1 {
     CHECK_THAT( 4.62084E-6, WithinRel( total.crossSection().values()[0] ) );
     CHECK_THAT( .020718042, WithinRel( total.crossSection().values()[2020] ) );
 
-    CHECK( 0 == total.numberReactionProducts() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyCoherentReaction( const Reaction& coherent ) {
@@ -66,7 +66,7 @@ namespace h1 {
     CHECK_THAT( 4.52522E-6, WithinRel( coherent.crossSection().values()[0] ) );
     CHECK_THAT( 4.6282E-16, WithinRel( coherent.crossSection().values()[360] ) );
 
-    CHECK( 1 == coherent.numberReactionProducts() );
+    CHECK( 1 == coherent.numberProducts() );
     CHECK( 1 == coherent.numberProducts( id::ParticleID( "g" ) ) );
 
     auto gamma = coherent.products()[0];
@@ -172,7 +172,7 @@ namespace h1 {
     CHECK_THAT( 9.56230E-8, WithinRel( incoherent.crossSection().values()[0] ) );
     CHECK_THAT( 1.70420E-5, WithinRel( incoherent.crossSection().values()[395] ) );
 
-    CHECK( 1 == incoherent.numberReactionProducts() );
+    CHECK( 1 == incoherent.numberProducts() );
     CHECK( 1 == incoherent.numberProducts( id::ParticleID( "g" ) ) );
 
     auto gamma = incoherent.products()[0];
@@ -238,7 +238,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( epairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .0111   , WithinRel( epairproduction.crossSection().values()[216] ) );
 
-    CHECK( 0 == epairproduction.numberReactionProducts() );
+    CHECK( 0 == epairproduction.numberProducts() );
   }
 
   void verifyNuclearFieldPairProductionReaction( const Reaction& npairproduction ) {
@@ -266,7 +266,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( npairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .009601 , WithinRel( npairproduction.crossSection().values()[307] ) );
 
-    CHECK( 0 == npairproduction.numberReactionProducts() );
+    CHECK( 0 == npairproduction.numberProducts() );
   }
 
   void verifyTotalPairProductionReaction( const Reaction& tpairproduction ) {
@@ -299,7 +299,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( tpairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .020701 , WithinRel( tpairproduction.crossSection().values()[465] ) );
 
-    CHECK( 0 == tpairproduction.numberReactionProducts() );
+    CHECK( 0 == tpairproduction.numberProducts() );
   }
 
   void verifyIonisationReaction( const Reaction& ionisation ) {
@@ -327,7 +327,7 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( ionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( ionisation.crossSection().values()[903] ) );
 
-    CHECK( 0 == ionisation.numberReactionProducts() );
+    CHECK( 0 == ionisation.numberProducts() );
   }
 
   void verifyTotalIonisationReaction( const Reaction& tionisation ) {
@@ -359,7 +359,7 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( tionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( tionisation.crossSection().values()[903] ) );
 
-    CHECK( 0 == tionisation.numberReactionProducts() );
+    CHECK( 0 == tionisation.numberProducts() );
   }
 
 } // namespace h1

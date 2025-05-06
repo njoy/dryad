@@ -829,6 +829,12 @@ class Reaction:
             self        the reaction
             tolerance   the linearisation tolerance
         """
+    @typing.overload
+    def number_products(self) -> int:
+        """
+        The total number of reaction products
+        """
+    @typing.overload
     def number_products(self, type: id.ParticleID) -> int:
         """
         The number of reaction products of a given type
@@ -866,11 +872,6 @@ class Reaction:
     def mass_difference_qvalue(self) -> float | None:
         """
         The mass difference Q value
-        """
-    @property
-    def number_reaction_products(self) -> int:
-        """
-        The number of reaction products
         """
     @property
     def partial_reaction_identifiers(self) -> list[str] | None:

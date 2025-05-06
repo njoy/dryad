@@ -102,7 +102,7 @@ namespace dryad {
     /**
      *  @brief Return the number of reaction products
      */
-    std::size_t numberReactionProducts() const noexcept {
+    std::size_t numberProducts() const noexcept {
 
       return this->products_.size();
     }
@@ -112,7 +112,7 @@ namespace dryad {
      */
     bool hasProducts() const noexcept {
 
-      return this->numberReactionProducts() != 0;
+      return this->numberProducts() != 0;
     }
 
     /**

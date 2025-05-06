@@ -38,7 +38,7 @@ namespace h1 {
     CHECK_THAT( 4.62084E-6, WithinRel( total.crossSection().values()[0] ) );
     CHECK_THAT( .020718042, WithinRel( total.crossSection().values()[2020] ) );
 
-    CHECK( 0 == total.numberReactionProducts() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyCoherentReaction( const Reaction& coherent ) {
@@ -66,7 +66,7 @@ namespace h1 {
     CHECK_THAT( 4.52522E-6, WithinRel( coherent.crossSection().values()[0] ) );
     CHECK_THAT( 4.6282E-16, WithinRel( coherent.crossSection().values()[360] ) );
 
-    CHECK( 2 == coherent.numberReactionProducts() );
+    CHECK( 2 == coherent.numberProducts() );
     CHECK( 1 == coherent.numberProducts( id::ParticleID( "g" ) ) );
     CHECK( 1 == coherent.numberProducts( id::ParticleID( "H" ) ) );
 
@@ -176,7 +176,7 @@ namespace h1 {
     CHECK_THAT( 9.56230E-8, WithinRel( incoherent.crossSection().values()[0] ) );
     CHECK_THAT( 1.70420E-5, WithinRel( incoherent.crossSection().values()[395] ) );
 
-    CHECK( 2 == incoherent.numberReactionProducts() );
+    CHECK( 2 == incoherent.numberProducts() );
     CHECK( 1 == incoherent.numberProducts( id::ParticleID( "g" ) ) );
     CHECK( 1 == incoherent.numberProducts( id::ParticleID( "H" ) ) );
 
@@ -246,7 +246,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( epairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .0111   , WithinRel( epairproduction.crossSection().values()[216] ) );
 
-    CHECK( 4 == epairproduction.numberReactionProducts() );
+    CHECK( 4 == epairproduction.numberProducts() );
     CHECK( 2 == epairproduction.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == epairproduction.numberProducts( id::ParticleID( "e+" ) ) );
     CHECK( 1 == epairproduction.numberProducts( id::ParticleID( "H" ) ) );
@@ -289,7 +289,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( npairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .009601 , WithinRel( npairproduction.crossSection().values()[307] ) );
 
-    CHECK( 3 == npairproduction.numberReactionProducts() );
+    CHECK( 3 == npairproduction.numberProducts() );
     CHECK( 1 == npairproduction.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == npairproduction.numberProducts( id::ParticleID( "e+" ) ) );
     CHECK( 1 == npairproduction.numberProducts( id::ParticleID( "H" ) ) );
@@ -334,7 +334,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( tpairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .020701 , WithinRel( tpairproduction.crossSection().values()[465] ) );
 
-    CHECK( 0 == tpairproduction.numberReactionProducts() );
+    CHECK( 0 == tpairproduction.numberProducts() );
   }
 
   void verifyIonisationReaction( const Reaction& ionisation ) {
@@ -362,7 +362,7 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( ionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( ionisation.crossSection().values()[903] ) );
 
-    CHECK( 2 == ionisation.numberReactionProducts() );
+    CHECK( 2 == ionisation.numberProducts() );
     CHECK( 1 == ionisation.numberProducts( id::ParticleID( "e-" ) ) );
     CHECK( 1 == ionisation.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
 
@@ -402,7 +402,7 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( tionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( tionisation.crossSection().values()[903] ) );
 
-    CHECK( 0 == tionisation.numberReactionProducts() );
+    CHECK( 0 == tionisation.numberProducts() );
   }
 
 } // namespace h1
