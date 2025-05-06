@@ -795,7 +795,7 @@ class Reaction:
         Initialise a summation reaction
         
         Summation reactions do not have Q values associated to them. A cross section
-        weighted Q value could be calculated using the the partial reactions making
+        weighted Q value could be calculated using the partial reactions making
         up the summation reaction.
         
         Arguments:
@@ -803,7 +803,7 @@ class Reaction:
             id          the reaction identifier
             partials    the identifiers of the partials of the reaction
             xs          the cross section of the reaction
-            products    the reaction productsassociated to the summation reaction
+            products    the reaction products associated to the summation reaction
                         (defaults to no reaction products)
         """
     def has_product(self, arg0: str) -> bool:

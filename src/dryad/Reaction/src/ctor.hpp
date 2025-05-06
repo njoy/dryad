@@ -66,7 +66,7 @@ Reaction( id::ReactionID id,
  *  @brief Constructor for summation reactions
  *
  *  Summation reactions do not have Q values associated to them. A cross section
- *  weighted Q value could be calculated using the the partial reactions making up
+ *  weighted Q value could be calculated using the partial reactions making up
  *  the summation reaction.
  *
  *  @param id          the reaction identifier
