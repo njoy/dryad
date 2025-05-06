@@ -67,13 +67,37 @@ void wrapParticleID( python::module& module ) {
 
     "number",
     &Component::number,
-    "The level number"
+    "The particle number"
   )
   .def_property_readonly(
 
     "symbol",
     &Component::symbol,
-    "The level symbol"
+    "The particle's symbol"
+  )
+  .def_property_readonly(
+
+    "element",
+    &Component::element,
+    "The particle's element"
+  )
+  .def_property_readonly(
+
+    "mass",
+    &Component::mass,
+    "The particle's mass number"
+  )
+  .def_property_readonly(
+
+    "level",
+    &Component::level,
+    "The particle's level"
+  )
+  .def_property_readonly(
+
+    "subshell",
+    &Component::subshell,
+    "The particle's subshell"
   )
   .def(
 

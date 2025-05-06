@@ -264,6 +264,14 @@ namespace id {
     }
 
     /**
+     *  @brief Return the particle's subshell
+     */
+    const std::optional< ElectronSubshellID >& subshell() const noexcept {
+
+      return entries[ this->index_ ].subshell();
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the id on the left

@@ -312,12 +312,32 @@ class ParticleID:
         Convenience function for printing the identifier
         """
     @property
+    def element(self) -> ElementID:
+        """
+        The particle's element
+        """
+    @property
+    def level(self) -> LevelID:
+        """
+        The particle's level
+        """
+    @property
+    def mass(self) -> int:
+        """
+        The particle's mass number
+        """
+    @property
     def number(self) -> int:
         """
-        The level number
+        The particle number
+        """
+    @property
+    def subshell(self) -> ElectronSubshellID | None:
+        """
+        The particle's subshell
         """
     @property
     def symbol(self) -> str:
         """
-        The level symbol
+        The particle's symbol
         """
