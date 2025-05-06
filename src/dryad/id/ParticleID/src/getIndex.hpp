@@ -2,17 +2,17 @@
  *  @brief Update registry
  *
  *  @param element   the particle element
- *  @param mass      the particle mass number
+ *  @param a         the particle mass number
  *  @param level     the particle level
  */
-static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) {
+static std::size_t updateRegistry( ElementID element, int a, LevelID state ) {
 
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  int number = element.number() * 1000000 + mass * 1000 + state.number();
+  int number = element.number() * 1000000 + a * 1000 + state.number();
   std::vector< std::string > alternatives = {};
-  std::string symbol = element.symbol() + std::to_string( mass );
+  std::string symbol = element.symbol() + std::to_string( a );
   if ( state.number() != 0 ) {
 
     symbol += state.symbol();
@@ -23,7 +23,7 @@ static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) 
   }
 
   // create the data entry and set conversion
-  entries.emplace_back( number, element.number(), static_cast< short >( mass ),
+  entries.emplace_back( number, element.number(), static_cast< short >( a ),
                         state.number(), std::move( symbol ),
                         std::move( alternatives ) );
 
