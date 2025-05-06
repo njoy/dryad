@@ -264,6 +264,14 @@ namespace id {
     }
 
     /**
+     *  @brief Return the particle's za number
+     */
+    int za() const noexcept {
+
+      return static_cast< int >( this->z() ) * 1000 + this->a();
+    }
+
+    /**
      *  @brief Return the particle's subshell
      */
     const std::optional< ElectronSubshellID >& subshell() const noexcept {

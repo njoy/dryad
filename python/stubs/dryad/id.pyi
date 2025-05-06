@@ -341,3 +341,8 @@ class ParticleID:
         """
         The particle's element number
         """
+    @property
+    def za(self) -> int:
+        """
+        The particle's za number
+        """

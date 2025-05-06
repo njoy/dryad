@@ -95,6 +95,12 @@ void wrapParticleID( python::module& module ) {
   )
   .def_property_readonly(
 
+    "za",
+    &Component::za,
+    "The particle's za number"
+  )
+  .def_property_readonly(
+
     "subshell",
     &Component::subshell,
     "The particle's subshell"
