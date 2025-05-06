@@ -467,8 +467,15 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         # illegal values
         with self.assertRaises( IndexError ) : id = ParticleID( 'not a valid level number' )
         with self.assertRaises( IndexError ) : id = ParticleID( -1000 )
+        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 1 )
+        with self.assertRaises( IndexError ) : id = ParticleID( 1000, LevelID.continuum )
         with self.assertRaises( IndexError ) : id = ParticleID( 1000, 151 )
+        with self.assertRaises( IndexError ) : id = ParticleID( 1001, 151 )
+        with self.assertRaises( IndexError ) : id = ParticleID( 'H_e0' )
+        with self.assertRaises( IndexError ) : id = ParticleID( 'H_e1' )
         with self.assertRaises( IndexError ) : id = ParticleID( 'H1_e151' )
+        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 533 )
+        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 581 )
 
 if __name__ == '__main__' :
 

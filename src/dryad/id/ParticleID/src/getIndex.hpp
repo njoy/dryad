@@ -92,6 +92,11 @@ static std::size_t getIndex( int za, int number ) {
       // look for state or subshell number
       if ( number <= LevelID::continuum ) {
 
+        if ( ( mass == 0 ) && ( number != 0 ) ) {
+
+          throw std::out_of_range( "An element cannot have a non-zero level number" );
+        }
+
         // determine the level
         LevelID state( number );
 

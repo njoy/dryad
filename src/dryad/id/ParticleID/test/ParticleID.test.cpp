@@ -499,7 +499,12 @@ SCENARIO( "ParticleID" ) {
 
       CHECK_THROWS( ParticleID( "not a particle symbol" ) );
       CHECK_THROWS( ParticleID( -1000 ) );
+      CHECK_THROWS( ParticleID( 1000, 1 ) );
+      CHECK_THROWS( ParticleID( 1000, njoy::dryad::id::LevelID::continuum ) );
       CHECK_THROWS( ParticleID( 1000, 151 ) );
+      CHECK_THROWS( ParticleID( 1001, 151 ) );
+      CHECK_THROWS( ParticleID( "H_e0" ) );
+      CHECK_THROWS( ParticleID( "H_e1" ) );
       CHECK_THROWS( ParticleID( "H1_e151" ) );
       CHECK_THROWS( ParticleID( 1000, 533 ) );
       CHECK_THROWS( ParticleID( 1000, 581 ) );
