@@ -151,6 +151,30 @@ SCENARIO( "createProjectileTarget" ) {
         auto lumped = Li7.reactions()[40];
         neutron::li7::verifyLumpedReaction851( lumped );
 
+        lumped = Li7.reactions()[41];
+        neutron::li7::verifyLumpedReaction852( lumped );
+
+        lumped = Li7.reactions()[42];
+        neutron::li7::verifyLumpedReaction853( lumped );
+
+        lumped = Li7.reactions()[43];
+        neutron::li7::verifyLumpedReaction854( lumped );
+
+        lumped = Li7.reactions()[44];
+        neutron::li7::verifyLumpedReaction855( lumped );
+
+        lumped = Li7.reactions()[45];
+        neutron::li7::verifyLumpedReaction856( lumped );
+
+        lumped = Li7.reactions()[46];
+        neutron::li7::verifyLumpedReaction857( lumped );
+
+        lumped = Li7.reactions()[47];
+        neutron::li7::verifyLumpedReaction858( lumped );
+
+        lumped = Li7.reactions()[48];
+        neutron::li7::verifyLumpedReaction859( lumped );
+
         total = Li7.reaction( id::ReactionID( "1" ) );
         neutron::li7::verifyTotalReaction( total );
 
@@ -162,6 +186,30 @@ SCENARIO( "createProjectileTarget" ) {
 
         lumped = Li7.reaction( id::ReactionID( "851" ) );
         neutron::li7::verifyLumpedReaction851( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "852" ) );
+        neutron::li7::verifyLumpedReaction852( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "853" ) );
+        neutron::li7::verifyLumpedReaction853( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "854" ) );
+        neutron::li7::verifyLumpedReaction854( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "855" ) );
+        neutron::li7::verifyLumpedReaction855( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "856" ) );
+        neutron::li7::verifyLumpedReaction856( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "857" ) );
+        neutron::li7::verifyLumpedReaction857( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "858" ) );
+        neutron::li7::verifyLumpedReaction858( lumped );
+
+        lumped = Li7.reaction( id::ReactionID( "859" ) );
+        neutron::li7::verifyLumpedReaction859( lumped );
       } // THEN
     } // WHEN
   } // GIVEN

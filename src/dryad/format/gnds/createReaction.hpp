@@ -68,6 +68,13 @@ namespace gnds {
       // metadata and miscellaneous information
       id::ReactionID id = reaction.attribute( "ENDF_MT" ).as_string();
 
+      // Q values
+      auto qvalue = reaction.child( "Q" );
+      if ( qvalue ) {
+
+        Log::info( "Ignoring reaction Q value for summation reaction" );
+      }
+
       // partial identifiers
       std::vector< id::ReactionID > partials;
       auto summands = reaction.child( "summands" );
@@ -99,7 +106,7 @@ namespace gnds {
       TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
       // return the reaction data
-      return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+      return Reaction( std::move( id ), std::move( partials ), std::move( xs ), {} );
     }
     else {
 

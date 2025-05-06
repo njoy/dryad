@@ -244,5 +244,317 @@ namespace li7 {
     CHECK( 0 == lumped.products().size() );
   }
 
+  void verifyLumpedReaction852( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "852" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 1 == partials.size() );
+    CHECK( id::ReactionID( "51" ) == partials[0] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 134 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 134 == lumped.crossSection().energies().size() );
+    CHECK( 134 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 133 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 5.46277000e+05, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 5.50000000e+05, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[132] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[133] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 5.90690000e-03, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 3.97335000e-02, WithinRel( lumped.crossSection().values()[132] ) );
+    CHECK_THAT( 3.93590000e-02, WithinRel( lumped.crossSection().values()[133] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction853( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "853" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 4 == partials.size() );
+    CHECK( id::ReactionID( "52" ) == partials[0] );
+    CHECK( id::ReactionID( "53" ) == partials[1] );
+    CHECK( id::ReactionID( "54" ) == partials[2] );
+    CHECK( id::ReactionID( "55" ) == partials[3] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 95 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 95 == lumped.crossSection().energies().size() );
+    CHECK( 95 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 94 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 3.14540000e+06, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 3.20000000e+06, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[93] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[94] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 9.67624500e-04, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 1.89748930e-03, WithinRel( lumped.crossSection().values()[93] ) );
+    CHECK_THAT( 1.77996460e-03, WithinRel( lumped.crossSection().values()[94] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction854( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "854" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 1 == partials.size() );
+    CHECK( id::ReactionID( "56" ) == partials[0] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 73 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 73 == lumped.crossSection().energies().size() );
+    CHECK( 73 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 72 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 5295640.00, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 5300000.00, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 19730000.0, WithinRel( lumped.crossSection().energies()[71] ) );
+    CHECK_THAT( 20000000.0, WithinRel( lumped.crossSection().energies()[72] ) );
+    CHECK_THAT( 0.0       , WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( .003490122, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( .078823130, WithinRel( lumped.crossSection().values()[71] ) );
+    CHECK_THAT( .078000000, WithinRel( lumped.crossSection().values()[72] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction855( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "855" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 5 == partials.size() );
+    CHECK( id::ReactionID( "57" ) == partials[0] );
+    CHECK( id::ReactionID( "58" ) == partials[1] );
+    CHECK( id::ReactionID( "59" ) == partials[2] );
+    CHECK( id::ReactionID( "60" ) == partials[3] );
+    CHECK( id::ReactionID( "61" ) == partials[4] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 68 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 68 == lumped.crossSection().energies().size() );
+    CHECK( 68 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 67 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 5.43290000e+06, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 5.50000000e+06, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[66] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[67] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 7.59054300e-03, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 9.16765500e-03, WithinRel( lumped.crossSection().values()[66] ) );
+    CHECK_THAT( 8.56193900e-03, WithinRel( lumped.crossSection().values()[67] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction856( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "856" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 5 == partials.size() );
+    CHECK( id::ReactionID( "62" ) == partials[0] );
+    CHECK( id::ReactionID( "63" ) == partials[1] );
+    CHECK( id::ReactionID( "64" ) == partials[2] );
+    CHECK( id::ReactionID( "65" ) == partials[3] );
+    CHECK( id::ReactionID( "66" ) == partials[4] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 48 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 48 == lumped.crossSection().energies().size() );
+    CHECK( 48 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 47 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 8.29230000e+06, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 8.50000000e+06, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[46] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[47] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 8.22307000e-03, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 1.91613490e-02, WithinRel( lumped.crossSection().values()[46] ) );
+    CHECK_THAT( 1.79659390e-02, WithinRel( lumped.crossSection().values()[47] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction857( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "857" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 5 == partials.size() );
+    CHECK( id::ReactionID( "67" ) == partials[0] );
+    CHECK( id::ReactionID( "68" ) == partials[1] );
+    CHECK( id::ReactionID( "69" ) == partials[2] );
+    CHECK( id::ReactionID( "70" ) == partials[3] );
+    CHECK( id::ReactionID( "71" ) == partials[4] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 34 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 34 == lumped.crossSection().energies().size() );
+    CHECK( 34 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 33 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 1.11520000e+07, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 1.15000000e+07, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[32] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[33] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 1.02849900e-02, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 2.38844240e-02, WithinRel( lumped.crossSection().values()[32] ) );
+    CHECK_THAT( 2.27516480e-02, WithinRel( lumped.crossSection().values()[33] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction858( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "858" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 5 == partials.size() );
+    CHECK( id::ReactionID( "72" ) == partials[0] );
+    CHECK( id::ReactionID( "73" ) == partials[1] );
+    CHECK( id::ReactionID( "74" ) == partials[2] );
+    CHECK( id::ReactionID( "75" ) == partials[3] );
+    CHECK( id::ReactionID( "76" ) == partials[4] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 23 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 23 == lumped.crossSection().energies().size() );
+    CHECK( 23 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 22 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 1.40110000e+07, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 1.45000000e+07, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[21] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[22] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 1.20486300e-02, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 3.05346270e-02, WithinRel( lumped.crossSection().values()[21] ) );
+    CHECK_THAT( 2.84387580e-02, WithinRel( lumped.crossSection().values()[22] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
+  void verifyLumpedReaction859( const Reaction& lumped ) {
+
+    CHECK( id::ReactionID( "859" ) == lumped.identifier() );
+    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( false == lumped.hasProducts() );
+    CHECK( true == lumped.isLinearised() );
+
+    CHECK( std::nullopt != lumped.partialReactionIdentifiers() );
+    auto partials = lumped.partialReactionIdentifiers().value();
+    CHECK( 6 == partials.size() );
+    CHECK( id::ReactionID( "77" ) == partials[0] );
+    CHECK( id::ReactionID( "78" ) == partials[1] );
+    CHECK( id::ReactionID( "79" ) == partials[2] );
+    CHECK( id::ReactionID( "80" ) == partials[3] );
+    CHECK( id::ReactionID( "81" ) == partials[4] );
+    CHECK( id::ReactionID( "82" ) == partials[5] );
+
+    CHECK( std::nullopt == lumped.massDifferenceQValue() );
+    CHECK( std::nullopt == lumped.reactionQValue() );
+
+    CHECK( true == lumped.crossSection().isLinearised() );
+    CHECK( 13 == lumped.crossSection().numberPoints() );
+    CHECK( 1 == lumped.crossSection().numberRegions() );
+    CHECK( 13 == lumped.crossSection().energies().size() );
+    CHECK( 13 == lumped.crossSection().values().size() );
+    CHECK( 1 == lumped.crossSection().boundaries().size() );
+    CHECK( 1 == lumped.crossSection().interpolants().size() );
+    CHECK( 12 == lumped.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == lumped.crossSection().interpolants()[0] );
+    CHECK_THAT( 1.68710000e+07, WithinRel( lumped.crossSection().energies()[0] ) );
+    CHECK_THAT( 1.70000000e+07, WithinRel( lumped.crossSection().energies()[1] ) );
+    CHECK_THAT( 1.97300000e+07, WithinRel( lumped.crossSection().energies()[11] ) );
+    CHECK_THAT( 2.00000000e+07, WithinRel( lumped.crossSection().energies()[12] ) );
+    CHECK_THAT( 0.00000000e+00, WithinRel( lumped.crossSection().values()[0] ) );
+    CHECK_THAT( 1.78534600e-03, WithinRel( lumped.crossSection().values()[1] ) );
+    CHECK_THAT( 3.55291340e-02, WithinRel( lumped.crossSection().values()[11] ) );
+    CHECK_THAT( 3.76534200e-02, WithinRel( lumped.crossSection().values()[12] ) );
+
+    CHECK( 0 == lumped.products().size() );
+  }
+
 } // namespace h1
 } // namespace neutron
