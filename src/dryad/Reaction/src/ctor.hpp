@@ -66,13 +66,14 @@ Reaction( id::ReactionID id,
  *  @brief Constructor for summation reactions
  *
  *  Summation reactions do not have Q values associated to them. A cross section
- *  weighted Q value can always be calculated using the the partial reactions
- *  making up the summation reaction.
+ *  weighted Q value could be calculated using the the partial reactions making up
+ *  the summation reaction.
  *
  *  @param id          the reaction identifier
  *  @param xs          the cross section of the reaction
  *  @param partials    the identifiers of the partials of the reaction
  *  @param products    the reaction products associated to the summation reaction
+ *                     (defaults to no reaction products)
  */
 Reaction( id::ReactionID id,
           std::vector< id::ReactionID > partials,
