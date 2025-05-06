@@ -268,7 +268,7 @@ namespace id {
      */
     int za() const noexcept {
 
-      return static_cast< int >( this->z() ) * 1000 + this->a();
+      return entries[ this->index_ ].za();
     }
 
     /**
