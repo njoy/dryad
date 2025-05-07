@@ -385,6 +385,17 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] already registered
 
+        id = ParticleID( 'H1_e150' )
+        self.assertEqual( 1001150, id.number )
+        self.assertEqual( 'H1[continuum]', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 1, id.a )
+        self.assertEqual( LevelID.continuum, id.e )
+        self.assertEqual( 1001, id.za )
+        self.assertEqual( None, id.subshell )
+
+        self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] already registered
+
         id = ParticleID( 'H2[continuum]' )
         self.assertEqual( 1002150, id.number )
         self.assertEqual( 'H2[continuum]', id.symbol )
@@ -397,6 +408,17 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         self.assertEqual( size + 4, ParticleID.size() ) # registering H1[continuum] using a string
 
         id = ParticleID( 1002, LevelID.continuum )
+        self.assertEqual( 1002150, id.number )
+        self.assertEqual( 'H2[continuum]', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 2, id.a )
+        self.assertEqual( LevelID.continuum, id.e )
+        self.assertEqual( 1002, id.za )
+        self.assertEqual( None, id.subshell )
+
+        self.assertEqual( size + 4, ParticleID.size() ) # H1[continuum] already registered
+
+        id = ParticleID( 'H2_e150' )
         self.assertEqual( 1002150, id.number )
         self.assertEqual( 'H2[continuum]', id.symbol )
         self.assertEqual( 1, id.z )

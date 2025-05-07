@@ -15,6 +15,11 @@ static std::size_t updateRegistry( ElementID element, int a, LevelID state ) {
   std::string symbol = element.symbol() + std::to_string( a );
   if ( state.number() != 0 ) {
 
+    if ( state.number() == LevelID::continuum ) {
+
+      alternatives.emplace_back( symbol + std::string( "_e" ) +
+                                 std::to_string( LevelID::continuum ) );
+    }
     symbol += state.symbol();
   }
   else {

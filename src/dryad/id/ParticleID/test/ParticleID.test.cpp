@@ -397,6 +397,17 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 3 == ParticleID::size() ); // H1[continuum] already registered
 
+      id = ParticleID( "H1_e150" );
+      CHECK( 1001150 == id.number() );
+      CHECK( "H1[continuum]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 1 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::continuum == id.e() );
+      CHECK( 1001 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 3 == ParticleID::size() ); // H1[continuum] already registered
+
       id = ParticleID( "H2[continuum]" );
       CHECK( 1002150 == id.number() );
       CHECK( "H2[continuum]" == id.symbol() );
@@ -409,6 +420,17 @@ SCENARIO( "ParticleID" ) {
       CHECK( size + 4 == ParticleID::size() ); // registering H1[continuum] as a string
 
       id = ParticleID( 1002, njoy::dryad::id::LevelID::continuum );
+      CHECK( 1002150 == id.number() );
+      CHECK( "H2[continuum]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 2 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::continuum == id.e() );
+      CHECK( 1002 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 4 == ParticleID::size() ); // H1[continuum] already registered
+
+      id = ParticleID( "H2_e150" );
       CHECK( 1002150 == id.number() );
       CHECK( "H2[continuum]" == id.symbol() );
       CHECK( 1 == id.z() );
