@@ -24,7 +24,21 @@ void wrapParticleID( python::module& module ) {
 
     module,
     "ParticleID",
-    "The particle identifier"
+    "The particle identifier\n\n"
+    "The ParticleID can be used to identify the following particle types (the\n"
+    "numbers between parentheses are the internal logic numbers assigned to them):\n"
+    "  - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),\n"
+    "    t (1003), h (2003), a (2004)\n"
+    "  - elements (z * 1000000)\n"
+    "  - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 150 with 150 being\n"
+    "    defined as the continuum )\n"
+    "  - ions (z * 1000000 + s, with s = K(534) .. Q11(580) - basically the ENDF\n"
+    "    mt numbers for the subshell ionisation)\n\n"
+    "Comparison operators are provided using the logical order given by the\n"
+    "element number. A hash function and override for std::hash is also\n"
+    "provided.\n\n"
+    "For more information on how to create instances of ParticleID, see the\n"
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n"
   );
 
   // wrap the component

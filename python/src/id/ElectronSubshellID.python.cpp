@@ -24,7 +24,9 @@ void wrapElectronSubshellID( python::module& module ) {
 
     module,
     "ElectronSubshellID",
-    "The electron subshell identifier"
+    "The electron subshell identifier\n\n"
+    "For more information on how to create instances of ElectronSubshellID, see the\n"
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n"
   );
 
   // wrap the component
