@@ -59,14 +59,15 @@ void wrapReaction( python::module& module ) {
     python::arg( "products" ) = std::vector< ReactionProduct >{},
     "Initialise a summation reaction\n\n"
     "Summation reactions do not have Q values associated to them. A cross section\n"
-    "weighted Q value can always be calculated using the the partial reactions\n"
-    "making up the summation reaction.\n\n"
+    "weighted Q value could be calculated using the partial reactions making\n"
+    "up the summation reaction.\n\n"
     "Arguments:\n"
     "    self        the reaction\n"
     "    id          the reaction identifier\n"
     "    partials    the identifiers of the partials of the reaction\n"
     "    xs          the cross section of the reaction\n"
-    "    products     the reaction products"
+    "    products    the reaction products associated to the summation reaction\n"
+    "                (defaults to no reaction products)"
   )
   .def_property_readonly(
 
