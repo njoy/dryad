@@ -1,13 +1,4 @@
 /**
- *  @brief Constructor
- *
- *  @param pointer    the pointer to the element information
- */
-ElementID( const Entry* pointer ) : entry_( pointer ) {}
-
-public:
-
-/**
  *  @brief Default constructor (for pybind11 purposes only)
  */
 ElementID() = default;
@@ -23,11 +14,11 @@ ElementID& operator=( ElementID&& ) = default;
  *
  *  @param number   the element number
  */
-ElementID( int number ) : ElementID( getPointer( number ) ) {}
+ElementID( int number ) : index_( getIndex( number ) ) {}
 
 /**
  *  @brief Constructor
  *
- *  @param string   the element identifier
+ *  @param string   the element identifier or element name
  */
-ElementID( const std::string& string ) : ElementID( getPointer( string ) ) {}
+ElementID( const std::string& string ) : index_( getIndex( string ) ) {}

@@ -30,9 +30,9 @@ SCENARIO( "CrossSectionMetadata" ) {
 
       THEN( "a CrossSectionMetadata can be constructed and members can be tested" ) {
 
-        CHECK( "n" == chunk.projectileIdentifier() );
-        CHECK( "U235" == chunk.targetIdentifier() );
-        CHECK( "2" == chunk.reactionIdentifier() );
+        CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
+        CHECK( id::ParticleID( "U235" ) == chunk.targetIdentifier() );
+        CHECK( id::ReactionID( "2" ) == chunk.reactionIdentifier() );
 
         CHECK( 4 == chunk.energies().size() );
         CHECK( 3 == chunk.numberGroups() );

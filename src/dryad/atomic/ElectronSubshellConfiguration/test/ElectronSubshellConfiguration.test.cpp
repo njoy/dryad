@@ -45,17 +45,17 @@ SCENARIO( "ElectronSubshellConfiguration" ) {
       double population = 2.;
       std::vector< RadiativeTransitionData > radiative = {
 
-        RadiativeTransitionData( "L2", 0.00190768, 523.09 ),
-        RadiativeTransitionData( "L3", 0.00380027, 523.13 )
+        RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+        RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 )
       };
       std::vector< NonRadiativeTransitionData > nonradiative = {
 
-        NonRadiativeTransitionData( "L1", "L1", 0.178644, 478.82 ),
-        NonRadiativeTransitionData( "L1", "L2", 0.116224, 493.86 ),
-        NonRadiativeTransitionData( "L1", "L3", 0.230418, 493.9 ),
-        NonRadiativeTransitionData( "L2", "L2", 0.0110822, 508.9 ),
-        NonRadiativeTransitionData( "L2", "L3", 0.291115, 508.94 ),
-        NonRadiativeTransitionData( "L3", "L3", 0.166809, 508.98 )
+        NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+        NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+        NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+        NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+        NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+        NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 )
       };
 
       ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),

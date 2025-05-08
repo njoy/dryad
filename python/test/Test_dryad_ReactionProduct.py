@@ -8,6 +8,7 @@ import sys
 from dryad import ReactionProduct
 from dryad import TabulatedMultiplicity
 from dryad import InterpolationType
+from dryad.id import ParticleID
 
 class Test_dryad_ReactionProduct( unittest.TestCase ) :
     """Unit test for the ReactionProduct class."""
@@ -17,7 +18,7 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # reaction product identifier
-            self.assertEqual( 'n', chunk.identifier )
+            self.assertEqual( ParticleID( 'n' ), chunk.identifier )
 
             # multiplicity
             self.assertEqual( True, isinstance( chunk.multiplicity, int ) )
@@ -37,7 +38,7 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
         def verify_tabulated_chunk( self, chunk ) :
 
             # reaction product identifier
-            self.assertEqual( 'n', chunk.identifier )
+            self.assertEqual( ParticleID( 'n' ), chunk.identifier )
 
             # multiplicity
             self.assertEqual( True, isinstance( chunk.multiplicity, TabulatedMultiplicity ) )
@@ -77,7 +78,7 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
         def verify_tabulated_linearised_chunk( self, chunk ) :
 
             # reaction product identifier
-            self.assertEqual( 'n', chunk.identifier )
+            self.assertEqual( ParticleID( 'n' ), chunk.identifier )
 
             # multiplicity
             self.assertEqual( True, isinstance( chunk.multiplicity, TabulatedMultiplicity ) )
@@ -129,7 +130,7 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
             self.assertEqual( False, chunk.has_distribution_data )
 
         # the data is given explicitly using an integer multiplicity
-        chunk = ReactionProduct( id = 'n', multiplicity = 1 )
+        chunk = ReactionProduct( id = ParticleID( 'n' ), multiplicity = 1 )
 
         verify_chunk( self, chunk )
 
@@ -146,7 +147,7 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
         verify_chunk( self, copy )
 
         # the data is given explicitly using a tabulated multiplicity
-        chunk = ReactionProduct( id = 'n',
+        chunk = ReactionProduct( id = ParticleID( 'n' ),
                                  multiplicity = TabulatedMultiplicity ( [ 1., 2., 2., 3., 4. ],
                                                                         [ 4., 3., 4., 3., 2. ],
                                                                         [ 1, 4 ],

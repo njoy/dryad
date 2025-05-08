@@ -24,7 +24,7 @@ void wrapElementID( python::module& module ) {
 
     module,
     "ElementID",
-    "The element identifier, with associated element symbol, name and aliases"
+    "The element identifier"
   );
 
   // wrap the component
@@ -35,17 +35,17 @@ void wrapElementID( python::module& module ) {
     python::arg( "number" ),
     "Initialise the element identifier\n\n"
     "Arguments:\n"
-    "    self     the reaction\n"
+    "    self     the identifier\n"
     "    number   the element number"
   )
   .def(
 
     python::init< const std::string& >(),
-    python::arg( "number" ),
-    "Initialise the reaction\n\n"
+    python::arg( "string" ),
+    "Initialise the element identifier\n\n"
     "Arguments:\n"
-    "    self     the reaction\n"
-    "    symbol   the element symbol or name"
+    "    self     the identifier\n"
+    "    string   the element symbol, name or alternative name"
   )
   .def_property_readonly(
 
@@ -74,6 +74,9 @@ void wrapElementID( python::module& module ) {
 
   // add standard comparison definitions
   addStandardComparisonDefinitions< Component >( component );
+
+  // add standard print definitions
+  addStandardPrintDefinitions< Component >( component );
 }
 
 } // namespace id

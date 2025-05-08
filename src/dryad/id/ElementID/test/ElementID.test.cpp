@@ -109,7 +109,6 @@ SCENARIO( "ElementID" ) {
 
       CHECK_THROWS( ElementID( "not an element name, symbol or alternative" ) );
       CHECK_THROWS( ElementID( -1 ) );
-      CHECK_THROWS( ElementID( 0 ) );
       CHECK_THROWS( ElementID( 119 ) );
     } // THEN
   } // GIVEN

@@ -10,6 +10,7 @@ from dryad import ReactionProduct
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import ReactionType
+from dryad.id import ParticleID
 
 class Test_dryad_Reaction( unittest.TestCase ) :
     """Unit test for the Reaction class."""
@@ -59,8 +60,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( False, chunk.cross_section.is_linearised )
 
             # reaction products
-            self.assertEqual( True, chunk.has_product( 'n' ) )
-            self.assertEqual( False, chunk.has_product( 'g' ) )
+            self.assertEqual( True, chunk.has_product( ParticleID( 'n' ) ) )
+            self.assertEqual( False, chunk.has_product( ParticleID( 'g' ) ) )
             self.assertEqual( 1, len( chunk.products ) )
 
             # metadata
@@ -111,8 +112,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( False, chunk.cross_section.is_linearised )
 
             # reaction products
-            self.assertEqual( False, chunk.has_product( 'n' ) )
-            self.assertEqual( False, chunk.has_product( 'g' ) )
+            self.assertEqual( False, chunk.has_product( ParticleID( 'n' ) ) )
+            self.assertEqual( False, chunk.has_product( ParticleID( 'g' ) ) )
             self.assertEqual( 0, len( chunk.products ) )
 
             # metadata
@@ -168,7 +169,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                                        [ 1, 4 ],
                                                        [ InterpolationType.LinearLinear,
                                                          InterpolationType.LinearLog ] ),
-                          products = [ ReactionProduct( 'n', 1 ) ] )
+                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ) ] )
 
         verify_chunk( self, chunk )
 

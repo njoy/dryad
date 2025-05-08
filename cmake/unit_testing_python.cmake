@@ -26,6 +26,8 @@ endfunction()
 message( STATUS "Adding dryad Python unit testing" )
 
 add_python_test( id.ElementID                            id/Test_dryad_id_ElementID.py )
+add_python_test( id.LevelID                              id/Test_dryad_id_LevelID.py )
+add_python_test( id.ParticleID                           id/Test_dryad_id_ParticleID.py )
 
 add_python_test( atomic.RadiativeTransitionData          atomic/Test_dryad_atomic_RadiativeTransitionData.py )
 add_python_test( atomic.NonRadiativeTransitionData       atomic/Test_dryad_atomic_NonRadiativeTransitionData.py )

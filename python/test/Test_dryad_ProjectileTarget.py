@@ -11,6 +11,7 @@ from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import InteractionType
 from dryad import ReactionType
+from dryad.id import ParticleID
 
 class Test_dryad_ProjectileTarget( unittest.TestCase ) :
     """Unit test for the ProjectileTarget class."""
@@ -20,8 +21,8 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # identifiers
-            self.assertEqual( "n", chunk.projectile_identifier )
-            self.assertEqual( "Fe56", chunk.target_identifier )
+            self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
+            self.assertEqual( ParticleID( 'Fe56' ), chunk.target_identifier )
 
             # interaction type
             self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
@@ -30,14 +31,14 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             self.assertEqual( None, chunk.resonances )
 
             # reactions are present
-            self.assertEqual( True, chunk.has_reaction( "n,Fe56->n,Fe56" ) )
-            self.assertEqual( True, chunk.has_reaction( "n,Fe56->n,Fe56_e1" ) )
-            self.assertEqual( False, chunk.has_reaction( "some unknown reaction" ) )
+            self.assertEqual( True, chunk.has_reaction( 'n,Fe56->n,Fe56' ) )
+            self.assertEqual( True, chunk.has_reaction( 'n,Fe56->n,Fe56_e1' ) )
+            self.assertEqual( False, chunk.has_reaction( 'some unknown reaction' ) )
 
             # reactions[0] and reaction( 'n,Fe56->n,Fe56' )
             for reaction in [ chunk.reactions[0], chunk.reaction( 'n,Fe56->n,Fe56' ) ] :
 
-                self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
+                self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
                 self.assertEqual( ReactionType.Primary, reaction.type )
                 self.assertEqual( False, reaction.has_products )
                 self.assertEqual( False, reaction.is_linearised )
@@ -60,7 +61,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             # reactions[1] and reaction( 'n,Fe56->n,Fe56_e1' )
             for reaction in [ chunk.reactions[1], chunk.reaction( 'n,Fe56->n,Fe56_e1' ) ] :
 
-                self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
+                self.assertEqual( 'n,Fe56->n,Fe56_e1', reaction.identifier )
                 self.assertEqual( ReactionType.Primary, reaction.type )
                 self.assertEqual( False, reaction.has_products )
                 self.assertEqual( True, reaction.is_linearised )
@@ -86,8 +87,8 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
         def verify_linearised_chunk( self, chunk ) :
 
             # identifiers
-            self.assertEqual( "n", chunk.projectile_identifier )
-            self.assertEqual( "Fe56", chunk.target_identifier )
+            self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
+            self.assertEqual( ParticleID( 'Fe56' ), chunk.target_identifier )
 
             # interaction type
             self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
@@ -97,7 +98,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
             # reactions
             reaction = chunk.reactions[0]
-            self.assertEqual( "n,Fe56->n,Fe56", reaction.identifier )
+            self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
             self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertEqual( False, reaction.has_products )
             self.assertEqual( True, reaction.is_linearised )
@@ -121,7 +122,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
             self.assertEqual( True, reaction.cross_section.is_linearised )
             reaction = chunk.reactions[1]
-            self.assertEqual( "n,Fe56->n,Fe56_e1", reaction.identifier )
+            self.assertEqual( 'n,Fe56->n,Fe56_e1', reaction.identifier )
             self.assertEqual( ReactionType.Primary, reaction.type )
             self.assertEqual( False, reaction.has_products )
             self.assertEqual( True, reaction.is_linearised )
@@ -146,13 +147,15 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
         # the data is given explicitly
         chunk = ProjectileTarget(
-                    projectile = "n", target = "Fe56", type = InteractionType.Nuclear,
-                    reactions = [ Reaction( "n,Fe56->n,Fe56",
+                    projectile = ParticleID( 'n' ),
+                    target = ParticleID( 'Fe56' ),
+                    type = InteractionType.Nuclear,
+                    reactions = [ Reaction( 'n,Fe56->n,Fe56',
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                    InterpolationType.LogLinear ),
                                             [],
                                             0, 0 ),
-                                  Reaction( "n,Fe56->n,Fe56_e1",
+                                  Reaction( 'n,Fe56->n,Fe56_e1',
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
                                                                    InterpolationType.LinearLinear ),
                                             [],

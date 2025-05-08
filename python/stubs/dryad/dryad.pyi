@@ -36,7 +36,7 @@ class AtomicRelaxation:
             element      the element identifier
             subshells    the electron subshell configuration data
         """
-    def has_subshell(self, arg0: str) -> bool:
+    def has_subshell(self, arg0: id.ElectronSubshellID) -> bool:
         """
         Return whether or not a subshell is present
         
@@ -44,7 +44,7 @@ class AtomicRelaxation:
             self   the AtomicRelaxation data
             id     the electron subshell identifier
         """
-    def subshell(self, arg0: str) -> atomic.ElectronSubshellConfiguration:
+    def subshell(self, arg0: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
         Return the requested subshell
         
@@ -699,7 +699,7 @@ class ProjectileTarget:
         Arguments:
             filename   the GNDS file name
         """
-    def __init__(self, projectile: str, target: str, type: InteractionType, reactions: list[Reaction]) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -753,7 +753,7 @@ class ProjectileTarget:
         Flag indicating whether or not the data is linearised
         """
     @property
-    def projectile_identifier(self) -> str:
+    def projectile_identifier(self) -> id.ParticleID:
         """
         The projectile identifier
         """
@@ -768,7 +768,7 @@ class ProjectileTarget:
         The resonance parameters
         """
     @property
-    def target_identifier(self) -> str:
+    def target_identifier(self) -> id.ParticleID:
         """
         The target identifier
         """
@@ -806,7 +806,7 @@ class Reaction:
             products    the reaction products associated to the summation reaction
                         (defaults to no reaction products)
         """
-    def has_product(self, arg0: str) -> bool:
+    def has_product(self, arg0: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product is present
         
@@ -889,7 +889,7 @@ class ReactionProduct:
     The data associated to a single reaction product
     """
     @typing.overload
-    def __init__(self, id: str, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
+    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
         """
         Initialise the reaction
         
@@ -899,7 +899,7 @@ class ReactionProduct:
             multiplicity   the reaction product multiplicity
         """
     @typing.overload
-    def __init__(self, id: str, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData) -> None:
+    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData) -> None:
         """
         Initialise the reaction
         
@@ -946,7 +946,7 @@ class ReactionProduct:
         Flag indicating whether or not the reaction product has distribution data
         """
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> id.ParticleID:
         """
         The reaction product identifier
         """

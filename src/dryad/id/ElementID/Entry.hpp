@@ -1,11 +1,13 @@
 /**
  *  @class
- *  @brief Private helper class to retrieve symbols, names and alternatives
+ *  @brief Private helper class
  */
 class Entry {
 
+  // unsigned char has a max value of 255
+
   /* fields */
-  int number_;
+  unsigned char number_;
   std::string symbol_;
   std::string name_;
   std::vector< std::string > alternatives_;
@@ -13,14 +15,14 @@ class Entry {
 public:
 
   /* constructor */
-  Entry( int number, std::string symbol, std::string name,
+  Entry( unsigned char number, std::string symbol, std::string name,
          std::vector< std::string > alternatives ) :
     number_( number ), symbol_( std::move( symbol ) ),
     name_( std::move( name ) ), alternatives_( std::move( alternatives ) ) {}
 
   /* methods */
-  auto number() const { return this->number_; }
-  const std::string& symbol() const { return this->symbol_; }
-  const std::string& name() const { return this->name_; }
-  const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+  unsigned char number() const noexcept { return this->number_; }
+  const std::string& symbol() const noexcept { return this->symbol_; }
+  const std::string& name() const noexcept { return this->name_; }
+  const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
 };

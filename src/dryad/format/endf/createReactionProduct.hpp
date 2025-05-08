@@ -35,7 +35,7 @@ namespace endf {
                          const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions ) {
 
     id::ParticleID id = createProductIdentifier( 1, 0 );
-    Log::info( "Reading reaction product data for \'{}\'", id );
+    Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
     auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
                                                  createLegendreAngularDistributions( distributions ) );
@@ -59,7 +59,7 @@ namespace endf {
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
                                                  product.productModifierFlag(),
                                                  multiple );
-    Log::info( "Reading reaction product data for \'{}\'", id );
+    Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     auto multiplicity = createMultiplicity( product.multiplicity() );
 
     return ReactionProduct( std::move( id ), std::move( multiplicity ) );
@@ -79,7 +79,7 @@ namespace endf {
                          int mt ) {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0, false );
-    Log::info( "Reading reaction product data for \'{}\'", id );
+    Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     auto multiplicity = createMultiplicity( product.multiplicity() );
 
     //! @todo what about the reference frames?
@@ -90,7 +90,7 @@ namespace endf {
 
         // ENDF/B-VIII.0 erroneously uses 11 for the gamma identifier in MF26 MT527
         // LAW = 1 is only used for the outgoing gamma, the electron uses LAW = 8
-        if ( ( mt == 527 ) && ( id == "e-" ) ) {
+        if ( ( mt == 527 ) && ( id == id::ParticleID( "e-" ) ) ) {
 
           id = createProductIdentifier( 0, 0, false );
           Log::warning( "Reaction product identifier changed from \'e-\' to \'g\'" );
@@ -145,7 +145,7 @@ namespace endf {
                          int mt ) {
 
     id::ParticleID id = createProductIdentifier( 0, 0, false );
-    Log::info( "Reading reaction product data for \'{}\'", id );
+    Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
 
     //! @todo what about the reference frames?
@@ -181,7 +181,7 @@ namespace endf {
                          int mt ) {
 
     id::ParticleID id = createProductIdentifier( 0, 0, false );
-    Log::info( "Reading reaction product data for \'{}\'", id );
+    Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
 
     //! @todo what about the reference frames?

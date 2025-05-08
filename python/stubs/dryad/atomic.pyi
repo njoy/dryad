@@ -2,6 +2,7 @@
 Atomic relaxation data components
 """
 from __future__ import annotations
+import dryad.id
 import typing
 __all__ = ['ElectronSubshellConfiguration', 'NonRadiativeTransitionData', 'RadiativeTransitionData', 'TransitionType']
 class ElectronSubshellConfiguration:
@@ -16,7 +17,7 @@ class ElectronSubshellConfiguration:
       - the decay modes or transitions that can fill a hole in this shell
     """
     @typing.overload
-    def __init__(self, id: str, energy: float, population: float) -> None:
+    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float) -> None:
         """
         Initialise the subshell configuration
         
@@ -27,7 +28,7 @@ class ElectronSubshellConfiguration:
             population     the electron subshell population when the atom is neutral
         """
     @typing.overload
-    def __init__(self, id: str, energy: float, population: float, radiative: list[RadiativeTransitionData], non_radiative: list[NonRadiativeTransitionData]) -> None:
+    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData], non_radiative: list[NonRadiativeTransitionData]) -> None:
         """
         Initialise the subshell configuration
         
@@ -60,7 +61,7 @@ class ElectronSubshellConfiguration:
         Flag to indicate whether or not transitions are available
         """
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> dryad.id.ElectronSubshellID:
         """
         The electron subshell identifier
         """
@@ -116,7 +117,7 @@ class NonRadiativeTransitionData:
     from which the emitted electron came from.
     """
     @typing.overload
-    def __init__(self, originating_shell: str, emitting_shell: str, probability: float) -> None:
+    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float) -> None:
         """
         Initialise the non-radiative transition data without transition energy
         
@@ -129,7 +130,7 @@ class NonRadiativeTransitionData:
             probability         the probability of the transition
         """
     @typing.overload
-    def __init__(self, originating_shell: str, emitting_shell: str, probability: float, energy: float) -> None:
+    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float, energy: float) -> None:
         """
         Initialise the non-radiative transition data with transition energy
         
@@ -143,7 +144,7 @@ class NonRadiativeTransitionData:
             energy              the energy of the emitted particle
         """
     @property
-    def emitting_shell(self) -> str:
+    def emitting_shell(self) -> dryad.id.ElectronSubshellID:
         """
         The identifier of the subshell from which the emitted electron originated
         """
@@ -153,7 +154,7 @@ class NonRadiativeTransitionData:
         The energy of the emitted electron
         """
     @property
-    def originating_shell(self) -> str:
+    def originating_shell(self) -> dryad.id.ElectronSubshellID:
         """
         The identifier of the subshell from which the electron filling the vacancy originated
         """
@@ -178,7 +179,7 @@ class RadiativeTransitionData:
     electron filling the vacancy originated from.
     """
     @typing.overload
-    def __init__(self, originating_shell: str, probability: float) -> None:
+    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float) -> None:
         """
         Initialise the radiative transition data without transition energy
         
@@ -189,7 +190,7 @@ class RadiativeTransitionData:
             probability         the probability of the transition
         """
     @typing.overload
-    def __init__(self, originating_shell: str, probability: float, energy: float) -> None:
+    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float, energy: float) -> None:
         """
         Initialise the radiative transition data with transition energy
         
@@ -206,7 +207,7 @@ class RadiativeTransitionData:
         The energy of the emitted photon
         """
     @property
-    def originating_shell(self) -> str:
+    def originating_shell(self) -> dryad.id.ElectronSubshellID:
         """
         The identifier of the subshell from which the electron filling the vacancy originated
         """

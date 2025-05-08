@@ -39,7 +39,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "2p3/2" ) ) );
   CHECK( false == chunk.hasSubshell( id::ElectronSubshellID( "3s1/2" ) ) );
 
-  auto shell_k = chunk.subshell( "1s1/2" );
+  auto shell_k = chunk.subshell( id::ElectronSubshellID( "1s1/2" ) );
   CHECK( id::ElectronSubshellID( "1s1/2" ) == shell_k.identifier() );
   CHECK_THAT( 538, WithinRel( shell_k.bindingEnergy() ) );
   CHECK_THAT( 2. , WithinRel( shell_k.population() ) );
@@ -97,7 +97,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK_THAT( 0.00570795, WithinRel( shell_k.totalRadiativeProbability() ) );
   CHECK_THAT( 0.9942922 , WithinRel( shell_k.totalNonRadiativeProbability() ) );
 
-  auto shell_l1 = chunk.subshell( "2s1/2" );
+  auto shell_l1 = chunk.subshell( id::ElectronSubshellID( "2s1/2" ) );
   CHECK( id::ElectronSubshellID( "2s1/2" ) == shell_l1.identifier() );
   CHECK_THAT( 28.48, WithinRel( shell_l1.bindingEnergy() ) );
   CHECK_THAT( 2. , WithinRel( shell_l1.population() ) );
@@ -112,7 +112,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( 0 == shell_l1.radiativeTransitions().size() );
   CHECK( 0 == shell_l1.nonRadiativeTransitions().size() );
 
-  auto shell_l2 = chunk.subshell( "2p1/2" );
+  auto shell_l2 = chunk.subshell( id::ElectronSubshellID( "2p1/2" ) );
   CHECK( id::ElectronSubshellID( "2p1/2" ) == shell_l2.identifier() );
   CHECK_THAT( 13.62, WithinRel( shell_l2.bindingEnergy() ) );
   CHECK_THAT( 1.33 , WithinRel( shell_l2.population() ) );
@@ -127,7 +127,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( 0 == shell_l2.radiativeTransitions().size() );
   CHECK( 0 == shell_l2.nonRadiativeTransitions().size() );
 
-  auto shell_l3 = chunk.subshell( "2p3/2" );
+  auto shell_l3 = chunk.subshell( id::ElectronSubshellID( "2p3/2" ) );
   CHECK( id::ElectronSubshellID( "2p3/2" ) == shell_l3.identifier() );
   CHECK_THAT( 13.62, WithinRel( shell_l3.bindingEnergy() ) );
   CHECK_THAT( 2.67 , WithinRel( shell_l3.population() ) );

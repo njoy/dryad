@@ -10,7 +10,10 @@ namespace python = pybind11;
 namespace id {
 
   // declarations - identifiers
+  void wrapElectronSubshellID( python::module& );
   void wrapElementID( python::module& );
+  void wrapLevelID( python::module& );
+  void wrapParticleID( python::module& );
 }
 
 void wrapID( python::module& module ) {
@@ -22,5 +25,8 @@ void wrapID( python::module& module ) {
     "Identifiers for particles, elements, etc."
   );
 
+  id::wrapElectronSubshellID( submodule );
   id::wrapElementID( submodule );
+  id::wrapLevelID( submodule );
+  id::wrapParticleID( submodule );
 }

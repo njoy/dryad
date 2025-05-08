@@ -34,9 +34,9 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
     THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
 
-      CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-      CHECK( "U235" == chunk.rowMetadata().targetIdentifier() );
-      CHECK( "elastic" == chunk.rowMetadata().reactionIdentifier() );
+      CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+      CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
+      CHECK( id::ReactionID( "elastic" ) == chunk.rowMetadata().reactionIdentifier() );
       CHECK( 4 == chunk.rowMetadata().energies().size() );
       CHECK( 3 == chunk.rowMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -44,9 +44,9 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
       CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
 
-      CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-      CHECK( "U235" == chunk.columnMetadata().targetIdentifier() );
-      CHECK( "elastic" == chunk.columnMetadata().reactionIdentifier() );
+      CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+      CHECK( id::ParticleID( "U235" ) == chunk.columnMetadata().targetIdentifier() );
+      CHECK( id::ReactionID( "elastic" ) == chunk.columnMetadata().reactionIdentifier() );
       CHECK( 4 == chunk.columnMetadata().energies().size() );
       CHECK( 3 == chunk.columnMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -147,9 +147,9 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
     THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
 
-     CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-     CHECK( "U235" == chunk.rowMetadata().targetIdentifier() );
-     CHECK( "elastic" == chunk.rowMetadata().reactionIdentifier() );
+     CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+     CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
+     CHECK( id::ReactionID( "elastic" ) == chunk.rowMetadata().reactionIdentifier() );
      CHECK( 4 == chunk.rowMetadata().energies().size() );
      CHECK( 3 == chunk.rowMetadata().numberGroups() );
      CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -157,9 +157,9 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
      CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
      CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
 
-     CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-     CHECK( "U235" == chunk.columnMetadata().targetIdentifier() );
-     CHECK( "elastic" == chunk.columnMetadata().reactionIdentifier() );
+     CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+     CHECK( id::ParticleID( "U235" ) == chunk.columnMetadata().targetIdentifier() );
+     CHECK( id::ReactionID( "elastic" ) == chunk.columnMetadata().reactionIdentifier() );
      CHECK( 4 == chunk.columnMetadata().energies().size() );
      CHECK( 3 == chunk.columnMetadata().numberGroups() );
      CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -275,20 +275,20 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
     THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
 
-      CHECK( "n" == chunk.rowMetadata().projectileIdentifier() );
-      CHECK( "U235" == chunk.rowMetadata().targetIdentifier() );
-      CHECK( "elastic" == chunk.rowMetadata().reactionIdentifier() );
-      CHECK( 4 == chunk.rowMetadata().energies().size() );
+      CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
+      CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
+      CHECK( id::ReactionID( "elastic" ) == chunk.rowMetadata().reactionIdentifier() );
+       CHECK( 4 == chunk.rowMetadata().energies().size() );
       CHECK( 3 == chunk.rowMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
       CHECK_THAT( 1.  , WithinRel( chunk.rowMetadata().energies()[1] ) );
       CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
 
-      CHECK( "n" == chunk.columnMetadata().projectileIdentifier() );
-      CHECK( "U238" == chunk.columnMetadata().targetIdentifier() );
-      CHECK( "fission" == chunk.columnMetadata().reactionIdentifier() );
-      CHECK( 3 == chunk.columnMetadata().energies().size() );
+      CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
+      CHECK( id::ParticleID( "U238" ) == chunk.columnMetadata().targetIdentifier() );
+      CHECK( id::ReactionID( "fission" ) == chunk.columnMetadata().reactionIdentifier() );
+       CHECK( 3 == chunk.columnMetadata().energies().size() );
       CHECK( 2 == chunk.columnMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
       CHECK_THAT( 2.  , WithinRel( chunk.columnMetadata().energies()[1] ) );

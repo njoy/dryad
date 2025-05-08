@@ -29,7 +29,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto H0_pa = std::get< ProjectileTarget >( targets );
 
         CHECK( id::ParticleID( "g" ) == H0_pa.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.84p" ) == H0_pa.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0_pa.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_pa.interactionType() );
 
@@ -92,7 +92,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         // photoatomic data
         CHECK( id::ParticleID( "g" ) == H0_pa.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.12p" ) == H0_pa.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0_pa.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_pa.interactionType() );
 
@@ -148,7 +148,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         // electroatomic data
         CHECK( id::ParticleID( "e-" ) == H0_ea.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.12p" ) == H0_ea.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0_ea.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_ea.interactionType() );
 
@@ -216,7 +216,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         // photoatomic data
         CHECK( id::ParticleID( "g" ) == H0_pa.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.14p" ) == H0_pa.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0_pa.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_pa.interactionType() );
 
@@ -272,7 +272,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         // electroatomic data
         CHECK( id::ParticleID( "e-" ) == H0_ea.projectileIdentifier() );
-        CHECK( id::ParticleID( "1000.14p" ) == H0_ea.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0_ea.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_ea.interactionType() );
 
