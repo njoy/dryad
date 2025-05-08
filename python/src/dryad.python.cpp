@@ -21,6 +21,9 @@ void wrapReactionType( python::module& );
 void wrapReferenceFrame( python::module& );
 void wrapUniformDistributionType( python::module& );
 
+// declarations - resonances
+void wrapResonances( python::module& );
+
 // declarations - covariance data
 void wrapCovariance( python::module& );
 
@@ -43,6 +46,7 @@ void wrapTabulatedEnergyDistribution( python::module& );
 void wrapTabulatedEnergyDistributions( python::module& );
 void wrapUniformEnergyDistribution( python::module& );
 void wrapUniformEnergyDistributions( python::module& );
+void wrapMultiEnergyDistributions( python::module& );
 void wrapTabulatedCrossSection( python::module& );
 void wrapPolynomialMultiplicity( python::module& );
 void wrapTabulatedMultiplicity( python::module& );
@@ -80,6 +84,9 @@ PYBIND11_MODULE( dryad, module ) {
   wrapReferenceFrame( module );
   wrapUniformDistributionType( module );
 
+  // wrap components - resonances
+  wrapResonances( module );
+
   // wrap components - covariance data
   wrapCovariance( module );
 
@@ -87,17 +94,17 @@ PYBIND11_MODULE( dryad, module ) {
   wrapAtomic( module );
 
   // wrap components - reaction products
-  wrapPolynomialMultiplicity( module );
   wrapTabulatedMultiplicity( module );
+  wrapPolynomialMultiplicity( module );
   wrapTabulatedAverageCosine( module );
   wrapTabulatedAverageEnergy( module );
   wrapIsotropicAngularDistributions( module );
-  wrapLegendreAngularDistributionFunction( module );
-  wrapLegendreAngularDistribution( module );
-  wrapLegendreAngularDistributions( module );
   wrapTabulatedAngularDistributionFunction( module );
   wrapTabulatedAngularDistribution( module );
   wrapTabulatedAngularDistributions( module );
+  wrapLegendreAngularDistributionFunction( module );
+  wrapLegendreAngularDistribution( module );
+  wrapLegendreAngularDistributions( module );
   wrapUniformAngularDistribution( module );
   wrapUniformAngularDistributions( module );
   wrapTabulatedEnergyDistributionFunction( module );
@@ -105,6 +112,7 @@ PYBIND11_MODULE( dryad, module ) {
   wrapTabulatedEnergyDistributions( module );
   wrapUniformEnergyDistribution( module );
   wrapUniformEnergyDistributions( module );
+  wrapMultiEnergyDistributions( module );
   wrapTabulatedFormFactor( module );
   wrapTabulatedScatteringFunction( module );
   wrapTwoBodyDistributionData( module );
