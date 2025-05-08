@@ -7,6 +7,9 @@ __all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID']
 class ElectronSubshellID:
     """
     The electron subshell identifier
+    
+    For more information on how to create instances of ElectronSubshellID, see the
+    Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     K: typing.ClassVar[int] = 534
     L1: typing.ClassVar[int] = 535
@@ -221,6 +224,23 @@ class LevelID:
 class ParticleID:
     """
     The particle identifier
+    
+    The ParticleID can be used to identify the following particle types (the
+    numbers between parentheses are the internal logic numbers assigned to them):
+      - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),
+        t (1003), h (2003), a (2004)
+      - elements (z * 1000000)
+      - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 150 with 150 being
+        defined as the continuum )
+      - ions (z * 1000000 + s, with s = K(534) .. Q11(580) - basically the ENDF
+        mt numbers for the subshell ionisation)
+    
+    Comparison operators are provided using the logical order given by the
+    element number. A hash function and override for std::hash is also
+    provided.
+    
+    For more information on how to create instances of ParticleID, see the
+    Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     @staticmethod
     def alpha() -> ParticleID:
