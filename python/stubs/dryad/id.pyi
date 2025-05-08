@@ -92,7 +92,7 @@ class ElectronSubshellID:
         ...
     def __ne__(self, arg0: ElectronSubshellID) -> bool:
         ...
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """
         Convenience function for printing the identifier
         """
@@ -149,7 +149,7 @@ class ElementID:
         ...
     def __ne__(self, arg0: ElementID) -> bool:
         ...
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """
         Convenience function for printing the identifier
         """
@@ -207,7 +207,7 @@ class LevelID:
         ...
     def __ne__(self, arg0: LevelID) -> bool:
         ...
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """
         Convenience function for printing the identifier
         """
@@ -327,7 +327,7 @@ class ParticleID:
         ...
     def __ne__(self, arg0: ParticleID) -> bool:
         ...
-    def __repr__(self) -> str:
+    def __str__(self) -> str:
         """
         Convenience function for printing the identifier
         """
