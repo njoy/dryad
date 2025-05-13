@@ -31,7 +31,9 @@ SCENARIO( "Reaction" ) {
       double reaction_q = -1;
       std::vector< ReactionProduct > products = {
 
-        ReactionProduct( id::ParticleID( "n" ), 1 )
+        ReactionProduct( id::ParticleID( "n" ), 1 ),
+        ReactionProduct( id::ParticleID( "g" ), 2 ),
+        ReactionProduct( id::ParticleID( "g" ), 3 )
       };
 
       Reaction chunk( std::move( id ), std::move( xs ),
@@ -137,8 +139,23 @@ void verifyChunk( const Reaction& chunk ) {
   // reaction products
   CHECK( true == chunk.hasProducts() );
   CHECK( true == chunk.hasProduct( id::ParticleID( "n" ) ) );
-  CHECK( false == chunk.hasProduct( id::ParticleID( "g" ) ) );
-  CHECK( 1 == chunk.products().size() );
+  CHECK( true == chunk.hasProduct( id::ParticleID( "g" ) ) );
+  CHECK( false == chunk.hasProduct( id::ParticleID( "h" ) ) );
+  CHECK( 3 == chunk.numberProducts() );
+  CHECK( 3 == chunk.products().size() );
+  CHECK( 1 == chunk.numberProducts( id::ParticleID( "n" ) ) );
+  CHECK( 2 == chunk.numberProducts( id::ParticleID( "g" ) ) );
+  CHECK( 0 == chunk.numberProducts( id::ParticleID( "h" ) ) );
+
+  CHECK( 1 == std::get< int >( chunk.product( id::ParticleID( "n" ) ).multiplicity() ) );
+  CHECK( 1 == std::get< int >( chunk.product( id::ParticleID( "n" ), 0 ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( id::ParticleID( "g" ) ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( id::ParticleID( "g" ), 0 ).multiplicity() ) );
+  CHECK( 3 == std::get< int >( chunk.product( id::ParticleID( "g" ), 1 ).multiplicity() ) );
+
+  CHECK_THROWS( chunk.product( id::ParticleID( "n" ), 1 ) );
+  CHECK_THROWS( chunk.product( id::ParticleID( "h" ) ) );
+  CHECK_THROWS( chunk.product( id::ParticleID( "h" ), 1 ) );
 
   // metadata
   CHECK( false == chunk.isLinearised() );

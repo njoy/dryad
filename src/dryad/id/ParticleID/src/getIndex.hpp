@@ -2,19 +2,24 @@
  *  @brief Update registry
  *
  *  @param element   the particle element
- *  @param mass      the particle mass number
+ *  @param a         the particle mass number
  *  @param level     the particle level
  */
-static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) {
+static std::size_t updateRegistry( ElementID element, int a, LevelID state ) {
 
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  int number = element.number() * 1000000 + mass * 1000 + state.number();
+  int number = element.number() * 1000000 + a * 1000 + state.number();
   std::vector< std::string > alternatives = {};
-  std::string symbol = element.symbol() + std::to_string( mass );
+  std::string symbol = element.symbol() + std::to_string( a );
   if ( state.number() != 0 ) {
 
+    if ( state.number() == LevelID::continuum ) {
+
+      alternatives.emplace_back( symbol + std::string( "_e" ) +
+                                 std::to_string( LevelID::continuum ) );
+    }
     symbol += state.symbol();
   }
   else {
@@ -23,8 +28,8 @@ static std::size_t updateRegistry( ElementID element, int mass, LevelID state ) 
   }
 
   // create the data entry and set conversion
-  entries.emplace_back( number, std::move( element ), static_cast< char >( mass ),
-                        std::move( state ), std::move( symbol ),
+  entries.emplace_back( number, element.number(), static_cast< short >( a ),
+                        state.number(), std::move( symbol ),
                         std::move( alternatives ) );
 
   number_conversion_dictionary[ entries[ index ].number() ] = index;
@@ -54,7 +59,7 @@ static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshel
   std::vector< std::string > alternatives = { element.symbol() + std::string( "{" ) + subshell.name() + std::string( "}" ) };
 
   // create the data entry and set conversion
-  entries.emplace_back( number, std::move( element ),
+  entries.emplace_back( number, element.number(),
                         std::move( subshell ), std::move( symbol ),
                         std::move( alternatives ) );
 
@@ -91,6 +96,11 @@ static std::size_t getIndex( int za, int number ) {
 
       // look for state or subshell number
       if ( number <= LevelID::continuum ) {
+
+        if ( ( mass == 0 ) && ( number != 0 ) ) {
+
+          throw std::out_of_range( "An element cannot have a non-zero level number" );
+        }
 
         // determine the level
         LevelID state( number );

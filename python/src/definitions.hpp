@@ -41,7 +41,7 @@ void addStandardComparisonDefinitions( PythonClass& component ) {
  *  @brief Add standard print definitions
  *
  *  This adds the following standard functions:
- *    __repr__
+ *    __str__
  *
  *  @param[in] component   the component to which the definitions have to be added
  */
@@ -51,7 +51,7 @@ void addStandardPrintDefinitions( PythonClass& component ) {
   component
   .def(
 
-    "__repr__",
+    "__str__",
     [] ( const Component& self ) { return self.symbol(); },
     "Convenience function for printing the identifier"
   );

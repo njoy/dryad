@@ -38,7 +38,7 @@ namespace h1 {
     CHECK_THAT( 4.62084E-6, WithinRel( total.crossSection().values()[0] ) );
     CHECK_THAT( .020718042, WithinRel( total.crossSection().values()[2020] ) );
 
-    CHECK( 0 == total.products().size() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyCoherentReaction( const Reaction& coherent ) {
@@ -66,9 +66,11 @@ namespace h1 {
     CHECK_THAT( 4.52522E-6, WithinRel( coherent.crossSection().values()[0] ) );
     CHECK_THAT( 4.6282E-16, WithinRel( coherent.crossSection().values()[360] ) );
 
-    CHECK( 2 == coherent.products().size() );
+    CHECK( 2 == coherent.numberProducts() );
+    CHECK( 1 == coherent.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == coherent.numberProducts( id::ParticleID( "H" ) ) );
 
-    auto gamma = coherent.products()[0];
+    auto gamma = coherent.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
     CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
@@ -145,7 +147,7 @@ namespace h1 {
     CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
     CHECK( true == factor.isLinearised() );
 
-    auto hydrogen = coherent.products()[1];
+    auto hydrogen = coherent.product( id::ParticleID( "H" ) );
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
@@ -174,9 +176,11 @@ namespace h1 {
     CHECK_THAT( 9.56230E-8, WithinRel( incoherent.crossSection().values()[0] ) );
     CHECK_THAT( 1.70420E-5, WithinRel( incoherent.crossSection().values()[395] ) );
 
-    CHECK( 2 == incoherent.products().size() );
+    CHECK( 2 == incoherent.numberProducts() );
+    CHECK( 1 == incoherent.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == incoherent.numberProducts( id::ParticleID( "H" ) ) );
 
-    auto gamma = incoherent.products()[0];
+    auto gamma = incoherent.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
     CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
@@ -213,7 +217,7 @@ namespace h1 {
     CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
     CHECK( true == data.scatteringFunction().isLinearised() );
 
-    auto hydrogen = incoherent.products()[1];
+    auto hydrogen = incoherent.product( id::ParticleID( "H" ) );
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
     }
 
@@ -242,18 +246,21 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( epairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .0111   , WithinRel( epairproduction.crossSection().values()[216] ) );
 
-    CHECK( 4 == epairproduction.products().size() );
+    CHECK( 4 == epairproduction.numberProducts() );
+    CHECK( 2 == epairproduction.numberProducts( id::ParticleID( "e-" ) ) );
+    CHECK( 1 == epairproduction.numberProducts( id::ParticleID( "e+" ) ) );
+    CHECK( 1 == epairproduction.numberProducts( id::ParticleID( "H" ) ) );
 
-    auto electron = epairproduction.products()[0];
+    auto electron = epairproduction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 
-    electron = epairproduction.products()[1];
+    electron = epairproduction.product( id::ParticleID( "e-" ), 1 );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 
-    auto antielectron = epairproduction.products()[2];
-    CHECK( id::ParticleID( "e+" ) == antielectron.identifier() );
+    auto positron = epairproduction.product( id::ParticleID( "e+" ) );
+    CHECK( id::ParticleID( "e+" ) == positron.identifier() );
 
-    auto hydrogen = epairproduction.products()[3];
+    auto hydrogen = epairproduction.product( id::ParticleID( "H" ) );;
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
@@ -282,15 +289,18 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( npairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .009601 , WithinRel( npairproduction.crossSection().values()[307] ) );
 
-    CHECK( 3 == npairproduction.products().size() );
+    CHECK( 3 == npairproduction.numberProducts() );
+    CHECK( 1 == npairproduction.numberProducts( id::ParticleID( "e-" ) ) );
+    CHECK( 1 == npairproduction.numberProducts( id::ParticleID( "e+" ) ) );
+    CHECK( 1 == npairproduction.numberProducts( id::ParticleID( "H" ) ) );
 
-    auto electron = npairproduction.products()[0];
+    auto electron = npairproduction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 
-    auto antielectron = npairproduction.products()[1];
-    CHECK( id::ParticleID( "e+" ) == antielectron.identifier() );
+    auto positron = npairproduction.product( id::ParticleID( "e+" ) );
+    CHECK( id::ParticleID( "e+" ) == positron.identifier() );
 
-    auto hydrogen = npairproduction.products()[2];
+    auto hydrogen = npairproduction.product( id::ParticleID( "H" ) );
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
@@ -324,7 +334,7 @@ namespace h1 {
     CHECK_THAT( 0.      , WithinRel( tpairproduction.crossSection().values()[0] ) );
     CHECK_THAT( .020701 , WithinRel( tpairproduction.crossSection().values()[465] ) );
 
-    CHECK( 0 == tpairproduction.products().size() );
+    CHECK( 0 == tpairproduction.numberProducts() );
   }
 
   void verifyIonisationReaction( const Reaction& ionisation ) {
@@ -352,12 +362,14 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( ionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( ionisation.crossSection().values()[903] ) );
 
-    CHECK( 2 == ionisation.products().size() );
+    CHECK( 2 == ionisation.numberProducts() );
+    CHECK( 1 == ionisation.numberProducts( id::ParticleID( "e-" ) ) );
+    CHECK( 1 == ionisation.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
 
-    auto electron = ionisation.products()[0];
+    auto electron = ionisation.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
 
-    auto ion = ionisation.products()[1];
+    auto ion = ionisation.product( id::ParticleID( "H{1s1/2}" ) );
     CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
   }
 
@@ -390,7 +402,7 @@ namespace h1 {
     CHECK_THAT( 6318358.25, WithinRel( tionisation.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( tionisation.crossSection().values()[903] ) );
 
-    CHECK( 0 == tionisation.products().size() );
+    CHECK( 0 == tionisation.numberProducts() );
   }
 
 } // namespace h1

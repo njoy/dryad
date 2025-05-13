@@ -1,3 +1,12 @@
+private:
+
+/**
+ *  @brief Private constructor taking an index
+ */
+constexpr ParticleID( std::size_t index ) : index_( index ) {};
+
+public:
+
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */

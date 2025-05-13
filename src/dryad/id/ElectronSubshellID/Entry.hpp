@@ -4,8 +4,6 @@
  */
 class Entry {
 
-  // unsigned char has a max value of 255
-
   /* fields */
   short number_;
   std::string symbol_;

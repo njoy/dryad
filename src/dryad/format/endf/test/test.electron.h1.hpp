@@ -36,7 +36,7 @@ namespace h1 {
     CHECK_THAT( 274896030., WithinRel( total.crossSection().values()[0] ) );
     CHECK_THAT( 177322.091, WithinRel( total.crossSection().values()[348] ) );
 
-    CHECK( 0 == total.products().size() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyTotalIonisationReaction( const Reaction& ionisation ) {
@@ -68,7 +68,7 @@ namespace h1 {
     CHECK_THAT( 0., WithinRel( ionisation.crossSection().values()[0] ) );
     CHECK_THAT( 82892.4, WithinRel( ionisation.crossSection().values()[34] ) );
 
-    CHECK( 0 == ionisation.products().size() );
+    CHECK( 0 == ionisation.numberProducts() );
   }
 
   void verifyElasticReaction( const Reaction& elastic ) {
@@ -96,8 +96,10 @@ namespace h1 {
     CHECK_THAT( 274896000., WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 1.31176e-5, WithinRel( elastic.crossSection().values()[100] ) );
 
-    CHECK( 1 == elastic.products().size() );
-    auto electron = elastic.products()[0];
+    CHECK( 1 == elastic.numberProducts() );
+    CHECK( 1 == elastic.numberProducts( id::ParticleID( "e-" ) ) );
+
+    auto electron = elastic.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
@@ -211,7 +213,7 @@ namespace h1 {
     CHECK_THAT( 274896000., WithinRel( telastic.crossSection().values()[0] ) );
     CHECK_THAT( 12987.1, WithinRel( telastic.crossSection().values()[100] ) );
 
-    CHECK( 0 == telastic.products().size() );
+    CHECK( 0 == telastic.numberProducts() );
   }
 
   void verifyBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
@@ -239,8 +241,11 @@ namespace h1 {
     CHECK_THAT( 29.7832 , WithinRel( bremsstrahlung.crossSection().values()[0] ) );
     CHECK_THAT( 0.990621, WithinRel( bremsstrahlung.crossSection().values()[95] ) );
 
-    CHECK( 2 == bremsstrahlung.products().size() );
-    auto gamma = bremsstrahlung.products()[0];
+    CHECK( 2 == bremsstrahlung.numberProducts() );
+    CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "e-" ) ) );
+
+    auto gamma = bremsstrahlung.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
     CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
@@ -327,7 +332,8 @@ namespace h1 {
     CHECK_THROWS( energy.distributions()[9].cdf() );
     CHECK( 9 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
-    auto electron = bremsstrahlung.products()[1];
+
+    auto electron = bremsstrahlung.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
@@ -382,8 +388,10 @@ namespace h1 {
     CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
     CHECK_THAT( 81441.6, WithinRel( subionisation.crossSection().values()[169] ) );
 
-    CHECK( 1 == subionisation.products().size() );
-    auto electron = subionisation.products()[0];
+    CHECK( 1 == subionisation.numberProducts() );
+    CHECK( 1 == subionisation.numberProducts( id::ParticleID( "e-" ) ) );
+
+    auto electron = subionisation.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
@@ -438,8 +446,10 @@ namespace h1 {
     CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
     CHECK_THAT( 82892.4, WithinRel( subionisation.crossSection().values()[34] ) );
 
-    CHECK( 1 == subionisation.products().size() );
-    auto electron = subionisation.products()[0];
+    CHECK( 1 == subionisation.numberProducts() );
+    CHECK( 1 == subionisation.numberProducts( id::ParticleID( "e-" ) ) );
+
+    auto electron = subionisation.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
@@ -534,7 +544,7 @@ namespace h1 {
 
     CHECK( true == deficit.crossSection().isLinearised() );
 
-    CHECK( 0 == deficit.products().size() );
+    CHECK( 0 == deficit.numberProducts() );
   }
 
 } // namespace h1

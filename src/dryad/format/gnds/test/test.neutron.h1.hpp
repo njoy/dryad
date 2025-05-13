@@ -37,7 +37,7 @@ namespace h1 {
     CHECK_THAT( 2.118421e+1, WithinRel( total.crossSection().values()[8] ) );
     CHECK_THAT( 4.818679e-1, WithinRel( total.crossSection().values()[152] ) );
 
-    CHECK( 0 == total.products().size() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyElasticReaction( const Reaction& elastic ) {
@@ -66,9 +66,11 @@ namespace h1 {
     CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
 
-    CHECK( 2 == elastic.products().size() );
+    CHECK( 2 == elastic.numberProducts() );
+    CHECK( 1 == elastic.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == elastic.numberProducts( id::ParticleID( "H1" ) ) );
 
-    auto neutron = elastic.products()[0];
+    auto neutron = elastic.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
@@ -168,7 +170,7 @@ namespace h1 {
     CHECK( 152 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    auto h1 = elastic.products()[1];
+    auto h1 = elastic.product( id::ParticleID( "H1" ) );
     CHECK( id::ParticleID( "H1" ) == h1.identifier() );
   }
 
@@ -201,12 +203,14 @@ namespace h1 {
     CHECK_THAT( 4.950573e-4, WithinRel( capture.crossSection().values()[32] ) );
     CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
 
-    CHECK( 2 == capture.products().size() );
+    CHECK( 2 == capture.numberProducts() );
+    CHECK( 1 == capture.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == capture.numberProducts( id::ParticleID( "H2" ) ) );
 
-    auto gamma = capture.products()[0];
+    auto gamma = capture.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
 
-    auto deuterium = capture.products()[1];
+    auto deuterium = capture.product( id::ParticleID( "H2" ) );
     CHECK( id::ParticleID( "H2" ) == deuterium.identifier() );
   }
 

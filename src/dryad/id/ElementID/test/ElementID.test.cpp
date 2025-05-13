@@ -46,6 +46,21 @@ SCENARIO( "ElementID" ) {
       CHECK( 13 == id.number() );
       CHECK( "Al" == id.symbol() );
       CHECK( "Aluminium" == id.name() );
+
+      id = ElementID( 118 );
+      CHECK( 118 == id.number() );
+      CHECK( "Og" == id.symbol() );
+      CHECK( "Oganesson" == id.name() );
+
+      id = ElementID( "Oganesson" );
+      CHECK( 118 == id.number() );
+      CHECK( "Og" == id.symbol() );
+      CHECK( "Oganesson" == id.name() );
+
+      id = ElementID( "Og" );
+      CHECK( 118 == id.number() );
+      CHECK( "Og" == id.symbol() );
+      CHECK( "Oganesson" == id.name() );
     } // THEN
   } // GIVEN
 
@@ -109,6 +124,7 @@ SCENARIO( "ElementID" ) {
 
       CHECK_THROWS( ElementID( "not an element name, symbol or alternative" ) );
       CHECK_THROWS( ElementID( -1 ) );
+      CHECK_THROWS( ElementID( 0 ) );
       CHECK_THROWS( ElementID( 119 ) );
     } // THEN
   } // GIVEN

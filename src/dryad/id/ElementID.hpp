@@ -28,7 +28,6 @@ namespace id {
     /* static fields */
     static inline const std::vector< Entry > entries{
 
-      Entry{   0, ""  , ""             , {} },
       Entry{   1, "H" , "Hydrogen"     , {} },
       Entry{   2, "He", "Helium"       , {} },
       Entry{   3, "Li", "Lithium"      , {} },

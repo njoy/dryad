@@ -61,8 +61,23 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
             # reaction products
             self.assertEqual( True, chunk.has_product( ParticleID( 'n' ) ) )
-            self.assertEqual( False, chunk.has_product( ParticleID( 'g' ) ) )
-            self.assertEqual( 1, len( chunk.products ) )
+            self.assertEqual( True, chunk.has_product( ParticleID( 'g' ) ) )
+            self.assertEqual( False, chunk.has_product( ParticleID( 'h' ) ) )
+            self.assertEqual( 3, len( chunk.products ) )
+            self.assertEqual( 3, chunk.number_products() )
+            self.assertEqual( 1, chunk.number_products( ParticleID( 'n' ) ) )
+            self.assertEqual( 2, chunk.number_products( ParticleID( 'g' ) ) )
+            self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ) ) )
+
+            self.assertEqual( 1, chunk.product( ParticleID( 'n' ) ).multiplicity )
+            self.assertEqual( 1, chunk.product( ParticleID( 'n' ), 0 ).multiplicity )
+            self.assertEqual( 2, chunk.product( ParticleID( 'g' ) ).multiplicity )
+            self.assertEqual( 2, chunk.product( ParticleID( 'g' ), 0 ).multiplicity )
+            self.assertEqual( 3, chunk.product( ParticleID( 'g' ), 1 ).multiplicity )
+
+            with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'n' ), 1 )
+            with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ) )
+            with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ), 1 )
 
             # metadata
             self.assertEqual( False, chunk.is_linearised )
@@ -169,7 +184,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                                        [ 1, 4 ],
                                                        [ InterpolationType.LinearLinear,
                                                          InterpolationType.LinearLog ] ),
-                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ) ] )
+                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
+                                       ReactionProduct( ParticleID( 'g' ), 2 ),
+                                       ReactionProduct( ParticleID( 'g' ), 3 ) ] )
 
         verify_chunk( self, chunk )
 

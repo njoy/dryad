@@ -37,7 +37,7 @@ namespace h1 {
     CHECK_THAT( 2.118421e+1, WithinRel( total.crossSection().values()[8] ) );
     CHECK_THAT( 4.818679e-1, WithinRel( total.crossSection().values()[152] ) );
 
-    CHECK( 0 == total.products().size() );
+    CHECK( 0 == total.numberProducts() );
   }
 
   void verifyElasticReaction( const Reaction& elastic ) {
@@ -66,8 +66,10 @@ namespace h1 {
     CHECK_THAT( 2.043608e+1, WithinRel( elastic.crossSection().values()[0] ) );
     CHECK_THAT( 4.818408e-1, WithinRel( elastic.crossSection().values()[152] ) );
 
-    CHECK( 1 == elastic.products().size() );
-    auto neutron = elastic.products()[0];
+    CHECK( 1 == elastic.numberProducts() );
+    CHECK( 1 == elastic.numberProducts( id::ParticleID( "n" ) ) );
+
+    auto neutron = elastic.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
@@ -198,10 +200,14 @@ namespace h1 {
     CHECK_THAT( 4.950573e-4, WithinRel( capture.crossSection().values()[32] ) );
     CHECK_THAT( 2.710792e-5, WithinRel( capture.crossSection().values()[152] ) );
 
-    CHECK( 2 == capture.products().size() );
-    auto gamma = capture.products()[0];
+    CHECK( 2 == capture.numberProducts() );
+    CHECK( 1 == capture.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == capture.numberProducts( id::ParticleID( "d" ) ) );
+
+    auto gamma = capture.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    auto deuterium = capture.products()[1];
+
+    auto deuterium = capture.product( id::ParticleID( "d" ) );
     CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
   }
 

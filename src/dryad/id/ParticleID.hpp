@@ -21,9 +21,22 @@ namespace id {
    *  @class
    *  @brief The particle identifier, with associated symbol and aliases
    *
+   *  The ParticleID can be used to identify the following particle types (the
+   *  numbers between parentheses are the internal logic numbers assigned to them):
+   *    - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),
+   *      t (1003), h (2003), a (2004)
+   *    - elements (z * 1000000)
+   *    - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 150 with 150 being
+   *      defined as the continuum )
+   *    - ions (z * 1000000 + s, with s = K(534) .. Q11(580) - basically the ENDF
+   *      mt numbers for the subshell ionisation)
+   *
    *  Comparison operators are provided using the logical order given by the
    *  element number. A hash function and override for std::hash is also
    *  provided.
+   *
+   *  For more information on how to create instances of ParticleID, see the
+   *  Jupyter notebook dryad-identifiers.ipynb under python/examples.
    */
   class ParticleID {
 
@@ -37,8 +50,8 @@ namespace id {
 
       // fundamental particles
       Entry{         0,   0, 0, 0, "g" , { "photon", "gamma", "x-ray" } },
-      Entry{         1,   0, 0, 0, "e-", { "electron", "beta-" } },
-      Entry{         2,   0, 0, 0, "e+", { "positron", "beta+", "e-_anti" } },
+      Entry{         1,  -1, 0, 0, "e-", { "electron", "beta-" } },
+      Entry{         2,   1, 0, 0, "e+", { "positron", "beta+", "e-_anti" } },
       Entry{        10,   0, 1, 0, "n" , { "neutron" } },
       Entry{      1001,   1, 1, 0, "p" , { "proton" } },
       Entry{      1002,   1, 2, 0, "d" , { "deuteron" } },
@@ -201,6 +214,18 @@ namespace id {
     /* constructor */
     #include "dryad/id/ParticleID/src/ctor.hpp"
 
+    /* predefined identifiers */
+
+    static constexpr ParticleID photon() { return ParticleID{ static_cast< std::size_t >( 0 ) }; };
+    static constexpr ParticleID electron() { return ParticleID{ static_cast< std::size_t >( 1 ) }; };
+    static constexpr ParticleID positron() { return ParticleID{ static_cast< std::size_t >( 2 ) }; };
+    static constexpr ParticleID neutron() { return ParticleID{ static_cast< std::size_t >( 3 ) }; };
+    static constexpr ParticleID proton() { return ParticleID{ static_cast< std::size_t >( 4 ) }; };
+    static constexpr ParticleID deuteron() { return ParticleID{ static_cast< std::size_t >( 5 ) }; };
+    static constexpr ParticleID triton() { return ParticleID{ static_cast< std::size_t >( 6 ) }; };
+    static constexpr ParticleID helion() { return ParticleID{ static_cast< std::size_t >( 7 ) }; };
+    static constexpr ParticleID alpha() { return ParticleID{ static_cast< std::size_t >( 8 ) }; };
+
     /* methods */
 
     /**
@@ -228,27 +253,43 @@ namespace id {
     }
 
     /**
-     *  @brief Return the particle's element
+     *  @brief Return the particle's element number
      */
-    const ElementID& element() const noexcept {
+    short z() const noexcept {
 
-      return entries[ this->index_ ].element();
+      return entries[ this->index_ ].z();
     }
 
     /**
      *  @brief Return the particle's mass number
      */
-    short mass() const noexcept {
+    short a() const noexcept {
 
-      return entries[ this->index_ ].mass();
+      return entries[ this->index_ ].a();
     }
 
     /**
-     *  @brief Return the particle's level
+     *  @brief Return the particle's level number
      */
-    const LevelID& level() const noexcept {
+    short e() const noexcept {
 
-      return entries[ this->index_ ].level();
+      return entries[ this->index_ ].e();
+    }
+
+    /**
+     *  @brief Return the particle's za number
+     */
+    int za() const noexcept {
+
+      return entries[ this->index_ ].za();
+    }
+
+    /**
+     *  @brief Return the particle's subshell
+     */
+    const std::optional< ElectronSubshellID >& subshell() const noexcept {
+
+      return entries[ this->index_ ].subshell();
     }
 
     /**

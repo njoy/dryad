@@ -25,6 +25,7 @@ endfunction()
 
 message( STATUS "Adding dryad Python unit testing" )
 
+add_python_test( id.ElectronSubshellID                   id/Test_dryad_id_ElectronSubshellID.py )
 add_python_test( id.ElementID                            id/Test_dryad_id_ElementID.py )
 add_python_test( id.LevelID                              id/Test_dryad_id_LevelID.py )
 add_python_test( id.ParticleID                           id/Test_dryad_id_ParticleID.py )

@@ -13,6 +13,7 @@ void wrapReaction( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::id::ReactionID;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionType = njoy::dryad::ReactionType;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
@@ -119,22 +120,39 @@ void wrapReaction( python::module& module ) {
   )
   .def(
 
+    "number_products",
+    python::overload_cast<>( &Component::numberProducts, python::const_ ),
+    "The total number of reaction products"
+  )
+  .def(
+
+    "number_products",
+    python::overload_cast< const ParticleID& >( &Component::numberProducts, python::const_ ),
+    python::arg( "type" ),
+    "The number of reaction products of a given type"
+  )
+  .def(
+
     "has_product",
     &Component::hasProduct,
-    "Return whether or not a reaction product is present\n\n"
+    python::arg( "type" ),
+    "Return whether or not a reaction product type is present\n\n"
     "Arguments:\n"
     "    self   the reaction\n"
-    "    id     the reaction product identifier"
+    "    type   the reaction product type"
   )
   .def(
 
     "product",
     &Component::product,
-    "Return the requested reaction product\n\n"
+    python::arg( "type" ),
+    python::arg( "index" ) = 0,
+    "Return a reaction product with a given type and index\n\n"
     "Arguments:\n"
-    "    self   the reaction\n"
-    "    id     the reaction product identifier"
-  )
+    "    self    the reaction\n"
+    "    type    the reaction product type\n"
+    "    index   the reaction product index (default is zero)"
+ )
   .def_property_readonly(
 
     "is_linearised",
