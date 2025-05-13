@@ -37,6 +37,16 @@ class Test_elementary_LevelID( unittest.TestCase ) :
         self.assertEqual( continuum, id.number )
         self.assertEqual( '[continuum]', id.symbol )
 
+        all = LevelID.all
+
+        id = LevelID( all )
+        self.assertEqual( all, id.number )
+        self.assertEqual( '[all]', id.symbol )
+
+        id = LevelID( '[all]' )
+        self.assertEqual( all, id.number )
+        self.assertEqual( '[all]', id.symbol )
+
     def test_comparison( self ) :
 
         id1 = LevelID( 0 )
@@ -78,7 +88,7 @@ class Test_elementary_LevelID( unittest.TestCase ) :
         # illegal values
         with self.assertRaises( IndexError ) : id = LevelID( 'not a valid level number' )
         with self.assertRaises( IndexError ) : id = LevelID( -1 )
-        with self.assertRaises( IndexError ) : id = LevelID( 151 )
+        with self.assertRaises( IndexError ) : id = LevelID( 152 )
 
 if __name__ == '__main__' :
 

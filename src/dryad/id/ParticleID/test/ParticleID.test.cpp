@@ -417,7 +417,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1002 == id.za() );
       CHECK( std::nullopt == id.subshell() );
 
-      CHECK( size + 4 == ParticleID::size() ); // registering H1[continuum] as a string
+      CHECK( size + 4 == ParticleID::size() ); // registering H2[continuum] as a string
 
       id = ParticleID( 1002, njoy::dryad::id::LevelID::continuum );
       CHECK( 1002150 == id.number() );
@@ -428,7 +428,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1002 == id.za() );
       CHECK( std::nullopt == id.subshell() );
 
-      CHECK( size + 4 == ParticleID::size() ); // H1[continuum] already registered
+      CHECK( size + 4 == ParticleID::size() ); // H2[continuum] already registered
 
       id = ParticleID( "H2_e150" );
       CHECK( 1002150 == id.number() );
@@ -439,7 +439,73 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1002 == id.za() );
       CHECK( std::nullopt == id.subshell() );
 
-      CHECK( size + 4 == ParticleID::size() ); // H1[continuum] already registered
+      CHECK( size + 4 == ParticleID::size() ); // H2[continuum] already registered
+
+      id = ParticleID( 1001, njoy::dryad::id::LevelID::all );
+      CHECK( 1001151 == id.number() );
+      CHECK( "H1[all]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 1 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::all == id.e() );
+      CHECK( 1001 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 5 == ParticleID::size() ); // registering H1[all] using integers
+
+      id = ParticleID( "H1[all]" );
+      CHECK( 1001151 == id.number() );
+      CHECK( "H1[all]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 1 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::all == id.e() );
+      CHECK( 1001 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 5 == ParticleID::size() ); // H1[all] already registered
+
+      id = ParticleID( "H1_e151" );
+      CHECK( 1001151 == id.number() );
+      CHECK( "H1[all]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 1 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::all == id.e() );
+      CHECK( 1001 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 5 == ParticleID::size() ); // H1[all] already registered
+
+      id = ParticleID( "H2[all]" );
+      CHECK( 1002151 == id.number() );
+      CHECK( "H2[all]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 2 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::all == id.e() );
+      CHECK( 1002 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 6 == ParticleID::size() ); // registering H2[all] as a string
+
+      id = ParticleID( 1002, njoy::dryad::id::LevelID::all );
+      CHECK( 1002151 == id.number() );
+      CHECK( "H2[all]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 2 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::all == id.e() );
+      CHECK( 1002 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 6 == ParticleID::size() ); // H2[all] already registered
+
+      id = ParticleID( "H2_e151" );
+      CHECK( 1002151 == id.number() );
+      CHECK( "H2[all]" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 2 == id.a() );
+      CHECK( njoy::dryad::id::LevelID::all == id.e() );
+      CHECK( 1002 == id.za() );
+      CHECK( std::nullopt == id.subshell() );
+
+      CHECK( size + 6 == ParticleID::size() ); // H2[continuum] already registered
 
       id = ParticleID( "U236_e10" );
       CHECK( 92236010 == id.number() );
@@ -450,7 +516,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 92236 == id.za() );
       CHECK( std::nullopt == id.subshell() );
 
-      CHECK( size + 5 == ParticleID::size() ); // registering U235_e10 as a string
+      CHECK( size + 7 == ParticleID::size() ); // registering U235_e10 as a string
 
       id = ParticleID( 92236, 10 );
       CHECK( 92236010 == id.number() );
@@ -461,7 +527,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 92236 == id.za() );
       CHECK( std::nullopt == id.subshell() );
 
-      CHECK( size + 5 == ParticleID::size() ); // U235_e10 already registered
+      CHECK( size + 7 == ParticleID::size() ); // U235_e10 already registered
 
       id = ParticleID( 1000, njoy::dryad::id::ElectronSubshellID::K );
       CHECK( 1000534 == id.number() );
@@ -472,7 +538,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1000 == id.za() );
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
-      CHECK( size + 6 == ParticleID::size() ); // registering H{1s1/2} using integers
+      CHECK( size + 8 == ParticleID::size() ); // registering H{1s1/2} using integers
 
       id = ParticleID( "H{1s1/2}" );
       CHECK( 1000534 == id.number() );
@@ -483,7 +549,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1000 == id.za() );
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
-      CHECK( size + 6 == ParticleID::size() ); // H{1s1/2} already registered
+      CHECK( size + 8 == ParticleID::size() ); // H{1s1/2} already registered
 
       id = ParticleID( "H{K}" );
       CHECK( 1000534 == id.number() );
@@ -494,7 +560,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 1000 == id.za() );
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
-      CHECK( size + 6 == ParticleID::size() ); // H{1s1/2} already registered
+      CHECK( size + 8 == ParticleID::size() ); // H{1s1/2} already registered
 
       id = ParticleID( "He{1s1/2}" );
       CHECK( 2000534 == id.number() );
@@ -505,7 +571,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 2000 == id.za() );
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
-      CHECK( size + 7 == ParticleID::size() ); // registering He{1s1/2} using a string
+      CHECK( size + 9 == ParticleID::size() ); // registering He{1s1/2} using a string
 
       id = ParticleID( "He{K}" );
       CHECK( 2000534 == id.number() );
@@ -516,7 +582,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 2000 == id.za() );
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
-      CHECK( size + 7 == ParticleID::size() ); // He{1s1/2} already registered
+      CHECK( size + 9 == ParticleID::size() ); // He{1s1/2} already registered
 
       id = ParticleID( 2000, njoy::dryad::id::ElectronSubshellID::K );
       CHECK( 2000534 == id.number() );
@@ -527,7 +593,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 2000 == id.za() );
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
-      CHECK( size + 7 == ParticleID::size() ); // He{1s1/2} already registered
+      CHECK( size + 9 == ParticleID::size() ); // He{1s1/2} already registered
     } // THEN
   } // GIVEN
 
@@ -593,11 +659,12 @@ SCENARIO( "ParticleID" ) {
       CHECK_THROWS( ParticleID( -1000 ) );
       CHECK_THROWS( ParticleID( 1000, 1 ) );
       CHECK_THROWS( ParticleID( 1000, njoy::dryad::id::LevelID::continuum ) );
-      CHECK_THROWS( ParticleID( 1000, 151 ) );
-      CHECK_THROWS( ParticleID( 1001, 151 ) );
+      CHECK_THROWS( ParticleID( 1000, njoy::dryad::id::LevelID::all ) );
+      CHECK_THROWS( ParticleID( 1000, 152 ) );
+      CHECK_THROWS( ParticleID( 1001, 152 ) );
       CHECK_THROWS( ParticleID( "H_e0" ) );
       CHECK_THROWS( ParticleID( "H_e1" ) );
-      CHECK_THROWS( ParticleID( "H1_e151" ) );
+      CHECK_THROWS( ParticleID( "H1_e152" ) );
       CHECK_THROWS( ParticleID( 1000, 533 ) );
       CHECK_THROWS( ParticleID( 1000, 581 ) );
     } // THEN

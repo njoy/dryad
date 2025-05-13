@@ -172,6 +172,7 @@ class LevelID:
     """
     The level identifier
     """
+    all: typing.ClassVar[int] = 151
     continuum: typing.ClassVar[int] = 150
     def __eq__(self, arg0: LevelID) -> bool:
         ...

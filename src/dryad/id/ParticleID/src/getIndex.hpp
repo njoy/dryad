@@ -15,10 +15,10 @@ static std::size_t updateRegistry( ElementID element, int a, LevelID state ) {
   std::string symbol = element.symbol() + std::to_string( a );
   if ( state.number() != 0 ) {
 
-    if ( state.number() == LevelID::continuum ) {
+    if ( ( state.number() == LevelID::continuum ) || ( state.number() == LevelID::all ) ) {
 
       alternatives.emplace_back( symbol + std::string( "_e" ) +
-                                 std::to_string( LevelID::continuum ) );
+                                 std::to_string( state.number() ) );
     }
     symbol += state.symbol();
   }
@@ -95,7 +95,7 @@ static std::size_t getIndex( int za, int number ) {
       ElementID element( ( za - mass ) / 1000 );
 
       // look for state or subshell number
-      if ( number <= LevelID::continuum ) {
+      if ( number < LevelID::size() ) {
 
         if ( ( mass == 0 ) && ( number != 0 ) ) {
 
@@ -149,9 +149,11 @@ static std::size_t getIndex( const std::string& string ) {
       // data entries
       ElementID element( match[2] );
       int mass = std::stoi( match[3] );
-      LevelID state( match[4] != "" ? match[5] != "" ? std::stoi( match[6] )
-                                                     : LevelID::continuum
-                                    : 0 );
+      LevelID state( match[4] != ""
+                     ? match[5] != "" ? std::stoi( match[6] )
+                                      : match[7] != "" ? LevelID::all
+                                                       : LevelID::continuum
+                     : 0 );
 
       // update registry and return the index
       return updateRegistry( std::move( element ), std::move( mass ), std::move( state ) );

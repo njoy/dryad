@@ -27,6 +27,9 @@ namespace id {
     // the value representing the continuum level
     static constexpr unsigned char continuum = 150;
 
+    // the value representing any level
+    static constexpr unsigned char all = continuum + 1;
+
   private:
 
     /* helper class */
@@ -42,6 +45,7 @@ namespace id {
         entries.emplace_back( level, std::string( "_e" ) + std::to_string( level ) );
       }
       entries.emplace_back( continuum, "[continuum]" );
+      entries.emplace_back( all, "[all]" );
       return entries;
     }();
     static inline const std::unordered_map< std::string, std::size_t >
@@ -68,6 +72,14 @@ namespace id {
     #include "dryad/id/LevelID/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the number of currently registered level numbers
+     */
+    static std::size_t size() {
+
+      return entries.size();
+    }
 
     /**
      *  @brief Return the level number

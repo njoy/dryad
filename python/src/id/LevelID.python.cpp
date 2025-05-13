@@ -53,6 +53,12 @@ void wrapLevelID( python::module& module ) {
     [] ( python::object ) { return Component::continuum; },
     "The continuum level number"
   )
+  .def_property_readonly_static(
+
+    "all",
+    [] ( python::object ) { return Component::all; },
+    "The all level number"
+  )
   .def_property_readonly(
 
     "number",

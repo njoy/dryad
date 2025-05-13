@@ -44,7 +44,7 @@ namespace id {
     #include "dryad/id/ParticleID/Entry.hpp"
 
     /* static fields */
-    static inline const std::regex nuclide_id_regex{ "^(([A-Z][a-z]?)(\\d{1,3}))((_e(\\d+))|(\\[continuum\\]))?$" };
+    static inline const std::regex nuclide_id_regex{ "^(([A-Z][a-z]?)(\\d{1,3}))((_e(\\d+))|(\\[all\\])|(\\[continuum\\]))?$" };
     static inline const std::regex ion_id_regex{ "^([A-Z][a-z]?)\\{(.+)\\}$" };
     static inline std::vector< Entry > entries{
 
