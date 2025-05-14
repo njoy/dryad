@@ -363,7 +363,6 @@ namespace id {
 } // dryad namespace
 } // njoy namespace
 
-
 namespace std {
 
   // std::hash override for the ParticleID class
