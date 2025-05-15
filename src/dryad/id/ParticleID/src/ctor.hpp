@@ -21,14 +21,14 @@ ParticleID& operator=( ParticleID&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param za      the particle za number
- *  @param level   the particle level number (default is zero)
+ *  @param za       the particle za number
+ *  @param number   the particle level or subshell number (default is zero)
  */
-ParticleID( int za, int level = 0 ) : index_( getIndex( za, level ) ) {}
+ParticleID( int za, int number = 0 ) : index_( getIndex( za, number ) ) {}
 
 /**
  *  @brief Constructor
  *
- *  @param particle   the particle identifier
+ *  @param string   the particle symbol, name or alternative
  */
-ParticleID( const std::string& particle ) : index_( getIndex( particle ) ) {}
+ParticleID( const std::string& string ) : index_( getIndex( string ) ) {}

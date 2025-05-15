@@ -79,12 +79,6 @@ void wrapParticleID( python::module& module ) {
   .def_static( "alpha",    &Component::alpha,    "The particle identifier for alphas" )
   .def_property_readonly(
 
-    "number",
-    &Component::number,
-    "The particle number"
-  )
-  .def_property_readonly(
-
     "symbol",
     &Component::symbol,
     "The particle's symbol"

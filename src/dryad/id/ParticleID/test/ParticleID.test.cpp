@@ -17,7 +17,68 @@ SCENARIO( "ParticleID" ) {
 
     THEN( "an ParticleID can be created" ) {
 
+      // original number of registered particles
       std::size_t size = ParticleID::size();
+
+      // all fundamental particles are registered
+      CHECK( true == ParticleID::isRegistered( "g" ) );
+      CHECK( true == ParticleID::isRegistered( "photon" ) );
+      CHECK( true == ParticleID::isRegistered( "gamma" ) );
+      CHECK( true == ParticleID::isRegistered( "x-ray" ) );
+      CHECK( true == ParticleID::isRegistered( "e-" ) );
+      CHECK( true == ParticleID::isRegistered( "electron" ) );
+      CHECK( true == ParticleID::isRegistered( "beta-" ) );
+      CHECK( true == ParticleID::isRegistered( "e+" ) );
+      CHECK( true == ParticleID::isRegistered( "positron" ) );
+      CHECK( true == ParticleID::isRegistered( "beta+" ) );
+      CHECK( true == ParticleID::isRegistered( "e-_anti" ) );
+      CHECK( true == ParticleID::isRegistered( "n" ) );
+      CHECK( true == ParticleID::isRegistered( "neutron" ) );
+      CHECK( true == ParticleID::isRegistered( "p" ) );
+      CHECK( true == ParticleID::isRegistered( "proton" ) );
+      CHECK( true == ParticleID::isRegistered( "d" ) );
+      CHECK( true == ParticleID::isRegistered( "deuteron" ) );
+      CHECK( true == ParticleID::isRegistered( "t" ) );
+      CHECK( true == ParticleID::isRegistered( "triton" ) );
+      CHECK( true == ParticleID::isRegistered( "h" ) );
+      CHECK( true == ParticleID::isRegistered( "helion" ) );
+      CHECK( true == ParticleID::isRegistered( "a" ) );
+      CHECK( true == ParticleID::isRegistered( "alpha" ) );
+
+      // all other particles are not registered
+      CHECK( false == ParticleID::isRegistered( "H1" ) );
+      CHECK( false == ParticleID::isRegistered( "H1_e0" ) );
+      CHECK( false == ParticleID::isRegistered( "H1_e10" ) );
+      CHECK( false == ParticleID::isRegistered( "H1_e150" ) );
+      CHECK( false == ParticleID::isRegistered( "H1_e151" ) );
+      CHECK( false == ParticleID::isRegistered( "H1[continuum]" ) );
+      CHECK( false == ParticleID::isRegistered( "H1[all]" ) );
+      CHECK( false == ParticleID::isRegistered( "H2" ) );
+      CHECK( false == ParticleID::isRegistered( "H2_e0" ) );
+      CHECK( false == ParticleID::isRegistered( "H2_e10" ) );
+      CHECK( false == ParticleID::isRegistered( "H2_e150" ) );
+      CHECK( false == ParticleID::isRegistered( "H2_e151" ) );
+      CHECK( false == ParticleID::isRegistered( "H2[continuum]" ) );
+      CHECK( false == ParticleID::isRegistered( "H2[all]" ) );
+      CHECK( false == ParticleID::isRegistered( "U236_e10" ) );
+      CHECK( false == ParticleID::isRegistered( "H{1s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "H{K}" ) );
+      CHECK( false == ParticleID::isRegistered( "He{1s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "He{K}" ) );
+      CHECK( false == ParticleID::isRegistered( "H1" ) );
+      CHECK( false == ParticleID::isRegistered( 1001 ) );
+      CHECK( false == ParticleID::isRegistered( 1001, 0 ) );
+      CHECK( false == ParticleID::isRegistered( 1001, njoy::dryad::id::LevelID::continuum ) );
+      CHECK( false == ParticleID::isRegistered( 1001, njoy::dryad::id::LevelID::all ) );
+      CHECK( false == ParticleID::isRegistered( 1002 ) );
+      CHECK( false == ParticleID::isRegistered( 1002, 0 ) );
+      CHECK( false == ParticleID::isRegistered( 1002, njoy::dryad::id::LevelID::continuum ) );
+      CHECK( false == ParticleID::isRegistered( 1002, njoy::dryad::id::LevelID::all ) );
+      CHECK( false == ParticleID::isRegistered( 92236, 10 ) );
+      CHECK( false == ParticleID::isRegistered( 1000, njoy::dryad::id::ElectronSubshellID::K ) );
+      CHECK( false == ParticleID::isRegistered( 2000, njoy::dryad::id::ElectronSubshellID::K ) );
+
+      CHECK( size == ParticleID::size() );     // checking for registered particles does not change the size
 
       ParticleID id( "g" );
       CHECK( 0 == id.number() );
@@ -594,6 +655,34 @@ SCENARIO( "ParticleID" ) {
       CHECK( njoy::dryad::id::ElectronSubshellID::K == id.subshell() );
 
       CHECK( size + 9 == ParticleID::size() ); // He{1s1/2} already registered
+
+      // all other particles are now registered
+      CHECK( true == ParticleID::isRegistered( "H1" ) );
+      CHECK( true == ParticleID::isRegistered( "H1_e0" ) );
+      CHECK( true == ParticleID::isRegistered( "H1_e10" ) );
+      CHECK( true == ParticleID::isRegistered( "H1_e150" ) );
+      CHECK( true == ParticleID::isRegistered( "H1_e151" ) );
+      CHECK( true == ParticleID::isRegistered( "H1[continuum]" ) );
+      CHECK( true == ParticleID::isRegistered( "H1[all]" ) );
+      CHECK( true == ParticleID::isRegistered( "H2_e150" ) );
+      CHECK( true == ParticleID::isRegistered( "H2_e151" ) );
+      CHECK( true == ParticleID::isRegistered( "H2[continuum]" ) );
+      CHECK( true == ParticleID::isRegistered( "H2[all]" ) );
+      CHECK( true == ParticleID::isRegistered( "U236_e10" ) );
+      CHECK( true == ParticleID::isRegistered( "H{1s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "H{K}" ) );
+      CHECK( true == ParticleID::isRegistered( "He{1s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "He{K}" ) );
+      CHECK( true == ParticleID::isRegistered( "H1" ) );
+      CHECK( true == ParticleID::isRegistered( 1001 ) );
+      CHECK( true == ParticleID::isRegistered( 1001, 0 ) );
+      CHECK( true == ParticleID::isRegistered( 1001, njoy::dryad::id::LevelID::continuum ) );
+      CHECK( true == ParticleID::isRegistered( 1001, njoy::dryad::id::LevelID::all ) );
+      CHECK( true == ParticleID::isRegistered( 1002, njoy::dryad::id::LevelID::continuum ) );
+      CHECK( true == ParticleID::isRegistered( 1002, njoy::dryad::id::LevelID::all ) );
+      CHECK( true == ParticleID::isRegistered( 92236, 10 ) );
+      CHECK( true == ParticleID::isRegistered( 1000, njoy::dryad::id::ElectronSubshellID::K ) );
+      CHECK( true == ParticleID::isRegistered( 2000, njoy::dryad::id::ElectronSubshellID::K ) );
     } // THEN
   } // GIVEN
 
@@ -661,6 +750,7 @@ SCENARIO( "ParticleID" ) {
       CHECK_THROWS( ParticleID( 1000, njoy::dryad::id::LevelID::continuum ) );
       CHECK_THROWS( ParticleID( 1000, njoy::dryad::id::LevelID::all ) );
       CHECK_THROWS( ParticleID( 1000, 152 ) );
+      CHECK_THROWS( ParticleID( 1001, -1 ) );
       CHECK_THROWS( ParticleID( 1001, 152 ) );
       CHECK_THROWS( ParticleID( "H_e0" ) );
       CHECK_THROWS( ParticleID( "H_e1" ) );

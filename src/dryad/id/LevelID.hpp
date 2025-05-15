@@ -76,7 +76,7 @@ namespace id {
     /**
      *  @brief Return the number of currently registered level numbers
      */
-    static std::size_t size() {
+    static std::size_t size() noexcept {
 
       return entries.size();
     }

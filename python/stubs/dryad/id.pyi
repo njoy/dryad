@@ -343,11 +343,6 @@ class ParticleID:
         The particle's level number
         """
     @property
-    def number(self) -> int:
-        """
-        The particle number
-        """
-    @property
     def subshell(self) -> ElectronSubshellID | None:
         """
         The particle's subshell
