@@ -542,9 +542,9 @@ namespace id {
 
       // atomic reaction types
 
-      Entry{ 501, InteractionType::Atomic , "atomic total", {} },  // the symbol must be unique and total is already taken
-      Entry{ 502, InteractionType::Atomic , "coherent"    , { "coherent scattering" } },
-      Entry{ 504, InteractionType::Atomic , "incoherent"  , { "incoherent scattering" } }
+//      Entry{ 501, InteractionType::Atomic , "atomic total", {} },  // the symbol must be unique and total is already taken
+//      Entry{ 502, InteractionType::Atomic , "coherent"    , { "coherent scattering" } },
+//      Entry{ 504, InteractionType::Atomic , "incoherent"  , { "incoherent scattering" } }
     };
     static inline std::unordered_map< std::string, std::size_t >
     string_conversion_dictionary = [] ( const auto& entries ) {
@@ -585,8 +585,46 @@ namespace id {
     /* constructor */
     #include "dryad/id/ReactionType/src/ctor.hpp"
 
+    /* static methods */
+
     /**
-     *  @brief Return the reaction type number
+     *  @brief Return the number of currently registered identifiers
+     *
+     *  Note: this imposes logical order to the reaction types. It is public
+     *        for test purposes only.
+     */
+    static std::size_t size() noexcept {
+
+      return entries.size();
+    }
+
+    /**
+     *  @brief Return whether or not the mt number corresponds to a registered reaction type
+     *
+     *  @param[in] mt   the mt number
+     */
+    static bool isRegistered( int mt ) noexcept {
+
+      return mt_conversion_dictionary.find( mt ) != mt_conversion_dictionary.end();
+    }
+
+    /**
+     *  @brief Return whether or not the string corresponds to a registered reaction type
+     *
+     *  @param[in] string   the string
+     */
+    static bool isRegistered( const std::string& string ) noexcept {
+
+      return string_conversion_dictionary.find( string ) != string_conversion_dictionary.end();
+    }
+
+    /* methods */
+
+    /**
+     *  @brief Return the number for this reaction type
+     *
+     *  Note: this imposes logical order to the identifiers. It is public
+     *        for test purposes only.
      */
     long number() const noexcept {
 
@@ -594,7 +632,7 @@ namespace id {
     }
 
     /**
-     *  @brief Return the reaction type symbol
+     *  @brief Return the symbol for this reaction type
      */
     const std::string& symbol() const noexcept {
 
@@ -602,7 +640,7 @@ namespace id {
     }
 
     /**
-     *  @brief Return the reaction type particles
+     *  @brief Return the particles emitted for this reaction type
      */
     const std::optional< std::vector< std::pair< ParticleID, char > > >& particles() const noexcept {
 
@@ -612,7 +650,7 @@ namespace id {
     /**
      *  @brief Return whether or not the reaction type is ENDF compatible
      */
-    bool isCompatibleWithENDF() const {
+    bool isCompatibleWithENDF() const noexcept {
 
       return entries[ this->index_ ].mt().has_value();
     }
