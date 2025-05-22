@@ -25,9 +25,9 @@ ReactionType& operator=( ReactionType&& ) = default;
  */
 ReactionType( int mt ) : index_( getIndex( mt ) ) {}
 
-// /**
-//  *  @brief Constructor
-//  *
-//  *  @param particle   the particle identifier
-//  */
-// ReactionType( const std::string& particle ) : index_( getIndex( particle ) ) {}
+/**
+ *  @brief Constructor
+ *
+ *  @param string   the reaction type string
+ */
+ReactionType( const std::string& string ) : index_( getIndex( string ) ) {}

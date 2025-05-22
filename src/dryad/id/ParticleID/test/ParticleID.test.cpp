@@ -13,9 +13,9 @@ using ParticleID = njoy::dryad::id::ParticleID;
 
 SCENARIO( "ParticleID" ) {
 
-  GIVEN( "valid data for an ParticleID" ) {
+  GIVEN( "valid data for a ParticleID" ) {
 
-    THEN( "an ParticleID can be created" ) {
+    THEN( "a ParticleID can be created" ) {
 
       // original number of registered particles
       std::size_t size = ParticleID::size();
@@ -740,7 +740,7 @@ SCENARIO( "ParticleID" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "invalid data for an ParticleID" ) {
+  GIVEN( "invalid data for a ParticleID" ) {
 
     THEN( "an exception is thrown" ) {
 

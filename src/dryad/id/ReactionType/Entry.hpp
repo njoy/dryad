@@ -79,7 +79,7 @@ public:
 
   /* methods */
   long number() const noexcept { return this->number_; }
-  std::optional< short > mt() const noexcept { return this->mt_; }
+  const std::optional< short >& mt() const noexcept { return this->mt_; }
   const std::string& symbol() const noexcept { return this->symbol_; }
   const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
   const InteractionType& type() const { return this->interaction_; }
@@ -87,4 +87,5 @@ public:
 
     return this->ejectiles_;
   }
+  const std::optional< short >& level() const noexcept { return this->level_; }
 };

@@ -589,9 +589,6 @@ namespace id {
 
     /**
      *  @brief Return the number of currently registered identifiers
-     *
-     *  Note: this imposes logical order to the reaction types. It is public
-     *        for test purposes only.
      */
     static std::size_t size() noexcept {
 
@@ -645,6 +642,26 @@ namespace id {
     const std::optional< std::vector< std::pair< ParticleID, char > > >& particles() const noexcept {
 
       return entries[ this->index_ ].particles();
+    }
+
+    /**
+     *  @brief Return the level of the residual for this reaction type
+     */
+    const std::optional< short >& level() const noexcept {
+
+      return entries[ this->index_ ].level();
+    }
+
+    /**
+     *  @brief Return whether or not the reaction type is considered a special type
+     *
+     *  A special type is a reaction type for which no outgoing particles types can be
+     *  defined because it is a summation reaction or because the outgoing particles
+     *  are not known due to complexity (e.g. anything or fission)
+     */
+    bool isSpecial() const noexcept {
+
+      return !entries[ this->index_ ].particles().has_value();
     }
 
     /**
