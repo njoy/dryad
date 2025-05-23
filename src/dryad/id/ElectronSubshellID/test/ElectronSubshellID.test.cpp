@@ -106,7 +106,7 @@ SCENARIO( "ElectronSubshellID" ) {
       CHECK_THROWS( ElectronSubshellID( "not an element name, symbol or alternative" ) );
       CHECK_THROWS( ElectronSubshellID( -1 ) );
       CHECK_THROWS( ElectronSubshellID( 533 ) );
-      CHECK_THROWS( ElectronSubshellID( 581 ) );
+      CHECK_THROWS( ElectronSubshellID( 583 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

@@ -72,6 +72,8 @@ namespace id {
     static constexpr short Q9  = 578;
     static constexpr short Q10 = 579;
     static constexpr short Q11 = 580;
+    static constexpr short Q12 = 581;
+    static constexpr short Q13 = 582;
 
   private:
 
@@ -127,7 +129,9 @@ namespace id {
       Entry{ Q8 , "7g7/2" , "Q8"  },
       Entry{ Q9 , "7g9/2" , "Q9"  },
       Entry{ Q10, "7h9/2" , "Q10" },
-      Entry{ Q11, "7h11/2", "Q11" }
+      Entry{ Q11, "7h11/2", "Q11" },
+      Entry{ Q12, "7i11/2", "Q12" },
+      Entry{ Q13, "7i13/2", "Q13" }
     };
     static inline const std::unordered_map< std::string, std::size_t >
     string_conversion_dictionary = [] ( const auto& entries ) {

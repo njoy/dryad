@@ -756,7 +756,7 @@ SCENARIO( "ParticleID" ) {
       CHECK_THROWS( ParticleID( "H_e1" ) );
       CHECK_THROWS( ParticleID( "H1_e152" ) );
       CHECK_THROWS( ParticleID( 1000, 533 ) );
-      CHECK_THROWS( ParticleID( 1000, 581 ) );
+      CHECK_THROWS( ParticleID( 1000, 583 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

@@ -50,6 +50,8 @@ class ElectronSubshellID:
     Q1: typing.ClassVar[int] = 570
     Q10: typing.ClassVar[int] = 579
     Q11: typing.ClassVar[int] = 580
+    Q12: typing.ClassVar[int] = 581
+    Q13: typing.ClassVar[int] = 582
     Q2: typing.ClassVar[int] = 571
     Q3: typing.ClassVar[int] = 572
     Q4: typing.ClassVar[int] = 573

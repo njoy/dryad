@@ -577,7 +577,7 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
         with self.assertRaises( IndexError ) : id = ParticleID( 'H_e1' )
         with self.assertRaises( IndexError ) : id = ParticleID( 'H1_e152' )
         with self.assertRaises( IndexError ) : id = ParticleID( 1000, 533 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 581 )
+        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 583 )
 
 if __name__ == '__main__' :
 
