@@ -424,7 +424,7 @@ class ReactionType:
         The interaction type (nuclear or atomic) associated to the reaction type
         """
     @property
-    def is_endf_compatible(self) -> bool:
+    def is_compatible_with_endf(self) -> bool:
         """
         Flag to indicate whether or not the reaction type is compatible with ENDF
         """

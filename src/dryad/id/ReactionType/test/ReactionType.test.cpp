@@ -935,7 +935,7 @@ SCENARIO( "ReactionType" ) {
     THEN( "an exception is thrown" ) {
 
       // illegal values
-      CHECK_THROWS( ReactionType( "not a particle symbol" ) );
+      CHECK_THROWS( ReactionType( "not a reaction type symbol" ) );
       CHECK_THROWS( ReactionType( -1000 ) );
       CHECK_THROWS( ReactionType( 2 ) ); // 2 has no meaning without knowing the incident particle type
     } // THEN

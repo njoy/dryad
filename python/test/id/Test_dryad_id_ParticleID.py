@@ -5,12 +5,11 @@ import unittest
 
 # local imports
 from dryad.id import ElectronSubshellID
-from dryad.id import ElementID
 from dryad.id import LevelID
 from dryad.id import ParticleID
 
 class Test_elementary_ParticleID( unittest.TestCase ) :
-    """Unit test for the Level class."""
+    """Unit test for the ParticleID class."""
 
     def test_values( self ) :
 

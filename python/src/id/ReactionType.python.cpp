@@ -99,7 +99,7 @@ void wrapReactionType( python::module& module ) {
   )
   .def_property_readonly(
 
-    "is_endf_compatible",
+    "is_compatible_with_endf",
     &Component::isCompatibleWithENDF,
     "Flag to indicate whether or not the reaction type is compatible with ENDF"
   )
