@@ -17,6 +17,17 @@ namespace njoy {
 namespace dryad {
 namespace id {
 
+  /**
+   *  @class
+   *  @brief The reaction types, with associated symbol, aliases, particles, etc.
+   *
+   *  The ReactionType can be used to identify reaction types. For the moment, only
+   *  registered types can be used. In the future, we will extend this so that users
+   *  can create types other than the ones currently registered.
+   *
+   *  For more information on how to create instances of ReactionType, see the
+   *  Jupyter notebook dryad-identifiers.ipynb under python/examples.
+   */
   class ReactionType {
 
     /* helper class */
@@ -693,9 +704,9 @@ namespace id {
     }
 
     /**
-     *  @brief Return the interaction type for this reaction type
+     *  @brief Return the interaction type (nuclear or atomic) for this reaction type
      */
-    const InteractionType& type() const {
+    const InteractionType& interactionType() const {
 
       return entries[ this->index_ ].type();
     }
