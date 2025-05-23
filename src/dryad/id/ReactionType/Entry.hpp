@@ -7,7 +7,7 @@ class Entry {
   /* fields */
   long number_;
   std::optional< short > mt_;
-  std::optional< std::vector< std::pair< ParticleID, char > > > ejectiles_;
+  std::optional< std::vector< std::pair< ParticleID, short > > > ejectiles_;
   std::string symbol_;
   std::vector< std::string > alternatives_;
   InteractionType interaction_;
@@ -36,7 +36,7 @@ public:
     level_( std::nullopt ) {}
   Entry( long number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, char > > ejectiles ) :
+         std::vector< std::pair< ParticleID, short > > ejectiles ) :
     number_( number ),
     mt_( mt ),
     ejectiles_( std::move( ejectiles ) ),
@@ -46,7 +46,7 @@ public:
     level_( std::nullopt ) {}
   Entry( long number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, char > > ejectiles,
+         std::vector< std::pair< ParticleID, short > > ejectiles,
          short level ) :
     number_( number ),
     mt_( mt ),
@@ -57,7 +57,7 @@ public:
     level_( level ) {}
   Entry( long number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, char > > ejectiles ) :
+         std::vector< std::pair< ParticleID, short > > ejectiles ) :
     number_( number ),
     mt_( std::nullopt ),
     ejectiles_( std::move( ejectiles ) ),
@@ -67,7 +67,7 @@ public:
     level_( std::nullopt ) {}
   Entry( long number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, char > > ejectiles,
+         std::vector< std::pair< ParticleID, short > > ejectiles,
          short level ) :
     number_( number ),
     mt_( std::nullopt ),
@@ -83,7 +83,7 @@ public:
   const std::string& symbol() const noexcept { return this->symbol_; }
   const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
   const InteractionType& type() const { return this->interaction_; }
-  const std::optional< std::vector< std::pair< ParticleID, char > > >& particles() const noexcept {
+  const std::optional< std::vector< std::pair< ParticleID, short > > >& particles() const noexcept {
 
     return this->ejectiles_;
   }

@@ -448,7 +448,7 @@ class ReactionType:
         The interaction type's mt number
         """
     @property
-    def particles(self) -> list[tuple[ParticleID, str]] | None:
+    def particles(self) -> list[tuple[ParticleID, int]] | None:
         """
         The reaction type's outgoing particles
         """
