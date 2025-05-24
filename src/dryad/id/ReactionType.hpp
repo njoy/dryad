@@ -4,6 +4,7 @@
 // system includes
 #include <optional>
 #include <string>
+#include <numeric>
 #include <unordered_map>
 #include <vector>
 
@@ -50,7 +51,8 @@ namespace id {
       Entry{         27,  27, InteractionType::Nuclear, "absorption"   , {} },
       Entry{        101, 101, InteractionType::Nuclear, "disappearance", {} },
 
-      // ENDF normal reactions: reactions with ejectiles (not counting photons and residual)
+      // normal reactions: reactions with ejectiles (not counting photons and residual)
+      // all these must have a final excited state set for the residual
       Entry{       1000,      InteractionType::Nuclear, "g(0)"         , {}                 , {}, 0 },
       Entry{       1001,      InteractionType::Nuclear, "g(1)"         , {}                 , {}, 1 },
       Entry{       1002,      InteractionType::Nuclear, "g(2)"         , {}                 , {}, 2 },
@@ -535,7 +537,7 @@ namespace id {
       Entry{ 1000130151, 181, InteractionType::Nuclear, "3npa(t)"      , { "3npa" }         , { { ParticleID::neutron(), 3 }, { ParticleID::proton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1000140151, 196, InteractionType::Nuclear, "4npa(t)"      , { "4npa" }         , { { ParticleID::neutron(), 4 }, { ParticleID::proton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1000230151, 199, InteractionType::Nuclear, "3n2pa(t)"     , { "3n2pa" }        , { { ParticleID::neutron(), 3 }, { ParticleID::proton(), 2 }, { ParticleID::alpha(), 1 } }, LevelID::all },
-      Entry{ 1001000151, 117, InteractionType::Nuclear, "da(t)"        , { "da" }           , { { ParticleID::proton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
+      Entry{ 1001000151, 117, InteractionType::Nuclear, "da(t)"        , { "da" }           , { { ParticleID::deuteron(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1001010151, 158, InteractionType::Nuclear, "nda(t)"       , { "nda" }          , { { ParticleID::neutron(), 1 }, { ParticleID::deuteron(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1010000151, 155, InteractionType::Nuclear, "ta(t)"        , { "ta" }           , { { ParticleID::triton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1010010151, 189, InteractionType::Nuclear, "nta(t)"       , { "nta" }          , { { ParticleID::neutron(), 1 }, { ParticleID::triton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
@@ -553,6 +555,8 @@ namespace id {
       Entry{ 3000010151,  23, InteractionType::Nuclear, "n3a(t)"       , { "n3a" }          , { { ParticleID::neutron(), 1 }, { ParticleID::alpha(), 3 } }, LevelID::all },
 
       // atomic reaction types
+      // the interaction is with the electron cloud
+
       // check for what to do with 523
 
       Entry{ 501, 501, InteractionType::Atomic , "total[atomic]"  , {} },  // the symbol must be unique and total is already taken
@@ -563,13 +567,16 @@ namespace id {
       Entry{ 1525, 525, InteractionType::Atomic , "e-[large-angle-scattering]", { "large-angle-scattering" }, { { ParticleID::electron(), 1 } } },
       Entry{ 1526, 526, InteractionType::Atomic , "e-[total-scattering]"      , { "total-scattering" }      , { { ParticleID::electron(), 1 } } },
 
-      Entry{ 1515, 515, InteractionType::Atomic , "2e-e+[nuclear]" , { "pair-production[nuclear]" } , { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-      Entry{ 1517, 517, InteractionType::Atomic , "2e-e+[electron]", { "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-      Entry{ 1518, 516, InteractionType::Atomic , "2e-e+"          , { "pair-production" }          , { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+// these are an issue: pair production for photoatomic is e-e+, for electroatomic it is 2e-e+
+// but they use the same mt number with different secondary particles :-(
+//      Entry{ 1515, 515, InteractionType::Atomic , "2e-e+[nuclear]" , { "pair-production[nuclear]" } , { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+//      Entry{ 1517, 517, InteractionType::Atomic , "2e-e+[electron]", { "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+//      Entry{ 1518, 516, InteractionType::Atomic , "2e-e+"          , { "pair-production" }          , { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
 
       Entry{ 1527, 527, InteractionType::Atomic , "e-[bremsstrahlung]" , { "bremsstrahlung" } , { { ParticleID::electron(), 1 } } },
       Entry{ 1528, 528, InteractionType::Atomic , "e-[excitation]"     , { "excitation" }     , { { ParticleID::electron(), 1 } } },
 
+      // only ionisation reactions have a subshell identifier
       Entry{ 1534, 534, InteractionType::Atomic , "e-{1s1/2}"     , { "ionisation{1s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::K  },
       Entry{ 1535, 535, InteractionType::Atomic , "e-{2s1/2}"     , { "ionisation{2s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L1  },
       Entry{ 1536, 536, InteractionType::Atomic , "e-{2p1/2}"     , { "ionisation{2p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L2  },
@@ -761,6 +768,44 @@ namespace id {
     bool isCompatibleWithENDF() const noexcept {
 
       return this->mt().has_value();
+    }
+
+    /**
+     *  @brief Return the residual
+     *
+     *  @param[in] projectile   the projectile
+     *  @param[in] target       the target
+     */
+    ParticleID resolve( const ParticleID& projectile, const ParticleID& target ) const {
+
+      if ( this->isSpecial() ) {
+
+        throw std::exception();
+      }
+
+      if ( this->interactionType() == InteractionType::Nuclear ) {
+
+        int za = projectile.za() + target.za() - entries[ this->index_ ].dza().value();
+        return ParticleID( za, this->level().value() );
+      }
+      else {
+
+        // atomic reactions only work on elemental identifiers
+        if ( ( target.a() != 0 ) && ( target.e() != 0 ) ) {
+
+          throw std::exception();
+        }
+
+        // assign the subshell ID for the io if we need to, otherwise just return the target
+        if ( this->level().has_value() ) {
+
+          return ParticleID( target.za(), this->level().value() );
+        }
+        else {
+
+          return target;
+        }
+      }
     }
 
     /**
