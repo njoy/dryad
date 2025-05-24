@@ -37,10 +37,10 @@ void wrapReactionType( python::module& module ) {
   .def(
 
     python::init< int >(),
-    python::arg( "mt" ) = 0,
+    python::arg( "mt" ),
     "Initialise the reaction type\n\n"
     "Arguments:\n"
-    "    self   the identifier\n"
+    "    self   the reaction type\n"
     "    mt     the mt number"
      )
   .def(
@@ -49,7 +49,7 @@ void wrapReactionType( python::module& module ) {
     python::arg( "string" ),
     "Initialise the reaction type\n\n"
     "Arguments:\n"
-    "    self     the identifier\n"
+    "    self     the reaction type\n"
     "    string   the reaction type string"
   )
   .def_static(
@@ -102,6 +102,17 @@ void wrapReactionType( python::module& module ) {
     "is_compatible_with_endf",
     &Component::isCompatibleWithENDF,
     "Flag to indicate whether or not the reaction type is compatible with ENDF"
+  )
+  .def(
+
+    "resolve",
+    &Component::resolve,
+    python::arg( "projectile" ), python::arg( "target" ),
+    "Return the residual produced by this reaction type\n\n"
+    "Arguments:\n"
+    "    self         the reaction type\n"
+    "    projectile   the projectile\n"
+    "    target       the target"
   )
   .def(
 

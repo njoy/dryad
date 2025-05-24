@@ -391,12 +391,12 @@ class ReactionType:
         Hash function
         """
     @typing.overload
-    def __init__(self, mt: int = 0) -> None:
+    def __init__(self, mt: int) -> None:
         """
         Initialise the reaction type
         
         Arguments:
-            self   the identifier
+            self   the reaction type
             mt     the mt number
         """
     @typing.overload
@@ -405,7 +405,7 @@ class ReactionType:
         Initialise the reaction type
         
         Arguments:
-            self     the identifier
+            self     the reaction type
             string   the reaction type string
         """
     def __le__(self, arg0: ReactionType) -> bool:
@@ -417,6 +417,15 @@ class ReactionType:
     def __str__(self) -> str:
         """
         Convenience function for printing the identifier
+        """
+    def resolve(self, projectile: ParticleID, target: ParticleID) -> ParticleID:
+        """
+        Return the residual produced by this reaction type
+        
+        Arguments:
+            self         the reaction type
+            projectile   the projectile
+            target       the target
         """
     @property
     def interaction_type(self) -> ...:
