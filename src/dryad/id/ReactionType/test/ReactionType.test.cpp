@@ -907,6 +907,19 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{7i13/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q13 ) == id.resolve( eminus, u ) );
 
+      id = ReactionType( "photo-ionisation" );
+      CHECK( 1583 == id.number() );
+      CHECK( 522 == id.mt() );
+      CHECK( atomic == id.interactionType() );
+      CHECK( "photo-ionisation" == id.symbol() );
+      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::nullopt == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( "photo-ionisation" ) );
+      CHECK( id == ReactionType( "photo-ionisation{t}" ) );
+      CHECK( u == id.resolve( eminus, u ) );
+
       id = ReactionType( "electro-ionisation{1s1/2}" );
       CHECK( 2534 == id.number() );
       CHECK( 534 == id.mt() );
@@ -1495,6 +1508,19 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "electro-ionisation{7i13/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q13 ) == id.resolve( eminus, u ) );
+
+      id = ReactionType( "electro-ionisation" );
+      CHECK( 2583 == id.number() );
+      CHECK( 522 == id.mt() );
+      CHECK( atomic == id.interactionType() );
+      CHECK( "electro-ionisation" == id.symbol() );
+      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::nullopt == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( "electro-ionisation" ) );
+      CHECK( id == ReactionType( "electro-ionisation{t}" ) );
+      CHECK( u == id.resolve( eminus, u ) );
     } // THEN
 
     THEN( "all reaction types (other than special reactions) can be resolved" ) {
