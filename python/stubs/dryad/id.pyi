@@ -2,6 +2,7 @@
 Identifiers for particles, elements, etc.
 """
 from __future__ import annotations
+import dryad
 import typing
 __all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID', 'ReactionType']
 class ElectronSubshellID:
@@ -376,9 +377,19 @@ class ReactionType:
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     @staticmethod
+    def elastic(projectile: ParticleID) -> ReactionType:
+        """
+        The elastic reaction type
+        """
+    @staticmethod
     def size() -> int:
         """
         The number of currently registered types
+        """
+    @staticmethod
+    def total(type: dryad.InteractionType = ...) -> ReactionType:
+        """
+        The total reaction type
         """
     def __eq__(self, arg0: ReactionType) -> bool:
         ...
@@ -428,7 +439,7 @@ class ReactionType:
             target       the target
         """
     @property
-    def interaction_type(self) -> ...:
+    def interaction_type(self) -> dryad.InteractionType:
         """
         The interaction type (nuclear or atomic) associated to the reaction type
         """

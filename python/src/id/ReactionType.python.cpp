@@ -6,6 +6,7 @@
 // local includes
 #include "definitions.hpp"
 #include "dryad/id/ReactionType.hpp"
+#include "dryad/InteractionType.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -16,6 +17,7 @@ void wrapReactionType( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::id::ReactionType;
+  using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
 
@@ -51,6 +53,20 @@ void wrapReactionType( python::module& module ) {
     "Arguments:\n"
     "    self     the reaction type\n"
     "    string   the reaction type string"
+  )
+  .def_static(
+
+    "total",
+    &Component::total,
+    python::arg( "type" ) = InteractionType::Nuclear,
+    "The total reaction type"
+  )
+  .def_static(
+
+    "elastic",
+    &Component::elastic,
+    python::arg( "projectile" ),
+    "The elastic reaction type"
   )
   .def_static(
 
