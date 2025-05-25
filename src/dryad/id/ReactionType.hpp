@@ -723,6 +723,59 @@ namespace id {
     /* constructor */
     #include "dryad/id/ReactionType/src/ctor.hpp"
 
+    /* predefined identifiers */
+
+    static constexpr ReactionType
+    total( const InteractionType& type = InteractionType::Nuclear ) noexcept {
+
+      if ( type == InteractionType::Nuclear ) {
+
+        return ReactionType( static_cast< std::size_t >( 0 ) );
+      }
+      else {
+
+        return ReactionType( static_cast< std::size_t >( 513 ) );
+      }
+    };
+
+    static constexpr ReactionType
+    elastic( const ParticleID& projectile ) {
+
+      if ( projectile == ParticleID::neutron() ) {
+
+        return ReactionType( static_cast< std::size_t >( 111 ) );
+      }
+      else if ( projectile == ParticleID::photon() ) {
+
+        return ReactionType( static_cast< std::size_t >( 10 ) );
+      }
+      else if ( projectile == ParticleID::proton() ) {
+
+        return ReactionType( static_cast< std::size_t >( 178 ) );
+      }
+      else if ( projectile == ParticleID::deuteron() ) {
+
+        return ReactionType( static_cast< std::size_t >( 244 ) );
+      }
+      else if ( projectile == ParticleID::triton() ) {
+
+        return ReactionType( static_cast< std::size_t >( 302 ) );
+      }
+      else if ( projectile == ParticleID::helion() ) {
+
+        return ReactionType( static_cast< std::size_t >( 363 ) );
+      }
+      else if ( projectile == ParticleID::alpha() ) {
+
+        return ReactionType( static_cast< std::size_t >( 423 ) );
+      }
+      else {
+
+        Log::error( "Elastic scattering for \'{}\' is not difined", projectile.symbol() );
+        throw std::exception();
+      }
+    };
+
     /* static methods */
 
     /**
