@@ -725,7 +725,7 @@ namespace id {
 
     /* predefined identifiers */
 
-    static constexpr ReactionType
+    static ReactionType
     total( const InteractionType& type = InteractionType::Nuclear ) noexcept {
 
       if ( type == InteractionType::Nuclear ) {
