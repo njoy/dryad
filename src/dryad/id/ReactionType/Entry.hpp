@@ -16,11 +16,11 @@ class Entry {
 
   static std::optional< int >
   calculateDZA( const InteractionType& type,
-                const std::vector< std::pair< ParticleID, short > >& ejectiles ) {
+                const std::optional< std::vector< std::pair< ParticleID, short > > >& ejectiles ) {
 
-    if ( type == InteractionType::Nuclear ) {
+    if ( ( type == InteractionType::Nuclear ) && ( ejectiles.has_value() ) ){
 
-      return std::accumulate( ejectiles.begin(), ejectiles.end(), 0,
+      return std::accumulate( ejectiles->begin(), ejectiles->end(), 0,
                               [] ( int result, const auto& pair )
                                  { return result + pair.second * pair.first.za(); } );
     }
@@ -31,7 +31,7 @@ class Entry {
   }
 
   /* constructor */
-  Entry( std::optional< int > dza, long number, std::optional< short > mt,
+  Entry( long number, std::optional< short > mt,
          std::optional< std::vector< std::pair< ParticleID, short > > > ejectiles,
          std::string symbol, std::vector< std::string > alternatives,
          InteractionType interaction, std::optional< short > level ) :
@@ -42,7 +42,10 @@ class Entry {
     alternatives_( std::move( alternatives ) ),
     interaction_( std::move( interaction ) ),
     level_( std::move( level ) ),
-    dza_( std::move( dza ) ) {}
+    dza_( std::nullopt ) {
+
+    this->dza_ = calculateDZA( this->type(), this->particles() );
+  }
 
 public:
 
@@ -51,14 +54,14 @@ public:
   // special reaction without an mt number
   Entry( long number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives ) :
-    Entry( std::nullopt, std::move( number ), std::nullopt, std::nullopt,
+    Entry( std::move( number ), std::nullopt, std::nullopt,
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
   // special reaction with an mt number
   Entry( long number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives ) :
-    Entry( std::nullopt, std::move( number ), std::move( mt ), std::nullopt,
+    Entry( std::move( number ), std::move( mt ), std::nullopt,
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
@@ -66,8 +69,7 @@ public:
   Entry( long number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
          std::vector< std::pair< ParticleID, short > > ejectiles ) :
-    Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::move( mt ),
+    Entry( std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
@@ -77,8 +79,7 @@ public:
          std::vector< std::string > alternatives,
          std::vector< std::pair< ParticleID, short > > ejectiles,
          short level ) :
-    Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::move( mt ),
+    Entry( std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::move( level ) ) {}
@@ -87,8 +88,7 @@ public:
   Entry( long number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
          std::vector< std::pair< ParticleID, short > > ejectiles ) :
-    Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::nullopt,
+    Entry( std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
@@ -98,8 +98,7 @@ public:
          std::vector< std::string > alternatives,
          std::vector< std::pair< ParticleID, short > > ejectiles,
          short level ) :
-    Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::nullopt,
+    Entry( std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::move( level ) ) {}
