@@ -17,6 +17,7 @@ void wrapReactionType( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::id::ReactionType;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
@@ -44,7 +45,17 @@ void wrapReactionType( python::module& module ) {
     "Arguments:\n"
     "    self   the reaction type\n"
     "    mt     the mt number"
-     )
+  )
+  .def(
+
+    python::init< ParticleID, int >(),
+    python::arg( "projectile" ), python::arg( "mt" ),
+    "Initialise the reaction type\n\n"
+    "Arguments:\n"
+    "    self         the reaction type\n"
+    "    projectile   the projectile\n"
+    "    mt           the mt number"
+  )
   .def(
 
     python::init< const std::string& >(),

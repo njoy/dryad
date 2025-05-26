@@ -771,7 +771,7 @@ namespace id {
       }
       else {
 
-        Log::error( "Elastic scattering for \'{}\' is not difined", projectile.symbol() );
+        Log::error( "Elastic scattering for \'{}\' is not defined", projectile.symbol() );
         throw std::exception();
       }
     };

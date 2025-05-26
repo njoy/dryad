@@ -411,6 +411,16 @@ class ReactionType:
             mt     the mt number
         """
     @typing.overload
+    def __init__(self, projectile: ParticleID, mt: int) -> None:
+        """
+        Initialise the reaction type
+        
+        Arguments:
+            self         the reaction type
+            projectile   the projectile
+            mt           the mt number
+        """
+    @typing.overload
     def __init__(self, string: str) -> None:
         """
         Initialise the reaction type

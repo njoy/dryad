@@ -371,7 +371,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'excitation' ) )
         self.assertEqual( u, id.resolve( g, u ) )
 
-        id = ReactionType( 'photo-ionisation{1s1/2}' )
+        id = ReactionType( g, 534 )
         self.assertEqual( 534, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{1s1/2}', id.symbol )
@@ -382,7 +382,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{1s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.K ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{2s1/2}' )
+        id = ReactionType( g, 535 )
         self.assertEqual( 535, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{2s1/2}', id.symbol )
@@ -393,7 +393,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{2s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.L1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{2p1/2}' )
+        id = ReactionType( g, 536 )
         self.assertEqual( 536, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{2p1/2}', id.symbol )
@@ -404,7 +404,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{2p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.L2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{2p3/2}' )
+        id = ReactionType( g, 537 )
         self.assertEqual( 537, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{2p3/2}', id.symbol )
@@ -415,7 +415,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{2p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.L3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{3s1/2}' )
+        id = ReactionType( g, 538 )
         self.assertEqual( 538, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{3s1/2}', id.symbol )
@@ -426,7 +426,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{3s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{3p1/2}' )
+        id = ReactionType( g, 539 )
         self.assertEqual( 539, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{3p1/2}', id.symbol )
@@ -437,7 +437,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{3p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{3p3/2}' )
+        id = ReactionType( g, 540 )
         self.assertEqual( 540, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{3p3/2}', id.symbol )
@@ -448,7 +448,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{3p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{3d3/2}' )
+        id = ReactionType( g, 541 )
         self.assertEqual( 541, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{3d3/2}', id.symbol )
@@ -459,7 +459,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{3d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{3d5/2}' )
+        id = ReactionType( g, 542 )
         self.assertEqual( 542, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{3d5/2}', id.symbol )
@@ -470,7 +470,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{3d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4s1/2}' )
+        id = ReactionType( g, 543 )
         self.assertEqual( 543, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4s1/2}', id.symbol )
@@ -481,7 +481,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4p1/2}' )
+        id = ReactionType( g, 544 )
         self.assertEqual( 544, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4p1/2}', id.symbol )
@@ -492,7 +492,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4p3/2}' )
+        id = ReactionType( g, 545 )
         self.assertEqual( 545, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4p3/2}', id.symbol )
@@ -503,7 +503,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4d3/2}' )
+        id = ReactionType( g, 546 )
         self.assertEqual( 546, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4d3/2}', id.symbol )
@@ -514,7 +514,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4d5/2}' )
+        id = ReactionType( g, 547 )
         self.assertEqual( 547, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4d5/2}', id.symbol )
@@ -525,7 +525,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4f5/2}' )
+        id = ReactionType( g, 548 )
         self.assertEqual( 548, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4f5/2}', id.symbol )
@@ -536,7 +536,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N6 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{4f7/2}' )
+        id = ReactionType( g, 549 )
         self.assertEqual( 549, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{4f7/2}', id.symbol )
@@ -547,7 +547,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{4f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N7 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5s1/2}' )
+        id = ReactionType( g, 550 )
         self.assertEqual( 550, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5s1/2}', id.symbol )
@@ -558,7 +558,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5p1/2}' )
+        id = ReactionType( g, 551 )
         self.assertEqual( 551, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5p1/2}', id.symbol )
@@ -569,7 +569,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5p3/2}' )
+        id = ReactionType( g, 552 )
         self.assertEqual( 552, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5p3/2}', id.symbol )
@@ -580,7 +580,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5d3/2}' )
+        id = ReactionType( g, 553 )
         self.assertEqual( 553, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5d3/2}', id.symbol )
@@ -591,7 +591,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5d5/2}' )
+        id = ReactionType( g, 554 )
         self.assertEqual( 554, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5d5/2}', id.symbol )
@@ -602,7 +602,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5f5/2}' )
+        id = ReactionType( g, 555 )
         self.assertEqual( 555, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5f5/2}', id.symbol )
@@ -613,7 +613,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O6 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5f7/2}' )
+        id = ReactionType( g, 556 )
         self.assertEqual( 556, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5f7/2}', id.symbol )
@@ -624,7 +624,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O7 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5g7/2}' )
+        id = ReactionType( g, 557 )
         self.assertEqual( 557, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5g7/2}', id.symbol )
@@ -635,7 +635,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5g7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O8 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{5g9/2}' )
+        id = ReactionType( g, 558 )
         self.assertEqual( 558, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{5g9/2}', id.symbol )
@@ -646,7 +646,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{5g9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O9 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6s1/2}' )
+        id = ReactionType( g, 559 )
         self.assertEqual( 559, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6s1/2}', id.symbol )
@@ -657,7 +657,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6p1/2}' )
+        id = ReactionType( g, 560 )
         self.assertEqual( 560, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6p1/2}', id.symbol )
@@ -668,7 +668,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6p3/2}' )
+        id = ReactionType( g, 561 )
         self.assertEqual( 561, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6p3/2}', id.symbol )
@@ -679,7 +679,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6d3/2}' )
+        id = ReactionType( g, 562 )
         self.assertEqual( 562, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6d3/2}', id.symbol )
@@ -690,7 +690,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6d5/2}' )
+        id = ReactionType( g, 563 )
         self.assertEqual( 563, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6d5/2}', id.symbol )
@@ -701,7 +701,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6f5/2}' )
+        id = ReactionType( g, 564 )
         self.assertEqual( 564, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6f5/2}', id.symbol )
@@ -712,7 +712,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P6 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6f7/2}' )
+        id = ReactionType( g, 565 )
         self.assertEqual( 565, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6f7/2}', id.symbol )
@@ -723,7 +723,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P7 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6g7/2}' )
+        id = ReactionType( g, 566 )
         self.assertEqual( 566, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6g7/2}', id.symbol )
@@ -734,7 +734,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6g7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P8 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6g9/2}' )
+        id = ReactionType( g, 567 )
         self.assertEqual( 567, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6g9/2}', id.symbol )
@@ -745,7 +745,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6g9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P9 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6h9/2}' )
+        id = ReactionType( g, 568 )
         self.assertEqual( 568, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6h9/2}', id.symbol )
@@ -756,7 +756,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6h9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P10 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{6h11/2}' )
+        id = ReactionType( g, 569 )
         self.assertEqual( 569, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{6h11/2}', id.symbol )
@@ -767,7 +767,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{6h11/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P11 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{7s1/2}' )
+        id = ReactionType( g, 570 )
         self.assertEqual( 570, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{7s1/2}', id.symbol )
@@ -778,7 +778,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{7s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{7p1/2}' )
+        id = ReactionType( g, 571 )
         self.assertEqual( 571, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{7p1/2}', id.symbol )
@@ -789,7 +789,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'photo-ionisation{7p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'photo-ionisation{7p3/2}' )
+        id = ReactionType( g, 572 )
         self.assertEqual( 572, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation{7p3/2}', id.symbol )
@@ -809,7 +809,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q4, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q4 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7d5/2}' )
@@ -820,7 +819,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q5, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q5 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7f5/2}' )
@@ -831,7 +829,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q6, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q6 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7f7/2}' )
@@ -842,7 +839,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q7, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q7 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7g7/2}' )
@@ -853,7 +849,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q8, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7g7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q8 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7g9/2}' )
@@ -864,7 +859,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q9, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7g9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q9 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7h9/2}' )
@@ -875,7 +869,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q10, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7h9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q10 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7h11/2}' )
@@ -886,7 +879,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q11, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7h11/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q11 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7i11/2}' )
@@ -897,7 +889,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q12, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7i11/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q12 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'photo-ionisation{7i13/2}' )
@@ -908,10 +899,21 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q13, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{7i13/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q13 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{1s1/2}' )
+        id = ReactionType( g, 522 )
+        self.assertEqual( 522, id.mt )
+        self.assertEqual( atomic, id.interaction_type )
+        self.assertEqual( 'photo-ionisation', id.symbol )
+        self.assertEqual( [ ( eminus, 1 ) ] , id.particles )
+        self.assertEqual( ElectronSubshellID.Q3, id.level )
+        self.assertEqual( False, id.is_special )
+        self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( 'photo-ionisation' ) )
+        self.assertEqual( id, ReactionType( 'photo-ionisation{t}' ) )
+        self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q3 ), id.resolve( eminus, u ) )
+
+        id = ReactionType( eminus, 534 )
         self.assertEqual( 534, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{1s1/2}', id.symbol )
@@ -922,7 +924,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{1s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.K ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{2s1/2}' )
+        id = ReactionType( eminus, 535 )
         self.assertEqual( 535, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{2s1/2}', id.symbol )
@@ -933,7 +935,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{2s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.L1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{2p1/2}' )
+        id = ReactionType( eminus, 536 )
         self.assertEqual( 536, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{2p1/2}', id.symbol )
@@ -944,7 +946,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{2p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.L2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{2p3/2}' )
+        id = ReactionType( eminus, 537 )
         self.assertEqual( 537, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{2p3/2}', id.symbol )
@@ -955,7 +957,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{2p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.L3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{3s1/2}' )
+        id = ReactionType( eminus, 538 )
         self.assertEqual( 538, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{3s1/2}', id.symbol )
@@ -966,7 +968,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{3s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{3p1/2}' )
+        id = ReactionType( eminus, 539 )
         self.assertEqual( 539, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{3p1/2}', id.symbol )
@@ -977,7 +979,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{3p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{3p3/2}' )
+        id = ReactionType( eminus, 540 )
         self.assertEqual( 540, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{3p3/2}', id.symbol )
@@ -988,7 +990,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{3p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{3d3/2}' )
+        id = ReactionType( eminus, 541 )
         self.assertEqual( 541, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{3d3/2}', id.symbol )
@@ -999,7 +1001,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{3d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{3d5/2}' )
+        id = ReactionType( eminus, 542 )
         self.assertEqual( 542, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{3d5/2}', id.symbol )
@@ -1010,7 +1012,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{3d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.M5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4s1/2}' )
+        id = ReactionType( eminus, 543 )
         self.assertEqual( 543, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4s1/2}', id.symbol )
@@ -1021,7 +1023,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4p1/2}' )
+        id = ReactionType( eminus, 544 )
         self.assertEqual( 544, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4p1/2}', id.symbol )
@@ -1032,7 +1034,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4p3/2}' )
+        id = ReactionType( eminus, 545 )
         self.assertEqual( 545, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4p3/2}', id.symbol )
@@ -1043,7 +1045,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4d3/2}' )
+        id = ReactionType( eminus, 546 )
         self.assertEqual( 546, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4d3/2}', id.symbol )
@@ -1054,7 +1056,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4d5/2}' )
+        id = ReactionType( eminus, 547 )
         self.assertEqual( 547, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4d5/2}', id.symbol )
@@ -1065,7 +1067,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4f5/2}' )
+        id = ReactionType( eminus, 548 )
         self.assertEqual( 548, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4f5/2}', id.symbol )
@@ -1076,7 +1078,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N6 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{4f7/2}' )
+        id = ReactionType( eminus, 549 )
         self.assertEqual( 549, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{4f7/2}', id.symbol )
@@ -1087,7 +1089,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{4f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.N7 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5s1/2}' )
+        id = ReactionType( eminus, 550 )
         self.assertEqual( 550, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5s1/2}', id.symbol )
@@ -1098,7 +1100,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5p1/2}' )
+        id = ReactionType( eminus, 551 )
         self.assertEqual( 551, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5p1/2}', id.symbol )
@@ -1109,7 +1111,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5p3/2}' )
+        id = ReactionType( eminus, 552 )
         self.assertEqual( 552, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5p3/2}', id.symbol )
@@ -1120,7 +1122,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5d3/2}' )
+        id = ReactionType( eminus, 553 )
         self.assertEqual( 553, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5d3/2}', id.symbol )
@@ -1131,7 +1133,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5d5/2}' )
+        id = ReactionType( eminus, 554 )
         self.assertEqual( 554, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5d5/2}', id.symbol )
@@ -1142,7 +1144,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5f5/2}' )
+        id = ReactionType( eminus, 555 )
         self.assertEqual( 555, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5f5/2}', id.symbol )
@@ -1153,7 +1155,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O6 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5f7/2}' )
+        id = ReactionType( eminus, 556 )
         self.assertEqual( 556, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5f7/2}', id.symbol )
@@ -1164,7 +1166,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O7 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5g7/2}' )
+        id = ReactionType( eminus, 557 )
         self.assertEqual( 557, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5g7/2}', id.symbol )
@@ -1175,7 +1177,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5g7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O8 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{5g9/2}' )
+        id = ReactionType( eminus, 558 )
         self.assertEqual( 558, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{5g9/2}', id.symbol )
@@ -1186,7 +1188,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{5g9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.O9 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6s1/2}' )
+        id = ReactionType( eminus, 559 )
         self.assertEqual( 559, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6s1/2}', id.symbol )
@@ -1197,7 +1199,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6p1/2}' )
+        id = ReactionType( eminus, 560 )
         self.assertEqual( 560, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6p1/2}', id.symbol )
@@ -1208,7 +1210,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6p3/2}' )
+        id = ReactionType( eminus, 561 )
         self.assertEqual( 561, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6p3/2}', id.symbol )
@@ -1219,7 +1221,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6p3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P3 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6d3/2}' )
+        id = ReactionType( eminus, 562 )
         self.assertEqual( 562, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6d3/2}', id.symbol )
@@ -1230,7 +1232,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P4 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6d5/2}' )
+        id = ReactionType( eminus, 563 )
         self.assertEqual( 563, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6d5/2}', id.symbol )
@@ -1241,7 +1243,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P5 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6f5/2}' )
+        id = ReactionType( eminus, 564 )
         self.assertEqual( 564, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6f5/2}', id.symbol )
@@ -1252,7 +1254,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P6 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6f7/2}' )
+        id = ReactionType( eminus, 565 )
         self.assertEqual( 565, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6f7/2}', id.symbol )
@@ -1263,7 +1265,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P7 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6g7/2}' )
+        id = ReactionType( eminus, 566 )
         self.assertEqual( 566, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6g7/2}', id.symbol )
@@ -1274,7 +1276,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6g7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P8 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6g9/2}' )
+        id = ReactionType( eminus, 567 )
         self.assertEqual( 567, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6g9/2}', id.symbol )
@@ -1285,7 +1287,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6g9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P9 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6h9/2}' )
+        id = ReactionType( eminus, 568 )
         self.assertEqual( 568, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6h9/2}', id.symbol )
@@ -1296,7 +1298,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6h9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P10 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{6h11/2}' )
+        id = ReactionType( eminus, 569 )
         self.assertEqual( 569, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{6h11/2}', id.symbol )
@@ -1307,7 +1309,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{6h11/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.P11 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{7s1/2}' )
+        id = ReactionType( eminus, 570 )
         self.assertEqual( 570, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{7s1/2}', id.symbol )
@@ -1318,7 +1320,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{7s1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q1 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{7p1/2}' )
+        id = ReactionType( eminus, 571 )
         self.assertEqual( 571, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{7p1/2}', id.symbol )
@@ -1329,7 +1331,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation{7p1/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q2 ), id.resolve( eminus, u ) )
 
-        id = ReactionType( 'electro-ionisation{7p3/2}' )
+        id = ReactionType( eminus, 572 )
         self.assertEqual( 572, id.mt )
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'electro-ionisation{7p3/2}', id.symbol )
@@ -1349,7 +1351,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q4, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7d3/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q4 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7d5/2}' )
@@ -1360,7 +1361,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q5, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7d5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q5 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7f5/2}' )
@@ -1371,7 +1371,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q6, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7f5/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q6 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7f7/2}' )
@@ -1382,7 +1381,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q7, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7f7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q7 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7g7/2}' )
@@ -1393,7 +1391,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q8, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7g7/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q8 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7g9/2}' )
@@ -1404,7 +1401,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q9, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7g9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q9 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7h9/2}' )
@@ -1415,7 +1411,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q10, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7h9/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q10 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7h11/2}' )
@@ -1426,7 +1421,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q11, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7h11/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q11 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7i11/2}' )
@@ -1437,7 +1431,6 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q12, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7i11/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q12 ), id.resolve( eminus, u ) )
 
         id = ReactionType( 'electro-ionisation{7i13/2}' )
@@ -1448,8 +1441,19 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ElectronSubshellID.Q13, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'electro-ionisation{7i13/2}' ) )
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q13 ), id.resolve( eminus, u ) )
+
+        id = ReactionType( eminus, 522 )
+        self.assertEqual( 572, id.mt )
+        self.assertEqual( atomic, id.interaction_type )
+        self.assertEqual( 'photo-ionisation', id.symbol )
+        self.assertEqual( [ ( eminus, 2 ) ] , id.particles )
+        self.assertEqual( ElectronSubshellID.Q3, id.level )
+        self.assertEqual( False, id.is_special )
+        self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( 'photo-ionisation' ) )
+        self.assertEqual( id, ReactionType( 'photo-ionisation{t}' ) )
+        self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q3 ), id.resolve( eminus, u ) )
 
     def test_key( self ) :
 
@@ -1468,7 +1472,49 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         # illegal values
         with self.assertRaises( IndexError ) : id = ReactionType( 'not a reaction type symbol' )
         with self.assertRaises( IndexError ) : id = ReactionType( -1000 )
-        with self.assertRaises( IndexError ) : id = ReactionType( 2 ) # 2 has no meaning without knowing the incident particle type
+        with self.assertRaises( IndexError ) : id = ReactionType( 2 )      # 2 has no meaning without knowing the incident particle type
+        with self.assertRaises( IndexError ) : id = ReactionType( n, 534 ) # ionisation has no meaning for particles other than photons and electrons
+
+        with self.assertRaises( IndexError ) : id = ReactionType( 534 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 535 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 536 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 537 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 538 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 539 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 540 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 541 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 542 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 543 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 544 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 545 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 546 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 547 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 548 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 549 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 550 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 551 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 552 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 553 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 554 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 555 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 556 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 557 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 558 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 559 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 560 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 561 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 562 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 563 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 564 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 565 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 566 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 567 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 568 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 569 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 570 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 571 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 572 )
+        with self.assertRaises( IndexError ) : id = ReactionType( 522 )
 
 if __name__ == '__main__' :
 

@@ -189,6 +189,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( n, 2 ) );
       CHECK( id == ReactionType( "n(0)" ) );
       CHECK( u238 == id.resolve( n, u238 ) );
 
@@ -201,6 +202,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( p, 2 ) );
       CHECK( id == ReactionType( "p(0)" ) );
       CHECK( u238 == id.resolve( p, u238 ) );
 
@@ -213,6 +215,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( d, 2 ) );
       CHECK( id == ReactionType( "d(0)" ) );
       CHECK( u238 == id.resolve( d, u238 ) );
 
@@ -225,6 +228,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( t, 2 ) );
       CHECK( id == ReactionType( "t(0)" ) );
       CHECK( u238 == id.resolve( t, u238 ) );
 
@@ -237,6 +241,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( h, 2 ) );
       CHECK( id == ReactionType( "h(0)" ) );
       CHECK( u238 == id.resolve( h, u238 ) );
 
@@ -249,6 +254,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( a, 2 ) );
       CHECK( id == ReactionType( "a(0)" ) );
       CHECK( u238 == id.resolve( a, u238 ) );
 
@@ -406,7 +412,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "excitation" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{1s1/2}" );
+      id = ReactionType( g, 534 );
       CHECK( 1534 == id.number() );
       CHECK( 534 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -418,7 +424,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{1s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::K ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{2s1/2}" );
+      id = ReactionType( g, 535 );
       CHECK( 1535 == id.number() );
       CHECK( 535 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -430,7 +436,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{2s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::L1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{2p1/2}" );
+      id = ReactionType( g, 536 );
       CHECK( 1536 == id.number() );
       CHECK( 536 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -442,7 +448,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{2p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::L2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{2p3/2}" );
+      id = ReactionType( g, 537 );
       CHECK( 1537 == id.number() );
       CHECK( 537 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -454,7 +460,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{2p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::L3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{3s1/2}" );
+      id = ReactionType( g, 538 );
       CHECK( 1538 == id.number() );
       CHECK( 538 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -466,7 +472,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{3s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{3p1/2}" );
+      id = ReactionType( g, 539 );
       CHECK( 1539 == id.number() );
       CHECK( 539 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -478,7 +484,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{3p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{3p3/2}" );
+      id = ReactionType( g, 540 );
       CHECK( 1540 == id.number() );
       CHECK( 540 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -490,7 +496,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{3p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{3d3/2}" );
+      id = ReactionType( g, 541 );
       CHECK( 1541 == id.number() );
       CHECK( 541 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -502,7 +508,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{3d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{3d5/2}" );
+      id = ReactionType( g, 542 );
       CHECK( 1542 == id.number() );
       CHECK( 542 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -514,7 +520,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{3d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4s1/2}" );
+      id = ReactionType( g, 543 );
       CHECK( 1543 == id.number() );
       CHECK( 543 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -526,7 +532,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4p1/2}" );
+      id = ReactionType( g, 544 );
       CHECK( 1544 == id.number() );
       CHECK( 544 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -538,7 +544,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4p3/2}" );
+      id = ReactionType( g, 545 );
       CHECK( 1545 == id.number() );
       CHECK( 545 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -550,7 +556,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4d3/2}" );
+      id = ReactionType( g, 546 );
       CHECK( 1546 == id.number() );
       CHECK( 546 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -562,7 +568,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4d5/2}" );
+      id = ReactionType( g, 547 );
       CHECK( 1547 == id.number() );
       CHECK( 547 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -574,7 +580,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4f5/2}" );
+      id = ReactionType( g, 548 );
       CHECK( 1548 == id.number() );
       CHECK( 548 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -586,7 +592,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N6 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{4f7/2}" );
+      id = ReactionType( g, 549 );
       CHECK( 1549 == id.number() );
       CHECK( 549 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -598,7 +604,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{4f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N7 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5s1/2}" );
+      id = ReactionType( g, 550 );
       CHECK( 1550 == id.number() );
       CHECK( 550 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -610,7 +616,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5p1/2}" );
+      id = ReactionType( g, 551 );
       CHECK( 1551 == id.number() );
       CHECK( 551 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -622,7 +628,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5p3/2}" );
+      id = ReactionType( g, 552 );
       CHECK( 1552 == id.number() );
       CHECK( 552 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -634,7 +640,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5d3/2}" );
+      id = ReactionType( g, 553 );
       CHECK( 1553 == id.number() );
       CHECK( 553 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -646,7 +652,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5d5/2}" );
+      id = ReactionType( g, 554 );
       CHECK( 1554 == id.number() );
       CHECK( 554 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -658,7 +664,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5f5/2}" );
+      id = ReactionType( g, 555 );
       CHECK( 1555 == id.number() );
       CHECK( 555 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -670,7 +676,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O6 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5f7/2}" );
+      id = ReactionType( g, 556 );
       CHECK( 1556 == id.number() );
       CHECK( 556 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -682,7 +688,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O7 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5g7/2}" );
+      id = ReactionType( g, 557 );
       CHECK( 1557 == id.number() );
       CHECK( 557 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -694,7 +700,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5g7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O8 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{5g9/2}" );
+      id = ReactionType( g, 558 );
       CHECK( 1558 == id.number() );
       CHECK( 558 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -706,7 +712,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{5g9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O9 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6s1/2}" );
+      id = ReactionType( g, 559 );
       CHECK( 1559 == id.number() );
       CHECK( 559 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -718,7 +724,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6p1/2}" );
+      id = ReactionType( g, 560 );
       CHECK( 1560 == id.number() );
       CHECK( 560 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -730,7 +736,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6p3/2}" );
+      id = ReactionType( g, 561 );
       CHECK( 1561 == id.number() );
       CHECK( 561 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -742,7 +748,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6d3/2}" );
+      id = ReactionType( g, 562 );
       CHECK( 1562 == id.number() );
       CHECK( 562 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -754,7 +760,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6d5/2}" );
+      id = ReactionType( g, 563 );
       CHECK( 1563 == id.number() );
       CHECK( 563 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -766,7 +772,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6f5/2}" );
+      id = ReactionType( g, 564 );
       CHECK( 1564 == id.number() );
       CHECK( 564 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -778,7 +784,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P6 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6f7/2}" );
+      id = ReactionType( g, 565 );
       CHECK( 1565 == id.number() );
       CHECK( 565 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -790,7 +796,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P7 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6g7/2}" );
+      id = ReactionType( g, 566 );
       CHECK( 1566 == id.number() );
       CHECK( 566 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -802,7 +808,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6g7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P8 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6g9/2}" );
+      id = ReactionType( g, 567 );
       CHECK( 1567 == id.number() );
       CHECK( 567 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -814,7 +820,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6g9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P9 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6h9/2}" );
+      id = ReactionType( g, 568 );
       CHECK( 1568 == id.number() );
       CHECK( 568 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -826,7 +832,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6h9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P10 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{6h11/2}" );
+      id = ReactionType( g, 569 );
       CHECK( 1569 == id.number() );
       CHECK( 569 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -838,7 +844,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{6h11/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P11 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{7s1/2}" );
+      id = ReactionType( g, 570 );
       CHECK( 1570 == id.number() );
       CHECK( 570 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -850,7 +856,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{7s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{7p1/2}" );
+      id = ReactionType( g, 571 );
       CHECK( 1571 == id.number() );
       CHECK( 571 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -862,7 +868,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{7p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation{7p3/2}" );
+      id = ReactionType( g, 572 );
       CHECK( 1572 == id.number() );
       CHECK( 572 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -884,7 +890,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q4 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7d5/2}" );
@@ -896,7 +901,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q5 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7f5/2}" );
@@ -908,7 +912,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q6 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7f7/2}" );
@@ -920,7 +923,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q7 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7g7/2}" );
@@ -932,7 +934,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7g7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q8 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7g9/2}" );
@@ -944,7 +945,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7g9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q9 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7h9/2}" );
@@ -956,7 +956,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q10 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7h9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q10 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7h11/2}" );
@@ -968,7 +967,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q11 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7h11/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q11 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7i11/2}" );
@@ -980,7 +978,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q12 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7i11/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q12 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "photo-ionisation{7i13/2}" );
@@ -992,10 +989,9 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q13 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "photo-ionisation{7i13/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q13 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "photo-ionisation" );
+      id = ReactionType( g, 522 );
       CHECK( 1583 == id.number() );
       CHECK( 522 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1008,7 +1004,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "photo-ionisation{t}" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{1s1/2}" );
+      id = ReactionType( eminus, 534 );
       CHECK( 2534 == id.number() );
       CHECK( 534 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1020,7 +1016,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{1s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::K ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{2s1/2}" );
+      id = ReactionType( eminus, 535 );
       CHECK( 2535 == id.number() );
       CHECK( 535 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1032,7 +1028,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{2s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::L1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{2p1/2}" );
+      id = ReactionType( eminus, 536 );
       CHECK( 2536 == id.number() );
       CHECK( 536 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1044,7 +1040,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{2p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::L2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{2p3/2}" );
+      id = ReactionType( eminus, 537 );
       CHECK( 2537 == id.number() );
       CHECK( 537 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1056,7 +1052,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{2p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::L3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{3s1/2}" );
+      id = ReactionType( eminus, 538 );
       CHECK( 2538 == id.number() );
       CHECK( 538 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1068,7 +1064,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{3s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{3p1/2}" );
+      id = ReactionType( eminus, 539 );
       CHECK( 2539 == id.number() );
       CHECK( 539 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1080,7 +1076,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{3p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{3p3/2}" );
+      id = ReactionType( eminus, 540 );
       CHECK( 2540 == id.number() );
       CHECK( 540 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1092,7 +1088,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{3p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{3d3/2}" );
+      id = ReactionType( eminus, 541 );
       CHECK( 2541 == id.number() );
       CHECK( 541 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1104,7 +1100,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{3d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{3d5/2}" );
+      id = ReactionType( eminus, 542 );
       CHECK( 2542 == id.number() );
       CHECK( 542 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1116,7 +1112,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{3d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::M5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4s1/2}" );
+      id = ReactionType( eminus, 543 );
       CHECK( 2543 == id.number() );
       CHECK( 543 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1128,7 +1124,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4p1/2}" );
+      id = ReactionType( eminus, 544 );
       CHECK( 2544 == id.number() );
       CHECK( 544 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1140,7 +1136,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4p3/2}" );
+      id = ReactionType( eminus, 545 );
       CHECK( 2545 == id.number() );
       CHECK( 545 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1152,7 +1148,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4d3/2}" );
+      id = ReactionType( eminus, 546 );
       CHECK( 2546 == id.number() );
       CHECK( 546 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1164,7 +1160,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4d5/2}" );
+      id = ReactionType( eminus, 547 );
       CHECK( 2547 == id.number() );
       CHECK( 547 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1176,7 +1172,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4f5/2}" );
+      id = ReactionType( eminus, 548 );
       CHECK( 2548 == id.number() );
       CHECK( 548 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1188,7 +1184,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N6 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{4f7/2}" );
+      id = ReactionType( eminus, 549 );
       CHECK( 2549 == id.number() );
       CHECK( 549 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1200,7 +1196,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{4f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::N7 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5s1/2}" );
+      id = ReactionType( eminus, 550 );
       CHECK( 2550 == id.number() );
       CHECK( 550 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1212,7 +1208,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5p1/2}" );
+      id = ReactionType( eminus, 551 );
       CHECK( 2551 == id.number() );
       CHECK( 551 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1224,7 +1220,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5p3/2}" );
+      id = ReactionType( eminus, 552 );
       CHECK( 2552 == id.number() );
       CHECK( 552 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1236,7 +1232,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5d3/2}" );
+      id = ReactionType( eminus, 553 );
       CHECK( 2553 == id.number() );
       CHECK( 553 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1248,7 +1244,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5d5/2}" );
+      id = ReactionType( eminus, 554 );
       CHECK( 2554 == id.number() );
       CHECK( 554 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1260,7 +1256,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5f5/2}" );
+      id = ReactionType( eminus, 555 );
       CHECK( 2555 == id.number() );
       CHECK( 555 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1272,7 +1268,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O6 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5f7/2}" );
+      id = ReactionType( eminus, 556 );
       CHECK( 2556 == id.number() );
       CHECK( 556 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1284,7 +1280,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O7 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5g7/2}" );
+      id = ReactionType( eminus, 557 );
       CHECK( 2557 == id.number() );
       CHECK( 557 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1296,7 +1292,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5g7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O8 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{5g9/2}" );
+      id = ReactionType( eminus, 558 );
       CHECK( 2558 == id.number() );
       CHECK( 558 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1308,7 +1304,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{5g9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::O9 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6s1/2}" );
+      id = ReactionType( eminus, 559 );
       CHECK( 2559 == id.number() );
       CHECK( 559 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1320,7 +1316,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6p1/2}" );
+      id = ReactionType( eminus, 560 );
       CHECK( 2560 == id.number() );
       CHECK( 560 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1332,7 +1328,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6p3/2}" );
+      id = ReactionType( eminus, 561 );
       CHECK( 2561 == id.number() );
       CHECK( 561 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1344,7 +1340,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6p3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P3 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6d3/2}" );
+      id = ReactionType( eminus, 562 );
       CHECK( 2562 == id.number() );
       CHECK( 562 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1356,7 +1352,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P4 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6d5/2}" );
+      id = ReactionType( eminus, 563 );
       CHECK( 2563 == id.number() );
       CHECK( 563 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1368,7 +1364,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P5 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6f5/2}" );
+      id = ReactionType( eminus, 564 );
       CHECK( 2564 == id.number() );
       CHECK( 564 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1380,7 +1376,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P6 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6f7/2}" );
+      id = ReactionType( eminus, 565 );
       CHECK( 2565 == id.number() );
       CHECK( 565 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1392,7 +1388,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P7 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6g7/2}" );
+      id = ReactionType( eminus, 566 );
       CHECK( 2566 == id.number() );
       CHECK( 566 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1404,7 +1400,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6g7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P8 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6g9/2}" );
+      id = ReactionType( eminus, 567 );
       CHECK( 2567 == id.number() );
       CHECK( 567 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1416,7 +1412,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6g9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P9 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6h9/2}" );
+      id = ReactionType( eminus, 568 );
       CHECK( 2568 == id.number() );
       CHECK( 568 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1428,7 +1424,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6h9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P10 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{6h11/2}" );
+      id = ReactionType( eminus, 569 );
       CHECK( 2569 == id.number() );
       CHECK( 569 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1440,7 +1436,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{6h11/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::P11 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{7s1/2}" );
+      id = ReactionType( eminus, 570 );
       CHECK( 2570 == id.number() );
       CHECK( 570 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1452,7 +1448,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{7s1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q1 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{7p1/2}" );
+      id = ReactionType( eminus, 571 );
       CHECK( 2571 == id.number() );
       CHECK( 571 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1464,7 +1460,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "electro-ionisation{7p1/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q2 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation{7p3/2}" );
+      id = ReactionType( eminus, 572 );
       CHECK( 2572 == id.number() );
       CHECK( 572 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -1486,7 +1482,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7d3/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q4 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7d5/2}" );
@@ -1498,7 +1493,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7d5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q5 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7f5/2}" );
@@ -1510,7 +1504,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7f5/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q6 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7f7/2}" );
@@ -1522,7 +1515,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7f7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q7 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7g7/2}" );
@@ -1534,7 +1526,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7g7/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q8 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7g9/2}" );
@@ -1546,7 +1537,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7g9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q9 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7h9/2}" );
@@ -1558,7 +1548,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q10 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7h9/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q10 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7h11/2}" );
@@ -1570,7 +1559,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q11 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7h11/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q11 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7i11/2}" );
@@ -1582,7 +1570,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q12 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7i11/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q12 ) == id.resolve( eminus, u ) );
 
       id = ReactionType( "electro-ionisation{7i13/2}" );
@@ -1594,10 +1581,9 @@ SCENARIO( "ReactionType" ) {
       CHECK( ElectronSubshellID::Q13 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "electro-ionisation{7i13/2}" ) );
       CHECK( ParticleID( 92000, ElectronSubshellID::Q13 ) == id.resolve( eminus, u ) );
 
-      id = ReactionType( "electro-ionisation" );
+      id = ReactionType( eminus, 522 );
       CHECK( 2583 == id.number() );
       CHECK( 522 == id.mt() );
       CHECK( atomic == id.interactionType() );
@@ -5145,10 +5131,56 @@ SCENARIO( "ReactionType" ) {
 
     THEN( "an exception is thrown" ) {
 
+      // neutron particle id
+      auto n = ParticleID::neutron();
+
       // illegal values
       CHECK_THROWS( ReactionType( "not a reaction type symbol" ) );
       CHECK_THROWS( ReactionType( -1000 ) );
-      CHECK_THROWS( ReactionType( 2 ) ); // 2 has no meaning without knowing the incident particle type
+      CHECK_THROWS( ReactionType( 2 ) );      // 2 has no meaning without knowing the incident particle type
+      CHECK_THROWS( ReactionType( n, 534 ) ); // ionisation has no meaning for particles other than photons and electrons
+
+      // ionisation types cannot be created using their mt number alone
+      CHECK_THROWS( ReactionType( 534 ) );
+      CHECK_THROWS( ReactionType( 535 ) );
+      CHECK_THROWS( ReactionType( 536 ) );
+      CHECK_THROWS( ReactionType( 537 ) );
+      CHECK_THROWS( ReactionType( 538 ) );
+      CHECK_THROWS( ReactionType( 539 ) );
+      CHECK_THROWS( ReactionType( 540 ) );
+      CHECK_THROWS( ReactionType( 541 ) );
+      CHECK_THROWS( ReactionType( 542 ) );
+      CHECK_THROWS( ReactionType( 543 ) );
+      CHECK_THROWS( ReactionType( 544 ) );
+      CHECK_THROWS( ReactionType( 545 ) );
+      CHECK_THROWS( ReactionType( 546 ) );
+      CHECK_THROWS( ReactionType( 547 ) );
+      CHECK_THROWS( ReactionType( 548 ) );
+      CHECK_THROWS( ReactionType( 549 ) );
+      CHECK_THROWS( ReactionType( 550 ) );
+      CHECK_THROWS( ReactionType( 551 ) );
+      CHECK_THROWS( ReactionType( 552 ) );
+      CHECK_THROWS( ReactionType( 553 ) );
+      CHECK_THROWS( ReactionType( 554 ) );
+      CHECK_THROWS( ReactionType( 555 ) );
+      CHECK_THROWS( ReactionType( 556 ) );
+      CHECK_THROWS( ReactionType( 557 ) );
+      CHECK_THROWS( ReactionType( 558 ) );
+      CHECK_THROWS( ReactionType( 559 ) );
+      CHECK_THROWS( ReactionType( 560 ) );
+      CHECK_THROWS( ReactionType( 561 ) );
+      CHECK_THROWS( ReactionType( 562 ) );
+      CHECK_THROWS( ReactionType( 563 ) );
+      CHECK_THROWS( ReactionType( 564 ) );
+      CHECK_THROWS( ReactionType( 565 ) );
+      CHECK_THROWS( ReactionType( 566 ) );
+      CHECK_THROWS( ReactionType( 567 ) );
+      CHECK_THROWS( ReactionType( 568 ) );
+      CHECK_THROWS( ReactionType( 569 ) );
+      CHECK_THROWS( ReactionType( 570 ) );
+      CHECK_THROWS( ReactionType( 571 ) );
+      CHECK_THROWS( ReactionType( 572 ) );
+      CHECK_THROWS( ReactionType( 522 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO
