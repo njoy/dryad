@@ -906,12 +906,12 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( atomic, id.interaction_type )
         self.assertEqual( 'photo-ionisation', id.symbol )
         self.assertEqual( [ ( eminus, 1 ) ] , id.particles )
-        self.assertEqual( ElectronSubshellID.Q3, id.level )
+        self.assertEqual( None, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
         self.assertEqual( id, ReactionType( 'photo-ionisation' ) )
         self.assertEqual( id, ReactionType( 'photo-ionisation{t}' ) )
-        self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q3 ), id.resolve( eminus, u ) )
+        self.assertEqual( u, id.resolve( g, u ) )
 
         id = ReactionType( eminus, 534 )
         self.assertEqual( 534, id.mt )
@@ -1444,16 +1444,16 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q13 ), id.resolve( eminus, u ) )
 
         id = ReactionType( eminus, 522 )
-        self.assertEqual( 572, id.mt )
+        self.assertEqual( 522, id.mt )
         self.assertEqual( atomic, id.interaction_type )
-        self.assertEqual( 'photo-ionisation', id.symbol )
+        self.assertEqual( 'electro-ionisation', id.symbol )
         self.assertEqual( [ ( eminus, 2 ) ] , id.particles )
-        self.assertEqual( ElectronSubshellID.Q3, id.level )
+        self.assertEqual( None, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
-        self.assertEqual( id, ReactionType( 'photo-ionisation' ) )
-        self.assertEqual( id, ReactionType( 'photo-ionisation{t}' ) )
-        self.assertEqual( ParticleID( 92000, ElectronSubshellID.Q3 ), id.resolve( eminus, u ) )
+        self.assertEqual( id, ReactionType( 'electro-ionisation' ) )
+        self.assertEqual( id, ReactionType( 'electro-ionisation{t}' ) )
+        self.assertEqual( u, id.resolve( eminus, u ) )
 
     def test_key( self ) :
 
@@ -1469,11 +1469,13 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
 
     def test_failures( self ) :
 
+        n = ParticleID.neutron()
+
         # illegal values
         with self.assertRaises( IndexError ) : id = ReactionType( 'not a reaction type symbol' )
         with self.assertRaises( IndexError ) : id = ReactionType( -1000 )
         with self.assertRaises( IndexError ) : id = ReactionType( 2 )      # 2 has no meaning without knowing the incident particle type
-        with self.assertRaises( IndexError ) : id = ReactionType( n, 534 ) # ionisation has no meaning for particles other than photons and electrons
+        with self.assertRaises( RuntimeError ) : id = ReactionType( n, 534 ) # ionisation has no meaning for particles other than photons and electrons
 
         with self.assertRaises( IndexError ) : id = ReactionType( 534 )
         with self.assertRaises( IndexError ) : id = ReactionType( 535 )
