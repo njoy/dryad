@@ -51,16 +51,14 @@ public:
   // special reaction without an mt number
   Entry( long number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives ) :
-    Entry( std::nullopt,
-           std::move( number ), std::nullopt, std::nullopt,
+    Entry( std::nullopt, std::move( number ), std::nullopt, std::nullopt,
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
   // special reaction with an mt number
   Entry( long number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives ) :
-    Entry( std::nullopt,
-           std::move( number ), std::move( mt ), std::nullopt,
+    Entry( std::nullopt, std::move( number ), std::move( mt ), std::nullopt,
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
@@ -69,7 +67,8 @@ public:
          std::vector< std::string > alternatives,
          std::vector< std::pair< ParticleID, short > > ejectiles ) :
     Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::move( mt ), std::move( ejectiles ),
+           std::move( number ), std::move( mt ),
+           std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
@@ -79,7 +78,8 @@ public:
          std::vector< std::pair< ParticleID, short > > ejectiles,
          short level ) :
     Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::move( mt ), std::move( ejectiles ),
+           std::move( number ), std::move( mt ),
+           std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::move( level ) ) {}
 
@@ -88,7 +88,8 @@ public:
          std::vector< std::string > alternatives,
          std::vector< std::pair< ParticleID, short > > ejectiles ) :
     Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::nullopt, std::move( ejectiles ),
+           std::move( number ), std::nullopt,
+           std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
@@ -98,7 +99,8 @@ public:
          std::vector< std::pair< ParticleID, short > > ejectiles,
          short level ) :
     Entry( calculateDZA( interaction, ejectiles ),
-           std::move( number ), std::nullopt, std::move( ejectiles ),
+           std::move( number ), std::nullopt,
+           std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::move( level ) ) {}
 
