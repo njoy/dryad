@@ -738,7 +738,7 @@ namespace id {
       }
     };
 
-    static constexpr ReactionType
+    static ReactionType
     elastic( const ParticleID& projectile ) {
 
       if ( projectile == ParticleID::neutron() ) {
