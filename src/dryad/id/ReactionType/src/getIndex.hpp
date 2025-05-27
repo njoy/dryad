@@ -11,8 +11,8 @@ static std::size_t getIndex( int mt ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "\'" + std::to_string( mt ) + "\' does not define a "
-                             "registered mt number" );
+    throw std::invalid_argument( "\'" + std::to_string( mt ) + "\' does not define a "
+                                 "registered mt number" );
   }
 }
 
@@ -29,7 +29,7 @@ static std::size_t getIndex( const std::string& string ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "\'" + string + "\' does not define a "
-                             "registered reaction type string" );
+    throw std::invalid_argument( "\'" + string + "\' does not define a "
+                                 "registered reaction type string" );
   }
 }

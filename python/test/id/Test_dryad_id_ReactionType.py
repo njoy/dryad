@@ -809,9 +809,9 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
     def test_failures( self ) :
 
         # illegal values
-        with self.assertRaises( IndexError ) : id = ReactionType( 'not a reaction type symbol' )
-        with self.assertRaises( IndexError ) : id = ReactionType( -1000 )
-        with self.assertRaises( IndexError ) : id = ReactionType( 2 ) # 2 has no meaning without knowing the incident particle type
+        with self.assertRaises( ValueError ) : id = ReactionType( 'not a reaction type symbol' )
+        with self.assertRaises( ValueError ) : id = ReactionType( -1000 )
+        with self.assertRaises( ValueError ) : id = ReactionType( 2 ) # 2 has no meaning without knowing the incident particle type
 
 if __name__ == '__main__' :
 

@@ -564,19 +564,19 @@ class Test_elementary_ParticleID( unittest.TestCase ) :
     def test_failures( self ) :
 
         # illegal values
-        with self.assertRaises( IndexError ) : id = ParticleID( 'not a valid particle identifier' )
-        with self.assertRaises( IndexError ) : id = ParticleID( -1000 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 1 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, LevelID.continuum )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, LevelID.all )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 152 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1001, -1 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1001, 152 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 'H_e0' )
-        with self.assertRaises( IndexError ) : id = ParticleID( 'H_e1' )
-        with self.assertRaises( IndexError ) : id = ParticleID( 'H1_e152' )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 533 )
-        with self.assertRaises( IndexError ) : id = ParticleID( 1000, 583 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 'not a valid particle identifier' )
+        with self.assertRaises( ValueError ) : id = ParticleID( -1000 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1000, 1 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1000, LevelID.continuum )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1000, LevelID.all )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1000, 152 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1001, -1 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1001, 152 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 'H_e0' )
+        with self.assertRaises( ValueError ) : id = ParticleID( 'H_e1' )
+        with self.assertRaises( ValueError ) : id = ParticleID( 'H1_e152' )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1000, 533 )
+        with self.assertRaises( ValueError ) : id = ParticleID( 1000, 583 )
 
 if __name__ == '__main__' :
 

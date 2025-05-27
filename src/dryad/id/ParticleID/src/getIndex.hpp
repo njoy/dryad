@@ -99,7 +99,7 @@ static std::size_t getIndex( int za, int number ) {
 
         if ( ( mass == 0 ) && ( number != 0 ) ) {
 
-          throw std::out_of_range( "An element cannot have a non-zero level number" );
+          throw std::invalid_argument( "An element cannot have a non-zero level number" );
         }
 
         // determine the level
@@ -118,14 +118,14 @@ static std::size_t getIndex( int za, int number ) {
       }
       else {
 
-        throw std::out_of_range( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
-                                 + std::to_string( number ) + "\' does not define a standard particle or ion" );
+        throw std::invalid_argument( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
+                                     + std::to_string( number ) + "\' does not define a standard particle or ion" );
       }
     }
     catch ( ... ) {
 
-      throw std::out_of_range( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
-      + std::to_string( number ) + "\' does not define a standard particle or ion" );
+      throw std::invalid_argument( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
+                                   + std::to_string( number ) + "\' does not define a standard particle or ion" );
     }
   }
 }
@@ -168,6 +168,6 @@ static std::size_t getIndex( const std::string& string ) {
       return updateRegistry( std::move( element ), std::move( subshell ) );
     }
 
-    throw std::out_of_range( "Not a particle symbol or name: \'" + string + "\'" );
+    throw std::invalid_argument( "Not a particle symbol or name: \'" + string + "\'" );
   }
 }
