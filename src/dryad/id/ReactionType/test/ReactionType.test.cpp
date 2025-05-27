@@ -1824,7 +1824,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 91236, LevelID::all ) == ReactionType(  28 ).resolve( g, u238 ) );
       CHECK( ParticleID( 91235, LevelID::all ) == ReactionType(  41 ).resolve( g, u238 ) );
       CHECK( ParticleID( 91234, LevelID::all ) == ReactionType(  42 ).resolve( g, u238 ) );
-      CHECK( ParticleID( 90235, LevelID::all ) == ReactionType(  43 ).resolve( g, u238 ) );
+      CHECK( ParticleID( 90235, LevelID::all ) == ReactionType(  44 ).resolve( g, u238 ) );
       CHECK( ParticleID( 91233, LevelID::all ) == ReactionType( 156 ).resolve( g, u238 ) );
       CHECK( ParticleID( 91232, LevelID::all ) == ReactionType( 162 ).resolve( g, u238 ) );
       CHECK( ParticleID( 91231, LevelID::all ) == ReactionType( 163 ).resolve( g, u238 ) );
@@ -2319,7 +2319,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 91237, LevelID::all ) == ReactionType(  28 ).resolve( n, u238 ) );
       CHECK( ParticleID( 91236, LevelID::all ) == ReactionType(  41 ).resolve( n, u238 ) );
       CHECK( ParticleID( 91235, LevelID::all ) == ReactionType(  42 ).resolve( n, u238 ) );
-      CHECK( ParticleID( 90236, LevelID::all ) == ReactionType(  43 ).resolve( n, u238 ) );
+      CHECK( ParticleID( 90236, LevelID::all ) == ReactionType(  44 ).resolve( n, u238 ) );
       CHECK( ParticleID( 91234, LevelID::all ) == ReactionType( 156 ).resolve( n, u238 ) );
       CHECK( ParticleID( 91233, LevelID::all ) == ReactionType( 162 ).resolve( n, u238 ) );
       CHECK( ParticleID( 91232, LevelID::all ) == ReactionType( 163 ).resolve( n, u238 ) );
@@ -2814,7 +2814,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 92237, LevelID::all ) == ReactionType(  28 ).resolve( p, u238 ) );
       CHECK( ParticleID( 92236, LevelID::all ) == ReactionType(  41 ).resolve( p, u238 ) );
       CHECK( ParticleID( 92235, LevelID::all ) == ReactionType(  42 ).resolve( p, u238 ) );
-      CHECK( ParticleID( 91236, LevelID::all ) == ReactionType(  43 ).resolve( p, u238 ) );
+      CHECK( ParticleID( 91236, LevelID::all ) == ReactionType(  44 ).resolve( p, u238 ) );
       CHECK( ParticleID( 92234, LevelID::all ) == ReactionType( 156 ).resolve( p, u238 ) );
       CHECK( ParticleID( 92233, LevelID::all ) == ReactionType( 162 ).resolve( p, u238 ) );
       CHECK( ParticleID( 92232, LevelID::all ) == ReactionType( 163 ).resolve( p, u238 ) );
@@ -3309,7 +3309,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 92238, LevelID::all ) == ReactionType(  28 ).resolve( d, u238 ) );
       CHECK( ParticleID( 92237, LevelID::all ) == ReactionType(  41 ).resolve( d, u238 ) );
       CHECK( ParticleID( 92236, LevelID::all ) == ReactionType(  42 ).resolve( d, u238 ) );
-      CHECK( ParticleID( 91237, LevelID::all ) == ReactionType(  43 ).resolve( d, u238 ) );
+      CHECK( ParticleID( 91237, LevelID::all ) == ReactionType(  44 ).resolve( d, u238 ) );
       CHECK( ParticleID( 92235, LevelID::all ) == ReactionType( 156 ).resolve( d, u238 ) );
       CHECK( ParticleID( 92234, LevelID::all ) == ReactionType( 162 ).resolve( d, u238 ) );
       CHECK( ParticleID( 92233, LevelID::all ) == ReactionType( 163 ).resolve( d, u238 ) );
@@ -3804,7 +3804,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 92239, LevelID::all ) == ReactionType(  28 ).resolve( t, u238 ) );
       CHECK( ParticleID( 92238, LevelID::all ) == ReactionType(  41 ).resolve( t, u238 ) );
       CHECK( ParticleID( 92237, LevelID::all ) == ReactionType(  42 ).resolve( t, u238 ) );
-      CHECK( ParticleID( 91238, LevelID::all ) == ReactionType(  43 ).resolve( t, u238 ) );
+      CHECK( ParticleID( 91238, LevelID::all ) == ReactionType(  44 ).resolve( t, u238 ) );
       CHECK( ParticleID( 92236, LevelID::all ) == ReactionType( 156 ).resolve( t, u238 ) );
       CHECK( ParticleID( 92235, LevelID::all ) == ReactionType( 162 ).resolve( t, u238 ) );
       CHECK( ParticleID( 92234, LevelID::all ) == ReactionType( 163 ).resolve( t, u238 ) );
@@ -4299,7 +4299,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 93239, LevelID::all ) == ReactionType(  28 ).resolve( h, u238 ) );
       CHECK( ParticleID( 93238, LevelID::all ) == ReactionType(  41 ).resolve( h, u238 ) );
       CHECK( ParticleID( 93237, LevelID::all ) == ReactionType(  42 ).resolve( h, u238 ) );
-      CHECK( ParticleID( 92238, LevelID::all ) == ReactionType(  43 ).resolve( h, u238 ) );
+      CHECK( ParticleID( 92238, LevelID::all ) == ReactionType(  44 ).resolve( h, u238 ) );
       CHECK( ParticleID( 93236, LevelID::all ) == ReactionType( 156 ).resolve( h, u238 ) );
       CHECK( ParticleID( 93235, LevelID::all ) == ReactionType( 162 ).resolve( h, u238 ) );
       CHECK( ParticleID( 93234, LevelID::all ) == ReactionType( 163 ).resolve( h, u238 ) );
@@ -4794,7 +4794,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( 93240, LevelID::all ) == ReactionType(  28 ).resolve( a, u238 ) );
       CHECK( ParticleID( 93239, LevelID::all ) == ReactionType(  41 ).resolve( a, u238 ) );
       CHECK( ParticleID( 93238, LevelID::all ) == ReactionType(  42 ).resolve( a, u238 ) );
-      CHECK( ParticleID( 92239, LevelID::all ) == ReactionType(  43 ).resolve( a, u238 ) );
+      CHECK( ParticleID( 92239, LevelID::all ) == ReactionType(  44 ).resolve( a, u238 ) );
       CHECK( ParticleID( 93237, LevelID::all ) == ReactionType( 156 ).resolve( a, u238 ) );
       CHECK( ParticleID( 93236, LevelID::all ) == ReactionType( 162 ).resolve( a, u238 ) );
       CHECK( ParticleID( 93235, LevelID::all ) == ReactionType( 163 ).resolve( a, u238 ) );
