@@ -46,6 +46,16 @@ SCENARIO( "LevelID" ) {
       id = LevelID( "[continuum]" );
       CHECK( continuum == id.number() );
       CHECK( "[continuum]" == id.symbol() );
+
+      auto all = njoy::dryad::id::LevelID::all;
+
+      id = LevelID( all );
+      CHECK( all == id.number() );
+      CHECK( "[all]" == id.symbol() );
+
+      id = LevelID( "[all]" );
+      CHECK( all == id.number() );
+      CHECK( "[all]" == id.symbol() );
     } // THEN
   } // GIVEN
 
@@ -109,7 +119,7 @@ SCENARIO( "LevelID" ) {
 
       CHECK_THROWS( LevelID( "not an level symbol" ) );
       CHECK_THROWS( LevelID( -1 ) );
-      CHECK_THROWS( LevelID( 151 ) );
+      CHECK_THROWS( LevelID( 152 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

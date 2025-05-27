@@ -7,7 +7,7 @@ static std::size_t getIndex( int number ) {
 
   if ( ( number < 0 ) || ( number >= entries.size() ) ) {
 
-    throw std::out_of_range( "Not a level number: \'" + std::to_string( number ) + "\'" );
+    throw std::invalid_argument( "Not a level number: \'" + std::to_string( number ) + "\'" );
   }
 
   return static_cast< std::size_t >( number );
@@ -26,6 +26,6 @@ static std::size_t getIndex( const std::string& string ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "Not an element symbol or name: \'" + string + "\'" );
+    throw std::invalid_argument( "Not an element symbol or name: \'" + string + "\'" );
   }
 }

@@ -3,7 +3,7 @@ Identifiers for particles, elements, etc.
 """
 from __future__ import annotations
 import typing
-__all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID']
+__all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID', 'ReactionType']
 class ElectronSubshellID:
     """
     The electron subshell identifier
@@ -50,6 +50,8 @@ class ElectronSubshellID:
     Q1: typing.ClassVar[int] = 570
     Q10: typing.ClassVar[int] = 579
     Q11: typing.ClassVar[int] = 580
+    Q12: typing.ClassVar[int] = 581
+    Q13: typing.ClassVar[int] = 582
     Q2: typing.ClassVar[int] = 571
     Q3: typing.ClassVar[int] = 572
     Q4: typing.ClassVar[int] = 573
@@ -172,6 +174,7 @@ class LevelID:
     """
     The level identifier
     """
+    all: typing.ClassVar[int] = 151
     continuum: typing.ClassVar[int] = 150
     def __eq__(self, arg0: LevelID) -> bool:
         ...
@@ -342,11 +345,6 @@ class ParticleID:
         The particle's level number
         """
     @property
-    def number(self) -> int:
-        """
-        The particle number
-        """
-    @property
     def subshell(self) -> ElectronSubshellID | None:
         """
         The particle's subshell
@@ -365,4 +363,97 @@ class ParticleID:
     def za(self) -> int:
         """
         The particle's za number
+        """
+class ReactionType:
+    """
+    The reaction type
+    
+    The ReactionType can be used to identify reaction types. For the moment, only
+    registered types can be used. In the future, we will extend this so that users
+    can create types other than the ones currently registered.
+    
+    For more information on how to create instances of ReactionType, see the
+    Jupyter notebook dryad-identifiers.ipynb under python/examples.
+    """
+    @staticmethod
+    def size() -> int:
+        """
+        The number of currently registered types
+        """
+    def __eq__(self, arg0: ReactionType) -> bool:
+        ...
+    def __ge__(self, arg0: ReactionType) -> bool:
+        ...
+    def __gt__(self, arg0: ReactionType) -> bool:
+        ...
+    def __hash__(self) -> int:
+        """
+        Hash function
+        """
+    @typing.overload
+    def __init__(self, mt: int = 0) -> None:
+        """
+        Initialise the reaction type
+        
+        Arguments:
+            self   the identifier
+            mt     the mt number
+        """
+    @typing.overload
+    def __init__(self, string: str) -> None:
+        """
+        Initialise the reaction type
+        
+        Arguments:
+            self     the identifier
+            string   the reaction type string
+        """
+    def __le__(self, arg0: ReactionType) -> bool:
+        ...
+    def __lt__(self, arg0: ReactionType) -> bool:
+        ...
+    def __ne__(self, arg0: ReactionType) -> bool:
+        ...
+    def __str__(self) -> str:
+        """
+        Convenience function for printing the identifier
+        """
+    @property
+    def interaction_type(self) -> ...:
+        """
+        The interaction type (nuclear or atomic) associated to the reaction type
+        """
+    @property
+    def is_compatible_with_endf(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction type is compatible with ENDF
+        """
+    @property
+    def is_special(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction type is considered a special type
+        
+        A special type is a reaction type for which no outgoing particles types can be
+        defined because it is a summation reaction or because the outgoing particles
+        are not known due to complexity (e.g. anything or fission)
+        """
+    @property
+    def level(self) -> int | None:
+        """
+        The level or subshell number for the residual
+        """
+    @property
+    def mt(self) -> int | None:
+        """
+        The interaction type's mt number
+        """
+    @property
+    def particles(self) -> list[tuple[ParticleID, int]] | None:
+        """
+        The reaction type's outgoing particles
+        """
+    @property
+    def symbol(self) -> str:
+        """
+        The reaction type's symbol
         """

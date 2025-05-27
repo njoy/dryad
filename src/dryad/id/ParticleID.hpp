@@ -44,7 +44,7 @@ namespace id {
     #include "dryad/id/ParticleID/Entry.hpp"
 
     /* static fields */
-    static inline const std::regex nuclide_id_regex{ "^(([A-Z][a-z]?)(\\d{1,3}))((_e(\\d+))|(\\[continuum\\]))?$" };
+    static inline const std::regex nuclide_id_regex{ "^(([A-Z][a-z]?)(\\d{1,3}))((_e(\\d+))|(\\[all\\])|(\\[continuum\\]))?$" };
     static inline const std::regex ion_id_regex{ "^([A-Z][a-z]?)\\{(.+)\\}$" };
     static inline std::vector< Entry > entries{
 
@@ -226,18 +226,44 @@ namespace id {
     static constexpr ParticleID helion() { return ParticleID{ static_cast< std::size_t >( 7 ) }; };
     static constexpr ParticleID alpha() { return ParticleID{ static_cast< std::size_t >( 8 ) }; };
 
-    /* methods */
+    /* static methods */
 
     /**
      *  @brief Return the number of currently registered identifiers
      */
-    static std::size_t size() {
+    static std::size_t size() noexcept {
 
       return entries.size();
     }
 
     /**
+     *  @brief Return whether or not the the numbers correspond to a registered identifier
+     *
+     *  @param za       the particle za number
+     *  @param number   the particle level or subshell number (default is zero)
+     */
+    static bool isRegistered( int za, int number = 0 ) noexcept {
+
+      return number_conversion_dictionary.find( za * 1000 + number ) != number_conversion_dictionary.end();
+    }
+
+    /**
+     *  @brief Return whether or not the string correspond to a registered identifier
+     *
+     *  @param[in] string   the string
+     */
+    static bool isRegistered( const std::string& string ) noexcept {
+
+      return string_conversion_dictionary.find( string ) != string_conversion_dictionary.end();
+    }
+
+    /* methods */
+
+    /**
      *  @brief Return the particle number
+     *
+     *  Note: this imposes logical order to the identifiers. It is public
+     *        for test purposes only.
      */
     int number() const noexcept {
 
@@ -362,7 +388,6 @@ namespace id {
 } // id namespace
 } // dryad namespace
 } // njoy namespace
-
 
 namespace std {
 

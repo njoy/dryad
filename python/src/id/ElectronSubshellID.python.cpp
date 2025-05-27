@@ -96,6 +96,8 @@ void wrapElectronSubshellID( python::module& module ) {
   .def_property_readonly_static( "Q9" ,  [] ( python::object ) { return Component::Q9;  }, "The Q9 shell" )
   .def_property_readonly_static( "Q10",  [] ( python::object ) { return Component::Q10; }, "The Q10 shell" )
   .def_property_readonly_static( "Q11",  [] ( python::object ) { return Component::Q11; }, "The Q11 shell" )
+  .def_property_readonly_static( "Q12",  [] ( python::object ) { return Component::Q12; }, "The Q12 shell" )
+  .def_property_readonly_static( "Q13",  [] ( python::object ) { return Component::Q13; }, "The Q13 shell" )
   .def_property_readonly(
 
     "number",

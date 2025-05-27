@@ -38,7 +38,7 @@ void wrapParticleID( python::module& module ) {
     "element number. A hash function and override for std::hash is also\n"
     "provided.\n\n"
     "For more information on how to create instances of ParticleID, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n"
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples."
   );
 
   // wrap the component
@@ -77,12 +77,6 @@ void wrapParticleID( python::module& module ) {
   .def_static( "triton",   &Component::triton,   "The particle identifier for tritons" )
   .def_static( "helion",   &Component::helion,   "The particle identifier for helions" )
   .def_static( "alpha",    &Component::alpha,    "The particle identifier for alphas" )
-  .def_property_readonly(
-
-    "number",
-    &Component::number,
-    "The particle number"
-  )
   .def_property_readonly(
 
     "symbol",
