@@ -79,54 +79,55 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.level() );
       CHECK( true == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( "fission" ) );
       CHECK( id == ReactionType( "fission(t)" ) );
 
       id = ReactionType( 19 );
       CHECK( 19 == id.number() );
       CHECK( 19 == id.mt() );
       CHECK( nuclear == id.interactionType() );
-      CHECK( "fission" == id.symbol() );
+      CHECK( "fission[first]" == id.symbol() );
       CHECK( std::nullopt == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( true == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "fission" ) );
+      CHECK( id == ReactionType( "fission[first]" ) );
       CHECK( id == ReactionType( "fission1" ) );
 
       id = ReactionType( 20 );
       CHECK( 20 == id.number() );
       CHECK( 20 == id.mt() );
       CHECK( nuclear == id.interactionType() );
-      CHECK( "fission[n]" == id.symbol() );
+      CHECK( "fission[second]" == id.symbol() );
       CHECK( std::nullopt == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( true == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "fission[n]" ) );
+      CHECK( id == ReactionType( "fission[second]" ) );
       CHECK( id == ReactionType( "fission2" ) );
 
       id = ReactionType( 21 );
       CHECK( 21 == id.number() );
       CHECK( 21 == id.mt() );
       CHECK( nuclear == id.interactionType() );
-      CHECK( "fission[2n]" == id.symbol() );
+      CHECK( "fission[third]" == id.symbol() );
       CHECK( std::nullopt == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( true == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "fission[2n]" ) );
+      CHECK( id == ReactionType( "fission[third]" ) );
       CHECK( id == ReactionType( "fission3" ) );
 
       id = ReactionType( 38 );
       CHECK( 38 == id.number() );
       CHECK( 38 == id.mt() );
       CHECK( nuclear == id.interactionType() );
-      CHECK( "fission[3n]" == id.symbol() );
+      CHECK( "fission[fourth]" == id.symbol() );
       CHECK( std::nullopt == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( true == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "fission[3n]" ) );
+      CHECK( id == ReactionType( "fission[fourth]" ) );
       CHECK( id == ReactionType( "fission4" ) );
 
       id = ReactionType( 27 );
