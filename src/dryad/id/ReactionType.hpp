@@ -276,7 +276,7 @@ namespace id {
       Entry{     110151,  28, InteractionType::Nuclear, "np(t)"        , { "np" }           , { { ParticleID::neutron(), 1 }, { ParticleID::proton(), 1 } }, LevelID::all },
       Entry{     120151,  41, InteractionType::Nuclear, "2np(t)"       , { "2np" }          , { { ParticleID::neutron(), 2 }, { ParticleID::proton(), 1 } }, LevelID::all },
       Entry{     130151,  42, InteractionType::Nuclear, "3np(t)"       , { "3np" }          , { { ParticleID::neutron(), 3 }, { ParticleID::proton(), 1 } }, LevelID::all },
-      Entry{     210151,  43, InteractionType::Nuclear, "n2p(t)"       , { "n2p" }          , { { ParticleID::neutron(), 1 }, { ParticleID::proton(), 2 } }, LevelID::all },
+      Entry{     210151,  44, InteractionType::Nuclear, "n2p(t)"       , { "n2p" }          , { { ParticleID::neutron(), 1 }, { ParticleID::proton(), 2 } }, LevelID::all },
       Entry{     140151, 156, InteractionType::Nuclear, "4np(t)"       , { "4np" }          , { { ParticleID::neutron(), 4 }, { ParticleID::proton(), 1 } }, LevelID::all },
       Entry{     150151, 162, InteractionType::Nuclear, "5np(t)"       , { "5np" }          , { { ParticleID::neutron(), 5 }, { ParticleID::proton(), 1 } }, LevelID::all },
       Entry{     160151, 163, InteractionType::Nuclear, "6np(t)"       , { "6np" }          , { { ParticleID::neutron(), 6 }, { ParticleID::proton(), 1 } }, LevelID::all },
