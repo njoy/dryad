@@ -15,22 +15,22 @@ set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         07c6d7a4a4d2f685d91ede05d97b53cfcc9e47ae  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         309169c0715c20424e4344131604c91a0f7415b6  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         138c705f73fe2045cc51064ea9358af46779dbb6  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         545cc2de109e70afc0775a09d8c4c95b90586129  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         5fdd3cf9c3082633c9edd229c4dc5d9d5577246f  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         56fc1ba58ca54ab60e7aefc6f1d30902d282d8da  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         4ebaf25080c8e26452cb9329d54947095419a6d1  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         ab62fd35295824f2d916042aaa5166082cf50745  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

@@ -3,7 +3,8 @@ import typing
 from . import atomic
 from . import covariance
 from . import id
-__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionProduct', 'ReactionType', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id']
+from . import resonances
+__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionProduct', 'ReactionType', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -354,7 +355,7 @@ class LegendreAngularDistribution:
             coefficients   the coefficients of the Legendre series (from
                            lowest to highest order coefficient) for the pdf
         """
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ...:
+    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
@@ -454,7 +455,7 @@ class LegendreAngularDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ...:
+    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributionFunction:
         """
         Linearise the distribution function
         
@@ -530,7 +531,7 @@ class LegendreAngularDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ...:
+    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
         
@@ -573,6 +574,8 @@ class LegendreAngularDistributions:
         """
         The number of interpolation regions in the table
         """
+class MultiEnergyDistributions:
+    pass
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series
@@ -636,7 +639,7 @@ class PolynomialMultiplicity:
         ...
     def __truediv__(self, arg0: float) -> PolynomialMultiplicity:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ...:
+    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedMultiplicity:
         """
         Linearise the distribution function
         
@@ -763,7 +766,7 @@ class ProjectileTarget:
         The reactions
         """
     @property
-    def resonances(self) -> ... | None:
+    def resonances(self) -> resonances.ResonanceParameters | None:
         """
         The resonance parameters
         """
@@ -2538,7 +2541,7 @@ class UncorrelatedDistributionData:
     This is also the representation for Brehmstrahlung and excitation data in MF26
     for electro-atomic interactions.
     """
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: ... | TabulatedEnergyDistributions) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions) -> None:
         """
         Initialise the uncorrelated distribution data
         
@@ -2554,7 +2557,7 @@ class UncorrelatedDistributionData:
         The angular distributions
         """
     @property
-    def energy(self) -> ... | TabulatedEnergyDistributions:
+    def energy(self) -> MultiEnergyDistributions | TabulatedEnergyDistributions:
         """
         The energy distributions
         """

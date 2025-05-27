@@ -14,6 +14,8 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/RadiativeTransitionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/NonRadiativeTransitionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/ElectronSubshellConfiguration.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceParameters.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/matrix.python.cpp
@@ -36,6 +38,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/LegendreAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/LegendreAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/LegendreAngularDistributions.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MultiEnergyDistributions.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/TabulatedAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/TabulatedAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/TabulatedAngularDistributions.python.cpp
