@@ -350,20 +350,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1515 == id.number() );
       CHECK( 515 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-e+" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 }, { eplus, 1 } }  == id.particles() );
-      CHECK( std::nullopt == id.level() );
-      CHECK( false == id.isSpecial() );
-      CHECK( true == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "e-e+" ) );
-      CHECK( id == ReactionType( "e-e+[nuclear]" ) );
-      CHECK( id == ReactionType( "pair-production[nuclear]" ) );
-      CHECK( u == id.resolve( eminus, u ) );
-
-      id = ReactionType( 517 );
-      CHECK( 1517 == id.number() );
-      CHECK( 517 == id.mt() );
-      CHECK( atomic == id.interactionType() );
       CHECK( "2e-e+" == id.symbol() );
       CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
@@ -372,6 +358,20 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "2e-e+" ) );
       CHECK( id == ReactionType( "2e-e+[electron]" ) );
       CHECK( id == ReactionType( "pair-production[electron]" ) );
+      CHECK( u == id.resolve( eminus, u ) );
+
+      id = ReactionType( 517 );
+      CHECK( 1517 == id.number() );
+      CHECK( 517 == id.mt() );
+      CHECK( atomic == id.interactionType() );
+      CHECK( "e-e+" == id.symbol() );
+      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 }, { eplus, 1 } }  == id.particles() );
+      CHECK( std::nullopt == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( "e-e+" ) );
+      CHECK( id == ReactionType( "e-e+[nuclear]" ) );
+      CHECK( id == ReactionType( "pair-production[nuclear]" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
       id = ReactionType( 516 );

@@ -559,8 +559,8 @@ namespace id {
       // check for what to do with 523 - is it used in evaluations?
       Entry{        502, 502, InteractionType::Atomic , "g[coherent]"    , { "coherent", "coherent-scattering" }, {} },
       Entry{        504, 504, InteractionType::Atomic , "g[incoherent]"  , { "incoherent", "incoherent-scattering" }, {} },
-      Entry{       1515, 515, InteractionType::Atomic , "e-e+"           , { "e-e+[nuclear]", "pair-production[nuclear]" }   , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
-      Entry{       1517, 517, InteractionType::Atomic , "2e-e+"          , { "2e-e+[electron]", "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+      Entry{       1515, 515, InteractionType::Atomic , "2e-e+"          , { "2e-e+[electron]", "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+      Entry{       1517, 517, InteractionType::Atomic , "e-e+"           , { "e-e+[nuclear]", "pair-production[nuclear]" }   , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
       Entry{       1518, 516, InteractionType::Atomic , "pair-production", {} },
 
       // electroatomic only
