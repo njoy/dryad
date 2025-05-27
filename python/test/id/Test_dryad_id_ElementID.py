@@ -114,9 +114,9 @@ class Test_dryad_id_ElementID( unittest.TestCase ) :
     def test_failures( self ) :
 
         # illegal values
-        with self.assertRaises( IndexError ) : id = ElementID( 119 )
-        with self.assertRaises( IndexError ) : id = ElementID( -1 )
-        with self.assertRaises( IndexError ) : id = ElementID( 'unknown' )
+        with self.assertRaises( ValueError ) : id = ElementID( 119 )
+        with self.assertRaises( ValueError ) : id = ElementID( -1 )
+        with self.assertRaises( ValueError ) : id = ElementID( 'unknown' )
 
 if __name__ == '__main__' :
 

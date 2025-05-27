@@ -11,7 +11,7 @@ static std::size_t getIndex( int number ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "Not a subshell number: \'" + std::to_string( number ) + "\'" );
+    throw std::invalid_argument( "Not a subshell number: \'" + std::to_string( number ) + "\'" );
   }
 }
 
@@ -28,6 +28,6 @@ static std::size_t getIndex( const std::string& string ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "Not a subshell symbol or name: \'" + string + "\'" );
+    throw std::invalid_argument( "Not a subshell symbol or name: \'" + string + "\'" );
   }
 }

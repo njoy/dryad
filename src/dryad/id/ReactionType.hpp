@@ -41,16 +41,16 @@ namespace id {
 
       // special types: reactions without ejectiles, unknown number and/or types of ejectiles, or with
       // ejectiles that depend on the projectile
-      Entry{          1,   1, InteractionType::Nuclear, "total"        , { "total[nuclear]" } },
-      Entry{          3,   3, InteractionType::Nuclear, "non-elastic"  , {} },
-      Entry{          5,   5, InteractionType::Nuclear, "anything"     , {} },
-      Entry{         18,  18, InteractionType::Nuclear, "fission(t)"   , {} },
-      Entry{         19,  19, InteractionType::Nuclear, "fission"      , { "fission1" } },
-      Entry{         20,  20, InteractionType::Nuclear, "fission[n]"   , { "fission2" } },
-      Entry{         21,  21, InteractionType::Nuclear, "fission[2n]"  , { "fission3" } },
-      Entry{         38,  38, InteractionType::Nuclear, "fission[3n]"  , { "fission4" } },
-      Entry{         27,  27, InteractionType::Nuclear, "absorption"   , {} },
-      Entry{        101, 101, InteractionType::Nuclear, "disappearance", {} },
+      Entry{          1,   1, InteractionType::Nuclear, "total"          , { "total[nuclear]" } },
+      Entry{          3,   3, InteractionType::Nuclear, "non-elastic"    , {} },
+      Entry{          5,   5, InteractionType::Nuclear, "anything"       , {} },
+      Entry{         18,  18, InteractionType::Nuclear, "fission(t)"     , { "fission" } },
+      Entry{         19,  19, InteractionType::Nuclear, "fission[first]" , { "fission1" } },
+      Entry{         20,  20, InteractionType::Nuclear, "fission[second]", { "fission2" } },
+      Entry{         21,  21, InteractionType::Nuclear, "fission[third]" , { "fission3" } },
+      Entry{         38,  38, InteractionType::Nuclear, "fission[fourth]", { "fission4" } },
+      Entry{         27,  27, InteractionType::Nuclear, "absorption"     , {} },
+      Entry{        101, 101, InteractionType::Nuclear, "disappearance"  , {} },
 
       // normal reactions: reactions with ejectiles (not counting photons and residual)
       // all these must have a final excited state set for the residual

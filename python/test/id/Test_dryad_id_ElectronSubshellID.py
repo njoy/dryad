@@ -106,10 +106,10 @@ class Test_dryad_id_ElectronSubshellID( unittest.TestCase ) :
     def test_failures( self ) :
 
         # illegal values
-        with self.assertRaises( IndexError ) : id = ElectronSubshellID( 'not a valid subshell id' )
-        with self.assertRaises( IndexError ) : id = ElectronSubshellID( -1 )
-        with self.assertRaises( IndexError ) : id = ElectronSubshellID( 533 )
-        with self.assertRaises( IndexError ) : id = ElectronSubshellID( 583 )
+        with self.assertRaises( ValueError ) : id = ElectronSubshellID( 'not a valid subshell id' )
+        with self.assertRaises( ValueError ) : id = ElectronSubshellID( -1 )
+        with self.assertRaises( ValueError ) : id = ElectronSubshellID( 533 )
+        with self.assertRaises( ValueError ) : id = ElectronSubshellID( 583 )
 
 if __name__ == '__main__' :
 

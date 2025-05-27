@@ -11,8 +11,8 @@ static std::size_t getIndex( int mt ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "\'" + std::to_string( mt ) + "\' does not define a "
-                             "registered mt number" );
+    throw std::invalid_argument( "\'" + std::to_string( mt ) + "\' does not define a "
+                                 "registered mt number" );
   }
 }
 
@@ -37,8 +37,7 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
     else if ( projectile == ParticleID::alpha() )    { return 423; }
     else {
 
-      Log::error( "Elastic scattering using mt = 2 for \'{}\' is not defined", projectile.symbol() );
-      throw std::exception();
+      throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' is not defined" );
     }
   }
   else if ( ( ( mt < 534 ) || ( mt > 572 ) ) && ( mt != 522 ) ) {
@@ -53,8 +52,7 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
     else if ( projectile == ParticleID::photon() )   { offset = 514; }
     else {
 
-      Log::error( "Ionisation is not defined for \'{}\'", projectile.symbol() );
-      throw std::exception();
+      throw std::invalid_argument( "Ionisation is not defined for \'" + projectile.symbol() + "\'" );
     }
 
     if ( mt == 522 ) {
@@ -66,7 +64,6 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
       return offset + mt - 534;
     }
   }
-  throw std::out_of_range( "what?" );
 }
 
 /**
@@ -82,7 +79,7 @@ static std::size_t getIndex( const std::string& string ) {
   }
   catch ( ... ) {
 
-    throw std::out_of_range( "\'" + string + "\' does not define a "
-                             "registered reaction type string" );
+    throw std::invalid_argument( "\'" + string + "\' does not define a "
+                                 "registered reaction type string" );
   }
 }

@@ -86,9 +86,9 @@ class Test_elementary_LevelID( unittest.TestCase ) :
     def test_failures( self ) :
 
         # illegal values
-        with self.assertRaises( IndexError ) : id = LevelID( 'not a valid level number' )
-        with self.assertRaises( IndexError ) : id = LevelID( -1 )
-        with self.assertRaises( IndexError ) : id = LevelID( 152 )
+        with self.assertRaises( ValueError ) : id = LevelID( 'not a valid level number' )
+        with self.assertRaises( ValueError ) : id = LevelID( -1 )
+        with self.assertRaises( ValueError ) : id = LevelID( 152 )
 
 if __name__ == '__main__' :
 
