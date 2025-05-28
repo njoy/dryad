@@ -4,10 +4,12 @@
 // system includes
 #include <optional>
 #include <string>
+#include <numeric>
 #include <unordered_map>
 #include <vector>
 
 // other includes
+#include "tools/Log.hpp"
 #include "dryad/InteractionType.hpp"
 #include "dryad/id/ElectronSubshellID.hpp"
 #include "dryad/id/LevelID.hpp"
@@ -50,7 +52,8 @@ namespace id {
       Entry{         27,  27, InteractionType::Nuclear, "absorption"     , {} },
       Entry{        101, 101, InteractionType::Nuclear, "disappearance"  , {} },
 
-      // ENDF normal reactions: reactions with ejectiles (not counting photons and residual)
+      // normal reactions: reactions with ejectiles (not counting photons and residual)
+      // all these must have a final excited state set for the residual
       Entry{       1000,      InteractionType::Nuclear, "g(0)"         , {}                 , {}, 0 },
       Entry{       1001,      InteractionType::Nuclear, "g(1)"         , {}                 , {}, 1 },
       Entry{       1002,      InteractionType::Nuclear, "g(2)"         , {}                 , {}, 2 },
@@ -535,7 +538,7 @@ namespace id {
       Entry{ 1000130151, 181, InteractionType::Nuclear, "3npa(t)"      , { "3npa" }         , { { ParticleID::neutron(), 3 }, { ParticleID::proton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1000140151, 196, InteractionType::Nuclear, "4npa(t)"      , { "4npa" }         , { { ParticleID::neutron(), 4 }, { ParticleID::proton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1000230151, 199, InteractionType::Nuclear, "3n2pa(t)"     , { "3n2pa" }        , { { ParticleID::neutron(), 3 }, { ParticleID::proton(), 2 }, { ParticleID::alpha(), 1 } }, LevelID::all },
-      Entry{ 1001000151, 117, InteractionType::Nuclear, "da(t)"        , { "da" }           , { { ParticleID::proton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
+      Entry{ 1001000151, 117, InteractionType::Nuclear, "da(t)"        , { "da" }           , { { ParticleID::deuteron(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1001010151, 158, InteractionType::Nuclear, "nda(t)"       , { "nda" }          , { { ParticleID::neutron(), 1 }, { ParticleID::deuteron(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1010000151, 155, InteractionType::Nuclear, "ta(t)"        , { "ta" }           , { { ParticleID::triton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1010010151, 189, InteractionType::Nuclear, "nta(t)"       , { "nta" }          , { { ParticleID::neutron(), 1 }, { ParticleID::triton(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
@@ -552,74 +555,128 @@ namespace id {
       Entry{ 3000000151, 109, InteractionType::Nuclear, "3a(t)"        , { "3a" }           , { { ParticleID::alpha(), 3 } }, LevelID::all },
       Entry{ 3000010151,  23, InteractionType::Nuclear, "n3a(t)"       , { "n3a" }          , { { ParticleID::neutron(), 1 }, { ParticleID::alpha(), 3 } }, LevelID::all },
 
-      // atomic reaction types
-      // check for what to do with 523
+      // photoatomic only
+      // check for what to do with 523 - is it used in evaluations?
+      Entry{        502, 502, InteractionType::Atomic , "g[coherent]"    , { "coherent", "coherent-scattering" }, {} },
+      Entry{        504, 504, InteractionType::Atomic , "g[incoherent]"  , { "incoherent", "incoherent-scattering" }, {} },
+      Entry{       1515, 515, InteractionType::Atomic , "2e-e+"          , { "2e-e+[electron]", "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+      Entry{       1517, 517, InteractionType::Atomic , "e-e+"           , { "e-e+[nuclear]", "pair-production[nuclear]" }   , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
+      Entry{       1518, 516, InteractionType::Atomic , "pair-production", {} },
 
-      Entry{ 501, 501, InteractionType::Atomic , "total[atomic]"  , {} },  // the symbol must be unique and total is already taken
-      Entry{ 502, 502, InteractionType::Atomic , "g[coherent]"    , { "coherent" }, {} },
-      Entry{ 504, 504, InteractionType::Atomic , "g[incoherent]"  , { "incoherent" }, {} },
+      // electroatomic only
+      Entry{       1524,      InteractionType::Atomic , "e-[deficit-scattering]"    , { "deficit-scattering" }    , { { ParticleID::electron(), 1 } } },
+      Entry{       1525, 525, InteractionType::Atomic , "e-[large-angle-scattering]", { "large-angle-scattering" }, { { ParticleID::electron(), 1 } } },
+      Entry{       1526, 526, InteractionType::Atomic , "e-[total-scattering]"      , { "total-scattering" }      , { { ParticleID::electron(), 1 } } },
+      Entry{       1527, 527, InteractionType::Atomic , "e-[bremsstrahlung]"        , { "bremsstrahlung" }        , { { ParticleID::electron(), 1 } } },
+      Entry{       1528, 528, InteractionType::Atomic , "e-[excitation]"            , { "excitation" }            , { { ParticleID::electron(), 1 } } },
 
-      Entry{ 1524,      InteractionType::Atomic , "e-[deficit-scattering]"    , { "deficit-scattering" }    , { { ParticleID::electron(), 1 } } },
-      Entry{ 1525, 525, InteractionType::Atomic , "e-[large-angle-scattering]", { "large-angle-scattering" }, { { ParticleID::electron(), 1 } } },
-      Entry{ 1526, 526, InteractionType::Atomic , "e-[total-scattering]"      , { "total-scattering" }      , { { ParticleID::electron(), 1 } } },
+      // both photoatomic and electroatomic
+      Entry{        501, 501, InteractionType::Atomic , "total[atomic]", {} },  // the symbol must be unique and total is already taken
 
-      Entry{ 1515, 515, InteractionType::Atomic , "2e-e+[nuclear]" , { "pair-production[nuclear]" } , { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-      Entry{ 1517, 517, InteractionType::Atomic , "2e-e+[electron]", { "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-      Entry{ 1518, 516, InteractionType::Atomic , "2e-e+"          , { "pair-production" }          , { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-
-      Entry{ 1527, 527, InteractionType::Atomic , "e-[bremsstrahlung]" , { "bremsstrahlung" } , { { ParticleID::electron(), 1 } } },
-      Entry{ 1528, 528, InteractionType::Atomic , "e-[excitation]"     , { "excitation" }     , { { ParticleID::electron(), 1 } } },
-
-      Entry{ 1534, 534, InteractionType::Atomic , "e-{1s1/2}"     , { "ionisation{1s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::K  },
-      Entry{ 1535, 535, InteractionType::Atomic , "e-{2s1/2}"     , { "ionisation{2s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L1  },
-      Entry{ 1536, 536, InteractionType::Atomic , "e-{2p1/2}"     , { "ionisation{2p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L2  },
-      Entry{ 1537, 537, InteractionType::Atomic , "e-{2p3/2}"     , { "ionisation{2p3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L3  },
-      Entry{ 1538, 538, InteractionType::Atomic , "e-{3s1/2}"     , { "ionisation{3s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M1  },
-      Entry{ 1539, 539, InteractionType::Atomic , "e-{3p1/2}"     , { "ionisation{3p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M2  },
-      Entry{ 1540, 540, InteractionType::Atomic , "e-{3p3/2}"     , { "ionisation{3p3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M3  },
-      Entry{ 1541, 541, InteractionType::Atomic , "e-{3d3/2}"     , { "ionisation{3d3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M4  },
-      Entry{ 1542, 542, InteractionType::Atomic , "e-{3d5/2}"     , { "ionisation{3d5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M5  },
-      Entry{ 1543, 543, InteractionType::Atomic , "e-{4s1/2}"     , { "ionisation{4s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N1  },
-      Entry{ 1544, 544, InteractionType::Atomic , "e-{4p1/2}"     , { "ionisation{4p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N2  },
-      Entry{ 1545, 545, InteractionType::Atomic , "e-{4p3/2}"     , { "ionisation{4p3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N3  },
-      Entry{ 1546, 546, InteractionType::Atomic , "e-{4d3/2}"     , { "ionisation{4d3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N4  },
-      Entry{ 1547, 547, InteractionType::Atomic , "e-{4d5/2}"     , { "ionisation{4d5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N5  },
-      Entry{ 1548, 548, InteractionType::Atomic , "e-{4f5/2}"     , { "ionisation{4f5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N6  },
-      Entry{ 1549, 549, InteractionType::Atomic , "e-{4f7/2}"     , { "ionisation{4f7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N7  },
-      Entry{ 1550, 550, InteractionType::Atomic , "e-{5s1/2}"     , { "ionisation{5s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O1  },
-      Entry{ 1551, 551, InteractionType::Atomic , "e-{5p1/2}"     , { "ionisation{5p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O2  },
-      Entry{ 1552, 552, InteractionType::Atomic , "e-{5p3/2}"     , { "ionisation{5p3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O3  },
-      Entry{ 1553, 553, InteractionType::Atomic , "e-{5d3/2}"     , { "ionisation{5d3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O4  },
-      Entry{ 1554, 554, InteractionType::Atomic , "e-{5d5/2}"     , { "ionisation{5d5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O5  },
-      Entry{ 1555, 555, InteractionType::Atomic , "e-{5f5/2}"     , { "ionisation{5f5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O6  },
-      Entry{ 1556, 556, InteractionType::Atomic , "e-{5f7/2}"     , { "ionisation{5f7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O7  },
-      Entry{ 1557, 557, InteractionType::Atomic , "e-{5g7/2}"     , { "ionisation{5g7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O8  },
-      Entry{ 1558, 558, InteractionType::Atomic , "e-{5g9/2}"     , { "ionisation{5g9/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O9  },
-      Entry{ 1559, 559, InteractionType::Atomic , "e-{6s1/2}"     , { "ionisation{6s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P1  },
-      Entry{ 1560, 560, InteractionType::Atomic , "e-{6p1/2}"     , { "ionisation{6p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P2  },
-      Entry{ 1561, 561, InteractionType::Atomic , "e-{6p3/2}"     , { "ionisation{6p3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P3  },
-      Entry{ 1562, 562, InteractionType::Atomic , "e-{6d3/2}"     , { "ionisation{6d3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P4  },
-      Entry{ 1563, 563, InteractionType::Atomic , "e-{6d5/2}"     , { "ionisation{6d5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P5  },
-      Entry{ 1564, 564, InteractionType::Atomic , "e-{6f5/2}"     , { "ionisation{6f5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P6  },
-      Entry{ 1565, 565, InteractionType::Atomic , "e-{6f7/2}"     , { "ionisation{6f7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P7  },
-      Entry{ 1566, 566, InteractionType::Atomic , "e-{6g7/2}"     , { "ionisation{6g7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P8  },
-      Entry{ 1567, 567, InteractionType::Atomic , "e-{6g9/2}"     , { "ionisation{6g9/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P9  },
-      Entry{ 1568, 568, InteractionType::Atomic , "e-{6h9/2}"     , { "ionisation{6h9/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P10 },
-      Entry{ 1569, 569, InteractionType::Atomic , "e-{6h11/2}"    , { "ionisation{6h11/2}" }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P11 },
-      Entry{ 1570, 570, InteractionType::Atomic , "e-{7s1/2}"     , { "ionisation{7s1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q1  },
-      Entry{ 1571, 571, InteractionType::Atomic , "e-{7p1/2}"     , { "ionisation{7p1/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q2  },
-      Entry{ 1572, 572, InteractionType::Atomic , "e-{7p3/2}"     , { "ionisation{7p3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q3  },
-      Entry{ 1573,      InteractionType::Atomic , "e-{7d3/2}"     , { "ionisation{7d3/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q4  },
-      Entry{ 1574,      InteractionType::Atomic , "e-{7d5/2}"     , { "ionisation{7d5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q5  },
-      Entry{ 1575,      InteractionType::Atomic , "e-{7f5/2}"     , { "ionisation{7f5/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q6  },
-      Entry{ 1576,      InteractionType::Atomic , "e-{7f7/2}"     , { "ionisation{7f7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q7  },
-      Entry{ 1577,      InteractionType::Atomic , "e-{7g7/2}"     , { "ionisation{7g7/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q8  },
-      Entry{ 1578,      InteractionType::Atomic , "e-{7g9/2}"     , { "ionisation{7g9/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q9  },
-      Entry{ 1579,      InteractionType::Atomic , "e-{7h9/2}"     , { "ionisation{7h9/2}"  }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q10 },
-      Entry{ 1580,      InteractionType::Atomic , "e-{7h11/2}"    , { "ionisation{7h11/2}" }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q11 },
-      Entry{ 1581,      InteractionType::Atomic , "e-{7i11/2}"    , { "ionisation{7i11/2}" }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q12 },
-      Entry{ 1582,      InteractionType::Atomic , "e-{7i13/2}"    , { "ionisation{7i13/2}" }, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q13 },
-      Entry{ 1583, 522, InteractionType::Atomic , "e-{t}"         , { "ionisation{t}"      }, { { ParticleID::electron(), 1 } } }
+      // only ionisation reactions have a subshell identifier
+      // for photoionisation there is only one outgoing electron (the electron knocked off)
+      // for electro-ionisation there are two outgoing electrons (the incident one and the electron knocked off)
+      // mt numbers for these cannot be used for constructing a ReactionType
+      Entry{       1534, 534, InteractionType::Atomic , "photo-ionisation{1s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::K  },
+      Entry{       1535, 535, InteractionType::Atomic , "photo-ionisation{2s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L1  },
+      Entry{       1536, 536, InteractionType::Atomic , "photo-ionisation{2p1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L2  },
+      Entry{       1537, 537, InteractionType::Atomic , "photo-ionisation{2p3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::L3  },
+      Entry{       1538, 538, InteractionType::Atomic , "photo-ionisation{3s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M1  },
+      Entry{       1539, 539, InteractionType::Atomic , "photo-ionisation{3p1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M2  },
+      Entry{       1540, 540, InteractionType::Atomic , "photo-ionisation{3p3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M3  },
+      Entry{       1541, 541, InteractionType::Atomic , "photo-ionisation{3d3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M4  },
+      Entry{       1542, 542, InteractionType::Atomic , "photo-ionisation{3d5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::M5  },
+      Entry{       1543, 543, InteractionType::Atomic , "photo-ionisation{4s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N1  },
+      Entry{       1544, 544, InteractionType::Atomic , "photo-ionisation{4p1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N2  },
+      Entry{       1545, 545, InteractionType::Atomic , "photo-ionisation{4p3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N3  },
+      Entry{       1546, 546, InteractionType::Atomic , "photo-ionisation{4d3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N4  },
+      Entry{       1547, 547, InteractionType::Atomic , "photo-ionisation{4d5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N5  },
+      Entry{       1548, 548, InteractionType::Atomic , "photo-ionisation{4f5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N6  },
+      Entry{       1549, 549, InteractionType::Atomic , "photo-ionisation{4f7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::N7  },
+      Entry{       1550, 550, InteractionType::Atomic , "photo-ionisation{5s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O1  },
+      Entry{       1551, 551, InteractionType::Atomic , "photo-ionisation{5p1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O2  },
+      Entry{       1552, 552, InteractionType::Atomic , "photo-ionisation{5p3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O3  },
+      Entry{       1553, 553, InteractionType::Atomic , "photo-ionisation{5d3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O4  },
+      Entry{       1554, 554, InteractionType::Atomic , "photo-ionisation{5d5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O5  },
+      Entry{       1555, 555, InteractionType::Atomic , "photo-ionisation{5f5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O6  },
+      Entry{       1556, 556, InteractionType::Atomic , "photo-ionisation{5f7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O7  },
+      Entry{       1557, 557, InteractionType::Atomic , "photo-ionisation{5g7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O8  },
+      Entry{       1558, 558, InteractionType::Atomic , "photo-ionisation{5g9/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::O9  },
+      Entry{       1559, 559, InteractionType::Atomic , "photo-ionisation{6s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P1  },
+      Entry{       1560, 560, InteractionType::Atomic , "photo-ionisation{6p1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P2  },
+      Entry{       1561, 561, InteractionType::Atomic , "photo-ionisation{6p3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P3  },
+      Entry{       1562, 562, InteractionType::Atomic , "photo-ionisation{6d3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P4  },
+      Entry{       1563, 563, InteractionType::Atomic , "photo-ionisation{6d5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P5  },
+      Entry{       1564, 564, InteractionType::Atomic , "photo-ionisation{6f5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P6  },
+      Entry{       1565, 565, InteractionType::Atomic , "photo-ionisation{6f7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P7  },
+      Entry{       1566, 566, InteractionType::Atomic , "photo-ionisation{6g7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P8  },
+      Entry{       1567, 567, InteractionType::Atomic , "photo-ionisation{6g9/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P9  },
+      Entry{       1568, 568, InteractionType::Atomic , "photo-ionisation{6h9/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P10 },
+      Entry{       1569, 569, InteractionType::Atomic , "photo-ionisation{6h11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::P11 },
+      Entry{       1570, 570, InteractionType::Atomic , "photo-ionisation{7s1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q1  },
+      Entry{       1571, 571, InteractionType::Atomic , "photo-ionisation{7p1/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q2  },
+      Entry{       1572, 572, InteractionType::Atomic , "photo-ionisation{7p3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q3  },
+      Entry{       1573,      InteractionType::Atomic , "photo-ionisation{7d3/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q4  },
+      Entry{       1574,      InteractionType::Atomic , "photo-ionisation{7d5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q5  },
+      Entry{       1575,      InteractionType::Atomic , "photo-ionisation{7f5/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q6  },
+      Entry{       1576,      InteractionType::Atomic , "photo-ionisation{7f7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q7  },
+      Entry{       1577,      InteractionType::Atomic , "photo-ionisation{7g7/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q8  },
+      Entry{       1578,      InteractionType::Atomic , "photo-ionisation{7g9/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q9  },
+      Entry{       1579,      InteractionType::Atomic , "photo-ionisation{7h9/2}"    , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q10 },
+      Entry{       1580,      InteractionType::Atomic , "photo-ionisation{7h11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q11 },
+      Entry{       1581,      InteractionType::Atomic , "photo-ionisation{7i11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q12 },
+      Entry{       1582,      InteractionType::Atomic , "photo-ionisation{7i13/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q13 },
+      Entry{       1583, 522, InteractionType::Atomic , "photo-ionisation"           , { "photo-ionisation{t}" }, { { ParticleID::electron(), 1 } } },
+      Entry{       2534, 534, InteractionType::Atomic , "electro-ionisation{1s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::K  },
+      Entry{       2535, 535, InteractionType::Atomic , "electro-ionisation{2s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L1  },
+      Entry{       2536, 536, InteractionType::Atomic , "electro-ionisation{2p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L2  },
+      Entry{       2537, 537, InteractionType::Atomic , "electro-ionisation{2p3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L3  },
+      Entry{       2538, 538, InteractionType::Atomic , "electro-ionisation{3s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::M1  },
+      Entry{       2539, 539, InteractionType::Atomic , "electro-ionisation{3p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::M2  },
+      Entry{       2540, 540, InteractionType::Atomic , "electro-ionisation{3p3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::M3  },
+      Entry{       2541, 541, InteractionType::Atomic , "electro-ionisation{3d3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::M4  },
+      Entry{       2542, 542, InteractionType::Atomic , "electro-ionisation{3d5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::M5  },
+      Entry{       2543, 543, InteractionType::Atomic , "electro-ionisation{4s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N1  },
+      Entry{       2544, 544, InteractionType::Atomic , "electro-ionisation{4p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N2  },
+      Entry{       2545, 545, InteractionType::Atomic , "electro-ionisation{4p3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N3  },
+      Entry{       2546, 546, InteractionType::Atomic , "electro-ionisation{4d3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N4  },
+      Entry{       2547, 547, InteractionType::Atomic , "electro-ionisation{4d5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N5  },
+      Entry{       2548, 548, InteractionType::Atomic , "electro-ionisation{4f5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N6  },
+      Entry{       2549, 549, InteractionType::Atomic , "electro-ionisation{4f7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::N7  },
+      Entry{       2550, 550, InteractionType::Atomic , "electro-ionisation{5s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O1  },
+      Entry{       2551, 551, InteractionType::Atomic , "electro-ionisation{5p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O2  },
+      Entry{       2552, 552, InteractionType::Atomic , "electro-ionisation{5p3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O3  },
+      Entry{       2553, 553, InteractionType::Atomic , "electro-ionisation{5d3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O4  },
+      Entry{       2554, 554, InteractionType::Atomic , "electro-ionisation{5d5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O5  },
+      Entry{       2555, 555, InteractionType::Atomic , "electro-ionisation{5f5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O6  },
+      Entry{       2556, 556, InteractionType::Atomic , "electro-ionisation{5f7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O7  },
+      Entry{       2557, 557, InteractionType::Atomic , "electro-ionisation{5g7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O8  },
+      Entry{       2558, 558, InteractionType::Atomic , "electro-ionisation{5g9/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::O9  },
+      Entry{       2559, 559, InteractionType::Atomic , "electro-ionisation{6s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P1  },
+      Entry{       2560, 560, InteractionType::Atomic , "electro-ionisation{6p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P2  },
+      Entry{       2561, 561, InteractionType::Atomic , "electro-ionisation{6p3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P3  },
+      Entry{       2562, 562, InteractionType::Atomic , "electro-ionisation{6d3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P4  },
+      Entry{       2563, 563, InteractionType::Atomic , "electro-ionisation{6d5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P5  },
+      Entry{       2564, 564, InteractionType::Atomic , "electro-ionisation{6f5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P6  },
+      Entry{       2565, 565, InteractionType::Atomic , "electro-ionisation{6f7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P7  },
+      Entry{       2566, 566, InteractionType::Atomic , "electro-ionisation{6g7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P8  },
+      Entry{       2567, 567, InteractionType::Atomic , "electro-ionisation{6g9/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P9  },
+      Entry{       2568, 568, InteractionType::Atomic , "electro-ionisation{6h9/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P10 },
+      Entry{       2569, 569, InteractionType::Atomic , "electro-ionisation{6h11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::P11 },
+      Entry{       2570, 570, InteractionType::Atomic , "electro-ionisation{7s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q1  },
+      Entry{       2571, 571, InteractionType::Atomic , "electro-ionisation{7p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q2  },
+      Entry{       2572, 572, InteractionType::Atomic , "electro-ionisation{7p3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q3  },
+      Entry{       2573,      InteractionType::Atomic , "electro-ionisation{7d3/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q4  },
+      Entry{       2574,      InteractionType::Atomic , "electro-ionisation{7d5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q5  },
+      Entry{       2575,      InteractionType::Atomic , "electro-ionisation{7f5/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q6  },
+      Entry{       2576,      InteractionType::Atomic , "electro-ionisation{7f7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q7  },
+      Entry{       2577,      InteractionType::Atomic , "electro-ionisation{7g7/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q8  },
+      Entry{       2578,      InteractionType::Atomic , "electro-ionisation{7g9/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q9  },
+      Entry{       2579,      InteractionType::Atomic , "electro-ionisation{7h9/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q10 },
+      Entry{       2580,      InteractionType::Atomic , "electro-ionisation{7h11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q11 },
+      Entry{       2581,      InteractionType::Atomic , "electro-ionisation{7i11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q12 },
+      Entry{       2582,      InteractionType::Atomic , "electro-ionisation{7i13/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q13 },
+      Entry{       2583, 522, InteractionType::Atomic , "electro-ionisation"         , { "electro-ionisation{t}" }, { { ParticleID::electron(), 2 } } }
     };
     static inline std::unordered_map< std::string, std::size_t >
     string_conversion_dictionary = [] ( const auto& entries ) {
@@ -641,9 +698,15 @@ namespace id {
       std::unordered_map< int, std::size_t > conversion;
       for ( std::size_t index = 0; index < entries.size(); ++index ) {
 
-        if ( entries[ index ].mt().has_value() ) {
+        auto mt = entries[ index ].mt();
+        if ( mt.has_value() ) {
 
-          conversion[ entries[ index ].mt().value() ] = index;
+          // exclude ionisation since the mt number applies to both
+          // photoatomic and electroatomic reactions
+          if ( ( ( mt.value() < 534 ) || ( mt.value() > 572 ) ) && ( mt.value() != 522 ) ) {
+
+            conversion[ mt.value() ] = index;
+          }
         }
       }
       return conversion;
@@ -659,6 +722,59 @@ namespace id {
 
     /* constructor */
     #include "dryad/id/ReactionType/src/ctor.hpp"
+
+    /* predefined identifiers */
+
+    static ReactionType
+    total( const InteractionType& type = InteractionType::Nuclear ) noexcept {
+
+      if ( type == InteractionType::Nuclear ) {
+
+        return ReactionType( static_cast< std::size_t >( 0 ) );
+      }
+      else {
+
+        return ReactionType( static_cast< std::size_t >( 513 ) );
+      }
+    };
+
+    static ReactionType
+    elastic( const ParticleID& projectile ) {
+
+      if ( projectile == ParticleID::neutron() ) {
+
+        return ReactionType( static_cast< std::size_t >( 111 ) );
+      }
+      else if ( projectile == ParticleID::photon() ) {
+
+        return ReactionType( static_cast< std::size_t >( 10 ) );
+      }
+      else if ( projectile == ParticleID::proton() ) {
+
+        return ReactionType( static_cast< std::size_t >( 178 ) );
+      }
+      else if ( projectile == ParticleID::deuteron() ) {
+
+        return ReactionType( static_cast< std::size_t >( 244 ) );
+      }
+      else if ( projectile == ParticleID::triton() ) {
+
+        return ReactionType( static_cast< std::size_t >( 302 ) );
+      }
+      else if ( projectile == ParticleID::helion() ) {
+
+        return ReactionType( static_cast< std::size_t >( 363 ) );
+      }
+      else if ( projectile == ParticleID::alpha() ) {
+
+        return ReactionType( static_cast< std::size_t >( 423 ) );
+      }
+      else {
+
+        Log::error( "Elastic scattering for \'{}\' is not defined", projectile.symbol() );
+        throw std::exception();
+      }
+    };
 
     /* static methods */
 
@@ -761,6 +877,46 @@ namespace id {
     bool isCompatibleWithENDF() const noexcept {
 
       return this->mt().has_value();
+    }
+
+    /**
+     *  @brief Return the residual produced by this reaction type
+     *
+     *  @param[in] projectile   the projectile
+     *  @param[in] target       the target
+     */
+    ParticleID resolve( const ParticleID& projectile, const ParticleID& target ) const {
+
+      if ( this->isSpecial() ) {
+
+        Log::error( "\'{}\' is a special reaction and cannot be resolved", this->symbol() );
+        throw std::exception();
+      }
+
+      if ( this->interactionType() == InteractionType::Nuclear ) {
+
+        int za = projectile.za() + target.za() - entries[ this->index_ ].dza().value();
+        return ParticleID( za, this->level().value() );
+      }
+      else {
+
+        // atomic reactions only work on elemental identifiers
+        if ( target.a() != 0 ) {
+
+          Log::error( "\'{}\' is an atomic interaction and only elemental targets be resolved" );
+          throw std::exception();
+        }
+
+        // assign the subshell ID for the ion if we need to, otherwise just return the target
+        if ( this->level().has_value() ) {
+
+          return ParticleID( target.za(), this->level().value() );
+        }
+        else {
+
+          return target;
+        }
+      }
     }
 
     /**

@@ -73,9 +73,6 @@ PYBIND11_MODULE( dryad, module ) {
   // wrap components - scion objects
   wrapToleranceConvergence( module );
 
-  // wrap components - identifiers
-  wrapID( module );
-
   // wrap components - enumerators
   wrapInterpolationType( module );
   wrapDistributionDataType( module );
@@ -83,6 +80,9 @@ PYBIND11_MODULE( dryad, module ) {
   wrapReactionType( module );
   wrapReferenceFrame( module );
   wrapUniformDistributionType( module );
+
+  // wrap components - identifiers
+  wrapID( module );
 
   // wrap components - resonances
   wrapResonances( module );

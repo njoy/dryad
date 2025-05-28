@@ -6,6 +6,7 @@
 // local includes
 #include "definitions.hpp"
 #include "dryad/id/ReactionType.hpp"
+#include "dryad/InteractionType.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -16,6 +17,8 @@ void wrapReactionType( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::id::ReactionType;
+  using ParticleID = njoy::dryad::id::ParticleID;
+  using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
 
@@ -37,20 +40,44 @@ void wrapReactionType( python::module& module ) {
   .def(
 
     python::init< int >(),
-    python::arg( "mt" ) = 0,
+    python::arg( "mt" ),
     "Initialise the reaction type\n\n"
     "Arguments:\n"
-    "    self   the identifier\n"
+    "    self   the reaction type\n"
     "    mt     the mt number"
-     )
+  )
+  .def(
+
+    python::init< ParticleID, int >(),
+    python::arg( "projectile" ), python::arg( "mt" ),
+    "Initialise the reaction type\n\n"
+    "Arguments:\n"
+    "    self         the reaction type\n"
+    "    projectile   the projectile\n"
+    "    mt           the mt number"
+  )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
     "Initialise the reaction type\n\n"
     "Arguments:\n"
-    "    self     the identifier\n"
+    "    self     the reaction type\n"
     "    string   the reaction type string"
+  )
+  .def_static(
+
+    "total",
+    &Component::total,
+    python::arg( "type" ) = InteractionType::Nuclear,
+    "The total reaction type"
+  )
+  .def_static(
+
+    "elastic",
+    &Component::elastic,
+    python::arg( "projectile" ),
+    "The elastic reaction type"
   )
   .def_static(
 
@@ -102,6 +129,17 @@ void wrapReactionType( python::module& module ) {
     "is_compatible_with_endf",
     &Component::isCompatibleWithENDF,
     "Flag to indicate whether or not the reaction type is compatible with ENDF"
+  )
+  .def(
+
+    "resolve",
+    &Component::resolve,
+    python::arg( "projectile" ), python::arg( "target" ),
+    "Return the residual produced by this reaction type\n\n"
+    "Arguments:\n"
+    "    self         the reaction type\n"
+    "    projectile   the projectile\n"
+    "    target       the target"
   )
   .def(
 

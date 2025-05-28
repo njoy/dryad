@@ -2,6 +2,7 @@
 Identifiers for particles, elements, etc.
 """
 from __future__ import annotations
+import dryad
 import typing
 __all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID', 'ReactionType']
 class ElectronSubshellID:
@@ -376,9 +377,19 @@ class ReactionType:
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     @staticmethod
+    def elastic(projectile: ParticleID) -> ReactionType:
+        """
+        The elastic reaction type
+        """
+    @staticmethod
     def size() -> int:
         """
         The number of currently registered types
+        """
+    @staticmethod
+    def total(type: dryad.InteractionType = ...) -> ReactionType:
+        """
+        The total reaction type
         """
     def __eq__(self, arg0: ReactionType) -> bool:
         ...
@@ -391,13 +402,23 @@ class ReactionType:
         Hash function
         """
     @typing.overload
-    def __init__(self, mt: int = 0) -> None:
+    def __init__(self, mt: int) -> None:
         """
         Initialise the reaction type
         
         Arguments:
-            self   the identifier
+            self   the reaction type
             mt     the mt number
+        """
+    @typing.overload
+    def __init__(self, projectile: ParticleID, mt: int) -> None:
+        """
+        Initialise the reaction type
+        
+        Arguments:
+            self         the reaction type
+            projectile   the projectile
+            mt           the mt number
         """
     @typing.overload
     def __init__(self, string: str) -> None:
@@ -405,7 +426,7 @@ class ReactionType:
         Initialise the reaction type
         
         Arguments:
-            self     the identifier
+            self     the reaction type
             string   the reaction type string
         """
     def __le__(self, arg0: ReactionType) -> bool:
@@ -418,8 +439,17 @@ class ReactionType:
         """
         Convenience function for printing the identifier
         """
+    def resolve(self, projectile: ParticleID, target: ParticleID) -> ParticleID:
+        """
+        Return the residual produced by this reaction type
+        
+        Arguments:
+            self         the reaction type
+            projectile   the projectile
+            target       the target
+        """
     @property
-    def interaction_type(self) -> ...:
+    def interaction_type(self) -> dryad.InteractionType:
         """
         The interaction type (nuclear or atomic) associated to the reaction type
         """
