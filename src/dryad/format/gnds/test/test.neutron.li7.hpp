@@ -6,7 +6,7 @@ namespace li7 {
   void verifyTotalReaction( const Reaction& total ) {
 
     CHECK( id::ReactionID( "1" ) == total.identifier() );
-    CHECK( ReactionType::Summation == total.type() );
+    CHECK( ReactionCategory::Summation == total.category() );
     CHECK( false == total.hasProducts() );
     CHECK( true == total.isLinearised() );
 
@@ -75,7 +75,7 @@ namespace li7 {
   void verifyElasticReaction( const Reaction& elastic ) {
 
     CHECK( id::ReactionID( "2" ) == elastic.identifier() );
-    CHECK( ReactionType::Primary == elastic.type() );
+    CHECK( ReactionCategory::Primary == elastic.category() );
     CHECK( true == elastic.hasProducts() );
     CHECK( true == elastic.isLinearised() );
 
@@ -168,7 +168,7 @@ namespace li7 {
   void verifyCaptureReaction( const Reaction& capture ) {
 
     CHECK( id::ReactionID( "102" ) == capture.identifier() );
-    CHECK( ReactionType::Primary == capture.type() );
+    CHECK( ReactionCategory::Primary == capture.category() );
     CHECK( true == capture.hasProducts() );
     CHECK( true == capture.isLinearised() );
 
@@ -214,7 +214,7 @@ namespace li7 {
   void verifyLumpedReaction851( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "851" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -251,7 +251,7 @@ namespace li7 {
   void verifyLumpedReaction852( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "852" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -287,7 +287,7 @@ namespace li7 {
   void verifyLumpedReaction853( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "853" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -326,7 +326,7 @@ namespace li7 {
   void verifyLumpedReaction854( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "854" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -362,7 +362,7 @@ namespace li7 {
   void verifyLumpedReaction855( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "855" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -402,7 +402,7 @@ namespace li7 {
   void verifyLumpedReaction856( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "856" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -442,7 +442,7 @@ namespace li7 {
   void verifyLumpedReaction857( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "857" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -482,7 +482,7 @@ namespace li7 {
   void verifyLumpedReaction858( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "858" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 
@@ -522,7 +522,7 @@ namespace li7 {
   void verifyLumpedReaction859( const Reaction& lumped ) {
 
     CHECK( id::ReactionID( "859" ) == lumped.identifier() );
-    CHECK( ReactionType::Summation == lumped.type() );
+    CHECK( ReactionCategory::Summation == lumped.category() );
     CHECK( false == lumped.hasProducts() );
     CHECK( true == lumped.isLinearised() );
 

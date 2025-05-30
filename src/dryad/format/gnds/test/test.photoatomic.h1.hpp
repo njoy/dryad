@@ -6,7 +6,7 @@ namespace h1 {
   void verifyTotalReaction( const Reaction& total ) {
 
     CHECK( id::ReactionID( "501" ) == total.identifier() );
-    CHECK( ReactionType::Summation == total.type() );
+    CHECK( ReactionCategory::Summation == total.category() );
     CHECK( false == total.hasProducts() );
     CHECK( true == total.isLinearised() );
 
@@ -44,7 +44,7 @@ namespace h1 {
   void verifyCoherentReaction( const Reaction& coherent ) {
 
     CHECK( id::ReactionID( "502" ) == coherent.identifier() );
-    CHECK( ReactionType::Primary == coherent.type() );
+    CHECK( ReactionCategory::Primary == coherent.category() );
     CHECK( true == coherent.hasProducts() );
     CHECK( true == coherent.isLinearised() );
 
@@ -154,7 +154,7 @@ namespace h1 {
   void verifyIncoherentReaction( const Reaction& incoherent ) {
 
     CHECK( id::ReactionID( "504" ) == incoherent.identifier() );
-    CHECK( ReactionType::Primary == incoherent.type() );
+    CHECK( ReactionCategory::Primary == incoherent.category() );
     CHECK( true == incoherent.hasProducts() );
     CHECK( true == incoherent.isLinearised() );
 
@@ -224,7 +224,7 @@ namespace h1 {
   void verifyElectronFieldPairProductionReaction( const Reaction& epairproduction ) {
 
     CHECK( id::ReactionID( "515" ) == epairproduction.identifier() );
-    CHECK( ReactionType::Primary == epairproduction.type() );
+    CHECK( ReactionCategory::Primary == epairproduction.category() );
     CHECK( true == epairproduction.hasProducts() );
     CHECK( true == epairproduction.isLinearised() );
 
@@ -267,7 +267,7 @@ namespace h1 {
   void verifyNuclearFieldPairProductionReaction( const Reaction& npairproduction ) {
 
     CHECK( id::ReactionID( "517" ) == npairproduction.identifier() );
-    CHECK( ReactionType::Primary == npairproduction.type() );
+    CHECK( ReactionCategory::Primary == npairproduction.category() );
     CHECK( true == npairproduction.hasProducts() );
     CHECK( true == npairproduction.isLinearised() );
 
@@ -307,7 +307,7 @@ namespace h1 {
   void verifyTotalPairProductionReaction( const Reaction& tpairproduction ) {
 
     CHECK( id::ReactionID( "516" ) == tpairproduction.identifier() );
-    CHECK( ReactionType::Summation == tpairproduction.type() );
+    CHECK( ReactionCategory::Summation == tpairproduction.category() );
     CHECK( false == tpairproduction.hasProducts() );
     CHECK( true == tpairproduction.isLinearised() );
 
@@ -340,7 +340,7 @@ namespace h1 {
   void verifyIonisationReaction( const Reaction& ionisation ) {
 
     CHECK( id::ReactionID( "534" ) == ionisation.identifier() );
-    CHECK( ReactionType::Primary == ionisation.type() );
+    CHECK( ReactionCategory::Primary == ionisation.category() );
     CHECK( true == ionisation.hasProducts() );
     CHECK( true == ionisation.isLinearised() );
 
@@ -376,7 +376,7 @@ namespace h1 {
   void verifyTotalIonisationReaction( const Reaction& tionisation ) {
 
     CHECK( id::ReactionID( "522" ) == tionisation.identifier() );
-    CHECK( ReactionType::Summation == tionisation.type() );
+    CHECK( ReactionCategory::Summation == tionisation.category() );
     CHECK( false == tionisation.hasProducts() );
     CHECK( true == tionisation.isLinearised() );
 

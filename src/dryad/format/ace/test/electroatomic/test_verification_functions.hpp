@@ -1,7 +1,7 @@
 void verifyEprdata12ElectronTotalReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "501" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -38,7 +38,7 @@ void verifyEprdata12ElectronTotalReaction( const Reaction& reaction ) {
 void verifyEprdata12ElectronTotalIonisationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "522" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -72,7 +72,7 @@ void verifyEprdata12ElectronTotalIonisationReaction( const Reaction& reaction ) 
 void verifyEprdata12ElectronTotalElasticReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "526" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -103,7 +103,7 @@ void verifyEprdata12ElectronTotalElasticReaction( const Reaction& reaction ) {
 void verifyEprdata12ElectronBremsstrahlungReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "527" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -134,7 +134,7 @@ void verifyEprdata12ElectronBremsstrahlungReaction( const Reaction& reaction ) {
 void verifyEprdata12ElectronExcitationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "528" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -165,7 +165,7 @@ void verifyEprdata12ElectronExcitationReaction( const Reaction& reaction ) {
 void verifyEprdata12ElectronIonisationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "534" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -196,7 +196,7 @@ void verifyEprdata12ElectronIonisationReaction( const Reaction& reaction ) {
 void verifyEprdata14ElectronTotalReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "501" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -234,7 +234,7 @@ void verifyEprdata14ElectronTotalReaction( const Reaction& reaction ) {
 void verifyEprdata14ElectronTotalIonisationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "522" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -268,7 +268,7 @@ void verifyEprdata14ElectronTotalIonisationReaction( const Reaction& reaction ) 
 void verifyEprdata14ElectronLargeAngleElasticReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "525" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -299,7 +299,7 @@ void verifyEprdata14ElectronLargeAngleElasticReaction( const Reaction& reaction 
 void verifyEprdata14ElectronTotalElasticReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "526" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -334,7 +334,7 @@ void verifyEprdata14ElectronTotalElasticReaction( const Reaction& reaction ) {
 void verifyEprdata14ElectronBremsstrahlungReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "527" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -365,7 +365,7 @@ void verifyEprdata14ElectronBremsstrahlungReaction( const Reaction& reaction ) {
 void verifyEprdata14ElectronExcitationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "528" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -396,7 +396,7 @@ void verifyEprdata14ElectronExcitationReaction( const Reaction& reaction ) {
 void verifyEprdata14ElectronIonisationReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "534" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -427,7 +427,7 @@ void verifyEprdata14ElectronIonisationReaction( const Reaction& reaction ) {
 void verifyEprdata14ElectronElasticReactionDeficit( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "-526" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 

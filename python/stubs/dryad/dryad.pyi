@@ -4,7 +4,7 @@ from . import atomic
 from . import covariance
 from . import id
 from . import resonances
-__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionProduct', 'ReactionType', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
+__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -853,6 +853,11 @@ class Reaction:
             index   the reaction product index (default is zero)
         """
     @property
+    def category(self) -> ReactionCategory:
+        """
+        The reaction category
+        """
+    @property
     def cross_section(self) -> TabulatedCrossSection:
         """
         The cross section
@@ -893,11 +898,53 @@ class Reaction:
         """
         The reaction Q value
         """
+class ReactionCategory:
+    """
+    The reaction category
+    
+    Members:
+    
+      Primary
+    
+      Summation
+    """
+    Primary: typing.ClassVar[ReactionCategory]  # value = <ReactionCategory.Primary: 1>
+    Summation: typing.ClassVar[ReactionCategory]  # value = <ReactionCategory.Summation: 2>
+    __members__: typing.ClassVar[dict[str, ReactionCategory]]  # value = {'Primary': <ReactionCategory.Primary: 1>, 'Summation': <ReactionCategory.Summation: 2>}
+    def __eq__(self, other: typing.Any) -> bool:
+        ...
+    def __ge__(self, other: typing.Any) -> bool:
+        ...
+    def __getstate__(self) -> int:
+        ...
+    def __gt__(self, other: typing.Any) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
+    def __index__(self) -> int:
+        ...
+    def __init__(self, value: int) -> None:
+        ...
+    def __int__(self) -> int:
+        ...
+    def __le__(self, other: typing.Any) -> bool:
+        ...
+    def __lt__(self, other: typing.Any) -> bool:
+        ...
+    def __ne__(self, other: typing.Any) -> bool:
+        ...
+    def __repr__(self) -> str:
+        ...
+    def __setstate__(self, state: int) -> None:
+        ...
+    def __str__(self) -> str:
+        ...
     @property
-    def type(self) -> ReactionType:
-        """
-        The reaction type
-        """
+    def name(self) -> str:
+        ...
+    @property
+    def value(self) -> int:
+        ...
 class ReactionProduct:
     """
     The data associated to a single reaction product
@@ -974,53 +1021,6 @@ class ReactionProduct:
         """
         The multiplicity
         """
-class ReactionType:
-    """
-    The reaction type
-    
-    Members:
-    
-      Primary
-    
-      Summation
-    """
-    Primary: typing.ClassVar[ReactionType]  # value = <ReactionType.Primary: 1>
-    Summation: typing.ClassVar[ReactionType]  # value = <ReactionType.Summation: 2>
-    __members__: typing.ClassVar[dict[str, ReactionType]]  # value = {'Primary': <ReactionType.Primary: 1>, 'Summation': <ReactionType.Summation: 2>}
-    def __eq__(self, other: typing.Any) -> bool:
-        ...
-    def __ge__(self, other: typing.Any) -> bool:
-        ...
-    def __getstate__(self) -> int:
-        ...
-    def __gt__(self, other: typing.Any) -> bool:
-        ...
-    def __hash__(self) -> int:
-        ...
-    def __index__(self) -> int:
-        ...
-    def __init__(self, value: int) -> None:
-        ...
-    def __int__(self) -> int:
-        ...
-    def __le__(self, other: typing.Any) -> bool:
-        ...
-    def __lt__(self, other: typing.Any) -> bool:
-        ...
-    def __ne__(self, other: typing.Any) -> bool:
-        ...
-    def __repr__(self) -> str:
-        ...
-    def __setstate__(self, state: int) -> None:
-        ...
-    def __str__(self) -> str:
-        ...
-    @property
-    def name(self) -> str:
-        ...
-    @property
-    def value(self) -> int:
-        ...
 class ReferenceFrame:
     """
     The reference frame used to describe data

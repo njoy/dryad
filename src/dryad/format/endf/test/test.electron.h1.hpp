@@ -6,7 +6,7 @@ namespace h1 {
   void verifyTotalReaction( const Reaction& total ) {
 
     CHECK( id::ReactionID( "501" ) == total.identifier() );
-    CHECK( ReactionType::Summation == total.type() );
+    CHECK( ReactionCategory::Summation == total.category() );
     CHECK( false == total.hasProducts() );
     CHECK( true == total.isLinearised() );
 
@@ -42,7 +42,7 @@ namespace h1 {
   void verifyTotalIonisationReaction( const Reaction& ionisation ) {
 
     CHECK( id::ReactionID( "522" ) == ionisation.identifier() );
-    CHECK( ReactionType::Summation == ionisation.type() );
+    CHECK( ReactionCategory::Summation == ionisation.category() );
     CHECK( false == ionisation.hasProducts() );
     CHECK( true == ionisation.isLinearised() );
 
@@ -74,7 +74,7 @@ namespace h1 {
   void verifyElasticReaction( const Reaction& elastic ) {
 
     CHECK( id::ReactionID( "525" ) == elastic.identifier() );
-    CHECK( ReactionType::Primary == elastic.type() );
+    CHECK( ReactionCategory::Primary == elastic.category() );
     CHECK( true == elastic.hasProducts() );
     CHECK( true == elastic.isLinearised() );
 
@@ -186,7 +186,7 @@ namespace h1 {
   void verifyTotalElasticReaction( const Reaction& telastic ) {
 
     CHECK( id::ReactionID( "526" ) == telastic.identifier() );
-    CHECK( ReactionType::Summation == telastic.type() );
+    CHECK( ReactionCategory::Summation == telastic.category() );
     CHECK( false == telastic.hasProducts() );
     CHECK( true == telastic.isLinearised() );
 
@@ -219,7 +219,7 @@ namespace h1 {
   void verifyBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
 
     CHECK( id::ReactionID( "527" ) == bremsstrahlung.identifier() );
-    CHECK( ReactionType::Primary == bremsstrahlung.type() );
+    CHECK( ReactionCategory::Primary == bremsstrahlung.category() );
     CHECK( true == bremsstrahlung.hasProducts() );
     CHECK( true == bremsstrahlung.isLinearised() );
 
@@ -366,7 +366,7 @@ namespace h1 {
   void verifyExcitationReaction( const Reaction& subionisation ) {
 
     CHECK( id::ReactionID( "528" ) == subionisation.identifier() );
-    CHECK( ReactionType::Primary == subionisation.type() );
+    CHECK( ReactionCategory::Primary == subionisation.category() );
     CHECK( true == subionisation.hasProducts() );
     CHECK( true == subionisation.isLinearised() );
 
@@ -424,7 +424,7 @@ namespace h1 {
   void verifySubshellIonisationReaction( const Reaction& subionisation ) {
 
     CHECK( id::ReactionID( "534" ) == subionisation.identifier() );
-    CHECK( ReactionType::Primary == subionisation.type() );
+    CHECK( ReactionCategory::Primary == subionisation.category() );
     CHECK( true == subionisation.hasProducts() );
     CHECK( true == subionisation.isLinearised() );
 
@@ -533,7 +533,7 @@ namespace h1 {
   void verifyElasticDeficitReaction( const Reaction& deficit ) {
 
     CHECK( id::ReactionID( "-526" ) == deficit.identifier() );
-    CHECK( ReactionType::Primary == deficit.type() );
+    CHECK( ReactionCategory::Primary == deficit.category() );
     CHECK( false == deficit.hasProducts() );
     CHECK( true == deficit.isLinearised() );
 

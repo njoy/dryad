@@ -6,7 +6,7 @@ namespace h1 {
   void verifyTotalReaction( const Reaction& total ) {
 
     CHECK( id::ReactionID( "1" ) == total.identifier() );
-    CHECK( ReactionType::Summation == total.type() );
+    CHECK( ReactionCategory::Summation == total.category() );
     CHECK( false == total.hasProducts() );
     CHECK( false == total.isLinearised() );
 
@@ -43,7 +43,7 @@ namespace h1 {
   void verifyElasticReaction( const Reaction& elastic ) {
 
     CHECK( id::ReactionID( "2" ) == elastic.identifier() );
-    CHECK( ReactionType::Primary == elastic.type() );
+    CHECK( ReactionCategory::Primary == elastic.category() );
     CHECK( true == elastic.hasProducts() );
     CHECK( true == elastic.isLinearised() );
 
@@ -173,7 +173,7 @@ namespace h1 {
   void verifyCaptureReaction( const Reaction& capture ) {
 
     CHECK( id::ReactionID( "102" ) == capture.identifier() );
-    CHECK( ReactionType::Primary == capture.type() );
+    CHECK( ReactionCategory::Primary == capture.category() );
     CHECK( true == capture.hasProducts() );
     CHECK( false == capture.isLinearised() );
 

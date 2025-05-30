@@ -1,7 +1,7 @@
 void verifyMcplib84PhotonTotalReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "501" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -38,7 +38,7 @@ void verifyMcplib84PhotonTotalReaction( const Reaction& reaction ) {
 void verifyMcplib84PhotonCoherentReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "502" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -99,7 +99,7 @@ void verifyMcplib84PhotonCoherentReaction( const Reaction& reaction ) {
 void verifyMcplib84PhotonIncoherentReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "504" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -157,7 +157,7 @@ void verifyMcplib84PhotonIncoherentReaction( const Reaction& reaction ) {
 void verifyMcplib84PhotonPairProductionReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "516" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -188,7 +188,7 @@ void verifyMcplib84PhotonPairProductionReaction( const Reaction& reaction ) {
 void verifyMcplib84PhotonTotalPhotoElectricReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "522" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -219,7 +219,7 @@ void verifyMcplib84PhotonTotalPhotoElectricReaction( const Reaction& reaction ) 
 void verifyEprdata12PhotonTotalReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "501" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -256,7 +256,7 @@ void verifyEprdata12PhotonTotalReaction( const Reaction& reaction ) {
 void verifyEprdata12PhotonCoherentReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "502" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -317,7 +317,7 @@ void verifyEprdata12PhotonCoherentReaction( const Reaction& reaction ) {
 void verifyEprdata12PhotonIncoherentReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "504" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -375,7 +375,7 @@ void verifyEprdata12PhotonIncoherentReaction( const Reaction& reaction ) {
 void verifyEprdata12PhotonPairProductionReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "516" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -406,7 +406,7 @@ void verifyEprdata12PhotonPairProductionReaction( const Reaction& reaction ) {
 void verifyEprdata12PhotonTotalPhotoElectricReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "522" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -440,7 +440,7 @@ void verifyEprdata12PhotonTotalPhotoElectricReaction( const Reaction& reaction )
 void verifyEprdata12PhotonPhotoElectricReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "534" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -471,7 +471,7 @@ void verifyEprdata12PhotonPhotoElectricReaction( const Reaction& reaction ) {
 void verifyEprdata14PhotonTotalReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "501" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -508,7 +508,7 @@ void verifyEprdata14PhotonTotalReaction( const Reaction& reaction ) {
 void verifyEprdata14PhotonCoherentReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "502" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -569,7 +569,7 @@ void verifyEprdata14PhotonCoherentReaction( const Reaction& reaction ) {
 void verifyEprdata14PhotonIncoherentReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "504" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -627,7 +627,7 @@ void verifyEprdata14PhotonIncoherentReaction( const Reaction& reaction ) {
 void verifyEprdata14PhotonPairProductionReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "516" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -658,7 +658,7 @@ void verifyEprdata14PhotonPairProductionReaction( const Reaction& reaction ) {
 void verifyEprdata14PhotonTotalPhotoElectricReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "522" ) == reaction.identifier() );
-  CHECK( ReactionType::Summation == reaction.type() );
+  CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
@@ -692,7 +692,7 @@ void verifyEprdata14PhotonTotalPhotoElectricReaction( const Reaction& reaction )
 void verifyEprdata14PhotonPhotoElectricReaction( const Reaction& reaction ) {
 
   CHECK( id::ReactionID( "534" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
 
