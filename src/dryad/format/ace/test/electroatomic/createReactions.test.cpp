@@ -43,22 +43,22 @@ SCENARIO( "createReactions" ) {
         CHECK( 6 == reactions.size() );
 
         auto total = reactions[0];
-        verifyEprdata12ElectronTotalReaction( total );
+        electroatomic::eprdata12::h::verifyTotalReaction( total );
 
         auto tionisation = reactions[1];
-        verifyEprdata12ElectronTotalIonisationReaction( tionisation );
+        electroatomic::eprdata12::h::verifyTotalIonisationReaction( tionisation );
 
         auto telastic = reactions[2];
-        verifyEprdata12ElectronTotalElasticReaction( telastic );
+        electroatomic::eprdata12::h::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = reactions[3];
-        verifyEprdata12ElectronBremsstrahlungReaction( bremsstrahlung );
+        electroatomic::eprdata12::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = reactions[4];
-        verifyEprdata12ElectronExcitationReaction( excitation );
+        electroatomic::eprdata12::h::verifyExcitationReaction( excitation );
 
         auto ionisation = reactions[5];
-        verifyEprdata12ElectronIonisationReaction( ionisation );
+        electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
 
@@ -73,28 +73,28 @@ SCENARIO( "createReactions" ) {
         CHECK( 8 == reactions.size() );
 
         auto total = reactions[0];
-        verifyEprdata14ElectronTotalReaction( total );
+        electroatomic::eprdata14::h::verifyTotalReaction( total );
 
         auto tionisation = reactions[1];
-        verifyEprdata14ElectronTotalIonisationReaction( tionisation );
+        electroatomic::eprdata14::h::verifyTotalIonisationReaction( tionisation );
 
         auto elastic = reactions[2];
-        verifyEprdata14ElectronLargeAngleElasticReaction( elastic );
+        electroatomic::eprdata14::h::verifyLargeAngleElasticReaction( elastic );
 
         auto telastic = reactions[3];
-        verifyEprdata14ElectronTotalElasticReaction( telastic );
+        electroatomic::eprdata14::h::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = reactions[4];
-        verifyEprdata12ElectronBremsstrahlungReaction( bremsstrahlung );
+        electroatomic::eprdata14::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = reactions[5];
-        verifyEprdata12ElectronExcitationReaction( excitation );
+        electroatomic::eprdata14::h::verifyExcitationReaction( excitation );
 
         auto ionisation = reactions[6];
-        verifyEprdata12ElectronIonisationReaction( ionisation );
+        electroatomic::eprdata14::h::verifyIonisationReaction( ionisation );
 
         auto deficit = reactions[7];
-        verifyEprdata14ElectronElasticReactionDeficit( deficit );
+        electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
