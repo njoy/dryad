@@ -71,6 +71,22 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return whether or not the reaction is a summation reaction
+     */
+    bool isSummationReaction() const noexcept {
+
+      return this->partialReactionIdentifiers().has_value();
+    }
+
+    /**
+     *  @brief Return whether or not the reaction is a primary reaction
+     */
+    bool isPrimaryReaction() const noexcept {
+
+      return ! this->isSummationReaction();
+    }
+
+    /**
      *  @brief Return the mass difference Q value
      *
      *  The mass difference Q value is defined as the energy equivalence of the
