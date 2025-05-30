@@ -878,6 +878,16 @@ class Reaction:
         Flag indicating whether or not the data is linearised
         """
     @property
+    def is_primary_reaction(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction is a primary reaction
+        """
+    @property
+    def is_summation_reaction(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction is a summation reaction
+        """
+    @property
     def mass_difference_qvalue(self) -> float | None:
         """
         The mass difference Q value

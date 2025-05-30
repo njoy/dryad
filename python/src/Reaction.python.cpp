@@ -83,6 +83,18 @@ void wrapReaction( python::module& module ) {
   )
   .def_property_readonly(
 
+    "is_summation_reaction",
+    &Component::isSummationReaction,
+    "Flag to indicate whether or not the reaction is a summation reaction"
+  )
+  .def_property_readonly(
+
+    "is_primary_reaction",
+    &Component::isPrimaryReaction,
+    "Flag to indicate whether or not the reaction is a primary reaction"
+  )
+  .def_property_readonly(
+
     "partial_reaction_identifiers",
     &Component::partialReactionIdentifiers,
     "The summation reaction identifiers (not defined if this is a primary\n"

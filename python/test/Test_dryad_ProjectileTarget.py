@@ -40,6 +40,8 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
                 self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
                 self.assertEqual( ReactionCategory.Primary, reaction.category )
+                self.assertEqual( False, reaction.is_summation_reaction )
+                self.assertEqual( True, reaction.is_primary_reaction )
                 self.assertEqual( False, reaction.has_products )
                 self.assertEqual( False, reaction.is_linearised )
                 self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
@@ -63,6 +65,8 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
                 self.assertEqual( 'n,Fe56->n,Fe56_e1', reaction.identifier )
                 self.assertEqual( ReactionCategory.Primary, reaction.category )
+                self.assertEqual( False, reaction.is_summation_reaction )
+                self.assertEqual( True, reaction.is_primary_reaction )
                 self.assertEqual( False, reaction.has_products )
                 self.assertEqual( True, reaction.is_linearised )
                 self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
@@ -100,6 +104,8 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             reaction = chunk.reactions[0]
             self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
             self.assertEqual( ReactionCategory.Primary, reaction.category )
+            self.assertEqual( False, reaction.is_summation_reaction )
+            self.assertEqual( True, reaction.is_primary_reaction )
             self.assertEqual( False, reaction.has_products )
             self.assertEqual( True, reaction.is_linearised )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
