@@ -31,6 +31,14 @@ namespace gnds {
 
       return InterpolationType::LogLog;
     }
+    else if ( type == "lin-log" ) {
+
+      return InterpolationType::LinearLog;
+    }
+    else if ( type == "log-lin" ) {
+
+      return InterpolationType::LogLinear;
+    }
     else {
 
       Log::error( "GNDS interpolation type \'{}\' is not recognised", type );
