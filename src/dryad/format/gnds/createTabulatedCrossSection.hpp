@@ -122,32 +122,43 @@ namespace gnds {
     }
     else if ( strcmp( node.name(), "resonancesWithBackground" ) == 0 ) {
 
+      std::vector< double > energies;
+      std::vector< double > values;
+      std::vector< std::size_t > boundaries;
+      std::vector< InterpolationType > interpolants;
+
       // get the resolved background data
       auto resolved = node.child( "background" ).child( "resolvedRegion" );
-      auto result = createTabulatedCrossSectionFromNodes( resolved.first_child() );
+      if ( resolved ) {
 
-      // start to assemble the data together
-      std::vector< double > energies = result.energies();
-      std::vector< double > values = result.values();
-      std::vector< std::size_t > boundaries = result.boundaries();
-      std::vector< InterpolationType > interpolants = result.interpolants();
+        auto result = createTabulatedCrossSectionFromNodes( resolved.first_child() );
+
+        // start to assemble the data together
+        energies = result.energies();
+        values = result.values();
+        boundaries = result.boundaries();
+        interpolants = result.interpolants();
+      }
 
       // get the unresolved background data
       auto unresolved = node.child( "background" ).child( "unresolvedRegion" );
       if ( unresolved ) {
 
-        result = createTabulatedCrossSectionFromNodes( unresolved.first_child() );
+        auto result = createTabulatedCrossSectionFromNodes( unresolved.first_child() );
 
         // check for duplicate points at interpolation region boundaries
+        std::size_t size = energies.size();
         std::size_t offset = 0;
-        if ( energies.back() == result.energies().front() &&
-             values.back() == result.values().front() ) {
+        if ( size > 0 ) {
 
-          offset = 1;
+          if ( energies.back() == result.energies().front() &&
+               values.back() == result.values().front() ) {
+
+            offset = 1;
+          }
         }
 
         // add data
-        std::size_t size = energies.size();
         energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() );
         values.insert( values.end(), result.values().begin() + offset, result.values().end() );
         for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
@@ -159,25 +170,30 @@ namespace gnds {
 
       // get the fast background data
       auto fast = node.child( "background" ).child( "fastRegion" );
+      if ( fast ) {
 
-      result = createTabulatedCrossSectionFromNodes( fast.first_child() );
+        auto result = createTabulatedCrossSectionFromNodes( fast.first_child() );
 
-      // check for duplicate points at interpolation region boundaries
-      std::size_t offset = 0;
-      if ( energies.back() == result.energies().front() &&
-           values.back() == result.values().front() ) {
+        // check for duplicate points at interpolation region boundaries
+        std::size_t size = energies.size();
+        std::size_t offset = 0;
+        if ( size > 0 ) {
 
-        offset = 1;
-      }
+          if ( energies.back() == result.energies().front() &&
+               values.back() == result.values().front() ) {
 
-      // add data
-      std::size_t size = energies.size();
-      energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() );
-      values.insert( values.end(), result.values().begin() + offset, result.values().end() );
-      for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
+            offset = 1;
+          }
+        }
 
-        boundaries.emplace_back( result.boundaries()[i] - offset + size );
-        interpolants.emplace_back( result.interpolants()[i] );
+        // add data
+        energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() );
+        values.insert( values.end(), result.values().begin() + offset, result.values().end() );
+        for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
+
+          boundaries.emplace_back( result.boundaries()[i] - offset + size );
+          interpolants.emplace_back( result.interpolants()[i] );
+        }
       }
 
       return TabulatedCrossSection(
