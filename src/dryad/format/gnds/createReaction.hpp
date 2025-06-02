@@ -41,8 +41,12 @@ namespace gnds {
       std::optional< double > reaction_q = createQValue( output.child( "Q" ), style );
 
       // reaction products
-      std::vector< ReactionProduct > products =
-      createReactionProducts( projectile, target, suite, output.child( "products" ) );
+      std::vector< ReactionProduct > products;
+      auto node = output.child( "products" );
+      if ( node ) {
+
+        products = createReactionProducts( projectile, target, suite, node );
+      }
 
       // special treatment for some incident electron data reactions
       if ( projectile == id::ParticleID( "e-" ) ) {
