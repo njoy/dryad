@@ -122,6 +122,18 @@ namespace gnds {
 
         energyd = TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
       }
+      else if ( strcmp( node.name(), "NBodyPhaseSpace" ) == 0 ) {
+
+        Log::error( "NBodyPhaseSpace for energy distribution data is "
+                    "currently unsupported" );
+        throw std::exception();
+      }
+      else if ( strcmp( node.name(), "weightedFunctionals" ) == 0 ) {
+
+        Log::error( "MultiEnergyDistributions (weightedFunctionals) for energy distribution data is "
+                    "currently unsupported" );
+        throw std::exception();
+      }
       else {
 
         Log::error( "Expected an XYs2d node for uncorrelated energy distribution data, found \'{}\'",
