@@ -200,6 +200,11 @@ namespace gnds {
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
+    else if ( strcmp( node.name(), "CoulombPlusNuclearElastic" ) == 0 ) {
+
+      Log::info( "CoulombPlusNuclearElastic is currently unsupported" );
+      return TabulatedCrossSection( { 1e-5, 20. }, { 0., 0. } );
+    }
     else {
 
       Log::error( "Expected either an XYs1d, regions1d (with XYs1d nodes) or a "
