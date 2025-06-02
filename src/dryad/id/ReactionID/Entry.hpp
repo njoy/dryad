@@ -33,6 +33,6 @@ public:
   const ParticleID& target() const noexcept { return this->target_; }
   const ReactionType& type() const noexcept { return this->type_; }
   const std::optional< ParticleID >& residual() const noexcept { return this->residual_; }
-  const std::string& symbol() const noexcept { return this->symbol_; }
-  const std::string& fullSymbol() const noexcept { return this->full_symbol_; }
+  const std::string& shortSymbol() const noexcept { return this->symbol_; }
+  const std::string& longSymbol() const noexcept { return this->full_symbol_; }
 };
