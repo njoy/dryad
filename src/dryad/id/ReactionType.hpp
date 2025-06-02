@@ -5,6 +5,7 @@
 #include <optional>
 #include <string>
 #include <numeric>
+#include <map>
 #include <unordered_map>
 #include <vector>
 
@@ -846,7 +847,7 @@ namespace id {
     /**
      *  @brief Return the particles emitted for this reaction type
      */
-    const std::optional< std::vector< std::pair< ParticleID, short > > >& particles() const noexcept {
+    const std::optional< std::map< ParticleID, short > >& particles() const noexcept {
 
       return entries[ this->index_ ].particles();
     }

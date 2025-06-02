@@ -35,7 +35,7 @@ SCENARIO( "ReactionType" ) {
     auto nuclear = InteractionType::Nuclear;
     auto atomic = InteractionType::Atomic;
 
-    std::vector< std::pair< ParticleID, short > > empty;
+    std::map< ParticleID, short > empty;
 
     THEN( "a ReactionType can be created using mt numbers, strings and static functions" ) {
 
@@ -174,7 +174,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "g(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{} == id.particles() );
+      CHECK( std::map< ParticleID, short >{} == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -186,7 +186,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 50 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "n(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { n, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -199,7 +199,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 600 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "p(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { p, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { p, 1 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -212,7 +212,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 650 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "d(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { d, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { d, 1 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -225,7 +225,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 700 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "t(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { t, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { t, 1 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -238,7 +238,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 750 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "h(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { h, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { h, 1 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -251,7 +251,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 800 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "a(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { a, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { a, 1 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -264,7 +264,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 4 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "n(t)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { n, 1 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
       CHECK( LevelID::all == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -277,7 +277,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 875 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "2n(0)" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { n, 2 } } == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { n, 2 } } == id.particles() );
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -327,7 +327,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "e-[deficit-scattering]" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -339,7 +339,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 525 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "e-[large-angle-scattering]" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -352,7 +352,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 515 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "2e-e+" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 }, { eplus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -366,7 +366,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 517 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "e-e+" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 }, { eplus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -392,7 +392,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 527 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "e-[bremsstrahlung]" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -405,7 +405,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 528 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "e-[excitation]" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -418,7 +418,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 534 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{1s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::K == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -430,7 +430,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 535 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{2s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::L1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -442,7 +442,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 536 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{2p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::L2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -454,7 +454,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 537 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{2p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::L3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -466,7 +466,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 538 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{3s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::M1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -478,7 +478,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 539 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{3p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::M2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -490,7 +490,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 540 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{3p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::M3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -502,7 +502,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 541 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{3d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::M4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -514,7 +514,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 542 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{3d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::M5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -526,7 +526,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 543 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -538,7 +538,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 544 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -550,7 +550,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 545 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -562,7 +562,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 546 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -574,7 +574,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 547 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -586,7 +586,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 548 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -598,7 +598,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 549 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{4f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::N7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -610,7 +610,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 550 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -622,7 +622,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 551 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -634,7 +634,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 552 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -646,7 +646,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 553 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -658,7 +658,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 554 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -670,7 +670,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 555 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -682,7 +682,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 556 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -694,7 +694,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 557 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5g7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -706,7 +706,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 558 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{5g9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::O9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -718,7 +718,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 559 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -730,7 +730,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 560 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -742,7 +742,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 561 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -754,7 +754,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 562 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -766,7 +766,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 563 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -778,7 +778,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 564 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -790,7 +790,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 565 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -802,7 +802,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 566 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6g7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -814,7 +814,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 567 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6g9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -826,7 +826,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 568 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6h9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P10 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -838,7 +838,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 569 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{6h11/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::P11 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -850,7 +850,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 570 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -862,7 +862,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 571 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -874,7 +874,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 572 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -887,7 +887,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -898,7 +898,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -909,7 +909,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -920,7 +920,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -931,7 +931,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7g7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -942,7 +942,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7g9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -953,7 +953,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7h9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q10 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -964,7 +964,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7h11/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q11 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -975,7 +975,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7i11/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q12 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -986,7 +986,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation{7i13/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q13 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -997,7 +997,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 522 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "photo-ionisation" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 1 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1010,7 +1010,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 534 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{1s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::K == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1022,7 +1022,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 535 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{2s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::L1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1034,7 +1034,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 536 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{2p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::L2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1046,7 +1046,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 537 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{2p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::L3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1058,7 +1058,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 538 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{3s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::M1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1070,7 +1070,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 539 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{3p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::M2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1082,7 +1082,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 540 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{3p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::M3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1094,7 +1094,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 541 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{3d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::M4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1106,7 +1106,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 542 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{3d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::M5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1118,7 +1118,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 543 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1130,7 +1130,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 544 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1142,7 +1142,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 545 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1154,7 +1154,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 546 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1166,7 +1166,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 547 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1178,7 +1178,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 548 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1190,7 +1190,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 549 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{4f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::N7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1202,7 +1202,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 550 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1214,7 +1214,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 551 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1226,7 +1226,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 552 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1238,7 +1238,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 553 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1250,7 +1250,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 554 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1262,7 +1262,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 555 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1274,7 +1274,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 556 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1286,7 +1286,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 557 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5g7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1298,7 +1298,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 558 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{5g9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::O9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1310,7 +1310,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 559 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1322,7 +1322,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 560 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1334,7 +1334,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 561 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1346,7 +1346,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 562 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1358,7 +1358,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 563 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1370,7 +1370,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 564 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1382,7 +1382,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 565 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1394,7 +1394,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 566 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6g7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1406,7 +1406,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 567 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6g9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1418,7 +1418,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 568 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6h9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P10 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1430,7 +1430,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 569 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{6h11/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::P11 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1442,7 +1442,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 570 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7s1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q1 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1454,7 +1454,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 571 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7p1/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q2 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1466,7 +1466,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 572 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7p3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q3 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
@@ -1479,7 +1479,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7d3/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q4 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1490,7 +1490,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7d5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q5 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1501,7 +1501,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7f5/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q6 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1512,7 +1512,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7f7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q7 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1523,7 +1523,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7g7/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q8 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1534,7 +1534,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7g9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q9 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1545,7 +1545,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7h9/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q10 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1556,7 +1556,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7h11/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q11 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1567,7 +1567,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7i11/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q12 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1578,7 +1578,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation{7i13/2}" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( ElectronSubshellID::Q13 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
@@ -1589,7 +1589,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 522 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "electro-ionisation" == id.symbol() );
-      CHECK( std::vector< std::pair< ParticleID, short > >{ { eminus, 2 } }  == id.particles() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 2 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
