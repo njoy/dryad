@@ -65,7 +65,14 @@ namespace gnds {
         auto primaryGamma = node.child( "energy" ).child( "primaryGamma" );
         if ( ! discreteGamma && ! primaryGamma ) {
 
-          distribution = createUncorrelatedDistributionData( node );
+          try {
+
+            distribution = createUncorrelatedDistributionData( node );
+          }
+          catch ( const std::runtime_error& error ) {
+
+            Log::info( "Ignoring distribution type since it is not implemented yet: {}", error.what() );
+          }
         }
       }
       else if ( strcmp( node.name(), "coherentPhotonScattering" ) == 0 ) {

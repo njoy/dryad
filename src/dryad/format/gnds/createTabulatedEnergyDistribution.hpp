@@ -56,9 +56,52 @@ namespace gnds {
       boundaries.emplace_back( energies.size() - 1 );
       interpolants.emplace_back( interpolant );
     }
+    else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
+
+      // get the outer domain value
+      auto attribute = node.attribute( "outerDomainValue" );
+      if ( attribute ) {
+
+        outer = attribute.as_double();
+        convertEnergy( outer.value(), std::get< 1 >( units[0] ).value() );
+      }
+
+      // loop over the children of function1ds
+      pugi::xml_node function1ds = node.child( "function1ds" );
+      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" );
+            xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
+
+        // read the current interpolation region
+        auto data = readXYs1D( xys1d, units );
+
+        // get the interpolation type
+        auto interpolant = createInterpolationType( std::get< 6 >( data ) );
+
+        // convert units - if necessary
+        // cosine and probability data does not need to be converted
+        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+
+        // check for duplicate points at interpolation region boundaries
+        std::size_t offset = 0;
+        if ( energies.size() > 0 ) {
+
+          if ( energies.back() == std::get< 2 >( data ).front() &&
+               values.back() == std::get< 4 >( data ).front() ) {
+
+            offset = 1;
+          }
+        }
+
+        // grow the data accordingly
+        energies.insert( energies.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
+        values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
+        boundaries.emplace_back( energies.size() - 1 );
+        interpolants.emplace_back( interpolant );
+      }
+    }
     else {
 
-      Log::error( "Expected an XYs1d node for tabulated energy distribution data" );
+      Log::error( "Expected an XYs1d or regions1d node for tabulated energy distribution data" );
       throw std::exception();
     }
 
