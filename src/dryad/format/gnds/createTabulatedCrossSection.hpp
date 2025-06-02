@@ -148,8 +148,8 @@ namespace gnds {
 
         // add data
         std::size_t size = energies.size();
-        energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() + offset );
-        values.insert( values.end(), result.values().begin() + offset, result.values().end() + offset );
+        energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() );
+        values.insert( values.end(), result.values().begin() + offset, result.values().end() );
         for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
 
           boundaries.emplace_back( result.boundaries()[i] - offset + size );
@@ -172,8 +172,8 @@ namespace gnds {
 
       // add data
       std::size_t size = energies.size();
-      energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() + offset );
-      values.insert( values.end(), result.values().begin() + offset, result.values().end() + offset );
+      energies.insert( energies.end(), result.energies().begin() + offset, result.energies().end() );
+      values.insert( values.end(), result.values().begin() + offset, result.values().end() );
       for ( unsigned int i = 0; i < result.numberRegions(); ++i ) {
 
         boundaries.emplace_back( result.boundaries()[i] - offset + size );
