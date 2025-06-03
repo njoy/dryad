@@ -69,6 +69,63 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
 /**
  *  @brief Retrieve the index to the reaction type information entry
  *
+ *  Note: this constructor only works for nuclear interactions
+ * 
+ *  @param particles   the outgoing particles
+ *  @param level       the level number of the residual
+ */
+static std::size_t getIndex( const std::map< ParticleID, short >& particles, int level ) {
+
+  // generate the symbol for the reaction entry
+  long number = 0;
+
+  // generate number based on outgoing particles
+  if ( ( particles.size() == 0 ) || 
+       ( particles.size() == 1 && particles.find( ParticleID::photon() ) != particles.end() ) ) {
+
+    number = 1000;
+  }
+  else {
+
+    // note: this can probably be optimised
+    auto iter = particles.find( ParticleID::alpha() );
+    number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+    iter = particles.find( ParticleID::helion() );
+    number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+    iter = particles.find( ParticleID::triton() );
+    number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+    iter = particles.find( ParticleID::deuteron() );
+    number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+    iter = particles.find( ParticleID::proton() );
+    number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+    iter = particles.find( ParticleID::neutron() );
+    number = iter != particles.end() ? number * 10 + iter->second : number * 10;
+    number *= 10000;
+  }
+
+  // add the level
+  if ( ( level >= 0 ) && ( level <= LevelID::all ) ) {
+
+    number += level;
+  }
+  else {
+
+    throw std::invalid_argument( "Not a level number: \'" + std::to_string( level ) + "\'" );
+  }
+
+  try {
+
+    return particles_conversion_dictionary.at( number );
+  }
+  catch ( ... ) {
+
+    throw std::invalid_argument( "The set of outgoing particles does not define a registered reaction type" );
+  }
+}
+
+/**
+ *  @brief Retrieve the index to the reaction type information entry
+ *
  *  @param string   the reaction type string
  */
 static std::size_t getIndex( const std::string& string ) {

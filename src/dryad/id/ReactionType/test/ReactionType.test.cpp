@@ -178,6 +178,8 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( empty, 0 ) );
+      CHECK( id == ReactionType( { { g, 1 } }, 0 ) );
       CHECK( id == ReactionType( "g(0)" ) );
       CHECK( u238 == id.resolve( g, u238 ) );
 
@@ -191,6 +193,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( n, 2 ) );
+      CHECK( id == ReactionType( { { n, 1 } }, 0 ) );
       CHECK( id == ReactionType( "n(0)" ) );
       CHECK( u238 == id.resolve( n, u238 ) );
 
@@ -204,6 +207,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( p, 2 ) );
+      CHECK( id == ReactionType( { { p, 1 } }, 0 ) );
       CHECK( id == ReactionType( "p(0)" ) );
       CHECK( u238 == id.resolve( p, u238 ) );
 
@@ -217,6 +221,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( d, 2 ) );
+      CHECK( id == ReactionType( { { d, 1 } }, 0 ) );
       CHECK( id == ReactionType( "d(0)" ) );
       CHECK( u238 == id.resolve( d, u238 ) );
 
@@ -230,6 +235,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( t, 2 ) );
+      CHECK( id == ReactionType( { { t, 1 } }, 0 ) );
       CHECK( id == ReactionType( "t(0)" ) );
       CHECK( u238 == id.resolve( t, u238 ) );
 
@@ -243,6 +249,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( h, 2 ) );
+      CHECK( id == ReactionType( { { h, 1 } }, 0 ) );
       CHECK( id == ReactionType( "h(0)" ) );
       CHECK( u238 == id.resolve( h, u238 ) );
 
@@ -256,6 +263,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( a, 2 ) );
+      CHECK( id == ReactionType( { { a, 1 } }, 0 ) );
       CHECK( id == ReactionType( "a(0)" ) );
       CHECK( u238 == id.resolve( a, u238 ) );
 
@@ -268,6 +276,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( LevelID::all == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( { { n, 1 } }, LevelID::all ) );
       CHECK( id == ReactionType( "n" ) );
       CHECK( id == ReactionType( "n(t)" ) );
       CHECK( ParticleID( 92238, LevelID::all ) == id.resolve( n, u238 ) );
@@ -281,8 +290,21 @@ SCENARIO( "ReactionType" ) {
       CHECK( 0 == id.level() );
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( { { n, 2 } }, 0 ) );
       CHECK( id == ReactionType( "2n(0)" ) );
       CHECK( ParticleID( 92237 ) == id.resolve( n, u238 ) );
+
+      id = ReactionType( 199 );
+      CHECK( 1000230151 == id.number() );
+      CHECK( 199 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "3n2pa(t)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
+      CHECK( LevelID::all == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( { { n, 3 }, { p, 2 }, { a, 1 } }, LevelID::all ) );
+      CHECK( ParticleID( 88230, LevelID::all ) == id.resolve( n, u238 ) );
 
       // photoatomic and electroatomic reaction types
       id = ReactionType::total( InteractionType::Atomic );

@@ -161,6 +161,8 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( False, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( empty, 0 ) )
+        self.assertEqual( id, ReactionType( { g : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 'g(0)' ) )
         self.assertEqual( u238, id.resolve( g, u238 ) )
 
@@ -172,6 +174,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { n : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 'n(0)' ) )
         self.assertEqual( u238, id.resolve( n, u238 ) )
 
@@ -183,6 +186,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { p : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 'p(0)' ) )
         self.assertEqual( u238, id.resolve( p, u238 ) )
 
@@ -194,6 +198,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { d : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 'd(0)' ) )
         self.assertEqual( u238, id.resolve( d, u238 ) )
 
@@ -205,6 +210,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { t : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 't(0)' ) )
         self.assertEqual( u238, id.resolve( t, u238 ) )
 
@@ -216,6 +222,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { h : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 'h(0)' ) )
         self.assertEqual( u238, id.resolve( h, u238 ) )
 
@@ -227,6 +234,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { a : 1 }, 0 ) )
         self.assertEqual( id, ReactionType( 'a(0)' ) )
         self.assertEqual( u238, id.resolve( a, u238 ) )
 
@@ -238,6 +246,7 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( LevelID.all, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { n : 1 }, LevelID.all ) )
         self.assertEqual( id, ReactionType( 'n' ) )
         self.assertEqual( id, ReactionType( 'n(t)' ) )
         self.assertEqual( ParticleID( 92238, LevelID.all ), id.resolve( n, u238 ) )
@@ -250,8 +259,21 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( 0, id.level )
         self.assertEqual( False, id.is_special )
         self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { n : 2 }, 0 ) )
         self.assertEqual( id, ReactionType( '2n(0)' ) )
         self.assertEqual( ParticleID( 92237 ), id.resolve( n, u238 ) )
+
+        id = ReactionType( 199 )
+        self.assertEqual( 199, id.mt )
+        self.assertEqual( nuclear, id.interaction_type )
+        self.assertEqual( '3n2pa(t)', id.symbol )
+        self.assertEqual( { n : 3, p : 2, a : 1 }, id.particles )
+        self.assertEqual( LevelID.all, id.level )
+        self.assertEqual( False, id.is_special )
+        self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { n : 3, p : 2, a : 1 }, LevelID.all ) )
+        self.assertEqual( id, ReactionType( '3n2pa(t)' ) )
+        self.assertEqual( ParticleID( 88230, LevelID.all ), id.resolve( n, u238 ) )
 
         # photoatomic and electroatomic reaction types
         id = ReactionType.total( InteractionType.Atomic )

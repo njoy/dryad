@@ -693,10 +693,24 @@ namespace id {
       }
       return conversion;
     }( entries );
-    static inline std::unordered_map< int, std::size_t >
+    static inline std::unordered_map< long, std::size_t >
+    particles_conversion_dictionary = [] ( const auto& entries ) {
+
+      std::unordered_map< long, std::size_t > conversion;
+      for ( std::size_t index = 0; index < entries.size(); ++index ) {
+
+        auto number = entries[index].number();
+        if ( number >= 1000  ) {
+
+          conversion[ number ] = index;
+        }
+      }
+      return conversion;
+    }( entries );
+    static inline std::unordered_map< short, std::size_t >
     mt_conversion_dictionary = [] ( const auto& entries ) {
 
-      std::unordered_map< int, std::size_t > conversion;
+      std::unordered_map< short, std::size_t > conversion;
       for ( std::size_t index = 0; index < entries.size(); ++index ) {
 
         auto mt = entries[ index ].mt();
