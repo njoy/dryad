@@ -15,6 +15,7 @@ namespace id {
   void wrapLevelID( python::module& );
   void wrapParticleID( python::module& );
   void wrapReactionType( python::module& );
+  void wrapReactionID( python::module& );
 }
 
 void wrapID( python::module& module ) {
@@ -31,4 +32,5 @@ void wrapID( python::module& module ) {
   id::wrapLevelID( submodule );
   id::wrapParticleID( submodule );
   id::wrapReactionType( submodule );
+  id::wrapReactionID( submodule );
 }
