@@ -213,6 +213,26 @@ namespace dryad {
 
       return InterpolationTable::operator-( right );
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const TabulatedFormFactor& right ) const noexcept {
+
+      return InterpolationTable::operator==( right );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const TabulatedFormFactor& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
   /**
