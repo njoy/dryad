@@ -172,7 +172,7 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of InterpolationTable are given" ) {
+    WHEN( "two instances of TabulatedAngularDistributions are given" ) {
 
       TabulatedAngularDistributions left( { 1., 2., 3., 4. },
                                           { { { -1., +1. }, { 0.5, 0.5 } },
@@ -191,11 +191,11 @@ SCENARIO( "TabulatedAngularDistributions" ) {
       THEN( "they can be compared" ) {
 
         CHECK( true == ( left == left ) );
-//        CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == equal ) );
         CHECK( false == ( left == different ) );
 
         CHECK( false == ( left != left ) );
-//        CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != equal ) );
         CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN

@@ -63,7 +63,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK_THAT( 64. / 24., WithinRel( chunk.averageEnergy() ) );
       } // THEN
 
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
+      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
 
         auto linear = chunk.linearise();
 
@@ -143,7 +143,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK_THAT( 64. / 24., WithinRel( chunk.averageEnergy() ) );
       } // THEN
 
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
+      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
 
         auto linear = chunk.linearise();
 

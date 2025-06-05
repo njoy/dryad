@@ -67,4 +67,25 @@ SCENARIO( "PolynomialMultiplicity" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of PolynomialMultiplicity are given" ) {
+
+      PolynomialMultiplicity left( 1e-5, 2e+7, { 2., 1e-6 } );
+      PolynomialMultiplicity equal( 1e-5, 2e+7, { 2., 1e-6 } );
+      PolynomialMultiplicity different( 1e-5, 2e+7, { 2., 1e-3 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO

@@ -21,9 +21,9 @@ namespace dryad {
    *
    *  In this representation, a scattering function S(x,Z) and two optional form factor
    *  functions are defined which together with the Thompson cross section determine the
-   *  double differential cross section. The optional form factors are the real and 
+   *  double differential cross section. The optional form factors are the real and
    *  complex part of the anomolous form factor. These are defined as optional because
-   *  photoatomic MCNP data files produced in 2024 or earlier do not contain these form 
+   *  photoatomic MCNP data files produced in 2024 or earlier do not contain these form
    *  factors even though the photoatomic ENDF evaluations define them.
    *
    *  This corresponds with the coherent scattering function data given in
@@ -92,6 +92,29 @@ namespace dryad {
     const std::optional< TabulatedFormFactor >& imaginaryAnomolousFormFactor() const noexcept {
 
       return this->imaginary_;
+    }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const CoherentDistributionData& right ) const noexcept {
+
+      return this->frame() == right.frame() &&
+             this->scatteringFunction() == right.scatteringFunction() &&
+             this->realAnomolousFormFactor() == right.realAnomolousFormFactor()&&
+             this->imaginaryAnomolousFormFactor() == right.imaginaryAnomolousFormFactor();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const CoherentDistributionData& right ) const noexcept {
+
+      return ! this->operator==( right );
     }
   };
 

@@ -14,7 +14,30 @@ namespace dryad {
    *  @class
    *  @brief All angular distributions are isotropic
    */
-  class IsotropicAngularDistributions {};
+  class IsotropicAngularDistributions {
+
+  public:
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const IsotropicAngularDistributions& right ) const noexcept {
+
+      return true;
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const IsotropicAngularDistributions& right ) const noexcept {
+
+      return false;
+    }
+  };
 
 } // dryad namespace
 } // njoy namespace

@@ -164,6 +164,44 @@ SCENARIO( "LegendreAngularDistributions" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of LegendreAngularDistributions are given" ) {
+
+      LegendreAngularDistributions left( { 1., 2., 3., 4. },
+                                         { { { 0.5 } },
+                                           { { 0.5, 0.01 } },
+                                           { { 0.5, 0.1 } },
+                                           { { 0.5, 0.4 } } } );
+      LegendreAngularDistributions equal( { 1., 2., 3., 4. },
+                                          { { { 0.5 } },
+                                            { { 0.5, 0.01 } },
+                                            { { 0.5, 0.1 } },
+                                            { { 0.5, 0.4 } } } );
+      LegendreAngularDistributions unnormalised( { 1., 2., 3., 4. },
+                                                 { { { 1.0 } },
+                                                   { { 0.5, 0.01 } },
+                                                   { { 0.5, 0.1 } },
+                                                   { { 0.5, 0.4 } } } );
+      LegendreAngularDistributions different( { 1., 4. },
+                                              { { { 0.5 } },
+                                                { { 0.5, 0.4 } } } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == unnormalised ) ); // normalised under the hood, so equal
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != unnormalised ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for an InterpolationTableFunction object" ) {
 
     WHEN( "there are not enough values in the x or f(y) grid" ) {

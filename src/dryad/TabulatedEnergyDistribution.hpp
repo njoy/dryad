@@ -83,6 +83,26 @@ namespace dryad {
       TabulatedEnergyDistributionFunction pdf = this->pdf().linearise( tolerance );
       return TabulatedEnergyDistribution( std::move( pdf ) );
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const TabulatedEnergyDistribution& right ) const noexcept {
+
+      return this->pdf() == right.pdf() && this->cdf() == right.cdf();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const TabulatedEnergyDistribution& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

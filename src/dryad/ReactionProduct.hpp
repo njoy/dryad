@@ -155,6 +155,30 @@ namespace dryad {
       this->multiplicity_ = std::visit( linearise, this->multiplicity() );
       this->linearised_ = true;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ReactionProduct& right ) const noexcept {
+
+      return this->isLinearised() == right.isLinearised() &&
+             this->identifier() == right.identifier() &&
+             this->multiplicity() == right.multiplicity() &&
+             this->averageEnergy() == right.averageEnergy() &&
+             this->distributionData() == right.distributionData();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ReactionProduct& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

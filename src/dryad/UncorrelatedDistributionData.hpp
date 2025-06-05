@@ -89,6 +89,26 @@ namespace dryad {
       return this->energy_;
     }
 
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const UncorrelatedDistributionData& right ) const noexcept {
+
+      return this->frame() == right.frame() && this->angle() == right.angle() &&
+             this->energy() == right.energy();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const UncorrelatedDistributionData& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

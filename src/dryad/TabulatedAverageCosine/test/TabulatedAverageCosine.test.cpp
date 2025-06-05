@@ -1849,7 +1849,7 @@ SCENARIO( "TabulatedAverageCosine" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this InterpolationTable is the
+    //       the jump. As a result, the final data contained in this TabulatedAverageCosine is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1867,7 +1867,7 @@ SCENARIO( "TabulatedAverageCosine" ) {
                                           std::move( boundaries ),
                                           std::move( interpolants ) );
 
-      THEN( "a InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "a TabulatedAverageCosine can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1912,7 +1912,7 @@ SCENARIO( "TabulatedAverageCosine" ) {
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "an InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "an TabulatedAverageCosine can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -1937,7 +1937,7 @@ SCENARIO( "TabulatedAverageCosine" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an InterpolationTable object" ) {
+  GIVEN( "invalid data for an TabulatedAverageCosine object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 
