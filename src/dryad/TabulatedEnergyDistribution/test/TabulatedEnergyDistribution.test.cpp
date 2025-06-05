@@ -174,13 +174,37 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedEnergyDistribution are given" ) {
+
+      TabulatedEnergyDistribution left( { 1., 3. }, { 0.5, 0.5 } );
+      TabulatedEnergyDistribution equal( { 1., 3. }, { 0.5, 0.5 } );
+      TabulatedEnergyDistribution unnormalised( { 1., 3. }, { 1., 1. } );
+      TabulatedEnergyDistribution different( { 1., 3. }, { 0.25, 0.75 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == unnormalised ) ); // normalised under the hood, so equal
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != unnormalised ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data" ) {
 
-    WHEN( "the cosine and values vector are not of the same length" ) {
+    WHEN( "the energies and values vector are not of the same length" ) {
 
       THEN( "an exception is thrown" ) {
 
-        const std::vector< double > energies = { -1., 1. };
+        const std::vector< double > energies = { 1., 2. };
         const std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
         CHECK_THROWS( TabulatedEnergyDistribution( energies, values ) );

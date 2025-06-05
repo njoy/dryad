@@ -1937,6 +1937,27 @@ SCENARIO( "TabulatedAverageEnergy" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of LegendreAngularDistributionFunction are given" ) {
+
+      TabulatedAverageEnergy left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedAverageEnergy equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedAverageEnergy different( { 1., 4. }, { 4., 1. } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for an TabulatedAverageEnergy object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {

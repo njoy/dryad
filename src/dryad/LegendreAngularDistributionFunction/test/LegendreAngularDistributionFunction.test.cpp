@@ -349,7 +349,6 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
     } // WHEN
   } // GIVEN
 
-
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of LegendreAngularDistributionFunction are given" ) {

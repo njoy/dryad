@@ -1937,6 +1937,27 @@ SCENARIO( "TabulatedCrossSection" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of LegendreAngularDistributionFunction are given" ) {
+
+      TabulatedCrossSection left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedCrossSection equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedCrossSection different( { 1., 4. }, { 4., 1. } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for an TabulatedCrossSection object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {

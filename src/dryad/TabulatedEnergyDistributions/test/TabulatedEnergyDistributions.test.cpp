@@ -118,7 +118,7 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
         CHECK( true == energies.isLinearised() );
       }
 
-      THEN( "a TabulatedAngularDistributions can be linearised" ) {
+      THEN( "a TabulatedEnergyDistributions can be linearised" ) {
 
         auto linear = chunk.linearise();
 
@@ -166,6 +166,37 @@ SCENARIO( "TabulatedEnergyDistributions" ) {
         CHECK( std::nullopt == linear.distributions()[3].cdf() );
         CHECK( 3 == linear.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedEnergyDistributions are given" ) {
+
+      TabulatedEnergyDistributions left( { 1., 2., 3., 4. },
+                                         { { { 1., 3. }, { 0.5, 0.5 } },
+                                           { { 1., 3. }, { 0.49, 0.51 } },
+                                           { { 1., 3. }, { 0.4, 0.6 } },
+                                           { { 1., 3. }, { 0.1, 0.9 } } } );
+      TabulatedEnergyDistributions equal( { 1., 2., 3., 4. },
+                                          { { { 1., 3. }, { 0.5, 0.5 } },
+                                            { { 1., 3. }, { 0.49, 0.51 } },
+                                            { { 1., 3. }, { 0.4, 0.6 } },
+                                            { { 1., 3. }, { 0.1, 0.9 } } } );
+      TabulatedEnergyDistributions different( { 1., 4. },
+                                              { { { 1., 3. }, { 0.5, 0.5 } },
+                                                { { 1., 3. }, { 0.1, 0.9 } } } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN
