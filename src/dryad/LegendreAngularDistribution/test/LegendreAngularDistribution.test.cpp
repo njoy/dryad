@@ -25,8 +25,6 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
 
-        CHECK( true == chunk.hasCdf() );
-
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -101,8 +99,6 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
-
-        CHECK( true == chunk.hasCdf() );
 
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );

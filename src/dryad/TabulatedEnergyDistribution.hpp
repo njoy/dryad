@@ -50,25 +50,9 @@ namespace dryad {
     /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const TabulatedEnergyDistributionFunction& cdf() const {
+    const std::optional< TabulatedEnergyDistributionFunction >& cdf() const noexcept {
 
-      if ( this->cdf_.has_value() ) {
-
-        return this->cdf_.value();
-      }
-      else {
-
-        Log::error( "The calculation of the cdf is not implemented yet" );
-        throw std::bad_optional_access();
-      }
-    }
-
-    /**
-     *  @brief Return whether or not the cumulative distribution function (cdf) is defined
-     */
-    bool hasCdf() const {
-
-      return this->cdf_.has_value();
+      return this->cdf_;
     }
 
     /**

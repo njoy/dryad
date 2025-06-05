@@ -67,14 +67,10 @@ SCENARIO( "TabulatedAngularDistributions" ) {
         CHECK_THAT(  1.  , WithinRel( chunk.distributions()[3].pdf().cosines()[1] ) );
         CHECK_THAT(  0.1 , WithinRel( chunk.distributions()[3].pdf().values()[0] ) );
         CHECK_THAT(  0.9 , WithinRel( chunk.distributions()[3].pdf().values()[1] ) );
-        CHECK( false == chunk.distributions()[0].hasCdf() );
-        CHECK( false == chunk.distributions()[1].hasCdf() );
-        CHECK( false == chunk.distributions()[2].hasCdf() );
-        CHECK( false == chunk.distributions()[3].hasCdf() );
-        CHECK_THROWS( chunk.distributions()[0].cdf() );
-        CHECK_THROWS( chunk.distributions()[1].cdf() );
-        CHECK_THROWS( chunk.distributions()[2].cdf() );
-        CHECK_THROWS( chunk.distributions()[3].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[0].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[1].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[2].cdf() );
+        CHECK( std::nullopt == chunk.distributions()[3].cdf() );
         CHECK( 3 == chunk.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
       } // THEN
@@ -136,10 +132,6 @@ SCENARIO( "TabulatedAngularDistributions" ) {
         CHECK_THAT( 2., WithinRel( linear.grid()[1] ) );
         CHECK_THAT( 3., WithinRel( linear.grid()[2] ) );
         CHECK_THAT( 4., WithinRel( linear.grid()[3] ) );
-        CHECK( false == linear.distributions()[0].hasCdf() );
-        CHECK( false == linear.distributions()[1].hasCdf() );
-        CHECK( false == linear.distributions()[2].hasCdf() );
-        CHECK( false == linear.distributions()[3].hasCdf() );
         CHECK( true == linear.distributions()[0].pdf().isLinearised() );
         CHECK( true == linear.distributions()[1].pdf().isLinearised() );
         CHECK( true == linear.distributions()[2].pdf().isLinearised() );
@@ -168,8 +160,43 @@ SCENARIO( "TabulatedAngularDistributions" ) {
         CHECK_THAT(  0.6 , WithinRel( linear.distributions()[2].pdf().values()[1] ) );
         CHECK_THAT(  0.1 , WithinRel( linear.distributions()[3].pdf().values()[0] ) );
         CHECK_THAT(  0.9 , WithinRel( linear.distributions()[3].pdf().values()[1] ) );
+        CHECK( std::nullopt == linear.distributions()[0].cdf() );
+        CHECK( std::nullopt == linear.distributions()[1].cdf() );
+        CHECK( std::nullopt == linear.distributions()[2].cdf() );
+        CHECK( std::nullopt == linear.distributions()[3].cdf() );
         CHECK( 3 == linear.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of InterpolationTable are given" ) {
+
+      TabulatedAngularDistributions left( { 1., 2., 3., 4. },
+                                          { { { -1., +1. }, { 0.5, 0.5 } },
+                                            { { -1., +1. }, { 0.49, 0.51 } },
+                                            { { -1., +1. }, { 0.4, 0.6 } },
+                                            { { -1., +1. }, { 0.1, 0.9 } } } );
+      TabulatedAngularDistributions equal( { 1., 2., 3., 4. },
+                                           { { { -1., +1. }, { 0.5, 0.5 } },
+                                             { { -1., +1. }, { 0.49, 0.51 } },
+                                             { { -1., +1. }, { 0.4, 0.6 } },
+                                             { { -1., +1. }, { 0.1, 0.9 } } } );
+      TabulatedAngularDistributions different( { 1., 4. },
+                                               { { { -1., +1. }, { 0.5, 0.5 } },
+                                                 { { -1., +1. }, { 0.1, 0.9 } } } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+//        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+//        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

@@ -30,7 +30,7 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual(  0.75, pdf.values[2] )
             self.assertAlmostEqual(  1.  , pdf.values[3] )
 
-            self.assertEqual( False, chunk.has_cdf )
+            self.assertEqual( None, chunk.cdf )
 
             # verify evaluation - values of x in the x grid
             self.assertAlmostEqual( 0.  , chunk( cosine = -1. ) )

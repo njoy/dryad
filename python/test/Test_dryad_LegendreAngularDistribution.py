@@ -16,8 +16,6 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # verify content
-            self.assertEqual( True, chunk.has_cdf )
-
             pdf = chunk.pdf
             self.assertAlmostEqual( -1., pdf.lower_cosine_limit )
             self.assertAlmostEqual(  1., pdf.upper_cosine_limit )

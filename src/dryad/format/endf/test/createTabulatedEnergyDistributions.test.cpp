@@ -99,14 +99,10 @@ void verifyElectronChunk( const TabulatedEnergyDistributions& chunk ) {
   CHECK_THAT( scale09 *  .246105000 , WithinRel( chunk.distributions()[9].pdf().values()[1] ) );
   CHECK_THAT( scale09 * 9.06486E-16 , WithinRel( chunk.distributions()[9].pdf().values()[109] ) );
   CHECK_THAT( scale09 * 5.16344E-16 , WithinRel( chunk.distributions()[9].pdf().values()[110] ) );
-  CHECK( false == chunk.distributions()[0].hasCdf() );
-  CHECK( false == chunk.distributions()[1].hasCdf() );
-  CHECK( false == chunk.distributions()[8].hasCdf() );
-  CHECK( false == chunk.distributions()[9].hasCdf() );
-  CHECK_THROWS( chunk.distributions()[0].cdf() );
-  CHECK_THROWS( chunk.distributions()[1].cdf() );
-  CHECK_THROWS( chunk.distributions()[8].cdf() );
-  CHECK_THROWS( chunk.distributions()[9].cdf() );
+  CHECK( std::nullopt == chunk.distributions()[0].cdf() );
+  CHECK( std::nullopt == chunk.distributions()[1].cdf() );
+  CHECK( std::nullopt == chunk.distributions()[8].cdf() );
+  CHECK( std::nullopt == chunk.distributions()[9].cdf() );
   CHECK( 9 == chunk.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
 }

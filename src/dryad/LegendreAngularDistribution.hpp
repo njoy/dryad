@@ -58,11 +58,6 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the cumulative distribution function (cdf) is defined
-     */
-    static constexpr bool hasCdf() { return true; }
-
-    /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
      *  @param cosine   the value to be evaluated

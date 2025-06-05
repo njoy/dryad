@@ -1976,6 +1976,27 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of InterpolationTable are given" ) {
+
+      TabulatedAngularDistributionFunction left( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedAngularDistributionFunction equal( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedAngularDistributionFunction different( { -1., 1. }, { 0.25, 0.75 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for an InterpolationTable object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {

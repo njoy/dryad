@@ -70,13 +70,6 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     &Component::cdf,
     "The cumulative distribution function (cdf) of the distribution"
   )
-  .def_property_readonly(
-
-    "has_cdf",
-    &Component::hasCdf,
-    "Flag to indicate whether or not the cumulative distribution function (cdf) "
-    "is defined"
-  )
   .def(
 
     "__call__",

@@ -38,7 +38,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK_THAT(  0.375, WithinRel( pdf.values()[2] ) );
         CHECK_THAT(  0.5  , WithinRel( pdf.values()[3] ) );
 
-        CHECK_THROWS( chunk.cdf() );
+        CHECK( std::nullopt == chunk.cdf() );
       } // THEN
 
       THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
@@ -118,7 +118,7 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
         CHECK_THAT(  0.375, WithinRel( pdf.values()[2] ) );
         CHECK_THAT(  0.5  , WithinRel( pdf.values()[3] ) );
 
-        CHECK_THROWS( chunk.cdf() );
+        CHECK( std::nullopt == chunk.cdf() );
       } // THEN
 
       THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
