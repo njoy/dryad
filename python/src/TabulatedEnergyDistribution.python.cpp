@@ -97,4 +97,7 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "    self        the energy distribution\n"
     "    tolerance   the linearisation tolerance"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/UncorrelatedDistributionData.hpp"
 
 // namespace aliases
@@ -73,4 +74,7 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
     &Component::energy,
     "The energy distributions"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

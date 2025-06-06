@@ -82,6 +82,9 @@ void wrapUniformAngularDistributions( python::module& module ) {
     "The average cosine values"
   );
 
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
   // add standard tabulated data definitions
   addStandardInterpolationTableDefinitions< Component >( component );
 }

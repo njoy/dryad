@@ -97,4 +97,7 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "    self        the angular distribution\n"
     "    tolerance   the linearisation tolerance"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

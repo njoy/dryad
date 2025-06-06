@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/IsotropicAngularDistributions.hpp"
 
 // namespace aliases
@@ -32,4 +33,7 @@ void wrapIsotropicAngularDistributions( python::module& module ) {
     "Arguments:\n"
     "    self   the component"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

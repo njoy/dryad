@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/MultiEnergyDistributions.hpp"
 
 // namespace aliases
@@ -21,4 +22,7 @@ void wrapMultiEnergyDistributions( python::module& module ) {
     module,
     "MultiEnergyDistributions"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

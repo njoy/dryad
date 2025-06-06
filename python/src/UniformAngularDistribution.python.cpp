@@ -62,4 +62,7 @@ void wrapUniformAngularDistribution( python::module& module ) {
     &Component::averageCosine,
     "The average cosine defined by the distribution"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
