@@ -112,6 +112,23 @@ class Test_dryad_CoherentDistributionData( unittest.TestCase ) :
 
         verify_chunk_with_anomolous_form_factor( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = CoherentDistributionData( ReferenceFrame.CentreOfMass,
+                                         TabulatedScatteringFunction( [ 0., 1e+6 ], [ 2., 1. ] ) )
+        equal = CoherentDistributionData( ReferenceFrame.CentreOfMass,
+                                          TabulatedScatteringFunction( [ 0., 1e+6 ], [ 2., 1. ] ) )
+        different = CoherentDistributionData( ReferenceFrame.CentreOfMass,
+                                              TabulatedScatteringFunction( [ 0., 1e+7 ], [ 2., 1. ] ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()

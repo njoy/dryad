@@ -79,6 +79,23 @@ class Test_dryad_TabulatedEnergyDistribution( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] )
+        equal = TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] )
+        unnormalised = TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] )
+        different = TabulatedEnergyDistribution( [ 1., 4. ], [ 0.25, 0.75 ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

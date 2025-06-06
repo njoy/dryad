@@ -152,6 +152,37 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TabulatedEnergyDistributions( [ 1., 2., 3., 4. ],
+                                             [ TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] ),
+                                               TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                               TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                               TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        equal = TabulatedEnergyDistributions( [ 1., 2., 3., 4. ],
+                                              [ TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] ),
+                                                TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                                TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                                TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        unnormalised = TabulatedEnergyDistributions( [ 1., 2., 3., 4. ],
+                                                     [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        different = TabulatedEnergyDistributions( [ 1., 4. ],
+                                                  [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
+                                                    TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

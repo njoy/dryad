@@ -303,6 +303,20 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = LegendreAngularDistributionFunction( [ 0.5, 0.25 ] )
+        equal = LegendreAngularDistributionFunction( [ 0.5, 0.25 ] )
+        different = LegendreAngularDistributionFunction( [ 0.5, 0.1, 0.0001 ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

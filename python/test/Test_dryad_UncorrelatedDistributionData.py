@@ -204,6 +204,35 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
 
         verify_tabulated_and_tabulated_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+
+        left = UncorrelatedDistributionData( ReferenceFrame.CentreOfMass,
+                                             IsotropicAngularDistributions(),
+                                             TabulatedEnergyDistributions( [ 1e-5, 20. ],
+                                                                           [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.1 ] ),
+                                                                             TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.05 ] ) ] ) )
+        equal = UncorrelatedDistributionData( ReferenceFrame.CentreOfMass,
+                                              IsotropicAngularDistributions(),
+                                              TabulatedEnergyDistributions( [ 1e-5, 20. ],
+                                                                            [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0., 0.1 ] ),
+                                                                              TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.05 ] ) ] ) )
+        different = UncorrelatedDistributionData( ReferenceFrame.CentreOfMass,
+                                                  TabulatedAngularDistributions( [ 1e-5, 20. ],
+                                                                                 [ TabulatedAngularDistribution( [ -1., 1. ], [ 0.5, 0.5 ] ),
+                                                                                   TabulatedAngularDistribution( [ -1., 1. ], [ 0.5, 0.5 ] ) ] ),
+                                                  TabulatedEnergyDistributions( [ 1e-5, 20. ],
+                                                                                [ TabulatedEnergyDistribution( [ 0., 20. ], [ 0.5, 0.5 ] ),
+                                                                                  TabulatedEnergyDistribution( [ 0., 20. ], [ 0.05, 0.05 ] ) ] ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()

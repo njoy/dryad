@@ -113,6 +113,23 @@ class Test_dryad_TwoBodyDistributionData( unittest.TestCase ) :
 
         verify_tabulated_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TwoBodyDistributionData( ReferenceFrame.CentreOfMass, IsotropicAngularDistributions() )
+        equal = TwoBodyDistributionData( ReferenceFrame.CentreOfMass, IsotropicAngularDistributions() )
+        different = TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                             LegendreAngularDistributions( [ 1e-5, 20. ],
+                                                                           [ LegendreAngularDistribution( [ 0.5 ] ),
+                                                                             LegendreAngularDistribution( [ 0.5, 0.1 ] ) ] ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()

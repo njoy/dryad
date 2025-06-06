@@ -1939,7 +1939,7 @@ SCENARIO( "TabulatedAverageEnergy" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of LegendreAngularDistributionFunction are given" ) {
+    WHEN( "two instances of TabulatedAverageEnergy are given" ) {
 
       TabulatedAverageEnergy left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
       TabulatedAverageEnergy equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );

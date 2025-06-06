@@ -153,6 +153,37 @@ class Test_dryad_TabulatedAngularDistributions( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TabulatedAngularDistributions( [ 1., 2., 3., 4. ],
+                                              [ TabulatedAngularDistribution( [ -1., +1. ], [ 0.5, 0.5 ] ),
+                                                TabulatedAngularDistribution( [ -1., +1. ], [ 0.49, 0.51 ] ),
+                                                TabulatedAngularDistribution( [ -1., +1. ], [ 0.4, 0.6 ] ),
+                                                TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ] )
+        equal = TabulatedAngularDistributions( [ 1., 2., 3., 4. ],
+                                               [ TabulatedAngularDistribution( [ -1., +1. ], [ 0.5, 0.5 ] ),
+                                                 TabulatedAngularDistribution( [ -1., +1. ], [ 0.49, 0.51 ] ),
+                                                 TabulatedAngularDistribution( [ -1., +1. ], [ 0.4, 0.6 ] ),
+                                                 TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ] )
+        unnormalised = TabulatedAngularDistributions( [ 1., 2., 3., 4. ],
+                                                      [ TabulatedAngularDistribution( [ -1., +1. ], [ 1.0, 1.0 ] ),
+                                                        TabulatedAngularDistribution( [ -1., +1. ], [ 0.49, 0.51 ] ),
+                                                        TabulatedAngularDistribution( [ -1., +1. ], [ 0.4, 0.6 ] ),
+                                                        TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ] )
+        different = TabulatedAngularDistributions( [ 1., 4. ],
+                                                   [ TabulatedAngularDistribution( [ -1., +1. ], [ 0.5, 0.5 ] ),
+                                                     TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

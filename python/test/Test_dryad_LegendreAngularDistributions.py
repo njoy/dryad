@@ -149,6 +149,37 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = LegendreAngularDistributions( [ 1., 2., 3., 4. ],
+                                             [ LegendreAngularDistribution( [ 0.5 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.01 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.1 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+        equal = LegendreAngularDistributions( [ 1., 2., 3., 4. ],
+                                             [ LegendreAngularDistribution( [ 0.5 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.01 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.1 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+        unnormalised = LegendreAngularDistributions( [ 1., 2., 3., 4. ],
+                                                     [ LegendreAngularDistribution( [ 1.0 ] ),
+                                                       LegendreAngularDistribution( [ 0.5, 0.01 ] ),
+                                                       LegendreAngularDistribution( [ 0.5, 0.1 ] ),
+                                                       LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+        different = LegendreAngularDistributions( [ 1., 4. ],
+                                                  [ LegendreAngularDistribution( [ 0.5 ] ),
+                                                    LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

@@ -1761,6 +1761,20 @@ class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
 
         verify_chunk6( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TabulatedCrossSection( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
+        equal = TabulatedCrossSection( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
+        different = TabulatedCrossSection( [ 1., 4. ], [ 4., 1. ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

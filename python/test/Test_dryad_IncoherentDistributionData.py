@@ -43,6 +43,23 @@ class Test_dryad_IncoherentDistributionData( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = IncoherentDistributionData( ReferenceFrame.CentreOfMass,
+                                           TabulatedScatteringFunction( [ 0., 1e+6 ], [ 2., 1. ] ) )
+        equal = IncoherentDistributionData( ReferenceFrame.CentreOfMass,
+                                            TabulatedScatteringFunction( [ 0., 1e+6 ], [ 2., 1. ] ) )
+        different = IncoherentDistributionData( ReferenceFrame.CentreOfMass,
+                                                TabulatedScatteringFunction( [ 0., 1e+7 ], [ 2., 1. ] ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()

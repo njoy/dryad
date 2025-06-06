@@ -184,6 +184,11 @@ SCENARIO( "TabulatedAngularDistributions" ) {
                                              { { -1., +1. }, { 0.49, 0.51 } },
                                              { { -1., +1. }, { 0.4, 0.6 } },
                                              { { -1., +1. }, { 0.1, 0.9 } } } );
+      TabulatedAngularDistributions unnormalised( { 1., 2., 3., 4. },
+                                                  { { { -1., +1. }, { 1.0, 1.0 } },
+                                                    { { -1., +1. }, { 0.49, 0.51 } },
+                                                    { { -1., +1. }, { 0.4, 0.6 } },
+                                                    { { -1., +1. }, { 0.1, 0.9 } } } );
       TabulatedAngularDistributions different( { 1., 4. },
                                                { { { -1., +1. }, { 0.5, 0.5 } },
                                                  { { -1., +1. }, { 0.1, 0.9 } } } );
@@ -192,10 +197,12 @@ SCENARIO( "TabulatedAngularDistributions" ) {
 
         CHECK( true == ( left == left ) );
         CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == unnormalised ) );
         CHECK( false == ( left == different ) );
 
         CHECK( false == ( left != left ) );
         CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != unnormalised ) );
         CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN

@@ -8,6 +8,9 @@ import sys
 from dryad import ReactionProduct
 from dryad import TabulatedMultiplicity
 from dryad import InterpolationType
+from dryad import ReferenceFrame
+from dryad import TwoBodyDistributionData
+from dryad import IsotropicAngularDistributions
 from dryad.id import ParticleID
 
 class Test_dryad_ReactionProduct( unittest.TestCase ) :
@@ -167,6 +170,27 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
         copy.linearise_inplace()
 
         verify_tabulated_linearised_chunk( self, copy )
+
+    def test_comparison( self ) :
+
+        left = ReactionProduct( ParticleID.neutron(), 1 )
+        equal = ReactionProduct( ParticleID.neutron(), 1 )
+        different1 = ReactionProduct( ParticleID.proton(), 1,
+                    TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                             IsotropicAngularDistributions() ) )
+        different2 = ReactionProduct( ParticleID.proton(), 1,
+                                  TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                           IsotropicAngularDistributions() ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different1 ) )
+        self.assertEqual( False, ( left == different2 ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different1 ) )
+        self.assertEqual( True, ( left != different2 ) )
 
 if __name__ == '__main__' :
 
