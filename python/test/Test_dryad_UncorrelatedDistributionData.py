@@ -206,7 +206,6 @@ class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-
         left = UncorrelatedDistributionData( ReferenceFrame.CentreOfMass,
                                              IsotropicAngularDistributions(),
                                              TabulatedEnergyDistributions( [ 1e-5, 20. ],
