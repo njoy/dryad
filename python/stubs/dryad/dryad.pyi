@@ -705,6 +705,7 @@ class ProjectileTarget:
     """
     Data associated to a given projectile and target
     """
+    __hash__: typing.ClassVar[None] = None
     @staticmethod
     def from_ace_file(filename: str) -> ProjectileTarget | tuple[ProjectileTarget, ProjectileTarget]:
         """
@@ -736,6 +737,8 @@ class ProjectileTarget:
         Arguments:
             filename   the GNDS file name
         """
+    def __eq__(self, arg0: ProjectileTarget) -> bool:
+        ...
     def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
         """
         Initialise the ProjectileTarget
@@ -747,6 +750,8 @@ class ProjectileTarget:
             type         the interaction type
             reactions    the reaction data
         """
+    def __ne__(self, arg0: ProjectileTarget) -> bool:
+        ...
     def has_reaction(self, id: str) -> bool:
         """
         Return whether or not a reaction is present
@@ -813,6 +818,9 @@ class Reaction:
     """
     The data associated to a single reaction
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: Reaction) -> bool:
+        ...
     @typing.overload
     def __init__(self, id: str, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None) -> None:
         """
@@ -843,6 +851,8 @@ class Reaction:
             products    the reaction products associated to the summation reaction
                         (defaults to no reaction products)
         """
+    def __ne__(self, arg0: Reaction) -> bool:
+        ...
     def has_product(self, type: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product type is present

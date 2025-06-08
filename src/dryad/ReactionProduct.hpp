@@ -163,8 +163,7 @@ namespace dryad {
      */
     bool operator==( const ReactionProduct& right ) const noexcept {
 
-      return this->isLinearised() == right.isLinearised() &&
-             this->identifier() == right.identifier() &&
+      return this->identifier() == right.identifier() &&
              this->multiplicity() == right.multiplicity() &&
              this->averageEnergy() == right.averageEnergy() &&
              this->distributionData() == right.distributionData();

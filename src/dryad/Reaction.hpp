@@ -243,6 +243,32 @@ namespace dryad {
       this->xs_ = this->xs_.linearise( tolerance );
       this->linearised_ = true;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const Reaction& right ) const noexcept {
+
+      return this->identifier() == right.identifier() &&
+             this->category() == right.category() &&
+             this->massDifferenceQValue() == right.massDifferenceQValue() &&
+             this->reactionQValue() == right.reactionQValue() &&
+             this->partialReactionIdentifiers() == right.partialReactionIdentifiers() &&
+             this->crossSection() == right.crossSection() &&
+             this->products() == right.products();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const Reaction& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/ProjectileTarget.hpp"
 #include "dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
@@ -163,4 +164,7 @@ void wrapProjectileTarget( python::module& module ) {
     "Arguments:\n"
     "    filename   the ENDF file name"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
