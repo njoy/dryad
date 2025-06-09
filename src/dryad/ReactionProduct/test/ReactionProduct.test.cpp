@@ -89,24 +89,19 @@ SCENARIO( "ReactionProduct" ) {
 
       ReactionProduct left( id::ParticleID::neutron(), 1 );
       ReactionProduct equal( id::ParticleID::neutron(), 1 );
-      ReactionProduct different1( id::ParticleID::proton(), 1,
-                                  TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
-                                                           IsotropicAngularDistributions() ) );
-      ReactionProduct different2( id::ParticleID::proton(), 1,
-                                  TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
-                                                           IsotropicAngularDistributions() ) );
+      ReactionProduct different( id::ParticleID::proton(), 1,
+                                 TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                                          IsotropicAngularDistributions() ) );
 
       THEN( "they can be compared" ) {
 
         CHECK( true == ( left == left ) );
         CHECK( true == ( left == equal ) );
-        CHECK( false == ( left == different1 ) );
-        CHECK( false == ( left == different2 ) );
+        CHECK( false == ( left == different ) );
 
         CHECK( false == ( left != left ) );
         CHECK( false == ( left != equal ) );
-        CHECK( true == ( left != different1 ) );
-        CHECK( true == ( left != different2 ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

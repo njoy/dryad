@@ -175,22 +175,17 @@ class Test_dryad_ReactionProduct( unittest.TestCase ) :
 
         left = ReactionProduct( ParticleID.neutron(), 1 )
         equal = ReactionProduct( ParticleID.neutron(), 1 )
-        different1 = ReactionProduct( ParticleID.proton(), 1,
-                    TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
-                                             IsotropicAngularDistributions() ) )
-        different2 = ReactionProduct( ParticleID.proton(), 1,
-                                  TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
-                                                           IsotropicAngularDistributions() ) )
+        different = ReactionProduct( ParticleID.proton(), 1,
+                                     TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                              IsotropicAngularDistributions() ) )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )
-        self.assertEqual( False, ( left == different1 ) )
-        self.assertEqual( False, ( left == different2 ) )
+        self.assertEqual( False, ( left == different ) )
 
         self.assertEqual( False, ( left != left ) )
         self.assertEqual( False, ( left != equal ) )
-        self.assertEqual( True, ( left != different1 ) )
-        self.assertEqual( True, ( left != different2 ) )
+        self.assertEqual( True, ( left != different ) )
 
 if __name__ == '__main__' :
 
