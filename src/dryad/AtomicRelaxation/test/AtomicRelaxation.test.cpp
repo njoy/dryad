@@ -52,28 +52,6 @@ SCENARIO( "AtomicRelaxation" ) {
 
     WHEN( "two instances of TabulatedFormFactor are given" ) {
 
-      id::ElementID element( 1 );
-      std::vector< atomic::ElectronSubshellConfiguration > subshells = {
-
-        atomic::ElectronSubshellConfiguration(
-
-          id::ElectronSubshellID( "K" ), 538, 2,
-          { atomic::RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
-            atomic::RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) },
-          { atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) }
-        ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 )
-      };
-
-      AtomicRelaxation chunk( std::move( element ), std::move( subshells ) );
-
       id::ElementID h( 1 );
       id::ElectronSubshellID k_shell( id::ElectronSubshellID::K );
       id::ElectronSubshellID l1_shell( id::ElectronSubshellID::L1 );
