@@ -112,6 +112,42 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
 
         verify_chunk_with_transitions( self, chunk )
 
+    def test_comparison( self ) :
+
+        k_shell = ElectronSubshellID( ElectronSubshellID.K )
+
+        left = ElectronSubshellConfiguration( k_shell, 538., 2.,
+                                              [ RadiativeTransitionData( ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                                RadiativeTransitionData( ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) ],
+                                              [ NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                                NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+                                                NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+                                                NonRadiativeTransitionData( ElectronSubshellID( "L2" ), ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+                                                NonRadiativeTransitionData( ElectronSubshellID( "L2" ), ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+                                                NonRadiativeTransitionData( ElectronSubshellID( "L3" ), ElectronSubshellID( "L3" ), 0.166809, 508.98 ) ] )
+        equal = ElectronSubshellConfiguration( k_shell, 538., 2.,
+                                               [ RadiativeTransitionData( ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                                 RadiativeTransitionData( ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) ],
+                                               [ NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                                 NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+                                                 NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+                                                 NonRadiativeTransitionData( ElectronSubshellID( "L2" ), ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+                                                 NonRadiativeTransitionData( ElectronSubshellID( "L2" ), ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+                                                 NonRadiativeTransitionData( ElectronSubshellID( "L3" ), ElectronSubshellID( "L3" ), 0.166809, 508.98 ) ] )
+        different = ElectronSubshellConfiguration( k_shell, 538., 2.,
+                                                   [ RadiativeTransitionData( ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                                     RadiativeTransitionData( ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) ],
+                                                   [ NonRadiativeTransitionData( ElectronSubshellID( "L1" ), ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                                     NonRadiativeTransitionData( ElectronSubshellID( "L3" ), ElectronSubshellID( "L3" ), 0.166809, 508.98 ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()

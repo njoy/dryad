@@ -38,6 +38,22 @@ class Test_dryad_RadiativeTransitionData( unittest.TestCase ) :
 
         verify_chunk_with_transition_energy( self, chunk )
 
+    def test_comparison( self ) :
+
+        k_shell = ElectronSubshellID( ElectronSubshellID.K )
+
+        left = RadiativeTransitionData( k_shell, 1e-3 )
+        equal = RadiativeTransitionData( k_shell, 1e-3 )
+        different = RadiativeTransitionData( k_shell, 1e-3, 550. )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()
