@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/TwoBodyDistributionData.hpp"
 
 // namespace aliases
@@ -64,4 +65,7 @@ void wrapTwoBodyDistributionData( python::module& module ) {
     &Component::angle,
     "The angular distributions"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

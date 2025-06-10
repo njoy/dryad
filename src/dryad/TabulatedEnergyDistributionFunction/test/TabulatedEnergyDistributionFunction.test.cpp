@@ -2028,6 +2028,27 @@ SCENARIO( "TabulatedEnergyDistributionFunction" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedEnergyDistributionFunction are given" ) {
+
+      TabulatedEnergyDistributionFunction left( { 1., 3. }, { 0.5, 0.5 } );
+      TabulatedEnergyDistributionFunction equal( { 1., 3. }, { 0.5, 0.5 } );
+      TabulatedEnergyDistributionFunction different( { 1., 3. }, { 0.25, 0.75 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for an TabulatedEnergyDistributionFunction object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {

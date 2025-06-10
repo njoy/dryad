@@ -53,14 +53,6 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     &Component::cdf,
     "The cumulative distribution function (cdf) of the distribution"
   )
-  .def_property_readonly(
-
-    "has_cdf",
-    [] ( const Component& self ) -> decltype(auto)
-       { return self.hasCdf(); },
-    "Flag to indicate whether or not the cumulative distribution function (cdf) "
-    "is defined"
-  )
   .def(
 
     "__call__",
@@ -88,4 +80,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "    self        the angular distribution\n"
     "    tolerance   the linearisation tolerance"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

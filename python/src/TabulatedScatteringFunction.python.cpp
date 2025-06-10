@@ -116,6 +116,9 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     "    cosine   the outgoing photon cosine"
   );
 
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
 }

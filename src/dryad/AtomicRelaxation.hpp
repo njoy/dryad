@@ -85,6 +85,27 @@ namespace dryad {
         throw std::exception();
       }
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const AtomicRelaxation& right ) const noexcept {
+
+      return this->elementIdentifier() == right.elementIdentifier() &&
+             this->subshells() == right.subshells();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const AtomicRelaxation& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

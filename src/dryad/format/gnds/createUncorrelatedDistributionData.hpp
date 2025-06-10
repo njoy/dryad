@@ -110,24 +110,41 @@ namespace gnds {
 
         // get the functions
         auto function = node.child( "function1ds" ).first_child();
-        if ( strcmp( function.name(), "XYs1d" ) == 0 ) {
 
-          std::vector< double > grid;
-          std::vector< TabulatedEnergyDistribution > distributions;
-          for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
+        std::vector< double > grid;
+        std::vector< TabulatedEnergyDistribution > distributions;
+        for ( ; function; function = function.next_sibling() ) {
 
-            auto tabulated = createTabulatedEnergyDistribution( function, units );
-            grid.push_back( tabulated.first.value() );
-            distributions.emplace_back( std::move( tabulated.second ) );
-          }
-
-          energyd = TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
+          auto tabulated = createTabulatedEnergyDistribution( function, units );
+          grid.push_back( tabulated.first.value() );
+          distributions.emplace_back( std::move( tabulated.second ) );
         }
-        else {
 
-          Log::error( "Only XYs1d nodes are allowed in an energy XYs2d" );
-          throw std::exception();
-        }
+        energyd = TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
+      }
+      else if ( strcmp( node.name(), "evaporation" ) == 0 ) {
+
+        throw std::runtime_error( "evaporation" );
+      }
+      else if ( strcmp( node.name(), "NBodyPhaseSpace" ) == 0 ) {
+
+        throw std::runtime_error( "NBodyPhaseSpace" );
+      }
+      else if ( strcmp( node.name(), "weightedFunctionals" ) == 0 ) {
+
+        throw std::runtime_error( "weightedFunctionals" );
+      }
+      else if ( strcmp( node.name(), "simpleMaxwellianFission" ) == 0 ) {
+
+        throw std::runtime_error( "simpleMaxwellianFission" );
+      }
+      else if ( strcmp( node.name(), "regions2d" ) == 0 ) {
+
+        throw std::runtime_error( "regions2d" );
+      }
+      else if ( strcmp( node.name(), "MadlandNix" ) == 0 ) {
+
+        throw std::runtime_error( "MadlandNix" );
       }
       else {
 

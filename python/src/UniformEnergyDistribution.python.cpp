@@ -62,4 +62,7 @@ void wrapUniformEnergyDistribution( python::module& module ) {
     &Component::averageEnergy,
     "The average energy defined by the distribution"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

@@ -70,6 +70,30 @@ SCENARIO( "UniformEnergyDistribution" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of UniformAngularDistribution are given" ) {
+
+      UniformEnergyDistribution left( { 2., 3., 10. },
+                                      UniformDistributionType::Discrete );
+      UniformEnergyDistribution equal( { 2., 3., 10. },
+                                       UniformDistributionType::Discrete );
+      UniformEnergyDistribution different( { 2., 3., 10., 11., 20. },
+                                           UniformDistributionType::Interval );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data" ) {
 
     WHEN( "the values are empty for a discrete uniform distribution" ) {

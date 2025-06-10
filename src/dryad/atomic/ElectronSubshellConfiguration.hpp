@@ -153,6 +153,32 @@ namespace atomic {
 
       return this->nonradiative_probability_;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ElectronSubshellConfiguration& right ) const noexcept {
+
+      return this->identifier() == right.identifier() &&
+             this->bindingEnergy() == right.bindingEnergy() &&
+             this->population() == right.population() &&
+             this->totalRadiativeProbability() == right.totalRadiativeProbability() &&
+             this->totalNonRadiativeProbability() == right.totalNonRadiativeProbability() &&
+             this->radiativeTransitions() == right.radiativeTransitions() &&
+             this->nonRadiativeTransitions() == right.nonRadiativeTransitions();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ElectronSubshellConfiguration& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // atomic namespace

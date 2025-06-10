@@ -83,6 +83,9 @@ void wrapRadiativeTransitionData( python::module& module ) {
     python::overload_cast<>( &Component::energy, python::const_ ),
     "The energy of the emitted photon"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
 
 } // atomic namespace

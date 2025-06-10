@@ -30,7 +30,7 @@ class Test_dryad_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 0.375, pdf.values[2] )
             self.assertAlmostEqual( 0.5  , pdf.values[3] )
 
-            self.assertEqual( False, chunk.has_cdf )
+            self.assertEqual( None, chunk.cdf )
 
             # verify evaluation - values of x in the x grid
             self.assertAlmostEqual( 0.   , chunk( energy = 0. ) )
@@ -78,6 +78,23 @@ class Test_dryad_TabulatedEnergyDistribution( unittest.TestCase ) :
         chunk = TabulatedEnergyDistribution( energies = [ 0., 2., 3., 4. ], values = [ 0., 0.5, 0.75, 1. ] )
 
         verify_chunk( self, chunk )
+
+    def test_comparison( self ) :
+
+        left = TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] )
+        equal = TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] )
+        unnormalised = TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] )
+        different = TabulatedEnergyDistribution( [ 1., 4. ], [ 0.25, 0.75 ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
 
     def test_failures( self ) :
 

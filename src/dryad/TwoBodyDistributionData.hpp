@@ -78,6 +78,25 @@ namespace dryad {
     //! @todo implement kinematics formulas to retrieve outgoing energy
     //!       from an incident energy and outgoing cosine
 
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const TwoBodyDistributionData& right ) const noexcept {
+
+      return this->frame() == right.frame() && this->angle() == right.angle();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const TwoBodyDistributionData& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

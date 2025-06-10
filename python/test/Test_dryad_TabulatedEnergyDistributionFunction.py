@@ -1749,6 +1749,20 @@ class Test_dryad_TabulatedEnergyDistributionFunction( unittest.TestCase ) :
 
         verify_chunk6( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TabulatedEnergyDistributionFunction( [ 1., 3. ], [ 0.5, 0.5 ] )
+        equal = TabulatedEnergyDistributionFunction( [ 1., 3. ], [ 0.5, 0.5 ] )
+        different = TabulatedEnergyDistributionFunction( [ 1., 4. ], [ 0.25, 0.75 ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

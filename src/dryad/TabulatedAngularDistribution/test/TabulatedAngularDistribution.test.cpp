@@ -38,7 +38,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT(  0.75, WithinRel( pdf.values()[2] ) );
         CHECK_THAT(  1.  , WithinRel( pdf.values()[3] ) );
 
-        CHECK_THROWS( chunk.cdf() );
+        CHECK( std::nullopt == chunk.cdf() );
       } // THEN
 
       THEN( "a TabulatedAngularDistribution can be evaluated" ) {
@@ -118,7 +118,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT(  0.75, WithinRel( pdf.values()[2] ) );
         CHECK_THAT(  1.  , WithinRel( pdf.values()[3] ) );
 
-        CHECK_THROWS( chunk.cdf() );
+        CHECK( std::nullopt == chunk.cdf() );
       } // THEN
 
       THEN( "a TabulatedAngularDistribution can be evaluated" ) {
@@ -170,6 +170,30 @@ SCENARIO( "TabulatedAngularDistribution" ) {
         CHECK_THAT(  1.  , WithinRel( linear.pdf().values()[3] ) );
 
         CHECK( true == linear.pdf().isLinearised() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedAngularDistribution are given" ) {
+
+      TabulatedAngularDistribution left( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedAngularDistribution equal( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedAngularDistribution unnormalised( { -1., 1. }, { 1., 1. } );
+      TabulatedAngularDistribution different( { -1., 1. }, { 0.25, 0.75 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == unnormalised ) ); // normalised under the hood, so equal
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != unnormalised ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

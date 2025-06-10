@@ -130,10 +130,6 @@ namespace h1 {
     CHECK_THAT(  1.69449750E-03 , WithinRel( angle.distributions()[152].pdf().coefficients()[4] ) );
     CHECK_THAT(  5.25219970E-05 , WithinRel( angle.distributions()[152].pdf().coefficients()[5] ) );
     CHECK_THAT(  4.48370065E-05 , WithinRel( angle.distributions()[152].pdf().coefficients()[6] ) );
-    CHECK( true == angle.distributions()[0].hasCdf() );
-    CHECK( true == angle.distributions()[1].hasCdf() );
-    CHECK( true == angle.distributions()[151].hasCdf() );
-    CHECK( true == angle.distributions()[152].hasCdf() );
     CHECK( 8 == angle.distributions()[0].cdf().coefficients().size() );
     CHECK( 8 == angle.distributions()[1].cdf().coefficients().size() );
     CHECK( 8 == angle.distributions()[151].cdf().coefficients().size() );

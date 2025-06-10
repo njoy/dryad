@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/IncoherentDistributionData.hpp"
 
 // namespace aliases
@@ -62,4 +63,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
     &Component::scatteringFunction,
     "The scattering function"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

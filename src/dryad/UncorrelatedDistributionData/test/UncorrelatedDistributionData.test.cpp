@@ -95,6 +95,41 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of UncorrelatedDistributionData are given" ) {
+
+      UncorrelatedDistributionData left( ReferenceFrame::CentreOfMass,
+                                         IsotropicAngularDistributions(),
+                                         TabulatedEnergyDistributions( { 1e-5, 20. },
+                                                                       { { { 0., 20. }, { 0., 0.1 } },
+                                                                         { { 0., 20. }, { 0.05, 0.05 } } } ) );
+      UncorrelatedDistributionData equal( ReferenceFrame::CentreOfMass,
+                                          IsotropicAngularDistributions(),
+                                          TabulatedEnergyDistributions( { 1e-5, 20. },
+                                                                        { { { 0., 20. }, { 0., 0.1 } },
+                                                                          { { 0., 20. }, { 0.05, 0.05 } } } ) );
+      UncorrelatedDistributionData different( ReferenceFrame::CentreOfMass,
+                                              TabulatedAngularDistributions( { 1e-5, 20. },
+                                                                             { { { -1., 1. }, { 0.5, 0.5 } },
+                                                                               { { -1., 1. }, { 0.5, 0.5 } } } ),
+                                              TabulatedEnergyDistributions( { 1e-5, 20. },
+                                                                            { { { 0., 20. }, { 0., 0.1 } },
+                                                                              { { 0., 20. }, { 0.05, 0.05 } } } ) );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData& chunk ) {

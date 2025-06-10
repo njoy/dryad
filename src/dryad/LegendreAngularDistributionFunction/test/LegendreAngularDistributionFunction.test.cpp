@@ -349,6 +349,27 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of LegendreAngularDistributionFunction are given" ) {
+
+      LegendreAngularDistributionFunction left( { 0.5, 0.25 } );
+      LegendreAngularDistributionFunction equal( { 0.5, 0.25 } );
+      LegendreAngularDistributionFunction different( { 0.5, 0.1, 0.0001 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data" ) {
 
     WHEN( "the coefficient vector is empty" ) {

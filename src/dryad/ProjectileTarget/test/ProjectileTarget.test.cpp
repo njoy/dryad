@@ -63,6 +63,55 @@ SCENARIO( "ProjectileTarget" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of ReactionProduct are given" ) {
+
+      ProjectileTarget left( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+                             InteractionType::Nuclear,
+                             { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
+                                         TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
+                                                                  InterpolationType::LogLinear ),
+                                         {},
+                                         0, 0 ),
+                              Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                                        TabulatedCrossSection( { 1., 20. }, { 0., 100. },
+                                                                 InterpolationType::LinearLinear ),
+                                        {},
+                                        0, -1 ) } );
+      ProjectileTarget equal( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+                              InteractionType::Nuclear,
+                              { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
+                                          TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
+                                                                   InterpolationType::LogLinear ),
+                                          {},
+                                          0, 0 ),
+                               Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                                         TabulatedCrossSection( { 1., 20. }, { 0., 100. },
+                                                                  InterpolationType::LinearLinear ),
+                                         {},
+                                         0, -1 ) } );
+      ProjectileTarget different( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+                                  InteractionType::Nuclear,
+                                  { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
+                                              TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
+                                                                       InterpolationType::LogLinear ),
+                                              {},
+                                              0, 0 ) } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const ProjectileTarget& chunk ) {

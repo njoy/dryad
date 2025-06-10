@@ -21,7 +21,7 @@ SCENARIO( "ReactionProduct" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      id::ParticleID id( "n" );
+      id::ParticleID id = id::ParticleID::neutron();
       int multiplicity = 1;
 
       ReactionProduct chunk( std::move( id ), std::move( multiplicity ) );
@@ -82,6 +82,30 @@ SCENARIO( "ReactionProduct" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of ReactionProduct are given" ) {
+
+      ReactionProduct left( id::ParticleID::neutron(), 1 );
+      ReactionProduct equal( id::ParticleID::neutron(), 1 );
+      ReactionProduct different( id::ParticleID::proton(), 1,
+                                 TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                                          IsotropicAngularDistributions() ) );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
 } // SCENARIO
 
 void verifyChunk( const ReactionProduct& chunk ) {

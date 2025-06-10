@@ -85,6 +85,37 @@ SCENARIO( "UniformEnergyDistributions" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of UniformAngularDistributions are given" ) {
+
+      UniformEnergyDistributions left( { 1., 2., 3., 4. },
+                                       { { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+                                         { { 1., 2. }, UniformDistributionType::Discrete },
+                                         { { 3., 5., 7. }, UniformDistributionType::Discrete },
+                                         { { 5., 10. }, UniformDistributionType::Discrete } } );
+      UniformEnergyDistributions equal( { 1., 2., 3., 4. },
+                                        { { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+                                          { { 1., 2. }, UniformDistributionType::Discrete },
+                                          { { 3., 5., 7. }, UniformDistributionType::Discrete },
+                                          { { 5., 10. }, UniformDistributionType::Discrete } } );
+      UniformEnergyDistributions different(  { 1., 4. },
+                                             { { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+                                               { { 5., 10. }, UniformDistributionType::Discrete } } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for a UniformEnergyDistributions object" ) {
 
     WHEN( "there are not enough values in the x or f(y) grid" ) {

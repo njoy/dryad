@@ -74,6 +74,30 @@ class Test_dryad_UniformAngularDistributions( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = UniformAngularDistributions( [ 1., 2., 3., 4. ],
+                                            [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                              UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                              UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                              UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+        equal = UniformAngularDistributions( [ 1., 2., 3., 4. ],
+                                             [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                               UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                               UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+        different = UniformAngularDistributions( [ 1., 4. ],
+                                                 [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                                   UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

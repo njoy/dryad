@@ -25,6 +25,25 @@ namespace resonances {
 
     /* methods */
 
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ResonanceParameters& right ) const noexcept {
+
+      return true;
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ResonanceParameters& right ) const noexcept {
+
+      return false;
+    }
   };
 
 } // resonances namespace

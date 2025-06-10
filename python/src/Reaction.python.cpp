@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/Reaction.hpp"
 
 // namespace aliases
@@ -191,4 +192,7 @@ void wrapReaction( python::module& module ) {
     "    self        the reaction\n"
     "    tolerance   the linearisation tolerance"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

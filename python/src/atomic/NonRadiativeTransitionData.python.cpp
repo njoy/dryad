@@ -95,6 +95,9 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     &Component::energy,
     "The energy of the emitted electron"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
 
 } // atomic namespace

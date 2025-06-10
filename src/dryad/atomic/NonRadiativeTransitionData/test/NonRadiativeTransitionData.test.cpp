@@ -52,6 +52,30 @@ SCENARIO( "NonRadiativeTransitionData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedFormFactor are given" ) {
+
+      id::ElectronSubshellID k_shell( id::ElectronSubshellID::K );
+      id::ElectronSubshellID l1_shell( id::ElectronSubshellID::L1 );
+
+      NonRadiativeTransitionData left( k_shell, l1_shell, 1e-3 );
+      NonRadiativeTransitionData equal( k_shell, l1_shell, 1e-3 );
+      NonRadiativeTransitionData different( k_shell, l1_shell, 1e-3, 550. );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunkWithoutTransitionEnergy( const NonRadiativeTransitionData& chunk ) {

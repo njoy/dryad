@@ -30,7 +30,7 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual(  0.75, pdf.values[2] )
             self.assertAlmostEqual(  1.  , pdf.values[3] )
 
-            self.assertEqual( False, chunk.has_cdf )
+            self.assertEqual( None, chunk.cdf )
 
             # verify evaluation - values of x in the x grid
             self.assertAlmostEqual( 0.  , chunk( cosine = -1. ) )
@@ -78,6 +78,23 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
         chunk = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 1., 1.5, 2. ] )
 
         verify_chunk( self, chunk )
+
+    def test_comparison( self ) :
+
+        left = TabulatedAngularDistribution( [ -1., 1. ], [ 0.5, 0.5 ] )
+        equal = TabulatedAngularDistribution( [ -1., 1. ], [ 0.5, 0.5 ] )
+        unnormalised = TabulatedAngularDistribution( [ -1., 1. ], [ 1., 1. ] )
+        different = TabulatedAngularDistribution( [ -1., 1. ], [ 0.25, 0.75 ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
 
     def test_failures( self ) :
 

@@ -68,6 +68,26 @@ namespace dryad {
       return TabulatedEnergyDistributions( this->grid(), std::move( distributions ),
                                            this->boundaries(), this->interpolants() );
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const TabulatedEnergyDistributions& right ) const noexcept {
+
+      return Parent::operator==( right );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const TabulatedEnergyDistributions& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

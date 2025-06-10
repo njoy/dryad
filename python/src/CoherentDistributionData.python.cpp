@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/CoherentDistributionData.hpp"
 
 // namespace aliases
@@ -96,4 +97,7 @@ void wrapCoherentDistributionData( python::module& module ) {
     &Component::imaginaryAnomolousFormFactor,
     "The imaginary part of the anomolous form factor"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }

@@ -94,6 +94,9 @@ void wrapTabulatedMultiplicity( python::module& module ) {
     "    energy    the energy value"
   );
 
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
 }

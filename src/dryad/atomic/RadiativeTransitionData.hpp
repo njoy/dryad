@@ -69,6 +69,28 @@ namespace atomic {
 
       return this->energy_;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const RadiativeTransitionData& right ) const noexcept {
+
+      return this->originatingShell() == right.originatingShell() &&
+             this->probability() == right.probability() &&
+             this->energy() == right.energy();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const RadiativeTransitionData& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // atomic namespace

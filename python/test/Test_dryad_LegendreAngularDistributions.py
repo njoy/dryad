@@ -38,10 +38,6 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 0.1 , chunk.distributions[2].pdf.coefficients[1] )
             self.assertAlmostEqual( 0.5 , chunk.distributions[3].pdf.coefficients[0] )
             self.assertAlmostEqual( 0.4 , chunk.distributions[3].pdf.coefficients[1] )
-            self.assertEqual( True, chunk.distributions[0].has_cdf )
-            self.assertEqual( True, chunk.distributions[1].has_cdf )
-            self.assertEqual( True, chunk.distributions[2].has_cdf )
-            self.assertEqual( True, chunk.distributions[3].has_cdf )
             self.assertEqual( 2, len( chunk.distributions[0].cdf.coefficients ) )
             self.assertEqual( 3, len( chunk.distributions[1].cdf.coefficients ) )
             self.assertEqual( 3, len( chunk.distributions[2].cdf.coefficients ) )
@@ -108,10 +104,6 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., linear.grid[1] )
             self.assertAlmostEqual( 3., linear.grid[2] )
             self.assertAlmostEqual( 4., linear.grid[3] )
-            self.assertEqual( False, linear.distributions[0].has_cdf )
-            self.assertEqual( False, linear.distributions[1].has_cdf )
-            self.assertEqual( False, linear.distributions[2].has_cdf )
-            self.assertEqual( False, linear.distributions[3].has_cdf )
             self.assertEqual( True, linear.distributions[0].pdf.is_linearised )
             self.assertEqual( True, linear.distributions[1].pdf.is_linearised )
             self.assertEqual( True, linear.distributions[2].pdf.is_linearised )
@@ -140,6 +132,10 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual(  0.6 , linear.distributions[2].pdf.values[1] )
             self.assertAlmostEqual(  0.1 , linear.distributions[3].pdf.values[0] )
             self.assertAlmostEqual(  0.9 , linear.distributions[3].pdf.values[1] )
+            self.assertEqual( None, linear.distributions[0].cdf )
+            self.assertEqual( None, linear.distributions[1].cdf )
+            self.assertEqual( None, linear.distributions[2].cdf )
+            self.assertEqual( None, linear.distributions[3].cdf )
             self.assertEqual( 3, linear.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, linear.interpolants[0] )
 
@@ -152,6 +148,37 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
                                               interpolant = InterpolationType.LinearLinear )
 
         verify_chunk( self, chunk )
+
+    def test_comparison( self ) :
+
+        left = LegendreAngularDistributions( [ 1., 2., 3., 4. ],
+                                             [ LegendreAngularDistribution( [ 0.5 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.01 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.1 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+        equal = LegendreAngularDistributions( [ 1., 2., 3., 4. ],
+                                             [ LegendreAngularDistribution( [ 0.5 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.01 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.1 ] ),
+                                               LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+        unnormalised = LegendreAngularDistributions( [ 1., 2., 3., 4. ],
+                                                     [ LegendreAngularDistribution( [ 1.0 ] ),
+                                                       LegendreAngularDistribution( [ 0.5, 0.01 ] ),
+                                                       LegendreAngularDistribution( [ 0.5, 0.1 ] ),
+                                                       LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+        different = LegendreAngularDistributions( [ 1., 4. ],
+                                                  [ LegendreAngularDistribution( [ 0.5 ] ),
+                                                    LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
 
     def test_failures( self ) :
 
