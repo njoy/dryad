@@ -58,6 +58,16 @@ void wrapReactionType( python::module& module ) {
   )
   .def(
 
+    python::init< std::map< ParticleID, short >, int >(),
+    python::arg( "particles" ), python::arg( "level" ),
+    "Initialise the reaction type\n\n"
+    "Arguments:\n"
+    "    self        the reaction type\n"
+    "    particles   the outgoing particles (excluding the residual)\n"
+    "    level       the level number of the residual"
+  )
+  .def(
+
     python::init< const std::string& >(),
     python::arg( "string" ),
     "Initialise the reaction type\n\n"

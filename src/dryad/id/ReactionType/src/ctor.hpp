@@ -36,6 +36,15 @@ ReactionType( const ParticleID& projectile, int mt ) : index_( getIndex( project
 /**
  *  @brief Constructor
  *
+ *  @param particles   the outgoing particles (excluding the residual)
+ *  @param level       the level number of the residual
+ */
+ReactionType( const std::map< ParticleID, short >& particles, int level ) : 
+  index_( getIndex( particles, level ) ) {}
+
+/**
+ *  @brief Constructor
+ *
  *  @param string   the reaction type string
  */
 ReactionType( const std::string& string ) : index_( getIndex( string ) ) {}
