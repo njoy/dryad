@@ -27,7 +27,7 @@ endfunction()
 
 message( STATUS "Adding dryad C++ unit testing" )
 
-add_subdirectory( src/dryad/base/UniformDistribution/test )
+add_subdirectory( test )
 
 add_subdirectory( src/dryad/id/ElectronSubshellID/test )
 add_subdirectory( src/dryad/id/ElementID/test )
@@ -35,18 +35,12 @@ add_subdirectory( src/dryad/id/LevelID/test )
 add_subdirectory( src/dryad/id/ParticleID/test )
 add_subdirectory( src/dryad/id/ReactionType/test )
 
-add_subdirectory( src/dryad/atomic/ElectronSubshellConfiguration/test )
-add_subdirectory( src/dryad/atomic/RadiativeTransitionData/test )
-add_subdirectory( src/dryad/atomic/NonRadiativeTransitionData/test )
-
 add_subdirectory( src/dryad/covariance/matrix/test )
 add_subdirectory( src/dryad/covariance/CovarianceBlock/test )
 add_subdirectory( src/dryad/covariance/CrossSectionMetadata/test )
 add_subdirectory( src/dryad/covariance/VarianceScaling/test )
 add_subdirectory( src/dryad/covariance/LinearCombinationCovariance/test )
 add_subdirectory( src/dryad/covariance/CrossSectionCovarianceBlock/test )
-
-add_subdirectory( src/dryad/AtomicRelaxation/test )
 
 add_subdirectory( src/dryad/TabulatedFormFactor/test )
 add_subdirectory( src/dryad/TabulatedScatteringFunction/test )
