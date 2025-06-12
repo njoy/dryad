@@ -16,6 +16,9 @@ class ElectronSubshellConfiguration:
         when the atom is neutral (given as a floating point number)
       - the decay modes or transitions that can fill a hole in this shell
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
+        ...
     @typing.overload
     def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float) -> None:
         """
@@ -40,6 +43,8 @@ class ElectronSubshellConfiguration:
             radiative      the radiative transitions that are available
             nonradiative   the non-radiative transitions that are available
         """
+    def __ne__(self, arg0: ElectronSubshellConfiguration) -> bool:
+        ...
     @property
     def binding_energy(self) -> float:
         """
@@ -116,6 +121,9 @@ class NonRadiativeTransitionData:
     which the electron filling the vacancy originated from and the subshell
     from which the emitted electron came from.
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
+        ...
     @typing.overload
     def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float) -> None:
         """
@@ -143,6 +151,8 @@ class NonRadiativeTransitionData:
             probability         the probability of the transition
             energy              the energy of the emitted particle
         """
+    def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
+        ...
     @property
     def emitting_shell(self) -> dryad.id.ElectronSubshellID:
         """
@@ -178,6 +188,9 @@ class RadiativeTransitionData:
     between the subshell with the vacancy and the subshell from which the
     electron filling the vacancy originated from.
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: RadiativeTransitionData) -> bool:
+        ...
     @typing.overload
     def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float) -> None:
         """
@@ -201,6 +214,8 @@ class RadiativeTransitionData:
             probability         the probability of the transition
             energy              the energy of the emitted particle
         """
+    def __ne__(self, arg0: RadiativeTransitionData) -> bool:
+        ...
     @property
     def energy(self) -> float | None:
         """

@@ -73,6 +73,29 @@ SCENARIO( "TwoBodyDistributionData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TwoBodyDistributionData are given" ) {
+
+      TwoBodyDistributionData left( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+      TwoBodyDistributionData equal( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+      TwoBodyDistributionData different( ReferenceFrame::CentreOfMass,
+                                         LegendreAngularDistributions( { 1e-5, 20. },
+                                                                       { { { 0.5 } }, { { 0.5, 0.1 } } } ) );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyIsotropicChunk( const TwoBodyDistributionData& chunk ) {

@@ -686,13 +686,13 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 2.5, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "an InterpolationTable can be integrated" ) {
+      THEN( "an TabulatedAngularDistributionFunction can be integrated" ) {
 
         // ( 4 + 3 ) / 2 + ( 4 + 2 ) / 2 = 6.5
         CHECK_THAT( 6.5, WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the first raw moment of an InterpolationTable can be calculated" ) {
+      THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // region 1
         // f(x) = 3 - x
@@ -1381,7 +1381,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.86602540378444, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "an InterpolationTable can be integrated" ) {
+      THEN( "an TabulatedAngularDistributionFunction can be integrated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1391,7 +1391,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.99279536989483, WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the first raw moment of an InterpolationTable can be calculated" ) {
+      THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1659,7 +1659,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 1.36930639376292, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "an InterpolationTable can be integrated" ) {
+      THEN( "an TabulatedAngularDistributionFunction can be integrated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1669,7 +1669,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // CHECK_THAT( 1.49577938318395, WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the first raw moment of an InterpolationTable can be calculated" ) {
+      THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1888,7 +1888,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this InterpolationTable is the
+    //       the jump. As a result, the final data contained in this TabulatedAngularDistributionFunction is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1906,7 +1906,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
                                                   std::move( boundaries ),
                                                   std::move( interpolants ) );
 
-      THEN( "a InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "a TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.cosines().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1951,7 +1951,7 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
                                                   std::move( boundaries ),
                                                   std::move( interpolants ) );
 
-      THEN( "an InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "an TabulatedAngularDistributionFunction can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -1976,7 +1976,28 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an InterpolationTable object" ) {
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedAngularDistributionFunction are given" ) {
+
+      TabulatedAngularDistributionFunction left( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedAngularDistributionFunction equal( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedAngularDistributionFunction different( { -1., 1. }, { 0.25, 0.75 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "invalid data for an TabulatedAngularDistributionFunction object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 

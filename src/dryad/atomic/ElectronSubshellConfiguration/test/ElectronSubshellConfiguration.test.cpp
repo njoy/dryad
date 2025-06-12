@@ -17,7 +17,7 @@ void verifyChunkWithTransitions( const ElectronSubshellConfiguration& );
 
 SCENARIO( "ElectronSubshellConfiguration" ) {
 
-  GIVEN( "valid data for a subshell configuration with transitions" ) {
+  GIVEN( "valid data for a subshell configuration without transitions" ) {
 
     WHEN( "the data is given explicitly" ) {
 
@@ -67,6 +67,50 @@ SCENARIO( "ElectronSubshellConfiguration" ) {
             "can be tested" ) {
 
         verifyChunkWithTransitions( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of ElectronSubshellConfiguration are given" ) {
+
+      id::ElectronSubshellID k_shell( id::ElectronSubshellID::K );
+      id::ElectronSubshellID l1_shell( id::ElectronSubshellID::L1 );
+
+      ElectronSubshellConfiguration left( k_shell, 538., 2.,
+                                          { RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                            RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) },
+                                          { NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                            NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+                                            NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+                                            NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+                                            NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+                                            NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) } );
+      ElectronSubshellConfiguration equal( k_shell, 538., 2.,
+                                           { RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                             RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) },
+                                           { NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                             NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+                                             NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+                                             NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+                                             NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+                                             NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) } );
+      ElectronSubshellConfiguration different( k_shell, 538., 2.,
+                                               { RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                                 RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) },
+                                               { NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                                 NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

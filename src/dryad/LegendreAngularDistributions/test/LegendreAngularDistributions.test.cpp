@@ -130,10 +130,6 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT( 2., WithinRel( linear.grid()[1] ) );
         CHECK_THAT( 3., WithinRel( linear.grid()[2] ) );
         CHECK_THAT( 4., WithinRel( linear.grid()[3] ) );
-        CHECK( false == linear.distributions()[0].hasCdf() );
-        CHECK( false == linear.distributions()[1].hasCdf() );
-        CHECK( false == linear.distributions()[2].hasCdf() );
-        CHECK( false == linear.distributions()[3].hasCdf() );
         CHECK( true == linear.distributions()[0].pdf().isLinearised() );
         CHECK( true == linear.distributions()[1].pdf().isLinearised() );
         CHECK( true == linear.distributions()[2].pdf().isLinearised() );
@@ -164,6 +160,44 @@ SCENARIO( "LegendreAngularDistributions" ) {
         CHECK_THAT(  0.9 , WithinRel( linear.distributions()[3].pdf().values()[1] ) );
         CHECK( 3 == linear.boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of LegendreAngularDistributions are given" ) {
+
+      LegendreAngularDistributions left( { 1., 2., 3., 4. },
+                                         { { { 0.5 } },
+                                           { { 0.5, 0.01 } },
+                                           { { 0.5, 0.1 } },
+                                           { { 0.5, 0.4 } } } );
+      LegendreAngularDistributions equal( { 1., 2., 3., 4. },
+                                          { { { 0.5 } },
+                                            { { 0.5, 0.01 } },
+                                            { { 0.5, 0.1 } },
+                                            { { 0.5, 0.4 } } } );
+      LegendreAngularDistributions unnormalised( { 1., 2., 3., 4. },
+                                                 { { { 1.0 } },
+                                                   { { 0.5, 0.01 } },
+                                                   { { 0.5, 0.1 } },
+                                                   { { 0.5, 0.4 } } } );
+      LegendreAngularDistributions different( { 1., 4. },
+                                              { { { 0.5 } },
+                                                { { 0.5, 0.4 } } } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == unnormalised ) ); // normalised under the hood, so equal
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != unnormalised ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

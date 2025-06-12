@@ -64,6 +64,9 @@ void wrapPolynomialMultiplicity( python::module& module ) {
     "    energy    the energy value"
   );
 
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
   // add standard series data definitions
   addStandardSeriesDefinitions< Component >( component );
 }

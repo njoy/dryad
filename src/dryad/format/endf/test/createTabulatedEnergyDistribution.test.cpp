@@ -65,6 +65,5 @@ void verifyElectronChunk( const TabulatedEnergyDistribution& chunk ) {
   CHECK_THAT( scale *  .0214392, WithinRel( pdf.values()[15] ) );
   CHECK_THAT( scale *  .0212245, WithinRel( pdf.values()[16] ) );
 
-  CHECK( false == chunk.hasCdf() );
-  CHECK_THROWS( chunk.cdf() );
+  CHECK( std::nullopt == chunk.cdf() );
 }

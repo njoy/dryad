@@ -181,6 +181,54 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
         verify_linearised_chunk( self, copy )
 
+    def test_comparison( self ) :
+
+        left = ProjectileTarget(
+                   projectile = ParticleID( 'n' ),
+                   target = ParticleID( 'Fe56' ),
+                   type = InteractionType.Nuclear,
+                   reactions = [ Reaction( 'n,Fe56->n,Fe56',
+                                           TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
+                                                                  InterpolationType.LogLinear ),
+                                           [],
+                                           0, 0 ),
+                                 Reaction( 'n,Fe56->n,Fe56_e1',
+                                           TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
+                                                                  InterpolationType.LinearLinear ),
+                                           [],
+                                           0, -1 ) ] )
+        equal = ProjectileTarget(
+                    projectile = ParticleID( 'n' ),
+                    target = ParticleID( 'Fe56' ),
+                    type = InteractionType.Nuclear,
+                    reactions = [ Reaction( 'n,Fe56->n,Fe56',
+                                            TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
+                                                                   InterpolationType.LogLinear ),
+                                            [],
+                                            0, 0 ),
+                                  Reaction( 'n,Fe56->n,Fe56_e1',
+                                            TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
+                                                                   InterpolationType.LinearLinear ),
+                                            [],
+                                            0, -1 ) ] )
+        different = ProjectileTarget(
+                        projectile = ParticleID( 'n' ),
+                        target = ParticleID( 'Fe56' ),
+                        type = InteractionType.Nuclear,
+                        reactions = [ Reaction( 'n,Fe56->n,Fe56',
+                                                TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
+                                                                       InterpolationType.LogLinear ),
+                                                [],
+                                                0, 0 ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
 if __name__ == '__main__' :
 
     unittest.main()

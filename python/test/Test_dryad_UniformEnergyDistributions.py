@@ -74,6 +74,30 @@ class Test_dryad_UniformEnergyDistributions( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = UniformEnergyDistributions( [ 1., 2., 3., 4. ],
+                                           [ UniformEnergyDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                             UniformEnergyDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                             UniformEnergyDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                             UniformEnergyDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+        equal = UniformEnergyDistributions( [ 1., 2., 3., 4. ],
+                                            [ UniformEnergyDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                              UniformEnergyDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                              UniformEnergyDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                              UniformEnergyDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+        different = UniformEnergyDistributions( [ 1., 4. ],
+                                                [ UniformEnergyDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                                  UniformEnergyDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

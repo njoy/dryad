@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/resonances/ResonanceParameters.hpp"
 
 // namespace aliases
@@ -23,6 +24,9 @@ void wrapResonanceParameters( python::module& module ) {
     module,
     "ResonanceParameters"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
 
 } // resonances namespace

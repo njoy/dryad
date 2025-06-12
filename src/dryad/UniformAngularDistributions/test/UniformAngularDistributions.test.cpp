@@ -85,6 +85,37 @@ SCENARIO( "UniformAngularDistributions" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of UniformAngularDistributions are given" ) {
+
+      UniformAngularDistributions left( { 1., 2., 3., 4. },
+                                        { { { -0.5, 0.5 }, UniformDistributionType::Discrete },
+                                          { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
+                                          { { -0.5, 0.2, 0.5 }, UniformDistributionType::Discrete },
+                                          { { -1., 0.8, 1. }, UniformDistributionType::Discrete } } );
+      UniformAngularDistributions equal( { 1., 2., 3., 4. },
+                                         { { { -0.5, 0.5 }, UniformDistributionType::Discrete },
+                                           { { -0.5, 0.02, 0.5 }, UniformDistributionType::Discrete },
+                                           { { -0.5, 0.2, 0.5 }, UniformDistributionType::Discrete },
+                                           { { -1., 0.8, 1. }, UniformDistributionType::Discrete } } );
+      UniformAngularDistributions different(  { 1., 4. },
+                                              { { { -0.5, 0.5 }, UniformDistributionType::Discrete },
+                                                { { -1., 0.8, 1. }, UniformDistributionType::Discrete } } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data for a UniformAngularDistributions object" ) {
 
     WHEN( "there are not enough values in the x or f(y) grid" ) {

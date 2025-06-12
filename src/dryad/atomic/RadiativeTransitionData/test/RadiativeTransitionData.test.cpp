@@ -49,6 +49,29 @@ SCENARIO( "RadiativeTransitionData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of NonRadiativeTransitionData are given" ) {
+
+      id::ElectronSubshellID k_shell( id::ElectronSubshellID::K );
+
+      RadiativeTransitionData left( k_shell, 1e-3 );
+      RadiativeTransitionData equal( k_shell, 1e-3 );
+      RadiativeTransitionData different( k_shell, 1e-3, 550. );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunkWithoutTransitionEnergy( const RadiativeTransitionData& chunk ) {

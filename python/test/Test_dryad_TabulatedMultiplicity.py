@@ -1761,6 +1761,20 @@ class Test_dryad_TabulatedMultiplicity( unittest.TestCase ) :
 
         verify_chunk6( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = TabulatedMultiplicity( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
+        equal = TabulatedMultiplicity( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
+        different = TabulatedMultiplicity( [ 1., 4. ], [ 4., 1. ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

@@ -74,6 +74,9 @@ class CoherentDistributionData:
     This corresponds with the coherent scattering function data given in MF27 MT502 and
     the form factors in MF27 MT505 and MT506.
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: CoherentDistributionData) -> bool:
+        ...
     @typing.overload
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction) -> None:
         """
@@ -96,6 +99,8 @@ class CoherentDistributionData:
             real         the real part of the anamolous form factor
             imaginary    the imaginary part of the anamolous form factor
         """
+    def __ne__(self, arg0: CoherentDistributionData) -> bool:
+        ...
     @property
     def frame(self) -> ReferenceFrame:
         """
@@ -192,6 +197,9 @@ class IncoherentDistributionData:
     
     This corresponds with the incoherent scattering function data given in MF27 MT504.
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: IncoherentDistributionData) -> bool:
+        ...
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction) -> None:
         """
         Initialise the incoherent distribution data
@@ -201,6 +209,8 @@ class IncoherentDistributionData:
             frame        the reference frame of the distribution data
             scattering   the scattering function
         """
+    def __ne__(self, arg0: IncoherentDistributionData) -> bool:
+        ...
     @property
     def frame(self) -> ReferenceFrame:
         """
@@ -323,6 +333,9 @@ class IsotropicAngularDistributions:
     """
     The angular distribution data is fully isotropic
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: IsotropicAngularDistributions) -> bool:
+        ...
     def __init__(self) -> None:
         """
         Initialise the component
@@ -330,6 +343,8 @@ class IsotropicAngularDistributions:
         Arguments:
             self   the component
         """
+    def __ne__(self, arg0: IsotropicAngularDistributions) -> bool:
+        ...
 class LegendreAngularDistribution:
     """
     An angular distribution defined by a pdf and cdf using a Legendre series
@@ -338,6 +353,7 @@ class LegendreAngularDistribution:
     The pdf is normalised to 1 upon construction and the associated cdf is
     calculated upon construction (after the pdf has been normalised).
     """
+    __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
         """
         Evaluate the pdf of the distribution for a given cosine value
@@ -346,6 +362,8 @@ class LegendreAngularDistribution:
             self      the angular distribution
             cosine    the cosine value
         """
+    def __eq__(self, arg0: LegendreAngularDistribution) -> bool:
+        ...
     def __init__(self, coefficients: list[float]) -> None:
         """
         Initialise the angular distribution
@@ -355,6 +373,8 @@ class LegendreAngularDistribution:
             coefficients   the coefficients of the Legendre series (from
                            lowest to highest order coefficient) for the pdf
         """
+    def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
@@ -372,11 +392,6 @@ class LegendreAngularDistribution:
     def cdf(self) -> LegendreAngularDistributionFunction:
         """
         The cumulative distribution function (cdf) of the distribution
-        """
-    @property
-    def has_cdf(self) -> bool:
-        """
-        Flag to indicate whether or not the cumulative distribution function (cdf) is defined
         """
     @property
     def pdf(self) -> LegendreAngularDistributionFunction:
@@ -398,6 +413,7 @@ class LegendreAngularDistributionFunction:
     to represent both a pdf and cdf. Proper normalisation should be applied after
     construction using the normalise() function if required.
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
@@ -412,6 +428,8 @@ class LegendreAngularDistributionFunction:
             self      the table
             cosine    the cosine value
         """
+    def __eq__(self, arg0: LegendreAngularDistributionFunction) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
@@ -438,6 +456,8 @@ class LegendreAngularDistributionFunction:
     def __itruediv__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
     def __mul__(self, arg0: float) -> LegendreAngularDistributionFunction:
+        ...
+    def __ne__(self, arg0: LegendreAngularDistributionFunction) -> bool:
         ...
     def __neg__(self) -> LegendreAngularDistributionFunction:
         ...
@@ -497,6 +517,7 @@ class LegendreAngularDistributions:
     """
     Angular distribution data given using Legendre expansions
     """
+    __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
         """
         Evaluate the angular distributions
@@ -506,6 +527,8 @@ class LegendreAngularDistributions:
             value     the grid value
             cosine    the cosine value
         """
+    def __eq__(self, arg0: LegendreAngularDistributions) -> bool:
+        ...
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -531,6 +554,8 @@ class LegendreAngularDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: LegendreAngularDistributions) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
@@ -575,11 +600,16 @@ class LegendreAngularDistributions:
         The number of interpolation regions in the table
         """
 class MultiEnergyDistributions:
-    pass
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: MultiEnergyDistributions) -> bool:
+        ...
+    def __ne__(self, arg0: MultiEnergyDistributions) -> bool:
+        ...
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> PolynomialMultiplicity:
         ...
@@ -594,6 +624,8 @@ class PolynomialMultiplicity:
             self      the multiplicity
             energy    the energy value
         """
+    def __eq__(self, arg0: PolynomialMultiplicity) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> PolynomialMultiplicity:
         ...
@@ -622,6 +654,8 @@ class PolynomialMultiplicity:
     def __itruediv__(self, arg0: float) -> PolynomialMultiplicity:
         ...
     def __mul__(self, arg0: float) -> PolynomialMultiplicity:
+        ...
+    def __ne__(self, arg0: PolynomialMultiplicity) -> bool:
         ...
     def __neg__(self) -> PolynomialMultiplicity:
         ...
@@ -671,6 +705,7 @@ class ProjectileTarget:
     """
     Data associated to a given projectile and target
     """
+    __hash__: typing.ClassVar[None] = None
     @staticmethod
     def from_ace_file(filename: str) -> ProjectileTarget | tuple[ProjectileTarget, ProjectileTarget]:
         """
@@ -702,6 +737,8 @@ class ProjectileTarget:
         Arguments:
             filename   the GNDS file name
         """
+    def __eq__(self, arg0: ProjectileTarget) -> bool:
+        ...
     def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
         """
         Initialise the ProjectileTarget
@@ -713,6 +750,8 @@ class ProjectileTarget:
             type         the interaction type
             reactions    the reaction data
         """
+    def __ne__(self, arg0: ProjectileTarget) -> bool:
+        ...
     def has_reaction(self, id: str) -> bool:
         """
         Return whether or not a reaction is present
@@ -779,6 +818,9 @@ class Reaction:
     """
     The data associated to a single reaction
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: Reaction) -> bool:
+        ...
     @typing.overload
     def __init__(self, id: str, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None) -> None:
         """
@@ -809,6 +851,8 @@ class Reaction:
             products    the reaction products associated to the summation reaction
                         (defaults to no reaction products)
         """
+    def __ne__(self, arg0: Reaction) -> bool:
+        ...
     def has_product(self, type: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product type is present
@@ -959,6 +1003,9 @@ class ReactionProduct:
     """
     The data associated to a single reaction product
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: ReactionProduct) -> bool:
+        ...
     @typing.overload
     def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
         """
@@ -980,6 +1027,8 @@ class ReactionProduct:
             multiplicity   the reaction product multiplicity
             distribution   the reaction product distribution data
         """
+    def __ne__(self, arg0: ReactionProduct) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> ReactionProduct:
         """
         Linearise the reaction product data and return a new reaction product
@@ -1082,6 +1131,7 @@ class TabulatedAngularDistribution:
     """
     An angular distribution defined by a pdf and cdf using tabulated data
     """
+    __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
         """
         Evaluate the pdf of the distribution for a given cosine value
@@ -1090,6 +1140,8 @@ class TabulatedAngularDistribution:
             self      the distribution
             cosine    the cosine value
         """
+    def __eq__(self, arg0: TabulatedAngularDistribution) -> bool:
+        ...
     @typing.overload
     def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -1115,6 +1167,8 @@ class TabulatedAngularDistribution:
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
@@ -1129,14 +1183,9 @@ class TabulatedAngularDistribution:
         The average cosine defined by the distribution
         """
     @property
-    def cdf(self) -> TabulatedAngularDistributionFunction:
+    def cdf(self) -> TabulatedAngularDistributionFunction | None:
         """
         The cumulative distribution function (cdf) of the distribution
-        """
-    @property
-    def has_cdf(self) -> bool:
-        """
-        Flag to indicate whether or not the cumulative distribution function (cdf) is defined
         """
     @property
     def pdf(self) -> TabulatedAngularDistributionFunction:
@@ -1147,6 +1196,7 @@ class TabulatedAngularDistributionFunction:
     """
     An angular distribution function using tabulated data
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedAngularDistributionFunction:
         ...
@@ -1161,6 +1211,8 @@ class TabulatedAngularDistributionFunction:
             self      the table
             cosine    the cosine value
         """
+    def __eq__(self, arg0: TabulatedAngularDistributionFunction) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedAngularDistributionFunction:
         ...
@@ -1203,6 +1255,8 @@ class TabulatedAngularDistributionFunction:
     def __itruediv__(self, arg0: float) -> TabulatedAngularDistributionFunction:
         ...
     def __mul__(self, arg0: float) -> TabulatedAngularDistributionFunction:
+        ...
+    def __ne__(self, arg0: TabulatedAngularDistributionFunction) -> bool:
         ...
     def __neg__(self) -> TabulatedAngularDistributionFunction:
         ...
@@ -1287,6 +1341,7 @@ class TabulatedAngularDistributions:
     """
     Angular distribution data given as tables
     """
+    __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
         """
         Evaluate the angular distributions
@@ -1296,6 +1351,8 @@ class TabulatedAngularDistributions:
             value     the grid value
             cosine    the cosine value
         """
+    def __eq__(self, arg0: TabulatedAngularDistributions) -> bool:
+        ...
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -1321,6 +1378,8 @@ class TabulatedAngularDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
@@ -1368,6 +1427,7 @@ class TabulatedAverageCosine:
     """
     An average cosine table
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedAverageCosine:
         ...
@@ -1382,6 +1442,8 @@ class TabulatedAverageCosine:
             self      the table
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedAverageCosine) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedAverageCosine:
         ...
@@ -1424,6 +1486,8 @@ class TabulatedAverageCosine:
     def __itruediv__(self, arg0: float) -> TabulatedAverageCosine:
         ...
     def __mul__(self, arg0: float) -> TabulatedAverageCosine:
+        ...
+    def __ne__(self, arg0: TabulatedAverageCosine) -> bool:
         ...
     def __neg__(self) -> TabulatedAverageCosine:
         ...
@@ -1498,6 +1562,7 @@ class TabulatedAverageEnergy:
     """
     An average reaction product energy table
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
@@ -1512,6 +1577,8 @@ class TabulatedAverageEnergy:
             self      the table
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedAverageEnergy) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
@@ -1554,6 +1621,8 @@ class TabulatedAverageEnergy:
     def __itruediv__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
     def __mul__(self, arg0: float) -> TabulatedAverageEnergy:
+        ...
+    def __ne__(self, arg0: TabulatedAverageEnergy) -> bool:
         ...
     def __neg__(self) -> TabulatedAverageEnergy:
         ...
@@ -1628,6 +1697,7 @@ class TabulatedCrossSection:
     """
     A cross section table
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedCrossSection:
         ...
@@ -1642,6 +1712,8 @@ class TabulatedCrossSection:
             self      the table
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedCrossSection) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedCrossSection:
         ...
@@ -1684,6 +1756,8 @@ class TabulatedCrossSection:
     def __itruediv__(self, arg0: float) -> TabulatedCrossSection:
         ...
     def __mul__(self, arg0: float) -> TabulatedCrossSection:
+        ...
+    def __ne__(self, arg0: TabulatedCrossSection) -> bool:
         ...
     def __neg__(self) -> TabulatedCrossSection:
         ...
@@ -1758,6 +1832,7 @@ class TabulatedEnergyDistribution:
     """
     An energy distribution defined by a pdf and cdf using tabulated data
     """
+    __hash__: typing.ClassVar[None] = None
     def __call__(self, energy: float) -> float:
         """
         Evaluate the pdf of the distribution for a given energy value
@@ -1766,6 +1841,8 @@ class TabulatedEnergyDistribution:
             self      the distribution
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedEnergyDistribution) -> bool:
+        ...
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -1791,6 +1868,8 @@ class TabulatedEnergyDistribution:
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistribution:
         """
         Linearise the distribution
@@ -1805,14 +1884,9 @@ class TabulatedEnergyDistribution:
         The average energy defined by the distribution
         """
     @property
-    def cdf(self) -> TabulatedEnergyDistributionFunction:
+    def cdf(self) -> TabulatedEnergyDistributionFunction | None:
         """
         The cumulative distribution function (cdf) of the distribution
-        """
-    @property
-    def has_cdf(self) -> bool:
-        """
-        Flag to indicate whether or not the cumulative distribution function (cdf) is defined
         """
     @property
     def pdf(self) -> TabulatedEnergyDistributionFunction:
@@ -1823,6 +1897,7 @@ class TabulatedEnergyDistributionFunction:
     """
     An energy distribution function using tabulated data
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
         ...
@@ -1837,6 +1912,8 @@ class TabulatedEnergyDistributionFunction:
             self      the table
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedEnergyDistributionFunction) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
         ...
@@ -1879,6 +1956,8 @@ class TabulatedEnergyDistributionFunction:
     def __itruediv__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
         ...
     def __mul__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
+        ...
+    def __ne__(self, arg0: TabulatedEnergyDistributionFunction) -> bool:
         ...
     def __neg__(self) -> TabulatedEnergyDistributionFunction:
         ...
@@ -1963,6 +2042,7 @@ class TabulatedEnergyDistributions:
     """
     Energy distribution data given as tables
     """
+    __hash__: typing.ClassVar[None] = None
     def __call__(self, value: float, cosine: float) -> float:
         """
         Evaluate the energy distributions
@@ -1972,6 +2052,8 @@ class TabulatedEnergyDistributions:
             value     the grid value
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedEnergyDistributions) -> bool:
+        ...
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -1997,6 +2079,8 @@ class TabulatedEnergyDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
+        ...
     def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistributions:
         """
         Linearise the distribution
@@ -2044,6 +2128,7 @@ class TabulatedFormFactor:
     """
     A form factor table
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedFormFactor:
         ...
@@ -2058,6 +2143,8 @@ class TabulatedFormFactor:
             self      the table
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedFormFactor) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedFormFactor:
         ...
@@ -2100,6 +2187,8 @@ class TabulatedFormFactor:
     def __itruediv__(self, arg0: float) -> TabulatedFormFactor:
         ...
     def __mul__(self, arg0: float) -> TabulatedFormFactor:
+        ...
+    def __ne__(self, arg0: TabulatedFormFactor) -> bool:
         ...
     def __neg__(self) -> TabulatedFormFactor:
         ...
@@ -2174,6 +2263,7 @@ class TabulatedMultiplicity:
     """
     A multiplicity table
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedMultiplicity:
         ...
@@ -2188,6 +2278,8 @@ class TabulatedMultiplicity:
             self      the table
             energy    the energy value
         """
+    def __eq__(self, arg0: TabulatedMultiplicity) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedMultiplicity:
         ...
@@ -2230,6 +2322,8 @@ class TabulatedMultiplicity:
     def __itruediv__(self, arg0: float) -> TabulatedMultiplicity:
         ...
     def __mul__(self, arg0: float) -> TabulatedMultiplicity:
+        ...
+    def __ne__(self, arg0: TabulatedMultiplicity) -> bool:
         ...
     def __neg__(self) -> TabulatedMultiplicity:
         ...
@@ -2304,6 +2398,7 @@ class TabulatedScatteringFunction:
     """
     A scattering function table
     """
+    __hash__: typing.ClassVar[None] = None
     @typing.overload
     def __add__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
@@ -2329,6 +2424,8 @@ class TabulatedScatteringFunction:
             energy   the incident photon energy
             cosine   the outgoing photon cosine
         """
+    def __eq__(self, arg0: TabulatedScatteringFunction) -> bool:
+        ...
     @typing.overload
     def __iadd__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
@@ -2371,6 +2468,8 @@ class TabulatedScatteringFunction:
     def __itruediv__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
     def __mul__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    def __ne__(self, arg0: TabulatedScatteringFunction) -> bool:
         ...
     def __neg__(self) -> TabulatedScatteringFunction:
         ...
@@ -2512,6 +2611,9 @@ class TwoBodyDistributionData:
     LAW = 2 (discrete two-body scattering). This is also the representation for
     elastic scattering data in MF26 for electro-atomic interactions.
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: TwoBodyDistributionData) -> bool:
+        ...
     def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
         """
         Initialise the two-body distribution data
@@ -2521,6 +2623,8 @@ class TwoBodyDistributionData:
             frame   the reference frame of the distribution data
             angle   the angular distributions
         """
+    def __ne__(self, arg0: TwoBodyDistributionData) -> bool:
+        ...
     @property
     def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
         """
@@ -2551,6 +2655,9 @@ class UncorrelatedDistributionData:
     This is also the representation for Brehmstrahlung and excitation data in MF26
     for electro-atomic interactions.
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: UncorrelatedDistributionData) -> bool:
+        ...
     def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions) -> None:
         """
         Initialise the uncorrelated distribution data
@@ -2561,6 +2668,8 @@ class UncorrelatedDistributionData:
             angle    the angular distributions
             energy   the energy distributions
         """
+    def __ne__(self, arg0: UncorrelatedDistributionData) -> bool:
+        ...
     @property
     def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
         """
@@ -2585,6 +2694,9 @@ class UniformAngularDistribution:
     """
     A uniform or equally probable angular distribution
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: UniformAngularDistribution) -> bool:
+        ...
     def __init__(self, cosines: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the angular distribution
@@ -2594,6 +2706,8 @@ class UniformAngularDistribution:
             cosines    the cosine values
             type       the uniform distribution type
         """
+    def __ne__(self, arg0: UniformAngularDistribution) -> bool:
+        ...
     @property
     def average_cosine(self) -> float:
         """
@@ -2618,6 +2732,9 @@ class UniformAngularDistributions:
     """
     Angular distribution data given as uniform distributions
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: UniformAngularDistributions) -> bool:
+        ...
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -2643,6 +2760,8 @@ class UniformAngularDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: UniformAngularDistributions) -> bool:
+        ...
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
         """
@@ -2729,6 +2848,9 @@ class UniformEnergyDistribution:
     """
     A uniform or equally probably energy distribution
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: UniformEnergyDistribution) -> bool:
+        ...
     def __init__(self, energies: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the energy distribution
@@ -2738,6 +2860,8 @@ class UniformEnergyDistribution:
             energies   the energy values
             type       the uniform distribution type
         """
+    def __ne__(self, arg0: UniformEnergyDistribution) -> bool:
+        ...
     @property
     def average_energy(self) -> float:
         """
@@ -2762,6 +2886,9 @@ class UniformEnergyDistributions:
     """
     Energy distribution data given as uniform distributions
     """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: UniformEnergyDistributions) -> bool:
+        ...
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
@@ -2787,6 +2914,8 @@ class UniformEnergyDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
+    def __ne__(self, arg0: UniformEnergyDistributions) -> bool:
+        ...
     @property
     def average_energies(self) -> TabulatedAverageEnergy:
         """

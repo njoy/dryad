@@ -1849,7 +1849,7 @@ SCENARIO( "TabulatedCrossSection" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this InterpolationTable is the
+    //       the jump. As a result, the final data contained in this TabulatedCrossSection is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1867,7 +1867,7 @@ SCENARIO( "TabulatedCrossSection" ) {
                                           std::move( boundaries ),
                                           std::move( interpolants ) );
 
-      THEN( "a InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "a TabulatedCrossSection can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1912,7 +1912,7 @@ SCENARIO( "TabulatedCrossSection" ) {
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "an InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "an TabulatedCrossSection can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -1937,7 +1937,28 @@ SCENARIO( "TabulatedCrossSection" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an InterpolationTable object" ) {
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedCrossSection are given" ) {
+
+      TabulatedCrossSection left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedCrossSection equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedCrossSection different( { 1., 4. }, { 4., 1. } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "invalid data for an TabulatedCrossSection object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 

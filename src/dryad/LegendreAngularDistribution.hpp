@@ -58,11 +58,6 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the cumulative distribution function (cdf) is defined
-     */
-    static constexpr bool hasCdf() { return true; }
-
-    /**
      *  @brief Evaluate the pdf of the distribution for a cosine value
      *
      *  @param cosine   the value to be evaluated
@@ -92,6 +87,26 @@ namespace dryad {
 
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( std::move( tolerance ) );
       return TabulatedAngularDistribution( std::move( pdf ) );
+    }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const LegendreAngularDistribution& right ) const noexcept {
+
+      return this->pdf() == right.pdf() && this->cdf() == right.cdf();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const LegendreAngularDistribution& right ) const noexcept {
+
+      return ! this->operator==( right );
     }
   };
 

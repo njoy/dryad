@@ -144,10 +144,6 @@ namespace li7 {
     CHECK_THAT( 1.202805    , WithinRel( angle.distributions()[74].pdf().coefficients()[1] ) );
     CHECK_THAT( 3.224725e-07, WithinRel( angle.distributions()[74].pdf().coefficients()[17] ) );
     CHECK_THAT( 6.63336e-08 , WithinRel( angle.distributions()[74].pdf().coefficients()[18] ) );
-    CHECK( true == angle.distributions()[0].hasCdf() );
-    CHECK( true == angle.distributions()[1].hasCdf() );
-    CHECK( true == angle.distributions()[73].hasCdf() );
-    CHECK( true == angle.distributions()[74].hasCdf() );
     CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
     CHECK( 2 == angle.distributions()[1].cdf().coefficients().size() );
     CHECK( 20 == angle.distributions()[73].cdf().coefficients().size() );

@@ -51,6 +51,23 @@ class Test_dryad_UniformAngularDistribution( unittest.TestCase ) :
 
         verify_interval_chunk( self, chunk )
 
+    def test_comparison( self ) :
+
+        left = UniformAngularDistribution( [ -0.25, 0., 0.55 ],
+                                           UniformDistributionType.Discrete )
+        equal= UniformAngularDistribution( [ -0.25, 0., 0.55 ],
+                                           UniformDistributionType.Discrete )
+        different = UniformAngularDistribution( [ -1., -0.25, 0., 0.5, 1.0 ],
+                                                UniformDistributionType.Interval )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
+
     def test_failures( self ) :
 
         print( '\n' )

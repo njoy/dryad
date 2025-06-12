@@ -96,6 +96,51 @@ SCENARIO( "Reaction" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of Reaction are given" ) {
+
+      Reaction left( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                     TabulatedCrossSection( { 1., 2., 2., 3., 4. },
+                                            { 4., 3., 4., 3., 2. },
+                                            { 1, 4 },
+                                            { InterpolationType::LinearLinear,
+                                              InterpolationType::LinearLog } ),
+                     { ReactionProduct( id::ParticleID( "n" ), 1 ),
+                       ReactionProduct( id::ParticleID( "g" ), 2 ),
+                       ReactionProduct( id::ParticleID( "g" ), 3 ) },
+                     0, -1 );
+      Reaction equal( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                      TabulatedCrossSection( { 1., 2., 2., 3., 4. },
+                                             { 4., 3., 4., 3., 2. },
+                                             { 1, 4 },
+                                             { InterpolationType::LinearLinear,
+                                               InterpolationType::LinearLog } ),
+                      { ReactionProduct( id::ParticleID( "n" ), 1 ),
+                        ReactionProduct( id::ParticleID( "g" ), 2 ),
+                        ReactionProduct( id::ParticleID( "g" ), 3 ) },
+                      0, -1 );
+      Reaction different( id::ReactionID( "n,Fe56->total" ),
+                          { "n,Fe56->elastic", "n,Fe56->2n,Fe55" },
+                          TabulatedCrossSection( { 1., 2., 2., 3., 4. },
+                                                 { 4., 3., 4., 3., 2. },
+                                                 { 1, 4 },
+                                                 { InterpolationType::LinearLinear,
+                                                   InterpolationType::LinearLog } ) );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const Reaction& chunk ) {

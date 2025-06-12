@@ -1849,7 +1849,7 @@ SCENARIO( "TabulatedMultiplicity" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this InterpolationTable is the
+    //       the jump. As a result, the final data contained in this TabulatedMultiplicity is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1867,7 +1867,7 @@ SCENARIO( "TabulatedMultiplicity" ) {
                                           std::move( boundaries ),
                                           std::move( interpolants ) );
 
-      THEN( "a InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "a TabulatedMultiplicity can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.energies().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1912,7 +1912,7 @@ SCENARIO( "TabulatedMultiplicity" ) {
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "an InterpolationTable can be constructed and members can be tested" ) {
+      THEN( "an TabulatedMultiplicity can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -1937,7 +1937,28 @@ SCENARIO( "TabulatedMultiplicity" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an InterpolationTable object" ) {
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TabulatedMultiplicity are given" ) {
+
+      TabulatedMultiplicity left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedMultiplicity equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedMultiplicity different( { 1., 4. }, { 4., 1. } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "invalid data for an TabulatedMultiplicity object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 

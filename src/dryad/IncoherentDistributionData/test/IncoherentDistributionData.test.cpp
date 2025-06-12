@@ -30,6 +30,30 @@ SCENARIO( "IncoherentDistributionData" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of IncoherentDistributionData are given" ) {
+
+      IncoherentDistributionData left( ReferenceFrame::CentreOfMass,
+                                       TabulatedScatteringFunction( { 0., 1e+6 }, { 2., 1. } ) );
+      IncoherentDistributionData equal( ReferenceFrame::CentreOfMass,
+                                        TabulatedScatteringFunction( { 0., 1e+6 }, { 2., 1. } ) );
+      IncoherentDistributionData different( ReferenceFrame::CentreOfMass,
+                                            TabulatedScatteringFunction( { 0., 1e+7 }, { 2., 1. } ) );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const IncoherentDistributionData& chunk ) {

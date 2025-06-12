@@ -104,6 +104,9 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     "    tolerance   the linearisation tolerance"
   );
 
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
   // add standard tabulated data definitions
   addStandardInterpolationTableDefinitions< Component >( component );
 }

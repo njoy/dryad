@@ -87,6 +87,26 @@ namespace base {
 
       return sum / static_cast< double >( this->number() );
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const UniformDistribution& right ) const noexcept {
+
+      return this->type() == right.type() && this->values() == right.values();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const UniformDistribution& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // base namespace

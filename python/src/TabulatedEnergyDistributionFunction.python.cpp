@@ -106,6 +106,9 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "The mean (first order raw moment) of the distribution function over its domain"
   );
 
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
 }

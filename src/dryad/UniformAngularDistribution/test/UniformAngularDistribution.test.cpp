@@ -70,6 +70,30 @@ SCENARIO( "UniformAngularDistribution" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of UniformAngularDistribution are given" ) {
+
+      UniformAngularDistribution left( { -0.25, 0., 0.55 },
+                                       UniformDistributionType::Discrete );
+      UniformAngularDistribution equal( { -0.25, 0., 0.55 },
+                                       UniformDistributionType::Discrete );
+      UniformAngularDistribution different( { -1., -0.25, 0., 0.5, 1.0 },
+                                            UniformDistributionType::Interval );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "invalid data" ) {
 
     WHEN( "the values are empty for a discrete uniform distribution" ) {

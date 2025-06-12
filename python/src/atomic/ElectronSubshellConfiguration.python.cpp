@@ -142,6 +142,9 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::totalNonRadiativeProbability,
     "The total non-radiative probability"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
 
 } // atomic namespace

@@ -62,6 +62,27 @@ namespace dryad {
 
       return this->scattering_;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const IncoherentDistributionData& right ) const noexcept {
+
+      return this->frame() == right.frame() &&
+             this->scatteringFunction() == right.scatteringFunction();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const IncoherentDistributionData& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

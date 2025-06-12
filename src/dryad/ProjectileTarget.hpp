@@ -153,6 +153,30 @@ namespace dryad {
       }
       this->linearised_ = true;
     }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ProjectileTarget& right ) const noexcept {
+
+      return this->projectileIdentifier() == right.projectileIdentifier() &&
+             this->targetIdentifier() == right.targetIdentifier() &&
+             this->interactionType() == right.interactionType() &&
+             this->resonances() == right.resonances() &&
+             this->reactions() == right.reactions();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ProjectileTarget& right ) const noexcept {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // dryad namespace

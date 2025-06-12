@@ -25,8 +25,6 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
 
-        CHECK( true == chunk.hasCdf() );
-
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -102,8 +100,6 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
 
-        CHECK( true == chunk.hasCdf() );
-
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -161,6 +157,30 @@ SCENARIO( "LegendreAngularDistribution" ) {
         CHECK_THAT( 0.75, WithinRel( linear.pdf().values()[1] ) );
 
         CHECK( true == linear.pdf().isLinearised() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of LegendreAngularDistribution are given" ) {
+
+      LegendreAngularDistribution left( { 0.5, 0.25 } );
+      LegendreAngularDistribution equal( { 0.5, 0.25 } );
+      LegendreAngularDistribution unnormalised( { 1., 0.5 } );
+      LegendreAngularDistribution different( { 0.5, 0.1, 0.0001 } );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( true == ( left == unnormalised ) ); // normalised under the hood, so equal
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( false == ( left != unnormalised ) );
+        CHECK( true == ( left != different ) );
       } // THEN
     } // WHEN
   } // GIVEN

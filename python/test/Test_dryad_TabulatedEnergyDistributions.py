@@ -51,10 +51,10 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 4.  , chunk.distributions[3].pdf.energies[1] )
             self.assertAlmostEqual( 0.1 , chunk.distributions[3].pdf.values[0] )
             self.assertAlmostEqual( 0.4 , chunk.distributions[3].pdf.values[1] )
-            self.assertEqual( False, chunk.distributions[0].has_cdf )
-            self.assertEqual( False, chunk.distributions[1].has_cdf )
-            self.assertEqual( False, chunk.distributions[2].has_cdf )
-            self.assertEqual( False, chunk.distributions[3].has_cdf )
+            self.assertEqual( None, chunk.distributions[0].cdf )
+            self.assertEqual( None, chunk.distributions[1].cdf )
+            self.assertEqual( None, chunk.distributions[2].cdf )
+            self.assertEqual( None, chunk.distributions[3].cdf )
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
@@ -106,10 +106,6 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., linear.grid[1] )
             self.assertAlmostEqual( 3., linear.grid[2] )
             self.assertAlmostEqual( 4., linear.grid[3] )
-            self.assertEqual( False, linear.distributions[0].has_cdf )
-            self.assertEqual( False, linear.distributions[1].has_cdf )
-            self.assertEqual( False, linear.distributions[2].has_cdf )
-            self.assertEqual( False, linear.distributions[3].has_cdf )
             self.assertEqual( True, linear.distributions[0].pdf.is_linearised )
             self.assertEqual( True, linear.distributions[1].pdf.is_linearised )
             self.assertEqual( True, linear.distributions[2].pdf.is_linearised )
@@ -138,6 +134,11 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual(  0.26, linear.distributions[2].pdf.values[1] )
             self.assertAlmostEqual(  0.1 , linear.distributions[3].pdf.values[0] )
             self.assertAlmostEqual(  0.4 , linear.distributions[3].pdf.values[1] )
+            self.assertEqual( None, linear.distributions[0].cdf )
+            self.assertEqual( None, linear.distributions[1].cdf )
+            self.assertEqual( None, linear.distributions[2].cdf )
+            self.assertEqual( None, linear.distributions[3].cdf )
+
             self.assertEqual( 3, linear.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, linear.interpolants[0] )
 
@@ -150,6 +151,37 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
                                                interpolant = InterpolationType.LinearLinear )
 
         verify_chunk( self, chunk )
+
+    def test_comparison( self ) :
+
+        left = TabulatedEnergyDistributions( [ 1., 2., 3., 4. ],
+                                             [ TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] ),
+                                               TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                               TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                               TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        equal = TabulatedEnergyDistributions( [ 1., 2., 3., 4. ],
+                                              [ TabulatedEnergyDistribution( [ 1., 3. ], [ 0.5, 0.5 ] ),
+                                                TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                                TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                                TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        unnormalised = TabulatedEnergyDistributions( [ 1., 2., 3., 4. ],
+                                                     [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        different = TabulatedEnergyDistributions( [ 1., 4. ],
+                                                  [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
+                                                    TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( True, ( left == unnormalised ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( False, ( left != unnormalised ) )
+        self.assertEqual( True, ( left != different ) )
 
     def test_failures( self ) :
 
