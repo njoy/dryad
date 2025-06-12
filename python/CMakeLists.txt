@@ -26,7 +26,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DistributionDataType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/InteractionType.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/ReactionType.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/ReactionCategory.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ReferenceFrame.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/UniformDistributionType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/TabulatedCrossSection.python.cpp

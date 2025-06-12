@@ -14,7 +14,7 @@ void wrapReaction( python::module& module ) {
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::id::ReactionID;
   using ParticleID = njoy::dryad::id::ParticleID;
-  using ReactionType = njoy::dryad::ReactionType;
+  using ReactionCategory = njoy::dryad::ReactionCategory;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
@@ -77,9 +77,21 @@ void wrapReaction( python::module& module ) {
   )
   .def_property_readonly(
 
-    "type",
-    &Component::type,
-    "The reaction type"
+    "category",
+    &Component::category,
+    "The reaction category"
+  )
+  .def_property_readonly(
+
+    "is_summation_reaction",
+    &Component::isSummationReaction,
+    "Flag to indicate whether or not the reaction is a summation reaction"
+  )
+  .def_property_readonly(
+
+    "is_primary_reaction",
+    &Component::isPrimaryReaction,
+    "Flag to indicate whether or not the reaction is a primary reaction"
   )
   .def_property_readonly(
 

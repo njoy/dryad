@@ -8,7 +8,6 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/endf/ReactionInformation.hpp"
-#include "dryad/format/endf/createReactionType.hpp"
 #include "dryad/format/endf/createTabulatedCrossSection.hpp"
 #include "dryad/format/endf/createMultiplicity.hpp"
 #include "dryad/format/endf/createReactionProducts.hpp"
@@ -50,7 +49,6 @@ namespace endf {
 
       // metadata and miscellaneous information
       id::ReactionID id = std::to_string( mt );
-      ReactionType type = createReactionType( material, mt );
 
       // cross section
       auto section = material.section( 3, mt ).parse< 3 >();
@@ -63,7 +61,7 @@ namespace endf {
       // reaction products
       std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
 
-      if ( type == ReactionType::Primary ) {
+      if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
         // Q values
         if ( mt == 18 ) {
@@ -92,7 +90,7 @@ namespace endf {
                          std::move( products ), std::move( mass_q ),
                          std::move( reaction_q ) );
       }
-      else {
+      else if ( endf::ReactionInformation::isSummation( material, mt ) ) {
 
         if ( mt == 18 ) {
 
@@ -108,12 +106,16 @@ namespace endf {
         // return the reaction data
         return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
       }
+      else {
+
+        Log::error( "{} is not an MT number that designates a valid reaction", mt );
+        throw std::exception();
+      }
     }
     else if ( material.hasSection( 23, mt ) ) {
 
       // metadata and miscellaneous information
       id::ReactionID id = std::to_string( mt );
-      ReactionType type = createReactionType( material, mt );
 
       // cross section
       auto section = material.section( 23, mt ).parse< 23 >();
@@ -126,7 +128,7 @@ namespace endf {
       // reaction products
       std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
 
-      if ( type == ReactionType::Primary ) {
+      if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
         // q values
         reaction_q = -section.subshellBindingEnergy();
@@ -143,7 +145,7 @@ namespace endf {
                          std::move( products ), std::move( mass_q ),
                          std::move( reaction_q ) );
       }
-      else {
+      else if ( endf::ReactionInformation::isSummation( material, mt ) ) {
 
         // partials
         std::vector< int > endf_partials = ReactionInformation::partials( material, 23, mt );
@@ -153,6 +155,11 @@ namespace endf {
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+      }
+      else {
+
+        Log::error( "{} is not an MT number that designates a valid reaction", mt );
+        throw std::exception();
       }
     }
     else {

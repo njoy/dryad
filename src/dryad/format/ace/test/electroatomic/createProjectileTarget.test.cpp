@@ -63,40 +63,40 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 6 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyEprdata12ElectronTotalReaction( total );
+        electroatomic::eprdata12::h::verifyTotalReaction( total );
 
         auto tionisation = H0.reactions()[1];
-        verifyEprdata12ElectronTotalIonisationReaction( tionisation );
+        electroatomic::eprdata12::h::verifyTotalIonisationReaction( tionisation );
 
         auto telastic = H0.reactions()[2];
-        verifyEprdata12ElectronTotalElasticReaction( telastic );
+        electroatomic::eprdata12::h::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = H0.reactions()[3];
-        verifyEprdata12ElectronBremsstrahlungReaction( bremsstrahlung );
+        electroatomic::eprdata12::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = H0.reactions()[4];
-        verifyEprdata12ElectronExcitationReaction( excitation );
+        electroatomic::eprdata12::h::verifyExcitationReaction( excitation );
 
         auto ionisation = H0.reactions()[5];
-        verifyEprdata12ElectronIonisationReaction( ionisation );
+        electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyEprdata12ElectronTotalReaction( total );
+        electroatomic::eprdata12::h::verifyTotalReaction( total );
 
         tionisation = H0.reaction( id::ReactionID( "522" ) );
-        verifyEprdata12ElectronTotalIonisationReaction( tionisation );
+        electroatomic::eprdata12::h::verifyTotalIonisationReaction( tionisation );
 
         telastic = H0.reaction( id::ReactionID( "526" ) );
-        verifyEprdata12ElectronTotalElasticReaction( telastic );
+        electroatomic::eprdata12::h::verifyTotalElasticReaction( telastic );
 
         bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
-        verifyEprdata12ElectronBremsstrahlungReaction( bremsstrahlung );
+        electroatomic::eprdata12::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
         excitation = H0.reaction( id::ReactionID( "528" ) );
-        verifyEprdata12ElectronExcitationReaction( excitation );
+        electroatomic::eprdata12::h::verifyExcitationReaction( excitation );
 
         ionisation = H0.reaction( id::ReactionID( "534" ) );
-        verifyEprdata12ElectronIonisationReaction( ionisation );
+        electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
 
@@ -130,52 +130,52 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyEprdata14ElectronTotalReaction( total );
+        electroatomic::eprdata14::h::verifyTotalReaction( total );
 
         auto tionisation = H0.reactions()[1];
-        verifyEprdata14ElectronTotalIonisationReaction( tionisation );
+        electroatomic::eprdata14::h::verifyTotalIonisationReaction( tionisation );
 
         auto elastic = H0.reactions()[2];
-        verifyEprdata14ElectronLargeAngleElasticReaction( elastic );
+        electroatomic::eprdata14::h::verifyLargeAngleElasticReaction( elastic );
 
         auto telastic = H0.reactions()[3];
-        verifyEprdata14ElectronTotalElasticReaction( telastic );
+        electroatomic::eprdata14::h::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = H0.reactions()[4];
-        verifyEprdata14ElectronBremsstrahlungReaction( bremsstrahlung );
+        electroatomic::eprdata14::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = H0.reactions()[5];
-        verifyEprdata14ElectronExcitationReaction( excitation );
+        electroatomic::eprdata14::h::verifyExcitationReaction( excitation );
 
         auto ionisation = H0.reactions()[6];
-        verifyEprdata14ElectronIonisationReaction( ionisation );
+        electroatomic::eprdata14::h::verifyIonisationReaction( ionisation );
 
         auto deficit = H0.reactions()[7];
-        verifyEprdata14ElectronElasticReactionDeficit( deficit );
+        electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyEprdata14ElectronTotalReaction( total );
+        electroatomic::eprdata14::h::verifyTotalReaction( total );
 
         tionisation = H0.reaction( id::ReactionID( "522" ) );
-        verifyEprdata14ElectronTotalIonisationReaction( tionisation );
+        electroatomic::eprdata14::h::verifyTotalIonisationReaction( tionisation );
 
         elastic = H0.reaction( id::ReactionID( "525" ) );
-        verifyEprdata14ElectronLargeAngleElasticReaction( elastic );
+        electroatomic::eprdata14::h::verifyLargeAngleElasticReaction( elastic );
 
         telastic = H0.reaction( id::ReactionID( "526" ) );
-        verifyEprdata14ElectronTotalElasticReaction( telastic );
+        electroatomic::eprdata14::h::verifyTotalElasticReaction( telastic );
 
         bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
-        verifyEprdata14ElectronBremsstrahlungReaction( bremsstrahlung );
+        electroatomic::eprdata14::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
         excitation = H0.reaction( id::ReactionID( "528" ) );
-        verifyEprdata14ElectronExcitationReaction( excitation );
+        electroatomic::eprdata14::h::verifyExcitationReaction( excitation );
 
         ionisation = H0.reaction( id::ReactionID( "534" ) );
-        verifyEprdata14ElectronIonisationReaction( ionisation );
+        electroatomic::eprdata14::h::verifyIonisationReaction( ionisation );
 
         deficit = H0.reaction( id::ReactionID( "-526" ) );
-        verifyEprdata14ElectronElasticReactionDeficit( deficit );
+        electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
       } // THEN
     } // WHEN
   } // GIVEN

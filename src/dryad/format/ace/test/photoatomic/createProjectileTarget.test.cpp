@@ -47,34 +47,34 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 5 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyMcplib84PhotonTotalReaction( total );
+        photoatomic::mcplib84::h::verifyTotalReaction( total );
 
         auto coherent = H0.reactions()[1];
-        verifyMcplib84PhotonCoherentReaction( coherent );
+        photoatomic::mcplib84::h::verifyCoherentReaction( coherent );
 
         auto incoherent = H0.reactions()[2];
-        verifyMcplib84PhotonIncoherentReaction( incoherent );
+        photoatomic::mcplib84::h::verifyIncoherentReaction( incoherent );
 
         auto pair = H0.reactions()[3];
-        verifyMcplib84PhotonPairProductionReaction( pair );
+        photoatomic::mcplib84::h::verifyPairProductionReaction( pair );
 
         auto photoelectric = H0.reactions()[4];
-        verifyMcplib84PhotonTotalPhotoElectricReaction( photoelectric );
+        photoatomic::mcplib84::h::verifyTotalPhotoElectricReaction( photoelectric );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyMcplib84PhotonTotalReaction( total );
+        photoatomic::mcplib84::h::verifyTotalReaction( total );
 
         coherent = H0.reaction( id::ReactionID( "502" ) );
-        verifyMcplib84PhotonCoherentReaction( coherent );
+        photoatomic::mcplib84::h::verifyCoherentReaction( coherent );
 
         incoherent = H0.reaction( id::ReactionID( "504" ) );
-        verifyMcplib84PhotonIncoherentReaction( incoherent );
+        photoatomic::mcplib84::h::verifyIncoherentReaction( incoherent );
 
         pair = H0.reaction( id::ReactionID( "516" ) );
-        verifyMcplib84PhotonPairProductionReaction( pair );
+        photoatomic::mcplib84::h::verifyPairProductionReaction( pair );
 
         photoelectric = H0.reaction( id::ReactionID( "522" ) );
-        verifyMcplib84PhotonTotalPhotoElectricReaction( photoelectric );
+        photoatomic::mcplib84::h::verifyTotalPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
 
@@ -106,40 +106,40 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 6 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyEprdata12PhotonTotalReaction( total );
+        photoatomic::eprdata12::h::verifyTotalReaction( total );
 
         auto coherent = H0.reactions()[1];
-        verifyEprdata12PhotonCoherentReaction( coherent );
+        photoatomic::eprdata12::h::verifyCoherentReaction( coherent );
 
         auto incoherent = H0.reactions()[2];
-        verifyEprdata12PhotonIncoherentReaction( incoherent );
+        photoatomic::eprdata12::h::verifyIncoherentReaction( incoherent );
 
         auto pair = H0.reactions()[3];
-        verifyEprdata12PhotonPairProductionReaction( pair );
+        photoatomic::eprdata12::h::verifyPairProductionReaction( pair );
 
         auto tphotoelectric = H0.reactions()[4];
-        verifyEprdata12PhotonTotalPhotoElectricReaction( tphotoelectric );
+        photoatomic::eprdata12::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
         auto photoelectric = H0.reactions()[5];
-        verifyEprdata12PhotonPhotoElectricReaction( photoelectric );
+        photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyEprdata12PhotonTotalReaction( total );
+        photoatomic::eprdata12::h::verifyTotalReaction( total );
 
         coherent = H0.reaction( id::ReactionID( "502" ) );
-        verifyEprdata12PhotonCoherentReaction( coherent );
+        photoatomic::eprdata12::h::verifyCoherentReaction( coherent );
 
         incoherent = H0.reaction( id::ReactionID( "504" ) );
-        verifyEprdata12PhotonIncoherentReaction( incoherent );
+        photoatomic::eprdata12::h::verifyIncoherentReaction( incoherent );
 
         pair = H0.reaction( id::ReactionID( "516" ) );
-        verifyEprdata12PhotonPairProductionReaction( pair );
+        photoatomic::eprdata12::h::verifyPairProductionReaction( pair );
 
         tphotoelectric = H0.reaction( id::ReactionID( "522" ) );
-        verifyEprdata12PhotonTotalPhotoElectricReaction( tphotoelectric );
+        photoatomic::eprdata12::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
         photoelectric = H0.reaction( id::ReactionID( "534" ) );
-        verifyEprdata12PhotonPhotoElectricReaction( photoelectric );
+        photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
 
@@ -171,40 +171,40 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 6 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        verifyEprdata14PhotonTotalReaction( total );
+        photoatomic::eprdata14::h::verifyTotalReaction( total );
 
         auto coherent = H0.reactions()[1];
-        verifyEprdata14PhotonCoherentReaction( coherent );
+        photoatomic::eprdata14::h::verifyCoherentReaction( coherent );
 
         auto incoherent = H0.reactions()[2];
-        verifyEprdata14PhotonIncoherentReaction( incoherent );
+        photoatomic::eprdata14::h::verifyIncoherentReaction( incoherent );
 
         auto pair = H0.reactions()[3];
-        verifyEprdata14PhotonPairProductionReaction( pair );
+        photoatomic::eprdata14::h::verifyPairProductionReaction( pair );
 
         auto tphotoelectric = H0.reactions()[4];
-        verifyEprdata14PhotonTotalPhotoElectricReaction( tphotoelectric );
+        photoatomic::eprdata14::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
         auto photoelectric = H0.reactions()[5];
-        verifyEprdata14PhotonPhotoElectricReaction( photoelectric );
+        photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        verifyEprdata14PhotonTotalReaction( total );
+        photoatomic::eprdata14::h::verifyTotalReaction( total );
 
         coherent = H0.reaction( id::ReactionID( "502" ) );
-        verifyEprdata14PhotonCoherentReaction( coherent );
+        photoatomic::eprdata14::h::verifyCoherentReaction( coherent );
 
         incoherent = H0.reaction( id::ReactionID( "504" ) );
-        verifyEprdata14PhotonIncoherentReaction( incoherent );
+        photoatomic::eprdata14::h::verifyIncoherentReaction( incoherent );
 
         pair = H0.reaction( id::ReactionID( "516" ) );
-        verifyEprdata14PhotonPairProductionReaction( pair );
+        photoatomic::eprdata14::h::verifyPairProductionReaction( pair );
 
         tphotoelectric = H0.reaction( id::ReactionID( "522" ) );
-        verifyEprdata14PhotonTotalPhotoElectricReaction( tphotoelectric );
+        photoatomic::eprdata14::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
         photoelectric = H0.reaction( id::ReactionID( "534" ) );
-        verifyEprdata14PhotonPhotoElectricReaction( photoelectric );
+        photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
   } // GIVEN

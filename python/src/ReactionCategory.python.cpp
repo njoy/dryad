@@ -3,15 +3,15 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/ReactionType.hpp"
+#include "dryad/ReactionCategory.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapReactionType( python::module& module ) {
+void wrapReactionCategory( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::ReactionType;
+  using Component = njoy::dryad::ReactionCategory;
 
   // wrap views created by this component
 
@@ -19,8 +19,8 @@ void wrapReactionType( python::module& module ) {
   python::enum_< Component > component(
 
     module,
-    "ReactionType",
-    "The reaction type",
+    "ReactionCategory",
+    "The reaction category",
     python::arithmetic()
   );
 

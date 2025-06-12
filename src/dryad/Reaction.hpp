@@ -10,7 +10,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/id/ReactionID.hpp"
-#include "dryad/ReactionType.hpp"
+#include "dryad/ReactionCategory.hpp"
 #include "dryad/ReactionProduct.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 
@@ -26,7 +26,7 @@ namespace dryad {
     /* fields */
     id::ReactionID id_;
 
-    ReactionType type_;
+    ReactionCategory category_;
     std::optional< std::vector< id::ReactionID > > partials_;
 
     std::optional< double > mass_difference_qvalue_;
@@ -53,11 +53,11 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the reaction type
+     *  @brief Return the reaction category
      */
-    const ReactionType& type() const noexcept {
+    const ReactionCategory& category() const noexcept {
 
-      return this->type_;
+      return this->category_;
     }
 
     /**
@@ -68,6 +68,22 @@ namespace dryad {
     partialReactionIdentifiers() const noexcept {
 
       return this->partials_;
+    }
+
+    /**
+     *  @brief Return whether or not the reaction is a summation reaction
+     */
+    bool isSummationReaction() const noexcept {
+
+      return this->partialReactionIdentifiers().has_value();
+    }
+
+    /**
+     *  @brief Return whether or not the reaction is a primary reaction
+     */
+    bool isPrimaryReaction() const noexcept {
+
+      return ! this->isSummationReaction();
     }
 
     /**
@@ -202,7 +218,7 @@ namespace dryad {
     Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
 
       TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
-      if ( this->type() == ReactionType::Primary ) {
+      if ( this->category() == ReactionCategory::Primary ) {
 
         return Reaction( this->identifier(), std::move( xs ),
                          this->products(), this->massDifferenceQValue(),
@@ -212,7 +228,8 @@ namespace dryad {
 
         return Reaction( this->identifier(),
                          this->partialReactionIdentifiers().value(),
-                         std::move( xs ) );
+                         std::move( xs ),
+                         this->products() );
       }
     }
 

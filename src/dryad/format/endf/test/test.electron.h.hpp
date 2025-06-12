@@ -3,15 +3,17 @@ namespace electron {
 // e-001_H_000.endf and e-001_H_000-endf80.endf
 namespace h1 {
 
-  void verifyTotalReaction( const Reaction& total ) {
+  void verifyTotalReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "501" ) == total.identifier() );
-    CHECK( ReactionType::Summation == total.type() );
-    CHECK( false == total.hasProducts() );
-    CHECK( true == total.isLinearised() );
+    CHECK( id::ReactionID( "501" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Summation == reaction.category() );
+    CHECK( true == reaction.isSummationReaction() );
+    CHECK( false == reaction.isPrimaryReaction() );
+    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt != total.partialReactionIdentifiers() );
-    auto partials = total.partialReactionIdentifiers().value();
+    CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
+    auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 5 == partials.size() );
     CHECK( id::ReactionID(  "525" ) == partials[0] );
     CHECK( id::ReactionID( "-526" ) == partials[1] );
@@ -19,88 +21,91 @@ namespace h1 {
     CHECK( id::ReactionID(  "528" ) == partials[3] );
     CHECK( id::ReactionID(  "534" ) == partials[4] );
 
-    CHECK( std::nullopt == total.massDifferenceQValue() );
-    CHECK( std::nullopt == total.reactionQValue() );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt == reaction.reactionQValue() );
 
-    CHECK( true == total.crossSection().isLinearised() );
-    CHECK( 349 == total.crossSection().numberPoints() );
-    CHECK( 1 == total.crossSection().numberRegions() );
-    CHECK( 349 == total.crossSection().energies().size() );
-    CHECK( 349 == total.crossSection().values().size() );
-    CHECK( 1 == total.crossSection().boundaries().size() );
-    CHECK( 1 == total.crossSection().interpolants().size() );
-    CHECK( 348 == total.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == total.crossSection().interpolants()[0] );
-    CHECK_THAT( 10., WithinRel( total.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( total.crossSection().energies()[348] ) );
-    CHECK_THAT( 274896030., WithinRel( total.crossSection().values()[0] ) );
-    CHECK_THAT( 177322.091, WithinRel( total.crossSection().values()[348] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 349 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 349 == reaction.crossSection().energies().size() );
+    CHECK( 349 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 348 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 10., WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[348] ) );
+    CHECK_THAT( 274896030., WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 177322.091, WithinRel( reaction.crossSection().values()[348] ) );
 
-    CHECK( 0 == total.numberProducts() );
+    CHECK( 0 == reaction.numberProducts() );
   }
 
-  void verifyTotalIonisationReaction( const Reaction& ionisation ) {
+  void verifyTotalIonisationReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "522" ) == ionisation.identifier() );
-    CHECK( ReactionType::Summation == ionisation.type() );
-    CHECK( false == ionisation.hasProducts() );
-    CHECK( true == ionisation.isLinearised() );
+    CHECK( id::ReactionID( "522" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Summation == reaction.category() );
+    CHECK( true == reaction.isSummationReaction() );
+    CHECK( false == reaction.isPrimaryReaction() );
+    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt != ionisation.partialReactionIdentifiers() );
-    auto partials = ionisation.partialReactionIdentifiers().value();
+    CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
+    auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
     CHECK( id::ReactionID( "534" ) == partials[0] );
 
-    CHECK( std::nullopt == ionisation.massDifferenceQValue() );
-    CHECK( std::nullopt == ionisation.reactionQValue() );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt == reaction.reactionQValue() );
 
-    CHECK( true == ionisation.crossSection().isLinearised() );
-    CHECK( 35 == ionisation.crossSection().numberPoints() );
-    CHECK( 1 == ionisation.crossSection().numberRegions() );
-    CHECK( 35 == ionisation.crossSection().energies().size() );
-    CHECK( 35 == ionisation.crossSection().values().size() );
-    CHECK( 1 == ionisation.crossSection().boundaries().size() );
-    CHECK( 1 == ionisation.crossSection().interpolants().size() );
-    CHECK( 34 == ionisation.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == ionisation.crossSection().interpolants()[0] );
-    CHECK_THAT( 13.6, WithinRel( ionisation.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( ionisation.crossSection().energies()[34] ) );
-    CHECK_THAT( 0., WithinRel( ionisation.crossSection().values()[0] ) );
-    CHECK_THAT( 82892.4, WithinRel( ionisation.crossSection().values()[34] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 35 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 35 == reaction.crossSection().energies().size() );
+    CHECK( 35 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 34 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 13.6, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[34] ) );
+    CHECK_THAT( 0., WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 82892.4, WithinRel( reaction.crossSection().values()[34] ) );
 
-    CHECK( 0 == ionisation.numberProducts() );
+    CHECK( 0 == reaction.numberProducts() );
   }
 
-  void verifyElasticReaction( const Reaction& elastic ) {
+  void verifyElasticReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "525" ) == elastic.identifier() );
-    CHECK( ReactionType::Primary == elastic.type() );
-    CHECK( true == elastic.hasProducts() );
-    CHECK( true == elastic.isLinearised() );
+    CHECK( id::ReactionID( "525" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt == elastic.massDifferenceQValue() );
-    CHECK( std::nullopt != elastic.reactionQValue() );
-    CHECK_THAT( 0, WithinRel( elastic.reactionQValue().value() ) );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
 
-    CHECK( true == elastic.crossSection().isLinearised() );
-    CHECK( 101 == elastic.crossSection().numberPoints() );
-    CHECK( 1 == elastic.crossSection().numberRegions() );
-    CHECK( 101 == elastic.crossSection().energies().size() );
-    CHECK( 101 == elastic.crossSection().values().size() );
-    CHECK( 1 == elastic.crossSection().boundaries().size() );
-    CHECK( 1 == elastic.crossSection().interpolants().size() );
-    CHECK( 100 == elastic.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == elastic.crossSection().interpolants()[0] );
-    CHECK_THAT( 10., WithinRel( elastic.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( elastic.crossSection().energies()[100] ) );
-    CHECK_THAT( 274896000., WithinRel( elastic.crossSection().values()[0] ) );
-    CHECK_THAT( 1.31176e-5, WithinRel( elastic.crossSection().values()[100] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 101 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 101 == reaction.crossSection().energies().size() );
+    CHECK( 101 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 100 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 10., WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[100] ) );
+    CHECK_THAT( 274896000., WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 1.31176e-5, WithinRel( reaction.crossSection().values()[100] ) );
 
-    CHECK( 2 == elastic.numberProducts() );
-    CHECK( 1 == elastic.numberProducts( id::ParticleID( "e-" ) ) );
-    CHECK( 1 == elastic.numberProducts( id::ParticleID( "H" ) ) );
+    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
 
-    auto electron = elastic.product( id::ParticleID( "e-" ) );
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
@@ -182,75 +187,75 @@ namespace h1 {
     CHECK_THROWS( angle.distributions()[15].cdf() );
     CHECK( 15 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
-
-    auto hydrogen = elastic.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
-  void verifyTotalElasticReaction( const Reaction& telastic ) {
+  void verifyTotalElasticReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "526" ) == telastic.identifier() );
-    CHECK( ReactionType::Summation == telastic.type() );
-    CHECK( false == telastic.hasProducts() );
-    CHECK( true == telastic.isLinearised() );
+    CHECK( id::ReactionID( "526" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Summation == reaction.category() );
+    CHECK( true == reaction.isSummationReaction() );
+    CHECK( false == reaction.isPrimaryReaction() );
+    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt != telastic.partialReactionIdentifiers() );
-    auto partials = telastic.partialReactionIdentifiers().value();
+    CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
+    auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 2 == partials.size() );
     CHECK( id::ReactionID(  "525" ) == partials[0] );
     CHECK( id::ReactionID( "-526" ) == partials[1] );
 
-    CHECK( std::nullopt == telastic.massDifferenceQValue() );
-    CHECK( std::nullopt == telastic.reactionQValue() );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt == reaction.reactionQValue() );
 
-    CHECK( true == telastic.crossSection().isLinearised() );
-    CHECK( 101 == telastic.crossSection().numberPoints() );
-    CHECK( 1 == telastic.crossSection().numberRegions() );
-    CHECK( 101 == telastic.crossSection().energies().size() );
-    CHECK( 101 == telastic.crossSection().values().size() );
-    CHECK( 1 == telastic.crossSection().boundaries().size() );
-    CHECK( 1 == telastic.crossSection().interpolants().size() );
-    CHECK( 100 == telastic.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == telastic.crossSection().interpolants()[0] );
-    CHECK_THAT( 10., WithinRel( telastic.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( telastic.crossSection().energies()[100] ) );
-    CHECK_THAT( 274896000., WithinRel( telastic.crossSection().values()[0] ) );
-    CHECK_THAT( 12987.1, WithinRel( telastic.crossSection().values()[100] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 101 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 101 == reaction.crossSection().energies().size() );
+    CHECK( 101 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 100 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 10., WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[100] ) );
+    CHECK_THAT( 274896000., WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 12987.1, WithinRel( reaction.crossSection().values()[100] ) );
 
-    CHECK( 0 == telastic.numberProducts() );
+    CHECK( 0 == reaction.numberProducts() );
   }
 
-  void verifyBremsstrahlungReaction( const Reaction& bremsstrahlung ) {
+  void verifyBremsstrahlungReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "527" ) == bremsstrahlung.identifier() );
-    CHECK( ReactionType::Primary == bremsstrahlung.type() );
-    CHECK( true == bremsstrahlung.hasProducts() );
-    CHECK( true == bremsstrahlung.isLinearised() );
+    CHECK( id::ReactionID( "527" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt == bremsstrahlung.massDifferenceQValue() );
-    CHECK( std::nullopt != bremsstrahlung.reactionQValue() );
-    CHECK_THAT( 0, WithinRel( bremsstrahlung.reactionQValue().value() ) );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
 
-    CHECK( true == bremsstrahlung.crossSection().isLinearised() );
-    CHECK( 96 == bremsstrahlung.crossSection().numberPoints() );
-    CHECK( 1 == bremsstrahlung.crossSection().numberRegions() );
-    CHECK( 96 == bremsstrahlung.crossSection().energies().size() );
-    CHECK( 96 == bremsstrahlung.crossSection().values().size() );
-    CHECK( 1 == bremsstrahlung.crossSection().boundaries().size() );
-    CHECK( 1 == bremsstrahlung.crossSection().interpolants().size() );
-    CHECK( 95 == bremsstrahlung.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == bremsstrahlung.crossSection().interpolants()[0] );
-    CHECK_THAT( 10., WithinRel( bremsstrahlung.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( bremsstrahlung.crossSection().energies()[95] ) );
-    CHECK_THAT( 29.7832 , WithinRel( bremsstrahlung.crossSection().values()[0] ) );
-    CHECK_THAT( 0.990621, WithinRel( bremsstrahlung.crossSection().values()[95] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 96 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 96 == reaction.crossSection().energies().size() );
+    CHECK( 96 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 95 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 10., WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[95] ) );
+    CHECK_THAT( 29.7832 , WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 0.990621, WithinRel( reaction.crossSection().values()[95] ) );
 
-    CHECK( 3 == bremsstrahlung.numberProducts() );
-    CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "e-" ) ) );
-    CHECK( 1 == bremsstrahlung.numberProducts( id::ParticleID( "H" ) ) );
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
 
-    auto gamma = bremsstrahlung.product( id::ParticleID( "g" ) );
+    auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
     CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
@@ -338,7 +343,7 @@ namespace h1 {
     CHECK( 9 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 
-    auto electron = bremsstrahlung.product( id::ParticleID( "e-" ) );
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
@@ -366,41 +371,39 @@ namespace h1 {
     CHECK_THAT(  7.86876E+10 - 2.11850E+9, WithinRel( average.values()[80] ) );
     CHECK_THAT(  1e+11       - 2.66810E+9, WithinRel( average.values()[81] ) );
     CHECK( std::nullopt == electron.distributionData() );
-
-    auto hydrogen = bremsstrahlung.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
-  void verifyExcitationReaction( const Reaction& subionisation ) {
+  void verifyExcitationReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "528" ) == subionisation.identifier() );
-    CHECK( ReactionType::Primary == subionisation.type() );
-    CHECK( true == subionisation.hasProducts() );
-    CHECK( true == subionisation.isLinearised() );
+    CHECK( id::ReactionID( "528" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt == subionisation.massDifferenceQValue() );
-    CHECK( std::nullopt != subionisation.reactionQValue() );
-    CHECK_THAT( 0., WithinRel( subionisation.reactionQValue().value() ) );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( 0., WithinRel( reaction.reactionQValue().value() ) );
 
-    CHECK( true == subionisation.crossSection().isLinearised() );
-    CHECK( 170 == subionisation.crossSection().numberPoints() );
-    CHECK( 1 == subionisation.crossSection().numberRegions() );
-    CHECK( 170 == subionisation.crossSection().energies().size() );
-    CHECK( 170 == subionisation.crossSection().values().size() );
-    CHECK( 1 == subionisation.crossSection().boundaries().size() );
-    CHECK( 1 == subionisation.crossSection().interpolants().size() );
-    CHECK( 169 == subionisation.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == subionisation.crossSection().interpolants()[0] );
-    CHECK_THAT( 13.6, WithinRel( subionisation.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( subionisation.crossSection().energies()[169] ) );
-    CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
-    CHECK_THAT( 81441.6, WithinRel( subionisation.crossSection().values()[169] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 170 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 170 == reaction.crossSection().energies().size() );
+    CHECK( 170 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 169 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 13.6, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[169] ) );
+    CHECK_THAT( 0. , WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 81441.6, WithinRel( reaction.crossSection().values()[169] ) );
 
-    CHECK( 2 == subionisation.numberProducts() );
-    CHECK( 1 == subionisation.numberProducts( id::ParticleID( "e-" ) ) );
-    CHECK( 1 == subionisation.numberProducts( id::ParticleID( "H" ) ) );
+    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
 
-    auto electron = subionisation.product( id::ParticleID( "e-" ) );
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
@@ -428,41 +431,39 @@ namespace h1 {
     CHECK_THAT(  9e+10       - 21.0777000, WithinRel( average.values()[168] ) );
     CHECK_THAT(  1e+11       - 21.0777000, WithinRel( average.values()[169] ) );
     CHECK( std::nullopt == electron.distributionData() );
-
-    auto hydrogen = subionisation.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
   }
 
-  void verifySubshellIonisationReaction( const Reaction& subionisation ) {
+  void verifySubshellIonisationReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "534" ) == subionisation.identifier() );
-    CHECK( ReactionType::Primary == subionisation.type() );
-    CHECK( true == subionisation.hasProducts() );
-    CHECK( true == subionisation.isLinearised() );
+    CHECK( id::ReactionID( "534" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt == subionisation.massDifferenceQValue() );
-    CHECK( std::nullopt != subionisation.reactionQValue() );
-    CHECK_THAT( -13.6, WithinRel( subionisation.reactionQValue().value() ) );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( -13.6, WithinRel( reaction.reactionQValue().value() ) );
 
-    CHECK( true == subionisation.crossSection().isLinearised() );
-    CHECK( 35 == subionisation.crossSection().numberPoints() );
-    CHECK( 1 == subionisation.crossSection().numberRegions() );
-    CHECK( 35 == subionisation.crossSection().energies().size() );
-    CHECK( 35 == subionisation.crossSection().values().size() );
-    CHECK( 1 == subionisation.crossSection().boundaries().size() );
-    CHECK( 1 == subionisation.crossSection().interpolants().size() );
-    CHECK( 34 == subionisation.crossSection().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == subionisation.crossSection().interpolants()[0] );
-    CHECK_THAT( 13.6, WithinRel( subionisation.crossSection().energies()[0] ) );
-    CHECK_THAT( 1e+11, WithinRel( subionisation.crossSection().energies()[34] ) );
-    CHECK_THAT( 0. , WithinRel( subionisation.crossSection().values()[0] ) );
-    CHECK_THAT( 82892.4, WithinRel( subionisation.crossSection().values()[34] ) );
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 35 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 35 == reaction.crossSection().energies().size() );
+    CHECK( 35 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 34 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 13.6, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[34] ) );
+    CHECK_THAT( 0. , WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 82892.4, WithinRel( reaction.crossSection().values()[34] ) );
 
-    CHECK( 3 == subionisation.numberProducts() );
-    CHECK( 2 == subionisation.numberProducts( id::ParticleID( "e-" ) ) );
-    CHECK( 1 == subionisation.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
+    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
 
-    auto electron = subionisation.product( id::ParticleID( "e-" ), 0 );
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
     CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
@@ -541,29 +542,25 @@ namespace h1 {
     CHECK_THROWS( energy.distributions()[7].cdf() );
     CHECK( 7 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
-
-    electron = subionisation.product( id::ParticleID( "e-" ), 1 );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-
-    auto ion = subionisation.product( id::ParticleID( "H{1s1/2}" ), 0 );
-    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
   }
 
-  void verifyElasticDeficitReaction( const Reaction& deficit ) {
+  void verifyElasticDeficitReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "-526" ) == deficit.identifier() );
-    CHECK( ReactionType::Primary == deficit.type() );
-    CHECK( false == deficit.hasProducts() );
-    CHECK( true == deficit.isLinearised() );
+    CHECK( id::ReactionID( "-526" ) == reaction.identifier() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.isLinearised() );
 
-    CHECK( std::nullopt == deficit.partialReactionIdentifiers() );
+    CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 
-    CHECK( std::nullopt == deficit.massDifferenceQValue() );
-    CHECK( std::nullopt != deficit.reactionQValue() );
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
 
-    CHECK( true == deficit.crossSection().isLinearised() );
+    CHECK( true == reaction.crossSection().isLinearised() );
 
-    CHECK( 0 == deficit.numberProducts() );
+    CHECK( 0 == reaction.numberProducts() );
   }
 
 } // namespace h1

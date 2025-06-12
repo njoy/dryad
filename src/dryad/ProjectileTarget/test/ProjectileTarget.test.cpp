@@ -85,7 +85,9 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   // reactions
   auto reaction = chunk.reactions()[0];
   CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
+  CHECK( true == reaction.isPrimaryReaction() );
+  CHECK( false == reaction.isSummationReaction() );
   CHECK( false == reaction.hasProducts() );
   CHECK( false == reaction.isLinearised() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
@@ -126,7 +128,9 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   // reaction
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56" ) );
   CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
+  CHECK( true == reaction.isPrimaryReaction() );
+  CHECK( false == reaction.isSummationReaction() );
   CHECK( false == reaction.hasProducts() );
   CHECK( false == reaction.isLinearised() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
@@ -178,7 +182,9 @@ void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
   // reactions
   auto reaction = chunk.reactions()[0];
   CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
+  CHECK( true == reaction.isPrimaryReaction() );
+  CHECK( false == reaction.isSummationReaction() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT( 0, WithinRel( reaction.reactionQValue().value() ) );
   CHECK( false == reaction.hasProducts() );
@@ -202,7 +208,9 @@ void verifyLinearisedChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
   reaction = chunk.reactions()[1];
   CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == reaction.identifier() );
-  CHECK( ReactionType::Primary == reaction.type() );
+  CHECK( ReactionCategory::Primary == reaction.category() );
+  CHECK( true == reaction.isPrimaryReaction() );
+  CHECK( false == reaction.isSummationReaction() );
   CHECK( false == reaction.hasProducts() );
   CHECK( true == reaction.isLinearised() );
   CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );

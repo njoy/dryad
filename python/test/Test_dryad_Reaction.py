@@ -9,7 +9,7 @@ from dryad import Reaction
 from dryad import ReactionProduct
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
-from dryad import ReactionType
+from dryad import ReactionCategory
 from dryad.id import ParticleID
 
 class Test_dryad_Reaction( unittest.TestCase ) :
@@ -26,8 +26,10 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( True, chunk.has_products )
             self.assertEqual( False, chunk.is_linearised )
 
-            # reaction type
-            self.assertEqual( ReactionType.Primary, chunk.type )
+            # reaction category
+            self.assertEqual( ReactionCategory.Primary, chunk.category )
+            self.assertEqual( False, chunk.is_summation_reaction )
+            self.assertEqual( True, chunk.is_primary_reaction )
 
             # partial identifiers
             self.assertEqual( None, chunk.partial_reaction_identifiers )
@@ -91,8 +93,10 @@ class Test_dryad_Reaction( unittest.TestCase ) :
             self.assertEqual( False, chunk.has_products )
             self.assertEqual( False, chunk.is_linearised )
 
-            # reaction type
-            self.assertEqual( ReactionType.Summation, chunk.type )
+            # reaction category
+            self.assertEqual( ReactionCategory.Summation, chunk.category )
+            self.assertEqual( True, chunk.is_summation_reaction )
+            self.assertEqual( False, chunk.is_primary_reaction )
 
             # partial identifiers
             self.assertEqual( 2, len( chunk.partial_reaction_identifiers ) )

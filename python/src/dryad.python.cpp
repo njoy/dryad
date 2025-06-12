@@ -17,7 +17,7 @@ void wrapID( python::module& );
 void wrapInterpolationType( python::module& );
 void wrapDistributionDataType( python::module& );
 void wrapInteractionType( python::module& );
-void wrapReactionType( python::module& );
+void wrapReactionCategory( python::module& );
 void wrapReferenceFrame( python::module& );
 void wrapUniformDistributionType( python::module& );
 
@@ -77,7 +77,7 @@ PYBIND11_MODULE( dryad, module ) {
   wrapInterpolationType( module );
   wrapDistributionDataType( module );
   wrapInteractionType( module );
-  wrapReactionType( module );
+  wrapReactionCategory( module );
   wrapReferenceFrame( module );
   wrapUniformDistributionType( module );
 

@@ -10,7 +10,7 @@ from dryad import Reaction
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import InteractionType
-from dryad import ReactionType
+from dryad import ReactionCategory
 from dryad.id import ParticleID
 
 class Test_dryad_ProjectileTarget( unittest.TestCase ) :
@@ -39,7 +39,9 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             for reaction in [ chunk.reactions[0], chunk.reaction( 'n,Fe56->n,Fe56' ) ] :
 
                 self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
-                self.assertEqual( ReactionType.Primary, reaction.type )
+                self.assertEqual( ReactionCategory.Primary, reaction.category )
+                self.assertEqual( False, reaction.is_summation_reaction )
+                self.assertEqual( True, reaction.is_primary_reaction )
                 self.assertEqual( False, reaction.has_products )
                 self.assertEqual( False, reaction.is_linearised )
                 self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
@@ -62,7 +64,9 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             for reaction in [ chunk.reactions[1], chunk.reaction( 'n,Fe56->n,Fe56_e1' ) ] :
 
                 self.assertEqual( 'n,Fe56->n,Fe56_e1', reaction.identifier )
-                self.assertEqual( ReactionType.Primary, reaction.type )
+                self.assertEqual( ReactionCategory.Primary, reaction.category )
+                self.assertEqual( False, reaction.is_summation_reaction )
+                self.assertEqual( True, reaction.is_primary_reaction )
                 self.assertEqual( False, reaction.has_products )
                 self.assertEqual( True, reaction.is_linearised )
                 self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
@@ -99,7 +103,9 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             # reactions
             reaction = chunk.reactions[0]
             self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
-            self.assertEqual( ReactionType.Primary, reaction.type )
+            self.assertEqual( ReactionCategory.Primary, reaction.category )
+            self.assertEqual( False, reaction.is_summation_reaction )
+            self.assertEqual( True, reaction.is_primary_reaction )
             self.assertEqual( False, reaction.has_products )
             self.assertEqual( True, reaction.is_linearised )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )
@@ -123,7 +129,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             self.assertEqual( True, reaction.cross_section.is_linearised )
             reaction = chunk.reactions[1]
             self.assertEqual( 'n,Fe56->n,Fe56_e1', reaction.identifier )
-            self.assertEqual( ReactionType.Primary, reaction.type )
+            self.assertEqual( ReactionCategory.Primary, reaction.category )
             self.assertEqual( False, reaction.has_products )
             self.assertEqual( True, reaction.is_linearised )
             self.assertAlmostEqual( 0, reaction.mass_difference_qvalue )

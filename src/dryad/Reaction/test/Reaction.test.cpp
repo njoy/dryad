@@ -103,8 +103,10 @@ void verifyChunk( const Reaction& chunk ) {
   // reaction identifier
   CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
 
-  // reaction type
-  CHECK( ReactionType::Primary == chunk.type() );
+  // reaction category
+  CHECK( ReactionCategory::Primary == chunk.category() );
+  CHECK( true == chunk.isPrimaryReaction() );
+  CHECK( false == chunk.isSummationReaction() );
 
   // partial identifiers
   CHECK( std::nullopt == chunk.partialReactionIdentifiers() );
@@ -210,7 +212,9 @@ void verifySummationChunk( const Reaction& chunk ) {
   CHECK( id::ReactionID( "n,Fe56->total" ) == chunk.identifier() );
 
   // reaction type
-  CHECK( ReactionType::Summation == chunk.type() );
+  CHECK( ReactionCategory::Summation == chunk.category() );
+  CHECK( false == chunk.isPrimaryReaction() );
+  CHECK( true == chunk.isSummationReaction() );
 
   // partial identifiers
   CHECK( std::nullopt != chunk.partialReactionIdentifiers() );

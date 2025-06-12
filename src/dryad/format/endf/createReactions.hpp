@@ -88,7 +88,6 @@ namespace endf {
 
             // metadata and miscellaneous information
             id::ReactionID id = std::to_string( mt );
-            ReactionType type = ReactionType::Summation;
 
             // partials
             std::vector< int > endf_partials = ReactionInformation::partials( material, 33, mt );
