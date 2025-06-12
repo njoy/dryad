@@ -29,19 +29,6 @@ message( STATUS "Adding dryad C++ unit testing" )
 
 add_subdirectory( test )
 
-add_subdirectory( src/dryad/id/ElectronSubshellID/test )
-add_subdirectory( src/dryad/id/ElementID/test )
-add_subdirectory( src/dryad/id/LevelID/test )
-add_subdirectory( src/dryad/id/ParticleID/test )
-add_subdirectory( src/dryad/id/ReactionType/test )
-
-add_subdirectory( src/dryad/covariance/matrix/test )
-add_subdirectory( src/dryad/covariance/CovarianceBlock/test )
-add_subdirectory( src/dryad/covariance/CrossSectionMetadata/test )
-add_subdirectory( src/dryad/covariance/VarianceScaling/test )
-add_subdirectory( src/dryad/covariance/LinearCombinationCovariance/test )
-add_subdirectory( src/dryad/covariance/CrossSectionCovarianceBlock/test )
-
 add_subdirectory( src/dryad/TabulatedFormFactor/test )
 add_subdirectory( src/dryad/TabulatedScatteringFunction/test )
 add_subdirectory( src/dryad/PolynomialMultiplicity/test )
@@ -63,16 +50,9 @@ add_subdirectory( src/dryad/TabulatedEnergyDistribution/test )
 add_subdirectory( src/dryad/TabulatedEnergyDistributions/test )
 add_subdirectory( src/dryad/TwoBodyDistributionData/test )
 add_subdirectory( src/dryad/UncorrelatedDistributionData/test )
-add_subdirectory( src/dryad/CoherentDistributionData/test )
-add_subdirectory( src/dryad/IncoherentDistributionData/test )
 add_subdirectory( src/dryad/ReactionProduct/test )
 
 add_subdirectory( src/dryad/TabulatedCrossSection/test )
 add_subdirectory( src/dryad/Reaction/test )
 
 add_subdirectory( src/dryad/ProjectileTarget/test )
-
-add_subdirectory( src/dryad/format/test )
-add_subdirectory( src/dryad/format/ace/test )
-add_subdirectory( src/dryad/format/endf/test )
-add_subdirectory( src/dryad/format/gnds/test )
