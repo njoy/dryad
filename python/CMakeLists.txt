@@ -1,5 +1,6 @@
 if(dryad.python)
 
+    find_package( Python3 REQUIRED )
     pybind11_add_module( dryad.python
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ToleranceConvergence.python.cpp
