@@ -87,7 +87,7 @@ SCENARIO( "UniformEnergyDistributions" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of UniformAngularDistributions are given" ) {
+    WHEN( "two instances of UniformEnergyDistributions are given" ) {
 
       UniformEnergyDistributions left( { 1., 2., 3., 4. },
                                        { { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
