@@ -78,12 +78,12 @@ target_link_libraries( dryad
 # dryad : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if (dryad.python)
-  add_subdirectory(python)
+if ( dryad.python )
+  add_subdirectory( python )
 endif()
 
 if( dryad.tests )
-  include( cmake/unit_testing.cmake )
+  add_subdirectory( test )
 endif()
 
 #######################################################################

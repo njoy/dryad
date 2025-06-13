@@ -1,1 +1,0 @@
-add_cpp_test( LegendreAngularDistributionFunction LegendreAngularDistributionFunction.test.cpp )

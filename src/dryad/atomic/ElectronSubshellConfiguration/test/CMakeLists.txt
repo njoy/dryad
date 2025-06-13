@@ -1,1 +1,0 @@
-add_cpp_test( atomic.ElectronSubshellConfiguration ElectronSubshellConfiguration.test.cpp )

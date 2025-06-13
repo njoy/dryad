@@ -1,1 +1,0 @@
-add_cpp_test( TabulatedEnergyDistributions TabulatedEnergyDistributions.test.cpp )
