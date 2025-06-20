@@ -45,6 +45,7 @@ add_cpp_test( id.ElementID                                               id/Elem
 add_cpp_test( id.LevelID                                                 id/LevelID.test.cpp )
 add_cpp_test( id.ParticleID                                              id/ParticleID.test.cpp )
 add_cpp_test( id.ReactionType                                            id/ReactionType.test.cpp )
+add_cpp_test( id.ReactionID.                                             id/ReactionID.test.cpp )
 
 add_cpp_test( CoherentDistributionData                                   CoherentDistributionData.test.cpp )
 add_cpp_test( IncoherentDistributionData                                 IncoherentDistributionData.test.cpp )
