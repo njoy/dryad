@@ -28,7 +28,7 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::atomic::createElectronSubshellConfiguration( configuration );
+        auto chunk = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration );
 
         verifyChunk( chunk );
       } // THEN

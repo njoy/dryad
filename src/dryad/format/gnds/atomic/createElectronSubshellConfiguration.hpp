@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "dryad/id/ElementID.hpp"
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
 #include "dryad/format/gnds/convertEnergy.hpp"
 #include "dryad/format/gnds/atomic/createElectronSubshellID.hpp"
@@ -21,7 +22,8 @@ namespace atomic {
    *  @brief Create an ElectronSubshellConfiguration from a GNDS configuration node
    */
   dryad::atomic::ElectronSubshellConfiguration
-  createElectronSubshellConfiguration( const pugi::xml_node& configuration ) {
+  createElectronSubshellConfiguration( const id::ElementID& element,
+                                       const pugi::xml_node& configuration ) {
 
     // shell id and population are attributes on the configuration node
     id::ElectronSubshellID identifier = createElectronSubshellID( configuration.attribute( "subshell" ).as_string() );
@@ -51,9 +53,10 @@ namespace atomic {
         double probability = mode.child( "probability" ).child( "double" ).attribute( "value" ).as_double();
 
         // helper lambda function
-        auto isVacancyProduct = [] ( pugi::xml_node product ) {
+        auto isVacancyProduct = [&element] ( pugi::xml_node product ) {
 
-          return product.attribute( "pid" ).as_string()[0] == 'O';
+          std::string string( product.attribute( "pid" ).as_string() );
+          return string.find( element.symbol() ) != std::string::npos;
         };
 
         // go to the products and see if we have a radiative or non-radiative transition
@@ -62,19 +65,24 @@ namespace atomic {
 
           // get the originating shell id
           id::ElectronSubshellID originating =
-          createRadiativeTransitionElectronSubshellID( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+          createRadiativeTransitionElectronSubshellID( element, products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
 
           // GNDS does not store the transition energy
           radiative.emplace_back( originating, probability );
         }
-        else {
+        else if ( products.find_child_by_attribute( "pid", "e-" ) ) {
 
           // get the originating and emitting shell id
           auto pair =
-          createNonRadiativeTransitionElectronSubshellID( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+          createNonRadiativeTransitionElectronSubshellID( element, products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
 
           // GNDS does not store the transition energy
           nonradiative.emplace_back( pair.first, pair.second, probability );
+        }
+        else {
+
+          Log::error( "Could not determine if the transition is radiative or non-radiative" );
+          throw std::exception();
         }
       }
       return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population,
