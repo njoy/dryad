@@ -560,8 +560,8 @@ namespace id {
       // check for what to do with 523 - is it used in evaluations?
       Entry{        502, 502, InteractionType::Atomic , "g[coherent]"    , { "coherent", "coherent-scattering" }, {} },
       Entry{        504, 504, InteractionType::Atomic , "g[incoherent]"  , { "incoherent", "incoherent-scattering" }, {} },
-      Entry{       1515, 515, InteractionType::Atomic , "2e-e+"          , { "2e-e+[electron]", "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-      Entry{       1517, 517, InteractionType::Atomic , "e-e+"           , { "e-e+[nuclear]", "pair-production[nuclear]" }   , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
+      Entry{       1515, 515, InteractionType::Atomic , "2e-e+[electron]", { "pair-production-electron", "2e-e+" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+      Entry{       1517, 517, InteractionType::Atomic , "e-e+[nuclear]"  , { "pair-production-nuclear", "e-e+" }  , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
       Entry{       1518, 516, InteractionType::Atomic , "pair-production", {} },
 
       // electroatomic only
@@ -627,7 +627,7 @@ namespace id {
       Entry{       1580,      InteractionType::Atomic , "photo-ionisation{7h11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q11 },
       Entry{       1581,      InteractionType::Atomic , "photo-ionisation{7i11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q12 },
       Entry{       1582,      InteractionType::Atomic , "photo-ionisation{7i13/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q13 },
-      Entry{       1583, 522, InteractionType::Atomic , "photo-ionisation"           , { "photo-ionisation{t}" }, { { ParticleID::electron(), 1 } } },
+      Entry{       1583, 522, InteractionType::Atomic , "photo-ionisation"           , {}, { { ParticleID::electron(), 1 } } },
       Entry{       2534, 534, InteractionType::Atomic , "electro-ionisation{1s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::K  },
       Entry{       2535, 535, InteractionType::Atomic , "electro-ionisation{2s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L1  },
       Entry{       2536, 536, InteractionType::Atomic , "electro-ionisation{2p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L2  },
@@ -677,7 +677,7 @@ namespace id {
       Entry{       2580,      InteractionType::Atomic , "electro-ionisation{7h11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q11 },
       Entry{       2581,      InteractionType::Atomic , "electro-ionisation{7i11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q12 },
       Entry{       2582,      InteractionType::Atomic , "electro-ionisation{7i13/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q13 },
-      Entry{       2583, 522, InteractionType::Atomic , "electro-ionisation"         , { "electro-ionisation{t}" }, { { ParticleID::electron(), 2 } } }
+      Entry{       2583, 522, InteractionType::Atomic , "electro-ionisation"         , {}, { { ParticleID::electron(), 2 } } }
     };
     static inline std::unordered_map< std::string, std::size_t >
     string_conversion_dictionary = [] ( const auto& entries ) {
@@ -804,6 +804,11 @@ namespace id {
     /**
      *  @brief Return whether or not the mt number corresponds to a registered reaction type
      *
+     *  This function does not recognise any of the ionisation mt numbers
+     *  (522 for total ionisation and 534 through 572 for subshell ionisation)
+     *  because electro- and photoinionisation cannot be distinguished by the
+     *  mt number alone.
+     *
      *  @param[in] mt   the mt number
      */
     static bool isRegistered( int mt ) noexcept {
@@ -875,6 +880,19 @@ namespace id {
     }
 
     /**
+     *  @brief Return the partial designator for this reaction type
+     *
+     *  A partial designator is used for some atomic interactions when the
+     *  reaction type cannot be completely characterised with outgoing particles
+     *  only. For example: both coherent and incoherent scattering have an outgoing
+     *  photon.
+     */
+    const std::optional< std::string >& partialDesignator() const noexcept {
+
+      return entries[ this->index_ ].partialDesignator();
+    }
+
+    /**
      *  @brief Return whether or not the reaction type is considered a special type
      *
      *  A special type is a reaction type for which no outgoing particles types can be
@@ -883,7 +901,20 @@ namespace id {
      */
     bool isSpecial() const noexcept {
 
-      return !entries[ this->index_ ].particles().has_value();
+      return !this->particles().has_value();
+    }
+
+    /**
+     *  @brief Return whether or not the reaction type has a partial designator
+     *
+     *  A partial designator is used for some atomic interactions when the
+     *  reaction type cannot be completely characterised with outgoing particles
+     *  only. For example: both coherent and incoherent scattering have an outgoing
+     *  photon.
+     */
+    bool hasPartialDesignator() const noexcept {
+
+      return this->partialDesignator().has_value();
     }
 
     /**

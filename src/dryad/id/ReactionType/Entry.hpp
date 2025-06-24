@@ -11,8 +11,24 @@ class Entry {
   std::string symbol_;
   std::vector< std::string > alternatives_;
   InteractionType interaction_;
+  std::optional< std::string > designator_;
   std::optional< short > level_;
   std::optional< int > dza_;
+
+  static std::optional< std::string >
+  getDesignator( const InteractionType& type,
+                 const std::vector< std::string >& alternatives ) {
+
+    if ( ( type == InteractionType::Atomic ) &&
+         ( alternatives.size() > 0 ) ){
+
+      return alternatives.front();
+    }
+    else {
+
+      return std::nullopt;
+    }
+  }
 
   static std::optional< int >
   calculateDZA( const InteractionType& type,
@@ -41,10 +57,12 @@ class Entry {
     symbol_( std::move( symbol ) ),
     alternatives_( std::move( alternatives ) ),
     interaction_( std::move( interaction ) ),
+    designator_( std::nullopt ),
     level_( std::move( level ) ),
     dza_( std::nullopt ) {
 
     this->dza_ = calculateDZA( this->type(), this->particles() );
+    this->designator_ = getDesignator( this->type(), this->alternatives() );
   }
 
 public:
@@ -115,4 +133,5 @@ public:
   }
   const std::optional< short >& level() const noexcept { return this->level_; }
   const std::optional< int >& dza() const noexcept { return this->dza_; }
+  const std::optional< std::string >& partialDesignator() const noexcept { return this->designator_; }
 };
