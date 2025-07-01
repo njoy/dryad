@@ -66,7 +66,7 @@ SCENARIO( "ProjectileTarget" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of ReactionProduct are given" ) {
+    WHEN( "two instances of ProjectileTarget are given" ) {
 
       ProjectileTarget left( id::ParticleID::neutron(), id::ParticleID( 26056 ),
                              InteractionType::Nuclear,

@@ -50,7 +50,7 @@ SCENARIO( "AtomicRelaxation" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of TabulatedFormFactor are given" ) {
+    WHEN( "two instances of AtomicRelaxation are given" ) {
 
       id::ElementID h( 1 );
       id::ElectronSubshellID k_shell( id::ElectronSubshellID::K );

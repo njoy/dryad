@@ -55,7 +55,7 @@ SCENARIO( "NonRadiativeTransitionData" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of TabulatedFormFactor are given" ) {
+    WHEN( "two instances of NonRadiativeTransitionData are given" ) {
 
       id::ElectronSubshellID k_shell( id::ElectronSubshellID::K );
       id::ElectronSubshellID l1_shell( id::ElectronSubshellID::L1 );

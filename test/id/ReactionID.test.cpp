@@ -26,9 +26,12 @@ SCENARIO( "ReactionID" ) {
     ParticleID t = ParticleID::triton();
     ParticleID h = ParticleID::helion();
     ParticleID a = ParticleID::alpha();
+    ParticleID eminus = ParticleID::electron();
+    ParticleID eplus = ParticleID::positron();
     ParticleID u238( 92238 );
+    ParticleID u( 92000 );
 
-    std::map< ParticleID, short > empty; 
+    std::map< ParticleID, short > empty;
 
     THEN( "a ReactionID can be created using mt numbers, strings and static functions" ) {
 
@@ -81,6 +84,18 @@ SCENARIO( "ReactionID" ) {
       CHECK( id == NewReactionID( "n,U238->3n,2p,a,Ra230[all]" ) );
 
       CHECK( size + 4 == NewReactionID::size() );
+
+      id = NewReactionID( eminus, u, ReactionType( 525 ) );
+      CHECK( eminus == id.projectile() );
+      CHECK( u == id.target() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
+      CHECK( u == id.residual() );
+      CHECK( ReactionType( 525 ) == id.reactionType() );
+      CHECK( InteractionType::Atomic == id.interactionType() );
+      CHECK( "e-,U->e-,U[large-angle-scattering]" == id.symbol() );
+      CHECK( id == NewReactionID( "e-,U->e-,U[large-angle-scattering]" ) );
+
+      CHECK( size + 5 == NewReactionID::size() );
     }
   } // GIVEN
 

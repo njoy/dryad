@@ -99,7 +99,7 @@ SCENARIO( "Reaction" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of ReactionProduct are given" ) {
+    WHEN( "two instances of Reaction are given" ) {
 
       Reaction left( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
                      TabulatedCrossSection( { 1., 2., 2., 3., 4. },

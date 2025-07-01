@@ -12,9 +12,9 @@ class Entry {
 //  std::string short_symbol_;
   std::string long_symbol_;
 
-  static std::optional< ParticleID > 
-  generateResidual( const ParticleID& projectile, 
-                    const ParticleID& target, 
+  static std::optional< ParticleID >
+  generateResidual( const ParticleID& projectile,
+                    const ParticleID& target,
                     const ReactionType& type ) {
 
     if ( type.isSpecial() ) {
@@ -27,9 +27,9 @@ class Entry {
     }
   }
 
-  static std::string 
-  generateLongSymbol( const ParticleID& projectile, 
-                      const ParticleID& target, 
+  static std::string
+  generateLongSymbol( const ParticleID& projectile,
+                      const ParticleID& target,
                       const ReactionType& type ) {
 
     std::string symbol( projectile.symbol() + "," + target.symbol() + "->" );
@@ -56,6 +56,11 @@ class Entry {
         }
       }
       symbol += type.resolve( projectile, target ).symbol();
+
+      if ( type.hasPartialDesignator() ) {
+
+        symbol += "[" + type.partialDesignator().value() + "]";
+      }
     }
     return symbol;
   }
@@ -64,9 +69,9 @@ public:
 
   /* constructor */
   Entry( ParticleID projectile, ParticleID target, ReactionType type ) :
-    projectile_( std::move( projectile ) ), 
+    projectile_( std::move( projectile ) ),
     target_( std::move( target ) ),
-    type_( std::move( type ) ), 
+    type_( std::move( type ) ),
 //    short_symbol_( generateShortSymbol( projectile, target, type ) ),
     long_symbol_( generateLongSymbol( projectile, target, type ) ),
     residual_( generateResidual( projectile, target, type ) ) {}

@@ -1,6 +1,11 @@
 /**
  *  @brief Retrieve the index to the reaction type information entry
  *
+ *  This function does not recognise any of the ionisation mt numbers
+ *  (522 for total ionisation and 534 through 572 for subshell ionisation)
+ *  because electro- and photoinionisation cannot be distinguished by the
+ *  mt number alone.
+ *
  *  @param mt   the mt number
  */
 static std::size_t getIndex( int mt ) {
@@ -70,7 +75,7 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
  *  @brief Retrieve the index to the reaction type information entry
  *
  *  Note: this constructor only works for nuclear interactions
- * 
+ *
  *  @param particles   the outgoing particles
  *  @param level       the level number of the residual
  */
@@ -80,7 +85,7 @@ static std::size_t getIndex( const std::map< ParticleID, short >& particles, int
   long number = 0;
 
   // generate number based on outgoing particles
-  if ( ( particles.size() == 0 ) || 
+  if ( ( particles.size() == 0 ) ||
        ( particles.size() == 1 && particles.find( ParticleID::photon() ) != particles.end() ) ) {
 
     number = 1000;
