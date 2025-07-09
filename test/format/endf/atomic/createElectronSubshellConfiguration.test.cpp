@@ -72,12 +72,14 @@ void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( 2 == chunk.radiativeTransitions().size() );
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
+  double normalisation = 1.00000015;
+
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );
   CHECK( id::ElectronSubshellID( "L2" ) == chunk.radiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == chunk.radiativeTransitions()[1].originatingShell() );
-  CHECK_THAT( 0.00190768, WithinRel( chunk.radiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.00380027, WithinRel( chunk.radiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( chunk.radiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.00380027 / normalisation, WithinRel( chunk.radiativeTransitions()[1].probability() ) );
   CHECK_THAT( 523.09, WithinRel( chunk.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 523.13, WithinRel( chunk.radiativeTransitions()[1].energy().value() ) );
 
@@ -99,12 +101,12 @@ void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( id::ElectronSubshellID( "L2" ) == chunk.nonRadiativeTransitions()[3].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == chunk.nonRadiativeTransitions()[4].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == chunk.nonRadiativeTransitions()[5].emittingShell() );
-  CHECK_THAT( 0.178644 , WithinRel( chunk.nonRadiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.116224 , WithinRel( chunk.nonRadiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.230418 , WithinRel( chunk.nonRadiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0110822, WithinRel( chunk.nonRadiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 0.291115 , WithinRel( chunk.nonRadiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 0.166809 , WithinRel( chunk.nonRadiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 0.178644  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.116224  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.230418  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0110822 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 0.291115  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 0.166809  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[5].probability() ) );
   CHECK_THAT( 478.82, WithinRel( chunk.nonRadiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 493.86, WithinRel( chunk.nonRadiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 493.9 , WithinRel( chunk.nonRadiativeTransitions()[2].energy().value() ) );
@@ -112,8 +114,8 @@ void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK_THAT( 508.94, WithinRel( chunk.nonRadiativeTransitions()[4].energy().value() ) );
   CHECK_THAT( 508.98, WithinRel( chunk.nonRadiativeTransitions()[5].energy().value() ) );
 
-  CHECK_THAT( 0.00570795, WithinRel( chunk.totalRadiativeProbability() ) );
-  CHECK_THAT( 0.9942922 , WithinRel( chunk.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0.00570795 / normalisation, WithinRel( chunk.totalRadiativeProbability() ) );
+  CHECK_THAT( 0.9942922  / normalisation, WithinRel( chunk.totalNonRadiativeProbability() ) );
 }
 
 void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
@@ -132,6 +134,8 @@ void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( 6 == chunk.radiativeTransitions().size() );
   CHECK( 43 == chunk.nonRadiativeTransitions().size() );
 
+  double normalisation = 1.00000017168;
+
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[2].type() );
@@ -144,12 +148,12 @@ void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( id::ElectronSubshellID( "3p3/2" ) == chunk.radiativeTransitions()[3].originatingShell() );
   CHECK( id::ElectronSubshellID( "3d3/2" ) == chunk.radiativeTransitions()[4].originatingShell() );
   CHECK( id::ElectronSubshellID( "3d5/2" ) == chunk.radiativeTransitions()[5].originatingShell() );
-  CHECK_THAT( 0.131119  , WithinRel( chunk.radiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.255668  , WithinRel( chunk.radiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.0158899 , WithinRel( chunk.radiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0310908 , WithinRel( chunk.radiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 1.79389e-5, WithinRel( chunk.radiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 2.59348e-5, WithinRel( chunk.radiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 0.131119   / normalisation, WithinRel( chunk.radiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.255668   / normalisation, WithinRel( chunk.radiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.0158899  / normalisation, WithinRel( chunk.radiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0310908  / normalisation, WithinRel( chunk.radiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 1.79389e-5 / normalisation, WithinRel( chunk.radiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 2.59348e-5 / normalisation, WithinRel( chunk.radiativeTransitions()[5].probability() ) );
   CHECK_THAT( 7984.67, WithinRel( chunk.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 8005.71, WithinRel( chunk.radiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 8862.70, WithinRel( chunk.radiativeTransitions()[2].energy().value() ) );
@@ -286,49 +290,49 @@ void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( id::ElectronSubshellID( "4s1/2" ) == chunk.nonRadiativeTransitions()[40].emittingShell() );
   CHECK( id::ElectronSubshellID( "3d5/2" ) == chunk.nonRadiativeTransitions()[41].emittingShell() );
   CHECK( id::ElectronSubshellID( "4s1/2" ) == chunk.nonRadiativeTransitions()[42].emittingShell() );
-  CHECK_THAT( 0.0388567 , WithinRel( chunk.nonRadiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.0431908 , WithinRel( chunk.nonRadiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.0768383 , WithinRel( chunk.nonRadiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0104073 , WithinRel( chunk.nonRadiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 5.57458e-3, WithinRel( chunk.nonRadiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 9.82486e-3, WithinRel( chunk.nonRadiativeTransitions()[5].probability() ) );
-  CHECK_THAT( 2.80672e-4, WithinRel( chunk.nonRadiativeTransitions()[6].probability() ) );
-  CHECK_THAT( 3.81309e-4, WithinRel( chunk.nonRadiativeTransitions()[7].probability() ) );
-  CHECK_THAT( 3.54221e-4, WithinRel( chunk.nonRadiativeTransitions()[8].probability() ) );
-  CHECK_THAT( 7.65781e-3, WithinRel( chunk.nonRadiativeTransitions()[9].probability() ) );
-  CHECK_THAT( 0.181191  , WithinRel( chunk.nonRadiativeTransitions()[10].probability() ) );
-  CHECK_THAT( 4.90291e-3, WithinRel( chunk.nonRadiativeTransitions()[11].probability() ) );
-  CHECK_THAT( 1.85044e-3, WithinRel( chunk.nonRadiativeTransitions()[12].probability() ) );
-  CHECK_THAT( 0.0199826 , WithinRel( chunk.nonRadiativeTransitions()[13].probability() ) );
-  CHECK_THAT( 3.89071e-4, WithinRel( chunk.nonRadiativeTransitions()[14].probability() ) );
-  CHECK_THAT( 1.43235e-3, WithinRel( chunk.nonRadiativeTransitions()[15].probability() ) );
-  CHECK_THAT( 1.62596e-4, WithinRel( chunk.nonRadiativeTransitions()[16].probability() ) );
-  CHECK_THAT( 0.100194  , WithinRel( chunk.nonRadiativeTransitions()[17].probability() ) );
-  CHECK_THAT( 8.76108e-3, WithinRel( chunk.nonRadiativeTransitions()[18].probability() ) );
-  CHECK_THAT( 0.0200201 , WithinRel( chunk.nonRadiativeTransitions()[19].probability() ) );
-  CHECK_THAT( 0.0224684 , WithinRel( chunk.nonRadiativeTransitions()[20].probability() ) );
-  CHECK_THAT( 1.77886e-3, WithinRel( chunk.nonRadiativeTransitions()[21].probability() ) );
-  CHECK_THAT( 1.73429e-3, WithinRel( chunk.nonRadiativeTransitions()[22].probability() ) );
-  CHECK_THAT( 2.92272e-4, WithinRel( chunk.nonRadiativeTransitions()[23].probability() ) );
-  CHECK_THAT( 7.62703e-4, WithinRel( chunk.nonRadiativeTransitions()[24].probability() ) );
-  CHECK_THAT( 7.0483e-4 , WithinRel( chunk.nonRadiativeTransitions()[25].probability() ) );
-  CHECK_THAT( 1.2447e-3 , WithinRel( chunk.nonRadiativeTransitions()[26].probability() ) );
-  CHECK_THAT( 3.21362e-5, WithinRel( chunk.nonRadiativeTransitions()[27].probability() ) );
-  CHECK_THAT( 4.49905e-5, WithinRel( chunk.nonRadiativeTransitions()[28].probability() ) );
-  CHECK_THAT( 5.14183e-5, WithinRel( chunk.nonRadiativeTransitions()[29].probability() ) );
-  CHECK_THAT( 1.20557e-4, WithinRel( chunk.nonRadiativeTransitions()[30].probability() ) );
-  CHECK_THAT( 2.52309e-3, WithinRel( chunk.nonRadiativeTransitions()[31].probability() ) );
-  CHECK_THAT( 3.72645e-5, WithinRel( chunk.nonRadiativeTransitions()[32].probability() ) );
-  CHECK_THAT( 1.46859e-4, WithinRel( chunk.nonRadiativeTransitions()[33].probability() ) );
-  CHECK_THAT( 2.41126e-5, WithinRel( chunk.nonRadiativeTransitions()[34].probability() ) );
-  CHECK_THAT( 1.52046e-3, WithinRel( chunk.nonRadiativeTransitions()[35].probability() ) );
-  CHECK_THAT( 1.96192e-4, WithinRel( chunk.nonRadiativeTransitions()[36].probability() ) );
-  CHECK_THAT( 1.86855e-4, WithinRel( chunk.nonRadiativeTransitions()[37].probability() ) );
-  CHECK_THAT( 4.43756e-5, WithinRel( chunk.nonRadiativeTransitions()[38].probability() ) );
-  CHECK_THAT( 1.10707e-5, WithinRel( chunk.nonRadiativeTransitions()[39].probability() ) );
-  CHECK_THAT( 2.21424e-6, WithinRel( chunk.nonRadiativeTransitions()[40].probability() ) );
-  CHECK_THAT( 4.12417e-6, WithinRel( chunk.nonRadiativeTransitions()[41].probability() ) );
-  CHECK_THAT( 4.12417e-6, WithinRel( chunk.nonRadiativeTransitions()[42].probability() ) );
+  CHECK_THAT( 0.0388567  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.0431908  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.0768383  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0104073  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 5.57458e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 9.82486e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 2.80672e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[6].probability() ) );
+  CHECK_THAT( 3.81309e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[7].probability() ) );
+  CHECK_THAT( 3.54221e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[8].probability() ) );
+  CHECK_THAT( 7.65781e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[9].probability() ) );
+  CHECK_THAT( 0.181191   / normalisation, WithinRel( chunk.nonRadiativeTransitions()[10].probability() ) );
+  CHECK_THAT( 4.90291e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[11].probability() ) );
+  CHECK_THAT( 1.85044e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[12].probability() ) );
+  CHECK_THAT( 0.0199826  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[13].probability() ) );
+  CHECK_THAT( 3.89071e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[14].probability() ) );
+  CHECK_THAT( 1.43235e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[15].probability() ) );
+  CHECK_THAT( 1.62596e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[16].probability() ) );
+  CHECK_THAT( 0.100194   / normalisation, WithinRel( chunk.nonRadiativeTransitions()[17].probability() ) );
+  CHECK_THAT( 8.76108e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[18].probability() ) );
+  CHECK_THAT( 0.0200201  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[19].probability() ) );
+  CHECK_THAT( 0.0224684  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[20].probability() ) );
+  CHECK_THAT( 1.77886e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[21].probability() ) );
+  CHECK_THAT( 1.73429e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[22].probability() ) );
+  CHECK_THAT( 2.92272e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[23].probability() ) );
+  CHECK_THAT( 7.62703e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[24].probability() ) );
+  CHECK_THAT( 7.0483e-4  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[25].probability() ) );
+  CHECK_THAT( 1.2447e-3  / normalisation, WithinRel( chunk.nonRadiativeTransitions()[26].probability() ) );
+  CHECK_THAT( 3.21362e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[27].probability() ) );
+  CHECK_THAT( 4.49905e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[28].probability() ) );
+  CHECK_THAT( 5.14183e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[29].probability() ) );
+  CHECK_THAT( 1.20557e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[30].probability() ) );
+  CHECK_THAT( 2.52309e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[31].probability() ) );
+  CHECK_THAT( 3.72645e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[32].probability() ) );
+  CHECK_THAT( 1.46859e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[33].probability() ) );
+  CHECK_THAT( 2.41126e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[34].probability() ) );
+  CHECK_THAT( 1.52046e-3 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[35].probability() ) );
+  CHECK_THAT( 1.96192e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[36].probability() ) );
+  CHECK_THAT( 1.86855e-4 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[37].probability() ) );
+  CHECK_THAT( 4.43756e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[38].probability() ) );
+  CHECK_THAT( 1.10707e-5 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[39].probability() ) );
+  CHECK_THAT( 2.21424e-6 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[40].probability() ) );
+  CHECK_THAT( 4.12417e-6 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[41].probability() ) );
+  CHECK_THAT( 4.12417e-6 / normalisation, WithinRel( chunk.nonRadiativeTransitions()[42].probability() ) );
   CHECK_THAT( 6771.00, WithinRel( chunk.nonRadiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 6898.57, WithinRel( chunk.nonRadiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 6919.61, WithinRel( chunk.nonRadiativeTransitions()[2].energy().value() ) );
@@ -373,6 +377,6 @@ void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK_THAT( 8923.60, WithinRel( chunk.nonRadiativeTransitions()[41].energy().value() ) );
   CHECK_THAT( 8926.29, WithinRel( chunk.nonRadiativeTransitions()[42].energy().value() ) );
 
-  CHECK_THAT( 0.43381157370, WithinRel( chunk.totalRadiativeProbability() ) );
-  CHECK_THAT( 0.56618859798, WithinRel( chunk.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0.43381157370 / normalisation, WithinRel( chunk.totalRadiativeProbability() ) );
+  CHECK_THAT( 0.56618859798 / normalisation, WithinRel( chunk.totalNonRadiativeProbability() ) );
 }
