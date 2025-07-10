@@ -874,6 +874,9 @@ class Reaction:
         """
         The cross section
         """
+    @cross_section.setter
+    def cross_section(self, arg1: TabulatedCrossSection) -> None:
+        ...
     @property
     def has_products(self) -> bool:
         """
@@ -904,22 +907,34 @@ class Reaction:
         """
         The mass difference Q value
         """
+    @mass_difference_qvalue.setter
+    def mass_difference_qvalue(self, arg1: float | None) -> None:
+        ...
     @property
     def partial_reaction_identifiers(self) -> list[str] | None:
         """
         The summation reaction identifiers (not defined if this is a primary
         reaction)
         """
+    @partial_reaction_identifiers.setter
+    def partial_reaction_identifiers(self, arg1: list[str] | None) -> None:
+        ...
     @property
     def products(self) -> list[ReactionProduct]:
         """
         The reaction products
         """
+    @products.setter
+    def products(self, arg1: list[ReactionProduct]) -> None:
+        ...
     @property
     def reaction_qvalue(self) -> float | None:
         """
         The reaction Q value
         """
+    @reaction_qvalue.setter
+    def reaction_qvalue(self, arg1: float | None) -> None:
+        ...
 class ReactionCategory:
     """
     The reaction category
