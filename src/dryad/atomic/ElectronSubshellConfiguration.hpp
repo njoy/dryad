@@ -24,6 +24,9 @@ namespace atomic {
    *    - the electron population, i.e. the number of electrons in the subshell
    *      when the atom is neutral (given as a floating point number)
    *    - the transitions that can fill a vacancy in this shell
+   *
+   *  If there are transitions defined, the transition probabilities are
+   *  normalised to 1 upon construction.
    */
   class ElectronSubshellConfiguration {
 
@@ -67,11 +70,31 @@ namespace atomic {
     }
 
     /**
+     *  @brief Set the subshell binding energy
+     *
+     *  @param[in] energy   the subshell binding energy
+     */
+    void bindingEnergy( double energy ) noexcept {
+
+      this->binding_energy_ = energy;
+    }
+
+    /**
      *  @brief Return the electron subshell population when the atom is neutral
      */
     double population() const noexcept {
 
       return this->population_;
+    }
+
+    /**
+     *  @brief Set the electron subshell population
+     *
+     *  @param[in] population   the electron subshell population
+     */
+    void population( double population ) noexcept {
+
+      this->population_ = population;
     }
 
     /**
@@ -123,7 +146,7 @@ namespace atomic {
     }
 
     /**
-     *  @brief Return the data for all available radiative transitions to this subshell
+     *  @brief Return the available radiative transitions to this subshell
      */
     const std::vector< RadiativeTransitionData >& radiativeTransitions() const noexcept {
 
@@ -131,11 +154,33 @@ namespace atomic {
     }
 
     /**
-     *  @brief Return the data for all available non-radiative transitions to this subshell
+     *  @brief Set the available radiative transitions to this subshell
+     *
+     *  @param[in] radiative   the available radiative transitions to this subshell
+     */
+    void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) noexcept {
+
+      this->radiative_ = radiative;
+      this->calculateProbabilities();
+    }
+
+    /**
+     *  @brief Return the available non-radiative transitions to this subshell
      */
     const std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() const noexcept {
 
       return this->nonradiative_;
+    }
+
+    /**
+     *  @brief Set the available non-radiative transitions to this subshell
+     *
+     *  @param[in] radiative   the available non-radiative transitions to this subshell
+     */
+    void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) noexcept {
+
+      this->nonradiative_ = nonradiative;
+      this->calculateProbabilities();
     }
 
     /**
@@ -152,6 +197,27 @@ namespace atomic {
     double totalNonRadiativeProbability() const noexcept {
 
       return this->nonradiative_probability_;
+    }
+
+    /**
+     *  @brief Normalise the transition probabilities
+     */
+    void normalise() noexcept {
+
+      if ( this->hasTransitions() ) {
+
+        double total = this->totalRadiativeProbability() + this->totalNonRadiativeProbability();
+        for ( RadiativeTransitionData& transition : this->radiative_ ) {
+
+          transition.probability( transition.probability() / total );
+        }
+        for ( NonRadiativeTransitionData& transition : this->nonradiative_ ) {
+
+          transition.probability( transition.probability() / total );
+        }
+        this->radiative_probability_ /= total;
+        this->nonradiative_probability_ /= total;
+      }
     }
 
     /**

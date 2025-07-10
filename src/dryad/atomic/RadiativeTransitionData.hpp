@@ -63,11 +63,31 @@ namespace atomic {
     }
 
     /**
+     *  @brief Set the transition probability
+     *
+     *  @param[in] probability   the probability of the transition
+     */
+    void probability( double probability ) noexcept {
+
+      this->probability_ = probability;
+    }
+
+    /**
      *  @brief Return the energy of the emitted photon
      */
     const std::optional< double >& energy() const noexcept {
 
       return this->energy_;
+    }
+
+    /**
+     *  @brief Set the energy of the emitted photon
+     *
+     *  @param[in] energy   the energy of the emitted photon
+     */
+    void energy( std::optional< double > energy ) noexcept {
+
+      this->energy_ = std::move( energy );
     }
 
     /**

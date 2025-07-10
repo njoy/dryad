@@ -41,17 +41,19 @@ namespace atomic {
         if ( transition.isRadiative() ) {
 
           radiative.emplace_back( createElectronSubshellID( transition.secondarySubshellDesignator() ),
-                                  transition.transitionProbability() / total,
+                                  transition.transitionProbability(),
                                   transition.transitionEnergy() );
         }
         else {
 
           nonradiative.emplace_back( createElectronSubshellID( transition.secondarySubshellDesignator() ),
                                      createElectronSubshellID( transition.tertiarySubshellDesignator() ),
-                                     transition.transitionProbability() / total,
+                                     transition.transitionProbability(),
                                      transition.transitionEnergy() );
         }
       }
+
+      //! @todo check normalisation using the total probability
 
       return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population,
                                                            std::move( radiative ),

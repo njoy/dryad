@@ -34,7 +34,7 @@ NonRadiativeTransitionData( id::ElectronSubshellID originating,
  *  @param emittingShell      the identifier of the subshell from which the
  *                            emitted electron originated
  *  @param probability        the probability of the transition
- *  @param energy             the energy of the emitted particle
+ *  @param energy             the energy of the emitted electron
  */
 NonRadiativeTransitionData( id::ElectronSubshellID originating,
                             id::ElectronSubshellID emitting,

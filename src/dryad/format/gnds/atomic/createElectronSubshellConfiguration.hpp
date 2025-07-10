@@ -45,20 +45,15 @@ namespace atomic {
 
       pugi::xml_node modes = decay.child( "decayModes" );
 
-      // calculate total probability for normalisation
-      double total = 0;
-      for ( pugi::xml_node mode = modes.child( "decayMode" ); mode; mode = mode.next_sibling(  "decayMode"  ) ) {
-
-        total += mode.child( "probability" ).child( "double" ).attribute( "value" ).as_double();
-      }
-
       std::vector< dryad::atomic::RadiativeTransitionData > radiative;
       std::vector< dryad::atomic::NonRadiativeTransitionData > nonradiative;
 
+      double total = 0;
       for ( pugi::xml_node mode = modes.child( "decayMode" ); mode; mode = mode.next_sibling(  "decayMode"  ) ) {
 
         // transition probability is an attribute on the double node in the probability node
-        double probability = mode.child( "probability" ).child( "double" ).attribute( "value" ).as_double() / total;
+        double probability = mode.child( "probability" ).child( "double" ).attribute( "value" ).as_double();
+        total += probability;
 
         // helper lambda function
         auto isVacancyProduct = [&element] ( pugi::xml_node product ) {
@@ -93,6 +88,9 @@ namespace atomic {
           throw std::exception();
         }
       }
+
+      //! @todo check normalisation using the total probability
+
       return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population,
                                                            std::move( radiative ),
                                                            std::move( nonradiative ) );

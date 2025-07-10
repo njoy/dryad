@@ -27,6 +27,7 @@ ElectronSubshellConfiguration( id::ElectronSubshellID id, double energy,
   radiative_probability_( 0. ), nonradiative_probability_( 0. ) {
 
   this->calculateProbabilities();
+  this->normalise();
 }
 
 /**

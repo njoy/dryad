@@ -27,7 +27,7 @@ RadiativeTransitionData( id::ElectronSubshellID originating, double probability 
  *  @param originatingShell   the identifier of the subshell from which the
  *                            vacancy filling electron originated
  *  @param probability        the probability of the transition
- *  @param energy             the energy of the emitted particle
+ *  @param energy             the energy of the emitted photon
  */
 RadiativeTransitionData( id::ElectronSubshellID originating,
                          double probability, double energy ) :

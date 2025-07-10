@@ -62,7 +62,7 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     "    emitting_shell      the identifier of the subshell from which the\n"
     "                        emitted electron originated\n"
     "    probability         the probability of the transition\n"
-    "    energy              the energy of the emitted particle"
+    "    energy              the energy of the emitted electron"
   )
   .def_property_readonly(
 
@@ -83,16 +83,18 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     &Component::emittingShell,
     "The identifier of the subshell from which the emitted electron originated"
   )
-  .def_property_readonly(
+  .def_property(
 
     "probability",
-    &Component::probability,
+    python::overload_cast<>( &Component::probability, python::const_ ),
+    python::overload_cast< double >( &Component::probability ),
     "The transition probability"
   )
-  .def_property_readonly(
+  .def_property(
 
     "energy",
-    &Component::energy,
+    python::overload_cast<>( &Component::energy, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::energy ),
     "The energy of the emitted electron"
   );
 
