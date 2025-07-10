@@ -90,6 +90,10 @@ namespace dryad {
     void partialReactionIdentifiers( std::optional< std::vector< id::ReactionID > > partials ) noexcept {
 
       this->partials_ = std::move( partials );
+      if ( this->partials_.has_value() && this->partials_.value().size() == 0 ) {
+
+        this->partials_ = std::nullopt;
+      }
       this->category_ = this->isPrimaryReaction()
                         ? ReactionCategory::Primary
                         : ReactionCategory::Summation;
