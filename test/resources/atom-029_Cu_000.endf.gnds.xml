@@ -1,0 +1,1462 @@
+<?xml version="1.0"?>
+<PoPs name="ENDF atomic relaxation for Z = 29" version="1.0" format="2.0">
+  <styles>
+    <evaluated label="eval" date="2023-08-01" library="ENDF/B" version="8.1.0">
+      <documentation>
+        <authors>
+          <author name="D.E.Cullen"></author></authors>
+        <dates>
+          <date value="2023-08-01" dateType="created"/></dates>
+        <title><![CDATA[ENDF-6 file from ENDF/B version 8.1.0 translated to GNDS by FUDGE.]]></title>
+        <body><![CDATA[See the endfCompatible section.]]></body>
+        <endfCompatible><![CDATA[ 29-Cu-  0 NDS,IAEA   Eval-Aug23 D.E.Cullen
+ NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830
+---- ENDF/B-VIII.1    MATERIAL 2900         REVISION 1
+----- ATOMIC RELAXATION DATA
+------ ENDF-6
+==================================================================
+The Livermore Evaluated Atomic Data Library (EADL) in the
+ENDF-6 Format. Translated from the Livermore ENDL format
+to the ENDF-6 Format.
+==================================================================
+  Contents
+==================================================================
+  MF/MT    Description
+==================================================================
+  28/533   Atomic Relaxation Data for Electrons and Photons
+==================================================================
+  Warning
+==================================================================
+  MF/MT combinations used to define ALL electron interaction data
+  are newly defined MF/MT numbers for ENDF/B-VI that did not exist
+  in earlier versions of ENDF/B.
+==================================================================
+  Definition of Data
+==================================================================
+  Atomic Relaxation Data for Electrons and Photons
+==================================================================
+1) An atom can be ionized by a photon or an electron interaction.
+2) The atomic relaxation data included here describes how a
+   singly ionized atom returns to neutrality, by emitting photons
+   (x-rays) and/or electrons (Auger, Coster-Kronig).
+3) Data is given to define the transition probabilities between
+   subshells for radiative (x-ray emission) and non-radiative
+   (Auger, Coster-Kronig) transitions.
+4) The complete spectrum of emitted photons and electrons can be
+   calculated using the data included here, e.g., see ref. 2,
+   below, for am example of a computer code that analytically
+   calculates these spectra.
+==================================================================
+  References
+==================================================================
+1) S.T. Perkins, D.E. Cullen, etal., "Tables and Graphs of Atomic
+   Subshell and Relaxation Data Derived from the LLNL Evaluated
+   Atomic Data Library (EADL), Z = 1 - 100", UCRL-50400, Vol. 30,
+   Lawrence Livermore National Laboratory (1991).
+2) D.E. Cullen "Program RELAX: A Code Designed to Calculate X-Ray
+   and Electron Emission Spectra as Singly Charged Atoms Relax
+   Back to Neutrality", UCRL-ID-110438, Lawrence Livermore
+   National Laboratory (1992).
+3) D.E. Cullen "A Survey of Atomic Binding Energies for use
+   in EPICS2017" ,IAEA-NDS-224, (2017), Nuclear Data Section,
+   IAEA, Vienna, Austria
+4) D.E. Cullen,"EPICS2017: April 2019 Status Report",
+   IAEA-NDS-228, April 2019, Nuclear Data Section,
+   IAEA, Vienna, Austria.
+5) D.E. Cullen,"EPICS2023: August 2023 Status Report",
+   IAEA-NDS-242, August 2023, Nuclear Data Section,
+   IAEA, Vienna, Austria.
+
+  These are the primary references to the contents of this library
+  and they contain a complete list of references to the sources
+  of data used in this library, methods of evaluation, accuracy
+  of the data, etc.
+==================================================================
+  History
+==================================================================
+ (1) November, 1991 - Initial release in the ENDL format.
+ (2) November, 2001 - Initial release in the ENDF-6 format.
+ (3) September,2014 - Insure Standard C, C++, FORTRAN Format
+ (4) September,2014 - Updated based on recently publshed data
+ (5) September,2017 - New Binding Energies (see: ref.3)
+                      Same Transition Probabilities
+ (6) August,   2023 - Reformatted, but data same as 2017 version
+==================================================================
+ ***************** Program FIXUP (Version 2023-2) ****************
+ **************** Program DICTIN (VERSION 2023-1) ****************]]></endfCompatible></documentation></evaluated></styles>
+  <chemicalElements>
+    <chemicalElement symbol="Cu" Z="29" name="Copper">
+      <atomic>
+        <configurations>
+          <configuration subshell="1s1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="8986." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.131119"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{2p1/2}" pid="Cu{2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.255668"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{2p3/2}" pid="Cu{2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0158899"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p1/2}" pid="Cu{3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0310908"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p3/2}" pid="Cu{3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.79389e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d3/2}" pid="Cu{3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.59348e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d5/2}" pid="Cu{3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0388567"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,2s1/2}" pid="Cu{2s1/2,2s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0431908"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,2p1/2}" pid="Cu{2s1/2,2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="8" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0768383"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,2p3/2}" pid="Cu{2s1/2,2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="9" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0104073"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,3s1/2}" pid="Cu{2s1/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="10" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.57458e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,3p1/2}" pid="Cu{2s1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="11" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="9.82486e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,3p3/2}" pid="Cu{2s1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="12" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.80672e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,3d3/2}" pid="Cu{2s1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="13" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.81309e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,3d5/2}" pid="Cu{2s1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="14" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.54221e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2s1/2,4s1/2}" pid="Cu{2s1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="15" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="7.65781e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,2p1/2}" pid="Cu{2p1/2,2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="16" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.181191"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,2p3/2}" pid="Cu{2p1/2,2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="17" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.90291e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3s1/2}" pid="Cu{2p1/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="18" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.85044e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3p1/2}" pid="Cu{2p1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="19" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0199826"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3p3/2}" pid="Cu{2p1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="20" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.89071e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3d3/2}" pid="Cu{2p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="21" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.43235e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3d5/2}" pid="Cu{2p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="22" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.62596e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,4s1/2}" pid="Cu{2p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="23" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.100194"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,2p3/2}" pid="Cu{2p3/2,2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="24" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.76108e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3s1/2}" pid="Cu{2p3/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="25" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0200201"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3p1/2}" pid="Cu{2p3/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="26" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0224684"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3p3/2}" pid="Cu{2p3/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="27" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.77886e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3d3/2}" pid="Cu{2p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="28" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.73429e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3d5/2}" pid="Cu{2p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="29" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.92272e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,4s1/2}" pid="Cu{2p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="30" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="7.62703e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3s1/2}" pid="Cu{3s1/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="31" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="7.0483e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p1/2}" pid="Cu{3s1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="32" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.2447e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p3/2}" pid="Cu{3s1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="33" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.21362e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d3/2}" pid="Cu{3s1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="34" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.49905e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d5/2}" pid="Cu{3s1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="35" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.14183e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,4s1/2}" pid="Cu{3s1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="36" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.20557e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p1/2}" pid="Cu{3p1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="37" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.52309e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p3/2}" pid="Cu{3p1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="38" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.72645e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d3/2}" pid="Cu{3p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="39" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.46859e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d5/2}" pid="Cu{3p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="40" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.41126e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,4s1/2}" pid="Cu{3p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="41" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.52046e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3p3/2}" pid="Cu{3p3/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="42" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.96192e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d3/2}" pid="Cu{3p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="43" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.86855e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d5/2}" pid="Cu{3p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="44" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.43756e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,4s1/2}" pid="Cu{3p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="45" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.10707e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="46" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.21424e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="47" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.12417e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="48" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.12417e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="2s1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="1103." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.9146e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{2p1/2}" pid="Cu{2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.7182e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{2p3/2}" pid="Cu{2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="6.8836e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p1/2}" pid="Cu{3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.0652e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p3/2}" pid="Cu{3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.601e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d3/2}" pid="Cu{3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.4221e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d5/2}" pid="Cu{3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0478361"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3p1/2}" pid="Cu{2p1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0692207"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3p3/2}" pid="Cu{2p1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="8" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.046482"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3d3/2}" pid="Cu{2p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="9" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0746387"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,3d5/2}" pid="Cu{2p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="10" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.9924e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p1/2,4s1/2}" pid="Cu{2p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="11" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.107359"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3s1/2}" pid="Cu{2p3/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="12" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0588771"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3p1/2}" pid="Cu{2p3/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="13" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.125939"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3p3/2}" pid="Cu{2p3/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="14" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.114171"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3d3/2}" pid="Cu{2p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="15" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.162177"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,3d5/2}" pid="Cu{2p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="16" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.56746e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,4s1/2}" pid="Cu{2p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="17" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0112747"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3s1/2}" pid="Cu{3s1/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="18" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0204284"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p1/2}" pid="Cu{3s1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="19" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0397086"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p3/2}" pid="Cu{3s1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="20" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.02103"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d3/2}" pid="Cu{3s1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="21" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0308047"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d5/2}" pid="Cu{3s1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="22" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="6.83622e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,4s1/2}" pid="Cu{3s1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="23" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.03846e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p1/2}" pid="Cu{3p1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="24" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="6.94692e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p3/2}" pid="Cu{3p1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="25" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.37886e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d3/2}" pid="Cu{3p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="26" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="6.64782e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d5/2}" pid="Cu{3p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="27" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.86257e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,4s1/2}" pid="Cu{3p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="28" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.07698e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3p3/2}" pid="Cu{3p3/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="29" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="7.13355e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d3/2}" pid="Cu{3p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="30" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.0946e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d5/2}" pid="Cu{3p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="31" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.18286e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,4s1/2}" pid="Cu{3p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="32" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.6318e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d3/2}" pid="Cu{3d3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="33" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0286944"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="34" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.17393e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="35" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.31045e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="36" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.00352e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="2p1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="958." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.18584e-10"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{2p3/2}" pid="Cu{2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.65603e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3s1/2}" pid="Cu{3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.62541e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p3/2}" pid="Cu{3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.42993e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d3/2}" pid="Cu{3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.20891e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{4s1/2}" pid="Cu{4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.94776e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{2p3/2,4s1/2}" pid="Cu{2p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.62933e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3s1/2}" pid="Cu{3s1/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0668802"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p1/2}" pid="Cu{3s1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="8" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.61858e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p3/2}" pid="Cu{3s1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="9" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.11852e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d3/2}" pid="Cu{3s1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="10" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="6.83737e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d5/2}" pid="Cu{3s1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="11" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.10585e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,4s1/2}" pid="Cu{3s1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="12" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0577499"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p1/2}" pid="Cu{3p1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="13" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.198084"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p3/2}" pid="Cu{3p1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="14" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0692466"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d3/2}" pid="Cu{3p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="15" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.131715"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d5/2}" pid="Cu{3p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="16" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.26721e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,4s1/2}" pid="Cu{3p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="17" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.52451e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3p3/2}" pid="Cu{3p3/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="18" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0826916"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d3/2}" pid="Cu{3p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="19" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0122043"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d5/2}" pid="Cu{3p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="20" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.70255e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,4s1/2}" pid="Cu{3p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="21" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0584943"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d3/2}" pid="Cu{3d3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="22" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.265016"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="23" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.12427e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="24" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0120386"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="25" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.19538e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="2p3/2" electronNumber="4.0">
+            <bindingEnergy>
+              <double label="eval" value="938." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.33818e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3s1/2}" pid="Cu{3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.20307e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p1/2}" pid="Cu{3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="7.94827e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p3/2}" pid="Cu{3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.70919e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d3/2}" pid="Cu{3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.97209e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d5/2}" pid="Cu{3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.0619e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{4s1/2}" pid="Cu{4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.73446e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3s1/2}" pid="Cu{3s1/2,3s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.6036e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p1/2}" pid="Cu{3s1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="8" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.069408"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3p3/2}" pid="Cu{3s1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="9" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.66601e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d3/2}" pid="Cu{3s1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="10" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="5.73035e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,3d5/2}" pid="Cu{3s1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="11" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.17322e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3s1/2,4s1/2}" pid="Cu{3s1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="12" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="9.75756e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p1/2}" pid="Cu{3p1/2,3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="13" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.105475"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3p3/2}" pid="Cu{3p1/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="14" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.55055e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d3/2}" pid="Cu{3p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="15" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0433586"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d5/2}" pid="Cu{3p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="16" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="7.98344e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,4s1/2}" pid="Cu{3p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="17" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.154845"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3p3/2}" pid="Cu{3p3/2,3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="18" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.101637"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d3/2}" pid="Cu{3p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="19" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.152475"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d5/2}" pid="Cu{3p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="20" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.34172e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,4s1/2}" pid="Cu{3p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="21" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="9.71767e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d3/2}" pid="Cu{3d3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="22" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.196561"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="23" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.50793e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="24" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.132479"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="25" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.90728e-4"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="3s1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="127." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="8.17583e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p1/2}" pid="Cu{3p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.00565e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3p3/2}" pid="Cu{3p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0790941"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d3/2}" pid="Cu{3p1/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.174485"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,3d5/2}" pid="Cu{3p1/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0188508"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p1/2,4s1/2}" pid="Cu{3p1/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.248773"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d3/2}" pid="Cu{3p3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.308941"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,3d5/2}" pid="Cu{3p3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0349061"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3p3/2,4s1/2}" pid="Cu{3p3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="8" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.64835e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d3/2}" pid="Cu{3d3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="9" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0539118"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="10" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0158988"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="11" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0270922"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="12" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0343707"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="3p1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="82." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.915e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d3/2}" pid="Cu{3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="2.338e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{4s1/2}" pid="Cu{4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.153632"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d3/2}" pid="Cu{3d3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.798786"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0191501"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0243355"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.07449e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="3p3/2" electronNumber="4.0">
+            <bindingEnergy>
+              <double label="eval" value="80." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.746e-6"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d3/2}" pid="Cu{3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.5967e-5"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{3d5/2}" pid="Cu{3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="9.55071e-7"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="Cu{4s1/2}" pid="Cu{4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0235524"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d3/2}" pid="Cu{3d3/2,3d3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.554813"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,3d5/2}" pid="Cu{3d3/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="4.32518e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d3/2,4s1/2}" pid="Cu{3d3/2,4s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.39649"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,3d5/2}" pid="Cu{3d5/2,3d5/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0208001"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="Cu{3d5/2,4s1/2}" pid="Cu{3d5/2,4s1/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="3d3/2" electronNumber="4.0">
+            <bindingEnergy>
+              <double label="eval" value="11." unit="eV"/></bindingEnergy></configuration>
+          <configuration subshell="3d5/2" electronNumber="6.0">
+            <bindingEnergy>
+              <double label="eval" value="10.4" unit="eV"/></bindingEnergy></configuration>
+          <configuration subshell="4s1/2" electronNumber="1.0">
+            <bindingEnergy>
+              <double label="eval" value="7.73" unit="eV"/></bindingEnergy></configuration></configurations></atomic></chemicalElement></chemicalElements></PoPs>
