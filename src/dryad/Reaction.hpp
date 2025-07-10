@@ -45,6 +45,8 @@ namespace dryad {
 
     /* methods */
 
+    //! @todo add insertion, removal of individual reaction products
+
     /**
      *  @brief Return the reaction identifier
      */
