@@ -760,22 +760,6 @@ class ProjectileTarget:
             self   the ProjectileTarget data
             id     the reaction identifier
         """
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ProjectileTarget:
-        """
-        Linearise the data and return a new object
-        
-        Arguments:
-            self        the ProjectileTarget
-            tolerance   the linearisation tolerance
-        """
-    def linearise_inplace(self, tolerance: ToleranceConvergence = ...) -> None:
-        """
-        Linearise the data inplace
-        
-        Arguments:
-            self        the ProjectileTarget
-            tolerance   the linearisation tolerance
-        """
     def reaction(self, id: str) -> Reaction:
         """
         Return the requested reaction
@@ -860,22 +844,6 @@ class Reaction:
         Arguments:
             self   the reaction
             type   the reaction product type
-        """
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> Reaction:
-        """
-        Linearise the reaction data and return a new reaction
-        
-        Arguments:
-            self        the reaction
-            tolerance   the linearisation tolerance
-        """
-    def linearise_inplace(self, tolerance: ToleranceConvergence = ...) -> None:
-        """
-        Linearise the reaction data inplace
-        
-        Arguments:
-            self        the reaction
-            tolerance   the linearisation tolerance
         """
     @typing.overload
     def number_products(self) -> int:

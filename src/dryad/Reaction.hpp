@@ -211,40 +211,6 @@ namespace dryad {
     }
 
     /**
-     *  @brief Linearise the reaction data and return a new reaction
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
-
-      TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
-      if ( this->category() == ReactionCategory::Primary ) {
-
-        return Reaction( this->identifier(), std::move( xs ),
-                         this->products(), this->massDifferenceQValue(),
-                         this->reactionQValue() );
-      }
-      else {
-
-        return Reaction( this->identifier(),
-                         this->partialReactionIdentifiers().value(),
-                         std::move( xs ),
-                         this->products() );
-      }
-    }
-
-    /**
-     *  @brief Linearise the reaction data inplace
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
-
-      this->xs_ = this->xs_.linearise( tolerance );
-      this->linearised_ = true;
-    }
-
-    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

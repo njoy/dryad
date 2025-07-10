@@ -171,26 +171,6 @@ void wrapReaction( python::module& module ) {
     "is_linearised",
     &Component::isLinearised,
     "Flag indicating whether or not the data is linearised"
-  )
-  .def(
-
-    "linearise",
-    &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the reaction data and return a new reaction\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    tolerance   the linearisation tolerance"
-  )
-  .def(
-
-    "linearise_inplace",
-    &Component::lineariseInplace,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the reaction data inplace\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    tolerance   the linearisation tolerance"
   );
 
   // add standard equality comparison definitions
