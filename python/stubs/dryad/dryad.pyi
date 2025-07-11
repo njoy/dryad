@@ -63,6 +63,9 @@ class AtomicRelaxation:
         """
         The electron shell configuration data
         """
+    @subshells.setter
+    def subshells(self, arg1: list[atomic.ElectronSubshellConfiguration]) -> None:
+        ...
 class CoherentDistributionData:
     """
     The distribution data for coherent scattering in photoatomic interactions

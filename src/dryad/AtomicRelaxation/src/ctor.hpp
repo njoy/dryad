@@ -17,4 +17,7 @@ AtomicRelaxation& operator=( AtomicRelaxation&& ) = default;
  */
 AtomicRelaxation( id::ElementID element,
                   std::vector< atomic::ElectronSubshellConfiguration > subshells ) :
-    element_id_( std::move( element ) ), subshells_( std::move( subshells ) ) {}
+    element_id_( std::move( element ) ), subshells_( std::move( subshells ) ) {
+
+  this->sort();
+}

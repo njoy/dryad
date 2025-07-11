@@ -19,9 +19,14 @@ SCENARIO( "AtomicRelaxation" ) {
 
     WHEN( "the data is given explicitly" ) {
 
+      // note: subshell data is deliberately given out of order to check for sorting
+
       id::ElementID element( 1 );
       std::vector< atomic::ElectronSubshellConfiguration > subshells = {
 
+        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 ),
+        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
+        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
         atomic::ElectronSubshellConfiguration(
 
           id::ElectronSubshellID( "K" ), 538, 2,
@@ -33,10 +38,7 @@ SCENARIO( "AtomicRelaxation" ) {
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) }
-        ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 )
+        )
       };
 
       AtomicRelaxation chunk( std::move( element ), std::move( subshells ) );
@@ -318,4 +320,6 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( 0 == l3_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l3_shell.totalRadiativeProbability() ) );
   CHECK_THAT( 0., WithinRel( l3_shell.totalNonRadiativeProbability() ) );
+
+  CHECK_THROWS( chunk.subshell( id::ElectronSubshellID( "M1" ) ) );
 }

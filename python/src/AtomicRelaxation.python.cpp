@@ -45,10 +45,11 @@ void wrapAtomicRelaxation( python::module& module ) {
     &Component::elementIdentifier,
     "The element identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "subshells",
-    &Component::subshells,
+    python::overload_cast<>( &Component::subshells, python::const_ ),
+    python::overload_cast< std::vector< ElectronSubshellConfiguration > >( &Component::subshells ),
     "The electron shell configuration data"
   )
   .def(

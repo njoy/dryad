@@ -164,7 +164,7 @@ class NonRadiativeTransitionData:
             emitting_shell      the identifier of the subshell from which the
                                 emitted electron originated
             probability         the probability of the transition
-            energy              the energy of the emitted particle
+            energy              the energy of the emitted electron
         """
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
@@ -233,7 +233,7 @@ class RadiativeTransitionData:
             originating_shell   the identifier of the subshell from which the
                                 vacancy filling electron originated
             probability         the probability of the transition
-            energy              the energy of the emitted particle
+            energy              the energy of the emitted photon
         """
     def __ne__(self, arg0: RadiativeTransitionData) -> bool:
         ...
