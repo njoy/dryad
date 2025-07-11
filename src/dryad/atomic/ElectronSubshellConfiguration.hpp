@@ -160,8 +160,8 @@ namespace atomic {
      */
     void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) noexcept {
 
-      this->radiative_ = radiative;
-      this->calculateProbabilities();
+      this->radiative_ = std::move( radiative );
+      this->calculateTotalRadiativeProbability();
     }
 
     /**
@@ -179,8 +179,8 @@ namespace atomic {
      */
     void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) noexcept {
 
-      this->nonradiative_ = nonradiative;
-      this->calculateProbabilities();
+      this->nonradiative_ = std::move( nonradiative );
+      this->calculateTotalNonRadiativeProbability();
     }
 
     /**
