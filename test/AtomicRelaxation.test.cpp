@@ -121,6 +121,8 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "L3" ) ) );
   CHECK( false == chunk.hasSubshell( id::ElectronSubshellID( "M1" ) ) );
 
+  double normalisation = 1.00000015;
+
   auto k_shell = chunk.subshell( id::ElectronSubshellID( "K" ) );
   CHECK( id::ElectronSubshellID( "K" ) == k_shell.identifier() );
   CHECK_THAT( 538, WithinRel( k_shell.bindingEnergy() ) );
@@ -137,8 +139,8 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( atomic::TransitionType::Radiative == k_shell.radiativeTransitions()[1].type() );
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.radiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.radiativeTransitions()[1].originatingShell() );
-  CHECK_THAT( 0.00190768, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.00380027, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.00380027 / normalisation, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
   CHECK_THAT( 523.09, WithinRel( k_shell.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 523.13, WithinRel( k_shell.radiativeTransitions()[1].energy().value() ) );
   CHECK( atomic::TransitionType::NonRadiative == k_shell.nonRadiativeTransitions()[0].type() );
@@ -159,20 +161,20 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.nonRadiativeTransitions()[3].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[4].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[5].emittingShell() );
-  CHECK_THAT( 0.178644 , WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.116224 , WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.230418 , WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0110822, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 0.291115 , WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 0.166809 , WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 0.178644  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.116224  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.230418  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0110822 / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 0.291115  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 0.166809  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
   CHECK_THAT( 478.82, WithinRel( k_shell.nonRadiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 493.86, WithinRel( k_shell.nonRadiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 493.9 , WithinRel( k_shell.nonRadiativeTransitions()[2].energy().value() ) );
   CHECK_THAT( 508.9 , WithinRel( k_shell.nonRadiativeTransitions()[3].energy().value() ) );
   CHECK_THAT( 508.94, WithinRel( k_shell.nonRadiativeTransitions()[4].energy().value() ) );
   CHECK_THAT( 508.98, WithinRel( k_shell.nonRadiativeTransitions()[5].energy().value() ) );
-  CHECK_THAT( 0.00570795, WithinRel( k_shell.totalRadiativeProbability() ) );
-  CHECK_THAT( 0.9942922 , WithinRel( k_shell.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0.00570795 / normalisation, WithinRel( k_shell.totalRadiativeProbability() ) );
+  CHECK_THAT( 0.9942922  / normalisation, WithinRel( k_shell.totalNonRadiativeProbability() ) );
 
   auto l1_shell = chunk.subshell( id::ElectronSubshellID( "L1" ) );
   CHECK( id::ElectronSubshellID( "L1" ) == l1_shell.identifier() );
@@ -235,8 +237,8 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( atomic::TransitionType::Radiative == k_shell.radiativeTransitions()[1].type() );
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.radiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.radiativeTransitions()[1].originatingShell() );
-  CHECK_THAT( 0.00190768, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.00380027, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.00380027 / normalisation, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
   CHECK_THAT( 523.09, WithinRel( k_shell.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 523.13, WithinRel( k_shell.radiativeTransitions()[1].energy().value() ) );
   CHECK( atomic::TransitionType::NonRadiative == k_shell.nonRadiativeTransitions()[0].type() );
@@ -257,20 +259,20 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.nonRadiativeTransitions()[3].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[4].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[5].emittingShell() );
-  CHECK_THAT( 0.178644 , WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.116224 , WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.230418 , WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0110822, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 0.291115 , WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 0.166809 , WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 0.178644  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.116224  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.230418  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0110822 / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 0.291115  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 0.166809  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
   CHECK_THAT( 478.82, WithinRel( k_shell.nonRadiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 493.86, WithinRel( k_shell.nonRadiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 493.9 , WithinRel( k_shell.nonRadiativeTransitions()[2].energy().value() ) );
   CHECK_THAT( 508.9 , WithinRel( k_shell.nonRadiativeTransitions()[3].energy().value() ) );
   CHECK_THAT( 508.94, WithinRel( k_shell.nonRadiativeTransitions()[4].energy().value() ) );
   CHECK_THAT( 508.98, WithinRel( k_shell.nonRadiativeTransitions()[5].energy().value() ) );
-  CHECK_THAT( 0.00570795, WithinRel( k_shell.totalRadiativeProbability() ) );
-  CHECK_THAT( 0.9942922 , WithinRel( k_shell.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0.00570795 / normalisation, WithinRel( k_shell.totalRadiativeProbability() ) );
+  CHECK_THAT( 0.9942922  / normalisation, WithinRel( k_shell.totalNonRadiativeProbability() ) );
 
   l1_shell = chunk.subshells()[1];
   CHECK( id::ElectronSubshellID( "L1" ) == l1_shell.identifier() );

@@ -51,12 +51,14 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
             self.assertEqual( 2, len( chunk.radiative_transitions ) )
             self.assertEqual( 6, len( chunk.non_radiative_transitions ) )
 
+            normalisation = 1.00000015
+
             self.assertEqual( TransitionType.Radiative, chunk.radiative_transitions[0].type )
             self.assertEqual( TransitionType.Radiative, chunk.radiative_transitions[1].type )
             self.assertEqual( ElectronSubshellID( 'L2' ), chunk.radiative_transitions[0].originating_shell )
             self.assertEqual( ElectronSubshellID( 'L3' ), chunk.radiative_transitions[1].originating_shell )
-            self.assertAlmostEqual( 0.00190768, chunk.radiative_transitions[0].probability )
-            self.assertAlmostEqual( 0.00380027, chunk.radiative_transitions[1].probability )
+            self.assertAlmostEqual( 0.00190768 / normalisation, chunk.radiative_transitions[0].probability )
+            self.assertAlmostEqual( 0.00380027 / normalisation, chunk.radiative_transitions[1].probability )
             self.assertAlmostEqual( 523.09, chunk.radiative_transitions[0].energy )
             self.assertAlmostEqual( 523.13, chunk.radiative_transitions[1].energy )
 
@@ -78,12 +80,12 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
             self.assertEqual( ElectronSubshellID( 'L2' ), chunk.non_radiative_transitions[3].emitting_shell )
             self.assertEqual( ElectronSubshellID( 'L3' ), chunk.non_radiative_transitions[4].emitting_shell )
             self.assertEqual( ElectronSubshellID( 'L3' ), chunk.non_radiative_transitions[5].emitting_shell )
-            self.assertAlmostEqual( 0.178644 , chunk.non_radiative_transitions[0].probability )
-            self.assertAlmostEqual( 0.116224 , chunk.non_radiative_transitions[1].probability )
-            self.assertAlmostEqual( 0.230418 , chunk.non_radiative_transitions[2].probability )
-            self.assertAlmostEqual( 0.0110822, chunk.non_radiative_transitions[3].probability )
-            self.assertAlmostEqual( 0.291115 , chunk.non_radiative_transitions[4].probability )
-            self.assertAlmostEqual( 0.166809 , chunk.non_radiative_transitions[5].probability )
+            self.assertAlmostEqual( 0.178644  / normalisation, chunk.non_radiative_transitions[0].probability )
+            self.assertAlmostEqual( 0.116224  / normalisation, chunk.non_radiative_transitions[1].probability )
+            self.assertAlmostEqual( 0.230418  / normalisation, chunk.non_radiative_transitions[2].probability )
+            self.assertAlmostEqual( 0.0110822 / normalisation, chunk.non_radiative_transitions[3].probability )
+            self.assertAlmostEqual( 0.291115  / normalisation, chunk.non_radiative_transitions[4].probability )
+            self.assertAlmostEqual( 0.166809  / normalisation, chunk.non_radiative_transitions[5].probability )
             self.assertAlmostEqual( 478.82, chunk.non_radiative_transitions[0].energy )
             self.assertAlmostEqual( 493.86, chunk.non_radiative_transitions[1].energy )
             self.assertAlmostEqual( 493.9 , chunk.non_radiative_transitions[2].energy )
@@ -91,8 +93,8 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
             self.assertAlmostEqual( 508.94, chunk.non_radiative_transitions[4].energy )
             self.assertAlmostEqual( 508.98, chunk.non_radiative_transitions[5].energy )
 
-            self.assertAlmostEqual( 0.00570795, chunk.total_radiative_probability )
-            self.assertAlmostEqual( 0.9942922 , chunk.total_non_radiative_probability )
+            self.assertAlmostEqual( 0.00570795 / normalisation, chunk.total_radiative_probability )
+            self.assertAlmostEqual( 0.9942922  / normalisation, chunk.total_non_radiative_probability )
 
         # the data is given explicitly for a non-radiative transition without a transition energy
         chunk = ElectronSubshellConfiguration( id = ElectronSubshellID( 'K' ), energy = 538, population = 2. )
