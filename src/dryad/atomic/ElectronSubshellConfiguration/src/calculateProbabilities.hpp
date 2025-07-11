@@ -1,5 +1,7 @@
 void calculateProbabilities() noexcept {
 
+  //! @todo do we want to normalise these probability values?
+
   if ( this->hasTransitions() ) {
 
     auto sum = [] ( double value, auto&& transition )

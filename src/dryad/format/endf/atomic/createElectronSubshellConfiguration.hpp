@@ -31,6 +31,9 @@ namespace atomic {
     }
     else {
 
+      double total = std::accumulate( subshell.transitionProbabilities().begin(),
+                                      subshell.transitionProbabilities().end(), 0. );
+
       std::vector< dryad::atomic::RadiativeTransitionData > radiative;
       std::vector< dryad::atomic::NonRadiativeTransitionData > nonradiative;
       for ( const auto& transition : subshell.transitions() ) {
@@ -38,14 +41,14 @@ namespace atomic {
         if ( transition.isRadiative() ) {
 
           radiative.emplace_back( createElectronSubshellID( transition.secondarySubshellDesignator() ),
-                                  transition.transitionProbability(),
+                                  transition.transitionProbability() / total,
                                   transition.transitionEnergy() );
         }
         else {
 
           nonradiative.emplace_back( createElectronSubshellID( transition.secondarySubshellDesignator() ),
                                      createElectronSubshellID( transition.tertiarySubshellDesignator() ),
-                                     transition.transitionProbability(),
+                                     transition.transitionProbability() / total,
                                      transition.transitionEnergy() );
         }
       }
