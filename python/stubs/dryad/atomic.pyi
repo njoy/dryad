@@ -17,7 +17,7 @@ class ElectronSubshellConfiguration:
       - the decay modes or transitions that can fill a hole in this shell
     
     If there are transitions defined, the transition probabilities are
-    normalised to 1 upon construction.
+    can be normalised to 1 upon construction.
     """
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
