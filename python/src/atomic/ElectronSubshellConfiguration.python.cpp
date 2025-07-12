@@ -34,7 +34,7 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "    when the atom is neutral (given as a floating point number)\n"
     "  - the decay modes or transitions that can fill a hole in this shell\n\n"
     "If there are transitions defined, the transition probabilities are\n"
-    "normalised to 1 upon construction."
+    "can be normalised to 1 upon construction."
   );
 
   // wrap the component

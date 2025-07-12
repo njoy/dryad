@@ -26,7 +26,7 @@ namespace atomic {
    *    - the transitions that can fill a vacancy in this shell
    *
    *  If there are transitions defined, the transition probabilities are
-   *  normalised to 1 upon construction.
+   *  can be normalised to 1 upon construction.
    */
   class ElectronSubshellConfiguration {
 
