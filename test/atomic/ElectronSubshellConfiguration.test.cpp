@@ -13,7 +13,7 @@ using namespace njoy::dryad;
 using namespace njoy::dryad::atomic;
 
 void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& );
-void verifyChunkWithTransitions( const ElectronSubshellConfiguration& );
+void verifyChunk( const ElectronSubshellConfiguration&, bool );
 
 SCENARIO( "ElectronSubshellConfiguration" ) {
 
@@ -58,15 +58,32 @@ SCENARIO( "ElectronSubshellConfiguration" ) {
         NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 )
       };
 
-      ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
-                                           std::move( population ),
-                                           std::move( radiative ),
-                                           std::move( nonradiative ) );
+      // no normalisation
+      ElectronSubshellConfiguration chunk1( id, energy, population,
+                                            radiative, nonradiative ,
+                                            false );
+
+      // normalisation at construction time
+      ElectronSubshellConfiguration chunk2( std::move( id ), std::move( energy ),
+                                            std::move( population ),
+                                            std::move( radiative ),
+                                            std::move( nonradiative ),
+                                            true );
 
       THEN( "an ElectronSubshellConfiguration can be constructed and members "
             "can be tested" ) {
 
-        verifyChunkWithTransitions( chunk );
+        verifyChunk( chunk1, false ); // unnormalised
+        verifyChunk( chunk2, true );  // normalised
+      } // THEN
+
+      THEN( "an ElectronSubshellConfiguration can be normalised" ) {
+
+        chunk1.normalise();
+        verifyChunk( chunk1, true ); // now normalised
+
+        chunk2.normalise();
+        verifyChunk( chunk2, true ); // still normalised
       } // THEN
     } // WHEN
   } // GIVEN
@@ -136,7 +153,8 @@ void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& chunk )
   CHECK_THAT( 0., WithinRel( chunk.totalNonRadiativeProbability() ) );
 }
 
-void verifyChunkWithTransitions( const ElectronSubshellConfiguration& chunk ) {
+void verifyChunk( const ElectronSubshellConfiguration& chunk,
+                  bool normalise ) {
 
   CHECK( id::ElectronSubshellID( "K" ) == chunk.identifier() );
   CHECK_THAT( 538, WithinRel( chunk.bindingEnergy() ) );
@@ -152,7 +170,7 @@ void verifyChunkWithTransitions( const ElectronSubshellConfiguration& chunk ) {
   CHECK( 2 == chunk.radiativeTransitions().size() );
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
-  double normalisation = 1.00000015;
+  double normalisation = normalise ? 1.00000015 : 1.0;
 
   CHECK( TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
   CHECK( TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );

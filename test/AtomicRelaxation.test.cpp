@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const AtomicRelaxation& );
+void verifyChunk( const AtomicRelaxation&, bool );
 
 SCENARIO( "AtomicRelaxation" ) {
 
@@ -20,6 +20,7 @@ SCENARIO( "AtomicRelaxation" ) {
     WHEN( "the data is given explicitly" ) {
 
       // note: subshell data is deliberately given out of order to check for sorting
+      //.      and the transition probabilities are not normalised to test normalisation
 
       id::ElementID element( 1 );
       std::vector< atomic::ElectronSubshellConfiguration > subshells = {
@@ -37,7 +38,8 @@ SCENARIO( "AtomicRelaxation" ) {
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) }
+            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) },
+          false
         )
       };
 
@@ -45,7 +47,13 @@ SCENARIO( "AtomicRelaxation" ) {
 
       THEN( "a AtomicRelaxation can be constructed and members can be tested" ) {
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false ); // not normalised
+      } // THEN
+
+      THEN( "a AtomicRelaxation can be normalised" ) {
+
+        chunk.normalise();
+        verifyChunk( chunk, true ); // normalised
       } // THEN
     } // WHEN
   } // GIVEN
@@ -109,7 +117,7 @@ SCENARIO( "AtomicRelaxation" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const AtomicRelaxation& chunk ) {
+void verifyChunk( const AtomicRelaxation& chunk, bool normalise ) {
 
   // identifiers
   CHECK( id::ElementID( 1 ) == chunk.elementIdentifier() );
@@ -123,7 +131,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "L3" ) ) );
   CHECK( false == chunk.hasSubshell( id::ElectronSubshellID( "M1" ) ) );
 
-  double normalisation = 1.00000015;
+  double normalisation = normalise ? 1.00000015 : 1.0;
 
   auto k_shell = chunk.subshell( id::ElectronSubshellID( "K" ) );
   CHECK( id::ElectronSubshellID( "K" ) == k_shell.identifier() );

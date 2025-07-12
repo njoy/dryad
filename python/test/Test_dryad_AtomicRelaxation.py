@@ -18,7 +18,7 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        def verify_chunk( self, chunk ) :
+        def verify_chunk( self, chunk, normalise ) :
 
             # identifiers
             self.assertEqual( ElementID( 1 ), chunk.element_identifier )
@@ -32,7 +32,7 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
             self.assertEqual( True, chunk.has_subshell( ElectronSubshellID( 'L3' ) ) )
             self.assertEqual( False, chunk.has_subshell( ElectronSubshellID( 'M1' ) ) )
 
-            normalisation = 1.00000015
+            normalisation = 1.00000015 if normalise else 1.0
 
             k_shell = chunk.subshell( ElectronSubshellID( 'K' ) )
             self.assertEqual( ElectronSubshellID( 'K' ), k_shell.identifier )
@@ -242,13 +242,18 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
                                       NonRadiativeTransitionData( ElectronSubshellID( 'L1' ), ElectronSubshellID( 'L3' ), 0.230418, 493.9 ),
                                       NonRadiativeTransitionData( ElectronSubshellID( 'L2' ), ElectronSubshellID( 'L2' ), 0.0110822, 508.9 ),
                                       NonRadiativeTransitionData( ElectronSubshellID( 'L2' ), ElectronSubshellID( 'L3' ), 0.291115, 508.94 ),
-                                      NonRadiativeTransitionData( ElectronSubshellID( 'L3' ), ElectronSubshellID( 'L3' ), 0.166809, 508.98 ) ]
+                                      NonRadiativeTransitionData( ElectronSubshellID( 'L3' ), ElectronSubshellID( 'L3' ), 0.166809, 508.98 ) ],
+                                    False
                                   ),
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L1' ), 28.48, 2 ),
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L2' ), 13.62, 1.33 ),
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L3' ), 13.62, 2.67 ) ] )
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk, False )
+
+        chunk.normalise()
+
+        verify_chunk( self, chunk, True )
 
 if __name__ == '__main__' :
 

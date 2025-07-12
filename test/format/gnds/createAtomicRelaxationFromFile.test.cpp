@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const AtomicRelaxation& );
+void verifyChunk( const AtomicRelaxation&, bool );
 
 SCENARIO( "createAtomicRelaxation" ) {
 
@@ -21,15 +21,18 @@ SCENARIO( "createAtomicRelaxation" ) {
 
       THEN( "it can be converted" ) {
 
-        AtomicRelaxation oxygen = format::gnds::createAtomicRelaxationFromFile( "atom-008_O_000.endf.gnds.xml" );
+        AtomicRelaxation oxygen1 = format::gnds::createAtomicRelaxationFromFile( "atom-008_O_000.endf.gnds.xml", false );
+        AtomicRelaxation oxygen2 = format::gnds::createAtomicRelaxationFromFile( "atom-008_O_000.endf.gnds.xml", true );
 
-        verifyChunk( oxygen );
+        verifyChunk( oxygen1, false );
+        verifyChunk( oxygen2, true );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const AtomicRelaxation& chunk ) {
+void verifyChunk( const AtomicRelaxation& chunk,
+                  bool normalise ) {
 
   CHECK( id::ElementID( 8 ) == chunk.elementIdentifier() );
 
@@ -54,7 +57,7 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( 2 == shell_k.radiativeTransitions().size() );
   CHECK( 6 == shell_k.nonRadiativeTransitions().size() );
 
-  double normalisation = 1.00000015;
+  double normalisation = normalise ? 1.00000015 : 1.0;
 
   CHECK( atomic::TransitionType::Radiative == shell_k.radiativeTransitions()[0].type() );
   CHECK( atomic::TransitionType::Radiative == shell_k.radiativeTransitions()[1].type() );
