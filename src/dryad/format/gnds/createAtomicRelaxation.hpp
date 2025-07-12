@@ -17,8 +17,13 @@ namespace gnds {
 
   /**
    *  @brief Create an AtomicRelaxation from a GNDS xml document
+   *
+   *  @param[in] document    the GNDS xml document
+   *  @param[in] normalise   option to indicate whether or not to normalise
+   *                         all probability data
    */
-  static AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document ) {
+  static AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document,
+                                                  bool normalise ) {
 
     //! @todo verify validity of the file
 
@@ -34,7 +39,7 @@ namespace gnds {
       for ( pugi::xml_node subshell = shells.child( "configuration" );
             subshell; subshell = subshell.next_sibling(  "configuration"  ) ) {
 
-        subshells.push_back( gnds::atomic::createElectronSubshellConfiguration( id, subshell ) );
+        subshells.push_back( gnds::atomic::createElectronSubshellConfiguration( id, subshell, normalise ) );
       }
 
       return AtomicRelaxation( std::move( id ), std::move( subshells ) );

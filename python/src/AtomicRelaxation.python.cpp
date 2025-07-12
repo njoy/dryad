@@ -70,30 +70,40 @@ void wrapAtomicRelaxation( python::module& module ) {
     "    self   the AtomicRelaxation data\n"
     "    id     the electron subshell identifier"
   )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the transition probabilities"
+  )
   .def_static(
 
     "from_endf_file",
-    [] ( const std::string& filename ) -> decltype(auto) {
+    [] ( const std::string& filename, bool normalise = false ) -> decltype(auto) {
 
-      return njoy::dryad::format::endf::createAtomicRelaxationFromFile( filename );
+      return njoy::dryad::format::endf::createAtomicRelaxationFromFile( filename, normalise );
     },
-    python::arg( "filename" ),
+    python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a AtomicRelaxation.\n\n"
     "Arguments:\n"
-    "    filename   the ENDF file name"
+    "    filename    the ENDF file name\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   )
   .def_static(
 
     "from_gnds_file",
-    [] ( const std::string& filename ) -> decltype(auto) {
+    [] ( const std::string& filename, bool normalise = false ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createAtomicRelaxationFromFile( filename );
+      return njoy::dryad::format::gnds::createAtomicRelaxationFromFile( filename, normalise );
     },
-    python::arg( "filename" ),
+    python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from a GNDS file\n\n"
     "Arguments:\n"
-    "    filename   the GNDS file name"
+    "    filename    the GNDS file name\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   );
 }

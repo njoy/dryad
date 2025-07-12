@@ -20,10 +20,16 @@ namespace atomic {
 
   /**
    *  @brief Create an ElectronSubshellConfiguration from a GNDS configuration node
+   *
+   *  @param[in] element         the element for which we are reading data
+   *  @param[in] configuration   the configuration xml element
+   *  @param[in] normalise       option to indicate whether or not to normalise
+   *                             all probability data
    */
   dryad::atomic::ElectronSubshellConfiguration
   createElectronSubshellConfiguration( const id::ElementID& element,
-                                       const pugi::xml_node& configuration ) {
+                                       const pugi::xml_node& configuration,
+                                       bool normalise ) {
 
     // shell id and population are attributes on the configuration node
     id::ElectronSubshellID identifier = createElectronSubshellID( configuration.attribute( "subshell" ).as_string() );
@@ -48,12 +54,10 @@ namespace atomic {
       std::vector< dryad::atomic::RadiativeTransitionData > radiative;
       std::vector< dryad::atomic::NonRadiativeTransitionData > nonradiative;
 
-      double total = 0;
       for ( pugi::xml_node mode = modes.child( "decayMode" ); mode; mode = mode.next_sibling(  "decayMode"  ) ) {
 
         // transition probability is an attribute on the double node in the probability node
         double probability = mode.child( "probability" ).child( "double" ).attribute( "value" ).as_double();
-        total += probability;
 
         // helper lambda function
         auto isVacancyProduct = [&element] ( pugi::xml_node product ) {
@@ -89,11 +93,10 @@ namespace atomic {
         }
       }
 
-      //! @todo check normalisation using the total probability
-
       return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population,
                                                            std::move( radiative ),
-                                                           std::move( nonradiative ) );
+                                                           std::move( nonradiative ),
+                                                           normalise );
     }
   }
 

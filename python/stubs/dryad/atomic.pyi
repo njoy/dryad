@@ -34,7 +34,7 @@ class ElectronSubshellConfiguration:
             population     the electron subshell population when the atom is neutral
         """
     @typing.overload
-    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData], non_radiative: list[NonRadiativeTransitionData]) -> None:
+    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData], non_radiative: list[NonRadiativeTransitionData], normalise: bool = False) -> None:
         """
         Initialise the subshell configuration
         
@@ -45,9 +45,15 @@ class ElectronSubshellConfiguration:
             population     the electron subshell population when the atom is neutral
             radiative      the radiative transitions that are available
             nonradiative   the non-radiative transitions that are available
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
+    def normalise(self) -> None:
+        """
+        Normalise the transition probabilities
+        """
     @property
     def binding_energy(self) -> float:
         """

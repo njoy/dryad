@@ -54,9 +54,11 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
 
     python::init< ElectronSubshellID, double, double,
                   std::vector< RadiativeTransitionData >,
-                  std::vector< NonRadiativeTransitionData > >(),
+                  std::vector< NonRadiativeTransitionData >,
+                  bool >(),
     python::arg( "id" ), python::arg( "energy" ), python::arg( "population" ),
     python::arg( "radiative" ), python::arg( "non_radiative" ),
+    python::arg( "normalise" ) = false,
     "Initialise the subshell configuration\n\n"
     "Arguments:\n"
     "    self           the subshell configuration data\n"
@@ -64,7 +66,9 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "    energy         the electron subshell binding energy\n"
     "    population     the electron subshell population when the atom is neutral\n"
     "    radiative      the radiative transitions that are available\n"
-    "    nonradiative   the non-radiative transitions that are available"
+    "    nonradiative   the non-radiative transitions that are available\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -147,6 +151,12 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "total_non_radiative_probability",
     &Component::totalNonRadiativeProbability,
     "The total non-radiative probability"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the transition probabilities"
   );
 
   // add standard equality comparison definitions
