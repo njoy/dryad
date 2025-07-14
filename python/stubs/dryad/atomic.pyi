@@ -145,10 +145,9 @@ class NonRadiativeTransitionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
-    @typing.overload
-    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float) -> None:
+    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
         """
-        Initialise the non-radiative transition data without transition energy
+        Initialise the non-radiative transition data
         
         Arguments:
             self                the radiative transition data
@@ -157,20 +156,7 @@ class NonRadiativeTransitionData:
             emitting_shell      the identifier of the subshell from which the
                                 emitted electron originated
             probability         the probability of the transition
-        """
-    @typing.overload
-    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float, energy: float) -> None:
-        """
-        Initialise the non-radiative transition data with transition energy
-        
-        Arguments:
-            self                the radiative transition data
-            originating_shell   the identifier of the subshell from which the
-                                vacancy filling electron originated
-            emitting_shell      the identifier of the subshell from which the
-                                emitted electron originated
-            probability         the probability of the transition
-            energy              the energy of the emitted electron
+            energy              the energy of the emitted electron (default: undefined)
         """
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
@@ -218,28 +204,16 @@ class RadiativeTransitionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: RadiativeTransitionData) -> bool:
         ...
-    @typing.overload
-    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float) -> None:
+    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
         """
-        Initialise the radiative transition data without transition energy
+        Initialise the radiative transition data
         
         Arguments:
             self                the radiative transition data
             originating_shell   the identifier of the subshell from which the
                                 vacancy filling electron originated
             probability         the probability of the transition
-        """
-    @typing.overload
-    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float, energy: float) -> None:
-        """
-        Initialise the radiative transition data with transition energy
-        
-        Arguments:
-            self                the radiative transition data
-            originating_shell   the identifier of the subshell from which the
-                                vacancy filling electron originated
-            probability         the probability of the transition
-            energy              the energy of the emitted photon
+            energy              the energy of the emitted photon (default: undefined)
         """
     def __ne__(self, arg0: RadiativeTransitionData) -> bool:
         ...

@@ -37,24 +37,11 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
   component
   .def(
 
-    python::init< ElectronSubshellID, ElectronSubshellID, double >(),
+    python::init< ElectronSubshellID, ElectronSubshellID,
+                  double, std::optional< double > >(),
     python::arg( "originating_shell" ), python::arg( "emitting_shell" ),
-    python::arg( "probability" ),
-    "Initialise the non-radiative transition data without transition energy\n\n"
-    "Arguments:\n"
-    "    self                the radiative transition data\n"
-    "    originating_shell   the identifier of the subshell from which the\n"
-    "                        vacancy filling electron originated\n"
-    "    emitting_shell      the identifier of the subshell from which the\n"
-    "                        emitted electron originated\n"
-    "    probability         the probability of the transition"
-  )
-  .def(
-
-    python::init< ElectronSubshellID, ElectronSubshellID, double, double >(),
-    python::arg( "originating_shell" ), python::arg( "emitting_shell" ),
-    python::arg( "probability" ), python::arg( "energy" ),
-    "Initialise the non-radiative transition data with transition energy\n\n"
+    python::arg( "probability" ), python::arg( "energy" ) = std::nullopt,
+    "Initialise the non-radiative transition data\n\n"
     "Arguments:\n"
     "    self                the radiative transition data\n"
     "    originating_shell   the identifier of the subshell from which the\n"
@@ -62,7 +49,7 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     "    emitting_shell      the identifier of the subshell from which the\n"
     "                        emitted electron originated\n"
     "    probability         the probability of the transition\n"
-    "    energy              the energy of the emitted electron"
+    "    energy              the energy of the emitted electron (default: undefined)"
   )
   .def_property_readonly(
 

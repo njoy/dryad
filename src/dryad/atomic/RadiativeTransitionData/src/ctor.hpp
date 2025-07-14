@@ -15,22 +15,11 @@ RadiativeTransitionData& operator=( RadiativeTransitionData&& ) = default;
  *  @param originatingShell   the identifier of the subshell from which the
  *                            vacancy filling electron originated
  *  @param probability        the probability of the transition
- */
-RadiativeTransitionData( id::ElectronSubshellID originating, double probability ) :
-  originating_shell_( std::move( originating ) ),
-  probability_( std::move( probability ) ),
-  energy_( std::nullopt ) {}
-
-/**
- *  @brief Constructor
- *
- *  @param originatingShell   the identifier of the subshell from which the
- *                            vacancy filling electron originated
- *  @param probability        the probability of the transition
- *  @param energy             the energy of the emitted photon
+ *  @param energy             the energy of the emitted photon (default: undefined)
  */
 RadiativeTransitionData( id::ElectronSubshellID originating,
-                         double probability, double energy ) :
+                         double probability,
+                         std::optional< double > energy = std::nullopt ) :
   originating_shell_( std::move( originating ) ),
   probability_( std::move( probability ) ),
   energy_( std::move( energy ) ) {}
