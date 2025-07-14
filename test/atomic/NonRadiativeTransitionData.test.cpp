@@ -53,6 +53,48 @@ SCENARIO( "NonRadiativeTransitionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of RadiativeTransitionData is given" ) {
+
+      NonRadiativeTransitionData chunk( id::ElectronSubshellID( "K" ),
+                                        id::ElectronSubshellID( "L1" ),
+                                        1e-3 );
+
+      THEN( "the probability can be changed" ) {
+
+        double newprobability = 0.1;
+        double original = 1e-3;
+
+        // assign new partial reaction identifiers
+        chunk.probability( newprobability );
+
+        CHECK( newprobability == chunk.probability() );
+
+        // assign the partial reaction identifiers
+        chunk.probability( original );
+
+        verifyChunkWithoutTransitionEnergy( chunk );
+      } // THEN
+
+      THEN( "the transition energy can be changed" ) {
+
+        std::optional< double > newenergy = 0.1;
+        std::optional< double > original = std::nullopt;
+
+        // assign new partial reaction identifiers
+        chunk.energy( newenergy );
+
+        CHECK( newenergy == chunk.energy() );
+
+        // assign the partial reaction identifiers
+        chunk.energy( original );
+
+        verifyChunkWithoutTransitionEnergy( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of NonRadiativeTransitionData are given" ) {
