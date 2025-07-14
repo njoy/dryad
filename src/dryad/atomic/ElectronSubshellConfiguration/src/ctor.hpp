@@ -26,10 +26,8 @@ ElectronSubshellConfiguration( id::ElectronSubshellID id, double energy,
                                std::vector< NonRadiativeTransitionData > nonradiative,
                                bool normalise = false ) :
   id_( std::move( id ) ), binding_energy_( energy ), population_( population ),
-  radiative_( std::move( radiative ) ), nonradiative_( std::move( nonradiative ) ),
-  radiative_probability_( 0. ), nonradiative_probability_( 0. ) {
+  radiative_( std::move( radiative ) ), nonradiative_( std::move( nonradiative ) ) {
 
-  this->calculateProbabilities();
   if ( normalise ) {
 
     this->normalise();

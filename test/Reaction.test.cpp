@@ -132,7 +132,6 @@ SCENARIO( "Reaction" ) {
         std::optional< std::vector< id::ReactionID > > newpartials( { "n,Fe56->elastic", "n,Fe56->2n,Fe55" } );
         std::optional< std::vector< id::ReactionID > > original( std::nullopt );
 
-        // assign new partial reaction identifiers
         chunk.partialReactionIdentifiers( newpartials );
 
         CHECK( newpartials == chunk.partialReactionIdentifiers() );
@@ -140,7 +139,6 @@ SCENARIO( "Reaction" ) {
         CHECK( false == chunk.isPrimaryReaction() );
         CHECK( true == chunk.isSummationReaction() );
 
-        // assign the partial reaction identifiers
         chunk.partialReactionIdentifiers( original );
 
         verifyChunk( chunk );
@@ -153,14 +151,12 @@ SCENARIO( "Reaction" ) {
         std::optional< double > newreactionq = -2;
         std::optional< double > originalreactionq = -1;
 
-        // assign new q values
         chunk.massDifferenceQValue( newmassq );
         chunk.reactionQValue( newreactionq );
 
         CHECK( newmassq == chunk.massDifferenceQValue() );
         CHECK( newreactionq == chunk.reactionQValue() );
 
-        // assign the original q values
         chunk.massDifferenceQValue( originalmassq );
         chunk.reactionQValue( originalreactionq );
 
@@ -176,13 +172,11 @@ SCENARIO( "Reaction" ) {
                                         { InterpolationType::LinearLinear,
                                           InterpolationType::LinearLog } );
 
-        // assign a new cross section that is linearised
         chunk.crossSection( newxs );
 
         CHECK( newxs == chunk.crossSection() );
         CHECK( true == chunk.isLinearised() );
 
-        // assign the original cross section
         chunk.crossSection( original );
 
         verifyChunk( chunk );
@@ -195,13 +189,11 @@ SCENARIO( "Reaction" ) {
                                                     ReactionProduct( id::ParticleID( "g" ), 2 ),
                                                     ReactionProduct( id::ParticleID( "g" ), 3 ) };
 
-        // assign the new products
         chunk.products( newproducts );
 
         CHECK( newproducts == chunk.products() );
         CHECK( 1 == chunk.numberProducts() );
 
-        // assign the original products
         chunk.products( original );
 
         verifyChunk( chunk );

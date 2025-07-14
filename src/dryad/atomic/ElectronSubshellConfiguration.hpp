@@ -38,12 +38,15 @@ namespace atomic {
     std::vector< RadiativeTransitionData > radiative_;
     std::vector< NonRadiativeTransitionData > nonradiative_;
 
-    double radiative_probability_;
-    double nonradiative_probability_;
-
     /* auxiliary functions */
 
-    #include "dryad/atomic/ElectronSubshellConfiguration/src/calculateProbabilities.hpp"
+    template < typename Range >
+    static double calculateTotalProbability( const Range& transitions ) noexcept {
+
+      return std::accumulate( transitions.begin(), transitions.end(), 0.,
+                              [] ( double value, auto&& transition )
+                                 { return value + transition.probability(); } );
+    }
 
   public:
 
@@ -161,7 +164,6 @@ namespace atomic {
     void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) noexcept {
 
       this->radiative_ = std::move( radiative );
-      this->calculateTotalRadiativeProbability();
     }
 
     /**
@@ -180,7 +182,6 @@ namespace atomic {
     void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) noexcept {
 
       this->nonradiative_ = std::move( nonradiative );
-      this->calculateTotalNonRadiativeProbability();
     }
 
     /**
@@ -188,7 +189,7 @@ namespace atomic {
      */
     double totalRadiativeProbability() const noexcept {
 
-      return this->radiative_probability_;
+      return calculateTotalProbability( this->radiativeTransitions() );
     }
 
     /**
@@ -196,7 +197,7 @@ namespace atomic {
      */
     double totalNonRadiativeProbability() const noexcept {
 
-      return this->nonradiative_probability_;
+      return calculateTotalProbability( this->nonRadiativeTransitions() );
     }
 
     /**
@@ -215,8 +216,6 @@ namespace atomic {
 
           transition.probability( transition.probability() / total );
         }
-        this->radiative_probability_ /= total;
-        this->nonradiative_probability_ /= total;
       }
     }
 
