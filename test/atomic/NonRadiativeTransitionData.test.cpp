@@ -66,12 +66,10 @@ SCENARIO( "NonRadiativeTransitionData" ) {
         double newprobability = 0.1;
         double original = 1e-3;
 
-        // assign new partial reaction identifiers
         chunk.probability( newprobability );
 
         CHECK( newprobability == chunk.probability() );
 
-        // assign the partial reaction identifiers
         chunk.probability( original );
 
         verifyChunkWithoutTransitionEnergy( chunk );
@@ -82,12 +80,10 @@ SCENARIO( "NonRadiativeTransitionData" ) {
         std::optional< double > newenergy = 0.1;
         std::optional< double > original = std::nullopt;
 
-        // assign new partial reaction identifiers
         chunk.energy( newenergy );
 
         CHECK( newenergy == chunk.energy() );
 
-        // assign the partial reaction identifiers
         chunk.energy( original );
 
         verifyChunkWithoutTransitionEnergy( chunk );

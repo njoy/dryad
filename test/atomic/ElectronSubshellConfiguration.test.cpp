@@ -88,6 +88,74 @@ SCENARIO( "ElectronSubshellConfiguration" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of ElectronSubshellConfiguration is given" ) {
+
+      id::ElectronSubshellID( "K" );
+      double energy = 538;
+      double population = 2.;
+
+      ElectronSubshellConfiguration chunk( id::ElectronSubshellID( "K" ), 538, 2 );
+
+      THEN( "the probability can be changed" ) {
+
+        double newenergy = 538.6;
+        double original = 538;
+
+        chunk.bindingEnergy( newenergy );
+
+        CHECK( newenergy == chunk.bindingEnergy() );
+
+        chunk.bindingEnergy( original );
+
+        verifyChunkWithoutTransitions( chunk );
+      } // THEN
+
+      THEN( "the population can be changed" ) {
+
+        double newpopulation = 1.5;
+        double original = 2;
+
+        chunk.population( newpopulation );
+
+        CHECK( newpopulation == chunk.population() );
+
+        chunk.population( original );
+
+        verifyChunkWithoutTransitions( chunk );
+      } // THEN
+
+      THEN( "the transitions can be changed" ) {
+
+        std::vector< RadiativeTransitionData > newradiative = {
+
+          RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+          RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 )
+        };
+        std::vector< NonRadiativeTransitionData > newnonradiative = {
+
+          NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+          NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+          NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+          NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+          NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+          NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 )
+        };
+
+        chunk.radiativeTransitions( newradiative );
+        chunk.nonRadiativeTransitions( newnonradiative );
+
+        verifyChunk( chunk, false );
+
+        chunk.radiativeTransitions( {} );
+        chunk.nonRadiativeTransitions( {} );
+
+        verifyChunkWithoutTransitions( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ElectronSubshellConfiguration are given" ) {
