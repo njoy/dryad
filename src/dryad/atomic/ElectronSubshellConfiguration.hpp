@@ -105,7 +105,7 @@ namespace atomic {
      */
     std::size_t numberRadiativeTransitions() const noexcept {
 
-      return this->radiative_.size();
+      return this->radiativeTransitions().size();
     }
 
     /**
@@ -113,7 +113,7 @@ namespace atomic {
      */
     std::size_t numberNonRadiativeTransitions() const noexcept {
 
-      return this->nonradiative_.size();
+      return this->nonRadiativeTransitions().size();
     }
 
     /**
@@ -157,6 +157,14 @@ namespace atomic {
     }
 
     /**
+     *  @brief Return the available radiative transitions to this subshell
+     */
+    std::vector< RadiativeTransitionData >& radiativeTransitions() noexcept {
+
+      return this->radiative_;
+    }
+
+    /**
      *  @brief Set the available radiative transitions to this subshell
      *
      *  @param[in] radiative   the available radiative transitions to this subshell
@@ -170,6 +178,14 @@ namespace atomic {
      *  @brief Return the available non-radiative transitions to this subshell
      */
     const std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() const noexcept {
+
+      return this->nonradiative_;
+    }
+
+    /**
+     *  @brief Return the available non-radiative transitions to this subshell
+     */
+    std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() noexcept {
 
       return this->nonradiative_;
     }
@@ -208,11 +224,11 @@ namespace atomic {
       if ( this->hasTransitions() ) {
 
         double total = this->totalRadiativeProbability() + this->totalNonRadiativeProbability();
-        for ( RadiativeTransitionData& transition : this->radiative_ ) {
+        for ( RadiativeTransitionData& transition : this->radiativeTransitions() ) {
 
           transition.probability( transition.probability() / total );
         }
-        for ( NonRadiativeTransitionData& transition : this->nonradiative_ ) {
+        for ( NonRadiativeTransitionData& transition : this->nonRadiativeTransitions() ) {
 
           transition.probability( transition.probability() / total );
         }

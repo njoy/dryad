@@ -68,7 +68,8 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Return the requested subshell\n\n"
     "Arguments:\n"
     "    self   the AtomicRelaxation data\n"
-    "    id     the electron subshell identifier"
+    "    id     the electron subshell identifier",
+    python::return_value_policy::reference_internal
   )
   .def(
 

@@ -53,6 +53,15 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the electron shell configuration data
+     */
+    std::vector< atomic::ElectronSubshellConfiguration >&
+    subshells() noexcept {
+
+      return this->subshells_;
+    }
+
+    /**
      *  @brief Set the electron shell configuration data
      *
      *  @param[in] subshells   the electron shell configuration data

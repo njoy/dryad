@@ -169,7 +169,8 @@ void wrapReaction( python::module& module ) {
     "Arguments:\n"
     "    self    the reaction\n"
     "    type    the reaction product type\n"
-    "    index   the reaction product index (default is zero)"
+    "    index   the reaction product index (default is zero)",
+    python::return_value_policy::reference_internal
  )
   .def_property_readonly(
 
