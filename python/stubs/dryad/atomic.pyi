@@ -22,8 +22,7 @@ class ElectronSubshellConfiguration:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
-    @typing.overload
-    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float) -> None:
+    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
         """
         Initialise the subshell configuration
         
@@ -32,19 +31,8 @@ class ElectronSubshellConfiguration:
             id             the electron subshell identifier
             energy         the electron subshell binding energy
             population     the electron subshell population when the atom is neutral
-        """
-    @typing.overload
-    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData], non_radiative: list[NonRadiativeTransitionData], normalise: bool = False) -> None:
-        """
-        Initialise the subshell configuration
-        
-        Arguments:
-            self           the subshell configuration data
-            id             the electron subshell identifier
-            energy         the electron subshell binding energy
-            population     the electron subshell population when the atom is neutral
-            radiative      the radiative transitions that are available
-            nonradiative   the non-radiative transitions that are available
+            radiative      the radiative transitions that are available (default: an empty list)
+            nonradiative   the non-radiative transitions that are available (default: an empty list)
             normalise      option to indicate whether or not to normalise
                            all probability data (default: no normalisation)
         """

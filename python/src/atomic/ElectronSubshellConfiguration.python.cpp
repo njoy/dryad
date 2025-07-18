@@ -41,23 +41,13 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
   component
   .def(
 
-    python::init< ElectronSubshellID, double, double >(),
-    python::arg( "id" ), python::arg( "energy" ), python::arg( "population" ),
-    "Initialise the subshell configuration\n\n"
-    "Arguments:\n"
-    "    self           the subshell configuration data\n"
-    "    id             the electron subshell identifier\n"
-    "    energy         the electron subshell binding energy\n"
-    "    population     the electron subshell population when the atom is neutral"
-  )
-  .def(
-
     python::init< ElectronSubshellID, double, double,
                   std::vector< RadiativeTransitionData >,
                   std::vector< NonRadiativeTransitionData >,
                   bool >(),
     python::arg( "id" ), python::arg( "energy" ), python::arg( "population" ),
-    python::arg( "radiative" ), python::arg( "non_radiative" ),
+    python::arg( "radiative" ) = std::vector< RadiativeTransitionData >{},
+    python::arg( "non_radiative" ) = std::vector< NonRadiativeTransitionData >{},
     python::arg( "normalise" ) = false,
     "Initialise the subshell configuration\n\n"
     "Arguments:\n"
@@ -65,8 +55,8 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "    id             the electron subshell identifier\n"
     "    energy         the electron subshell binding energy\n"
     "    population     the electron subshell population when the atom is neutral\n"
-    "    radiative      the radiative transitions that are available\n"
-    "    nonradiative   the non-radiative transitions that are available\n"
+    "    radiative      the radiative transitions that are available (default: an empty list)\n"
+    "    nonradiative   the non-radiative transitions that are available (default: an empty list)\n"
     "    normalise      option to indicate whether or not to normalise\n"
     "                   all probability data (default: no normalisation)"
   )
