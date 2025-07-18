@@ -26,6 +26,7 @@ namespace dryad {
     /* auxiliary functions */
 
     #include "dryad/AtomicRelaxation/src/sort.hpp"
+    #include "dryad/AtomicRelaxation/src/iterator.hpp"
 
   public:
 
@@ -79,11 +80,7 @@ namespace dryad {
      */
     bool hasSubshell( const id::ElectronSubshellID& id ) const {
 
-      auto iter = std::lower_bound( this->subshells().begin(),
-                                    this->subshells().end(),
-                                    id,
-                                    [] ( auto&& subshell, auto&& right )
-                                          { return subshell.identifier() < right; } );
+      auto iter = this->iterator( id );
       return iter != this->subshells().end();
     }
 
@@ -95,11 +92,7 @@ namespace dryad {
     const atomic::ElectronSubshellConfiguration&
     subshell( const id::ElectronSubshellID& id ) const {
 
-      auto iter = std::lower_bound( this->subshells().begin(),
-                                    this->subshells().end(),
-                                    id,
-                                    [] ( auto&& subshell, auto&& right )
-                                       { return subshell.identifier() < right; } );
+      auto iter = this->iterator( id );
       if ( ( iter != this->subshells().end() ) && ( iter->identifier() == id ) ) {
 
         return *iter;
@@ -116,9 +109,31 @@ namespace dryad {
      */
     void normalise() noexcept {
 
-      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells_ ) {
+      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
 
         subshell.normalise();
+      }
+    }
+
+    /**
+     *  @brief Calculate the transition energies for all transitions
+     */
+    void calculateTransitionEnergies() noexcept {
+
+      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
+
+        auto current = subshell.bindingEnergy();
+        for ( atomic::RadiativeTransitionData& transition : subshell.radiativeTransitions() ) {
+
+          auto originating = this->subshell( transition.originatingShell() ).bindingEnergy();
+          transition.energy( current - originating );
+        }
+        for ( atomic::NonRadiativeTransitionData& transition : subshell.nonRadiativeTransitions() ) {
+
+          auto originating = this->subshell( transition.originatingShell() ).bindingEnergy();
+          auto emitting = this->subshell( transition.emittingShell() ).bindingEnergy();
+          transition.energy( current - originating - emitting );
+        }
       }
     }
 

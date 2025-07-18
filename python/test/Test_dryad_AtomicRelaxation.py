@@ -230,6 +230,17 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
             self.assertAlmostEqual( 0, l3_shell.total_radiative_probability )
             self.assertAlmostEqual( 0, l3_shell.total_non_radiative_probability )
 
+        def verify_transition_energies( self, chunk ) :
+
+            self.assertAlmostEqual( 538 - 13.62        , chunk.subshells[0].radiative_transitions[0].energy )
+            self.assertAlmostEqual( 538 - 13.62        , chunk.subshells[0].radiative_transitions[1].energy )
+            self.assertAlmostEqual( 538 - 28.48 - 28.48, chunk.subshells[0].non_radiative_transitions[0].energy )
+            self.assertAlmostEqual( 538 - 28.48 - 13.62, chunk.subshells[0].non_radiative_transitions[1].energy )
+            self.assertAlmostEqual( 538 - 28.48 - 13.62, chunk.subshells[0].non_radiative_transitions[2].energy )
+            self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[3].energy )
+            self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[4].energy )
+            self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[5].energy )
+
         # the data is given explicitly
         chunk = AtomicRelaxation(
                     element = ElementID( 1 ),
@@ -254,6 +265,10 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
         chunk.normalise()
 
         verify_chunk( self, chunk, True )
+
+        chunk.calculate_transition_energies()
+
+        verify_transition_energies( self, chunk )
 
 if __name__ == '__main__' :
 

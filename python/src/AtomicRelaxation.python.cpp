@@ -77,6 +77,12 @@ void wrapAtomicRelaxation( python::module& module ) {
     &Component::normalise,
     "Normalise the transition probabilities"
   )
+  .def(
+
+    "calculate_transition_energies",
+    &Component::calculateTransitionEnergies,
+    "Calculate the transition energies for all transitions"
+  )
   .def_static(
 
     "from_endf_file",

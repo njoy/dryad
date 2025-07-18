@@ -19,8 +19,9 @@ SCENARIO( "AtomicRelaxation" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      // note: subshell data is deliberately given out of order to check for sorting
-      //.      and the transition probabilities are not normalised to test normalisation
+      // note: subshell data is deliberately given out of order to check for sorting,
+      //       the transition probabilities are not normalised to test normalisation
+      //       and the transition energies are not correct to test calculating the energies
 
       id::ElementID element( 1 );
       std::vector< atomic::ElectronSubshellConfiguration > subshells = {
@@ -54,6 +55,20 @@ SCENARIO( "AtomicRelaxation" ) {
 
         chunk.normalise();
         verifyChunk( chunk, true ); // normalised
+      } // THEN
+
+      THEN( "transition energies can be calculated" ) {
+
+        chunk.calculateTransitionEnergies();
+
+        CHECK_THAT( 538 - 13.62        , WithinRel( chunk.subshells()[0].radiativeTransitions()[0].energy().value() ) );
+        CHECK_THAT( 538 - 13.62        , WithinRel( chunk.subshells()[0].radiativeTransitions()[1].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 28.48, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[0].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[1].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[2].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[3].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[4].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[5].energy().value() ) );
       } // THEN
     } // WHEN
   } // GIVEN

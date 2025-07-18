@@ -41,6 +41,10 @@ class AtomicRelaxation:
             element      the element identifier
             subshells    the electron subshell configuration data
         """
+    def calculate_transition_energies(self) -> None:
+        """
+        Calculate the transition energies for all transitions
+        """
     def has_subshell(self, arg0: id.ElectronSubshellID) -> bool:
         """
         Return whether or not a subshell is present
