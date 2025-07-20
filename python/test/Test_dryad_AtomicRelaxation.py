@@ -241,7 +241,7 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
             self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[4].energy )
             self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[5].energy )
 
-        # the data is given explicitly
+        # the data is given explicitly - no normalisation
         chunk = AtomicRelaxation(
                     element = ElementID( 1 ),
                     subshells = [ ElectronSubshellConfiguration(
@@ -258,9 +258,40 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
                                   ),
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L1' ), 28.48, 2 ),
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L2' ), 13.62, 1.33 ),
-                                  ElectronSubshellConfiguration( ElectronSubshellID( 'L3' ), 13.62, 2.67 ) ] )
+                                  ElectronSubshellConfiguration( ElectronSubshellID( 'L3' ), 13.62, 2.67 ) ],
+                    normalise = False )
 
         verify_chunk( self, chunk, False )
+
+        chunk.normalise()
+
+        verify_chunk( self, chunk, True )
+
+        chunk.calculate_transition_energies()
+
+        verify_transition_energies( self, chunk )
+
+        # the data is given explicitly - no normalisation
+        chunk = AtomicRelaxation(
+                    element = ElementID( 1 ),
+                    subshells = [ ElectronSubshellConfiguration(
+                                    ElectronSubshellID( 'K' ), 538, 2,
+                                    [ RadiativeTransitionData( ElectronSubshellID( 'L2' ), 0.00190768, 523.09 ),
+                                      RadiativeTransitionData( ElectronSubshellID( 'L3' ), 0.00380027, 523.13 ) ],
+                                    [ NonRadiativeTransitionData( ElectronSubshellID( 'L1' ), ElectronSubshellID( 'L1' ), 0.178644, 478.82 ),
+                                      NonRadiativeTransitionData( ElectronSubshellID( 'L1' ), ElectronSubshellID( 'L2' ), 0.116224, 493.86 ),
+                                      NonRadiativeTransitionData( ElectronSubshellID( 'L1' ), ElectronSubshellID( 'L3' ), 0.230418, 493.9 ),
+                                      NonRadiativeTransitionData( ElectronSubshellID( 'L2' ), ElectronSubshellID( 'L2' ), 0.0110822, 508.9 ),
+                                      NonRadiativeTransitionData( ElectronSubshellID( 'L2' ), ElectronSubshellID( 'L3' ), 0.291115, 508.94 ),
+                                      NonRadiativeTransitionData( ElectronSubshellID( 'L3' ), ElectronSubshellID( 'L3' ), 0.166809, 508.98 ) ],
+                                    False
+                                  ),
+                                  ElectronSubshellConfiguration( ElectronSubshellID( 'L1' ), 28.48, 2 ),
+                                  ElectronSubshellConfiguration( ElectronSubshellID( 'L2' ), 13.62, 1.33 ),
+                                  ElectronSubshellConfiguration( ElectronSubshellID( 'L3' ), 13.62, 2.67 ) ],
+                    normalise = True )
+
+        verify_chunk( self, chunk, True )
 
         chunk.normalise()
 

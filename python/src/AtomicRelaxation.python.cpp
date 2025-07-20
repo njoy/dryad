@@ -31,19 +31,28 @@ void wrapAtomicRelaxation( python::module& module ) {
   component
   .def(
 
-    python::init< ElementID, std::vector< ElectronSubshellConfiguration > >(),
+    python::init< ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "element" ), python::arg( "subshells" ),
+    python::arg( "normalise" ) = false,
     "Initialise the atomic relaxation data\n\n"
     "Arguments:\n"
-    "    self         the reaction\n"
-    "    element      the element identifier\n"
-    "    subshells    the electron subshell configuration data"
+    "    self        the reaction\n"
+    "    element     the element identifier\n"
+    "    subshells   the electron subshell configuration data\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
     "element_identifier",
     &Component::elementIdentifier,
     "The element identifier"
+  )
+  .def_property_readonly(
+
+    "number_subshells",
+    &Component::numberSubshells,
+    "The number of subshells defined for this atom"
   )
   .def_property(
 

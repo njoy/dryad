@@ -44,31 +44,39 @@ SCENARIO( "AtomicRelaxation" ) {
         )
       };
 
-      AtomicRelaxation chunk( std::move( element ), std::move( subshells ) );
+      // no normalisation
+      AtomicRelaxation chunk1( element, subshells, false );
+
+      // normalisation at construction time
+      AtomicRelaxation chunk2( std::move( element ), std::move( subshells ), true );
 
       THEN( "a AtomicRelaxation can be constructed and members can be tested" ) {
 
-        verifyChunk( chunk, false ); // not normalised
+        verifyChunk( chunk1, false ); // unnormalised
+        verifyChunk( chunk2, true );  // normalised
       } // THEN
 
       THEN( "a AtomicRelaxation can be normalised" ) {
 
-        chunk.normalise();
-        verifyChunk( chunk, true ); // normalised
+        chunk1.normalise();
+        verifyChunk( chunk1, true ); // now normalised
+
+        chunk2.normalise();
+        verifyChunk( chunk2, true ); // still normalised
       } // THEN
 
       THEN( "transition energies can be calculated" ) {
 
-        chunk.calculateTransitionEnergies();
+        chunk1.calculateTransitionEnergies();
 
-        CHECK_THAT( 538 - 13.62        , WithinRel( chunk.subshells()[0].radiativeTransitions()[0].energy().value() ) );
-        CHECK_THAT( 538 - 13.62        , WithinRel( chunk.subshells()[0].radiativeTransitions()[1].energy().value() ) );
-        CHECK_THAT( 538 - 28.48 - 28.48, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[0].energy().value() ) );
-        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[1].energy().value() ) );
-        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[2].energy().value() ) );
-        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[3].energy().value() ) );
-        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[4].energy().value() ) );
-        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk.subshells()[0].nonRadiativeTransitions()[5].energy().value() ) );
+        CHECK_THAT( 538 - 13.62        , WithinRel( chunk1.subshells()[0].radiativeTransitions()[0].energy().value() ) );
+        CHECK_THAT( 538 - 13.62        , WithinRel( chunk1.subshells()[0].radiativeTransitions()[1].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 28.48, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[0].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[1].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[2].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[3].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[4].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[5].energy().value() ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -138,6 +146,7 @@ void verifyChunk( const AtomicRelaxation& chunk, bool normalise ) {
   CHECK( id::ElementID( 1 ) == chunk.elementIdentifier() );
 
   // subshell configuration data
+  CHECK( 4 == chunk.numberSubshells() );
   CHECK( 4 == chunk.subshells().size() );
 
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "K" ) ) );

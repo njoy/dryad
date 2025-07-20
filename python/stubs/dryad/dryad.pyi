@@ -32,14 +32,16 @@ class AtomicRelaxation:
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
         """
-    def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration]) -> None:
+    def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
         Initialise the atomic relaxation data
         
         Arguments:
-            self         the reaction
-            element      the element identifier
-            subshells    the electron subshell configuration data
+            self        the reaction
+            element     the element identifier
+            subshells   the electron subshell configuration data
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def calculate_transition_energies(self) -> None:
         """
@@ -69,6 +71,11 @@ class AtomicRelaxation:
     def element_identifier(self) -> id.ElementID:
         """
         The element identifier
+        """
+    @property
+    def number_subshells(self) -> int:
+        """
+        The number of subshells defined for this atom
         """
     @property
     def subshells(self) -> list[atomic.ElectronSubshellConfiguration]:

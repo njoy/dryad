@@ -12,12 +12,19 @@ AtomicRelaxation& operator=( AtomicRelaxation&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param element      the element identifier
- *  @param subshells    the electron subshell configuration data
+ *  @param[in] element      the element identifier
+ *  @param[in] subshells    the electron subshell configuration data
+ *  @param[in] normalise    option to indicate whether or not to normalise
+ *                          all probability data (default: no normalisation)
  */
 AtomicRelaxation( id::ElementID element,
-                  std::vector< atomic::ElectronSubshellConfiguration > subshells ) :
+                  std::vector< atomic::ElectronSubshellConfiguration > subshells,
+                  bool normalise = false ) :
     element_id_( std::move( element ) ), subshells_( std::move( subshells ) ) {
 
   this->sort();
+  if ( normalise ) {
+
+    this->normalise();
+  }
 }

@@ -74,6 +74,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the number of subshells defined for this atom
+     */
+    std::size_t numberSubshells() const noexcept {
+
+      return this->subshells().size();
+    }
+
+    /**
      *  @brief Return whether or not a given subshell is present
      *
      *  @param[in] id   the subshell identifier

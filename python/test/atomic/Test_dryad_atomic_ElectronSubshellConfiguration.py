@@ -101,7 +101,7 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
 
         verify_chunk_without_transitions( self, chunk )
 
-        # the data is given explicitly with transition data
+        # the data is given explicitly with transition data - not normalised
         chunk = ElectronSubshellConfiguration( id = ElectronSubshellID( 'K' ), energy = 538, population = 2.,
                                                radiative = [ RadiativeTransitionData( ElectronSubshellID( 'L2' ), 0.00190768, 523.09 ),
                                                              RadiativeTransitionData( ElectronSubshellID( 'L3' ), 0.00380027, 523.13 ) ],
@@ -119,6 +119,7 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
 
         verify_chunk( self, chunk, True )
 
+        # the data is given explicitly with transition data - normalised
         chunk = ElectronSubshellConfiguration( id = ElectronSubshellID( 'K' ), energy = 538, population = 2.,
                                                radiative = [ RadiativeTransitionData( ElectronSubshellID( 'L2' ), 0.00190768, 523.09 ),
                                                              RadiativeTransitionData( ElectronSubshellID( 'L3' ), 0.00380027, 523.13 ) ],
