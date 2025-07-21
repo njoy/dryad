@@ -68,13 +68,13 @@ void wrapProjectileTarget( python::module& module ) {
   .def_property_readonly(
 
     "resonances",
-    &Component::resonances,
+    python::overload_cast<>( &Component::resonances, python::const_ ),
     "The resonance parameters"
   )
   .def_property_readonly(
 
     "reactions",
-    &Component::reactions,
+    python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions"
   )
   .def(

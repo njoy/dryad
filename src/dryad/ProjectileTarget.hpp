@@ -32,6 +32,10 @@ namespace dryad {
 
     bool linearised_;
 
+    /* auxiliary functions */
+
+    #include "dryad/ProjectileTarget/src/iterator.hpp"
+
   public:
 
     /* constructor */
@@ -72,9 +76,25 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the resonance parameter data
+     */
+    std::optional< resonances::ResonanceParameters >& resonances() noexcept {
+
+      return this->resonances_;
+    }
+
+    /**
      *  @brief Return the reactions
      */
     const std::vector< Reaction >& reactions() const noexcept {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions
+     */
+    std::vector< Reaction >& reactions() noexcept {
 
       return this->reactions_;
     }
@@ -86,10 +106,7 @@ namespace dryad {
      */
     bool hasReaction( const id::ReactionID& id ) const {
 
-      auto iter = std::find_if( this->reactions().begin(),
-                                this->reactions().end(),
-                                [&id] ( auto&& reaction )
-                                      { return reaction.identifier() == id; } );
+      auto iter = this->iterator( id );
       return iter != this->reactions().end();
     }
 
@@ -100,10 +117,7 @@ namespace dryad {
      */
     const Reaction& reaction( const id::ReactionID& id ) const {
 
-      auto iter = std::find_if( this->reactions().begin(),
-                                this->reactions().end(),
-                                [&id] ( auto&& reaction )
-                                      { return reaction.identifier() == id; } );
+      auto iter = this->iterator( id );
       if ( iter != this->reactions().end() ) {
 
         return *iter;
