@@ -80,6 +80,12 @@ void wrapProjectileTarget( python::module& module ) {
     python::overload_cast< std::vector< Reaction > >( &Component::reactions ),
     "The reactions"
   )
+  .def_property_readonly(
+
+    "number_reactions",
+    &Component::numberReactions,
+    "The number of reactions"
+  )
   .def(
 
     "has_reaction",

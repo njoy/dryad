@@ -112,6 +112,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( std::nullopt == chunk.resonances() );
 
   // reactions are present
+  CHECK( 2 == chunk.numberReactions() );
   CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->n,Fe56" ) ) );
   CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ) ) );
   CHECK( false == chunk.hasReaction( id::ReactionID( "some unknown reaction" ) ) );

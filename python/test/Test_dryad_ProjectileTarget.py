@@ -31,6 +31,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
             self.assertEqual( None, chunk.resonances )
 
             # reactions are present
+            self.assertEqual( 2, chunk.number_reactions )
             self.assertEqual( True, chunk.has_reaction( 'n,Fe56->n,Fe56' ) )
             self.assertEqual( True, chunk.has_reaction( 'n,Fe56->n,Fe56_e1' ) )
             self.assertEqual( False, chunk.has_reaction( 'some unknown reaction' ) )

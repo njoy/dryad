@@ -102,6 +102,12 @@ void wrapReaction( python::module& module ) {
     "The summation reaction identifiers (not defined if this is a primary\n"
     "reaction)"
   )
+  .def_property_readonly(
+
+    "number_partial_reactions",
+    &Component::numberPartialReactions,
+    "The number of partial reactions that make up this reaction"
+  )
   .def_property(
 
     "mass_difference_qvalue",

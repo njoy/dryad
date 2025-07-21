@@ -809,6 +809,11 @@ class ProjectileTarget:
         Flag indicating whether or not the data is linearised
         """
     @property
+    def number_reactions(self) -> int:
+        """
+        The number of reactions
+        """
+    @property
     def projectile_identifier(self) -> id.ParticleID:
         """
         The projectile identifier
@@ -946,6 +951,11 @@ class Reaction:
     @mass_difference_qvalue.setter
     def mass_difference_qvalue(self, arg1: float | None) -> None:
         ...
+    @property
+    def number_partial_reactions(self) -> int:
+        """
+        The number of partial reactions that make up this reaction
+        """
     @property
     def partial_reaction_identifiers(self) -> list[str] | None:
         """

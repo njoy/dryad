@@ -27,6 +27,7 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( True, chunk.is_primary_reaction )
 
     # partial identifiers
+    self.assertEqual( 0, chunk.number_partial_reactions )
     self.assertEqual( None, chunk.partial_reaction_identifiers )
 
     # q values
@@ -94,6 +95,7 @@ def verify_summation_chunk( self, chunk ) :
     self.assertEqual( False, chunk.is_primary_reaction )
 
     # partial identifiers
+    self.assertEqual( 2, chunk.number_partial_reactions )
     self.assertEqual( 2, len( chunk.partial_reaction_identifiers ) )
     self.assertEqual( 'n,Fe56->elastic', chunk.partial_reaction_identifiers[0] )
     self.assertEqual( 'n,Fe56->2n,Fe56', chunk.partial_reaction_identifiers[1] )

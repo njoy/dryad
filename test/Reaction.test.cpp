@@ -214,6 +214,7 @@ void verifyChunk( const Reaction& chunk ) {
 
   // partial identifiers
   CHECK( std::nullopt == chunk.partialReactionIdentifiers() );
+  CHECK( 0 == chunk.numberPartialReactions() );
 
   // q values
   CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue().value() ) );
@@ -279,6 +280,7 @@ void verifySummationChunk( const Reaction& chunk ) {
 
   // partial identifiers
   CHECK( std::nullopt != chunk.partialReactionIdentifiers() );
+  CHECK( 2 == chunk.numberPartialReactions() );
   auto partials = chunk.partialReactionIdentifiers().value();
   CHECK( 2 == partials.size() );
   CHECK( id::ReactionID( "n,Fe56->elastic" ) == partials[0] );
