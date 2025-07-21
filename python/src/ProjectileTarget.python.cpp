@@ -18,6 +18,7 @@ void wrapProjectileTarget( python::module& module ) {
   using Component = njoy::dryad::ProjectileTarget;
   using ParticleID = njoy::dryad::id::ParticleID;
   using Reaction = njoy::dryad::Reaction;
+  using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
   using InteractionType = njoy::dryad::InteractionType;
 
@@ -65,16 +66,18 @@ void wrapProjectileTarget( python::module& module ) {
     &Component::interactionType,
     "The interaction type (atomic or nuclear)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "resonances",
     python::overload_cast<>( &Component::resonances, python::const_ ),
+    python::overload_cast< std::optional< ResonanceParameters > >( &Component::resonances ),
     "The resonance parameters"
   )
-  .def_property_readonly(
+  .def_property(
 
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
+    python::overload_cast< std::vector< Reaction > >( &Component::reactions ),
     "The reactions"
   )
   .def(
@@ -95,7 +98,8 @@ void wrapProjectileTarget( python::module& module ) {
     "Return the requested reaction\n\n"
     "Arguments:\n"
     "    self   the ProjectileTarget data\n"
-    "    id     the reaction identifier"
+    "    id     the reaction identifier",
+    python::return_value_policy::reference_internal
   )
   .def_property_readonly(
 

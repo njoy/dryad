@@ -120,6 +120,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the number of partial reactions that make up this reaction
+     */
+    std::size_t numberPartialReactions() const noexcept {
+
+      return this->isSummationReaction() ? this->partialReactionIdentifiers()->size() : 0;
+    }
+
+    /**
      *  @brief Return the mass difference Q value
      *
      *  The mass difference Q value is defined as the energy equivalence of the

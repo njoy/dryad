@@ -810,11 +810,17 @@ class ProjectileTarget:
         """
         The reactions
         """
+    @reactions.setter
+    def reactions(self, arg1: list[Reaction]) -> None:
+        ...
     @property
     def resonances(self) -> resonances.ResonanceParameters | None:
         """
         The resonance parameters
         """
+    @resonances.setter
+    def resonances(self, arg1: resonances.ResonanceParameters | None) -> None:
+        ...
     @property
     def target_identifier(self) -> id.ParticleID:
         """

@@ -82,6 +82,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the resonance parameters
+     *
+     *  @param[in] resonances   the resonance parameters
+     */
+    void resonances( std::optional< resonances::ResonanceParameters > resonances ) noexcept {
+
+      this->resonances_ = std::move( resonances );
+    }
+
+    /**
      *  @brief Return the reactions
      */
     const std::vector< Reaction >& reactions() const noexcept {
@@ -95,6 +105,24 @@ namespace dryad {
     std::vector< Reaction >& reactions() noexcept {
 
       return this->reactions_;
+    }
+
+    /**
+     *  @brief Set the reactions
+     *
+     *  @param[in] reactions   the reactions
+     */
+    void reactions( std::vector< Reaction > reactions ) noexcept {
+
+      this->reactions_ = std::move( reactions );
+    }
+
+    /**
+     *  @brief Return the number of reactions
+     */
+    std::size_t numberReactions() const noexcept {
+
+      return this->reactions().size();
     }
 
     /**
