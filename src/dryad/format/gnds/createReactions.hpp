@@ -82,7 +82,7 @@ namespace gnds {
 
       auto total = std::find_if( reactions.begin(), reactions.end(),
                                  [] ( const auto& reaction )
-                                    { return reaction.identifier() == id::ReactionID( "501" ); } );
+                                    { return reaction.identifier() == id::ReactionID( "526" ); } );
       auto partial = std::find_if( reactions.begin(), reactions.end(),
                                    [] ( const auto& reaction )
                                       { return reaction.identifier() == id::ReactionID( "525" ); } );
