@@ -774,6 +774,14 @@ class ProjectileTarget:
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
+    def calculate_summation_cross_sections(self, tolerance: ToleranceConvergence = ...) -> None:
+        """
+        Calculate summation cross sections
+        
+        Arguments:
+            self        the ProjectileTarget data
+            tolerance   the linearisation tolerance
+        """
     def has_reaction(self, id: str) -> bool:
         """
         Return whether or not a reaction is present

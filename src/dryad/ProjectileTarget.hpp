@@ -166,6 +166,36 @@ namespace dryad {
     }
 
     /**
+     *  @brief Calculate summation cross sections
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    void calculateSummationCrossSections( ToleranceConvergence tolerance = {} ) {
+
+      for ( auto& reaction : this->reactions() ) {
+
+        if ( reaction.isSummationReaction() ) {
+
+          TabulatedCrossSection total;
+          for ( std::size_t index = 0; index < reaction.numberPartialReactions(); ++index ) {
+
+            decltype(auto) partial = this->reaction( reaction.partialReactionIdentifiers().value()[index] );
+            if ( index == 0 ) {
+
+              total = partial.crossSection().linearise( tolerance );
+            }
+            else {
+
+              total += partial.crossSection().linearise( tolerance );
+            }
+          }
+
+          reaction.crossSection( std::move( total ) );
+        }
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

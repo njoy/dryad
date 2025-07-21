@@ -101,6 +101,16 @@ void wrapProjectileTarget( python::module& module ) {
     "    id     the reaction identifier",
     python::return_value_policy::reference_internal
   )
+  .def(
+
+    "calculate_summation_cross_sections",
+    &Component::calculateSummationCrossSections,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Calculate summation cross sections\n\n"
+    "Arguments:\n"
+    "    self        the ProjectileTarget data\n"
+    "    tolerance   the linearisation tolerance"
+  )
   .def_property_readonly(
 
     "is_linearised",
