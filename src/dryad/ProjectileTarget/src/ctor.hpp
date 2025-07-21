@@ -11,14 +11,12 @@ ProjectileTarget( id::ParticleID&& projectile,
                   id::ParticleID&& target,
                   InteractionType type,
                   std::optional< resonances::ResonanceParameters > resonances,
-                  std::vector< Reaction >&& reactions,
-                  bool linearised ) :
+                  std::vector< Reaction >&& reactions ) :
     projectile_id_( std::move( projectile ) ),
     target_id_( std::move( target ) ),
     interaction_( type ),
     resonances_( std::move( resonances ) ),
-    reactions_( std::move( reactions ) ),
-    linearised_( linearised ) {}
+    reactions_( std::move( reactions ) ) {}
 
 public:
 
@@ -48,7 +46,4 @@ ProjectileTarget( id::ParticleID projectile,
                       std::move( target ),
                       type,
                       std::nullopt,
-                      std::move( reactions ),
-                      std::all_of( reactions.begin(), reactions.end(),
-                                   [] ( auto&& reaction )
-                                      { return reaction.isLinearised(); } ) ) {}
+                      std::move( reactions ) ) {}

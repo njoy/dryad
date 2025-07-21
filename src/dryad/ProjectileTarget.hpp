@@ -30,8 +30,6 @@ namespace dryad {
     std::optional< resonances::ResonanceParameters > resonances_;
     std::vector< Reaction > reactions_;
 
-    bool linearised_;
-
     /* auxiliary functions */
 
     #include "dryad/ProjectileTarget/src/iterator.hpp"
@@ -134,7 +132,9 @@ namespace dryad {
      */
     bool isLinearised() const noexcept {
 
-      return this->linearised_;
+      return std::all_of( this->reactions().begin(), this->reactions().end(),
+                          [] ( auto&& reaction )
+                             { return reaction.isLinearised(); } );
     }
 
     /**
