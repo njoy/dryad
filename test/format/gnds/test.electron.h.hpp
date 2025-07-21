@@ -566,6 +566,18 @@ namespace h1 {
     CHECK( std::nullopt != reaction.reactionQValue() );
 
     CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 101 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 101 == reaction.crossSection().energies().size() );
+    CHECK( 101 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 100 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 10., WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 1e+11, WithinRel( reaction.crossSection().energies()[100] ) );
+    CHECK_THAT( 0., WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 12987.1 - 1.31176e-5, WithinRel( reaction.crossSection().values()[100] ) );
 
     CHECK( 0 == reaction.numberProducts() );
   }
