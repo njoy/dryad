@@ -81,9 +81,9 @@ namespace dryad {
      *  @brief Set the partial reaction identifiers
      *
      *  This will also reset the reaction category to summation or primary
-     *  as required. Using std::nullopt will thus erase the partial identifiers
-     *  and make the reaction a primary reaction if it wasn't a primary one
-     *  already.
+     *  as required. Using std::nullopt or an empty vector of identifiers will
+     *  thus erase the partial identifiers and make the reaction a primary
+     *  reaction if it wasn't a primary one already.
      *
      *  Summation reactions do not have q values associated to them, so it is
      *  up to the user to update the q values seperately when changing the

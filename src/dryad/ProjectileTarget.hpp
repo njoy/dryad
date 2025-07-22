@@ -190,7 +190,16 @@ namespace dryad {
             }
             else {
 
-              total += partial.crossSection().linearise( tolerance );
+              if ( partial.crossSection().isLinearised() ) {
+
+                // operator+= passes the table by reference so no copy this way
+                total += partial.crossSection();
+              }
+              else {
+
+                // linearise makes a new temporary object
+                total += partial.crossSection().linearise( tolerance );
+              }
             }
           }
 
