@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "definitions.hpp"
 #include "dryad/AtomicRelaxation.hpp"
 #include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
 #include "dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
@@ -122,4 +123,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "    normalise   option to indicate whether or not to normalise\n"
     "                all probability data (default: no normalisation)"
   );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
 }
