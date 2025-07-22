@@ -9,6 +9,7 @@ class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
     """
+    __hash__: typing.ClassVar[None] = None
     @staticmethod
     def from_endf_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
@@ -32,6 +33,8 @@ class AtomicRelaxation:
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
         """
+    def __eq__(self, arg0: AtomicRelaxation) -> bool:
+        ...
     def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
         Initialise the atomic relaxation data
@@ -43,6 +46,8 @@ class AtomicRelaxation:
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
         """
+    def __ne__(self, arg0: AtomicRelaxation) -> bool:
+        ...
     def calculate_transition_energies(self) -> None:
         """
         Calculate the transition energies for all transitions
