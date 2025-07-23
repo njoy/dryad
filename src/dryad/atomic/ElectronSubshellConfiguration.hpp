@@ -25,7 +25,7 @@ namespace atomic {
    *      when the atom is neutral (given as a floating point number)
    *    - the transitions that can fill a vacancy in this shell
    *
-   *  If there are transitions defined, the transition probabilities are
+   *  If there are transitions defined, the transition probabilities
    *  can be normalised to 1 upon construction.
    */
   class ElectronSubshellConfiguration {
