@@ -16,7 +16,7 @@ class ElectronSubshellConfiguration:
         when the atom is neutral (given as a floating point number)
       - the decay modes or transitions that can fill a hole in this shell
     
-    If there are transitions defined, the transition probabilities are
+    If there are transitions defined, the transition probabilities
     can be normalised to 1 upon construction.
     """
     __hash__: typing.ClassVar[None] = None
