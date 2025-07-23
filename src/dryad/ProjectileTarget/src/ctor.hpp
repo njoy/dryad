@@ -16,7 +16,10 @@ ProjectileTarget( id::ParticleID&& projectile,
     target_id_( std::move( target ) ),
     interaction_( type ),
     resonances_( std::move( resonances ) ),
-    reactions_( std::move( reactions ) ) {}
+    reactions_( std::move( reactions ) ) {
+
+  //! @todo run the resolvePartialIdentifiers function
+}
 
 public:
 

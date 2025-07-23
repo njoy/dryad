@@ -115,6 +115,7 @@ namespace dryad {
     void reactions( std::vector< Reaction > reactions ) noexcept {
 
       this->reactions_ = std::move( reactions );
+      //! @todo run the resolvePartialIdentifiers function
     }
 
     /**
@@ -207,6 +208,8 @@ namespace dryad {
         }
       }
     }
+
+    //! @todo add a resolvePartialIdentifiers function
 
     /**
      *  @brief Comparison operator: equal
