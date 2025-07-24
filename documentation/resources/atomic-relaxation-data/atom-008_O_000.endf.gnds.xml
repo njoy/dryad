@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<PoPs name="ENDF atomic relaxation for Z = 8" version="1.0" format="2.0">
+  <styles>
+    <evaluated label="eval" date="2023-08-01" library="ENDF/B" version="8.1.0">
+      <documentation>
+        <authors>
+          <author name="D.E.Cullen"></author></authors>
+        <dates>
+          <date value="2023-08-01" dateType="created"/></dates>
+        <title><![CDATA[ENDF-6 file from ENDF/B version 8.1.0 translated to GNDS by FUDGE.]]></title>
+        <body><![CDATA[See the endfCompatible section.]]></body>
+        <endfCompatible><![CDATA[  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen
+ NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830
+---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1
+----- ATOMIC RELAXATION DATA
+------ ENDF-6
+==================================================================
+The Livermore Evaluated Atomic Data Library (EADL) in the
+ENDF-6 Format. Translated from the Livermore ENDL format
+to the ENDF-6 Format.
+==================================================================
+  Contents
+==================================================================
+  MF/MT    Description
+==================================================================
+  28/533   Atomic Relaxation Data for Electrons and Photons
+==================================================================
+  Warning
+==================================================================
+  MF/MT combinations used to define ALL electron interaction data
+  are newly defined MF/MT numbers for ENDF/B-VI that did not exist
+  in earlier versions of ENDF/B.
+==================================================================
+  Definition of Data
+==================================================================
+  Atomic Relaxation Data for Electrons and Photons
+==================================================================
+1) An atom can be ionized by a photon or an electron interaction.
+2) The atomic relaxation data included here describes how a
+   singly ionized atom returns to neutrality, by emitting photons
+   (x-rays) and/or electrons (Auger, Coster-Kronig).
+3) Data is given to define the transition probabilities between
+   subshells for radiative (x-ray emission) and non-radiative
+   (Auger, Coster-Kronig) transitions.
+4) The complete spectrum of emitted photons and electrons can be
+   calculated using the data included here, e.g., see ref. 2,
+   below, for am example of a computer code that analytically
+   calculates these spectra.
+==================================================================
+  References
+==================================================================
+1) S.T. Perkins, D.E. Cullen, etal., "Tables and Graphs of Atomic
+   Subshell and Relaxation Data Derived from the LLNL Evaluated
+   Atomic Data Library (EADL), Z = 1 - 100", UCRL-50400, Vol. 30,
+   Lawrence Livermore National Laboratory (1991).
+2) D.E. Cullen "Program RELAX: A Code Designed to Calculate X-Ray
+   and Electron Emission Spectra as Singly Charged Atoms Relax
+   Back to Neutrality", UCRL-ID-110438, Lawrence Livermore
+   National Laboratory (1992).
+3) D.E. Cullen "A Survey of Atomic Binding Energies for use
+   in EPICS2017" ,IAEA-NDS-224, (2017), Nuclear Data Section,
+   IAEA, Vienna, Austria
+4) D.E. Cullen,"EPICS2017: April 2019 Status Report",
+   IAEA-NDS-228, April 2019, Nuclear Data Section,
+   IAEA, Vienna, Austria.
+5) D.E. Cullen,"EPICS2023: August 2023 Status Report",
+   IAEA-NDS-242, August 2023, Nuclear Data Section,
+   IAEA, Vienna, Austria.
+
+  These are the primary references to the contents of this library
+  and they contain a complete list of references to the sources
+  of data used in this library, methods of evaluation, accuracy
+  of the data, etc.
+==================================================================
+  History
+==================================================================
+ (1) November, 1991 - Initial release in the ENDL format.
+ (2) November, 2001 - Initial release in the ENDF-6 format.
+ (3) September,2014 - Insure Standard C, C++, FORTRAN Format
+ (4) September,2014 - Updated based on recently publshed data
+ (5) September,2017 - New Binding Energies (see: ref.3)
+                      Same Transition Probabilities
+ (6) August,   2023 - Reformatted, but data same as 2017 version
+==================================================================
+ ***************** Program FIXUP (Version 2023-2) ****************
+ **************** Program DICTIN (VERSION 2023-1) ****************]]></endfCompatible></documentation></evaluated></styles>
+  <chemicalElements>
+    <chemicalElement symbol="O" Z="8" name="Oxygen">
+      <atomic>
+        <configurations>
+          <configuration subshell="1s1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="538." unit="eV"/></bindingEnergy>
+            <decayData>
+              <decayModes>
+                <decayMode label="0" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="1.90768e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="O{2p1/2}" pid="O{2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="1" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="3.80027e-3"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="photon" pid="photon"/>
+                        <product label="O{2p3/2}" pid="O{2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="2" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.178644"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="O{2s1/2,2s1/2}" pid="O{2s1/2,2s1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="3" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.116224"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="O{2s1/2,2p1/2}" pid="O{2s1/2,2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="4" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.230418"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="O{2s1/2,2p3/2}" pid="O{2s1/2,2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="5" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.0110822"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="O{2p1/2,2p1/2}" pid="O{2p1/2,2p1/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="6" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.291115"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="O{2p1/2,2p3/2}" pid="O{2p1/2,2p3/2}"/></products></decay></decayPath></decayMode>
+                <decayMode label="7" mode="atomicRelaxation">
+                  <probability>
+                    <double label="BR" value="0.166809"/></probability>
+                  <decayPath>
+                    <decay index="0">
+                      <products>
+                        <product label="e-" pid="e-"/>
+                        <product label="O{2p3/2,2p3/2}" pid="O{2p3/2,2p3/2}"/></products></decay></decayPath></decayMode></decayModes></decayData></configuration>
+          <configuration subshell="2s1/2" electronNumber="2.0">
+            <bindingEnergy>
+              <double label="eval" value="28.48" unit="eV"/></bindingEnergy></configuration>
+          <configuration subshell="2p1/2" electronNumber="1.33">
+            <bindingEnergy>
+              <double label="eval" value="13.62" unit="eV"/></bindingEnergy></configuration>
+          <configuration subshell="2p3/2" electronNumber="2.67">
+            <bindingEnergy>
+              <double label="eval" value="13.62" unit="eV"/></bindingEnergy></configuration></configurations></atomic></chemicalElement></chemicalElements></PoPs>
