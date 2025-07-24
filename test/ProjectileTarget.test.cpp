@@ -49,6 +49,59 @@ SCENARIO( "ProjectileTarget" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of ProjectileTarget is given" ) {
+
+      ProjectileTarget chunk( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+                              InteractionType::Nuclear,
+                              { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
+                                          TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
+                                                                   InterpolationType::LogLinear ),
+                                          {},
+                                          0, 0 ),
+                               Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                                         TabulatedCrossSection( { 1., 20. }, { 0., 100. },
+                                                                  InterpolationType::LinearLinear ),
+                                         {},
+                                         0, -1 ) } );
+
+      THEN( "the reaction data can be changed" ) {
+
+        std::vector< Reaction > newreactions = {
+
+          Reaction( id::ReactionID( "n,Fe56->n,Fe56_e2" ),
+                    TabulatedCrossSection( { 5., 20. }, { 0., 15. },
+                                             InterpolationType::LogLog ),
+                    {},
+                    0, -1 )
+        };
+        std::vector< Reaction > original = {
+
+          Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
+                    TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
+                                             InterpolationType::LogLinear ),
+                    {},
+                    0, 0 ),
+          Reaction( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                    TabulatedCrossSection( { 1., 20. }, { 0., 100. },
+                                             InterpolationType::LinearLinear ),
+                    {},
+                    0, -1 )
+        };
+
+        chunk.reactions( newreactions );
+
+        CHECK( newreactions == chunk.reactions() );
+        CHECK( 1 == chunk.reactions().size() );
+
+        chunk.reactions( original );
+
+        verifyChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ProjectileTarget are given" ) {
