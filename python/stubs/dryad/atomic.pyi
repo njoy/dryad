@@ -70,6 +70,9 @@ class ElectronSubshellConfiguration:
         """
         The electron subshell identifier
         """
+    @identifier.setter
+    def identifier(self, arg1: dryad.id.ElectronSubshellID) -> None:
+        ...
     @property
     def non_radiative_transitions(self) -> list[NonRadiativeTransitionData]:
         """
@@ -153,6 +156,9 @@ class NonRadiativeTransitionData:
         """
         The identifier of the subshell from which the emitted electron originated
         """
+    @emitting_shell.setter
+    def emitting_shell(self, arg1: dryad.id.ElectronSubshellID) -> None:
+        ...
     @property
     def energy(self) -> float | None:
         """
@@ -166,6 +172,9 @@ class NonRadiativeTransitionData:
         """
         The identifier of the subshell from which the electron filling the vacancy originated
         """
+    @originating_shell.setter
+    def originating_shell(self, arg1: dryad.id.ElectronSubshellID) -> None:
+        ...
     @property
     def probability(self) -> float:
         """
@@ -218,6 +227,9 @@ class RadiativeTransitionData:
         """
         The identifier of the subshell from which the electron filling the vacancy originated
         """
+    @originating_shell.setter
+    def originating_shell(self, arg1: dryad.id.ElectronSubshellID) -> None:
+        ...
     @property
     def probability(self) -> float:
         """

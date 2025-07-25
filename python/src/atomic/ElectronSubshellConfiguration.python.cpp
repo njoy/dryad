@@ -60,10 +60,11 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "    normalise      option to indicate whether or not to normalise\n"
     "                   all probability data (default: no normalisation)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "identifier",
-    &Component::identifier,
+    python::overload_cast<>( &Component::identifier, python::const_ ),
+    python::overload_cast< ElectronSubshellID >( &Component::identifier ),
     "The electron subshell identifier"
   )
   .def_property(
