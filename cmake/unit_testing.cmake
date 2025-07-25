@@ -130,6 +130,8 @@ add_cpp_test( format.endf.createProjectileTarget                         format/
 add_cpp_test( format.endf.createProjectileTargetFromFile                 format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxation                         format/endf/createAtomicRelaxation.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationFromFile                 format/endf/createAtomicRelaxationFromFile.test.cpp )
+add_cpp_test( format.endf.atomic.toSubshellDesignator                    format/endf/atomic/toSubshellDesignator.test.cpp )
+add_cpp_test( format.endf.atomic.toSubshellData                          format/endf/atomic/toSubshellData.test.cpp )
 
 add_cpp_test( format.gnds.convertEnergy                                  format/gnds/convertEnergy.test.cpp )
 add_cpp_test( format.gnds.convertCrossSections                           format/gnds/convertCrossSections.test.cpp )
