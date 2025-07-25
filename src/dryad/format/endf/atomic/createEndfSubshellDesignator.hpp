@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEELECTRONSUBSHELLID
-#define NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEELECTRONSUBSHELLID
+#ifndef NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEENDFELECTRONSUBSHELLID
+#define NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEENDFELECTRONSUBSHELLID
 
 // system includes
 #include <vector>
@@ -19,7 +19,7 @@ namespace atomic {
    *
    *  @param[in] subshell   the subshell identifier
    */
-  unsigned int toSubshellDesignator( const id::ElectronSubshellID& id ) {
+  unsigned int createEndfSubshellDesignator( const id::ElectronSubshellID& id ) {
 
     return id.number() - id::ElectronSubshellID::K + 1;
   }

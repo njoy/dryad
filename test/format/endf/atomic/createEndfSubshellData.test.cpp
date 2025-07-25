@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/atomic/toSubshellData.hpp"
+#include "dryad/format/endf/atomic/createEndfSubshellData.hpp"
 
 // other includes
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
@@ -33,7 +33,7 @@ SCENARIO( "toSubshellData" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::atomic::toSubshellData( chunk );
+        auto data = format::endf::atomic::createEndfSubshellData( chunk );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -75,7 +75,7 @@ SCENARIO( "toSubshellData" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::atomic::toSubshellData( chunk );
+        auto data = format::endf::atomic::createEndfSubshellData( chunk );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
