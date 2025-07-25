@@ -41,7 +41,7 @@ namespace endf {
       std::vector< dryad::atomic::ElectronSubshellConfiguration > subshells;
       for ( const auto& subshell : data.subshells() ) {
 
-        subshells.push_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
+        subshells.emplace_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
       }
 
       return AtomicRelaxation( std::move( element ), std::move( subshells ) );
