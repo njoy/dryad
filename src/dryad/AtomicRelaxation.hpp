@@ -45,6 +45,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the element identifier
+     *
+     *  @param[in] element   the element identifier
+     */
+    void elementIdentifier( id::ElementID element ) noexcept {
+
+      this->element_id_ = std::move( element );
+    }
+
+    /**
      *  @brief Return the electron shell configuration data
      */
     const std::vector< atomic::ElectronSubshellConfiguration >&

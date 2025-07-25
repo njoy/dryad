@@ -65,6 +65,16 @@ namespace atomic {
     }
 
     /**
+     *  @brief Set the electron subshell identifier
+     *
+     *  @param[in] id.  the electron subshell identifier
+     */
+    void identifier( id::ElectronSubshellID id ) noexcept {
+
+      this->id_ = std::move( id );
+    }
+
+    /**
      *  @brief Return the subshell binding energy
      */
     double bindingEnergy() const noexcept {
