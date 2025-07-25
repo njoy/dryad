@@ -98,6 +98,20 @@ SCENARIO( "ElectronSubshellConfiguration" ) {
 
       ElectronSubshellConfiguration chunk( id::ElectronSubshellID( "K" ), 538, 2 );
 
+      THEN( "the shell identifier can be changed" ) {
+
+        id::ElectronSubshellID newid = id::ElectronSubshellID( "L1" );
+        id::ElectronSubshellID original = id::ElectronSubshellID( "K" );
+
+        chunk.identifier( newid );
+
+        CHECK( newid == chunk.identifier() );
+
+        chunk.identifier( original );
+
+        verifyChunkWithoutTransitions( chunk );
+      } // THEN
+
       THEN( "the probability can be changed" ) {
 
         double newenergy = 538.6;

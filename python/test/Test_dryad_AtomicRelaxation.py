@@ -319,6 +319,18 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L2' ), 13.62, 1.33 ),
                                   ElectronSubshellConfiguration( ElectronSubshellID( 'L3' ), 13.62, 2.67 ) ]  )
 
+        # the originating shell can be changed
+        newid =  ElementID( 2 )
+        original =  ElementID( 1 )
+
+        chunk.element_identifier = newid
+
+        self.assertEqual( newid, chunk.element_identifier )
+
+        chunk.element_identifier = original
+
+        verify_chunk( self, chunk, False )
+
         # the subshells can be changed
         newsubshells = [ ElectronSubshellConfiguration( ElectronSubshellID( 'M1' ), 5000, 2 ) ]
         original = [ ElectronSubshellConfiguration(

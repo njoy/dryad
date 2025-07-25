@@ -50,6 +50,30 @@ class Test_dryad_NonRadiativeTransitionData( unittest.TestCase ) :
                                             emitting_shell = ElectronSubshellID( 'L1' ),
                                             probability = 1e-3 )
 
+        # the originating shell can be changed
+        newid = ElectronSubshellID( 'L1' )
+        original = ElectronSubshellID( 'K' )
+
+        chunk.originating_shell = newid
+
+        self.assertEqual( newid, chunk.originating_shell )
+
+        chunk.originating_shell = original
+
+        verify_chunk_without_transition_energy( self, chunk )
+
+        # the emitting shell can be changed
+        newid = ElectronSubshellID( 'L3' )
+        original = ElectronSubshellID( 'L1' )
+
+        chunk.emitting_shell = newid
+
+        self.assertEqual( newid, chunk.emitting_shell )
+
+        chunk.emitting_shell = original
+
+        verify_chunk_without_transition_energy( self, chunk )
+
         # the probability can be changed
         newprobability = 0.1
         original = 1e-3

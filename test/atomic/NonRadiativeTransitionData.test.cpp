@@ -61,6 +61,34 @@ SCENARIO( "NonRadiativeTransitionData" ) {
                                         id::ElectronSubshellID( "L1" ),
                                         1e-3 );
 
+      THEN( "the originating shell can be changed" ) {
+
+        id::ElectronSubshellID newid = id::ElectronSubshellID( "L1" );
+        id::ElectronSubshellID original = id::ElectronSubshellID( "K" );
+
+        chunk.originatingShell( newid );
+
+        CHECK( newid == chunk.originatingShell() );
+
+        chunk.originatingShell( original );
+
+        verifyChunkWithoutTransitionEnergy( chunk );
+      } // THEN
+
+      THEN( "the emitting shell can be changed" ) {
+
+        id::ElectronSubshellID newid = id::ElectronSubshellID( "L3" );
+        id::ElectronSubshellID original = id::ElectronSubshellID( "L1" );
+
+        chunk.emittingShell( newid );
+
+        CHECK( newid == chunk.emittingShell() );
+
+        chunk.emittingShell( original );
+
+        verifyChunkWithoutTransitionEnergy( chunk );
+      } // THEN
+
       THEN( "the probability can be changed" ) {
 
         double newprobability = 0.1;
