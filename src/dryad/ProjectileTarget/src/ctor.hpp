@@ -18,7 +18,7 @@ ProjectileTarget( id::ParticleID&& projectile,
     resonances_( std::move( resonances ) ),
     reactions_( std::move( reactions ) ) {
 
-  //! @todo run the resolvePartialIdentifiers function
+  this->resolvePartialIdentifiers();
 }
 
 public:

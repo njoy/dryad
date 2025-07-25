@@ -115,7 +115,7 @@ namespace dryad {
     void reactions( std::vector< Reaction > reactions ) noexcept {
 
       this->reactions_ = std::move( reactions );
-      //! @todo run the resolvePartialIdentifiers function
+      this->resolvePartialIdentifiers();
     }
 
     /**
@@ -209,7 +209,40 @@ namespace dryad {
       }
     }
 
-    //! @todo add a resolvePartialIdentifiers function
+    /**
+     *  @brief Resolve all partial reaction identifiers
+     *
+     *  This function goes through all summation reactions and ensures that
+     *  the partial identifiers for each only point to primary reactions.
+     */
+    void resolvePartialIdentifiers() {
+
+      for ( auto& reaction : this->reactions() ) {
+
+        if ( reaction.isSummationReaction() ) {
+
+          std::vector< id::ReactionID > partials = reaction.partialReactionIdentifiers().value();
+
+          auto iter = partials.begin();
+          while ( iter != partials.end() ) {
+
+            decltype(auto) partial = this->reaction( *iter );
+            if ( partial.isSummationReaction() ) {
+
+              iter = partials.erase( iter );
+              iter = partials.insert( iter, partial.partialReactionIdentifiers()->begin(),
+                                            partial.partialReactionIdentifiers()->end() );
+            }
+            else {
+
+              ++iter;
+            }
+          }
+
+          reaction.partialReactionIdentifiers( partials );
+        }
+      }
+    }
 
     /**
      *  @brief Comparison operator: equal
