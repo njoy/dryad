@@ -43,7 +43,7 @@ namespace endf {
       std::vector< dryad::atomic::ElectronSubshellConfiguration > subshells;
       for ( const auto& subshell : data.subshells() ) {
 
-        subshells.push_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
+        subshells.emplace_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
       }
 
       Metadata metadata = createMetadata( information );
