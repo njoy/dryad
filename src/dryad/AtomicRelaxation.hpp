@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/Metadata.hpp"
 #include "dryad/id/ElementID.hpp"
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
 
@@ -20,6 +21,7 @@ namespace dryad {
   class AtomicRelaxation {
 
     /* fields */
+    Metadata metadata_;
     id::ElementID element_id_;
     std::vector< atomic::ElectronSubshellConfiguration > subshells_;
 
@@ -35,6 +37,24 @@ namespace dryad {
     #include "dryad/AtomicRelaxation/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the metadata
+     */
+    const Metadata& metadata() const noexcept {
+
+      return this->metadata_;
+    }
+
+    /**
+     *  @brief Return the metadata
+     *
+     *  @param[in] metadata   the metadata
+     */
+    void metadata( Metadata metadata ) noexcept {
+
+      this->metadata_ = std::move( metadata );
+    }
 
     /**
      *  @brief Return the element identifier
