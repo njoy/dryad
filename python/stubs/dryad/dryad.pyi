@@ -81,6 +81,14 @@ class AtomicRelaxation:
     def element_identifier(self, arg1: id.ElementID) -> None:
         ...
     @property
+    def metadata(self) -> Metadata:
+        """
+        The metadata
+        """
+    @metadata.setter
+    def metadata(self, arg1: Metadata) -> None:
+        ...
+    @property
     def number_subshells(self) -> int:
         """
         The number of subshells defined for this atom

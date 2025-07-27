@@ -130,6 +130,7 @@ add_cpp_test( format.endf.createReactionProduct                          format/
 add_cpp_test( format.endf.createReactionProducts                         format/endf/createReactionProducts.test.cpp )
 add_cpp_test( format.endf.createReaction                                 format/endf/createReaction.test.cpp )
 add_cpp_test( format.endf.createReactions                                format/endf/createReactions.test.cpp )
+add_cpp_test( format.endf.createMetadata                                 format/endf/createMetadata.test.cpp )
 add_cpp_test( format.endf.createProjectileTarget                         format/endf/createProjectileTarget.test.cpp )
 add_cpp_test( format.endf.createProjectileTargetFromFile                 format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxation                         format/endf/createAtomicRelaxation.test.cpp )
