@@ -41,6 +41,8 @@ add_python_test( covariance.LinearCombinationCovariance  covariance/Test_dryad_c
 add_python_test( covariance.CrossSectionMetadata         covariance/Test_dryad_covariance_CrossSectionMetadata.py )
 add_python_test( covariance.CrossSectionCovarianceBlock  covariance/Test_dryad_covariance_CrossSectionCovarianceBlock.py )
 
+add_python_test( Metadata                                Test_dryad_Metadata.py )
+
 add_python_test( TabulatedMultiplicity                   Test_dryad_TabulatedMultiplicity.py )
 add_python_test( TabulatedAverageEnergy                  Test_dryad_TabulatedAverageEnergy.py )
 add_python_test( TabulatedAverageCosine                  Test_dryad_TabulatedAverageCosine.py )

@@ -80,7 +80,7 @@ namespace dryad {
      *
      *  @param[in] version   the version numbers
      */
-    void version( std::optional< std::pair< unsigned int, unsigned int > > version ) noexcept {
+    void version( std::optional< std::pair< int, int > > version ) noexcept {
 
       this->version_ = std::move( version );
     }
