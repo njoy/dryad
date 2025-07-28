@@ -46,7 +46,7 @@ add_cpp_test( id.LevelID                                                 id/Leve
 add_cpp_test( id.ParticleID                                              id/ParticleID.test.cpp )
 add_cpp_test( id.ReactionType                                            id/ReactionType.test.cpp )
 
-add_cpp_test( Metadata                                                   Metadata.test.cpp )
+add_cpp_test( Documentation                                              Documentation.test.cpp )
 
 add_cpp_test( CoherentDistributionData                                   CoherentDistributionData.test.cpp )
 add_cpp_test( IncoherentDistributionData                                 IncoherentDistributionData.test.cpp )
@@ -130,7 +130,7 @@ add_cpp_test( format.endf.createReactionProduct                          format/
 add_cpp_test( format.endf.createReactionProducts                         format/endf/createReactionProducts.test.cpp )
 add_cpp_test( format.endf.createReaction                                 format/endf/createReaction.test.cpp )
 add_cpp_test( format.endf.createReactions                                format/endf/createReactions.test.cpp )
-add_cpp_test( format.endf.createMetadata                                 format/endf/createMetadata.test.cpp )
+add_cpp_test( format.endf.createDocumentation                            format/endf/createDocumentation.test.cpp )
 add_cpp_test( format.endf.createProjectileTarget                         format/endf/createProjectileTarget.test.cpp )
 add_cpp_test( format.endf.createProjectileTargetFromFile                 format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxation                         format/endf/createAtomicRelaxation.test.cpp )
