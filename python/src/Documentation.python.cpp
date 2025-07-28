@@ -4,15 +4,15 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/Metadata.hpp"
+#include "dryad/Documentation.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-void wrapMetadata( python::module& module ) {
+void wrapDocumentation( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::Metadata;
+  using Component = njoy::dryad::Documentation;
 
   // wrap views created by this component
 
@@ -20,8 +20,8 @@ void wrapMetadata( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "Metadata",
-    "Metadata associated to the dryad data"
+    "Documentation",
+    "Documentation associated to the dryad data"
    );
 
   // wrap the component
@@ -31,18 +31,15 @@ void wrapMetadata( python::module& module ) {
     python::init< std::optional< double >,
                   std::optional< int >,
                   std::optional< std::pair< int, int > >,
-                  std::optional< double >,
                   std::optional< std::string > >(),
     python::arg( "awr" ), python::arg( "library" ),
-    python::arg( "version" ), python::arg( "temperature" ),
-    python::arg( "description" ),
-    "Initialise the metadata\n\n"
+    python::arg( "version" ), python::arg( "description" ),
+    "Initialise the documentation\n\n"
     "Arguments:\n"
-    "    self          the metadata\n"
+    "    self          the documentation\n"
     "    awr           the atomic weight ratio\n"
     "    library       the library number\n"
     "    version       the version number\n"
-    "    temperature   the temperature\n"
     "    description   the description"
   )
   .def_property(
@@ -65,13 +62,6 @@ void wrapMetadata( python::module& module ) {
     python::overload_cast<>( &Component::version, python::const_ ),
     python::overload_cast< std::optional< std::pair< int, int > > >( &Component::version ),
     "The version"
-  )
-  .def_property(
-
-    "temperature",
-    python::overload_cast<>( &Component::temperature, python::const_ ),
-    python::overload_cast< std::optional< double > >( &Component::temperature ),
-    "The temperature"
   )
   .def_property(
 

@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad import Metadata
+from dryad import Documentation
 
 def verify_chunk( self, chunk ) :
 
@@ -25,49 +25,46 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 0, chunk.library )
     self.assertEqual( 8, chunk.version[0] )
     self.assertEqual( 1, chunk.version[1] )
-    self.assertEqual( None, chunk.temperature )
     self.assertEqual( description, chunk.description )
 
-class Test_dryad_Metadata( unittest.TestCase ) :
-    """Unit test for the Metadata class."""
+class Test_dryad_Documentation( unittest.TestCase ) :
+    """Unit test for the Documentation class."""
 
     def test_component( self ) :
 
-        chunk = Metadata( awr = 15.8619530,
-                          library = 0,
-                          version = [ 8, 1 ],
-                          temperature = None,
-                          description = str(
-                            '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
-                            ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
-                            '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
-                            '----- ATOMIC RELAXATION DATA                                      \n'
-                            '------ ENDF-6                                                     \n'
-                            '==================================================================\n'
-                            'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
-                            'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
-                            'to the ENDF-6 Format.                                             \n'
-                            '==================================================================\n' ) )
+        chunk = Documentation( awr = 15.8619530,
+                               library = 0,
+                               version = [ 8, 1 ],
+                               description = str(
+                                 '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
+                                 ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
+                                 '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
+                                 '----- ATOMIC RELAXATION DATA                                      \n'
+                                 '------ ENDF-6                                                     \n'
+                                 '==================================================================\n'
+                                 'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
+                                 'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
+                                 'to the ENDF-6 Format.                                             \n'
+                                 '==================================================================\n' ) )
 
         verify_chunk( self, chunk )
 
     def test_setter_functions( self ) :
 
-        chunk = Metadata( awr = 15.8619530,
-                          library = 0,
-                          version = [ 8, 1 ],
-                          temperature = None,
-                          description = str(
-                            '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
-                            ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
-                            '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
-                            '----- ATOMIC RELAXATION DATA                                      \n'
-                            '------ ENDF-6                                                     \n'
-                            '==================================================================\n'
-                            'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
-                            'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
-                            'to the ENDF-6 Format.                                             \n'
-                            '==================================================================\n' ) )
+        chunk = Documentation( awr = 15.8619530,
+                               library = 0,
+                               version = [ 8, 1 ],
+                               description = str(
+                                 '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
+                                 ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
+                                 '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
+                                 '----- ATOMIC RELAXATION DATA                                      \n'
+                                 '------ ENDF-6                                                     \n'
+                                 '==================================================================\n'
+                                 'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
+                                 'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
+                                 'to the ENDF-6 Format.                                             \n'
+                                 '==================================================================\n' ) )
 
         # the awr can be changed
         newawr = 25.
@@ -105,18 +102,6 @@ class Test_dryad_Metadata( unittest.TestCase ) :
 
         verify_chunk( self, chunk )
 
-        # the temperature can be changed
-        newtemperature = 100.
-        original = None
-
-        chunk.temperature = newtemperature
-
-        self.assertEqual( newtemperature, chunk.temperature )
-
-        chunk.temperature = original
-
-        verify_chunk( self, chunk )
-
         # the description can be changed
         newdescription = 'Something different                                               \n'
         original = str( '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
@@ -140,42 +125,39 @@ class Test_dryad_Metadata( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = Metadata( awr = 15.8619530,
-                         library = 0,
-                         version = [ 8, 1 ],
-                         temperature = None,
-                         description = str(
-                           '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
-                           ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
-                           '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
-                           '----- ATOMIC RELAXATION DATA                                      \n'
-                           '------ ENDF-6                                                     \n'
-                           '==================================================================\n'
-                           'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
-                           'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
-                           'to the ENDF-6 Format.                                             \n'
-                           '==================================================================\n' ) )
-        equal = Metadata( awr = 15.8619530,
-                          library = 0,
-                          version = [ 8, 1 ],
-                          temperature = None,
-                          description = str(
-                            '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
-                            ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
-                            '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
-                            '----- ATOMIC RELAXATION DATA                                      \n'
-                            '------ ENDF-6                                                     \n'
-                            '==================================================================\n'
-                            'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
-                            'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
-                            'to the ENDF-6 Format.                                             \n'
-                            '==================================================================\n' ) )
-        different = Metadata( awr = 15.8619530,
+        left = Documentation( awr = 15.8619530,
                               library = 0,
                               version = [ 8, 1 ],
-                              temperature = None,
                               description = str(
-                                'this is different                                                 \n' ) )
+                                '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
+                                ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
+                                '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
+                                '----- ATOMIC RELAXATION DATA                                      \n'
+                                '------ ENDF-6                                                     \n'
+                                '==================================================================\n'
+                                'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
+                                'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
+                                'to the ENDF-6 Format.                                             \n'
+                                '==================================================================\n' ) )
+        equal = Documentation( awr = 15.8619530,
+                               library = 0,
+                               version = [ 8, 1 ],
+                               description = str(
+                                 '  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n'
+                                 ' NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n'
+                                 '---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n'
+                                 '----- ATOMIC RELAXATION DATA                                      \n'
+                                 '------ ENDF-6                                                     \n'
+                                 '==================================================================\n'
+                                 'The Livermore Evaluated Atomic Data Library (EADL) in the         \n'
+                                 'ENDF-6 Format. Translated from the Livermore ENDL format          \n'
+                                 'to the ENDF-6 Format.                                             \n'
+                                 '==================================================================\n' ) )
+        different = Documentation( awr = 15.8619530,
+                                   library = 0,
+                                   version = [ 8, 1 ],
+                                   description = str(
+                                     'this is different                                                 \n' ) )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

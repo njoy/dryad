@@ -8,7 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/endf/atomic/createEndfSubshellData.hpp"
-#include "dryad/format/endf/createMetadata.hpp"
+#include "dryad/format/endf/createDocumentation.hpp"
 #include "dryad/AtomicRelaxation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -29,13 +29,13 @@ namespace endf {
                                        const std::string& filename ) {
 
     int zaid = relaxation.elementIdentifier().number() * 1000;
-    double awr = relaxation.metadata().awr().has_value()
-                 ? relaxation.metadata().awr().value()
+    double awr = relaxation.documentation().awr().has_value()
+                 ? relaxation.documentation().awr().value()
                  : 0.;
     int lrp = -1;
     int lfi = 0;
-    int nlib = relaxation.metadata().library().has_value()
-               ? relaxation.metadata().library().value()
+    int nlib = relaxation.documentation().library().has_value()
+               ? relaxation.documentation().library().value()
                : 0;
     int nmod = 0;
     double elis = 0;
@@ -45,19 +45,17 @@ namespace endf {
     int nfor = 6;
     double awi = 0;
     double emax = 0;
-    int lrel = relaxation.metadata().version().has_value()
-               ? relaxation.metadata().version()->second
+    int lrel = relaxation.documentation().version().has_value()
+               ? relaxation.documentation().version()->second
                : 0;
     int nsub = 6;
-    int nver = relaxation.metadata().version().has_value()
-               ? relaxation.metadata().version()->first
+    int nver = relaxation.documentation().version().has_value()
+               ? relaxation.documentation().version()->first
                : 0;
-    double temp = relaxation.metadata().temperature().has_value()
-                  ? relaxation.metadata().temperature().value()
-                  : 0;
+    double temp = 0;
     int ldrv = 0;
-    std::string description = relaxation.metadata().description().has_value()
-                              ? relaxation.metadata().description().value()
+    std::string description = relaxation.documentation().description().has_value()
+                              ? relaxation.documentation().description().value()
                               : "";
 
     ENDFtk::section::Type< 1, 451 >

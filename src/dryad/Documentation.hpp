@@ -12,9 +12,9 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief Metadata associated to the dryad data
+   *  @brief Documentation associated to the dryad data
    */
-  class Metadata {
+  class Documentation {
 
     //! @todo remove once we get the particle database
     std::optional< double > awr_;
@@ -22,14 +22,13 @@ namespace dryad {
     /* fields */
     std::optional< int > library_;
     std::optional< std::pair< int, int > > version_;
-    std::optional< double > temperature_;
     std::optional< std::string > description_;
 
   public:
 
     /* constructor */
 
-    #include "dryad/Metadata/src/ctor.hpp"
+    #include "dryad/Documentation/src/ctor.hpp"
 
     /**
      *  @brief Return the awr (temporary)
@@ -86,24 +85,6 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the temperature
-     */
-    const std::optional< double >& temperature() const noexcept {
-
-      return this->temperature_;
-    }
-
-    /**
-     *  @brief Set the temperature
-     *
-     *  @param[in] temperature   the temperature
-     */
-    void temperature( std::optional< double > temperature ) noexcept {
-
-      this->temperature_ = std::move( temperature );
-    }
-
-    /**
      *  @brief Return the description
      */
     const std::optional< std::string >& description() const noexcept {
@@ -126,10 +107,11 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const Metadata& right ) const noexcept {
+    bool operator==( const Documentation& right ) const noexcept {
 
-      return this->awr() == right.awr() && this->library() == right.library() &&
-             this->version() == right.version() && this->temperature() == right.temperature() &&
+      return this->awr() == right.awr() &&
+             this->library() == right.library() &&
+             this->version() == right.version() &&
              this->description() == right.description();
     }
 
@@ -138,7 +120,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const Metadata& right ) const noexcept {
+    bool operator!=( const Documentation& right ) const noexcept {
 
       return ! this->operator==( right );
     }

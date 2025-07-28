@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createMetadata.hpp"
+#include "dryad/format/endf/createDocumentation.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
@@ -12,9 +12,9 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const Metadata& );
+void verifyChunk( const Documentation& );
 
-SCENARIO( "createMetadata" ) {
+SCENARIO( "createDocumentation" ) {
 
   GIVEN( "ENDF material with atomic relaxation data" ) {
 
@@ -25,7 +25,7 @@ SCENARIO( "createMetadata" ) {
 
       THEN( "it can be converted" ) {
 
-        Metadata chunk = format::endf::createMetadata( mf1mt451 );
+        Documentation chunk = format::endf::createDocumentation( mf1mt451 );
 
         verifyChunk( chunk );
       } // THEN
@@ -33,7 +33,7 @@ SCENARIO( "createMetadata" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const Metadata& chunk ) {
+void verifyChunk( const Documentation& chunk ) {
 
   std::string description =
     "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
@@ -116,6 +116,5 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK( 0 == chunk.library() );
   CHECK( 8 == chunk.version()->first );
   CHECK( 1 == chunk.version()->second );
-  CHECK( std::nullopt == chunk.temperature() );
   CHECK( description == chunk.description().value() );
 }

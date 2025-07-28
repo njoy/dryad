@@ -31,8 +31,8 @@ void wrapCovariance( python::module& );
 void wrapAtomic( python::module& );
 void wrapAtomicRelaxation( python::module& );
 
-// declarations - metadata
-void wrapMetadata( python::module& );
+// declarations - documentation
+void wrapDocumentation( python::module& );
 
 // declarations - components
 void wrapIsotropicAngularDistributions( python::module& );
@@ -73,8 +73,8 @@ void wrapProjectileTarget( python::module& );
  */
 PYBIND11_MODULE( dryad, module ) {
 
-  // wrap components - metadata
-  wrapMetadata( module );
+  // wrap components - documentation
+  wrapDocumentation( module );
 
   // wrap components - scion objects
   wrapToleranceConvergence( module );

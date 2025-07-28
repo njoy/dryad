@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/Metadata.hpp"
+#include "dryad/Documentation.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const Metadata& );
+void verifyChunk( const Documentation& );
 
-SCENARIO( "Metadata" ) {
+SCENARIO( "Documentation" ) {
 
   GIVEN( "valid metadata" ) {
 
@@ -22,7 +22,6 @@ SCENARIO( "Metadata" ) {
       std::optional< double > awr = 15.8619530;
       std::optional< int > library = 0;
       std::optional< std::pair< int, int > > version = std::make_pair( 8, 1 );
-      std::optional< double > temperature = std::nullopt;
       std::optional< std::string > description =
         "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
         " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
@@ -35,10 +34,10 @@ SCENARIO( "Metadata" ) {
         "to the ENDF-6 Format.                                             \n"
         "==================================================================\n";
 
-      Metadata chunk( std::move( awr ), std::move( library ), std::move( version ),
-                      std::move( temperature ), std::move( description ) );
+      Documentation chunk( std::move( awr ), std::move( library ),
+                           std::move( version ), std::move( description ) );
 
-      THEN( "Metadata can be constructed and members can be tested" ) {
+      THEN( "Documentation can be constructed and members can be tested" ) {
 
         verifyChunk( chunk );
       } // THEN
@@ -47,20 +46,19 @@ SCENARIO( "Metadata" ) {
 
   GIVEN( "setter functions" ) {
 
-    WHEN( "an instance of Metadata is given" ) {
+    WHEN( "an instance of Documentation is given" ) {
 
-      Metadata chunk( 15.8619530, 0, std::make_pair( 8, 1 ),
-                      std::nullopt,
-                      "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
-                      " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
-                      "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
-                      "----- ATOMIC RELAXATION DATA                                      \n"
-                      "------ ENDF-6                                                     \n"
-                      "==================================================================\n"
-                      "The Livermore Evaluated Atomic Data Library (EADL) in the         \n"
-                      "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
-                      "to the ENDF-6 Format.                                             \n"
-                      "==================================================================\n" );
+      Documentation chunk( 15.8619530, 0, std::make_pair( 8, 1 ),
+                           "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
+                           " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
+                           "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
+                           "----- ATOMIC RELAXATION DATA                                      \n"
+                           "------ ENDF-6                                                     \n"
+                           "==================================================================\n"
+                           "The Livermore Evaluated Atomic Data Library (EADL) in the         \n"
+                           "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
+                           "to the ENDF-6 Format.                                             \n"
+                           "==================================================================\n" );
 
       THEN( "the awr can be changed" ) {
 
@@ -104,20 +102,6 @@ SCENARIO( "Metadata" ) {
         verifyChunk( chunk );
       } // THEN
 
-      THEN( "the temperature can be changed" ) {
-
-        std::optional< double > newtemperature = 100.;
-        std::optional< double > original = std::nullopt;
-
-        chunk.temperature( newtemperature );
-
-        CHECK( newtemperature == chunk.temperature() );
-
-        chunk.temperature( original );
-
-        verifyChunk( chunk );
-      } // THEN
-
       THEN( "the description can be changed" ) {
 
         std::string newdescription =
@@ -147,35 +131,32 @@ SCENARIO( "Metadata" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of Metadata are given" ) {
+    WHEN( "two instances of Documentation are given" ) {
 
-      Metadata left( 15.8619530, 0, std::make_pair( 8, 1 ),
-                     std::nullopt,
-                     "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
-                     " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
-                     "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
-                     "----- ATOMIC RELAXATION DATA                                      \n"
-                     "------ ENDF-6                                                     \n"
-                     "==================================================================\n"
-                     "The Livermore Evaluated Atomic Data Library (EADL) in the         \n"
-                     "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
-                     "to the ENDF-6 Format.                                             \n"
-                     "==================================================================\n" );
-      Metadata equal( 15.8619530, 0, std::make_pair( 8, 1 ),
-                      std::nullopt,
-                      "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
-                      " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
-                      "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
-                      "----- ATOMIC RELAXATION DATA                                      \n"
-                      "------ ENDF-6                                                     \n"
-                      "==================================================================\n"
-                      "The Livermore Evaluated Atomic Data Library (EADL) in the         \n"
-                      "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
-                      "to the ENDF-6 Format.                                             \n"
-                      "==================================================================\n" );
-      Metadata different( 15.8619530, 0, std::make_pair( 8, 1 ),
-                          std::nullopt,
-                          "this is different                                                 \n" );
+      Documentation left( 15.8619530, 0, std::make_pair( 8, 1 ),
+                          "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
+                          " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
+                          "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
+                          "----- ATOMIC RELAXATION DATA                                      \n"
+                          "------ ENDF-6                                                     \n"
+                          "==================================================================\n"
+                          "The Livermore Evaluated Atomic Data Library (EADL) in the         \n"
+                          "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
+                          "to the ENDF-6 Format.                                             \n"
+                          "==================================================================\n" );
+      Documentation equal( 15.8619530, 0, std::make_pair( 8, 1 ),
+                           "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
+                           " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
+                           "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
+                           "----- ATOMIC RELAXATION DATA                                      \n"
+                           "------ ENDF-6                                                     \n"
+                           "==================================================================\n"
+                           "The Livermore Evaluated Atomic Data Library (EADL) in the         \n"
+                           "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
+                           "to the ENDF-6 Format.                                             \n"
+                           "==================================================================\n" );
+      Documentation different( 15.8619530, 0, std::make_pair( 8, 1 ),
+                               "this is different                                                 \n" );
 
       THEN( "they can be compared" ) {
 
@@ -191,7 +172,7 @@ SCENARIO( "Metadata" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const Metadata& chunk ) {
+void verifyChunk( const Documentation& chunk ) {
 
   std::string description =
     "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
@@ -209,6 +190,5 @@ void verifyChunk( const Metadata& chunk ) {
   CHECK( 0 == chunk.library() );
   CHECK( 8 == chunk.version()->first );
   CHECK( 1 == chunk.version()->second );
-  CHECK( std::nullopt == chunk.temperature() );
   CHECK( description == chunk.description() );
 }

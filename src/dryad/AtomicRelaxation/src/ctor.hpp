@@ -10,19 +10,20 @@ AtomicRelaxation& operator=( const AtomicRelaxation& ) = default;
 AtomicRelaxation& operator=( AtomicRelaxation&& ) = default;
 
 /**
- *  @brief Constructor with metadata
+ *  @brief Constructor with documentation
  *
- *  @param[in] element      the element identifier
- *  @param[in] subshells    the electron subshell configuration data
- *  @param[in] metadata     the metadata
- *  @param[in] normalise    option to indicate whether or not to normalise
- *                          all probability data (default: no normalisation)
+ *  @param[in] element         the element identifier
+ *  @param[in] subshells       the electron subshell configuration data
+ *  @param[in] documentation   the documentation
+ *  @param[in] normalise       option to indicate whether or not to normalise
+ *                             all probability data (default: no normalisation)
  */
-AtomicRelaxation( Metadata metadata,
+AtomicRelaxation( Documentation documentation,
                   id::ElementID element,
                   std::vector< atomic::ElectronSubshellConfiguration > subshells,
                   bool normalise = false ) :
-    metadata_( std::move( metadata ) ), element_id_( std::move( element ) ),
+    documentation_( std::move( documentation ) ),
+    element_id_( std::move( element ) ),
     subshells_( std::move( subshells ) ) {
 
   this->sort();

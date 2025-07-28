@@ -4,7 +4,7 @@ from . import atomic
 from . import covariance
 from . import id
 from . import resonances
-__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'Metadata', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
+__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -81,20 +81,20 @@ class AtomicRelaxation:
             filename    the ENDF file name
         """
     @property
+    def documentation(self) -> Documentation:
+        """
+        The documentation
+        """
+    @documentation.setter
+    def documentation(self, arg1: Documentation) -> None:
+        ...
+    @property
     def element_identifier(self) -> id.ElementID:
         """
         The element identifier
         """
     @element_identifier.setter
     def element_identifier(self, arg1: id.ElementID) -> None:
-        ...
-    @property
-    def metadata(self) -> Metadata:
-        """
-        The metadata
-        """
-    @metadata.setter
-    def metadata(self, arg1: Metadata) -> None:
         ...
     @property
     def number_subshells(self) -> int:
@@ -230,6 +230,58 @@ class DistributionDataType:
         ...
     @property
     def value(self) -> int:
+        ...
+class Documentation:
+    """
+    Documentation associated to the dryad data
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: Documentation) -> bool:
+        ...
+    def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
+        """
+        Initialise the documentation
+        
+        Arguments:
+            self          the documentation
+            awr           the atomic weight ratio
+            library       the library number
+            version       the version number
+            description   the description
+        """
+    def __ne__(self, arg0: Documentation) -> bool:
+        ...
+    @property
+    def awr(self) -> float | None:
+        """
+        The atomic weight ratio
+        """
+    @awr.setter
+    def awr(self, arg1: float | None) -> None:
+        ...
+    @property
+    def description(self) -> str | None:
+        """
+        The description
+        """
+    @description.setter
+    def description(self, arg1: str | None) -> None:
+        ...
+    @property
+    def library(self) -> int | None:
+        """
+        The library
+        """
+    @library.setter
+    def library(self, arg1: int | None) -> None:
+        ...
+    @property
+    def version(self) -> tuple[int, int] | None:
+        """
+        The version
+        """
+    @version.setter
+    def version(self, arg1: tuple[int, int] | None) -> None:
         ...
 class IncoherentDistributionData:
     """
@@ -645,67 +697,6 @@ class LegendreAngularDistributions:
         """
         The number of interpolation regions in the table
         """
-class Metadata:
-    """
-    Metadata associated to the dryad data
-    """
-    __hash__: typing.ClassVar[None] = None
-    def __eq__(self, arg0: Metadata) -> bool:
-        ...
-    def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, temperature: float | None, description: str | None) -> None:
-        """
-        Initialise the metadata
-        
-        Arguments:
-            self          the metadata
-            awr           the atomic weight ratio
-            library       the library number
-            version       the version number
-            temperature   the temperature
-            description   the description
-        """
-    def __ne__(self, arg0: Metadata) -> bool:
-        ...
-    @property
-    def awr(self) -> float | None:
-        """
-        The atomic weight ratio
-        """
-    @awr.setter
-    def awr(self, arg1: float | None) -> None:
-        ...
-    @property
-    def description(self) -> str | None:
-        """
-        The description
-        """
-    @description.setter
-    def description(self, arg1: str | None) -> None:
-        ...
-    @property
-    def library(self) -> int | None:
-        """
-        The library
-        """
-    @library.setter
-    def library(self, arg1: int | None) -> None:
-        ...
-    @property
-    def temperature(self) -> float | None:
-        """
-        The temperature
-        """
-    @temperature.setter
-    def temperature(self, arg1: float | None) -> None:
-        ...
-    @property
-    def version(self) -> tuple[int, int] | None:
-        """
-        The version
-        """
-    @version.setter
-    def version(self, arg1: tuple[int, int] | None) -> None:
-        ...
 class MultiEnergyDistributions:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: MultiEnergyDistributions) -> bool:

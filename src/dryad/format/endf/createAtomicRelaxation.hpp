@@ -7,7 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
-#include "dryad/format/endf/createMetadata.hpp"
+#include "dryad/format/endf/createDocumentation.hpp"
 #include "dryad/AtomicRelaxation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -46,9 +46,9 @@ namespace endf {
         subshells.emplace_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
       }
 
-      Metadata metadata = createMetadata( information );
+      Documentation documentation = createDocumentation( information );
 
-      return AtomicRelaxation( std::move( metadata ), std::move( element ),
+      return AtomicRelaxation( std::move( documentation ), std::move( element ),
                                std::move( subshells ) );
     }
     else {

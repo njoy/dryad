@@ -16,7 +16,7 @@ void wrapAtomicRelaxation( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::AtomicRelaxation;
-  using Metadata = njoy::dryad::Metadata;
+  using Documentation = njoy::dryad::Documentation;
   using ElementID = njoy::dryad::id::ElementID;
   using ElectronSubshellConfiguration = njoy::dryad::atomic::ElectronSubshellConfiguration;
 
@@ -47,10 +47,10 @@ void wrapAtomicRelaxation( python::module& module ) {
   )
   .def_property(
 
-    "metadata",
-    python::overload_cast<>( &Component::metadata, python::const_ ),
-    python::overload_cast< Metadata >( &Component::metadata ),
-    "The metadata"
+    "documentation",
+    python::overload_cast<>( &Component::documentation, python::const_ ),
+    python::overload_cast< Documentation >( &Component::documentation ),
+    "The documentation"
   )
   .def_property(
 

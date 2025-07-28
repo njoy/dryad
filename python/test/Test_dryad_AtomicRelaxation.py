@@ -15,11 +15,10 @@ from dryad.atomic import NonRadiativeTransitionData
 
 def verify_chunk( self, chunk, normalise ) :
 
-    self.assertEqual( None, chunk.metadata.awr )
-    self.assertEqual( None, chunk.metadata.library )
-    self.assertEqual( None, chunk.metadata.version )
-    self.assertEqual( None, chunk.metadata.temperature )
-    self.assertEqual( None, chunk.metadata.description )
+    self.assertEqual( None, chunk.documentation.awr )
+    self.assertEqual( None, chunk.documentation.library )
+    self.assertEqual( None, chunk.documentation.version )
+    self.assertEqual( None, chunk.documentation.description )
 
     # identifiers
     self.assertEqual( ElementID( 1 ), chunk.element_identifier )

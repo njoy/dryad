@@ -116,11 +116,10 @@ void verifyChunk( const AtomicRelaxation& chunk,
     " ***************** Program FIXUP (Version 2023-2) ****************\n"
     " **************** Program DICTIN (VERSION 2023-1) ****************\n";
 
-  CHECK_THAT( 15.8619530, WithinRel( chunk.metadata().awr().value() ) );
-  CHECK( 0 == chunk.metadata().library() );
-  CHECK( std::make_pair( 8, 1 ) == chunk.metadata().version() );
-  CHECK( std::nullopt == chunk.metadata().temperature() );
-  CHECK( description == chunk.metadata().description() );
+  CHECK_THAT( 15.8619530, WithinRel( chunk.documentation().awr().value() ) );
+  CHECK( 0 == chunk.documentation().library() );
+  CHECK( std::make_pair( 8, 1 ) == chunk.documentation().version() );
+  CHECK( description == chunk.documentation().description() );
 
   CHECK( id::ElementID( 8 ) == chunk.elementIdentifier() );
 

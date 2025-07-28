@@ -119,10 +119,10 @@ SCENARIO( "createAtomicRelaxation" ) {
     };
 
     AtomicRelaxation relaxation( element, subshells );
-    relaxation.metadata().awr( 15.8619530 );
-    relaxation.metadata().library( 0 );
-    relaxation.metadata().version( std::make_pair( 8, 1 ) );
-    relaxation.metadata().description( std::move( description ) );
+    relaxation.documentation().awr( 15.8619530 );
+    relaxation.documentation().library( 0 );
+    relaxation.documentation().version( std::make_pair( 8, 1 ) );
+    relaxation.documentation().description( std::move( description ) );
 
     THEN( "it can be converted to an ENDF material" ) {
 
