@@ -48,6 +48,14 @@ namespace dryad {
 
     /**
      *  @brief Return the metadata
+     */
+    Metadata& metadata() noexcept {
+
+      return this->metadata_;
+    }
+
+    /**
+     *  @brief Return the metadata
      *
      *  @param[in] metadata   the metadata
      */
