@@ -4,15 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createEndfAtomicRelaxation.hpp"
+#include "dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
 
 // other includes
+#include <filesystem>
 #include "ENDFtk/tree/Material.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
 
 std::string chunk();
+std::string readContentFromFile( const std::string& );
 
 SCENARIO( "createAtomicRelaxation" ) {
 
@@ -124,9 +126,12 @@ SCENARIO( "createAtomicRelaxation" ) {
 
     THEN( "it can be converted to an ENDF material" ) {
 
-      njoy::ENDFtk::tree::Material endf = format::endf::createEndfAtomicRelaxation( relaxation );
+      std::string filename = "test.endf";
+      format::endf::createAtomicRelaxationEndfFile( relaxation, filename );
 
-      CHECK( chunk() == endf.content() );
+      CHECK( chunk() == readContentFromFile( filename ) );
+
+      std::remove( filename.c_str() );
     } // THEN
   } // GIVEN
 } // SCENARIO
@@ -134,6 +139,7 @@ SCENARIO( "createAtomicRelaxation" ) {
 std::string chunk() {
 
   return
+    "Atomic relaxation data for Oxygen                                    0 0  0     \n"
     " 8.000000+3 15.8619530         -1          0          0          0 800 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6 800 1451     \n"
     " 0.000000+0 0.000000+0          1          0          6          8 800 1451     \n"
@@ -236,5 +242,25 @@ std::string chunk() {
     " 1.362000+1 2.670000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 80028533     \n"
     "                                                                   80028  0     \n"
     "                                                                   800 0  0     \n"
-    "                                                                     0 0  0     \n";
+    "                                                                     0 0  0     \n"
+    "                                                                    -1 0  0     \n";
+}
+
+std::string readContentFromFile( const std::string& filename ) {
+
+  std::string content;
+  std::ifstream in( filename,
+                    std::ios::in | std::ios::binary | std::ios::ate );
+  if ( not in ) {
+
+    throw std::runtime_error( "test.endf not found" );
+  }
+
+  const auto file_size = in.tellg();
+  in.seekg( 0, std::ios::beg );
+  content.resize( file_size / sizeof( char ) );
+  in.read( &( content[ 0 ] ), file_size );
+  in.close();
+
+  return content;
 }

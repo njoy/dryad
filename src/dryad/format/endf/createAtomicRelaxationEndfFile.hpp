@@ -1,7 +1,8 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEENDFATOMICrELAXATION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEENDFATOMICrELAXATION
+#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEATOMICRELAXATIONENDFFILE
+#define NJOY_DRYAD_FORMAT_ENDF_CREATEATOMICRELAXATIONENDFFILE
 
 // system includes
+#include <fstream>
 #include <vector>
 
 // other includes
@@ -19,13 +20,13 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create an ENDF atomic relaxation material
+   *  @brief Create an ENDF atomic relaxation file
    *
-   *  @param[in] material    the unparsed ENDF material
-   *  @param[in] normalise   option to indicate whether or not to normalise
-   *                         all probability data
+   *  @param[in] relaxation   the atomic relaxation data
+   *  @param[in] filename     the file name for the ENDF file
    */
-  ENDFtk::tree::Material createEndfAtomicRelaxation( const AtomicRelaxation& relaxation ) {
+  void createAtomicRelaxationEndfFile( const AtomicRelaxation& relaxation,
+                                       const std::string& filename ) {
 
     int zaid = relaxation.elementIdentifier().number() * 1000;
     double awr = relaxation.metadata().awr().has_value()
@@ -80,7 +81,14 @@ namespace endf {
     material.insert( data );
     ENDFtk::tree::updateDirectory( material );
 
-    return material;
+    ENDFtk::TapeIdentification id( "Atomic relaxation data for " +
+                                   relaxation.elementIdentifier().name() );
+    ENDFtk::tree::Tape tape( std::move( id ) );
+    tape.insert( std::move( material ) );
+
+    std::ofstream out( filename );
+    out << tape.content();
+    out.close();
   }
 
 } // endf namespace

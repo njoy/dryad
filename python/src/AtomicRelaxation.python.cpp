@@ -6,6 +6,7 @@
 #include "definitions.hpp"
 #include "dryad/AtomicRelaxation.hpp"
 #include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+#include "dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
 #include "dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
 
 // namespace aliases
@@ -131,6 +132,19 @@ void wrapAtomicRelaxation( python::module& module ) {
     "    filename    the GNDS file name\n"
     "    normalise   option to indicate whether or not to normalise\n"
     "                all probability data (default: no normalisation)"
+  )
+  .def(
+
+    "to_endf_file",
+    [] ( const Component& self, const std::string& filename ) {
+
+      njoy::dryad::format::endf::createAtomicRelaxationEndfFile( self, filename );
+    },
+    python::arg( "filename" ),
+    "Write the AtomicRelaxation data to an ENDF file\n\n"
+    "Arguments:\n"
+    "    self        the atomic relaxation data\n"
+    "    filename    the ENDF file name"
   );
 
   // add standard equality comparison definitions

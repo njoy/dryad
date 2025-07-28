@@ -72,6 +72,14 @@ class AtomicRelaxation:
             self   the AtomicRelaxation data
             id     the electron subshell identifier
         """
+    def to_endf_file(self, filename: str) -> None:
+        """
+        Write the AtomicRelaxation data to an ENDF file
+        
+        Arguments:
+            self        the atomic relaxation data
+            filename    the ENDF file name
+        """
     @property
     def element_identifier(self) -> id.ElementID:
         """
