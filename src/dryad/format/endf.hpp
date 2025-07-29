@@ -42,6 +42,7 @@
 #include "dryad/format/endf/createEndfInterpolant.hpp"
 #include "dryad/format/endf/createEndfBoundaries.hpp"
 #include "dryad/format/endf/createEndfInterpolants.hpp"
+#include "dryad/format/endf/createEndfSublibraryType.hpp"
 
 #include "dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
 #include "dryad/format/endf/atomic/createEndfSubshellData.hpp"

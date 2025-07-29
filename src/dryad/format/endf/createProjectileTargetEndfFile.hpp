@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/format/endf/createEndfSublibraryType.hpp"
 #include "dryad/format/endf/createEndfFile3Section.hpp"
 #include "dryad/format/endf/createDocumentation.hpp"
 #include "dryad/ProjectileTarget.hpp"
@@ -22,18 +23,13 @@ namespace endf {
   /**
    *  @brief Create an ENDF incident particle file
    *
-   *  @param[in] data       the projectile-target data
-   *  @param[in] mat        the ENDF mat number
-   *  @param[in] filename   the file name for the ENDF file
+   *  @param[in] transport   the projectile-target data
+   *  @param[in] mat         the ENDF mat number
+   *  @param[in] filename    the file name for the ENDF file
    */
   void createProjectileTargetEndfFile( const ProjectileTarget& transport,
                                        int mat,
                                        const std::string& filename ) {
-
-    if ( transport.projectileIdentifier() != id::ParticleID::neutron() ) {
-
-      throw std::runtime_error( "creating ENDF file only implemented for neutron data" );
-    }
 
     int zaid = transport.targetIdentifier().za();
     double awr = transport.documentation().awr().has_value()
@@ -47,15 +43,16 @@ namespace endf {
     int nmod = 0;
     double elis = 0;
     double sta = 0;
-    int lis = 0;
+    int lis = transport.targetIdentifier().e();
     int liso = 0;
     int nfor = 6;
     double awi = 0;
-    double emax = 0;
+    double emax = transport.reactions().front().crossSection().upperEnergyLimit();
     int lrel = transport.documentation().version().has_value()
                ? transport.documentation().version()->second
                : 0;
-    int nsub = 10; // neutron induced
+    int nsub = createEndfSublibraryType( transport.projectileIdentifier(),
+                                         transport.interactionType() );
     int nver = transport.documentation().version().has_value()
                ? transport.documentation().version()->first
                : 0;

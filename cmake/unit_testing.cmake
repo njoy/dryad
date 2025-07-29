@@ -138,6 +138,7 @@ add_cpp_test( format.endf.createEndfIndex                                format/
 add_cpp_test( format.endf.createEndfBoundaries                           format/endf/createEndfBoundaries.test.cpp )
 add_cpp_test( format.endf.createEndfInterpolant                          format/endf/createEndfInterpolant.test.cpp )
 add_cpp_test( format.endf.createEndfInterpolants                         format/endf/createEndfInterpolants.test.cpp )
+add_cpp_test( format.endf.createEndfSubLibraryType                       format/endf/createEndfSubLibraryType.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
 add_cpp_test( format.endf.createEndfFile3Section.                        format/endf/createEndfFile3Section.test.cpp )
