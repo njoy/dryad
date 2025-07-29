@@ -35,6 +35,20 @@ class AtomicRelaxation:
         """
     def __eq__(self, arg0: AtomicRelaxation) -> bool:
         ...
+    @typing.overload
+    def __init__(self, documentation: Documentation, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
+        """
+        Initialise the atomic relaxation data
+        
+        Arguments:
+            self            the reaction
+            documentation   the documentation
+            element         the element identifier
+            subshells       the electron subshell configuration data
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
+        """
+    @typing.overload
     def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
         Initialise the atomic relaxation data
