@@ -28,6 +28,11 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H1 = format::endf::createProjectileTarget( material );
 
+        CHECK( std::nullopt == H1.documentation().awr() );
+        CHECK( std::nullopt == H1.documentation().library() );
+        CHECK( std::nullopt == H1.documentation().version() );
+        CHECK( std::nullopt == H1.documentation().description() );
+
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
@@ -72,6 +77,11 @@ SCENARIO( "createProjectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget Li7 = format::endf::createProjectileTarget( material );
+
+        CHECK( std::nullopt == Li7.documentation().awr() );
+        CHECK( std::nullopt == Li7.documentation().library() );
+        CHECK( std::nullopt == Li7.documentation().version() );
+        CHECK( std::nullopt == Li7.documentation().description() );
 
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
         CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
@@ -225,6 +235,11 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTarget( material );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
@@ -307,6 +322,11 @@ SCENARIO( "createProjectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTarget( material );
+
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );

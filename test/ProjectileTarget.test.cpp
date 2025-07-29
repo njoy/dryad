@@ -311,6 +311,12 @@ SCENARIO( "ProjectileTarget" ) {
 
 void verifyChunk( const ProjectileTarget& chunk ) {
 
+  // documentation
+  CHECK( std::nullopt == chunk.documentation().awr() );
+  CHECK( std::nullopt == chunk.documentation().library() );
+  CHECK( std::nullopt == chunk.documentation().version() );
+  CHECK( std::nullopt == chunk.documentation().description() );
+
   // identifiers
   CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
   CHECK( id::ParticleID( "Fe56" ) == chunk.targetIdentifier() );

@@ -25,6 +25,11 @@ SCENARIO( "projectileTarget" ) {
 
         ProjectileTarget H1 = format::endf::createProjectileTargetFromFile( "n-001_H_001.endf" );
 
+        CHECK( std::nullopt == H1.documentation().awr() );
+        CHECK( std::nullopt == H1.documentation().library() );
+        CHECK( std::nullopt == H1.documentation().version() );
+        CHECK( std::nullopt == H1.documentation().description() );
+
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
@@ -66,6 +71,11 @@ SCENARIO( "projectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget Li7 = format::endf::createProjectileTargetFromFile( "n-003_Li_007.endf" );
+
+        CHECK( std::nullopt == Li7.documentation().awr() );
+        CHECK( std::nullopt == Li7.documentation().library() );
+        CHECK( std::nullopt == Li7.documentation().version() );
+        CHECK( std::nullopt == Li7.documentation().description() );
 
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
         CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
@@ -222,6 +232,11 @@ SCENARIO( "projectileTarget" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "e-001_H_000.endf" );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
@@ -298,6 +313,11 @@ SCENARIO( "projectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "e-001_H_000-endf80.endf" );
+
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
@@ -378,6 +398,11 @@ SCENARIO( "projectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf" );
+
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );

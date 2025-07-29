@@ -8,6 +8,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/InteractionType.hpp"
+#include "dryad/Documentation.hpp"
 #include "dryad/Reaction.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/resonances/ResonanceParameters.hpp"
@@ -22,6 +23,8 @@ namespace dryad {
   class ProjectileTarget {
 
     /* fields */
+    Documentation documentation_;
+
     id::ParticleID projectile_id_;
     id::ParticleID target_id_;
 
@@ -40,6 +43,32 @@ namespace dryad {
     #include "dryad/ProjectileTarget/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the documentation
+     */
+    const Documentation& documentation() const noexcept {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Return the documentation
+     */
+    Documentation& documentation() noexcept {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Set the documentation
+     *
+     *  @param[in] documentation   the documentation
+     */
+    void documentation( Documentation documentation ) noexcept {
+
+      this->documentation_ = std::move( documentation );
+    }
 
     /**
      *  @brief Return the projectile identifier

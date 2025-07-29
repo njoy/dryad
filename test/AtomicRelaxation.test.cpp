@@ -212,6 +212,12 @@ SCENARIO( "AtomicRelaxation" ) {
 
 void verifyChunk( const AtomicRelaxation& chunk, bool normalise ) {
 
+  // documentation
+  CHECK( std::nullopt == chunk.documentation().awr() );
+  CHECK( std::nullopt == chunk.documentation().library() );
+  CHECK( std::nullopt == chunk.documentation().version() );
+  CHECK( std::nullopt == chunk.documentation().description() );
+
   // identifiers
   CHECK( id::ElementID( 1 ) == chunk.elementIdentifier() );
 

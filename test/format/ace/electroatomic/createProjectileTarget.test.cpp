@@ -28,6 +28,11 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
@@ -42,6 +47,11 @@ SCENARIO( "createProjectileTarget" ) {
       THEN( "a ProjectileTarget can be derived" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table );
+
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
@@ -107,6 +117,11 @@ SCENARIO( "createProjectileTarget" ) {
       THEN( "a ProjectileTarget can be derived" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table );
+
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
