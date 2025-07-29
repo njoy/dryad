@@ -169,7 +169,7 @@ void wrapReaction( python::module& module ) {
   .def(
 
     "product",
-    python::overload_cast<  const ParticleID&, std::size_t >( &Component::product, python::const_ ),
+    python::overload_cast< const ParticleID&, std::size_t >( &Component::product, python::const_ ),
     python::arg( "type" ),
     python::arg( "index" ) = 0,
     "Return a reaction product with a given type and index\n\n"
