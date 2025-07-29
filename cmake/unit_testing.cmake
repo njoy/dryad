@@ -108,8 +108,6 @@ add_cpp_test( format.endf.createTargetIdentifier                         format/
 add_cpp_test( format.endf.createInteractionType                          format/endf/createInteractionType.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellID                format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration     format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
-add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
-add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
 add_cpp_test( format.endf.covariance.createMatrix                        format/endf/covariance/createMatrix.test.cpp )
 add_cpp_test( format.endf.covariance.createVarianceScaling               format/endf/covariance/createVarianceScaling.test.cpp )
 add_cpp_test( format.endf.covariance.createCrossSectionCovarianceBlock   format/endf/covariance/createCrossSectionCovarianceBlock.test.cpp )
@@ -135,6 +133,13 @@ add_cpp_test( format.endf.createProjectileTarget                         format/
 add_cpp_test( format.endf.createProjectileTargetFromFile                 format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxation                         format/endf/createAtomicRelaxation.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationFromFile                 format/endf/createAtomicRelaxationFromFile.test.cpp )
+
+add_cpp_test( format.createEndfIndex                                     format/endf/createEndfIndex.test.cpp )
+add_cpp_test( format.endf.createEndfBoundaries                           format/endf/createEndfBoundaries.test.cpp )
+add_cpp_test( format.endf.createEndfInterpolant                          format/endf/createEndfInterpolant.test.cpp )
+add_cpp_test( format.endf.createEndfInterpolants                         format/endf/createEndfInterpolants.test.cpp )
+add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
+add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationEndfFile                 format/endf/createAtomicRelaxationEndfFile.test.cpp )
 
 add_cpp_test( format.gnds.convertEnergy                                  format/gnds/convertEnergy.test.cpp )
