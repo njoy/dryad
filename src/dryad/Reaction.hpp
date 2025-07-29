@@ -60,6 +60,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the reaction identifier
+     *
+     *  @param id.  the reaction identifier
+     */
+    void identifier( id::ReactionID id ) noexcept {
+
+      this->id_ = std::move( id );
+    }
+
+    /**
      *  @brief Return the reaction category
      */
     const ReactionCategory& category() const noexcept {
@@ -73,6 +83,16 @@ namespace dryad {
      */
     const std::optional< std::vector< id::ReactionID > >&
     partialReactionIdentifiers() const noexcept {
+
+      return this->partials_;
+    }
+
+    /**
+     *  @brief Return the partial reaction identifiers (not defined if this is
+     *         a primary reaction)
+     */
+    std::optional< std::vector< id::ReactionID > >&
+    partialReactionIdentifiers() noexcept {
 
       return this->partials_;
     }
@@ -275,6 +295,18 @@ namespace dryad {
                     type.symbol(), index );
         throw std::exception();
       }
+    }
+
+    /**
+     *  @brief Return a reaction product with a given type and index
+     *
+     *  @param[in] type    the reaction product type
+     *  @param[in] index   the reaction product index (default is zero)
+     */
+    ReactionProduct& product( const id::ParticleID& type,
+                              std::size_t index = 0 ) {
+
+      return const_cast< ReactionProduct& >( const_cast< const Reaction& >( *this ).product( type, index ) );
     }
 
     /**

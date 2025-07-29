@@ -178,6 +178,18 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                        ReactionProduct( ParticleID( 'g' ), 2 ),
                                        ReactionProduct( ParticleID( 'g' ), 3 ) ] )
 
+        # the reaction identifier can be changed
+        newid = 'n,Fe56->n,Fe56_e40'
+        original = 'n,Fe56->n,Fe56_e1'
+
+        chunk.identifier = newid
+
+        self.assertEqual( newid, chunk.identifier )
+
+        chunk.identifier = original
+
+        verify_chunk( self, chunk )
+
         # the partial reaction identifiers can be changed
         newpartials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe55' ]
         original = None

@@ -70,10 +70,11 @@ void wrapReaction( python::module& module ) {
     "    products    the reaction products associated to the summation reaction\n"
     "                (defaults to no reaction products)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "identifier",
-    &Component::identifier,
+    python::overload_cast<>( &Component::identifier, python::const_ ),
+    python::overload_cast< ReactionID >( &Component::identifier ),
     "The reaction identifier"
   )
   .def_property_readonly(
@@ -168,7 +169,7 @@ void wrapReaction( python::module& module ) {
   .def(
 
     "product",
-    &Component::product,
+    python::overload_cast<  const ParticleID&, std::size_t >( &Component::product, python::const_ ),
     python::arg( "type" ),
     python::arg( "index" ) = 0,
     "Return a reaction product with a given type and index\n\n"

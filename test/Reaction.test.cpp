@@ -82,6 +82,20 @@ SCENARIO( "Reaction" ) {
                         ReactionProduct( id::ParticleID( "g" ), 3 ) },
                       0, -1 );
 
+      THEN( "the reaction identifier can be changed" ) {
+
+        id::ReactionID newid( "n,Fe56->n,Fe56_e40" );
+        id::ReactionID original( "n,Fe56->n,Fe56_e1" );
+
+        chunk.identifier( newid );
+
+        CHECK( newid == chunk.identifier() );
+
+        chunk.identifier( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
       THEN( "the partial reaction identifiers can be changed" ) {
 
         std::optional< std::vector< id::ReactionID > > newpartials( { "n,Fe56->elastic", "n,Fe56->2n,Fe55" } );

@@ -1013,6 +1013,9 @@ class Reaction:
         """
         The reaction identifier
         """
+    @identifier.setter
+    def identifier(self, arg1: str) -> None:
+        ...
     @property
     def is_linearised(self) -> bool:
         """
