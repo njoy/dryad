@@ -39,14 +39,14 @@ namespace endf {
         throw std::exception();
       }
 
+      Documentation documentation = createDocumentation( information );
+
       id::ElementID element( data.targetIdentifier() / 1000 );
       std::vector< dryad::atomic::ElectronSubshellConfiguration > subshells;
       for ( const auto& subshell : data.subshells() ) {
 
         subshells.emplace_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
       }
-
-      Documentation documentation = createDocumentation( information );
 
       return AtomicRelaxation( std::move( documentation ), std::move( element ),
                                std::move( subshells ) );

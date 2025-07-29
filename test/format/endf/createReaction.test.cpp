@@ -54,25 +54,25 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H" );
 
         Reaction total = format::endf::createReaction( projectile, target, material, 501 );
-        electron::h1::verifyTotalReaction( total );
+        electron::h0::verifyTotalReaction( total );
 
         Reaction ionisation = format::endf::createReaction( projectile, target, material, 522 );
-        electron::h1::verifyTotalIonisationReaction( ionisation );
+        electron::h0::verifyTotalIonisationReaction( ionisation );
 
         Reaction elastic = format::endf::createReaction( projectile, target, material, 525 );
-        electron::h1::verifyElasticReaction( elastic );
+        electron::h0::verifyElasticReaction( elastic );
 
         Reaction telastic = format::endf::createReaction( projectile, target, material, 526 );
-        electron::h1::verifyTotalElasticReaction( telastic );
+        electron::h0::verifyTotalElasticReaction( telastic );
 
         Reaction bremsstrahlung = format::endf::createReaction( projectile, target, material, 527 );
-        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung );
 
         Reaction excitation = format::endf::createReaction( projectile, target, material, 528 );
-        electron::h1::verifyExcitationReaction( excitation );
+        electron::h0::verifyExcitationReaction( excitation );
 
         Reaction subionisation = format::endf::createReaction( projectile, target, material, 534 );
-        electron::h1::verifySubshellIonisationReaction( subionisation );
+        electron::h0::verifySubshellIonisationReaction( subionisation );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -90,28 +90,28 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H" );
 
         Reaction total = format::endf::createReaction( projectile, target, material, 501 );
-        photoatomic::h1::verifyTotalReaction( total );
+        photoatomic::h0::verifyTotalReaction( total );
 
         Reaction coherent = format::endf::createReaction( projectile, target, material, 502 );
-        photoatomic::h1::verifyCoherentReaction( coherent );
+        photoatomic::h0::verifyCoherentReaction( coherent );
 
         Reaction incoherent = format::endf::createReaction( projectile, target, material, 504 );
-        photoatomic::h1::verifyIncoherentReaction( incoherent );
+        photoatomic::h0::verifyIncoherentReaction( incoherent );
 
         Reaction epairproduction = format::endf::createReaction( projectile, target, material, 515 );
-        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction );
 
         Reaction tpairproduction = format::endf::createReaction( projectile, target, material, 516 );
-        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction );
 
         Reaction npairproduction = format::endf::createReaction( projectile, target, material, 517 );
-        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         Reaction tionisation = format::endf::createReaction( projectile, target, material, 522 );
-        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation );
 
         Reaction ionisation = format::endf::createReaction( projectile, target, material, 534 );
-        photoatomic::h1::verifyIonisationReaction( ionisation );
+        photoatomic::h0::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN

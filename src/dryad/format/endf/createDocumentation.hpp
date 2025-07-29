@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create a PolynomialMultiplicity from a parsed ENDF multiplicity
    */
-  Documentation
+  static Documentation
   createDocumentation( const ENDFtk::section::Type< 1, 451 >& information ) {
 
     Log::info( "Reading documentation" );
