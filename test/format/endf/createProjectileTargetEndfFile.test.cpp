@@ -316,12 +316,12 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
     THEN( "it can be converted to an ENDF material" ) {
 
-      std::string filename = "test.endf";
+      std::string filename = "kjlaksdhlwaekhfvbnlkrfdgjghldkjghladkjfgh.endf";
       format::endf::createProjectileTargetEndfFile( transport, 125, filename );
 
       CHECK( chunk() == readContentFromFile( filename ) );
 
-//      std::remove( filename.c_str() );
+      std::remove( filename.c_str() );
     } // THEN
   } // GIVEN
 } // SCENARIO
@@ -330,7 +330,7 @@ std::string chunk() {
 
   return
     "n+H1 data                                                            0 0  0     \n"
-    " 1.001000+3 9.991673-1          0          0          0          0 125 1451     \n"
+    " 1.001000+3 9.991673-1         -1          0          0          0 125 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6 125 1451     \n"
     " 0.000000+0 2.000000+7          0          0         10          8 125 1451     \n"
     " 0.000000+0 0.000000+0          0          0         87          4 125 1451     \n"
@@ -421,10 +421,10 @@ std::string chunk() {
     "[1] G. M. Hale, \"Covariances from light-element R-matrix           125 1451     \n"
     "analyses,\" Nuclear Data Sheets, 109, 2812 (2008).                  125 1451     \n"
     " ****************************************************************  125 1451     \n"
-    "                                1        451        101          5 125 1451     \n"
-    "                                3          1         54          4 125 1451     \n"
-    "                                3          2         54          4 125 1451     \n"
-    "                                3        102         54          5 125 1451     \n"
+    "                                1        451         95          0 125 1451     \n"
+    "                                3          1         54          0 125 1451     \n"
+    "                                3          2         54          0 125 1451     \n"
+    "                                3        102         54          0 125 1451     \n"
     "                                                                   125 1  0     \n"
     "                                                                   125 0  0     \n"
     " 1.001000+3 9.991673-1          0          0          0          0 125 3  1     \n"
@@ -604,7 +604,9 @@ std::string readContentFromFile( const std::string& filename ) {
                     std::ios::in | std::ios::binary | std::ios::ate );
   if ( not in ) {
 
-    throw std::runtime_error( "test.endf not found" );
+    std::string message = filename;
+    message += " not found";
+    throw std::runtime_error( message );
   }
 
   const auto file_size = in.tellg();

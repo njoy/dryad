@@ -125,7 +125,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
     THEN( "it can be converted to an ENDF material" ) {
 
-      std::string filename = "test.endf";
+      std::string filename = "ercoiuryqncoieruycoeurcowureugcregrygrcyg.endf";
       format::endf::createAtomicRelaxationEndfFile( relaxation, filename );
 
       CHECK( chunk() == readContentFromFile( filename ) );
@@ -252,7 +252,9 @@ std::string readContentFromFile( const std::string& filename ) {
                     std::ios::in | std::ios::binary | std::ios::ate );
   if ( not in ) {
 
-    throw std::runtime_error( "test.endf not found" );
+    std::string message = filename;
+    message += " not found";
+    throw std::runtime_error( message );
   }
 
   const auto file_size = in.tellg();
