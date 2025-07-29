@@ -677,6 +677,42 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                                             [],
                                             0, 0 ) ] )
 
+        # the projectile identifier can be changed
+        newprojectile = ParticleID.proton()
+        original = ParticleID.neutron()
+
+        chunk.projectile_identifier = newprojectile
+
+        self.assertEqual( newprojectile, chunk.projectile_identifier )
+
+        chunk.projectile_identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the target identifier can be changed
+        newtarget = ParticleID( 1001 )
+        original = ParticleID( 26056 )
+
+        chunk.target_identifier = newtarget
+
+        self.assertEqual( newtarget, chunk.target_identifier )
+
+        chunk.target_identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the interaction type can be changed
+        newtype = InteractionType.Atomic
+        original = InteractionType.Nuclear
+
+        chunk.interaction_type = newtype
+
+        self.assertEqual( newtype, chunk.interaction_type )
+
+        chunk.interaction_type = original
+
+        verify_chunk( self, chunk )
+
         # the reaction data can be changed
         newreactions = [ Reaction( 'n,Fe56->n,Fe56_e2',
                                    TabulatedCrossSection( [ 5., 20. ], [ 0., 15. ],

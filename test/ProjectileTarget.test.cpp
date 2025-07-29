@@ -145,6 +145,48 @@ SCENARIO( "ProjectileTarget" ) {
                                           {},
                                           0, 0 ) } );
 
+      THEN( "the projectile identifier can be changed" ) {
+
+        id::ParticleID newprojectile = id::ParticleID::proton();
+        id::ParticleID original = id::ParticleID::neutron();
+
+        chunk.projectileIdentifier( newprojectile );
+
+        CHECK( newprojectile == chunk.projectileIdentifier() );
+
+        chunk.projectileIdentifier( original );
+
+        verifyChunk( chunk );
+      }
+
+      THEN( "the target identifier can be changed" ) {
+
+        id::ParticleID newtarget = id::ParticleID( 1001 );
+        id::ParticleID original = id::ParticleID( 26056 );
+
+        chunk.targetIdentifier( newtarget );
+
+        CHECK( newtarget == chunk.targetIdentifier() );
+
+        chunk.targetIdentifier( original );
+
+        verifyChunk( chunk );
+      }
+
+      THEN( "the interaction type can be changed" ) {
+
+        InteractionType newtype = InteractionType::Atomic;
+        InteractionType original = InteractionType::Nuclear;
+
+        chunk.interactionType( newtype );
+
+        CHECK( newtype == chunk.interactionType() );
+
+        chunk.interactionType( original );
+
+        verifyChunk( chunk );
+      }
+
       THEN( "the reaction data can be changed" ) {
 
         std::vector< Reaction > newreactions = {

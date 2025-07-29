@@ -17,6 +17,7 @@ void wrapProjectileTarget( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::ProjectileTarget;
   using ParticleID = njoy::dryad::id::ParticleID;
+  using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
@@ -48,22 +49,25 @@ void wrapProjectileTarget( python::module& module ) {
     "    type         the interaction type\n"
     "    reactions    the reaction data"
   )
-  .def_property_readonly(
+  .def_property(
 
     "projectile_identifier",
-    &Component::projectileIdentifier,
+    python::overload_cast<>( &Component::projectileIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::projectileIdentifier ),
     "The projectile identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "target_identifier",
-    &Component::targetIdentifier,
+    python::overload_cast<>( &Component::targetIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::targetIdentifier ),
     "The target identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "interaction_type",
-    &Component::interactionType,
+    python::overload_cast<>( &Component::interactionType, python::const_ ),
+    python::overload_cast< InteractionType >( &Component::interactionType ),
     "The interaction type (atomic or nuclear)"
   )
   .def_property(
@@ -99,7 +103,7 @@ void wrapProjectileTarget( python::module& module ) {
   .def(
 
     "reaction",
-    &Component::reaction,
+    python::overload_cast< const ReactionID& >( &Component::reaction, python::const_ ),
     python::arg( "id" ),
     "Return the requested reaction\n\n"
     "Arguments:\n"

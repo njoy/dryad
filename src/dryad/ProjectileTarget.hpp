@@ -50,6 +50,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the projectile identifier
+     *
+     *  @param projectile   the projectile identifier
+     */
+    void projectileIdentifier( id::ParticleID projectile ) noexcept {
+
+      this->projectile_id_ = std::move( projectile );
+    }
+
+    /**
      *  @brief Return the target identifier
      */
     const id::ParticleID& targetIdentifier() const noexcept {
@@ -58,11 +68,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the target identifier
+     *
+     *  @param target   the target identifier
+     */
+    void targetIdentifier( id::ParticleID target ) noexcept {
+
+      this->target_id_ = std::move( target );
+    }
+
+    /**
      *  @brief Return the interaction type
      */
     const InteractionType& interactionType() const noexcept {
 
       return this->interaction_;
+    }
+
+    /**
+     *  @brief Set the interaction type
+     *
+     *  @param type   the interaction type
+     */
+    void interactionType( InteractionType type ) noexcept {
+
+      this->interaction_ = std::move( type );
     }
 
     /**
@@ -154,6 +184,16 @@ namespace dryad {
         Log::error( "The requested reaction \'{}\' could not be found", id );
         throw std::exception();
       }
+    }
+
+    /**
+     *  @brief Return the requested reaction
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    Reaction& reaction( const id::ReactionID& id ) {
+
+      return const_cast< Reaction& >( const_cast< const ProjectileTarget& >( *this ).reaction( id ) );
     }
 
     /**

@@ -879,6 +879,9 @@ class ProjectileTarget:
         """
         The interaction type (atomic or nuclear)
         """
+    @interaction_type.setter
+    def interaction_type(self, arg1: InteractionType) -> None:
+        ...
     @property
     def is_linearised(self) -> bool:
         """
@@ -894,6 +897,9 @@ class ProjectileTarget:
         """
         The projectile identifier
         """
+    @projectile_identifier.setter
+    def projectile_identifier(self, arg1: id.ParticleID) -> None:
+        ...
     @property
     def reactions(self) -> list[Reaction]:
         """
@@ -915,6 +921,9 @@ class ProjectileTarget:
         """
         The target identifier
         """
+    @target_identifier.setter
+    def target_identifier(self, arg1: id.ParticleID) -> None:
+        ...
 class Reaction:
     """
     The data associated to a single reaction
