@@ -14,14 +14,14 @@ namespace format {
   /**
    *  @brief Create an one-based index from a zero-based index
    */
-  std::size_t createEndfIndex( int index ) {
+  long createEndfIndex( int index ) {
 
     if ( index < 0 ) {
 
       Log::error( "This is not a zero-based index, found {}", index );
       throw std::exception();
     }
-    return static_cast< std::size_t >( index ) + 1;
+    return static_cast< long >( index ) + 1;
   }
 
 } // format namespace

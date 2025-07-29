@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create an interpolation type from an ENDF interpolation type
    */
-  std::size_t createEndfInterpolant( InterpolationType interpolant ) {
+  long createEndfInterpolant( InterpolationType interpolant ) {
 
     switch ( interpolant ) {
 

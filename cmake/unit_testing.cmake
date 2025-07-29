@@ -134,12 +134,13 @@ add_cpp_test( format.endf.createProjectileTargetFromFile                 format/
 add_cpp_test( format.endf.createAtomicRelaxation                         format/endf/createAtomicRelaxation.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationFromFile                 format/endf/createAtomicRelaxationFromFile.test.cpp )
 
-add_cpp_test( format.createEndfIndex                                     format/endf/createEndfIndex.test.cpp )
+add_cpp_test( format.endf.createEndfIndex                                format/endf/createEndfIndex.test.cpp )
 add_cpp_test( format.endf.createEndfBoundaries                           format/endf/createEndfBoundaries.test.cpp )
 add_cpp_test( format.endf.createEndfInterpolant                          format/endf/createEndfInterpolant.test.cpp )
 add_cpp_test( format.endf.createEndfInterpolants                         format/endf/createEndfInterpolants.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
+add_cpp_test( format.endf.createEndfFile3Section.                        format/endf/createEndfFile3Section.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationEndfFile                 format/endf/createAtomicRelaxationEndfFile.test.cpp )
 
 add_cpp_test( format.gnds.convertEnergy                                  format/gnds/convertEnergy.test.cpp )

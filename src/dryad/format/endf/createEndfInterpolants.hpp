@@ -22,9 +22,9 @@ namespace endf {
   template < typename Range >
   auto createEndfInterpolants( const Range& interpolants )
   -> std::enable_if_t< njoy::tools::std20::ranges::range< Range >,
-                       std::vector< std::size_t > > {
+                       std::vector< long > > {
 
-    std::vector< std::size_t > converted( interpolants.size() );
+    std::vector< long > converted( interpolants.size() );
     std::transform( interpolants.begin(), interpolants.end(),
                     converted.begin(), &createEndfInterpolant );
     return converted;

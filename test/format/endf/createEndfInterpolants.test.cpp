@@ -24,7 +24,7 @@ SCENARIO( "createEndfInterpolants" ) {
                                                           InterpolationType::LinearLog,
                                                           InterpolationType::LogLinear,
                                                           InterpolationType::LogLog };
-        std::vector< std::size_t > converted = format::endf::createEndfInterpolants( interpolants );
+        std::vector< long > converted = format::endf::createEndfInterpolants( interpolants );
 
         CHECK( 1 == converted[0] );
         CHECK( 2 == converted[1] );

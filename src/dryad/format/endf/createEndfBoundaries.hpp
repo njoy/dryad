@@ -21,9 +21,9 @@ namespace endf {
   template < typename Range >
   auto createEndfBoundaries( const Range& boundaries )
   -> std::enable_if_t< njoy::tools::std20::ranges::range< Range >,
-                       std::vector< std::size_t > > {
+                       std::vector< long > > {
 
-    std::vector< std::size_t > converted( boundaries.size() );
+    std::vector< long > converted( boundaries.size() );
     std::transform( boundaries.begin(), boundaries.end(),
                     converted.begin(), &createEndfIndex );
     return converted;

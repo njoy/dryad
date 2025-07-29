@@ -20,7 +20,7 @@ SCENARIO( "createBoundaries" ) {
       THEN( "it can be converted" ) {
 
         std::vector< int > boundaries = { 0, 1, 2, 3, 4, 5 };
-        std::vector< std::size_t > converted = format::endf::createEndfBoundaries( boundaries );
+        std::vector< long > converted = format::endf::createEndfBoundaries( boundaries );
 
         CHECK( 1 == converted[0] );
         CHECK( 2 == converted[1] );
