@@ -7,6 +7,7 @@
 #include "dryad/ProjectileTarget.hpp"
 #include "dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "dryad/format/endf/createProjectileTargetEndfFile.hpp"
 #include "dryad/format/gnds/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
@@ -192,6 +193,20 @@ void wrapProjectileTarget( python::module& module ) {
     "ProjectileTarget for eprdata files.\n\n"
     "Arguments:\n"
     "    filename   the ENDF file name"
+  )
+  .def(
+
+    "to_endf_file",
+    [] ( const Component& self, int mat, const std::string& filename ) {
+
+      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename );
+    },
+    python::arg( "mat" ), python::arg( "filename" ),
+    "Write the AtomicRelaxation data to an ENDF file\n\n"
+    "Arguments:\n"
+    "    self        the atomic relaxation data\n"
+    "    mat         the ENDF mat number to be used\n"
+    "    filename    the ENDF file name"
   );
 
   // add standard equality comparison definitions

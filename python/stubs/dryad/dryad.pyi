@@ -902,6 +902,15 @@ class ProjectileTarget:
             self   the ProjectileTarget data
             id     the reaction identifier
         """
+    def to_endf_file(self, mat: int, filename: str) -> None:
+        """
+        Write the AtomicRelaxation data to an ENDF file
+        
+        Arguments:
+            self        the atomic relaxation data
+            mat         the ENDF mat number to be used
+            filename    the ENDF file name
+        """
     @property
     def documentation(self) -> Documentation:
         """
