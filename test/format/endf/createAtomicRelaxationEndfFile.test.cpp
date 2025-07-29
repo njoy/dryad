@@ -8,7 +8,6 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include <cstdio>
-#include "ENDFtk/tree/Material.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -16,7 +15,7 @@ using namespace njoy::dryad;
 std::string chunk();
 std::string readContentFromFile( const std::string& );
 
-SCENARIO( "createAtomicRelaxation" ) {
+SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
   GIVEN( "Atomic relaxation data" ) {
 

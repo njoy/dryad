@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "dryad/format/endf/createEndfSublibraryType.hpp"
 #include "dryad/format/endf/createEndfFile3Section.hpp"
+#include "dryad/format/endf/createEndfFile23Section.hpp"
 #include "dryad/format/endf/createDocumentation.hpp"
 #include "dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
@@ -74,7 +75,14 @@ namespace endf {
 
     for ( const auto& reaction : transport.reactions() ) {
 
-      material.insert( createEndfFile3Section( transport.targetIdentifier(), awr, reaction ) );
+      if ( transport.interactionType() == InteractionType::Nuclear ) {
+
+        material.insert( createEndfFile3Section( transport.targetIdentifier(), awr, reaction ) );
+      }
+      else {
+
+        material.insert( createEndfFile23Section( transport.targetIdentifier(), awr, reaction ) );
+      }
     }
 
     ENDFtk::tree::updateDirectory( material );
