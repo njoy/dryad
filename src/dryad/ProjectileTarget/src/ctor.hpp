@@ -1,17 +1,13 @@
 /**
- *  @brief Constructor
- *
- *  @param projectile   the projectile identifier
- *  @param target       the target identifier
- *  @param reactions    the reaction data
- *  @param linearised   a flag indicating whether or not the data is
- *                      linearised
+ *  @brief Private constructor
  */
-ProjectileTarget( id::ParticleID&& projectile,
+ProjectileTarget( Documentation&& documentation,
+                  id::ParticleID&& projectile,
                   id::ParticleID&& target,
                   InteractionType type,
                   std::optional< resonances::ResonanceParameters > resonances,
                   std::vector< Reaction >&& reactions ) :
+    documentation_( std::move( documentation ) ),
     projectile_id_( std::move( projectile ) ),
     target_id_( std::move( target ) ),
     interaction_( type ),
@@ -37,15 +33,38 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param projectile   the projectile identifier
- *  @param target       the target identifier
- *  @param reactions    the reaction data
+ *  @param documentation   the documentation
+ *  @param projectile      the projectile identifier
+ *  @param target          the target identifier
+ *  @param type.           the interaction type
+ *  @param reactions       the reaction data
+ */
+ProjectileTarget( Documentation documentation,
+                  id::ParticleID projectile,
+                  id::ParticleID target,
+                  InteractionType type,
+                  std::vector< Reaction > reactions ) :
+    ProjectileTarget( std::move( documentation ),
+                      std::move( projectile ),
+                      std::move( target ),
+                      type,
+                      std::nullopt,
+                      std::move( reactions ) ) {}
+
+/**
+ *  @brief Constructor
+ *
+ *  @param projectile      the projectile identifier
+ *  @param target          the target identifier
+ *  @param type.           the interaction type
+ *  @param reactions       the reaction data
  */
 ProjectileTarget( id::ParticleID projectile,
                   id::ParticleID target,
                   InteractionType type,
                   std::vector< Reaction > reactions ) :
-    ProjectileTarget( std::move( projectile ),
+    ProjectileTarget( {},
+                      std::move( projectile ),
                       std::move( target ),
                       type,
                       std::nullopt,

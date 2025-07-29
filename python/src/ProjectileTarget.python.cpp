@@ -16,6 +16,7 @@ void wrapProjectileTarget( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::ProjectileTarget;
+  using Documentation = njoy::dryad::Documentation;
   using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
@@ -37,6 +38,23 @@ void wrapProjectileTarget( python::module& module ) {
   component
   .def(
 
+    python::init< Documentation, ParticleID, ParticleID,
+                  InteractionType,
+                  std::vector< Reaction > >(),
+    python::arg( "documentation" ), python::arg( "projectile" ),
+    python::arg( "target" ), python::arg( "type" ),
+    python::arg( "reactions" ),
+    "Initialise the ProjectileTarget\n\n"
+    "Arguments:\n"
+    "    self            the reaction\n"
+    "    documentation   the documentation\n"
+    "    projectile      the particle identifier\n"
+    "    target          the target identifier\n"
+    "    type            the interaction type\n"
+    "    reactions       the reaction data"
+  )
+  .def(
+
     python::init< ParticleID, ParticleID, InteractionType,
                   std::vector< Reaction > >(),
     python::arg( "projectile" ), python::arg( "target" ),
@@ -48,6 +66,13 @@ void wrapProjectileTarget( python::module& module ) {
     "    target       the target identifier\n"
     "    type         the interaction type\n"
     "    reactions    the reaction data"
+  )
+  .def_property(
+
+    "documentation",
+    python::overload_cast<>( &Component::documentation, python::const_ ),
+    python::overload_cast< Documentation >( &Component::documentation ),
+    "The documentation"
   )
   .def_property(
 

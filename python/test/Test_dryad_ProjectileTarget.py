@@ -15,6 +15,12 @@ from dryad.id import ParticleID
 
 def verify_chunk( self, chunk ) :
 
+    # documentation
+    self.assertEqual( None, chunk.documentation.awr )
+    self.assertEqual( None, chunk.documentation.library )
+    self.assertEqual( None, chunk.documentation.version )
+    self.assertEqual( None, chunk.documentation.description )
+
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
     self.assertEqual( ParticleID( 'Fe56' ), chunk.target_identifier )
@@ -286,6 +292,12 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( False, chunk.is_linearised )
 
 def verify_correct_summation( self, chunk ) :
+
+    # documentation
+    self.assertEqual( None, chunk.documentation.awr )
+    self.assertEqual( None, chunk.documentation.library )
+    self.assertEqual( None, chunk.documentation.version )
+    self.assertEqual( None, chunk.documentation.description )
 
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )

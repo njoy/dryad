@@ -851,6 +851,20 @@ class ProjectileTarget:
         """
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
+    @typing.overload
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
+        """
+        Initialise the ProjectileTarget
+        
+        Arguments:
+            self            the reaction
+            documentation   the documentation
+            projectile      the particle identifier
+            target          the target identifier
+            type            the interaction type
+            reactions       the reaction data
+        """
+    @typing.overload
     def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
         """
         Initialise the ProjectileTarget
@@ -888,6 +902,14 @@ class ProjectileTarget:
             self   the ProjectileTarget data
             id     the reaction identifier
         """
+    @property
+    def documentation(self) -> Documentation:
+        """
+        The documentation
+        """
+    @documentation.setter
+    def documentation(self, arg1: Documentation) -> None:
+        ...
     @property
     def interaction_type(self) -> InteractionType:
         """
