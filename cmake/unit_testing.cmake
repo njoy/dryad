@@ -142,6 +142,7 @@ add_cpp_test( format.endf.createEndfSubLibraryType                       format/
 add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
 add_cpp_test( format.endf.createEndfFile3Section.                        format/endf/createEndfFile3Section.test.cpp )
+add_cpp_test( format.endf.createEndfFile23Section.                       format/endf/createEndfFile23Section.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationEndfFile                 format/endf/createAtomicRelaxationEndfFile.test.cpp )
 add_cpp_test( format.endf.createProjectileTargetEndfFile                 format/endf/createProjectileTargetEndfFile.test.cpp )
 
