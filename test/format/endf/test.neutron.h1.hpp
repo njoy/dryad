@@ -107,7 +107,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( false == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -146,7 +145,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -273,7 +271,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( false == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );

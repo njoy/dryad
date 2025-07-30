@@ -36,8 +36,6 @@ namespace dryad {
     TabulatedCrossSection xs_;
     std::vector< ReactionProduct > products_;
 
-    bool linearised_;
-
     /* auxiliary functions */
 
     #include "dryad/Reaction/src/iterator.hpp"
@@ -204,7 +202,6 @@ namespace dryad {
     void crossSection( TabulatedCrossSection xs ) noexcept {
 
       this->xs_ = std::move( xs );
-      this->linearised_ = this->crossSection().isLinearised() ? true : false;
     }
 
     /**
@@ -307,14 +304,6 @@ namespace dryad {
                               std::size_t index = 0 ) {
 
       return const_cast< ReactionProduct& >( const_cast< const Reaction& >( *this ).product( type, index ) );
-    }
-
-    /**
-     *  @brief Return whether or not the reaction data is linearised
-     */
-    bool isLinearised() const noexcept {
-
-      return this->linearised_;
     }
 
     /**

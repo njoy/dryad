@@ -1057,11 +1057,6 @@ class Reaction:
     def identifier(self, arg1: str) -> None:
         ...
     @property
-    def is_linearised(self) -> bool:
-        """
-        Flag indicating whether or not the data is linearised
-        """
-    @property
     def is_primary_reaction(self) -> bool:
         """
         Flag to indicate whether or not the reaction is a primary reaction
