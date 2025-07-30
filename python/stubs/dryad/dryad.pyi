@@ -2763,11 +2763,17 @@ class TwoBodyDistributionData:
         """
         The angular distributions
         """
+    @angle.setter
+    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+        ...
     @property
     def frame(self) -> ReferenceFrame:
         """
         The reference frame
         """
+    @frame.setter
+    def frame(self, arg1: ReferenceFrame) -> None:
+        ...
     @property
     def type(self) -> DistributionDataType:
         """
