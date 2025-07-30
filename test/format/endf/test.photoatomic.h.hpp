@@ -237,7 +237,6 @@ namespace h0 {
 
     auto gamma = reaction.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 
@@ -345,7 +344,6 @@ namespace h0 {
 
     auto gamma = reaction.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 

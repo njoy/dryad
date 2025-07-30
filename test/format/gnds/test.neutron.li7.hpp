@@ -107,7 +107,6 @@ namespace li7 {
 
     auto neutron = reaction.products()[0];
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
-    CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );

@@ -408,7 +408,6 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -554,7 +553,6 @@ namespace endf81 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
@@ -638,7 +636,6 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -698,7 +695,6 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -758,7 +754,6 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );

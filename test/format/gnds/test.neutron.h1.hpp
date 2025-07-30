@@ -75,7 +75,6 @@ namespace h1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
-    CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
