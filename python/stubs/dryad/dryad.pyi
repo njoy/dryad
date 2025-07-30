@@ -1168,55 +1168,35 @@ class ReactionProduct:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
-    @typing.overload
-    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
+    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None) -> None:
         """
         Initialise the reaction
         
         Arguments:
-            self           the reaction
-            id             the reaction product identifier
-            multiplicity   the reaction product multiplicity
-        """
-    @typing.overload
-    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData) -> None:
-        """
-        Initialise the reaction
-        
-        Arguments:
-            self           the reaction
-            id             the reaction product identifier
-            multiplicity   the reaction product multiplicity
-            distribution   the reaction product distribution data
+            self             the reaction
+            id               the reaction product identifier
+            multiplicity     the reaction product multiplicity
+            distribution     the optional reaction product distribution data
+            average_energy   the optional average reaction product energy
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ReactionProduct:
-        """
-        Linearise the reaction product data and return a new reaction product
-        
-        Arguments:
-            self        the reaction
-            tolerance   the linearisation tolerance
-        """
-    def linearise_inplace(self, tolerance: ToleranceConvergence = ...) -> None:
-        """
-        Linearise the reaction product data inplace
-        
-        Arguments:
-            self        the reaction
-            tolerance   the linearisation tolerance
-        """
     @property
     def average_energy(self) -> TabulatedAverageEnergy | None:
         """
         The average reaction product energy
         """
+    @average_energy.setter
+    def average_energy(self, arg1: TabulatedAverageEnergy | None) -> None:
+        ...
     @property
     def distribution_data(self) -> TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None:
         """
         The distribution data
         """
+    @distribution_data.setter
+    def distribution_data(self, arg1: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None) -> None:
+        ...
     @property
     def has_average_energy(self) -> bool:
         """
@@ -1232,16 +1212,17 @@ class ReactionProduct:
         """
         The reaction product identifier
         """
-    @property
-    def is_linearised(self) -> bool:
-        """
-        Flag indicating whether or not the reaction product is linearised
-        """
+    @identifier.setter
+    def identifier(self, arg1: id.ParticleID) -> None:
+        ...
     @property
     def multiplicity(self) -> int | TabulatedMultiplicity | PolynomialMultiplicity:
         """
         The multiplicity
         """
+    @multiplicity.setter
+    def multiplicity(self, arg1: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
+        ...
 class ReferenceFrame:
     """
     The reference frame used to describe data
