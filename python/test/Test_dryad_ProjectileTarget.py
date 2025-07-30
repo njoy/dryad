@@ -288,9 +288,6 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # metadata
-    self.assertEqual( False, chunk.is_linearised )
-
 def verify_correct_summation( self, chunk ) :
 
     # documentation
@@ -569,9 +566,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
-
-    # metadata
-    self.assertEqual( True, chunk.is_linearised )
 
 class Test_dryad_ProjectileTarget( unittest.TestCase ) :
     """Unit test for the ProjectileTarget class."""

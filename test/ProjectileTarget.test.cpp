@@ -792,9 +792,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
-
-  // metadata
-  CHECK( false == chunk.isLinearised() );
 }
 
 void verifyCorrectSummation( const ProjectileTarget& chunk ) {
@@ -1282,7 +1279,4 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
-
-  // metadata
-  CHECK( true == chunk.isLinearised() );
 }

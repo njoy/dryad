@@ -928,11 +928,6 @@ class ProjectileTarget:
     def interaction_type(self, arg1: InteractionType) -> None:
         ...
     @property
-    def is_linearised(self) -> bool:
-        """
-        Flag indicating whether or not the data is linearised
-        """
-    @property
     def number_reactions(self) -> int:
         """
         The number of reactions

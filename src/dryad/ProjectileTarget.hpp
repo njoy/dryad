@@ -226,16 +226,6 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the data is linearised
-     */
-    bool isLinearised() const noexcept {
-
-      return std::all_of( this->reactions().begin(), this->reactions().end(),
-                          [] ( auto&& reaction )
-                             { return reaction.isLinearised(); } );
-    }
-
-    /**
      *  @brief Calculate summation cross sections
      *
      *  This function recalculates the cross section of all summation cross

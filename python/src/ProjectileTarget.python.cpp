@@ -147,12 +147,6 @@ void wrapProjectileTarget( python::module& module ) {
     "    self        the ProjectileTarget data\n"
     "    tolerance   the linearisation tolerance"
   )
-  .def_property_readonly(
-
-    "is_linearised",
-    &Component::isLinearised,
-    "Flag indicating whether or not the data is linearised"
-  )
   .def_static(
 
     "from_endf_file",

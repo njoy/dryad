@@ -38,8 +38,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
-        CHECK( true == H0.isLinearised() );
-
         CHECK( std::nullopt == H0.resonances() );
 
         CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
@@ -100,8 +98,6 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 
@@ -170,8 +166,6 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 
