@@ -38,6 +38,10 @@ namespace dryad {
 
     bool linearised_;
 
+    /* auxiliary functions */
+
+    #include "dryad/Reaction/src/iterator.hpp"
+
   public:
 
     /* constructor */
@@ -77,9 +81,9 @@ namespace dryad {
      *  @brief Set the partial reaction identifiers
      *
      *  This will also reset the reaction category to summation or primary
-     *  as required. Using std::nullopt will thus erase the partial identifiers
-     *  and make the reaction a primary reaction if it wasn't a primary one
-     *  already.
+     *  as required. Using std::nullopt or an empty vector of identifiers will
+     *  thus erase the partial identifiers and make the reaction a primary
+     *  reaction if it wasn't a primary one already.
      *
      *  Summation reactions do not have q values associated to them, so it is
      *  up to the user to update the q values seperately when changing the
@@ -113,6 +117,14 @@ namespace dryad {
     bool isPrimaryReaction() const noexcept {
 
       return ! this->isSummationReaction();
+    }
+
+    /**
+     *  @brief Return the number of partial reactions that make up this reaction
+     */
+    std::size_t numberPartialReactions() const noexcept {
+
+      return this->isSummationReaction() ? this->partialReactionIdentifiers()->size() : 0;
     }
 
     /**
@@ -200,6 +212,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the reaction products
+     */
+    std::vector< ReactionProduct >& products() noexcept {
+
+      return this->products_;
+    }
+
+    /**
      *  @brief Set the reaction products
      *
      *  @param[in] products   the reaction products
@@ -216,12 +236,7 @@ namespace dryad {
      */
     bool hasProduct( const id::ParticleID& type ) const {
 
-      auto functor = [&type] ( auto&& product )
-                             { return product.identifier() == type; };
-
-      auto iter = std::find_if( this->products().begin(),
-                                this->products().end(),
-                                functor );
+      auto iter = this->iterator( type );
       return iter != this->products().end();
     }
 
@@ -249,17 +264,7 @@ namespace dryad {
     const ReactionProduct& product( const id::ParticleID& type,
                                     std::size_t index = 0 ) const {
 
-      auto functor = [&type] ( auto&& product )
-                             { return product.identifier() == type; };
-
-      auto iter = std::find_if( this->products().begin(), this->products().end(), functor );
-      std::size_t current = index;
-      while ( current != 0 && iter != this->products().end() ) {
-
-        iter = std::find_if( iter + 1, this->products().end(), functor );
-        --current;
-      }
-
+      auto iter = this->iterator( type, index );
       if ( iter != this->products().end() ) {
 
         return *iter;

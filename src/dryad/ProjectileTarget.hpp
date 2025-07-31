@@ -30,7 +30,9 @@ namespace dryad {
     std::optional< resonances::ResonanceParameters > resonances_;
     std::vector< Reaction > reactions_;
 
-    bool linearised_;
+    /* auxiliary functions */
+
+    #include "dryad/ProjectileTarget/src/iterator.hpp"
 
   public:
 
@@ -72,11 +74,56 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the resonance parameter data
+     */
+    std::optional< resonances::ResonanceParameters >& resonances() noexcept {
+
+      return this->resonances_;
+    }
+
+    /**
+     *  @brief Set the resonance parameters
+     *
+     *  @param[in] resonances   the resonance parameters
+     */
+    void resonances( std::optional< resonances::ResonanceParameters > resonances ) noexcept {
+
+      this->resonances_ = std::move( resonances );
+    }
+
+    /**
      *  @brief Return the reactions
      */
     const std::vector< Reaction >& reactions() const noexcept {
 
       return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions
+     */
+    std::vector< Reaction >& reactions() noexcept {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Set the reactions
+     *
+     *  @param[in] reactions   the reactions
+     */
+    void reactions( std::vector< Reaction > reactions ) noexcept {
+
+      this->reactions_ = std::move( reactions );
+      this->resolvePartialIdentifiers();
+    }
+
+    /**
+     *  @brief Return the number of reactions
+     */
+    std::size_t numberReactions() const noexcept {
+
+      return this->reactions().size();
     }
 
     /**
@@ -86,10 +133,7 @@ namespace dryad {
      */
     bool hasReaction( const id::ReactionID& id ) const {
 
-      auto iter = std::find_if( this->reactions().begin(),
-                                this->reactions().end(),
-                                [&id] ( auto&& reaction )
-                                      { return reaction.identifier() == id; } );
+      auto iter = this->iterator( id );
       return iter != this->reactions().end();
     }
 
@@ -100,10 +144,7 @@ namespace dryad {
      */
     const Reaction& reaction( const id::ReactionID& id ) const {
 
-      auto iter = std::find_if( this->reactions().begin(),
-                                this->reactions().end(),
-                                [&id] ( auto&& reaction )
-                                      { return reaction.identifier() == id; } );
+      auto iter = this->iterator( id );
       if ( iter != this->reactions().end() ) {
 
         return *iter;
@@ -120,7 +161,87 @@ namespace dryad {
      */
     bool isLinearised() const noexcept {
 
-      return this->linearised_;
+      return std::all_of( this->reactions().begin(), this->reactions().end(),
+                          [] ( auto&& reaction )
+                             { return reaction.isLinearised(); } );
+    }
+
+    /**
+     *  @brief Calculate summation cross sections
+     *
+     *  This function recalculates the cross section of all summation reactions.
+     *  It does so by linearising the cross sections of the partials (if required)
+     *  and summing them together.
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     */
+    void calculateSummationCrossSections( ToleranceConvergence tolerance = {} ) {
+
+      for ( auto& reaction : this->reactions() ) {
+
+        if ( reaction.isSummationReaction() ) {
+
+          TabulatedCrossSection total;
+          for ( std::size_t index = 0; index < reaction.numberPartialReactions(); ++index ) {
+
+            decltype(auto) partial = this->reaction( reaction.partialReactionIdentifiers().value()[index] );
+            if ( index == 0 ) {
+
+              total = partial.crossSection().linearise( tolerance );
+            }
+            else {
+
+              if ( partial.crossSection().isLinearised() ) {
+
+                // operator+= passes the table by reference so no copy this way
+                total += partial.crossSection();
+              }
+              else {
+
+                // linearise makes a new temporary object
+                total += partial.crossSection().linearise( tolerance );
+              }
+            }
+          }
+
+          reaction.crossSection( std::move( total ) );
+        }
+      }
+    }
+
+    /**
+     *  @brief Resolve all partial reaction identifiers
+     *
+     *  This function goes through all summation reactions and ensures that
+     *  the partial identifiers for each only point to primary reactions.
+     */
+    void resolvePartialIdentifiers() {
+
+      for ( auto& reaction : this->reactions() ) {
+
+        if ( reaction.isSummationReaction() ) {
+
+          std::vector< id::ReactionID > partials = reaction.partialReactionIdentifiers().value();
+
+          auto iter = partials.begin();
+          while ( iter != partials.end() ) {
+
+            decltype(auto) partial = this->reaction( *iter );
+            if ( partial.isSummationReaction() ) {
+
+              iter = partials.erase( iter );
+              iter = partials.insert( iter, partial.partialReactionIdentifiers()->begin(),
+                                            partial.partialReactionIdentifiers()->end() );
+            }
+            else {
+
+              ++iter;
+            }
+          }
+
+          reaction.partialReactionIdentifiers( partials );
+        }
+      }
     }
 
     /**

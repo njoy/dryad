@@ -779,6 +779,14 @@ class ProjectileTarget:
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
+    def calculate_summation_cross_sections(self, tolerance: ToleranceConvergence = ...) -> None:
+        """
+        Calculate summation cross sections
+        
+        Arguments:
+            self        the ProjectileTarget data
+            tolerance   the linearisation tolerance
+        """
     def has_reaction(self, id: str) -> bool:
         """
         Return whether or not a reaction is present
@@ -806,6 +814,11 @@ class ProjectileTarget:
         Flag indicating whether or not the data is linearised
         """
     @property
+    def number_reactions(self) -> int:
+        """
+        The number of reactions
+        """
+    @property
     def projectile_identifier(self) -> id.ParticleID:
         """
         The projectile identifier
@@ -815,11 +828,17 @@ class ProjectileTarget:
         """
         The reactions
         """
+    @reactions.setter
+    def reactions(self, arg1: list[Reaction]) -> None:
+        ...
     @property
     def resonances(self) -> resonances.ResonanceParameters | None:
         """
         The resonance parameters
         """
+    @resonances.setter
+    def resonances(self, arg1: resonances.ResonanceParameters | None) -> None:
+        ...
     @property
     def target_identifier(self) -> id.ParticleID:
         """
@@ -937,6 +956,11 @@ class Reaction:
     @mass_difference_qvalue.setter
     def mass_difference_qvalue(self, arg1: float | None) -> None:
         ...
+    @property
+    def number_partial_reactions(self) -> int:
+        """
+        The number of partial reactions that make up this reaction
+        """
     @property
     def partial_reaction_identifiers(self) -> list[str] | None:
         """
