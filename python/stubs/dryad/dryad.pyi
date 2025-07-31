@@ -77,6 +77,9 @@ class AtomicRelaxation:
         """
         The element identifier
         """
+    @element_identifier.setter
+    def element_identifier(self, arg1: id.ElementID) -> None:
+        ...
     @property
     def number_subshells(self) -> int:
         """

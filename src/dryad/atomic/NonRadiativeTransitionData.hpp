@@ -58,12 +58,36 @@ namespace atomic {
     }
 
     /**
+     *  @brief Set the identifier of the subshell from which the
+     *         electron filling the vacancy originated
+     *
+     *  @param originatingShell   the identifier of the subshell from which the
+     *                            vacancy filling electron originated
+     */
+    void originatingShell( id::ElectronSubshellID originatingShell ) noexcept {
+
+      this->originating_shell_ = std::move( originatingShell );
+    }
+
+    /**
      *  @brief Return the identifier of the subshell from which the
      *         emitted electron originated
      */
     const id::ElectronSubshellID& emittingShell() const noexcept {
 
       return this->emitting_shell_;
+    }
+
+    /**
+     *  @brief Set the the identifier of the subshell from which the
+     *         emitted electron originated
+     *
+     *  @param emittingShell      the identifier of the subshell from which the
+     *                            emitted electron originated
+     */
+    void emittingShell( id::ElectronSubshellID emittingShell ) noexcept {
+
+      this->emitting_shell_ = std::move( emittingShell );
     }
 
     /**

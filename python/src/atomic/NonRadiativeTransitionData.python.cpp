@@ -57,17 +57,19 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     [] ( const Component& self ) ->decltype(auto) { return self.type(); },
     "The transition type"
   )
-  .def_property_readonly(
+  .def_property(
 
     "originating_shell",
-    &Component::originatingShell,
+    python::overload_cast<>( &Component::originatingShell, python::const_ ),
+    python::overload_cast< ElectronSubshellID >( &Component::originatingShell ),
     "The identifier of the subshell from which the electron filling the vacancy "
     "originated"
   )
-  .def_property_readonly(
+  .def_property(
 
     "emitting_shell",
-    &Component::emittingShell,
+    python::overload_cast<>( &Component::emittingShell, python::const_ ),
+    python::overload_cast< ElectronSubshellID >( &Component::emittingShell ),
     "The identifier of the subshell from which the emitted electron originated"
   )
   .def_property(

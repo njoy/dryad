@@ -103,6 +103,20 @@ SCENARIO( "AtomicRelaxation" ) {
                                   false
                                 ) } );
 
+      THEN( "the shell identifier can be changed" ) {
+
+        id::ElementID newid = id::ElementID( 2 );
+        id::ElementID original = id::ElementID( 1 );
+
+        chunk.elementIdentifier( newid );
+
+        CHECK( newid == chunk.elementIdentifier() );
+
+        chunk.elementIdentifier( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
       THEN( "the subshell data can be changed" ) {
 
         std::vector< atomic::ElectronSubshellConfiguration > newsubshells = {

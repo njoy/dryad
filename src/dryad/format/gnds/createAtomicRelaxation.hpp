@@ -39,7 +39,7 @@ namespace gnds {
       for ( pugi::xml_node subshell = shells.child( "configuration" );
             subshell; subshell = subshell.next_sibling(  "configuration"  ) ) {
 
-        subshells.push_back( gnds::atomic::createElectronSubshellConfiguration( id, subshell, normalise ) );
+        subshells.emplace_back( gnds::atomic::createElectronSubshellConfiguration( id, subshell, normalise ) );
       }
 
       return AtomicRelaxation( std::move( id ), std::move( subshells ) );

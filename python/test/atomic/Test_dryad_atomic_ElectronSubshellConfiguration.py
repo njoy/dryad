@@ -141,6 +141,16 @@ class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
 
         chunk = ElectronSubshellConfiguration( id = ElectronSubshellID( 'K' ), energy = 538, population = 2. )
 
+        # the subshell id can be changed
+        newid = ElectronSubshellID( 'L1' )
+        original = ElectronSubshellID( 'K' )
+
+        chunk.identifier = newid
+
+        self.assertEqual( newid, chunk.identifier )
+
+        chunk.identifier = original
+
         # the binding energy can be changed
         newenergy = 538.6
         original = 538

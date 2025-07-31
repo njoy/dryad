@@ -43,10 +43,11 @@ void wrapAtomicRelaxation( python::module& module ) {
     "    normalise   option to indicate whether or not to normalise\n"
     "                all probability data (default: no normalisation)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "element_identifier",
-    &Component::elementIdentifier,
+    python::overload_cast<>( &Component::elementIdentifier, python::const_ ),
+    python::overload_cast< ElementID >( &Component::elementIdentifier ),
     "The element identifier"
   )
   .def_property_readonly(
