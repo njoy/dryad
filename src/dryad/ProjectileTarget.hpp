@@ -169,9 +169,9 @@ namespace dryad {
     /**
      *  @brief Calculate summation cross sections
      *
-     *  This function recalculates the cross section of all summation cross
-     *  section. It does so by linearising the cross sections of the partials
-     *  (if required) and summing them together.
+     *  This function recalculates the cross section of all summation reactions.
+     *  It does so by linearising the cross sections of the partials (if required)
+     *  and summing them together.
      *
      *  @param[in] tolerance   the linearisation tolerance
      */

@@ -3,9 +3,9 @@
  *
  *  @param projectile   the projectile identifier
  *  @param target       the target identifier
+ *  @param type         the interaction type
+ *  @param resonances   the resonance parameters
  *  @param reactions    the reaction data
- *  @param linearised   a flag indicating whether or not the data is
- *                      linearised
  */
 ProjectileTarget( id::ParticleID&& projectile,
                   id::ParticleID&& target,
@@ -39,6 +39,7 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *
  *  @param projectile   the projectile identifier
  *  @param target       the target identifier
+ *  @param type         the interaction type
  *  @param reactions    the reaction data
  */
 ProjectileTarget( id::ParticleID projectile,
