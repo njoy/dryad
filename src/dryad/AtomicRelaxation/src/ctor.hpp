@@ -12,9 +12,9 @@ AtomicRelaxation& operator=( AtomicRelaxation&& ) = default;
 /**
  *  @brief Constructor with documentation
  *
+ *  @param[in] documentation   the documentation
  *  @param[in] element         the element identifier
  *  @param[in] subshells       the electron subshell configuration data
- *  @param[in] documentation   the documentation
  *  @param[in] normalise       option to indicate whether or not to normalise
  *                             all probability data (default: no normalisation)
  */
