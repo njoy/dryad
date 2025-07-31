@@ -103,26 +103,6 @@ void wrapProjectileTarget( python::module& module ) {
     &Component::isLinearised,
     "Flag indicating whether or not the data is linearised"
   )
-  .def(
-
-    "linearise",
-    &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the data and return a new object\n\n"
-    "Arguments:\n"
-    "    self        the ProjectileTarget\n"
-    "    tolerance   the linearisation tolerance"
-  )
-  .def(
-
-    "linearise_inplace",
-    &Component::lineariseInplace,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the data inplace\n\n"
-    "Arguments:\n"
-    "    self        the ProjectileTarget\n"
-    "    tolerance   the linearisation tolerance"
-  )
   .def_static(
 
     "from_endf_file",

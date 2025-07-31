@@ -760,22 +760,6 @@ class ProjectileTarget:
             self   the ProjectileTarget data
             id     the reaction identifier
         """
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> ProjectileTarget:
-        """
-        Linearise the data and return a new object
-        
-        Arguments:
-            self        the ProjectileTarget
-            tolerance   the linearisation tolerance
-        """
-    def linearise_inplace(self, tolerance: ToleranceConvergence = ...) -> None:
-        """
-        Linearise the data inplace
-        
-        Arguments:
-            self        the ProjectileTarget
-            tolerance   the linearisation tolerance
-        """
     def reaction(self, id: str) -> Reaction:
         """
         Return the requested reaction
@@ -861,22 +845,6 @@ class Reaction:
             self   the reaction
             type   the reaction product type
         """
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> Reaction:
-        """
-        Linearise the reaction data and return a new reaction
-        
-        Arguments:
-            self        the reaction
-            tolerance   the linearisation tolerance
-        """
-    def linearise_inplace(self, tolerance: ToleranceConvergence = ...) -> None:
-        """
-        Linearise the reaction data inplace
-        
-        Arguments:
-            self        the reaction
-            tolerance   the linearisation tolerance
-        """
     @typing.overload
     def number_products(self) -> int:
         """
@@ -906,6 +874,9 @@ class Reaction:
         """
         The cross section
         """
+    @cross_section.setter
+    def cross_section(self, arg1: TabulatedCrossSection) -> None:
+        ...
     @property
     def has_products(self) -> bool:
         """
@@ -936,22 +907,34 @@ class Reaction:
         """
         The mass difference Q value
         """
+    @mass_difference_qvalue.setter
+    def mass_difference_qvalue(self, arg1: float | None) -> None:
+        ...
     @property
     def partial_reaction_identifiers(self) -> list[str] | None:
         """
         The summation reaction identifiers (not defined if this is a primary
         reaction)
         """
+    @partial_reaction_identifiers.setter
+    def partial_reaction_identifiers(self, arg1: list[str] | None) -> None:
+        ...
     @property
     def products(self) -> list[ReactionProduct]:
         """
         The reaction products
         """
+    @products.setter
+    def products(self, arg1: list[ReactionProduct]) -> None:
+        ...
     @property
     def reaction_qvalue(self) -> float | None:
         """
         The reaction Q value
         """
+    @reaction_qvalue.setter
+    def reaction_qvalue(self, arg1: float | None) -> None:
+        ...
 class ReactionCategory:
     """
     The reaction category

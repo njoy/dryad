@@ -94,29 +94,33 @@ void wrapReaction( python::module& module ) {
     &Component::isPrimaryReaction,
     "Flag to indicate whether or not the reaction is a primary reaction"
   )
-  .def_property_readonly(
+  .def_property(
 
     "partial_reaction_identifiers",
-    &Component::partialReactionIdentifiers,
+    python::overload_cast<>( &Component::partialReactionIdentifiers, python::const_ ),
+    python::overload_cast< std::optional< std::vector< ReactionID > > >( &Component::partialReactionIdentifiers ),
     "The summation reaction identifiers (not defined if this is a primary\n"
     "reaction)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "mass_difference_qvalue",
-    &Component::massDifferenceQValue,
+    python::overload_cast<>( &Component::massDifferenceQValue, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::massDifferenceQValue ),
     "The mass difference Q value"
   )
-  .def_property_readonly(
+  .def_property(
 
     "reaction_qvalue",
-    &Component::reactionQValue,
+    python::overload_cast<>( &Component::reactionQValue, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::reactionQValue ),
     "The reaction Q value"
   )
-  .def_property_readonly(
+  .def_property(
 
     "cross_section",
-    &Component::crossSection,
+    python::overload_cast<>( &Component::crossSection, python::const_ ),
+    python::overload_cast< TabulatedCrossSection >( &Component::crossSection ),
     "The cross section"
   )
   .def_property_readonly(
@@ -125,10 +129,11 @@ void wrapReaction( python::module& module ) {
     &Component::hasProducts,
     "Flag indicating whether or not there are reaction products defined"
   )
-  .def_property_readonly(
+  .def_property(
 
     "products",
-    &Component::products,
+    python::overload_cast<>( &Component::products, python::const_ ),
+    python::overload_cast< std::vector< ReactionProduct > >( &Component::products ),
     "The reaction products"
   )
   .def(
@@ -171,26 +176,6 @@ void wrapReaction( python::module& module ) {
     "is_linearised",
     &Component::isLinearised,
     "Flag indicating whether or not the data is linearised"
-  )
-  .def(
-
-    "linearise",
-    &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the reaction data and return a new reaction\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    tolerance   the linearisation tolerance"
-  )
-  .def(
-
-    "linearise_inplace",
-    &Component::lineariseInplace,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the reaction data inplace\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    tolerance   the linearisation tolerance"
   );
 
   // add standard equality comparison definitions

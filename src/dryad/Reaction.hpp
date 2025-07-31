@@ -26,6 +26,7 @@ namespace dryad {
     /* fields */
     id::ReactionID id_;
 
+    //! @todo if in the end there are only 2 categories, we may want to remove this
     ReactionCategory category_;
     std::optional< std::vector< id::ReactionID > > partials_;
 
@@ -44,6 +45,8 @@ namespace dryad {
 
     /* methods */
 
+    //! @todo add insertion, removal of individual reaction products
+
     /**
      *  @brief Return the reaction identifier
      */
@@ -61,13 +64,39 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the summation reaction identifiers (not defined if this is
+     *  @brief Return the partial reaction identifiers (not defined if this is
      *         a primary reaction)
      */
     const std::optional< std::vector< id::ReactionID > >&
     partialReactionIdentifiers() const noexcept {
 
       return this->partials_;
+    }
+
+    /**
+     *  @brief Set the partial reaction identifiers
+     *
+     *  This will also reset the reaction category to summation or primary
+     *  as required. Using std::nullopt will thus erase the partial identifiers
+     *  and make the reaction a primary reaction if it wasn't a primary one
+     *  already.
+     *
+     *  Summation reactions do not have q values associated to them, so it is
+     *  up to the user to update the q values seperately when changing the
+     *  partial identifiers causes the reaction category to change.
+     *
+     *  @param[in] partials   the partial reaction identifiers
+     */
+    void partialReactionIdentifiers( std::optional< std::vector< id::ReactionID > > partials ) noexcept {
+
+      this->partials_ = std::move( partials );
+      if ( this->partials_.has_value() && this->partials_.value().size() == 0 ) {
+
+        this->partials_ = std::nullopt;
+      }
+      this->category_ = this->isPrimaryReaction()
+                        ? ReactionCategory::Primary
+                        : ReactionCategory::Summation;
     }
 
     /**
@@ -100,11 +129,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the mass difference Q value
+     *
+     *  @param[in] mass_q   the mass difference Q value
+     */
+    void massDifferenceQValue( std::optional< double > mass_q ) noexcept {
+
+      this->mass_difference_qvalue_ = std::move( mass_q );
+    }
+
+    /**
      *  @brief Return the reaction Q value
      */
     const std::optional< double >& reactionQValue() const noexcept {
 
       return this->reaction_qvalue_;
+    }
+
+    /**
+     *  @brief Set the reaction Q value
+     *
+     *  @param[in] reaction_q   the reaction Q value
+     */
+    void reactionQValue( std::optional< double > reaction_q ) noexcept {
+
+      this->reaction_qvalue_ = std::move( reaction_q );
     }
 
     /**
@@ -116,11 +165,22 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the cross section
+     *
+     *  @param[in] xs   the new tabulated cross section
+     */
+    void crossSection( TabulatedCrossSection xs ) noexcept {
+
+      this->xs_ = std::move( xs );
+      this->linearised_ = this->crossSection().isLinearised() ? true : false;
+    }
+
+    /**
      *  @brief Return the number of reaction products
      */
     std::size_t numberProducts() const noexcept {
 
-      return this->products_.size();
+      return this->products().size();
     }
 
     /**
@@ -137,6 +197,16 @@ namespace dryad {
     const std::vector< ReactionProduct >& products() const noexcept {
 
       return this->products_;
+    }
+
+    /**
+     *  @brief Set the reaction products
+     *
+     *  @param[in] products   the reaction products
+     */
+    void products( std::vector< ReactionProduct > products ) noexcept {
+
+      this->products_ = std::move( products );
     }
 
     /**
@@ -208,40 +278,6 @@ namespace dryad {
     bool isLinearised() const noexcept {
 
       return this->linearised_;
-    }
-
-    /**
-     *  @brief Linearise the reaction data and return a new reaction
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
-
-      TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
-      if ( this->category() == ReactionCategory::Primary ) {
-
-        return Reaction( this->identifier(), std::move( xs ),
-                         this->products(), this->massDifferenceQValue(),
-                         this->reactionQValue() );
-      }
-      else {
-
-        return Reaction( this->identifier(),
-                         this->partialReactionIdentifiers().value(),
-                         std::move( xs ),
-                         this->products() );
-      }
-    }
-
-    /**
-     *  @brief Linearise the reaction data inplace
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
-
-      this->xs_ = this->xs_.linearise( tolerance );
-      this->linearised_ = true;
     }
 
     /**
