@@ -74,6 +74,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the reference frame
+     *
+     *  @param frame   the reference frame of the distribution data
+     */
+    void frame( ReferenceFrame frame ) noexcept {
+
+      this->frame_ = std::move( frame );
+    }
+
+    /**
      *  @brief Return the angular distributions
      */
     const AngularDistributions& angle() const noexcept {
@@ -82,11 +92,47 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the angular distributions
+     */
+    AngularDistributions& angle() noexcept {
+
+      return this->angle_;
+    }
+
+    /**
+     *  @brief Set the angular distributions
+     *
+     *  @param angle   the angular distributions
+     */
+    void angle( AngularDistributions angle ) noexcept {
+
+      this->angle_ = std::move( angle );
+    }
+
+    /**
      *  @brief Return the energy distributions
      */
     const EnergyDistributions& energy() const noexcept {
 
       return this->energy_;
+    }
+
+    /**
+     *  @brief Return the energy distributions
+     */
+    EnergyDistributions& energy() noexcept {
+
+      return this->energy_;
+    }
+
+    /**
+     *  @brief Set the energy distributions
+     *
+     *  @param energy   the energy distributions
+     */
+    void energy( EnergyDistributions energy ) noexcept {
+
+      this->energy_ = std::move( energy );
     }
 
     /**

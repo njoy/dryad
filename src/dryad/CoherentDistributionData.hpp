@@ -62,6 +62,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the reference frame
+     *
+     *  @param frame   the reference frame of the distribution data
+     */
+    void frame( ReferenceFrame frame ) noexcept {
+
+      this->frame_ = std::move( frame );
+    }
+
+    /**
      *  @brief Return whether or not the coherent distribution data has an anomolous
      *         form factor
      */
@@ -79,6 +89,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the scattering function
+     *
+     *  @param scattering   the scattering function
+     */
+    void scatteringFunction( TabulatedScatteringFunction scattering ) noexcept {
+
+      this->scattering_ = scattering;
+    }
+
+    /**
      *  @brief Return the real part of the anomolous form factor
      */
     const std::optional< TabulatedFormFactor >& realAnomolousFormFactor() const noexcept {
@@ -87,11 +107,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the real part of the anomolous form factor
+     *
+     *  @param real   the real part of the anamolous form factor
+     */
+    void realAnomolousFormFactor( std::optional< TabulatedFormFactor > real ) noexcept {
+
+      this->real_ = real;
+    }
+
+    /**
      *  @brief Return the imaginary part of the anomolous form factor
      */
     const std::optional< TabulatedFormFactor >& imaginaryAnomolousFormFactor() const noexcept {
 
       return this->imaginary_;
+    }
+
+    /**
+     *  @brief Set the imaginary part of the anomolous form factor
+     *
+     *  @param real   the imaginary part of the anamolous form factor
+     */
+    void imaginaryAnomolousFormFactor( std::optional< TabulatedFormFactor > imaginary ) noexcept {
+
+      this->imaginary_ = imaginary;
     }
 
     /**

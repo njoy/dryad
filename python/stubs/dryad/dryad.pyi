@@ -166,6 +166,9 @@ class CoherentDistributionData:
         """
         The reference frame
         """
+    @frame.setter
+    def frame(self, arg1: ReferenceFrame) -> None:
+        ...
     @property
     def has_anomolous_form_factor(self) -> bool:
         """
@@ -177,16 +180,25 @@ class CoherentDistributionData:
         """
         The imaginary part of the anomolous form factor
         """
+    @imaginary_anomolous_form_factor.setter
+    def imaginary_anomolous_form_factor(self, arg1: TabulatedFormFactor | None) -> None:
+        ...
     @property
     def real_anomolous_form_factor(self) -> TabulatedFormFactor | None:
         """
         The real part of the anomolous form factor
         """
+    @real_anomolous_form_factor.setter
+    def real_anomolous_form_factor(self, arg1: TabulatedFormFactor | None) -> None:
+        ...
     @property
     def scattering_function(self) -> TabulatedScatteringFunction:
         """
         The scattering function
         """
+    @scattering_function.setter
+    def scattering_function(self, arg1: TabulatedScatteringFunction) -> None:
+        ...
     @property
     def type(self) -> DistributionDataType:
         """
@@ -328,11 +340,17 @@ class IncoherentDistributionData:
         """
         The reference frame
         """
+    @frame.setter
+    def frame(self, arg1: ReferenceFrame) -> None:
+        ...
     @property
     def scattering_function(self) -> TabulatedScatteringFunction:
         """
         The scattering function
         """
+    @scattering_function.setter
+    def scattering_function(self, arg1: TabulatedScatteringFunction) -> None:
+        ...
     @property
     def type(self) -> DistributionDataType:
         """
@@ -2814,16 +2832,25 @@ class UncorrelatedDistributionData:
         """
         The angular distributions
         """
+    @angle.setter
+    def angle(self, arg1: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+        ...
     @property
     def energy(self) -> MultiEnergyDistributions | TabulatedEnergyDistributions:
         """
         The energy distributions
         """
+    @energy.setter
+    def energy(self, arg1: MultiEnergyDistributions | TabulatedEnergyDistributions) -> None:
+        ...
     @property
     def frame(self) -> ReferenceFrame:
         """
         The reference frame
         """
+    @frame.setter
+    def frame(self, arg1: ReferenceFrame) -> None:
+        ...
     @property
     def type(self) -> DistributionDataType:
         """

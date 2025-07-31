@@ -96,6 +96,61 @@ SCENARIO( "UncorrelatedDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of CoherentDistributionData is given" ) {
+
+      UncorrelatedDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                          IsotropicAngularDistributions(),
+                                          TabulatedEnergyDistributions(
+                                            { 1e-5, 20. },
+                                            { { { 0., 20. }, { 0., 0.1 } },
+                                              { { 0., 20. }, { 0.05, 0.05 } } } ) );
+
+      THEN( "the reference frame can be changed" ) {
+
+        ReferenceFrame newframe = ReferenceFrame::Laboratory;
+        ReferenceFrame original = ReferenceFrame::CentreOfMass;
+
+        chunk.frame( newframe );
+
+        CHECK( newframe == chunk.frame() );
+
+        chunk.frame( original );
+
+        verifyIsotropicAndTabulatedChunk( chunk );
+      } // THEN
+
+      THEN( "the distribution data can be changed" ) {
+
+        UncorrelatedDistributionData::AngularDistributions
+        newangle = LegendreAngularDistributions( { 1e-5, 20. },
+                                                 { { { 0.5 } }, { { 0.5, 0.1 } } } );
+        UncorrelatedDistributionData::EnergyDistributions
+        newenergy = TabulatedEnergyDistributions( { 1e-5, 20. },
+                                                  { { { 0., 10. }, { 0., 0.1 } },
+                                                    { { 0., 10. }, { 0.05, 0.05 } } } );
+        UncorrelatedDistributionData::AngularDistributions
+        originalangle = IsotropicAngularDistributions();
+        UncorrelatedDistributionData::EnergyDistributions
+        originalenergy = TabulatedEnergyDistributions( { 1e-5, 20. },
+                                                       { { { 0., 20. }, { 0., 0.1 } },
+                                                         { { 0., 20. }, { 0.05, 0.05 } } } );
+
+        chunk.angle( newangle );
+        chunk.energy( newenergy );
+
+        CHECK( newangle == chunk.angle() );
+        CHECK( newenergy == chunk.energy() );
+
+        chunk.angle( originalangle );
+        chunk.energy( originalenergy );
+
+        verifyIsotropicAndTabulatedChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of UncorrelatedDistributionData are given" ) {

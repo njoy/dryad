@@ -51,6 +51,60 @@ SCENARIO( "CoherentDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of CoherentDistributionData is given" ) {
+
+      CoherentDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                      TabulatedScatteringFunction( { 0., 1e+6 }, { 2., 1. } ) );
+
+      THEN( "the reference frame can be changed" ) {
+
+        ReferenceFrame newframe = ReferenceFrame::Laboratory;
+        ReferenceFrame original = ReferenceFrame::CentreOfMass;
+
+        chunk.frame( newframe );
+
+        CHECK( newframe == chunk.frame() );
+
+        chunk.frame( original );
+
+        verifyChunkWithoutAnomolousFormFactor( chunk );
+      } // THEN
+
+      THEN( "the scattering function can be changed" ) {
+
+        TabulatedScatteringFunction newfunction( { 0., 1e+6 }, { 4., 2. } );
+        TabulatedScatteringFunction original( { 0., 1e+6 }, { 2., 1. } );
+
+        chunk.scatteringFunction( newfunction );
+
+        CHECK( newfunction == chunk.scatteringFunction() );
+
+        chunk.scatteringFunction( original );
+
+        verifyChunkWithoutAnomolousFormFactor( chunk );
+      } // THEN
+
+      THEN( "the form factor can be changed" ) {
+
+        std::optional< TabulatedFormFactor > newrealfactor( { { 1., 2e+7 }, { 1., 2. } } );
+        std::optional< TabulatedFormFactor > newimaginaryfactor( { { 1., 2e+7 }, { 0.5, 0.6 } } );
+        std::optional< TabulatedFormFactor > original = std::nullopt;
+
+        chunk.realAnomolousFormFactor( newrealfactor );
+        chunk.imaginaryAnomolousFormFactor( newimaginaryfactor );
+
+        verifyChunkWithAnomolousFormFactor( chunk );
+
+        chunk.realAnomolousFormFactor( original );
+        chunk.imaginaryAnomolousFormFactor( original );
+
+        verifyChunkWithoutAnomolousFormFactor( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of CoherentDistributionData are given" ) {

@@ -56,11 +56,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the reference frame
+     *
+     *  @param frame   the reference frame of the distribution data
+     */
+    void frame( ReferenceFrame frame ) noexcept {
+
+      this->frame_ = std::move( frame );
+    }
+
+    /**
      *  @brief Return the scattering function
      */
     const TabulatedScatteringFunction& scatteringFunction() const noexcept {
 
       return this->scattering_;
+    }
+
+    /**
+     *  @brief Set the scattering function
+     *
+     *  @param scattering   the scattering function
+     */
+    void scatteringFunction( TabulatedScatteringFunction scattering ) noexcept {
+
+      this->scattering_ = scattering;
     }
 
     /**
