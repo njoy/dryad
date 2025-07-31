@@ -163,44 +163,6 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
         verify_summation_chunk( self, chunk )
 
-    def test_comparison( self ) :
-
-        left = Reaction( id = 'n,Fe56->n,Fe56_e1',
-                         mass_q = 0, reaction_q = -1,
-                         xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
-                                                      [ 4., 3., 4., 3., 2. ],
-                                                      [ 1, 4 ],
-                                                      [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] ),
-                         products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
-                                      ReactionProduct( ParticleID( 'g' ), 2 ),
-                                      ReactionProduct( ParticleID( 'g' ), 3 ) ] )
-        equal = Reaction( id = 'n,Fe56->n,Fe56_e1',
-                          mass_q = 0, reaction_q = -1,
-                          xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
-                                                       [ 4., 3., 4., 3., 2. ],
-                                                       [ 1, 4 ],
-                                                       [ InterpolationType.LinearLinear,
-                                                         InterpolationType.LinearLog ] ),
-                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
-                                       ReactionProduct( ParticleID( 'g' ), 2 ),
-                                       ReactionProduct( ParticleID( 'g' ), 3 ) ] )
-        different = Reaction( id = 'n,Fe56->total',
-                              partials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe56' ],
-                              xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
-                                                           [ 4., 3., 4., 3., 2. ],
-                                                           [ 1, 4 ],
-                                                           [ InterpolationType.LinearLinear,
-                                                             InterpolationType.LinearLog ] ) )
-
-        self.assertEqual( True, ( left == left ) )
-        self.assertEqual( True, ( left == equal ) )
-        self.assertEqual( False, ( left == different ) )
-
-        self.assertEqual( False, ( left != left ) )
-        self.assertEqual( False, ( left != equal ) )
-        self.assertEqual( True, ( left != different ) )
-
     def test_setter_functions( self ) :
 
         chunk = Reaction( id = 'n,Fe56->n,Fe56_e1',
@@ -277,6 +239,44 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         chunk.products = original
 
         verify_chunk( self, chunk )
+
+    def test_comparison( self ) :
+
+        left = Reaction( id = 'n,Fe56->n,Fe56_e1',
+                         mass_q = 0, reaction_q = -1,
+                         xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
+                                                      [ 4., 3., 4., 3., 2. ],
+                                                      [ 1, 4 ],
+                                                      [ InterpolationType.LinearLinear,
+                                                        InterpolationType.LinearLog ] ),
+                         products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
+                                      ReactionProduct( ParticleID( 'g' ), 2 ),
+                                      ReactionProduct( ParticleID( 'g' ), 3 ) ] )
+        equal = Reaction( id = 'n,Fe56->n,Fe56_e1',
+                          mass_q = 0, reaction_q = -1,
+                          xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
+                                                       [ 4., 3., 4., 3., 2. ],
+                                                       [ 1, 4 ],
+                                                       [ InterpolationType.LinearLinear,
+                                                         InterpolationType.LinearLog ] ),
+                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
+                                       ReactionProduct( ParticleID( 'g' ), 2 ),
+                                       ReactionProduct( ParticleID( 'g' ), 3 ) ] )
+        different = Reaction( id = 'n,Fe56->total',
+                              partials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe56' ],
+                              xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
+                                                           [ 4., 3., 4., 3., 2. ],
+                                                           [ 1, 4 ],
+                                                           [ InterpolationType.LinearLinear,
+                                                             InterpolationType.LinearLog ] ) )
+
+        self.assertEqual( True, ( left == left ) )
+        self.assertEqual( True, ( left == equal ) )
+        self.assertEqual( False, ( left == different ) )
+
+        self.assertEqual( False, ( left != left ) )
+        self.assertEqual( False, ( left != equal ) )
+        self.assertEqual( True, ( left != different ) )
 
 if __name__ == '__main__' :
 

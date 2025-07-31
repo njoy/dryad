@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const AtomicRelaxation& );
+void verifyChunk( const AtomicRelaxation&, bool );
 
 SCENARIO( "AtomicRelaxation" ) {
 
@@ -19,9 +19,16 @@ SCENARIO( "AtomicRelaxation" ) {
 
     WHEN( "the data is given explicitly" ) {
 
+      // note: subshell data is deliberately given out of order to check for sorting,
+      //       the transition probabilities are not normalised to test normalisation
+      //       and the transition energies are not correct to test calculating the energies
+
       id::ElementID element( 1 );
       std::vector< atomic::ElectronSubshellConfiguration > subshells = {
 
+        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 ),
+        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
+        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
         atomic::ElectronSubshellConfiguration(
 
           id::ElectronSubshellID( "K" ), 538, 2,
@@ -32,18 +39,100 @@ SCENARIO( "AtomicRelaxation" ) {
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
             atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
-            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) }
-        ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
-        atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 )
+            atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) },
+          false
+        )
       };
 
-      AtomicRelaxation chunk( std::move( element ), std::move( subshells ) );
+      // no normalisation
+      AtomicRelaxation chunk1( element, subshells, false );
+
+      // normalisation at construction time
+      AtomicRelaxation chunk2( std::move( element ), std::move( subshells ), true );
 
       THEN( "a AtomicRelaxation can be constructed and members can be tested" ) {
 
-        verifyChunk( chunk );
+        verifyChunk( chunk1, false ); // unnormalised
+        verifyChunk( chunk2, true );  // normalised
+      } // THEN
+
+      THEN( "a AtomicRelaxation can be normalised" ) {
+
+        chunk1.normalise();
+        verifyChunk( chunk1, true ); // now normalised
+
+        chunk2.normalise();
+        verifyChunk( chunk2, true ); // still normalised
+      } // THEN
+
+      THEN( "transition energies can be calculated" ) {
+
+        chunk1.calculateTransitionEnergies();
+
+        CHECK_THAT( 538 - 13.62        , WithinRel( chunk1.subshells()[0].radiativeTransitions()[0].energy().value() ) );
+        CHECK_THAT( 538 - 13.62        , WithinRel( chunk1.subshells()[0].radiativeTransitions()[1].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 28.48, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[0].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[1].energy().value() ) );
+        CHECK_THAT( 538 - 28.48 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[2].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[3].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[4].energy().value() ) );
+        CHECK_THAT( 538 - 13.62 - 13.62, WithinRel( chunk1.subshells()[0].nonRadiativeTransitions()[5].energy().value() ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of Reaction is given" ) {
+
+      AtomicRelaxation chunk( id::ElementID( 1 ),
+                              { atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 ),
+                                atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
+                                atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
+                                atomic::ElectronSubshellConfiguration(
+
+                                  id::ElectronSubshellID( "K" ), 538, 2,
+                                  { atomic::RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                                    atomic::RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) },
+                                  { atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+                                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+                                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+                                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+                                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) },
+                                  false
+                                ) } );
+
+      THEN( "the subshell data can be changed" ) {
+
+        std::vector< atomic::ElectronSubshellConfiguration > newsubshells = {
+
+                atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "M1" ), 5000, 2 )
+        };
+        std::vector< atomic::ElectronSubshellConfiguration > original = {
+                atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L3" ), 13.62, 2.67 ),
+                atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L2" ), 13.62, 1.33 ),
+                atomic::ElectronSubshellConfiguration( id::ElectronSubshellID( "L1" ), 28.48, 2 ),
+                atomic::ElectronSubshellConfiguration(
+
+                  id::ElectronSubshellID( "K" ), 538, 2,
+                  { atomic::RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+                    atomic::RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 ) },
+                  { atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+                    atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 ) } )
+        };
+
+        chunk.subshells( newsubshells );
+
+        CHECK( newsubshells == chunk.subshells() );
+
+        chunk.subshells( original );
+
+        verifyChunk( chunk, false );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -107,12 +196,13 @@ SCENARIO( "AtomicRelaxation" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const AtomicRelaxation& chunk ) {
+void verifyChunk( const AtomicRelaxation& chunk, bool normalise ) {
 
   // identifiers
   CHECK( id::ElementID( 1 ) == chunk.elementIdentifier() );
 
   // subshell configuration data
+  CHECK( 4 == chunk.numberSubshells() );
   CHECK( 4 == chunk.subshells().size() );
 
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "K" ) ) );
@@ -120,6 +210,8 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "L2" ) ) );
   CHECK( true == chunk.hasSubshell( id::ElectronSubshellID( "L3" ) ) );
   CHECK( false == chunk.hasSubshell( id::ElectronSubshellID( "M1" ) ) );
+
+  double normalisation = normalise ? 1.00000015 : 1.0;
 
   auto k_shell = chunk.subshell( id::ElectronSubshellID( "K" ) );
   CHECK( id::ElectronSubshellID( "K" ) == k_shell.identifier() );
@@ -137,8 +229,8 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( atomic::TransitionType::Radiative == k_shell.radiativeTransitions()[1].type() );
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.radiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.radiativeTransitions()[1].originatingShell() );
-  CHECK_THAT( 0.00190768, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.00380027, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.00380027 / normalisation, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
   CHECK_THAT( 523.09, WithinRel( k_shell.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 523.13, WithinRel( k_shell.radiativeTransitions()[1].energy().value() ) );
   CHECK( atomic::TransitionType::NonRadiative == k_shell.nonRadiativeTransitions()[0].type() );
@@ -159,20 +251,20 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.nonRadiativeTransitions()[3].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[4].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[5].emittingShell() );
-  CHECK_THAT( 0.178644 , WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.116224 , WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.230418 , WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0110822, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 0.291115 , WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 0.166809 , WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 0.178644  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.116224  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.230418  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0110822 / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 0.291115  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 0.166809  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
   CHECK_THAT( 478.82, WithinRel( k_shell.nonRadiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 493.86, WithinRel( k_shell.nonRadiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 493.9 , WithinRel( k_shell.nonRadiativeTransitions()[2].energy().value() ) );
   CHECK_THAT( 508.9 , WithinRel( k_shell.nonRadiativeTransitions()[3].energy().value() ) );
   CHECK_THAT( 508.94, WithinRel( k_shell.nonRadiativeTransitions()[4].energy().value() ) );
   CHECK_THAT( 508.98, WithinRel( k_shell.nonRadiativeTransitions()[5].energy().value() ) );
-  CHECK_THAT( 0.00570795, WithinRel( k_shell.totalRadiativeProbability() ) );
-  CHECK_THAT( 0.9942922 , WithinRel( k_shell.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0.00570795 / normalisation, WithinRel( k_shell.totalRadiativeProbability() ) );
+  CHECK_THAT( 0.9942922  / normalisation, WithinRel( k_shell.totalNonRadiativeProbability() ) );
 
   auto l1_shell = chunk.subshell( id::ElectronSubshellID( "L1" ) );
   CHECK( id::ElectronSubshellID( "L1" ) == l1_shell.identifier() );
@@ -235,8 +327,8 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( atomic::TransitionType::Radiative == k_shell.radiativeTransitions()[1].type() );
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.radiativeTransitions()[0].originatingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.radiativeTransitions()[1].originatingShell() );
-  CHECK_THAT( 0.00190768, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.00380027, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( k_shell.radiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.00380027 / normalisation, WithinRel( k_shell.radiativeTransitions()[1].probability() ) );
   CHECK_THAT( 523.09, WithinRel( k_shell.radiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 523.13, WithinRel( k_shell.radiativeTransitions()[1].energy().value() ) );
   CHECK( atomic::TransitionType::NonRadiative == k_shell.nonRadiativeTransitions()[0].type() );
@@ -257,20 +349,20 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( id::ElectronSubshellID( "L2" ) == k_shell.nonRadiativeTransitions()[3].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[4].emittingShell() );
   CHECK( id::ElectronSubshellID( "L3" ) == k_shell.nonRadiativeTransitions()[5].emittingShell() );
-  CHECK_THAT( 0.178644 , WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
-  CHECK_THAT( 0.116224 , WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
-  CHECK_THAT( 0.230418 , WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
-  CHECK_THAT( 0.0110822, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
-  CHECK_THAT( 0.291115 , WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
-  CHECK_THAT( 0.166809 , WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
+  CHECK_THAT( 0.178644  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[0].probability() ) );
+  CHECK_THAT( 0.116224  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[1].probability() ) );
+  CHECK_THAT( 0.230418  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[2].probability() ) );
+  CHECK_THAT( 0.0110822 / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[3].probability() ) );
+  CHECK_THAT( 0.291115  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[4].probability() ) );
+  CHECK_THAT( 0.166809  / normalisation, WithinRel( k_shell.nonRadiativeTransitions()[5].probability() ) );
   CHECK_THAT( 478.82, WithinRel( k_shell.nonRadiativeTransitions()[0].energy().value() ) );
   CHECK_THAT( 493.86, WithinRel( k_shell.nonRadiativeTransitions()[1].energy().value() ) );
   CHECK_THAT( 493.9 , WithinRel( k_shell.nonRadiativeTransitions()[2].energy().value() ) );
   CHECK_THAT( 508.9 , WithinRel( k_shell.nonRadiativeTransitions()[3].energy().value() ) );
   CHECK_THAT( 508.94, WithinRel( k_shell.nonRadiativeTransitions()[4].energy().value() ) );
   CHECK_THAT( 508.98, WithinRel( k_shell.nonRadiativeTransitions()[5].energy().value() ) );
-  CHECK_THAT( 0.00570795, WithinRel( k_shell.totalRadiativeProbability() ) );
-  CHECK_THAT( 0.9942922 , WithinRel( k_shell.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0.00570795 / normalisation, WithinRel( k_shell.totalRadiativeProbability() ) );
+  CHECK_THAT( 0.9942922  / normalisation, WithinRel( k_shell.totalNonRadiativeProbability() ) );
 
   l1_shell = chunk.subshells()[1];
   CHECK( id::ElectronSubshellID( "L1" ) == l1_shell.identifier() );
@@ -316,4 +408,6 @@ void verifyChunk( const AtomicRelaxation& chunk ) {
   CHECK( 0 == l3_shell.nonRadiativeTransitions().size() );
   CHECK_THAT( 0., WithinRel( l3_shell.totalRadiativeProbability() ) );
   CHECK_THAT( 0., WithinRel( l3_shell.totalNonRadiativeProbability() ) );
+
+  CHECK_THROWS( chunk.subshell( id::ElectronSubshellID( "M1" ) ) );
 }

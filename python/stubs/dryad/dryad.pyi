@@ -9,8 +9,9 @@ class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
     """
+    __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_endf_file(filename: str) -> AtomicRelaxation:
+    def from_endf_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
         Create AtomicRelaxation data from an ENDF file
         
@@ -18,24 +19,38 @@ class AtomicRelaxation:
         will be transformed into a AtomicRelaxation.
         
         Arguments:
-            filename   the ENDF file name
+            filename    the ENDF file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     @staticmethod
-    def from_gnds_file(filename: str) -> AtomicRelaxation:
+    def from_gnds_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
         Create AtomicRelaxation data from a GNDS file
         
         Arguments:
-            filename   the GNDS file name
+            filename    the GNDS file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
-    def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration]) -> None:
+    def __eq__(self, arg0: AtomicRelaxation) -> bool:
+        ...
+    def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
         Initialise the atomic relaxation data
         
         Arguments:
-            self         the reaction
-            element      the element identifier
-            subshells    the electron subshell configuration data
+            self        the reaction
+            element     the element identifier
+            subshells   the electron subshell configuration data
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def __ne__(self, arg0: AtomicRelaxation) -> bool:
+        ...
+    def calculate_transition_energies(self) -> None:
+        """
+        Calculate the transition energies for all transitions
         """
     def has_subshell(self, arg0: id.ElectronSubshellID) -> bool:
         """
@@ -44,6 +59,10 @@ class AtomicRelaxation:
         Arguments:
             self   the AtomicRelaxation data
             id     the electron subshell identifier
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the transition probabilities
         """
     def subshell(self, arg0: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
@@ -59,10 +78,18 @@ class AtomicRelaxation:
         The element identifier
         """
     @property
+    def number_subshells(self) -> int:
+        """
+        The number of subshells defined for this atom
+        """
+    @property
     def subshells(self) -> list[atomic.ElectronSubshellConfiguration]:
         """
         The electron shell configuration data
         """
+    @subshells.setter
+    def subshells(self, arg1: list[atomic.ElectronSubshellConfiguration]) -> None:
+        ...
 class CoherentDistributionData:
     """
     The distribution data for coherent scattering in photoatomic interactions

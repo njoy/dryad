@@ -9,6 +9,20 @@ from dryad.atomic import TransitionType
 from dryad.atomic import RadiativeTransitionData
 from dryad.id import ElectronSubshellID
 
+def verify_chunk_without_transition_energy( self, chunk ) :
+
+    self.assertEqual( TransitionType.Radiative, chunk.type )
+    self.assertEqual( ElectronSubshellID( 'K' ), chunk.originating_shell )
+    self.assertAlmostEqual( 1e-3, chunk.probability )
+    self.assertEqual( None, chunk.energy )
+
+def verify_chunk_with_transition_energy( self, chunk ) :
+
+    self.assertEqual( TransitionType.Radiative, chunk.type )
+    self.assertEqual( ElectronSubshellID( 'K' ), chunk.originating_shell )
+    self.assertAlmostEqual( 1e-3, chunk.probability )
+    self.assertAlmostEqual( 550, chunk.energy )
+
 class Test_dryad_RadiativeTransitionData( unittest.TestCase ) :
     """Unit test for the RadiativeTransitionData class."""
 
@@ -37,6 +51,34 @@ class Test_dryad_RadiativeTransitionData( unittest.TestCase ) :
         chunk = RadiativeTransitionData( originating_shell = ElectronSubshellID( 'K' ), probability = 1e-3, energy = 550 )
 
         verify_chunk_with_transition_energy( self, chunk )
+
+    def test_setter_functions( self ) :
+
+        chunk = RadiativeTransitionData( originating_shell = ElectronSubshellID( 'K' ), probability = 1e-3 )
+
+        # the probability can be changed
+        newprobability = 0.1
+        original = 1e-3
+
+        chunk.probability = newprobability
+
+        self.assertEqual( newprobability, chunk.probability )
+
+        chunk.probability = original
+
+        verify_chunk_without_transition_energy( self, chunk )
+
+        # the transition energy can be changed
+        newenergy = 1.0
+        original = None
+
+        chunk.energy = newenergy
+
+        self.assertEqual( newenergy, chunk.energy )
+
+        chunk.energy = original
+
+        verify_chunk_without_transition_energy( self, chunk )
 
     def test_comparison( self ) :
 

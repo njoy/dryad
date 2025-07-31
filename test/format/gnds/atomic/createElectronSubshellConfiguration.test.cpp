@@ -12,8 +12,8 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& );
-void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& );
+void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration&, bool );
+void verifyCopperChunk( const atomic::ElectronSubshellConfiguration&, bool );
 
 SCENARIO( "createElectronSubshellConfiguration" ) {
 
@@ -29,9 +29,11 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration );
+        auto chunk1 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration, false );
+        auto chunk2 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration, true );
 
-        verifyOxygenChunk( chunk );
+        verifyOxygenChunk( chunk1, false );
+        verifyOxygenChunk( chunk2, true );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -48,15 +50,18 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration );
+        auto chunk1 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration, false );
+        auto chunk2 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration, true );
 
-        verifyCopperChunk( chunk );
+        verifyCopperChunk( chunk1, false );
+        verifyCopperChunk( chunk2, true );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
+void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk,
+                        bool normalise ) {
 
   CHECK( id::ElectronSubshellID( "1s1/2" ) == chunk.identifier() );
   CHECK_THAT( 538, WithinRel( chunk.bindingEnergy() ) );
@@ -72,7 +77,7 @@ void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( 2 == chunk.radiativeTransitions().size() );
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
-  double normalisation = 1.00000015;
+  double normalisation = normalise ? 1.00000015 : 1.0;
 
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );
@@ -118,7 +123,8 @@ void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK_THAT( 0.9942922  / normalisation, WithinRel( chunk.totalNonRadiativeProbability() ) );
 }
 
-void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
+void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk,
+                        bool normalise ) {
 
   CHECK( id::ElectronSubshellID( "1s1/2" ) == chunk.identifier() );
   CHECK_THAT( 8986, WithinRel( chunk.bindingEnergy() ) );
@@ -134,7 +140,7 @@ void verifyCopperChunk( const atomic::ElectronSubshellConfiguration& chunk ) {
   CHECK( 6 == chunk.radiativeTransitions().size() );
   CHECK( 43 == chunk.nonRadiativeTransitions().size() );
 
-  double normalisation = 1.00000017168;
+  double normalisation = normalise ? 1.00000017168 : 1.0;
 
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
   CHECK( atomic::TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );

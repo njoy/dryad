@@ -18,6 +18,8 @@ namespace atomic {
 
   /**
    *  @brief Create an ElectronSubshellID
+   *
+   *  @param[in] subshell   the string denoting the subshell
    */
   id::ElectronSubshellID createElectronSubshellID( std::string subshell ) {
 
@@ -27,6 +29,9 @@ namespace atomic {
   /**
    *  @brief Create an ElectronSubshellID from a vacancy for
    *         a radiative transition
+   *
+   *  @param[in] element   the element identifier
+   *  @param[in] vacancy   the string denoting the vacancy
    */
   id::ElectronSubshellID
   createRadiativeTransitionElectronSubshellID( const id::ElementID& element,
@@ -38,6 +43,9 @@ namespace atomic {
 
   /**
    *  @brief Create ElectronSubshellIDs from vacancy for a non-radiative transition
+   *
+   *  @param[in] element     the element identifier
+   *  @param[in] vacancies   the string denoting the vacancies
    */
   std::pair< id::ElectronSubshellID, id::ElectronSubshellID >
   createNonRadiativeTransitionElectronSubshellID( const id::ElementID& element,

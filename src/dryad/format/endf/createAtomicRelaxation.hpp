@@ -18,8 +18,13 @@ namespace endf {
 
   /**
    *  @brief Create an AtomicRelaxation from an unparsed ENDF material
+   *
+   *  @param[in] material    the unparsed ENDF material
+   *  @param[in] normalise   option to indicate whether or not to normalise
+   *                         all probability data
    */
-  AtomicRelaxation createAtomicRelaxation( const ENDFtk::tree::Material& material ) {
+  AtomicRelaxation createAtomicRelaxation( const ENDFtk::tree::Material& material,
+                                           bool normalise ) {
 
     if ( material.hasSection( 28, 533 ) ) {
 
@@ -36,7 +41,7 @@ namespace endf {
       std::vector< dryad::atomic::ElectronSubshellConfiguration > subshells;
       for ( const auto& subshell : data.subshells() ) {
 
-        subshells.push_back( atomic::createElectronSubshellConfiguration( subshell ) );
+        subshells.push_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
       }
 
       return AtomicRelaxation( std::move( element ), std::move( subshells ) );

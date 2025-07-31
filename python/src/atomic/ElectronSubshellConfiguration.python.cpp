@@ -32,37 +32,33 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "  - the subshell binding energy (in eV)\n"
     "  - the electron population, i.e. the number of electrons in the subshell\n"
     "    when the atom is neutral (given as a floating point number)\n"
-    "  - the decay modes or transitions that can fill a hole in this shell"
+    "  - the decay modes or transitions that can fill a hole in this shell\n\n"
+    "If there are transitions defined, the transition probabilities\n"
+    "can be normalised to 1 upon construction."
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< ElectronSubshellID, double, double >(),
-    python::arg( "id" ), python::arg( "energy" ), python::arg( "population" ),
-    "Initialise the subshell configuration\n\n"
-    "Arguments:\n"
-    "    self           the subshell configuration data\n"
-    "    id             the electron subshell identifier\n"
-    "    energy         the electron subshell binding energy\n"
-    "    population     the electron subshell population when the atom is neutral"
-  )
-  .def(
-
     python::init< ElectronSubshellID, double, double,
                   std::vector< RadiativeTransitionData >,
-                  std::vector< NonRadiativeTransitionData > >(),
+                  std::vector< NonRadiativeTransitionData >,
+                  bool >(),
     python::arg( "id" ), python::arg( "energy" ), python::arg( "population" ),
-    python::arg( "radiative" ), python::arg( "non_radiative" ),
+    python::arg( "radiative" ) = std::vector< RadiativeTransitionData >{},
+    python::arg( "non_radiative" ) = std::vector< NonRadiativeTransitionData >{},
+    python::arg( "normalise" ) = false,
     "Initialise the subshell configuration\n\n"
     "Arguments:\n"
     "    self           the subshell configuration data\n"
     "    id             the electron subshell identifier\n"
     "    energy         the electron subshell binding energy\n"
     "    population     the electron subshell population when the atom is neutral\n"
-    "    radiative      the radiative transitions that are available\n"
-    "    nonradiative   the non-radiative transitions that are available"
+    "    radiative      the radiative transitions that are available (default: an empty list)\n"
+    "    nonradiative   the non-radiative transitions that are available (default: an empty list)\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -70,16 +66,18 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::identifier,
     "The electron subshell identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "binding_energy",
-    &Component::bindingEnergy,
+    python::overload_cast<>( &Component::bindingEnergy, python::const_ ),
+    python::overload_cast< double >( &Component::bindingEnergy ),
     "The electron subshell binding energy"
   )
-  .def_property_readonly(
+  .def_property(
 
     "population",
-    &Component::population,
+    python::overload_cast<>( &Component::population, python::const_ ),
+    python::overload_cast< double >( &Component::population ),
     "The electron subshell population when the atom is neutral"
   )
   .def_property_readonly(
@@ -118,17 +116,19 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::hasTransitions,
     "Flag to indicate whether or not transitions are available"
   )
-  .def_property_readonly(
+  .def_property(
 
     "radiative_transitions",
-    &Component::radiativeTransitions,
-    "The data for all available radiative transitions to this subshell"
+    python::overload_cast<>( &Component::radiativeTransitions, python::const_ ),
+    python::overload_cast< std::vector< RadiativeTransitionData > >( &Component::radiativeTransitions ),
+    "The available radiative transitions to this subshell"
   )
-  .def_property_readonly(
+  .def_property(
 
     "non_radiative_transitions",
-    &Component::nonRadiativeTransitions,
-    "The data for all available non-radiative transitions to this subshell"
+    python::overload_cast<>( &Component::nonRadiativeTransitions, python::const_ ),
+    python::overload_cast< std::vector< NonRadiativeTransitionData > >( &Component::nonRadiativeTransitions ),
+    "The available non-radiative transitions to this subshell"
   )
   .def_property_readonly(
 
@@ -141,6 +141,12 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "total_non_radiative_probability",
     &Component::totalNonRadiativeProbability,
     "The total non-radiative probability"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the transition probabilities"
   );
 
   // add standard equality comparison definitions

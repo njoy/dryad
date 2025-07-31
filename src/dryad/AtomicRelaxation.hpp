@@ -21,8 +21,12 @@ namespace dryad {
 
     /* fields */
     id::ElementID element_id_;
-
     std::vector< atomic::ElectronSubshellConfiguration > subshells_;
+
+    /* auxiliary functions */
+
+    #include "dryad/AtomicRelaxation/src/sort.hpp"
+    #include "dryad/AtomicRelaxation/src/iterator.hpp"
 
   public:
 
@@ -50,16 +54,41 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the electron shell configuration data
+     */
+    std::vector< atomic::ElectronSubshellConfiguration >&
+    subshells() noexcept {
+
+      return this->subshells_;
+    }
+
+    /**
+     *  @brief Set the electron shell configuration data
+     *
+     *  @param[in] subshells   the electron shell configuration data
+     */
+    void subshells( std::vector< atomic::ElectronSubshellConfiguration > subshells ) noexcept {
+
+      this->subshells_ = std::move( subshells );
+      this->sort();
+    }
+
+    /**
+     *  @brief Return the number of subshells defined for this atom
+     */
+    std::size_t numberSubshells() const noexcept {
+
+      return this->subshells().size();
+    }
+
+    /**
      *  @brief Return whether or not a given subshell is present
      *
      *  @param[in] id   the subshell identifier
      */
     bool hasSubshell( const id::ElectronSubshellID& id ) const {
 
-      auto iter = std::find_if( this->subshells().begin(),
-                                this->subshells().end(),
-                                [&id] ( auto&& subshell )
-                                      { return subshell.identifier() == id; } );
+      auto iter = this->iterator( id );
       return iter != this->subshells().end();
     }
 
@@ -71,11 +100,8 @@ namespace dryad {
     const atomic::ElectronSubshellConfiguration&
     subshell( const id::ElectronSubshellID& id ) const {
 
-      auto iter = std::find_if( this->subshells().begin(),
-                                this->subshells().end(),
-                                [&id] ( auto&& subshell )
-                                      { return subshell.identifier() == id; } );
-      if ( iter != this->subshells().end() ) {
+      auto iter = this->iterator( id );
+      if ( ( iter != this->subshells().end() ) && ( iter->identifier() == id ) ) {
 
         return *iter;
       }
@@ -83,6 +109,39 @@ namespace dryad {
 
         Log::error( "The requested subshell \'{}\' could not be found", id.symbol() );
         throw std::exception();
+      }
+    }
+
+    /**
+     *  @brief Normalise the transition probabilities for each subshell
+     */
+    void normalise() noexcept {
+
+      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
+
+        subshell.normalise();
+      }
+    }
+
+    /**
+     *  @brief Calculate the transition energies for all transitions
+     */
+    void calculateTransitionEnergies() noexcept {
+
+      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
+
+        auto current = subshell.bindingEnergy();
+        for ( atomic::RadiativeTransitionData& transition : subshell.radiativeTransitions() ) {
+
+          auto originating = this->subshell( transition.originatingShell() ).bindingEnergy();
+          transition.energy( current - originating );
+        }
+        for ( atomic::NonRadiativeTransitionData& transition : subshell.nonRadiativeTransitions() ) {
+
+          auto originating = this->subshell( transition.originatingShell() ).bindingEnergy();
+          auto emitting = this->subshell( transition.emittingShell() ).bindingEnergy();
+          transition.energy( current - originating - emitting );
+        }
       }
     }
 

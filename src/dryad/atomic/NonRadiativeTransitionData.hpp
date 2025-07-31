@@ -17,11 +17,12 @@ namespace atomic {
    *  @brief Data for a non-radiative transition in atomic relaxation
    *
    *  In a non-radiative transition, an electron from another shell fills a
-   *  vacancy in the current shell while another electron () is emitted. The
-   *  energy of the emitted electron is equal to the binding energy of the
-   *  subshell with the vacancy minus the binding energy of the subshell from
-   *  which the electron filling the vacancy originated from and the subshell
-   *  from which the emitted electron came from.
+   *  vacancy in the current shell while another electron is emitted (this
+   *  electron is often referred to as an Auger electron). The energy of the
+   *  emitted electron is equal to the binding energy of the subshell with
+   *  the vacancy minus the binding energy of the subshell from which the
+   *  electron filling the vacancy originated from and the subshell from
+   *  which the emitted electron came from.
    */
   class NonRadiativeTransitionData {
 
@@ -74,11 +75,31 @@ namespace atomic {
     }
 
     /**
+     *  @brief Set the transition probability
+     *
+     *  @param[in] probability   the probability of the transition
+     */
+    void probability( double probability ) noexcept {
+
+      this->probability_ = probability;
+    }
+
+    /**
      *  @brief Return the energy of the emitted electron
      */
     const std::optional< double >& energy() const noexcept {
 
       return this->energy_;
+    }
+
+    /**
+     *  @brief Set the energy of the emitted electron
+     *
+     *  @param[in] energy   the energy of the emitted electron
+     */
+    void energy( std::optional< double > energy ) noexcept {
+
+      this->energy_ = std::move( energy );
     }
 
     /**
