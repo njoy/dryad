@@ -55,7 +55,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the documentation
+     *  @brief Set the documentation
      *
      *  @param[in] documentation   the documentation
      */
@@ -73,7 +73,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the element identifier
+     *  @brief Set the element identifier
      *
      *  @param[in] element   the element identifier
      */

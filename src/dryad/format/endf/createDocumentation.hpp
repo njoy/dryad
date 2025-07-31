@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_METADATA
-#define NJOY_DRYAD_FORMAT_ENDF_METADATA
+#ifndef NJOY_DRYAD_FORMAT_ENDF_DOCUMENTATION
+#define NJOY_DRYAD_FORMAT_ENDF_DOCUMENTATION
 
 // system includes
 
@@ -14,7 +14,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a PolynomialMultiplicity from a parsed ENDF multiplicity
+   *  @brief Create a Documentation instance from a parsed MF1 MT451 section
    */
   Documentation
   createDocumentation( const ENDFtk::section::Type< 1, 451 >& information ) {
