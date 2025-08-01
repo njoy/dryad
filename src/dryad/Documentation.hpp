@@ -33,7 +33,7 @@ namespace dryad {
     /**
      *  @brief Return the awr (temporary)
      */
-    const std::optional< double >& awr() const noexcept {
+    const std::optional< double >& awr() const {
 
       return this->awr_;
     }
@@ -43,7 +43,7 @@ namespace dryad {
      *
      *  @param[in] awr   the awr
      */
-    void awr( std::optional< double > awr ) noexcept {
+    void awr( std::optional< double > awr ) {
 
       this->awr_ = std::move( awr );
     }
@@ -51,7 +51,7 @@ namespace dryad {
     /**
      *  @brief Return the library
      */
-    const std::optional< int >& library() const noexcept {
+    const std::optional< int >& library() const {
 
       return this->library_;
     }
@@ -61,7 +61,7 @@ namespace dryad {
      *
      *  @param[in] library   the library
      */
-    void library( std::optional< int > library ) noexcept {
+    void library( std::optional< int > library ) {
 
       this->library_ = std::move( library );
     }
@@ -69,7 +69,7 @@ namespace dryad {
     /**
      *  @brief Return the temperature
      */
-    const std::optional< std::pair< int, int > >& version() const noexcept {
+    const std::optional< std::pair< int, int > >& version() const {
 
       return this->version_;
     }
@@ -79,7 +79,7 @@ namespace dryad {
      *
      *  @param[in] version   the version numbers
      */
-    void version( std::optional< std::pair< int, int > > version ) noexcept {
+    void version( std::optional< std::pair< int, int > > version ) {
 
       this->version_ = std::move( version );
     }
@@ -87,7 +87,7 @@ namespace dryad {
     /**
      *  @brief Return the description
      */
-    const std::optional< std::string >& description() const noexcept {
+    const std::optional< std::string >& description() const {
 
       return this->description_;
     }
@@ -97,7 +97,7 @@ namespace dryad {
      *
      *  @param[in] description   the description
      */
-    void description( std::optional< std::string > description ) noexcept {
+    void description( std::optional< std::string > description ) {
 
       this->description_ = std::move( description );
     }
@@ -107,7 +107,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const Documentation& right ) const noexcept {
+    bool operator==( const Documentation& right ) const {
 
       return this->awr() == right.awr() &&
              this->library() == right.library() &&
@@ -120,7 +120,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const Documentation& right ) const noexcept {
+    bool operator!=( const Documentation& right ) const {
 
       return ! this->operator==( right );
     }

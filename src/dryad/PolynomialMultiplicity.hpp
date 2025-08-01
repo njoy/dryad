@@ -38,7 +38,7 @@ namespace dryad {
     /**
      *  @brief Return the lower energy limit
      */
-    double lowerEnergyLimit() const noexcept {
+    double lowerEnergyLimit() const {
 
       return std::get< njoy::scion::math::IntervalDomain< double > >( this->domain() ).lowerLimit();
     }
@@ -46,7 +46,7 @@ namespace dryad {
     /**
      *  @brief Return the upper energy limit
      */
-    double upperEnergyLimit() const noexcept {
+    double upperEnergyLimit() const {
 
       return std::get< njoy::scion::math::IntervalDomain< double > >( this->domain() ).upperLimit();
     }
@@ -200,7 +200,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const PolynomialMultiplicity& right ) const noexcept {
+    bool operator==( const PolynomialMultiplicity& right ) const {
 
       return PolynomialSeries::operator==( right );
     }
@@ -210,7 +210,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const PolynomialMultiplicity& right ) const noexcept {
+    bool operator!=( const PolynomialMultiplicity& right ) const {
 
       return ! this->operator==( right );
     }

@@ -42,7 +42,7 @@ namespace dryad {
     /**
      *  @brief Return the distribution data type
      */
-    static constexpr DistributionDataType type() noexcept {
+    static constexpr DistributionDataType type() {
 
       return DistributionDataType::Incoherent;
     }
@@ -50,7 +50,7 @@ namespace dryad {
     /**
      *  @brief Return the reference frame
      */
-    const ReferenceFrame& frame() const noexcept {
+    const ReferenceFrame& frame() const {
 
       return this->frame_;
     }
@@ -60,7 +60,7 @@ namespace dryad {
      *
      *  @param frame   the reference frame of the distribution data
      */
-    void frame( ReferenceFrame frame ) noexcept {
+    void frame( ReferenceFrame frame ) {
 
       this->frame_ = std::move( frame );
     }
@@ -68,7 +68,7 @@ namespace dryad {
     /**
      *  @brief Return the scattering function
      */
-    const TabulatedScatteringFunction& scatteringFunction() const noexcept {
+    const TabulatedScatteringFunction& scatteringFunction() const {
 
       return this->scattering_;
     }
@@ -78,7 +78,7 @@ namespace dryad {
      *
      *  @param scattering   the scattering function
      */
-    void scatteringFunction( TabulatedScatteringFunction scattering ) noexcept {
+    void scatteringFunction( TabulatedScatteringFunction scattering ) {
 
       this->scattering_ = scattering;
     }
@@ -88,7 +88,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const IncoherentDistributionData& right ) const noexcept {
+    bool operator==( const IncoherentDistributionData& right ) const {
 
       return this->frame() == right.frame() &&
              this->scatteringFunction() == right.scatteringFunction();
@@ -99,7 +99,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const IncoherentDistributionData& right ) const noexcept {
+    bool operator!=( const IncoherentDistributionData& right ) const {
 
       return ! this->operator==( right );
     }

@@ -1,4 +1,4 @@
-auto iterator( const id::ElectronSubshellID& id ) const noexcept {
+auto iterator( const id::ElectronSubshellID& id ) const {
 
   return std::lower_bound( this->subshells().begin(), this->subshells().end(),
                            id,

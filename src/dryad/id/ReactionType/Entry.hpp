@@ -104,15 +104,15 @@ public:
            std::move( interaction ), std::move( level ) ) {}
 
   /* methods */
-  long number() const noexcept { return this->number_; }
-  const std::optional< short >& mt() const noexcept { return this->mt_; }
-  const std::string& symbol() const noexcept { return this->symbol_; }
-  const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
+  long number() const { return this->number_; }
+  const std::optional< short >& mt() const { return this->mt_; }
+  const std::string& symbol() const { return this->symbol_; }
+  const std::vector< std::string >& alternatives() const { return this->alternatives_; }
   const InteractionType& type() const { return this->interaction_; }
-  const std::optional< std::vector< std::pair< ParticleID, short > > >& particles() const noexcept {
+  const std::optional< std::vector< std::pair< ParticleID, short > > >& particles() const {
 
     return this->ejectiles_;
   }
-  const std::optional< short >& level() const noexcept { return this->level_; }
-  const std::optional< int >& dza() const noexcept { return this->dza_; }
+  const std::optional< short >& level() const { return this->level_; }
+  const std::optional< int >& dza() const { return this->dza_; }
 };

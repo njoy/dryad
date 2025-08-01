@@ -38,7 +38,7 @@ namespace covariance {
     /**
      *  @brief Return the lower energy limit
      */
-    double lowerEnergyLimit() const noexcept {
+    double lowerEnergyLimit() const {
 
       return this->lower_;
     }
@@ -46,7 +46,7 @@ namespace covariance {
     /**
      *  @brief Return the upper energy limit
      */
-    double upperEnergyLimit() const noexcept {
+    double upperEnergyLimit() const {
 
       return this->upper_;
     }
@@ -54,7 +54,7 @@ namespace covariance {
     /**
      *  @brief Return the reactions in the linear combination
      */
-    const std::vector< id::ReactionID >& reactions() const noexcept {
+    const std::vector< id::ReactionID >& reactions() const {
 
       return this->reactions_;
     }
@@ -62,7 +62,7 @@ namespace covariance {
     /**
      *  @brief Return the coefficients for the linear combination
      */
-    const std::vector< double >& coefficients() const noexcept {
+    const std::vector< double >& coefficients() const {
 
       return this->coefficients_;
     }
@@ -70,7 +70,7 @@ namespace covariance {
     /**
      *  @brief Return the number of reactions in the linear combination
      */
-    std::size_t numberReactions() const noexcept {
+    std::size_t numberReactions() const {
 
       return this->reactions().size();
     }

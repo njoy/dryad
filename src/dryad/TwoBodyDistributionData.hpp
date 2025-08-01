@@ -54,7 +54,7 @@ namespace dryad {
     /**
      *  @brief Return the distribution data type
      */
-    static constexpr DistributionDataType type() noexcept {
+    static constexpr DistributionDataType type() {
 
       return DistributionDataType::TwoBody;
     }
@@ -62,7 +62,7 @@ namespace dryad {
     /**
      *  @brief Return the reference frame
      */
-    const ReferenceFrame& frame() const noexcept {
+    const ReferenceFrame& frame() const {
 
       return this->frame_;
     }
@@ -72,7 +72,7 @@ namespace dryad {
      *
      *  @param frame   the reference frame of the distribution data
      */
-    void frame( ReferenceFrame frame ) noexcept {
+    void frame( ReferenceFrame frame ) {
 
       this->frame_ = std::move( frame );
     }
@@ -80,7 +80,7 @@ namespace dryad {
     /**
      *  @brief Return the angular distributions
      */
-    const AngularDistributions& angle() const noexcept {
+    const AngularDistributions& angle() const {
 
       return this->angle_;
     }
@@ -88,7 +88,7 @@ namespace dryad {
     /**
      *  @brief Return the angular distributions
      */
-    AngularDistributions& angle() noexcept {
+    AngularDistributions& angle() {
 
       return this->angle_;
     }
@@ -98,7 +98,7 @@ namespace dryad {
      *
      *  @param angle   the angular distributions
      */
-    void angle( AngularDistributions angle ) noexcept {
+    void angle( AngularDistributions angle ) {
 
       this->angle_ = std::move( angle );
     }
@@ -111,7 +111,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TwoBodyDistributionData& right ) const noexcept {
+    bool operator==( const TwoBodyDistributionData& right ) const {
 
       return this->frame() == right.frame() && this->angle() == right.angle();
     }
@@ -121,7 +121,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TwoBodyDistributionData& right ) const noexcept {
+    bool operator!=( const TwoBodyDistributionData& right ) const {
 
       return ! this->operator==( right );
     }

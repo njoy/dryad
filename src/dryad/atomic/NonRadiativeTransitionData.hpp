@@ -43,7 +43,7 @@ namespace atomic {
     /**
      *  @brief Return the transition type
      */
-    static constexpr TransitionType type() noexcept {
+    static constexpr TransitionType type() {
 
       return TransitionType::NonRadiative;
     }
@@ -52,7 +52,7 @@ namespace atomic {
      *  @brief Return the identifier of the subshell from which the
      *         electron filling the vacancy originated
      */
-    const id::ElectronSubshellID& originatingShell() const noexcept {
+    const id::ElectronSubshellID& originatingShell() const {
 
       return this->originating_shell_;
     }
@@ -64,7 +64,7 @@ namespace atomic {
      *  @param originatingShell   the identifier of the subshell from which the
      *                            vacancy filling electron originated
      */
-    void originatingShell( id::ElectronSubshellID originatingShell ) noexcept {
+    void originatingShell( id::ElectronSubshellID originatingShell ) {
 
       this->originating_shell_ = std::move( originatingShell );
     }
@@ -73,7 +73,7 @@ namespace atomic {
      *  @brief Return the identifier of the subshell from which the
      *         emitted electron originated
      */
-    const id::ElectronSubshellID& emittingShell() const noexcept {
+    const id::ElectronSubshellID& emittingShell() const {
 
       return this->emitting_shell_;
     }
@@ -85,7 +85,7 @@ namespace atomic {
      *  @param emittingShell      the identifier of the subshell from which the
      *                            emitted electron originated
      */
-    void emittingShell( id::ElectronSubshellID emittingShell ) noexcept {
+    void emittingShell( id::ElectronSubshellID emittingShell ) {
 
       this->emitting_shell_ = std::move( emittingShell );
     }
@@ -93,7 +93,7 @@ namespace atomic {
     /**
      *  @brief Return the transition probability
      */
-    double probability() const noexcept {
+    double probability() const {
 
       return this->probability_;
     }
@@ -103,7 +103,7 @@ namespace atomic {
      *
      *  @param[in] probability   the probability of the transition
      */
-    void probability( double probability ) noexcept {
+    void probability( double probability ) {
 
       this->probability_ = probability;
     }
@@ -111,7 +111,7 @@ namespace atomic {
     /**
      *  @brief Return the energy of the emitted electron
      */
-    const std::optional< double >& energy() const noexcept {
+    const std::optional< double >& energy() const {
 
       return this->energy_;
     }
@@ -121,7 +121,7 @@ namespace atomic {
      *
      *  @param[in] energy   the energy of the emitted electron
      */
-    void energy( std::optional< double > energy ) noexcept {
+    void energy( std::optional< double > energy ) {
 
       this->energy_ = std::move( energy );
     }
@@ -131,7 +131,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const NonRadiativeTransitionData& right ) const noexcept {
+    bool operator==( const NonRadiativeTransitionData& right ) const {
 
       return this->originatingShell() == right.originatingShell() &&
              this->emittingShell() == right.emittingShell() &&
@@ -144,7 +144,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const NonRadiativeTransitionData& right ) const noexcept {
+    bool operator!=( const NonRadiativeTransitionData& right ) const {
 
       return ! this->operator==( right );
     }

@@ -52,7 +52,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction identifier
      */
-    const id::ReactionID& identifier() const noexcept {
+    const id::ReactionID& identifier() const {
 
       return this->id_;
     }
@@ -62,7 +62,7 @@ namespace dryad {
      *
      *  @param id.  the reaction identifier
      */
-    void identifier( id::ReactionID id ) noexcept {
+    void identifier( id::ReactionID id ) {
 
       this->id_ = std::move( id );
     }
@@ -70,7 +70,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction category
      */
-    const ReactionCategory& category() const noexcept {
+    const ReactionCategory& category() const {
 
       return this->category_;
     }
@@ -80,7 +80,7 @@ namespace dryad {
      *         a primary reaction)
      */
     const std::optional< std::vector< id::ReactionID > >&
-    partialReactionIdentifiers() const noexcept {
+    partialReactionIdentifiers() const {
 
       return this->partials_;
     }
@@ -90,7 +90,7 @@ namespace dryad {
      *         a primary reaction)
      */
     std::optional< std::vector< id::ReactionID > >&
-    partialReactionIdentifiers() noexcept {
+    partialReactionIdentifiers() {
 
       return this->partials_;
     }
@@ -109,7 +109,7 @@ namespace dryad {
      *
      *  @param[in] partials   the partial reaction identifiers
      */
-    void partialReactionIdentifiers( std::optional< std::vector< id::ReactionID > > partials ) noexcept {
+    void partialReactionIdentifiers( std::optional< std::vector< id::ReactionID > > partials ) {
 
       this->partials_ = std::move( partials );
       if ( this->partials_.has_value() && this->partials_.value().size() == 0 ) {
@@ -124,7 +124,7 @@ namespace dryad {
     /**
      *  @brief Return whether or not the reaction is a summation reaction
      */
-    bool isSummationReaction() const noexcept {
+    bool isSummationReaction() const {
 
       return this->partialReactionIdentifiers().has_value();
     }
@@ -132,7 +132,7 @@ namespace dryad {
     /**
      *  @brief Return whether or not the reaction is a primary reaction
      */
-    bool isPrimaryReaction() const noexcept {
+    bool isPrimaryReaction() const {
 
       return ! this->isSummationReaction();
     }
@@ -140,7 +140,7 @@ namespace dryad {
     /**
      *  @brief Return the number of partial reactions that make up this reaction
      */
-    std::size_t numberPartialReactions() const noexcept {
+    std::size_t numberPartialReactions() const {
 
       return this->isSummationReaction() ? this->partialReactionIdentifiers()->size() : 0;
     }
@@ -153,7 +153,7 @@ namespace dryad {
      *  and the final atomic mass (the residual mass and all reactor product
      *  masses). All particles involved are supposed to be in the ground state.
      */
-    const std::optional< double >& massDifferenceQValue() const noexcept {
+    const std::optional< double >& massDifferenceQValue() const {
 
       return this->mass_difference_qvalue_;
     }
@@ -163,7 +163,7 @@ namespace dryad {
      *
      *  @param[in] mass_q   the mass difference Q value
      */
-    void massDifferenceQValue( std::optional< double > mass_q ) noexcept {
+    void massDifferenceQValue( std::optional< double > mass_q ) {
 
       this->mass_difference_qvalue_ = std::move( mass_q );
     }
@@ -171,7 +171,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction Q value
      */
-    const std::optional< double >& reactionQValue() const noexcept {
+    const std::optional< double >& reactionQValue() const {
 
       return this->reaction_qvalue_;
     }
@@ -181,7 +181,7 @@ namespace dryad {
      *
      *  @param[in] reaction_q   the reaction Q value
      */
-    void reactionQValue( std::optional< double > reaction_q ) noexcept {
+    void reactionQValue( std::optional< double > reaction_q ) {
 
       this->reaction_qvalue_ = std::move( reaction_q );
     }
@@ -189,7 +189,7 @@ namespace dryad {
     /**
      *  @brief Return the cross section
      */
-    const TabulatedCrossSection& crossSection() const noexcept {
+    const TabulatedCrossSection& crossSection() const {
 
       return this->xs_;
     }
@@ -199,7 +199,7 @@ namespace dryad {
      *
      *  @param[in] xs   the new tabulated cross section
      */
-    void crossSection( TabulatedCrossSection xs ) noexcept {
+    void crossSection( TabulatedCrossSection xs ) {
 
       this->xs_ = std::move( xs );
     }
@@ -207,7 +207,7 @@ namespace dryad {
     /**
      *  @brief Return the number of reaction products
      */
-    std::size_t numberProducts() const noexcept {
+    std::size_t numberProducts() const {
 
       return this->products().size();
     }
@@ -215,7 +215,7 @@ namespace dryad {
     /**
      *  @brief Return whether or not the reaction has reaction products
      */
-    bool hasProducts() const noexcept {
+    bool hasProducts() const {
 
       return this->numberProducts() != 0;
     }
@@ -223,7 +223,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction products
      */
-    const std::vector< ReactionProduct >& products() const noexcept {
+    const std::vector< ReactionProduct >& products() const {
 
       return this->products_;
     }
@@ -231,7 +231,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction products
      */
-    std::vector< ReactionProduct >& products() noexcept {
+    std::vector< ReactionProduct >& products() {
 
       return this->products_;
     }
@@ -241,7 +241,7 @@ namespace dryad {
      *
      *  @param[in] products   the reaction products
      */
-    void products( std::vector< ReactionProduct > products ) noexcept {
+    void products( std::vector< ReactionProduct > products ) {
 
       this->products_ = std::move( products );
     }
@@ -262,7 +262,7 @@ namespace dryad {
      *
      *  @param[in] type   the reaction product type
      */
-    std::size_t numberProducts( const id::ParticleID& type ) const noexcept {
+    std::size_t numberProducts( const id::ParticleID& type ) const {
 
       auto functor = [&type] ( auto&& product )
                              { return product.identifier() == type; };
@@ -311,7 +311,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const Reaction& right ) const noexcept {
+    bool operator==( const Reaction& right ) const {
 
       return this->identifier() == right.identifier() &&
              this->category() == right.category() &&
@@ -327,7 +327,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const Reaction& right ) const noexcept {
+    bool operator!=( const Reaction& right ) const {
 
       return ! this->operator==( right );
     }

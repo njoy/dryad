@@ -40,7 +40,7 @@ namespace dryad {
     /**
      *  @brief Return the average energy values
      */
-    TabulatedAverageEnergy averageEnergies() const noexcept {
+    TabulatedAverageEnergy averageEnergies() const {
 
       std::vector< double > energies;
       energies.reserve( this->numberPoints() );
@@ -74,7 +74,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedEnergyDistributions& right ) const noexcept {
+    bool operator==( const TabulatedEnergyDistributions& right ) const {
 
       return Parent::operator==( right );
     }
@@ -84,7 +84,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedEnergyDistributions& right ) const noexcept {
+    bool operator!=( const TabulatedEnergyDistributions& right ) const {
 
       return ! this->operator==( right );
     }

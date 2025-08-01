@@ -40,7 +40,7 @@ namespace covariance {
     /**
      *  @brief Return the projectile identifier
      */
-    const id::ParticleID& projectileIdentifier() const noexcept {
+    const id::ParticleID& projectileIdentifier() const {
 
       return this->projectile_id_;
     }
@@ -48,7 +48,7 @@ namespace covariance {
     /**
      *  @brief Return the target identifier
      */
-    const id::ParticleID& targetIdentifier() const noexcept {
+    const id::ParticleID& targetIdentifier() const {
 
       return this->target_id_;
     }
@@ -56,7 +56,7 @@ namespace covariance {
     /**
      *  @brief Return the reaction identifier
      */
-    const id::ReactionID& reactionIdentifier() const noexcept {
+    const id::ReactionID& reactionIdentifier() const {
 
       return this->reaction_id_;
     }
@@ -64,7 +64,7 @@ namespace covariance {
     /**
      *  @brief Return the energy group boundaries
      */
-    const std::vector< double >& energies() const noexcept {
+    const std::vector< double >& energies() const {
 
       return this->energies_;
     }
@@ -72,7 +72,7 @@ namespace covariance {
     /**
      *  @brief Return the number of energy groups
      */
-    std::size_t numberGroups() const noexcept {
+    std::size_t numberGroups() const {
 
       return this->energies().size() - 1;
     }
@@ -80,7 +80,7 @@ namespace covariance {
     /**
      *  @brief Return the size
      */
-    std::size_t size() const noexcept {
+    std::size_t size() const {
 
       return this->numberGroups();
     }

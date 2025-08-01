@@ -42,7 +42,7 @@ namespace dryad {
     /**
      *  @brief Return the energy values for the distribution
      */
-    const std::vector< double >& energies() const noexcept {
+    const std::vector< double >& energies() const {
 
       return this->values();
     }
@@ -50,7 +50,7 @@ namespace dryad {
     /**
      *  @brief Return the number of discrete energies or intervals
      */
-    std::size_t numberEnergies() const noexcept {
+    std::size_t numberEnergies() const {
 
       return this->number();
     }
@@ -58,7 +58,7 @@ namespace dryad {
     /**
      *  @brief Return the average energy defined by the distribution
      */
-    double averageEnergy() const noexcept {
+    double averageEnergy() const {
 
       return this->mean();
     }
@@ -68,7 +68,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const UniformEnergyDistribution& right ) const noexcept {
+    bool operator==( const UniformEnergyDistribution& right ) const {
 
       return base::UniformDistribution::operator==( right );
     }
@@ -78,7 +78,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const UniformEnergyDistribution& right ) const noexcept {
+    bool operator!=( const UniformEnergyDistribution& right ) const {
 
       return ! this->operator==( right );
     }

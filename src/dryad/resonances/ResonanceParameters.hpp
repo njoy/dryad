@@ -30,7 +30,7 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ResonanceParameters& right ) const noexcept {
+    bool operator==( const ResonanceParameters& right ) const {
 
       return true;
     }
@@ -40,7 +40,7 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ResonanceParameters& right ) const noexcept {
+    bool operator!=( const ResonanceParameters& right ) const {
 
       return false;
     }

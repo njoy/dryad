@@ -1,4 +1,4 @@
-auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const noexcept {
+auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const {
 
   auto functor = [&type] ( auto&& product )
                          { return product.identifier() == type; };

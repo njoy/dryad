@@ -60,7 +60,7 @@ namespace dryad {
     /**
      *  @brief Return the distribution data type
      */
-    static constexpr DistributionDataType type() noexcept {
+    static constexpr DistributionDataType type() {
 
       return DistributionDataType::Uncorrelated;
     }
@@ -68,7 +68,7 @@ namespace dryad {
     /**
      *  @brief Return the reference frame
      */
-    const ReferenceFrame& frame() const noexcept {
+    const ReferenceFrame& frame() const {
 
       return this->frame_;
     }
@@ -78,7 +78,7 @@ namespace dryad {
      *
      *  @param frame   the reference frame of the distribution data
      */
-    void frame( ReferenceFrame frame ) noexcept {
+    void frame( ReferenceFrame frame ) {
 
       this->frame_ = std::move( frame );
     }
@@ -86,7 +86,7 @@ namespace dryad {
     /**
      *  @brief Return the angular distributions
      */
-    const AngularDistributions& angle() const noexcept {
+    const AngularDistributions& angle() const {
 
       return this->angle_;
     }
@@ -94,7 +94,7 @@ namespace dryad {
     /**
      *  @brief Return the angular distributions
      */
-    AngularDistributions& angle() noexcept {
+    AngularDistributions& angle() {
 
       return this->angle_;
     }
@@ -104,7 +104,7 @@ namespace dryad {
      *
      *  @param angle   the angular distributions
      */
-    void angle( AngularDistributions angle ) noexcept {
+    void angle( AngularDistributions angle ) {
 
       this->angle_ = std::move( angle );
     }
@@ -112,7 +112,7 @@ namespace dryad {
     /**
      *  @brief Return the energy distributions
      */
-    const EnergyDistributions& energy() const noexcept {
+    const EnergyDistributions& energy() const {
 
       return this->energy_;
     }
@@ -120,7 +120,7 @@ namespace dryad {
     /**
      *  @brief Return the energy distributions
      */
-    EnergyDistributions& energy() noexcept {
+    EnergyDistributions& energy() {
 
       return this->energy_;
     }
@@ -130,7 +130,7 @@ namespace dryad {
      *
      *  @param energy   the energy distributions
      */
-    void energy( EnergyDistributions energy ) noexcept {
+    void energy( EnergyDistributions energy ) {
 
       this->energy_ = std::move( energy );
     }
@@ -140,7 +140,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const UncorrelatedDistributionData& right ) const noexcept {
+    bool operator==( const UncorrelatedDistributionData& right ) const {
 
       return this->frame() == right.frame() && this->angle() == right.angle() &&
              this->energy() == right.energy();
@@ -151,7 +151,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const UncorrelatedDistributionData& right ) const noexcept {
+    bool operator!=( const UncorrelatedDistributionData& right ) const {
 
       return ! this->operator==( right );
     }
