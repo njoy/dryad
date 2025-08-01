@@ -40,6 +40,38 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the energy values
+     */
+    const std::vector< double >& energies() const {
+
+      return this->pdf().energies();
+    }
+
+    /**
+     *  @brief Return the probability values
+     */
+    const std::vector< double >& values() const {
+
+      return this->pdf().values();
+    }
+
+    /**
+     *  @brief Return the boundaries of the interpolation regions
+     */
+    const std::vector< std::size_t >& boundaries() const {
+
+      return this->pdf().boundaries();
+    }
+
+    /**
+     *  @brief Return the interpolation types of the interpolation regions
+     */
+    const std::vector< InterpolationType >& interpolants() const {
+
+      return this->pdf().interpolants();
+    }
+
+    /**
      *  @brief Return the probability distribution function (pdf) of the distribution
      */
     const TabulatedEnergyDistributionFunction& pdf() const {

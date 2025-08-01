@@ -42,6 +42,14 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the coefficients of the distribution
+     */
+    const std::vector< double > coefficients() const {
+
+      return this->pdf().coefficients();
+    }
+
+    /**
      *  @brief Return the probability distribution function (pdf) of the distribution
      */
     const LegendreAngularDistributionFunction& pdf() const {
