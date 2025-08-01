@@ -26,6 +26,15 @@ SCENARIO( "TabulatedAngularDistribution" ) {
       THEN( "a TabulatedAngularDistribution can be constructed and members can "
             "be tested" ) {
 
+        CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+        CHECK_THAT(  0.  , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.5 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.75, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  1.  , WithinRel( chunk.values()[3] ) );
+
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
