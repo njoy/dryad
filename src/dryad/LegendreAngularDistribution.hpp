@@ -28,6 +28,10 @@ namespace dryad {
     LegendreAngularDistributionFunction pdf_;
     LegendreAngularDistributionFunction cdf_;
 
+    /* auxiliary functions */
+
+    #include "dryad/LegendreAngularDistribution/src/calculateCdf.hpp"
+
   public:
 
     /* type aliases */
@@ -76,6 +80,15 @@ namespace dryad {
     }
 
     /**
+     *  @brief Normalise the distribution
+     */
+    void normalise() {
+
+      this->pdf_.normalise();
+      this->calculateCdf();
+    }
+
+    /**
      *  @brief Return the average cosine defined by the distribution
      */
     double averageCosine() const {
@@ -90,8 +103,7 @@ namespace dryad {
      */
     TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
 
-      // no need to normalise the resulting pdf, the TabulatedAngularDistribution ctor
-      // will take care of normalisation
+      //! @todo should we normalise the resulting distribution?
 
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( std::move( tolerance ) );
       return TabulatedAngularDistribution( std::move( pdf ) );

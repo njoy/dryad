@@ -39,6 +39,17 @@ namespace dryad {
     using Parent::operator();
 
     /**
+     *  @brief Normalise the distributions
+     */
+    void normalise() {
+
+      for ( auto& distribution : this->distributions() ) {
+
+        distribution.normalise();
+      }
+    }
+
+    /**
      *  @brief Return the average cosine values
      */
     TabulatedAverageCosine averageCosines() const {
@@ -59,6 +70,8 @@ namespace dryad {
      *  @param[in] tolerance   the linearisation tolerance
      */
     TabulatedAngularDistributions linearise( ToleranceConvergence tolerance = {} ) const {
+
+      //! @todo should we normalise the resulting distribution?
 
       std::vector< TabulatedAngularDistribution > distributions;
       distributions.reserve( this->numberPoints() );

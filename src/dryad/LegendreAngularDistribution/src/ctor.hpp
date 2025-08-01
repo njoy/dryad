@@ -14,10 +14,16 @@ LegendreAngularDistribution& operator=( LegendreAngularDistribution&& ) = defaul
  *
  *  @param coefficients   the coefficients of the distribution pdf represented by a
  *                        Legendre series (from lowest to highest order coefficient)
+ *  @param normalise      option to indicate whether or not to normalise
+ *                        all probability data (default: no normalisation)
  */
-LegendreAngularDistribution( std::vector< double > coefficients ) :
+LegendreAngularDistribution( std::vector< double > coefficients,
+                             bool normalise = false ) :
     pdf_( std::move( coefficients ) ), cdf_() {
 
-  this->pdf_.normalise();
-  this->cdf_ = this->pdf().primitive( -1. );
+  if ( normalise ) {
+
+    this->pdf_.normalise();
+  }
+  this->calculateCdf();
 }
