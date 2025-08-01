@@ -35,6 +35,20 @@ class AtomicRelaxation:
         """
     def __eq__(self, arg0: AtomicRelaxation) -> bool:
         ...
+    @typing.overload
+    def __init__(self, documentation: Documentation, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
+        """
+        Initialise the atomic relaxation data
+        
+        Arguments:
+            self            the reaction
+            documentation   the documentation
+            element         the element identifier
+            subshells       the electron subshell configuration data
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
+        """
+    @typing.overload
     def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
         Initialise the atomic relaxation data
@@ -837,6 +851,20 @@ class ProjectileTarget:
         """
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
+    @typing.overload
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
+        """
+        Initialise the ProjectileTarget
+        
+        Arguments:
+            self            the reaction
+            documentation   the documentation
+            projectile      the particle identifier
+            target          the target identifier
+            type            the interaction type
+            reactions       the reaction data
+        """
+    @typing.overload
     def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
         """
         Initialise the ProjectileTarget
@@ -874,11 +902,31 @@ class ProjectileTarget:
             self   the ProjectileTarget data
             id     the reaction identifier
         """
+    def to_endf_file(self, mat: int, filename: str) -> None:
+        """
+        Write the ProjectileTarget data to an ENDF file
+        
+        Arguments:
+            self        the ProjectileTarget data
+            mat         the ENDF mat number to be used
+            filename    the ENDF file name
+        """
+    @property
+    def documentation(self) -> Documentation:
+        """
+        The documentation
+        """
+    @documentation.setter
+    def documentation(self, arg1: Documentation) -> None:
+        ...
     @property
     def interaction_type(self) -> InteractionType:
         """
         The interaction type (atomic or nuclear)
         """
+    @interaction_type.setter
+    def interaction_type(self, arg1: InteractionType) -> None:
+        ...
     @property
     def is_linearised(self) -> bool:
         """
@@ -894,6 +942,9 @@ class ProjectileTarget:
         """
         The projectile identifier
         """
+    @projectile_identifier.setter
+    def projectile_identifier(self, arg1: id.ParticleID) -> None:
+        ...
     @property
     def reactions(self) -> list[Reaction]:
         """
@@ -915,6 +966,9 @@ class ProjectileTarget:
         """
         The target identifier
         """
+    @target_identifier.setter
+    def target_identifier(self, arg1: id.ParticleID) -> None:
+        ...
 class Reaction:
     """
     The data associated to a single reaction
@@ -1004,6 +1058,9 @@ class Reaction:
         """
         The reaction identifier
         """
+    @identifier.setter
+    def identifier(self, arg1: str) -> None:
+        ...
     @property
     def is_linearised(self) -> bool:
         """

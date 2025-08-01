@@ -28,6 +28,11 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         CHECK( true == std::holds_alternative< ProjectileTarget >( targets ) );
         auto H0_pa = std::get< ProjectileTarget >( targets );
 
+        CHECK( std::nullopt == H0_pa.documentation().awr() );
+        CHECK( std::nullopt == H0_pa.documentation().library() );
+        CHECK( std::nullopt == H0_pa.documentation().version() );
+        CHECK( std::nullopt == H0_pa.documentation().description() );
+
         CHECK( id::ParticleID( "g" ) == H0_pa.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0_pa.targetIdentifier() );
 
@@ -91,6 +96,11 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto H0_ea = std::get< std::pair< ProjectileTarget, ProjectileTarget > >( targets ).second;
 
         // photoatomic data
+        CHECK( std::nullopt == H0_pa.documentation().awr() );
+        CHECK( std::nullopt == H0_pa.documentation().library() );
+        CHECK( std::nullopt == H0_pa.documentation().version() );
+        CHECK( std::nullopt == H0_pa.documentation().description() );
+
         CHECK( id::ParticleID( "g" ) == H0_pa.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0_pa.targetIdentifier() );
 
@@ -147,6 +157,11 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
 
         // electroatomic data
+        CHECK( std::nullopt == H0_ea.documentation().awr() );
+        CHECK( std::nullopt == H0_ea.documentation().library() );
+        CHECK( std::nullopt == H0_ea.documentation().version() );
+        CHECK( std::nullopt == H0_ea.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0_ea.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0_ea.targetIdentifier() );
 
@@ -215,6 +230,11 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto H0_ea = std::get< std::pair< ProjectileTarget, ProjectileTarget > >( targets ).second;
 
         // photoatomic data
+        CHECK( std::nullopt == H0_pa.documentation().awr() );
+        CHECK( std::nullopt == H0_pa.documentation().library() );
+        CHECK( std::nullopt == H0_pa.documentation().version() );
+        CHECK( std::nullopt == H0_pa.documentation().description() );
+
         CHECK( id::ParticleID( "g" ) == H0_pa.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0_pa.targetIdentifier() );
 
@@ -271,6 +291,11 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
 
         // electroatomic data
+        CHECK( std::nullopt == H0_ea.documentation().awr() );
+        CHECK( std::nullopt == H0_ea.documentation().library() );
+        CHECK( std::nullopt == H0_ea.documentation().version() );
+        CHECK( std::nullopt == H0_ea.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0_ea.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0_ea.targetIdentifier() );
 

@@ -25,6 +25,11 @@ SCENARIO( "projectileTargetFromFile" ) {
 
         ProjectileTarget H1 = format::gnds::createProjectileTargetFromFile( "n-001_H_001.endf.gnds.xml" );
 
+        CHECK( std::nullopt == H1.documentation().awr() );
+        CHECK( std::nullopt == H1.documentation().library() );
+        CHECK( std::nullopt == H1.documentation().version() );
+        CHECK( std::nullopt == H1.documentation().description() );
+
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
@@ -66,6 +71,11 @@ SCENARIO( "projectileTargetFromFile" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget Li7 = format::gnds::createProjectileTargetFromFile( "n-003_Li_007.endf.gnds.xml" );
+
+        CHECK( std::nullopt == Li7.documentation().awr() );
+        CHECK( std::nullopt == Li7.documentation().library() );
+        CHECK( std::nullopt == Li7.documentation().version() );
+        CHECK( std::nullopt == Li7.documentation().description() );
 
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
         CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
@@ -219,6 +229,11 @@ SCENARIO( "projectileTargetFromFile" ) {
 
         ProjectileTarget H0 = format::gnds::createProjectileTargetFromFile( "e-001_H_000.endf.gnds.xml" );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
@@ -298,6 +313,11 @@ SCENARIO( "projectileTargetFromFile" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget H0 = format::gnds::createProjectileTargetFromFile( "photoat-001_H_000.endf.gnds.xml" );
+
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );

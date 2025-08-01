@@ -28,6 +28,8 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H1 = format::endf::createProjectileTarget( material );
 
+        neutron::h1::verifyDocumentation( H1.documentation() );
+
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
@@ -72,6 +74,8 @@ SCENARIO( "createProjectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget Li7 = format::endf::createProjectileTarget( material );
+
+        neutron::li7::verifyDocumentation( Li7.documentation() );
 
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
         CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
@@ -225,6 +229,8 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTarget( material );
 
+        electron::h0::endf81::verifyDocumentation( H0.documentation() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
 
@@ -247,52 +253,52 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        electron::h1::verifyTotalReaction( total );
+        electron::h0::verifyTotalReaction( total );
 
         auto ionisation = H0.reactions()[1];
-        electron::h1::verifyTotalIonisationReaction( ionisation );
+        electron::h0::verifyTotalIonisationReaction( ionisation );
 
         auto elastic = H0.reactions()[2];
-        electron::h1::verifyElasticReaction( elastic );
+        electron::h0::verifyElasticReaction( elastic );
 
         auto telastic = H0.reactions()[3];
-        electron::h1::verifyTotalElasticReaction( telastic );
+        electron::h0::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = H0.reactions()[4];
-        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = H0.reactions()[5];
-        electron::h1::verifyExcitationReaction( excitation );
+        electron::h0::verifyExcitationReaction( excitation );
 
         auto subionisation = H0.reactions()[6];
-        electron::h1::verifySubshellIonisationReaction( subionisation );
+        electron::h0::verifySubshellIonisationReaction( subionisation );
 
         auto deficit = H0.reactions()[7];
-        electron::h1::verifyElasticDeficitReaction( deficit );
+        electron::h0::verifyElasticDeficitReaction( deficit );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        electron::h1::verifyTotalReaction( total );
+        electron::h0::verifyTotalReaction( total );
 
         ionisation = H0.reaction( id::ReactionID( "522" ) );
-        electron::h1::verifyTotalIonisationReaction( ionisation );
+        electron::h0::verifyTotalIonisationReaction( ionisation );
 
         elastic = H0.reaction( id::ReactionID( "525" ) );
-        electron::h1::verifyElasticReaction( elastic );
+        electron::h0::verifyElasticReaction( elastic );
 
         telastic = H0.reaction( id::ReactionID( "526" ) );
-        electron::h1::verifyTotalElasticReaction( telastic );
+        electron::h0::verifyTotalElasticReaction( telastic );
 
         bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
-        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung );
 
         excitation = H0.reaction( id::ReactionID( "528" ) );
-        electron::h1::verifyExcitationReaction( excitation );
+        electron::h0::verifyExcitationReaction( excitation );
 
         subionisation = H0.reaction( id::ReactionID( "534" ) );
-        electron::h1::verifySubshellIonisationReaction( subionisation );
+        electron::h0::verifySubshellIonisationReaction( subionisation );
 
         deficit = H0.reaction( id::ReactionID( "-526" ) );
-        electron::h1::verifyElasticDeficitReaction( deficit );
+        electron::h0::verifyElasticDeficitReaction( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -307,6 +313,8 @@ SCENARIO( "createProjectileTarget" ) {
       THEN( "it can be converted" ) {
 
         ProjectileTarget H0 = format::endf::createProjectileTarget( material );
+
+        photoatomic::h0::verifyDocumentation( H0.documentation() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
@@ -330,52 +338,52 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( 8 == H0.reactions().size() );
 
         auto total = H0.reactions()[0];
-        photoatomic::h1::verifyTotalReaction( total );
+        photoatomic::h0::verifyTotalReaction( total );
 
         auto coherent = H0.reactions()[1];
-        photoatomic::h1::verifyCoherentReaction( coherent );
+        photoatomic::h0::verifyCoherentReaction( coherent );
 
         auto incoherent = H0.reactions()[2];
-        photoatomic::h1::verifyIncoherentReaction( incoherent );
+        photoatomic::h0::verifyIncoherentReaction( incoherent );
 
         auto epairproduction = H0.reactions()[3];
-        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction );
 
         auto tpairproduction = H0.reactions()[4];
-        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction );
 
         auto npairproduction = H0.reactions()[5];
-        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         auto tionisation = H0.reactions()[6];
-        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation );
 
         auto ionisation = H0.reactions()[7];
-        photoatomic::h1::verifyIonisationReaction( ionisation );
+        photoatomic::h0::verifyIonisationReaction( ionisation );
 
         total = H0.reaction( id::ReactionID( "501" ) );
-        photoatomic::h1::verifyTotalReaction( total );
+        photoatomic::h0::verifyTotalReaction( total );
 
         coherent = H0.reaction( id::ReactionID( "502" ) );
-        photoatomic::h1::verifyCoherentReaction( coherent );
+        photoatomic::h0::verifyCoherentReaction( coherent );
 
         incoherent = H0.reaction( id::ReactionID( "504" ) );
-        photoatomic::h1::verifyIncoherentReaction( incoherent );
+        photoatomic::h0::verifyIncoherentReaction( incoherent );
 
         epairproduction = H0.reaction( id::ReactionID( "515" ) );
-        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction );
 
         tpairproduction = H0.reaction( id::ReactionID( "516" ) );
-        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction );
 
         npairproduction = H0.reaction( id::ReactionID( "517" ) );
-        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         tionisation = H0.reaction( id::ReactionID( "522" ) );
-        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation );
 
         ionisation = H0.reaction( id::ReactionID( "534" ) );
-        photoatomic::h1::verifyIonisationReaction( ionisation );
+        photoatomic::h0::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN

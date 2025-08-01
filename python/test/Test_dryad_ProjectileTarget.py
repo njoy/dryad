@@ -15,6 +15,12 @@ from dryad.id import ParticleID
 
 def verify_chunk( self, chunk ) :
 
+    # documentation
+    self.assertEqual( None, chunk.documentation.awr )
+    self.assertEqual( None, chunk.documentation.library )
+    self.assertEqual( None, chunk.documentation.version )
+    self.assertEqual( None, chunk.documentation.description )
+
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
     self.assertEqual( ParticleID( 'Fe56' ), chunk.target_identifier )
@@ -286,6 +292,12 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( False, chunk.is_linearised )
 
 def verify_correct_summation( self, chunk ) :
+
+    # documentation
+    self.assertEqual( None, chunk.documentation.awr )
+    self.assertEqual( None, chunk.documentation.library )
+    self.assertEqual( None, chunk.documentation.version )
+    self.assertEqual( None, chunk.documentation.description )
 
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
@@ -676,6 +688,42 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, 0 ) ] )
+
+        # the projectile identifier can be changed
+        newprojectile = ParticleID.proton()
+        original = ParticleID.neutron()
+
+        chunk.projectile_identifier = newprojectile
+
+        self.assertEqual( newprojectile, chunk.projectile_identifier )
+
+        chunk.projectile_identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the target identifier can be changed
+        newtarget = ParticleID( 1001 )
+        original = ParticleID( 26056 )
+
+        chunk.target_identifier = newtarget
+
+        self.assertEqual( newtarget, chunk.target_identifier )
+
+        chunk.target_identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the interaction type can be changed
+        newtype = InteractionType.Atomic
+        original = InteractionType.Nuclear
+
+        chunk.interaction_type = newtype
+
+        self.assertEqual( newtype, chunk.interaction_type )
+
+        chunk.interaction_type = original
+
+        verify_chunk( self, chunk )
 
         # the reaction data can be changed
         newreactions = [ Reaction( 'n,Fe56->n,Fe56_e2',

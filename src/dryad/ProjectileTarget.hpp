@@ -8,6 +8,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/InteractionType.hpp"
+#include "dryad/Documentation.hpp"
 #include "dryad/Reaction.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/resonances/ResonanceParameters.hpp"
@@ -22,6 +23,8 @@ namespace dryad {
   class ProjectileTarget {
 
     /* fields */
+    Documentation documentation_;
+
     id::ParticleID projectile_id_;
     id::ParticleID target_id_;
 
@@ -42,11 +45,47 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the documentation
+     */
+    const Documentation& documentation() const noexcept {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Return the documentation
+     */
+    Documentation& documentation() noexcept {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Set the documentation
+     *
+     *  @param[in] documentation   the documentation
+     */
+    void documentation( Documentation documentation ) noexcept {
+
+      this->documentation_ = std::move( documentation );
+    }
+
+    /**
      *  @brief Return the projectile identifier
      */
     const id::ParticleID& projectileIdentifier() const noexcept {
 
       return this->projectile_id_;
+    }
+
+    /**
+     *  @brief Set the projectile identifier
+     *
+     *  @param projectile   the projectile identifier
+     */
+    void projectileIdentifier( id::ParticleID projectile ) noexcept {
+
+      this->projectile_id_ = std::move( projectile );
     }
 
     /**
@@ -58,11 +97,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the target identifier
+     *
+     *  @param target   the target identifier
+     */
+    void targetIdentifier( id::ParticleID target ) noexcept {
+
+      this->target_id_ = std::move( target );
+    }
+
+    /**
      *  @brief Return the interaction type
      */
     const InteractionType& interactionType() const noexcept {
 
       return this->interaction_;
+    }
+
+    /**
+     *  @brief Set the interaction type
+     *
+     *  @param type   the interaction type
+     */
+    void interactionType( InteractionType type ) noexcept {
+
+      this->interaction_ = std::move( type );
     }
 
     /**
@@ -154,6 +213,16 @@ namespace dryad {
         Log::error( "The requested reaction \'{}\' could not be found", id );
         throw std::exception();
       }
+    }
+
+    /**
+     *  @brief Return the requested reaction
+     *
+     *  @param[in] id   the reaction identifier
+     */
+    Reaction& reaction( const id::ReactionID& id ) {
+
+      return const_cast< Reaction& >( const_cast< const ProjectileTarget& >( *this ).reaction( id ) );
     }
 
     /**

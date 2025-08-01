@@ -38,3 +38,13 @@
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createAtomicRelaxation.hpp"
 #include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+
+#include "dryad/format/endf/createEndfInterpolant.hpp"
+#include "dryad/format/endf/createEndfBoundaries.hpp"
+#include "dryad/format/endf/createEndfInterpolants.hpp"
+#include "dryad/format/endf/createEndfSublibraryType.hpp"
+
+#include "dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
+#include "dryad/format/endf/atomic/createEndfSubshellData.hpp"
+
+#include "dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
