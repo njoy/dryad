@@ -72,6 +72,16 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 1., WithinRel( chunk.integral() ) );
       } // THEN
 
+      THEN( "the cumulative integral of a TabulatedAngularDistributionFunction can be calculated" ) {
+
+        auto cumulative = chunk.cumulativeIntegral();
+        CHECK( 4 == cumulative.size() );
+        CHECK_THAT( 0.    , WithinRel( cumulative[0] ) );
+        CHECK_THAT( 0.25  , WithinRel( cumulative[1] ) );
+        CHECK_THAT( 0.5625, WithinRel( cumulative[2] ) );
+        CHECK_THAT( 1.    , WithinRel( cumulative[3] ) );
+      } // THEN
+
       THEN( "the first raw moment of a TabulatedAngularDistributionFunction can be calculated" ) {
 
         CHECK_THAT( 1. / 3., WithinRel( chunk.mean() ) );
@@ -690,6 +700,17 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
 
         // ( 4 + 3 ) / 2 + ( 4 + 2 ) / 2 = 6.5
         CHECK_THAT( 6.5, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the cumulative integral of a TabulatedAngularDistributionFunction can be calculated" ) {
+
+        auto cumulative = chunk.cumulativeIntegral();
+        CHECK( 5 == cumulative.size() );
+        CHECK_THAT( 0.  , WithinRel( cumulative[0] ) );
+        CHECK_THAT( 3.5 , WithinRel( cumulative[1] ) );
+        CHECK_THAT( 3.5 , WithinRel( cumulative[2] ) );
+        CHECK_THAT( 5.25, WithinRel( cumulative[3] ) );
+        CHECK_THAT( 6.5 , WithinRel( cumulative[4] ) );
       } // THEN
 
       THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
@@ -1391,6 +1412,24 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         CHECK_THAT( 0.99279536989483, WithinRel( chunk.integral() ) );
       } // THEN
 
+      THEN( "the cumulative integral of a TabulatedAngularDistributionFunction can be calculated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
+        // std::cout << std::setprecision(15) << integrator( chunk, -1. , 0. ) << ' '
+        //                                    << integrator( chunk, -1. , 0. )
+        //                                     + integrator( chunk,  0. , 0.5 ) << ' '
+        //                                    << integrator( chunk, -1. , 0. )
+        //                                     + integrator( chunk,  0. , 0.5 )
+        //                                     + integrator( chunk,  0.5, 1. ) << std::endl;
+        auto cumulative = chunk.cumulativeIntegral();
+        CHECK( 4 == cumulative.size() );
+        CHECK_THAT( 0.               , WithinRel( cumulative[0] ) );
+        CHECK_THAT( 0.25             , WithinRel( cumulative[1] ) );
+        CHECK_THAT( 0.558287932797054, WithinRel( cumulative[2] ) );
+        CHECK_THAT( 0.99279536989483 , WithinRel( cumulative[3] ) );
+      } // THEN
+
       THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
@@ -1666,7 +1705,26 @@ SCENARIO( "TabulatedAngularDistributionFunction" ) {
         // std::cout << std::setprecision(15) << integrator( chunk, -1., 0. )
         //                                     + integrator( chunk,  0., 1. ) << std::endl;
         // std::cout << std::setprecision(15) << chunk.integral() << std::endl;
-        // CHECK_THAT( 1.49577938318395, WithinRel( chunk.integral() ) );
+        CHECK_THAT( 1.49577938318395, WithinRel( chunk.integral() ) );
+      } // THEN
+
+      THEN( "the cumulative integral of a TabulatedAngularDistributionFunction can be calculated" ) {
+
+        // generate test result using Gauss-Legendre quadrature
+        // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
+        // std::cout << std::setprecision(15) << integrator( chunk, -1. , 0. ) << ' '
+        //                                    << integrator( chunk, -1. , 0. )
+        //                                     + integrator( chunk,  0. , 0.5 ) << ' '
+        //                                    << integrator( chunk, -1. , 0. )
+        //                                     + integrator( chunk,  0. , 0.5 )
+        //                                     + integrator( chunk,  0.5, 1. ) << std::endl;
+        auto cumulative = chunk.cumulativeIntegral();
+        CHECK( 5 == cumulative.size() );
+        CHECK_THAT( 0.               , WithinRel( cumulative[0] ) );
+        CHECK_THAT( 0.25             , WithinRel( cumulative[1] ) );
+        CHECK_THAT( 0.25             , WithinRel( cumulative[2] ) );
+        CHECK_THAT( 0.810177514715569, WithinRel( cumulative[3] ) );
+        CHECK_THAT( 1.49577938318395 , WithinRel( cumulative[4] ) );
       } // THEN
 
       THEN( "the first raw moment of an TabulatedAngularDistributionFunction can be calculated" ) {
