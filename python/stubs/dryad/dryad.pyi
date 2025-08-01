@@ -524,6 +524,11 @@ class LegendreAngularDistribution:
         The cumulative distribution function (cdf) of the distribution
         """
     @property
+    def coefficients(self) -> list[float]:
+        """
+        The coefficients
+        """
+    @property
     def pdf(self) -> LegendreAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
@@ -1334,14 +1339,34 @@ class TabulatedAngularDistribution:
         The average cosine defined by the distribution
         """
     @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
     def cdf(self) -> TabulatedAngularDistributionFunction | None:
         """
         The cumulative distribution function (cdf) of the distribution
         """
     @property
+    def cosines(self) -> list[float]:
+        """
+        The cosine values
+        """
+    @property
+    def interpolants(self) -> list[InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
     def pdf(self) -> TabulatedAngularDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The probability values
         """
 class TabulatedAngularDistributionFunction:
     """
@@ -2035,14 +2060,34 @@ class TabulatedEnergyDistribution:
         The average energy defined by the distribution
         """
     @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
     def cdf(self) -> TabulatedEnergyDistributionFunction | None:
         """
         The cumulative distribution function (cdf) of the distribution
         """
     @property
+    def energies(self) -> list[float]:
+        """
+        The cosine values
+        """
+    @property
+    def interpolants(self) -> list[InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
     def pdf(self) -> TabulatedEnergyDistributionFunction:
         """
         The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The probability values
         """
 class TabulatedEnergyDistributionFunction:
     """
