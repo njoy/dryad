@@ -73,7 +73,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the element identifier
+     *  @brief Set the element identifier
      *
      *  @param[in] element   the element identifier
      */
