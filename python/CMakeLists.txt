@@ -24,6 +24,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/VarianceScaling.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/LinearCombinationCovariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionCovarianceBlock.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/Documentation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DistributionDataType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/InteractionType.python.cpp

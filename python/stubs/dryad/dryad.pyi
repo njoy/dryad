@@ -4,7 +4,7 @@ from . import atomic
 from . import covariance
 from . import id
 from . import resonances
-__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
+__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -72,6 +72,22 @@ class AtomicRelaxation:
             self   the AtomicRelaxation data
             id     the electron subshell identifier
         """
+    def to_endf_file(self, filename: str) -> None:
+        """
+        Write the AtomicRelaxation data to an ENDF file
+        
+        Arguments:
+            self        the atomic relaxation data
+            filename    the ENDF file name
+        """
+    @property
+    def documentation(self) -> Documentation:
+        """
+        The documentation
+        """
+    @documentation.setter
+    def documentation(self, arg1: Documentation) -> None:
+        ...
     @property
     def element_identifier(self) -> id.ElementID:
         """
@@ -214,6 +230,58 @@ class DistributionDataType:
         ...
     @property
     def value(self) -> int:
+        ...
+class Documentation:
+    """
+    Documentation associated to the dryad data
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: Documentation) -> bool:
+        ...
+    def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
+        """
+        Initialise the documentation
+        
+        Arguments:
+            self          the documentation
+            awr           the atomic weight ratio
+            library       the library number
+            version       the version number
+            description   the description
+        """
+    def __ne__(self, arg0: Documentation) -> bool:
+        ...
+    @property
+    def awr(self) -> float | None:
+        """
+        The atomic weight ratio
+        """
+    @awr.setter
+    def awr(self, arg1: float | None) -> None:
+        ...
+    @property
+    def description(self) -> str | None:
+        """
+        The description
+        """
+    @description.setter
+    def description(self, arg1: str | None) -> None:
+        ...
+    @property
+    def library(self) -> int | None:
+        """
+        The library
+        """
+    @library.setter
+    def library(self, arg1: int | None) -> None:
+        ...
+    @property
+    def version(self) -> tuple[int, int] | None:
+        """
+        The version
+        """
+    @version.setter
+    def version(self, arg1: tuple[int, int] | None) -> None:
         ...
 class IncoherentDistributionData:
     """

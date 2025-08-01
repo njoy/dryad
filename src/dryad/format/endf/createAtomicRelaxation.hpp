@@ -7,6 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
+#include "dryad/format/endf/createDocumentation.hpp"
 #include "dryad/AtomicRelaxation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -28,6 +29,7 @@ namespace endf {
 
     if ( material.hasSection( 28, 533 ) ) {
 
+      auto information = material.section( 1, 451 ).parse< 1, 451 >();
       auto data = material.section( 28, 533 ).parse< 28 >();
 
       if ( ( data.targetIdentifier() == 0 ) || ( data.targetIdentifier() % 1000 != 0 ) ) {
@@ -44,7 +46,10 @@ namespace endf {
         subshells.emplace_back( atomic::createElectronSubshellConfiguration( subshell, normalise ) );
       }
 
-      return AtomicRelaxation( std::move( element ), std::move( subshells ) );
+      Documentation documentation = createDocumentation( information );
+
+      return AtomicRelaxation( std::move( documentation ), std::move( element ),
+                               std::move( subshells ) );
     }
     else {
 

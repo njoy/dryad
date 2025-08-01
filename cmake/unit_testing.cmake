@@ -46,6 +46,8 @@ add_cpp_test( id.LevelID                                                 id/Leve
 add_cpp_test( id.ParticleID                                              id/ParticleID.test.cpp )
 add_cpp_test( id.ReactionType                                            id/ReactionType.test.cpp )
 
+add_cpp_test( Documentation                                              Documentation.test.cpp )
+
 add_cpp_test( CoherentDistributionData                                   CoherentDistributionData.test.cpp )
 add_cpp_test( IncoherentDistributionData                                 IncoherentDistributionData.test.cpp )
 
@@ -106,6 +108,8 @@ add_cpp_test( format.endf.createTargetIdentifier                         format/
 add_cpp_test( format.endf.createInteractionType                          format/endf/createInteractionType.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellID                format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration     format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
+add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
+add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
 add_cpp_test( format.endf.covariance.createMatrix                        format/endf/covariance/createMatrix.test.cpp )
 add_cpp_test( format.endf.covariance.createVarianceScaling               format/endf/covariance/createVarianceScaling.test.cpp )
 add_cpp_test( format.endf.covariance.createCrossSectionCovarianceBlock   format/endf/covariance/createCrossSectionCovarianceBlock.test.cpp )
@@ -126,10 +130,12 @@ add_cpp_test( format.endf.createReactionProduct                          format/
 add_cpp_test( format.endf.createReactionProducts                         format/endf/createReactionProducts.test.cpp )
 add_cpp_test( format.endf.createReaction                                 format/endf/createReaction.test.cpp )
 add_cpp_test( format.endf.createReactions                                format/endf/createReactions.test.cpp )
+add_cpp_test( format.endf.createDocumentation                            format/endf/createDocumentation.test.cpp )
 add_cpp_test( format.endf.createProjectileTarget                         format/endf/createProjectileTarget.test.cpp )
 add_cpp_test( format.endf.createProjectileTargetFromFile                 format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxation                         format/endf/createAtomicRelaxation.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationFromFile                 format/endf/createAtomicRelaxationFromFile.test.cpp )
+add_cpp_test( format.endf.createAtomicRelaxationEndfFile                 format/endf/createAtomicRelaxationEndfFile.test.cpp )
 
 add_cpp_test( format.gnds.convertEnergy                                  format/gnds/convertEnergy.test.cpp )
 add_cpp_test( format.gnds.convertCrossSections                           format/gnds/convertCrossSections.test.cpp )

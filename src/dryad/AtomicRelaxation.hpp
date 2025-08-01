@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/Documentation.hpp"
 #include "dryad/id/ElementID.hpp"
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
 
@@ -20,6 +21,7 @@ namespace dryad {
   class AtomicRelaxation {
 
     /* fields */
+    Documentation documentation_;
     id::ElementID element_id_;
     std::vector< atomic::ElectronSubshellConfiguration > subshells_;
 
@@ -35,6 +37,32 @@ namespace dryad {
     #include "dryad/AtomicRelaxation/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the documentation
+     */
+    const Documentation& documentation() const noexcept {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Return the documentation
+     */
+    Documentation& documentation() noexcept {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Set the documentation
+     *
+     *  @param[in] documentation   the documentation
+     */
+    void documentation( Documentation documentation ) noexcept {
+
+      this->documentation_ = std::move( documentation );
+    }
 
     /**
      *  @brief Return the element identifier
