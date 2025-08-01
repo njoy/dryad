@@ -10,7 +10,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( false == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -49,7 +48,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -75,7 +73,6 @@ namespace h1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
-    CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
@@ -180,7 +177,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( false == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );

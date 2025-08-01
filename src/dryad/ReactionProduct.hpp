@@ -6,7 +6,6 @@
 #include <variant>
 
 // other includes
-#include "tools/overload.hpp"
 #include "dryad/type-aliases.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/PolynomialMultiplicity.hpp"
@@ -43,7 +42,6 @@ namespace dryad {
     Multiplicity multiplicity_;
     std::optional< DistributionData > distribution_;
     std::optional< TabulatedAverageEnergy > average_energy_;
-    bool linearised_;
 
   public:
 
@@ -61,11 +59,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the particle identifier for the reaction product
+     *
+     *  @param id.  the reaction product identifier
+     */
+    void identifier( id::ParticleID id ) noexcept {
+
+      this->id_ = std::move( id );
+    }
+
+    /**
      *  @brief Return the reaction product multiplicity
      */
     const Multiplicity& multiplicity() const noexcept {
 
       return this->multiplicity_;
+    }
+
+    /**
+     *  @brief Set the reaction product multiplicity
+     *
+     *  @param multiplicity   the multiplicity of the reaction product
+     */
+    void multiplicity( Multiplicity multiplicity ) noexcept {
+
+      this->multiplicity_ = std::move( multiplicity );
     }
 
     /**
@@ -77,6 +95,16 @@ namespace dryad {
     }
 
     /**
+     *  @brief Set the average reaction product energy
+     *
+     *  @param averageEnergy   the average reaction product energy
+     */
+    void averageEnergy( std::optional< TabulatedAverageEnergy > averageEnergy ) noexcept {
+
+      this->average_energy_ = std::move( averageEnergy );
+    }
+
+    /**
      *  @brief Return the reaction product distribution data
      */
     const std::optional< DistributionData >& distributionData() const noexcept {
@@ -85,11 +113,21 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the reaction product data is linearised
+     *  @brief Return the reaction product distribution data
      */
-    bool isLinearised() const noexcept {
+    std::optional< DistributionData >& distributionData() noexcept {
 
-      return this->linearised_;
+      return this->distribution_;
+    }
+
+    /**
+     *  @brief Set the reaction product distribution data
+     *
+     *  @param distribution   the reaction product distribution data
+     */
+    void distributionData( std::optional< DistributionData > distribution ) noexcept {
+
+      this->distribution_ = std::move( distribution );
     }
 
     /**
@@ -107,53 +145,6 @@ namespace dryad {
     bool hasDistributionData() const noexcept {
 
       return this->distribution_.has_value();
-    }
-
-    /**
-     *  @brief Linearise the reaction product data and return a new reaction product
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    ReactionProduct linearise( ToleranceConvergence tolerance = {} ) const noexcept {
-
-      auto linearise = tools::overload{
-
-        [] ( int multiplicity ) -> Multiplicity
-           { return Multiplicity( multiplicity ); },
-        [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); },
-        [&tolerance] ( const PolynomialMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }
-      };
-
-      id::ParticleID id = this->identifier();
-      Multiplicity multiplicity = std::visit( linearise, this->multiplicity() );
-      std::optional< TabulatedAverageEnergy > averageEnergy = this->averageEnergy();
-      std::optional< DistributionData > distribution = this->distributionData();
-
-      return ReactionProduct( std::move( id ), std::move( multiplicity ),
-                              std::move( distribution ), std::move( averageEnergy ),
-                              true );
-    }
-
-    /**
-     *  @brief Linearise the reaction product data inplace
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
-
-      auto linearise = tools::overload{
-
-        [] ( int multiplicity ) -> Multiplicity
-           { return Multiplicity( multiplicity ); },
-        [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); },
-        [&tolerance] ( const PolynomialMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }      };
-
-      this->multiplicity_ = std::visit( linearise, this->multiplicity() );
-      this->linearised_ = true;
     }
 
     /**

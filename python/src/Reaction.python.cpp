@@ -178,13 +178,7 @@ void wrapReaction( python::module& module ) {
     "    type    the reaction product type\n"
     "    index   the reaction product index (default is zero)",
     python::return_value_policy::reference_internal
- )
-  .def_property_readonly(
-
-    "is_linearised",
-    &Component::isLinearised,
-    "Flag indicating whether or not the data is linearised"
-  );
+ );
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );

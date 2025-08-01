@@ -11,7 +11,6 @@ namespace h {
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -50,7 +49,6 @@ namespace h {
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 
@@ -76,7 +74,6 @@ namespace h {
     CHECK( 1 == reaction.products().size() );
 
     CHECK( id::ParticleID( "g" ) == reaction.products()[0].identifier() );
-    CHECK( true == reaction.products()[0].isLinearised() );
     CHECK( false == reaction.products()[0].hasAverageEnergy() );
     CHECK( true == reaction.products()[0].hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( reaction.products()[0].multiplicity() ) );
@@ -113,7 +110,6 @@ namespace h {
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 
@@ -139,7 +135,6 @@ namespace h {
     CHECK( 1 == reaction.products().size() );
 
     CHECK( id::ParticleID( "g" ) == reaction.products()[0].identifier() );
-    CHECK( true == reaction.products()[0].isLinearised() );
     CHECK( false == reaction.products()[0].hasAverageEnergy() );
     CHECK( true == reaction.products()[0].hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( reaction.products()[0].multiplicity() ) );
@@ -173,7 +168,6 @@ namespace h {
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 
@@ -206,7 +200,6 @@ namespace h {
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 

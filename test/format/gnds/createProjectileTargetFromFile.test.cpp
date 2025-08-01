@@ -35,8 +35,6 @@ SCENARIO( "projectileTargetFromFile" ) {
 
         CHECK( InteractionType::Nuclear == H1.interactionType() );
 
-        CHECK( false == H1.isLinearised() );
-
         CHECK( std::nullopt == H1.resonances() );
 
         CHECK( true == H1.hasReaction( id::ReactionID( "1" ) ) );
@@ -81,8 +79,6 @@ SCENARIO( "projectileTargetFromFile" ) {
         CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == Li7.interactionType() );
-
-        CHECK( true == Li7.isLinearised() );
 
         CHECK( std::nullopt == Li7.resonances() );
 
@@ -239,8 +235,6 @@ SCENARIO( "projectileTargetFromFile" ) {
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
-        CHECK( true == H0.isLinearised() );
-
         CHECK( std::nullopt == H0.resonances() );
 
         CHECK( true == H0.hasReaction( id::ReactionID(  "501" ) ) );
@@ -323,8 +317,6 @@ SCENARIO( "projectileTargetFromFile" ) {
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 

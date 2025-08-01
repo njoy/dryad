@@ -10,7 +10,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -48,7 +47,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -82,7 +80,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -108,7 +105,6 @@ namespace h1 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -196,7 +192,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -231,7 +226,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -258,7 +252,6 @@ namespace h1 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
@@ -342,7 +335,6 @@ namespace h1 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -380,7 +372,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -406,7 +397,6 @@ namespace h1 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -444,7 +434,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -470,7 +459,6 @@ namespace h1 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ), 0 );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
-    CHECK( true == electron.isLinearised() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
@@ -558,7 +546,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 

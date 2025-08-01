@@ -31,7 +31,6 @@ SCENARIO( "createReactionProducts" ) {
 
         CHECK( 1 == products[1].size() );
         CHECK( id::ParticleID( "g" ) == products[1][0].identifier() );
-        CHECK( true == products[1][0].isLinearised() );
         CHECK( false == products[1][0].hasAverageEnergy() );
         CHECK( true == products[1][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[1][0].multiplicity() ) );
@@ -62,7 +61,6 @@ SCENARIO( "createReactionProducts" ) {
 
         CHECK( 1 == products[2].size() );
         CHECK( id::ParticleID( "g" ) == products[2][0].identifier() );
-        CHECK( true == products[2][0].isLinearised() );
         CHECK( false == products[2][0].hasAverageEnergy() );
         CHECK( true == products[2][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[2][0].multiplicity() ) );
@@ -108,7 +106,6 @@ SCENARIO( "createReactionProducts" ) {
 
         CHECK( 1 == products[1].size() );
         CHECK( id::ParticleID( "g" ) == products[1][0].identifier() );
-        CHECK( true == products[1][0].isLinearised() );
         CHECK( false == products[1][0].hasAverageEnergy() );
         CHECK( true == products[1][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[1][0].multiplicity() ) );
@@ -139,7 +136,6 @@ SCENARIO( "createReactionProducts" ) {
 
         CHECK( 1 == products[2].size() );
         CHECK( id::ParticleID( "g" ) == products[2][0].identifier() );
-        CHECK( true == products[2][0].isLinearised() );
         CHECK( false == products[2][0].hasAverageEnergy() );
         CHECK( true == products[2][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[2][0].multiplicity() ) );
@@ -187,7 +183,6 @@ SCENARIO( "createReactionProducts" ) {
 
         CHECK( 1 == products[1].size() );
         CHECK( id::ParticleID( "g" ) == products[1][0].identifier() );
-        CHECK( true == products[1][0].isLinearised() );
         CHECK( false == products[1][0].hasAverageEnergy() );
         CHECK( true == products[1][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[1][0].multiplicity() ) );
@@ -218,7 +213,6 @@ SCENARIO( "createReactionProducts" ) {
 
         CHECK( 1 == products[2].size() );
         CHECK( id::ParticleID( "g" ) == products[2][0].identifier() );
-        CHECK( true == products[2][0].isLinearised() );
         CHECK( false == products[2][0].hasAverageEnergy() );
         CHECK( true == products[2][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[2][0].multiplicity() ) );

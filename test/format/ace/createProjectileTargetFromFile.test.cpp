@@ -38,8 +38,6 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( InteractionType::Atomic == H0_pa.interactionType() );
 
-        CHECK( true == H0_pa.isLinearised() );
-
         CHECK( std::nullopt == H0_pa.resonances() );
 
         CHECK( true == H0_pa.hasReaction( id::ReactionID( "501" ) ) );
@@ -106,8 +104,6 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( InteractionType::Atomic == H0_pa.interactionType() );
 
-        CHECK( true == H0_pa.isLinearised() );
-
         CHECK( std::nullopt == H0_pa.resonances() );
 
         CHECK( true == H0_pa.hasReaction( id::ReactionID( "501" ) ) );
@@ -166,8 +162,6 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         CHECK( id::ParticleID( "H" ) == H0_ea.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_ea.interactionType() );
-
-        CHECK( true == H0_ea.isLinearised() );
 
         CHECK( std::nullopt == H0_ea.resonances() );
 
@@ -240,8 +234,6 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( InteractionType::Atomic == H0_pa.interactionType() );
 
-        CHECK( true == H0_pa.isLinearised() );
-
         CHECK( std::nullopt == H0_pa.resonances() );
 
         CHECK( true == H0_pa.hasReaction( id::ReactionID( "501" ) ) );
@@ -300,8 +292,6 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         CHECK( id::ParticleID( "H" ) == H0_ea.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0_ea.interactionType() );
-
-        CHECK( true == H0_ea.isLinearised() );
 
         CHECK( std::nullopt == H0_ea.resonances() );
 

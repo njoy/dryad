@@ -73,7 +73,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1000001., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
-        self.assertEqual( False, reaction.is_linearised )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[1] and reaction( 'n,Fe56->n,Fe56' )
@@ -99,7 +98,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1000000, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[2] and reaction( 'n,Fe56->2n,Fe55[all]' )
@@ -127,7 +125,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 3, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
-        self.assertEqual( False, reaction.is_linearised )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[3] and reaction( 'n,Fe56->2n,Fe55' )
@@ -153,7 +150,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 2.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[4] and reaction( 'n,Fe56->2n,Fe55_e1' )
@@ -179,7 +175,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[5] and reaction( 'n,Fe56->3n,Fe54[all]' )
@@ -207,7 +202,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 5, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
-        self.assertEqual( False, reaction.is_linearised )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[6] and reaction( 'n,Fe56-3n,Fe54' )
@@ -233,7 +227,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 3.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[7] and reaction( 'n,Fe56->3n,Fe54_e1' )
@@ -259,7 +252,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 2., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[8] and reaction( 'n,Fe56->a,Cr52[all]' )
@@ -285,11 +277,7 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
-
-    # metadata
-    self.assertEqual( False, chunk.is_linearised )
 
 def verify_correct_summation( self, chunk ) :
 
@@ -355,7 +343,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1000009.00002, reaction.cross_section.values[3] )
         self.assertEqual( 3, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[1] and reaction( 'n,Fe56->n,Fe56' )
@@ -381,7 +368,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1000000, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[2] and reaction( 'n,Fe56->2n,Fe55[all]' )
@@ -409,7 +395,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 3.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[3] and reaction( 'n,Fe56->2n,Fe55' )
@@ -435,7 +420,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 2.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[4] and reaction( 'n,Fe56->2n,Fe55_e1' )
@@ -461,7 +445,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[5] and reaction( 'n,Fe56->3n,Fe54[all]' )
@@ -489,7 +472,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 5.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[6] and reaction( 'n,Fe56-3n,Fe54' )
@@ -515,7 +497,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 3.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[7] and reaction( 'n,Fe56->3n,Fe54_e1' )
@@ -541,7 +522,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 2., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[8] and reaction( 'n,Fe56->a,Cr52[all]' )
@@ -567,11 +547,7 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
-
-    # metadata
-    self.assertEqual( True, chunk.is_linearised )
 
 class Test_dryad_ProjectileTarget( unittest.TestCase ) :
     """Unit test for the ProjectileTarget class."""

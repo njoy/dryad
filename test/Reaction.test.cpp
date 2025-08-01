@@ -144,7 +144,6 @@ SCENARIO( "Reaction" ) {
         chunk.crossSection( newxs );
 
         CHECK( newxs == chunk.crossSection() );
-        CHECK( true == chunk.isLinearised() );
 
         chunk.crossSection( original );
 
@@ -277,9 +276,6 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK_THROWS( chunk.product( id::ParticleID( "n" ), 1 ) );
   CHECK_THROWS( chunk.product( id::ParticleID( "h" ) ) );
   CHECK_THROWS( chunk.product( id::ParticleID( "h" ), 1 ) );
-
-  // metadata
-  CHECK( false == chunk.isLinearised() );
 }
 
 void verifySummationChunk( const Reaction& chunk ) {
@@ -332,7 +328,4 @@ void verifySummationChunk( const Reaction& chunk ) {
   CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
   CHECK( false == chunk.hasProduct( id::ParticleID( "g" ) ) );
   CHECK( 0 == chunk.products().size() );
-
-  // metadata
-  CHECK( false == chunk.isLinearised() );
 }
