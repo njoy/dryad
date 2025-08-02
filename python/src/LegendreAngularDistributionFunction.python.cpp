@@ -83,6 +83,12 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
     "mean",
     [] ( const Component& self ) { return self.mean(); },
     "The mean (first order raw moment) of the distribution function over its domain"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution function"
   );
 
   // add standard equality comparison definitions

@@ -87,6 +87,12 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     "    value     the grid value\n"
     "    cosine    the cosine value"
   )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distributions"
+  )
   .def_property_readonly(
 
     "average_cosines",
