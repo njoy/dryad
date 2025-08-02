@@ -54,8 +54,7 @@ void wrapLegendreAngularDistributions( python::module& module ) {
 
     python::init< std::vector< double >,
                   std::vector< LegendreAngularDistribution >,
-                  InterpolationType,
-                  bool >(),
+                  InterpolationType, bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,

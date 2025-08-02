@@ -65,6 +65,7 @@ TabulatedAngularDistribution(
     this->calculateCdf();
   }
 }
+
 /**
  *  @brief Constructor using a pdf
  *
@@ -75,3 +76,13 @@ TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf ) :
 
   this->calculateCdf();
 }
+
+/**
+ *  @brief Constructor using a pdf
+ *
+ *  @param pdf         the pdf of the distribution
+ *  @param cdf         the pdf of the distribution
+ */
+TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
+                              TabulatedAngularDistributionFunction cdf ) :
+  pdf_( std::move( pdf ) ), cdf_( std::move( cdf ) ) {}

@@ -38,6 +38,17 @@ namespace dryad {
     using Parent::operator();
 
     /**
+     *  @brief Normalise the distributions
+     */
+    void normalise() {
+
+      for ( auto& distribution : this->distributions() ) {
+
+        distribution.normalise();
+      }
+    }
+
+    /**
      *  @brief Return the average energy values
      */
     TabulatedAverageEnergy averageEnergies() const {
@@ -58,6 +69,8 @@ namespace dryad {
      *  @param[in] tolerance   the linearisation tolerance
      */
     TabulatedEnergyDistributions linearise( ToleranceConvergence tolerance = {} ) const {
+
+      //! @todo should we normalise the resulting distribution?
 
       std::vector< TabulatedEnergyDistribution > distributions;
       distributions.reserve( this->numberPoints() );

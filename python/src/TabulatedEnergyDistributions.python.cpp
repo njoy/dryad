@@ -34,9 +34,11 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< TabulatedEnergyDistribution >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "normalise" ) = false,
     "Initialise the energy distributions\n\n"
     "Arguments:\n"
     "    self            the energy distribution table\n"
@@ -50,9 +52,10 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
 
     python::init< std::vector< double >,
                   std::vector< TabulatedEnergyDistribution >,
-                  InterpolationType >(),
+                  InterpolationType, bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "normalise" ) = false,
     "Initialise the energy distributions\n\n"
     "Arguments:\n"
     "    self            the multiplicity table\n"
@@ -86,6 +89,12 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     "    self      the table\n"
     "    value     the grid value\n"
     "    energy    the energy value"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distributions"
   )
   .def_property_readonly(
 

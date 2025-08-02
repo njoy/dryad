@@ -34,9 +34,11 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< TabulatedAngularDistribution >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "normalise" ) = false,
     "Initialise the angular distributions\n\n"
     "Arguments:\n"
     "    self            the angular distribution table\n"
@@ -44,22 +46,27 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
     "    distributions   the distributions\n"
     "    boundaries      the boundaries of the interpolation regions\n"
     "    interpolants    the interpolation types of the interpolation regions,\n"
-    "                    see InterpolationType for all interpolation types"
+    "                    see InterpolationType for all interpolation types\n"
+    "    normalise       option to indicate whether or not to normalise\n"
+    "                    all probability data (default: no normalisation)"
   )
   .def(
 
     python::init< std::vector< double >,
                   std::vector< TabulatedAngularDistribution >,
-                  InterpolationType >(),
+                  InterpolationType, bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "normalise" ) = false,
     "Initialise the angular distributions\n\n"
     "Arguments:\n"
     "    self            the multiplicity table\n"
     "    grid            the grid values\n"
     "    distributions   the distributions\n"
     "    interpolant     the interpolation type (default lin-lin),\n"
-    "                    see InterpolationType for all interpolation types"
+    "                    see InterpolationType for all interpolation types\n"
+    "    normalise       option to indicate whether or not to normalise\n"
+    "                    all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
