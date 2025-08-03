@@ -872,7 +872,7 @@ class ProjectileTarget:
             filename   the ENDF file name
         """
     @staticmethod
-    def from_endf_file(filename: str) -> ProjectileTarget:
+    def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from an ENDF file
         
@@ -880,7 +880,9 @@ class ProjectileTarget:
         will be transformed into a ProjectileTarget.
         
         Arguments:
-            filename   the ENDF file name
+            filename    the ENDF file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     @staticmethod
     def from_gnds_file(filename: str) -> ProjectileTarget:
@@ -1560,7 +1562,7 @@ class TabulatedAngularDistributions:
     def __eq__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the angular distributions
         
@@ -1571,9 +1573,11 @@ class TabulatedAngularDistributions:
             boundaries      the boundaries of the interpolation regions
             interpolants    the interpolation types of the interpolation regions,
                             see InterpolationType for all interpolation types
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the angular distributions
         
@@ -1583,6 +1587,8 @@ class TabulatedAngularDistributions:
             distributions   the distributions
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
@@ -2054,7 +2060,7 @@ class TabulatedEnergyDistribution:
     def __eq__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the energy distribution
         
@@ -2065,9 +2071,11 @@ class TabulatedEnergyDistribution:
             boundaries     the boundaries of the interpolation regions
             interpolants   the interpolation types of the interpolation regions,
                            see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the energy distribution
         
@@ -2077,6 +2085,8 @@ class TabulatedEnergyDistribution:
             values         the probability values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
@@ -2087,6 +2097,10 @@ class TabulatedEnergyDistribution:
         Arguments:
             self        the energy distribution
             tolerance   the linearisation tolerance
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
         """
     @property
     def average_energy(self) -> float:
@@ -2099,7 +2113,7 @@ class TabulatedEnergyDistribution:
         The boundaries of the interpolation regions
         """
     @property
-    def cdf(self) -> TabulatedEnergyDistributionFunction | None:
+    def cdf(self) -> TabulatedEnergyDistributionFunction:
         """
         The cumulative distribution function (cdf) of the distribution
         """
@@ -2285,7 +2299,7 @@ class TabulatedEnergyDistributions:
     def __eq__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the energy distributions
         
@@ -2298,7 +2312,7 @@ class TabulatedEnergyDistributions:
                             see InterpolationType for all interpolation types
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the energy distributions
         
@@ -2318,6 +2332,10 @@ class TabulatedEnergyDistributions:
         Arguments:
             self        the energy distributions
             tolerance   the linearisation tolerance
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distributions
         """
     @property
     def average_energies(self) -> TabulatedAverageEnergy:

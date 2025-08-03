@@ -128,10 +128,10 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
 
         # the data is given explicitly using a normalised table
-        chunk1 = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 0.5, 0.75, 1. ],
-                                               normalisation = False )
-        chunk2 = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 0.5, 0.75, 1. ],
-                                               normalisation = True )
+        chunk1 = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 1., 1.5, 2. ],
+                                               normalise = False )
+        chunk2 = TabulatedAngularDistribution( cosines = [ -1., 0., 0.5, 1. ], values = [ 0., 1., 1.5, 2. ],
+                                               normalise = True )
 
         verify_chunk( self, chunk1, False )
         verify_chunk( self, chunk2, True )
@@ -139,14 +139,14 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
         chunk1.normalise()
         chunk2.normalise()
 
-        verify_chunk( self, chunk1, False )
+        verify_chunk( self, chunk1, True )
         verify_chunk( self, chunk2, True )
 
     def test_comparison( self ) :
 
         left = TabulatedAngularDistribution( [ -1., 1. ], [ 0.5, 0.5 ] )
         equal = TabulatedAngularDistribution( [ -1., 1. ], [ 0.5, 0.5 ] )
-        unnormalised = TabulatedAngularDistribution( [ -1., 1. ], [ 1., 1. ] )
+        unnormalised = TabulatedAngularDistribution( [ -1., 1. ], [ 1., 1. ], InterpolationType.LinearLinear, True )
         different = TabulatedAngularDistribution( [ -1., 1. ], [ 0.25, 0.75 ] )
 
         self.assertEqual( True, ( left == left ) )

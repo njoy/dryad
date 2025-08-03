@@ -126,14 +126,14 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
             self.assertAlmostEqual(  1.0, linear.distributions[2].pdf.cosines[1] )
             self.assertAlmostEqual( -1.0, linear.distributions[3].pdf.cosines[0] )
             self.assertAlmostEqual(  1.0, linear.distributions[3].pdf.cosines[1] )
-            self.assertAlmostEqual(  1.0  / normalisation, linear.distributions[0].cdf.values[0] )
-            self.assertAlmostEqual(  1.0  / normalisation, linear.distributions[0].cdf.values[1] )
-            self.assertAlmostEqual(  0.98 / normalisation, linear.distributions[1].cdf.values[0] )
-            self.assertAlmostEqual(  1.02 / normalisation, linear.distributions[1].cdf.values[1] )
-            self.assertAlmostEqual(  0.8  / normalisation, linear.distributions[2].cdf.values[0] )
-            self.assertAlmostEqual(  1.2  / normalisation, linear.distributions[2].cdf.values[1] )
-            self.assertAlmostEqual(  0.2  / normalisation, linear.distributions[3].cdf.values[0] )
-            self.assertAlmostEqual(  1.8  / normalisation, linear.distributions[3].cdf.values[1] )
+            self.assertAlmostEqual(  1.0  / normalisation, linear.distributions[0].pdf.values[0] )
+            self.assertAlmostEqual(  1.0  / normalisation, linear.distributions[0].pdf.values[1] )
+            self.assertAlmostEqual(  0.98 / normalisation, linear.distributions[1].pdf.values[0] )
+            self.assertAlmostEqual(  1.02 / normalisation, linear.distributions[1].pdf.values[1] )
+            self.assertAlmostEqual(  0.8  / normalisation, linear.distributions[2].pdf.values[0] )
+            self.assertAlmostEqual(  1.2  / normalisation, linear.distributions[2].pdf.values[1] )
+            self.assertAlmostEqual(  0.2  / normalisation, linear.distributions[3].pdf.values[0] )
+            self.assertAlmostEqual(  1.8  / normalisation, linear.distributions[3].pdf.values[1] )
             self.assertEqual( True, linear.distributions[0].cdf.is_linearised )
             self.assertEqual( True, linear.distributions[1].cdf.is_linearised )
             self.assertEqual( True, linear.distributions[2].cdf.is_linearised )
@@ -171,13 +171,13 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
                                                                  LegendreAngularDistribution( [ 1., 0.02 ] ),
                                                                  LegendreAngularDistribution( [ 1., 0.2 ] ),
                                                                  LegendreAngularDistribution( [ 1., 0.8 ] ) ],
-                                               interpolant = InterpolationType.LinearLinear, normalisation = False )
+                                               interpolant = InterpolationType.LinearLinear, normalise = False )
         chunk2 = LegendreAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                                distributions = [ LegendreAngularDistribution( [ 1. ] ),
                                                                  LegendreAngularDistribution( [ 1., 0.02 ] ),
                                                                  LegendreAngularDistribution( [ 1., 0.2 ] ),
                                                                  LegendreAngularDistribution( [ 1., 0.8 ] ) ],
-                                               interpolant = InterpolationType.LinearLinear, normalisation = True )
+                                               interpolant = InterpolationType.LinearLinear, normalise = True )
 
         verify_chunk( self, chunk1, False )
         verify_chunk( self, chunk2, True )
@@ -204,7 +204,9 @@ class Test_dryad_LegendreAngularDistributions( unittest.TestCase ) :
                                                      [ LegendreAngularDistribution( [ 1.0 ] ),
                                                        LegendreAngularDistribution( [ 0.5, 0.01 ] ),
                                                        LegendreAngularDistribution( [ 0.5, 0.1 ] ),
-                                                       LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )
+                                                       LegendreAngularDistribution( [ 0.5, 0.4 ] ) ],
+                                                     InterpolationType.LinearLinear,
+                                                     True )
         different = LegendreAngularDistributions( [ 1., 4. ],
                                                   [ LegendreAngularDistribution( [ 0.5 ] ),
                                                     LegendreAngularDistribution( [ 0.5, 0.4 ] ) ] )

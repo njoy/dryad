@@ -227,7 +227,8 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
                                                      [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
                                                        TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
                                                        TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
-                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ],
+                                                     InterpolationType.LinearLinear, True )
         different = TabulatedEnergyDistributions( [ 1., 4. ],
                                                   [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
                                                     TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )

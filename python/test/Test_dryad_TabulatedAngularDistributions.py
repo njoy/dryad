@@ -10,7 +10,7 @@ from dryad import TabulatedAngularDistributions
 from dryad import InterpolationType
 
 class Test_dryad_TabulatedAngularDistributions( unittest.TestCase ) :
-    """Unit test for the TabulatedAngularDistribution class."""
+    """Unit test for the TabulatedAngularDistributions class."""
 
     def test_component( self ) :
 
@@ -228,7 +228,8 @@ class Test_dryad_TabulatedAngularDistributions( unittest.TestCase ) :
                                                       [ TabulatedAngularDistribution( [ -1., +1. ], [ 1.0, 1.0 ] ),
                                                         TabulatedAngularDistribution( [ -1., +1. ], [ 0.49, 0.51 ] ),
                                                         TabulatedAngularDistribution( [ -1., +1. ], [ 0.4, 0.6 ] ),
-                                                        TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ] )
+                                                        TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ],
+                                                      InterpolationType.LinearLinear, True )
         different = TabulatedAngularDistributions( [ 1., 4. ],
                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 0.5, 0.5 ] ),
                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.1, 0.9 ] ) ] )

@@ -8,8 +8,8 @@ import sys
 from dryad import LegendreAngularDistribution
 from dryad import InterpolationType
 
-class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
-    """Unit test for the LegendreAngularDistributionFunction class."""
+class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
+    """Unit test for the LegendreAngularDistribution class."""
 
     def test_component( self ) :
 
@@ -18,8 +18,8 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
             normalisation = 2.0 if normalise else 1.0
 
             # verify content
-            self.assertAlmostEqual( 0.5 , chunk.coefficients[0] )
-            self.assertAlmostEqual( 0.25, chunk.coefficients[1] )
+            self.assertAlmostEqual( 1.0 / normalisation, chunk.coefficients[0] )
+            self.assertAlmostEqual( 0.5 / normalisation, chunk.coefficients[1] )
 
             pdf = chunk.pdf
             self.assertAlmostEqual( -1., pdf.lower_cosine_limit )
@@ -83,8 +83,8 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertEqual( True, linear.cdf.is_linearised )
 
         # the data is given explicitly
-        chunk1 = LegendreAngularDistribution( coefficients = [ 0.5, 0.25 ], normalisation = False )
-        chunk2 = LegendreAngularDistribution( coefficients = [ 0.5, 0.25 ], normalisation = False )
+        chunk1 = LegendreAngularDistribution( coefficients = [ 1., 0.5 ], normalise = False )
+        chunk2 = LegendreAngularDistribution( coefficients = [ 1., 0.5 ], normalise = True )
 
         verify_chunk( self, chunk1, False )
         verify_chunk( self, chunk2, True )
@@ -92,14 +92,14 @@ class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
         chunk1.normalise()
         chunk2.normalise()
 
-        verify_chunk( self, chunk1, False )
+        verify_chunk( self, chunk1, True )
         verify_chunk( self, chunk2, True )
 
     def test_comparison( self ) :
 
         left = LegendreAngularDistribution( [ 0.5, 0.25 ] )
         equal = LegendreAngularDistribution( [ 0.5, 0.25 ] )
-        unnormalised = LegendreAngularDistribution( [ 1., 0.5 ] )
+        unnormalised = LegendreAngularDistribution( [ 1., 0.5 ], True )
         different = LegendreAngularDistribution( [ 0.5, 0.1, 0.0001 ] )
 
         self.assertEqual( True, ( left == left ) )
