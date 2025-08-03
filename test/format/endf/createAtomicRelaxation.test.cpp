@@ -13,7 +13,6 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 
 void verifyChunk( const AtomicRelaxation&, bool );
-void verifyNormalisedChunk( const AtomicRelaxation& );
 
 SCENARIO( "createAtomicRelaxation" ) {
 
@@ -30,6 +29,12 @@ SCENARIO( "createAtomicRelaxation" ) {
         AtomicRelaxation oxygen2 = format::endf::createAtomicRelaxation( material, true );
 
         verifyChunk( oxygen1, false );
+        verifyChunk( oxygen2, true );
+
+        oxygen1.normalise();
+        oxygen2.normalise();
+
+        verifyChunk( oxygen1, true );
         verifyChunk( oxygen2, true );
       } // THEN
     } // WHEN

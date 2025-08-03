@@ -24,17 +24,16 @@ namespace endf {
    */
   TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(
-    const ENDFtk::section::Type< 6 >::ContinuumEnergyAngle::LegendreCoefficients& distribution ) {
-
-    //! @todo interpolants and boundaries on LegendreCoefficients for interpolation on
-    //!       outgoing energy?
-    //! @todo what is the interpolation type over the outgoing energy axis?
+    const ENDFtk::section::Type< 6 >::ContinuumEnergyAngle::LegendreCoefficients& distribution,
+    const InterpolationType& interpolant,
+    bool normalise ) {
 
     try {
 
       auto energies = createVector( distribution.energies() );
       auto values = createVector( distribution.totalEmissionProbabilities() );
-      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ) );
+      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
+                                          interpolant, normalise );
     }
     catch ( ... ) {
 
@@ -49,7 +48,9 @@ namespace endf {
    */
   TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(
-    const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle::LegendreCoefficients& distribution ) {
+    const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle::LegendreCoefficients& distribution,
+    const InterpolationType& interpolant,
+    bool normalise ) {
 
     if ( distribution.numberAngularParameters() != 0 ) {
 
@@ -58,15 +59,12 @@ namespace endf {
       throw std::exception();
     }
 
-    //! @todo interpolants and boundaries on LegendreCoefficients for interpolation on
-    //!       outgoing energy?
-    //! @todo what is the interpolation type over the outgoing energy axis?
-
     try {
 
       auto energies = createVector( distribution.energies() );
       auto values = createVector( distribution.totalEmissionProbabilities() );
-      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ) );
+      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
+                                          interpolant, normalise );
     }
     catch ( ... ) {
 

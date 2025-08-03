@@ -23,7 +23,8 @@ namespace endf {
    */
   std::vector< ReactionProduct >
   createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
-                          const ENDFtk::tree::Material& material, int mt ) {
+                          const ENDFtk::tree::Material& material, int mt,
+                          bool normalise ) {
 
     std::vector< ReactionProduct > products;
 
@@ -40,7 +41,7 @@ namespace endf {
 
               using LegendreDistributions = ENDFtk::section::Type< 4 >::LegendreDistributions;
               auto distributions = std::get< LegendreDistributions >( section.distributions() );
-              products.emplace_back( createReactionProduct( projectile, target, distributions ) );
+              products.emplace_back( createReactionProduct( projectile, target, distributions, normalise ) );
               break;
             }
             default : {
@@ -70,7 +71,7 @@ namespace endf {
                                        } ) > 1;
         if ( mt != 18 ) {
 
-          products.emplace_back( createReactionProduct( projectile, target, product, multiple ) );
+          products.emplace_back( createReactionProduct( projectile, target, product, multiple, normalise ) );
         }
         else {
 
@@ -84,7 +85,7 @@ namespace endf {
       auto section = material.section( 26, mt ).parse< 26 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        products.emplace_back( createReactionProduct( projectile, target, product, mt ) );
+        products.emplace_back( createReactionProduct( projectile, target, product, mt, normalise ) );
       }
     }
     else if ( material.hasSection( 27, mt ) ) {
@@ -98,13 +99,13 @@ namespace endf {
           std::optional< ENDFtk::section::Type< 27 > > imaginary = std::nullopt;
           if ( material.hasSection( 27, 506 ) ) { real = material.section( 27, 506 ).parse< 27 >(); }
           if ( material.hasSection( 27, 505 ) ) { imaginary = material.section( 27, 505 ).parse< 27 >(); }
-          products.emplace_back( createReactionProduct( projectile, target, section, real, imaginary, mt ) );
+          products.emplace_back( createReactionProduct( projectile, target, section, real, imaginary, mt, normalise ) );
           break;
         }
         case 504 : {
 
           auto section = material.section( 27, mt ).parse< 27 >();
-          products.emplace_back( createReactionProduct( projectile, target, section, mt ) );
+          products.emplace_back( createReactionProduct( projectile, target, section, mt, normalise ) );
           break;
         }
         default : {

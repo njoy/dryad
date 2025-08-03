@@ -28,15 +28,19 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createLegendreAngularDistributions( distribution );
+        auto chunk1 = format::endf::createLegendreAngularDistributions( distribution, false );
+        auto chunk2 = format::endf::createLegendreAngularDistributions( distribution, true );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk1 );
+        verifyChunk( chunk2 );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
 void verifyChunk( const LegendreAngularDistributions& chunk ) {
+
+  // MF4 sections assume that the first coefficient is 0.5 so it is always normalised
 
   CHECK( 153 == chunk.numberPoints() );
   CHECK( 1 == chunk.numberRegions() );

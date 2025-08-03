@@ -43,7 +43,8 @@ namespace endf {
    *  @brief Create a Reaction from an unparsed ENDF material
    */
   Reaction createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                           const ENDFtk::tree::Material& material, int mt ) {
+                           const ENDFtk::tree::Material& material, int mt,
+                           bool normalise ) {
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -59,7 +60,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt, normalise );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
@@ -126,7 +127,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt, normalise );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 

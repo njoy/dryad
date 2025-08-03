@@ -27,6 +27,12 @@ SCENARIO( "createAtomicRelaxation" ) {
 
         verifyChunk( oxygen1, false );
         verifyChunk( oxygen2, true );
+
+        oxygen1.normalise();
+        oxygen2.normalise();
+
+        verifyChunk( oxygen1, true );
+        verifyChunk( oxygen2, true );
       } // THEN
     } // WHEN
   } // GIVEN

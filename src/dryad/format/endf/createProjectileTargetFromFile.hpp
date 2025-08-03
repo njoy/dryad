@@ -22,12 +22,13 @@ namespace endf {
    *
    *  @param[in] filename   the ENDF file name
    */
-  ProjectileTarget createProjectileTargetFromFile( const std::string& filename ) {
+  ProjectileTarget createProjectileTargetFromFile( const std::string& filename,
+                                                   bool normalise ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
     auto tape = ENDFtk::tree::fromFile( filename );
-    return createProjectileTarget( tape.materials().front() );
+    return createProjectileTarget( tape.materials().front(), normalise );
   }
 
 } // endf namespace

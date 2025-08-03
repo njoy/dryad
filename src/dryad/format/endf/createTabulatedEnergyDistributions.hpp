@@ -24,16 +24,19 @@ namespace endf {
    *         ENDF MF6 ContinuumEnergyAngle component
    */
   TabulatedEnergyDistributions
-  createTabulatedEnergyDistributions( const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle& distribution ) {
+  createTabulatedEnergyDistributions(
+      const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle& distribution,
+      bool normalise ) {
 
     try {
 
       auto energies = createVector( distribution.incidentEnergies() );
+      auto interpolant = createInterpolant( distribution.interpolationScheme() );
       std::vector< TabulatedEnergyDistribution > distributions;
       distributions.reserve( energies.size() );
       for ( auto&& table : distribution.distributions() ) {
 
-        distributions.emplace_back( createTabulatedEnergyDistribution( table ) );
+        distributions.emplace_back( createTabulatedEnergyDistribution( table, interpolant, normalise ) );
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );

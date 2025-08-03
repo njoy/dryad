@@ -24,7 +24,8 @@ namespace endf {
   /**
    *  @brief Create a ProjectileTarget from an unparsed ENDF material
    */
-  ProjectileTarget createProjectileTarget( const ENDFtk::tree::Material& material ) {
+  ProjectileTarget createProjectileTarget( const ENDFtk::tree::Material& material,
+                                           bool normalise ) {
 
     auto information = material.section( 1, 451 ).parse< 1, 451 >();
 
@@ -34,7 +35,7 @@ namespace endf {
     id::ParticleID target = createTargetIdentifier( information.ZA(), information.excitedLevel() );
     InteractionType type = createInteractionType( information.subLibrary() );
 
-    std::vector< Reaction > reactions = createReactions( projectile, target, material );
+    std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
 
     return ProjectileTarget( std::move( documentation ), std::move( projectile ),
                              std::move( target ), type, std::move( reactions ) );

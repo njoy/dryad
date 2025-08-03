@@ -174,10 +174,9 @@ namespace h1 {
     CHECK_THAT( scale15 *  1.25808e-11, WithinRel( angle.distributions()[15].pdf().values()[1] ) );
     CHECK_THAT( scale15 *   8.15658e+5, WithinRel( angle.distributions()[15].pdf().values()[94] ) );
     CHECK_THAT( scale15 *   9.86945e+5, WithinRel( angle.distributions()[15].pdf().values()[95] ) );
-    CHECK( std::nullopt == angle.distributions()[0].cdf() );
-    CHECK( std::nullopt == angle.distributions()[1].cdf() );
-    CHECK( std::nullopt == angle.distributions()[14].cdf() );
-    CHECK( std::nullopt == angle.distributions()[15].cdf() );
+
+//! @todo test cdf
+
     CHECK( 15 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
@@ -326,10 +325,9 @@ namespace h1 {
     CHECK_THAT( scale09 *  .246105000 , WithinRel( energy.distributions()[9].pdf().values()[1] ) );
     CHECK_THAT( scale09 * 9.06486E-16 , WithinRel( energy.distributions()[9].pdf().values()[109] ) );
     CHECK_THAT( scale09 * 5.16344E-16 , WithinRel( energy.distributions()[9].pdf().values()[110] ) );
-    CHECK( std::nullopt == energy.distributions()[0].cdf() );
-    CHECK( std::nullopt == energy.distributions()[1].cdf() );
-    CHECK( std::nullopt == energy.distributions()[8].cdf() );
-    CHECK( std::nullopt == energy.distributions()[9].cdf() );
+
+//! @todo test cdf
+
     CHECK( 9 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 
@@ -525,10 +523,9 @@ namespace h1 {
     CHECK_THAT( scale07 *  .143104000, WithinRel( energy.distributions()[7].pdf().values()[1] ) );
     CHECK_THAT( scale07 * 3.10545E-21, WithinRel( energy.distributions()[7].pdf().values()[145] ) );
     CHECK_THAT( scale07 *  2.7755E-21, WithinRel( energy.distributions()[7].pdf().values()[146] ) );
-    CHECK( std::nullopt == energy.distributions()[0].cdf() );
-    CHECK( std::nullopt == energy.distributions()[1].cdf() );
-    CHECK( std::nullopt == energy.distributions()[6].cdf() );
-    CHECK( std::nullopt == energy.distributions()[7].cdf() );
+
+//! @todo test cdf
+
     CHECK( 7 == energy.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 
