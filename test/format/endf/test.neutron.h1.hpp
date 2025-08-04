@@ -1,5 +1,3 @@
-#include "dryad/ProjectileTarget.hpp"
-
 namespace neutron {
 
 // test functions based on n-001_H_001.endf

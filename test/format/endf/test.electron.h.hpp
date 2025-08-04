@@ -1,5 +1,3 @@
-#include "dryad/ProjectileTarget.hpp"
-
 namespace electron {
 
 // e-001_H_000.endf and e-001_H_000-endf80.endf
@@ -438,7 +436,7 @@ namespace endf81 {
     CHECK( 96 == angle.distributions()[15].pdf().cosines().size() );
     CHECK( 96 == angle.distributions()[15].pdf().values().size() );
 
-      // the numbers in the tests given below are the values as found in the test
+    // the numbers in the tests given below are the values as found in the test
     // file so they need to be normalised. the following values are the scaling
     // factors that need to be applied (calculated by integrating the distributions
     // in excel).
@@ -447,7 +445,7 @@ namespace endf81 {
     double normalisation14 = normalise ? 1.00000048323214 : 1.;
     double normalisation15 = normalise ? 1.00000000937718 : 1.;
 
-      CHECK_THAT( -1.                           , WithinRel( angle.distributions()[0].pdf().cosines()[0] ) );
+    CHECK_THAT( -1.                           , WithinRel( angle.distributions()[0].pdf().cosines()[0] ) );
     CHECK_THAT(  0.999999                     , WithinRel( angle.distributions()[0].pdf().cosines()[1] ) );
     CHECK_THAT(  0.5 / normalisation00        , WithinRel( angle.distributions()[0].pdf().values()[0] ) );
     CHECK_THAT(  0.5 / normalisation00        , WithinRel( angle.distributions()[0].pdf().values()[1] ) );
@@ -476,7 +474,7 @@ namespace endf81 {
     CHECK_THAT(  8.15658e+5 / normalisation15 , WithinRel( angle.distributions()[15].pdf().values()[94] ) );
     CHECK_THAT(  9.86945e+5 / normalisation15 , WithinRel( angle.distributions()[15].pdf().values()[95] ) );
 
-      CHECK(  2 == angle.distributions()[0].cdf().cosines().size() );
+    CHECK(  2 == angle.distributions()[0].cdf().cosines().size() );
     CHECK(  2 == angle.distributions()[0].cdf().values().size() );
     CHECK( 30 == angle.distributions()[1].cdf().cosines().size() );
     CHECK( 30 == angle.distributions()[1].cdf().values().size() );
@@ -485,7 +483,7 @@ namespace endf81 {
     CHECK( 96 == angle.distributions()[15].cdf().cosines().size() );
     CHECK( 96 == angle.distributions()[15].cdf().values().size() );
 
-      CHECK_THAT( -1.                                    , WithinRel( angle.distributions()[0].cdf().cosines()[0] ) );
+    CHECK_THAT( -1.                                    , WithinRel( angle.distributions()[0].cdf().cosines()[0] ) );
     CHECK_THAT(  0.999999                              , WithinRel( angle.distributions()[0].cdf().cosines()[1] ) );
     CHECK_THAT(  0.            / normalisation00       , WithinRel( angle.distributions()[0].cdf().values()[0] ) );
     CHECK_THAT(  1.999999 / 2. / normalisation00       , WithinRel( angle.distributions()[0].cdf().values()[1] ) );
@@ -514,7 +512,7 @@ namespace endf81 {
     CHECK_THAT(  0.90986985942462     / normalisation15, WithinRel( angle.distributions()[15].cdf().values()[94] ) );
     CHECK_THAT(  1.00000000937718     / normalisation15, WithinRel( angle.distributions()[15].cdf().values()[95] ) );
 
-      CHECK( 15 == angle.boundaries()[0] );
+    CHECK( 15 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
   }
 

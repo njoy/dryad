@@ -1,5 +1,3 @@
-#include "dryad/ProjectileTarget.hpp"
-
 namespace photoatomic {
 
 // test functions based on photoat-001_H_000.endf
