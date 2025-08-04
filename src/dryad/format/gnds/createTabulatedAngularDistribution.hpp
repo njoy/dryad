@@ -24,7 +24,8 @@ namespace gnds {
    */
   static std::pair< std::optional< double >,
                     TabulatedAngularDistribution >
-  createTabulatedAngularDistribution( pugi::xml_node node, const Axes& units ) {
+  createTabulatedAngularDistribution( pugi::xml_node node, const Axes& units,
+                                      bool normalise ) {
 
     std::optional< double > outer = std::nullopt;
     std::vector< double > cosines;
@@ -63,7 +64,8 @@ namespace gnds {
     return { std::move( outer ),
              TabulatedAngularDistribution(
                std::move( cosines ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) ) };
+               std::move( boundaries ), std::move( interpolants ),
+               normalise ) };
   }
 
 } // gnds namespace

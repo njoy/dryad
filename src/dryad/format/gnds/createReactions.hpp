@@ -21,7 +21,8 @@ namespace gnds {
    */
   static std::vector< Reaction >
   createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
-                   pugi::xml_node suite, const std::string& style = "eval" ) {
+                   pugi::xml_node suite, bool nornmalise,
+                   const std::string& style = "eval" ) {
 
     // check that this is a valid reaction node
     throwExceptionOnWrongNode( suite, "reactionSuite" );
@@ -43,7 +44,7 @@ namespace gnds {
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction, style ) );
+        reactions.emplace_back( createReaction( projectile, target, suite, reaction, nornmalise, style ) );
       }
     }
 
@@ -55,7 +56,7 @@ namespace gnds {
             reaction; reaction = reaction.next_sibling( "crossSectionSum" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction, style ) );
+        reactions.emplace_back( createReaction( projectile, target, suite, reaction, nornmalise, style ) );
       }
     }
 
@@ -67,7 +68,7 @@ namespace gnds {
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction ) );
+        reactions.emplace_back( createReaction( projectile, target, suite, reaction, nornmalise ) );
       }
     }
 
