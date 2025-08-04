@@ -885,12 +885,14 @@ class ProjectileTarget:
                         all probability data (default: no normalisation)
         """
     @staticmethod
-    def from_gnds_file(filename: str) -> ProjectileTarget:
+    def from_gnds_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from a GNDS file
         
         Arguments:
-            filename   the GNDS file name
+            filename    the GNDS file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...

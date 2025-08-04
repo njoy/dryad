@@ -166,14 +166,16 @@ void wrapProjectileTarget( python::module& module ) {
   .def_static(
 
     "from_gnds_file",
-    [] ( const std::string& filename ) -> decltype(auto) {
+    [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createProjectileTargetFromFile( filename );
+      return njoy::dryad::format::gnds::createProjectileTargetFromFile( filename, normalise );
     },
-    python::arg( "filename" ),
+    python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create ProjectileTarget data from a GNDS file\n\n"
     "Arguments:\n"
-    "    filename   the GNDS file name"
+    "    filename    the GNDS file name\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   )
   .def_static(
 
