@@ -74,7 +74,10 @@ namespace endf {
     ENDFtk::section::Type< 28 >
     data( 533, zaid, awr, std::move( subshells ) );
 
-    ENDFtk::tree::Material material( relaxation.elementIdentifier().number() * 100 );
+    int mat = relaxation.elementIdentifier().number() < 100
+              ? relaxation.elementIdentifier().number() * 100
+              : 9900 + ( relaxation.elementIdentifier().number() - 99 ) * 20;
+    ENDFtk::tree::Material material( mat );
     material.insert( information );
     material.insert( data );
     ENDFtk::tree::updateDirectory( material );
