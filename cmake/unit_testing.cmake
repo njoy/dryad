@@ -174,6 +174,7 @@ add_cpp_test( format.gnds.createTabulatedScatteringFunctionFromNodes     format/
 add_cpp_test( format.gnds.createTabulatedCrossSection                    format/gnds/createTabulatedCrossSection.test.cpp )
 add_cpp_test( format.gnds.createMultiplicity                             format/gnds/createMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createQValue                                   format/gnds/createQValue.test.cpp )
+add_cpp_test( format.gnds.createCoherentDistributionData                 format/gnds/createCoherentDistributionData.test.cpp )
 add_cpp_test( format.gnds.createLegendreAngularDistribution              format/gnds/createLegendreAngularDistribution.test.cpp )
 add_cpp_test( format.gnds.createTabulatedAverageEnergy                   format/gnds/createTabulatedAverageEnergy.test.cpp )
 add_cpp_test( format.gnds.createReaction                                 format/gnds/createReaction.test.cpp )
