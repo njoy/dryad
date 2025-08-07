@@ -176,6 +176,8 @@ add_cpp_test( format.gnds.createMultiplicity                             format/
 add_cpp_test( format.gnds.createQValue                                   format/gnds/createQValue.test.cpp )
 add_cpp_test( format.gnds.createCoherentDistributionData                 format/gnds/createCoherentDistributionData.test.cpp )
 add_cpp_test( format.gnds.createIncoherentDistributionData               format/gnds/createIncoherentDistributionData.test.cpp )
+add_cpp_test( format.gnds.createUncorrelatedDistributionData             format/gnds/createUncorrelatedDistributionData.test.cpp )
+add_cpp_test( format.gnds.createTwoBodyDistributionData                  format/gnds/createTwoBodyDistributionData.test.cpp )
 add_cpp_test( format.gnds.createLegendreAngularDistribution              format/gnds/createLegendreAngularDistribution.test.cpp )
 add_cpp_test( format.gnds.createTabulatedAverageEnergy                   format/gnds/createTabulatedAverageEnergy.test.cpp )
 add_cpp_test( format.gnds.createReaction                                 format/gnds/createReaction.test.cpp )
