@@ -47,8 +47,8 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     "    boundaries      the boundaries of the interpolation regions\n"
     "    interpolants    the interpolation types of the interpolation regions,\n"
     "                    see InterpolationType for all interpolation types\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    "    normalise       option to indicate whether or not to normalise\n"
+    "                    all probability data (default: no normalisation)"
   )
   .def(
 

@@ -11,9 +11,9 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData& );
-void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& );
-void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData& );
+void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData&, bool );
+void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData&, bool );
+void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData&, bool );
 
 SCENARIO( "UncorrelatedDistributionData" ) {
 
@@ -27,17 +27,22 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       TabulatedEnergyDistributions energy(
 
         { 1e-5, 20. },
-        { { { 0., 20. }, { 0., 0.1 } },
-          { { 0., 20. }, { 0.05, 0.05 } } }
+        { { { 0., 20. }, { 0., 0.2 } },
+          { { 0., 20. }, { 0.1, 0.1 } } }
       );
 
-      UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
-                                          std::move( energy ) );
+      UncorrelatedDistributionData chunk1( frame, angle, energy, false );
+      UncorrelatedDistributionData chunk2( std::move( frame ), std::move( angle ),
+                                           std::move( energy ), true );
 
-      THEN( "an UncorrelatedDistributionData can be constructed and members can be tested" ) {
+      verifyIsotropicAndTabulatedChunk( chunk1, false );
+      verifyIsotropicAndTabulatedChunk( chunk2, true );
 
-        verifyIsotropicAndTabulatedChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyIsotropicAndTabulatedChunk( chunk1, true );
+      verifyIsotropicAndTabulatedChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -49,22 +54,27 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       LegendreAngularDistributions angle(
 
         { 1e-5, 20. },
-        { { { 0.5 } }, { { 0.5, 0.1 } } }
+        { { { 1. } }, { { 1., 0.2 } } }
       );
       TabulatedEnergyDistributions energy(
 
         { 1e-5, 20. },
-        { { { 0., 20. }, { 0., 0.1 } },
-          { { 0., 20. }, { 0.05, 0.05 } } }
+        { { { 0., 20. }, { 0., 0.2 } },
+          { { 0., 20. }, { 0.1, 0.1 } } }
       );
 
-      UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
-                                          std::move( energy ) );
+      UncorrelatedDistributionData chunk1( frame, angle, energy, false );
+      UncorrelatedDistributionData chunk2( std::move( frame ), std::move( angle ),
+                                          std::move( energy ), true );
 
-      THEN( "an UncorrelatedDistributionData can be constructed and members can be tested" ) {
+      verifyLegendreAndTabulatedChunk( chunk1, false );
+      verifyLegendreAndTabulatedChunk( chunk2, true );
 
-        verifyLegendreAndTabulatedChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyLegendreAndTabulatedChunk( chunk1, true );
+      verifyLegendreAndTabulatedChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -76,23 +86,28 @@ SCENARIO( "UncorrelatedDistributionData" ) {
       TabulatedAngularDistributions angle(
 
         { 1e-5, 20. },
-        { { { -1., +1. }, { 0.5, 0.5 } },
-          { { -1., +1. }, { 0.4, 0.6 } } }
+        { { { -1., +1. }, { 1., 1. } },
+          { { -1., +1. }, { 0.8, 1.2 } } }
       );
       TabulatedEnergyDistributions energy(
 
         { 1e-5, 20. },
-        { { { 0., 20. }, { 0., 0.1 } },
-          { { 0., 20. }, { 0.05, 0.05 } } }
+        { { { 0., 20. }, { 0., 0.2 } },
+          { { 0., 20. }, { 0.1, 0.1 } } }
       );
 
-      UncorrelatedDistributionData chunk( std::move( frame ), std::move( angle ),
-                                          std::move( energy ) );
+      UncorrelatedDistributionData chunk1( frame, angle, energy, false );
+      UncorrelatedDistributionData chunk2( std::move( frame ), std::move( angle ),
+                                           std::move( energy ), true );
 
-      THEN( "an UncorrelatedDistributionData can be constructed and members can be tested" ) {
+      verifyTabulatedAndTabulatedChunk( chunk1, false );
+      verifyTabulatedAndTabulatedChunk( chunk2, true );
 
-        verifyTabulatedAndTabulatedChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyTabulatedAndTabulatedChunk( chunk1, true );
+      verifyTabulatedAndTabulatedChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -118,7 +133,7 @@ SCENARIO( "UncorrelatedDistributionData" ) {
 
         chunk.frame( original );
 
-        verifyIsotropicAndTabulatedChunk( chunk );
+        verifyIsotropicAndTabulatedChunk( chunk, true );
       } // THEN
 
       THEN( "the distribution data can be changed" ) {
@@ -146,7 +161,7 @@ SCENARIO( "UncorrelatedDistributionData" ) {
         chunk.angle( originalangle );
         chunk.energy( originalenergy );
 
-        verifyIsotropicAndTabulatedChunk( chunk );
+        verifyIsotropicAndTabulatedChunk( chunk, true );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -187,7 +202,9 @@ SCENARIO( "UncorrelatedDistributionData" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData& chunk ) {
+void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2. : 1.;
 
   CHECK( DistributionDataType::Uncorrelated == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
@@ -210,29 +227,31 @@ void verifyIsotropicAndTabulatedChunk( const UncorrelatedDistributionData& chunk
   CHECK( 2 == energy.distributions()[1].pdf().values().size() );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0.1 , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.  / normalisation, WithinRel( energy.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.2 / normalisation, WithinRel( energy.distributions()[0].pdf().values()[1] ) );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.1 / normalisation, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.1 / normalisation, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
   CHECK( 2 == energy.distributions()[0].cdf().energies().size() );
   CHECK( 2 == energy.distributions()[0].cdf().values().size() );
   CHECK( 2 == energy.distributions()[1].cdf().energies().size() );
   CHECK( 2 == energy.distributions()[1].cdf().values().size() );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].cdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].cdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( energy.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( energy.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( energy.distributions()[0].cdf().values()[1] ) );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].cdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].cdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( energy.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( energy.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( energy.distributions()[1].cdf().values()[1] ) );
   CHECK( 1 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }
 
-void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& chunk ) {
+void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2. : 1.;
 
   CHECK( DistributionDataType::Uncorrelated == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
@@ -251,16 +270,16 @@ void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& chunk 
   CHECK_THAT( 20., WithinRel( angle.grid()[1] ) );
   CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
   CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
-  CHECK_THAT( 0.5, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
-  CHECK_THAT( 0.5, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
-  CHECK_THAT( 0.1, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK_THAT( 1. / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1. / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
   CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
   CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
-  CHECK_THAT( 0.5               , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
-  CHECK_THAT( 0.5               , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
-  CHECK_THAT( 0.4666666666666666, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
-  CHECK_THAT( 0.5               , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
-  CHECK_THAT( 0.0333333333333333, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
   CHECK( 1 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
@@ -279,29 +298,31 @@ void verifyLegendreAndTabulatedChunk( const UncorrelatedDistributionData& chunk 
   CHECK( 2 == energy.distributions()[1].pdf().values().size() );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0.1 , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.  / normalisation, WithinRel( energy.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.2 / normalisation, WithinRel( energy.distributions()[0].pdf().values()[1] ) );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.1 / normalisation, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.1 / normalisation, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
   CHECK( 2 == energy.distributions()[0].cdf().energies().size() );
   CHECK( 2 == energy.distributions()[0].cdf().values().size() );
   CHECK( 2 == energy.distributions()[1].cdf().energies().size() );
   CHECK( 2 == energy.distributions()[1].cdf().values().size() );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].cdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].cdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( energy.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( energy.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( energy.distributions()[0].cdf().values()[1] ) );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].cdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].cdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( energy.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( energy.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( energy.distributions()[1].cdf().values()[1] ) );
   CHECK( 1 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }
 
-void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData& chunk ) {
+void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2. : 1.;
 
   CHECK( DistributionDataType::Uncorrelated == chunk.type() );
   CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
@@ -324,24 +345,24 @@ void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData& chunk
   CHECK( 2 == angle.distributions()[1].pdf().values().size() );
   CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].pdf().cosines()[0] ) );
   CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].pdf().cosines()[1] ) );
-  CHECK_THAT(  0.5 , WithinRel( angle.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0.5 , WithinRel( angle.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  1. / normalisation, WithinRel( angle.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  1. / normalisation, WithinRel( angle.distributions()[0].pdf().values()[1] ) );
   CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].pdf().cosines()[0] ) );
   CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].pdf().cosines()[1] ) );
-  CHECK_THAT(  0.4 , WithinRel( angle.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  0.6 , WithinRel( angle.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.8 / normalisation, WithinRel( angle.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  1.2 / normalisation, WithinRel( angle.distributions()[1].pdf().values()[1] ) );
   CHECK( 2 == angle.distributions()[0].cdf().cosines().size() );
   CHECK( 2 == angle.distributions()[0].cdf().values().size() );
   CHECK( 2 == angle.distributions()[1].cdf().cosines().size() );
   CHECK( 2 == angle.distributions()[1].cdf().values().size() );
   CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].cdf().cosines()[0] ) );
   CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].cdf().cosines()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( angle.distributions()[0].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( angle.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( angle.distributions()[0].cdf().values()[1] ) );
   CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].cdf().cosines()[0] ) );
   CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].cdf().cosines()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( angle.distributions()[1].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( angle.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( angle.distributions()[1].cdf().values()[1] ) );
   CHECK( 1 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
@@ -360,24 +381,24 @@ void verifyTabulatedAndTabulatedChunk( const UncorrelatedDistributionData& chunk
   CHECK( 2 == energy.distributions()[1].pdf().values().size() );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].pdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].pdf().values()[0] ) );
-  CHECK_THAT(  0.1 , WithinRel( energy.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0.  / normalisation, WithinRel( energy.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0.2 / normalisation, WithinRel( energy.distributions()[0].pdf().values()[1] ) );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].pdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].pdf().energies()[1] ) );
-  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
-  CHECK_THAT(  0.05, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  0.1 / normalisation, WithinRel( energy.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0.1 / normalisation, WithinRel( energy.distributions()[1].pdf().values()[1] ) );
   CHECK( 2 == energy.distributions()[0].cdf().energies().size() );
   CHECK( 2 == energy.distributions()[0].cdf().values().size() );
   CHECK( 2 == energy.distributions()[1].cdf().energies().size() );
   CHECK( 2 == energy.distributions()[1].cdf().values().size() );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].cdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[0].cdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[0].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( energy.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( energy.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( energy.distributions()[0].cdf().values()[1] ) );
   CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].cdf().energies()[0] ) );
   CHECK_THAT( 20.  , WithinRel( energy.distributions()[1].cdf().energies()[1] ) );
-  CHECK_THAT(  0.  , WithinRel( energy.distributions()[1].cdf().values()[0] ) );
-  CHECK_THAT(  1.  , WithinRel( energy.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( energy.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( energy.distributions()[1].cdf().values()[1] ) );
   CHECK( 1 == energy.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 }

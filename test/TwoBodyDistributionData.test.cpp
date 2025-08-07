@@ -176,22 +176,22 @@ void verifyLegendreChunk( const TwoBodyDistributionData& chunk, bool normalise )
   CHECK( 2 == angle.distributions().size() );
   CHECK( 1 == angle.boundaries().size() );
   CHECK( 1 == angle.interpolants().size() );
-//  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
-//  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
-//  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
-//  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
-//  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
-//  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
-//  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
-//  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
-//  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
-//  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
-//  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
-//  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
-//  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
-//  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
-//  CHECK( 1 == angle.boundaries()[0] );
-//  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }
 
 void verifyTabulatedChunk( const TwoBodyDistributionData& chunk, bool normalise ) {
