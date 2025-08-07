@@ -22,7 +22,9 @@ def verify_isotropic_chunk( self, chunk ) :
 
     self.assertEqual( True, isinstance( chunk.angle, IsotropicAngularDistributions ) )
 
-def verify_legendre_chunk( self, chunk ) :
+def verify_legendre_chunk( self, chunk, normalise ) :
+
+    normalisation = 2.0 if normalise else 1.0
 
     self.assertEqual( DistributionDataType.TwoBody, chunk.type )
     self.assertEqual( ReferenceFrame.CentreOfMass, chunk.frame )
@@ -39,20 +41,22 @@ def verify_legendre_chunk( self, chunk ) :
     self.assertAlmostEqual( 20. , chunk.angle.grid[1] )
     self.assertEqual( 1, len( chunk.angle.distributions[0].pdf.coefficients ) )
     self.assertEqual( 2, len( chunk.angle.distributions[1].pdf.coefficients ) )
-    self.assertAlmostEqual( 0.5, chunk.angle.distributions[0].pdf.coefficients[0] )
-    self.assertAlmostEqual( 0.5, chunk.angle.distributions[1].pdf.coefficients[0] )
-    self.assertAlmostEqual( 0.1, chunk.angle.distributions[1].pdf.coefficients[1] )
+    self.assertAlmostEqual( 1.  / normalisation, chunk.angle.distributions[0].pdf.coefficients[0] )
+    self.assertAlmostEqual( 1.  / normalisation, chunk.angle.distributions[1].pdf.coefficients[0] )
+    self.assertAlmostEqual( 0.2 / normalisation, chunk.angle.distributions[1].pdf.coefficients[1] )
     self.assertEqual( 2, len( chunk.angle.distributions[0].cdf.coefficients ) )
     self.assertEqual( 3, len( chunk.angle.distributions[1].cdf.coefficients ) )
-    self.assertAlmostEqual( 0.5               , chunk.angle.distributions[0].cdf.coefficients[0] )
-    self.assertAlmostEqual( 0.5               , chunk.angle.distributions[0].cdf.coefficients[1] )
-    self.assertAlmostEqual( 0.4666666666666666, chunk.angle.distributions[1].cdf.coefficients[0] )
-    self.assertAlmostEqual( 0.5               , chunk.angle.distributions[1].cdf.coefficients[1] )
-    self.assertAlmostEqual( 0.0333333333333333, chunk.angle.distributions[1].cdf.coefficients[2] )
+    self.assertAlmostEqual( 1.                 / normalisation, chunk.angle.distributions[0].cdf.coefficients[0] )
+    self.assertAlmostEqual( 1.                 / normalisation, chunk.angle.distributions[0].cdf.coefficients[1] )
+    self.assertAlmostEqual( 0.9333333333333333 / normalisation, chunk.angle.distributions[1].cdf.coefficients[0] )
+    self.assertAlmostEqual( 1.                 / normalisation, chunk.angle.distributions[1].cdf.coefficients[1] )
+    self.assertAlmostEqual( 0.0666666666666666 / normalisation, chunk.angle.distributions[1].cdf.coefficients[2] )
     self.assertEqual( 1, chunk.angle.boundaries[0] )
     self.assertEqual( InterpolationType.LinearLinear, chunk.angle.interpolants[0] )
 
-def verify_tabulated_chunk( self, chunk ) :
+def verify_tabulated_chunk( self, chunk, normalise ) :
+
+    normalisation = 2.0 if normalise else 1.0
 
     self.assertEqual( DistributionDataType.TwoBody, chunk.type )
     self.assertEqual( ReferenceFrame.CentreOfMass, chunk.frame )
@@ -73,24 +77,24 @@ def verify_tabulated_chunk( self, chunk ) :
     self.assertEqual( 2, len( chunk.angle.distributions[1].pdf.values ) )
     self.assertAlmostEqual( -1.  , chunk.angle.distributions[0].pdf.cosines[0] )
     self.assertAlmostEqual(  1.  , chunk.angle.distributions[0].pdf.cosines[1] )
-    self.assertAlmostEqual(  0.5 , chunk.angle.distributions[0].pdf.values[0] )
-    self.assertAlmostEqual(  0.5 , chunk.angle.distributions[0].pdf.values[1] )
+    self.assertAlmostEqual(  1. / normalisation, chunk.angle.distributions[0].pdf.values[0] )
+    self.assertAlmostEqual(  1. / normalisation, chunk.angle.distributions[0].pdf.values[1] )
     self.assertAlmostEqual( -1.  , chunk.angle.distributions[1].pdf.cosines[0] )
     self.assertAlmostEqual(  1.  , chunk.angle.distributions[1].pdf.cosines[1] )
-    self.assertAlmostEqual(  0.4 , chunk.angle.distributions[1].pdf.values[0] )
-    self.assertAlmostEqual(  0.6 , chunk.angle.distributions[1].pdf.values[1] )
+    self.assertAlmostEqual(  0.8 / normalisation, chunk.angle.distributions[1].pdf.values[0] )
+    self.assertAlmostEqual(  1.2 / normalisation, chunk.angle.distributions[1].pdf.values[1] )
     self.assertEqual( 2, len( chunk.angle.distributions[0].cdf.cosines ) )
     self.assertEqual( 2, len( chunk.angle.distributions[0].cdf.values ) )
     self.assertEqual( 2, len( chunk.angle.distributions[1].cdf.cosines ) )
     self.assertEqual( 2, len( chunk.angle.distributions[1].cdf.values ) )
     self.assertAlmostEqual( -1.  , chunk.angle.distributions[0].cdf.cosines[0] )
     self.assertAlmostEqual(  1.  , chunk.angle.distributions[0].cdf.cosines[1] )
-    self.assertAlmostEqual(  0.  , chunk.angle.distributions[0].cdf.values[0] )
-    self.assertAlmostEqual(  1.  , chunk.angle.distributions[0].cdf.values[1] )
+    self.assertAlmostEqual(  0. / normalisation, chunk.angle.distributions[0].cdf.values[0] )
+    self.assertAlmostEqual(  2. / normalisation, chunk.angle.distributions[0].cdf.values[1] )
     self.assertAlmostEqual( -1.  , chunk.angle.distributions[1].cdf.cosines[0] )
     self.assertAlmostEqual(  1.  , chunk.angle.distributions[1].cdf.cosines[1] )
-    self.assertAlmostEqual(  0.  , chunk.angle.distributions[1].cdf.values[0] )
-    self.assertAlmostEqual(  1.  , chunk.angle.distributions[1].cdf.values[1] )
+    self.assertAlmostEqual(  0. / normalisation, chunk.angle.distributions[1].cdf.values[0] )
+    self.assertAlmostEqual(  2. / normalisation, chunk.angle.distributions[1].cdf.values[1] )
     self.assertEqual( 1, chunk.angle.boundaries[0] )
     self.assertEqual( InterpolationType.LinearLinear, chunk.angle.interpolants[0] )
 
@@ -106,22 +110,50 @@ class Test_dryad_TwoBodyDistributionData( unittest.TestCase ) :
         verify_isotropic_chunk( self, chunk )
 
         # the data is given explicitly for Legendre distributions
-        chunk = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
-                                         angle = LegendreAngularDistributions(
-                                                   [ 1e-5, 20. ],
-                                                   [ LegendreAngularDistribution( [ 0.5 ] ),
-                                                     LegendreAngularDistribution( [ 0.5, 0.1 ] ) ] ) )
+        chunk1 = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                          angle = LegendreAngularDistributions(
+                                                    [ 1e-5, 20. ],
+                                                    [ LegendreAngularDistribution( [ 1. ] ),
+                                                      LegendreAngularDistribution( [ 1., 0.2 ] ) ] ),
+                                          normalise = False )
+        chunk2 = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                          angle = LegendreAngularDistributions(
+                                                    [ 1e-5, 20. ],
+                                                    [ LegendreAngularDistribution( [ 1. ] ),
+                                                      LegendreAngularDistribution( [ 1., 0.2 ] ) ] ),
+                                          normalise = True )
 
-        verify_legendre_chunk( self, chunk )
+        verify_legendre_chunk( self, chunk1, False )
+        verify_legendre_chunk( self, chunk2, True )
+
+        chunk1.normalise()
+        chunk2.normalise()
+
+        verify_legendre_chunk( self, chunk1, True )
+        verify_legendre_chunk( self, chunk2, True )
 
         # the data is given explicitly for tabulated distributions
-        chunk = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
-                                         angle = TabulatedAngularDistributions(
-                                                   [ 1e-5, 20. ],
-                                                   [ TabulatedAngularDistribution( [ -1., +1. ], [ 0.5, 0.5 ] ),
-                                                     TabulatedAngularDistribution( [ -1., +1. ], [ 0.4, 0.6 ] ) ] ) )
+        chunk1 = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                          angle = TabulatedAngularDistributions(
+                                                    [ 1e-5, 20. ],
+                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ),
+                                          normalise = False )
+        chunk2 = TwoBodyDistributionData( frame = ReferenceFrame.CentreOfMass,
+                                          angle = TabulatedAngularDistributions(
+                                                     [ 1e-5, 20. ],
+                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ),
+                                          normalise = True )
 
-        verify_tabulated_chunk( self, chunk )
+        verify_tabulated_chunk( self, chunk1, False )
+        verify_tabulated_chunk( self, chunk2, True )
+
+        chunk1.normalise()
+        chunk2.normalise()
+
+        verify_tabulated_chunk( self, chunk1, True )
+        verify_tabulated_chunk( self, chunk2, True )
 
     def test_setter_functions( self ) :
 
@@ -143,13 +175,13 @@ class Test_dryad_TwoBodyDistributionData( unittest.TestCase ) :
         # the distribution data can be changed
         newdistribution = LegendreAngularDistributions(
                             [ 1e-5, 20. ],
-                            [ LegendreAngularDistribution( [ 0.5 ] ),
-                              LegendreAngularDistribution( [ 0.5, 0.1 ] ) ] )
+                            [ LegendreAngularDistribution( [ 1. ] ),
+                              LegendreAngularDistribution( [ 1., 0.2 ] ) ] )
         original = IsotropicAngularDistributions()
 
         chunk.angle = newdistribution
 
-        verify_legendre_chunk( self, chunk )
+        verify_legendre_chunk( self, chunk, False )
 
         chunk.angle = original
 

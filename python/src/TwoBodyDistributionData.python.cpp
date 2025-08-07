@@ -38,13 +38,17 @@ void wrapTwoBodyDistributionData( python::module& module ) {
   component
   .def(
 
-    python::init< ReferenceFrame, AngularDistributions >(),
+    python::init< ReferenceFrame, AngularDistributions,
+                  bool >(),
     python::arg( "frame" ), python::arg( "angle" ),
+    python::arg( "normalise" ) = false,
     "Initialise the two-body distribution data\n\n"
     "Arguments:\n"
-    "    self    the reaction product distribution data\n"
-    "    frame   the reference frame of the distribution data\n"
-    "    angle   the angular distributions"
+    "    self        the reaction product distribution data\n"
+    "    frame       the reference frame of the distribution data\n"
+    "    angle       the angular distributions\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -66,6 +70,12 @@ void wrapTwoBodyDistributionData( python::module& module ) {
     python::overload_cast<>( &Component::angle, python::const_ ),
     python::overload_cast< AngularDistributions >( &Component::angle ),
     "The angular distributions"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution data"
   );
 
   // add standard equality comparison definitions

@@ -10,6 +10,7 @@
 #include "dryad/IsotropicAngularDistributions.hpp"
 #include "dryad/LegendreAngularDistributions.hpp"
 #include "dryad/TabulatedAngularDistributions.hpp"
+#include "tools/overload.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -105,6 +106,19 @@ namespace dryad {
 
     //! @todo implement kinematics formulas to retrieve outgoing energy
     //!       from an incident energy and outgoing cosine
+
+    /**
+     *  @brief Normalise the distribution data
+     */
+    void normalise() {
+
+      std::visit( tools::overload{
+
+                    [] ( IsotropicAngularDistributions& ) {},
+                    [] ( auto&& data ) { data.normalise(); }
+                  },
+                  this->angle() );
+    }
 
     /**
      *  @brief Comparison operator: equal
