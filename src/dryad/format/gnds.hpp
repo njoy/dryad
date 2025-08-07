@@ -27,7 +27,6 @@
 #include "dryad/format/gnds/createTabulatedEnergyDistribution.hpp"
 #include "dryad/format/gnds/createTabulatedFormFactor.hpp"
 #include "dryad/format/gnds/createTabulatedFormFactorFromNodes.hpp"
-#include "dryad/format/gnds/createTabulatedScatteringFunction.hpp"
 #include "dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
 #include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
 #include "dryad/format/gnds/createUncorrelatedDistributionData.hpp"
