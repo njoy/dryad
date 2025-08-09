@@ -6,7 +6,8 @@ ProjectileTarget( Documentation&& documentation,
                   id::ParticleID&& target,
                   InteractionType type,
                   std::optional< resonances::ResonanceParameters > resonances,
-                  std::vector< Reaction >&& reactions ) :
+                  std::vector< Reaction >&& reactions,
+                  bool normalise ) :
     documentation_( std::move( documentation ) ),
     projectile_id_( std::move( projectile ) ),
     target_id_( std::move( target ) ),
@@ -15,6 +16,10 @@ ProjectileTarget( Documentation&& documentation,
     reactions_( std::move( reactions ) ) {
 
   this->resolvePartialIdentifiers();
+  if ( normalise ) {
+
+    this->normalise();
+  }
 }
 
 public:
@@ -38,34 +43,42 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param target          the target identifier
  *  @param type.           the interaction type
  *  @param reactions       the reaction data
+ *  @param normalise       option to indicate whether or not to normalise
+ *                         all probability data (default: no normalisation)
  */
 ProjectileTarget( Documentation documentation,
                   id::ParticleID projectile,
                   id::ParticleID target,
                   InteractionType type,
-                  std::vector< Reaction > reactions ) :
+                  std::vector< Reaction > reactions,
+                  bool normalise = false ) :
     ProjectileTarget( std::move( documentation ),
                       std::move( projectile ),
                       std::move( target ),
                       type,
                       std::nullopt,
-                      std::move( reactions ) ) {}
+                      std::move( reactions ),
+                      normalise ) {}
 
 /**
  *  @brief Constructor
  *
- *  @param projectile      the projectile identifier
- *  @param target          the target identifier
- *  @param type.           the interaction type
- *  @param reactions       the reaction data
+ *  @param projectile   the projectile identifier
+ *  @param target       the target identifier
+ *  @param type.        the interaction type
+ *  @param reactions    the reaction data
+ *  @param normalise    option to indicate whether or not to normalise
+ *                      all probability data (default: no normalisation)
  */
 ProjectileTarget( id::ParticleID projectile,
                   id::ParticleID target,
                   InteractionType type,
-                  std::vector< Reaction > reactions ) :
+                  std::vector< Reaction > reactions,
+                  bool normalise = false ) :
     ProjectileTarget( {},
                       std::move( projectile ),
                       std::move( target ),
                       type,
                       std::nullopt,
-                      std::move( reactions ) ) {}
+                      std::move( reactions ),
+                      normalise ) {}

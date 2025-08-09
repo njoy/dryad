@@ -304,6 +304,17 @@ namespace dryad {
     }
 
     /**
+     *  @brief Normalise the distribution data
+     */
+    void normalise() {
+
+      for ( auto&& product : this->reactions() ) {
+
+        product.normalise();
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

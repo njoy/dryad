@@ -686,8 +686,8 @@ class LegendreAngularDistributions:
             boundaries      the boundaries of the interpolation regions
             interpolants    the interpolation types of the interpolation regions,
                             see InterpolationType for all interpolation types
-            normalise      option to indicate whether or not to normalise
-                           all probability data (default: no normalisation)
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
         """
     @typing.overload
     def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
@@ -897,7 +897,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -908,9 +908,11 @@ class ProjectileTarget:
             target          the target identifier
             type            the interaction type
             reactions       the reaction data
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction]) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -920,6 +922,8 @@ class ProjectileTarget:
             target       the target identifier
             type         the interaction type
             reactions    the reaction data
+            normalise    option to indicate whether or not to normalise
+                         all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
@@ -938,6 +942,10 @@ class ProjectileTarget:
         Arguments:
             self   the ProjectileTarget data
             id     the reaction identifier
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution data
         """
     def reaction(self, id: str) -> Reaction:
         """
@@ -1017,7 +1025,7 @@ class Reaction:
     def __eq__(self, arg0: Reaction) -> bool:
         ...
     @typing.overload
-    def __init__(self, id: str, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None) -> None:
+    def __init__(self, id: str, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None, normalise: bool = False) -> None:
         """
         Initialise a primary reaction
         
@@ -1028,9 +1036,11 @@ class Reaction:
             products     the reaction products
             mass_q       the mass difference Q value (optional)
             reaction_q   the reaction Q value (optional)
+            normalise    option to indicate whether or not to normalise
+                         all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, id: str, partials: list[str], xs: TabulatedCrossSection, products: list[ReactionProduct] = []) -> None:
+    def __init__(self, id: str, partials: list[str], xs: TabulatedCrossSection, products: list[ReactionProduct] = [], normalise: bool = False) -> None:
         """
         Initialise a summation reaction
         
@@ -1045,6 +1055,8 @@ class Reaction:
             xs          the cross section of the reaction
             products    the reaction products associated to the summation reaction
                         (defaults to no reaction products)
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: Reaction) -> bool:
         ...
@@ -1055,6 +1067,10 @@ class Reaction:
         Arguments:
             self   the reaction
             type   the reaction product type
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution data
         """
     @typing.overload
     def number_products(self) -> int:
@@ -1203,7 +1219,7 @@ class ReactionProduct:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
-    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None) -> None:
+    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
         """
         Initialise the reaction
         
@@ -1213,9 +1229,15 @@ class ReactionProduct:
             multiplicity     the reaction product multiplicity
             distribution     the optional reaction product distribution data
             average_energy   the optional average reaction product energy
+            normalise        option to indicate whether or not to normalise
+                             all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
+    def normalise(self) -> None:
+        """
+        Normalise the distribution data
+        """
     @property
     def average_energy(self) -> TabulatedAverageEnergy | None:
         """
@@ -2864,17 +2886,23 @@ class TwoBodyDistributionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, normalise: bool = False) -> None:
         """
         Initialise the two-body distribution data
         
         Arguments:
-            self    the reaction product distribution data
-            frame   the reference frame of the distribution data
-            angle   the angular distributions
+            self        the reaction product distribution data
+            frame       the reference frame of the distribution data
+            angle       the angular distributions
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
+    def normalise(self) -> None:
+        """
+        Normalise the distribution data
+        """
     @property
     def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
         """
@@ -2914,18 +2942,24 @@ class UncorrelatedDistributionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions) -> None:
+    def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
         """
         Initialise the uncorrelated distribution data
         
         Arguments:
-            self     the reaction product distribution data
-            frame    the reference frame of the distribution data
-            angle    the angular distributions
-            energy   the energy distributions
+            self        the reaction product distribution data
+            frame       the reference frame of the distribution data
+            angle       the angular distributions
+            energy      the energy distributions
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
+    def normalise(self) -> None:
+        """
+        Normalise the distribution data
+        """
     @property
     def angle(self) -> IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions:
         """

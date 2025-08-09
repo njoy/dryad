@@ -186,11 +186,11 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                                         [ InterpolationType.LinearLinear,
                                                           InterpolationType.LinearLog ] ),
                            products = [ ReactionProduct( ParticleID( 'n' ), 1,
-                                        TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
-                                                                 TabulatedAngularDistributions(
-                                                                   [ 1e-5, 20. ],
-                                                                   [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
-                                                                     TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
+                                                         TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                                                  TabulatedAngularDistributions(
+                                                                                    [ 1e-5, 20. ],
+                                                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                                         ReactionProduct( ParticleID( 'g' ), 2 ),
                                         ReactionProduct( ParticleID( 'g' ), 3 ) ],
                            normalise = False )
