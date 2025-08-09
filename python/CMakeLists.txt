@@ -63,6 +63,8 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/AtomicRelaxation.python.cpp
     )
 
+    add_library( njoy::dryad.python ALIAS dryad.python )
+
     target_link_libraries(dryad.python PRIVATE njoy::dryad)
     target_include_directories( dryad.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src )
     set_target_properties( dryad.python PROPERTIES CXX_VISIBILITY_PRESET hidden)
