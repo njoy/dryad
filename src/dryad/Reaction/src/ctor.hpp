@@ -1,14 +1,5 @@
 /**
- *  @brief Constructor
- *
- *  @param id           the reaction identifier
- *  @param type         the reaction type
- *  @param xs           the cross section of the reaction
- *  @param products     the reaction products
- *  @param mass_q       the mass difference Q value
- *  @param reaction_q   the reaction Q value
- *  @param linearised   a flag indicating whether or not the data is
- *                      linearised
+ *  @brief Private constructor
  */
 Reaction( id::ReactionID&& id,
           ReactionCategory&& type,
@@ -16,13 +7,20 @@ Reaction( id::ReactionID&& id,
           TabulatedCrossSection&& xs,
           std::vector< ReactionProduct >&& products,
           std::optional< double >&& mass_q,
-          std::optional< double >&& reaction_q ) :
+          std::optional< double >&& reaction_q,
+          bool normalise ) :
     id_( std::move( id ) ), category_( std::move( type ) ),
     partials_( std::move( partials ) ),
     mass_difference_qvalue_( mass_q ),
     reaction_qvalue_( reaction_q ),
     xs_( std::move( xs ) ),
-    products_( std::move( products ) ) {}
+    products_( std::move( products ) ) {
+
+  if ( normalise ) {
+
+    this->normalise();
+  }
+}
 
 public:
 
@@ -45,19 +43,23 @@ Reaction& operator=( Reaction&& ) = default;
  *  @param products     the reaction products
  *  @param mass_q       the mass difference Q value
  *  @param reaction_q   the reaction Q value
+ *  @param normalise    option to indicate whether or not to normalise
+ *                      all probability data (default: no normalisation)
  */
 Reaction( id::ReactionID id,
           TabulatedCrossSection xs,
           std::vector< ReactionProduct > products = {},
           std::optional< double > mass_q = std::nullopt,
-          std::optional< double > reaction_q = std::nullopt ) :
+          std::optional< double > reaction_q = std::nullopt,
+          bool normalise = false ) :
     Reaction( std::move( id ),
               ReactionCategory::Primary,
               std::nullopt,
               std::move( xs ),
               std::move( products ),
               std::move( mass_q ),
-              std::move( reaction_q ) ) {}
+              std::move( reaction_q ),
+              normalise ) {}
 
 /**
  *  @brief Constructor for summation reactions
@@ -71,15 +73,19 @@ Reaction( id::ReactionID id,
  *  @param partials    the identifiers of the partials of the reaction
  *  @param products    the reaction products associated to the summation reaction
  *                     (defaults to no reaction products)
+ *  @param normalise   option to indicate whether or not to normalise
+ *                     all probability data (default: no normalisation)
  */
 Reaction( id::ReactionID id,
           std::vector< id::ReactionID > partials,
           TabulatedCrossSection xs,
-          std::vector< ReactionProduct > products = {} ) :
+          std::vector< ReactionProduct > products = {},
+          bool normalise = false ) :
     Reaction( std::move( id ),
               ReactionCategory::Summation,
               std::move( partials ),
               std::move( xs ),
               std::move( products ),
               std::nullopt,
-              std::nullopt ) {}
+              std::nullopt,
+              normalise ) {}

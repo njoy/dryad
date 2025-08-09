@@ -36,11 +36,13 @@ void wrapReaction( python::module& module ) {
 
     python::init< ReactionID, TabulatedCrossSection,
                   std::vector< ReactionProduct >,
-                  std::optional< double >, std::optional< double > >(),
+                  std::optional< double >, std::optional< double >,
+                  bool >(),
     python::arg( "id" ), python::arg( "xs" ),
     python::arg( "products" ) = std::vector< ReactionProduct >{},
     python::arg( "mass_q" ) = std::nullopt,
     python::arg( "reaction_q" ) = std::nullopt,
+    python::arg( "normalise" ) = false,
     "Initialise a primary reaction\n\n"
     "Arguments:\n"
     "    self         the reaction\n"
@@ -48,16 +50,20 @@ void wrapReaction( python::module& module ) {
     "    xs           the cross section of the reaction\n"
     "    products     the reaction products\n"
     "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)"
+    "    reaction_q   the reaction Q value (optional)\n"
+    "    normalise    option to indicate whether or not to normalise\n"
+    "                 all probability data (default: no normalisation)"
   )
   .def(
 
     python::init< ReactionID,
                   std::vector< ReactionID >,
                   TabulatedCrossSection,
-                  std::vector< ReactionProduct > >(),
+                  std::vector< ReactionProduct >,
+                  bool >(),
     python::arg( "id" ), python::arg( "partials" ), python::arg( "xs" ),
     python::arg( "products" ) = std::vector< ReactionProduct >{},
+    python::arg( "normalise" ) = false,
     "Initialise a summation reaction\n\n"
     "Summation reactions do not have Q values associated to them. A cross section\n"
     "weighted Q value could be calculated using the partial reactions making\n"
@@ -68,7 +74,9 @@ void wrapReaction( python::module& module ) {
     "    partials    the identifiers of the partials of the reaction\n"
     "    xs          the cross section of the reaction\n"
     "    products    the reaction products associated to the summation reaction\n"
-    "                (defaults to no reaction products)"
+    "                (defaults to no reaction products)\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   )
   .def_property(
 
@@ -178,7 +186,13 @@ void wrapReaction( python::module& module ) {
     "    type    the reaction product type\n"
     "    index   the reaction product index (default is zero)",
     python::return_value_policy::reference_internal
- );
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution data"
+  );
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
