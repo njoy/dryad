@@ -14,7 +14,7 @@ def verify_chunk_without_transition_energy( self, chunk ) :
     self.assertEqual( TransitionType.Radiative, chunk.type )
     self.assertEqual( ElectronSubshellID( 'K' ), chunk.originating_shell )
     self.assertAlmostEqual( 1e-3, chunk.probability )
-    self.assertEqual( None, chunk.energy )
+    self.assertIsNone( chunk.energy )
 
 def verify_chunk_with_transition_energy( self, chunk ) :
 

@@ -79,8 +79,8 @@ def verify_tabulated_chunk( self, chunk ) :
     self.assertAlmostEqual(  1.  , chunk.angle.distributions[1].pdf.cosines[1] )
     self.assertAlmostEqual(  0.4 , chunk.angle.distributions[1].pdf.values[0] )
     self.assertAlmostEqual(  0.6 , chunk.angle.distributions[1].pdf.values[1] )
-    self.assertEqual( None, chunk.angle.distributions[0].cdf )
-    self.assertEqual( None, chunk.angle.distributions[1].cdf )
+    self.assertIsNone( chunk.angle.distributions[0].cdf )
+    self.assertIsNone( chunk.angle.distributions[1].cdf )
     self.assertEqual( 1, chunk.angle.boundaries[0] )
     self.assertEqual( InterpolationType.LinearLinear, chunk.angle.interpolants[0] )
 

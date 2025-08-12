@@ -39,7 +39,7 @@ class Test_dryad_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 0.375, pdf.values[2] )
             self.assertAlmostEqual( 0.5  , pdf.values[3] )
 
-            self.assertEqual( None, chunk.cdf )
+            self.assertIsNone( chunk.cdf )
 
             # verify evaluation - values of x in the x grid
             self.assertAlmostEqual( 0.   , chunk( energy = 0. ) )

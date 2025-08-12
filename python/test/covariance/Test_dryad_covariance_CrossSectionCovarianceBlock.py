@@ -49,16 +49,16 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.column_metadata.energies[3] )
 
         self.assertEqual( False, chunk.has_variance_scaling )
-        self.assertEqual( None, chunk.variance_scaling )
+        self.assertIsNone( chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
         self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
-        self.assertEqual( None, chunk.standard_deviations )
-        self.assertEqual( None, chunk.correlations )
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.standard_deviations )
+        self.assertIsNone( chunk.correlations )
+        self.assertIsNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -140,9 +140,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
-        self.assertEqual( None, chunk.standard_deviations )
-        self.assertEqual( None, chunk.correlations )
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.standard_deviations )
+        self.assertIsNone( chunk.correlations )
+        self.assertIsNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -208,16 +208,16 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.column_metadata.energies[3] )
 
         self.assertEqual( False, chunk.has_variance_scaling )
-        self.assertEqual( None, chunk.variance_scaling )
+        self.assertIsNone( chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
         self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
-        self.assertEqual( None, chunk.standard_deviations )
-        self.assertEqual( None, chunk.correlations )
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.standard_deviations )
+        self.assertIsNone( chunk.correlations )
+        self.assertIsNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -298,9 +298,9 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertEqual( False, chunk.is_off_diagonal_block )
         self.assertEqual( True, chunk.is_diagonal_block )
 
-        self.assertEqual( None, chunk.standard_deviations )
-        self.assertEqual( None, chunk.correlations )
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.standard_deviations )
+        self.assertIsNone( chunk.correlations )
+        self.assertIsNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -371,16 +371,16 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.column_metadata.energies[2] )
 
         self.assertEqual( False, chunk.has_variance_scaling )
-        self.assertEqual( None, chunk.variance_scaling )
+        self.assertIsNone( chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
         self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( True, chunk.is_off_diagonal_block )
         self.assertEqual( False, chunk.is_diagonal_block )
 
-        self.assertEqual( None, chunk.standard_deviations )
-        self.assertEqual( None, chunk.correlations )
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.standard_deviations )
+        self.assertIsNone( chunk.correlations )
+        self.assertIsNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -390,7 +390,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 6., chunk.covariances[2,1] )
 
         chunk.calculate_standard_deviations()
-        self.assertEqual( None, chunk.standard_deviations )
+        self.assertIsNone( chunk.standard_deviations )
 
         chunk.calculate_correlations( [ 1., 2., 3. ], [ 1., 2. ] )
         self.assertAlmostEqual( 1., chunk.correlations[0,0] )
@@ -401,7 +401,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1., chunk.correlations[2,1] )
 
         chunk.calculate_eigenvalues()
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.eigenvalues )
 
         # using CrossSectionMetadata
 
@@ -439,16 +439,16 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.column_metadata.energies[2] )
 
         self.assertEqual( False, chunk.has_variance_scaling )
-        self.assertEqual( None, chunk.variance_scaling )
+        self.assertIsNone( chunk.variance_scaling )
 
         self.assertEqual( True, chunk.is_relative_block )
         self.assertEqual( False, chunk.is_absolute_block )
         self.assertEqual( True, chunk.is_off_diagonal_block )
         self.assertEqual( False, chunk.is_diagonal_block )
 
-        self.assertEqual( None, chunk.standard_deviations )
-        self.assertEqual( None, chunk.correlations )
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.standard_deviations )
+        self.assertIsNone( chunk.correlations )
+        self.assertIsNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -458,7 +458,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 6., chunk.covariances[2,1] )
 
         chunk.calculate_standard_deviations()
-        self.assertEqual( None, chunk.standard_deviations )
+        self.assertIsNone( chunk.standard_deviations )
 
         chunk.calculate_correlations( [ 1., 2., 3. ], [ 1., 2. ] )
         self.assertAlmostEqual( 1., chunk.correlations[0,0] )
@@ -469,7 +469,7 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
         self.assertAlmostEqual( 1., chunk.correlations[2,1] )
 
         chunk.calculate_eigenvalues()
-        self.assertEqual( None, chunk.eigenvalues )
+        self.assertIsNone( chunk.eigenvalues )
 
     def test_failures( self ) :
 
