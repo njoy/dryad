@@ -39,6 +39,10 @@ cmake_dependent_option(
 
 option( dryad.installation "Install dryad" ON )
 
+if(MSVC)
+  add_compile_options(/bigobj)
+endif()
+
 ########################################################################
 # Dependencies
 ########################################################################
