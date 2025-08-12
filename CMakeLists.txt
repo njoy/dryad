@@ -39,10 +39,6 @@ cmake_dependent_option(
 
 option( dryad.installation "Install dryad" ON )
 
-if(MSVC)
-  add_compile_options(/bigobj)
-endif()
-
 ########################################################################
 # Dependencies
 ########################################################################
@@ -77,6 +73,12 @@ target_link_libraries( dryad
     njoy::ACEtk
     njoy::ENDFtk
 )
+
+if(MSVC)
+  add_compile_options(/bigobj)
+  target_link_options(dryad INTERFACE "/STACK:8388608")
+endif()
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # dryad : python bindings
