@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_ID_REACTIONTYPE
 
 // system includes
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <numeric>
@@ -814,7 +815,7 @@ namespace id {
      *  Note: this imposes logical order to the identifiers. It is public
      *        for test purposes only.
      */
-    long number() const {
+    std::int64_t number() const {
 
       return entries[ this->index_ ].number();
     }

@@ -1,5 +1,3 @@
-#include <cstdint>
-
 /**
  *  @class
  *  @brief Private helper class
@@ -7,23 +5,23 @@
 class Entry {
 
   /* fields */
-  int64_t number_;
-  std::optional< int16_t > mt_;
-  std::optional< std::vector< std::pair< ParticleID, int16_t > > > ejectiles_;
+  std::int64_t number_;
+  std::optional< short > mt_;
+  std::optional< std::vector< std::pair< ParticleID, short > > > ejectiles_;
   std::string symbol_;
   std::vector< std::string > alternatives_;
   InteractionType interaction_;
-  std::optional< int16_t > level_;
-  std::optional< int32_t > dza_;
+  std::optional< short > level_;
+  std::optional< int > dza_;
 
-  static std::optional< int32_t >
+  static std::optional< int >
   calculateDZA( const InteractionType& type,
-                const std::optional< std::vector< std::pair< ParticleID, int16_t > > >& ejectiles ) {
+                const std::optional< std::vector< std::pair< ParticleID, short > > >& ejectiles ) {
 
     if ( ( type == InteractionType::Nuclear ) && ( ejectiles.has_value() ) ){
 
       return std::accumulate( ejectiles->begin(), ejectiles->end(), 0,
-                              [] ( int32_t result, const auto& pair )
+                              [] ( int result, const auto& pair )
                                  { return result + pair.second * pair.first.za(); } );
     }
     else {
@@ -33,10 +31,10 @@ class Entry {
   }
 
   /* constructor */
-  Entry( int64_t number, std::optional< int16_t > mt,
-         std::optional< std::vector< std::pair< ParticleID, int16_t > > > ejectiles,
+  Entry( std::int64_t number, std::optional< short > mt,
+         std::optional< std::vector< std::pair< ParticleID, short > > > ejectiles,
          std::string symbol, std::vector< std::string > alternatives,
-         InteractionType interaction, std::optional< int16_t > level ) :
+         InteractionType interaction, std::optional< short > level ) :
     number_( std::move( number ) ),
     mt_( std::move( mt ) ),
     ejectiles_( std::move( ejectiles ) ),
@@ -54,67 +52,67 @@ public:
   /* constructor */
 
   // special reaction without an mt number
-  Entry( int64_t number, InteractionType interaction, std::string symbol,
+  Entry( std::int64_t number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives ) :
     Entry( std::move( number ), std::nullopt, std::nullopt,
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
   // special reaction with an mt number
-  Entry( int64_t number, int16_t mt, InteractionType interaction, std::string symbol,
+  Entry( std::int64_t number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives ) :
     Entry( std::move( number ), std::move( mt ), std::nullopt,
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
   // normal reaction with an mt number but no defined level/subshell
-  Entry( int64_t number, int16_t mt, InteractionType interaction, std::string symbol,
+  Entry( std::int64_t number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, int16_t > > ejectiles ) :
+         std::vector< std::pair< ParticleID, short > > ejectiles ) :
     Entry( std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
   // normal reaction with an mt number and level/subshell
-  Entry( int64_t number, int16_t mt, InteractionType interaction, std::string symbol,
+  Entry( std::int64_t number, short mt, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, int16_t > > ejectiles,
-         int16_t level ) :
+         std::vector< std::pair< ParticleID, short > > ejectiles,
+         short level ) :
     Entry( std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::move( level ) ) {}
 
   // normal reaction without an mt number and no defined level/subshell
-  Entry( int64_t number, InteractionType interaction, std::string symbol,
+  Entry( std::int64_t number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, int16_t > > ejectiles ) :
+         std::vector< std::pair< ParticleID, short > > ejectiles ) :
     Entry( std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::nullopt ) {}
 
   // normal reaction without an mt number and a level/subshell
-  Entry( int64_t number, InteractionType interaction, std::string symbol,
+  Entry( std::int64_t number, InteractionType interaction, std::string symbol,
          std::vector< std::string > alternatives,
-         std::vector< std::pair< ParticleID, int16_t > > ejectiles,
-         int16_t level ) :
+         std::vector< std::pair< ParticleID, short > > ejectiles,
+         short level ) :
     Entry( std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbol ), std::move( alternatives ),
            std::move( interaction ), std::move( level ) ) {}
 
   /* methods */
-  int64_t number() const { return this->number_; }
-  const std::optional< int16_t >& mt() const { return this->mt_; }
+  std::int64_t number() const { return this->number_; }
+  const std::optional< short >& mt() const { return this->mt_; }
   const std::string& symbol() const { return this->symbol_; }
   const std::vector< std::string >& alternatives() const { return this->alternatives_; }
   const InteractionType& type() const { return this->interaction_; }
-  const std::optional< std::vector< std::pair< ParticleID, int16_t > > >& particles() const {
+  const std::optional< std::vector< std::pair< ParticleID, short > > >& particles() const {
 
     return this->ejectiles_;
   }
-  const std::optional< int16_t >& level() const { return this->level_; }
-  const std::optional< int32_t >& dza() const { return this->dza_; }
+  const std::optional< short >& level() const { return this->level_; }
+  const std::optional< int >& dza() const { return this->dza_; }
 };
