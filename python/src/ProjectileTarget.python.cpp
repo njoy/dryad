@@ -200,9 +200,9 @@ void wrapProjectileTarget( python::module& module ) {
       njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename );
     },
     python::arg( "mat" ), python::arg( "filename" ),
-    "Write the AtomicRelaxation data to an ENDF file\n\n"
+    "Write the ProjectileTarget data to an ENDF file\n\n"
     "Arguments:\n"
-    "    self        the atomic relaxation data\n"
+    "    self        the ProjectileTarget data\n"
     "    mat         the ENDF mat number to be used\n"
     "    filename    the ENDF file name"
   );

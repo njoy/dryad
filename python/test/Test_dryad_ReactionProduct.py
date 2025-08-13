@@ -24,10 +24,10 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 1, chunk.multiplicity )
 
     # average reaction product energy
-    self.assertEqual( None, chunk.average_energy )
+    self.assertIsNone( chunk.average_energy )
 
     # distribution data
-    self.assertEqual( None, chunk.distribution_data )
+    self.assertIsNone( chunk.distribution_data )
 
     # metadata
     self.assertEqual( False, chunk.has_average_energy )
@@ -63,10 +63,10 @@ def verify_tabulated_chunk( self, chunk ) :
     self.assertEqual( False, chunk.multiplicity.is_linearised )
 
     # average reaction product energy
-    self.assertEqual( None, chunk.average_energy )
+    self.assertIsNone( chunk.average_energy )
 
     # distribution data
-    self.assertEqual( None, chunk.distribution_data )
+    self.assertIsNone( chunk.distribution_data )
 
     # metadata
     self.assertEqual( False, chunk.has_average_energy )
