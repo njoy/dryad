@@ -11,11 +11,11 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "convertCrossSections" ) {
+SCENARIO( "convertVarianceScalingFactors" ) {
 
   GIVEN( "GNDS variance scaling factors ranges and units" ) {
 
-    WHEN( "a single cross section range is given" ) {
+    WHEN( "a single range of variance scaling factors is given" ) {
 
       THEN( "it can be converted" ) {
 
