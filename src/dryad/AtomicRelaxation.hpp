@@ -41,7 +41,7 @@ namespace dryad {
     /**
      *  @brief Return the documentation
      */
-    const Documentation& documentation() const noexcept {
+    const Documentation& documentation() const {
 
       return this->documentation_;
     }
@@ -49,7 +49,7 @@ namespace dryad {
     /**
      *  @brief Return the documentation
      */
-    Documentation& documentation() noexcept {
+    Documentation& documentation() {
 
       return this->documentation_;
     }
@@ -59,7 +59,7 @@ namespace dryad {
      *
      *  @param[in] documentation   the documentation
      */
-    void documentation( Documentation documentation ) noexcept {
+    void documentation( Documentation documentation ) {
 
       this->documentation_ = std::move( documentation );
     }
@@ -67,7 +67,7 @@ namespace dryad {
     /**
      *  @brief Return the element identifier
      */
-    const id::ElementID& elementIdentifier() const noexcept {
+    const id::ElementID& elementIdentifier() const {
 
       return this->element_id_;
     }
@@ -77,7 +77,7 @@ namespace dryad {
      *
      *  @param[in] element   the element identifier
      */
-    void elementIdentifier( id::ElementID element ) noexcept {
+    void elementIdentifier( id::ElementID element ) {
 
       this->element_id_ = std::move( element );
     }
@@ -86,7 +86,7 @@ namespace dryad {
      *  @brief Return the electron shell configuration data
      */
     const std::vector< atomic::ElectronSubshellConfiguration >&
-    subshells() const noexcept {
+    subshells() const {
 
       return this->subshells_;
     }
@@ -95,7 +95,7 @@ namespace dryad {
      *  @brief Return the electron shell configuration data
      */
     std::vector< atomic::ElectronSubshellConfiguration >&
-    subshells() noexcept {
+    subshells() {
 
       return this->subshells_;
     }
@@ -105,7 +105,7 @@ namespace dryad {
      *
      *  @param[in] subshells   the electron shell configuration data
      */
-    void subshells( std::vector< atomic::ElectronSubshellConfiguration > subshells ) noexcept {
+    void subshells( std::vector< atomic::ElectronSubshellConfiguration > subshells ) {
 
       this->subshells_ = std::move( subshells );
       this->sort();
@@ -114,7 +114,7 @@ namespace dryad {
     /**
      *  @brief Return the number of subshells defined for this atom
      */
-    std::size_t numberSubshells() const noexcept {
+    std::size_t numberSubshells() const {
 
       return this->subshells().size();
     }
@@ -153,7 +153,7 @@ namespace dryad {
     /**
      *  @brief Normalise the transition probabilities for each subshell
      */
-    void normalise() noexcept {
+    void normalise() {
 
       for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
 
@@ -164,7 +164,7 @@ namespace dryad {
     /**
      *  @brief Calculate the transition energies for all transitions
      */
-    void calculateTransitionEnergies() noexcept {
+    void calculateTransitionEnergies() {
 
       for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
 
@@ -188,7 +188,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const AtomicRelaxation& right ) const noexcept {
+    bool operator==( const AtomicRelaxation& right ) const {
 
       return this->elementIdentifier() == right.elementIdentifier() &&
              this->subshells() == right.subshells();
@@ -199,7 +199,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const AtomicRelaxation& right ) const noexcept {
+    bool operator!=( const AtomicRelaxation& right ) const {
 
       return ! this->operator==( right );
     }

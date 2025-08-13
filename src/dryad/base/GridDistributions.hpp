@@ -34,7 +34,7 @@ namespace base {
     /**
      *  @brief Return the grid values for which distributions are given
      */
-    const std::vector< double >& grid() const noexcept {
+    const std::vector< double >& grid() const {
 
       return this->x();
     }
@@ -42,7 +42,15 @@ namespace base {
     /**
      *  @brief Return the associated distributions
      */
-    const std::vector< Distribution >& distributions() const noexcept {
+    const std::vector< Distribution >& distributions() const {
+
+      return this->f();
+    }
+
+    /**
+     *  @brief Return the associated distributions
+     */
+    std::vector< Distribution >& distributions() {
 
       return this->f();
     }

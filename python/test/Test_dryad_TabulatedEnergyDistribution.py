@@ -16,6 +16,15 @@ class Test_dryad_TabulatedEnergyDistribution( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # verify content
+            self.assertAlmostEqual( 0.   , chunk.energies[0] )
+            self.assertAlmostEqual( 2.   , chunk.energies[1] )
+            self.assertAlmostEqual( 3.   , chunk.energies[2] )
+            self.assertAlmostEqual( 4.   , chunk.energies[3] )
+            self.assertAlmostEqual( 0.   , chunk.values[0] )
+            self.assertAlmostEqual( 0.25 , chunk.values[1] )
+            self.assertAlmostEqual( 0.375, chunk.values[2] )
+            self.assertAlmostEqual( 0.5  , chunk.values[3] )
+
             pdf = chunk.pdf
             self.assertAlmostEqual(  0., pdf.lower_energy_limit )
             self.assertAlmostEqual(  4., pdf.upper_energy_limit )
@@ -30,7 +39,7 @@ class Test_dryad_TabulatedEnergyDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 0.375, pdf.values[2] )
             self.assertAlmostEqual( 0.5  , pdf.values[3] )
 
-            self.assertEqual( None, chunk.cdf )
+            self.assertIsNone( chunk.cdf )
 
             # verify evaluation - values of x in the x grid
             self.assertAlmostEqual( 0.   , chunk( energy = 0. ) )

@@ -26,6 +26,15 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
       THEN( "a TabulatedEnergyDistribution can be constructed and members can "
             "be tested" ) {
 
+        CHECK_THAT(  0.   , WithinRel( chunk.energies()[0] ) );
+        CHECK_THAT(  2.   , WithinRel( chunk.energies()[1] ) );
+        CHECK_THAT(  3.   , WithinRel( chunk.energies()[2] ) );
+        CHECK_THAT(  4.   , WithinRel( chunk.energies()[3] ) );
+        CHECK_THAT(  0.   , WithinRel( chunk.values()[0] ) );
+        CHECK_THAT(  0.25 , WithinRel( chunk.values()[1] ) );
+        CHECK_THAT(  0.375, WithinRel( chunk.values()[2] ) );
+        CHECK_THAT(  0.5  , WithinRel( chunk.values()[3] ) );
+
         auto pdf = chunk.pdf();
         CHECK_THAT(  0., WithinRel( pdf.lowerEnergyLimit() ) );
         CHECK_THAT(  4., WithinRel( pdf.upperEnergyLimit() ) );

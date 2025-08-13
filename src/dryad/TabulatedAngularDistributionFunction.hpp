@@ -38,7 +38,7 @@ namespace dryad {
     /**
      *  @brief Return the cosine values
      */
-    const std::vector< double >& cosines() const noexcept {
+    const std::vector< double >& cosines() const {
 
       return this->x();
     }
@@ -46,7 +46,7 @@ namespace dryad {
     /**
      *  @brief Return the probability values
      */
-    const std::vector< double >& values() const noexcept {
+    const std::vector< double >& values() const {
 
       return this->y();
     }
@@ -54,7 +54,7 @@ namespace dryad {
     /**
      *  @brief Return the lower cosine limit
      */
-    double lowerCosineLimit() const noexcept {
+    double lowerCosineLimit() const {
 
       return this->x().front();
     }
@@ -62,7 +62,7 @@ namespace dryad {
     /**
      *  @brief Return the upper cosine limit
      */
-    double upperCosineLimit() const noexcept {
+    double upperCosineLimit() const {
 
       return this->x().back();
     }
@@ -81,7 +81,7 @@ namespace dryad {
     /**
      *  @brief Normalise the distribution function
      */
-    void normalise() noexcept {
+    void normalise() {
 
       this->operator/=( this->integral() );
     }
@@ -239,7 +239,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedAngularDistributionFunction& right ) const noexcept {
+    bool operator==( const TabulatedAngularDistributionFunction& right ) const {
 
       return InterpolationTable::operator==( right );
     }
@@ -249,7 +249,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedAngularDistributionFunction& right ) const noexcept {
+    bool operator!=( const TabulatedAngularDistributionFunction& right ) const {
 
       return ! this->operator==( right );
     }

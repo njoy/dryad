@@ -60,6 +60,30 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
   )
   .def_property_readonly(
 
+    "cosines",
+    &Component::cosines,
+    "The cosine values"
+  )
+  .def_property_readonly(
+
+    "values",
+    &Component::values,
+    "The probability values"
+  )
+  .def_property_readonly(
+
+    "boundaries",
+    &Component::boundaries,
+    "The boundaries of the interpolation regions"
+  )
+  .def_property_readonly(
+
+    "interpolants",
+    &Component::interpolants,
+    "The interpolation types of the interpolation regions"
+  )
+  .def_property_readonly(
+
     "pdf",
     &Component::pdf,
     "The probability distribution function (pdf) of the distribution"

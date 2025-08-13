@@ -43,6 +43,12 @@ void wrapLegendreAngularDistribution( python::module& module ) {
   )
   .def_property_readonly(
 
+    "coefficients",
+    &Component::coefficients,
+    "The coefficients"
+  )
+  .def_property_readonly(
+
     "pdf",
     &Component::pdf,
     "The probability distribution function (pdf) of the distribution"

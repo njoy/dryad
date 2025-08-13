@@ -33,12 +33,12 @@ public:
      alternatives_( std::move( alternatives ) ) {}
 
   /* methods */
-  int number() const noexcept { return this->number_; }
-  short z() const noexcept { return this->z_; }
-  short a() const noexcept { return this->a_; }
-  short e() const noexcept { return this->e_; }
-  int za() const noexcept { return this->za_; }
-  const std::optional< id::ElectronSubshellID >& subshell() const noexcept { return this->subshell_; }
-  const std::string& symbol() const noexcept { return this->symbol_; }
-  const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
+  int number() const { return this->number_; }
+  short z() const { return this->z_; }
+  short a() const { return this->a_; }
+  short e() const { return this->e_; }
+  int za() const { return this->za_; }
+  const std::optional< id::ElectronSubshellID >& subshell() const { return this->subshell_; }
+  const std::string& symbol() const { return this->symbol_; }
+  const std::vector< std::string >& alternatives() const { return this->alternatives_; }
 };

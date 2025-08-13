@@ -106,15 +106,15 @@ public:
            std::move( interaction ), std::move( level ) ) {}
 
   /* methods */
-  int64_t number() const noexcept { return this->number_; }
-  const std::optional< int16_t >& mt() const noexcept { return this->mt_; }
-  const std::string& symbol() const noexcept { return this->symbol_; }
-  const std::vector< std::string >& alternatives() const noexcept { return this->alternatives_; }
+  int64_t number() const { return this->number_; }
+  const std::optional< int16_t >& mt() const { return this->mt_; }
+  const std::string& symbol() const { return this->symbol_; }
+  const std::vector< std::string >& alternatives() const { return this->alternatives_; }
   const InteractionType& type() const { return this->interaction_; }
-  const std::optional< std::vector< std::pair< ParticleID, int16_t > > >& particles() const noexcept {
+  const std::optional< std::vector< std::pair< ParticleID, int16_t > > >& particles() const {
 
     return this->ejectiles_;
   }
-  const std::optional< int16_t >& level() const noexcept { return this->level_; }
-  const std::optional< int32_t >& dza() const noexcept { return this->dza_; }
+  const std::optional< int16_t >& level() const { return this->level_; }
+  const std::optional< int32_t >& dza() const { return this->dza_; }
 };

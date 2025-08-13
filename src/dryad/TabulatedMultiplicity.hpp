@@ -37,7 +37,7 @@ namespace dryad {
     /**
      *  @brief Return the energy values
      */
-    const std::vector< double >& energies() const noexcept {
+    const std::vector< double >& energies() const {
 
       return this->x();
     }
@@ -45,7 +45,7 @@ namespace dryad {
     /**
      *  @brief Return the multiplicity values
      */
-    const std::vector< double >& values() const noexcept {
+    const std::vector< double >& values() const {
 
       return this->y();
     }
@@ -53,7 +53,7 @@ namespace dryad {
     /**
      *  @brief Return the lower energy limit
      */
-    double lowerEnergyLimit() const noexcept {
+    double lowerEnergyLimit() const {
 
       return this->x().front();
     }
@@ -61,7 +61,7 @@ namespace dryad {
     /**
      *  @brief Return the upper energy limit
      */
-    double upperEnergyLimit() const noexcept {
+    double upperEnergyLimit() const {
 
       return this->x().back();
     }
@@ -223,7 +223,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedMultiplicity& right ) const noexcept {
+    bool operator==( const TabulatedMultiplicity& right ) const {
 
       return InterpolationTable::operator==( right );
     }
@@ -233,7 +233,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedMultiplicity& right ) const noexcept {
+    bool operator!=( const TabulatedMultiplicity& right ) const {
 
       return ! this->operator==( right );
     }

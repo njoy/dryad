@@ -76,7 +76,7 @@ namespace id {
     /**
      *  @brief Return the number of currently registered level numbers
      */
-    static std::size_t size() noexcept {
+    static std::size_t size() {
 
       return entries.size();
     }
@@ -84,7 +84,7 @@ namespace id {
     /**
      *  @brief Return the level number
      */
-    unsigned char number() const noexcept {
+    unsigned char number() const {
 
       return entries[ this->index_ ].number();
     }
@@ -92,7 +92,7 @@ namespace id {
     /**
      *  @brief Return the element symbol
      */
-    const std::string& symbol() const noexcept {
+    const std::string& symbol() const {
 
       return entries[ this->index_ ].symbol();
     }
@@ -174,7 +174,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::LevelID > {
 
-    size_t operator()( const njoy::dryad::id::LevelID& key ) const noexcept {
+    size_t operator()( const njoy::dryad::id::LevelID& key ) const {
 
       return key.number();
     }

@@ -40,9 +40,41 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the cosine values
+     */
+    const std::vector< double >& cosines() const {
+
+      return this->pdf().cosines();
+    }
+
+    /**
+     *  @brief Return the probability values
+     */
+    const std::vector< double >& values() const {
+
+      return this->pdf().values();
+    }
+
+    /**
+     *  @brief Return the boundaries of the interpolation regions
+     */
+    const std::vector< std::size_t >& boundaries() const {
+
+      return this->pdf().boundaries();
+    }
+
+    /**
+     *  @brief Return the interpolation types of the interpolation regions
+     */
+    const std::vector< InterpolationType >& interpolants() const {
+
+      return this->pdf().interpolants();
+    }
+
+    /**
      *  @brief Return the probability distribution function (pdf) of the distribution
      */
-    const TabulatedAngularDistributionFunction& pdf() const noexcept {
+    const TabulatedAngularDistributionFunction& pdf() const {
 
       return this->pdf_;
     }
@@ -50,7 +82,7 @@ namespace dryad {
     /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const std::optional< TabulatedAngularDistributionFunction >& cdf() const noexcept {
+    const std::optional< TabulatedAngularDistributionFunction >& cdf() const {
 
       return this->cdf_;
     }
@@ -68,7 +100,7 @@ namespace dryad {
     /**
      *  @brief Return the average cosine defined by the distribution
      */
-    double averageCosine() const noexcept { return this->pdf().mean(); }
+    double averageCosine() const { return this->pdf().mean(); }
 
     /**
      *  @brief Return a linearised angular distribution table
@@ -89,7 +121,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedAngularDistribution& right ) const noexcept {
+    bool operator==( const TabulatedAngularDistribution& right ) const {
 
       return this->pdf() == right.pdf() && this->cdf() == right.cdf();
     }
@@ -99,7 +131,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedAngularDistribution& right ) const noexcept {
+    bool operator!=( const TabulatedAngularDistribution& right ) const {
 
       return ! this->operator==( right );
     }

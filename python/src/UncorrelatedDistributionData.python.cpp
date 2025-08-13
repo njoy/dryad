@@ -56,22 +56,25 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
     [] ( const Component& self ) { return self.type(); },
     "The distribution data type"
   )
-  .def_property_readonly(
+  .def_property(
 
     "frame",
-    &Component::frame,
+    python::overload_cast<>( &Component::frame, python::const_ ),
+    python::overload_cast< ReferenceFrame >( &Component::frame ),
     "The reference frame"
   )
-  .def_property_readonly(
+  .def_property(
 
     "angle",
-    &Component::angle,
+    python::overload_cast<>( &Component::angle, python::const_ ),
+    python::overload_cast< AngularDistributions >( &Component::angle ),
     "The angular distributions"
   )
-  .def_property_readonly(
+  .def_property(
 
     "energy",
-    &Component::energy,
+    python::overload_cast<>( &Component::energy, python::const_ ),
+    python::overload_cast< EnergyDistributions >( &Component::energy ),
     "The energy distributions"
   );
 

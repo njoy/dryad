@@ -53,7 +53,7 @@ namespace dryad {
     /**
      *  @brief Return the particle identifier for the reaction product
      */
-    const id::ParticleID& identifier() const noexcept {
+    const id::ParticleID& identifier() const {
 
       return this->id_;
     }
@@ -63,7 +63,7 @@ namespace dryad {
      *
      *  @param id.  the reaction product identifier
      */
-    void identifier( id::ParticleID id ) noexcept {
+    void identifier( id::ParticleID id ) {
 
       this->id_ = std::move( id );
     }
@@ -71,7 +71,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction product multiplicity
      */
-    const Multiplicity& multiplicity() const noexcept {
+    const Multiplicity& multiplicity() const {
 
       return this->multiplicity_;
     }
@@ -81,7 +81,7 @@ namespace dryad {
      *
      *  @param multiplicity   the multiplicity of the reaction product
      */
-    void multiplicity( Multiplicity multiplicity ) noexcept {
+    void multiplicity( Multiplicity multiplicity ) {
 
       this->multiplicity_ = std::move( multiplicity );
     }
@@ -89,7 +89,7 @@ namespace dryad {
     /**
      *  @brief Return the average reaction product energy
      */
-    const std::optional< TabulatedAverageEnergy >& averageEnergy() const noexcept {
+    const std::optional< TabulatedAverageEnergy >& averageEnergy() const {
 
       return this->average_energy_;
     }
@@ -99,7 +99,7 @@ namespace dryad {
      *
      *  @param averageEnergy   the average reaction product energy
      */
-    void averageEnergy( std::optional< TabulatedAverageEnergy > averageEnergy ) noexcept {
+    void averageEnergy( std::optional< TabulatedAverageEnergy > averageEnergy ) {
 
       this->average_energy_ = std::move( averageEnergy );
     }
@@ -107,7 +107,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction product distribution data
      */
-    const std::optional< DistributionData >& distributionData() const noexcept {
+    const std::optional< DistributionData >& distributionData() const {
 
       return this->distribution_;
     }
@@ -115,7 +115,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction product distribution data
      */
-    std::optional< DistributionData >& distributionData() noexcept {
+    std::optional< DistributionData >& distributionData() {
 
       return this->distribution_;
     }
@@ -125,7 +125,7 @@ namespace dryad {
      *
      *  @param distribution   the reaction product distribution data
      */
-    void distributionData( std::optional< DistributionData > distribution ) noexcept {
+    void distributionData( std::optional< DistributionData > distribution ) {
 
       this->distribution_ = std::move( distribution );
     }
@@ -134,7 +134,7 @@ namespace dryad {
      *  @brief Return whether or not the reaction product has average reaction
      *         product energy data
      */
-    bool hasAverageEnergy() const noexcept {
+    bool hasAverageEnergy() const {
 
       return this->average_energy_.has_value();
     }
@@ -142,7 +142,7 @@ namespace dryad {
     /**
      *  @brief Return whether or not the reaction product has distribution data
      */
-    bool hasDistributionData() const noexcept {
+    bool hasDistributionData() const {
 
       return this->distribution_.has_value();
     }
@@ -152,7 +152,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ReactionProduct& right ) const noexcept {
+    bool operator==( const ReactionProduct& right ) const {
 
       return this->identifier() == right.identifier() &&
              this->multiplicity() == right.multiplicity() &&
@@ -165,7 +165,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ReactionProduct& right ) const noexcept {
+    bool operator!=( const ReactionProduct& right ) const {
 
       return ! this->operator==( right );
     }

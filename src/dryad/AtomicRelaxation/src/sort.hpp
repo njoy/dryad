@@ -1,4 +1,4 @@
-void sort() noexcept {
+void sort() {
 
   std::sort( this->subshells_.begin(), this->subshells_.end(),
              [] ( auto&& left, auto&& right )
