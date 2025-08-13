@@ -126,7 +126,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "ercoiuryqncoieruycoeurcowureugcregrygrcyg.endf";
-      format::endf::createAtomicRelaxationEndfFile( relaxation, filename );
+      format::endf::createAtomicRelaxationEndfFile( relaxation, 800, filename );
 
       CHECK( chunk() == readContentFromFile( filename ) );
 
