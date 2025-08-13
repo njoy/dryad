@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_ENDF_CREATEBOUNDARIES
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes

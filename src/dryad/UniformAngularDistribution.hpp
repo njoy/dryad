@@ -47,7 +47,7 @@ namespace dryad {
     /**
      *  @brief Return the cosine values for the distribution
      */
-    const std::vector< double >& cosines() const noexcept {
+    const std::vector< double >& cosines() const {
 
       return this->values();
     }
@@ -55,7 +55,7 @@ namespace dryad {
     /**
      *  @brief Return the number of discrete cosines or intervals
      */
-    std::size_t numberCosines() const noexcept {
+    std::size_t numberCosines() const {
 
       return this->number();
     }
@@ -63,7 +63,7 @@ namespace dryad {
     /**
      *  @brief Return the average cosine defined by the distribution
      */
-    double averageCosine() const noexcept {
+    double averageCosine() const {
 
       return this->mean();
     }
@@ -73,7 +73,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const UniformAngularDistribution& right ) const noexcept {
+    bool operator==( const UniformAngularDistribution& right ) const {
 
       return base::UniformDistribution::operator==( right );
     }
@@ -83,7 +83,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const UniformAngularDistribution& right ) const noexcept {
+    bool operator!=( const UniformAngularDistribution& right ) const {
 
       return ! this->operator==( right );
     }

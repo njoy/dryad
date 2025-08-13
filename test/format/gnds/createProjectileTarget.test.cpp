@@ -28,12 +28,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H1 = format::gnds::createProjectileTarget( document );
 
+        CHECK( std::nullopt == H1.documentation().awr() );
+        CHECK( std::nullopt == H1.documentation().library() );
+        CHECK( std::nullopt == H1.documentation().version() );
+        CHECK( std::nullopt == H1.documentation().description() );
+
         CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
         CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == H1.interactionType() );
-
-        CHECK( false == H1.isLinearised() );
 
         CHECK( std::nullopt == H1.resonances() );
 
@@ -73,12 +76,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget Li7 = format::gnds::createProjectileTarget( document );
 
+        CHECK( std::nullopt == Li7.documentation().awr() );
+        CHECK( std::nullopt == Li7.documentation().library() );
+        CHECK( std::nullopt == Li7.documentation().version() );
+        CHECK( std::nullopt == Li7.documentation().description() );
+
         CHECK( id::ParticleID( "n" ) == Li7.projectileIdentifier() );
         CHECK( id::ParticleID( "Li7" ) == Li7.targetIdentifier() );
 
         CHECK( InteractionType::Nuclear == Li7.interactionType() );
-
-        CHECK( true == Li7.isLinearised() );
 
         CHECK( std::nullopt == Li7.resonances() );
 
@@ -228,12 +234,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::gnds::createProjectileTarget( document );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 
@@ -311,12 +320,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::gnds::createProjectileTarget( document );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 

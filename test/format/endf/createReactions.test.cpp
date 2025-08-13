@@ -111,28 +111,28 @@ SCENARIO( "createReactions" ) {
         CHECK( 8 == reactions.size() );
 
         auto total = reactions[0];
-        electron::h1::verifyTotalReaction( total );
+        electron::h0::verifyTotalReaction( total );
 
         auto ionisation = reactions[1];
-        electron::h1::verifyTotalIonisationReaction( ionisation );
+        electron::h0::verifyTotalIonisationReaction( ionisation );
 
         auto elastic = reactions[2];
-        electron::h1::verifyElasticReaction( elastic );
+        electron::h0::verifyElasticReaction( elastic );
 
         auto telastic = reactions[3];
-        electron::h1::verifyTotalElasticReaction( telastic );
+        electron::h0::verifyTotalElasticReaction( telastic );
 
         auto bremsstrahlung = reactions[4];
-        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung );
 
         auto excitation = reactions[5];
-        electron::h1::verifyExcitationReaction( excitation );
+        electron::h0::verifyExcitationReaction( excitation );
 
         auto subionisation = reactions[6];
-        electron::h1::verifySubshellIonisationReaction( subionisation );
+        electron::h0::verifySubshellIonisationReaction( subionisation );
 
         auto deficit = reactions[7];
-        electron::h1::verifyElasticDeficitReaction( deficit );
+        electron::h0::verifyElasticDeficitReaction( deficit );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -153,28 +153,28 @@ SCENARIO( "createReactions" ) {
         CHECK( 8 == reactions.size() );
 
         auto total = reactions[0];
-        photoatomic::h1::verifyTotalReaction( total );
+        photoatomic::h0::verifyTotalReaction( total );
 
         auto coherent = reactions[1];
-        photoatomic::h1::verifyCoherentReaction( coherent );
+        photoatomic::h0::verifyCoherentReaction( coherent );
 
         auto incoherent = reactions[2];
-        photoatomic::h1::verifyIncoherentReaction( incoherent );
+        photoatomic::h0::verifyIncoherentReaction( incoherent );
 
         auto epairproduction = reactions[3];
-        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction );
 
         auto tpairproduction = reactions[4];
-        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction );
 
         auto npairproduction = reactions[5];
-        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction );
 
         auto tionisation = reactions[6];
-        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation );
 
         auto ionisation = reactions[7];
-        photoatomic::h1::verifyIonisationReaction( ionisation );
+        photoatomic::h0::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
   } // GIVEN

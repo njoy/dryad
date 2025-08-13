@@ -66,10 +66,11 @@ void wrapCoherentDistributionData( python::module& module ) {
        { return self.type(); },
     "The distribution data type"
   )
-  .def_property_readonly(
+  .def_property(
 
     "frame",
-    &Component::frame,
+    python::overload_cast<>( &Component::frame, python::const_ ),
+    python::overload_cast< ReferenceFrame >( &Component::frame ),
     "The reference frame"
   )
   .def_property_readonly(
@@ -79,22 +80,25 @@ void wrapCoherentDistributionData( python::module& module ) {
     "Flag indicating whether or not the coherent distribution data has an anomolous\n"
     "form factor"
   )
-  .def_property_readonly(
+  .def_property(
 
     "scattering_function",
-    &Component::scatteringFunction,
+    python::overload_cast<>( &Component::scatteringFunction, python::const_ ),
+    python::overload_cast< TabulatedScatteringFunction >( &Component::scatteringFunction ),
     "The scattering function"
   )
-  .def_property_readonly(
+  .def_property(
 
     "real_anomolous_form_factor",
-    &Component::realAnomolousFormFactor,
+    python::overload_cast<>( &Component::realAnomolousFormFactor, python::const_ ),
+    python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::realAnomolousFormFactor ),
     "The real part of the anomolous form factor"
   )
-  .def_property_readonly(
+  .def_property(
 
     "imaginary_anomolous_form_factor",
-    &Component::imaginaryAnomolousFormFactor,
+    python::overload_cast<>( &Component::imaginaryAnomolousFormFactor, python::const_ ),
+    python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::imaginaryAnomolousFormFactor ),
     "The imaginary part of the anomolous form factor"
   );
 

@@ -145,6 +145,48 @@ SCENARIO( "ProjectileTarget" ) {
                                           {},
                                           0, 0 ) } );
 
+      THEN( "the projectile identifier can be changed" ) {
+
+        id::ParticleID newprojectile = id::ParticleID::proton();
+        id::ParticleID original = id::ParticleID::neutron();
+
+        chunk.projectileIdentifier( newprojectile );
+
+        CHECK( newprojectile == chunk.projectileIdentifier() );
+
+        chunk.projectileIdentifier( original );
+
+        verifyChunk( chunk );
+      }
+
+      THEN( "the target identifier can be changed" ) {
+
+        id::ParticleID newtarget = id::ParticleID( 1001 );
+        id::ParticleID original = id::ParticleID( 26056 );
+
+        chunk.targetIdentifier( newtarget );
+
+        CHECK( newtarget == chunk.targetIdentifier() );
+
+        chunk.targetIdentifier( original );
+
+        verifyChunk( chunk );
+      }
+
+      THEN( "the interaction type can be changed" ) {
+
+        InteractionType newtype = InteractionType::Atomic;
+        InteractionType original = InteractionType::Nuclear;
+
+        chunk.interactionType( newtype );
+
+        CHECK( newtype == chunk.interactionType() );
+
+        chunk.interactionType( original );
+
+        verifyChunk( chunk );
+      }
+
       THEN( "the reaction data can be changed" ) {
 
         std::vector< Reaction > newreactions = {
@@ -269,6 +311,12 @@ SCENARIO( "ProjectileTarget" ) {
 
 void verifyChunk( const ProjectileTarget& chunk ) {
 
+  // documentation
+  CHECK( std::nullopt == chunk.documentation().awr() );
+  CHECK( std::nullopt == chunk.documentation().library() );
+  CHECK( std::nullopt == chunk.documentation().version() );
+  CHECK( std::nullopt == chunk.documentation().description() );
+
   // identifiers
   CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
   CHECK( id::ParticleID( "Fe56" ) == chunk.targetIdentifier() );
@@ -320,7 +368,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000001., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
-  CHECK( false == reaction.isLinearised() );
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[1];
@@ -344,7 +391,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000000., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[2];
@@ -370,7 +416,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
-  CHECK( false == reaction.isLinearised() );
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[3];
@@ -394,7 +439,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[4];
@@ -418,7 +462,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[5];
@@ -444,7 +487,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 5., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
-  CHECK( false == reaction.isLinearised() );
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[6];
@@ -468,7 +510,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[7];
@@ -492,7 +533,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[8];
@@ -516,7 +556,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->total" ) );
@@ -546,7 +585,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000001., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
-  CHECK( false == reaction.isLinearised() );
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56" ) );
@@ -570,7 +608,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000000., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) );
@@ -596,7 +633,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
-  CHECK( false == reaction.isLinearised() );
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55" ) );
@@ -620,7 +656,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) );
@@ -644,7 +679,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->3n,Fe54[all]" ) );
@@ -670,7 +704,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 5., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
-  CHECK( false == reaction.isLinearised() );
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->3n,Fe54" ) );
@@ -694,7 +727,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->3n,Fe54_e1" ) );
@@ -718,7 +750,6 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->a,Cr52[all]" ) );
@@ -742,11 +773,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
-
-  // metadata
-  CHECK( false == chunk.isLinearised() );
 }
 
 void verifyCorrectSummation( const ProjectileTarget& chunk ) {
@@ -806,7 +833,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000009.00002, WithinRel( reaction.crossSection().values()[3] ) );
   CHECK( 3 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[1];
@@ -830,7 +856,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000000., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[2];
@@ -856,7 +881,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[3];
@@ -880,7 +904,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[4];
@@ -904,7 +927,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[5];
@@ -930,7 +952,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 5.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[6];
@@ -954,7 +975,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[7];
@@ -978,7 +998,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[8];
@@ -1002,7 +1021,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->total" ) );
@@ -1036,7 +1054,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000009.00002, WithinRel( reaction.crossSection().values()[3] ) );
   CHECK( 3 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56" ) );
@@ -1060,7 +1077,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1000000., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) );
@@ -1086,7 +1102,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55" ) );
@@ -1110,7 +1125,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) );
@@ -1134,7 +1148,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->3n,Fe54[all]" ) );
@@ -1160,7 +1173,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 5.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->3n,Fe54" ) );
@@ -1184,7 +1196,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 3.00001, WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->3n,Fe54_e1" ) );
@@ -1208,7 +1219,6 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 2., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->a,Cr52[all]" ) );
@@ -1232,9 +1242,5 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT( 1., WithinRel( reaction.crossSection().values()[1] ) );
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
-  CHECK( true == reaction.isLinearised() );
   CHECK( true == reaction.crossSection().isLinearised() );
-
-  // metadata
-  CHECK( true == chunk.isLinearised() );
 }

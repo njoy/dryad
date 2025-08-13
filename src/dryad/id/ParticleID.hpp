@@ -231,7 +231,7 @@ namespace id {
     /**
      *  @brief Return the number of currently registered identifiers
      */
-    static std::size_t size() noexcept {
+    static std::size_t size() {
 
       return entries.size();
     }
@@ -242,7 +242,7 @@ namespace id {
      *  @param za       the particle za number
      *  @param number   the particle level or subshell number (default is zero)
      */
-    static bool isRegistered( int za, int number = 0 ) noexcept {
+    static bool isRegistered( int za, int number = 0 ) {
 
       return number_conversion_dictionary.find( za * 1000 + number ) != number_conversion_dictionary.end();
     }
@@ -252,7 +252,7 @@ namespace id {
      *
      *  @param[in] string   the string
      */
-    static bool isRegistered( const std::string& string ) noexcept {
+    static bool isRegistered( const std::string& string ) {
 
       return string_conversion_dictionary.find( string ) != string_conversion_dictionary.end();
     }
@@ -265,7 +265,7 @@ namespace id {
      *  Note: this imposes logical order to the identifiers. It is public
      *        for test purposes only.
      */
-    int number() const noexcept {
+    int number() const {
 
       return entries[ this->index_ ].number();
     }
@@ -273,7 +273,7 @@ namespace id {
     /**
      *  @brief Return the particle symbol
      */
-    const std::string& symbol() const noexcept {
+    const std::string& symbol() const {
 
       return entries[ this->index_ ].symbol();
     }
@@ -281,7 +281,7 @@ namespace id {
     /**
      *  @brief Return the particle's element number
      */
-    short z() const noexcept {
+    short z() const {
 
       return entries[ this->index_ ].z();
     }
@@ -289,7 +289,7 @@ namespace id {
     /**
      *  @brief Return the particle's mass number
      */
-    short a() const noexcept {
+    short a() const {
 
       return entries[ this->index_ ].a();
     }
@@ -297,7 +297,7 @@ namespace id {
     /**
      *  @brief Return the particle's level number
      */
-    short e() const noexcept {
+    short e() const {
 
       return entries[ this->index_ ].e();
     }
@@ -305,7 +305,7 @@ namespace id {
     /**
      *  @brief Return the particle's za number
      */
-    int za() const noexcept {
+    int za() const {
 
       return entries[ this->index_ ].za();
     }
@@ -313,7 +313,7 @@ namespace id {
     /**
      *  @brief Return the particle's subshell
      */
-    const std::optional< ElectronSubshellID >& subshell() const noexcept {
+    const std::optional< ElectronSubshellID >& subshell() const {
 
       return entries[ this->index_ ].subshell();
     }
@@ -395,7 +395,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::ParticleID > {
 
-    size_t operator()( const njoy::dryad::id::ParticleID& key ) const noexcept {
+    size_t operator()( const njoy::dryad::id::ParticleID& key ) const {
 
       return key.number();
     }

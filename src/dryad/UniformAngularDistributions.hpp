@@ -41,7 +41,7 @@ namespace dryad {
     /**
      *  @brief Return the average cosine values
      */
-    TabulatedAverageCosine averageCosines() const noexcept {
+    TabulatedAverageCosine averageCosines() const {
 
       std::vector< double > cosines;
       cosines.reserve( this->numberPoints() );
@@ -58,7 +58,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const UniformAngularDistributions& right ) const noexcept {
+    bool operator==( const UniformAngularDistributions& right ) const {
 
       return Parent::operator==( right );
     }
@@ -68,7 +68,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const UniformAngularDistributions& right ) const noexcept {
+    bool operator!=( const UniformAngularDistributions& right ) const {
 
       return ! this->operator==( right );
     }

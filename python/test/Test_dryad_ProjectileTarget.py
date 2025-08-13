@@ -15,6 +15,12 @@ from dryad.id import ParticleID
 
 def verify_chunk( self, chunk ) :
 
+    # documentation
+    self.assertIsNone( chunk.documentation.awr )
+    self.assertIsNone( chunk.documentation.library )
+    self.assertIsNone( chunk.documentation.version )
+    self.assertIsNone( chunk.documentation.description )
+
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
     self.assertEqual( ParticleID( 'Fe56' ), chunk.target_identifier )
@@ -23,7 +29,7 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
     # resonance parameters are not present
-    self.assertEqual( None, chunk.resonances )
+    self.assertIsNone( chunk.resonances )
 
     # reactions are present
     self.assertEqual( 9, chunk.number_reactions )
@@ -46,8 +52,8 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 6, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->n,Fe56', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[1] )
@@ -67,7 +73,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1000001., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
-        self.assertEqual( False, reaction.is_linearised )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[1] and reaction( 'n,Fe56->n,Fe56' )
@@ -93,7 +98,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1000000, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[2] and reaction( 'n,Fe56->2n,Fe55[all]' )
@@ -104,8 +108,8 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[1] )
@@ -121,7 +125,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 3, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
-        self.assertEqual( False, reaction.is_linearised )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[3] and reaction( 'n,Fe56->2n,Fe55' )
@@ -147,7 +150,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 2.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[4] and reaction( 'n,Fe56->2n,Fe55_e1' )
@@ -173,7 +175,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[5] and reaction( 'n,Fe56->3n,Fe54[all]' )
@@ -184,8 +185,8 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[1] )
@@ -201,7 +202,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 5, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
-        self.assertEqual( False, reaction.is_linearised )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[6] and reaction( 'n,Fe56-3n,Fe54' )
@@ -227,7 +227,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 3.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[7] and reaction( 'n,Fe56->3n,Fe54_e1' )
@@ -253,7 +252,6 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 2., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[8] and reaction( 'n,Fe56->a,Cr52[all]' )
@@ -279,13 +277,15 @@ def verify_chunk( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # metadata
-    self.assertEqual( False, chunk.is_linearised )
-
 def verify_correct_summation( self, chunk ) :
+
+    # documentation
+    self.assertIsNone( chunk.documentation.awr )
+    self.assertIsNone( chunk.documentation.library )
+    self.assertIsNone( chunk.documentation.version )
+    self.assertIsNone( chunk.documentation.description )
 
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
@@ -295,7 +295,7 @@ def verify_correct_summation( self, chunk ) :
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
     # resonance parameters are not present
-    self.assertEqual( None, chunk.resonances )
+    self.assertIsNone( chunk.resonances )
 
     # reactions are present
     self.assertEqual( 9, chunk.number_reactions )
@@ -318,8 +318,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 6, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->n,Fe56', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[1] )
@@ -343,7 +343,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1000009.00002, reaction.cross_section.values[3] )
         self.assertEqual( 3, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[1] and reaction( 'n,Fe56->n,Fe56' )
@@ -369,7 +368,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1000000, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[2] and reaction( 'n,Fe56->2n,Fe55[all]' )
@@ -380,8 +378,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[1] )
@@ -397,7 +395,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 3.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[3] and reaction( 'n,Fe56->2n,Fe55' )
@@ -423,7 +420,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 2.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[4] and reaction( 'n,Fe56->2n,Fe55_e1' )
@@ -449,7 +445,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[5] and reaction( 'n,Fe56->3n,Fe54[all]' )
@@ -460,8 +455,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[1] )
@@ -477,7 +472,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 5.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[6] and reaction( 'n,Fe56-3n,Fe54' )
@@ -503,7 +497,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 3.00001, reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[7] and reaction( 'n,Fe56->3n,Fe54_e1' )
@@ -529,7 +522,6 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 2., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[8] and reaction( 'n,Fe56->a,Cr52[all]' )
@@ -555,11 +547,7 @@ def verify_correct_summation( self, chunk ) :
         self.assertAlmostEqual( 1., reaction.cross_section.values[1] )
         self.assertEqual( 1, reaction.cross_section.boundaries[0] )
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
-        self.assertEqual( True, reaction.is_linearised )
         self.assertEqual( True, reaction.cross_section.is_linearised )
-
-    # metadata
-    self.assertEqual( True, chunk.is_linearised )
 
 class Test_dryad_ProjectileTarget( unittest.TestCase ) :
     """Unit test for the ProjectileTarget class."""
@@ -676,6 +664,42 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, 0 ) ] )
+
+        # the projectile identifier can be changed
+        newprojectile = ParticleID.proton()
+        original = ParticleID.neutron()
+
+        chunk.projectile_identifier = newprojectile
+
+        self.assertEqual( newprojectile, chunk.projectile_identifier )
+
+        chunk.projectile_identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the target identifier can be changed
+        newtarget = ParticleID( 1001 )
+        original = ParticleID( 26056 )
+
+        chunk.target_identifier = newtarget
+
+        self.assertEqual( newtarget, chunk.target_identifier )
+
+        chunk.target_identifier = original
+
+        verify_chunk( self, chunk )
+
+        # the interaction type can be changed
+        newtype = InteractionType.Atomic
+        original = InteractionType.Nuclear
+
+        chunk.interaction_type = newtype
+
+        self.assertEqual( newtype, chunk.interaction_type )
+
+        chunk.interaction_type = original
+
+        verify_chunk( self, chunk )
 
         # the reaction data can be changed
         newreactions = [ Reaction( 'n,Fe56->n,Fe56_e2',

@@ -16,15 +16,13 @@ Reaction( id::ReactionID&& id,
           TabulatedCrossSection&& xs,
           std::vector< ReactionProduct >&& products,
           std::optional< double >&& mass_q,
-          std::optional< double >&& reaction_q,
-          bool linearised ) :
+          std::optional< double >&& reaction_q ) :
     id_( std::move( id ) ), category_( std::move( type ) ),
     partials_( std::move( partials ) ),
     mass_difference_qvalue_( mass_q ),
     reaction_qvalue_( reaction_q ),
     xs_( std::move( xs ) ),
-    products_( std::move( products ) ),
-    linearised_( linearised ) {}
+    products_( std::move( products ) ) {}
 
 public:
 
@@ -59,8 +57,7 @@ Reaction( id::ReactionID id,
               std::move( xs ),
               std::move( products ),
               std::move( mass_q ),
-              std::move( reaction_q ),
-              xs.isLinearised() ? true : false ) {}
+              std::move( reaction_q ) ) {}
 
 /**
  *  @brief Constructor for summation reactions
@@ -85,5 +82,4 @@ Reaction( id::ReactionID id,
               std::move( xs ),
               std::move( products ),
               std::nullopt,
-              std::nullopt,
-              xs.isLinearised() ? true : false ) {}
+              std::nullopt ) {}

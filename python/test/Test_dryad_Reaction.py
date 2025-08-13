@@ -19,7 +19,6 @@ def verify_chunk( self, chunk ) :
 
     # metadata
     self.assertEqual( True, chunk.has_products )
-    self.assertEqual( False, chunk.is_linearised )
 
     # reaction category
     self.assertEqual( ReactionCategory.Primary, chunk.category )
@@ -28,7 +27,7 @@ def verify_chunk( self, chunk ) :
 
     # partial identifiers
     self.assertEqual( 0, chunk.number_partial_reactions )
-    self.assertEqual( None, chunk.partial_reaction_identifiers )
+    self.assertIsNone( chunk.partial_reaction_identifiers )
 
     # q values
     self.assertAlmostEqual( 0, chunk.mass_difference_qvalue )
@@ -77,9 +76,6 @@ def verify_chunk( self, chunk ) :
     with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ) )
     with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ), 1 )
 
-    # metadata
-    self.assertEqual( False, chunk.is_linearised )
-
 def verify_summation_chunk( self, chunk ) :
 
     # reaction identifier
@@ -87,7 +83,6 @@ def verify_summation_chunk( self, chunk ) :
 
     # metadata
     self.assertEqual( False, chunk.has_products )
-    self.assertEqual( False, chunk.is_linearised )
 
     # reaction category
     self.assertEqual( ReactionCategory.Summation, chunk.category )
@@ -101,8 +96,8 @@ def verify_summation_chunk( self, chunk ) :
     self.assertEqual( 'n,Fe56->2n,Fe56', chunk.partial_reaction_identifiers[1] )
 
     # q values
-    self.assertEqual( None, chunk.mass_difference_qvalue )
-    self.assertEqual( None, chunk.reaction_qvalue )
+    self.assertIsNone( chunk.mass_difference_qvalue )
+    self.assertIsNone( chunk.reaction_qvalue )
 
     # cross section
     self.assertEqual( 5, chunk.cross_section.number_points )
@@ -131,9 +126,6 @@ def verify_summation_chunk( self, chunk ) :
     self.assertEqual( False, chunk.has_product( ParticleID( 'n' ) ) )
     self.assertEqual( False, chunk.has_product( ParticleID( 'g' ) ) )
     self.assertEqual( 0, len( chunk.products ) )
-
-    # metadata
-    self.assertEqual( False, chunk.is_linearised )
 
 class Test_dryad_Reaction( unittest.TestCase ) :
     """Unit test for the Reaction class."""
@@ -178,6 +170,18 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                        ReactionProduct( ParticleID( 'g' ), 2 ),
                                        ReactionProduct( ParticleID( 'g' ), 3 ) ] )
 
+        # the reaction identifier can be changed
+        newid = 'n,Fe56->n,Fe56_e40'
+        original = 'n,Fe56->n,Fe56_e1'
+
+        chunk.identifier = newid
+
+        self.assertEqual( newid, chunk.identifier )
+
+        chunk.identifier = original
+
+        verify_chunk( self, chunk )
+
         # the partial reaction identifiers can be changed
         newpartials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe55' ]
         original = None
@@ -221,7 +225,6 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         chunk.cross_section = newxs
 
         self.assertEqual( newxs, chunk.cross_section )
-        self.assertEqual( True, chunk.is_linearised )
 
         chunk.cross_section = original
 

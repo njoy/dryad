@@ -87,7 +87,7 @@ namespace endf {
     ENDFtk::tree::Tape tape( std::move( id ) );
     tape.insert( std::move( material ) );
 
-    std::ofstream out( filename );
+    std::ofstream out( filename, std::ios::binary );
     out << tape.content();
     out.close();
   }

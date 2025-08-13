@@ -6,7 +6,6 @@
 #include <variant>
 
 // other includes
-#include "tools/overload.hpp"
 #include "dryad/type-aliases.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/PolynomialMultiplicity.hpp"
@@ -43,7 +42,6 @@ namespace dryad {
     Multiplicity multiplicity_;
     std::optional< DistributionData > distribution_;
     std::optional< TabulatedAverageEnergy > average_energy_;
-    bool linearised_;
 
   public:
 
@@ -55,48 +53,88 @@ namespace dryad {
     /**
      *  @brief Return the particle identifier for the reaction product
      */
-    const id::ParticleID& identifier() const noexcept {
+    const id::ParticleID& identifier() const {
 
       return this->id_;
     }
 
     /**
+     *  @brief Set the particle identifier for the reaction product
+     *
+     *  @param id.  the reaction product identifier
+     */
+    void identifier( id::ParticleID id ) {
+
+      this->id_ = std::move( id );
+    }
+
+    /**
      *  @brief Return the reaction product multiplicity
      */
-    const Multiplicity& multiplicity() const noexcept {
+    const Multiplicity& multiplicity() const {
 
       return this->multiplicity_;
     }
 
     /**
+     *  @brief Set the reaction product multiplicity
+     *
+     *  @param multiplicity   the multiplicity of the reaction product
+     */
+    void multiplicity( Multiplicity multiplicity ) {
+
+      this->multiplicity_ = std::move( multiplicity );
+    }
+
+    /**
      *  @brief Return the average reaction product energy
      */
-    const std::optional< TabulatedAverageEnergy >& averageEnergy() const noexcept {
+    const std::optional< TabulatedAverageEnergy >& averageEnergy() const {
 
       return this->average_energy_;
     }
 
     /**
+     *  @brief Set the average reaction product energy
+     *
+     *  @param averageEnergy   the average reaction product energy
+     */
+    void averageEnergy( std::optional< TabulatedAverageEnergy > averageEnergy ) {
+
+      this->average_energy_ = std::move( averageEnergy );
+    }
+
+    /**
      *  @brief Return the reaction product distribution data
      */
-    const std::optional< DistributionData >& distributionData() const noexcept {
+    const std::optional< DistributionData >& distributionData() const {
 
       return this->distribution_;
     }
 
     /**
-     *  @brief Return whether or not the reaction product data is linearised
+     *  @brief Return the reaction product distribution data
      */
-    bool isLinearised() const noexcept {
+    std::optional< DistributionData >& distributionData() {
 
-      return this->linearised_;
+      return this->distribution_;
+    }
+
+    /**
+     *  @brief Set the reaction product distribution data
+     *
+     *  @param distribution   the reaction product distribution data
+     */
+    void distributionData( std::optional< DistributionData > distribution ) {
+
+      this->distribution_ = std::move( distribution );
     }
 
     /**
      *  @brief Return whether or not the reaction product has average reaction
      *         product energy data
      */
-    bool hasAverageEnergy() const noexcept {
+    bool hasAverageEnergy() const {
 
       return this->average_energy_.has_value();
     }
@@ -104,56 +142,9 @@ namespace dryad {
     /**
      *  @brief Return whether or not the reaction product has distribution data
      */
-    bool hasDistributionData() const noexcept {
+    bool hasDistributionData() const {
 
       return this->distribution_.has_value();
-    }
-
-    /**
-     *  @brief Linearise the reaction product data and return a new reaction product
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    ReactionProduct linearise( ToleranceConvergence tolerance = {} ) const noexcept {
-
-      auto linearise = tools::overload{
-
-        [] ( int multiplicity ) -> Multiplicity
-           { return Multiplicity( multiplicity ); },
-        [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); },
-        [&tolerance] ( const PolynomialMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }
-      };
-
-      id::ParticleID id = this->identifier();
-      Multiplicity multiplicity = std::visit( linearise, this->multiplicity() );
-      std::optional< TabulatedAverageEnergy > averageEnergy = this->averageEnergy();
-      std::optional< DistributionData > distribution = this->distributionData();
-
-      return ReactionProduct( std::move( id ), std::move( multiplicity ),
-                              std::move( distribution ), std::move( averageEnergy ),
-                              true );
-    }
-
-    /**
-     *  @brief Linearise the reaction product data inplace
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
-
-      auto linearise = tools::overload{
-
-        [] ( int multiplicity ) -> Multiplicity
-           { return Multiplicity( multiplicity ); },
-        [&tolerance] ( const TabulatedMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); },
-        [&tolerance] ( const PolynomialMultiplicity& multiplicity ) -> Multiplicity
-                     { return Multiplicity( multiplicity.linearise( tolerance ) ); }      };
-
-      this->multiplicity_ = std::visit( linearise, this->multiplicity() );
-      this->linearised_ = true;
     }
 
     /**
@@ -161,7 +152,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ReactionProduct& right ) const noexcept {
+    bool operator==( const ReactionProduct& right ) const {
 
       return this->identifier() == right.identifier() &&
              this->multiplicity() == right.multiplicity() &&
@@ -174,7 +165,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ReactionProduct& right ) const noexcept {
+    bool operator!=( const ReactionProduct& right ) const {
 
       return ! this->operator==( right );
     }

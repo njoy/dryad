@@ -31,6 +31,43 @@ SCENARIO( "IncoherentDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of IncoherentDistributionData is given" ) {
+
+      IncoherentDistributionData chunk( ReferenceFrame::CentreOfMass,
+                                        TabulatedScatteringFunction( { 1., 1e+6 }, { 2., 1. } ) );
+
+      THEN( "the reference frame can be changed" ) {
+
+        ReferenceFrame newframe = ReferenceFrame::Laboratory;
+        ReferenceFrame original = ReferenceFrame::CentreOfMass;
+
+        chunk.frame( newframe );
+
+        CHECK( newframe == chunk.frame() );
+
+        chunk.frame( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the scattering function can be changed" ) {
+
+        TabulatedScatteringFunction newfunction( { 1., 1e+6 }, { 4., 2. } );
+        TabulatedScatteringFunction original( { 1., 1e+6 }, { 2., 1. } );
+
+        chunk.scatteringFunction( newfunction );
+
+        CHECK( newfunction == chunk.scatteringFunction() );
+
+        chunk.scatteringFunction( original );
+
+        verifyChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of IncoherentDistributionData are given" ) {

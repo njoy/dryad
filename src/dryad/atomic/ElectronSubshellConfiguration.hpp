@@ -41,7 +41,7 @@ namespace atomic {
     /* auxiliary functions */
 
     template < typename Range >
-    static double calculateTotalProbability( const Range& transitions ) noexcept {
+    static double calculateTotalProbability( const Range& transitions ) {
 
       return std::accumulate( transitions.begin(), transitions.end(), 0.,
                               [] ( double value, auto&& transition )
@@ -59,7 +59,7 @@ namespace atomic {
     /**
      *  @brief Return the electron subshell identifier
      */
-    const id::ElectronSubshellID& identifier() const noexcept {
+    const id::ElectronSubshellID& identifier() const {
 
       return this->id_;
     }
@@ -69,7 +69,7 @@ namespace atomic {
      *
      *  @param[in] id.  the electron subshell identifier
      */
-    void identifier( id::ElectronSubshellID id ) noexcept {
+    void identifier( id::ElectronSubshellID id ) {
 
       this->id_ = std::move( id );
     }
@@ -77,7 +77,7 @@ namespace atomic {
     /**
      *  @brief Return the subshell binding energy
      */
-    double bindingEnergy() const noexcept {
+    double bindingEnergy() const {
 
       return this->binding_energy_;
     }
@@ -87,7 +87,7 @@ namespace atomic {
      *
      *  @param[in] energy   the subshell binding energy
      */
-    void bindingEnergy( double energy ) noexcept {
+    void bindingEnergy( double energy ) {
 
       this->binding_energy_ = energy;
     }
@@ -95,7 +95,7 @@ namespace atomic {
     /**
      *  @brief Return the electron subshell population when the atom is neutral
      */
-    double population() const noexcept {
+    double population() const {
 
       return this->population_;
     }
@@ -105,7 +105,7 @@ namespace atomic {
      *
      *  @param[in] population   the electron subshell population
      */
-    void population( double population ) noexcept {
+    void population( double population ) {
 
       this->population_ = population;
     }
@@ -113,7 +113,7 @@ namespace atomic {
     /**
      *  @brief Return the number of available radiative transitions
      */
-    std::size_t numberRadiativeTransitions() const noexcept {
+    std::size_t numberRadiativeTransitions() const {
 
       return this->radiativeTransitions().size();
     }
@@ -121,7 +121,7 @@ namespace atomic {
     /**
      *  @brief Return the number of available non-radiative transitions
      */
-    std::size_t numberNonRadiativeTransitions() const noexcept {
+    std::size_t numberNonRadiativeTransitions() const {
 
       return this->nonRadiativeTransitions().size();
     }
@@ -129,7 +129,7 @@ namespace atomic {
     /**
      *  @brief Return the number of available transitions
      */
-    std::size_t numberTransitions() const noexcept {
+    std::size_t numberTransitions() const {
 
       return this->numberRadiativeTransitions() + this->numberNonRadiativeTransitions();
     }
@@ -137,7 +137,7 @@ namespace atomic {
     /**
      *  @brief Return whether or not radiative transitions are available
      */
-    bool hasRadiativeTransitions() const noexcept {
+    bool hasRadiativeTransitions() const {
 
       return this->numberRadiativeTransitions() > 0;
     }
@@ -145,7 +145,7 @@ namespace atomic {
     /**
      *  @brief Return whether or not non-radiative transitions are available
      */
-    bool hasNonRadiativeTransitions() const noexcept {
+    bool hasNonRadiativeTransitions() const {
 
       return this->numberNonRadiativeTransitions() > 0;
     }
@@ -153,7 +153,7 @@ namespace atomic {
     /**
      *  @brief Return whether or not any transitions are available
      */
-    bool hasTransitions() const noexcept {
+    bool hasTransitions() const {
 
       return this->hasRadiativeTransitions() || this->hasNonRadiativeTransitions();
     }
@@ -161,7 +161,7 @@ namespace atomic {
     /**
      *  @brief Return the available radiative transitions to this subshell
      */
-    const std::vector< RadiativeTransitionData >& radiativeTransitions() const noexcept {
+    const std::vector< RadiativeTransitionData >& radiativeTransitions() const {
 
       return this->radiative_;
     }
@@ -169,7 +169,7 @@ namespace atomic {
     /**
      *  @brief Return the available radiative transitions to this subshell
      */
-    std::vector< RadiativeTransitionData >& radiativeTransitions() noexcept {
+    std::vector< RadiativeTransitionData >& radiativeTransitions() {
 
       return this->radiative_;
     }
@@ -179,7 +179,7 @@ namespace atomic {
      *
      *  @param[in] radiative   the available radiative transitions to this subshell
      */
-    void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) noexcept {
+    void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) {
 
       this->radiative_ = std::move( radiative );
     }
@@ -187,7 +187,7 @@ namespace atomic {
     /**
      *  @brief Return the available non-radiative transitions to this subshell
      */
-    const std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() const noexcept {
+    const std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() const {
 
       return this->nonradiative_;
     }
@@ -195,7 +195,7 @@ namespace atomic {
     /**
      *  @brief Return the available non-radiative transitions to this subshell
      */
-    std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() noexcept {
+    std::vector< NonRadiativeTransitionData >& nonRadiativeTransitions() {
 
       return this->nonradiative_;
     }
@@ -205,7 +205,7 @@ namespace atomic {
      *
      *  @param[in] radiative   the available non-radiative transitions to this subshell
      */
-    void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) noexcept {
+    void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) {
 
       this->nonradiative_ = std::move( nonradiative );
     }
@@ -213,7 +213,7 @@ namespace atomic {
     /**
      *  @brief Return the total radiative probability
      */
-    double totalRadiativeProbability() const noexcept {
+    double totalRadiativeProbability() const {
 
       return calculateTotalProbability( this->radiativeTransitions() );
     }
@@ -221,7 +221,7 @@ namespace atomic {
     /**
      *  @brief Return the total non-radiative probability
      */
-    double totalNonRadiativeProbability() const noexcept {
+    double totalNonRadiativeProbability() const {
 
       return calculateTotalProbability( this->nonRadiativeTransitions() );
     }
@@ -229,7 +229,7 @@ namespace atomic {
     /**
      *  @brief Normalise the transition probabilities
      */
-    void normalise() noexcept {
+    void normalise() {
 
       if ( this->hasTransitions() ) {
 
@@ -250,7 +250,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ElectronSubshellConfiguration& right ) const noexcept {
+    bool operator==( const ElectronSubshellConfiguration& right ) const {
 
       return this->identifier() == right.identifier() &&
              this->bindingEnergy() == right.bindingEnergy() &&
@@ -266,7 +266,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ElectronSubshellConfiguration& right ) const noexcept {
+    bool operator!=( const ElectronSubshellConfiguration& right ) const {
 
       return ! this->operator==( right );
     }

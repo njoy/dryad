@@ -8,7 +8,6 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include <cstdio>
-#include "ENDFtk/tree/Material.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -16,7 +15,7 @@ using namespace njoy::dryad;
 std::string chunk();
 std::string readContentFromFile( const std::string& );
 
-SCENARIO( "createAtomicRelaxation" ) {
+SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
   GIVEN( "Atomic relaxation data" ) {
 
@@ -126,7 +125,7 @@ SCENARIO( "createAtomicRelaxation" ) {
 
     THEN( "it can be converted to an ENDF material" ) {
 
-      std::string filename = "test.endf";
+      std::string filename = "ercoiuryqncoieruycoeurcowureugcregrygrcyg.endf";
       format::endf::createAtomicRelaxationEndfFile( relaxation, filename );
 
       CHECK( chunk() == readContentFromFile( filename ) );
@@ -253,7 +252,9 @@ std::string readContentFromFile( const std::string& filename ) {
                     std::ios::in | std::ios::binary | std::ios::ate );
   if ( not in ) {
 
-    throw std::runtime_error( "test.endf not found" );
+    std::string message = filename;
+    message += " not found";
+    throw std::runtime_error( message );
   }
 
   const auto file_size = in.tellg();

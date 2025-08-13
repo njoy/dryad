@@ -10,7 +10,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -81,7 +80,6 @@ namespace li7 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -107,7 +105,6 @@ namespace li7 {
 
     auto neutron = reaction.products()[0];
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
-    CHECK( true == neutron.isLinearised() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
@@ -172,7 +169,6 @@ namespace li7 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -220,7 +216,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -259,7 +254,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -297,7 +291,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -338,7 +331,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -376,7 +368,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -418,7 +409,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -460,7 +450,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -502,7 +491,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -544,7 +532,6 @@ namespace li7 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();

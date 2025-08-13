@@ -7,6 +7,7 @@
 #include "dryad/ProjectileTarget.hpp"
 #include "dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "dryad/format/endf/createProjectileTargetEndfFile.hpp"
 #include "dryad/format/gnds/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
@@ -16,7 +17,9 @@ void wrapProjectileTarget( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::ProjectileTarget;
+  using Documentation = njoy::dryad::Documentation;
   using ParticleID = njoy::dryad::id::ParticleID;
+  using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
@@ -36,6 +39,23 @@ void wrapProjectileTarget( python::module& module ) {
   component
   .def(
 
+    python::init< Documentation, ParticleID, ParticleID,
+                  InteractionType,
+                  std::vector< Reaction > >(),
+    python::arg( "documentation" ), python::arg( "projectile" ),
+    python::arg( "target" ), python::arg( "type" ),
+    python::arg( "reactions" ),
+    "Initialise the ProjectileTarget\n\n"
+    "Arguments:\n"
+    "    self            the reaction\n"
+    "    documentation   the documentation\n"
+    "    projectile      the particle identifier\n"
+    "    target          the target identifier\n"
+    "    type            the interaction type\n"
+    "    reactions       the reaction data"
+  )
+  .def(
+
     python::init< ParticleID, ParticleID, InteractionType,
                   std::vector< Reaction > >(),
     python::arg( "projectile" ), python::arg( "target" ),
@@ -48,22 +68,32 @@ void wrapProjectileTarget( python::module& module ) {
     "    type         the interaction type\n"
     "    reactions    the reaction data"
   )
-  .def_property_readonly(
+  .def_property(
+
+    "documentation",
+    python::overload_cast<>( &Component::documentation, python::const_ ),
+    python::overload_cast< Documentation >( &Component::documentation ),
+    "The documentation"
+  )
+  .def_property(
 
     "projectile_identifier",
-    &Component::projectileIdentifier,
+    python::overload_cast<>( &Component::projectileIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::projectileIdentifier ),
     "The projectile identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "target_identifier",
-    &Component::targetIdentifier,
+    python::overload_cast<>( &Component::targetIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::targetIdentifier ),
     "The target identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "interaction_type",
-    &Component::interactionType,
+    python::overload_cast<>( &Component::interactionType, python::const_ ),
+    python::overload_cast< InteractionType >( &Component::interactionType ),
     "The interaction type (atomic or nuclear)"
   )
   .def_property(
@@ -99,7 +129,7 @@ void wrapProjectileTarget( python::module& module ) {
   .def(
 
     "reaction",
-    &Component::reaction,
+    python::overload_cast< const ReactionID& >( &Component::reaction, python::const_ ),
     python::arg( "id" ),
     "Return the requested reaction\n\n"
     "Arguments:\n"
@@ -116,12 +146,6 @@ void wrapProjectileTarget( python::module& module ) {
     "Arguments:\n"
     "    self        the ProjectileTarget data\n"
     "    tolerance   the linearisation tolerance"
-  )
-  .def_property_readonly(
-
-    "is_linearised",
-    &Component::isLinearised,
-    "Flag indicating whether or not the data is linearised"
   )
   .def_static(
 
@@ -163,6 +187,20 @@ void wrapProjectileTarget( python::module& module ) {
     "ProjectileTarget for eprdata files.\n\n"
     "Arguments:\n"
     "    filename   the ENDF file name"
+  )
+  .def(
+
+    "to_endf_file",
+    [] ( const Component& self, int mat, const std::string& filename ) {
+
+      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename );
+    },
+    python::arg( "mat" ), python::arg( "filename" ),
+    "Write the ProjectileTarget data to an ENDF file\n\n"
+    "Arguments:\n"
+    "    self        the ProjectileTarget data\n"
+    "    mat         the ENDF mat number to be used\n"
+    "    filename    the ENDF file name"
   );
 
   // add standard equality comparison definitions

@@ -8,6 +8,7 @@
 // other includes
 #include "dryad/type-aliases.hpp"
 #include "dryad/InteractionType.hpp"
+#include "dryad/Documentation.hpp"
 #include "dryad/Reaction.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/resonances/ResonanceParameters.hpp"
@@ -22,6 +23,8 @@ namespace dryad {
   class ProjectileTarget {
 
     /* fields */
+    Documentation documentation_;
+
     id::ParticleID projectile_id_;
     id::ParticleID target_id_;
 
@@ -42,33 +45,89 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the documentation
+     */
+    const Documentation& documentation() const {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Return the documentation
+     */
+    Documentation& documentation() {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Set the documentation
+     *
+     *  @param[in] documentation   the documentation
+     */
+    void documentation( Documentation documentation ) {
+
+      this->documentation_ = std::move( documentation );
+    }
+
+    /**
      *  @brief Return the projectile identifier
      */
-    const id::ParticleID& projectileIdentifier() const noexcept {
+    const id::ParticleID& projectileIdentifier() const {
 
       return this->projectile_id_;
     }
 
     /**
+     *  @brief Set the projectile identifier
+     *
+     *  @param projectile   the projectile identifier
+     */
+    void projectileIdentifier( id::ParticleID projectile ) {
+
+      this->projectile_id_ = std::move( projectile );
+    }
+
+    /**
      *  @brief Return the target identifier
      */
-    const id::ParticleID& targetIdentifier() const noexcept {
+    const id::ParticleID& targetIdentifier() const {
 
       return this->target_id_;
     }
 
     /**
+     *  @brief Set the target identifier
+     *
+     *  @param target   the target identifier
+     */
+    void targetIdentifier( id::ParticleID target ) {
+
+      this->target_id_ = std::move( target );
+    }
+
+    /**
      *  @brief Return the interaction type
      */
-    const InteractionType& interactionType() const noexcept {
+    const InteractionType& interactionType() const {
 
       return this->interaction_;
     }
 
     /**
+     *  @brief Set the interaction type
+     *
+     *  @param type   the interaction type
+     */
+    void interactionType( InteractionType type ) {
+
+      this->interaction_ = std::move( type );
+    }
+
+    /**
      *  @brief Return the resonance parameter data
      */
-    const std::optional< resonances::ResonanceParameters >& resonances() const noexcept {
+    const std::optional< resonances::ResonanceParameters >& resonances() const {
 
       return this->resonances_;
     }
@@ -76,7 +135,7 @@ namespace dryad {
     /**
      *  @brief Return the resonance parameter data
      */
-    std::optional< resonances::ResonanceParameters >& resonances() noexcept {
+    std::optional< resonances::ResonanceParameters >& resonances() {
 
       return this->resonances_;
     }
@@ -86,7 +145,7 @@ namespace dryad {
      *
      *  @param[in] resonances   the resonance parameters
      */
-    void resonances( std::optional< resonances::ResonanceParameters > resonances ) noexcept {
+    void resonances( std::optional< resonances::ResonanceParameters > resonances ) {
 
       this->resonances_ = std::move( resonances );
     }
@@ -94,7 +153,7 @@ namespace dryad {
     /**
      *  @brief Return the reactions
      */
-    const std::vector< Reaction >& reactions() const noexcept {
+    const std::vector< Reaction >& reactions() const {
 
       return this->reactions_;
     }
@@ -102,7 +161,7 @@ namespace dryad {
     /**
      *  @brief Return the reactions
      */
-    std::vector< Reaction >& reactions() noexcept {
+    std::vector< Reaction >& reactions() {
 
       return this->reactions_;
     }
@@ -112,7 +171,7 @@ namespace dryad {
      *
      *  @param[in] reactions   the reactions
      */
-    void reactions( std::vector< Reaction > reactions ) noexcept {
+    void reactions( std::vector< Reaction > reactions ) {
 
       this->reactions_ = std::move( reactions );
       this->resolvePartialIdentifiers();
@@ -121,7 +180,7 @@ namespace dryad {
     /**
      *  @brief Return the number of reactions
      */
-    std::size_t numberReactions() const noexcept {
+    std::size_t numberReactions() const {
 
       return this->reactions().size();
     }
@@ -157,13 +216,13 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the data is linearised
+     *  @brief Return the requested reaction
+     *
+     *  @param[in] id   the reaction identifier
      */
-    bool isLinearised() const noexcept {
+    Reaction& reaction( const id::ReactionID& id ) {
 
-      return std::all_of( this->reactions().begin(), this->reactions().end(),
-                          [] ( auto&& reaction )
-                             { return reaction.isLinearised(); } );
+      return const_cast< Reaction& >( const_cast< const ProjectileTarget& >( *this ).reaction( id ) );
     }
 
     /**
@@ -249,7 +308,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ProjectileTarget& right ) const noexcept {
+    bool operator==( const ProjectileTarget& right ) const {
 
       return this->projectileIdentifier() == right.projectileIdentifier() &&
              this->targetIdentifier() == right.targetIdentifier() &&
@@ -263,7 +322,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ProjectileTarget& right ) const noexcept {
+    bool operator!=( const ProjectileTarget& right ) const {
 
       return ! this->operator==( right );
     }

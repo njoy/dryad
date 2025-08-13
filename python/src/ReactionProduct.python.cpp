@@ -16,6 +16,7 @@ void wrapReactionProduct( python::module& module ) {
   using ParticleID = njoy::dryad::id::ParticleID;
   using Multiplicity = njoy::dryad::ReactionProduct::Multiplicity;
   using DistributionData = njoy::dryad::ReactionProduct::DistributionData;
+  using TabulatedAverageEnergy = njoy::dryad::TabulatedAverageEnergy;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
@@ -32,54 +33,47 @@ void wrapReactionProduct( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, Multiplicity >(),
+    python::init< ParticleID, Multiplicity,
+                  std::optional< DistributionData >,
+                  std::optional< TabulatedAverageEnergy > >(),
     python::arg( "id" ), python::arg( "multiplicity" ),
+    python::arg( "distribution" ) = std::nullopt,
+    python::arg( "average_energy" ) = std::nullopt,
     "Initialise the reaction\n\n"
     "Arguments:\n"
-    "    self           the reaction\n"
-    "    id             the reaction product identifier\n"
-    "    multiplicity   the reaction product multiplicity"
+    "    self             the reaction\n"
+    "    id               the reaction product identifier\n"
+    "    multiplicity     the reaction product multiplicity\n"
+    "    distribution     the optional reaction product distribution data\n"
+    "    average_energy   the optional average reaction product energy"
   )
-  .def(
-
-    python::init< ParticleID, Multiplicity, DistributionData >(),
-    python::arg( "id" ), python::arg( "multiplicity" ), python::arg( "distribution" ),
-    "Initialise the reaction\n\n"
-    "Arguments:\n"
-    "    self           the reaction\n"
-    "    id             the reaction product identifier\n"
-    "    multiplicity   the reaction product multiplicity\n"
-    "    distribution   the reaction product distribution data"
-  )
-  .def_property_readonly(
+  .def_property(
 
     "identifier",
-    &Component::identifier,
+    python::overload_cast<>( &Component::identifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::identifier ),
     "The reaction product identifier"
   )
-  .def_property_readonly(
+  .def_property(
 
     "multiplicity",
-    &Component::multiplicity,
+    python::overload_cast<>( &Component::multiplicity, python::const_ ),
+    python::overload_cast< Multiplicity >( &Component::multiplicity ),
     "The multiplicity"
   )
-  .def_property_readonly(
+  .def_property(
 
     "average_energy",
-    &Component::averageEnergy,
+    python::overload_cast<>( &Component::averageEnergy, python::const_ ),
+    python::overload_cast< std::optional< TabulatedAverageEnergy > >( &Component::averageEnergy ),
     "The average reaction product energy"
   )
-  .def_property_readonly(
+  .def_property(
 
     "distribution_data",
-    &Component::distributionData,
+    python::overload_cast<>( &Component::distributionData, python::const_ ),
+    python::overload_cast< std::optional< DistributionData > >( &Component::distributionData ),
     "The distribution data"
-  )
-  .def_property_readonly(
-
-    "is_linearised",
-    &Component::isLinearised,
-    "Flag indicating whether or not the reaction product is linearised"
   )
   .def_property_readonly(
 
@@ -93,26 +87,6 @@ void wrapReactionProduct( python::module& module ) {
     "has_distribution_data",
     &Component::hasDistributionData,
     "Flag indicating whether or not the reaction product has distribution data"
-  )
-  .def(
-
-    "linearise",
-    &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the reaction product data and return a new reaction product\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    tolerance   the linearisation tolerance"
-  )
-  .def(
-
-    "linearise_inplace",
-    &Component::lineariseInplace,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the reaction product data inplace\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    tolerance   the linearisation tolerance"
   );
 
   // add standard equality comparison definitions

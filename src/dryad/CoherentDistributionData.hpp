@@ -48,7 +48,7 @@ namespace dryad {
     /**
      *  @brief Return the distribution data type
      */
-    static constexpr DistributionDataType type() noexcept {
+    static constexpr DistributionDataType type() {
 
       return DistributionDataType::Coherent;
     }
@@ -56,16 +56,26 @@ namespace dryad {
     /**
      *  @brief Return the reference frame
      */
-    const ReferenceFrame& frame() const noexcept {
+    const ReferenceFrame& frame() const {
 
       return this->frame_;
+    }
+
+    /**
+     *  @brief Set the reference frame
+     *
+     *  @param frame   the reference frame of the distribution data
+     */
+    void frame( ReferenceFrame frame ) {
+
+      this->frame_ = std::move( frame );
     }
 
     /**
      *  @brief Return whether or not the coherent distribution data has an anomolous
      *         form factor
      */
-    bool hasAnomolousFormFactor() const noexcept {
+    bool hasAnomolousFormFactor() const {
 
       return this->real_.has_value() || this->imaginary_.has_value();
     }
@@ -73,25 +83,55 @@ namespace dryad {
     /**
      *  @brief Return the scattering function
      */
-    const TabulatedScatteringFunction& scatteringFunction() const noexcept {
+    const TabulatedScatteringFunction& scatteringFunction() const {
 
       return this->scattering_;
     }
 
     /**
+     *  @brief Set the scattering function
+     *
+     *  @param scattering   the scattering function
+     */
+    void scatteringFunction( TabulatedScatteringFunction scattering ) {
+
+      this->scattering_ = scattering;
+    }
+
+    /**
      *  @brief Return the real part of the anomolous form factor
      */
-    const std::optional< TabulatedFormFactor >& realAnomolousFormFactor() const noexcept {
+    const std::optional< TabulatedFormFactor >& realAnomolousFormFactor() const {
 
       return this->real_;
     }
 
     /**
+     *  @brief Set the real part of the anomolous form factor
+     *
+     *  @param real   the real part of the anamolous form factor
+     */
+    void realAnomolousFormFactor( std::optional< TabulatedFormFactor > real ) {
+
+      this->real_ = real;
+    }
+
+    /**
      *  @brief Return the imaginary part of the anomolous form factor
      */
-    const std::optional< TabulatedFormFactor >& imaginaryAnomolousFormFactor() const noexcept {
+    const std::optional< TabulatedFormFactor >& imaginaryAnomolousFormFactor() const {
 
       return this->imaginary_;
+    }
+
+    /**
+     *  @brief Set the imaginary part of the anomolous form factor
+     *
+     *  @param real   the imaginary part of the anamolous form factor
+     */
+    void imaginaryAnomolousFormFactor( std::optional< TabulatedFormFactor > imaginary ) {
+
+      this->imaginary_ = imaginary;
     }
 
     /**
@@ -99,7 +139,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const CoherentDistributionData& right ) const noexcept {
+    bool operator==( const CoherentDistributionData& right ) const {
 
       return this->frame() == right.frame() &&
              this->scatteringFunction() == right.scatteringFunction() &&
@@ -112,7 +152,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const CoherentDistributionData& right ) const noexcept {
+    bool operator!=( const CoherentDistributionData& right ) const {
 
       return ! this->operator==( right );
     }

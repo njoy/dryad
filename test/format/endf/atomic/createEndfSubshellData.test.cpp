@@ -16,7 +16,7 @@ using namespace njoy::dryad::atomic;
 std::string chunk();
 std::string chunkWithoutTransitions();
 
-SCENARIO( "toSubshellData" ) {
+SCENARIO( "createEndfSubshellData" ) {
 
   GIVEN( "valid data for a subshell configuration without transitions" ) {
 

@@ -46,7 +46,7 @@ namespace base {
     /**
      *  @brief Return the distribution type
      */
-    const UniformDistributionType& type() const noexcept {
+    const UniformDistributionType& type() const {
 
       return this->type_;
     }
@@ -54,7 +54,7 @@ namespace base {
     /**
      *  @brief Return the values for the distribution
      */
-    const std::vector< double >& values() const noexcept {
+    const std::vector< double >& values() const {
 
       return this->values_;
     }
@@ -62,7 +62,7 @@ namespace base {
     /**
      *  @brief Return the number of discrete values or intervals
      */
-    std::size_t number() const noexcept {
+    std::size_t number() const {
 
       if ( this->type() == UniformDistributionType::Discrete ) {
 
@@ -77,7 +77,7 @@ namespace base {
     /**
      *  @brief Return the mean defined by the distribution
      */
-    double mean() const noexcept {
+    double mean() const {
 
       double sum = std::accumulate( this->values().begin(), this->values().end(), 0. );
       if ( this->type() == UniformDistributionType::Interval ) {
@@ -93,7 +93,7 @@ namespace base {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const UniformDistribution& right ) const noexcept {
+    bool operator==( const UniformDistribution& right ) const {
 
       return this->type() == right.type() && this->values() == right.values();
     }
@@ -103,7 +103,7 @@ namespace base {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const UniformDistribution& right ) const noexcept {
+    bool operator!=( const UniformDistribution& right ) const {
 
       return ! this->operator==( right );
     }
