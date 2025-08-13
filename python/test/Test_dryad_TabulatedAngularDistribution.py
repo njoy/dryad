@@ -16,6 +16,15 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
         def verify_chunk( self, chunk ) :
 
             # verify content
+            self.assertAlmostEqual( -1.  , chunk.cosines[0] )
+            self.assertAlmostEqual(  0.  , chunk.cosines[1] )
+            self.assertAlmostEqual(  0.5 , chunk.cosines[2] )
+            self.assertAlmostEqual(  1.  , chunk.cosines[3] )
+            self.assertAlmostEqual(  0.  , chunk.values[0] )
+            self.assertAlmostEqual(  0.5 , chunk.values[1] )
+            self.assertAlmostEqual(  0.75, chunk.values[2] )
+            self.assertAlmostEqual(  1.  , chunk.values[3] )
+
             pdf = chunk.pdf
             self.assertAlmostEqual( -1., pdf.lower_cosine_limit )
             self.assertAlmostEqual(  1., pdf.upper_cosine_limit )
@@ -30,7 +39,7 @@ class Test_dryad_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual(  0.75, pdf.values[2] )
             self.assertAlmostEqual(  1.  , pdf.values[3] )
 
-            self.assertEqual( None, chunk.cdf )
+            self.assertIsNone( chunk.cdf )
 
             # verify evaluation - values of x in the x grid
             self.assertAlmostEqual( 0.  , chunk( cosine = -1. ) )

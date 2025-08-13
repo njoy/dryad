@@ -25,6 +25,9 @@ SCENARIO( "LegendreAngularDistribution" ) {
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
 
+        CHECK_THAT( 0.5 , WithinRel( chunk.coefficients()[0] ) );
+        CHECK_THAT( 0.25, WithinRel( chunk.coefficients()[1] ) );
+
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
@@ -99,6 +102,9 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       THEN( "a LegendreAngularDistribution can be constructed and members can "
             "be tested" ) {
+
+        CHECK_THAT( 0.5 , WithinRel( chunk.coefficients()[0] ) );
+        CHECK_THAT( 0.25, WithinRel( chunk.coefficients()[1] ) );
 
         auto pdf = chunk.pdf();
         CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );

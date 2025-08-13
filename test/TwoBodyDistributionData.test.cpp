@@ -74,6 +74,45 @@ SCENARIO( "TwoBodyDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of TwoBodyDistributionData is given" ) {
+
+      TwoBodyDistributionData chunk( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+
+      THEN( "the reference frame can be changed" ) {
+
+        ReferenceFrame newframe = ReferenceFrame::Laboratory;
+        ReferenceFrame original = ReferenceFrame::CentreOfMass;
+
+        chunk.frame( newframe );
+
+        CHECK( newframe == chunk.frame() );
+
+        chunk.frame( original );
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+
+      THEN( "the distribution data can be changed" ) {
+
+        TwoBodyDistributionData::AngularDistributions
+        newdistribution = LegendreAngularDistributions( { 1e-5, 20. },
+                                                        { { { 0.5 } }, { { 0.5, 0.1 } } } );
+        TwoBodyDistributionData::AngularDistributions
+        original = IsotropicAngularDistributions();
+
+        chunk.angle( newdistribution );
+
+        verifyLegendreChunk( chunk );
+
+        chunk.angle( original );
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of TwoBodyDistributionData are given" ) {

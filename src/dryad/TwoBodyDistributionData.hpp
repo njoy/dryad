@@ -54,7 +54,7 @@ namespace dryad {
     /**
      *  @brief Return the distribution data type
      */
-    static constexpr DistributionDataType type() noexcept {
+    static constexpr DistributionDataType type() {
 
       return DistributionDataType::TwoBody;
     }
@@ -62,17 +62,45 @@ namespace dryad {
     /**
      *  @brief Return the reference frame
      */
-    const ReferenceFrame& frame() const noexcept {
+    const ReferenceFrame& frame() const {
 
       return this->frame_;
     }
 
     /**
+     *  @brief Set the reference frame
+     *
+     *  @param frame   the reference frame of the distribution data
+     */
+    void frame( ReferenceFrame frame ) {
+
+      this->frame_ = std::move( frame );
+    }
+
+    /**
      *  @brief Return the angular distributions
      */
-    const AngularDistributions& angle() const noexcept {
+    const AngularDistributions& angle() const {
 
       return this->angle_;
+    }
+
+    /**
+     *  @brief Return the angular distributions
+     */
+    AngularDistributions& angle() {
+
+      return this->angle_;
+    }
+
+    /**
+     *  @brief Set the angular distributions
+     *
+     *  @param angle   the angular distributions
+     */
+    void angle( AngularDistributions angle ) {
+
+      this->angle_ = std::move( angle );
     }
 
     //! @todo implement kinematics formulas to retrieve outgoing energy
@@ -83,7 +111,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TwoBodyDistributionData& right ) const noexcept {
+    bool operator==( const TwoBodyDistributionData& right ) const {
 
       return this->frame() == right.frame() && this->angle() == right.angle();
     }
@@ -93,7 +121,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TwoBodyDistributionData& right ) const noexcept {
+    bool operator!=( const TwoBodyDistributionData& right ) const {
 
       return ! this->operator==( right );
     }

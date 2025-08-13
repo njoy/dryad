@@ -61,7 +61,7 @@ namespace covariance {
     /**
      *  @brief Return the number of energy groups
      */
-    std::size_t numberGroups() const noexcept {
+    std::size_t numberGroups() const {
 
       return this->energies().size() - 1;
     }
@@ -69,7 +69,7 @@ namespace covariance {
     /**
      *  @brief Return the scaling procedure type
      */
-    const ScalingType& type() const noexcept {
+    const ScalingType& type() const {
 
       return this->type_;
     }

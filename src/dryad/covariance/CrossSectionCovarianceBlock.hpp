@@ -37,7 +37,7 @@ namespace covariance {
      *  If this type of information is given, it will be for an on-diagonal
      *  covariance block.
      */
-    const std::optional< VarianceScaling >& varianceScaling() const noexcept {
+    const std::optional< VarianceScaling >& varianceScaling() const {
 
       return this->scaling_;
     }
@@ -46,7 +46,7 @@ namespace covariance {
      *  @brief Return whether or not the covariance block has variance scaling
      *         information
      */
-    bool hasVarianceScaling() const noexcept {
+    bool hasVarianceScaling() const {
 
       return this->scaling_.has_value();
     }
