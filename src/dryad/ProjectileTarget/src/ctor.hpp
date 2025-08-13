@@ -36,7 +36,8 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param documentation   the documentation
  *  @param projectile      the projectile identifier
  *  @param target          the target identifier
- *  @param type.           the interaction type
+ *  @param type         the interaction type
+ *  @param type            the interaction type
  *  @param reactions       the reaction data
  */
 ProjectileTarget( Documentation documentation,
@@ -56,7 +57,7 @@ ProjectileTarget( Documentation documentation,
  *
  *  @param projectile      the projectile identifier
  *  @param target          the target identifier
- *  @param type.           the interaction type
+ *  @param type            the interaction type
  *  @param reactions       the reaction data
  */
 ProjectileTarget( id::ParticleID projectile,
