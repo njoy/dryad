@@ -67,7 +67,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the temperature
+     *  @brief Return the version
      */
     const std::optional< std::pair< int, int > >& version() const {
 
