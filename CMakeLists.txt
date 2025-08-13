@@ -74,6 +74,12 @@ target_link_libraries( dryad
     njoy::ENDFtk
 )
 
+if(MSVC)
+  add_compile_options(/bigobj)
+  target_link_options(dryad INTERFACE "/STACK:8388608")
+endif()
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # dryad : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
