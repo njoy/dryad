@@ -89,10 +89,13 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
     "Arguments:\n"
     "    self        the angular distribution\n"
-    "    tolerance   the linearisation tolerance"
+    "    tolerance   the linearisation tolerance\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

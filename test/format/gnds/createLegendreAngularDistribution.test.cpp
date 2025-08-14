@@ -35,9 +35,12 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createLegendreAngularDistribution( legendre, axes );
+        auto chunk1 = format::gnds::createLegendreAngularDistribution( legendre, axes, false );
+        auto chunk2 = format::gnds::createLegendreAngularDistribution( legendre, axes, true );
 
-        verifyChunk( chunk );
+        //! @todo we need an unnormalised GNDS snippet
+        verifyChunk( chunk1 );
+        verifyChunk( chunk2 );
       } // THEN
     } // WHEN
   } // GIVEN

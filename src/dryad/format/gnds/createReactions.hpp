@@ -18,10 +18,17 @@ namespace gnds {
 
   /**
    *  @brief Create every Reaction from a GNDS reaction suite
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] suite        the gnds xml reaction suite
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   static std::vector< Reaction >
   createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
-                   pugi::xml_node suite, bool nornmalise,
+                   pugi::xml_node suite, bool normalise,
                    const std::string& style = "eval" ) {
 
     // check that this is a valid reaction node
@@ -44,7 +51,7 @@ namespace gnds {
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction, nornmalise, style ) );
+        reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise, style ) );
       }
     }
 
@@ -56,7 +63,7 @@ namespace gnds {
             reaction; reaction = reaction.next_sibling( "crossSectionSum" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction, nornmalise, style ) );
+        reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise, style ) );
       }
     }
 
@@ -68,7 +75,7 @@ namespace gnds {
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction, nornmalise ) );
+        reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise ) );
       }
     }
 

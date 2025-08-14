@@ -70,18 +70,28 @@ TabulatedAngularDistribution(
  *  @brief Constructor using a pdf
  *
  *  @param pdf         the pdf of the distribution
+ *  @param normalise   option to indicate whether or not to normalise
+ *                     all probability data (default: no normalisation)
  */
-TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf ) :
+TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
+                              bool normalise = false ) :
   pdf_( std::move( pdf ) ), cdf_() {
 
-  this->calculateCdf();
+  if ( normalise ) {
+
+    this->normalise();
+  }
+  else {
+
+    this->calculateCdf();
+  }
 }
 
 /**
- *  @brief Constructor using a pdf
+ *  @brief Constructor using a pdf and cdf
  *
- *  @param pdf         the pdf of the distribution
- *  @param cdf         the pdf of the distribution
+ *  @param pdf   the pdf of the distribution
+ *  @param cdf   the cdf of the distribution
  */
 TabulatedAngularDistribution( TabulatedAngularDistributionFunction pdf,
                               TabulatedAngularDistributionFunction cdf ) :
