@@ -24,7 +24,11 @@ namespace dryad {
 
     /* fields */
     TabulatedAngularDistributionFunction pdf_;
-    std::optional< TabulatedAngularDistributionFunction > cdf_;
+    TabulatedAngularDistributionFunction cdf_;
+
+    /* auxiliary functions */
+
+    #include "dryad/TabulatedAngularDistribution/src/calculateCdf.hpp"
 
   public:
 
@@ -40,9 +44,41 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the cosine values
+     */
+    const std::vector< double >& cosines() const {
+
+      return this->pdf().cosines();
+    }
+
+    /**
+     *  @brief Return the probability values
+     */
+    const std::vector< double >& values() const {
+
+      return this->pdf().values();
+    }
+
+    /**
+     *  @brief Return the boundaries of the interpolation regions
+     */
+    const std::vector< std::size_t >& boundaries() const {
+
+      return this->pdf().boundaries();
+    }
+
+    /**
+     *  @brief Return the interpolation types of the interpolation regions
+     */
+    const std::vector< InterpolationType >& interpolants() const {
+
+      return this->pdf().interpolants();
+    }
+
+    /**
      *  @brief Return the probability distribution function (pdf) of the distribution
      */
-    const TabulatedAngularDistributionFunction& pdf() const noexcept {
+    const TabulatedAngularDistributionFunction& pdf() const {
 
       return this->pdf_;
     }
@@ -50,7 +86,7 @@ namespace dryad {
     /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const std::optional< TabulatedAngularDistributionFunction >& cdf() const noexcept {
+    const TabulatedAngularDistributionFunction& cdf() const {
 
       return this->cdf_;
     }
@@ -66,22 +102,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Normalise the distribution
+     */
+    void normalise() {
+
+      this->pdf_.normalise();
+      this->calculateCdf( true );
+    }
+
+    /**
      *  @brief Return the average cosine defined by the distribution
      */
-    double averageCosine() const noexcept { return this->pdf().mean(); }
+    double averageCosine() const { return this->pdf().mean(); }
 
     /**
      *  @brief Return a linearised angular distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-
-      // no need to normalise the resulting pdf, the TabulatedAngularDistribution ctor
-      // will take care of normalisation
+    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {},
+                                            bool normalise = false ) const {
 
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( tolerance );
-      return TabulatedAngularDistribution( std::move( pdf ) );
+      return TabulatedAngularDistribution( std::move( pdf ), normalise );
     }
 
     /**
@@ -89,7 +134,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedAngularDistribution& right ) const noexcept {
+    bool operator==( const TabulatedAngularDistribution& right ) const {
 
       return this->pdf() == right.pdf() && this->cdf() == right.cdf();
     }
@@ -99,7 +144,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedAngularDistribution& right ) const noexcept {
+    bool operator!=( const TabulatedAngularDistribution& right ) const {
 
       return ! this->operator==( right );
     }

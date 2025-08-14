@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedScatteringFunction from a GNDS scattering function node
    */
-  static TabulatedScatteringFunction 
+  static TabulatedScatteringFunction
   createTabulatedScatteringFunctionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > x;
@@ -52,7 +52,7 @@ namespace gnds {
 
       // loop over the children of function1ds
       pugi::xml_node function1ds = node.child( "function1ds" );
-      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" ); 
+      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" );
             xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
 
         // read the current interpolation region

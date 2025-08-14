@@ -74,6 +74,45 @@ SCENARIO( "TwoBodyDistributionData" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of TwoBodyDistributionData is given" ) {
+
+      TwoBodyDistributionData chunk( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+
+      THEN( "the reference frame can be changed" ) {
+
+        ReferenceFrame newframe = ReferenceFrame::Laboratory;
+        ReferenceFrame original = ReferenceFrame::CentreOfMass;
+
+        chunk.frame( newframe );
+
+        CHECK( newframe == chunk.frame() );
+
+        chunk.frame( original );
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+
+      THEN( "the distribution data can be changed" ) {
+
+        TwoBodyDistributionData::AngularDistributions
+        newdistribution = LegendreAngularDistributions( { 1e-5, 20. },
+                                                        { { { 0.5 } }, { { 0.5, 0.1 } } } );
+        TwoBodyDistributionData::AngularDistributions
+        original = IsotropicAngularDistributions();
+
+        chunk.angle( newdistribution );
+
+        verifyLegendreChunk( chunk );
+
+        chunk.angle( original );
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of TwoBodyDistributionData are given" ) {
@@ -166,6 +205,18 @@ void verifyTabulatedChunk( const TwoBodyDistributionData& chunk ) {
   CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].pdf().cosines()[1] ) );
   CHECK_THAT(  0.4 , WithinRel( angle.distributions()[1].pdf().values()[0] ) );
   CHECK_THAT(  0.6 , WithinRel( angle.distributions()[1].pdf().values()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[0].cdf().values().size() );
+  CHECK( 2 == angle.distributions()[1].cdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[1].cdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( angle.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.  , WithinRel( angle.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].cdf().values()[1] ) );
   CHECK( 1 == angle.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 }

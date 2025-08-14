@@ -10,33 +10,27 @@ ElectronSubshellConfiguration& operator=( const ElectronSubshellConfiguration& )
 ElectronSubshellConfiguration& operator=( ElectronSubshellConfiguration&& ) = default;
 
 /**
- *  @brief Constructor
+ *  @brief Constructor with transition data
  *
- *  @param id             the electron subshell identifier
- *  @param energy         the electron subshell binding energy
- *  @param population     the electron subshell population when the atom is neutral
- *  @param radiative      the radiative transitions that are available
- *  @param nonradiative   the non-radiative transitions that are available
+ *  @param[in] id             the electron subshell identifier
+ *  @param[in] energy         the electron subshell binding energy
+ *  @param[in] population     the electron subshell population when the atom is neutral
+ *  @param[in] radiative      the radiative transitions that are available (default is an empty vector)
+ *  @param[in] nonradiative   the non-radiative transitions that are available (default is an empty vector)
+ *  @param[in] normalise      option to indicate whether or not to normalise
+ *                            all probability data (default: no normalisation)
  */
-ElectronSubshellConfiguration( id::ElectronSubshellID id, double energy,
+ElectronSubshellConfiguration( id::ElectronSubshellID id,
+                               double energy,
                                double population,
-                               std::vector< RadiativeTransitionData > radiative,
-                               std::vector< NonRadiativeTransitionData > nonradiative ) :
+                               std::vector< RadiativeTransitionData > radiative = {},
+                               std::vector< NonRadiativeTransitionData > nonradiative = {},
+                               bool normalise = false ) :
   id_( std::move( id ) ), binding_energy_( energy ), population_( population ),
-  radiative_( std::move( radiative ) ), nonradiative_( std::move( nonradiative ) ),
-  radiative_probability_( 0. ), nonradiative_probability_( 0. ) {
+  radiative_( std::move( radiative ) ), nonradiative_( std::move( nonradiative ) ) {
 
-  this->calculateProbabilities();
+  if ( normalise ) {
+
+    this->normalise();
+  }
 }
-
-/**
- *  @brief Constructor
- *
- *  @param id             the electron subshell identifier
- *  @param energy         the electron subshell binding energy
- *  @param population     the electron subshell population when the atom is neutral
- */
-ElectronSubshellConfiguration( id::ElectronSubshellID id, double energy,
-                               double population ) :
-  ElectronSubshellConfiguration( std::move( id ), energy,
-                                 population, {}, {} ) {}

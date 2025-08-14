@@ -16,22 +16,22 @@ set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         22bae7709d012914f32c99c0fb7aab06f49c5f62  # tag: v0.4.3
+    GIT_TAG         08cac7cc68fcf83cc4b5230712fc3a4d9d990ac6  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         d2a6b8180e1375b32ee5ec18c7a2bd23825bcdf3  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         6e496bd29782357e6931868321724ce172538d5d  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         e8e5e312223ebb46d7500fe00a6f7e7ea64a70ed  # tag: v1.0.3
+    GIT_TAG         166ee0e79af8287779dbdee824cc3ebbc27d4d84  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         9a295d7ed4f05e81b169a0fb07a501ab9636abf9  # tag: v1.2.0
+    GIT_TAG         97838a724b1b32bdc6c0da7e219668e072750700  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

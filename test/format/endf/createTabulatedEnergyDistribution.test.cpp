@@ -12,7 +12,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyElectronChunk( const TabulatedEnergyDistribution& );
+void verifyElectronChunk( const TabulatedEnergyDistribution&, bool );
 
 SCENARIO( "createTabulatedEnergyDistribution" ) {
 
@@ -28,15 +28,25 @@ SCENARIO( "createTabulatedEnergyDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedEnergyDistribution( distribution.distributions()[0] );
+        auto chunk1 = format::endf::createTabulatedEnergyDistribution( distribution.distributions()[0],
+                                                                       InterpolationType::LinearLinear, false );
+        auto chunk2 = format::endf::createTabulatedEnergyDistribution( distribution.distributions()[0],
+                                                                       InterpolationType::LinearLinear, true );
 
-        verifyElectronChunk( chunk );
+        verifyElectronChunk( chunk1, false );
+        verifyElectronChunk( chunk2, true );
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyElectronChunk( const TabulatedEnergyDistribution& chunk ) {
+void verifyElectronChunk( const TabulatedEnergyDistribution& chunk, bool normalise ) {
+
+  // the numbers in the tests given below are the values as found in the test
+  // file so they need to be normalised. the following values are the scaling
+  // factors that need to be applied (calculated by integrating the distributions
+  // in excel).
+  double normalisation = normalise ? 0.99999998809250 : 1.;
 
   decltype(auto) pdf = chunk.pdf();
   CHECK( true == pdf.isLinearised() );
@@ -46,24 +56,33 @@ void verifyElectronChunk( const TabulatedEnergyDistribution& chunk ) {
   CHECK( 17 == pdf.values().size() );
   CHECK( 1 == pdf.boundaries().size() );
   CHECK( 1 == pdf.interpolants().size() );
+  CHECK_THAT(  0.1     , WithinRel( pdf.energies()[0] ) );
+  CHECK_THAT(  0.133352, WithinRel( pdf.energies()[1] ) );
+  CHECK_THAT(  9.9     , WithinRel( pdf.energies()[15] ) );
+  CHECK_THAT( 10.      , WithinRel( pdf.energies()[16] ) );
+  CHECK_THAT(  2.1394    / normalisation, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT(  1.60421   / normalisation, WithinRel( pdf.values()[1] ) );
+  CHECK_THAT(   .0214392 / normalisation, WithinRel( pdf.values()[15] ) );
+  CHECK_THAT(   .0212245 / normalisation, WithinRel( pdf.values()[16] ) );
   CHECK( 16 == pdf.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
 
-  // dryad normalises distributions upon construction
-  // the numbers in the tests given below are the values as found in the test
-  // file so they need to be normalised. the following values are the scaling
-  // factors that need to be applied (calculated by integrating the distributions
-  // in excel).
-  double scale = 1. / 0.99999998809250;
-
-  CHECK_THAT(          0.1     , WithinRel( pdf.energies()[0] ) );
-  CHECK_THAT(          0.133352, WithinRel( pdf.energies()[1] ) );
-  CHECK_THAT(          9.9     , WithinRel( pdf.energies()[15] ) );
-  CHECK_THAT(         10.      , WithinRel( pdf.energies()[16] ) );
-  CHECK_THAT( scale * 2.1394   , WithinRel( pdf.values()[0] ) );
-  CHECK_THAT( scale * 1.60421  , WithinRel( pdf.values()[1] ) );
-  CHECK_THAT( scale *  .0214392, WithinRel( pdf.values()[15] ) );
-  CHECK_THAT( scale *  .0212245, WithinRel( pdf.values()[16] ) );
-
-  CHECK( std::nullopt == chunk.cdf() );
+  decltype(auto) cdf = chunk.cdf();
+  CHECK( true == cdf.isLinearised() );
+  CHECK( 17 == cdf.numberPoints() );
+  CHECK( 1 == cdf.numberRegions() );
+  CHECK( 17 == cdf.energies().size() );
+  CHECK( 17 == cdf.values().size() );
+  CHECK( 1 == cdf.boundaries().size() );
+  CHECK( 1 == cdf.interpolants().size() );
+  CHECK_THAT(  0.1     , WithinRel( cdf.energies()[0] ) );
+  CHECK_THAT(  0.133352, WithinRel( cdf.energies()[1] ) );
+  CHECK_THAT(  9.9     , WithinRel( cdf.energies()[15] ) );
+  CHECK_THAT( 10.      , WithinRel( cdf.energies()[16] ) );
+  CHECK_THAT(  0.              / normalisation, WithinRel( cdf.values()[0] ) );
+  CHECK_THAT(  0.06242844036   / normalisation, WithinRel( cdf.values()[1] ) );
+  CHECK_THAT(  0.9978668030925 / normalisation, WithinRel( cdf.values()[15] ) );
+  CHECK_THAT(  0.9999999880925 / normalisation, WithinRel( cdf.values()[16] ) );
+  CHECK( 16 == cdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
 }

@@ -11,11 +11,11 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "convertCrossSections" ) {
+SCENARIO( "convertInverseLengths" ) {
 
-  GIVEN( "GNDS cross section ranges and units" ) {
+  GIVEN( "GNDS inverse length ranges and units" ) {
 
-    WHEN( "a single cross section range is given" ) {
+    WHEN( "a single range of inverse lengths is given" ) {
 
       THEN( "it can be converted" ) {
 

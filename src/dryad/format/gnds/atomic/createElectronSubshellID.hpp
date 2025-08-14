@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/id/ElementID.hpp"
 #include "dryad/id/ElectronSubshellID.hpp"
 
 namespace njoy {
@@ -17,6 +18,8 @@ namespace atomic {
 
   /**
    *  @brief Create an ElectronSubshellID
+   *
+   *  @param[in] subshell   the string denoting the subshell
    */
   id::ElectronSubshellID createElectronSubshellID( std::string subshell ) {
 
@@ -26,20 +29,31 @@ namespace atomic {
   /**
    *  @brief Create an ElectronSubshellID from a vacancy for
    *         a radiative transition
+   *
+   *  @param[in] element   the element identifier
+   *  @param[in] vacancy   the string denoting the vacancy
    */
-  id::ElectronSubshellID createRadiativeTransitionElectronSubshellID( std::string vacancy ) {
+  id::ElectronSubshellID
+  createRadiativeTransitionElectronSubshellID( const id::ElementID& element,
+                                               std::string vacancy ) {
 
-    return id::ElectronSubshellID( std::string( vacancy.begin() + 2, vacancy.end() - 1 ) );
+    auto size = element.symbol().size();
+    return id::ElectronSubshellID( std::string( vacancy.begin() + size + 1, vacancy.end() - 1 ) );
   }
 
   /**
    *  @brief Create ElectronSubshellIDs from vacancy for a non-radiative transition
+   *
+   *  @param[in] element     the element identifier
+   *  @param[in] vacancies   the string denoting the vacancies
    */
   std::pair< id::ElectronSubshellID, id::ElectronSubshellID >
-  createNonRadiativeTransitionElectronSubshellID( std::string vacancies ) {
+  createNonRadiativeTransitionElectronSubshellID( const id::ElementID& element,
+                                                  std::string vacancies ) {
 
+    auto size = element.symbol().size();
     auto iter = std::find( vacancies.begin(), vacancies.end(), ',' );
-    return std::make_pair( id::ElectronSubshellID( std::string( vacancies.begin() + 2, iter ) ),
+    return std::make_pair( id::ElectronSubshellID( std::string( vacancies.begin() + size + 1, iter ) ),
                            id::ElectronSubshellID( std::string( iter + 1, vacancies.end() -1 ) ) );
   }
 

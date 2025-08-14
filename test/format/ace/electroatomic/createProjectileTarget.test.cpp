@@ -28,6 +28,11 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
@@ -43,12 +48,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 
@@ -108,12 +116,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table );
 
+        CHECK( std::nullopt == H0.documentation().awr() );
+        CHECK( std::nullopt == H0.documentation().library() );
+        CHECK( std::nullopt == H0.documentation().version() );
+        CHECK( std::nullopt == H0.documentation().description() );
+
         CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
         CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( true == H0.isLinearised() );
 
         CHECK( std::nullopt == H0.resonances() );
 

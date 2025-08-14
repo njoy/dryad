@@ -16,18 +16,27 @@ TabulatedEnergyDistribution& operator=( TabulatedEnergyDistribution&& ) = defaul
  *  @param values         the probability values
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
+ *  @param normalise      option to indicate whether or not to normalise
+ *                        all probability data (default: no normalisation)
  */
 TabulatedEnergyDistribution(
     std::vector< double > energies,
     std::vector< double > values,
     std::vector< std::size_t > boundaries,
     std::vector< InterpolationType > interpolants,
-    bool cdf = false ) :
+    bool normalise = false ) :
   pdf_( std::move( energies ), std::move( values ),
         std::move( boundaries ), std::move( interpolants ) ),
-  cdf_( std::nullopt ) {
+  cdf_() {
 
-  this->pdf_.normalise();
+  if ( normalise ) {
+
+    this->normalise();
+  }
+  else {
+
+    this->calculateCdf();
+  }
 }
 
 /**
@@ -36,40 +45,54 @@ TabulatedEnergyDistribution(
  *  @param energies       the energy values
  *  @param values         the probability values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
+ *  @param normalise      option to indicate whether or not to normalise
+ *                        all probability data (default: no normalisation)
  */
 TabulatedEnergyDistribution(
     std::vector< double > energies,
     std::vector< double > values,
-    InterpolationType interpolant = InterpolationType::LinearLinear ) :
+    InterpolationType interpolant = InterpolationType::LinearLinear,
+    bool normalise = false ) :
   pdf_( std::move( energies ), std::move( values ), interpolant ),
-  cdf_( std::nullopt ) {
+  cdf_() {
 
-  this->pdf_.normalise();
+  if ( normalise ) {
+
+    this->normalise();
+  }
+  else {
+
+    this->calculateCdf();
+  }
 }
 
 /**
- *  @brief Constructor using a pdf and cdf
+ *  @brief Constructor using a pdf
  *
- *  @param pdf   the pdf of the distribution
- *  @param cdf   the cdf of the distribution
+ *  @param pdf         the pdf of the distribution
+ *  @param normalise   option to indicate whether or not to normalise
+ *                     all probability data (default: no normalisation)
  */
-TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf ) :
-  pdf_( std::move( pdf ) ),
-  cdf_( std::nullopt ) {
+TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf,
+                             bool normalise = false ) :
+  pdf_( std::move( pdf ) ), cdf_() {
 
-  this->pdf_.normalise();
+  if ( normalise ) {
+
+    this->normalise();
+  }
+  else {
+
+    this->calculateCdf();
+  }
 }
 
 /**
  *  @brief Constructor using a pdf and cdf
  *
- *  @param pdf   the pdf of the distribution
- *  @param cdf   the cdf of the distribution
+ *  @param pdf         the pdf of the distribution
+ *  @param cdf         the cdf of the distribution
  */
 TabulatedEnergyDistribution( TabulatedEnergyDistributionFunction pdf,
                              TabulatedEnergyDistributionFunction cdf ) :
-  pdf_( std::move( pdf ) ),
-  cdf_( std::move( cdf ) ) {
-
-  this->pdf_.normalise();
-}
+  pdf_( std::move( pdf ) ), cdf_( std::move( cdf ) ) {}

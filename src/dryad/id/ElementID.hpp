@@ -179,7 +179,7 @@ namespace id {
     /**
      *  @brief Return the element number
      */
-    unsigned char number() const noexcept {
+    unsigned char number() const {
 
       return entries[ this->index_ ].number();
     }
@@ -187,7 +187,7 @@ namespace id {
     /**
      *  @brief Return the element symbol
      */
-    const std::string& symbol() const noexcept {
+    const std::string& symbol() const {
 
       return entries[ this->index_ ].symbol();
     }
@@ -195,7 +195,7 @@ namespace id {
     /**
      *  @brief Return the element name
      */
-    const std::string& name() const noexcept {
+    const std::string& name() const {
 
       return entries[ this->index_ ].name();
     }
@@ -277,7 +277,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::ElementID > {
 
-    size_t operator()( const njoy::dryad::id::ElementID& key ) const noexcept {
+    size_t operator()( const njoy::dryad::id::ElementID& key ) const {
 
       return key.number();
     }

@@ -16,6 +16,8 @@ namespace atomic {
 
   /**
    *  @brief Create an ElectronSubshellID
+   *
+   *  @param[in] subshell   the integer denoting the subshell
    */
   id::ElectronSubshellID createElectronSubshellID( int subshell ) {
 

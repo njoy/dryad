@@ -29,14 +29,20 @@ SCENARIO( "createReaction" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
 
-        Reaction total = format::endf::createReaction( projectile, target, material, 1 );
-        neutron::h1::verifyTotalReaction( total );
+        Reaction total1 = format::endf::createReaction( projectile, target, material, 1, false );
+        Reaction total2 = format::endf::createReaction( projectile, target, material, 1, true );
+        neutron::h1::verifyTotalReaction( total1 );
+        neutron::h1::verifyTotalReaction( total2 );
 
-        Reaction elastic = format::endf::createReaction( projectile, target, material, 2 );
-        neutron::h1::verifyElasticReaction( elastic );
+        Reaction elastic1 = format::endf::createReaction( projectile, target, material, 2, false );
+        Reaction elastic2 = format::endf::createReaction( projectile, target, material, 2, true );
+        neutron::h1::verifyElasticReaction( elastic1 );
+        neutron::h1::verifyElasticReaction( elastic2 );
 
-        Reaction capture = format::endf::createReaction( projectile, target, material, 102 );
-        neutron::h1::verifyCaptureReaction( capture );
+        Reaction capture1 = format::endf::createReaction( projectile, target, material, 102, false );
+        Reaction capture2 = format::endf::createReaction( projectile, target, material, 102, true );
+        neutron::h1::verifyCaptureReaction( capture1 );
+        neutron::h1::verifyCaptureReaction( capture2 );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -53,26 +59,40 @@ SCENARIO( "createReaction" ) {
         id::ParticleID projectile( "e-" );
         id::ParticleID target( "H" );
 
-        Reaction total = format::endf::createReaction( projectile, target, material, 501 );
-        electron::h1::verifyTotalReaction( total );
+        Reaction total1 = format::endf::createReaction( projectile, target, material, 501, false );
+        Reaction total2 = format::endf::createReaction( projectile, target, material, 501, true );
+        electron::h0::verifyTotalReaction( total1 );
+        electron::h0::verifyTotalReaction( total2 );
 
-        Reaction ionisation = format::endf::createReaction( projectile, target, material, 522 );
-        electron::h1::verifyTotalIonisationReaction( ionisation );
+        Reaction ionisation1 = format::endf::createReaction( projectile, target, material, 522, false );
+        Reaction ionisation2 = format::endf::createReaction( projectile, target, material, 522, true );
+        electron::h0::verifyTotalIonisationReaction( ionisation1 );
+        electron::h0::verifyTotalIonisationReaction( ionisation2 );
 
-        Reaction elastic = format::endf::createReaction( projectile, target, material, 525 );
-        electron::h1::verifyElasticReaction( elastic );
+        Reaction elastic1 = format::endf::createReaction( projectile, target, material, 525, false );
+        Reaction elastic2 = format::endf::createReaction( projectile, target, material, 525, true );
+        electron::h0::verifyElasticReaction( elastic1, false );
+        electron::h0::verifyElasticReaction( elastic2, true );
 
-        Reaction telastic = format::endf::createReaction( projectile, target, material, 526 );
-        electron::h1::verifyTotalElasticReaction( telastic );
+        Reaction telastic1 = format::endf::createReaction( projectile, target, material, 526, false );
+        Reaction telastic2 = format::endf::createReaction( projectile, target, material, 526, true );
+        electron::h0::verifyTotalElasticReaction( telastic1 );
+        electron::h0::verifyTotalElasticReaction( telastic2 );
 
-        Reaction bremsstrahlung = format::endf::createReaction( projectile, target, material, 527 );
-        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
+        Reaction bremsstrahlung1 = format::endf::createReaction( projectile, target, material, 527, false );
+        Reaction bremsstrahlung2 = format::endf::createReaction( projectile, target, material, 527, true );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung1, false );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung2, true );
 
-        Reaction excitation = format::endf::createReaction( projectile, target, material, 528 );
-        electron::h1::verifyExcitationReaction( excitation );
+        Reaction excitation1 = format::endf::createReaction( projectile, target, material, 528, false );
+        Reaction excitation2 = format::endf::createReaction( projectile, target, material, 528, true );
+        electron::h0::verifyExcitationReaction( excitation1 );
+        electron::h0::verifyExcitationReaction( excitation2 );
 
-        Reaction subionisation = format::endf::createReaction( projectile, target, material, 534 );
-        electron::h1::verifySubshellIonisationReaction( subionisation );
+        Reaction subionisation1 = format::endf::createReaction( projectile, target, material, 534, false );
+        Reaction subionisation2 = format::endf::createReaction( projectile, target, material, 534, true );
+        electron::h0::verifySubshellIonisationReaction( subionisation1, false );
+        electron::h0::verifySubshellIonisationReaction( subionisation2, true );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -89,29 +109,45 @@ SCENARIO( "createReaction" ) {
         id::ParticleID projectile( "g" );
         id::ParticleID target( "H" );
 
-        Reaction total = format::endf::createReaction( projectile, target, material, 501 );
-        photoatomic::h1::verifyTotalReaction( total );
+        Reaction total1 = format::endf::createReaction( projectile, target, material, 501, false );
+        Reaction total2 = format::endf::createReaction( projectile, target, material, 501, true );
+        photoatomic::h0::verifyTotalReaction( total1 );
+        photoatomic::h0::verifyTotalReaction( total2 );
 
-        Reaction coherent = format::endf::createReaction( projectile, target, material, 502 );
-        photoatomic::h1::verifyCoherentReaction( coherent );
+        Reaction coherent1 = format::endf::createReaction( projectile, target, material, 502, false );
+        Reaction coherent2 = format::endf::createReaction( projectile, target, material, 502, true );
+        photoatomic::h0::verifyCoherentReaction( coherent1 );
+        photoatomic::h0::verifyCoherentReaction( coherent2 );
 
-        Reaction incoherent = format::endf::createReaction( projectile, target, material, 504 );
-        photoatomic::h1::verifyIncoherentReaction( incoherent );
+        Reaction incoherent1 = format::endf::createReaction( projectile, target, material, 504, false );
+        Reaction incoherent2 = format::endf::createReaction( projectile, target, material, 504, true );
+        photoatomic::h0::verifyIncoherentReaction( incoherent1 );
+        photoatomic::h0::verifyIncoherentReaction( incoherent2 );
 
-        Reaction epairproduction = format::endf::createReaction( projectile, target, material, 515 );
-        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
+        Reaction epairproduction1 = format::endf::createReaction( projectile, target, material, 515, false );
+        Reaction epairproduction2 = format::endf::createReaction( projectile, target, material, 515, true );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction1 );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction2 );
 
-        Reaction tpairproduction = format::endf::createReaction( projectile, target, material, 516 );
-        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
+        Reaction tpairproduction1 = format::endf::createReaction( projectile, target, material, 516, false );
+        Reaction tpairproduction2 = format::endf::createReaction( projectile, target, material, 516, true );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction1 );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction2 );
 
-        Reaction npairproduction = format::endf::createReaction( projectile, target, material, 517 );
-        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
+        Reaction npairproduction1 = format::endf::createReaction( projectile, target, material, 517, true );
+        Reaction npairproduction2 = format::endf::createReaction( projectile, target, material, 517, false );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction1 );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction2 );
 
-        Reaction tionisation = format::endf::createReaction( projectile, target, material, 522 );
-        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
+        Reaction tionisation1 = format::endf::createReaction( projectile, target, material, 522, false );
+        Reaction tionisation2 = format::endf::createReaction( projectile, target, material, 522, true );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation1 );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation2 );
 
-        Reaction ionisation = format::endf::createReaction( projectile, target, material, 534 );
-        photoatomic::h1::verifyIonisationReaction( ionisation );
+        Reaction ionisation1 = format::endf::createReaction( projectile, target, material, 534, false );
+        Reaction ionisation2 = format::endf::createReaction( projectile, target, material, 534, true );
+        photoatomic::h0::verifyIonisationReaction( ionisation1 );
+        photoatomic::h0::verifyIonisationReaction( ionisation2 );
       } // THEN
     } // WHEN
   } // GIVEN

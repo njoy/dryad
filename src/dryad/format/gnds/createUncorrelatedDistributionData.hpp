@@ -23,7 +23,8 @@ namespace gnds {
    *  @brief Create a UncorrelatedDistributionData from a GNDS uncorrelated node
    */
   static UncorrelatedDistributionData
-  createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated ) {
+  createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated,
+                                      bool normalise ) {
 
     // check that this is a valid uncorrelated node
     throwExceptionOnWrongNode( uncorrelated, "uncorrelated" );
@@ -57,7 +58,7 @@ namespace gnds {
             std::vector< LegendreAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
-              auto legendre = createLegendreAngularDistribution( function, units );
+              auto legendre = createLegendreAngularDistribution( function, units, normalise );
               grid.push_back( legendre.first.value() );
               distributions.emplace_back( std::move( legendre.second ) );
             }
@@ -69,7 +70,7 @@ namespace gnds {
             std::vector< TabulatedAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
 
-              auto tabulated = createTabulatedAngularDistribution( function, units );
+              auto tabulated = createTabulatedAngularDistribution( function, units, normalise );
               grid.push_back( tabulated.first.value() );
               distributions.emplace_back( std::move( tabulated.second ) );
             }
@@ -115,7 +116,7 @@ namespace gnds {
         std::vector< TabulatedEnergyDistribution > distributions;
         for ( ; function; function = function.next_sibling() ) {
 
-          auto tabulated = createTabulatedEnergyDistribution( function, units );
+          auto tabulated = createTabulatedEnergyDistribution( function, units, normalise );
           grid.push_back( tabulated.first.value() );
           distributions.emplace_back( std::move( tabulated.second ) );
         }

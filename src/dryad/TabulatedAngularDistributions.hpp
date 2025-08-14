@@ -38,9 +38,20 @@ namespace dryad {
     using Parent::operator();
 
     /**
+     *  @brief Normalise the distributions
+     */
+    void normalise() {
+
+      for ( auto& distribution : this->distributions() ) {
+
+        distribution.normalise();
+      }
+    }
+
+    /**
      *  @brief Return the average cosine values
      */
-    TabulatedAverageCosine averageCosines() const noexcept {
+    TabulatedAverageCosine averageCosines() const {
 
       std::vector< double > cosines;
       cosines.reserve( this->numberPoints() );
@@ -56,15 +67,19 @@ namespace dryad {
      *  @brief Return linearised angular distributions
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistributions linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedAngularDistributions linearise( ToleranceConvergence tolerance = {},
+                                             bool normalise = false ) const {
 
       std::vector< TabulatedAngularDistribution > distributions;
       distributions.reserve( this->numberPoints() );
       std::transform( this->distributions().begin(), this->distributions().end(),
                       std::back_inserter( distributions ),
-                      [&tolerance] ( auto&& distribution )
-                                   { return distribution.linearise( tolerance ); } );
+                      [tolerance, normalise]
+                        ( auto&& distribution )
+                        { return distribution.linearise( std::move( tolerance ), normalise ); } );
       return TabulatedAngularDistributions( this->grid(), std::move( distributions ),
                                             this->boundaries(), this->interpolants() );
     }
@@ -74,7 +89,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedAngularDistributions& right ) const noexcept {
+    bool operator==( const TabulatedAngularDistributions& right ) const {
 
       return Parent::operator==( right );
     }
@@ -84,7 +99,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedAngularDistributions& right ) const noexcept {
+    bool operator!=( const TabulatedAngularDistributions& right ) const {
 
       return ! this->operator==( right );
     }

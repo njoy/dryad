@@ -32,9 +32,11 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
 
     python::init< std::vector< double >, std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "normalise" ) = false,
     "Initialise the energy distribution\n\n"
     "Arguments:\n"
     "    self           the energy distribution\n"
@@ -42,21 +44,50 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "    values         the probability values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
     "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "                   see InterpolationType for all interpolation types\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
   )
   .def(
 
     python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType >(),
+                  InterpolationType, bool >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "normalise" ) = false,
     "Initialise the energy distribution\n\n"
     "Arguments:\n"
     "    self           the energy distribution\n"
     "    energies       the energy values\n"
     "    values         the probability values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "                   see InterpolationType for all interpolation types\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
+  )
+  .def_property_readonly(
+
+    "energies",
+    &Component::energies,
+    "The cosine values"
+  )
+  .def_property_readonly(
+
+    "values",
+    &Component::values,
+    "The probability values"
+  )
+  .def_property_readonly(
+
+    "boundaries",
+    &Component::boundaries,
+    "The boundaries of the interpolation regions"
+  )
+  .def_property_readonly(
+
+    "interpolants",
+    &Component::interpolants,
+    "The interpolation types of the interpolation regions"
   )
   .def_property_readonly(
 
@@ -81,6 +112,12 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "    self      the distribution\n"
     "    energy    the energy value"
   )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution"
+  )
   .def_property_readonly(
 
     "average_energy",
@@ -92,10 +129,13 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
     "Arguments:\n"
-    "    self        the energy distribution\n"
-    "    tolerance   the linearisation tolerance"
+    "    self        the angular distribution\n"
+    "    tolerance   the linearisation tolerance\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

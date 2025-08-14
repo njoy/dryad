@@ -18,9 +18,14 @@ namespace atomic {
 
   /**
    *  @brief Create an ElectronSubshellConfiguration from an ENDF MF28 SubshellData object
+   *
+   *  @param[in] subshell    the parsed subshell data
+   *  @param[in] normalise   option to indicate whether or not to normalise
+   *                         all probability data
    */
   dryad::atomic::ElectronSubshellConfiguration
-  createElectronSubshellConfiguration( const ENDFtk::section::Type< 28 >::SubshellData& subshell ) {
+  createElectronSubshellConfiguration( const ENDFtk::section::Type< 28 >::SubshellData& subshell,
+                                       bool normalise ) {
 
     id::ElectronSubshellID identifier = createElectronSubshellID( subshell.subshellDesignator() );
     double energy = subshell.subshellBindingEnergy();
@@ -52,7 +57,8 @@ namespace atomic {
 
       return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population,
                                                            std::move( radiative ),
-                                                           std::move( nonradiative ) );
+                                                           std::move( nonradiative ),
+                                                           normalise );
     }
   }
 

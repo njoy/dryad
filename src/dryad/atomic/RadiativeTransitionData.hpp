@@ -40,7 +40,7 @@ namespace atomic {
     /**
      *  @brief Return the transition type
      */
-    static constexpr TransitionType type() noexcept {
+    static constexpr TransitionType type() {
 
       return TransitionType::Radiative;
     }
@@ -49,25 +49,57 @@ namespace atomic {
      *  @brief Return the identifier of the subshell from which the
      *         electron filling the vacancy originated
      */
-    const id::ElectronSubshellID& originatingShell() const noexcept {
+    const id::ElectronSubshellID& originatingShell() const {
 
       return this->originating_shell_;
     }
 
     /**
+     *  @brief Set the identifier of the subshell from which the
+     *         electron filling the vacancy originated
+     *
+     *  @param originatingShell   the identifier of the subshell from which the
+     *                            vacancy filling electron originated
+     */
+    void originatingShell( id::ElectronSubshellID originatingShell ) {
+
+      this->originating_shell_ = std::move( originatingShell );
+    }
+
+    /**
      *  @brief Return the transition probability
      */
-    double probability() const noexcept {
+    double probability() const {
 
       return this->probability_;
     }
 
     /**
+     *  @brief Set the transition probability
+     *
+     *  @param[in] probability   the probability of the transition
+     */
+    void probability( double probability ) {
+
+      this->probability_ = probability;
+    }
+
+    /**
      *  @brief Return the energy of the emitted photon
      */
-    const std::optional< double >& energy() const noexcept {
+    const std::optional< double >& energy() const {
 
       return this->energy_;
+    }
+
+    /**
+     *  @brief Set the energy of the emitted photon
+     *
+     *  @param[in] energy   the energy of the emitted photon
+     */
+    void energy( std::optional< double > energy ) {
+
+      this->energy_ = std::move( energy );
     }
 
     /**
@@ -75,7 +107,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const RadiativeTransitionData& right ) const noexcept {
+    bool operator==( const RadiativeTransitionData& right ) const {
 
       return this->originatingShell() == right.originatingShell() &&
              this->probability() == right.probability() &&
@@ -87,7 +119,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const RadiativeTransitionData& right ) const noexcept {
+    bool operator!=( const RadiativeTransitionData& right ) const {
 
       return ! this->operator==( right );
     }

@@ -28,6 +28,10 @@ namespace dryad {
     LegendreAngularDistributionFunction pdf_;
     LegendreAngularDistributionFunction cdf_;
 
+    /* auxiliary functions */
+
+    #include "dryad/LegendreAngularDistribution/src/calculateCdf.hpp"
+
   public:
 
     /* type aliases */
@@ -42,9 +46,17 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the coefficients of the distribution
+     */
+    const std::vector< double > coefficients() const {
+
+      return this->pdf().coefficients();
+    }
+
+    /**
      *  @brief Return the probability distribution function (pdf) of the distribution
      */
-    const LegendreAngularDistributionFunction& pdf() const noexcept {
+    const LegendreAngularDistributionFunction& pdf() const {
 
       return this->pdf_;
     }
@@ -52,7 +64,7 @@ namespace dryad {
     /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const LegendreAngularDistributionFunction& cdf() const noexcept {
+    const LegendreAngularDistributionFunction& cdf() const {
 
       return this->cdf_;
     }
@@ -62,15 +74,24 @@ namespace dryad {
      *
      *  @param cosine   the value to be evaluated
      */
-    double operator()( double cosine ) const noexcept {
+    double operator()( double cosine ) const {
 
       return this->pdf()( cosine );
     }
 
     /**
+     *  @brief Normalise the distribution
+     */
+    void normalise() {
+
+      this->pdf_.normalise();
+      this->calculateCdf();
+    }
+
+    /**
      *  @brief Return the average cosine defined by the distribution
      */
-    double averageCosine() const noexcept {
+    double averageCosine() const {
 
       return this->pdf().order() == 0 ? 0. : this->pdf().mean();
     }
@@ -79,14 +100,14 @@ namespace dryad {
      *  @brief Return a linearised angular distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-
-      // no need to normalise the resulting pdf, the TabulatedAngularDistribution ctor
-      // will take care of normalisation
+    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {},
+                                            bool normalise = false ) const {
 
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( std::move( tolerance ) );
-      return TabulatedAngularDistribution( std::move( pdf ) );
+      return TabulatedAngularDistribution( std::move( pdf ), normalise );
     }
 
     /**
@@ -94,7 +115,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const LegendreAngularDistribution& right ) const noexcept {
+    bool operator==( const LegendreAngularDistribution& right ) const {
 
       return this->pdf() == right.pdf() && this->cdf() == right.cdf();
     }
@@ -104,7 +125,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const LegendreAngularDistribution& right ) const noexcept {
+    bool operator!=( const LegendreAngularDistribution& right ) const {
 
       return ! this->operator==( right );
     }

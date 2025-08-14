@@ -26,6 +26,7 @@ namespace dryad {
     /* fields */
     id::ReactionID id_;
 
+    //! @todo if in the end there are only 2 categories, we may want to remove this
     ReactionCategory category_;
     std::optional< std::vector< id::ReactionID > > partials_;
 
@@ -35,7 +36,9 @@ namespace dryad {
     TabulatedCrossSection xs_;
     std::vector< ReactionProduct > products_;
 
-    bool linearised_;
+    /* auxiliary functions */
+
+    #include "dryad/Reaction/src/iterator.hpp"
 
   public:
 
@@ -44,36 +47,84 @@ namespace dryad {
 
     /* methods */
 
+    //! @todo add insertion, removal of individual reaction products
+
     /**
      *  @brief Return the reaction identifier
      */
-    const id::ReactionID& identifier() const noexcept {
+    const id::ReactionID& identifier() const {
 
       return this->id_;
     }
 
     /**
+     *  @brief Set the reaction identifier
+     *
+     *  @param id.  the reaction identifier
+     */
+    void identifier( id::ReactionID id ) {
+
+      this->id_ = std::move( id );
+    }
+
+    /**
      *  @brief Return the reaction category
      */
-    const ReactionCategory& category() const noexcept {
+    const ReactionCategory& category() const {
 
       return this->category_;
     }
 
     /**
-     *  @brief Return the summation reaction identifiers (not defined if this is
+     *  @brief Return the partial reaction identifiers (not defined if this is
      *         a primary reaction)
      */
     const std::optional< std::vector< id::ReactionID > >&
-    partialReactionIdentifiers() const noexcept {
+    partialReactionIdentifiers() const {
 
       return this->partials_;
     }
 
     /**
+     *  @brief Return the partial reaction identifiers (not defined if this is
+     *         a primary reaction)
+     */
+    std::optional< std::vector< id::ReactionID > >&
+    partialReactionIdentifiers() {
+
+      return this->partials_;
+    }
+
+    /**
+     *  @brief Set the partial reaction identifiers
+     *
+     *  This will also reset the reaction category to summation or primary
+     *  as required. Using std::nullopt or an empty vector of identifiers will
+     *  thus erase the partial identifiers and make the reaction a primary
+     *  reaction if it wasn't a primary one already.
+     *
+     *  Summation reactions do not have q values associated to them, so it is
+     *  up to the user to update the q values seperately when changing the
+     *  partial identifiers causes the reaction category to change.
+     *
+     *  @param[in] partials   the partial reaction identifiers
+     */
+    void partialReactionIdentifiers( std::optional< std::vector< id::ReactionID > > partials ) {
+
+      this->partials_ = std::move( partials );
+      if ( this->partials_.has_value() && this->partials_.value().size() == 0 ) {
+
+        this->partials_ = std::nullopt;
+      }
+      this->category_ = this->isPrimaryReaction()
+                        ? ReactionCategory::Primary
+                        : ReactionCategory::Summation;
+    }
+
+    /**
      *  @brief Return whether or not the reaction is a summation reaction
      */
-    bool isSummationReaction() const noexcept {
+    bool isSummationReaction() const {
 
       return this->partialReactionIdentifiers().has_value();
     }
@@ -81,9 +132,17 @@ namespace dryad {
     /**
      *  @brief Return whether or not the reaction is a primary reaction
      */
-    bool isPrimaryReaction() const noexcept {
+    bool isPrimaryReaction() const {
 
       return ! this->isSummationReaction();
+    }
+
+    /**
+     *  @brief Return the number of partial reactions that make up this reaction
+     */
+    std::size_t numberPartialReactions() const {
+
+      return this->isSummationReaction() ? this->partialReactionIdentifiers()->size() : 0;
     }
 
     /**
@@ -94,39 +153,69 @@ namespace dryad {
      *  and the final atomic mass (the residual mass and all reactor product
      *  masses). All particles involved are supposed to be in the ground state.
      */
-    const std::optional< double >& massDifferenceQValue() const noexcept {
+    const std::optional< double >& massDifferenceQValue() const {
 
       return this->mass_difference_qvalue_;
     }
 
     /**
+     *  @brief Set the mass difference Q value
+     *
+     *  @param[in] mass_q   the mass difference Q value
+     */
+    void massDifferenceQValue( std::optional< double > mass_q ) {
+
+      this->mass_difference_qvalue_ = std::move( mass_q );
+    }
+
+    /**
      *  @brief Return the reaction Q value
      */
-    const std::optional< double >& reactionQValue() const noexcept {
+    const std::optional< double >& reactionQValue() const {
 
       return this->reaction_qvalue_;
     }
 
     /**
+     *  @brief Set the reaction Q value
+     *
+     *  @param[in] reaction_q   the reaction Q value
+     */
+    void reactionQValue( std::optional< double > reaction_q ) {
+
+      this->reaction_qvalue_ = std::move( reaction_q );
+    }
+
+    /**
      *  @brief Return the cross section
      */
-    const TabulatedCrossSection& crossSection() const noexcept {
+    const TabulatedCrossSection& crossSection() const {
 
       return this->xs_;
     }
 
     /**
+     *  @brief Set the cross section
+     *
+     *  @param[in] xs   the new tabulated cross section
+     */
+    void crossSection( TabulatedCrossSection xs ) {
+
+      this->xs_ = std::move( xs );
+    }
+
+    /**
      *  @brief Return the number of reaction products
      */
-    std::size_t numberProducts() const noexcept {
+    std::size_t numberProducts() const {
 
-      return this->products_.size();
+      return this->products().size();
     }
 
     /**
      *  @brief Return whether or not the reaction has reaction products
      */
-    bool hasProducts() const noexcept {
+    bool hasProducts() const {
 
       return this->numberProducts() != 0;
     }
@@ -134,9 +223,27 @@ namespace dryad {
     /**
      *  @brief Return the reaction products
      */
-    const std::vector< ReactionProduct >& products() const noexcept {
+    const std::vector< ReactionProduct >& products() const {
 
       return this->products_;
+    }
+
+    /**
+     *  @brief Return the reaction products
+     */
+    std::vector< ReactionProduct >& products() {
+
+      return this->products_;
+    }
+
+    /**
+     *  @brief Set the reaction products
+     *
+     *  @param[in] products   the reaction products
+     */
+    void products( std::vector< ReactionProduct > products ) {
+
+      this->products_ = std::move( products );
     }
 
     /**
@@ -146,12 +253,7 @@ namespace dryad {
      */
     bool hasProduct( const id::ParticleID& type ) const {
 
-      auto functor = [&type] ( auto&& product )
-                             { return product.identifier() == type; };
-
-      auto iter = std::find_if( this->products().begin(),
-                                this->products().end(),
-                                functor );
+      auto iter = this->iterator( type );
       return iter != this->products().end();
     }
 
@@ -160,7 +262,7 @@ namespace dryad {
      *
      *  @param[in] type   the reaction product type
      */
-    std::size_t numberProducts( const id::ParticleID& type ) const noexcept {
+    std::size_t numberProducts( const id::ParticleID& type ) const {
 
       auto functor = [&type] ( auto&& product )
                              { return product.identifier() == type; };
@@ -179,17 +281,7 @@ namespace dryad {
     const ReactionProduct& product( const id::ParticleID& type,
                                     std::size_t index = 0 ) const {
 
-      auto functor = [&type] ( auto&& product )
-                             { return product.identifier() == type; };
-
-      auto iter = std::find_if( this->products().begin(), this->products().end(), functor );
-      std::size_t current = index;
-      while ( current != 0 && iter != this->products().end() ) {
-
-        iter = std::find_if( iter + 1, this->products().end(), functor );
-        --current;
-      }
-
+      auto iter = this->iterator( type, index );
       if ( iter != this->products().end() ) {
 
         return *iter;
@@ -203,45 +295,15 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return whether or not the reaction data is linearised
-     */
-    bool isLinearised() const noexcept {
-
-      return this->linearised_;
-    }
-
-    /**
-     *  @brief Linearise the reaction data and return a new reaction
+     *  @brief Return a reaction product with a given type and index
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] type    the reaction product type
+     *  @param[in] index   the reaction product index (default is zero)
      */
-    Reaction linearise( ToleranceConvergence tolerance = {} ) const noexcept {
+    ReactionProduct& product( const id::ParticleID& type,
+                              std::size_t index = 0 ) {
 
-      TabulatedCrossSection xs = this->crossSection().linearise( tolerance );
-      if ( this->category() == ReactionCategory::Primary ) {
-
-        return Reaction( this->identifier(), std::move( xs ),
-                         this->products(), this->massDifferenceQValue(),
-                         this->reactionQValue() );
-      }
-      else {
-
-        return Reaction( this->identifier(),
-                         this->partialReactionIdentifiers().value(),
-                         std::move( xs ),
-                         this->products() );
-      }
-    }
-
-    /**
-     *  @brief Linearise the reaction data inplace
-     *
-     *  @param[in] tolerance   the linearisation tolerance
-     */
-    void lineariseInplace( ToleranceConvergence tolerance = {} ) noexcept {
-
-      this->xs_ = this->xs_.linearise( tolerance );
-      this->linearised_ = true;
+      return const_cast< ReactionProduct& >( const_cast< const Reaction& >( *this ).product( type, index ) );
     }
 
     /**
@@ -249,7 +311,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const Reaction& right ) const noexcept {
+    bool operator==( const Reaction& right ) const {
 
       return this->identifier() == right.identifier() &&
              this->category() == right.category() &&
@@ -265,7 +327,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const Reaction& right ) const noexcept {
+    bool operator!=( const Reaction& right ) const {
 
       return ! this->operator==( right );
     }

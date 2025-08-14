@@ -21,7 +21,8 @@ namespace gnds {
   static std::vector< ReactionProduct >
   createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
                           pugi::xml_node suite, pugi::xml_node products,
-                         const std::string& style = "eval" ) {
+                          bool normalise,
+                          const std::string& style = "eval" ) {
 
     // check that this is a valid products node
     throwExceptionOnWrongNode( products, "products" );
@@ -31,7 +32,7 @@ namespace gnds {
     for ( pugi::xml_node product = products.child( "product" ); product;
           product = product.next_sibling( "product" ) ) {
 
-      data.emplace_back( createReactionProduct( projectile, target, suite, product, style ) );
+      data.emplace_back( createReactionProduct( projectile, target, suite, product, normalise, style ) );
     }
 
     return data;

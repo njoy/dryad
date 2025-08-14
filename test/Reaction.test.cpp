@@ -12,7 +12,6 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 
 void verifyChunk( const Reaction& );
-void verifyLinearisedChunk( const Reaction& );
 void verifySummationChunk( const Reaction& );
 
 SCENARIO( "Reaction" ) {
@@ -44,20 +43,6 @@ SCENARIO( "Reaction" ) {
         verifyChunk( chunk );
       } // THEN
 
-      THEN( "a Reaction can be linearised" ) {
-
-        Reaction linear = chunk.linearise();
-
-        verifyLinearisedChunk( linear );
-      } // THEN
-
-      THEN( "a Reaction can be linearised inplace" ) {
-
-        Reaction copy = chunk; // we'll do this test on a copy
-        verifyChunk( copy );
-        copy.lineariseInplace();
-        verifyLinearisedChunk( copy );
-      } // THEN
     } // WHEN
   } // GIVEN
 
@@ -79,20 +64,107 @@ SCENARIO( "Reaction" ) {
 
         verifySummationChunk( chunk );
       } // THEN
+    } // WHEN
+  } // GIVEN
 
-      THEN( "a Reaction can be linearised" ) {
+  GIVEN( "setter functions" ) {
 
-        Reaction linear = chunk.linearise();
+    WHEN( "an instance of Reaction is given" ) {
 
-        verifyLinearisedChunk( linear );
+      Reaction chunk( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+                      TabulatedCrossSection( { 1., 2., 2., 3., 4. },
+                                             { 4., 3., 4., 3., 2. },
+                                             { 1, 4 },
+                                             { InterpolationType::LinearLinear,
+                                               InterpolationType::LinearLog } ),
+                      { ReactionProduct( id::ParticleID( "n" ), 1 ),
+                        ReactionProduct( id::ParticleID( "g" ), 2 ),
+                        ReactionProduct( id::ParticleID( "g" ), 3 ) },
+                      0, -1 );
+
+      THEN( "the reaction identifier can be changed" ) {
+
+        id::ReactionID newid( "n,Fe56->n,Fe56_e40" );
+        id::ReactionID original( "n,Fe56->n,Fe56_e1" );
+
+        chunk.identifier( newid );
+
+        CHECK( newid == chunk.identifier() );
+
+        chunk.identifier( original );
+
+        verifyChunk( chunk );
       } // THEN
 
-      THEN( "a Reaction can be linearised inplace" ) {
+      THEN( "the partial reaction identifiers can be changed" ) {
 
-        Reaction copy = chunk; // we'll do this test on a copy
-        verifySummationChunk( copy );
-        copy.lineariseInplace();
-        verifyLinearisedChunk( copy );
+        std::optional< std::vector< id::ReactionID > > newpartials( { "n,Fe56->elastic", "n,Fe56->2n,Fe55" } );
+        std::optional< std::vector< id::ReactionID > > original( std::nullopt );
+
+        chunk.partialReactionIdentifiers( newpartials );
+
+        CHECK( newpartials == chunk.partialReactionIdentifiers() );
+        CHECK( ReactionCategory::Summation == chunk.category() );
+        CHECK( false == chunk.isPrimaryReaction() );
+        CHECK( true == chunk.isSummationReaction() );
+
+        chunk.partialReactionIdentifiers( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the q values can be changed" ) {
+
+        std::optional< double > newmassq = 2;
+        std::optional< double > originalmassq = 0;
+        std::optional< double > newreactionq = -2;
+        std::optional< double > originalreactionq = -1;
+
+        chunk.massDifferenceQValue( newmassq );
+        chunk.reactionQValue( newreactionq );
+
+        CHECK( newmassq == chunk.massDifferenceQValue() );
+        CHECK( newreactionq == chunk.reactionQValue() );
+
+        chunk.massDifferenceQValue( originalmassq );
+        chunk.reactionQValue( originalreactionq );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the cross section can be changed" ) {
+
+        TabulatedCrossSection newxs( { 1., 4. }, { 1., 4. } );
+        TabulatedCrossSection original( { 1., 2., 2., 3., 4. },
+                                        { 4., 3., 4., 3., 2. },
+                                        { 1, 4 },
+                                        { InterpolationType::LinearLinear,
+                                          InterpolationType::LinearLog } );
+
+        chunk.crossSection( newxs );
+
+        CHECK( newxs == chunk.crossSection() );
+
+        chunk.crossSection( original );
+
+        verifyChunk( chunk );
+      } // THEN
+
+      THEN( "the products can be changed" ) {
+
+        std::vector< ReactionProduct > newproducts = { ReactionProduct( id::ParticleID( "n" ), 1 ) };
+        std::vector< ReactionProduct > original = { ReactionProduct( id::ParticleID( "n" ), 1 ),
+                                                    ReactionProduct( id::ParticleID( "g" ), 2 ),
+                                                    ReactionProduct( id::ParticleID( "g" ), 3 ) };
+
+        chunk.products( newproducts );
+
+        CHECK( newproducts == chunk.products() );
+        CHECK( 1 == chunk.numberProducts() );
+
+        chunk.products( original );
+
+        verifyChunk( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -155,6 +227,7 @@ void verifyChunk( const Reaction& chunk ) {
 
   // partial identifiers
   CHECK( std::nullopt == chunk.partialReactionIdentifiers() );
+  CHECK( 0 == chunk.numberPartialReactions() );
 
   // q values
   CHECK_THAT( 0, WithinRel( chunk.massDifferenceQValue().value() ) );
@@ -203,52 +276,6 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK_THROWS( chunk.product( id::ParticleID( "n" ), 1 ) );
   CHECK_THROWS( chunk.product( id::ParticleID( "h" ) ) );
   CHECK_THROWS( chunk.product( id::ParticleID( "h" ), 1 ) );
-
-  // metadata
-  CHECK( false == chunk.isLinearised() );
-}
-
-void verifyLinearisedChunk( const Reaction& chunk ) {
-
-  // cross section
-  CHECK( 12 == chunk.crossSection().numberPoints() );
-  CHECK( 2 == chunk.crossSection().numberRegions() );
-  CHECK( 12 == chunk.crossSection().energies().size() );
-  CHECK( 12 == chunk.crossSection().values().size() );
-  CHECK( 2 == chunk.crossSection().boundaries().size() );
-  CHECK( 2 == chunk.crossSection().interpolants().size() );
-  CHECK_THAT( 1.   , WithinRel( chunk.crossSection().energies()[0] ) );
-  CHECK_THAT( 2.   , WithinRel( chunk.crossSection().energies()[1] ) );
-  CHECK_THAT( 2.   , WithinRel( chunk.crossSection().energies()[2] ) );
-  CHECK_THAT( 2.125, WithinRel( chunk.crossSection().energies()[3] ) );
-  CHECK_THAT( 2.25 , WithinRel( chunk.crossSection().energies()[4] ) );
-  CHECK_THAT( 2.5  , WithinRel( chunk.crossSection().energies()[5] ) );
-  CHECK_THAT( 2.75 , WithinRel( chunk.crossSection().energies()[6] ) );
-  CHECK_THAT( 3.   , WithinRel( chunk.crossSection().energies()[7] ) );
-  CHECK_THAT( 3.25 , WithinRel( chunk.crossSection().energies()[8] ) );
-  CHECK_THAT( 3.5  , WithinRel( chunk.crossSection().energies()[9] ) );
-  CHECK_THAT( 3.75 , WithinRel( chunk.crossSection().energies()[10] ) );
-  CHECK_THAT( 4.   , WithinRel( chunk.crossSection().energies()[11] ) );
-  CHECK_THAT( 4.              , WithinRel( chunk.crossSection().values()[0] ) );
-  CHECK_THAT( 3.              , WithinRel( chunk.crossSection().values()[1] ) );
-  CHECK_THAT( 4.              , WithinRel( chunk.crossSection().values()[2] ) );
-  CHECK_THAT( 3.85048128530886, WithinRel( chunk.crossSection().values()[3] ) );
-  CHECK_THAT( 3.70951129135145, WithinRel( chunk.crossSection().values()[4] ) );
-  CHECK_THAT( 3.44966028678679, WithinRel( chunk.crossSection().values()[5] ) );
-  CHECK_THAT( 3.21459646033567, WithinRel( chunk.crossSection().values()[6] ) );
-  CHECK_THAT( 3.              , WithinRel( chunk.crossSection().values()[7] ) );
-  CHECK_THAT( 2.72176678584324, WithinRel( chunk.crossSection().values()[8] ) );
-  CHECK_THAT( 2.46416306545103, WithinRel( chunk.crossSection().values()[9] ) );
-  CHECK_THAT( 2.22433973930853, WithinRel( chunk.crossSection().values()[10] ) );
-  CHECK_THAT( 2.              , WithinRel( chunk.crossSection().values()[11] ) );
-  CHECK( 1 == chunk.crossSection().boundaries()[0] );
-  CHECK( 11 == chunk.crossSection().boundaries()[1] );
-  CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.crossSection().interpolants()[1] );
-  CHECK( true == chunk.crossSection().isLinearised() );
-
-  // metadata
-  CHECK( true == chunk.isLinearised() );
 }
 
 void verifySummationChunk( const Reaction& chunk ) {
@@ -263,6 +290,7 @@ void verifySummationChunk( const Reaction& chunk ) {
 
   // partial identifiers
   CHECK( std::nullopt != chunk.partialReactionIdentifiers() );
+  CHECK( 2 == chunk.numberPartialReactions() );
   auto partials = chunk.partialReactionIdentifiers().value();
   CHECK( 2 == partials.size() );
   CHECK( id::ReactionID( "n,Fe56->elastic" ) == partials[0] );
@@ -300,7 +328,4 @@ void verifySummationChunk( const Reaction& chunk ) {
   CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
   CHECK( false == chunk.hasProduct( id::ParticleID( "g" ) ) );
   CHECK( 0 == chunk.products().size() );
-
-  // metadata
-  CHECK( false == chunk.isLinearised() );
 }

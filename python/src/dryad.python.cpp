@@ -31,6 +31,9 @@ void wrapCovariance( python::module& );
 void wrapAtomic( python::module& );
 void wrapAtomicRelaxation( python::module& );
 
+// declarations - documentation
+void wrapDocumentation( python::module& );
+
 // declarations - components
 void wrapIsotropicAngularDistributions( python::module& );
 void wrapLegendreAngularDistributionFunction( python::module& );
@@ -69,6 +72,9 @@ void wrapProjectileTarget( python::module& );
  *  set on the PROPERTIES OUTPUT_NAME in the CMakeLists.txt file.
  */
 PYBIND11_MODULE( dryad, module ) {
+
+  // wrap components - documentation
+  wrapDocumentation( module );
 
   // wrap components - scion objects
   wrapToleranceConvergence( module );

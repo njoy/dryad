@@ -24,7 +24,11 @@ namespace dryad {
 
     /* fields */
     TabulatedEnergyDistributionFunction pdf_;
-    std::optional< TabulatedEnergyDistributionFunction > cdf_;
+    TabulatedEnergyDistributionFunction cdf_;
+
+    /* constructor */
+
+    #include "dryad/TabulatedEnergyDistribution/src/calculateCdf.hpp"
 
   public:
 
@@ -40,9 +44,41 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the energy values
+     */
+    const std::vector< double >& energies() const {
+
+      return this->pdf().energies();
+    }
+
+    /**
+     *  @brief Return the probability values
+     */
+    const std::vector< double >& values() const {
+
+      return this->pdf().values();
+    }
+
+    /**
+     *  @brief Return the boundaries of the interpolation regions
+     */
+    const std::vector< std::size_t >& boundaries() const {
+
+      return this->pdf().boundaries();
+    }
+
+    /**
+     *  @brief Return the interpolation types of the interpolation regions
+     */
+    const std::vector< InterpolationType >& interpolants() const {
+
+      return this->pdf().interpolants();
+    }
+
+    /**
      *  @brief Return the probability distribution function (pdf) of the distribution
      */
-    const TabulatedEnergyDistributionFunction& pdf() const noexcept {
+    const TabulatedEnergyDistributionFunction& pdf() const {
 
       return this->pdf_;
     }
@@ -50,7 +86,7 @@ namespace dryad {
     /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const std::optional< TabulatedEnergyDistributionFunction >& cdf() const noexcept {
+    const TabulatedEnergyDistributionFunction& cdf() const {
 
       return this->cdf_;
     }
@@ -66,22 +102,31 @@ namespace dryad {
     }
 
     /**
+     *  @brief Normalise the distribution
+     */
+    void normalise() {
+
+      this->pdf_.normalise();
+      this->calculateCdf( true );
+    }
+
+    /**
      *  @brief Return the average energy defined by the distribution
      */
-    double averageEnergy() const noexcept { return this->pdf().mean(); }
+    double averageEnergy() const { return this->pdf().mean(); }
 
     /**
      *  @brief Return a linearised energy distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-
-      // no need to normalise the resulting pdf, the TabulatedEnergyDistribution ctor
-      // will take care of normalisation
+    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {},
+                                           bool normalise = false ) const {
 
       TabulatedEnergyDistributionFunction pdf = this->pdf().linearise( tolerance );
-      return TabulatedEnergyDistribution( std::move( pdf ) );
+      return TabulatedEnergyDistribution( std::move( pdf ), normalise );
     }
 
     /**
@@ -89,7 +134,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedEnergyDistribution& right ) const noexcept {
+    bool operator==( const TabulatedEnergyDistribution& right ) const {
 
       return this->pdf() == right.pdf() && this->cdf() == right.cdf();
     }
@@ -99,7 +144,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedEnergyDistribution& right ) const noexcept {
+    bool operator!=( const TabulatedEnergyDistribution& right ) const {
 
       return ! this->operator==( right );
     }

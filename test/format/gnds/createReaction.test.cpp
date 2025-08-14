@@ -33,16 +33,22 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H1" );
 
         auto node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "1" );
-        Reaction total = format::gnds::createReaction( projectile, target, suite, node );
-        neutron::h1::verifyTotalReaction( total );
+        Reaction total1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction total2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::h1::verifyTotalReaction( total1 );
+        neutron::h1::verifyTotalReaction( total2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "2" );
-        Reaction elastic = format::gnds::createReaction( projectile, target, suite, node );
-        neutron::h1::verifyElasticReaction( elastic );
+        Reaction elastic1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction elastic2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::h1::verifyElasticReaction( elastic1 );
+        neutron::h1::verifyElasticReaction( elastic2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "102" );
-        Reaction capture = format::gnds::createReaction( projectile, target, suite, node );
-        neutron::h1::verifyCaptureReaction( capture );
+        Reaction capture1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction capture2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::h1::verifyCaptureReaction( capture1 );
+        neutron::h1::verifyCaptureReaction( capture2 );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -64,32 +70,46 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H" );
 
         auto node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "501" );
-        Reaction total = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifyTotalReaction( total );
+        Reaction total1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction total2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifyTotalReaction( total1 );
+        electron::h0::verifyTotalReaction( total2 );
 
         node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "522" );
-        Reaction ionisation = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifyTotalIonisationReaction( ionisation );
+        Reaction ionisation1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction ionisation2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifyTotalIonisationReaction( ionisation1 );
+        electron::h0::verifyTotalIonisationReaction( ionisation2 );
 
         node = incomplete.find_child_by_attribute( "reaction", "ENDF_MT", "525" );
-        Reaction elastic = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifyElasticReaction( elastic );
+        Reaction elastic1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction elastic2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifyElasticReaction( elastic1, false );
+        electron::h0::verifyElasticReaction( elastic2, true );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "526" );
-        Reaction telastic = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifyTotalElasticReaction( telastic );
+        Reaction telastic1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction telastic2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifyTotalElasticReaction( telastic1 );
+        electron::h0::verifyTotalElasticReaction( telastic1 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "527" );
-        Reaction bremsstrahlung = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifyBremsstrahlungReaction( bremsstrahlung );
+        Reaction bremsstrahlung1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction bremsstrahlung2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung1, false );
+        electron::h0::verifyBremsstrahlungReaction( bremsstrahlung2, true );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "528" );
-        Reaction excitation = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifyExcitationReaction( excitation );
+        Reaction excitation1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction excitation2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifyExcitationReaction( excitation1 );
+        electron::h0::verifyExcitationReaction( excitation2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "534" );
-        Reaction subionisation = format::gnds::createReaction( projectile, target, suite, node );
-        electron::h1::verifySubshellIonisationReaction( subionisation );
+        Reaction subionisation1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction subionisation2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        electron::h0::verifySubshellIonisationReaction( subionisation1, false );
+        electron::h0::verifySubshellIonisationReaction( subionisation2, true );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -110,36 +130,52 @@ SCENARIO( "createReaction" ) {
         id::ParticleID target( "H" );
 
         auto node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "501" );
-        Reaction total = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyTotalReaction( total );
+        Reaction total1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction total2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyTotalReaction( total1 );
+        photoatomic::h0::verifyTotalReaction( total2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "502" );
-        Reaction coherent = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyCoherentReaction( coherent );
+        Reaction coherent1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction coherent2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyCoherentReaction( coherent1 );
+        photoatomic::h0::verifyCoherentReaction( coherent2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "504" );
-        Reaction incoherent = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyIncoherentReaction( incoherent );
+        Reaction incoherent1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction incoherent2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyIncoherentReaction( incoherent1 );
+        photoatomic::h0::verifyIncoherentReaction( incoherent2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "515" );
-        Reaction epairproduction = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyElectronFieldPairProductionReaction( epairproduction );
+        Reaction epairproduction1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction epairproduction2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction1 );
+        photoatomic::h0::verifyElectronFieldPairProductionReaction( epairproduction2 );
 
         node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "516" );
-        Reaction tpairproduction = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyTotalPairProductionReaction( tpairproduction );
+        Reaction tpairproduction1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction tpairproduction2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction1 );
+        photoatomic::h0::verifyTotalPairProductionReaction( tpairproduction2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "517" );
-        Reaction npairproduction = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyNuclearFieldPairProductionReaction( npairproduction );
+        Reaction npairproduction1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction npairproduction2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction1 );
+        photoatomic::h0::verifyNuclearFieldPairProductionReaction( npairproduction2 );
 
         node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "522" );
-        Reaction tionisation = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyTotalIonisationReaction( tionisation );
+        Reaction tionisation1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction tionisation2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation1 );
+        photoatomic::h0::verifyTotalIonisationReaction( tionisation2 );
 
         node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "534" );
-        Reaction ionisation = format::gnds::createReaction( projectile, target, suite, node );
-        photoatomic::h1::verifyIonisationReaction( ionisation );
+        Reaction ionisation1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction ionisation2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        photoatomic::h0::verifyIonisationReaction( ionisation1 );
+        photoatomic::h0::verifyIonisationReaction( ionisation2 );
       } // THEN
     } // WHEN
   } // GIVEN

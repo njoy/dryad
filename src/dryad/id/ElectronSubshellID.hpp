@@ -171,7 +171,7 @@ namespace id {
     /**
      *  @brief Return the subshell number
      */
-    short number() const noexcept {
+    short number() const {
 
       return entries[ this->index_ ].number();
     }
@@ -179,7 +179,7 @@ namespace id {
     /**
      *  @brief Return the subshell symbol
      */
-    const std::string& symbol() const noexcept {
+    const std::string& symbol() const {
 
       return entries[ this->index_ ].symbol();
     }
@@ -187,7 +187,7 @@ namespace id {
     /**
      *  @brief Return the subshell name
      */
-    const std::string& name() const noexcept {
+    const std::string& name() const {
 
       return entries[ this->index_ ].name();
     }
@@ -269,7 +269,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::ElectronSubshellID > {
 
-    size_t operator()( const njoy::dryad::id::ElectronSubshellID& key ) const noexcept {
+    size_t operator()( const njoy::dryad::id::ElectronSubshellID& key ) const {
 
       return key.number();
     }

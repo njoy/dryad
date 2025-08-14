@@ -20,14 +20,17 @@ namespace endf {
    *  If there are multiple materials in the ENDF file, only the first material
    *  will be transformed into an AtomicRelaxation.
    *
-   *  @param[in] filename   the ENDF file name
+   *  @param[in] filename    the ENDF file name
+   *  @param[in] normalise   option to indicate whether or not to normalise
+   *                         all probability data
    */
-  AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename ) {
+  AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
+                                                   bool normalise ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
     auto tape = ENDFtk::tree::fromFile( filename );
-    return createAtomicRelaxation( tape.materials().front() );
+    return createAtomicRelaxation( tape.materials().front(), normalise );
   }
 
 } // endf namespace

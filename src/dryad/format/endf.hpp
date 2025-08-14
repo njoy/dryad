@@ -15,7 +15,6 @@
 #include "dryad/format/endf/createTargetIdentifier.hpp"
 #include "dryad/format/endf/createProductIdentifier.hpp"
 #include "dryad/format/endf/createInteractionType.hpp"
-#include "dryad/format/endf/createReactionType.hpp"
 
 #include "dryad/format/endf/createPolynomialMultiplicity.hpp"
 #include "dryad/format/endf/createTabulatedMultiplicity.hpp"
@@ -39,3 +38,13 @@
 #include "dryad/format/endf/createProjectileTargetFromFile.hpp"
 #include "dryad/format/endf/createAtomicRelaxation.hpp"
 #include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+
+#include "dryad/format/endf/createEndfInterpolant.hpp"
+#include "dryad/format/endf/createEndfBoundaries.hpp"
+#include "dryad/format/endf/createEndfInterpolants.hpp"
+#include "dryad/format/endf/createEndfSublibraryType.hpp"
+
+#include "dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
+#include "dryad/format/endf/atomic/createEndfSubshellData.hpp"
+
+#include "dryad/format/endf/createAtomicRelaxationEndfFile.hpp"

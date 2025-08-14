@@ -55,7 +55,8 @@ namespace endf {
    */
   std::vector< Reaction >
   createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
-                   const ENDFtk::tree::Material& material ) {
+                   const ENDFtk::tree::Material& material,
+                   bool normalise ) {
 
     std::vector< Reaction > reactions;
     if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
@@ -69,7 +70,7 @@ namespace endf {
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
           Log::info( "Reading data for MT{}", mt );
-          reactions.emplace_back( createReaction( projectile, target, material, mt ) );
+          reactions.emplace_back( createReaction( projectile, target, material, mt, normalise ) );
         }
         else {
 
@@ -108,7 +109,7 @@ namespace endf {
 
         auto total = std::find_if( reactions.begin(), reactions.end(),
                                    [] ( const auto& reaction )
-                                      { return reaction.identifier() == id::ReactionID( "501" ); } );
+                                      { return reaction.identifier() == id::ReactionID( "526" ); } );
         auto partial = std::find_if( reactions.begin(), reactions.end(),
                                      [] ( const auto& reaction )
                                         { return reaction.identifier() == id::ReactionID( "525" ); } );

@@ -14,7 +14,9 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        def verify_chunk( self, chunk ) :
+        def verify_chunk( self, chunk, normalise ) :
+
+            normalisation = 2.0 if normalise else 1.0
 
             # verify content
             self.assertEqual( 4, chunk.number_points )
@@ -37,39 +39,59 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertEqual( 2, len( chunk.distributions[3].pdf.values ) )
             self.assertAlmostEqual( 0.  , chunk.distributions[0].pdf.energies[0] )
             self.assertAlmostEqual( 4.  , chunk.distributions[0].pdf.energies[1] )
-            self.assertAlmostEqual( 0.25, chunk.distributions[0].pdf.values[0] )
-            self.assertAlmostEqual( 0.25, chunk.distributions[0].pdf.values[1] )
             self.assertAlmostEqual( 0.  , chunk.distributions[1].pdf.energies[0] )
             self.assertAlmostEqual( 4.  , chunk.distributions[1].pdf.energies[1] )
-            self.assertAlmostEqual( 0.26, chunk.distributions[1].pdf.values[0] )
-            self.assertAlmostEqual( 0.24, chunk.distributions[1].pdf.values[1] )
             self.assertAlmostEqual( 0.  , chunk.distributions[2].pdf.energies[0] )
             self.assertAlmostEqual( 4.  , chunk.distributions[2].pdf.energies[1] )
-            self.assertAlmostEqual( 0.24, chunk.distributions[2].pdf.values[0] )
-            self.assertAlmostEqual( 0.26, chunk.distributions[2].pdf.values[1] )
             self.assertAlmostEqual( 0.  , chunk.distributions[3].pdf.energies[0] )
             self.assertAlmostEqual( 4.  , chunk.distributions[3].pdf.energies[1] )
-            self.assertAlmostEqual( 0.1 , chunk.distributions[3].pdf.values[0] )
-            self.assertAlmostEqual( 0.4 , chunk.distributions[3].pdf.values[1] )
-            self.assertEqual( None, chunk.distributions[0].cdf )
-            self.assertEqual( None, chunk.distributions[1].cdf )
-            self.assertEqual( None, chunk.distributions[2].cdf )
-            self.assertEqual( None, chunk.distributions[3].cdf )
+            self.assertAlmostEqual( 0.5  / normalisation, chunk.distributions[0].pdf.values[0] )
+            self.assertAlmostEqual( 0.5  / normalisation, chunk.distributions[0].pdf.values[1] )
+            self.assertAlmostEqual( 0.52 / normalisation, chunk.distributions[1].pdf.values[0] )
+            self.assertAlmostEqual( 0.48 / normalisation, chunk.distributions[1].pdf.values[1] )
+            self.assertAlmostEqual( 0.48 / normalisation, chunk.distributions[2].pdf.values[0] )
+            self.assertAlmostEqual( 0.52 / normalisation, chunk.distributions[2].pdf.values[1] )
+            self.assertAlmostEqual( 0.2  / normalisation, chunk.distributions[3].pdf.values[0] )
+            self.assertAlmostEqual( 0.8  / normalisation, chunk.distributions[3].pdf.values[1] )
+            self.assertEqual( 2, len( chunk.distributions[0].cdf.energies ) )
+            self.assertEqual( 2, len( chunk.distributions[0].cdf.values ) )
+            self.assertEqual( 2, len( chunk.distributions[1].cdf.energies ) )
+            self.assertEqual( 2, len( chunk.distributions[1].cdf.values ) )
+            self.assertEqual( 2, len( chunk.distributions[2].cdf.energies ) )
+            self.assertEqual( 2, len( chunk.distributions[2].cdf.values ) )
+            self.assertEqual( 2, len( chunk.distributions[3].cdf.energies ) )
+            self.assertEqual( 2, len( chunk.distributions[3].cdf.values ) )
+            self.assertAlmostEqual( 0.  , chunk.distributions[0].cdf.energies[0] )
+            self.assertAlmostEqual( 4.  , chunk.distributions[0].cdf.energies[1] )
+            self.assertAlmostEqual( 0.  , chunk.distributions[1].cdf.energies[0] )
+            self.assertAlmostEqual( 4.  , chunk.distributions[1].cdf.energies[1] )
+            self.assertAlmostEqual( 0.  , chunk.distributions[2].cdf.energies[0] )
+            self.assertAlmostEqual( 4.  , chunk.distributions[2].cdf.energies[1] )
+            self.assertAlmostEqual( 0.  , chunk.distributions[3].cdf.energies[0] )
+            self.assertAlmostEqual( 4.  , chunk.distributions[3].cdf.energies[1] )
+            self.assertAlmostEqual( 0.0 / normalisation, chunk.distributions[0].cdf.values[0] )
+            self.assertAlmostEqual( 2.0 / normalisation, chunk.distributions[0].cdf.values[1] )
+            self.assertAlmostEqual( 0.0 / normalisation, chunk.distributions[1].cdf.values[0] )
+            self.assertAlmostEqual( 2.0 / normalisation, chunk.distributions[1].cdf.values[1] )
+            self.assertAlmostEqual( 0.0 / normalisation, chunk.distributions[2].cdf.values[0] )
+            self.assertAlmostEqual( 2.0 / normalisation, chunk.distributions[2].cdf.values[1] )
+            self.assertAlmostEqual( 0.0 / normalisation, chunk.distributions[3].cdf.values[0] )
+            self.assertAlmostEqual( 2.0 / normalisation, chunk.distributions[3].cdf.values[1] )
             self.assertEqual( 3, chunk.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
 
             # verify evaluation
-            self.assertAlmostEqual( 0.25  , chunk( 1., 3. ) )
-            self.assertAlmostEqual( 0.245 , chunk( 2., 3. ) )
-            self.assertAlmostEqual( 0.255 , chunk( 3., 3. ) )
-            self.assertAlmostEqual( 0.325 , chunk( 4., 3. ) )
+            self.assertAlmostEqual( 0.5  / normalisation, chunk( 1., 3. ) )
+            self.assertAlmostEqual( 0.49 / normalisation, chunk( 2., 3. ) )
+            self.assertAlmostEqual( 0.51 / normalisation, chunk( 3., 3. ) )
+            self.assertAlmostEqual( 0.65 / normalisation, chunk( 4., 3. ) )
 
             self.assertAlmostEqual( 0.    , chunk( 0., 3. ) )
             self.assertAlmostEqual( 0.    , chunk( 5., 3. ) )
 
-            self.assertAlmostEqual( 0.2475, chunk( 1.5, 3. ) )
-            self.assertAlmostEqual( 0.25  , chunk( 2.5, 3. ) )
-            self.assertAlmostEqual( 0.29  , chunk( 3.5, 3. ) )
+            self.assertAlmostEqual( 0.495 / normalisation, chunk( 1.5, 3. ) )
+            self.assertAlmostEqual( 0.5   / normalisation, chunk( 2.5, 3. ) )
+            self.assertAlmostEqual( 0.58  / normalisation, chunk( 3.5, 3. ) )
 
             # verify average energies
             energies = chunk.average_energies
@@ -85,10 +107,10 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., energies.energies[1] )
             self.assertAlmostEqual( 3., energies.energies[2] )
             self.assertAlmostEqual( 4., energies.energies[3] )
-            self.assertAlmostEqual( 2.          , energies.values[0] )
-            self.assertAlmostEqual( 1184. / 600., energies.values[1] )
-            self.assertAlmostEqual( 1216. / 600., energies.values[2] )
-            self.assertAlmostEqual( 2.4         , energies.values[3] )
+            self.assertAlmostEqual( 2. * 2.           / normalisation, energies.values[0] )
+            self.assertAlmostEqual( 2. * 1184. / 600. / normalisation, energies.values[1] )
+            self.assertAlmostEqual( 2. * 1216. / 600. / normalisation, energies.values[2] )
+            self.assertAlmostEqual( 2. * 2.4          / normalisation, energies.values[3] )
             self.assertEqual( 3, energies.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, energies.interpolants[0] )
             self.assertEqual( True, energies.is_linearised )
@@ -126,31 +148,68 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual(  4.  , linear.distributions[2].pdf.energies[1] )
             self.assertAlmostEqual(  0.  , linear.distributions[3].pdf.energies[0] )
             self.assertAlmostEqual(  4.  , linear.distributions[3].pdf.energies[1] )
-            self.assertAlmostEqual(  0.25, linear.distributions[0].pdf.values[0] )
-            self.assertAlmostEqual(  0.25, linear.distributions[0].pdf.values[1] )
-            self.assertAlmostEqual(  0.26, linear.distributions[1].pdf.values[0] )
-            self.assertAlmostEqual(  0.24, linear.distributions[1].pdf.values[1] )
-            self.assertAlmostEqual(  0.24, linear.distributions[2].pdf.values[0] )
-            self.assertAlmostEqual(  0.26, linear.distributions[2].pdf.values[1] )
-            self.assertAlmostEqual(  0.1 , linear.distributions[3].pdf.values[0] )
-            self.assertAlmostEqual(  0.4 , linear.distributions[3].pdf.values[1] )
-            self.assertEqual( None, linear.distributions[0].cdf )
-            self.assertEqual( None, linear.distributions[1].cdf )
-            self.assertEqual( None, linear.distributions[2].cdf )
-            self.assertEqual( None, linear.distributions[3].cdf )
+            self.assertAlmostEqual(  0.5  / normalisation, linear.distributions[0].pdf.values[0] )
+            self.assertAlmostEqual(  0.5  / normalisation, linear.distributions[0].pdf.values[1] )
+            self.assertAlmostEqual(  0.52 / normalisation, linear.distributions[1].pdf.values[0] )
+            self.assertAlmostEqual(  0.48 / normalisation, linear.distributions[1].pdf.values[1] )
+            self.assertAlmostEqual(  0.48 / normalisation, linear.distributions[2].pdf.values[0] )
+            self.assertAlmostEqual(  0.52 / normalisation, linear.distributions[2].pdf.values[1] )
+            self.assertAlmostEqual(  0.2  / normalisation, linear.distributions[3].pdf.values[0] )
+            self.assertAlmostEqual(  0.8  / normalisation, linear.distributions[3].pdf.values[1] )
+            self.assertEqual( True, linear.distributions[0].cdf.is_linearised )
+            self.assertEqual( True, linear.distributions[1].cdf.is_linearised )
+            self.assertEqual( True, linear.distributions[2].cdf.is_linearised )
+            self.assertEqual( True, linear.distributions[3].cdf.is_linearised )
+            self.assertEqual( 2, len( linear.distributions[0].cdf.energies ) )
+            self.assertEqual( 2, len( linear.distributions[1].cdf.energies ) )
+            self.assertEqual( 2, len( linear.distributions[2].cdf.energies ) )
+            self.assertEqual( 2, len( linear.distributions[3].cdf.energies ) )
+            self.assertEqual( 2, len( linear.distributions[0].cdf.values ) )
+            self.assertEqual( 2, len( linear.distributions[1].cdf.values ) )
+            self.assertEqual( 2, len( linear.distributions[2].cdf.values ) )
+            self.assertEqual( 2, len( linear.distributions[3].cdf.values ) )
+            self.assertAlmostEqual(  0.  , linear.distributions[0].cdf.energies[0] )
+            self.assertAlmostEqual(  4.  , linear.distributions[0].cdf.energies[1] )
+            self.assertAlmostEqual(  0.  , linear.distributions[1].cdf.energies[0] )
+            self.assertAlmostEqual(  4.  , linear.distributions[1].cdf.energies[1] )
+            self.assertAlmostEqual(  0.  , linear.distributions[2].cdf.energies[0] )
+            self.assertAlmostEqual(  4.  , linear.distributions[2].cdf.energies[1] )
+            self.assertAlmostEqual(  0.  , linear.distributions[3].cdf.energies[0] )
+            self.assertAlmostEqual(  4.  , linear.distributions[3].cdf.energies[1] )
+            self.assertAlmostEqual(  0.0 / normalisation, linear.distributions[0].cdf.values[0] )
+            self.assertAlmostEqual(  2.0 / normalisation, linear.distributions[0].cdf.values[1] )
+            self.assertAlmostEqual(  0.0 / normalisation, linear.distributions[1].cdf.values[0] )
+            self.assertAlmostEqual(  2.0 / normalisation, linear.distributions[1].cdf.values[1] )
+            self.assertAlmostEqual(  0.0 / normalisation, linear.distributions[2].cdf.values[0] )
+            self.assertAlmostEqual(  2.0 / normalisation, linear.distributions[2].cdf.values[1] )
+            self.assertAlmostEqual(  0.0 / normalisation, linear.distributions[3].cdf.values[0] )
+            self.assertAlmostEqual(  2.0 / normalisation, linear.distributions[3].cdf.values[1] )
 
             self.assertEqual( 3, linear.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, linear.interpolants[0] )
 
         # the data is given explicitly
-        chunk = TabulatedEnergyDistributions( grid = [ 1., 2., 3., 4. ],
-                                               distributions = [ TabulatedEnergyDistribution( [ 0., 4. ], [ 0.25, 0.25 ] ),
-                                                                 TabulatedEnergyDistribution( [ 0., 4. ], [ 0.26, 0.24 ] ),
-                                                                 TabulatedEnergyDistribution( [ 0., 4. ], [ 0.24, 0.26 ] ),
-                                                                 TabulatedEnergyDistribution( [ 0., 4. ], [ 0.1, 0.4 ] ) ],
-                                               interpolant = InterpolationType.LinearLinear )
+        chunk1 = TabulatedEnergyDistributions( grid = [ 1., 2., 3., 4. ],
+                                                distributions = [ TabulatedEnergyDistribution( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                                  TabulatedEnergyDistribution( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                                                  TabulatedEnergyDistribution( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                                                  TabulatedEnergyDistribution( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
+                                                interpolant = InterpolationType.LinearLinear, normalise = False )
+        chunk2 = TabulatedEnergyDistributions( grid = [ 1., 2., 3., 4. ],
+                                                distributions = [ TabulatedEnergyDistribution( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                                  TabulatedEnergyDistribution( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                                                  TabulatedEnergyDistribution( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                                                  TabulatedEnergyDistribution( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
+                                                interpolant = InterpolationType.LinearLinear, normalise = True )
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk1, False )
+        verify_chunk( self, chunk2, True )
+
+        chunk1.normalise()
+        chunk2.normalise()
+
+        verify_chunk( self, chunk2, True )
+        verify_chunk( self, chunk2, True )
 
     def test_comparison( self ) :
 
@@ -168,7 +227,8 @@ class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
                                                      [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
                                                        TabulatedEnergyDistribution( [ 1., 3. ], [ 0.49, 0.51 ] ),
                                                        TabulatedEnergyDistribution( [ 1., 3. ], [ 0.4, 0.6 ] ),
-                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+                                                       TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ],
+                                                     InterpolationType.LinearLinear, True )
         different = TabulatedEnergyDistributions( [ 1., 4. ],
                                                   [ TabulatedEnergyDistribution( [ 1., 3. ], [ 1.0, 1.0 ] ),
                                                     TabulatedEnergyDistribution( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )

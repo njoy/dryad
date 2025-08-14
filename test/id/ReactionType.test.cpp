@@ -346,6 +346,32 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( { { n, 3 }, { p, 2 }, { a, 1 } }, LevelID::all ) );
       CHECK( ParticleID( 88230, LevelID::all ) == id.resolve( n, u238 ) );
 
+      // large internal id number - long on Windows is narrow
+      id = ReactionType( 109 );
+      CHECK( 3000000151 == id.number() );
+      CHECK( 109 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "3a(t)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { a, 3 } }  == id.particles() );
+      CHECK( LevelID::all == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( "3a(t)" ) );
+      CHECK( ParticleID( 86227, LevelID::all ) == id.resolve( n, u238 ) );
+
+      // large internal id number - long on Windows is narrow
+      id = ReactionType( 23 );
+      CHECK( 3000010151 == id.number() );
+      CHECK( 23 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "n3a(t)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 }, { a, 3 } }  == id.particles() );
+      CHECK( LevelID::all == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( "n3a(t)" ) );
+      CHECK( ParticleID( 86226, LevelID::all ) == id.resolve( n, u238 ) );
+
       // photoatomic and electroatomic reaction types
       id = ReactionType::total( InteractionType::Atomic );
       CHECK( 501 == id.number() );

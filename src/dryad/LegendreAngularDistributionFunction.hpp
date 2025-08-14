@@ -88,12 +88,12 @@ namespace dryad {
     /**
      *  @brief Return the lower cosine limit
      */
-    static constexpr double lowerCosineLimit() noexcept { return -1.0; }
+    static constexpr double lowerCosineLimit() { return -1.0; }
 
     /**
      *  @brief Return the upper cosine limit
      */
-    static constexpr double upperCosineLimit() noexcept { return 1.0; }
+    static constexpr double upperCosineLimit() { return 1.0; }
 
     using LegendreSeries::operator();
     using LegendreSeries::order;
@@ -104,7 +104,7 @@ namespace dryad {
     /**
      *  @brief Normalise the distribution function
      */
-    void normalise() noexcept {
+    void normalise() {
 
       this->operator/=( this->integral() );
     }
@@ -262,7 +262,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const LegendreAngularDistributionFunction& right ) const noexcept {
+    bool operator==( const LegendreAngularDistributionFunction& right ) const {
 
       return LegendreSeries::operator==( right );
     }
@@ -272,7 +272,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const LegendreAngularDistributionFunction& right ) const noexcept {
+    bool operator!=( const LegendreAngularDistributionFunction& right ) const {
 
       return ! this->operator==( right );
     }

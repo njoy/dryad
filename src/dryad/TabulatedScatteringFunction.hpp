@@ -33,7 +33,7 @@ namespace dryad {
     /**
      *  @brief Return the inverse length values
      */
-    const std::vector< double >& inverseLengths() const noexcept {
+    const std::vector< double >& inverseLengths() const {
 
       return this->x();
     }
@@ -41,7 +41,7 @@ namespace dryad {
     /**
      *  @brief Return the scattering function values
      */
-    const std::vector< double >& values() const noexcept {
+    const std::vector< double >& values() const {
 
       return this->y();
     }
@@ -49,7 +49,7 @@ namespace dryad {
     /**
      *  @brief Return the lower inverse length limit
      */
-    double lowerInverseLengthLimit() const noexcept {
+    double lowerInverseLengthLimit() const {
 
       return this->x().front();
     }
@@ -57,7 +57,7 @@ namespace dryad {
     /**
      *  @brief Return the upper inverse length limit
      */
-    double upperInverseLengthLimit() const noexcept {
+    double upperInverseLengthLimit() const {
 
       return this->x().back();
     }
@@ -68,7 +68,7 @@ namespace dryad {
      *  @param energy   the incident photon energy
      *  @param cosine   the outgoing photon cosine
      */
-    double inverseLength( double energy, double cosine ) const noexcept {
+    double inverseLength( double energy, double cosine ) const {
 
       //! @todo add physical constants to scion or dryad
 
@@ -248,7 +248,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedScatteringFunction& right ) const noexcept {
+    bool operator==( const TabulatedScatteringFunction& right ) const {
 
       return InterpolationTable::operator==( right );
     }
@@ -258,7 +258,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedScatteringFunction& right ) const noexcept {
+    bool operator!=( const TabulatedScatteringFunction& right ) const {
 
       return ! this->operator==( right );
     }

@@ -23,7 +23,8 @@ namespace gnds {
   static
   std::pair< std::optional< double >,
              LegendreAngularDistribution >
-  createLegendreAngularDistribution( pugi::xml_node legendre, const Axes& units ) {
+  createLegendreAngularDistribution( pugi::xml_node legendre, const Axes& units,
+                                     bool normalise ) {
 
     // read data from the node
     auto data = readLegendre( legendre );
@@ -38,7 +39,8 @@ namespace gnds {
       convertEnergy( data.first.value(), std::get< 1 >( units[0] ).value() );
     }
 
-    return { std::move( data.first ), LegendreAngularDistribution( std::move( data.second ) ) };
+    return { std::move( data.first ),
+             LegendreAngularDistribution( std::move( data.second ), normalise ) };
   }
 
 } // gnds namespace

@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/Documentation.hpp"
 #include "dryad/id/ElementID.hpp"
 #include "dryad/atomic/ElectronSubshellConfiguration.hpp"
 
@@ -20,9 +21,14 @@ namespace dryad {
   class AtomicRelaxation {
 
     /* fields */
+    Documentation documentation_;
     id::ElementID element_id_;
-
     std::vector< atomic::ElectronSubshellConfiguration > subshells_;
+
+    /* auxiliary functions */
+
+    #include "dryad/AtomicRelaxation/src/sort.hpp"
+    #include "dryad/AtomicRelaxation/src/iterator.hpp"
 
   public:
 
@@ -33,20 +39,84 @@ namespace dryad {
     /* methods */
 
     /**
+     *  @brief Return the documentation
+     */
+    const Documentation& documentation() const {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Return the documentation
+     */
+    Documentation& documentation() {
+
+      return this->documentation_;
+    }
+
+    /**
+     *  @brief Set the documentation
+     *
+     *  @param[in] documentation   the documentation
+     */
+    void documentation( Documentation documentation ) {
+
+      this->documentation_ = std::move( documentation );
+    }
+
+    /**
      *  @brief Return the element identifier
      */
-    const id::ElementID& elementIdentifier() const noexcept {
+    const id::ElementID& elementIdentifier() const {
 
       return this->element_id_;
+    }
+
+    /**
+     *  @brief Set the element identifier
+     *
+     *  @param[in] element   the element identifier
+     */
+    void elementIdentifier( id::ElementID element ) {
+
+      this->element_id_ = std::move( element );
     }
 
     /**
      *  @brief Return the electron shell configuration data
      */
     const std::vector< atomic::ElectronSubshellConfiguration >&
-    subshells() const noexcept {
+    subshells() const {
 
       return this->subshells_;
+    }
+
+    /**
+     *  @brief Return the electron shell configuration data
+     */
+    std::vector< atomic::ElectronSubshellConfiguration >&
+    subshells() {
+
+      return this->subshells_;
+    }
+
+    /**
+     *  @brief Set the electron shell configuration data
+     *
+     *  @param[in] subshells   the electron shell configuration data
+     */
+    void subshells( std::vector< atomic::ElectronSubshellConfiguration > subshells ) {
+
+      this->subshells_ = std::move( subshells );
+      this->sort();
+    }
+
+    /**
+     *  @brief Return the number of subshells defined for this atom
+     */
+    std::size_t numberSubshells() const {
+
+      return this->subshells().size();
     }
 
     /**
@@ -56,10 +126,7 @@ namespace dryad {
      */
     bool hasSubshell( const id::ElectronSubshellID& id ) const {
 
-      auto iter = std::find_if( this->subshells().begin(),
-                                this->subshells().end(),
-                                [&id] ( auto&& subshell )
-                                      { return subshell.identifier() == id; } );
+      auto iter = this->iterator( id );
       return iter != this->subshells().end();
     }
 
@@ -71,11 +138,8 @@ namespace dryad {
     const atomic::ElectronSubshellConfiguration&
     subshell( const id::ElectronSubshellID& id ) const {
 
-      auto iter = std::find_if( this->subshells().begin(),
-                                this->subshells().end(),
-                                [&id] ( auto&& subshell )
-                                      { return subshell.identifier() == id; } );
-      if ( iter != this->subshells().end() ) {
+      auto iter = this->iterator( id );
+      if ( ( iter != this->subshells().end() ) && ( iter->identifier() == id ) ) {
 
         return *iter;
       }
@@ -87,11 +151,44 @@ namespace dryad {
     }
 
     /**
+     *  @brief Normalise the transition probabilities for each subshell
+     */
+    void normalise() {
+
+      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
+
+        subshell.normalise();
+      }
+    }
+
+    /**
+     *  @brief Calculate the transition energies for all transitions
+     */
+    void calculateTransitionEnergies() {
+
+      for ( atomic::ElectronSubshellConfiguration& subshell : this->subshells() ) {
+
+        auto current = subshell.bindingEnergy();
+        for ( atomic::RadiativeTransitionData& transition : subshell.radiativeTransitions() ) {
+
+          auto originating = this->subshell( transition.originatingShell() ).bindingEnergy();
+          transition.energy( current - originating );
+        }
+        for ( atomic::NonRadiativeTransitionData& transition : subshell.nonRadiativeTransitions() ) {
+
+          auto originating = this->subshell( transition.originatingShell() ).bindingEnergy();
+          auto emitting = this->subshell( transition.emittingShell() ).bindingEnergy();
+          transition.energy( current - originating - emitting );
+        }
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const AtomicRelaxation& right ) const noexcept {
+    bool operator==( const AtomicRelaxation& right ) const {
 
       return this->elementIdentifier() == right.elementIdentifier() &&
              this->subshells() == right.subshells();
@@ -102,7 +199,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const AtomicRelaxation& right ) const noexcept {
+    bool operator!=( const AtomicRelaxation& right ) const {
 
       return ! this->operator==( right );
     }

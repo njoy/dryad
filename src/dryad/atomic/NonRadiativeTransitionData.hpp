@@ -17,11 +17,12 @@ namespace atomic {
    *  @brief Data for a non-radiative transition in atomic relaxation
    *
    *  In a non-radiative transition, an electron from another shell fills a
-   *  vacancy in the current shell while another electron () is emitted. The
-   *  energy of the emitted electron is equal to the binding energy of the
-   *  subshell with the vacancy minus the binding energy of the subshell from
-   *  which the electron filling the vacancy originated from and the subshell
-   *  from which the emitted electron came from.
+   *  vacancy in the current shell while another electron is emitted (this
+   *  electron is often referred to as an Auger electron). The energy of the
+   *  emitted electron is equal to the binding energy of the subshell with
+   *  the vacancy minus the binding energy of the subshell from which the
+   *  electron filling the vacancy originated from and the subshell from
+   *  which the emitted electron came from.
    */
   class NonRadiativeTransitionData {
 
@@ -42,7 +43,7 @@ namespace atomic {
     /**
      *  @brief Return the transition type
      */
-    static constexpr TransitionType type() noexcept {
+    static constexpr TransitionType type() {
 
       return TransitionType::NonRadiative;
     }
@@ -51,34 +52,78 @@ namespace atomic {
      *  @brief Return the identifier of the subshell from which the
      *         electron filling the vacancy originated
      */
-    const id::ElectronSubshellID& originatingShell() const noexcept {
+    const id::ElectronSubshellID& originatingShell() const {
 
       return this->originating_shell_;
+    }
+
+    /**
+     *  @brief Set the identifier of the subshell from which the
+     *         electron filling the vacancy originated
+     *
+     *  @param originatingShell   the identifier of the subshell from which the
+     *                            vacancy filling electron originated
+     */
+    void originatingShell( id::ElectronSubshellID originatingShell ) {
+
+      this->originating_shell_ = std::move( originatingShell );
     }
 
     /**
      *  @brief Return the identifier of the subshell from which the
      *         emitted electron originated
      */
-    const id::ElectronSubshellID& emittingShell() const noexcept {
+    const id::ElectronSubshellID& emittingShell() const {
 
       return this->emitting_shell_;
     }
 
     /**
+     *  @brief Set the the identifier of the subshell from which the
+     *         emitted electron originated
+     *
+     *  @param emittingShell      the identifier of the subshell from which the
+     *                            emitted electron originated
+     */
+    void emittingShell( id::ElectronSubshellID emittingShell ) {
+
+      this->emitting_shell_ = std::move( emittingShell );
+    }
+
+    /**
      *  @brief Return the transition probability
      */
-    double probability() const noexcept {
+    double probability() const {
 
       return this->probability_;
     }
 
     /**
+     *  @brief Set the transition probability
+     *
+     *  @param[in] probability   the probability of the transition
+     */
+    void probability( double probability ) {
+
+      this->probability_ = probability;
+    }
+
+    /**
      *  @brief Return the energy of the emitted electron
      */
-    const std::optional< double >& energy() const noexcept {
+    const std::optional< double >& energy() const {
 
       return this->energy_;
+    }
+
+    /**
+     *  @brief Set the energy of the emitted electron
+     *
+     *  @param[in] energy   the energy of the emitted electron
+     */
+    void energy( std::optional< double > energy ) {
+
+      this->energy_ = std::move( energy );
     }
 
     /**
@@ -86,7 +131,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const NonRadiativeTransitionData& right ) const noexcept {
+    bool operator==( const NonRadiativeTransitionData& right ) const {
 
       return this->originatingShell() == right.originatingShell() &&
              this->emittingShell() == right.emittingShell() &&
@@ -99,7 +144,7 @@ namespace atomic {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const NonRadiativeTransitionData& right ) const noexcept {
+    bool operator!=( const NonRadiativeTransitionData& right ) const {
 
       return ! this->operator==( right );
     }

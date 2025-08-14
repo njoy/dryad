@@ -24,7 +24,11 @@ namespace endf {
    */
   LegendreAngularDistributions
   createLegendreAngularDistributions(
-      const ENDFtk::section::Type< 4 >::LegendreDistributions& distribution ) {
+      const ENDFtk::section::Type< 4 >::LegendreDistributions& distribution,
+      bool ) {
+
+    // MF4 sections assume that the first coefficient is 0.5 so it is always normalised.
+    // As such, we can read the distributions with normalise = false directly.
 
     try {
 
@@ -33,7 +37,7 @@ namespace endf {
       distributions.reserve( energies.size() );
       for ( auto&& entry : distribution.angularDistributions() ) {
 
-        distributions.emplace_back( createLegendreAngularDistribution( entry.coefficients(), true ) );
+        distributions.emplace_back( createLegendreAngularDistribution( entry.coefficients(), true, false ) );
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );

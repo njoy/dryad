@@ -12,165 +12,28 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 
+void verifyChunk( const TabulatedAngularDistribution&, bool );
+
 SCENARIO( "TabulatedAngularDistribution" ) {
 
-  GIVEN( "Cosines and probabilities for a normalised table" ) {
+  GIVEN( "cosines and probabilities for a table" ) {
 
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > cosines = { -1., 0., 0.5, 1. };
-      const std::vector< double > values = { 0., 0.5, 0.75, 1. };
+      const std::vector< double > values = { 0., 1., 1.5, 2. };
 
-      TabulatedAngularDistribution chunk( std::move( cosines ), std::move( values ) );
+      TabulatedAngularDistribution chunk1( cosines, values, InterpolationType::LinearLinear, false );
+      TabulatedAngularDistribution chunk2( std::move( cosines ), std::move( values ), InterpolationType::LinearLinear, true );
 
-      THEN( "a TabulatedAngularDistribution can be constructed and members can "
-            "be tested" ) {
+      verifyChunk( chunk1, false );
+      verifyChunk( chunk2, true );
 
-        auto pdf = chunk.pdf();
-        CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
-        CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
-        CHECK_THAT( -1.  , WithinRel( pdf.cosines()[0] ) );
-        CHECK_THAT(  0.  , WithinRel( pdf.cosines()[1] ) );
-        CHECK_THAT(  0.5 , WithinRel( pdf.cosines()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( pdf.cosines()[3] ) );
-        CHECK_THAT(  0.  , WithinRel( pdf.values()[0] ) );
-        CHECK_THAT(  0.5 , WithinRel( pdf.values()[1] ) );
-        CHECK_THAT(  0.75, WithinRel( pdf.values()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( pdf.values()[3] ) );
+      chunk1.normalise();
+      chunk2.normalise();
 
-        CHECK( std::nullopt == chunk.cdf() );
-      } // THEN
-
-      THEN( "a TabulatedAngularDistribution can be evaluated" ) {
-
-        // values of x in the x grid
-        CHECK_THAT( 0. , WithinRel( chunk( -1. ) ) );
-        CHECK_THAT( 0.5, WithinRel( chunk(  0. ) ) );
-        CHECK_THAT( 0.75, WithinRel( chunk( 0.5 ) ) );
-        CHECK_THAT( 1. , WithinRel( chunk(  1. ) ) );
-
-        // values of x outside the x grid
-        CHECK_THAT( 0., WithinRel( chunk( -5. ) ) );
-        CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
-
-        // values of x inside the x grid
-        CHECK_THAT( 0.25 , WithinRel( chunk( -0.5 ) ) );
-        CHECK_THAT( 0.875, WithinRel( chunk(  0.75 ) ) );
-      } // THEN
-
-      THEN( "the average cosine can be calculated" ) {
-
-        CHECK_THAT( 1. / 3., WithinRel( chunk.averageCosine() ) );
-      } // THEN
-
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
-
-        auto linear = chunk.linearise();
-
-        CHECK( 4 == linear.pdf().numberPoints() );
-        CHECK( 1 == linear.pdf().numberRegions() );
-
-        CHECK( 4 == linear.pdf().cosines().size() );
-        CHECK( 4 == linear.pdf().values().size() );
-        CHECK( 1 == linear.pdf().boundaries().size() );
-        CHECK( 1 == linear.pdf().interpolants().size() );
-
-        CHECK( 3 == linear.pdf().boundaries()[0] );
-
-        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
-
-        CHECK_THAT( -1.  , WithinRel( linear.pdf().cosines()[0] ) );
-        CHECK_THAT(  0.  , WithinRel( linear.pdf().cosines()[1] ) );
-        CHECK_THAT(  0.5 , WithinRel( linear.pdf().cosines()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( linear.pdf().cosines()[3] ) );
-
-        CHECK_THAT(  0.  , WithinRel( linear.pdf().values()[0] ) );
-        CHECK_THAT(  0.5 , WithinRel( linear.pdf().values()[1] ) );
-        CHECK_THAT(  0.75, WithinRel( linear.pdf().values()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( linear.pdf().values()[3] ) );
-
-        CHECK( true == linear.pdf().isLinearised() );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "Cosines and probabilities for an unnormalised table" ) {
-
-    WHEN( "the data is given explicitly" ) {
-
-      const std::vector< double > cosines = { -1., 0., 0.5, 1. };
-      const std::vector< double > values = { 0., 1.0, 1.5, 2. };
-
-      TabulatedAngularDistribution chunk( std::move( cosines ), std::move( values ) );
-
-      THEN( "a TabulatedAngularDistribution can be constructed and members can "
-            "be tested" ) {
-
-        auto pdf = chunk.pdf();
-        CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
-        CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
-        CHECK_THAT( -1.  , WithinRel( pdf.cosines()[0] ) );
-        CHECK_THAT(  0.  , WithinRel( pdf.cosines()[1] ) );
-        CHECK_THAT(  0.5 , WithinRel( pdf.cosines()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( pdf.cosines()[3] ) );
-        CHECK_THAT(  0.  , WithinRel( pdf.values()[0] ) );
-        CHECK_THAT(  0.5 , WithinRel( pdf.values()[1] ) );
-        CHECK_THAT(  0.75, WithinRel( pdf.values()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( pdf.values()[3] ) );
-
-        CHECK( std::nullopt == chunk.cdf() );
-      } // THEN
-
-      THEN( "a TabulatedAngularDistribution can be evaluated" ) {
-
-        // values of x in the x grid
-        CHECK_THAT( 0. , WithinRel( chunk( -1. ) ) );
-        CHECK_THAT( 0.5, WithinRel( chunk(  0. ) ) );
-        CHECK_THAT( 0.75, WithinRel( chunk( 0.5 ) ) );
-        CHECK_THAT( 1. , WithinRel( chunk(  1. ) ) );
-
-        // values of x outside the x grid
-        CHECK_THAT( 0., WithinRel( chunk( -5. ) ) );
-        CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
-
-        // values of x inside the x grid
-        CHECK_THAT( 0.25 , WithinRel( chunk( -0.5 ) ) );
-        CHECK_THAT( 0.875, WithinRel( chunk(  0.75 ) ) );
-      } // THEN
-
-      THEN( "the average cosine can be calculated" ) {
-
-        CHECK_THAT( 1. / 3., WithinRel( chunk.averageCosine() ) );
-      } // THEN
-
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
-
-        auto linear = chunk.linearise();
-
-        CHECK( 4 == linear.pdf().numberPoints() );
-        CHECK( 1 == linear.pdf().numberRegions() );
-
-        CHECK( 4 == linear.pdf().cosines().size() );
-        CHECK( 4 == linear.pdf().values().size() );
-        CHECK( 1 == linear.pdf().boundaries().size() );
-        CHECK( 1 == linear.pdf().interpolants().size() );
-
-        CHECK( 3 == linear.pdf().boundaries()[0] );
-
-        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
-
-        CHECK_THAT( -1.  , WithinRel( linear.pdf().cosines()[0] ) );
-        CHECK_THAT(  0.  , WithinRel( linear.pdf().cosines()[1] ) );
-        CHECK_THAT(  0.5 , WithinRel( linear.pdf().cosines()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( linear.pdf().cosines()[3] ) );
-
-        CHECK_THAT(  0.  , WithinRel( linear.pdf().values()[0] ) );
-        CHECK_THAT(  0.5 , WithinRel( linear.pdf().values()[1] ) );
-        CHECK_THAT(  0.75, WithinRel( linear.pdf().values()[2] ) );
-        CHECK_THAT(  1.  , WithinRel( linear.pdf().values()[3] ) );
-
-        CHECK( true == linear.pdf().isLinearised() );
-      } // THEN
+      verifyChunk( chunk1, true );
+      verifyChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -180,7 +43,7 @@ SCENARIO( "TabulatedAngularDistribution" ) {
 
       TabulatedAngularDistribution left( { -1., 1. }, { 0.5, 0.5 } );
       TabulatedAngularDistribution equal( { -1., 1. }, { 0.5, 0.5 } );
-      TabulatedAngularDistribution unnormalised( { -1., 1. }, { 1., 1. } );
+      TabulatedAngularDistribution unnormalised( { -1., 1. }, { 1., 1. }, InterpolationType::LinearLinear, true );
       TabulatedAngularDistribution different( { -1., 1. }, { 0.25, 0.75 } );
 
       THEN( "they can be compared" ) {
@@ -212,3 +75,119 @@ SCENARIO( "TabulatedAngularDistribution" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+void verifyChunk( const TabulatedAngularDistribution& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2.0 : 1.0;
+
+  CHECK( 4 == chunk.cosines().size() );
+  CHECK( 4 == chunk.values().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( -1.  , WithinRel( chunk.cosines()[0] ) );
+  CHECK_THAT(  0.  , WithinRel( chunk.cosines()[1] ) );
+  CHECK_THAT(  0.5 , WithinRel( chunk.cosines()[2] ) );
+  CHECK_THAT(  1.  , WithinRel( chunk.cosines()[3] ) );
+  CHECK_THAT(  0.  / normalisation, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT(  1.  / normalisation, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT(  1.5 / normalisation, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT(  2.  / normalisation, WithinRel( chunk.values()[3] ) );
+  CHECK( 3 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+  auto pdf = chunk.pdf();
+  CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
+  CHECK( 4 == pdf.cosines().size() );
+  CHECK( 4 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK_THAT( -1.  , WithinRel( pdf.cosines()[0] ) );
+  CHECK_THAT(  0.  , WithinRel( pdf.cosines()[1] ) );
+  CHECK_THAT(  0.5 , WithinRel( pdf.cosines()[2] ) );
+  CHECK_THAT(  1.  , WithinRel( pdf.cosines()[3] ) );
+  CHECK_THAT(  0.  / normalisation, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT(  1.  / normalisation, WithinRel( pdf.values()[1] ) );
+  CHECK_THAT(  1.5 / normalisation, WithinRel( pdf.values()[2] ) );
+  CHECK_THAT(  2.  / normalisation, WithinRel( pdf.values()[3] ) );
+  CHECK( 3 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+
+  auto cdf = chunk.cdf();
+  CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
+  CHECK( 4 == cdf.cosines().size() );
+  CHECK( 4 == cdf.values().size() );
+  CHECK( 1 == cdf.boundaries().size() );
+  CHECK( 1 == cdf.interpolants().size() );
+  CHECK_THAT( -1.  , WithinRel( cdf.cosines()[0] ) );
+  CHECK_THAT(  0.  , WithinRel( cdf.cosines()[1] ) );
+  CHECK_THAT(  0.5 , WithinRel( cdf.cosines()[2] ) );
+  CHECK_THAT(  1.  , WithinRel( cdf.cosines()[3] ) );
+  CHECK_THAT(  0.    / normalisation, WithinRel( cdf.values()[0] ) );
+  CHECK_THAT(  0.5   / normalisation, WithinRel( cdf.values()[1] ) );
+  CHECK_THAT(  1.125 / normalisation, WithinRel( cdf.values()[2] ) );
+  CHECK_THAT(  2.    / normalisation, WithinRel( cdf.values()[3] ) );
+  CHECK( 3 == cdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+
+  CHECK_THAT( 2.0 / normalisation, WithinRel( pdf.integral() ) );
+
+  // evaluation
+
+  // values of x in the x grid
+  CHECK_THAT( 0.  / normalisation, WithinRel( chunk( -1. ) ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( chunk(  0. ) ) );
+  CHECK_THAT( 1.5 / normalisation, WithinRel( chunk( 0.5 ) ) );
+  CHECK_THAT( 2.  / normalisation, WithinRel( chunk(  1. ) ) );
+
+  // values of x outside the x grid
+  CHECK_THAT( 0., WithinRel( chunk( -5. ) ) );
+  CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
+
+  // values of x inside the x grid
+  CHECK_THAT( 0.5  / normalisation, WithinRel( chunk( -0.5 ) ) );
+  CHECK_THAT( 1.75 / normalisation, WithinRel( chunk(  0.75 ) ) );
+
+  // average cosine
+  CHECK_THAT( 2. / 3. / normalisation, WithinRel( chunk.averageCosine() ) );
+
+  // linearisation
+  auto linear = chunk.linearise();
+
+  pdf = linear.pdf();
+  CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
+  CHECK( 4 == pdf.cosines().size() );
+  CHECK( 4 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK_THAT( -1.  , WithinRel( pdf.cosines()[0] ) );
+  CHECK_THAT(  0.  , WithinRel( pdf.cosines()[1] ) );
+  CHECK_THAT(  0.5 , WithinRel( pdf.cosines()[2] ) );
+  CHECK_THAT(  1.  , WithinRel( pdf.cosines()[3] ) );
+  CHECK_THAT(  0.  / normalisation, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT(  1.  / normalisation, WithinRel( pdf.values()[1] ) );
+  CHECK_THAT(  1.5 / normalisation, WithinRel( pdf.values()[2] ) );
+  CHECK_THAT(  2.  / normalisation, WithinRel( pdf.values()[3] ) );
+  CHECK( 3 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+
+  cdf = linear.cdf();
+  CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
+  CHECK( 4 == cdf.cosines().size() );
+  CHECK( 4 == cdf.values().size() );
+  CHECK( 1 == cdf.boundaries().size() );
+  CHECK( 1 == cdf.interpolants().size() );
+  CHECK_THAT( -1.  , WithinRel( cdf.cosines()[0] ) );
+  CHECK_THAT(  0.  , WithinRel( cdf.cosines()[1] ) );
+  CHECK_THAT(  0.5 , WithinRel( cdf.cosines()[2] ) );
+  CHECK_THAT(  1.  , WithinRel( cdf.cosines()[3] ) );
+  CHECK_THAT(  0.    / normalisation, WithinRel( cdf.values()[0] ) );
+  CHECK_THAT(  0.5   / normalisation, WithinRel( cdf.values()[1] ) );
+  CHECK_THAT(  1.125 / normalisation, WithinRel( cdf.values()[2] ) );
+  CHECK_THAT(  2.    / normalisation, WithinRel( cdf.values()[3] ) );
+  CHECK( 3 == cdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+}

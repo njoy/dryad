@@ -17,9 +17,12 @@ namespace gnds {
   /**
    *  @brief Create an AtomicRelaxation from a GNDS xml file
    *
-   *  @param[in] filename   the GNDS file name
+   *  @param[in] filename    the GNDS file name
+   *  @param[in] normalise   option to indicate whether or not to normalise
+   *                         all probability data
    */
-  static AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename ) {
+  static AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
+                                                          bool normalise ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
@@ -27,7 +30,7 @@ namespace gnds {
     pugi::xml_parse_result result = document.load_file( filename.c_str() );
     if ( document ) {
 
-      return createAtomicRelaxation( document );
+      return createAtomicRelaxation( document, normalise );
     }
     else {
 

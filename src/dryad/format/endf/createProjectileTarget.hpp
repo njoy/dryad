@@ -11,6 +11,7 @@
 #include "dryad/format/endf/createTargetIdentifier.hpp"
 #include "dryad/format/endf/createInteractionType.hpp"
 #include "dryad/format/endf/createReactions.hpp"
+#include "dryad/format/endf/createDocumentation.hpp"
 #include "dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -22,19 +23,26 @@ namespace endf {
 
   /**
    *  @brief Create a ProjectileTarget from an unparsed ENDF material
+   *
+   *  @param[in] material    the unparsed ENDF material
+   *  @param[in] normalise   the flag to indicate whether or not distributions
+   *                         need to be normalised
    */
-  ProjectileTarget createProjectileTarget( const ENDFtk::tree::Material& material ) {
+  ProjectileTarget createProjectileTarget( const ENDFtk::tree::Material& material,
+                                           bool normalise ) {
 
-    auto mf1mt451 = material.section( 1, 451 ).parse< 1, 451 >();
+    auto information = material.section( 1, 451 ).parse< 1, 451 >();
 
-    id::ParticleID projectile = createProjectileIdentifier( mf1mt451.subLibrary() );
-    id::ParticleID target = createTargetIdentifier( mf1mt451.ZA(), mf1mt451.excitedLevel() );
-    InteractionType type = createInteractionType( mf1mt451.subLibrary() );
+    Documentation documentation = createDocumentation( information );
 
-    std::vector< Reaction > reactions = createReactions( projectile, target, material );
+    id::ParticleID projectile = createProjectileIdentifier( information.subLibrary() );
+    id::ParticleID target = createTargetIdentifier( information.ZA(), information.excitedLevel() );
+    InteractionType type = createInteractionType( information.subLibrary() );
 
-    return ProjectileTarget( std::move( projectile ), std::move( target ),
-                             type, std::move( reactions ) );
+    std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
+
+    return ProjectileTarget( std::move( documentation ), std::move( projectile ),
+                             std::move( target ), type, std::move( reactions ) );
   }
 
 } // endf namespace

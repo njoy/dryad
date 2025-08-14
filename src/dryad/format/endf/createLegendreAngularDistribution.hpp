@@ -21,7 +21,9 @@ namespace endf {
    *  @brief Create a LegendreAngularDistribution from a range of coefficients
    */
   template < typename Range >
-  LegendreAngularDistribution createLegendreAngularDistribution( const Range& range, bool addOrderZero ) {
+  LegendreAngularDistribution
+  createLegendreAngularDistribution( const Range& range, bool addOrderZero,
+                                     bool normalise ) {
 
     try {
 
@@ -36,7 +38,7 @@ namespace endf {
 
         coefficients[index] *= 0.5 * ( 2 * index + 1 );
       }
-      return LegendreAngularDistribution( std::move( coefficients ) );
+      return LegendreAngularDistribution( std::move( coefficients ), normalise );
     }
     catch ( ... ) {
 

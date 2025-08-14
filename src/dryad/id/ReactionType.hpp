@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_ID_REACTIONTYPE
 
 // system includes
+#include <cstdint>
 #include <optional>
 #include <string>
 #include <numeric>
@@ -741,7 +742,7 @@ namespace id {
     /* predefined identifiers */
 
     static ReactionType
-    total( const InteractionType& type = InteractionType::Nuclear ) noexcept {
+    total( const InteractionType& type = InteractionType::Nuclear ) {
 
       if ( type == InteractionType::Nuclear ) {
 
@@ -796,7 +797,7 @@ namespace id {
     /**
      *  @brief Return the number of currently registered identifiers
      */
-    static std::size_t size() noexcept {
+    static std::size_t size() {
 
       return entries.size();
     }
@@ -811,7 +812,7 @@ namespace id {
      *
      *  @param[in] mt   the mt number
      */
-    static bool isRegistered( int mt ) noexcept {
+    static bool isRegistered( int mt ) {
 
       return mt_conversion_dictionary.find( mt ) != mt_conversion_dictionary.end();
     }
@@ -821,7 +822,7 @@ namespace id {
      *
      *  @param[in] string   the string
      */
-    static bool isRegistered( const std::string& string ) noexcept {
+    static bool isRegistered( const std::string& string ) {
 
       return string_conversion_dictionary.find( string ) != string_conversion_dictionary.end();
     }
@@ -834,7 +835,7 @@ namespace id {
      *  Note: this imposes logical order to the identifiers. It is public
      *        for test purposes only.
      */
-    long number() const noexcept {
+    std::int64_t number() const {
 
       return entries[ this->index_ ].number();
     }
@@ -850,7 +851,7 @@ namespace id {
     /**
      *  @brief Return the mt number for this reaction type
      */
-    const std::optional< short >& mt() const noexcept {
+    const std::optional< short >& mt() const {
 
       return entries[ this->index_ ].mt();
     }
@@ -858,7 +859,7 @@ namespace id {
     /**
      *  @brief Return the symbol for this reaction type
      */
-    const std::string& symbol() const noexcept {
+    const std::string& symbol() const {
 
       return entries[ this->index_ ].symbol();
     }
@@ -866,7 +867,7 @@ namespace id {
     /**
      *  @brief Return the particles emitted for this reaction type
      */
-    const std::optional< std::map< ParticleID, short > >& particles() const noexcept {
+    const std::optional< std::map< ParticleID, short > >& particles() const {
 
       return entries[ this->index_ ].particles();
     }
@@ -874,7 +875,7 @@ namespace id {
     /**
      *  @brief Return the level or subshell of the residual for this reaction type
      */
-    const std::optional< short >& level() const noexcept {
+    const std::optional< short >& level() const {
 
       return entries[ this->index_ ].level();
     }
@@ -899,7 +900,7 @@ namespace id {
      *  defined because it is a summation reaction or because the outgoing particles
      *  are not known due to complexity (e.g. anything or fission)
      */
-    bool isSpecial() const noexcept {
+    bool isSpecial() const {
 
       return !this->particles().has_value();
     }
@@ -920,7 +921,7 @@ namespace id {
     /**
      *  @brief Return whether or not the reaction type is ENDF compatible
      */
-    bool isCompatibleWithENDF() const noexcept {
+    bool isCompatibleWithENDF() const {
 
       return this->mt().has_value();
     }
@@ -1042,7 +1043,7 @@ namespace std {
   template <>
   struct hash< njoy::dryad::id::ReactionType > {
 
-    size_t operator()( const njoy::dryad::id::ReactionType& key ) const noexcept {
+    size_t operator()( const njoy::dryad::id::ReactionType& key ) const {
 
       return key.number();
     }

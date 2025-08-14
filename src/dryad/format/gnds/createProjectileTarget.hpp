@@ -20,9 +20,15 @@ namespace gnds {
 
   /**
    *  @brief Create a ProjectileTarget from a GNDS xml document
+   *
+   *  @param[in] document     the gnds xml document
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   static ProjectileTarget
   createProjectileTarget( const pugi::xml_document& document,
+                          bool normalise,
                           const std::string& style = "eval" ) {
 
     auto suite = document.child( "reactionSuite" );
@@ -33,7 +39,7 @@ namespace gnds {
       id::ParticleID target( suite.attribute( "target" ).as_string() );
       InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
 
-      std::vector< Reaction > reactions = createReactions( projectile, target, suite, style );
+      std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
 
       return ProjectileTarget( std::move( projectile ), std::move( target ),
                                type, std::move( reactions ) );

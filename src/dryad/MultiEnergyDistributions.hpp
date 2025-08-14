@@ -22,7 +22,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const MultiEnergyDistributions& right ) const noexcept {
+    bool operator==( const MultiEnergyDistributions& right ) const {
 
       return true;
     }
@@ -32,7 +32,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const MultiEnergyDistributions& right ) const noexcept {
+    bool operator!=( const MultiEnergyDistributions& right ) const {
 
       return false;
     }

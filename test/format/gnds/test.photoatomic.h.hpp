@@ -1,7 +1,169 @@
 namespace photoatomic {
 
 // test functions based on photoat-001_H_000.endf
-namespace h1 {
+namespace h0 {
+
+  void verifyDocumentation( const Documentation& documentation ) {
+
+    std::string description =
+      "  1-H -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen, et al.               \n"
+      " NDS-IAEA-225         DIST-AUG24 REV1-NOV23            20240830   \n"
+      "---- ENDF/B-VIII.1    MATERIAL  100         REVISION 1            \n"
+      "----- PHOTO-ATOMIC INTERACTION DATA                               \n"
+      "------ ENDF-6                                                     \n"
+      " =================================================================\n"
+      " The Livermore Evaluated Photon Data Library (EPDL97) in the      \n"
+      " ENDF-6 Format.                                                   \n"
+      " =================================================================\n"
+      "  Contents                                                        \n"
+      " =================================================================\n"
+      "  MF/MT     Description                                           \n"
+      " =================================================================\n"
+      "  23/501   Total cross sections                                   \n"
+      "  23/502   Coherent scattering cross sections                     \n"
+      "  23/504   Incoherent scattering cross sections                   \n"
+      "  23/515   Pair production cross sections, Electron field         \n"
+      "  23/516   Pair production cross sections, Total                  \n"
+      "  23/517   Pair production cross sections, Nuclear field          \n"
+      "  23/522   Total photoionization cross section                    \n"
+      "  23/534   K (1S1/2)    Photoionization subshell cross section    \n"
+      " =================================================================\n"
+      "  27/502   Coherent scattering form factors                       \n"
+      "  27/504   Incoherent scattering functions                        \n"
+      "  27/505   Imaginary anomalous scattering factor                  \n"
+      "  27/506   Real anomalous scattering factor                       \n"
+      " =================================================================\n"
+      "  Warning                                                         \n"
+      " =================================================================\n"
+      "  MF/MT combinations used to define photoionization subshell cross\n"
+      "  sections (MF=23, MT=534-572) and coherent anomalous scattering  \n"
+      "  factors (MF=27, MT=505 AND 506) are newly defined MF/MT numbers \n"
+      "  for ENDF/B-VI that did not exist in earlier versions of ENDF/B. \n"
+      "  If you are not prepared to use this data you need merely delete \n"
+      "  it and all of the remaining data will still be consistent and   \n"
+      "  equivalent to the types of data in earlier versions of ENDF/B.  \n"
+      "  However, this will limit the range of problems to which this    \n"
+      "  data can be applied (see: ref. 1 for details).                  \n"
+      " =================================================================\n"
+      "  Definition of new types of data                                 \n"
+      " =================================================================\n"
+      "  1) The total photoionization cross section is equal to the sum  \n"
+      "     of the photoionization subshell cross sections.              \n"
+      "                                                                  \n"
+      "     For each subshell on the second line of a section the C1 and \n"
+      "     C2 fields are defined as,                                    \n"
+      "                                                                  \n"
+      "     EPE = The photoionization edge energy (similar to Q-value)   \n"
+      "     EFL = The fluorescence yield (eV/photoionization)            \n"
+      "                                                                  \n"
+      "  2) The angular distribution of coherently scattered photons is, \n"
+      "                                                                  \n"
+      "     S(E,MU) = 3*T/8*(1 + MU**2)*((FF(M)+F1(E))**2+(F2(E))**2)    \n"
+      "                                                                  \n"
+      "     S(E,MU) = Angular distributions (barns per unit cosine)      \n"
+      "     T       = The Thomson cross section                          \n"
+      "     MU      = The cosine of the scattering angle                 \n"
+      "     FF(M)   = The atomic form factor                             \n"
+      "     M       = Momentum transfer = SIN(THETA/2)/LAMBDA/4*PI       \n"
+      "     F1(E)   = The real anomalous scattering factor               \n"
+      "     F2(E)   = The imaginary anomalous scattering factor          \n"
+      "                                                                  \n"
+      "     F1(E) and F2(E) are isotropic.                               \n"
+      "                                                                  \n"
+      "     When F1(E) = F2(E) = 0 this reduces to the result obtained   \n"
+      "     using only form factors (the older ENDF/B convention).       \n"
+      " =================================================================\n"
+      " Differences between EPDL97 and the data base presented here      \n"
+      " =================================================================\n"
+      " 1) Energy range - EPDL97 - 1 eV to 100 GeV                       \n"
+      "                   Here   - 1 eV TO 100 GeV (previously 100 MeV)  \n"
+      " 2) Type of Data - EPDL97 - Photon interaction including          \n"
+      "                            photoexcitation                       \n"
+      "                   Here   - Photon interaction  - ENDF/B-VI has   \n"
+      "                            no provision for photoexcitation      \n"
+      " 3) Secondary E  - EPDL97 - Average energy of each secondary      \n"
+      "                            (photons, electrons, positrons)       \n"
+      "                   HERE   - No secondary energy data              \n"
+      " 4) Interpolation- EPDL97 - Cross sections are Log X vs. Log Y    \n"
+      "                            interpolable - the total cross        \n"
+      "                            section is not included               \n"
+      "                          - Form factors and scattering functions \n"
+      "                            are Log X vs. Log y, except first     \n"
+      "                            interval.                             \n"
+      "                          - Anomalous scattering factors linearly \n"
+      "                            interpolable (they can be negative)   \n"
+      "                   Here   - Up through ENDF/B-V photon interaction\n"
+      "                            cross sections were Log X vs. Log Y.  \n"
+      "                          - For the first two Mods. of ENDF/B-VI  \n"
+      "                            in order to consistently define the   \n"
+      "                            total cross sections at ALL energies  \n"
+      "                            all cross sections were linearized.   \n"
+      "                            This was NOT a good idea.             \n"
+      "                          - Starting with Mod. 3, cross sections  \n"
+      "                            are left in Log X vs. Log. Y form so  \n"
+      "                            that they are IDENTICAL to what's in  \n"
+      "                            EPDL97.                               \n"
+      "                            The total is defined ONLY at the      \n"
+      "                            energies tabulated in any other cross \n"
+      "                            section.                              \n"
+      "                 WARNING  - As a result the total cross section   \n"
+      "                            MUST NOT be interpolated to define the\n"
+      "                            total between tabulated energies. The \n"
+      "                            ONLY consist way to define the total  \n"
+      "                            between tabulated energies is to      \n"
+      "                            interpolate all of the partials and   \n"
+      "                            add them up.                          \n"
+      " =================================================================\n"
+      "  References                                                      \n"
+      " =================================================================\n"
+      "  1) D.E. Cullen, M.H. Chen, J.H. Hubbell, S.T. Perkins,          \n"
+      "  E.F. Plechaty, J.A. Rathkopf and J.H. Scofield, Tables and      \n"
+      "  graphs of photon interaction cross sections from 10 eV to 100   \n"
+      "  GeV derived from the LLNL Evaluated Photon data library (EPDL), \n"
+      "  UCRL-50400, Vol. 6, Rev. 4, Part A: Z = 1 to 50 and Part B:     \n"
+      "  Z = 51 to 100, Lawrence Livermore National Laboratory (1989)    \n"
+      "  2) D.E. Cullen, J.H. Hubbell and L.D. Kissel, EPDL97: the       \n"
+      "  Evaluated Photon Data Library, '97 Version, UCRL-50400, Vol. 6, \n"
+      "  Rev. 5, Lawrence Livermore National Laboratory (1997)           \n"
+      "  3) D.E. Cullen \"A Survey of Atomic Binding Energies for use     \n"
+      "  in EPICS2017\" ,IAEA-NDS-224, (2017), Nuclear Data Section,      \n"
+      "  IAEA, Vienna, Austria                                           \n"
+      "  4) D.E. Cullen \"A Survey of Photon Cross Section Data for use   \n"
+      "  in EPICS2017\" ,IAEA-NDS-225, (2017), Nuclear Data Section,      \n"
+      "  IAEA, Vienna, Austria                                           \n"
+      "  5) D.E. Cullen,\"EPICS2017: April 2019 Status Report\",           \n"
+      "  IAEA-NDS-228, April 2019, Nuclear Data Section,                 \n"
+      "  IAEA, Vienna, Austria.                                          \n"
+      "  6) D.E. Cullen,\"EPICS2023: August 2023 Status Report\",          \n"
+      "  IAEA-NDS-242, August 2023, Nuclear Data Section,                \n"
+      "  IAEA, Vienna, Austria.                                          \n"
+      "                                                                  \n"
+      "  These are the primary references to the contents of this library\n"
+      "  and they contain a complete list of references to the sources   \n"
+      "  of data used in this library, methods of evaluation, accuracy   \n"
+      "  of the data, etc.                                               \n"
+      " =================================================================\n"
+      "  History                                                         \n"
+      " =================================================================\n"
+      " 1) Oct. 1989 - Initial Release                                   \n"
+      " 2) Aug. 1990 - Updated Photoelectic (total+shellS)               \n"
+      " 3) July 1997 - Complete re-evaluation                            \n"
+      " 4) Sept.2014 - Updated based on recently published data.         \n"
+      "              - Insured Standard C, C++, FORTRAN format           \n"
+      " 5) Nov. 2017 - New Binding Energies (see, ref. 3)                \n"
+      "              - New Photoelectric and Coherent Cross Sections     \n"
+      "              - New Anomalous Scattering Factors (see, ref. 4)    \n"
+      "              - ALL Cross Sections Lin-Lin Interpolable           \n"
+      " 6) Aug. 2023 - Delete repeated points. Threshold start with XC=0.\n"
+      " =================================================================\n"
+      " ***************** Program FIXUP (Version 2023-2) ****************\n"
+      " **************** Program DICTIN (VERSION 2023-1) ****************\n";
+
+    CHECK( std::nullopt == documentation.awr() );
+    CHECK( std::nullopt == documentation.library() );
+    CHECK( std::nullopt == documentation.version() );
+    CHECK( std::nullopt == documentation.description() );
+  }
 
   void verifyTotalReaction( const Reaction& reaction ) {
 
@@ -10,7 +172,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -50,7 +211,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -76,7 +236,6 @@ namespace h1 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 
@@ -162,7 +321,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -188,7 +346,6 @@ namespace h1 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( true == gamma.isLinearised() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 
@@ -225,7 +382,7 @@ namespace h1 {
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
-    }
+  }
 
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {
 
@@ -234,7 +391,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -279,7 +435,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -321,7 +476,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -356,7 +510,6 @@ namespace h1 {
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( true == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -394,7 +547,6 @@ namespace h1 {
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( false == reaction.hasProducts() );
-    CHECK( true == reaction.isLinearised() );
 
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
@@ -419,6 +571,78 @@ namespace h1 {
     CHECK_THAT( 7.7360E-15, WithinRel( reaction.crossSection().values()[903] ) );
 
     CHECK( 0 == reaction.numberProducts() );
+  }
+
+  void verifyH0( const ProjectileTarget& H0, bool normalise ) {
+
+    verifyDocumentation( H0.documentation() );
+
+    CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
+    CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
+
+    CHECK( InteractionType::Atomic == H0.interactionType() );
+
+    CHECK( std::nullopt == H0.resonances() );
+
+    CHECK( true == H0.hasReaction( id::ReactionID(  "501" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "502" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "504" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "515" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "516" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "517" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "522" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "534" ) ) );
+    CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+    CHECK( 8 == H0.reactions().size() );
+
+    auto total = H0.reactions()[0];
+    verifyTotalReaction( total );
+
+    auto coherent = H0.reactions()[1];
+    verifyCoherentReaction( coherent );
+
+    auto incoherent = H0.reactions()[2];
+    verifyIncoherentReaction( incoherent );
+
+    auto epairproduction = H0.reactions()[3];
+    verifyElectronFieldPairProductionReaction( epairproduction );
+
+    auto tpairproduction = H0.reactions()[4];
+    verifyTotalPairProductionReaction( tpairproduction );
+
+    auto npairproduction = H0.reactions()[5];
+    verifyNuclearFieldPairProductionReaction( npairproduction );
+
+    auto tionisation = H0.reactions()[6];
+    verifyTotalIonisationReaction( tionisation );
+
+    auto ionisation = H0.reactions()[7];
+    verifyIonisationReaction( ionisation );
+
+    total = H0.reaction( id::ReactionID( "501" ) );
+    verifyTotalReaction( total );
+
+    coherent = H0.reaction( id::ReactionID( "502" ) );
+    verifyCoherentReaction( coherent );
+
+    incoherent = H0.reaction( id::ReactionID( "504" ) );
+    verifyIncoherentReaction( incoherent );
+
+    epairproduction = H0.reaction( id::ReactionID( "515" ) );
+    verifyElectronFieldPairProductionReaction( epairproduction );
+
+    tpairproduction = H0.reaction( id::ReactionID( "516" ) );
+    verifyTotalPairProductionReaction( tpairproduction );
+
+    npairproduction = H0.reaction( id::ReactionID( "517" ) );
+    verifyNuclearFieldPairProductionReaction( npairproduction );
+
+    tionisation = H0.reaction( id::ReactionID( "522" ) );
+    verifyTotalIonisationReaction( tionisation );
+
+    ionisation = H0.reaction( id::ReactionID( "534" ) );
+    verifyIonisationReaction( ionisation );
   }
 
 } // namespace h1

@@ -13,7 +13,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "boundaries" ) {
 
-  GIVEN( "ENDF boudnary indeices" ) {
+  GIVEN( "ENDF boundary indices" ) {
 
     WHEN( "a single boundary index type is given" ) {
 
