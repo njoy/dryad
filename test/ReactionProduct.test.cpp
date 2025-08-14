@@ -11,9 +11,8 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const ReactionProduct& );
-void verifyTabulatedChunk( const ReactionProduct& );
-void verifyTabulatedLinearisedChunk( const ReactionProduct& );
+void verifyChunk( const ReactionProduct&, bool );
+void verifyTabulatedChunk( const ReactionProduct&, bool );
 
 SCENARIO( "ReactionProduct" ) {
 
@@ -23,13 +22,24 @@ SCENARIO( "ReactionProduct" ) {
 
       id::ParticleID id = id::ParticleID::neutron();
       int multiplicity = 1;
+      TwoBodyDistributionData distribution( ReferenceFrame::CentreOfMass,
+                                            LegendreAngularDistributions(
+                                              { 1e-5, 20. },
+                                              { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk( std::move( id ), std::move( multiplicity ) );
+      ReactionProduct chunk1( id, multiplicity,
+                              distribution, std::nullopt, false );
+      ReactionProduct chunk2( std::move( id ), std::move( multiplicity ),
+                              std::move( distribution ), std::nullopt, true );
 
-      THEN( "a ReactionProduct can be constructed and members can be tested" ) {
+      verifyChunk( chunk1, false );
+      verifyChunk( chunk2, true );
 
-        verifyChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyChunk( chunk1, true );
+      verifyChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -43,13 +53,23 @@ SCENARIO( "ReactionProduct" ) {
                                           { 1, 4 },
                                           { InterpolationType::LinearLinear,
                                             InterpolationType::LinearLog } );
+      TwoBodyDistributionData distribution( ReferenceFrame::CentreOfMass,
+                                            LegendreAngularDistributions(
+                                              { 1e-5, 20. },
+                                              { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk( std::move( id ), std::move( multiplicity ) );
+      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt, false );
+      ReactionProduct chunk2( std::move( id ), std::move( multiplicity ), std::move( distribution ),
+                              std::nullopt, true );
 
-      THEN( "a ReactionProduct can be constructed and members can be tested" ) {
+      verifyTabulatedChunk( chunk1, false );
+      verifyTabulatedChunk( chunk2, true );
 
-        verifyTabulatedChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyTabulatedChunk( chunk1, true );
+      verifyTabulatedChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -57,7 +77,11 @@ SCENARIO( "ReactionProduct" ) {
 
     WHEN( "an instance of Reaction is given" ) {
 
-      ReactionProduct chunk( id::ParticleID::neutron(), 1 );
+      ReactionProduct chunk( id::ParticleID::neutron(), 1,
+                             TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
+                                                       LegendreAngularDistributions(
+                                                         { 1e-5, 20. },
+                                                         { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) );
 
       THEN( "the product identifier can be changed" ) {
 
@@ -70,7 +94,7 @@ SCENARIO( "ReactionProduct" ) {
 
         chunk.identifier( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the multiplicity can be changed" ) {
@@ -84,18 +108,22 @@ SCENARIO( "ReactionProduct" ) {
 
         chunk.multiplicity( newmultiplicity );
 
-        verifyTabulatedChunk( chunk );
+        verifyTabulatedChunk( chunk, false );
 
         chunk.multiplicity( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the distribution data can be changed" ) {
 
         std::optional< ReactionProduct::DistributionData > newdistribution =
             TwoBodyDistributionData( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
-        std::optional< ReactionProduct::DistributionData > original = std::nullopt;
+        std::optional< ReactionProduct::DistributionData > original =
+            TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                     LegendreAngularDistributions(
+                                       { 1e-5, 20. },
+                                       { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
         chunk.distributionData( newdistribution );
 
@@ -103,7 +131,7 @@ SCENARIO( "ReactionProduct" ) {
 
         chunk.distributionData( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the average energy data can be changed" ) {
@@ -122,7 +150,7 @@ SCENARIO( "ReactionProduct" ) {
 
         chunk.averageEnergy( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -152,7 +180,7 @@ SCENARIO( "ReactionProduct" ) {
 
 } // SCENARIO
 
-void verifyChunk( const ReactionProduct& chunk ) {
+void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
 
   // ReactionProduct identifier
   CHECK( id::ParticleID( "n" ) == chunk.identifier() );
@@ -162,18 +190,49 @@ void verifyChunk( const ReactionProduct& chunk ) {
   CHECK( true == std::holds_alternative< int >( multiplicity ) );
   CHECK( 1 == std::get< int >( multiplicity ) );
 
-  // distribution data
+  // average energy data
   CHECK( std::nullopt == chunk.averageEnergy() );
 
   // distribution data
-  CHECK( std::nullopt == chunk.distributionData() );
+  auto distribution = chunk.distributionData();
+  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( distribution.value() ) );
+
+  double normalisation = normalise ? 2. : 1.;
+
+  auto data = std::get< TwoBodyDistributionData >( distribution.value() );
+  CHECK( DistributionDataType::TwoBody == data.type() );
+  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+  LegendreAngularDistributions angle = std::get< LegendreAngularDistributions >( data.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   // metadata
   CHECK( false == chunk.hasAverageEnergy() );
-  CHECK( false == chunk.hasDistributionData() );
+  CHECK( true == chunk.hasDistributionData() );
 }
 
-void verifyTabulatedChunk( const ReactionProduct& chunk ) {
+void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
 
   // ReactionProduct identifier
   CHECK( id::ParticleID( "n" ) == chunk.identifier() );
@@ -203,13 +262,45 @@ void verifyTabulatedChunk( const ReactionProduct& chunk ) {
   CHECK( InterpolationType::LinearLog == multiplicity.interpolants()[1] );
   CHECK( false == multiplicity.isLinearised() );
 
-  // distribution data
+  // average energy data
   CHECK( std::nullopt == chunk.averageEnergy() );
 
   // distribution data
-  CHECK( std::nullopt == chunk.distributionData() );
+  // distribution data
+  auto distribution = chunk.distributionData();
+  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( distribution.value() ) );
+
+  double normalisation = normalise ? 2. : 1.;
+
+  auto data = std::get< TwoBodyDistributionData >( distribution.value() );
+  CHECK( DistributionDataType::TwoBody == data.type() );
+  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+  LegendreAngularDistributions angle = std::get< LegendreAngularDistributions >( data.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   // metadata
   CHECK( false == chunk.hasAverageEnergy() );
-  CHECK( false == chunk.hasDistributionData() );
+  CHECK( true == chunk.hasDistributionData() );
 }

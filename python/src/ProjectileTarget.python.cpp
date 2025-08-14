@@ -41,10 +41,12 @@ void wrapProjectileTarget( python::module& module ) {
 
     python::init< Documentation, ParticleID, ParticleID,
                   InteractionType,
-                  std::vector< Reaction > >(),
+                  std::vector< Reaction >,
+                  bool >(),
     python::arg( "documentation" ), python::arg( "projectile" ),
     python::arg( "target" ), python::arg( "type" ),
     python::arg( "reactions" ),
+    python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
     "    self            the reaction\n"
@@ -52,21 +54,27 @@ void wrapProjectileTarget( python::module& module ) {
     "    projectile      the particle identifier\n"
     "    target          the target identifier\n"
     "    type            the interaction type\n"
-    "    reactions       the reaction data"
+    "    reactions       the reaction data\n"
+    "    normalise       option to indicate whether or not to normalise\n"
+    "                    all probability data (default: no normalisation)"
   )
   .def(
 
     python::init< ParticleID, ParticleID, InteractionType,
-                  std::vector< Reaction > >(),
+                  std::vector< Reaction >,
+                  bool >(),
     python::arg( "projectile" ), python::arg( "target" ),
     python::arg( "type" ), python::arg( "reactions" ),
+    python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
     "    self         the reaction\n"
     "    projectile   the particle identifier\n"
     "    target       the target identifier\n"
     "    type         the interaction type\n"
-    "    reactions    the reaction data"
+    "    reactions    the reaction data\n"
+    "    normalise    option to indicate whether or not to normalise\n"
+    "                 all probability data (default: no normalisation)"
   )
   .def_property(
 
@@ -146,6 +154,12 @@ void wrapProjectileTarget( python::module& module ) {
     "Arguments:\n"
     "    self        the ProjectileTarget data\n"
     "    tolerance   the linearisation tolerance"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution data"
   )
   .def_static(
 

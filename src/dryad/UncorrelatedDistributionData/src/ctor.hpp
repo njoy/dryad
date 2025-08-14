@@ -12,13 +12,22 @@ UncorrelatedDistributionData& operator=( UncorrelatedDistributionData&& ) = defa
 /**
  *  @brief Constructor
  *
- *  @param frame    the reference frame of the distribution data
- *  @param angle    the angular distributions
- *  @param energy   the energy distributions
+ *  @param frame       the reference frame of the distribution data
+ *  @param angle       the angular distributions
+ *  @param energy      the energy distributions
+ *  @param normalise   option to indicate whether or not to normalise
+ *                     all probability data (default: no normalisation)
  */
 UncorrelatedDistributionData( ReferenceFrame frame,
                               AngularDistributions angle,
-                              EnergyDistributions energy ) :
+                              EnergyDistributions energy,
+                              bool normalise = false ) :
     frame_( std::move( frame ) ),
     angle_( std::move( angle ) ),
-    energy_( std::move( energy ) ) {}
+    energy_( std::move( energy ) ) {
+
+  if ( normalise ) {
+
+    this->normalise();
+  }
+}
