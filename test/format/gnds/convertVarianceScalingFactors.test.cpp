@@ -4,32 +4,32 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/convertInverseLengths.hpp"
+#include "dryad/format/gnds/convertVarianceScalingFactors.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "convertInverseLengths" ) {
+SCENARIO( "convertVarianceScalingFactors" ) {
 
-  GIVEN( "GNDS inverse length ranges and units" ) {
+  GIVEN( "GNDS variance scaling factors ranges and units" ) {
 
-    WHEN( "a single range of inverse lengths is given" ) {
+    WHEN( "a single range of variance scaling factors is given" ) {
 
       THEN( "it can be converted" ) {
 
         std::vector< double > x = { 1., 1000. };
-        format::gnds::convertInverseLengths( x, "1/Ang" );
+        format::gnds::convertVarianceScalingFactors( x, "Mb**2" );
         CHECK( 2 == x.size() );
-        CHECK(    1. == x[0] );
-        CHECK( 1000. == x[1] );
+        CHECK(    1e+12 == x[0] );
+        CHECK( 1000e+12 == x[1] );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         std::vector< double > x = { 1., 1000. };
-        CHECK_THROWS( format::gnds::convertInverseLengths( x, "unsupported" ) );
+        CHECK_THROWS( format::gnds::convertVarianceScalingFactors( x, "unsupported" ) );
         CHECK( 2 == x.size() );
       } // THEN
     } // WHEN

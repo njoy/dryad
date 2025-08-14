@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a CoherentDistributionData from a GNDS coherentPhotonScattering node
    */
-  static CoherentDistributionData 
+  static CoherentDistributionData
   createCoherentDistributionData( const pugi::xml_node& coherent ) {
 
     // check that this is a valid coherentPhotonScattering node
