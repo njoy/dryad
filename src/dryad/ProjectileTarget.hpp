@@ -308,9 +308,9 @@ namespace dryad {
      */
     void normalise() {
 
-      for ( auto&& product : this->reactions() ) {
+      for ( auto&& reaction : this->reactions() ) {
 
-        product.normalise();
+        reaction.normalise();
       }
     }
 
