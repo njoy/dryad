@@ -21,7 +21,7 @@ namespace id {
 
   /**
    *  @class
-   *  @brief The reaction indentifier, with associated symbols, aliases, particles, etc.
+   *  @brief The reaction identifier, with associated symbols, aliases, particles, etc.
    */
   class NewReactionID {
 

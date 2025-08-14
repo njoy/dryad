@@ -55,7 +55,7 @@ class Entry {
           symbol += ",";
         }
       }
-      symbol += type.resolve( projectile, target ).symbol();
+      symbol += generateResidual( projectile, target, type ).value().symbol();
 
       if ( type.hasPartialDesignator() ) {
 

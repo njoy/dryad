@@ -82,7 +82,7 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
 static std::size_t getIndex( const std::map< ParticleID, short >& particles, int level ) {
 
   // generate the symbol for the reaction entry
-  long number = 0;
+  std::int64_t number = 0;
 
   // generate number based on outgoing particles
   if ( ( particles.size() == 0 ) ||
