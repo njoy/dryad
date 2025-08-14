@@ -96,6 +96,18 @@ SCENARIO( "ReactionID" ) {
       CHECK( id == NewReactionID( "e-,U->e-,U[large-angle-scattering]" ) );
 
       CHECK( size + 5 == NewReactionID::size() );
+
+      id = NewReactionID( eminus, u, ReactionType( 526 ) );
+      CHECK( eminus == id.projectile() );
+      CHECK( u == id.target() );
+      CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
+      CHECK( u == id.residual() );
+      CHECK( ReactionType( 526 ) == id.reactionType() );
+      CHECK( InteractionType::Atomic == id.interactionType() );
+      CHECK( "e-,U->e-,U[total-scattering]" == id.symbol() );
+      CHECK( id == NewReactionID( "e-,U->e-,U[total-scattering]" ) );
+
+      CHECK( size + 6 == NewReactionID::size() );
     }
   } // GIVEN
 
@@ -142,6 +154,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( map[ NewReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
     } // THEN
 
+//! @todo we need a hash function on NewReactionID
 //    THEN( "instances can be used as keys in a std::unordered_map" ) {
 //
 //      std::unordered_map< NewReactionID, std::string > map{
