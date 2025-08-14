@@ -24,7 +24,11 @@ namespace dryad {
 
     /* fields */
     TabulatedAngularDistributionFunction pdf_;
-    std::optional< TabulatedAngularDistributionFunction > cdf_;
+    TabulatedAngularDistributionFunction cdf_;
+
+    /* auxiliary functions */
+
+    #include "dryad/TabulatedAngularDistribution/src/calculateCdf.hpp"
 
   public:
 
@@ -82,7 +86,7 @@ namespace dryad {
     /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
-    const std::optional< TabulatedAngularDistributionFunction >& cdf() const {
+    const TabulatedAngularDistributionFunction& cdf() const {
 
       return this->cdf_;
     }
@@ -98,6 +102,15 @@ namespace dryad {
     }
 
     /**
+     *  @brief Normalise the distribution
+     */
+    void normalise() {
+
+      this->pdf_.normalise();
+      this->calculateCdf( true );
+    }
+
+    /**
      *  @brief Return the average cosine defined by the distribution
      */
     double averageCosine() const { return this->pdf().mean(); }
@@ -106,14 +119,14 @@ namespace dryad {
      *  @brief Return a linearised angular distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-
-      // no need to normalise the resulting pdf, the TabulatedAngularDistribution ctor
-      // will take care of normalisation
+    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {},
+                                            bool normalise = false ) const {
 
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( tolerance );
-      return TabulatedAngularDistribution( std::move( pdf ) );
+      return TabulatedAngularDistribution( std::move( pdf ), normalise );
     }
 
     /**

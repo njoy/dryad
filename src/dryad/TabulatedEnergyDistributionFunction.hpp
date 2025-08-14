@@ -71,6 +71,7 @@ namespace dryad {
     using InterpolationTable::operator();
 
     using InterpolationTable::integral;
+    using InterpolationTable::cumulativeIntegral;
     using InterpolationTable::mean;
 
     /**

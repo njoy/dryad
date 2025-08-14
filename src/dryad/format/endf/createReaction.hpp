@@ -22,6 +22,10 @@ namespace endf {
 
   /**
    *  @brief Add a reaction product if it is not in the list
+   *
+   *  @param[in] particle        the particle identifier
+   *  @param[in] multiplicity    the multiplicity of the target
+   *  @param[in, out] products   the current set of reaction products
    */
   void addProduct( const id::ParticleID& particle, int multiplicity,
                    std::vector< ReactionProduct >& products ) {
@@ -41,9 +45,17 @@ namespace endf {
 
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] target       the unparsed ENDF material
+   *  @param[in] mt           the MT number to process
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
    */
   Reaction createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                           const ENDFtk::tree::Material& material, int mt ) {
+                           const ENDFtk::tree::Material& material, int mt,
+                           bool normalise ) {
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -59,7 +71,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt, normalise );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
@@ -126,7 +138,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt );
+      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt, normalise );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 

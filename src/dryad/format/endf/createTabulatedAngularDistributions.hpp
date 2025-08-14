@@ -24,7 +24,9 @@ namespace endf {
    *         ENDF MF6 DiscreteTwoBodyScattering component
    */
   TabulatedAngularDistributions
-  createTabulatedAngularDistributions( const ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering& distribution ) {
+  createTabulatedAngularDistributions(
+      const ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering& distribution,
+      bool normalise ) {
 
     try {
 
@@ -33,7 +35,7 @@ namespace endf {
       distributions.reserve( energies.size() );
       for ( auto&& table : distribution.distributions() ) {
 
-        distributions.emplace_back( createTabulatedAngularDistribution( table ) );
+        distributions.emplace_back( createTabulatedAngularDistribution( table, normalise ) );
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );

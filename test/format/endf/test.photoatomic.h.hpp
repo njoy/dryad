@@ -530,5 +530,77 @@ namespace h0 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
+  void verifyH0( const ProjectileTarget& H0, bool normalise ) {
+
+    verifyDocumentation( H0.documentation() );
+
+    CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
+    CHECK( id::ParticleID( "Hydrogen" ) == H0.targetIdentifier() );
+
+    CHECK( InteractionType::Atomic == H0.interactionType() );
+
+    CHECK( std::nullopt == H0.resonances() );
+
+    CHECK( true == H0.hasReaction( id::ReactionID(  "501" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "502" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "504" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "515" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "516" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "517" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "522" ) ) );
+    CHECK( true == H0.hasReaction( id::ReactionID(  "534" ) ) );
+    CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+    CHECK( 8 == H0.reactions().size() );
+
+    auto total = H0.reactions()[0];
+    verifyTotalReaction( total );
+
+    auto coherent = H0.reactions()[1];
+    verifyCoherentReaction( coherent );
+
+    auto incoherent = H0.reactions()[2];
+    verifyIncoherentReaction( incoherent );
+
+    auto epairproduction = H0.reactions()[3];
+    verifyElectronFieldPairProductionReaction( epairproduction );
+
+    auto tpairproduction = H0.reactions()[4];
+    verifyTotalPairProductionReaction( tpairproduction );
+
+    auto npairproduction = H0.reactions()[5];
+    verifyNuclearFieldPairProductionReaction( npairproduction );
+
+    auto tionisation = H0.reactions()[6];
+    verifyTotalIonisationReaction( tionisation );
+
+    auto ionisation = H0.reactions()[7];
+    verifyIonisationReaction( ionisation );
+
+    total = H0.reaction( id::ReactionID( "501" ) );
+    verifyTotalReaction( total );
+
+    coherent = H0.reaction( id::ReactionID( "502" ) );
+    verifyCoherentReaction( coherent );
+
+    incoherent = H0.reaction( id::ReactionID( "504" ) );
+    verifyIncoherentReaction( incoherent );
+
+    epairproduction = H0.reaction( id::ReactionID( "515" ) );
+    verifyElectronFieldPairProductionReaction( epairproduction );
+
+    tpairproduction = H0.reaction( id::ReactionID( "516" ) );
+    verifyTotalPairProductionReaction( tpairproduction );
+
+    npairproduction = H0.reaction( id::ReactionID( "517" ) );
+    verifyNuclearFieldPairProductionReaction( npairproduction );
+
+    tionisation = H0.reaction( id::ReactionID( "522" ) );
+    verifyTotalIonisationReaction( tionisation );
+
+    ionisation = H0.reaction( id::ReactionID( "534" ) );
+    verifyIonisationReaction( ionisation );
+  }
+
 } // namespace h1
 } // namespace neutron

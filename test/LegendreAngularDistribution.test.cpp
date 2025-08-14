@@ -12,158 +12,27 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 
+void verifyChunk( const LegendreAngularDistribution&, bool );
+
 SCENARIO( "LegendreAngularDistribution" ) {
 
-  GIVEN( "Legendre coefficients for a normalised expansion" ) {
-
-    WHEN( "the data is given explicitly" ) {
-
-      std::vector< double > coefficients = { 0.5, 0.25 };
-
-      LegendreAngularDistribution chunk( std::move( coefficients ) );
-
-      THEN( "a LegendreAngularDistribution can be constructed and members can "
-            "be tested" ) {
-
-        CHECK_THAT( 0.5 , WithinRel( chunk.coefficients()[0] ) );
-        CHECK_THAT( 0.25, WithinRel( chunk.coefficients()[1] ) );
-
-        auto pdf = chunk.pdf();
-        CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
-        CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
-        CHECK( 1 == pdf.order() );
-        CHECK( 2 == pdf.coefficients().size() );
-        CHECK_THAT( 0.5 , WithinRel( pdf.coefficients()[0] ) );
-        CHECK_THAT( 0.25, WithinRel( pdf.coefficients()[1] ) );
-
-        CHECK_THAT( 1.0, WithinRel( pdf.integral() ) ); // normalised pdf
-
-        auto cdf = chunk.cdf();
-        CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
-        CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
-        CHECK( 2 == cdf.order() );
-        CHECK( 3 == cdf.coefficients().size() );
-        CHECK_THAT( 0.4166666666666666, WithinRel( cdf.coefficients()[0] ) );
-        CHECK_THAT( 0.5               , WithinRel( cdf.coefficients()[1] ) );
-        CHECK_THAT( 0.0833333333333333, WithinRel( cdf.coefficients()[2] ) );
-        CHECK_THAT( 0., WithinRel( cdf( -1. ) ) );
-        CHECK_THAT( 1., WithinRel( cdf(  1. ) ) );
-      } // THEN
-
-      THEN( "a LegendreAngularDistribution can be evaluated" ) {
-
-        CHECK_THAT( 0.25, WithinRel( chunk( -1. ) ) );
-        CHECK_THAT( 0.5 , WithinRel( chunk(  0. ) ) );
-        CHECK_THAT( 0.75, WithinRel( chunk(  1. ) ) );
-      } // THEN
-
-      THEN( "the average cosine can be calculated" ) {
-
-        CHECK_THAT( 1. / 6., WithinRel( chunk.averageCosine() ) );
-      } // THEN
-
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
-
-        auto linear = chunk.linearise();
-
-        CHECK( 2 == linear.pdf().numberPoints() );
-        CHECK( 1 == linear.pdf().numberRegions() );
-
-        CHECK( 2 == linear.pdf().cosines().size() );
-        CHECK( 2 == linear.pdf().values().size() );
-        CHECK( 1 == linear.pdf().boundaries().size() );
-        CHECK( 1 == linear.pdf().interpolants().size() );
-
-        CHECK( 1 == linear.pdf().boundaries()[0] );
-
-        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
-
-        CHECK_THAT( -1.0      , WithinRel( linear.pdf().cosines()[0] ) );
-        CHECK_THAT(  1.0      , WithinRel( linear.pdf().cosines()[1] ) );
-
-        CHECK_THAT( 0.25, WithinRel( linear.pdf().values()[0] ) );
-        CHECK_THAT( 0.75, WithinRel( linear.pdf().values()[1] ) );
-
-        CHECK( true == linear.pdf().isLinearised() );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "Legendre coefficients for an unnormalised expansion" ) {
-
-    // the resulting distribution will be normalised, test results are equal to
-    // the previous case
+  GIVEN( "coefficients for an expansion" ) {
 
     WHEN( "the data is given explicitly" ) {
 
       std::vector< double > coefficients = { 1.0, 0.5 };
 
-      LegendreAngularDistribution chunk( std::move( coefficients ) );
+      LegendreAngularDistribution chunk1( coefficients, false );
+      LegendreAngularDistribution chunk2( std::move( coefficients ), true );
 
-      THEN( "a LegendreAngularDistribution can be constructed and members can "
-            "be tested" ) {
+      verifyChunk( chunk1, false );
+      verifyChunk( chunk2, true );
 
-        CHECK_THAT( 0.5 , WithinRel( chunk.coefficients()[0] ) );
-        CHECK_THAT( 0.25, WithinRel( chunk.coefficients()[1] ) );
+      chunk1.normalise();
+      chunk2.normalise();
 
-        auto pdf = chunk.pdf();
-        CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
-        CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
-        CHECK( 1 == pdf.order() );
-        CHECK( 2 == pdf.coefficients().size() );
-        CHECK_THAT( 0.5 , WithinRel( pdf.coefficients()[0] ) );
-        CHECK_THAT( 0.25, WithinRel( pdf.coefficients()[1] ) );
-
-        CHECK_THAT( 1.0, WithinRel( pdf.integral() ) ); // normalised pdf
-
-        auto cdf = chunk.cdf();
-        CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
-        CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
-        CHECK( 2 == cdf.order() );
-        CHECK( 3 == cdf.coefficients().size() );
-        CHECK_THAT( 0.4166666666666666, WithinRel( cdf.coefficients()[0] ) );
-        CHECK_THAT( 0.5               , WithinRel( cdf.coefficients()[1] ) );
-        CHECK_THAT( 0.0833333333333333, WithinRel( cdf.coefficients()[2] ) );
-        CHECK_THAT( 0., WithinRel( cdf( -1. ) ) );
-        CHECK_THAT( 1., WithinRel( cdf(  1. ) ) );
-      } // THEN
-
-      THEN( "a LegendreAngularDistribution can be evaluated" ) {
-
-        CHECK_THAT( 0.25, WithinRel( chunk( -1. ) ) );
-        CHECK_THAT( 0.5 , WithinRel( chunk(  0. ) ) );
-        CHECK_THAT( 0.75, WithinRel( chunk(  1. ) ) );
-      } // THEN
-
-      THEN( "the average cosine can be calculated" ) {
-
-        CHECK_THAT( 1. / 6., WithinRel( chunk.averageCosine() ) );
-      } // THEN
-
-      THEN( "a LegendreAngularDistribution can be linearised" ) {
-
-        auto linear = chunk.linearise();
-
-        CHECK( 2 == linear.pdf().numberPoints() );
-        CHECK( 1 == linear.pdf().numberRegions() );
-
-        CHECK( 2 == linear.pdf().cosines().size() );
-        CHECK( 2 == linear.pdf().values().size() );
-        CHECK( 1 == linear.pdf().boundaries().size() );
-        CHECK( 1 == linear.pdf().interpolants().size() );
-
-        CHECK( 1 == linear.pdf().boundaries()[0] );
-
-        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
-
-        CHECK_THAT( -1.0      , WithinRel( linear.pdf().cosines()[0] ) );
-        CHECK_THAT(  1.0      , WithinRel( linear.pdf().cosines()[1] ) );
-
-        CHECK_THAT( 0.25, WithinRel( linear.pdf().values()[0] ) );
-        CHECK_THAT( 0.75, WithinRel( linear.pdf().values()[1] ) );
-
-        CHECK( true == linear.pdf().isLinearised() );
-      } // THEN
+      verifyChunk( chunk1, true );
+      verifyChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -173,7 +42,7 @@ SCENARIO( "LegendreAngularDistribution" ) {
 
       LegendreAngularDistribution left( { 0.5, 0.25 } );
       LegendreAngularDistribution equal( { 0.5, 0.25 } );
-      LegendreAngularDistribution unnormalised( { 1., 0.5 } );
+      LegendreAngularDistribution unnormalised( { 1., 0.5 }, true );
       LegendreAngularDistribution different( { 0.5, 0.1, 0.0001 } );
 
       THEN( "they can be compared" ) {
@@ -203,3 +72,71 @@ SCENARIO( "LegendreAngularDistribution" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+void verifyChunk( const LegendreAngularDistribution& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2.0 : 1.0;
+
+  CHECK_THAT( 1.0 / normalisation, WithinRel( chunk.coefficients()[0] ) );
+  CHECK_THAT( 0.5 / normalisation, WithinRel( chunk.coefficients()[1] ) );
+
+  auto pdf = chunk.pdf();
+  CHECK_THAT( -1., WithinRel( pdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( pdf.upperCosineLimit() ) );
+  CHECK( 1 == pdf.order() );
+  CHECK( 2 == pdf.coefficients().size() );
+  CHECK_THAT( 1.0 / normalisation, WithinRel( pdf.coefficients()[0] ) );
+  CHECK_THAT( 0.5 / normalisation, WithinRel( pdf.coefficients()[1] ) );
+
+  CHECK_THAT( 2.0 / normalisation, WithinRel( pdf.integral() ) );
+
+  auto cdf = chunk.cdf();
+  CHECK_THAT( -1., WithinRel( cdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( cdf.upperCosineLimit() ) );
+  CHECK( 2 == cdf.order() );
+  CHECK( 3 == cdf.coefficients().size() );
+  CHECK_THAT( 0.8333333333333333 / normalisation, WithinRel( cdf.coefficients()[0] ) );
+  CHECK_THAT( 1. / normalisation                , WithinRel( cdf.coefficients()[1] ) );
+  CHECK_THAT( 0.1666666666666666 / normalisation, WithinRel( cdf.coefficients()[2] ) );
+  CHECK_THAT( 0., WithinRel( cdf( -1. ) ) );
+  CHECK_THAT( 2. / normalisation, WithinRel( cdf(  1. ) ) );
+
+  // evaluate
+  CHECK_THAT( 0.5 / normalisation, WithinRel( chunk( -1. ) ) );
+  CHECK_THAT( 1.0 / normalisation, WithinRel( chunk(  0. ) ) );
+  CHECK_THAT( 1.5 / normalisation, WithinRel( chunk(  1. ) ) );
+
+  // average cosine
+  CHECK_THAT( 1. / 3. / normalisation, WithinRel( chunk.averageCosine() ) );
+
+  // linearisation
+  auto linear = chunk.linearise();
+
+  auto linearpdf = linear.pdf();
+  CHECK_THAT( -1., WithinRel( linearpdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( linearpdf.upperCosineLimit() ) );
+  CHECK( 2 == linearpdf.cosines().size() );
+  CHECK( 2 == linearpdf.values().size() );
+  CHECK( 1 == linearpdf.boundaries().size() );
+  CHECK( 1 == linearpdf.interpolants().size() );
+  CHECK_THAT( -1., WithinRel( linearpdf.cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( linearpdf.cosines()[1] ) );
+  CHECK_THAT(  0.5 / normalisation, WithinRel( linearpdf.values()[0] ) );
+  CHECK_THAT(  1.5 / normalisation, WithinRel( linearpdf.values()[1] ) );
+  CHECK( 1 == linearpdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == linearpdf.interpolants()[0] );
+
+  auto linearcdf = linear.cdf();
+  CHECK_THAT( -1., WithinRel( linearcdf.lowerCosineLimit() ) );
+  CHECK_THAT(  1., WithinRel( linearcdf.upperCosineLimit() ) );
+  CHECK( 2 == linearcdf.cosines().size() );
+  CHECK( 2 == linearcdf.values().size() );
+  CHECK( 1 == linearcdf.boundaries().size() );
+  CHECK( 1 == linearcdf.interpolants().size() );
+  CHECK_THAT( -1., WithinRel( linearcdf.cosines()[0] ) );
+  CHECK_THAT(  1., WithinRel( linearcdf.cosines()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( linearcdf.values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( linearcdf.values()[1] ) );
+  CHECK( 1 == linearcdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == linearcdf.interpolants()[0] );
+}

@@ -12,6 +12,8 @@ using Catch::Matchers::WithinAbs;
 // convenience typedefs
 using namespace njoy::dryad;
 
+void verifyChunk( const TabulatedEnergyDistribution&, bool );
+
 SCENARIO( "TabulatedEnergyDistribution" ) {
 
   GIVEN( "Energies and probabilities for a normalised table" ) {
@@ -19,167 +21,21 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > energies = { 0., 2., 3., 4. };
-      const std::vector< double > values = { 0., 0.25, 0.375, 0.5 };
+      const std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
-      TabulatedEnergyDistribution chunk( std::move( energies ), std::move( values ) );
+      TabulatedEnergyDistribution chunk1( energies, values,
+                                          InterpolationType::LinearLinear, false );
+      TabulatedEnergyDistribution chunk2( std::move( energies ), std::move( values ),
+                                          InterpolationType::LinearLinear, true );
 
-      THEN( "a TabulatedEnergyDistribution can be constructed and members can "
-            "be tested" ) {
+      verifyChunk( chunk1, false );
+      verifyChunk( chunk2, true );
 
-        CHECK_THAT(  0.   , WithinRel( chunk.energies()[0] ) );
-        CHECK_THAT(  2.   , WithinRel( chunk.energies()[1] ) );
-        CHECK_THAT(  3.   , WithinRel( chunk.energies()[2] ) );
-        CHECK_THAT(  4.   , WithinRel( chunk.energies()[3] ) );
-        CHECK_THAT(  0.   , WithinRel( chunk.values()[0] ) );
-        CHECK_THAT(  0.25 , WithinRel( chunk.values()[1] ) );
-        CHECK_THAT(  0.375, WithinRel( chunk.values()[2] ) );
-        CHECK_THAT(  0.5  , WithinRel( chunk.values()[3] ) );
+      chunk1.normalise();
+      chunk2.normalise();
 
-        auto pdf = chunk.pdf();
-        CHECK_THAT(  0., WithinRel( pdf.lowerEnergyLimit() ) );
-        CHECK_THAT(  4., WithinRel( pdf.upperEnergyLimit() ) );
-        CHECK_THAT(  0.   , WithinRel( pdf.energies()[0] ) );
-        CHECK_THAT(  2.   , WithinRel( pdf.energies()[1] ) );
-        CHECK_THAT(  3.   , WithinRel( pdf.energies()[2] ) );
-        CHECK_THAT(  4.   , WithinRel( pdf.energies()[3] ) );
-        CHECK_THAT(  0.   , WithinRel( pdf.values()[0] ) );
-        CHECK_THAT(  0.25 , WithinRel( pdf.values()[1] ) );
-        CHECK_THAT(  0.375, WithinRel( pdf.values()[2] ) );
-        CHECK_THAT(  0.5  , WithinRel( pdf.values()[3] ) );
-
-        CHECK( std::nullopt == chunk.cdf() );
-      } // THEN
-
-      THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
-
-        // values of x in the x grid
-        CHECK_THAT( 0.   , WithinRel( chunk( 0. ) ) );
-        CHECK_THAT( 0.25 , WithinRel( chunk( 2. ) ) );
-        CHECK_THAT( 0.375, WithinRel( chunk( 3. ) ) );
-        CHECK_THAT( 0.5  , WithinRel( chunk( 4. ) ) );
-
-        // values of x outside the x grid
-        CHECK_THAT( 0., WithinRel( chunk( -5. ) ) );
-        CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
-
-        // values of x inside the x grid
-        CHECK_THAT( 0.125 , WithinRel( chunk( 1.  ) ) );
-        CHECK_THAT( 0.4375, WithinRel( chunk( 3.5 ) ) );
-      } // THEN
-
-      THEN( "the average energy can be calculated" ) {
-
-        CHECK_THAT( 64. / 24., WithinRel( chunk.averageEnergy() ) );
-      } // THEN
-
-      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
-
-        auto linear = chunk.linearise();
-
-        CHECK( 4 == linear.pdf().numberPoints() );
-        CHECK( 1 == linear.pdf().numberRegions() );
-
-        CHECK( 4 == linear.pdf().energies().size() );
-        CHECK( 4 == linear.pdf().values().size() );
-        CHECK( 1 == linear.pdf().boundaries().size() );
-        CHECK( 1 == linear.pdf().interpolants().size() );
-
-        CHECK( 3 == linear.pdf().boundaries()[0] );
-
-        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
-
-        CHECK_THAT(  0.   , WithinRel( linear.pdf().energies()[0] ) );
-        CHECK_THAT(  2.   , WithinRel( linear.pdf().energies()[1] ) );
-        CHECK_THAT(  3.   , WithinRel( linear.pdf().energies()[2] ) );
-        CHECK_THAT(  4.   , WithinRel( linear.pdf().energies()[3] ) );
-
-        CHECK_THAT(  0.   , WithinRel( linear.pdf().values()[0] ) );
-        CHECK_THAT(  0.25 , WithinRel( linear.pdf().values()[1] ) );
-        CHECK_THAT(  0.375, WithinRel( linear.pdf().values()[2] ) );
-        CHECK_THAT(  0.5  , WithinRel( linear.pdf().values()[3] ) );
-
-        CHECK( true == linear.pdf().isLinearised() );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "Energies and probabilities for an unnormalised table" ) {
-
-    WHEN( "the data is given explicitly" ) {
-
-      const std::vector< double > energies = { 0., 2., 3., 4. };
-      const std::vector< double > values = { 0., 0.5, 0.75, 1.0 };
-
-      TabulatedEnergyDistribution chunk( std::move( energies ), std::move( values ) );
-
-      THEN( "a TabulatedEnergyDistribution can be constructed and members can "
-        "be tested" ) {
-
-        auto pdf = chunk.pdf();
-        CHECK_THAT(  0., WithinRel( pdf.lowerEnergyLimit() ) );
-        CHECK_THAT(  4., WithinRel( pdf.upperEnergyLimit() ) );
-        CHECK_THAT(  0.   , WithinRel( pdf.energies()[0] ) );
-        CHECK_THAT(  2.   , WithinRel( pdf.energies()[1] ) );
-        CHECK_THAT(  3.   , WithinRel( pdf.energies()[2] ) );
-        CHECK_THAT(  4.   , WithinRel( pdf.energies()[3] ) );
-        CHECK_THAT(  0.   , WithinRel( pdf.values()[0] ) );
-        CHECK_THAT(  0.25 , WithinRel( pdf.values()[1] ) );
-        CHECK_THAT(  0.375, WithinRel( pdf.values()[2] ) );
-        CHECK_THAT(  0.5  , WithinRel( pdf.values()[3] ) );
-
-        CHECK( std::nullopt == chunk.cdf() );
-      } // THEN
-
-      THEN( "a TabulatedEnergyDistribution can be evaluated" ) {
-
-        // values of x in the x grid
-        CHECK_THAT( 0.   , WithinRel( chunk( 0. ) ) );
-        CHECK_THAT( 0.25 , WithinRel( chunk( 2. ) ) );
-        CHECK_THAT( 0.375, WithinRel( chunk( 3. ) ) );
-        CHECK_THAT( 0.5  , WithinRel( chunk( 4. ) ) );
-
-        // values of x outside the x grid
-        CHECK_THAT( 0., WithinRel( chunk( -5. ) ) );
-        CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
-
-        // values of x inside the x grid
-        CHECK_THAT( 0.125 , WithinRel( chunk( 1.  ) ) );
-        CHECK_THAT( 0.4375, WithinRel( chunk( 3.5 ) ) );
-      } // THEN
-
-      THEN( "the average energy can be calculated" ) {
-
-        CHECK_THAT( 64. / 24., WithinRel( chunk.averageEnergy() ) );
-      } // THEN
-
-      THEN( "a TabulatedEnergyDistribution can be linearised" ) {
-
-        auto linear = chunk.linearise();
-
-        CHECK( 4 == linear.pdf().numberPoints() );
-        CHECK( 1 == linear.pdf().numberRegions() );
-
-        CHECK( 4 == linear.pdf().energies().size() );
-        CHECK( 4 == linear.pdf().values().size() );
-        CHECK( 1 == linear.pdf().boundaries().size() );
-        CHECK( 1 == linear.pdf().interpolants().size() );
-
-        CHECK( 3 == linear.pdf().boundaries()[0] );
-
-        CHECK( InterpolationType::LinearLinear == linear.pdf().interpolants()[0] );
-
-        CHECK_THAT(  0.   , WithinRel( linear.pdf().energies()[0] ) );
-        CHECK_THAT(  2.   , WithinRel( linear.pdf().energies()[1] ) );
-        CHECK_THAT(  3.   , WithinRel( linear.pdf().energies()[2] ) );
-        CHECK_THAT(  4.   , WithinRel( linear.pdf().energies()[3] ) );
-
-        CHECK_THAT(  0.   , WithinRel( linear.pdf().values()[0] ) );
-        CHECK_THAT(  0.25 , WithinRel( linear.pdf().values()[1] ) );
-        CHECK_THAT(  0.375, WithinRel( linear.pdf().values()[2] ) );
-        CHECK_THAT(  0.5  , WithinRel( linear.pdf().values()[3] ) );
-
-        CHECK( true == linear.pdf().isLinearised() );
-      } // THEN
+      verifyChunk( chunk1, true );
+      verifyChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -189,7 +45,8 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
 
       TabulatedEnergyDistribution left( { 1., 3. }, { 0.5, 0.5 } );
       TabulatedEnergyDistribution equal( { 1., 3. }, { 0.5, 0.5 } );
-      TabulatedEnergyDistribution unnormalised( { 1., 3. }, { 1., 1. } );
+      TabulatedEnergyDistribution unnormalised( { 1., 3. }, { 1., 1. },
+                                                InterpolationType::LinearLinear, true );
       TabulatedEnergyDistribution different( { 1., 3. }, { 0.25, 0.75 } );
 
       THEN( "they can be compared" ) {
@@ -221,3 +78,119 @@ SCENARIO( "TabulatedEnergyDistribution" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+void verifyChunk( const TabulatedEnergyDistribution& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2.0 : 1.0;
+
+  CHECK( 4 == chunk.energies().size() );
+  CHECK( 4 == chunk.values().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( chunk.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( chunk.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( chunk.energies()[3] ) );
+  CHECK_THAT( 0.   / normalisation, WithinRel( chunk.values()[0] ) );
+  CHECK_THAT( 0.5  / normalisation, WithinRel( chunk.values()[1] ) );
+  CHECK_THAT( 0.75 / normalisation, WithinRel( chunk.values()[2] ) );
+  CHECK_THAT( 1.   / normalisation, WithinRel( chunk.values()[3] ) );
+  CHECK( 3 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+
+  auto pdf = chunk.pdf();
+  CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( pdf.upperEnergyLimit() ) );
+  CHECK( 4 == pdf.energies().size() );
+  CHECK( 4 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( pdf.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( pdf.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( pdf.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( pdf.energies()[3] ) );
+  CHECK_THAT( 0.   / normalisation, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 0.5  / normalisation, WithinRel( pdf.values()[1] ) );
+  CHECK_THAT( 0.75 / normalisation, WithinRel( pdf.values()[2] ) );
+  CHECK_THAT( 1.   / normalisation, WithinRel( pdf.values()[3] ) );
+  CHECK( 3 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+
+  auto cdf = chunk.cdf();
+  CHECK_THAT( 0., WithinRel( cdf.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( cdf.upperEnergyLimit() ) );
+  CHECK( 4 == cdf.energies().size() );
+  CHECK( 4 == cdf.values().size() );
+  CHECK( 1 == cdf.boundaries().size() );
+  CHECK( 1 == cdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( cdf.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( cdf.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( cdf.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( cdf.energies()[3] ) );
+  CHECK_THAT( 0.    / normalisation, WithinRel( cdf.values()[0] ) );
+  CHECK_THAT( 0.5   / normalisation, WithinRel( cdf.values()[1] ) );
+  CHECK_THAT( 1.125 / normalisation, WithinRel( cdf.values()[2] ) );
+  CHECK_THAT( 2.    / normalisation, WithinRel( cdf.values()[3] ) );
+  CHECK( 3 == cdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+
+  CHECK_THAT( 2.0 / normalisation, WithinRel( pdf.integral() ) );
+
+  // evaluation
+
+  // values of x in the x grid
+  CHECK_THAT( 0.   / normalisation, WithinRel( chunk( 0. ) ) );
+  CHECK_THAT( 0.5  / normalisation, WithinRel( chunk( 2. ) ) );
+  CHECK_THAT( 0.75 / normalisation, WithinRel( chunk( 3. ) ) );
+  CHECK_THAT( 1.   / normalisation, WithinRel( chunk( 4. ) ) );
+
+  // values of x outside the x grid
+  CHECK_THAT( 0., WithinRel( chunk( -5. ) ) );
+  CHECK_THAT( 0., WithinRel( chunk(  5. ) ) );
+
+  // values of x inside the x grid
+  CHECK_THAT( 0.25  / normalisation, WithinRel( chunk( 1.  ) ) );
+  CHECK_THAT( 0.875 / normalisation, WithinRel( chunk( 3.5 ) ) );
+
+  // average cosine
+  CHECK_THAT( 128. / 24. / normalisation, WithinRel( chunk.averageEnergy() ) );
+
+  // linearisation
+  auto linear = chunk.linearise();
+
+  pdf = linear.pdf();
+  CHECK_THAT( 0., WithinRel( pdf.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( pdf.upperEnergyLimit() ) );
+  CHECK( 4 == pdf.energies().size() );
+  CHECK( 4 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( pdf.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( pdf.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( pdf.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( pdf.energies()[3] ) );
+  CHECK_THAT( 0.   / normalisation, WithinRel( pdf.values()[0] ) );
+  CHECK_THAT( 0.5  / normalisation, WithinRel( pdf.values()[1] ) );
+  CHECK_THAT( 0.75 / normalisation, WithinRel( pdf.values()[2] ) );
+  CHECK_THAT( 1.   / normalisation, WithinRel( pdf.values()[3] ) );
+  CHECK( 3 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+
+  cdf = linear.cdf();
+  CHECK_THAT( 0., WithinRel( cdf.lowerEnergyLimit() ) );
+  CHECK_THAT( 4., WithinRel( cdf.upperEnergyLimit() ) );
+  CHECK( 4 == cdf.energies().size() );
+  CHECK( 4 == cdf.values().size() );
+  CHECK( 1 == cdf.boundaries().size() );
+  CHECK( 1 == cdf.interpolants().size() );
+  CHECK_THAT( 0., WithinRel( cdf.energies()[0] ) );
+  CHECK_THAT( 2., WithinRel( cdf.energies()[1] ) );
+  CHECK_THAT( 3., WithinRel( cdf.energies()[2] ) );
+  CHECK_THAT( 4., WithinRel( cdf.energies()[3] ) );
+  CHECK_THAT( 0.    / normalisation, WithinRel( cdf.values()[0] ) );
+  CHECK_THAT( 0.5   / normalisation, WithinRel( cdf.values()[1] ) );
+  CHECK_THAT( 1.125 / normalisation, WithinRel( cdf.values()[2] ) );
+  CHECK_THAT( 2.    / normalisation, WithinRel( cdf.values()[3] ) );
+  CHECK( 3 == cdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+}

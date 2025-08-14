@@ -23,7 +23,8 @@ namespace endf {
    *         TabulatedDistribution
    */
   template < typename TabulatedDistribution >
-  auto createTabulatedAngularDistribution( const TabulatedDistribution& distribution )
+  auto createTabulatedAngularDistribution( const TabulatedDistribution& distribution,
+                                           bool normalise )
   -> std::enable_if_t< ( std::is_same_v< TabulatedDistribution,
                                          ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering::TabulatedDistribution > ||
                          std::is_same_v< TabulatedDistribution,
@@ -38,7 +39,8 @@ namespace endf {
       auto interpolants = createInterpolants( distribution.interpolants() );
       return TabulatedAngularDistribution(
                std::move( cosines ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) );
+               std::move( boundaries ), std::move( interpolants ),
+               normalise );
     }
     catch ( ... ) {
 

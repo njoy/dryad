@@ -29,16 +29,20 @@ namespace endf {
    *  @param[in] projectile      the projectile identifier
    *  @param[in] target          the target identifier
    *  @param[in] distributions   the MF4 LegendreDistributions
+   *  @param[in] normalise       the flag to indicate whether or not distributions
+   *                             need to be normalised
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
-                         const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions ) {
+                         const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions,
+                         bool normalise ) {
 
     id::ParticleID id = createProductIdentifier( 1, 0 );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
     auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
-                                                 createLegendreAngularDistributions( distributions ) );
+                                                 createLegendreAngularDistributions( distributions,
+                                                 normalise ) );
     return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
   }
 
@@ -54,7 +58,8 @@ namespace endf {
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
-                         bool multiple ) {
+                         bool multiple,
+                         bool normalise ) {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
                                                  product.productModifierFlag(),
@@ -76,7 +81,8 @@ namespace endf {
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          const ENDFtk::section::Type< 26 >::ReactionProduct& product,
-                         int mt ) {
+                         int mt,
+                         bool normalise ) {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0, false );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
@@ -100,7 +106,7 @@ namespace endf {
         decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::ContinuumEnergyAngle >( product.distribution() );
         auto distribution = UncorrelatedDistributionData( ReferenceFrame::Laboratory,
                                                           IsotropicAngularDistributions(),
-                                                          createTabulatedEnergyDistributions( data ) );
+                                                          createTabulatedEnergyDistributions( data, normalise ) );
         return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
       }
       case 2 : {
@@ -108,7 +114,7 @@ namespace endf {
         // MF26 LAW = 2 : Legendre coefficients are not allowed
         decltype(auto) data = std::get< ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering >( product.distribution() );
         auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
-                                                     createTabulatedAngularDistributions( data ) );
+                                                     createTabulatedAngularDistributions( data, normalise ) );
         return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
       }
       case 8 : {
@@ -142,7 +148,8 @@ namespace endf {
                          const ENDFtk::section::Type< 27 >& coherent,
                          const std::optional< ENDFtk::section::Type< 27 > >& real,
                          const std::optional< ENDFtk::section::Type< 27 > >& imaginary,
-                         int mt ) {
+                         int mt,
+                         bool normalise ) {
 
     id::ParticleID id = createProductIdentifier( 0, 0, false );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
@@ -178,7 +185,8 @@ namespace endf {
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          const ENDFtk::section::Type< 27 >& incoherent,
-                         int mt ) {
+                         int mt,
+                         bool normalise ) {
 
     id::ParticleID id = createProductIdentifier( 0, 0, false );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );

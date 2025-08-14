@@ -29,6 +29,7 @@ namespace gnds {
   static ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          pugi::xml_node suite, pugi::xml_node product,
+                         bool normalise,
                          const std::string& style = "eval" ) {
 
     // check that this is a valid product node
@@ -55,7 +56,7 @@ namespace gnds {
         auto regions2d = node.child( "regions2d" );
         if ( ! recoil && ! regions2d ) {
 
-          distribution = createTwoBodyDistributionData( node );
+          distribution = createTwoBodyDistributionData( node, normalise );
         }
       }
       else if ( strcmp( node.name(), "uncorrelated" ) == 0 ) {
@@ -67,7 +68,7 @@ namespace gnds {
 
           try {
 
-            distribution = createUncorrelatedDistributionData( node );
+            distribution = createUncorrelatedDistributionData( node, normalise );
           }
           catch ( const std::runtime_error& error ) {
 

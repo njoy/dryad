@@ -306,5 +306,42 @@ namespace h1 {
     CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
   }
 
+  void verifyH1( const ProjectileTarget& H1, bool normalise ) {
+
+    verifyDocumentation( H1.documentation() );
+
+    CHECK( id::ParticleID( "n" ) == H1.projectileIdentifier() );
+    CHECK( id::ParticleID( "H1" ) == H1.targetIdentifier() );
+
+    CHECK( InteractionType::Nuclear == H1.interactionType() );
+
+    CHECK( std::nullopt == H1.resonances() );
+
+    CHECK( true == H1.hasReaction( id::ReactionID( "1" ) ) );
+    CHECK( true == H1.hasReaction( id::ReactionID( "2" ) ) );
+    CHECK( true == H1.hasReaction( id::ReactionID( "102" ) ) );
+    CHECK( false == H1.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+
+    CHECK( 3 == H1.reactions().size() );
+
+    auto total = H1.reactions()[0];
+    verifyTotalReaction( total );
+
+    auto elastic = H1.reactions()[1];
+    verifyElasticReaction( elastic );
+
+    auto capture = H1.reactions()[2];
+    verifyCaptureReaction( capture );
+
+    total = H1.reaction( id::ReactionID( "1" ) );
+    verifyTotalReaction( total );
+
+    elastic = H1.reaction( id::ReactionID( "2" ) );
+    verifyElasticReaction( elastic );
+
+    capture = H1.reaction( id::ReactionID( "102" ) );
+    verifyCaptureReaction( capture );
+  }
+
 } // namespace h1
 } // namespace neutron

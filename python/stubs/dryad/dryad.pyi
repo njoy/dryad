@@ -495,7 +495,7 @@ class LegendreAngularDistribution:
         """
     def __eq__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
-    def __init__(self, coefficients: list[float]) -> None:
+    def __init__(self, coefficients: list[float], normalise: bool = False) -> None:
         """
         Initialise the angular distribution
         
@@ -503,16 +503,24 @@ class LegendreAngularDistribution:
             self           the angular distribution
             coefficients   the coefficients of the Legendre series (from
                            lowest to highest order coefficient) for the pdf
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
         Arguments:
             self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
         """
     @property
     def average_cosine(self) -> float:
@@ -619,6 +627,10 @@ class LegendreAngularDistributionFunction:
             self        the distribution function
             tolerance   the linearisation tolerance
         """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution function
+        """
     @property
     def coefficients(self) -> list[float]:
         """
@@ -666,7 +678,7 @@ class LegendreAngularDistributions:
     def __eq__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the angular distributions
         
@@ -677,9 +689,11 @@ class LegendreAngularDistributions:
             boundaries      the boundaries of the interpolation regions
             interpolants    the interpolation types of the interpolation regions,
                             see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[LegendreAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the angular distributions
         
@@ -689,16 +703,24 @@ class LegendreAngularDistributions:
             distributions   the distributions
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
         
         Arguments:
-            self        the angular distributions
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distributions
         """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
@@ -855,7 +877,7 @@ class ProjectileTarget:
             filename   the ENDF file name
         """
     @staticmethod
-    def from_endf_file(filename: str) -> ProjectileTarget:
+    def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from an ENDF file
         
@@ -863,15 +885,19 @@ class ProjectileTarget:
         will be transformed into a ProjectileTarget.
         
         Arguments:
-            filename   the ENDF file name
+            filename    the ENDF file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     @staticmethod
-    def from_gnds_file(filename: str) -> ProjectileTarget:
+    def from_gnds_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from a GNDS file
         
         Arguments:
-            filename   the GNDS file name
+            filename    the GNDS file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
@@ -1300,7 +1326,7 @@ class TabulatedAngularDistribution:
     def __eq__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, cosines: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the angular distribution
         
@@ -1311,9 +1337,11 @@ class TabulatedAngularDistribution:
             boundaries     the boundaries of the interpolation regions
             interpolants   the interpolation types of the interpolation regions,
                            see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, cosines: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the angular distribution
         
@@ -1323,16 +1351,24 @@ class TabulatedAngularDistribution:
             values         the probability values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
         Arguments:
             self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
         """
     @property
     def average_cosine(self) -> float:
@@ -1345,7 +1381,7 @@ class TabulatedAngularDistribution:
         The boundaries of the interpolation regions
         """
     @property
-    def cdf(self) -> TabulatedAngularDistributionFunction | None:
+    def cdf(self) -> TabulatedAngularDistributionFunction:
         """
         The cumulative distribution function (cdf) of the distribution
         """
@@ -1459,6 +1495,10 @@ class TabulatedAngularDistributionFunction:
             self        the table
             tolerance   the linearisation tolerance
         """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution function
+        """
     @property
     def boundaries(self) -> list[int]:
         """
@@ -1531,7 +1571,7 @@ class TabulatedAngularDistributions:
     def __eq__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the angular distributions
         
@@ -1542,9 +1582,11 @@ class TabulatedAngularDistributions:
             boundaries      the boundaries of the interpolation regions
             interpolants    the interpolation types of the interpolation regions,
                             see InterpolationType for all interpolation types
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedAngularDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the angular distributions
         
@@ -1554,16 +1596,24 @@ class TabulatedAngularDistributions:
             distributions   the distributions
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
+            normalise       option to indicate whether or not to normalise
+                            all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
         
         Arguments:
-            self        the angular distributions
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distributions
         """
     @property
     def average_cosines(self) -> TabulatedAverageCosine:
@@ -2021,7 +2071,7 @@ class TabulatedEnergyDistribution:
     def __eq__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the energy distribution
         
@@ -2032,9 +2082,11 @@ class TabulatedEnergyDistribution:
             boundaries     the boundaries of the interpolation regions
             interpolants   the interpolation types of the interpolation regions,
                            see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the energy distribution
         
@@ -2044,16 +2096,24 @@ class TabulatedEnergyDistribution:
             values         the probability values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistribution:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistribution:
         """
         Linearise the distribution
         
         Arguments:
-            self        the energy distribution
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
         """
     @property
     def average_energy(self) -> float:
@@ -2066,7 +2126,7 @@ class TabulatedEnergyDistribution:
         The boundaries of the interpolation regions
         """
     @property
-    def cdf(self) -> TabulatedEnergyDistributionFunction | None:
+    def cdf(self) -> TabulatedEnergyDistributionFunction:
         """
         The cumulative distribution function (cdf) of the distribution
         """
@@ -2252,7 +2312,7 @@ class TabulatedEnergyDistributions:
     def __eq__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the energy distributions
         
@@ -2265,7 +2325,7 @@ class TabulatedEnergyDistributions:
                             see InterpolationType for all interpolation types
         """
     @typing.overload
-    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ...) -> None:
+    def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the energy distributions
         
@@ -2278,13 +2338,19 @@ class TabulatedEnergyDistributions:
         """
     def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistributions:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistributions:
         """
         Linearise the distribution
         
         Arguments:
-            self        the energy distributions
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distributions
         """
     @property
     def average_energies(self) -> TabulatedAverageEnergy:

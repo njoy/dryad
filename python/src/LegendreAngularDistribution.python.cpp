@@ -33,13 +33,15 @@ void wrapLegendreAngularDistribution( python::module& module ) {
   component
   .def(
 
-    python::init< std::vector< double > >(),
-    python::arg( "coefficients" ),
+    python::init< std::vector< double >, bool >(),
+    python::arg( "coefficients" ), python::arg( "normalise" ) = false,
     "Initialise the angular distribution\n\n"
     "Arguments:\n"
     "    self           the angular distribution\n"
     "    coefficients   the coefficients of the Legendre series (from\n"
-    "                   lowest to highest order coefficient) for the pdf"
+    "                   lowest to highest order coefficient) for the pdf\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -70,6 +72,12 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "    self      the angular distribution\n"
     "    cosine    the cosine value"
   )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution"
+  )
   .def_property_readonly(
 
     "average_cosine",
@@ -81,10 +89,13 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
     "Arguments:\n"
     "    self        the angular distribution\n"
-    "    tolerance   the linearisation tolerance"
+    "    tolerance   the linearisation tolerance\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

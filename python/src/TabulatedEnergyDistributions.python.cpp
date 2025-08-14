@@ -34,9 +34,11 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< TabulatedEnergyDistribution >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
+                  std::vector< InterpolationType >,
+                  bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
+    python::arg( "normalise" ) = false,
     "Initialise the energy distributions\n\n"
     "Arguments:\n"
     "    self            the energy distribution table\n"
@@ -50,9 +52,10 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
 
     python::init< std::vector< double >,
                   std::vector< TabulatedEnergyDistribution >,
-                  InterpolationType >(),
+                  InterpolationType, bool >(),
     python::arg( "grid" ), python::arg( "distributions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
+    python::arg( "normalise" ) = false,
     "Initialise the energy distributions\n\n"
     "Arguments:\n"
     "    self            the multiplicity table\n"
@@ -87,6 +90,12 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     "    value     the grid value\n"
     "    energy    the energy value"
   )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distributions"
+  )
   .def_property_readonly(
 
     "average_energies",
@@ -98,10 +107,13 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
     "Arguments:\n"
-    "    self        the energy distributions\n"
-    "    tolerance   the linearisation tolerance"
+    "    self        the angular distribution\n"
+    "    tolerance   the linearisation tolerance\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

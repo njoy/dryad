@@ -25,7 +25,8 @@ namespace gnds {
    */
   static std::pair< std::optional< double >,
                     TabulatedEnergyDistribution >
-  createTabulatedEnergyDistribution( pugi::xml_node node, const Axes& units ) {
+  createTabulatedEnergyDistribution( pugi::xml_node node, const Axes& units,
+                                     bool normalise ) {
 
     std::optional< double > outer = std::nullopt;
     std::vector< double > energies;
@@ -108,7 +109,8 @@ namespace gnds {
     return { std::move( outer ),
              TabulatedEnergyDistribution(
                std::move( energies ), std::move( values ),
-               std::move( boundaries ), std::move( interpolants ) ) };
+               std::move( boundaries ), std::move( interpolants ),
+               normalise ) };
   }
 
 } // gnds namespace
