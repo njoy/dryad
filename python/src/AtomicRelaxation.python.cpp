@@ -150,14 +150,15 @@ void wrapAtomicRelaxation( python::module& module ) {
   .def(
 
     "to_endf_file",
-    [] ( const Component& self, const std::string& filename ) {
+    [] ( const Component& self, int mat, const std::string& filename ) {
 
-      njoy::dryad::format::endf::createAtomicRelaxationEndfFile( self, filename );
+      njoy::dryad::format::endf::createAtomicRelaxationEndfFile( self, mat, filename );
     },
-    python::arg( "filename" ),
+    python::arg( "mat" ), python::arg( "filename" ),
     "Write the AtomicRelaxation data to an ENDF file\n\n"
     "Arguments:\n"
     "    self        the atomic relaxation data\n"
+    "    mat         the ENDF mat number to be used\n"
     "    filename    the ENDF file name"
   );
 

@@ -23,9 +23,11 @@ namespace endf {
    *  @brief Create an ENDF atomic relaxation file
    *
    *  @param[in] relaxation   the atomic relaxation data
+   *  @param[in] mat          the ENDF mat number
    *  @param[in] filename     the file name for the ENDF file
    */
   void createAtomicRelaxationEndfFile( const AtomicRelaxation& relaxation,
+                                       int mat,
                                        const std::string& filename ) {
 
     int zaid = relaxation.elementIdentifier().number() * 1000;
@@ -74,7 +76,7 @@ namespace endf {
     ENDFtk::section::Type< 28 >
     data( 533, zaid, awr, std::move( subshells ) );
 
-    ENDFtk::tree::Material material( relaxation.elementIdentifier().number() * 100 );
+    ENDFtk::tree::Material material( mat );
     material.insert( information );
     material.insert( data );
     ENDFtk::tree::updateDirectory( material );
