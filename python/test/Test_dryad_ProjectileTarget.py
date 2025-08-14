@@ -22,10 +22,10 @@ from dryad.id import ParticleID
 def verify_chunk( self, chunk, normalise ) :
 
     # documentation
-    self.assertEqual( None, chunk.documentation.awr )
-    self.assertEqual( None, chunk.documentation.library )
-    self.assertEqual( None, chunk.documentation.version )
-    self.assertEqual( None, chunk.documentation.description )
+    self.assertIsNone( chunk.documentation.awr )
+    self.assertIsNone( chunk.documentation.library )
+    self.assertIsNone( chunk.documentation.version )
+    self.assertIsNone( chunk.documentation.description )
 
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
@@ -35,7 +35,7 @@ def verify_chunk( self, chunk, normalise ) :
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
     # resonance parameters are not present
-    self.assertEqual( None, chunk.resonances )
+    self.assertIsNone( chunk.resonances )
 
     # reactions are present
     self.assertEqual( 9, chunk.number_reactions )
@@ -58,8 +58,8 @@ def verify_chunk( self, chunk, normalise ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 6, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->n,Fe56', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[1] )
@@ -155,8 +155,8 @@ def verify_chunk( self, chunk, normalise ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[1] )
@@ -232,8 +232,8 @@ def verify_chunk( self, chunk, normalise ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[1] )
@@ -329,10 +329,10 @@ def verify_chunk( self, chunk, normalise ) :
 def verify_correct_summation( self, chunk ) :
 
     # documentation
-    self.assertEqual( None, chunk.documentation.awr )
-    self.assertEqual( None, chunk.documentation.library )
-    self.assertEqual( None, chunk.documentation.version )
-    self.assertEqual( None, chunk.documentation.description )
+    self.assertIsNone( chunk.documentation.awr )
+    self.assertIsNone( chunk.documentation.library )
+    self.assertIsNone( chunk.documentation.version )
+    self.assertIsNone( chunk.documentation.description )
 
     # identifiers
     self.assertEqual( ParticleID( 'n' ), chunk.projectile_identifier )
@@ -342,7 +342,7 @@ def verify_correct_summation( self, chunk ) :
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
     # resonance parameters are not present
-    self.assertEqual( None, chunk.resonances )
+    self.assertIsNone( chunk.resonances )
 
     # reactions are present
     self.assertEqual( 9, chunk.number_reactions )
@@ -365,8 +365,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 6, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->n,Fe56', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[1] )
@@ -425,8 +425,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[1] )
@@ -502,8 +502,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
         self.assertEqual( False, reaction.has_products )
-        self.assertEqual( None, reaction.mass_difference_qvalue )
-        self.assertEqual( None, reaction.reaction_qvalue )
+        self.assertIsNone( reaction.mass_difference_qvalue )
+        self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
         self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[0] )
         self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[1] )

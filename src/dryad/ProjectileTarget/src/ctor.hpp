@@ -41,7 +41,8 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param documentation   the documentation
  *  @param projectile      the projectile identifier
  *  @param target          the target identifier
- *  @param type.           the interaction type
+ *  @param type         the interaction type
+ *  @param type            the interaction type
  *  @param reactions       the reaction data
  *  @param normalise       option to indicate whether or not to normalise
  *                         all probability data (default: no normalisation)

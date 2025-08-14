@@ -113,7 +113,7 @@ SCENARIO( "UncorrelatedDistributionData" ) {
 
   GIVEN( "setter functions" ) {
 
-    WHEN( "an instance of CoherentDistributionData is given" ) {
+    WHEN( "an instance of UncorrelatedDistributionData is given" ) {
 
       UncorrelatedDistributionData chunk( ReferenceFrame::CentreOfMass,
                                           IsotropicAngularDistributions(),

@@ -27,7 +27,7 @@ def verify_chunk( self, chunk, normalise ) :
     self.assertEqual( 1, chunk.multiplicity )
 
     # average reaction product energy
-    self.assertEqual( None, chunk.average_energy )
+    self.assertIsNone( chunk.average_energy )
 
     # distribution data
     normalisation = 2.0 if normalise else 1.0
@@ -104,7 +104,7 @@ def verify_tabulated_chunk( self, chunk, normalise ) :
     self.assertEqual( False, chunk.multiplicity.is_linearised )
 
     # average reaction product energy
-    self.assertEqual( None, chunk.average_energy )
+    self.assertIsNone( chunk.average_energy )
 
     # distribution data
     normalisation = 2.0 if normalise else 1.0

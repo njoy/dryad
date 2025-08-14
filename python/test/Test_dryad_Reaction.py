@@ -32,7 +32,7 @@ def verify_chunk( self, chunk, normalise ) :
 
     # partial identifiers
     self.assertEqual( 0, chunk.number_partial_reactions )
-    self.assertEqual( None, chunk.partial_reaction_identifiers )
+    self.assertIsNone( chunk.partial_reaction_identifiers )
 
     # q values
     self.assertAlmostEqual( 0, chunk.mass_difference_qvalue )
@@ -141,8 +141,8 @@ def verify_summation_chunk( self, chunk ) :
     self.assertEqual( 'n,Fe56->2n,Fe56', chunk.partial_reaction_identifiers[1] )
 
     # q values
-    self.assertEqual( None, chunk.mass_difference_qvalue )
-    self.assertEqual( None, chunk.reaction_qvalue )
+    self.assertIsNone( chunk.mass_difference_qvalue )
+    self.assertIsNone( chunk.reaction_qvalue )
 
     # cross section
     self.assertEqual( 5, chunk.cross_section.number_points )
