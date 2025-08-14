@@ -20,7 +20,9 @@ namespace endf {
    *  If there are multiple materials in the ENDF file, only the first material
    *  will be transformed into a ProjectileTarget.
    *
-   *  @param[in] filename   the ENDF file name
+   *  @param[in] filename    the ENDF file name
+   *  @param[in] normalise   the flag to indicate whether or not distributions
+   *                         need to be normalised
    */
   ProjectileTarget createProjectileTargetFromFile( const std::string& filename,
                                                    bool normalise ) {
