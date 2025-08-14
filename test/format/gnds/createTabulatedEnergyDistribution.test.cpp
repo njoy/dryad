@@ -18,7 +18,7 @@ void verifyChunk( const std::pair< std::optional< double >,
 
 SCENARIO( "createTabulatedEnergyDistribution" ) {
 
-  GIVEN( "GNDS two body distribution data node with tabulated angular data" ) {
+  GIVEN( "GNDS two body distribution data node with tabulated energy distribution data" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );

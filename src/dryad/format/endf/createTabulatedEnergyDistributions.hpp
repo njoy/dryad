@@ -21,7 +21,7 @@ namespace endf {
 
   /**
    *  @brief Create a TabulatedEnergyDistributions instance from a parsed
-   *         ENDF MF6 ContinuumEnergyAngle component
+   *         ENDF MF26 ContinuumEnergyAngle component
    */
   TabulatedEnergyDistributions
   createTabulatedEnergyDistributions(

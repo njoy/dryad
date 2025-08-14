@@ -58,7 +58,7 @@ namespace gnds {
             std::vector< LegendreAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
-              auto legendre = createLegendreAngularDistribution( function, units );
+              auto legendre = createLegendreAngularDistribution( function, units, normalise );
               grid.push_back( legendre.first.value() );
               distributions.emplace_back( std::move( legendre.second ) );
             }

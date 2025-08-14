@@ -29,6 +29,8 @@ namespace endf {
    *  @param[in] projectile      the projectile identifier
    *  @param[in] target          the target identifier
    *  @param[in] distributions   the MF4 LegendreDistributions
+   *  @param[in] normalise       the flag to indicate whether or not distributions
+   *                             need to be normalised
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,

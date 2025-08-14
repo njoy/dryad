@@ -86,12 +86,13 @@ class AtomicRelaxation:
             self   the AtomicRelaxation data
             id     the electron subshell identifier
         """
-    def to_endf_file(self, filename: str) -> None:
+    def to_endf_file(self, mat: int, filename: str) -> None:
         """
         Write the AtomicRelaxation data to an ENDF file
         
         Arguments:
             self        the atomic relaxation data
+            mat         the ENDF mat number to be used
             filename    the ENDF file name
         """
     @property
@@ -507,13 +508,15 @@ class LegendreAngularDistribution:
         """
     def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
         Arguments:
             self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
@@ -705,13 +708,15 @@ class LegendreAngularDistributions:
         """
     def __ne__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
         
         Arguments:
-            self        the angular distributions
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
@@ -1373,13 +1378,15 @@ class TabulatedAngularDistribution:
         """
     def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistribution:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
         Arguments:
             self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
@@ -1616,13 +1623,15 @@ class TabulatedAngularDistributions:
         """
     def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributions:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distribution
         
         Arguments:
-            self        the angular distributions
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
@@ -2114,13 +2123,15 @@ class TabulatedEnergyDistribution:
         """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistribution:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistribution:
         """
         Linearise the distribution
         
         Arguments:
-            self        the energy distribution
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """
@@ -2349,13 +2360,15 @@ class TabulatedEnergyDistributions:
         """
     def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistributions:
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistributions:
         """
         Linearise the distribution
         
         Arguments:
-            self        the energy distributions
+            self        the angular distribution
             tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     def normalise(self) -> None:
         """

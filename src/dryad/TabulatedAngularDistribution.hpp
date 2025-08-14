@@ -119,13 +119,14 @@ namespace dryad {
      *  @brief Return a linearised angular distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-
-      //! @todo should we normalise the resulting distribution?
+    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {},
+                                            bool normalise = false ) const {
 
       TabulatedAngularDistributionFunction pdf = this->pdf().linearise( tolerance );
-      return TabulatedAngularDistribution( std::move( pdf ) );
+      return TabulatedAngularDistribution( std::move( pdf ), normalise );
     }
 
     /**

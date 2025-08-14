@@ -119,13 +119,14 @@ namespace dryad {
      *  @brief Return a linearised energy distribution table
      *
      *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
-    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {} ) const {
-
-      //! @todo should we normalise the resulting distribution?
+    TabulatedEnergyDistribution linearise( ToleranceConvergence tolerance = {},
+                                           bool normalise = false ) const {
 
       TabulatedEnergyDistributionFunction pdf = this->pdf().linearise( tolerance );
-      return TabulatedEnergyDistribution( std::move( pdf ) );
+      return TabulatedEnergyDistribution( std::move( pdf ), normalise );
     }
 
     /**
