@@ -11,7 +11,7 @@
 // convenience typedefs
 using InteractionType = njoy::dryad::InteractionType;
 using LevelID = njoy::dryad::id::LevelID;
-using NewReactionID = njoy::dryad::id::NewReactionID;
+using ReactionID = njoy::dryad::id::ReactionID;
 using ParticleID = njoy::dryad::id::ParticleID;
 using ReactionType = njoy::dryad::id::ReactionType;
 
@@ -35,9 +35,9 @@ SCENARIO( "ReactionID" ) {
 
     THEN( "a ReactionID can be created using mt numbers, strings and static functions" ) {
 
-      auto size = NewReactionID::size();
+      auto size = ReactionID::size();
 
-      NewReactionID id( n, u238, ReactionType( 1 ) );
+      ReactionID id( n, u238, ReactionType( 1 ) );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::nullopt == id.particles() );
@@ -45,11 +45,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 1 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->total" == id.symbol() );
-      CHECK( id == NewReactionID( "n,U238->total" ) );
+      CHECK( id == ReactionID( "n,U238->total" ) );
 
-      CHECK( size + 1 == NewReactionID::size() );
+      CHECK( size + 1 == ReactionID::size() );
 
-      id = NewReactionID( n, u238, ReactionType::elastic( n ) );
+      id = ReactionID( n, u238, ReactionType::elastic( n ) );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
@@ -57,11 +57,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 50 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->n,U238" == id.symbol() );
-      CHECK( id == NewReactionID( "n,U238->n,U238" ) );
+      CHECK( id == ReactionID( "n,U238->n,U238" ) );
 
-      CHECK( size + 2 == NewReactionID::size() );
+      CHECK( size + 2 == ReactionID::size() );
 
-      id = NewReactionID( n, u238, ReactionType( 102 ) );
+      id = ReactionID( n, u238, ReactionType( 102 ) );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( empty == id.particles() );
@@ -69,11 +69,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 102 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->g,U239[all]" == id.symbol() );
-      CHECK( id == NewReactionID( "n,U238->g,U239[all]" ) );
+      CHECK( id == ReactionID( "n,U238->g,U239[all]" ) );
 
-      CHECK( size + 3 == NewReactionID::size() );
+      CHECK( size + 3 == ReactionID::size() );
 
-      id = NewReactionID( n, u238, ReactionType( 199 ) );
+      id = ReactionID( n, u238, ReactionType( 199 ) );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
@@ -81,11 +81,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 199 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->3n,2p,a,Ra230[all]" == id.symbol() );
-      CHECK( id == NewReactionID( "n,U238->3n,2p,a,Ra230[all]" ) );
+      CHECK( id == ReactionID( "n,U238->3n,2p,a,Ra230[all]" ) );
 
-      CHECK( size + 4 == NewReactionID::size() );
+      CHECK( size + 4 == ReactionID::size() );
 
-      id = NewReactionID( eminus, u, ReactionType( 525 ) );
+      id = ReactionID( eminus, u, ReactionType( 525 ) );
       CHECK( eminus == id.projectile() );
       CHECK( u == id.target() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
@@ -93,11 +93,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 525 ) == id.reactionType() );
       CHECK( InteractionType::Atomic == id.interactionType() );
       CHECK( "e-,U->e-,U[large-angle-scattering]" == id.symbol() );
-      CHECK( id == NewReactionID( "e-,U->e-,U[large-angle-scattering]" ) );
+      CHECK( id == ReactionID( "e-,U->e-,U[large-angle-scattering]" ) );
 
-      CHECK( size + 5 == NewReactionID::size() );
+      CHECK( size + 5 == ReactionID::size() );
 
-      id = NewReactionID( eminus, u, ReactionType( 526 ) );
+      id = ReactionID( eminus, u, ReactionType( 526 ) );
       CHECK( eminus == id.projectile() );
       CHECK( u == id.target() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
@@ -105,9 +105,9 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 526 ) == id.reactionType() );
       CHECK( InteractionType::Atomic == id.interactionType() );
       CHECK( "e-,U->e-,U[total-scattering]" == id.symbol() );
-      CHECK( id == NewReactionID( "e-,U->e-,U[total-scattering]" ) );
+      CHECK( id == ReactionID( "e-,U->e-,U[total-scattering]" ) );
 
-      CHECK( size + 6 == NewReactionID::size() );
+      CHECK( size + 6 == ReactionID::size() );
     }
   } // GIVEN
 
@@ -116,8 +116,8 @@ SCENARIO( "ReactionID" ) {
     ParticleID n = ParticleID::neutron();
     ParticleID u238( 92238 );
 
-    NewReactionID id1( n, u238, ReactionType( 102 ) );
-    NewReactionID id2( n, u238, ReactionType( 199 ) );
+    ReactionID id1( n, u238, ReactionType( 102 ) );
+    ReactionID id2( n, u238, ReactionType( 199 ) );
 
     THEN( "instances can be compared" ) {
 
@@ -143,29 +143,29 @@ SCENARIO( "ReactionID" ) {
 
     THEN( "instances can be used as keys in a std::map" ) {
 
-      std::map< NewReactionID, std::string > map{
+      std::map< ReactionID, std::string > map{
 
         { id1, "1" }, { id2, "2" }
       };
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ NewReactionID( n, u238, ReactionType( 102 ) ) ] == "1" );
-      CHECK( map[ NewReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
+      CHECK( map[ ReactionID( n, u238, ReactionType( 102 ) ) ] == "1" );
+      CHECK( map[ ReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
     } // THEN
 
-//! @todo we need a hash function on NewReactionID
+//! @todo we need a hash function on ReactionID
 //    THEN( "instances can be used as keys in a std::unordered_map" ) {
 //
-//      std::unordered_map< NewReactionID, std::string > map{
+//      std::unordered_map< ReactionID, std::string > map{
 //
 //        { id1, "1" }, { id2, "2" }
 //      };
 //
 //      CHECK( map[ id1 ] == "1" );
 //      CHECK( map[ id2 ] == "2" );
-//      CHECK( map[ NewReactionID( n, u238, ReactionType( 102 ) ) ] == "1" );
-//      CHECK( map[ NewReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
+//      CHECK( map[ ReactionID( n, u238, ReactionType( 102 ) ) ] == "1" );
+//      CHECK( map[ ReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
 //    } // THEN
   } // GIVEN
 

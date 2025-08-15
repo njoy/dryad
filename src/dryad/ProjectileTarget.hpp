@@ -190,7 +190,7 @@ namespace dryad {
      *
      *  @param[in] id   the reaction identifier
      */
-    bool hasReaction( const id::NewReactionID& id ) const {
+    bool hasReaction( const id::ReactionID& id ) const {
 
       auto iter = this->iterator( id );
       return iter != this->reactions().end();
@@ -201,7 +201,7 @@ namespace dryad {
      *
      *  @param[in] id   the reaction identifier
      */
-    const Reaction& reaction( const id::NewReactionID& id ) const {
+    const Reaction& reaction( const id::ReactionID& id ) const {
 
       auto iter = this->iterator( id );
       if ( iter != this->reactions().end() ) {
@@ -220,7 +220,7 @@ namespace dryad {
      *
      *  @param[in] id   the reaction identifier
      */
-    Reaction& reaction( const id::NewReactionID& id ) {
+    Reaction& reaction( const id::ReactionID& id ) {
 
       return const_cast< Reaction& >( const_cast< const ProjectileTarget& >( *this ).reaction( id ) );
     }
@@ -280,7 +280,7 @@ namespace dryad {
 
         if ( reaction.isSummationReaction() ) {
 
-          std::vector< id::NewReactionID > partials = reaction.partialReactionIdentifiers().value();
+          std::vector< id::ReactionID > partials = reaction.partialReactionIdentifiers().value();
 
           auto iter = partials.begin();
           while ( iter != partials.end() ) {

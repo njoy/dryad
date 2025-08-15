@@ -45,12 +45,12 @@ SCENARIO( "createReactionTypes" ) {
 
         CHECK( 6 == numbers.size() );
 
-        CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == numbers[0] );
-        CHECK( id::NewReactionID( "e-,H->2e-,H" ) == numbers[1] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == numbers[2] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == numbers[3] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == numbers[4] );
-        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == numbers[5] );
+        CHECK( id::ReactionID( "e-,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::ReactionID( "e-,H->2e-,H" ) == numbers[1] );
+        CHECK( id::ReactionID( "e-,H->e-,H[total-scattering]" ) == numbers[2] );
+        CHECK( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) == numbers[3] );
+        CHECK( id::ReactionID( "e-,H->e-,H[excitation]" ) == numbers[4] );
+        CHECK( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) == numbers[5] );
       } // THEN
     } // WHEN
 
@@ -66,14 +66,14 @@ SCENARIO( "createReactionTypes" ) {
 
         CHECK( 8 == numbers.size() );
 
-        CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == numbers[0] );
-        CHECK( id::NewReactionID( "e-,H->2e-,H" ) == numbers[1] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == numbers[2] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == numbers[3] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == numbers[4] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == numbers[5] );
-        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == numbers[6] );
-        CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == numbers[7] );
+        CHECK( id::ReactionID( "e-,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::ReactionID( "e-,H->2e-,H" ) == numbers[1] );
+        CHECK( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) == numbers[2] );
+        CHECK( id::ReactionID( "e-,H->e-,H[total-scattering]" ) == numbers[3] );
+        CHECK( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) == numbers[4] );
+        CHECK( id::ReactionID( "e-,H->e-,H[excitation]" ) == numbers[5] );
+        CHECK( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) == numbers[6] );
+        CHECK( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) == numbers[7] );
       } // THEN
     } // WHEN
   } // GIVEN

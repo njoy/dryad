@@ -30,10 +30,10 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 5 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
-        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
-        CHECK( id::NewReactionID( "g,H->pair-production" ) == partials[0][2] );
-        CHECK( id::NewReactionID( "g,H->e-,H" ) == partials[0][3] );
+        CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
+        CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
+        CHECK( id::ReactionID( "g,H->pair-production" ) == partials[0][2] );
+        CHECK( id::ReactionID( "g,H->e-,H" ) == partials[0][3] );
 
         CHECK( 0 == partials[1].size() );
 
@@ -58,10 +58,10 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 6 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
-        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
-        CHECK( id::NewReactionID( "g,H->pair-production" ) == partials[0][2] );
-        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[0][3] );
+        CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
+        CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
+        CHECK( id::ReactionID( "g,H->pair-production" ) == partials[0][2] );
+        CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == partials[0][3] );
 
         CHECK( 0 == partials[1].size() );
 
@@ -70,7 +70,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 0 == partials[3].size() );
 
         CHECK( 1 == partials[4].size() );
-        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[4][0] );
+        CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == partials[4][0] );
 
         CHECK( 0 == partials[5].size() );
       } // THEN
@@ -89,10 +89,10 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 6 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
-        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
-        CHECK( id::NewReactionID( "g,H->pair-production" ) == partials[0][2] );
-        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[0][3] );
+        CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
+        CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
+        CHECK( id::ReactionID( "g,H->pair-production" ) == partials[0][2] );
+        CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == partials[0][3] );
 
         CHECK( 0 == partials[1].size() );
 
@@ -101,7 +101,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 0 == partials[3].size() );
 
         CHECK( 1 == partials[4].size() );
-        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[4][0] );
+        CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == partials[4][0] );
 
         CHECK( 0 == partials[5].size() );
       } // THEN

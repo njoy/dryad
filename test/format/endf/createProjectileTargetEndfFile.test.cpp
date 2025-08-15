@@ -17,6 +17,14 @@ std::string readContentFromFile( const std::string& );
 
 SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
+  //! @todo remove when we can parse string identifiers
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "H1" ),
+                  id::ReactionType( id::ParticleID::neutron(), 1 ) );
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "H1" ),
+                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "H1" ),
+                  id::ReactionType( id::ParticleID::neutron(), 102 ) );
+
   GIVEN( "projectile-target data - incident neutrons" ) {
 
     std::string description =
@@ -110,8 +118,8 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
     std::vector< Reaction > reactions = {
 
-      Reaction( id::ReactionID( "1" ),
-                { "2", "102" },
+      Reaction( id::ReactionID( "n,H1->total" ),
+                { id::ReactionID( "n,H1->n,H1" ), id::ReactionID( "n,H1->g,H2[all]" ) },
                 TabulatedCrossSection( { 1.000000e-5, 2.000000e-5, 5.000000e-5, 1.000000e-4, 2.000000e-4,
                                          5.000000e-4, 1.000000e-3, 2.000000e-3, 5.000000e-3, 1.000000e-2,
                                          2.530000e-2, 1.000000e-1, 2.000000e-1, 5.000000e-1, 1.000000e+0,
@@ -175,7 +183,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
                                          5.856907e-1, 5.685123e-1, 5.522144e-1, 5.367326e-1, 5.220080e-1,
                                          5.079874e-1, 4.946221e-1, 4.818679e-1 },
                                        { 8, 152 }, { InterpolationType::LogLog, InterpolationType::LinearLinear } ) ),
-      Reaction( id::ReactionID( "2" ),
+      Reaction( id::ReactionID( "n,H1->n,H1" ),
                 TabulatedCrossSection( { 1.000000e-5, 2.000000e-5, 5.000000e-5, 1.000000e-4, 2.000000e-4,
                                          5.000000e-4, 1.000000e-3, 2.000000e-3, 5.000000e-3, 1.000000e-2,
                                          2.530000e-2, 1.000000e-1, 2.000000e-1, 5.000000e-1, 1.000000e+0,
@@ -239,7 +247,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
                                          5.856622e-1, 5.684839e-1, 5.521863e-1, 5.367046e-1, 5.219803e-1,
                                          5.079599e-1, 4.945948e-1, 4.818408e-1 } ),
                 {}, 0., 0. ),
-      Reaction( id::ReactionID( "102" ),
+      Reaction( id::ReactionID( "n,H1->g,H2[all]" ),
                 TabulatedCrossSection( { 1.000000e-5, 2.000000e-5, 5.000000e-5, 1.000000e-4, 2.000000e-4,
                                          5.000000e-4, 1.000000e-3, 2.000000e-3, 5.000000e-3, 1.000000e-2,
                                          2.530000e-2, 1.000000e-1, 2.000000e-1, 5.000000e-1, 1.000000e+0,

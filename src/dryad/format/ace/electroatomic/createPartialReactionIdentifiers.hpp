@@ -18,12 +18,12 @@ namespace electroatomic {
   /**
    *  @brief Create partial reaction identifiers for electroatomic data
    */
-  std::vector< std::vector< id::NewReactionID > >
+  std::vector< std::vector< id::ReactionID > >
   createPartialReactionIdentifiers( const id::ParticleID& projectile,
                                     const id::ParticleID& target,
                                     const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< std::vector< id::NewReactionID > > partials;
+    std::vector< std::vector< id::ReactionID > > partials;
     auto e = id::ParticleID::electron();
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {

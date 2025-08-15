@@ -15,6 +15,10 @@ std::string chunk();
 
 SCENARIO( "createEndfFile3Section" ) {
 
+  //! @todo remove when we can parse string identifiers
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "Li7" ),
+                  id::ReactionType( id::ParticleID::neutron(), 25 ) );
+
   GIVEN( "valid data for a reaction" ) {
 
     std::string string = chunk();
@@ -24,7 +28,7 @@ SCENARIO( "createEndfFile3Section" ) {
       id::ParticleID target( 3007 );
       double awr = 6.955732;
 
-      Reaction reaction( "25",
+      Reaction reaction( id::ReactionID( "n,Li7->3n,a,H1[all]" ),
                          TabulatedCrossSection(
                            { 12522600.0, 13000000.0, 13500000.0, 14000000.0, 14500000.0,
                              15000000.0, 15500000.0, 16000000.0, 16500000.0, 17000000.0,

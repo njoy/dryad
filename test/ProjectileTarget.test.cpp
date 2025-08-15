@@ -20,15 +20,15 @@ SCENARIO( "ProjectileTarget" ) {
   id::ParticleID n = id::ParticleID::neutron();
   id::ParticleID fe56( 26056 );
 
-  id::NewReactionID( n, fe56, id::ReactionType( "total" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType::elastic( n ) );
-  id::NewReactionID( n, fe56, id::ReactionType( "2n" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType( "2n(0)" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType( "2n(1)" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType( "p" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType( "p(0)" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType( "p(1)" ) )  ;
-  id::NewReactionID( n, fe56, id::ReactionType( "a" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "total" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType::elastic( n ) );
+  id::ReactionID( n, fe56, id::ReactionType( "2n" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "2n(0)" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "2n(1)" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "p" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "p(0)" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "p(1)" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "a" ) )  ;
 
   GIVEN( "valid data for a ProjectileTarget" ) {
 
@@ -41,52 +41,52 @@ SCENARIO( "ProjectileTarget" ) {
 
       std::vector< Reaction > reactions = {
 
-        Reaction( id::NewReactionID( "n,Fe56->total" ),
-                  { id::NewReactionID( "n,Fe56->n,Fe56" ),
-                    id::NewReactionID( "n,Fe56->2n,Fe55[all]" ),
-                    id::NewReactionID( "n,Fe56->p,Mn56[all]" ),
-                    id::NewReactionID( "n,Fe56->a,Cr53[all]" ) },
+        Reaction( id::ReactionID( "n,Fe56->total" ),
+                  { id::ReactionID( "n,Fe56->n,Fe56" ),
+                    id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                    id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                    id::ReactionID( "n,Fe56->a,Cr53[all]" ) },
                   TabulatedCrossSection( { 1e-5, 20. }, { 1000001., 1000001. },
                                            InterpolationType::Histogram ),
                   {} ),
-        Reaction( id::NewReactionID( "n,Fe56->n,Fe56" ),
+        Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                   TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
                                            InterpolationType::LinearLinear ),
                   {},
                   0, 0 ),
-        Reaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ),
-                  { id::NewReactionID( "n,Fe56->2n,Fe55" ),
-                    id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) },
+        Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                  { id::ReactionID( "n,Fe56->2n,Fe55" ),
+                    id::ReactionID( "n,Fe56->2n,Fe55_e1" ) },
                   TabulatedCrossSection( { 1., 20. }, { 0., 3. },
                                            InterpolationType::Histogram ),
                   {} ),
-        Reaction( id::NewReactionID( "n,Fe56->2n,Fe55" ),
+        Reaction( id::ReactionID( "n,Fe56->2n,Fe55" ),
                   TabulatedCrossSection( { 1., 20. }, { 0., 2.00001 },
                                            InterpolationType::LinearLinear ),
                   {},
                   0, -1 ),
-        Reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ),
+        Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
                   TabulatedCrossSection( { 1., 20. }, { 0., 1. },
                                            InterpolationType::LinearLinear ),
                   {},
                   0, -1 ),
-        Reaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ),
-                  { id::NewReactionID( "n,Fe56->p,Mn56" ),
-                    id::NewReactionID( "n,Fe56->p,Mn56_e1" ) },
+        Reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                  { id::ReactionID( "n,Fe56->p,Mn56" ),
+                    id::ReactionID( "n,Fe56->p,Mn56_e1" ) },
                   TabulatedCrossSection( { 5., 20. }, { 0., 5. },
                                            InterpolationType::Histogram ),
                   {} ),
-        Reaction( id::NewReactionID( "n,Fe56->p,Mn56" ),
+        Reaction( id::ReactionID( "n,Fe56->p,Mn56" ),
                   TabulatedCrossSection( { 5., 20. }, { 0., 3.00001 },
                                            InterpolationType::LinearLinear ),
                   {},
                   0, -5 ),
-        Reaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ),
+        Reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ),
                   TabulatedCrossSection( { 5., 20. }, { 0., 2. },
                                            InterpolationType::LinearLinear ),
                   {},
                   0, -5 ),
-        Reaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ),
+        Reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ),
                   TabulatedCrossSection( { 1e-5, 20. }, { 1., 1. },
                                            InterpolationType::LinearLinear ),
                   {},
@@ -116,52 +116,52 @@ SCENARIO( "ProjectileTarget" ) {
 
       ProjectileTarget chunk( id::ParticleID::neutron(), id::ParticleID( 26056 ),
                               InteractionType::Nuclear,
-                              { Reaction( id::NewReactionID( "n,Fe56->total" ),
-                                          { id::NewReactionID( "n,Fe56->n,Fe56" ),
-                                            id::NewReactionID( "n,Fe56->2n,Fe55[all]" ),
-                                            id::NewReactionID( "n,Fe56->p,Mn56[all]" ),
-                                            id::NewReactionID( "n,Fe56->a,Cr53[all]" ) },
+                              { Reaction( id::ReactionID( "n,Fe56->total" ),
+                                          { id::ReactionID( "n,Fe56->n,Fe56" ),
+                                            id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                            id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                            id::ReactionID( "n,Fe56->a,Cr53[all]" ) },
                                           TabulatedCrossSection( { 1e-5, 20. }, { 1000001., 1000001. },
                                                                    InterpolationType::Histogram ),
                                           {} ),
-                                Reaction( id::NewReactionID( "n,Fe56->n,Fe56" ),
+                                Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                           TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
                                                                    InterpolationType::LinearLinear ),
                                           {},
                                           0, 0 ),
-                                Reaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ),
-                                          { id::NewReactionID( "n,Fe56->2n,Fe55" ),
-                                            id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) },
+                                Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                          { id::ReactionID( "n,Fe56->2n,Fe55" ),
+                                            id::ReactionID( "n,Fe56->2n,Fe55_e1" ) },
                                           TabulatedCrossSection( { 1., 20. }, { 0., 3. },
                                                                    InterpolationType::Histogram ),
                                           {} ),
-                                Reaction( id::NewReactionID( "n,Fe56->2n,Fe55" ),
+                                Reaction( id::ReactionID( "n,Fe56->2n,Fe55" ),
                                           TabulatedCrossSection( { 1., 20. }, { 0., 2.00001 },
                                                                    InterpolationType::LinearLinear ),
                                           {},
                                           0, -1 ),
-                                Reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ),
+                                Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                           TabulatedCrossSection( { 1., 20. }, { 0., 1. },
                                                                    InterpolationType::LinearLinear ),
                                           {},
                                           0, -1 ),
-                                Reaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ),
-                                          { id::NewReactionID( "n,Fe56->p,Mn56" ),
-                                            id::NewReactionID( "n,Fe56->p,Mn56_e1" ) },
+                                Reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                          { id::ReactionID( "n,Fe56->p,Mn56" ),
+                                            id::ReactionID( "n,Fe56->p,Mn56_e1" ) },
                                           TabulatedCrossSection( { 5., 20. }, { 0., 5. },
                                                                    InterpolationType::Histogram ),
                                           {} ),
-                                Reaction( id::NewReactionID( "n,Fe56->p,Mn56" ),
+                                Reaction( id::ReactionID( "n,Fe56->p,Mn56" ),
                                           TabulatedCrossSection( { 5., 20. }, { 0., 3.00001 },
                                                                    InterpolationType::LinearLinear ),
                                           {},
                                           0, -5 ),
-                                Reaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ),
+                                Reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ),
                                           TabulatedCrossSection( { 5., 20. }, { 0., 2. },
                                                                    InterpolationType::LinearLinear ),
                                           {},
                                           0, -5 ),
-                                Reaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ),
+                                Reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ),
                                           TabulatedCrossSection( { 1e-5, 20. }, { 1., 1. },
                                                                    InterpolationType::LinearLinear ),
                                           {},
@@ -213,7 +213,7 @@ SCENARIO( "ProjectileTarget" ) {
 
         std::vector< Reaction > newreactions = {
 
-          Reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ),
+          Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
                     TabulatedCrossSection( { 5., 20. }, { 0., 15. },
                                              InterpolationType::LogLog ),
                     {},
@@ -221,52 +221,52 @@ SCENARIO( "ProjectileTarget" ) {
         };
         std::vector< Reaction > original = {
 
-          Reaction( id::NewReactionID( "n,Fe56->total" ),
-                    { id::NewReactionID( "n,Fe56->n,Fe56" ),
-                      id::NewReactionID( "n,Fe56->2n,Fe55[all]" ),
-                      id::NewReactionID( "n,Fe56->p,Mn56[all]" ),
-                      id::NewReactionID( "n,Fe56->a,Cr53[all]" ) },
+          Reaction( id::ReactionID( "n,Fe56->total" ),
+                    { id::ReactionID( "n,Fe56->n,Fe56" ),
+                      id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                      id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                      id::ReactionID( "n,Fe56->a,Cr53[all]" ) },
                     TabulatedCrossSection( { 1e-5, 20. }, { 1000001., 1000001. },
                                              InterpolationType::Histogram ),
                     {} ),
-          Reaction( id::NewReactionID( "n,Fe56->n,Fe56" ),
+          Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                     TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
                                              InterpolationType::LinearLinear ),
                     {},
                     0, 0 ),
-          Reaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ),
-                    { id::NewReactionID( "n,Fe56->2n,Fe55" ),
-                      id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) },
+          Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                    { id::ReactionID( "n,Fe56->2n,Fe55" ),
+                      id::ReactionID( "n,Fe56->2n,Fe55_e1" ) },
                     TabulatedCrossSection( { 1., 20. }, { 0., 3. },
                                              InterpolationType::Histogram ),
                     {} ),
-          Reaction( id::NewReactionID( "n,Fe56->2n,Fe55" ),
+          Reaction( id::ReactionID( "n,Fe56->2n,Fe55" ),
                     TabulatedCrossSection( { 1., 20. }, { 0., 2.00001 },
                                              InterpolationType::LinearLinear ),
                     {},
                     0, -1 ),
-          Reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ),
+          Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
                     TabulatedCrossSection( { 1., 20. }, { 0., 1. },
                                              InterpolationType::LinearLinear ),
                     {},
                     0, -1 ),
-          Reaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ),
-                    { id::NewReactionID( "n,Fe56->p,Mn56" ),
-                      id::NewReactionID( "n,Fe56->p,Mn56_e1" ) },
+          Reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                    { id::ReactionID( "n,Fe56->p,Mn56" ),
+                      id::ReactionID( "n,Fe56->p,Mn56_e1" ) },
                     TabulatedCrossSection( { 5., 20. }, { 0., 5. },
                                              InterpolationType::Histogram ),
                     {} ),
-          Reaction( id::NewReactionID( "n,Fe56->p,Mn56" ),
+          Reaction( id::ReactionID( "n,Fe56->p,Mn56" ),
                     TabulatedCrossSection( { 5., 20. }, { 0., 3.00001 },
                                              InterpolationType::LinearLinear ),
                     {},
                     0, -5 ),
-          Reaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ),
+          Reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ),
                     TabulatedCrossSection( { 5., 20. }, { 0., 2. },
                                              InterpolationType::LinearLinear ),
                     {},
                     0, -5 ),
-          Reaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ),
+          Reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ),
                     TabulatedCrossSection( { 1e-5, 20. }, { 1., 1. },
                                              InterpolationType::LinearLinear ),
                     {},
@@ -291,31 +291,31 @@ SCENARIO( "ProjectileTarget" ) {
 
       ProjectileTarget left( id::ParticleID::neutron(), id::ParticleID( 26056 ),
                              InteractionType::Nuclear,
-                             { Reaction( id::NewReactionID( "n,Fe56->n,Fe56" ),
+                             { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                          TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
                                                                   InterpolationType::Histogram ),
                                          {},
                                          0, 0 ),
-                              Reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ),
+                              Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                         TabulatedCrossSection( { 1., 20. }, { 0., 100. },
                                                                  InterpolationType::LinearLinear ),
                                         {},
                                         0, -1 ) } );
       ProjectileTarget equal( id::ParticleID::neutron(), id::ParticleID( 26056 ),
                               InteractionType::Nuclear,
-                              { Reaction( id::NewReactionID( "n,Fe56->n,Fe56" ),
+                              { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                           TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
                                                                    InterpolationType::Histogram ),
                                           {},
                                           0, 0 ),
-                               Reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ),
+                               Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                          TabulatedCrossSection( { 1., 20. }, { 0., 100. },
                                                                   InterpolationType::LinearLinear ),
                                          {},
                                          0, -1 ) } );
       ProjectileTarget different( id::ParticleID::neutron(), id::ParticleID( 26056 ),
                                   InteractionType::Nuclear,
-                                  { Reaction( id::NewReactionID( "n,Fe56->n,Fe56" ),
+                                  { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                               TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
                                                                        InterpolationType::Histogram ),
                                               {},
@@ -355,32 +355,32 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 
   // reactions are present
   CHECK( 9 == chunk.numberReactions() );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->total" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->n,Fe56" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->2n,Fe55" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->p,Mn56" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) ) );
-//  CHECK( false == chunk.hasReaction( id::NewReactionID( "some unknown reaction" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->total" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->n,Fe56" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->2n,Fe55" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->p,Mn56" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ) ) );
+//  CHECK( false == chunk.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
   // reactions
   auto reaction = chunk.reactions()[0];
-  CHECK( id::NewReactionID( "n,Fe56->total" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->total" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 6 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -397,7 +397,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[1];
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -420,15 +420,15 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[2];
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -445,7 +445,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[3];
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -468,7 +468,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[4];
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -491,15 +491,15 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[5];
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -516,7 +516,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( false == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[6];
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -539,7 +539,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[7];
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -562,7 +562,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[8];
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -584,20 +584,20 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->total" ) );
-  CHECK( id::NewReactionID( "n,Fe56->total" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->total" ) );
+  CHECK( id::ReactionID( "n,Fe56->total" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 6 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -613,8 +613,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
   CHECK( false == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->n,Fe56" ) );
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56" ) );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -636,16 +636,16 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -661,8 +661,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
   CHECK( false == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->2n,Fe55" ) );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55" ) );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -684,8 +684,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -707,16 +707,16 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ) );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -732,8 +732,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::Histogram == reaction.crossSection().interpolants()[0] );
   CHECK( false == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->p,Mn56" ) );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->p,Mn56" ) );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -755,8 +755,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ) );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -778,8 +778,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) );
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ) );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -816,32 +816,32 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
 
   // reactions are present
   CHECK( 9 == chunk.numberReactions() );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->total" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->n,Fe56" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->2n,Fe55" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->p,Mn56" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) ) );
-  CHECK( true == chunk.hasReaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) ) );
-//  CHECK( false == chunk.hasReaction( id::NewReactionID( "some unknown reaction" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->total" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->n,Fe56" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->2n,Fe55" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->p,Mn56" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ) ) );
+  CHECK( true == chunk.hasReaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ) ) );
+//  CHECK( false == chunk.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
   // reactions
   auto reaction = chunk.reactions()[0];
-  CHECK( id::NewReactionID( "n,Fe56->total" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->total" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 6 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 4 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -862,7 +862,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[1];
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -885,15 +885,15 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[2];
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -910,7 +910,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[3];
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -933,7 +933,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[4];
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -956,15 +956,15 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[5];
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -981,7 +981,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[6];
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1004,7 +1004,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[7];
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1027,7 +1027,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   reaction = chunk.reactions()[8];
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1049,20 +1049,20 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->total" ) );
-  CHECK( id::NewReactionID( "n,Fe56->total" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->total" ) );
+  CHECK( id::ReactionID( "n,Fe56->total" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 6 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[2] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[3] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[4] );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.partialReactionIdentifiers().value()[5] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 4 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -1082,8 +1082,8 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->n,Fe56" ) );
-  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->n,Fe56" ) );
+  CHECK( id::ReactionID( "n,Fe56->n,Fe56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1105,16 +1105,16 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -1130,8 +1130,8 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->2n,Fe55" ) );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55" ) );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1153,8 +1153,8 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) );
-  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) );
+  CHECK( id::ReactionID( "n,Fe56->2n,Fe55_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1176,16 +1176,16 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ) );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Summation == reaction.category() );
   CHECK( false == reaction.isPrimaryReaction() );
   CHECK( true == reaction.isSummationReaction() );
   CHECK( std::nullopt == reaction.massDifferenceQValue() );
   CHECK( std::nullopt == reaction.reactionQValue() );
   CHECK( 2 == reaction.numberPartialReactions() );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.partialReactionIdentifiers().value()[0] );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.partialReactionIdentifiers().value()[1] );
   CHECK( false == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
@@ -1201,8 +1201,8 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->p,Mn56" ) );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->p,Mn56" ) );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1224,8 +1224,8 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) );
-  CHECK( id::NewReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ) );
+  CHECK( id::ReactionID( "n,Fe56->p,Mn56_e1" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );
@@ -1247,8 +1247,8 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
 
-  reaction = chunk.reaction( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) );
-  CHECK( id::NewReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
+  reaction = chunk.reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ) );
+  CHECK( id::ReactionID( "n,Fe56->a,Cr53[all]" ) == reaction.identifier() );
   CHECK( ReactionCategory::Primary == reaction.category() );
   CHECK( true == reaction.isPrimaryReaction() );
   CHECK( false == reaction.isSummationReaction() );

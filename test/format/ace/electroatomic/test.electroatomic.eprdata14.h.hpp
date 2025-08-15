@@ -6,7 +6,7 @@ namespace h {
 
   void verifyTotalReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "e-,H->total[atomic]" ) == reaction.identifier() );
     CHECK( 501 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -16,14 +16,14 @@ namespace h {
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 5 == partials.size() );
-    CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[0] );
-    CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == partials[1] );
-    CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == partials[2] );
-    CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[3] );
-    CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[4] );
+    CHECK( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[0] );
+    CHECK( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) == partials[1] );
+    CHECK( id::ReactionID( "e-,H->e-,H[excitation]" ) == partials[2] );
+    CHECK( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[3] );
+    CHECK( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[4] );
     CHECK( 525 == partials[0].reactionType().mt() );
-    CHECK( 507 == partials[1].reactionType().mt() );
-    CHECK( 508 == partials[2].reactionType().mt() );
+    CHECK( 527 == partials[1].reactionType().mt() );
+    CHECK( 528 == partials[2].reactionType().mt() );
     CHECK( 534 == partials[3].reactionType().mt() );
     CHECK( std::nullopt == partials[4].reactionType().mt() );
 
@@ -51,7 +51,7 @@ namespace h {
 
   void verifyTotalIonisationReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->2e-,H" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "e-,H->2e-,H" ) == reaction.identifier() );
     CHECK( 522 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -61,8 +61,8 @@ namespace h {
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
-    CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[0] );
-    CHECK( 524 == partials[0].reactionType().mt() );
+    CHECK( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[0] );
+    CHECK( 534 == partials[0].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -88,7 +88,7 @@ namespace h {
 
   void verifyLargeAngleElasticReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) == reaction.identifier() );
     CHECK( 525 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -121,7 +121,7 @@ namespace h {
 
   void verifyTotalElasticReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "e-,H->e-,H[total-scattering]" ) == reaction.identifier() );
     CHECK( 526 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -131,10 +131,10 @@ namespace h {
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 2 == partials.size() );
-    CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[0] );
-    CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[1] );
+    CHECK( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[0] );
+    CHECK( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[1] );
     CHECK( 525 == partials[0].reactionType().mt() );
-    CHECK( std::nullopt == partials[0].reactionType().mt() );
+    CHECK( std::nullopt == partials[1].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -160,8 +160,8 @@ namespace h {
 
   void verifyBremsstrahlungReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == reaction.identifier() );
-    CHECK( 507 == reaction.identifier().reactionType().mt() );
+    CHECK( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) == reaction.identifier() );
+    CHECK( 527 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
@@ -193,8 +193,8 @@ namespace h {
 
   void verifyExcitationReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == reaction.identifier() );
-    CHECK( 508 == reaction.identifier().reactionType().mt() );
+    CHECK( id::ReactionID( "e-,H->e-,H[excitation]" ) == reaction.identifier() );
+    CHECK( 528 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
@@ -226,7 +226,7 @@ namespace h {
 
   void verifyIonisationReaction( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) == reaction.identifier() );
     CHECK( 534 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -259,7 +259,7 @@ namespace h {
 
   void verifyElasticReactionDeficit( const Reaction& reaction ) {
 
-    CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) == reaction.identifier() );
     CHECK( std::nullopt == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );

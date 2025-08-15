@@ -17,13 +17,11 @@ namespace njoy {
 namespace dryad {
 namespace id {
 
-  using ReactionID = std::string;
-
   /**
    *  @class
    *  @brief The reaction identifier, with associated symbols, aliases, particles, etc.
    */
-  class NewReactionID {
+  class ReactionID {
 
     /* helper class */
     #include "dryad/id/ReactionID/Entry.hpp"
@@ -121,7 +119,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend auto operator==( const NewReactionID& left, const NewReactionID& right ) {
+    friend auto operator==( const ReactionID& left, const ReactionID& right ) {
 
       return ( left.projectile() == right.projectile() ) &&
              ( left.target() == right.target() ) &&
@@ -134,7 +132,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend auto operator!=( const NewReactionID& left, const NewReactionID& right ) {
+    friend auto operator!=( const ReactionID& left, const ReactionID& right ) {
 
       return ! ( left == right );
     }
@@ -145,7 +143,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend auto operator<( const NewReactionID& left, const NewReactionID& right ) {
+    friend auto operator<( const ReactionID& left, const ReactionID& right ) {
 
       if ( left.projectile() < right.projectile() ) {
 
@@ -167,7 +165,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend auto operator>( const NewReactionID& left, const NewReactionID& right ) {
+    friend auto operator>( const ReactionID& left, const ReactionID& right ) {
 
       return right < left;
     }
@@ -178,7 +176,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend auto operator<=( const NewReactionID& left, const NewReactionID& right ) {
+    friend auto operator<=( const ReactionID& left, const ReactionID& right ) {
 
       return ! ( right < left );
     }
@@ -189,7 +187,7 @@ namespace id {
      *  @param[in] left    the id on the left
      *  @param[in] right   the id on the right
      */
-    friend auto operator>=( const NewReactionID& left, const NewReactionID& right ) {
+    friend auto operator>=( const ReactionID& left, const ReactionID& right ) {
 
       return ! ( left < right );
     }

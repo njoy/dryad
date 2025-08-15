@@ -24,11 +24,11 @@ namespace dryad {
   class Reaction {
 
     /* fields */
-    id::NewReactionID id_;
+    id::ReactionID id_;
 
     //! @todo if in the end there are only 2 categories, we may want to remove this
     ReactionCategory category_;
-    std::optional< std::vector< id::NewReactionID > > partials_;
+    std::optional< std::vector< id::ReactionID > > partials_;
 
     std::optional< double > mass_difference_qvalue_;
     std::optional< double > reaction_qvalue_;
@@ -52,7 +52,7 @@ namespace dryad {
     /**
      *  @brief Return the reaction identifier
      */
-    const id::NewReactionID& identifier() const {
+    const id::ReactionID& identifier() const {
 
       return this->id_;
     }
@@ -62,7 +62,7 @@ namespace dryad {
      *
      *  @param id.  the reaction identifier
      */
-    void identifier( id::NewReactionID id ) {
+    void identifier( id::ReactionID id ) {
 
       this->id_ = std::move( id );
     }
@@ -79,7 +79,7 @@ namespace dryad {
      *  @brief Return the partial reaction identifiers (not defined if this is
      *         a primary reaction)
      */
-    const std::optional< std::vector< id::NewReactionID > >&
+    const std::optional< std::vector< id::ReactionID > >&
     partialReactionIdentifiers() const {
 
       return this->partials_;
@@ -89,7 +89,7 @@ namespace dryad {
      *  @brief Return the partial reaction identifiers (not defined if this is
      *         a primary reaction)
      */
-    std::optional< std::vector< id::NewReactionID > >&
+    std::optional< std::vector< id::ReactionID > >&
     partialReactionIdentifiers() {
 
       return this->partials_;
@@ -109,7 +109,7 @@ namespace dryad {
      *
      *  @param[in] partials   the partial reaction identifiers
      */
-    void partialReactionIdentifiers( std::optional< std::vector< id::NewReactionID > > partials ) {
+    void partialReactionIdentifiers( std::optional< std::vector< id::ReactionID > > partials ) {
 
       this->partials_ = std::move( partials );
       if ( this->partials_.has_value() && this->partials_.value().size() == 0 ) {

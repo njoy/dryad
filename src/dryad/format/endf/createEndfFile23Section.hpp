@@ -26,7 +26,7 @@ namespace endf {
                            double awr,
                            const dryad::Reaction& reaction ) {
 
-    int mt = std::stoi( reaction.identifier() );
+    int mt = reaction.identifier().reactionType().mt().value();
     double bindingenergy = reaction.reactionQValue().has_value()
                            ? -reaction.reactionQValue().value()
                            : 0;

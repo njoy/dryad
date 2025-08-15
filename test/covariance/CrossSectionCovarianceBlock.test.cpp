@@ -15,12 +15,18 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CrossSectionCovarianceBlock" ) {
 
+  //! @todo remove when we can parse string identifiers
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
+                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
+                  id::ReactionType( id::ParticleID::neutron(), 18 ) );
+
   GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock without "
          "variance scaling information" ) {
 
     id::ParticleID projectile( "n" );
     id::ParticleID target( "U235" );
-    id::ReactionID reaction( "elastic" );
+    id::ReactionID reaction( "n,U235->n,U235" );
     std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
     Matrix< double > matrix( 3, 3 );
@@ -36,7 +42,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
       CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "elastic" ) == chunk.rowMetadata().reactionIdentifier() );
+      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifier() );
       CHECK( 4 == chunk.rowMetadata().energies().size() );
       CHECK( 3 == chunk.rowMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -46,7 +52,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
       CHECK( id::ParticleID( "U235" ) == chunk.columnMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "elastic" ) == chunk.columnMetadata().reactionIdentifier() );
+      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.columnMetadata().reactionIdentifier() );
       CHECK( 4 == chunk.columnMetadata().energies().size() );
       CHECK( 3 == chunk.columnMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -129,7 +135,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
     id::ParticleID projectile( "n" );
     id::ParticleID target( "U235" );
-    id::ReactionID reaction( "elastic" );
+    id::ReactionID reaction( "n,U235->n,U235" );
     std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
     Matrix< double > matrix( 3, 3 );
@@ -149,7 +155,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
      CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
      CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
-     CHECK( id::ReactionID( "elastic" ) == chunk.rowMetadata().reactionIdentifier() );
+     CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifier() );
      CHECK( 4 == chunk.rowMetadata().energies().size() );
      CHECK( 3 == chunk.rowMetadata().numberGroups() );
      CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -159,7 +165,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
      CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
      CHECK( id::ParticleID( "U235" ) == chunk.columnMetadata().targetIdentifier() );
-     CHECK( id::ReactionID( "elastic" ) == chunk.columnMetadata().reactionIdentifier() );
+     CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.columnMetadata().reactionIdentifier() );
      CHECK( 4 == chunk.columnMetadata().energies().size() );
      CHECK( 3 == chunk.columnMetadata().numberGroups() );
      CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -251,11 +257,11 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
     id::ParticleID rowProjectile( "n" );
     id::ParticleID rowTarget( "U235" );
-    id::ReactionID rowReaction( "elastic" );
+    id::ReactionID rowReaction( "n,U235->n,U235" );
     std::vector< double > rowEnergies = { 1e-5, 1., 1e+6, 2e+7 };
     id::ParticleID columnProjectile( "n" );
     id::ParticleID columnTarget( "U238" );
-    id::ReactionID columnReaction( "fission" );
+    id::ReactionID columnReaction( "n,U235->fission(t)" );
     std::vector< double > columnEnergies = { 1e-5, 2., 2e+7 };
 
     Matrix< double > matrix( 3, 2 );
@@ -277,7 +283,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
       CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "elastic" ) == chunk.rowMetadata().reactionIdentifier() );
+      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifier() );
        CHECK( 4 == chunk.rowMetadata().energies().size() );
       CHECK( 3 == chunk.rowMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -287,7 +293,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
       CHECK( id::ParticleID( "U238" ) == chunk.columnMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "fission" ) == chunk.columnMetadata().reactionIdentifier() );
+      CHECK( id::ReactionID( "n,U235->fission(t)" ) == chunk.columnMetadata().reactionIdentifier() );
        CHECK( 3 == chunk.columnMetadata().energies().size() );
       CHECK( 2 == chunk.columnMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
@@ -354,7 +360,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "elastic" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
       Matrix< double > matrix( 3, 2 );
@@ -376,7 +382,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "elastic" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
       Matrix< double > matrix( 3, 3 );
@@ -399,7 +405,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "elastic" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > energies = { 1e-5, 1., 2e+7 };
 
       Matrix< double > matrix( 3, 3 );
@@ -422,11 +428,11 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       id::ParticleID rowProjectile( "n" );
       id::ParticleID rowTarget( "U235" );
-      id::ReactionID rowReaction( "elastic" );
+      id::ReactionID rowReaction( "n,U235->n,U235" );
       std::vector< double > rowEnergies = { 1e-5, 1., 2e+7 };
       id::ParticleID columnProjectile( "n" );
       id::ParticleID columnTarget( "U238" );
-      id::ReactionID columnReaction( "fission" );
+      id::ReactionID columnReaction( "n,U235->fission(t)" );
       std::vector< double > columnEnergies = { 1e-5, 2., 2e+7 };
 
       Matrix< double > matrix( 3, 2 );
@@ -453,11 +459,11 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       id::ParticleID rowProjectile( "n" );
       id::ParticleID rowTarget( "U235" );
-      id::ReactionID rowReaction( "elastic" );
+      id::ReactionID rowReaction( "n,U235->n,U235" );
       std::vector< double > rowEnergies = { 1e-5, 1., 1e+6, 2e+7 };
       id::ParticleID columnProjectile( "n" );
       id::ParticleID columnTarget( "U238" );
-      id::ReactionID columnReaction( "fission" );
+      id::ReactionID columnReaction( "n,U235->fission(t)" );
       std::vector< double > columnEnergies = { 1e-5, 2e+7 };
 
       Matrix< double > matrix( 3, 2 );

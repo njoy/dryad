@@ -23,7 +23,7 @@ namespace h {
     CHECK( 502 == partials[0].reactionType().mt() );
     CHECK( 504 == partials[1].reactionType().mt() );
     CHECK( 516 == partials[2].reactionType().mt() );
-    CHECK( 534 == partials[3].reactionType().mt() );
+    CHECK( 522 == partials[3].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );

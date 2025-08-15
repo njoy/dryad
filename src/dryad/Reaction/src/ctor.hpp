@@ -10,9 +10,9 @@
  *  @param linearised   a flag indicating whether or not the data is
  *                      linearised
  */
-Reaction( id::NewReactionID&& id,
+Reaction( id::ReactionID&& id,
           ReactionCategory&& type,
-          std::optional< std::vector< id::NewReactionID > >&& partials,
+          std::optional< std::vector< id::ReactionID > >&& partials,
           TabulatedCrossSection&& xs,
           std::vector< ReactionProduct >&& products,
           std::optional< double >&& mass_q,
@@ -46,7 +46,7 @@ Reaction& operator=( Reaction&& ) = default;
  *  @param mass_q       the mass difference Q value
  *  @param reaction_q   the reaction Q value
  */
-Reaction( id::NewReactionID id,
+Reaction( id::ReactionID id,
           TabulatedCrossSection xs,
           std::vector< ReactionProduct > products = {},
           std::optional< double > mass_q = std::nullopt,
@@ -72,8 +72,8 @@ Reaction( id::NewReactionID id,
  *  @param products    the reaction products associated to the summation reaction
  *                     (defaults to no reaction products)
  */
-Reaction( id::NewReactionID id,
-          std::vector< id::NewReactionID > partials,
+Reaction( id::ReactionID id,
+          std::vector< id::ReactionID > partials,
           TabulatedCrossSection xs,
           std::vector< ReactionProduct > products = {} ) :
     Reaction( std::move( id ),

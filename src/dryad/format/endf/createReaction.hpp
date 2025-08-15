@@ -58,7 +58,7 @@ namespace endf {
                            bool normalise ) {
 
     // metadata and miscellaneous information
-    id::NewReactionID id = id::NewReactionID( projectile, target, id::ReactionType( projectile, mt ) );
+    id::ReactionID id( projectile, target, id::ReactionType( projectile, mt ) );
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -109,11 +109,11 @@ namespace endf {
 
         // partials
         std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 3, mt );
-        std::vector< id::NewReactionID > partials( endf_partials.size() );
+        std::vector< id::ReactionID > partials( endf_partials.size() );
         std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
                         [&projectile, &target]
                            ( auto&& type )
-                           { return id::NewReactionID( projectile, target, type ); } );
+                           { return id::ReactionID( projectile, target, type ); } );
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
@@ -158,11 +158,11 @@ namespace endf {
 
         // partials
         std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 23, mt );
-        std::vector< id::NewReactionID > partials( endf_partials.size() );
+        std::vector< id::ReactionID > partials( endf_partials.size() );
         std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
                         [&projectile, &target]
                            ( auto&& type )
-                           { return id::NewReactionID( projectile, target, type ); } );
+                           { return id::ReactionID( projectile, target, type ); } );
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );

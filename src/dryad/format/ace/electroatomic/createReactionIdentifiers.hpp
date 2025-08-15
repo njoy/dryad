@@ -18,12 +18,12 @@ namespace electroatomic {
   /**
    *  @brief Create reaction identifiers for electroatomic data
    */
-  std::vector< id::NewReactionID >
+  std::vector< id::ReactionID >
   createReactionIdentifiers( const id::ParticleID& projectile,
                              const id::ParticleID& target,
                              const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< id::NewReactionID > identifiers;
+    std::vector< id::ReactionID > identifiers;
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {
 

@@ -18,12 +18,12 @@ namespace photoatomic {
   /**
    *  @brief Create TabulatedCrossSection instances for photoatomic data
    */
-  std::vector< id::NewReactionID >
+  std::vector< id::ReactionID >
   createReactionIdentifiers( const id::ParticleID& projectile,
                              const id::ParticleID& target,
                              const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< id::NewReactionID > numbers;
+    std::vector< id::ReactionID > numbers;
 
     // total - MT501
     numbers.emplace_back( projectile, target, id::ReactionType( projectile, 501 ) );

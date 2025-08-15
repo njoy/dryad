@@ -21,7 +21,7 @@ namespace endf {
    *  @brief Calculate a summation cross section
    */
   TabulatedCrossSection
-  calculateSummationCrossSection( const std::vector< id::NewReactionID >& partials,
+  calculateSummationCrossSection( const std::vector< id::ReactionID >& partials,
                                   const std::vector< Reaction >& reactions ) {
 
     auto find_cross_section = [] ( const auto& id, const auto& reactions ) {
@@ -88,15 +88,15 @@ namespace endf {
             Log::info( "Reading data for MT{}", mt );
 
             // metadata and miscellaneous information
-            id::NewReactionID id = id::NewReactionID( projectile, target, id::ReactionType( mt ) );
+            id::ReactionID id( projectile, target, id::ReactionType( mt ) );
 
             // partials
             std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 33, mt );
-            std::vector< id::NewReactionID > partials( endf_partials.size() );
+            std::vector< id::ReactionID > partials( endf_partials.size() );
             std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
                             [&projectile, &target]
                                ( auto&& type )
-                               { return id::NewReactionID( projectile, target, type ); } );
+                               { return id::ReactionID( projectile, target, type ); } );
 
             // cross section
             TabulatedCrossSection xs = calculateSummationCrossSection( partials, reactions );
@@ -120,7 +120,7 @@ namespace endf {
         TabulatedCrossSection deficit = total->crossSection().linearise();
         deficit -= partial->crossSection().linearise();
 
-        reactions.emplace_back( Reaction( id::NewReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
+        reactions.emplace_back( Reaction( id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
                                           deficit, {}, std::nullopt, 0. ) );
       }
     }

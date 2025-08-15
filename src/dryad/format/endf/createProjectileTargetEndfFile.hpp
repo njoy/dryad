@@ -81,7 +81,10 @@ namespace endf {
       }
       else {
 
-        material.insert( createEndfFile23Section( transport.targetIdentifier(), awr, reaction ) );
+        if ( reaction.identifier().reactionType() != id::ReactionType( "deficit-scattering" ) ) {
+
+          material.insert( createEndfFile23Section( transport.targetIdentifier(), awr, reaction ) );
+        }
       }
     }
 

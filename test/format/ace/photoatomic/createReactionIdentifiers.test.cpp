@@ -29,11 +29,11 @@ SCENARIO( "createReactionNumbers" ) {
 
         CHECK( 5 == numbers.size() );
 
-        CHECK( id::NewReactionID( "g,H->total[atomic]" ) == numbers[0] );
-        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == numbers[1] );
-        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == numbers[2] );
-        CHECK( id::NewReactionID( "g,H->pair-production" ) == numbers[3] );
-        CHECK( id::NewReactionID( "g,H->e-,H" ) == numbers[4] );
+        CHECK( id::ReactionID( "g,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == numbers[1] );
+        CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == numbers[2] );
+        CHECK( id::ReactionID( "g,H->pair-production" ) == numbers[3] );
+        CHECK( id::ReactionID( "g,H->e-,H" ) == numbers[4] );
       } // THEN
     } // WHEN
 
@@ -49,12 +49,12 @@ SCENARIO( "createReactionNumbers" ) {
 
         CHECK( 6 == numbers.size() );
 
-        CHECK( id::NewReactionID( "g,H->total[atomic]" ) == numbers[0] );
-        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == numbers[1] );
-        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == numbers[2] );
-        CHECK( id::NewReactionID( "g,H->pair-production" ) == numbers[3] );
-        CHECK( id::NewReactionID( "g,H->e-,H" ) == numbers[4] );
-        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == numbers[5] );
+        CHECK( id::ReactionID( "g,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == numbers[1] );
+        CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == numbers[2] );
+        CHECK( id::ReactionID( "g,H->pair-production" ) == numbers[3] );
+        CHECK( id::ReactionID( "g,H->e-,H" ) == numbers[4] );
+        CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == numbers[5] );
       } // THEN
     } // WHEN
 
@@ -70,12 +70,12 @@ SCENARIO( "createReactionNumbers" ) {
 
         CHECK( 6 == numbers.size() );
 
-        CHECK( id::NewReactionID( "g,H->total[atomic]" ) == numbers[0] );
-        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == numbers[1] );
-        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == numbers[2] );
-        CHECK( id::NewReactionID( "g,H->pair-production" ) == numbers[3] );
-        CHECK( id::NewReactionID( "g,H->e-,H" ) == numbers[4] );
-        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == numbers[5] );
+        CHECK( id::ReactionID( "g,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == numbers[1] );
+        CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == numbers[2] );
+        CHECK( id::ReactionID( "g,H->pair-production" ) == numbers[3] );
+        CHECK( id::ReactionID( "g,H->e-,H" ) == numbers[4] );
+        CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == numbers[5] );
       } // THEN
     } // WHEN
   } // GIVEN
