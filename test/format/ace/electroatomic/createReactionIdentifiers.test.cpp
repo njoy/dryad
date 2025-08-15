@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/electroatomic/createReactionNumbers.hpp"
+#include "dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -13,17 +13,21 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "createReactionNumbers" ) {
+SCENARIO( "createReactionTypes" ) {
+
+  auto e = id::ParticleID::electron();
 
   GIVEN( "instances of PhotoatomicTable" ) {
 
     WHEN( "an mcplib84 formatted table is given" ) {
 
+      auto e = id::ParticleID::electron();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::electroatomic::createReactionNumbers( table );
+        auto numbers = format::ace::electroatomic::createReactionIdentifiers( e, H, table );
 
         CHECK( 0 == numbers.size() );
       } // THEN
@@ -31,41 +35,45 @@ SCENARIO( "createReactionNumbers" ) {
 
     WHEN( "an eprdata12 formatted table is given" ) {
 
+      auto e = id::ParticleID::electron();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::electroatomic::createReactionNumbers( table );
+        auto numbers = format::ace::electroatomic::createReactionIdentifiers( e, H, table );
 
         CHECK( 6 == numbers.size() );
 
-        CHECK( 501 == numbers[0] );
-        CHECK( 522 == numbers[1] );
-        CHECK( 526 == numbers[2] );
-        CHECK( 527 == numbers[3] );
-        CHECK( 528 == numbers[4] );
-        CHECK( 534 == numbers[5] );
+        CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H" ) == numbers[1] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == numbers[2] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == numbers[3] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == numbers[4] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == numbers[5] );
       } // THEN
     } // WHEN
 
     WHEN( "an eprdata14 formatted table is given" ) {
 
+      auto e = id::ParticleID::electron();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::electroatomic::createReactionNumbers( table );
+        auto numbers = format::ace::electroatomic::createReactionIdentifiers( e, H, table );
 
         CHECK( 8 == numbers.size() );
 
-        CHECK(  501 == numbers[0] );
-        CHECK(  522 == numbers[1] );
-        CHECK(  525 == numbers[2] );
-        CHECK(  526 == numbers[3] );
-        CHECK(  527 == numbers[4] );
-        CHECK(  528 == numbers[5] );
-        CHECK(  534 == numbers[6] );
-        CHECK( -526 == numbers[7] );
+        CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == numbers[0] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H" ) == numbers[1] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == numbers[2] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == numbers[3] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == numbers[4] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == numbers[5] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == numbers[6] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == numbers[7] );
       } // THEN
     } // WHEN
   } // GIVEN

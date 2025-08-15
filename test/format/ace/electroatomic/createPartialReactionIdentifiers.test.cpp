@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/electroatomic/createPartialReactionNumbers.hpp"
+#include "dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -19,11 +19,13 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
     WHEN( "an mcplib84 formatted table is given" ) {
 
+      auto e = id::ParticleID::electron();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
       THEN( "partials can be derived" ) {
 
-        auto partials = format::ace::electroatomic::createPartialReactionNumbers( table );
+        auto partials = format::ace::electroatomic::createPartialReactionIdentifiers( e, H, table );
 
         CHECK( 0 == partials.size() );
       } // THEN
@@ -31,22 +33,24 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
     WHEN( "an eprdata12 formatted table is given" ) {
 
+      auto e = id::ParticleID::electron();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
       THEN( "partials can be derived" ) {
 
-        auto partials = format::ace::electroatomic::createPartialReactionNumbers( table );
+        auto partials = format::ace::electroatomic::createPartialReactionIdentifiers( e, H, table );
 
-        CHECK(    6 == partials.size() );
+        CHECK( 6 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( 526 == partials[0][0] );
-        CHECK( 527 == partials[0][1] );
-        CHECK( 528 == partials[0][2] );
-        CHECK( 534 == partials[0][3] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == partials[0][0] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == partials[0][1] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == partials[0][2] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[0][3] );
 
         CHECK( 1 == partials[1].size() );
-        CHECK( 534 == partials[1][0] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[1][0] );
 
         CHECK( 0 == partials[2].size() );
 
@@ -60,29 +64,31 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
     WHEN( "an eprdata14 formatted table is given" ) {
 
+      auto e = id::ParticleID::electron();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
       THEN( "partials can be derived" ) {
 
-        auto partials = format::ace::electroatomic::createPartialReactionNumbers( table );
+        auto partials = format::ace::electroatomic::createPartialReactionIdentifiers( e, H, table );
 
         CHECK( 8 == partials.size() );
 
         CHECK( 5 == partials[0].size() );
-        CHECK(  525 == partials[0][0] );
-        CHECK(  527 == partials[0][1] );
-        CHECK(  528 == partials[0][2] );
-        CHECK(  534 == partials[0][3] );
-        CHECK( -526 == partials[0][4] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[0][0] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == partials[0][1] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == partials[0][2] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[0][3] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[0][4] );
 
         CHECK( 1 == partials[1].size() );
-        CHECK(  534 == partials[1][0] );
+        CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[1][0] );
 
         CHECK( 0 == partials[2].size() );
 
         CHECK( 2 == partials[3].size() );
-        CHECK(  525 == partials[3][0] );
-        CHECK( -526 == partials[3][1] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[3][0] );
+        CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[3][1] );
 
         CHECK( 0 == partials[4].size() );
 

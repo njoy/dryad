@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/id/ReactionID.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -15,51 +16,53 @@ namespace ace {
 namespace electroatomic {
 
   /**
-   *  @brief Create reaction numbers for electroatomic data
+   *  @brief Create reaction identifiers for electroatomic data
    */
-  std::vector< int >
-  createReactionNumbers( const ACEtk::PhotoatomicTable& table ) {
+  std::vector< id::NewReactionID >
+  createReactionIdentifiers( const id::ParticleID& projectile,
+                             const id::ParticleID& target,
+                             const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< int > numbers;
+    std::vector< id::NewReactionID > identifiers;
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {
 
       // total - MT501
-      numbers.push_back( 501 );
+      identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 501 ) );
 
       // ionisation - MT522
-      numbers.push_back( 522 );
+      identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 522 ) );
 
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // large angle elastic - MT525
-        numbers.push_back( 525 );
+        identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 525 ) );
       }
 
       // total elastic - MT526
-      numbers.push_back( 526 );
+      identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 526 ) );
 
       // bremsstrahlung - MT527
-      numbers.push_back( 527 );
+      identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 527 ) );
 
       // excitation - MT528
-      numbers.push_back( 528 );
+      identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 528 ) );
 
       for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
         // subshell ionisation - MT534 and up
-        numbers.push_back( 534 + index - 1 );
+        identifiers.emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
       }
 
       // eprdata14 and higher has large angle and total elastic -> add deficit elastic
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // elastic deficit
-        numbers.push_back( -526 );
+        identifiers.emplace_back( projectile, target, id::ReactionType( "deficit-scattering" ) );
       }
     }
 
-    return numbers;
+    return identifiers;
   }
 
 } // electroatomic namespace

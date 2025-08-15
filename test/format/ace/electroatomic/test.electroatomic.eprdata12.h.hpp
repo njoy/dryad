@@ -6,7 +6,7 @@ namespace h {
 
   void verifyTotalReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "501" ) == reaction.identifier() );
+    CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == reaction.identifier() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( true == reaction.isSummationReaction() );
@@ -15,10 +15,10 @@ namespace h {
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 4 == partials.size() );
-    CHECK( id::ReactionID( "526" ) == partials[0] );
-    CHECK( id::ReactionID( "527" ) == partials[1] );
-    CHECK( id::ReactionID( "528" ) == partials[2] );
-    CHECK( id::ReactionID( "534" ) == partials[3] );
+    CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == partials[0] );
+    CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == partials[1] );
+    CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == partials[2] );
+    CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[3] );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -44,7 +44,7 @@ namespace h {
 
   void verifyTotalIonisationReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "522" ) == reaction.identifier() );
+    CHECK( id::NewReactionID( "e-,H->2e-,H" ) == reaction.identifier() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( false == reaction.isPrimaryReaction() );
     CHECK( true == reaction.isSummationReaction() );
@@ -53,7 +53,7 @@ namespace h {
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
-    CHECK( id::ReactionID( "534" ) == partials[0] );
+    CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[0] );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -79,7 +79,7 @@ namespace h {
 
   void verifyTotalElasticReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "526" ) == reaction.identifier() );
+    CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == reaction.identifier() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
@@ -111,7 +111,7 @@ namespace h {
 
   void verifyBremsstrahlungReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "527" ) == reaction.identifier() );
+    CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == reaction.identifier() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
@@ -143,7 +143,7 @@ namespace h {
 
   void verifyExcitationReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "528" ) == reaction.identifier() );
+    CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == reaction.identifier() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );
@@ -175,7 +175,7 @@ namespace h {
 
   void verifyIonisationReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "534" ) == reaction.identifier() );
+    CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == reaction.identifier() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( true == reaction.isPrimaryReaction() );
     CHECK( false == reaction.isSummationReaction() );

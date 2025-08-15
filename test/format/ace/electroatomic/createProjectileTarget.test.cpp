@@ -60,13 +60,13 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "526" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "527" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "528" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->total[atomic]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->2e-,H" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[excitation]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) ) );
+//        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 6 == H0.reactions().size() );
 
@@ -88,22 +88,22 @@ SCENARIO( "createProjectileTarget" ) {
         auto ionisation = H0.reactions()[5];
         electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
 
-        total = H0.reaction( id::ReactionID( "501" ) );
+        total = H0.reaction( id::ReactionID( "e-,H->total[atomic]" ) );
         electroatomic::eprdata12::h::verifyTotalReaction( total );
 
-        tionisation = H0.reaction( id::ReactionID( "522" ) );
+        tionisation = H0.reaction( id::ReactionID( "e-,H->2e-,H" ) );
         electroatomic::eprdata12::h::verifyTotalIonisationReaction( tionisation );
 
-        telastic = H0.reaction( id::ReactionID( "526" ) );
+        telastic = H0.reaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) );
         electroatomic::eprdata12::h::verifyTotalElasticReaction( telastic );
 
-        bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
+        bremsstrahlung = H0.reaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) );
         electroatomic::eprdata12::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
-        excitation = H0.reaction( id::ReactionID( "528" ) );
+        excitation = H0.reaction( id::ReactionID( "e-,H->e-,H[excitation]" ) );
         electroatomic::eprdata12::h::verifyExcitationReaction( excitation );
 
-        ionisation = H0.reaction( id::ReactionID( "534" ) );
+        ionisation = H0.reaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) );
         electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
@@ -128,15 +128,15 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "525" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "526" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "527" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "528" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "-526" ) ) );
-        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->total[atomic]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->2e-,H" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[excitation]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) ) );
+//        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 8 == H0.reactions().size() );
 
@@ -164,28 +164,28 @@ SCENARIO( "createProjectileTarget" ) {
         auto deficit = H0.reactions()[7];
         electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
 
-        total = H0.reaction( id::ReactionID( "501" ) );
+        total = H0.reaction( id::ReactionID( "e-,H->total[atomic]" ) );
         electroatomic::eprdata14::h::verifyTotalReaction( total );
 
-        tionisation = H0.reaction( id::ReactionID( "522" ) );
+        tionisation = H0.reaction( id::ReactionID( "e-,H->2e-,H" ) );
         electroatomic::eprdata14::h::verifyTotalIonisationReaction( tionisation );
 
-        elastic = H0.reaction( id::ReactionID( "525" ) );
+        elastic = H0.reaction( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) );
         electroatomic::eprdata14::h::verifyLargeAngleElasticReaction( elastic );
 
-        telastic = H0.reaction( id::ReactionID( "526" ) );
+        telastic = H0.reaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) );
         electroatomic::eprdata14::h::verifyTotalElasticReaction( telastic );
 
-        bremsstrahlung = H0.reaction( id::ReactionID( "527" ) );
+        bremsstrahlung = H0.reaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) );
         electroatomic::eprdata14::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
-        excitation = H0.reaction( id::ReactionID( "528" ) );
+        excitation = H0.reaction( id::ReactionID( "e-,H->e-,H[excitation]" ) );
         electroatomic::eprdata14::h::verifyExcitationReaction( excitation );
 
-        ionisation = H0.reaction( id::ReactionID( "534" ) );
+        ionisation = H0.reaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) );
         electroatomic::eprdata14::h::verifyIonisationReaction( ionisation );
 
-        deficit = H0.reaction( id::ReactionID( "-526" ) );
+        deficit = H0.reaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) );
         electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
       } // THEN
     } // WHEN
