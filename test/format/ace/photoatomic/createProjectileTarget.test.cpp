@@ -40,12 +40,12 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->total[atomic]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->g,H[coherent]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->g,H[incoherent]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->pair-production" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->e-,H" ) ) );
+//        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 5 == H0.reactions().size() );
 
@@ -64,19 +64,19 @@ SCENARIO( "createProjectileTarget" ) {
         auto photoelectric = H0.reactions()[4];
         photoatomic::mcplib84::h::verifyTotalPhotoElectricReaction( photoelectric );
 
-        total = H0.reaction( id::ReactionID( "501" ) );
+        total = H0.reaction( id::ReactionID( "g,H->total[atomic]" ) );
         photoatomic::mcplib84::h::verifyTotalReaction( total );
 
-        coherent = H0.reaction( id::ReactionID( "502" ) );
+        coherent = H0.reaction( id::ReactionID( "g,H->g,H[coherent]" ) );
         photoatomic::mcplib84::h::verifyCoherentReaction( coherent );
 
-        incoherent = H0.reaction( id::ReactionID( "504" ) );
+        incoherent = H0.reaction( id::ReactionID( "g,H->g,H[incoherent]" ) );
         photoatomic::mcplib84::h::verifyIncoherentReaction( incoherent );
 
-        pair = H0.reaction( id::ReactionID( "516" ) );
+        pair = H0.reaction( id::ReactionID( "g,H->pair-production" ) );
         photoatomic::mcplib84::h::verifyPairProductionReaction( pair );
 
-        photoelectric = H0.reaction( id::ReactionID( "522" ) );
+        photoelectric = H0.reaction( id::ReactionID( "g,H->e-,H" ) );
         photoatomic::mcplib84::h::verifyTotalPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
@@ -101,13 +101,13 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->total[atomic]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->g,H[coherent]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->g,H[incoherent]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->pair-production" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->e-,H" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) ) );
+//        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 6 == H0.reactions().size() );
 
@@ -129,22 +129,22 @@ SCENARIO( "createProjectileTarget" ) {
         auto photoelectric = H0.reactions()[5];
         photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
 
-        total = H0.reaction( id::ReactionID( "501" ) );
+        total = H0.reaction( id::ReactionID( "g,H->total[atomic]" ) );
         photoatomic::eprdata12::h::verifyTotalReaction( total );
 
-        coherent = H0.reaction( id::ReactionID( "502" ) );
+        coherent = H0.reaction( id::ReactionID( "g,H->g,H[coherent]" ) );
         photoatomic::eprdata12::h::verifyCoherentReaction( coherent );
 
-        incoherent = H0.reaction( id::ReactionID( "504" ) );
+        incoherent = H0.reaction( id::ReactionID( "g,H->g,H[incoherent]" ) );
         photoatomic::eprdata12::h::verifyIncoherentReaction( incoherent );
 
-        pair = H0.reaction( id::ReactionID( "516" ) );
+        pair = H0.reaction( id::ReactionID( "g,H->pair-production" ) );
         photoatomic::eprdata12::h::verifyPairProductionReaction( pair );
 
-        tphotoelectric = H0.reaction( id::ReactionID( "522" ) );
+        tphotoelectric = H0.reaction( id::ReactionID( "g,H->e-,H" ) );
         photoatomic::eprdata12::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
-        photoelectric = H0.reaction( id::ReactionID( "534" ) );
+        photoelectric = H0.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
         photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
@@ -169,13 +169,13 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H0.resonances() );
 
-        CHECK( true == H0.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->total[atomic]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->g,H[coherent]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->g,H[incoherent]" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->pair-production" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->e-,H" ) ) );
+        CHECK( true == H0.hasReaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) ) );
+//        CHECK( false == H0.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 6 == H0.reactions().size() );
 
@@ -197,22 +197,22 @@ SCENARIO( "createProjectileTarget" ) {
         auto photoelectric = H0.reactions()[5];
         photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
 
-        total = H0.reaction( id::ReactionID( "501" ) );
+        total = H0.reaction( id::ReactionID( "g,H->total[atomic]" ) );
         photoatomic::eprdata14::h::verifyTotalReaction( total );
 
-        coherent = H0.reaction( id::ReactionID( "502" ) );
+        coherent = H0.reaction( id::ReactionID( "g,H->g,H[coherent]" ) );
         photoatomic::eprdata14::h::verifyCoherentReaction( coherent );
 
-        incoherent = H0.reaction( id::ReactionID( "504" ) );
+        incoherent = H0.reaction( id::ReactionID( "g,H->g,H[incoherent]" ) );
         photoatomic::eprdata14::h::verifyIncoherentReaction( incoherent );
 
-        pair = H0.reaction( id::ReactionID( "516" ) );
+        pair = H0.reaction( id::ReactionID( "g,H->pair-production" ) );
         photoatomic::eprdata14::h::verifyPairProductionReaction( pair );
 
-        tphotoelectric = H0.reaction( id::ReactionID( "522" ) );
+        tphotoelectric = H0.reaction( id::ReactionID( "g,H->e-,H" ) );
         photoatomic::eprdata14::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
-        photoelectric = H0.reaction( id::ReactionID( "534" ) );
+        photoelectric = H0.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
         photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN

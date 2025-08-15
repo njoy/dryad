@@ -103,7 +103,7 @@ namespace h1 {
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,H1->total" ) == reaction.identifier() );
-    CHECK( 1 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 1 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -114,8 +114,8 @@ namespace h1 {
     CHECK( 2 == partials.size() );
     CHECK( id::ReactionID( "n,H1->n,H1" ) == partials[0] );
     CHECK( id::ReactionID( "n,H1->g,H2[all]" ) == partials[1] );
-    CHECK(  50 == partials[0].reactionType().mt().value() );
-    CHECK( 102 == partials[1].reactionType().mt().value() );
+    CHECK(  50 == partials[0].reactionType().mt() );
+    CHECK( 102 == partials[1].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -144,7 +144,7 @@ namespace h1 {
   void verifyElasticReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,H1->n,H1" ) == reaction.identifier() );
-    CHECK( 50 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 50 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -271,7 +271,7 @@ namespace h1 {
   void verifyCaptureReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,H1->g,H2[all]" ) == reaction.identifier() );
-    CHECK( 102 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 102 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );

@@ -324,7 +324,7 @@ namespace li7 {
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->total" ) == reaction.identifier() );
-    CHECK( 1 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 1 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -371,44 +371,44 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e32" ) == partials[35] );
     CHECK( id::NewReactionID( "n,Li7->g,Li8[all]" ) == partials[36] );
     CHECK( id::NewReactionID( "n,Li7->d,He6[all]" ) == partials[37] );
-    CHECK( 50 == partials[0].reactionType().mt().value() );
-    CHECK( 16 == partials[1].reactionType().mt().value() );
-    CHECK( 24 == partials[2].reactionType().mt().value() );
-    CHECK( 25 == partials[3].reactionType().mt().value() );
-    CHECK( 51 == partials[4].reactionType().mt().value() );
-    CHECK( 52 == partials[5].reactionType().mt().value() );
-    CHECK( 53 == partials[6].reactionType().mt().value() );
-    CHECK( 54 == partials[7].reactionType().mt().value() );
-    CHECK( 55 == partials[8].reactionType().mt().value() );
-    CHECK( 56 == partials[9].reactionType().mt().value() );
-    CHECK( 57 == partials[10].reactionType().mt().value() );
-    CHECK( 58 == partials[11].reactionType().mt().value() );
-    CHECK( 59 == partials[12].reactionType().mt().value() );
-    CHECK( 60 == partials[13].reactionType().mt().value() );
-    CHECK( 61 == partials[14].reactionType().mt().value() );
-    CHECK( 62 == partials[15].reactionType().mt().value() );
-    CHECK( 63 == partials[16].reactionType().mt().value() );
-    CHECK( 64 == partials[17].reactionType().mt().value() );
-    CHECK( 65 == partials[18].reactionType().mt().value() );
-    CHECK( 66 == partials[19].reactionType().mt().value() );
-    CHECK( 67 == partials[20].reactionType().mt().value() );
-    CHECK( 68 == partials[21].reactionType().mt().value() );
-    CHECK( 69 == partials[22].reactionType().mt().value() );
-    CHECK( 70 == partials[23].reactionType().mt().value() );
-    CHECK( 71 == partials[24].reactionType().mt().value() );
-    CHECK( 72 == partials[25].reactionType().mt().value() );
-    CHECK( 73 == partials[26].reactionType().mt().value() );
-    CHECK( 74 == partials[27].reactionType().mt().value() );
-    CHECK( 75 == partials[28].reactionType().mt().value() );
-    CHECK( 76 == partials[29].reactionType().mt().value() );
-    CHECK( 77 == partials[30].reactionType().mt().value() );
-    CHECK( 78 == partials[31].reactionType().mt().value() );
-    CHECK( 79 == partials[32].reactionType().mt().value() );
-    CHECK( 80 == partials[33].reactionType().mt().value() );
-    CHECK( 81 == partials[34].reactionType().mt().value() );
-    CHECK( 82 == partials[35].reactionType().mt().value() );
-    CHECK( 102 == partials[36].reactionType().mt().value() );
-    CHECK( 104 == partials[37].reactionType().mt().value() );
+    CHECK( 50 == partials[0].reactionType().mt() );
+    CHECK( 16 == partials[1].reactionType().mt() );
+    CHECK( 24 == partials[2].reactionType().mt() );
+    CHECK( 25 == partials[3].reactionType().mt() );
+    CHECK( 51 == partials[4].reactionType().mt() );
+    CHECK( 52 == partials[5].reactionType().mt() );
+    CHECK( 53 == partials[6].reactionType().mt() );
+    CHECK( 54 == partials[7].reactionType().mt() );
+    CHECK( 55 == partials[8].reactionType().mt() );
+    CHECK( 56 == partials[9].reactionType().mt() );
+    CHECK( 57 == partials[10].reactionType().mt() );
+    CHECK( 58 == partials[11].reactionType().mt() );
+    CHECK( 59 == partials[12].reactionType().mt() );
+    CHECK( 60 == partials[13].reactionType().mt() );
+    CHECK( 61 == partials[14].reactionType().mt() );
+    CHECK( 62 == partials[15].reactionType().mt() );
+    CHECK( 63 == partials[16].reactionType().mt() );
+    CHECK( 64 == partials[17].reactionType().mt() );
+    CHECK( 65 == partials[18].reactionType().mt() );
+    CHECK( 66 == partials[19].reactionType().mt() );
+    CHECK( 67 == partials[20].reactionType().mt() );
+    CHECK( 68 == partials[21].reactionType().mt() );
+    CHECK( 69 == partials[22].reactionType().mt() );
+    CHECK( 70 == partials[23].reactionType().mt() );
+    CHECK( 71 == partials[24].reactionType().mt() );
+    CHECK( 72 == partials[25].reactionType().mt() );
+    CHECK( 73 == partials[26].reactionType().mt() );
+    CHECK( 74 == partials[27].reactionType().mt() );
+    CHECK( 75 == partials[28].reactionType().mt() );
+    CHECK( 76 == partials[29].reactionType().mt() );
+    CHECK( 77 == partials[30].reactionType().mt() );
+    CHECK( 78 == partials[31].reactionType().mt() );
+    CHECK( 79 == partials[32].reactionType().mt() );
+    CHECK( 80 == partials[33].reactionType().mt() );
+    CHECK( 81 == partials[34].reactionType().mt() );
+    CHECK( 82 == partials[35].reactionType().mt() );
+    CHECK( 102 == partials[36].reactionType().mt() );
+    CHECK( 104 == partials[37].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -433,7 +433,7 @@ namespace li7 {
   void verifyElasticReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->n,Li7" ) == reaction.identifier() );
-    CHECK( 50 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 50 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -520,7 +520,7 @@ namespace li7 {
   void verifyCaptureReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->g,Li8[all]" ) == reaction.identifier() );
-    CHECK( 102 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 102 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -555,7 +555,7 @@ namespace li7 {
   void verifyLumpedReaction851( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped1" ) == reaction.identifier() );
-    CHECK( 851 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 851 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -566,8 +566,8 @@ namespace li7 {
     CHECK( 2 == partials.size() );
     CHECK( id::NewReactionID( "n,Li7->2n,Li6[all]" ) == partials[0] );
     CHECK( id::NewReactionID( "n,Li7->2n,a,H2[all]" ) == partials[1] );
-    CHECK( 16 == partials[0].reactionType().mt().value() );
-    CHECK( 24 == partials[1].reactionType().mt().value() );
+    CHECK( 16 == partials[0].reactionType().mt() );
+    CHECK( 24 == partials[1].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -596,7 +596,7 @@ namespace li7 {
   void verifyLumpedReaction852( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped2" ) == reaction.identifier() );
-    CHECK( 852 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 852 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -606,7 +606,7 @@ namespace li7 {
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e1" ) == partials[0] );
-    CHECK( 51 == partials[0].reactionType().mt().value() );
+    CHECK( 51 == partials[0].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -635,7 +635,7 @@ namespace li7 {
   void verifyLumpedReaction853( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped3" ) == reaction.identifier() );
-    CHECK( 853 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 853 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -648,10 +648,10 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e3" ) == partials[1] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e4" ) == partials[2] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e5" ) == partials[3] );
-    CHECK( 52 == partials[0].reactionType().mt().value() );
-    CHECK( 53 == partials[1].reactionType().mt().value() );
-    CHECK( 54 == partials[2].reactionType().mt().value() );
-    CHECK( 55 == partials[3].reactionType().mt().value() );
+    CHECK( 52 == partials[0].reactionType().mt() );
+    CHECK( 53 == partials[1].reactionType().mt() );
+    CHECK( 54 == partials[2].reactionType().mt() );
+    CHECK( 55 == partials[3].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -680,7 +680,7 @@ namespace li7 {
   void verifyLumpedReaction854( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped4" ) == reaction.identifier() );
-    CHECK( 854 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 854 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -690,7 +690,7 @@ namespace li7 {
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e6" ) == partials[0] );
-    CHECK( 56 == partials[0].reactionType().mt().value() );
+    CHECK( 56 == partials[0].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -719,7 +719,7 @@ namespace li7 {
   void verifyLumpedReaction855( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped5" ) == reaction.identifier() );
-    CHECK( 855 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 855 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -733,11 +733,11 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e9" ) == partials[2] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e10" ) == partials[3] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e11" ) == partials[4] );
-    CHECK( 57 == partials[0].reactionType().mt().value() );
-    CHECK( 58 == partials[1].reactionType().mt().value() );
-    CHECK( 59 == partials[2].reactionType().mt().value() );
-    CHECK( 60 == partials[3].reactionType().mt().value() );
-    CHECK( 61 == partials[4].reactionType().mt().value() );
+    CHECK( 57 == partials[0].reactionType().mt() );
+    CHECK( 58 == partials[1].reactionType().mt() );
+    CHECK( 59 == partials[2].reactionType().mt() );
+    CHECK( 60 == partials[3].reactionType().mt() );
+    CHECK( 61 == partials[4].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -766,7 +766,7 @@ namespace li7 {
   void verifyLumpedReaction856( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped6" ) == reaction.identifier() );
-    CHECK( 856 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 856 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -780,11 +780,11 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e14" ) == partials[2] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e15" ) == partials[3] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e16" ) == partials[4] );
-    CHECK( 62 == partials[0].reactionType().mt().value() );
-    CHECK( 63 == partials[1].reactionType().mt().value() );
-    CHECK( 64 == partials[2].reactionType().mt().value() );
-    CHECK( 65 == partials[3].reactionType().mt().value() );
-    CHECK( 66 == partials[4].reactionType().mt().value() );
+    CHECK( 62 == partials[0].reactionType().mt() );
+    CHECK( 63 == partials[1].reactionType().mt() );
+    CHECK( 64 == partials[2].reactionType().mt() );
+    CHECK( 65 == partials[3].reactionType().mt() );
+    CHECK( 66 == partials[4].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -813,7 +813,7 @@ namespace li7 {
   void verifyLumpedReaction857( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped7" ) == reaction.identifier() );
-    CHECK( 857 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 857 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -827,11 +827,11 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e19" ) == partials[2] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e20" ) == partials[3] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e21" ) == partials[4] );
-    CHECK( 67 == partials[0].reactionType().mt().value() );
-    CHECK( 68 == partials[1].reactionType().mt().value() );
-    CHECK( 69 == partials[2].reactionType().mt().value() );
-    CHECK( 70 == partials[3].reactionType().mt().value() );
-    CHECK( 71 == partials[4].reactionType().mt().value() );
+    CHECK( 67 == partials[0].reactionType().mt() );
+    CHECK( 68 == partials[1].reactionType().mt() );
+    CHECK( 69 == partials[2].reactionType().mt() );
+    CHECK( 70 == partials[3].reactionType().mt() );
+    CHECK( 71 == partials[4].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -860,7 +860,7 @@ namespace li7 {
   void verifyLumpedReaction858( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped8" ) == reaction.identifier() );
-    CHECK( 858 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 858 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -874,11 +874,11 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e24" ) == partials[2] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e25" ) == partials[3] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e26" ) == partials[4] );
-    CHECK( 72 == partials[0].reactionType().mt().value() );
-    CHECK( 73 == partials[1].reactionType().mt().value() );
-    CHECK( 74 == partials[2].reactionType().mt().value() );
-    CHECK( 75 == partials[3].reactionType().mt().value() );
-    CHECK( 76 == partials[4].reactionType().mt().value() );
+    CHECK( 72 == partials[0].reactionType().mt() );
+    CHECK( 73 == partials[1].reactionType().mt() );
+    CHECK( 74 == partials[2].reactionType().mt() );
+    CHECK( 75 == partials[3].reactionType().mt() );
+    CHECK( 76 == partials[4].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -907,7 +907,7 @@ namespace li7 {
   void verifyLumpedReaction859( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "n,Li7->lumped9" ) == reaction.identifier() );
-    CHECK( 859 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 859 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -922,12 +922,12 @@ namespace li7 {
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e30" ) == partials[3] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e31" ) == partials[4] );
     CHECK( id::NewReactionID( "n,Li7->n,Li7_e32" ) == partials[5] );
-    CHECK( 77 == partials[0].reactionType().mt().value() );
-    CHECK( 78 == partials[1].reactionType().mt().value() );
-    CHECK( 79 == partials[2].reactionType().mt().value() );
-    CHECK( 80 == partials[3].reactionType().mt().value() );
-    CHECK( 81 == partials[4].reactionType().mt().value() );
-    CHECK( 82 == partials[5].reactionType().mt().value() );
+    CHECK( 77 == partials[0].reactionType().mt() );
+    CHECK( 78 == partials[1].reactionType().mt() );
+    CHECK( 79 == partials[2].reactionType().mt() );
+    CHECK( 80 == partials[3].reactionType().mt() );
+    CHECK( 81 == partials[4].reactionType().mt() );
+    CHECK( 82 == partials[5].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );

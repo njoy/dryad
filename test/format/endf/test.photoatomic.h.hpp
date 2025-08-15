@@ -168,7 +168,7 @@ namespace h0 {
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->total[atomic]" ) == reaction.identifier() );
-    CHECK( 501 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 501 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -182,11 +182,11 @@ namespace h0 {
     CHECK( id::ReactionID( "g,H->2e-,e+,H[pair-production-electron]" ) == partials[2] );
     CHECK( id::ReactionID( "g,H->e-,e+,H[pair-production-nuclear]" ) == partials[3] );
     CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == partials[4] );
-    CHECK( 502 == partials[0].reactionType().mt().value() );
-    CHECK( 504 == partials[1].reactionType().mt().value() );
-    CHECK( 515 == partials[2].reactionType().mt().value() );
-    CHECK( 517 == partials[3].reactionType().mt().value() );
-    CHECK( 534 == partials[4].reactionType().mt().value() );
+    CHECK( 502 == partials[0].reactionType().mt() );
+    CHECK( 504 == partials[1].reactionType().mt() );
+    CHECK( 515 == partials[2].reactionType().mt() );
+    CHECK( 517 == partials[3].reactionType().mt() );
+    CHECK( 534 == partials[4].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -213,7 +213,7 @@ namespace h0 {
   void verifyCoherentReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->g,H[coherent]" ) == reaction.identifier() );
-    CHECK( 502 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 502 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -320,7 +320,7 @@ namespace h0 {
   void verifyIncoherentReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->g,H[incoherent]" ) == reaction.identifier() );
-    CHECK( 504 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 504 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -387,7 +387,7 @@ namespace h0 {
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->2e-,e+,H[pair-production-electron]" ) == reaction.identifier() );
-    CHECK( 515 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 515 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -417,7 +417,7 @@ namespace h0 {
   void verifyNuclearFieldPairProductionReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->e-,e+,H[pair-production-nuclear]" ) == reaction.identifier() );
-    CHECK( 517 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 517 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -447,7 +447,7 @@ namespace h0 {
   void verifyTotalPairProductionReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->pair-production" ) == reaction.identifier() );
-    CHECK( 516 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 516 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -458,8 +458,8 @@ namespace h0 {
     CHECK( 2 == partials.size() );
     CHECK( id::ReactionID( "g,H->2e-,e+,H[pair-production-electron]" ) == partials[0] );
     CHECK( id::ReactionID( "g,H->e-,e+,H[pair-production-nuclear]" ) == partials[1] );
-    CHECK( 515 == partials[0].reactionType().mt().value() );
-    CHECK( 517 == partials[1].reactionType().mt().value() );
+    CHECK( 515 == partials[0].reactionType().mt() );
+    CHECK( 517 == partials[1].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -484,7 +484,7 @@ namespace h0 {
   void verifyIonisationReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == reaction.identifier() );
-    CHECK( 534 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 534 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -514,7 +514,7 @@ namespace h0 {
   void verifyTotalIonisationReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "g,H->e-,H" ) == reaction.identifier() );
-    CHECK( 522 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 522 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -524,7 +524,7 @@ namespace h0 {
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
     CHECK( id::ReactionID( "g,H->e-,H{1s1/2}" ) == partials[0] );
-    CHECK( 534 == partials[0].reactionType().mt().value() );
+    CHECK( 534 == partials[0].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/photoatomic/createPartialReactionNumbers.hpp"
+#include "dryad/format/ace/photoatomic/createPartialReactionIdentifiers.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -19,19 +19,21 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
     WHEN( "an mcplib84 formatted table is given" ) {
 
+      auto g = id::ParticleID::photon();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
       THEN( "reaction partials can be derived" ) {
 
-        auto partials = format::ace::photoatomic::createPartialReactionNumbers( table );
+        auto partials = format::ace::photoatomic::createPartialReactionIdentifiers( g, H, table );
 
         CHECK( 5 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( 502 == partials[0][0] );
-        CHECK( 504 == partials[0][1] );
-        CHECK( 516 == partials[0][2] );
-        CHECK( 522 == partials[0][3] );
+        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
+        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
+        CHECK( id::NewReactionID( "g,H->pair-production" ) == partials[0][2] );
+        CHECK( id::NewReactionID( "g,H->e-,H" ) == partials[0][3] );
 
         CHECK( 0 == partials[1].size() );
 
@@ -45,19 +47,21 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
     WHEN( "an eprdata12 formatted table is given" ) {
 
+      auto g = id::ParticleID::photon();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
       THEN( "reaction partials can be derived" ) {
 
-        auto partials = format::ace::photoatomic::createPartialReactionNumbers( table );
+        auto partials = format::ace::photoatomic::createPartialReactionIdentifiers( g, H, table );
 
         CHECK( 6 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( 502 == partials[0][0] );
-        CHECK( 504 == partials[0][1] );
-        CHECK( 516 == partials[0][2] );
-        CHECK( 534 == partials[0][3] );
+        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
+        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
+        CHECK( id::NewReactionID( "g,H->pair-production" ) == partials[0][2] );
+        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[0][3] );
 
         CHECK( 0 == partials[1].size() );
 
@@ -66,7 +70,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 0 == partials[3].size() );
 
         CHECK( 1 == partials[4].size() );
-        CHECK( 534 == partials[4][0] );
+        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[4][0] );
 
         CHECK( 0 == partials[5].size() );
       } // THEN
@@ -74,19 +78,21 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
     WHEN( "an eprdata14 formatted table is given" ) {
 
+      auto g = id::ParticleID::photon();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
       THEN( "reaction partials can be derived" ) {
 
-        auto partials = format::ace::photoatomic::createPartialReactionNumbers( table );
+        auto partials = format::ace::photoatomic::createPartialReactionIdentifiers( g, H, table );
 
         CHECK( 6 == partials.size() );
 
         CHECK( 4 == partials[0].size() );
-        CHECK( 502 == partials[0][0] );
-        CHECK( 504 == partials[0][1] );
-        CHECK( 516 == partials[0][2] );
-        CHECK( 534 == partials[0][3] );
+        CHECK( id::NewReactionID( "g,H->g,H[coherent]" ) == partials[0][0] );
+        CHECK( id::NewReactionID( "g,H->g,H[incoherent]" ) == partials[0][1] );
+        CHECK( id::NewReactionID( "g,H->pair-production" ) == partials[0][2] );
+        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[0][3] );
 
         CHECK( 0 == partials[1].size() );
 
@@ -95,7 +101,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
         CHECK( 0 == partials[3].size() );
 
         CHECK( 1 == partials[4].size() );
-        CHECK( 534 == partials[4][0] );
+        CHECK( id::NewReactionID( "g,H->e-,H{1s1/2}" ) == partials[4][0] );
 
         CHECK( 0 == partials[5].size() );
       } // THEN

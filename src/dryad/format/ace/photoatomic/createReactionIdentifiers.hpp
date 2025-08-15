@@ -6,8 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
+#include "dryad/id/ReactionID.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -19,32 +18,34 @@ namespace photoatomic {
   /**
    *  @brief Create TabulatedCrossSection instances for photoatomic data
    */
-  std::vector< int >
-  createReactionNumbers( const ACEtk::PhotoatomicTable& table ) {
+  std::vector< id::NewReactionID >
+  createReactionIdentifiers( const id::ParticleID& projectile,
+                             const id::ParticleID& target,
+                             const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< int > numbers;
+    std::vector< id::NewReactionID > numbers;
 
     // total - MT501
-    numbers.push_back( 501 );
+    numbers.emplace_back( projectile, target, id::ReactionType( projectile, 501 ) );
 
     // coherent scattering - MT502
-    numbers.push_back( 502 );
+    numbers.emplace_back( projectile, target, id::ReactionType( projectile, 502 ) );
 
     // incoherent scattering - MT504
-    numbers.push_back( 504 );
+    numbers.emplace_back( projectile, target, id::ReactionType( projectile, 504 ) );
 
     // pair production - MT516 (sum of MT515 and MT517)
-    numbers.push_back( 516 );
+    numbers.emplace_back( projectile, target, id::ReactionType( projectile, 516 ) );
 
     // photoelectric - MT522 (sum of MT534 and up)
-    numbers.push_back( 522 );
+    numbers.emplace_back( projectile, target, id::ReactionType( projectile, 522 ) );
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {
 
       for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
         // subshell photoelectric - MT534 and up
-        numbers.push_back( 534 + index - 1 );
+        numbers.emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
       }
     }
 

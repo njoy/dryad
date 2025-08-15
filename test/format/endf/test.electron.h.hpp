@@ -307,7 +307,7 @@ namespace endf81 {
   void verifyTotalReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "e-,H->total[atomic]" ) == reaction.identifier() );
-    CHECK( 501 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 501 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -321,11 +321,11 @@ namespace endf81 {
     CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == partials[2] );
     CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == partials[3] );
     CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[4] );
-    CHECK( 525 == partials[0].reactionType().mt().value() );
+    CHECK( 525 == partials[0].reactionType().mt() );
     CHECK( std::nullopt == partials[1].reactionType().mt() );
-    CHECK( 527 == partials[2].reactionType().mt().value() );
-    CHECK( 528 == partials[3].reactionType().mt().value() );
-    CHECK( 534 == partials[4].reactionType().mt().value() );
+    CHECK( 527 == partials[2].reactionType().mt() );
+    CHECK( 528 == partials[3].reactionType().mt() );
+    CHECK( 534 == partials[4].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -350,7 +350,7 @@ namespace endf81 {
   void verifyTotalIonisationReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "e-,H->2e-,H" ) == reaction.identifier() );
-    CHECK( 522 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 522 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -360,7 +360,7 @@ namespace endf81 {
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 1 == partials.size() );
     CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == partials[0] );
-    CHECK( 534 == partials[0].reactionType().mt().value() );
+    CHECK( 534 == partials[0].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -385,7 +385,7 @@ namespace endf81 {
   void verifyElasticReaction( const Reaction& reaction, bool normalise ) {
 
     CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == reaction.identifier() );
-    CHECK( 525 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 525 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -528,7 +528,7 @@ namespace endf81 {
   void verifyTotalElasticReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "e-,H->e-,H[total-scattering]" ) == reaction.identifier() );
-    CHECK( 526 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 526 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -539,7 +539,7 @@ namespace endf81 {
     CHECK( 2 == partials.size() );
     CHECK( id::NewReactionID( "e-,H->e-,H[large-angle-scattering]" ) == partials[0] );
     CHECK( id::NewReactionID( "e-,H->e-,H[deficit-scattering]" ) == partials[1] );
-    CHECK( 525 == partials[0].reactionType().mt().value() );
+    CHECK( 525 == partials[0].reactionType().mt() );
     CHECK( std::nullopt == partials[1].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
@@ -565,7 +565,7 @@ namespace endf81 {
   void verifyBremsstrahlungReaction( const Reaction& reaction, bool normalise ) {
 
     CHECK( id::NewReactionID( "e-,H->e-,H[bremsstrahlung]" ) == reaction.identifier() );
-    CHECK( 527 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 527 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -743,7 +743,7 @@ namespace endf81 {
   void verifyExcitationReaction( const Reaction& reaction ) {
 
     CHECK( id::NewReactionID( "e-,H->e-,H[excitation]" ) == reaction.identifier() );
-    CHECK( 528 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 528 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -802,7 +802,7 @@ namespace endf81 {
   void verifySubshellIonisationReaction( const Reaction& reaction, bool normalise ) {
 
     CHECK( id::NewReactionID( "e-,H->2e-,H{1s1/2}" ) == reaction.identifier() );
-    CHECK( 534 == reaction.identifier().reactionType().mt().value() );
+    CHECK( 534 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );

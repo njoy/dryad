@@ -22,10 +22,12 @@ namespace photoatomic {
    */
   ProjectileTarget createProjectileTarget( const ACEtk::PhotoatomicTable& table ) {
 
-    return ProjectileTarget( id::ParticleID( "g" ),
-                             createTargetIdentifier( table.ZAID() ),
+    auto projectile = id::ParticleID::photon();
+    auto target = createTargetIdentifier( table.ZAID() );
+    return ProjectileTarget( projectile,
+                             target,
                              InteractionType::Atomic,
-                             createReactions( table ) );
+                             createReactions( projectile, target, table ) );
   }
 
 } // electroatomic namespace

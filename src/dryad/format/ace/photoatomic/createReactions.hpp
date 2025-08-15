@@ -7,8 +7,8 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/Reaction.hpp"
-#include "dryad/format/ace/photoatomic/createReactionNumbers.hpp"
-#include "dryad/format/ace/photoatomic/createPartialReactionNumbers.hpp"
+#include "dryad/format/ace/photoatomic/createReactionIdentifiers.hpp"
+#include "dryad/format/ace/photoatomic/createPartialReactionIdentifiers.hpp"
 #include "dryad/format/ace/photoatomic/createTabulatedCrossSections.hpp"
 #include "dryad/format/ace/photoatomic/createReactionProducts.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
@@ -22,33 +22,29 @@ namespace photoatomic {
   /**
    *  @brief Create the reactions for photoatomic data
    */
-  std::vector< Reaction > createReactions( const ACEtk::PhotoatomicTable& table ) {
+  std::vector< Reaction > createReactions( const id::ParticleID& projectile,
+                                           const id::ParticleID& target,
+                                           const ACEtk::PhotoatomicTable& table ) {
 
     std::vector< Reaction > reactions;
 
-    auto numbers = createReactionNumbers( table );
-    auto partialNumbers = createPartialReactionNumbers( table );
+    auto identifiers = createReactionIdentifiers( projectile, target, table );
+    auto partialIdentifiers = createPartialReactionIdentifiers( projectile, target, table );
     auto xs = createTabulatedCrossSections( table );
     auto products = createReactionProducts( table );
-    auto size = numbers.size();
+    auto size = identifiers.size();
 
     for ( std::size_t index = 0; index < size; ++index ) {
 
-      id::ReactionID id( std::to_string( numbers[index] ) );
-      if ( partialNumbers[index].size() == 0 ) {
+      if ( partialIdentifiers[index].size() == 0 ) {
 
-        reactions.emplace_back( std::move( id ), std::move( xs[index] ),
+        reactions.emplace_back( std::move( identifiers[index] ), std::move( xs[index] ),
                                 std::move( products[index] ) );
       }
       else {
 
-        std::vector< id::ReactionID > partials( partialNumbers[index].size() );
-        std::transform( partialNumbers[index].begin(), partialNumbers[index].end(),
-                        partials.begin(),
-                        [] ( auto&& number ) { return std::to_string( number ); } );
-
-        reactions.emplace_back( std::move( id ), std::move( partials ), std::move( xs[index] ),
-                                std::move( products[index] ) );
+        reactions.emplace_back( std::move( identifiers[index] ), std::move( partialIdentifiers[index] ),
+                                std::move( xs[index] ), std::move( products[index] ) );
       }
     }
 
