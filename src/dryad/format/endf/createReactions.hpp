@@ -21,7 +21,7 @@ namespace endf {
    *  @brief Calculate a summation cross section
    */
   TabulatedCrossSection
-  calculateSummationCrossSection( const std::vector< id::ReactionID >& partials,
+  calculateSummationCrossSection( const std::vector< id::NewReactionID >& partials,
                                   const std::vector< Reaction >& reactions ) {
 
     auto find_cross_section = [] ( const auto& id, const auto& reactions ) {
@@ -30,7 +30,7 @@ namespace endf {
                                 [ id ] ( auto&& reaction ) { return reaction.identifier() == id; } );
       if ( iter == reactions.end() ) {
 
-        Log::error( "Missing partial reaction {}", id );
+        Log::error( "Missing partial reaction {}", id.symbol() );
         throw std::exception();
       }
 
@@ -88,13 +88,15 @@ namespace endf {
             Log::info( "Reading data for MT{}", mt );
 
             // metadata and miscellaneous information
-            id::ReactionID id = std::to_string( mt );
+            id::NewReactionID id = id::NewReactionID( projectile, target, id::ReactionType( mt ) );
 
             // partials
-            std::vector< int > endf_partials = ReactionInformation::partials( material, 33, mt );
-            std::vector< id::ReactionID > partials( endf_partials.size() );
+            std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 33, mt );
+            std::vector< id::NewReactionID > partials( endf_partials.size() );
             std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                            [] ( auto&& value ) { return std::to_string( value ); } );
+                            [&projectile, &target]
+                               ( auto&& type )
+                               { return id::NewReactionID( projectile, target, type ); } );
 
             // cross section
             TabulatedCrossSection xs = calculateSummationCrossSection( partials, reactions );
@@ -109,14 +111,17 @@ namespace endf {
 
         auto total = std::find_if( reactions.begin(), reactions.end(),
                                    [] ( const auto& reaction )
-                                      { return reaction.identifier() == id::ReactionID( "526" ); } );
+                                      { return reaction.identifier().reactionType()
+                                               == id::ReactionType( "total-scattering" ); } );
         auto partial = std::find_if( reactions.begin(), reactions.end(),
                                      [] ( const auto& reaction )
-                                        { return reaction.identifier() == id::ReactionID( "525" ); } );
+                                        { return reaction.identifier().reactionType()
+                                                 == id::ReactionType( "large-angle-scattering" ); } );
         TabulatedCrossSection deficit = total->crossSection().linearise();
         deficit -= partial->crossSection().linearise();
 
-        reactions.emplace_back( Reaction( "-526", deficit, {}, std::nullopt, 0. ) );
+        reactions.emplace_back( Reaction( id::NewReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
+                                          deficit, {}, std::nullopt, 0. ) );
       }
     }
     return reactions;

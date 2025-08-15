@@ -53,6 +53,26 @@ namespace id {
       Entry{         38,  38, InteractionType::Nuclear, "fission[fourth]", { "fission4" } },
       Entry{         27,  27, InteractionType::Nuclear, "absorption"     , {} },
       Entry{        101, 101, InteractionType::Nuclear, "disappearance"  , {} },
+      Entry{        851, 851, InteractionType::Nuclear, "lumped1"        , {} },
+      Entry{        852, 852, InteractionType::Nuclear, "lumped2"        , {} },
+      Entry{        853, 853, InteractionType::Nuclear, "lumped3"        , {} },
+      Entry{        854, 854, InteractionType::Nuclear, "lumped4"        , {} },
+      Entry{        855, 855, InteractionType::Nuclear, "lumped5"        , {} },
+      Entry{        856, 856, InteractionType::Nuclear, "lumped6"        , {} },
+      Entry{        857, 857, InteractionType::Nuclear, "lumped7"        , {} },
+      Entry{        858, 858, InteractionType::Nuclear, "lumped8"        , {} },
+      Entry{        859, 859, InteractionType::Nuclear, "lumped9"        , {} },
+      Entry{        860, 860, InteractionType::Nuclear, "lumped10"       , {} },
+      Entry{        861, 861, InteractionType::Nuclear, "lumped11"       , {} },
+      Entry{        862, 862, InteractionType::Nuclear, "lumped12"       , {} },
+      Entry{        863, 863, InteractionType::Nuclear, "lumped13"       , {} },
+      Entry{        864, 864, InteractionType::Nuclear, "lumped14"       , {} },
+      Entry{        865, 865, InteractionType::Nuclear, "lumped15"       , {} },
+      Entry{        866, 866, InteractionType::Nuclear, "lumped16"       , {} },
+      Entry{        867, 867, InteractionType::Nuclear, "lumped17"       , {} },
+      Entry{        868, 868, InteractionType::Nuclear, "lumped18"       , {} },
+      Entry{        869, 869, InteractionType::Nuclear, "lumped19"       , {} },
+      Entry{        870, 870, InteractionType::Nuclear, "lumped20"       , {} },
 
       // normal reactions: reactions with ejectiles (not counting photons and residual)
       // all these must have a final excited state set for the residual
@@ -750,7 +770,7 @@ namespace id {
       }
       else {
 
-        return ReactionType( static_cast< std::size_t >( 513 ) );
+        return ReactionType( static_cast< std::size_t >( 533 ) );
       }
     };
 
@@ -759,31 +779,31 @@ namespace id {
 
       if ( projectile == ParticleID::neutron() ) {
 
-        return ReactionType( static_cast< std::size_t >( 111 ) );
+        return ReactionType( static_cast< std::size_t >( 131 ) );
       }
       else if ( projectile == ParticleID::photon() ) {
 
-        return ReactionType( static_cast< std::size_t >( 10 ) );
+        return ReactionType( static_cast< std::size_t >( 30 ) );
       }
       else if ( projectile == ParticleID::proton() ) {
 
-        return ReactionType( static_cast< std::size_t >( 178 ) );
+        return ReactionType( static_cast< std::size_t >( 198 ) );
       }
       else if ( projectile == ParticleID::deuteron() ) {
 
-        return ReactionType( static_cast< std::size_t >( 244 ) );
+        return ReactionType( static_cast< std::size_t >( 264 ) );
       }
       else if ( projectile == ParticleID::triton() ) {
 
-        return ReactionType( static_cast< std::size_t >( 302 ) );
+        return ReactionType( static_cast< std::size_t >( 322 ) );
       }
       else if ( projectile == ParticleID::helion() ) {
 
-        return ReactionType( static_cast< std::size_t >( 363 ) );
+        return ReactionType( static_cast< std::size_t >( 383 ) );
       }
       else if ( projectile == ParticleID::alpha() ) {
 
-        return ReactionType( static_cast< std::size_t >( 423 ) );
+        return ReactionType( static_cast< std::size_t >( 443 ) );
       }
       else {
 

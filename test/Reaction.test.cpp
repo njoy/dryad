@@ -16,11 +16,15 @@ void verifySummationChunk( const Reaction& );
 
 SCENARIO( "Reaction" ) {
 
+  id::ParticleID g = id::ParticleID::photon();
+  id::ParticleID n = id::ParticleID::neutron();
+  id::ParticleID fe56( 26056 );
+
   GIVEN( "valid data for a primary reaction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      id::ReactionID id( "n,Fe56->n,Fe56_e1" );
+      id::NewReactionID id( n, fe56, id::ReactionType( 51 ) );
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
                                 { 1, 4 },
@@ -30,9 +34,9 @@ SCENARIO( "Reaction" ) {
       double reaction_q = -1;
       std::vector< ReactionProduct > products = {
 
-        ReactionProduct( id::ParticleID( "n" ), 1 ),
-        ReactionProduct( id::ParticleID( "g" ), 2 ),
-        ReactionProduct( id::ParticleID( "g" ), 3 )
+        ReactionProduct( n, 1 ),
+        ReactionProduct( g, 2 ),
+        ReactionProduct( g, 3 )
       };
 
       Reaction chunk( std::move( id ), std::move( xs ),
@@ -50,8 +54,9 @@ SCENARIO( "Reaction" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      id::ReactionID id( "n,Fe56->total" );
-      std::vector< id::ReactionID > partials = { "n,Fe56->elastic", "n,Fe56->2n,Fe55" };
+      id::NewReactionID id( n, fe56, id::ReactionType( 1 ) );
+      std::vector< id::NewReactionID > partials = { id::NewReactionID( n, fe56, id::ReactionType::elastic( n ) ),
+                                                    id::NewReactionID( n, fe56, id::ReactionType( 16 ) ) };
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
                                 { 1, 4 },
@@ -71,21 +76,21 @@ SCENARIO( "Reaction" ) {
 
     WHEN( "an instance of Reaction is given" ) {
 
-      Reaction chunk( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+      Reaction chunk( id::NewReactionID( n, fe56, id::ReactionType( 51 ) ),
                       TabulatedCrossSection( { 1., 2., 2., 3., 4. },
                                              { 4., 3., 4., 3., 2. },
                                              { 1, 4 },
                                              { InterpolationType::LinearLinear,
                                                InterpolationType::LinearLog } ),
-                      { ReactionProduct( id::ParticleID( "n" ), 1 ),
-                        ReactionProduct( id::ParticleID( "g" ), 2 ),
-                        ReactionProduct( id::ParticleID( "g" ), 3 ) },
+                      { ReactionProduct( n, 1 ),
+                        ReactionProduct( g, 2 ),
+                        ReactionProduct( g, 3 ) },
                       0, -1 );
 
       THEN( "the reaction identifier can be changed" ) {
 
-        id::ReactionID newid( "n,Fe56->n,Fe56_e40" );
-        id::ReactionID original( "n,Fe56->n,Fe56_e1" );
+        id::NewReactionID newid( n, fe56, id::ReactionType( 90 ) );
+        id::NewReactionID original( n, fe56, id::ReactionType( 51 ) );
 
         chunk.identifier( newid );
 
@@ -98,8 +103,9 @@ SCENARIO( "Reaction" ) {
 
       THEN( "the partial reaction identifiers can be changed" ) {
 
-        std::optional< std::vector< id::ReactionID > > newpartials( { "n,Fe56->elastic", "n,Fe56->2n,Fe55" } );
-        std::optional< std::vector< id::ReactionID > > original( std::nullopt );
+        std::optional< std::vector< id::NewReactionID > > newpartials( { id::NewReactionID( n, fe56, id::ReactionType::elastic( n ) ),
+                                                                         id::NewReactionID( n, fe56, id::ReactionType( 16 ) ) } );
+        std::optional< std::vector< id::NewReactionID > > original( std::nullopt );
 
         chunk.partialReactionIdentifiers( newpartials );
 
@@ -152,10 +158,10 @@ SCENARIO( "Reaction" ) {
 
       THEN( "the products can be changed" ) {
 
-        std::vector< ReactionProduct > newproducts = { ReactionProduct( id::ParticleID( "n" ), 1 ) };
-        std::vector< ReactionProduct > original = { ReactionProduct( id::ParticleID( "n" ), 1 ),
-                                                    ReactionProduct( id::ParticleID( "g" ), 2 ),
-                                                    ReactionProduct( id::ParticleID( "g" ), 3 ) };
+        std::vector< ReactionProduct > newproducts = { ReactionProduct( n, 1 ) };
+        std::vector< ReactionProduct > original = { ReactionProduct( n, 1 ),
+                                                    ReactionProduct( g, 2 ),
+                                                    ReactionProduct( g, 3 ) };
 
         chunk.products( newproducts );
 
@@ -173,28 +179,29 @@ SCENARIO( "Reaction" ) {
 
     WHEN( "two instances of Reaction are given" ) {
 
-      Reaction left( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+      Reaction left( id::NewReactionID( n, fe56, id::ReactionType( 51 ) ),
                      TabulatedCrossSection( { 1., 2., 2., 3., 4. },
                                             { 4., 3., 4., 3., 2. },
                                             { 1, 4 },
                                             { InterpolationType::LinearLinear,
                                               InterpolationType::LinearLog } ),
-                     { ReactionProduct( id::ParticleID( "n" ), 1 ),
-                       ReactionProduct( id::ParticleID( "g" ), 2 ),
-                       ReactionProduct( id::ParticleID( "g" ), 3 ) },
+                     { ReactionProduct( n, 1 ),
+                       ReactionProduct( g, 2 ),
+                       ReactionProduct( g, 3 ) },
                      0, -1 );
-      Reaction equal( id::ReactionID( "n,Fe56->n,Fe56_e1" ),
+      Reaction equal( id::NewReactionID( n, fe56, id::ReactionType( 51 ) ),
                       TabulatedCrossSection( { 1., 2., 2., 3., 4. },
                                              { 4., 3., 4., 3., 2. },
                                              { 1, 4 },
                                              { InterpolationType::LinearLinear,
                                                InterpolationType::LinearLog } ),
-                      { ReactionProduct( id::ParticleID( "n" ), 1 ),
-                        ReactionProduct( id::ParticleID( "g" ), 2 ),
-                        ReactionProduct( id::ParticleID( "g" ), 3 ) },
+                      { ReactionProduct( n, 1 ),
+                        ReactionProduct( g, 2 ),
+                        ReactionProduct( g, 3 ) },
                       0, -1 );
-      Reaction different( id::ReactionID( "n,Fe56->total" ),
-                          { "n,Fe56->elastic", "n,Fe56->2n,Fe55" },
+      Reaction different( id::NewReactionID( n, fe56, id::ReactionType( 1 ) ),
+                          { id::NewReactionID( n, fe56, id::ReactionType::elastic( n ) ),
+                            id::NewReactionID( n, fe56, id::ReactionType( 16 ) ) },
                           TabulatedCrossSection( { 1., 2., 2., 3., 4. },
                                                  { 4., 3., 4., 3., 2. },
                                                  { 1, 4 },
@@ -217,8 +224,13 @@ SCENARIO( "Reaction" ) {
 
 void verifyChunk( const Reaction& chunk ) {
 
+  id::ParticleID g = id::ParticleID::photon();
+  id::ParticleID n = id::ParticleID::neutron();
+  id::ParticleID h = id::ParticleID::helion();
+  id::ParticleID fe56( 26056 );
+
   // reaction identifier
-  CHECK( id::ReactionID( "n,Fe56->n,Fe56_e1" ) == chunk.identifier() );
+  CHECK( "n,Fe56->n,Fe56_e1" == chunk.identifier().symbol() );
 
   // reaction category
   CHECK( ReactionCategory::Primary == chunk.category() );
@@ -258,30 +270,34 @@ void verifyChunk( const Reaction& chunk ) {
 
   // reaction products
   CHECK( true == chunk.hasProducts() );
-  CHECK( true == chunk.hasProduct( id::ParticleID( "n" ) ) );
-  CHECK( true == chunk.hasProduct( id::ParticleID( "g" ) ) );
-  CHECK( false == chunk.hasProduct( id::ParticleID( "h" ) ) );
+  CHECK( true == chunk.hasProduct( n ) );
+  CHECK( true == chunk.hasProduct( g ) );
+  CHECK( false == chunk.hasProduct( h ) );
   CHECK( 3 == chunk.numberProducts() );
   CHECK( 3 == chunk.products().size() );
-  CHECK( 1 == chunk.numberProducts( id::ParticleID( "n" ) ) );
-  CHECK( 2 == chunk.numberProducts( id::ParticleID( "g" ) ) );
-  CHECK( 0 == chunk.numberProducts( id::ParticleID( "h" ) ) );
+  CHECK( 1 == chunk.numberProducts( n ) );
+  CHECK( 2 == chunk.numberProducts( g ) );
+  CHECK( 0 == chunk.numberProducts( h ) );
 
-  CHECK( 1 == std::get< int >( chunk.product( id::ParticleID( "n" ) ).multiplicity() ) );
-  CHECK( 1 == std::get< int >( chunk.product( id::ParticleID( "n" ), 0 ).multiplicity() ) );
-  CHECK( 2 == std::get< int >( chunk.product( id::ParticleID( "g" ) ).multiplicity() ) );
-  CHECK( 2 == std::get< int >( chunk.product( id::ParticleID( "g" ), 0 ).multiplicity() ) );
-  CHECK( 3 == std::get< int >( chunk.product( id::ParticleID( "g" ), 1 ).multiplicity() ) );
+  CHECK( 1 == std::get< int >( chunk.product( n ).multiplicity() ) );
+  CHECK( 1 == std::get< int >( chunk.product( n, 0 ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( g ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( g, 0 ).multiplicity() ) );
+  CHECK( 3 == std::get< int >( chunk.product( g, 1 ).multiplicity() ) );
 
-  CHECK_THROWS( chunk.product( id::ParticleID( "n" ), 1 ) );
-  CHECK_THROWS( chunk.product( id::ParticleID( "h" ) ) );
-  CHECK_THROWS( chunk.product( id::ParticleID( "h" ), 1 ) );
+  CHECK_THROWS( chunk.product( n, 1 ) );
+  CHECK_THROWS( chunk.product( h ) );
+  CHECK_THROWS( chunk.product( h, 1 ) );
 }
 
 void verifySummationChunk( const Reaction& chunk ) {
 
+  id::ParticleID g = id::ParticleID::photon();
+  id::ParticleID n = id::ParticleID::neutron();
+  id::ParticleID fe56( 26056 );
+
   // reaction identifier
-  CHECK( id::ReactionID( "n,Fe56->total" ) == chunk.identifier() );
+  CHECK( id::NewReactionID( "n,Fe56->total" ) == chunk.identifier() );
 
   // reaction type
   CHECK( ReactionCategory::Summation == chunk.category() );
@@ -293,8 +309,8 @@ void verifySummationChunk( const Reaction& chunk ) {
   CHECK( 2 == chunk.numberPartialReactions() );
   auto partials = chunk.partialReactionIdentifiers().value();
   CHECK( 2 == partials.size() );
-  CHECK( id::ReactionID( "n,Fe56->elastic" ) == partials[0] );
-  CHECK( id::ReactionID( "n,Fe56->2n,Fe55" ) == partials[1] );
+  CHECK( id::NewReactionID( "n,Fe56->n,Fe56" ) == partials[0] );
+  CHECK( id::NewReactionID( "n,Fe56->2n,Fe55[all]" ) == partials[1] );
 
   // q values
   CHECK( std::nullopt == chunk.massDifferenceQValue() );
@@ -325,7 +341,7 @@ void verifySummationChunk( const Reaction& chunk ) {
 
   // reaction products
   CHECK( false == chunk.hasProducts() );
-  CHECK( false == chunk.hasProduct( id::ParticleID( "n" ) ) );
-  CHECK( false == chunk.hasProduct( id::ParticleID( "g" ) ) );
+  CHECK( false == chunk.hasProduct( n ) );
+  CHECK( false == chunk.hasProduct( g ) );
   CHECK( 0 == chunk.products().size() );
 }

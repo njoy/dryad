@@ -33,13 +33,13 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
 
   if ( mt == 2 ) {
 
-    if      ( projectile == ParticleID::neutron() )  { return 111; }
-    else if ( projectile == ParticleID::photon() )   { return 10; }
-    else if ( projectile == ParticleID::proton() )   { return 178; }
-    else if ( projectile == ParticleID::deuteron() ) { return 244; }
-    else if ( projectile == ParticleID::triton() )   { return 302; }
-    else if ( projectile == ParticleID::helion() )   { return 363; }
-    else if ( projectile == ParticleID::alpha() )    { return 423; }
+    if      ( projectile == ParticleID::neutron() )  { return 131; }
+    else if ( projectile == ParticleID::photon() )   { return 30; }
+    else if ( projectile == ParticleID::proton() )   { return 198; }
+    else if ( projectile == ParticleID::deuteron() ) { return 264; }
+    else if ( projectile == ParticleID::triton() )   { return 322; }
+    else if ( projectile == ParticleID::helion() )   { return 383; }
+    else if ( projectile == ParticleID::alpha() )    { return 443; }
     else {
 
       throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' is not defined" );
@@ -53,8 +53,8 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
   else {
 
     std::size_t offset = 0;
-    if      ( projectile == ParticleID::electron() ) { offset = 564; }
-    else if ( projectile == ParticleID::photon() )   { offset = 514; }
+    if      ( projectile == ParticleID::electron() ) { offset = 584; }
+    else if ( projectile == ParticleID::photon() )   { offset = 534; }
     else {
 
       throw std::invalid_argument( "Ionisation is not defined for \'" + projectile.symbol() + "\'" );
