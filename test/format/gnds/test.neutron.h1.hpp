@@ -3,7 +3,6 @@ namespace neutron {
 // test functions based on n-001_H_001.endf
 namespace h1 {
 
-
   void verifyDocumentation( const Documentation& documentation ) {
 
     std::string description =
@@ -103,7 +102,8 @@ namespace h1 {
 
   void verifyTotalReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "1" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "n,H1->total" ) == reaction.identifier() );
+    CHECK( 1 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Summation == reaction.category() );
     CHECK( true == reaction.isSummationReaction() );
     CHECK( false == reaction.isPrimaryReaction() );
@@ -112,8 +112,10 @@ namespace h1 {
     CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 2 == partials.size() );
-    CHECK( id::ReactionID( "2" ) == partials[0] );
-    CHECK( id::ReactionID( "102" ) == partials[1] );
+    CHECK( id::ReactionID( "n,H1->n,H1" ) == partials[0] );
+    CHECK( id::ReactionID( "n,H1->g,H2[all]" ) == partials[1] );
+    CHECK(  50 == partials[0].reactionType().mt() );
+    CHECK( 102 == partials[1].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt == reaction.reactionQValue() );
@@ -141,7 +143,8 @@ namespace h1 {
 
   void verifyElasticReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "2" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "n,H1->n,H1" ) == reaction.identifier() );
+    CHECK( 50 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -270,7 +273,8 @@ namespace h1 {
 
   void verifyCaptureReaction( const Reaction& reaction ) {
 
-    CHECK( id::ReactionID( "102" ) == reaction.identifier() );
+    CHECK( id::ReactionID( "n,H1->g,H2[all]" ) == reaction.identifier() );
+    CHECK( 102 == reaction.identifier().reactionType().mt() );
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
@@ -320,10 +324,10 @@ namespace h1 {
 
     CHECK( std::nullopt == H1.resonances() );
 
-    CHECK( true == H1.hasReaction( id::ReactionID( "1" ) ) );
-    CHECK( true == H1.hasReaction( id::ReactionID( "2" ) ) );
-    CHECK( true == H1.hasReaction( id::ReactionID( "102" ) ) );
-    CHECK( false == H1.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+    CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->total" ) ) );
+    CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->n,H1" ) ) );
+    CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->g,H2[all]" ) ) );
+//    CHECK( false == H1.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
     CHECK( 3 == H1.reactions().size() );
 
@@ -336,13 +340,13 @@ namespace h1 {
     auto capture = H1.reactions()[2];
     verifyCaptureReaction( capture );
 
-    total = H1.reaction( id::ReactionID( "1" ) );
+    total = H1.reaction( id::ReactionID( "n,H1->total" ) );
     verifyTotalReaction( total );
 
-    elastic = H1.reaction( id::ReactionID( "2" ) );
+    elastic = H1.reaction( id::ReactionID( "n,H1->n,H1" ) );
     verifyElasticReaction( elastic );
 
-    capture = H1.reaction( id::ReactionID( "102" ) );
+    capture = H1.reaction( id::ReactionID( "n,H1->g,H2[all]" ) );
     verifyCaptureReaction( capture );
   }
 

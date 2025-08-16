@@ -59,60 +59,60 @@ SCENARIO( "createReactions" ) {
       THEN( "all reactions can be created" ) {
 
         id::ParticleID projectile( "n" );
-        id::ParticleID target( "Li" );
+        id::ParticleID target( "Li7" );
         std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
         std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
 
-        CHECK( 53 == reactions1.size() );
+        CHECK( 49 == reactions1.size() );
         auto total = reactions1[0];
         neutron::li7::verifyTotalReaction( total );
-        auto elastic = reactions1[1];
+        auto elastic = reactions1[5];
         neutron::li7::verifyElasticReaction( elastic );
         auto capture = reactions1[38];
         neutron::li7::verifyCaptureReaction( capture );
-        auto lumped = reactions1[44];
+        auto lumped = reactions1[40];
         neutron::li7::verifyLumpedReaction851( lumped );
-        lumped = reactions1[45];
+        lumped = reactions1[41];
         neutron::li7::verifyLumpedReaction852( lumped );
-        lumped = reactions1[46];
+        lumped = reactions1[42];
         neutron::li7::verifyLumpedReaction853( lumped );
-        lumped = reactions1[47];
+        lumped = reactions1[43];
         neutron::li7::verifyLumpedReaction854( lumped );
-        lumped = reactions1[48];
+        lumped = reactions1[44];
         neutron::li7::verifyLumpedReaction855( lumped );
-        lumped = reactions1[49];
+        lumped = reactions1[45];
         neutron::li7::verifyLumpedReaction856( lumped );
-        lumped = reactions1[50];
+        lumped = reactions1[46];
         neutron::li7::verifyLumpedReaction857( lumped );
-        lumped = reactions1[51];
+        lumped = reactions1[47];
         neutron::li7::verifyLumpedReaction858( lumped );
-        lumped = reactions1[52];
+        lumped = reactions1[48];
         neutron::li7::verifyLumpedReaction859( lumped );
 
-        CHECK( 53 == reactions2.size() );
+        CHECK( 49 == reactions2.size() );
         total = reactions2[0];
         neutron::li7::verifyTotalReaction( total );
-        elastic = reactions2[1];
+        elastic = reactions2[5];
         neutron::li7::verifyElasticReaction( elastic );
         capture = reactions2[38];
         neutron::li7::verifyCaptureReaction( capture );
-        lumped = reactions2[44];
+        lumped = reactions2[40];
         neutron::li7::verifyLumpedReaction851( lumped );
-        lumped = reactions2[45];
+        lumped = reactions2[41];
         neutron::li7::verifyLumpedReaction852( lumped );
-        lumped = reactions2[46];
+        lumped = reactions2[42];
         neutron::li7::verifyLumpedReaction853( lumped );
-        lumped = reactions2[47];
+        lumped = reactions2[43];
         neutron::li7::verifyLumpedReaction854( lumped );
-        lumped = reactions2[48];
+        lumped = reactions2[44];
         neutron::li7::verifyLumpedReaction855( lumped );
-        lumped = reactions2[49];
+        lumped = reactions2[45];
         neutron::li7::verifyLumpedReaction856( lumped );
-        lumped = reactions2[50];
+        lumped = reactions2[46];
         neutron::li7::verifyLumpedReaction857( lumped );
-        lumped = reactions2[51];
+        lumped = reactions2[47];
         neutron::li7::verifyLumpedReaction858( lumped );
-        lumped = reactions2[52];
+        lumped = reactions2[48];
         neutron::li7::verifyLumpedReaction859( lumped );
       } // THEN
     } // WHEN
@@ -129,7 +129,7 @@ SCENARIO( "createReactions" ) {
       THEN( "all reactions can be created" ) {
 
         id::ParticleID projectile( "e-" );
-        id::ParticleID target( "H0" );
+        id::ParticleID target( "H" );
         std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
         std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
 
@@ -183,7 +183,7 @@ SCENARIO( "createReactions" ) {
       THEN( "all reactions can be created" ) {
 
         id::ParticleID projectile( "g" );
-        id::ParticleID target( "H0" );
+        id::ParticleID target( "H" );
         std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
         std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
 
