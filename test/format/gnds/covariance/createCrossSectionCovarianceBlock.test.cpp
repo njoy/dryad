@@ -8,12 +8,9 @@ using Catch::Matchers::WithinAbs;
 #include "dryad/format/gnds/covariance/createCrossSectionCovarianceBlock.hpp"
 
 // other includes
-#include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::ENDFtk;
-using ReactionBlock = section::ReactionBlock;
 
 SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
@@ -376,7 +373,7 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
         CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
         CHECK( id::ParticleID( "Ne22" ) == chunk.rowMetadata().targetIdentifier() );
-        CHECK( id::ReactionID( "n,F19->2n,F18[all]"  )== chunk.rowMetadata().reactionIdentifier() );
+        CHECK( id::ReactionID( "n,Ne22->2n,Ne21[all]"  )== chunk.rowMetadata().reactionIdentifier() );
         CHECK( 7 == chunk.rowMetadata().energies().size() );
         CHECK( 6 == chunk.rowMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
@@ -389,7 +386,7 @@ SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
         CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
         CHECK( id::ParticleID( "Ne22" ) == chunk.columnMetadata().targetIdentifier() );
-        CHECK( id::ReactionID( "n,F19->n,F19_e1"  )== chunk.columnMetadata().reactionIdentifier() );
+        CHECK( id::ReactionID( "n,Ne22->n,Ne22_e1"  )== chunk.columnMetadata().reactionIdentifier() );
         CHECK( 11 == chunk.columnMetadata().energies().size() );
         CHECK( 10 == chunk.columnMetadata().numberGroups() );
         CHECK_THAT( 1.000000e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
