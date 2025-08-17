@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const ProjectileTarget& );
+void verifyChunk( const ProjectileTarget&, bool );
 void verifyCorrectSummation( const ProjectileTarget& );
 
 SCENARIO( "ProjectileTarget" ) {
@@ -52,7 +52,11 @@ SCENARIO( "ProjectileTarget" ) {
         Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                   TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
                                            InterpolationType::LinearLinear ),
-                  {},
+                  { ReactionProduct( id::ParticleID( "n" ), 1,
+                                     TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
+                                                               LegendreAngularDistributions(
+                                                                 { 1e-5, 20. },
+                                                                 { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ) },
                   0, 0 ),
         Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
                   { id::ReactionID( "n,Fe56->2n,Fe55" ),
@@ -93,20 +97,24 @@ SCENARIO( "ProjectileTarget" ) {
                   0, 0 )
       };
 
-      ProjectileTarget chunk( std::move( projectile ), std::move( target ),
-                              type, std::move( reactions ) );
+      ProjectileTarget chunk1( projectile, target, type, reactions, false );
+      ProjectileTarget chunk2( std::move( projectile ), std::move( target ),
+                               type, std::move( reactions ), true );
 
-      THEN( "a ProjectileTarget can be constructed and members can be tested" ) {
+      verifyChunk( chunk1, false );
+      verifyChunk( chunk2, true );
 
-        verifyChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
 
-      THEN( "the summation cross sections can be recalculated" ) {
+      verifyChunk( chunk1, true );
+      verifyChunk( chunk2, true );
 
-        chunk.calculateSummationCrossSections();
+      chunk1.calculateSummationCrossSections();
+      chunk2.calculateSummationCrossSections();
 
-        verifyCorrectSummation( chunk );
-      } // THEN
+      verifyCorrectSummation( chunk1 );
+      verifyCorrectSummation( chunk2 );
     } // WHEN
   } // GIVEN
 
@@ -127,7 +135,11 @@ SCENARIO( "ProjectileTarget" ) {
                                 Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                           TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
                                                                    InterpolationType::LinearLinear ),
-                                          {},
+                                          { ReactionProduct( id::ParticleID( "n" ), 1,
+                                                             TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
+                                                                                       LegendreAngularDistributions(
+                                                                                         { 1e-5, 20. },
+                                                                                         { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ) },
                                           0, 0 ),
                                 Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
                                           { id::ReactionID( "n,Fe56->2n,Fe55" ),
@@ -178,7 +190,7 @@ SCENARIO( "ProjectileTarget" ) {
 
         chunk.projectileIdentifier( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       }
 
       THEN( "the target identifier can be changed" ) {
@@ -192,7 +204,7 @@ SCENARIO( "ProjectileTarget" ) {
 
         chunk.targetIdentifier( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       }
 
       THEN( "the interaction type can be changed" ) {
@@ -206,7 +218,7 @@ SCENARIO( "ProjectileTarget" ) {
 
         chunk.interactionType( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       }
 
       THEN( "the reaction data can be changed" ) {
@@ -232,7 +244,11 @@ SCENARIO( "ProjectileTarget" ) {
           Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                     TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
                                              InterpolationType::LinearLinear ),
-                    {},
+                    { ReactionProduct( id::ParticleID( "n" ), 1,
+                                       TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
+                                                                 LegendreAngularDistributions(
+                                                                   { 1e-5, 20. },
+                                                                   { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ) },
                     0, 0 ),
           Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
                     { id::ReactionID( "n,Fe56->2n,Fe55" ),
@@ -280,7 +296,7 @@ SCENARIO( "ProjectileTarget" ) {
 
         chunk.reactions( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -335,7 +351,7 @@ SCENARIO( "ProjectileTarget" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const ProjectileTarget& chunk ) {
+void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
 
   // documentation
   CHECK( std::nullopt == chunk.documentation().awr() );
@@ -404,7 +420,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT(  0., WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT(  0., WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 0 == reaction.numberPartialReactions() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
   CHECK( 2 == reaction.crossSection().energies().size() );
@@ -418,6 +434,38 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
+  auto product = reaction.product( id::ParticleID( "n" ) );
+  CHECK( 1 == std::get< int >( product.multiplicity() ) );
+  auto distribution = product.distributionData();
+  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( distribution.value() ) );
+  double normalisation = normalise ? 2. : 1.;
+  auto data = std::get< TwoBodyDistributionData >( distribution.value() );
+  CHECK( DistributionDataType::TwoBody == data.type() );
+  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+  LegendreAngularDistributions angle = std::get< LegendreAngularDistributions >( data.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   reaction = chunk.reactions()[2];
   CHECK( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
@@ -621,7 +669,7 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK_THAT(  0., WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT(  0., WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 0 == reaction.numberPartialReactions() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
   CHECK( 2 == reaction.crossSection().energies().size() );
@@ -635,6 +683,37 @@ void verifyChunk( const ProjectileTarget& chunk ) {
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
+  product = reaction.product( id::ParticleID( "n" ) );
+  CHECK( 1 == std::get< int >( product.multiplicity() ) );
+  distribution = product.distributionData();
+  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( distribution.value() ) );
+  data = std::get< TwoBodyDistributionData >( distribution.value() );
+  CHECK( DistributionDataType::TwoBody == data.type() );
+  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+  angle = std::get< LegendreAngularDistributions >( data.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   reaction = chunk.reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) );
   CHECK( id::ReactionID( "n,Fe56->2n,Fe55[all]" ) == reaction.identifier() );
@@ -804,6 +883,8 @@ void verifyChunk( const ProjectileTarget& chunk ) {
 
 void verifyCorrectSummation( const ProjectileTarget& chunk ) {
 
+  // only the xs are changed, so products are not checked
+
   // identifiers
   CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
   CHECK( id::ParticleID( "Fe56" ) == chunk.targetIdentifier() );
@@ -869,7 +950,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT(  0., WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT(  0., WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 0 == reaction.numberPartialReactions() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
   CHECK( 2 == reaction.crossSection().energies().size() );
@@ -1090,7 +1171,7 @@ void verifyCorrectSummation( const ProjectileTarget& chunk ) {
   CHECK_THAT(  0., WithinRel( reaction.massDifferenceQValue().value() ) );
   CHECK_THAT(  0., WithinRel( reaction.reactionQValue().value() ) );
   CHECK( 0 == reaction.numberPartialReactions() );
-  CHECK( false == reaction.hasProducts() );
+  CHECK( true == reaction.hasProducts() );
   CHECK( 2 == reaction.crossSection().numberPoints() );
   CHECK( 1 == reaction.crossSection().numberRegions() );
   CHECK( 2 == reaction.crossSection().energies().size() );

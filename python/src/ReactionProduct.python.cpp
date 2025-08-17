@@ -35,17 +35,21 @@ void wrapReactionProduct( python::module& module ) {
 
     python::init< ParticleID, Multiplicity,
                   std::optional< DistributionData >,
-                  std::optional< TabulatedAverageEnergy > >(),
+                  std::optional< TabulatedAverageEnergy >,
+                  bool >(),
     python::arg( "id" ), python::arg( "multiplicity" ),
     python::arg( "distribution" ) = std::nullopt,
     python::arg( "average_energy" ) = std::nullopt,
+    python::arg( "normalise" ) = false,
     "Initialise the reaction\n\n"
     "Arguments:\n"
     "    self             the reaction\n"
     "    id               the reaction product identifier\n"
     "    multiplicity     the reaction product multiplicity\n"
     "    distribution     the optional reaction product distribution data\n"
-    "    average_energy   the optional average reaction product energy"
+    "    average_energy   the optional average reaction product energy\n"
+    "    normalise        option to indicate whether or not to normalise\n"
+    "                     all probability data (default: no normalisation)"
   )
   .def_property(
 
@@ -87,6 +91,12 @@ void wrapReactionProduct( python::module& module ) {
     "has_distribution_data",
     &Component::hasDistributionData,
     "Flag indicating whether or not the reaction product has distribution data"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution data"
   );
 
   // add standard equality comparison definitions

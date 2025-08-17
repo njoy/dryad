@@ -15,6 +15,7 @@
 #include "dryad/UncorrelatedDistributionData.hpp"
 #include "dryad/CoherentDistributionData.hpp"
 #include "dryad/IncoherentDistributionData.hpp"
+#include "tools/overload.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -128,6 +129,23 @@ namespace dryad {
     void distributionData( std::optional< DistributionData > distribution ) {
 
       this->distribution_ = std::move( distribution );
+    }
+
+    /**
+     *  @brief Normalise the distribution data
+     */
+    void normalise() {
+
+      if ( this->hasDistributionData() ) {
+
+        std::visit( tools::overload{
+
+                      [] ( CoherentDistributionData& ) {},
+                      [] ( IncoherentDistributionData& ) {},
+                      [] ( auto&& data ) { data.normalise(); }
+                    },
+                    this->distributionData().value() );
+      }
     }
 
     /**

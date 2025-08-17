@@ -40,14 +40,18 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
   component
   .def(
 
-    python::init< ReferenceFrame, AngularDistributions, EnergyDistributions >(),
+    python::init< ReferenceFrame, AngularDistributions, EnergyDistributions,
+                  bool >(),
     python::arg( "frame" ), python::arg( "angle" ), python::arg( "energy" ),
+    python::arg( "normalise" ) = false,
     "Initialise the uncorrelated distribution data\n\n"
     "Arguments:\n"
-    "    self     the reaction product distribution data\n"
-    "    frame    the reference frame of the distribution data\n"
-    "    angle    the angular distributions\n"
-    "    energy   the energy distributions"
+    "    self        the reaction product distribution data\n"
+    "    frame       the reference frame of the distribution data\n"
+    "    angle       the angular distributions\n"
+    "    energy      the energy distributions\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -76,6 +80,12 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
     python::overload_cast<>( &Component::energy, python::const_ ),
     python::overload_cast< EnergyDistributions >( &Component::energy ),
     "The energy distributions"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution data"
   );
 
   // add standard equality comparison definitions

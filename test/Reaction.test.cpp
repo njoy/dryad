@@ -7,11 +7,12 @@ using Catch::Matchers::WithinRel;
 #include "dryad/Reaction.hpp"
 
 // other includes
+#include "dryad/TwoBodyDistributionData.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyChunk( const Reaction& );
+void verifyChunk( const Reaction&, bool );
 void verifySummationChunk( const Reaction& );
 
 SCENARIO( "Reaction" ) {
@@ -34,19 +35,28 @@ SCENARIO( "Reaction" ) {
       double reaction_q = -1;
       std::vector< ReactionProduct > products = {
 
-        ReactionProduct( n, 1 ),
+        ReactionProduct( n, 1,
+                         TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
+                                                   LegendreAngularDistributions(
+                                                     { 1e-5, 20. },
+                                                     { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ),
         ReactionProduct( g, 2 ),
         ReactionProduct( g, 3 )
       };
 
-      Reaction chunk( std::move( id ), std::move( xs ),
-                      std::move( products ), mass_q, reaction_q );
+      Reaction chunk1( id, xs ,
+                       products, mass_q, reaction_q, false );
+      Reaction chunk2( std::move( id ), std::move( xs ),
+                       std::move( products ), mass_q, reaction_q, true );
 
-      THEN( "a Reaction can be constructed and members can be tested" ) {
+      verifyChunk( chunk1, false );
+      verifyChunk( chunk2, true );
 
-        verifyChunk( chunk );
-      } // THEN
+      chunk1.normalise();
+      chunk2.normalise();
 
+      verifyChunk( chunk1, true );
+      verifyChunk( chunk2, true );
     } // WHEN
   } // GIVEN
 
@@ -82,7 +92,11 @@ SCENARIO( "Reaction" ) {
                                              { 1, 4 },
                                              { InterpolationType::LinearLinear,
                                                InterpolationType::LinearLog } ),
-                      { ReactionProduct( n, 1 ),
+                      { ReactionProduct( n, 1,
+                                         TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                                                  LegendreAngularDistributions(
+                                                                    { 1e-5, 20. },
+                                                                    { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ),
                         ReactionProduct( g, 2 ),
                         ReactionProduct( g, 3 ) },
                       0, -1 );
@@ -98,7 +112,7 @@ SCENARIO( "Reaction" ) {
 
         chunk.identifier( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the partial reaction identifiers can be changed" ) {
@@ -116,7 +130,7 @@ SCENARIO( "Reaction" ) {
 
         chunk.partialReactionIdentifiers( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the q values can be changed" ) {
@@ -135,7 +149,7 @@ SCENARIO( "Reaction" ) {
         chunk.massDifferenceQValue( originalmassq );
         chunk.reactionQValue( originalreactionq );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the cross section can be changed" ) {
@@ -153,13 +167,17 @@ SCENARIO( "Reaction" ) {
 
         chunk.crossSection( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
 
       THEN( "the products can be changed" ) {
 
         std::vector< ReactionProduct > newproducts = { ReactionProduct( n, 1 ) };
-        std::vector< ReactionProduct > original = { ReactionProduct( n, 1 ),
+        std::vector< ReactionProduct > original = { ReactionProduct( n, 1,
+                                                                     TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
+                                                                                              LegendreAngularDistributions(
+                                                                                                { 1e-5, 20. },
+                                                                                                { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ),
                                                     ReactionProduct( g, 2 ),
                                                     ReactionProduct( g, 3 ) };
 
@@ -170,7 +188,7 @@ SCENARIO( "Reaction" ) {
 
         chunk.products( original );
 
-        verifyChunk( chunk );
+        verifyChunk( chunk, false );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -222,7 +240,7 @@ SCENARIO( "Reaction" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const Reaction& chunk ) {
+void verifyChunk( const Reaction& chunk, bool normalise ) {
 
   id::ParticleID g = id::ParticleID::photon();
   id::ParticleID n = id::ParticleID::neutron();
@@ -284,6 +302,39 @@ void verifyChunk( const Reaction& chunk ) {
   CHECK( 2 == std::get< int >( chunk.product( g ).multiplicity() ) );
   CHECK( 2 == std::get< int >( chunk.product( g, 0 ).multiplicity() ) );
   CHECK( 3 == std::get< int >( chunk.product( g, 1 ).multiplicity() ) );
+
+  auto distribution = chunk.product( id::ParticleID( "n" ) ).distributionData();
+  CHECK( true == std::holds_alternative< TwoBodyDistributionData >( distribution.value() ) );
+
+  double normalisation = normalise ? 2. : 1.;
+
+  auto data = std::get< TwoBodyDistributionData >( distribution.value() );
+  CHECK( DistributionDataType::TwoBody == data.type() );
+  CHECK( ReferenceFrame::CentreOfMass == data.frame() );
+  CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+  LegendreAngularDistributions angle = std::get< LegendreAngularDistributions >( data.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   CHECK_THROWS( chunk.product( n, 1 ) );
   CHECK_THROWS( chunk.product( h ) );

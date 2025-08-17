@@ -12,9 +12,14 @@ from dryad import InterpolationType
 from dryad import ReactionCategory
 from dryad.id import ReactionType
 from dryad.id import ReactionID
+from dryad import DistributionDataType
+from dryad import ReferenceFrame
+from dryad import TabulatedAngularDistribution
+from dryad import TabulatedAngularDistributions
+from dryad import TwoBodyDistributionData
 from dryad.id import ParticleID
 
-def verify_chunk( self, chunk ) :
+def verify_chunk( self, chunk, normalise ) :
 
     # reaction identifier
     self.assertEqual( ReactionID( 'n,Fe56->n,Fe56_e1' ), chunk.identifier )
@@ -73,6 +78,46 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 2, chunk.product( ParticleID( 'g' ) ).multiplicity )
     self.assertEqual( 2, chunk.product( ParticleID( 'g' ), 0 ).multiplicity )
     self.assertEqual( 3, chunk.product( ParticleID( 'g' ), 1 ).multiplicity )
+
+    normalisation = 2.0 if normalise else 1.0
+    data = chunk.product( ParticleID( 'n' ) ).distribution_data
+    self.assertEqual( DistributionDataType.TwoBody, data.type )
+    self.assertEqual( ReferenceFrame.CentreOfMass, data.frame )
+    self.assertEqual( True, isinstance( data.angle, TabulatedAngularDistributions ) )
+    self.assertEqual( 2, data.angle.number_points )
+    self.assertEqual( 1, data.angle.number_regions )
+    self.assertEqual( 2, len( data.angle.grid ) )
+    self.assertEqual( 2, len( data.angle.distributions ) )
+    self.assertEqual( 1, len( data.angle.boundaries ) )
+    self.assertEqual( 1, len( data.angle.interpolants ) )
+    self.assertAlmostEqual( 1e-5, data.angle.grid[0] )
+    self.assertAlmostEqual( 20. , data.angle.grid[1] )
+    self.assertEqual( 2, len( data.angle.distributions[0].pdf.cosines ) )
+    self.assertEqual( 2, len( data.angle.distributions[0].pdf.values ) )
+    self.assertEqual( 2, len( data.angle.distributions[1].pdf.cosines ) )
+    self.assertEqual( 2, len( data.angle.distributions[1].pdf.values ) )
+    self.assertAlmostEqual( -1.  , data.angle.distributions[0].pdf.cosines[0] )
+    self.assertAlmostEqual(  1.  , data.angle.distributions[0].pdf.cosines[1] )
+    self.assertAlmostEqual(  1. / normalisation, data.angle.distributions[0].pdf.values[0] )
+    self.assertAlmostEqual(  1. / normalisation, data.angle.distributions[0].pdf.values[1] )
+    self.assertAlmostEqual( -1.  , data.angle.distributions[1].pdf.cosines[0] )
+    self.assertAlmostEqual(  1.  , data.angle.distributions[1].pdf.cosines[1] )
+    self.assertAlmostEqual(  0.8 / normalisation, data.angle.distributions[1].pdf.values[0] )
+    self.assertAlmostEqual(  1.2 / normalisation, data.angle.distributions[1].pdf.values[1] )
+    self.assertEqual( 2, len( data.angle.distributions[0].cdf.cosines ) )
+    self.assertEqual( 2, len( data.angle.distributions[0].cdf.values ) )
+    self.assertEqual( 2, len( data.angle.distributions[1].cdf.cosines ) )
+    self.assertEqual( 2, len( data.angle.distributions[1].cdf.values ) )
+    self.assertAlmostEqual( -1.  , data.angle.distributions[0].cdf.cosines[0] )
+    self.assertAlmostEqual(  1.  , data.angle.distributions[0].cdf.cosines[1] )
+    self.assertAlmostEqual(  0. / normalisation, data.angle.distributions[0].cdf.values[0] )
+    self.assertAlmostEqual(  2. / normalisation, data.angle.distributions[0].cdf.values[1] )
+    self.assertAlmostEqual( -1.  , data.angle.distributions[1].cdf.cosines[0] )
+    self.assertAlmostEqual(  1.  , data.angle.distributions[1].cdf.cosines[1] )
+    self.assertAlmostEqual(  0. / normalisation, data.angle.distributions[1].cdf.values[0] )
+    self.assertAlmostEqual(  2. / normalisation, data.angle.distributions[1].cdf.values[1] )
+    self.assertEqual( 1, data.angle.boundaries[0] )
+    self.assertEqual( InterpolationType.LinearLinear, data.angle.interpolants[0] )
 
     with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'n' ), 1 )
     with self.assertRaises( RuntimeError ) : product = chunk.product( ParticleID( 'h' ) )
@@ -137,19 +182,50 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         n = ParticleID.neutron()
         fe56 = ParticleID( 26056 )
 
-        # the data is given explicitly
-        chunk = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
-                          mass_q = 0, reaction_q = -1,
-                          xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
-                                                       [ 4., 3., 4., 3., 2. ],
-                                                       [ 1, 4 ],
-                                                       [ InterpolationType.LinearLinear,
-                                                         InterpolationType.LinearLog ] ),
-                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
-                                       ReactionProduct( ParticleID( 'g' ), 2 ),
-                                       ReactionProduct( ParticleID( 'g' ), 3 ) ] )
+        ReactionID( n, fe56, ReactionType( n, 51 ) )
 
-        verify_chunk( self, chunk )
+        # the data is given explicitly
+        chunk1 = Reaction( id = ReactionID( 'n,Fe56->n,Fe56_e1' ),
+                           mass_q = 0, reaction_q = -1,
+                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
+                                                        [ 4., 3., 4., 3., 2. ],
+                                                        [ 1, 4 ],
+                                                        [ InterpolationType.LinearLinear,
+                                                          InterpolationType.LinearLog ] ),
+                           products = [ ReactionProduct( ParticleID( 'n' ), 1,
+                                                         TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                                                  TabulatedAngularDistributions(
+                                                                                    [ 1e-5, 20. ],
+                                                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
+                                        ReactionProduct( ParticleID( 'g' ), 2 ),
+                                        ReactionProduct( ParticleID( 'g' ), 3 ) ],
+                           normalise = False )
+        chunk2 = Reaction( id = ReactionID( 'n,Fe56->n,Fe56_e1' ),
+                           mass_q = 0, reaction_q = -1,
+                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
+                                                        [ 4., 3., 4., 3., 2. ],
+                                                        [ 1, 4 ],
+                                                        [ InterpolationType.LinearLinear,
+                                                          InterpolationType.LinearLog ] ),
+                           products = [ ReactionProduct( ParticleID( 'n' ), 1,
+                                        TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                                 TabulatedAngularDistributions(
+                                                                   [ 1e-5, 20. ],
+                                                                   [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                                     TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
+                                        ReactionProduct( ParticleID( 'g' ), 2 ),
+                                        ReactionProduct( ParticleID( 'g' ), 3 ) ],
+                           normalise = True )
+
+        verify_chunk( self, chunk1, False )
+        verify_chunk( self, chunk2, True )
+
+        chunk1.normalise()
+        chunk2.normalise()
+
+        verify_chunk( self, chunk1, True )
+        verify_chunk( self, chunk2, True )
 
         # the data is given explicitly for a summation reaction
         chunk = Reaction( id = ReactionID( n, fe56, ReactionType.total() ),
@@ -175,7 +251,12 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                                        [ 1, 4 ],
                                                        [ InterpolationType.LinearLinear,
                                                          InterpolationType.LinearLog ] ),
-                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
+                          products = [ ReactionProduct( ParticleID( 'n' ), 1,
+                                                        TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                                                 TabulatedAngularDistributions(
+                                                                                   [ 1e-5, 20. ],
+                                                                                   [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                                                     TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                                        ReactionProduct( ParticleID( 'g' ), 2 ),
                                        ReactionProduct( ParticleID( 'g' ), 3 ) ] )
 
@@ -189,7 +270,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
         chunk.identifier = original
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk, False )
 
         # the partial reaction identifiers can be changed
         newpartials = [ ReactionID( n, fe56, ReactionType( n, 2 ) ),
@@ -205,7 +286,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
         chunk.partial_reaction_identifiers = original
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk, False )
 
         # the q values can be changed
         newmassq = 2
@@ -222,7 +303,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         chunk.mass_difference_qvalue = originalmassq
         chunk.reaction_qvalue = originalreactionq
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk, False )
 
         # the cross section can be changed
         newxs = TabulatedCrossSection( [ 1., 4. ], [ 1., 4. ] )
@@ -238,11 +319,16 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
         chunk.cross_section = original
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk, False )
 
         # the products can be changed
         newproducts = [ ReactionProduct( ParticleID( 'n' ), 1 ) ]
-        original = [ ReactionProduct( ParticleID( 'n' ), 1 ),
+        original = [ ReactionProduct( ParticleID( 'n' ), 1,
+                                      TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                               TabulatedAngularDistributions(
+                                                                 [ 1e-5, 20. ],
+                                                                 [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                                   TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                      ReactionProduct( ParticleID( 'g' ), 2 ),
                      ReactionProduct( ParticleID( 'g' ), 3 ) ]
 
@@ -253,7 +339,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
         chunk.products = original
 
-        verify_chunk( self, chunk )
+        verify_chunk( self, chunk, False )
 
     def test_comparison( self ) :
 

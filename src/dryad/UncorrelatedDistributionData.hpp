@@ -12,6 +12,7 @@
 #include "dryad/TabulatedAngularDistributions.hpp"
 #include "dryad/MultiEnergyDistributions.hpp"
 #include "dryad/TabulatedEnergyDistributions.hpp"
+#include "tools/overload.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -133,6 +134,25 @@ namespace dryad {
     void energy( EnergyDistributions energy ) {
 
       this->energy_ = std::move( energy );
+    }
+
+    /**
+     *  @brief Normalise the distribution data
+     */
+    void normalise() {
+
+      std::visit( tools::overload{
+
+                    [] ( IsotropicAngularDistributions& ) {},
+                    [] ( auto&& data ) { data.normalise(); }
+                  },
+                  this->angle() );
+      std::visit( tools::overload{
+
+                    [] ( MultiEnergyDistributions& ) {},
+                    [] ( auto&& data ) { data.normalise(); }
+                  },
+                  this->energy() );
     }
 
     /**

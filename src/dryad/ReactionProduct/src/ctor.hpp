@@ -16,15 +16,24 @@ ReactionProduct& operator=( ReactionProduct&& ) = default;
  *  @param multiplicity    the multiplicity of the reaction product
  *  @param distribution    the optional reaction product distribution data
  *  @param averageEnergy   the optional average reaction product energy
+ *  @param normalise       option to indicate whether or not to normalise
+ *                         all probability data (default: no normalisation)
  */
 ReactionProduct( id::ParticleID id,
                  Multiplicity multiplicity,
                  std::optional< DistributionData > distribution = std::nullopt,
-                 std::optional< TabulatedAverageEnergy > averageEnergy = std::nullopt ) :
+                 std::optional< TabulatedAverageEnergy > averageEnergy = std::nullopt,
+                 bool normalise = false ) :
     id_( std::move( id ) ),
     multiplicity_( std::move( multiplicity ) ),
     distribution_( std::move( distribution ) ),
-    average_energy_( std::move( averageEnergy ) ) {}
+    average_energy_( std::move( averageEnergy ) ) {
+
+  if ( normalise ) {
+
+    this->normalise();
+  }
+}
 
 /**
  *  @brief Constructor
@@ -39,4 +48,5 @@ ReactionProduct( id::ParticleID id,
     ReactionProduct( std::move( id ),
                      std::move( multiplicity ),
                      std::nullopt,
-                     std::move( averageEnergy ) ) {}
+                     std::move( averageEnergy ),
+                     false ) {}
