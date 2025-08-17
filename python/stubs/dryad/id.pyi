@@ -370,11 +370,6 @@ class ReactionID:
     The reaction identifier
     """
     __hash__: typing.ClassVar[None] = None
-    @staticmethod
-    def size() -> int:
-        """
-        The number of currently registered identifiers
-        """
     def __eq__(self, arg0: ReactionID) -> bool:
         ...
     def __ge__(self, arg0: ReactionID) -> bool:
@@ -417,14 +412,34 @@ class ReactionID:
         The interaction type (nuclear or atomic) associated to the reaction
         """
     @property
+    def particles(self) -> dict[ParticleID, int] | None:
+        """
+        The outgoing particles (excluding the residual)
+        """
+    @property
+    def projectile(self) -> ParticleID:
+        """
+        The projectile
+        """
+    @property
     def reaction_type(self) -> ReactionType:
         """
         The reaction type (nuclear or atomic) associated to the reaction
         """
     @property
+    def residual(self) -> ParticleID | None:
+        """
+        The residual
+        """
+    @property
     def symbol(self) -> str:
         """
         The reaction type's symbol
+        """
+    @property
+    def target(self) -> ParticleID:
+        """
+        The target
         """
 class ReactionType:
     """

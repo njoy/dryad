@@ -53,11 +53,29 @@ void wrapReactionID( python::module& module ) {
     "    self     the reaction identifier\n"
     "    symbol   the reaction symbol"
   )
-  .def_static(
+  .def_property_readonly(
 
-    "size",
-    &Component::size,
-    "The number of currently registered identifiers"
+    "projectile",
+    &Component::projectile,
+    "The projectile"
+  )
+  .def_property_readonly(
+
+    "target",
+    &Component::target,
+    "The target"
+  )
+  .def_property_readonly(
+
+    "particles",
+    &Component::particles,
+    "The outgoing particles (excluding the residual)"
+  )
+  .def_property_readonly(
+
+    "residual",
+    &Component::residual,
+    "The residual"
   )
   .def_property_readonly(
 
