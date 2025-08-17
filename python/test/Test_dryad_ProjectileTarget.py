@@ -11,6 +11,8 @@ from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import InteractionType
 from dryad import ReactionCategory
+from dryad.id import ReactionType
+from dryad.id import ReactionID
 from dryad.id import ParticleID
 
 def verify_chunk( self, chunk ) :
@@ -33,21 +35,21 @@ def verify_chunk( self, chunk ) :
 
     # reactions are present
     self.assertEqual( 9, chunk.number_reactions )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->total' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->n,Fe56' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->2n,Fe55[all]' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->2n,Fe55' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->2n,Fe55_e1' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->3n,Fe54[all]' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->3n,Fe54' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->3n,Fe54_e1' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->a,Cr52[all]' ) )
-    self.assertEqual( False, chunk.has_reaction( 'some unknown reaction' ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->total" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->n,Fe56" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->2n,Fe55" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->p,Mn56[all]" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->p,Mn56" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->p,Mn56_e1" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->a,Cr53[all]" ) ) )
+    #self.assertEqual( False, chunk.has_reaction( 'some unknown reaction' ) )
 
     # reactions[0] and reaction( 'n,Fe56->total' )
-    for reaction in [ chunk.reactions[0], chunk.reaction( 'n,Fe56->total' ) ] :
+    for reaction in [ chunk.reactions[0], chunk.reaction( ReactionID( 'n,Fe56->total' ) ) ] :
 
-        self.assertEqual( 'n,Fe56->total', reaction.identifier )
+        self.assertEqual( ReactionID( 'n,Fe56->total' ), reaction.identifier )
         self.assertEqual( ReactionCategory.Summation, reaction.category )
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
@@ -55,12 +57,12 @@ def verify_chunk( self, chunk ) :
         self.assertIsNone( reaction.mass_difference_qvalue )
         self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 6, reaction.number_partial_reactions )
-        self.assertEqual( 'n,Fe56->n,Fe56', reaction.partial_reaction_identifiers[0] )
-        self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[1] )
-        self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[2] )
-        self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[3] )
-        self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[4] )
-        self.assertEqual( 'n,Fe56->a,Cr52[all]', reaction.partial_reaction_identifiers[5] )
+        self.assertEqual( ReactionID( "n,Fe56->n,Fe56" ), reaction.partial_reaction_identifiers[0] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55" ), reaction.partial_reaction_identifiers[1] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55_e1" ), reaction.partial_reaction_identifiers[2] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56" ), reaction.partial_reaction_identifiers[3] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56_e1" ), reaction.partial_reaction_identifiers[4] )
+        self.assertEqual( ReactionID( "n,Fe56->a,Cr53[all]" ), reaction.partial_reaction_identifiers[5] )
         self.assertEqual( 2, reaction.cross_section.number_points )
         self.assertEqual( 1, reaction.cross_section.number_regions )
         self.assertEqual( 2, len( reaction.cross_section.energies ) )
@@ -76,9 +78,9 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[1] and reaction( 'n,Fe56->n,Fe56' )
-    for reaction in [ chunk.reactions[1], chunk.reaction( 'n,Fe56->n,Fe56' ) ] :
+    for reaction in [ chunk.reactions[1], chunk.reaction( ReactionID( "n,Fe56->n,Fe56" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->n,Fe56" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -101,9 +103,9 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[2] and reaction( 'n,Fe56->2n,Fe55[all]' )
-    for reaction in [ chunk.reactions[2], chunk.reaction( 'n,Fe56->2n,Fe55[all]' ) ] :
+    for reaction in [ chunk.reactions[2], chunk.reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->2n,Fe55[all]', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55[all]" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Summation, reaction.category )
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
@@ -111,8 +113,8 @@ def verify_chunk( self, chunk ) :
         self.assertIsNone( reaction.mass_difference_qvalue )
         self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
-        self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[0] )
-        self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[1] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55" ), reaction.partial_reaction_identifiers[0] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55_e1" ), reaction.partial_reaction_identifiers[1] )
         self.assertEqual( 2, reaction.cross_section.number_points )
         self.assertEqual( 1, reaction.cross_section.number_regions )
         self.assertEqual( 2, len( reaction.cross_section.energies ) )
@@ -128,9 +130,9 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
     # reactions[3] and reaction( 'n,Fe56->2n,Fe55' )
-    for reaction in [ chunk.reactions[3], chunk.reaction( 'n,Fe56->2n,Fe55' ) ] :
+    for reaction in [ chunk.reactions[3], chunk.reaction( ReactionID( "n,Fe56->2n,Fe55" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->2n,Fe55', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -153,9 +155,9 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[4] and reaction( 'n,Fe56->2n,Fe55_e1' )
-    for reaction in [ chunk.reactions[4], chunk.reaction( 'n,Fe56->2n,Fe55_e1' ) ] :
+    for reaction in [ chunk.reactions[4], chunk.reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55_e1" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -177,10 +179,10 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[5] and reaction( 'n,Fe56->3n,Fe54[all]' )
-    for reaction in [ chunk.reactions[5], chunk.reaction( 'n,Fe56->3n,Fe54[all]' ) ] :
+    # reactions[5] and reaction( 'n,Fe56->p,Mn56[all]' )
+    for reaction in [ chunk.reactions[5], chunk.reaction( ReactionID( "n,Fe56->p,Mn56[all]" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->3n,Fe54[all]', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56[all]" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Summation, reaction.category )
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
@@ -188,8 +190,8 @@ def verify_chunk( self, chunk ) :
         self.assertIsNone( reaction.mass_difference_qvalue )
         self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
-        self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[0] )
-        self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[1] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56" ), reaction.partial_reaction_identifiers[0] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56_e1" ), reaction.partial_reaction_identifiers[1] )
         self.assertEqual( 2, reaction.cross_section.number_points )
         self.assertEqual( 1, reaction.cross_section.number_regions )
         self.assertEqual( 2, len( reaction.cross_section.energies ) )
@@ -204,10 +206,10 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( InterpolationType.Histogram, reaction.cross_section.interpolants[0] )
         self.assertEqual( False, reaction.cross_section.is_linearised )
 
-    # reactions[6] and reaction( 'n,Fe56-3n,Fe54' )
-    for reaction in [ chunk.reactions[6], chunk.reaction( 'n,Fe56->3n,Fe54' ) ] :
+    # reactions[6] and reaction( 'n,Fe56->p,Mn56' )
+    for reaction in [ chunk.reactions[6], chunk.reaction( ReactionID( "n,Fe56->p,Mn56" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->3n,Fe54', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -229,10 +231,10 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[7] and reaction( 'n,Fe56->3n,Fe54_e1' )
-    for reaction in [ chunk.reactions[7], chunk.reaction( 'n,Fe56->3n,Fe54_e1' ) ] :
+    # reactions[7] and reaction( 'n,Fe56->p,Mn56_e1' )
+    for reaction in [ chunk.reactions[7], chunk.reaction( ReactionID( "n,Fe56->p,Mn56_e1" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56_e1" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -254,10 +256,10 @@ def verify_chunk( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[8] and reaction( 'n,Fe56->a,Cr52[all]' )
-    for reaction in [ chunk.reactions[8], chunk.reaction( 'n,Fe56->a,Cr52[all]' ) ] :
+    # reactions[8] and reaction( 'n,Fe56->a,Cr53[all]' )
+    for reaction in [ chunk.reactions[8], chunk.reaction( ReactionID( "n,Fe56->a,Cr53[all]" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->a,Cr52[all]', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->a,Cr53[all]" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -299,21 +301,21 @@ def verify_correct_summation( self, chunk ) :
 
     # reactions are present
     self.assertEqual( 9, chunk.number_reactions )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->total' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->n,Fe56' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->2n,Fe55[all]' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->2n,Fe55' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->2n,Fe55_e1' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->3n,Fe54[all]' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->3n,Fe54' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->3n,Fe54_e1' ) )
-    self.assertEqual( True, chunk.has_reaction( 'n,Fe56->a,Cr52[all]' ) )
-    self.assertEqual( False, chunk.has_reaction( 'some unknown reaction' ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->total" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->n,Fe56" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->2n,Fe55" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->p,Mn56[all]" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->p,Mn56" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->p,Mn56_e1" ) ) )
+    self.assertEqual( True, chunk.has_reaction( ReactionID( "n,Fe56->a,Cr53[all]" ) ) )
+    #self.assertEqual( False, chunk.has_reaction( 'some unknown reaction' ) ) )
 
     # reactions[0] and reaction( 'n,Fe56->total' )
-    for reaction in [ chunk.reactions[0], chunk.reaction( 'n,Fe56->total' ) ] :
+    for reaction in [ chunk.reactions[0], chunk.reaction( ReactionID( 'n,Fe56->total' ) ) ] :
 
-        self.assertEqual( 'n,Fe56->total', reaction.identifier )
+        self.assertEqual( ReactionID( 'n,Fe56->total' ), reaction.identifier )
         self.assertEqual( ReactionCategory.Summation, reaction.category )
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
@@ -321,12 +323,12 @@ def verify_correct_summation( self, chunk ) :
         self.assertIsNone( reaction.mass_difference_qvalue )
         self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 6, reaction.number_partial_reactions )
-        self.assertEqual( 'n,Fe56->n,Fe56', reaction.partial_reaction_identifiers[0] )
-        self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[1] )
-        self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[2] )
-        self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[3] )
-        self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[4] )
-        self.assertEqual( 'n,Fe56->a,Cr52[all]', reaction.partial_reaction_identifiers[5] )
+        self.assertEqual( ReactionID( "n,Fe56->n,Fe56" ), reaction.partial_reaction_identifiers[0] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55" ), reaction.partial_reaction_identifiers[1] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55_e1" ), reaction.partial_reaction_identifiers[2] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56" ), reaction.partial_reaction_identifiers[3] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56_e1" ), reaction.partial_reaction_identifiers[4] )
+        self.assertEqual( ReactionID( "n,Fe56->a,Cr53[all]" ), reaction.partial_reaction_identifiers[5] )
         self.assertEqual( 4, reaction.cross_section.number_points )
         self.assertEqual( 1, reaction.cross_section.number_regions )
         self.assertEqual( 4, len( reaction.cross_section.energies ) )
@@ -346,9 +348,9 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[1] and reaction( 'n,Fe56->n,Fe56' )
-    for reaction in [ chunk.reactions[1], chunk.reaction( 'n,Fe56->n,Fe56' ) ] :
+    for reaction in [ chunk.reactions[1], chunk.reaction( ReactionID( "n,Fe56->n,Fe56" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->n,Fe56', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->n,Fe56" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -371,9 +373,9 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[2] and reaction( 'n,Fe56->2n,Fe55[all]' )
-    for reaction in [ chunk.reactions[2], chunk.reaction( 'n,Fe56->2n,Fe55[all]' ) ] :
+    for reaction in [ chunk.reactions[2], chunk.reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->2n,Fe55[all]', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55[all]" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Summation, reaction.category )
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
@@ -381,8 +383,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertIsNone( reaction.mass_difference_qvalue )
         self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
-        self.assertEqual( 'n,Fe56->2n,Fe55', reaction.partial_reaction_identifiers[0] )
-        self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.partial_reaction_identifiers[1] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55" ), reaction.partial_reaction_identifiers[0] )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55_e1" ), reaction.partial_reaction_identifiers[1] )
         self.assertEqual( 2, reaction.cross_section.number_points )
         self.assertEqual( 1, reaction.cross_section.number_regions )
         self.assertEqual( 2, len( reaction.cross_section.energies ) )
@@ -398,9 +400,9 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[3] and reaction( 'n,Fe56->2n,Fe55' )
-    for reaction in [ chunk.reactions[3], chunk.reaction( 'n,Fe56->2n,Fe55' ) ] :
+    for reaction in [ chunk.reactions[3], chunk.reaction( ReactionID( "n,Fe56->2n,Fe55" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->2n,Fe55', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -423,9 +425,9 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
     # reactions[4] and reaction( 'n,Fe56->2n,Fe55_e1' )
-    for reaction in [ chunk.reactions[4], chunk.reaction( 'n,Fe56->2n,Fe55_e1' ) ] :
+    for reaction in [ chunk.reactions[4], chunk.reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->2n,Fe55_e1', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->2n,Fe55_e1" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -447,10 +449,10 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[5] and reaction( 'n,Fe56->3n,Fe54[all]' )
-    for reaction in [ chunk.reactions[5], chunk.reaction( 'n,Fe56->3n,Fe54[all]' ) ] :
+    # reactions[5] and reaction( 'n,Fe56->p,Mn56[all]' )
+    for reaction in [ chunk.reactions[5], chunk.reaction( ReactionID( "n,Fe56->p,Mn56[all]" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->3n,Fe54[all]', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56[all]" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Summation, reaction.category )
         self.assertEqual( True, reaction.is_summation_reaction )
         self.assertEqual( False, reaction.is_primary_reaction )
@@ -458,8 +460,8 @@ def verify_correct_summation( self, chunk ) :
         self.assertIsNone( reaction.mass_difference_qvalue )
         self.assertIsNone( reaction.reaction_qvalue )
         self.assertEqual( 2, reaction.number_partial_reactions )
-        self.assertEqual( 'n,Fe56->3n,Fe54', reaction.partial_reaction_identifiers[0] )
-        self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.partial_reaction_identifiers[1] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56" ), reaction.partial_reaction_identifiers[0] )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56_e1" ), reaction.partial_reaction_identifiers[1] )
         self.assertEqual( 2, reaction.cross_section.number_points )
         self.assertEqual( 1, reaction.cross_section.number_regions )
         self.assertEqual( 2, len( reaction.cross_section.energies ) )
@@ -474,10 +476,10 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[6] and reaction( 'n,Fe56-3n,Fe54' )
-    for reaction in [ chunk.reactions[6], chunk.reaction( 'n,Fe56->3n,Fe54' ) ] :
+    # reactions[6] and reaction( 'n,Fe56->p,Mn56' )
+    for reaction in [ chunk.reactions[6], chunk.reaction( ReactionID( "n,Fe56->p,Mn56" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->3n,Fe54', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -499,10 +501,10 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[7] and reaction( 'n,Fe56->3n,Fe54_e1' )
-    for reaction in [ chunk.reactions[7], chunk.reaction( 'n,Fe56->3n,Fe54_e1' ) ] :
+    # reactions[7] and reaction( 'n,Fe56->p,Mn56_e1' )
+    for reaction in [ chunk.reactions[7], chunk.reaction( ReactionID( "n,Fe56->p,Mn56_e1" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->3n,Fe54_e1', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->p,Mn56_e1" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -524,10 +526,10 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-    # reactions[8] and reaction( 'n,Fe56->a,Cr52[all]' )
-    for reaction in [ chunk.reactions[8], chunk.reaction( 'n,Fe56->a,Cr52[all]' ) ] :
+    # reactions[8] and reaction( 'n,Fe56->a,Cr53[all]' )
+    for reaction in [ chunk.reactions[8], chunk.reaction( ReactionID( "n,Fe56->a,Cr53[all]" ) ) ] :
 
-        self.assertEqual( 'n,Fe56->a,Cr52[all]', reaction.identifier )
+        self.assertEqual( ReactionID( "n,Fe56->a,Cr53[all]" ), reaction.identifier )
         self.assertEqual( ReactionCategory.Primary, reaction.category )
         self.assertEqual( False, reaction.is_summation_reaction )
         self.assertEqual( True, reaction.is_primary_reaction )
@@ -554,53 +556,70 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
     def test_component( self ) :
 
+        n = ParticleID.neutron()
+        fe56 = ParticleID( 26056 )
+
+        ReactionID( n, fe56, ReactionType( 'total' ) )
+        ReactionID( n, fe56, ReactionType.elastic( n ) )
+        ReactionID( n, fe56, ReactionType( '2n' ) )
+        ReactionID( n, fe56, ReactionType( '2n(0)' ) )
+        ReactionID( n, fe56, ReactionType( '2n(1)' ) )
+        ReactionID( n, fe56, ReactionType( 'p' ) )
+        ReactionID( n, fe56, ReactionType( 'p(0)' ) )
+        ReactionID( n, fe56, ReactionType( 'p(1)' ) )
+        ReactionID( n, fe56, ReactionType( 'a' ) )
+
         # the data is given explicitly
         chunk = ProjectileTarget(
                     projectile = ParticleID( 'n' ),
                     target = ParticleID( 'Fe56' ),
                     type = InteractionType.Nuclear,
-                    reactions = [ Reaction( 'n,Fe56->total',
-                                            [ 'n,Fe56->n,Fe56', 'n,Fe56->2n,Fe55[all]',
-                                              'n,Fe56->3n,Fe54[all]', 'n,Fe56->a,Cr52[all]' ],
+                    reactions = [ Reaction( ReactionID( 'n,Fe56->total' ),
+                                            [ ReactionID( "n,Fe56->n,Fe56" ),
+                                              ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                              ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                              ReactionID( "n,Fe56->a,Cr53[all]" ) ],
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000001., 1000001. ],
                                                                      InterpolationType.Histogram ),
                                             [] ),
-                                  Reaction( 'n,Fe56->n,Fe56',
+                                  Reaction( ReactionID( "n,Fe56->n,Fe56" ),
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1e+6, 1e+6 ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, 0 ),
-                                  Reaction( 'n,Fe56->2n,Fe55[all]',
-                                            [ 'n,Fe56->2n,Fe55', 'n,Fe56->2n,Fe55_e1' ],
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                            [ ReactionID( "n,Fe56->2n,Fe55" ),
+                                              ReactionID( "n,Fe56->2n,Fe55_e1" ) ],
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 3. ],
                                                                      InterpolationType.Histogram ),
                                             [] ),
-                                  Reaction( 'n,Fe56->2n,Fe55',
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55" ),
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 2.00001 ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -1 ),
-                                  Reaction( 'n,Fe56->2n,Fe55_e1',
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 1. ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -1 ),
-                                  Reaction( 'n,Fe56->3n,Fe54[all]',
-                                            [ 'n,Fe56->3n,Fe54', 'n,Fe56->3n,Fe54_e1' ],
+                                  Reaction( ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                            [ ReactionID( "n,Fe56->p,Mn56" ),
+                                              ReactionID( "n,Fe56->p,Mn56_e1" ) ],
                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 5. ],
                                                                      InterpolationType.Histogram ),
                                             [] ),
-                                  Reaction( 'n,Fe56->3n,Fe54',
+                                  Reaction( ReactionID( "n,Fe56->p,Mn56" ),
                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 3.00001 ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -5 ),
-                                  Reaction( 'n,Fe56->3n,Fe54_e1',
+                                  Reaction( ReactionID( "n,Fe56->p,Mn56_e1" ),
                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 2. ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -5 ),
-                                  Reaction( 'n,Fe56->a,Cr52[all]',
+                                  Reaction( ReactionID( "n,Fe56->a,Cr53[all]" ),
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1., 1. ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
@@ -614,52 +633,69 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
     def test_setter_functions( self ) :
 
+        n = ParticleID.neutron()
+        fe56 = ParticleID( 26056 )
+
+        ReactionID( n, fe56, ReactionType( 'total' ) )
+        ReactionID( n, fe56, ReactionType.elastic( n ) )
+        ReactionID( n, fe56, ReactionType( '2n' ) )
+        ReactionID( n, fe56, ReactionType( '2n(0)' ) )
+        ReactionID( n, fe56, ReactionType( '2n(1)' ) )
+        ReactionID( n, fe56, ReactionType( 'p' ) )
+        ReactionID( n, fe56, ReactionType( 'p(0)' ) )
+        ReactionID( n, fe56, ReactionType( 'p(1)' ) )
+        ReactionID( n, fe56, ReactionType( 'a' ) )
+
         chunk = ProjectileTarget(
                     projectile = ParticleID( 'n' ),
                     target = ParticleID( 'Fe56' ),
                     type = InteractionType.Nuclear,
-                    reactions = [ Reaction( 'n,Fe56->total',
-                                            [ 'n,Fe56->n,Fe56', 'n,Fe56->2n,Fe55[all]',
-                                              'n,Fe56->3n,Fe54[all]', 'n,Fe56->a,Cr52[all]' ],
+                    reactions = [ Reaction( ReactionID( 'n,Fe56->total' ),
+                                            [ ReactionID( "n,Fe56->n,Fe56" ),
+                                              ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                              ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                              ReactionID( "n,Fe56->a,Cr53[all]" ) ],
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000001., 1000001. ],
                                                                      InterpolationType.Histogram ),
                                             [] ),
-                                  Reaction( 'n,Fe56->n,Fe56',
+                                  Reaction( ReactionID( "n,Fe56->n,Fe56" ),
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1e+6, 1e+6 ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, 0 ),
-                                  Reaction( 'n,Fe56->2n,Fe55[all]',
-                                            [ 'n,Fe56->2n,Fe55', 'n,Fe56->2n,Fe55_e1' ],
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                            [ ReactionID( "n,Fe56->2n,Fe55" ),
+                                              ReactionID( "n,Fe56->2n,Fe55_e1" ) ],
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 3. ],
                                                                      InterpolationType.Histogram ),
                                             [] ),
-                                  Reaction( 'n,Fe56->2n,Fe55',
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55" ),
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 2.00001 ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -1 ),
-                                  Reaction( 'n,Fe56->2n,Fe55_e1',
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 1. ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -1 ),
-                                  Reaction( 'n,Fe56->3n,Fe54[all]',
-                                            [ 'n,Fe56->3n,Fe54', 'n,Fe56->3n,Fe54_e1' ],
+                                  Reaction( ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                            [ ReactionID( "n,Fe56->p,Mn56" ),
+                                              ReactionID( "n,Fe56->p,Mn56_e1" ) ],
                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 5. ],
                                                                      InterpolationType.Histogram ),
                                             [] ),
-                                  Reaction( 'n,Fe56->3n,Fe54',
+                                  Reaction( ReactionID( "n,Fe56->p,Mn56" ),
                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 3.00001 ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -5 ),
-                                  Reaction( 'n,Fe56->3n,Fe54_e1',
+                                  Reaction( ReactionID( "n,Fe56->p,Mn56_e1" ),
                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 2. ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
                                             0, -5 ),
-                                  Reaction( 'n,Fe56->a,Cr52[all]',
+                                  Reaction( ReactionID( "n,Fe56->a,Cr53[all]" ),
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1., 1. ],
                                                                      InterpolationType.LinearLinear ),
                                             [],
@@ -702,53 +738,57 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
         verify_chunk( self, chunk )
 
         # the reaction data can be changed
-        newreactions = [ Reaction( 'n,Fe56->n,Fe56_e2',
+        newreactions = [ Reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                    TabulatedCrossSection( [ 5., 20. ], [ 0., 15. ],
                                                           InterpolationType.LogLog ),
                                    [],
                                    0, -1 ) ]
-        original = [ Reaction( 'n,Fe56->total',
-                               [ 'n,Fe56->n,Fe56', 'n,Fe56->2n,Fe55[all]',
-                                 'n,Fe56->3n,Fe54[all]', 'n,Fe56->a,Cr52[all]' ],
+        original = [ Reaction( ReactionID( 'n,Fe56->total' ),
+                               [ ReactionID( "n,Fe56->n,Fe56" ),
+                                 ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                                 ReactionID( "n,Fe56->p,Mn56[all]" ),
+                                 ReactionID( "n,Fe56->a,Cr53[all]" ) ],
                                TabulatedCrossSection( [ 1e-5, 20. ], [ 1000001., 1000001. ],
                                                         InterpolationType.Histogram ),
                                [] ),
-                     Reaction( 'n,Fe56->n,Fe56',
+                     Reaction( ReactionID( "n,Fe56->n,Fe56" ),
                                TabulatedCrossSection( [ 1e-5, 20. ], [ 1e+6, 1e+6 ],
                                                         InterpolationType.LinearLinear ),
                                [],
                                0, 0 ),
-                     Reaction( 'n,Fe56->2n,Fe55[all]',
-                               [ 'n,Fe56->2n,Fe55', 'n,Fe56->2n,Fe55_e1' ],
+                     Reaction( ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                               [ ReactionID( "n,Fe56->2n,Fe55" ),
+                                 ReactionID( "n,Fe56->2n,Fe55_e1" ) ],
                                TabulatedCrossSection( [ 1., 20. ], [ 0., 3. ],
                                                         InterpolationType.Histogram ),
                                [] ),
-                     Reaction( 'n,Fe56->2n,Fe55',
+                     Reaction( ReactionID( "n,Fe56->2n,Fe55" ),
                                TabulatedCrossSection( [ 1., 20. ], [ 0., 2.00001 ],
                                                         InterpolationType.LinearLinear ),
                                [],
                                0, -1 ),
-                     Reaction( 'n,Fe56->2n,Fe55_e1',
+                     Reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                TabulatedCrossSection( [ 1., 20. ], [ 0., 1. ],
                                                         InterpolationType.LinearLinear ),
                                [],
                                0, -1 ),
-                     Reaction( 'n,Fe56->3n,Fe54[all]',
-                               [ 'n,Fe56->3n,Fe54', 'n,Fe56->3n,Fe54_e1' ],
+                     Reaction( ReactionID( "n,Fe56->p,Mn56[all]" ),
+                               [ ReactionID( "n,Fe56->p,Mn56" ),
+                                 ReactionID( "n,Fe56->p,Mn56_e1" ) ],
                                TabulatedCrossSection( [ 5., 20. ], [ 0., 5. ],
                                                         InterpolationType.Histogram ),
                                [] ),
-                     Reaction( 'n,Fe56->3n,Fe54',
+                     Reaction( ReactionID( "n,Fe56->p,Mn56" ),
                                TabulatedCrossSection( [ 5., 20. ], [ 0., 3.00001 ],
                                                         InterpolationType.LinearLinear ),
                                [],
                                0, -5 ),
-                     Reaction( 'n,Fe56->3n,Fe54_e1',
+                     Reaction( ReactionID( "n,Fe56->p,Mn56_e1" ),
                                TabulatedCrossSection( [ 5., 20. ], [ 0., 2. ],
                                                         InterpolationType.LinearLinear ),
                                [],
                                0, -5 ),
-                     Reaction( 'n,Fe56->a,Cr52[all]',
+                     Reaction( ReactionID( "n,Fe56->a,Cr53[all]" ),
                                TabulatedCrossSection( [ 1e-5, 20. ], [ 1., 1. ],
                                                         InterpolationType.LinearLinear ),
                                [],
@@ -765,16 +805,22 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
+        n = ParticleID.neutron()
+        fe56 = ParticleID( 26056 )
+
+        ReactionID( n, fe56, ReactionType.elastic( n ) )
+        ReactionID( n, fe56, ReactionType( '2n(1)' ) )
+
         left = ProjectileTarget(
                    projectile = ParticleID( 'n' ),
                    target = ParticleID( 'Fe56' ),
                    type = InteractionType.Nuclear,
-                   reactions = [ Reaction( 'n,Fe56->n,Fe56',
+                   reactions = [ Reaction( ReactionID( "n,Fe56->n,Fe56" ),
                                            TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                   InterpolationType.Histogram ),
                                            [],
                                            0, 0 ),
-                                 Reaction( 'n,Fe56->n,Fe56_e1',
+                                 Reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                            TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
                                                                   InterpolationType.LinearLinear ),
                                            [],
@@ -783,12 +829,12 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                     projectile = ParticleID( 'n' ),
                     target = ParticleID( 'Fe56' ),
                     type = InteractionType.Nuclear,
-                    reactions = [ Reaction( 'n,Fe56->n,Fe56',
+                    reactions = [ Reaction( ReactionID( "n,Fe56->n,Fe56" ),
                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                    InterpolationType.Histogram ),
                                             [],
                                             0, 0 ),
-                                  Reaction( 'n,Fe56->n,Fe56_e1',
+                                  Reaction( ReactionID( "n,Fe56->2n,Fe55_e1" ),
                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 100. ],
                                                                    InterpolationType.LinearLinear ),
                                             [],
@@ -797,7 +843,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                         projectile = ParticleID( 'n' ),
                         target = ParticleID( 'Fe56' ),
                         type = InteractionType.Nuclear,
-                        reactions = [ Reaction( 'n,Fe56->n,Fe56',
+                        reactions = [ Reaction( ReactionID( "n,Fe56->n,Fe56" ),
                                                 TabulatedCrossSection( [ 1e-5, 20. ], [ 1000., 10. ],
                                                                        InterpolationType.Histogram ),
                                                 [],

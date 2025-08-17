@@ -15,7 +15,7 @@ namespace id {
 void wrapReactionID( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::id::NewReactionID;
+  using Component = njoy::dryad::id::ReactionID;
   using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionType = njoy::dryad::id::ReactionType;
 

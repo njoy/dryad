@@ -56,7 +56,7 @@ SCENARIO( "Reaction" ) {
 
       id::ReactionID id( n, fe56, id::ReactionType( 1 ) );
       std::vector< id::ReactionID > partials = { id::ReactionID( n, fe56, id::ReactionType::elastic( n ) ),
-                                                    id::ReactionID( n, fe56, id::ReactionType( 16 ) ) };
+                                                 id::ReactionID( n, fe56, id::ReactionType( 16 ) ) };
       TabulatedCrossSection xs( { 1., 2., 2., 3., 4. },
                                 { 4., 3., 4., 3., 2. },
                                 { 1, 4 },
@@ -104,7 +104,7 @@ SCENARIO( "Reaction" ) {
       THEN( "the partial reaction identifiers can be changed" ) {
 
         std::optional< std::vector< id::ReactionID > > newpartials( { id::ReactionID( n, fe56, id::ReactionType::elastic( n ) ),
-                                                                         id::ReactionID( n, fe56, id::ReactionType( 16 ) ) } );
+                                                                      id::ReactionID( n, fe56, id::ReactionType( 16 ) ) } );
         std::optional< std::vector< id::ReactionID > > original( std::nullopt );
 
         chunk.partialReactionIdentifiers( newpartials );

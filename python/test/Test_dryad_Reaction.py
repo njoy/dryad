@@ -10,12 +10,14 @@ from dryad import ReactionProduct
 from dryad import TabulatedCrossSection
 from dryad import InterpolationType
 from dryad import ReactionCategory
+from dryad.id import ReactionType
+from dryad.id import ReactionID
 from dryad.id import ParticleID
 
 def verify_chunk( self, chunk ) :
 
     # reaction identifier
-    self.assertEqual( 'n,Fe56->n,Fe56_e1', chunk.identifier )
+    self.assertEqual( ReactionID( 'n,Fe56->n,Fe56_e1' ), chunk.identifier )
 
     # metadata
     self.assertEqual( True, chunk.has_products )
@@ -79,7 +81,7 @@ def verify_chunk( self, chunk ) :
 def verify_summation_chunk( self, chunk ) :
 
     # reaction identifier
-    self.assertEqual( 'n,Fe56->total', chunk.identifier )
+    self.assertEqual( ReactionID( 'n,Fe56->total' ), chunk.identifier )
 
     # metadata
     self.assertEqual( False, chunk.has_products )
@@ -92,8 +94,8 @@ def verify_summation_chunk( self, chunk ) :
     # partial identifiers
     self.assertEqual( 2, chunk.number_partial_reactions )
     self.assertEqual( 2, len( chunk.partial_reaction_identifiers ) )
-    self.assertEqual( 'n,Fe56->elastic', chunk.partial_reaction_identifiers[0] )
-    self.assertEqual( 'n,Fe56->2n,Fe56', chunk.partial_reaction_identifiers[1] )
+    self.assertEqual( ReactionID( 'n,Fe56->n,Fe56' ), chunk.partial_reaction_identifiers[0] )
+    self.assertEqual( ReactionID( 'n,Fe56->2n,Fe55[all]' ), chunk.partial_reaction_identifiers[1] )
 
     # q values
     self.assertIsNone( chunk.mass_difference_qvalue )
@@ -132,8 +134,11 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
     def test_component( self ) :
 
+        n = ParticleID.neutron()
+        fe56 = ParticleID( 26056 )
+
         # the data is given explicitly
-        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1',
+        chunk = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
                           mass_q = 0, reaction_q = -1,
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
@@ -147,8 +152,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         verify_chunk( self, chunk )
 
         # the data is given explicitly for a summation reaction
-        chunk = Reaction( id = 'n,Fe56->total',
-                          partials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe56' ],
+        chunk = Reaction( id = ReactionID( n, fe56, ReactionType.total() ),
+                          partials = [ ReactionID( n, fe56, ReactionType( n, 2 ) ),
+                                       ReactionID( n, fe56, ReactionType( n, 16 ) ) ],
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
                                                        [ 1, 4 ],
@@ -159,7 +165,10 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
     def test_setter_functions( self ) :
 
-        chunk = Reaction( id = 'n,Fe56->n,Fe56_e1',
+        n = ParticleID.neutron()
+        fe56 = ParticleID( 26056 )
+
+        chunk = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
                           mass_q = 0, reaction_q = -1,
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
@@ -171,8 +180,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                                        ReactionProduct( ParticleID( 'g' ), 3 ) ] )
 
         # the reaction identifier can be changed
-        newid = 'n,Fe56->n,Fe56_e40'
-        original = 'n,Fe56->n,Fe56_e1'
+        newid = ReactionID( n, fe56, ReactionType( n, 90 ) )
+        original = ReactionID( n, fe56, ReactionType( n, 51 ) )
 
         chunk.identifier = newid
 
@@ -183,7 +192,8 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         verify_chunk( self, chunk )
 
         # the partial reaction identifiers can be changed
-        newpartials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe55' ]
+        newpartials = [ ReactionID( n, fe56, ReactionType( n, 2 ) ),
+                        ReactionID( n, fe56, ReactionType( n, 16 ) ) ]
         original = None
 
         chunk.partial_reaction_identifiers = newpartials
@@ -247,7 +257,10 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = Reaction( id = 'n,Fe56->n,Fe56_e1',
+        n = ParticleID.neutron()
+        fe56 = ParticleID( 26056 )
+
+        left = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
                          mass_q = 0, reaction_q = -1,
                          xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                       [ 4., 3., 4., 3., 2. ],
@@ -257,7 +270,7 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                          products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
                                       ReactionProduct( ParticleID( 'g' ), 2 ),
                                       ReactionProduct( ParticleID( 'g' ), 3 ) ] )
-        equal = Reaction( id = 'n,Fe56->n,Fe56_e1',
+        equal = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
                           mass_q = 0, reaction_q = -1,
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
@@ -267,8 +280,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
                           products = [ ReactionProduct( ParticleID( 'n' ), 1 ),
                                        ReactionProduct( ParticleID( 'g' ), 2 ),
                                        ReactionProduct( ParticleID( 'g' ), 3 ) ] )
-        different = Reaction( id = 'n,Fe56->total',
-                              partials = [ 'n,Fe56->elastic', 'n,Fe56->2n,Fe56' ],
+        different = Reaction( id = ReactionID( n, fe56, ReactionType.total() ),
+                              partials = [ ReactionID( n, fe56, ReactionType( n, 2 ) ),
+                                           ReactionID( n, fe56, ReactionType( n, 16 ) ) ],
                               xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                            [ 4., 3., 4., 3., 2. ],
                                                            [ 1, 4 ],

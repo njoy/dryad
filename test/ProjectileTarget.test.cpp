@@ -20,15 +20,15 @@ SCENARIO( "ProjectileTarget" ) {
   id::ParticleID n = id::ParticleID::neutron();
   id::ParticleID fe56( 26056 );
 
-  id::ReactionID( n, fe56, id::ReactionType( "total" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "total" ) );
   id::ReactionID( n, fe56, id::ReactionType::elastic( n ) );
-  id::ReactionID( n, fe56, id::ReactionType( "2n" ) )  ;
-  id::ReactionID( n, fe56, id::ReactionType( "2n(0)" ) )  ;
-  id::ReactionID( n, fe56, id::ReactionType( "2n(1)" ) )  ;
-  id::ReactionID( n, fe56, id::ReactionType( "p" ) )  ;
-  id::ReactionID( n, fe56, id::ReactionType( "p(0)" ) )  ;
-  id::ReactionID( n, fe56, id::ReactionType( "p(1)" ) )  ;
-  id::ReactionID( n, fe56, id::ReactionType( "a" ) )  ;
+  id::ReactionID( n, fe56, id::ReactionType( "2n" ) );
+  id::ReactionID( n, fe56, id::ReactionType( "2n(0)" ) );
+  id::ReactionID( n, fe56, id::ReactionType( "2n(1)" ) );
+  id::ReactionID( n, fe56, id::ReactionType( "p" ) );
+  id::ReactionID( n, fe56, id::ReactionType( "p(0)" ) );
+  id::ReactionID( n, fe56, id::ReactionType( "p(1)" ) );
+  id::ReactionID( n, fe56, id::ReactionType( "a" ) );
 
   GIVEN( "valid data for a ProjectileTarget" ) {
 
