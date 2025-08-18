@@ -71,14 +71,9 @@ namespace endf {
       auto section = material.section( 6, mt ).parse< 6 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        bool multiple = std::count_if( section.reactionProducts().begin(),
-                                       section.reactionProducts().end(),
-                                       [&product] ( auto&& entry ) {
-                                         return product.productIdentifier() == entry.productIdentifier();
-                                       } ) > 1;
         if ( mt != 18 ) {
 
-          products.emplace_back( createReactionProduct( projectile, target, product, multiple, normalise ) );
+          products.emplace_back( createReactionProduct( projectile, target, product, normalise ) );
         }
         else {
 

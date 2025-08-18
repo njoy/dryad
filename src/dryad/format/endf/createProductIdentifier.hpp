@@ -22,18 +22,18 @@ namespace endf {
    *  @param[in] multiple   flag to indicate whether or not there is multiple
    *                        emission of the product
    */
-  id::ParticleID createProductIdentifier( int zap, int lip, bool multiple = false ) {
+  id::ParticleID createProductIdentifier( int zap, int lip ) {
 
     switch ( zap ) {
 
-      case    0 : return multiple == false ? "g"  : "g_" + std::to_string( lip );
-      case    1 : return multiple == false ? "n"  : "n_" + std::to_string( lip );
-      case   11 : return multiple == false ? "e-" : "e-_" + std::to_string( lip );
-      case 1001 : return multiple == false ? "p"  : "p_" + std::to_string( lip );
-      case 1002 : return multiple == false ? "d"  : "d_" + std::to_string( lip );
-      case 1003 : return multiple == false ? "t"  : "t_" + std::to_string( lip );
-      case 2003 : return multiple == false ? "h"  : "he3_" + std::to_string( lip );
-      case 2004 : return multiple == false ? "a"  : "a_" + std::to_string( lip );
+      case    0 : return id::ParticleID::photon();
+      case    1 : return id::ParticleID::neutron();
+      case   11 : return id::ParticleID::electron();
+      case 1001 : return id::ParticleID::proton();
+      case 1002 : return id::ParticleID::deuteron();
+      case 1003 : return id::ParticleID::triton();
+      case 2003 : return id::ParticleID::helion();
+      case 2004 : return id::ParticleID::alpha();
       default : return createTargetIdentifier( zap, lip );
     };
   }
