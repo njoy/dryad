@@ -23,14 +23,16 @@ namespace endf {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
-   *  @param[in] target       the unparsed ENDF material
+   *  @param[in] material     the unparsed ENDF material
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
   std::vector< ReactionProduct >
-  createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
-                          const ENDFtk::tree::Material& material, int mt,
+  createReactionProducts( const id::ParticleID& projectile,
+                          const id::ParticleID& target,
+                          const ENDFtk::tree::Material& material,
+                          int mt,
                           bool normalise ) {
 
     std::vector< ReactionProduct > products;
@@ -125,6 +127,7 @@ namespace endf {
     // std::sort( products.begin(), products.end(),
     //            [] ( auto&& left, auto&& right )
     //               { return left.identifier() < right.identifier(); } );
+    products.shrink_to_fit();
     return products;
   }
 

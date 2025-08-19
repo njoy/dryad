@@ -30,16 +30,13 @@ namespace endf {
   void addProduct( const id::ParticleID& particle, int multiplicity,
                    std::vector< ReactionProduct >& products ) {
 
-    if ( multiplicity != 0 ) {
+    auto iter = std::find_if( products.begin(), products.end(),
+                              [&particle] ( auto&& product )
+                                          { return product.identifier() == particle; } );
+    if ( iter == products.end() ) {
 
-      auto iter = std::find_if( products.begin(), products.end(),
-                                [&particle] ( auto&& product )
-                                            { return product.identifier() == particle; } );
-      if ( iter == products.end() ) {
-
-        Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );
-        products.emplace_back( particle, createMultiplicity( multiplicity ) );
-      }
+      Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );
+      products.emplace_back( particle, createMultiplicity( multiplicity ) );
     }
   }
 
@@ -53,8 +50,10 @@ namespace endf {
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
-  Reaction createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                           const ENDFtk::tree::Material& material, int mt,
+  Reaction createReaction( const id::ParticleID& projectile,
+                           const id::ParticleID& target,
+                           const ENDFtk::tree::Material& material,
+                           int mt,
                            bool normalise ) {
 
     // metadata and miscellaneous information
@@ -86,7 +85,7 @@ namespace endf {
           reaction_q = section.massDifferenceQValue();
         }
 
-        // add missing reaction products (n, p, d, t, h, a only)
+        // add missing reaction products - only for primary reactions
         if ( id.particles().has_value() ) {
 
           for ( const auto& entry : id.particles().value() ) {

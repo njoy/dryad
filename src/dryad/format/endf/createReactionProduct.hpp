@@ -52,8 +52,6 @@ namespace endf {
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] product      the MF26 reaction product data
-   *  @param[in] multiple     the flag to indicate whether or not the product is a
-   *                          multiple emission product
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
