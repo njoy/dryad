@@ -8,7 +8,7 @@
 #include "tools/Log.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/TabulatedAngularDistributionFunction.hpp"
-#include "ACEtk/electron/TabulatedAngularDistribution.hpp"
+#include "ACEtk/electroatomic/TabulatedAngularDistribution.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,11 +16,13 @@ namespace format {
 namespace ace {
 
   /**
-   *  @brief Create a TabulatedAngularDistributionFunction from a CoherentFormFactorBlock
+   *  @brief Create a TabulatedAngularDistributionFunction from ACE data
+   *
+   *  @param[in] distribution   the electroatomic tabulated angular distribution
    */
   TabulatedAngularDistributionFunction
   createTabulatedAngularDistributionFunction(
-      const njoy::ACEtk::electron::TabulatedAngularDistribution& distribution ) {
+      const njoy::ACEtk::electroatomic::TabulatedAngularDistribution& distribution ) {
 
     try {
 

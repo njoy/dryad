@@ -10,7 +10,7 @@
 #include "dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
 #include "dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
 #include "dryad/TabulatedEnergyDistributions.hpp"
-#include "ACEtk/electron/EnergyDistributionBlock.hpp"
+#include "ACEtk/electroatomic/EnergyDistributionBlock.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -18,10 +18,13 @@ namespace format {
 namespace ace {
 
   /**
-   *  @brief Create a TabulatedEnergyDistributions from an ElasticAngularDistributionBlock
+   *  @brief Create a TabulatedEnergyDistributions from an ACE energy distribution block
+   *
+   *  @param[in] distribution   the electroatomic energy distribution block
    */
   TabulatedEnergyDistributions
-  createTabulatedEnergyDistributions( const njoy::ACEtk::electron::EnergyDistributionBlock& block ) {
+  createTabulatedEnergyDistributions(
+      const njoy::ACEtk::electroatomic::EnergyDistributionBlock& block ) {
 
     try {
 
