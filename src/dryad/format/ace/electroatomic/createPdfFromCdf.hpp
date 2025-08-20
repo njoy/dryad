@@ -17,6 +17,8 @@ namespace electroatomic {
 
   /**
    *  @brief Create a pdf from a cdf
+   *
+   *  @param[in] cdf   the tabulated cdf from which to calculate a pdf
    */
   TabulatedAngularDistributionFunction
   createPdfFromCdf( const TabulatedAngularDistributionFunction& cdf ) {

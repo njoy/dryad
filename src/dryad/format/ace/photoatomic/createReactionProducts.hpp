@@ -18,6 +18,8 @@ namespace photoatomic {
 
   /**
    *  @brief Create partial reaction numbers for photoatomic data
+   *
+   *  @param[in] table   the ace table
    */
   std::vector< std::vector< ReactionProduct > >
   createReactionProducts( const ACEtk::PhotoatomicTable& table ) {

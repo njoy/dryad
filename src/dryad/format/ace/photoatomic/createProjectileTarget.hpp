@@ -19,6 +19,8 @@ namespace photoatomic {
 
   /**
    *  @brief Create a ProjectileTarget for photoatomic data
+   *
+   *  @param[in] table   the ace table
    */
   ProjectileTarget createProjectileTarget( const ACEtk::PhotoatomicTable& table ) {
 
