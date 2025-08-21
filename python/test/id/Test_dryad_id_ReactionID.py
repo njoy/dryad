@@ -43,16 +43,19 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
 
     def test_key( self ) :
 
-        pass
-        # id1 = ReactionType( 50 )
-        # id2 = ReactionType( 600 )
+        n = ParticleID.neutron()
+        u238 = ParticleID( 92238 )
+        pu239 = ParticleID( 94239 )
 
-        # map = { id1 : '1', id2 : '2' }
+        id1 = ReactionID( n, u238, ReactionType( 1 ) )
+        id2 = ReactionID( n, pu239, ReactionType( 18 ) )
 
-        # self.assertEqual( map[ id1 ], '1' )
-        # self.assertEqual( map[ id2 ], '2' )
-        # self.assertEqual( map[ ReactionType( 50 ) ], '1' )
-        # self.assertEqual( map[ ReactionType( 600 ) ], '2' )
+        map = { id1 : '1', id2 : '2' }
+
+        self.assertEqual( map[ id1 ], '1' )
+        self.assertEqual( map[ id2 ], '2' )
+        self.assertEqual( map[ ReactionID( 'n,U238->total' ) ], '1' )
+        self.assertEqual( map[ ReactionID( 'n,Pu239->fission(t)' ) ], '2' )
 
     def test_failures( self ) :
 
