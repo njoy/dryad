@@ -21,7 +21,7 @@ namespace covariance {
    *  @brief Create a cross section covariance block from a GNDS covariance section
    */
   dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock( 
+  createCrossSectionCovarianceBlock(
       const dryad::id::ParticleID& projectile,
       const dryad::id::ParticleID& target,
       const pugi::xml_node& covariance ) {
@@ -37,9 +37,11 @@ namespace covariance {
     auto row = covariance.child( "rowData" );
     if ( row ) {
 
-      rowReaction = row.attribute( "ENDF_MFMT" ).as_string();
-      rowReaction.erase( rowReaction.begin(), 
-                         std::find( rowReaction.begin(), rowReaction.end(), ',' ) + 1 );
+      //! @todo use the href instead to get the id? requires opening two files
+      std::string reaction = row.attribute( "ENDF_MFMT" ).as_string();
+      reaction.erase( reaction.begin(),
+                      std::find( reaction.begin(), reaction.end(), ',' ) + 1 );
+      rowReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, std::stoi( reaction ) ) );
     }
     else {
 
@@ -49,9 +51,11 @@ namespace covariance {
     auto column = covariance.child( "columnData" );
     if ( column ) {
 
-      columnReaction = column.attribute( "ENDF_MFMT" ).as_string();
-      columnReaction.erase( columnReaction.begin(), 
-                            std::find( columnReaction.begin(), columnReaction.end(), ',' ) + 1 );
+      //! @todo use the href instead to get the id? requires opening two files
+      std::string reaction = column.attribute( "ENDF_MFMT" ).as_string();
+      reaction.erase( reaction.begin(),
+                      std::find( reaction.begin(), reaction.end(), ',' ) + 1 );
+      columnReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, std::stoi( reaction ) ) );
     }
 
     bool cross = false;
@@ -71,14 +75,14 @@ namespace covariance {
       // search for the node with the matrix data
       auto node = covariance.child( "mixed" );
       if ( !node ) {
-  
+
         node = covariance;
       }
-  
+
       // read all matrix data
       for ( pugi::xml_node matrix = node.child( "covarianceMatrix" ); matrix;
             matrix = matrix.next_sibling( "covarianceMatrix" ) ) {
-  
+
         // read data
         auto data = readCovarianceMatrix( matrix );
         rowStructures.emplace_back( std::move( std::get< 1 >( data ) ) );
@@ -89,11 +93,11 @@ namespace covariance {
         convertEnergies( rowStructures.back(), std::get< 4 >( data ) );
         convertEnergies( columnStructures.back(), std::get< 5 >( data ) );
       }
-  
+
       // check for variance scaling
       auto scale = node.child( "shortRangeSelfScalingVariance" );
       if ( scale ) {
-  
+
         scaling = createVarianceScaling( scale );
         if ( cross ) {
 

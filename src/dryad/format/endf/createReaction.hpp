@@ -57,10 +57,10 @@ namespace endf {
                            const ENDFtk::tree::Material& material, int mt,
                            bool normalise ) {
 
-    if ( material.hasSection( 3, mt ) ) {
+    // metadata and miscellaneous information
+    id::ReactionID id( projectile, target, id::ReactionType( projectile, mt ) );
 
-      // metadata and miscellaneous information
-      id::ReactionID id = std::to_string( mt );
+    if ( material.hasSection( 3, mt ) ) {
 
       // cross section
       auto section = material.section( 3, mt ).parse< 3 >();
@@ -87,14 +87,12 @@ namespace endf {
         }
 
         // add missing reaction products (n, p, d, t, h, a only)
-        if ( ReactionInformation::hasSecondaryParticles( mt ) ) {
+        if ( id.particles().has_value() ) {
 
-          addProduct( createProductIdentifier( 1, 0 ), ReactionInformation::neutrons( mt ), products );
-          addProduct( createProductIdentifier( 1001, 0 ), ReactionInformation::protons( mt ), products );
-          addProduct( createProductIdentifier( 1002, 0 ), ReactionInformation::deuterons( mt ), products );
-          addProduct( createProductIdentifier( 1003, 0 ), ReactionInformation::tritons( mt ), products );
-          addProduct( createProductIdentifier( 2003, 0 ), ReactionInformation::helions( mt ), products );
-          addProduct( createProductIdentifier( 2004, 0 ), ReactionInformation::alphas( mt ), products );
+          for ( const auto& entry : id.particles().value() ) {
+
+            addProduct( entry.first, entry.second, products );
+          }
         }
 
         // return the reaction data
@@ -110,10 +108,12 @@ namespace endf {
         }
 
         // partials
-        std::vector< int > endf_partials = ReactionInformation::partials( material, 3, mt );
+        std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 3, mt );
         std::vector< id::ReactionID > partials( endf_partials.size() );
         std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                        [] ( auto&& value ) { return std::to_string( value ); } );
+                        [&projectile, &target]
+                           ( auto&& type )
+                           { return id::ReactionID( projectile, target, type ); } );
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
@@ -125,9 +125,6 @@ namespace endf {
       }
     }
     else if ( material.hasSection( 23, mt ) ) {
-
-      // metadata and miscellaneous information
-      id::ReactionID id = std::to_string( mt );
 
       // cross section
       auto section = material.section( 23, mt ).parse< 23 >();
@@ -160,10 +157,12 @@ namespace endf {
       else if ( endf::ReactionInformation::isSummation( material, mt ) ) {
 
         // partials
-        std::vector< int > endf_partials = ReactionInformation::partials( material, 23, mt );
+        std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 23, mt );
         std::vector< id::ReactionID > partials( endf_partials.size() );
         std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                        [] ( auto&& value ) { return std::to_string( value ); } );
+                        [&projectile, &target]
+                           ( auto&& type )
+                           { return id::ReactionID( projectile, target, type ); } );
 
         // return the reaction data
         return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );

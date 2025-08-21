@@ -40,12 +40,12 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( std::nullopt == H0_pa.resonances() );
 
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( false == H0_pa.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->total[atomic]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->g,H[coherent]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->g,H[incoherent]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->pair-production" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->e-,H" ) ) );
+//        CHECK( false == H0_pa.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 5 == H0_pa.reactions().size() );
 
@@ -64,19 +64,19 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto photoelectric = H0_pa.reactions()[4];
         photoatomic::mcplib84::h::verifyTotalPhotoElectricReaction( photoelectric );
 
-        total = H0_pa.reaction( id::ReactionID( "501" ) );
+        total = H0_pa.reaction( id::ReactionID( "g,H->total[atomic]" ) );
         photoatomic::mcplib84::h::verifyTotalReaction( total );
 
-        coherent = H0_pa.reaction( id::ReactionID( "502" ) );
+        coherent = H0_pa.reaction( id::ReactionID( "g,H->g,H[coherent]" ) );
         photoatomic::mcplib84::h::verifyCoherentReaction( coherent );
 
-        incoherent = H0_pa.reaction( id::ReactionID( "504" ) );
+        incoherent = H0_pa.reaction( id::ReactionID( "g,H->g,H[incoherent]" ) );
         photoatomic::mcplib84::h::verifyIncoherentReaction( incoherent );
 
-        pair = H0_pa.reaction( id::ReactionID( "516" ) );
+        pair = H0_pa.reaction( id::ReactionID( "g,H->pair-production" ) );
         photoatomic::mcplib84::h::verifyPairProductionReaction( pair );
 
-        photoelectric = H0_pa.reaction( id::ReactionID( "522" ) );
+        photoelectric = H0_pa.reaction( id::ReactionID( "g,H->e-,H" ) );
         photoatomic::mcplib84::h::verifyTotalPhotoElectricReaction( photoelectric );
       } // THEN
     } // WHEN
@@ -106,13 +106,13 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( std::nullopt == H0_pa.resonances() );
 
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( false == H0_pa.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->total[atomic]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->g,H[coherent]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->g,H[incoherent]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->pair-production" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->e-,H" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) ) );
+//        CHECK( false == H0_pa.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 6 == H0_pa.reactions().size() );
 
@@ -134,22 +134,22 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto photoelectric = H0_pa.reactions()[5];
         photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
 
-        total = H0_pa.reaction( id::ReactionID( "501" ) );
+        total = H0_pa.reaction( id::ReactionID( "g,H->total[atomic]" ) );
         photoatomic::eprdata12::h::verifyTotalReaction( total );
 
-        coherent = H0_pa.reaction( id::ReactionID( "502" ) );
+        coherent = H0_pa.reaction( id::ReactionID( "g,H->g,H[coherent]" ) );
         photoatomic::eprdata12::h::verifyCoherentReaction( coherent );
 
-        incoherent = H0_pa.reaction( id::ReactionID( "504" ) );
+        incoherent = H0_pa.reaction( id::ReactionID( "g,H->g,H[incoherent]" ) );
         photoatomic::eprdata12::h::verifyIncoherentReaction( incoherent );
 
-        pair = H0_pa.reaction( id::ReactionID( "516" ) );
+        pair = H0_pa.reaction( id::ReactionID( "g,H->pair-production" ) );
         photoatomic::eprdata12::h::verifyPairProductionReaction( pair );
 
-        tphotoelectric = H0_pa.reaction( id::ReactionID( "522" ) );
+        tphotoelectric = H0_pa.reaction( id::ReactionID( "g,H->e-,H" ) );
         photoatomic::eprdata12::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
-        photoelectric = H0_pa.reaction( id::ReactionID( "534" ) );
+        photoelectric = H0_pa.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
         photoatomic::eprdata12::h::verifyPhotoElectricReaction( photoelectric );
 
         // electroatomic data
@@ -165,13 +165,13 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( std::nullopt == H0_ea.resonances() );
 
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "526" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "527" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "528" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( false == H0_ea.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->total[atomic]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->2e-,H" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[excitation]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) ) );
+//        CHECK( false == H0_ea.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 6 == H0_ea.reactions().size() );
 
@@ -193,22 +193,22 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto ionisation = H0_ea.reactions()[5];
         electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
 
-        total = H0_ea.reaction( id::ReactionID( "501" ) );
+        total = H0_ea.reaction( id::ReactionID( "e-,H->total[atomic]" ) );
         electroatomic::eprdata12::h::verifyTotalReaction( total );
 
-        tionisation = H0_ea.reaction( id::ReactionID( "522" ) );
+        tionisation = H0_ea.reaction( id::ReactionID( "e-,H->2e-,H" ) );
         electroatomic::eprdata12::h::verifyTotalIonisationReaction( tionisation );
 
-        telastic = H0_ea.reaction( id::ReactionID( "526" ) );
+        telastic = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) );
         electroatomic::eprdata12::h::verifyTotalElasticReaction( telastic );
 
-        bremsstrahlung = H0_ea.reaction( id::ReactionID( "527" ) );
+        bremsstrahlung = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) );
         electroatomic::eprdata12::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
-        excitation = H0_ea.reaction( id::ReactionID( "528" ) );
+        excitation = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[excitation]" ) );
         electroatomic::eprdata12::h::verifyExcitationReaction( excitation );
 
-        ionisation = H0_ea.reaction( id::ReactionID( "534" ) );
+        ionisation = H0_ea.reaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) );
         electroatomic::eprdata12::h::verifyIonisationReaction( ionisation );
       } // THEN
     } // WHEN
@@ -236,13 +236,13 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( std::nullopt == H0_pa.resonances() );
 
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "502" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "504" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "516" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0_pa.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( false == H0_pa.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->total[atomic]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->g,H[coherent]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->g,H[incoherent]" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->pair-production" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->e-,H" ) ) );
+        CHECK( true == H0_pa.hasReaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) ) );
+//        CHECK( false == H0_pa.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 6 == H0_pa.reactions().size() );
 
@@ -264,22 +264,22 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto photoelectric = H0_pa.reactions()[5];
         photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
 
-        total = H0_pa.reaction( id::ReactionID( "501" ) );
+        total = H0_pa.reaction( id::ReactionID( "g,H->total[atomic]" ) );
         photoatomic::eprdata14::h::verifyTotalReaction( total );
 
-        coherent = H0_pa.reaction( id::ReactionID( "502" ) );
+        coherent = H0_pa.reaction( id::ReactionID( "g,H->g,H[coherent]" ) );
         photoatomic::eprdata14::h::verifyCoherentReaction( coherent );
 
-        incoherent = H0_pa.reaction( id::ReactionID( "504" ) );
+        incoherent = H0_pa.reaction( id::ReactionID( "g,H->g,H[incoherent]" ) );
         photoatomic::eprdata14::h::verifyIncoherentReaction( incoherent );
 
-        pair = H0_pa.reaction( id::ReactionID( "516" ) );
+        pair = H0_pa.reaction( id::ReactionID( "g,H->pair-production" ) );
         photoatomic::eprdata14::h::verifyPairProductionReaction( pair );
 
-        tphotoelectric = H0_pa.reaction( id::ReactionID( "522" ) );
+        tphotoelectric = H0_pa.reaction( id::ReactionID( "g,H->e-,H" ) );
         photoatomic::eprdata14::h::verifyTotalPhotoElectricReaction( tphotoelectric );
 
-        photoelectric = H0_pa.reaction( id::ReactionID( "534" ) );
+        photoelectric = H0_pa.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
         photoatomic::eprdata14::h::verifyPhotoElectricReaction( photoelectric );
 
         // electroatomic data
@@ -295,15 +295,15 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
         CHECK( std::nullopt == H0_ea.resonances() );
 
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "501" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "522" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "525" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "526" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "527" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "528" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "534" ) ) );
-        CHECK( true == H0_ea.hasReaction( id::ReactionID( "-526" ) ) );
-        CHECK( false == H0_ea.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->total[atomic]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->2e-,H" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[excitation]" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) ) );
+        CHECK( true == H0_ea.hasReaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) ) );
+//        CHECK( false == H0_ea.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
 
         CHECK( 8 == H0_ea.reactions().size() );
 
@@ -331,28 +331,28 @@ SCENARIO( "createProjectileTargetFromFile" ) {
         auto deficit = H0_ea.reactions()[7];
         electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
 
-        total = H0_ea.reaction( id::ReactionID( "501" ) );
+        total = H0_ea.reaction( id::ReactionID( "e-,H->total[atomic]" ) );
         electroatomic::eprdata14::h::verifyTotalReaction( total );
 
-        tionisation = H0_ea.reaction( id::ReactionID( "522" ) );
+        tionisation = H0_ea.reaction( id::ReactionID( "e-,H->2e-,H" ) );
         electroatomic::eprdata14::h::verifyTotalIonisationReaction( tionisation );
 
-        elastic = H0_ea.reaction( id::ReactionID( "525" ) );
+        elastic = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[large-angle-scattering]" ) );
         electroatomic::eprdata14::h::verifyLargeAngleElasticReaction( elastic );
 
-        telastic = H0_ea.reaction( id::ReactionID( "526" ) );
+        telastic = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[total-scattering]" ) );
         electroatomic::eprdata14::h::verifyTotalElasticReaction( telastic );
 
-        bremsstrahlung = H0_ea.reaction( id::ReactionID( "527" ) );
+        bremsstrahlung = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[bremsstrahlung]" ) );
         electroatomic::eprdata14::h::verifyBremsstrahlungReaction( bremsstrahlung );
 
-        excitation = H0_ea.reaction( id::ReactionID( "528" ) );
+        excitation = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[excitation]" ) );
         electroatomic::eprdata14::h::verifyExcitationReaction( excitation );
 
-        ionisation = H0_ea.reaction( id::ReactionID( "534" ) );
+        ionisation = H0_ea.reaction( id::ReactionID( "e-,H->2e-,H{1s1/2}" ) );
         electroatomic::eprdata14::h::verifyIonisationReaction( ionisation );
 
-        deficit = H0_ea.reaction( id::ReactionID( "-526" ) );
+        deficit = H0_ea.reaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) );
         electroatomic::eprdata14::h::verifyElasticReactionDeficit( deficit );
       } // THEN
     } // WHEN

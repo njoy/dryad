@@ -19,13 +19,17 @@ namespace photoatomic {
 
   /**
    *  @brief Create a ProjectileTarget for photoatomic data
+   *
+   *  @param[in] table   the ace table
    */
   ProjectileTarget createProjectileTarget( const ACEtk::PhotoatomicTable& table ) {
 
-    return ProjectileTarget( id::ParticleID( "g" ),
-                             createTargetIdentifier( table.ZAID() ),
+    auto projectile = id::ParticleID::photon();
+    auto target = createTargetIdentifier( table.ZAID() );
+    return ProjectileTarget( projectile,
+                             target,
                              InteractionType::Atomic,
-                             createReactions( table ) );
+                             createReactions( projectile, target, table ) );
   }
 
 } // electroatomic namespace

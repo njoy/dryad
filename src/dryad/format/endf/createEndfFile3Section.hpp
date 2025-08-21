@@ -26,7 +26,11 @@ namespace endf {
                           double awr,
                           const dryad::Reaction& reaction ) {
 
-    int mt = std::stoi( reaction.identifier() );
+    int mt = reaction.identifier().reactionType().mt().value();
+    if ( reaction.identifier().projectile() == id::ParticleID::neutron() && mt == 50 ) {
+
+      mt = 2;
+    }
     double qm = reaction.massDifferenceQValue().has_value()
                 ? reaction.massDifferenceQValue().value()
                 : 0;

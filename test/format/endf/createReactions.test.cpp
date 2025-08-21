@@ -126,7 +126,7 @@ SCENARIO( "createReactions" ) {
       THEN( "all reactions can be created" ) {
 
         id::ParticleID projectile( "e-" );
-        id::ParticleID target( "H0" );
+        id::ParticleID target( "H" );
         std::vector< Reaction > reactions1 = format::endf::createReactions( projectile, target, material, false );
         std::vector< Reaction > reactions2 = format::endf::createReactions( projectile, target, material, true );
 
@@ -179,7 +179,7 @@ SCENARIO( "createReactions" ) {
       THEN( "all reactions can be created" ) {
 
         id::ParticleID projectile( "g" );
-        id::ParticleID target( "H0" );
+        id::ParticleID target( "H" );
         std::vector< Reaction > reactions1 = format::endf::createReactions( projectile, target, material, false );
         std::vector< Reaction > reactions2 = format::endf::createReactions( projectile, target, material, true );
 

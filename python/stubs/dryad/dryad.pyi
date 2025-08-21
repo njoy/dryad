@@ -940,7 +940,7 @@ class ProjectileTarget:
             self        the ProjectileTarget data
             tolerance   the linearisation tolerance
         """
-    def has_reaction(self, id: str) -> bool:
+    def has_reaction(self, id: id.ReactionID) -> bool:
         """
         Return whether or not a reaction is present
         
@@ -952,7 +952,7 @@ class ProjectileTarget:
         """
         Normalise the distribution data
         """
-    def reaction(self, id: str) -> Reaction:
+    def reaction(self, id: id.ReactionID) -> Reaction:
         """
         Return the requested reaction
         
@@ -1030,7 +1030,7 @@ class Reaction:
     def __eq__(self, arg0: Reaction) -> bool:
         ...
     @typing.overload
-    def __init__(self, id: str, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None, normalise: bool = False) -> None:
+    def __init__(self, id: id.ReactionID, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None, normalise: bool = False) -> None:
         """
         Initialise a primary reaction
         
@@ -1045,7 +1045,7 @@ class Reaction:
                          all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, id: str, partials: list[str], xs: TabulatedCrossSection, products: list[ReactionProduct] = [], normalise: bool = False) -> None:
+    def __init__(self, id: id.ReactionID, partials: list[id.ReactionID], xs: TabulatedCrossSection, products: list[ReactionProduct] = [], normalise: bool = False) -> None:
         """
         Initialise a summation reaction
         
@@ -1115,12 +1115,12 @@ class Reaction:
         Flag indicating whether or not there are reaction products defined
         """
     @property
-    def identifier(self) -> str:
+    def identifier(self) -> id.ReactionID:
         """
         The reaction identifier
         """
     @identifier.setter
-    def identifier(self, arg1: str) -> None:
+    def identifier(self, arg1: id.ReactionID) -> None:
         ...
     @property
     def is_primary_reaction(self) -> bool:
@@ -1146,13 +1146,13 @@ class Reaction:
         The number of partial reactions that make up this reaction
         """
     @property
-    def partial_reaction_identifiers(self) -> list[str] | None:
+    def partial_reaction_identifiers(self) -> list[id.ReactionID] | None:
         """
         The summation reaction identifiers (not defined if this is a primary
         reaction)
         """
     @partial_reaction_identifiers.setter
-    def partial_reaction_identifiers(self, arg1: list[str] | None) -> None:
+    def partial_reaction_identifiers(self, arg1: list[id.ReactionID] | None) -> None:
         ...
     @property
     def products(self) -> list[ReactionProduct]:

@@ -20,6 +20,8 @@ namespace electroatomic {
 
   /**
    *  @brief Create reaction products for electroatomic data
+   *
+   *  @param[in] table   the ace table
    */
   std::vector< std::vector< ReactionProduct > >
   createReactionProducts( const ACEtk::PhotoatomicTable& table ) {

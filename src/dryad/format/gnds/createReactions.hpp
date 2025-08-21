@@ -74,30 +74,41 @@ namespace gnds {
      for ( pugi::xml_node reaction = incomplete.child( "reaction" );
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
-        Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
-        reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise ) );
+        int mt = reaction.attribute( "ENDF_MT" ).as_int();
+        if ( ( mt < 203 ) || ( mt > 207 ) ) {
+
+          Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
+          reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise ) );
+        }
+        else {
+
+          //! @todo read production cross sections
+        }
       }
     }
 
     // sort by MT
     std::sort( reactions.begin(), reactions.end(),
                [] ( auto&& left, auto&&right )
-                  { return std::stoi( left.identifier() ) <
-                           std::stoi( right.identifier() ); } );
+                  { return left.identifier().reactionType().mt()
+                           < right.identifier().reactionType().mt(); } );
 
     // calculate deficit reaction for elastic scattering in electro-atomic data
-    if ( projectile == id::ParticleID( "e-" ) ) {
+    if ( projectile == id::ParticleID::electron() ) {
 
-      auto total = std::find_if( reactions.begin(), reactions.end(),
-                                 [] ( const auto& reaction )
-                                    { return reaction.identifier() == id::ReactionID( "526" ); } );
-      auto partial = std::find_if( reactions.begin(), reactions.end(),
+        auto total = std::find_if( reactions.begin(), reactions.end(),
                                    [] ( const auto& reaction )
-                                      { return reaction.identifier() == id::ReactionID( "525" ); } );
+                                      { return reaction.identifier().reactionType()
+                                               == id::ReactionType( "total-scattering" ); } );
+        auto partial = std::find_if( reactions.begin(), reactions.end(),
+                                     [] ( const auto& reaction )
+                                        { return reaction.identifier().reactionType()
+                                                 == id::ReactionType( "large-angle-scattering" ); } );
       TabulatedCrossSection deficit = total->crossSection().linearise();
       deficit -= partial->crossSection().linearise();
 
-      reactions.emplace_back( Reaction( "-526", deficit, {}, std::nullopt, 0. ) );
+      reactions.emplace_back( Reaction( id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
+                                        deficit, {}, std::nullopt, 0. ) );
     }
 
     return reactions;

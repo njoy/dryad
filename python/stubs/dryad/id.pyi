@@ -4,7 +4,7 @@ Identifiers for particles, elements, etc.
 from __future__ import annotations
 import dryad
 import typing
-__all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID', 'ReactionType']
+__all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
 class ElectronSubshellID:
     """
     The electron subshell identifier
@@ -365,6 +365,82 @@ class ParticleID:
         """
         The particle's za number
         """
+class ReactionID:
+    """
+    The reaction identifier
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: ReactionID) -> bool:
+        ...
+    def __ge__(self, arg0: ReactionID) -> bool:
+        ...
+    def __gt__(self, arg0: ReactionID) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, projectile: ParticleID, target: ParticleID, type: ReactionType) -> None:
+        """
+        Initialise the reaction identifier
+        
+        Arguments:
+            self         the reaction identifier
+            projectile   the projectile
+            target       the target
+            type         the reaction type
+        """
+    @typing.overload
+    def __init__(self, symbol: str) -> None:
+        """
+        Initialise the reaction identifier
+        
+        Arguments:
+            self     the reaction identifier
+            symbol   the reaction symbol
+        """
+    def __le__(self, arg0: ReactionID) -> bool:
+        ...
+    def __lt__(self, arg0: ReactionID) -> bool:
+        ...
+    def __ne__(self, arg0: ReactionID) -> bool:
+        ...
+    def __str__(self) -> str:
+        """
+        Convenience function for printing the identifier
+        """
+    @property
+    def interaction_type(self) -> dryad.InteractionType:
+        """
+        The interaction type (nuclear or atomic) associated to the reaction
+        """
+    @property
+    def particles(self) -> dict[ParticleID, int] | None:
+        """
+        The outgoing particles (excluding the residual)
+        """
+    @property
+    def projectile(self) -> ParticleID:
+        """
+        The projectile
+        """
+    @property
+    def reaction_type(self) -> ReactionType:
+        """
+        The reaction type associated to the reaction
+        """
+    @property
+    def residual(self) -> ParticleID | None:
+        """
+        The residual
+        """
+    @property
+    def symbol(self) -> str:
+        """
+        The reaction identifier's symbol
+        """
+    @property
+    def target(self) -> ParticleID:
+        """
+        The target
+        """
 class ReactionType:
     """
     The reaction type
@@ -419,6 +495,16 @@ class ReactionType:
             self         the reaction type
             projectile   the projectile
             mt           the mt number
+        """
+    @typing.overload
+    def __init__(self, particles: dict[ParticleID, int], level: int) -> None:
+        """
+        Initialise the reaction type
+        
+        Arguments:
+            self        the reaction type
+            particles   the outgoing particles (excluding the residual)
+            level       the level number of the residual
         """
     @typing.overload
     def __init__(self, string: str) -> None:
@@ -478,7 +564,7 @@ class ReactionType:
         The interaction type's mt number
         """
     @property
-    def particles(self) -> list[tuple[ParticleID, int]] | None:
+    def particles(self) -> dict[ParticleID, int] | None:
         """
         The reaction type's outgoing particles
         """

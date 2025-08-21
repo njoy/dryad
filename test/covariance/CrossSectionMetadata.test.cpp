@@ -14,13 +14,17 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CrossSectionMetadata" ) {
 
+  //! @todo remove when we can parse string identifiers
+  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
+                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
+
   GIVEN( "valid data for a CrossSectionMetadata" ) {
 
     WHEN( "the data is given explicitly" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "2" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
 
       CrossSectionMetadata chunk( std::move( projectile ),
@@ -32,7 +36,7 @@ SCENARIO( "CrossSectionMetadata" ) {
 
         CHECK( id::ParticleID( "n" ) == chunk.projectileIdentifier() );
         CHECK( id::ParticleID( "U235" ) == chunk.targetIdentifier() );
-        CHECK( id::ReactionID( "2" ) == chunk.reactionIdentifier() );
+        CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.reactionIdentifier() );
 
         CHECK( 4 == chunk.energies().size() );
         CHECK( 3 == chunk.numberGroups() );
@@ -50,7 +54,7 @@ SCENARIO( "CrossSectionMetadata" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "2" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > wrong = { 1e-5 };
 
       THEN( "an exception is thrown" ) {
@@ -66,7 +70,7 @@ SCENARIO( "CrossSectionMetadata" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "2" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > wrong = { 2e+7, 1e+6, 1., 1e-5 };
 
       THEN( "an exception is thrown" ) {
@@ -82,7 +86,7 @@ SCENARIO( "CrossSectionMetadata" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "U235" );
-      id::ReactionID reaction( "2" );
+      id::ReactionID reaction( "n,U235->n,U235" );
       std::vector< double > wrong = { 1e-5, 1., 1., 2e+7 };
 
       THEN( "an exception is thrown" ) {

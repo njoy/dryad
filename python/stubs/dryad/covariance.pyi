@@ -35,7 +35,7 @@ class CrossSectionCovarianceBlock:
             relative           the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: str, energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
+    def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: dryad.id.ReactionID, energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
         """
         Initialise a diagonal cross section covariance block
         
@@ -50,7 +50,7 @@ class CrossSectionCovarianceBlock:
             scaling       the variance scaling information (default is none)
         """
     @typing.overload
-    def __init__(self, row_projectile: dryad.id.ParticleID, row_target: dryad.id.ParticleID, row_reaction: str, row_energies: list[float], column_projectile: dryad.id.ParticleID, column_target: dryad.id.ParticleID, column_reaction: str, column_energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, row_projectile: dryad.id.ParticleID, row_target: dryad.id.ParticleID, row_reaction: dryad.id.ReactionID, row_energies: list[float], column_projectile: dryad.id.ParticleID, column_target: dryad.id.ParticleID, column_reaction: dryad.id.ReactionID, column_energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an off-diagonal cross section covariance block
         
@@ -173,7 +173,7 @@ class CrossSectionMetadata:
     """
     Metadata for the rows or columns of a covariance matrix block for cross section data
     """
-    def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: str, energies: list[float]) -> None:
+    def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: dryad.id.ReactionID, energies: list[float]) -> None:
         """
         Initialise the meta data
         
@@ -200,7 +200,7 @@ class CrossSectionMetadata:
         The projectile identifier
         """
     @property
-    def reaction_identifier(self) -> str:
+    def reaction_identifier(self) -> dryad.id.ReactionID:
         """
         The reaction identifier
         """
@@ -213,7 +213,7 @@ class LinearCombinationCovariance:
     """
     Covariance data for a reaction defined as a linear combination of other reactions' covariance data
     """
-    def __init__(self, lower: float, upper: float, reactions: list[str], coefficients: list[float]) -> None:
+    def __init__(self, lower: float, upper: float, reactions: list[dryad.id.ReactionID], coefficients: list[float]) -> None:
         """
         Initialise the derived covariance
         
@@ -240,7 +240,7 @@ class LinearCombinationCovariance:
         The number of reactions
         """
     @property
-    def reactions(self) -> list[str]:
+    def reactions(self) -> list[dryad.id.ReactionID]:
         """
         The reactions in the linear combination
         """

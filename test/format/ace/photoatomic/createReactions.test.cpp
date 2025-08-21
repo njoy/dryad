@@ -22,11 +22,13 @@ SCENARIO( "createReactions" ) {
 
     WHEN( "an mcplib84 formatted table is given" ) {
 
+      auto g = id::ParticleID::photon();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::photoatomic::createReactions( table );
+        auto reactions = format::ace::photoatomic::createReactions( g, H, table );
 
         CHECK( 5 == reactions.size() );
 
@@ -49,11 +51,13 @@ SCENARIO( "createReactions" ) {
 
     WHEN( "an eprdata12 formatted table is given" ) {
 
+      auto g = id::ParticleID::photon();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::photoatomic::createReactions( table );
+        auto reactions = format::ace::photoatomic::createReactions( g, H, table );
 
         CHECK( 6 == reactions.size() );
 
@@ -79,11 +83,13 @@ SCENARIO( "createReactions" ) {
 
     WHEN( "an eprdata14 formatted table is given" ) {
 
+      auto g = id::ParticleID::photon();
+      auto H = id::ParticleID( "H" );
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::photoatomic::createReactions( table );
+        auto reactions = format::ace::photoatomic::createReactions( g, H, table );
 
         CHECK( 6 == reactions.size() );
 

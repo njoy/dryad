@@ -6,6 +6,7 @@
 #include <optional>
 #include <string>
 #include <numeric>
+#include <map>
 #include <unordered_map>
 #include <vector>
 
@@ -52,6 +53,26 @@ namespace id {
       Entry{         38,  38, InteractionType::Nuclear, "fission[fourth]", { "fission4" } },
       Entry{         27,  27, InteractionType::Nuclear, "absorption"     , {} },
       Entry{        101, 101, InteractionType::Nuclear, "disappearance"  , {} },
+      Entry{        851, 851, InteractionType::Nuclear, "lumped1"        , {} },
+      Entry{        852, 852, InteractionType::Nuclear, "lumped2"        , {} },
+      Entry{        853, 853, InteractionType::Nuclear, "lumped3"        , {} },
+      Entry{        854, 854, InteractionType::Nuclear, "lumped4"        , {} },
+      Entry{        855, 855, InteractionType::Nuclear, "lumped5"        , {} },
+      Entry{        856, 856, InteractionType::Nuclear, "lumped6"        , {} },
+      Entry{        857, 857, InteractionType::Nuclear, "lumped7"        , {} },
+      Entry{        858, 858, InteractionType::Nuclear, "lumped8"        , {} },
+      Entry{        859, 859, InteractionType::Nuclear, "lumped9"        , {} },
+      Entry{        860, 860, InteractionType::Nuclear, "lumped10"       , {} },
+      Entry{        861, 861, InteractionType::Nuclear, "lumped11"       , {} },
+      Entry{        862, 862, InteractionType::Nuclear, "lumped12"       , {} },
+      Entry{        863, 863, InteractionType::Nuclear, "lumped13"       , {} },
+      Entry{        864, 864, InteractionType::Nuclear, "lumped14"       , {} },
+      Entry{        865, 865, InteractionType::Nuclear, "lumped15"       , {} },
+      Entry{        866, 866, InteractionType::Nuclear, "lumped16"       , {} },
+      Entry{        867, 867, InteractionType::Nuclear, "lumped17"       , {} },
+      Entry{        868, 868, InteractionType::Nuclear, "lumped18"       , {} },
+      Entry{        869, 869, InteractionType::Nuclear, "lumped19"       , {} },
+      Entry{        870, 870, InteractionType::Nuclear, "lumped20"       , {} },
 
       // normal reactions: reactions with ejectiles (not counting photons and residual)
       // all these must have a final excited state set for the residual
@@ -560,8 +581,8 @@ namespace id {
       // check for what to do with 523 - is it used in evaluations?
       Entry{        502, 502, InteractionType::Atomic , "g[coherent]"    , { "coherent", "coherent-scattering" }, {} },
       Entry{        504, 504, InteractionType::Atomic , "g[incoherent]"  , { "incoherent", "incoherent-scattering" }, {} },
-      Entry{       1515, 515, InteractionType::Atomic , "2e-e+"          , { "2e-e+[electron]", "pair-production[electron]" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
-      Entry{       1517, 517, InteractionType::Atomic , "e-e+"           , { "e-e+[nuclear]", "pair-production[nuclear]" }   , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
+      Entry{       1515, 515, InteractionType::Atomic , "2e-e+[electron]", { "pair-production-electron", "2e-e+" }, { { ParticleID::electron(), 2 }, { ParticleID::positron(), 1 } } },
+      Entry{       1517, 517, InteractionType::Atomic , "e-e+[nuclear]"  , { "pair-production-nuclear", "e-e+" }  , { { ParticleID::electron(), 1 }, { ParticleID::positron(), 1 } } },
       Entry{       1518, 516, InteractionType::Atomic , "pair-production", {} },
 
       // electroatomic only
@@ -627,7 +648,7 @@ namespace id {
       Entry{       1580,      InteractionType::Atomic , "photo-ionisation{7h11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q11 },
       Entry{       1581,      InteractionType::Atomic , "photo-ionisation{7i11/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q12 },
       Entry{       1582,      InteractionType::Atomic , "photo-ionisation{7i13/2}"   , {}, { { ParticleID::electron(), 1 } }, ElectronSubshellID::Q13 },
-      Entry{       1583, 522, InteractionType::Atomic , "photo-ionisation"           , { "photo-ionisation{t}" }, { { ParticleID::electron(), 1 } } },
+      Entry{       1583, 522, InteractionType::Atomic , "photo-ionisation"           , {}, { { ParticleID::electron(), 1 } } },
       Entry{       2534, 534, InteractionType::Atomic , "electro-ionisation{1s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::K  },
       Entry{       2535, 535, InteractionType::Atomic , "electro-ionisation{2s1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L1  },
       Entry{       2536, 536, InteractionType::Atomic , "electro-ionisation{2p1/2}"  , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::L2  },
@@ -677,7 +698,7 @@ namespace id {
       Entry{       2580,      InteractionType::Atomic , "electro-ionisation{7h11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q11 },
       Entry{       2581,      InteractionType::Atomic , "electro-ionisation{7i11/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q12 },
       Entry{       2582,      InteractionType::Atomic , "electro-ionisation{7i13/2}" , {}, { { ParticleID::electron(), 2 } }, ElectronSubshellID::Q13 },
-      Entry{       2583, 522, InteractionType::Atomic , "electro-ionisation"         , { "electro-ionisation{t}" }, { { ParticleID::electron(), 2 } } }
+      Entry{       2583, 522, InteractionType::Atomic , "electro-ionisation"         , {}, { { ParticleID::electron(), 2 } } }
     };
     static inline std::unordered_map< std::string, std::size_t >
     string_conversion_dictionary = [] ( const auto& entries ) {
@@ -693,10 +714,24 @@ namespace id {
       }
       return conversion;
     }( entries );
-    static inline std::unordered_map< int, std::size_t >
+    static inline std::unordered_map< std::int64_t, std::size_t >
+    particles_conversion_dictionary = [] ( const auto& entries ) {
+
+      std::unordered_map< std::int64_t, std::size_t > conversion;
+      for ( std::size_t index = 0; index < entries.size(); ++index ) {
+
+        auto number = entries[index].number();
+        if ( number >= 1000  ) {
+
+          conversion[ number ] = index;
+        }
+      }
+      return conversion;
+    }( entries );
+    static inline std::unordered_map< short, std::size_t >
     mt_conversion_dictionary = [] ( const auto& entries ) {
 
-      std::unordered_map< int, std::size_t > conversion;
+      std::unordered_map< short, std::size_t > conversion;
       for ( std::size_t index = 0; index < entries.size(); ++index ) {
 
         auto mt = entries[ index ].mt();
@@ -735,7 +770,7 @@ namespace id {
       }
       else {
 
-        return ReactionType( static_cast< std::size_t >( 513 ) );
+        return ReactionType( static_cast< std::size_t >( 533 ) );
       }
     };
 
@@ -744,31 +779,31 @@ namespace id {
 
       if ( projectile == ParticleID::neutron() ) {
 
-        return ReactionType( static_cast< std::size_t >( 111 ) );
+        return ReactionType( static_cast< std::size_t >( 131 ) );
       }
       else if ( projectile == ParticleID::photon() ) {
 
-        return ReactionType( static_cast< std::size_t >( 10 ) );
+        return ReactionType( static_cast< std::size_t >( 30 ) );
       }
       else if ( projectile == ParticleID::proton() ) {
 
-        return ReactionType( static_cast< std::size_t >( 178 ) );
+        return ReactionType( static_cast< std::size_t >( 198 ) );
       }
       else if ( projectile == ParticleID::deuteron() ) {
 
-        return ReactionType( static_cast< std::size_t >( 244 ) );
+        return ReactionType( static_cast< std::size_t >( 264 ) );
       }
       else if ( projectile == ParticleID::triton() ) {
 
-        return ReactionType( static_cast< std::size_t >( 302 ) );
+        return ReactionType( static_cast< std::size_t >( 322 ) );
       }
       else if ( projectile == ParticleID::helion() ) {
 
-        return ReactionType( static_cast< std::size_t >( 363 ) );
+        return ReactionType( static_cast< std::size_t >( 383 ) );
       }
       else if ( projectile == ParticleID::alpha() ) {
 
-        return ReactionType( static_cast< std::size_t >( 423 ) );
+        return ReactionType( static_cast< std::size_t >( 443 ) );
       }
       else {
 
@@ -789,6 +824,11 @@ namespace id {
 
     /**
      *  @brief Return whether or not the mt number corresponds to a registered reaction type
+     *
+     *  This function does not recognise any of the ionisation mt numbers
+     *  (522 for total ionisation and 534 through 572 for subshell ionisation)
+     *  because electro- and photoinionisation cannot be distinguished by the
+     *  mt number alone.
      *
      *  @param[in] mt   the mt number
      */
@@ -847,7 +887,7 @@ namespace id {
     /**
      *  @brief Return the particles emitted for this reaction type
      */
-    const std::optional< std::vector< std::pair< ParticleID, short > > >& particles() const {
+    const std::optional< std::map< ParticleID, short > >& particles() const {
 
       return entries[ this->index_ ].particles();
     }
@@ -861,6 +901,19 @@ namespace id {
     }
 
     /**
+     *  @brief Return the partial designator for this reaction type
+     *
+     *  A partial designator is used for some atomic interactions when the
+     *  reaction type cannot be completely characterised with outgoing particles
+     *  only. For example: both coherent and incoherent scattering have an outgoing
+     *  photon.
+     */
+    const std::optional< std::string >& partialDesignator() const noexcept {
+
+      return entries[ this->index_ ].partialDesignator();
+    }
+
+    /**
      *  @brief Return whether or not the reaction type is considered a special type
      *
      *  A special type is a reaction type for which no outgoing particles types can be
@@ -869,7 +922,20 @@ namespace id {
      */
     bool isSpecial() const {
 
-      return !entries[ this->index_ ].particles().has_value();
+      return !this->particles().has_value();
+    }
+
+    /**
+     *  @brief Return whether or not the reaction type has a partial designator
+     *
+     *  A partial designator is used for some atomic interactions when the
+     *  reaction type cannot be completely characterised with outgoing particles
+     *  only. For example: both coherent and incoherent scattering have an outgoing
+     *  photon.
+     */
+    bool hasPartialDesignator() const noexcept {
+
+      return this->partialDesignator().has_value();
     }
 
     /**

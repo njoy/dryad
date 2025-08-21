@@ -210,7 +210,7 @@ namespace dryad {
       }
       else {
 
-        Log::error( "The requested reaction \'{}\' could not be found", id );
+        Log::error( "The requested reaction \'{}\' could not be found", id.symbol() );
         throw std::exception();
       }
     }

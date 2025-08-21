@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/id/ReactionID.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -15,27 +16,33 @@ namespace ace {
 namespace photoatomic {
 
   /**
-   *  @brief Create partial reaction numbers for photoatomic data
+   *  @brief Create partial reaction identifiers for photoatomic data
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] table        the ace table
    */
-  std::vector< std::vector< int > >
-  createPartialReactionNumbers( const ACEtk::PhotoatomicTable& table ) {
+  std::vector< std::vector< id::ReactionID > >
+  createPartialReactionIdentifiers( const id::ParticleID& projectile,
+                                    const id::ParticleID& target,
+                                    const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< std::vector< int > > partials;
+    std::vector< std::vector< id::ReactionID > > partials;
 
     // total - MT501
     partials.push_back( {} );
 
     // coherent scattering - MT502
     partials.push_back( {} );
-    partials.front().push_back( 502 );
+    partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 502 ) );
 
     // incoherent scattering - MT504
     partials.push_back( {} );
-    partials.front().push_back( 504 );
+    partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 504 ) );
 
     // pair production - MT516 (sum of MT515 and MT517)
     partials.push_back( {} );
-    partials.front().push_back( 516 );
+    partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 516 ) );
 
     // photoelectric - MT522 (sum of MT534 and up)
     partials.push_back( {} );
@@ -46,13 +53,13 @@ namespace photoatomic {
 
         // partial: subshell photoelectric - MT534 and up
         partials.push_back( {} );
-        partials.front().push_back( 534 + index - 1 );
-        partials[sum].push_back( 534 + index - 1 );
+        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
+        partials[sum].emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
       }
     }
     else {
 
-      partials.front().push_back( 522 );
+      partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 522 ) );
     }
 
     return partials;

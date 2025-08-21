@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/id/ReactionID.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -15,12 +16,19 @@ namespace ace {
 namespace electroatomic {
 
   /**
-   *  @brief Create partial reaction numbers for electroatomic data
+   *  @brief Create partial reaction identifiers for electroatomic data
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] table        the ace table
    */
-  std::vector< std::vector< int > >
-  createPartialReactionNumbers( const ACEtk::PhotoatomicTable& table ) {
+  std::vector< std::vector< id::ReactionID > >
+  createPartialReactionIdentifiers( const id::ParticleID& projectile,
+                                    const id::ParticleID& target,
+                                    const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< std::vector< int > > partials;
+    std::vector< std::vector< id::ReactionID > > partials;
+    auto e = id::ParticleID::electron();
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {
 
@@ -34,19 +42,19 @@ namespace electroatomic {
         for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
           // partial: subshell ionisation - MT534 and up
-          partials.back().push_back( 534 + index - 1 );
+          partials.back().emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
         }
       }
       else {
 
-        partials.front().push_back( 522 );
+        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 522 ) );
       }
 
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // large angle elastic - MT525
         partials.push_back( {} );
-        partials.front().push_back( 525 );
+        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 525 ) );
       }
 
       // total elastic - MT526
@@ -54,28 +62,28 @@ namespace electroatomic {
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // partial: large angle elastic - MT525
-        partials.back().push_back( 525 );
+        partials.back().emplace_back( projectile, target, id::ReactionType( projectile, 525 ) );
         // partial: elastic deficit
-        partials.back().push_back( -526 );
+        partials.back().emplace_back( projectile, target, id::ReactionType( "deficit-scattering" ) );
       }
       else {
 
-        partials.front().push_back( 526 );
+        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 526 ) );
       }
 
       // bremsstrahlung - MT527
       partials.push_back( {} );
-      partials.front().push_back( 527 );
+      partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 527 ) );
 
       // excitation - MT528
       partials.push_back( {} );
-      partials.front().push_back( 528 );
+      partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 528 ) );
 
       for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
         // subshell ionisation - MT534 and up
         partials.push_back( {} );
-        partials.front().push_back( 534 + index - 1 );
+        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
       }
 
       // eprdata14 and higher has large angle and total elastic -> add deficit elastic
@@ -83,7 +91,7 @@ namespace electroatomic {
 
         // elastic deficit
         partials.push_back( {} );
-        partials.front().push_back( -526 );
+        partials.front().emplace_back( projectile, target, id::ReactionType( "deficit-scattering" ) );
       }
     }
 

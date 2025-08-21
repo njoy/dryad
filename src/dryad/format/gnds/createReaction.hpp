@@ -30,7 +30,7 @@ namespace gnds {
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 
       // metadata and miscellaneous information
-      id::ReactionID id = reaction.attribute( "ENDF_MT" ).as_string();
+      id::ReactionID id( projectile, target, id::ReactionType( projectile, reaction.attribute( "ENDF_MT" ).as_int() ) );
 
       // cross section
       auto section = reaction.child( "crossSection" );
@@ -50,13 +50,14 @@ namespace gnds {
       }
 
       // special treatment for some incident electron data reactions
-      if ( projectile == id::ParticleID( "e-" ) ) {
+      if ( projectile == id::ParticleID::electron() ) {
 
-        if ( id == id::ReactionID( "526" ) ) {
+        if ( id.reactionType() == id::ReactionType( projectile, 526 ) ) {
 
           // GNDS classifies total elastic as a primary reaction
           // but we classify it as a summation with a deficit reaction
-          std::vector< id::ReactionID > partials = { "525", "-526" };
+          std::vector< id::ReactionID > partials = { id::ReactionID( projectile, target, id::ReactionType( projectile, 525 ) ),
+                                                     id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ) };
 
           // return the reaction data
           return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
@@ -71,7 +72,7 @@ namespace gnds {
     else if ( strcmp( reaction.name(), "crossSectionSum" ) == 0 ) {
 
       // metadata and miscellaneous information
-      id::ReactionID id = reaction.attribute( "ENDF_MT" ).as_string();
+      id::ReactionID id( projectile, target, id::ReactionType( projectile, reaction.attribute( "ENDF_MT" ).as_int() ) );
 
       // Q values
       auto qvalue = reaction.child( "Q" );
@@ -90,19 +91,20 @@ namespace gnds {
         auto start = href.find( '\'' ) + 1;
         auto end = href.find( '\'', start );
         href = href.substr( start, end - start );
-        href = suite.child( "reactions" ).find_child_by_attribute( "reaction", "label", href.c_str() ).attribute( "ENDF_MT" ).as_string();
-        partials.push_back( href );
+        int mt = suite.child( "reactions" ).find_child_by_attribute( "reaction", "label", href.c_str() ).attribute( "ENDF_MT" ).as_int();
+        partials.emplace_back( projectile, target, id::ReactionType( projectile, mt ) );
       }
 
       // special treatment for some incident electron data reactions
       if ( projectile == id::ParticleID( "e-" ) ) {
 
-        if ( id == id::ReactionID( "501" ) ) {
+        if ( id == id::ReactionID( projectile, target, id::ReactionType( projectile, 501 ) ) ) {
 
           // replace 526 by 525 and -526
-          auto iter = std::find( partials.begin(), partials.end(), id::ReactionID( "526" ) );
-          *iter = "525";
-          partials.insert( iter + 1, id::ReactionID( "-526" ) );
+          auto total_elastic = id::ReactionID( projectile, target, id::ReactionType( projectile, 526 ) );
+          auto iter = std::find( partials.begin(), partials.end(), total_elastic );
+          *iter = id::ReactionID( projectile, target, id::ReactionType( projectile, 525 ) );
+          partials.insert( iter + 1, id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ) );
         }
       }
 
