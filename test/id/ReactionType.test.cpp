@@ -1906,9 +1906,7 @@ SCENARIO( "ReactionType" ) {
 
     THEN( "all reaction types (other than special reactions) can be resolved" ) {
 
-      ParticleID id( 92238 );
-
-      // resolve neutron induced reactions
+      // resolve gamma induced reactions
       CHECK( ParticleID( 92238,  0 ) == ReactionType(  "g(0)" ).resolve( g, u238 ) );
       CHECK( ParticleID( 92238,  1 ) == ReactionType(  "g(1)" ).resolve( g, u238 ) );
       CHECK( ParticleID( 92238,  2 ) == ReactionType(  "g(2)" ).resolve( g, u238 ) );
