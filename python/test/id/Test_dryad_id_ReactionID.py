@@ -5,6 +5,7 @@ import unittest
 
 # local imports
 from dryad import InteractionType
+from dryad.id import LevelID
 from dryad.id import ParticleID
 from dryad.id import ReactionType
 from dryad.id import ReactionID
@@ -38,8 +39,87 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertIsNone( id.particles )
         self.assertIsNone( id.residual )
         self.assertEqual( ReactionType( 1 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U238->total', id.symbol )
         self.assertEqual( id, ReactionID( 'n,U238->total' ) )
+
+        id = ReactionID( n, u238, ReactionType.elastic( n ) )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( u238, id.residual )
+        self.assertEqual( ReactionType( 50 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->n,U238', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->n,U238' ) )
+
+        id = ReactionID( n, u238, ReactionType( 102 ) )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( empty, id.particles )
+        self.assertEqual( ParticleID( 92239, LevelID.all ), id.residual )
+        self.assertEqual( ReactionType( 102 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->g,U239[all]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->g,U239[all]' ) )
+
+        id = ReactionID( n, u238, ReactionType( 199 ) )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( { a : 1, p : 2, n : 3 }, id.particles )
+        self.assertEqual( ParticleID( 88230, LevelID.all ), id.residual )
+        self.assertEqual( ReactionType( 199 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->3n,2p,a,Ra230[all]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->3n,2p,a,Ra230[all]' ) )
+
+        id = ReactionID( eminus, u, ReactionType( 525 ) )
+        self.assertEqual( eminus, id.projectile )
+        self.assertEqual( u, id.target )
+        self.assertEqual( { eminus : 1 }, id.particles )
+        self.assertEqual( u, id.residual )
+        self.assertEqual( ReactionType( 525 ), id.reaction_type )
+        self.assertEqual( InteractionType.Atomic, id.interaction_type )
+        self.assertEqual( 'e-,U->e-,U[large-angle-scattering]', id.symbol )
+        self.assertEqual( id, ReactionID( 'e-,U->e-,U[large-angle-scattering]' ) )
+
+        id = ReactionID( eminus, u, ReactionType( 526 ) )
+        self.assertEqual( eminus, id.projectile )
+        self.assertEqual( u, id.target )
+        self.assertEqual( { eminus : 1 }, id.particles )
+        self.assertEqual( u, id.residual )
+        self.assertEqual( ReactionType( 526 ), id.reaction_type )
+        self.assertEqual( InteractionType.Atomic, id.interaction_type )
+        self.assertEqual( 'e-,U->e-,U[total-scattering]', id.symbol )
+        self.assertEqual( id, ReactionID( 'e-,U->e-,U[total-scattering]' ) )
+
+    def test_comparison( self ) :
+
+        n = ParticleID.neutron()
+        p = ParticleID.proton()
+        u238 = ParticleID( 92238 )
+
+        id1 = ReactionID( n, u238, ReactionType( n, 52 ) )
+        id2 = ReactionID( p, u238, ReactionType( n, 52 ) )
+
+        self.assertEqual( id1 <  id1, False )
+        self.assertEqual( id1 <= id1, True )
+        self.assertEqual( id1 >  id1, False )
+        self.assertEqual( id1 >= id1, True )
+        self.assertEqual( id1 == id1, True )
+        self.assertEqual( id1 != id1, False )
+        self.assertEqual( id1 <  id2, True )
+        self.assertEqual( id1 <= id2, True )
+        self.assertEqual( id1 >  id2, False )
+        self.assertEqual( id1 >= id2, False )
+        self.assertEqual( id1 == id2, False )
+        self.assertEqual( id1 != id2, True )
+        self.assertEqual( id2 <  id1, False )
+        self.assertEqual( id2 <= id1, False )
+        self.assertEqual( id2 >  id1, True )
+        self.assertEqual( id2 >= id1, True )
+        self.assertEqual( id2 == id1, False )
+        self.assertEqual( id2 != id1, True )
 
     def test_key( self ) :
 

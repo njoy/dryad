@@ -1476,6 +1476,30 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'electro-ionisation' ) )
         self.assertEqual( u, id.resolve( eminus, u ) )
 
+    def test_comparison( self ) :
+
+        id1 = ReactionType( 1 )
+        id2 = ReactionType( 102 )
+
+        self.assertEqual( id1 <  id1, False )
+        self.assertEqual( id1 <= id1, True )
+        self.assertEqual( id1 >  id1, False )
+        self.assertEqual( id1 >= id1, True )
+        self.assertEqual( id1 == id1, True )
+        self.assertEqual( id1 != id1, False )
+        self.assertEqual( id1 <  id2, True )
+        self.assertEqual( id1 <= id2, True )
+        self.assertEqual( id1 >  id2, False )
+        self.assertEqual( id1 >= id2, False )
+        self.assertEqual( id1 == id2, False )
+        self.assertEqual( id1 != id2, True )
+        self.assertEqual( id2 <  id1, False )
+        self.assertEqual( id2 <= id1, False )
+        self.assertEqual( id2 >  id1, True )
+        self.assertEqual( id2 >= id1, True )
+        self.assertEqual( id2 == id1, False )
+        self.assertEqual( id2 != id1, True )
+
     def test_resolve( self ) :
 
         g = ParticleID.photon()
