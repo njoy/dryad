@@ -16,7 +16,11 @@ namespace ace {
 namespace photoatomic {
 
   /**
-   *  @brief Create TabulatedCrossSection instances for photoatomic data
+   *  @brief Create reaction identifiers for photoatomic data
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] table        the ace table
    */
   std::vector< id::ReactionID >
   createReactionIdentifiers( const id::ParticleID& projectile,

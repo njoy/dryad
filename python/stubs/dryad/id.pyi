@@ -390,7 +390,7 @@ class ReactionID:
     @typing.overload
     def __init__(self, symbol: str) -> None:
         """
-        Initialise the reaction type
+        Initialise the reaction identifier
         
         Arguments:
             self     the reaction identifier
@@ -424,7 +424,7 @@ class ReactionID:
     @property
     def reaction_type(self) -> ReactionType:
         """
-        The reaction type (nuclear or atomic) associated to the reaction
+        The reaction type associated to the reaction
         """
     @property
     def residual(self) -> ParticleID | None:
@@ -434,7 +434,7 @@ class ReactionID:
     @property
     def symbol(self) -> str:
         """
-        The reaction type's symbol
+        The reaction identifier's symbol
         """
     @property
     def target(self) -> ParticleID:

@@ -21,6 +21,10 @@ namespace electroatomic {
 
   /**
    *  @brief Create the reactions for electroatomic data
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] table        the ace table
    */
   std::vector< Reaction > createReactions( const id::ParticleID& projectile,
                                            const id::ParticleID& target,

@@ -13,7 +13,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "createReactionNumbers" ) {
+SCENARIO( "createReactionIdentifiers" ) {
 
   GIVEN( "instances of PhotoatomicTable" ) {
 

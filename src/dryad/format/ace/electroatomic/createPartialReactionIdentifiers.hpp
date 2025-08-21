@@ -17,6 +17,10 @@ namespace electroatomic {
 
   /**
    *  @brief Create partial reaction identifiers for electroatomic data
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] table        the ace table
    */
   std::vector< std::vector< id::ReactionID > >
   createPartialReactionIdentifiers( const id::ParticleID& projectile,

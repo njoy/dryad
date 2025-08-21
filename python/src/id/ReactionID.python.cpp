@@ -48,7 +48,7 @@ void wrapReactionID( python::module& module ) {
 
     python::init< const std::string& >(),
     python::arg( "symbol" ),
-    "Initialise the reaction type\n\n"
+    "Initialise the reaction identifier\n\n"
     "Arguments:\n"
     "    self     the reaction identifier\n"
     "    symbol   the reaction symbol"
@@ -87,13 +87,13 @@ void wrapReactionID( python::module& module ) {
 
     "reaction_type",
     &Component::reactionType,
-    "The reaction type (nuclear or atomic) associated to the reaction"
+    "The reaction type associated to the reaction"
   )
   .def_property_readonly(
 
     "symbol",
     &Component::symbol,
-    "The reaction type's symbol"
+    "The reaction identifier's symbol"
   );
 
   // add standard comparison definitions

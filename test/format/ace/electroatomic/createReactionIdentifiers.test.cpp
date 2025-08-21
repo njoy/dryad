@@ -13,7 +13,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "createReactionTypes" ) {
+SCENARIO( "createReactionIdentifiers" ) {
 
   auto e = id::ParticleID::electron();
 

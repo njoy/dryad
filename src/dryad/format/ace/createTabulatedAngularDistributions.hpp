@@ -10,7 +10,7 @@
 #include "dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
 #include "dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
 #include "dryad/TabulatedAngularDistributions.hpp"
-#include "ACEtk/electron/ElasticAngularDistributionBlock.hpp"
+#include "ACEtk/electroatomic/ElasticAngularDistributionBlock.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -18,10 +18,13 @@ namespace format {
 namespace ace {
 
   /**
-   *  @brief Create a TabulatedAngularDistributions from an ElasticAngularDistributionBlock
+   *  @brief Create a TabulatedAngularDistributions from an ACE angular distribution block
+   *
+   *  @param[in] distribution   the electroatomic angular distribution block
    */
   TabulatedAngularDistributions
-  createTabulatedAngularDistributions( const njoy::ACEtk::electron::ElasticAngularDistributionBlock& block ) {
+  createTabulatedAngularDistributions(
+      const njoy::ACEtk::electroatomic::ElasticAngularDistributionBlock& block ) {
 
     try {
 

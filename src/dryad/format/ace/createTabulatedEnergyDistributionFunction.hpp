@@ -8,7 +8,7 @@
 #include "tools/Log.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/TabulatedEnergyDistributionFunction.hpp"
-#include "ACEtk/electron/TabulatedEnergyDistribution.hpp"
+#include "ACEtk/electroatomic/TabulatedEnergyDistribution.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,11 +16,13 @@ namespace format {
 namespace ace {
 
   /**
-   *  @brief Create a TabulatedEnergyDistributionFunction from a CoherentFormFactorBlock
+   *  @brief Create a TabulatedEnergyDistributionFunction from ACE data
+   *
+   *  @param[in] distribution   the electroatomic tabulated energy distribution
    */
   TabulatedEnergyDistributionFunction
   createTabulatedEnergyDistributionFunction(
-      const njoy::ACEtk::electron::TabulatedEnergyDistribution& distribution ) {
+      const njoy::ACEtk::electroatomic::TabulatedEnergyDistribution& distribution ) {
 
     try {
 
