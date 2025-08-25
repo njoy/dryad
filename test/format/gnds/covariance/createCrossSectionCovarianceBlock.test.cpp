@@ -14,18 +14,6 @@ using namespace njoy::dryad;
 
 SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "F19" ),
-                  id::ReactionType( id::ParticleID::neutron(), 16 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "F19" ),
-                  id::ReactionType( id::ParticleID::neutron(), 104 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "F19" ),
-                  id::ReactionType( id::ParticleID::neutron(), 4 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "Ne22" ),
-                  id::ReactionType( id::ParticleID::neutron(), 16 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "Ne22" ),
-                  id::ReactionType( id::ParticleID::neutron(), 51 ) );
-
   GIVEN( "an instance of an off-diagonal ReactionBlock with a single symmetric "
          "SquareMatrix and variance scaling information" ) {
 

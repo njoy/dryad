@@ -15,12 +15,6 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CrossSectionCovarianceBlock" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
-                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
-                  id::ReactionType( id::ParticleID::neutron(), 18 ) );
-
   GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock without "
          "variance scaling information" ) {
 

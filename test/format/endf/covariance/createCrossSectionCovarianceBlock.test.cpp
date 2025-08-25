@@ -17,18 +17,6 @@ using ReactionBlock = section::ReactionBlock;
 
 SCENARIO( "createCrossSectionCovarianceBlock" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "F19" ),
-                  id::ReactionType( id::ParticleID::neutron(), 16 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "F19" ),
-                  id::ReactionType( id::ParticleID::neutron(), 104 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "F19" ),
-                  id::ReactionType( id::ParticleID::neutron(), 4 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "Ne22" ),
-                  id::ReactionType( id::ParticleID::neutron(), 16 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "Ne22" ),
-                  id::ReactionType( id::ParticleID::neutron(), 51 ) );
-
 //  GIVEN( "an instance of CovariancePairs using LB=0/1 (diagonal elements)" ) {
 //
 //    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
