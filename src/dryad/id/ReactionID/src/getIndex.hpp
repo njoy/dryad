@@ -22,7 +22,10 @@ static std::size_t getIndex( const ParticleID& projectile, const ParticleID& tar
     // create entry and set up lookup
     entries.emplace_back( projectile, target, type );
     tuple_conversion_dictionary[ std::make_tuple( projectile, target, type ) ] = index;
-    string_conversion_dictionary[ entries.back().longSymbol() ] = index;
+    for ( const auto& symbol : entries.back().symbols() ) {
+
+      string_conversion_dictionary[ symbol ] = index;
+    }
 
     return index;
   }

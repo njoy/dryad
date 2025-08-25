@@ -82,6 +82,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->3n,2p,a,Ra230[all]" == id.symbol() );
       CHECK( id == ReactionID( n, u238, ReactionType( 199 ) ) );
+      CHECK( id == ReactionID( "n,U238->3n2pa,Ra230[all]" ) );
 
       CHECK( size + 4 == ReactionID::size() );
 
