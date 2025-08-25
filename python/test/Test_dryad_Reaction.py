@@ -179,11 +179,6 @@ class Test_dryad_Reaction( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        n = ParticleID.neutron()
-        fe56 = ParticleID( 26056 )
-
-        ReactionID( n, fe56, ReactionType( n, 51 ) )
-
         # the data is given explicitly
         chunk1 = Reaction( id = ReactionID( 'n,Fe56->n,Fe56_e1' ),
                            mass_q = 0, reaction_q = -1,
@@ -228,9 +223,9 @@ class Test_dryad_Reaction( unittest.TestCase ) :
         verify_chunk( self, chunk2, True )
 
         # the data is given explicitly for a summation reaction
-        chunk = Reaction( id = ReactionID( n, fe56, ReactionType.total() ),
-                          partials = [ ReactionID( n, fe56, ReactionType( n, 2 ) ),
-                                       ReactionID( n, fe56, ReactionType( n, 16 ) ) ],
+        chunk = Reaction( id = ReactionID( 'n,Fe56->total' ),
+                          partials = [ ReactionID( 'n,Fe56->n,Fe56' ),
+                                       ReactionID( 'n,Fe56->2n,Fe55[all]' ) ],
                           xs = TabulatedCrossSection ( [ 1., 2., 2., 3., 4. ],
                                                        [ 4., 3., 4., 3., 2. ],
                                                        [ 1, 4 ],

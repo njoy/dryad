@@ -18,12 +18,6 @@ class Test_codex_CrossSectionCovarianceBlock( unittest.TestCase ) :
 
     def test_diagonal_covariance_block( self ) :
 
-        n = ParticleID.neutron()
-        u235 = ParticleID( 92235 )
-
-        ReactionID( n, u235, ReactionType( n, 2 ) )
-        ReactionID( n, u235, ReactionType( n, 18 ) )
-
         # not using CrossSectionMetadata
 
         # the data is given explicitly - for a diagonal block without scaling

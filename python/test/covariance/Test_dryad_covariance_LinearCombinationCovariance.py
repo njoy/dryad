@@ -29,13 +29,6 @@ class Test_dryad_covariance_LinearCombinationCovariance( unittest.TestCase ) :
             self.assertAlmostEqual(  0.2, chunk.coefficients[1] )
             self.assertAlmostEqual(  0.3, chunk.coefficients[2] )
 
-        n = ParticleID.neutron()
-        u235 = ParticleID( 92235 )
-
-        ReactionID( n, u235, ReactionType.elastic( n ) )
-        ReactionID( n, u235, ReactionType( n, 4 ) )
-        ReactionID( n, u235, ReactionType( n, 16 ) )
-
         # the data is given explicitly
         chunk = LinearCombinationCovariance( lower = 1e-5, upper = 2e+7,
                                              reactions = [ ReactionID( 'n,U235->n,U235' ),
@@ -48,13 +41,6 @@ class Test_dryad_covariance_LinearCombinationCovariance( unittest.TestCase ) :
     def test_failures( self ) :
 
         print( '\n' )
-
-        n = ParticleID.neutron()
-        u235 = ParticleID( 92235 )
-
-        ReactionID( n, u235, ReactionType.elastic( n ) )
-        ReactionID( n, u235, ReactionType( n, 4 ) )
-        ReactionID( n, u235, ReactionType( n, 16 ) )
 
         # the number of reactions and coefficients is not consistent or both are zero
         with self.assertRaises( Exception ) :
