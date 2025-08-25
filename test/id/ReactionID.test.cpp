@@ -37,7 +37,7 @@ SCENARIO( "ReactionID" ) {
 
       auto size = ReactionID::size();
 
-      ReactionID id( n, u238, ReactionType( 1 ) );
+      ReactionID id( "n,U238->total" );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::nullopt == id.particles() );
@@ -45,11 +45,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 1 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->total" == id.symbol() );
-      CHECK( id == ReactionID( "n,U238->total" ) );
+      CHECK( id == ReactionID( n, u238, ReactionType( 1 ) ) );
 
       CHECK( size + 1 == ReactionID::size() );
 
-      id = ReactionID( n, u238, ReactionType::elastic( n ) );
+      id = ReactionID( "n,U238->n,U238" );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
@@ -57,11 +57,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 50 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->n,U238" == id.symbol() );
-      CHECK( id == ReactionID( "n,U238->n,U238" ) );
+      CHECK( id == ReactionID( n, u238, ReactionType::elastic( n ) ) );
 
       CHECK( size + 2 == ReactionID::size() );
 
-      id = ReactionID( n, u238, ReactionType( 102 ) );
+      id = ReactionID( "n,U238->g,U239[all]" );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( empty == id.particles() );
@@ -69,11 +69,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 102 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->g,U239[all]" == id.symbol() );
-      CHECK( id == ReactionID( "n,U238->g,U239[all]" ) );
+      CHECK( id == ReactionID( n, u238, ReactionType( 102 ) ) );
 
       CHECK( size + 3 == ReactionID::size() );
 
-      id = ReactionID( n, u238, ReactionType( 199 ) );
+      id = ReactionID( "n,U238->3n,2p,a,Ra230[all]" );
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
@@ -81,11 +81,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 199 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->3n,2p,a,Ra230[all]" == id.symbol() );
-      CHECK( id == ReactionID( "n,U238->3n,2p,a,Ra230[all]" ) );
+      CHECK( id == ReactionID( n, u238, ReactionType( 199 ) ) );
 
       CHECK( size + 4 == ReactionID::size() );
 
-      id = ReactionID( eminus, u, ReactionType( 525 ) );
+      id = ReactionID( "e-,U->e-,U[large-angle-scattering]" );
       CHECK( eminus == id.projectile() );
       CHECK( u == id.target() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
@@ -93,11 +93,11 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 525 ) == id.reactionType() );
       CHECK( InteractionType::Atomic == id.interactionType() );
       CHECK( "e-,U->e-,U[large-angle-scattering]" == id.symbol() );
-      CHECK( id == ReactionID( "e-,U->e-,U[large-angle-scattering]" ) );
+      CHECK( id == ReactionID( eminus, u, ReactionType( 525 ) ) );
 
       CHECK( size + 5 == ReactionID::size() );
 
-      id = ReactionID( eminus, u, ReactionType( 526 ) );
+      id = ReactionID( "e-,U->e-,U[total-scattering]" );
       CHECK( eminus == id.projectile() );
       CHECK( u == id.target() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
@@ -105,7 +105,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( ReactionType( 526 ) == id.reactionType() );
       CHECK( InteractionType::Atomic == id.interactionType() );
       CHECK( "e-,U->e-,U[total-scattering]" == id.symbol() );
-      CHECK( id == ReactionID( "e-,U->e-,U[total-scattering]" ) );
+      CHECK( id == ReactionID( eminus, u, ReactionType( 526 ) ) );
 
       CHECK( size + 6 == ReactionID::size() );
     }

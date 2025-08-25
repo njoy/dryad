@@ -370,6 +370,8 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "n3a(t)" ) );
+      CHECK( id == ReactionType( "n3a" ) );
+      CHECK( id == ReactionType( "n,3a" ) );
       CHECK( ParticleID( 86226, LevelID::all ) == id.resolve( n, u238 ) );
 
       // photoatomic and electroatomic reaction types
@@ -457,6 +459,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "2e-e+" ) );
+      CHECK( id == ReactionType( "2e-,e+" ) );
       CHECK( id == ReactionType( "2e-e+[electron]" ) );
       CHECK( id == ReactionType( "pair-production-electron" ) );
       CHECK( u == id.resolve( eminus, u ) );
@@ -473,6 +476,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "e-e+" ) );
+      CHECK( id == ReactionType( "e-,e+" ) );
       CHECK( id == ReactionType( "e-e+[nuclear]" ) );
       CHECK( id == ReactionType( "pair-production-nuclear" ) );
       CHECK( u == id.resolve( eminus, u ) );
