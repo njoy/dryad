@@ -19,6 +19,9 @@ namespace endf {
 
   /**
    *  @brief Calculate a summation cross section
+   *
+   *  @param[in] partials    the identifiers for the partials that compose the summation
+   *  @param[in] reactions   all reactions found
    */
   TabulatedCrossSection
   calculateSummationCrossSection( const std::vector< id::ReactionID >& partials,
@@ -52,15 +55,23 @@ namespace endf {
    *  This function will produce reaction instances for each MT number defined in
    *  MF3 or MF23 (if MF3 is not present in the file). If neither MF3 or MF23 are
    *  present, the function will return an empty vector.
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] material     the unparsed ENDF material
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
    */
   std::vector< Reaction >
-  createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
+  createReactions( const id::ParticleID& projectile,
+                   const id::ParticleID& target,
                    const ENDFtk::tree::Material& material,
                    bool normalise ) {
 
     std::vector< Reaction > reactions;
     if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
 
+      // where the cross section data is coming from
       int source = material.hasFile( 3 ) ? 3 : 23;
 
       // loop over the available reactions and create the reaction objects
@@ -123,6 +134,8 @@ namespace endf {
         reactions.emplace_back( Reaction( id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
                                           deficit, {}, std::nullopt, 0. ) );
       }
+
+      reactions.shrink_to_fit();
     }
     return reactions;
   }

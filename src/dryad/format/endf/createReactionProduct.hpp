@@ -37,7 +37,7 @@ namespace endf {
                          const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions,
                          bool normalise ) {
 
-    id::ParticleID id = createProductIdentifier( 1, 0 );
+    id::ParticleID id = id::ParticleID::neutron();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
     auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
@@ -52,18 +52,14 @@ namespace endf {
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] product      the MF26 reaction product data
-   *  @param[in] multiple     the flag to indicate whether or not the product is a
-   *                          multiple emission product
    */
   ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
-                         bool multiple,
                          bool normalise ) {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
-                                                 product.productModifierFlag(),
-                                                 multiple );
+                                                 product.productModifierFlag() );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     auto multiplicity = createMultiplicity( product.multiplicity() );
 
@@ -84,7 +80,7 @@ namespace endf {
                          int mt,
                          bool normalise ) {
 
-    id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0, false );
+    id::ParticleID id = createProductIdentifier( product.productIdentifier(), 0 );
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     auto multiplicity = createMultiplicity( product.multiplicity() );
 
@@ -96,9 +92,9 @@ namespace endf {
 
         // ENDF/B-VIII.0 erroneously uses 11 for the gamma identifier in MF26 MT527
         // LAW = 1 is only used for the outgoing gamma, the electron uses LAW = 8
-        if ( ( mt == 527 ) && ( id == id::ParticleID( "e-" ) ) ) {
+        if ( ( mt == 527 ) && ( id == id::ParticleID::electron() ) ) {
 
-          id = createProductIdentifier( 0, 0, false );
+          id = id::ParticleID::photon();
           Log::warning( "Reaction product identifier changed from \'e-\' to \'g\'" );
         }
 
@@ -134,7 +130,7 @@ namespace endf {
 
   /**
    *  @brief Create a ReactionProduct from parsed ENDF MF27 MT502, MT505 and MT506
-   *         section
+   *         section (coherent scattering)
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
@@ -151,7 +147,7 @@ namespace endf {
                          int mt,
                          bool normalise ) {
 
-    id::ParticleID id = createProductIdentifier( 0, 0, false );
+    id::ParticleID id = id::ParticleID::photon();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
 
@@ -175,7 +171,7 @@ namespace endf {
   }
 
   /**
-   *  @brief Create a ReactionProduct from a parsed ENDF MF27 MT504 section
+   *  @brief Create a ReactionProduct from a parsed ENDF MF27 MT504 section (incoherent scattering)
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
@@ -188,7 +184,7 @@ namespace endf {
                          int mt,
                          bool normalise ) {
 
-    id::ParticleID id = createProductIdentifier( 0, 0, false );
+    id::ParticleID id = id::ParticleID::photon();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     int multiplicity = 1;
 

@@ -23,14 +23,16 @@ namespace endf {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
-   *  @param[in] target       the unparsed ENDF material
+   *  @param[in] material     the unparsed ENDF material
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
   std::vector< ReactionProduct >
-  createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
-                          const ENDFtk::tree::Material& material, int mt,
+  createReactionProducts( const id::ParticleID& projectile,
+                          const id::ParticleID& target,
+                          const ENDFtk::tree::Material& material,
+                          int mt,
                           bool normalise ) {
 
     std::vector< ReactionProduct > products;
@@ -71,14 +73,9 @@ namespace endf {
       auto section = material.section( 6, mt ).parse< 6 >();
       for ( const auto& product : section.reactionProducts() ) {
 
-        bool multiple = std::count_if( section.reactionProducts().begin(),
-                                       section.reactionProducts().end(),
-                                       [&product] ( auto&& entry ) {
-                                         return product.productIdentifier() == entry.productIdentifier();
-                                       } ) > 1;
         if ( mt != 18 ) {
 
-          products.emplace_back( createReactionProduct( projectile, target, product, multiple, normalise ) );
+          products.emplace_back( createReactionProduct( projectile, target, product, normalise ) );
         }
         else {
 
@@ -130,6 +127,7 @@ namespace endf {
     // std::sort( products.begin(), products.end(),
     //            [] ( auto&& left, auto&& right )
     //               { return left.identifier() < right.identifier(); } );
+    products.shrink_to_fit();
     return products;
   }
 

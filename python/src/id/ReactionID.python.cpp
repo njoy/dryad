@@ -94,6 +94,12 @@ void wrapReactionID( python::module& module ) {
     "symbol",
     &Component::symbol,
     "The reaction identifier's symbol"
+  )
+  .def(
+
+    "__hash__",
+    [] ( const Component& self ) { return std::hash< Component >{}( self ); },
+    "Hash function"
   );
 
   // add standard comparison definitions

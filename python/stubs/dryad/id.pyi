@@ -369,13 +369,16 @@ class ReactionID:
     """
     The reaction identifier
     """
-    __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ReactionID) -> bool:
         ...
     def __ge__(self, arg0: ReactionID) -> bool:
         ...
     def __gt__(self, arg0: ReactionID) -> bool:
         ...
+    def __hash__(self) -> int:
+        """
+        Hash function
+        """
     @typing.overload
     def __init__(self, projectile: ParticleID, target: ParticleID, type: ReactionType) -> None:
         """

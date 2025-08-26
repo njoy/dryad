@@ -197,4 +197,18 @@ namespace id {
 } // dryad namespace
 } // njoy namespace
 
+namespace std {
+
+  // std::hash override for the ReactionID class
+  template <>
+  struct hash< njoy::dryad::id::ReactionID > {
+
+    std::size_t operator()( const njoy::dryad::id::ReactionID& key ) const {
+
+      return std::hash< std::string >{}( key.symbol() );
+    }
+  };
+
+} // namespace std
+
 #endif

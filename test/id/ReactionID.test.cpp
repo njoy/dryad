@@ -154,19 +154,18 @@ SCENARIO( "ReactionID" ) {
       CHECK( map[ ReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
     } // THEN
 
-//! @todo we need a hash function on ReactionID
-//    THEN( "instances can be used as keys in a std::unordered_map" ) {
-//
-//      std::unordered_map< ReactionID, std::string > map{
-//
-//        { id1, "1" }, { id2, "2" }
-//      };
-//
-//      CHECK( map[ id1 ] == "1" );
-//      CHECK( map[ id2 ] == "2" );
-//      CHECK( map[ ReactionID( n, u238, ReactionType( 102 ) ) ] == "1" );
-//      CHECK( map[ ReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
-//    } // THEN
+    THEN( "instances can be used as keys in a std::unordered_map" ) {
+
+      std::unordered_map< ReactionID, std::string > map{
+
+        { id1, "1" }, { id2, "2" }
+      };
+
+      CHECK( map[ id1 ] == "1" );
+      CHECK( map[ id2 ] == "2" );
+      CHECK( map[ ReactionID( n, u238, ReactionType( 102 ) ) ] == "1" );
+      CHECK( map[ ReactionID( n, u238, ReactionType( 199 ) ) ] == "2" );
+    } // THEN
   } // GIVEN
 
   GIVEN( "invalid data for a ReactionID" ) {

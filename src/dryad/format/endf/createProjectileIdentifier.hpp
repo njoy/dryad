@@ -20,15 +20,15 @@ namespace endf {
 
     switch ( sublibrary ) {
 
-      case     0 : return id::ParticleID( "g" );
-      case     3 : return id::ParticleID( "g" );
-      case    10 : return id::ParticleID( "n" );
-      case   113 : return id::ParticleID( "e-" );
-      case 10010 : return id::ParticleID( "p" );
-      case 10020 : return id::ParticleID( "d" );
-      case 10030 : return id::ParticleID( "t" );
-      case 20030 : return id::ParticleID( "h" );
-      case 20040 : return id::ParticleID( "a" );
+      case     0 : return id::ParticleID::photon();
+      case     3 : return id::ParticleID::photon();
+      case    10 : return id::ParticleID::neutron();
+      case   113 : return id::ParticleID::electron();
+      case 10010 : return id::ParticleID::proton();
+      case 10020 : return id::ParticleID::deuteron();
+      case 10030 : return id::ParticleID::triton();
+      case 20030 : return id::ParticleID::helion();
+      case 20040 : return id::ParticleID::alpha();
       default : {
 
         Log::error( "ENDF sublibrary {} does not define projectile-target data",
