@@ -394,7 +394,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 502 == id.number() );
       CHECK( 502 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "g[coherent]" == id.symbol() );
+      CHECK( "coherent" == id.symbol() );
       CHECK( empty == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "coherent" == id.partialDesignator() );
@@ -408,7 +408,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 504 == id.number() );
       CHECK( 504 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "g[incoherent]" == id.symbol() );
+      CHECK( "incoherent" == id.symbol() );
       CHECK( empty == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "incoherent" == id.partialDesignator() );
@@ -418,25 +418,25 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "incoherent" ) );
       CHECK( u == id.resolve( g, u ) );
 
-      id = ReactionType( "e-[deficit-scattering]" ); // no mt number for this
+      id = ReactionType( "deficit-scattering" ); // no mt number for this
       CHECK( 1524 == id.number() );
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[deficit-scattering]" == id.symbol() );
+      CHECK( "deficit-scattering" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "deficit-scattering" == id.partialDesignator() );
       CHECK( true == id.hasPartialDesignator() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "deficit-scattering" ) );
+      CHECK( id == ReactionType( "e-[deficit-scattering]" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
       id = ReactionType( 525 );
       CHECK( 1525 == id.number() );
       CHECK( 525 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[large-angle-scattering]" == id.symbol() );
+      CHECK( "large-angle-scattering" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "large-angle-scattering" == id.partialDesignator() );
@@ -451,7 +451,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1515 == id.number() );
       CHECK( 515 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "2e-e+[electron]" == id.symbol() );
+      CHECK( "pair-production-electron" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 2 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "pair-production-electron" == id.partialDesignator() );
@@ -460,7 +460,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "2e-e+" ) );
       CHECK( id == ReactionType( "2e-,e+" ) );
-      CHECK( id == ReactionType( "2e-e+[electron]" ) );
       CHECK( id == ReactionType( "pair-production-electron" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
@@ -468,7 +467,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1517 == id.number() );
       CHECK( 517 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-e+[nuclear]" == id.symbol() );
+      CHECK( "pair-production-nuclear" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "pair-production-nuclear" == id.partialDesignator() );
@@ -477,7 +476,6 @@ SCENARIO( "ReactionType" ) {
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "e-e+" ) );
       CHECK( id == ReactionType( "e-,e+" ) );
-      CHECK( id == ReactionType( "e-e+[nuclear]" ) );
       CHECK( id == ReactionType( "pair-production-nuclear" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
@@ -499,7 +497,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1527 == id.number() );
       CHECK( 527 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[bremsstrahlung]" == id.symbol() );
+      CHECK( "bremsstrahlung" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "bremsstrahlung" == id.partialDesignator() );
@@ -514,7 +512,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1528 == id.number() );
       CHECK( 528 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[excitation]" == id.symbol() );
+      CHECK( "excitation" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "excitation" == id.partialDesignator() );
