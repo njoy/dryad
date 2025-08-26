@@ -45,7 +45,7 @@ namespace endf {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
-   *  @param[in] target       the unparsed ENDF material
+   *  @param[in] material     the unparsed ENDF material
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
