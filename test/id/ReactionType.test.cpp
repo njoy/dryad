@@ -317,6 +317,21 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "n(t)" ) );
       CHECK( ParticleID( 92238, LevelID::all ) == id.resolve( n, u238 ) );
 
+      id = ReactionType( 91 );
+      CHECK( 10150 == id.number() );
+      CHECK( 91 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "n(c)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
+      CHECK( LevelID::continuum == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( { { n, 1 } }, LevelID::continuum ) );
+      CHECK( id == ReactionType( "n(c)" ) );
+      CHECK( ParticleID( 92238, LevelID::continuum ) == id.resolve( n, u238 ) );
+
       id = ReactionType( 875 );
       CHECK( 20000 == id.number() );
       CHECK( 875 == id.mt() );

@@ -251,6 +251,18 @@ class Test_elementary_ReactionType( unittest.TestCase ) :
         self.assertEqual( id, ReactionType( 'n(t)' ) )
         self.assertEqual( ParticleID( 92238, LevelID.all ), id.resolve( n, u238 ) )
 
+        id = ReactionType( 91 )
+        self.assertEqual( 91, id.mt )
+        self.assertEqual( nuclear, id.interaction_type )
+        self.assertEqual( 'n(c)', id.symbol )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( LevelID.continuum, id.level )
+        self.assertEqual( False, id.is_special )
+        self.assertEqual( True, id.is_compatible_with_endf )
+        self.assertEqual( id, ReactionType( { n : 1 }, LevelID.continuum ) )
+        self.assertEqual( id, ReactionType( 'n(c)' ) )
+        self.assertEqual( ParticleID( 92238, LevelID.continuum ), id.resolve( n, u238 ) )
+
         id = ReactionType( 875 )
         self.assertEqual( 875, id.mt )
         self.assertEqual( nuclear, id.interaction_type )

@@ -175,6 +175,17 @@ SCENARIO( "ReactionID" ) {
       CHECK( id == ReactionID( eminus, u, ReactionType( 526 ) ) );
 
       CHECK( size + 10 == ReactionID::size() );
+
+      id = ReactionID( "n,U238->n,U238[continuum]" );
+      CHECK( n == id.projectile() );
+      CHECK( u238 == id.target() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
+      CHECK( ReactionType( 91 ) == id.reactionType() );
+      CHECK( InteractionType::Nuclear == id.interactionType() );
+      CHECK( "n,U238->n,U238[continuum]" == id.symbol() );
+      CHECK( id == ReactionID( "n,U238->n(c)" ) );
+
+      CHECK( size + 11 == ReactionID::size() );
     }
   } // GIVEN
 

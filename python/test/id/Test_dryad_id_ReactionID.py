@@ -152,6 +152,15 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( 'e-,U->e-,U[total-scattering]', id.symbol )
         self.assertEqual( id, ReactionID( eminus, u, ReactionType( 526 ) ) )
 
+        id = ReactionID( 'n,U238->n,U238[continuum]' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( ReactionType( 91 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->n,U238[continuum]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->n(c)' ) )
+
     def test_comparison( self ) :
 
         n = ParticleID.neutron()
