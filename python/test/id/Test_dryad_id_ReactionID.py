@@ -53,6 +53,7 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U238->n,U238', id.symbol )
         self.assertEqual( id, ReactionID( n, u238, ReactionType.elastic( n ) ) )
+        self.assertEqual( id, ReactionID( 'n,U238->n(0)' ) )
 
         id = ReactionID( 'n,U238->g,U239[all]' )
         self.assertEqual( n, id.projectile )
@@ -63,6 +64,9 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U238->g,U239[all]', id.symbol )
         self.assertEqual( id, ReactionID( n, u238, ReactionType( 102 ) ) )
+        self.assertEqual( id, ReactionID( 'n,U238->g' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->g(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->capture' ) )
 
         id = ReactionID( 'n,U238->3n,2p,a,Ra230[all]' )
         self.assertEqual( n, id.projectile )
@@ -74,6 +78,10 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( 'n,U238->3n,2p,a,Ra230[all]', id.symbol )
         self.assertEqual( id, ReactionID( n, u238, ReactionType( 199 ) ) )
         self.assertEqual( id, ReactionID( 'n,U238->3n2pa,Ra230[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n2pa(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n2pa' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n,2p,a(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n,2p,a' ) )
 
         id = ReactionID( n, u235, ReactionType( 1 ) )
         self.assertEqual( n, id.projectile )
@@ -94,6 +102,7 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U235->n,U235', id.symbol )
         self.assertEqual( id, ReactionID( 'n,U235->n,U235' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->n(0)' ) )
 
         id = ReactionID( n, u235, ReactionType( 102 ) )
         self.assertEqual( n, id.projectile )
@@ -104,6 +113,9 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U235->g,U236[all]', id.symbol )
         self.assertEqual( id, ReactionID( 'n,U235->g,U236[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->g(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->g' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->capture' ) )
 
         id = ReactionID( n, u235, ReactionType( 199 ) )
         self.assertEqual( n, id.projectile )
@@ -115,6 +127,10 @@ class Test_elementary_ReactionID( unittest.TestCase ) :
         self.assertEqual( 'n,U235->3n,2p,a,Ra227[all]', id.symbol )
         self.assertEqual( id, ReactionID( 'n,U235->3n,2p,a,Ra227[all]' ) )
         self.assertEqual( id, ReactionID( 'n,U235->3n2pa,Ra227[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n,2p,a(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n,2p,a' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n2pa(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n2pa' ) )
 
         id = ReactionID( 'e-,U->e-,U[large-angle-scattering]' )
         self.assertEqual( eminus, id.projectile )

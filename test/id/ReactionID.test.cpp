@@ -59,6 +59,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->n,U238" == id.symbol() );
       CHECK( id == ReactionID( n, u238, ReactionType::elastic( n ) ) );
+      CHECK( id == ReactionID( "n,U238->n(0)" ) );
 
       CHECK( size + 2 == ReactionID::size() );
 
@@ -71,6 +72,9 @@ SCENARIO( "ReactionID" ) {
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->g,U239[all]" == id.symbol() );
       CHECK( id == ReactionID( n, u238, ReactionType( 102 ) ) );
+      CHECK( id == ReactionID( "n,U238->g(t)" ) );
+      CHECK( id == ReactionID( "n,U238->g" ) );
+      CHECK( id == ReactionID( "n,U238->capture" ) );
 
       CHECK( size + 3 == ReactionID::size() );
 
@@ -84,6 +88,10 @@ SCENARIO( "ReactionID" ) {
       CHECK( "n,U238->3n,2p,a,Ra230[all]" == id.symbol() );
       CHECK( id == ReactionID( n, u238, ReactionType( 199 ) ) );
       CHECK( id == ReactionID( "n,U238->3n2pa,Ra230[all]" ) );
+      CHECK( id == ReactionID( "n,U238->3n2pa(t)" ) );
+      CHECK( id == ReactionID( "n,U238->3n2pa" ) );
+      CHECK( id == ReactionID( "n,U238->3n,2p,a(t)" ) );
+      CHECK( id == ReactionID( "n,U238->3n,2p,a" ) );
 
       CHECK( size + 4 == ReactionID::size() );
 
@@ -108,6 +116,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->n,U235" == id.symbol() );
       CHECK( id == ReactionID( "n,U235->n,U235" ) );
+      CHECK( id == ReactionID( "n,U235->n(0)" ) );
 
       CHECK( size + 6 == ReactionID::size() );
 
@@ -120,6 +129,9 @@ SCENARIO( "ReactionID" ) {
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->g,U236[all]" == id.symbol() );
       CHECK( id == ReactionID( "n,U235->g,U236[all]" ) );
+      CHECK( id == ReactionID( "n,U235->g(t)" ) );
+      CHECK( id == ReactionID( "n,U235->g" ) );
+      CHECK( id == ReactionID( "n,U235->capture" ) );
 
       CHECK( size + 7 == ReactionID::size() );
 
@@ -133,6 +145,10 @@ SCENARIO( "ReactionID" ) {
       CHECK( "n,U235->3n,2p,a,Ra227[all]" == id.symbol() );
       CHECK( id == ReactionID( "n,U235->3n,2p,a,Ra227[all]" ) );
       CHECK( id == ReactionID( "n,U235->3n2pa,Ra227[all]" ) );
+      CHECK( id == ReactionID( "n,U235->3n,2p,a(t)" ) );
+      CHECK( id == ReactionID( "n,U235->3n,2p,a" ) );
+      CHECK( id == ReactionID( "n,U235->3n2pa(t)" ) );
+      CHECK( id == ReactionID( "n,U235->3n2pa" ) );
 
       CHECK( size + 8 == ReactionID::size() );
 

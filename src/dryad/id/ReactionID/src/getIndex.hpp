@@ -56,54 +56,58 @@ static std::size_t getIndex( const std::string& string ) {
         ParticleID projectile( incident[0] );
         ParticleID target( incident[1] );
 
-        // check for partial designator [xxxx]
-        if ( strings[1].back() == ']' &&
-             strings[1].find( "[all]" ) == std::string::npos &&
-             strings[1].find( "[continuum]" ) == std::string::npos ) {
+        // check for a registered type
+        if ( ReactionType::isRegistered( strings[1] ) ) {
 
-          auto pos = strings[1].find( '[' );
-          if ( pos != std::string::npos ) {
-
-            // create the reaction type
-            auto type = ReactionType( strings[1].substr( pos + 1, strings[1].size() - pos - 2 ) );
-            return getIndex( projectile, target, type );
-          }
+          // create the reaction type
+          auto type = ReactionType( strings[1] );
+          return getIndex( projectile, target, type );
         }
         else {
 
-          // split the outgoing particles
-          auto outgoing = njoy::tools::split( strings[1], ',' );
-          if ( outgoing.size() > 1 ) {
+          // check for partial designator [xxxx]
+          if ( strings[1].back() == ']' &&
+               strings[1].find( "[all]" ) == std::string::npos &&
+               strings[1].find( "[continuum]" ) == std::string::npos ) {
 
-            // the last one should be the residual
-            ParticleID residual( outgoing.back() );
+            auto pos = strings[1].find( '[' );
+            if ( pos != std::string::npos ) {
 
-            // get the outgoing particles
-            auto particles = strings[1].substr( 0, strings[1].size() - outgoing.back().size() - 1 );
-            if ( residual.e() != LevelID::all ) {
-
-              if ( residual.e() == LevelID::continuum ) {
-
-                particles += "(c)";
-              }
-              else {
-
-                particles += "(" + std::to_string( residual.e() ) + ")";
-              }
-            }
-
-            // create the reaction type and verify against the residual
-            auto type = ReactionType( particles );
-            if ( type.resolve( projectile, target ) == residual ) {
-
+              // create the reaction type
+              auto type = ReactionType( strings[1].substr( pos + 1, strings[1].size() - pos - 2 ) );
               return getIndex( projectile, target, type );
             }
           }
-          else if ( outgoing.size() == 1 ) {
+          else {
 
-            // create the reaction type
-            auto type = ReactionType( outgoing.front() );
-            return getIndex( projectile, target, type );
+            // split the outgoing particles
+            auto outgoing = njoy::tools::split( strings[1], ',' );
+            if ( outgoing.size() > 1 ) {
+
+              // the last one should be the residual
+              ParticleID residual( outgoing.back() );
+
+              // get the outgoing particles
+              auto particles = strings[1].substr( 0, strings[1].size() - outgoing.back().size() - 1 );
+              if ( residual.e() != LevelID::all ) {
+
+                if ( residual.e() == LevelID::continuum ) {
+
+                  particles += "(c)";
+                }
+                else {
+
+                  particles += "(" + std::to_string( residual.e() ) + ")";
+                }
+              }
+
+              // create the reaction type and verify against the residual
+              auto type = ReactionType( particles );
+              if ( type.resolve( projectile, target ) == residual ) {
+
+                return getIndex( projectile, target, type );
+              }
+            }
           }
         }
       }
