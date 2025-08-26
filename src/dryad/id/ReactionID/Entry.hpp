@@ -34,11 +34,7 @@ class Entry {
 
     std::vector< std::string > symbols;
     std::string incident( projectile.symbol() + "," + target.symbol() + "->" );
-    if ( type.isSpecial() ) {
-
-      symbols.emplace_back( incident + type.symbol() );
-    }
-    else {
+    if ( ! type.isSpecial() ) {
 
       if ( type.particles()->size() == 0 ) {
 
@@ -89,6 +85,12 @@ class Entry {
         }
       }
     }
+
+    for ( const auto& symbol : type.symbols() ) {
+
+      symbols.emplace_back( incident + symbol );
+    }
+
     return symbols;
   }
 
