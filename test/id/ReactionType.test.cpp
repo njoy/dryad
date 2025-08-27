@@ -317,6 +317,21 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "n(t)" ) );
       CHECK( ParticleID( 92238, LevelID::all ) == id.resolve( n, u238 ) );
 
+      id = ReactionType( 91 );
+      CHECK( 10150 == id.number() );
+      CHECK( 91 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "n(c)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
+      CHECK( LevelID::continuum == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( { { n, 1 } }, LevelID::continuum ) );
+      CHECK( id == ReactionType( "n(c)" ) );
+      CHECK( ParticleID( 92238, LevelID::continuum ) == id.resolve( n, u238 ) );
+
       id = ReactionType( 875 );
       CHECK( 20000 == id.number() );
       CHECK( 875 == id.mt() );
@@ -370,6 +385,8 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "n3a(t)" ) );
+      CHECK( id == ReactionType( "n3a" ) );
+      CHECK( id == ReactionType( "n,3a" ) );
       CHECK( ParticleID( 86226, LevelID::all ) == id.resolve( n, u238 ) );
 
       // photoatomic and electroatomic reaction types
@@ -392,7 +409,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 502 == id.number() );
       CHECK( 502 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "g[coherent]" == id.symbol() );
+      CHECK( "coherent" == id.symbol() );
       CHECK( empty == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "coherent" == id.partialDesignator() );
@@ -406,7 +423,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 504 == id.number() );
       CHECK( 504 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "g[incoherent]" == id.symbol() );
+      CHECK( "incoherent" == id.symbol() );
       CHECK( empty == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "incoherent" == id.partialDesignator() );
@@ -416,25 +433,25 @@ SCENARIO( "ReactionType" ) {
       CHECK( id == ReactionType( "incoherent" ) );
       CHECK( u == id.resolve( g, u ) );
 
-      id = ReactionType( "e-[deficit-scattering]" ); // no mt number for this
+      id = ReactionType( "deficit-scattering" ); // no mt number for this
       CHECK( 1524 == id.number() );
       CHECK( std::nullopt == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[deficit-scattering]" == id.symbol() );
+      CHECK( "deficit-scattering" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "deficit-scattering" == id.partialDesignator() );
       CHECK( true == id.hasPartialDesignator() );
       CHECK( false == id.isSpecial() );
       CHECK( false == id.isCompatibleWithENDF() );
-      CHECK( id == ReactionType( "deficit-scattering" ) );
+      CHECK( id == ReactionType( "e-[deficit-scattering]" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
       id = ReactionType( 525 );
       CHECK( 1525 == id.number() );
       CHECK( 525 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[large-angle-scattering]" == id.symbol() );
+      CHECK( "large-angle-scattering" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "large-angle-scattering" == id.partialDesignator() );
@@ -449,7 +466,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1515 == id.number() );
       CHECK( 515 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "2e-e+[electron]" == id.symbol() );
+      CHECK( "pair-production-electron" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 2 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "pair-production-electron" == id.partialDesignator() );
@@ -457,7 +474,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "2e-e+" ) );
-      CHECK( id == ReactionType( "2e-e+[electron]" ) );
+      CHECK( id == ReactionType( "2e-,e+" ) );
       CHECK( id == ReactionType( "pair-production-electron" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
@@ -465,7 +482,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1517 == id.number() );
       CHECK( 517 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-e+[nuclear]" == id.symbol() );
+      CHECK( "pair-production-nuclear" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 }, { eplus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "pair-production-nuclear" == id.partialDesignator() );
@@ -473,7 +490,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( "e-e+" ) );
-      CHECK( id == ReactionType( "e-e+[nuclear]" ) );
+      CHECK( id == ReactionType( "e-,e+" ) );
       CHECK( id == ReactionType( "pair-production-nuclear" ) );
       CHECK( u == id.resolve( eminus, u ) );
 
@@ -495,7 +512,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1527 == id.number() );
       CHECK( 527 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[bremsstrahlung]" == id.symbol() );
+      CHECK( "bremsstrahlung" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "bremsstrahlung" == id.partialDesignator() );
@@ -510,7 +527,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( 1528 == id.number() );
       CHECK( 528 == id.mt() );
       CHECK( atomic == id.interactionType() );
-      CHECK( "e-[excitation]" == id.symbol() );
+      CHECK( "excitation" == id.symbol() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } }  == id.particles() );
       CHECK( std::nullopt == id.level() );
       CHECK( "excitation" == id.partialDesignator() );
@@ -1906,9 +1923,7 @@ SCENARIO( "ReactionType" ) {
 
     THEN( "all reaction types (other than special reactions) can be resolved" ) {
 
-      ParticleID id( 92238 );
-
-      // resolve neutron induced reactions
+      // resolve gamma induced reactions
       CHECK( ParticleID( 92238,  0 ) == ReactionType(  "g(0)" ).resolve( g, u238 ) );
       CHECK( ParticleID( 92238,  1 ) == ReactionType(  "g(1)" ).resolve( g, u238 ) );
       CHECK( ParticleID( 92238,  2 ) == ReactionType(  "g(2)" ).resolve( g, u238 ) );

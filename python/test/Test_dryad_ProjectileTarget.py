@@ -603,19 +603,6 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        n = ParticleID.neutron()
-        fe56 = ParticleID( 26056 )
-
-        ReactionID( n, fe56, ReactionType( 'total' ) )
-        ReactionID( n, fe56, ReactionType.elastic( n ) )
-        ReactionID( n, fe56, ReactionType( '2n' ) )
-        ReactionID( n, fe56, ReactionType( '2n(0)' ) )
-        ReactionID( n, fe56, ReactionType( '2n(1)' ) )
-        ReactionID( n, fe56, ReactionType( 'p' ) )
-        ReactionID( n, fe56, ReactionType( 'p(0)' ) )
-        ReactionID( n, fe56, ReactionType( 'p(1)' ) )
-        ReactionID( n, fe56, ReactionType( 'a' ) )
-
         # the data is given explicitly
         chunk1 = ProjectileTarget(
                      projectile = ParticleID( 'n' ),
@@ -750,19 +737,6 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
         verify_correct_summation( self, chunk2 )
 
     def test_setter_functions( self ) :
-
-        n = ParticleID.neutron()
-        fe56 = ParticleID( 26056 )
-
-        ReactionID( n, fe56, ReactionType( 'total' ) )
-        ReactionID( n, fe56, ReactionType.elastic( n ) )
-        ReactionID( n, fe56, ReactionType( '2n' ) )
-        ReactionID( n, fe56, ReactionType( '2n(0)' ) )
-        ReactionID( n, fe56, ReactionType( '2n(1)' ) )
-        ReactionID( n, fe56, ReactionType( 'p' ) )
-        ReactionID( n, fe56, ReactionType( 'p(0)' ) )
-        ReactionID( n, fe56, ReactionType( 'p(1)' ) )
-        ReactionID( n, fe56, ReactionType( 'a' ) )
 
         chunk = ProjectileTarget(
                     projectile = ParticleID( 'n' ),
@@ -932,12 +906,6 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
         verify_chunk( self, chunk, False )
 
     def test_comparison( self ) :
-
-        n = ParticleID.neutron()
-        fe56 = ParticleID( 26056 )
-
-        ReactionID( n, fe56, ReactionType.elastic( n ) )
-        ReactionID( n, fe56, ReactionType( '2n(1)' ) )
 
         left = ProjectileTarget(
                    projectile = ParticleID( 'n' ),

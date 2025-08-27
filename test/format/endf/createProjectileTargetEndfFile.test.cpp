@@ -17,14 +17,6 @@ std::string readContentFromFile( const std::string& );
 
 SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "H1" ),
-                  id::ReactionType( id::ParticleID::neutron(), 1 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "H1" ),
-                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "H1" ),
-                  id::ReactionType( id::ParticleID::neutron(), 102 ) );
-
   GIVEN( "projectile-target data - incident neutrons" ) {
 
     std::string description =

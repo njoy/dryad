@@ -15,14 +15,6 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "LinearCombinationCovariance" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
-                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
-                  id::ReactionType( id::ParticleID::neutron(), 4 ) );
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
-                  id::ReactionType( id::ParticleID::neutron(), 16 ) );
-
   GIVEN( "valid covariance data for a diagonal LinearCombinationCovariance" ) {
 
     double lower = 1e-5;

@@ -135,6 +135,8 @@ static std::size_t getIndex( const std::map< ParticleID, short >& particles, int
  */
 static std::size_t getIndex( const std::string& string ) {
 
+  //! @todo add the possibility of parsing a string of particles
+
   try {
 
     return string_conversion_dictionary.at( string );

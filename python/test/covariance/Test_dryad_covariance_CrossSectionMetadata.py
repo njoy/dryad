@@ -32,7 +32,7 @@ class Test_dryad_covariance_CrossSectionMetadata( unittest.TestCase ) :
         u235 = ParticleID( 92235 )
         chunk = CrossSectionMetadata( projectile = n,
                                       target = u235,
-                                      reaction = ReactionID( n, u235, ReactionType.elastic( n ) ),
+                                      reaction = ReactionID( 'n,U235->n,U235' ),
                                       energies = [ 1e-5, 1., 1e+6, 2e+7 ] )
 
         verify_chunk( self, chunk )
@@ -49,7 +49,7 @@ class Test_dryad_covariance_CrossSectionMetadata( unittest.TestCase ) :
 
             chunk = CrossSectionMetadata( projectile = n,
                                           target = u235,
-                                          reaction = ReactionID( n, u235, ReactionType.elastic( n ) ),
+                                          reaction = ReactionID( 'n,U235->n,U235' ),
                                           energies = [ 1e-5 ] )
 
         # the energy grid is not sorted
@@ -57,7 +57,7 @@ class Test_dryad_covariance_CrossSectionMetadata( unittest.TestCase ) :
 
             chunk = CrossSectionMetadata( projectile = n,
                                           target = u235,
-                                          reaction = ReactionID( n, u235, ReactionType.elastic( n ) ),
+                                          reaction = ReactionID( 'n,U235->n,U235' ),
                                           energies = [ 2e+7, 1e+6, 1., 1e-5 ] )
 
         # the energy grid has duplicate points
@@ -65,7 +65,7 @@ class Test_dryad_covariance_CrossSectionMetadata( unittest.TestCase ) :
 
             chunk = CrossSectionMetadata( projectile = n,
                                           target = u235,
-                                          reaction = ReactionID( n, u235, ReactionType.elastic( n ) ),
+                                          reaction = ReactionID( 'n,U235->n,U235' ),
                                           energies = [ 1e-5, 1., 1., 2e+7 ] )
 
 if __name__ == '__main__' :

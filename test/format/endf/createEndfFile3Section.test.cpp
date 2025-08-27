@@ -15,10 +15,6 @@ std::string chunk();
 
 SCENARIO( "createEndfFile3Section" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "Li7" ),
-                  id::ReactionType( id::ParticleID::neutron(), 25 ) );
-
   GIVEN( "valid data for a reaction" ) {
 
     std::string string = chunk();

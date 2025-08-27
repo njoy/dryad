@@ -14,10 +14,6 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CrossSectionMetadata" ) {
 
-  //! @todo remove when we can parse string identifiers
-  id::ReactionID( id::ParticleID::neutron(), id::ParticleID( "U235" ),
-                  id::ReactionType( id::ParticleID::neutron(), 2 ) );
-
   GIVEN( "valid data for a CrossSectionMetadata" ) {
 
     WHEN( "the data is given explicitly" ) {

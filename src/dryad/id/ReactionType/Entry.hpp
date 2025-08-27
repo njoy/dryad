@@ -8,8 +8,7 @@ class Entry {
   std::int64_t number_;
   std::optional< short > mt_;
   std::optional< std::map< ParticleID, short > > ejectiles_;
-  std::string symbol_;
-  std::vector< std::string > alternatives_;
+  std::vector< std::string > symbols_;
   InteractionType interaction_;
   std::optional< std::string > designator_;
   std::optional< short > level_;
@@ -17,12 +16,12 @@ class Entry {
 
   static std::optional< std::string >
   getDesignator( const InteractionType& type,
-                 const std::vector< std::string >& alternatives ) {
+                 const std::vector< std::string >& symbols ) {
 
     if ( ( type == InteractionType::Atomic ) &&
-         ( alternatives.size() > 0 ) ){
+         ( symbols.size() > 1 ) ){
 
-      return alternatives.front();
+      return symbols.front();
     }
     else {
 
@@ -49,20 +48,19 @@ class Entry {
   /* constructor */
   Entry( std::int64_t number, std::optional< short > mt,
          std::optional< std::map< ParticleID, short > > ejectiles,
-         std::string symbol, std::vector< std::string > alternatives,
+         std::vector< std::string > symbols,
          InteractionType interaction, std::optional< short > level ) :
     number_( std::move( number ) ),
     mt_( std::move( mt ) ),
     ejectiles_( std::move( ejectiles ) ),
-    symbol_( std::move( symbol ) ),
-    alternatives_( std::move( alternatives ) ),
+    symbols_( std::move( symbols ) ),
     interaction_( std::move( interaction ) ),
     designator_( std::nullopt ),
     level_( std::move( level ) ),
     dza_( std::nullopt ) {
 
     this->dza_ = calculateDZA( this->type(), this->particles() );
-    this->designator_ = getDesignator( this->type(), this->alternatives() );
+    this->designator_ = getDesignator( this->type(), this->symbols() );
   }
 
 public:
@@ -70,62 +68,62 @@ public:
   /* constructor */
 
   // special reaction without an mt number
-  Entry( std::int64_t number, InteractionType interaction, std::string symbol,
-         std::vector< std::string > alternatives ) :
+  Entry( std::int64_t number, InteractionType interaction,
+         std::vector< std::string > symbols ) :
     Entry( std::move( number ), std::nullopt, std::nullopt,
-           std::move( symbol ), std::move( alternatives ),
+           std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
 
   // special reaction with an mt number
-  Entry( std::int64_t number, short mt, InteractionType interaction, std::string symbol,
-         std::vector< std::string > alternatives ) :
+  Entry( std::int64_t number, short mt, InteractionType interaction,
+         std::vector< std::string > symbols ) :
     Entry( std::move( number ), std::move( mt ), std::nullopt,
-           std::move( symbol ), std::move( alternatives ),
+           std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
 
   // normal reaction with an mt number but no defined level/subshell
-  Entry( std::int64_t number, short mt, InteractionType interaction, std::string symbol,
-         std::vector< std::string > alternatives,
+  Entry( std::int64_t number, short mt, InteractionType interaction,
+         std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles ) :
     Entry( std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
-           std::move( symbol ), std::move( alternatives ),
+           std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
 
   // normal reaction with an mt number and level/subshell
-  Entry( std::int64_t number, short mt, InteractionType interaction, std::string symbol,
-         std::vector< std::string > alternatives,
+  Entry( std::int64_t number, short mt, InteractionType interaction,
+         std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles,
          short level ) :
     Entry( std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
-           std::move( symbol ), std::move( alternatives ),
+           std::move( symbols ),
            std::move( interaction ), std::move( level ) ) {}
 
   // normal reaction without an mt number and no defined level/subshell
-  Entry( std::int64_t number, InteractionType interaction, std::string symbol,
-         std::vector< std::string > alternatives,
+  Entry( std::int64_t number, InteractionType interaction,
+         std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles ) :
     Entry( std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
-           std::move( symbol ), std::move( alternatives ),
+           std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
 
   // normal reaction without an mt number and a level/subshell
-  Entry( std::int64_t number, InteractionType interaction, std::string symbol,
-         std::vector< std::string > alternatives,
+  Entry( std::int64_t number, InteractionType interaction,
+         std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles,
          short level ) :
     Entry( std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
-           std::move( symbol ), std::move( alternatives ),
+           std::move( symbols ),
            std::move( interaction ), std::move( level ) ) {}
 
   /* methods */
   std::int64_t number() const { return this->number_; }
   const std::optional< short >& mt() const { return this->mt_; }
-  const std::string& symbol() const { return this->symbol_; }
-  const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+  const std::string& symbol() const { return this->symbols().front(); }
+  const std::vector< std::string >& symbols() const { return this->symbols_; }
   const InteractionType& type() const { return this->interaction_; }
   const std::optional< std::map< ParticleID, short > >& particles() const {
 

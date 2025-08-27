@@ -8,9 +8,9 @@ class Entry {
   ParticleID projectile_;
   ParticleID target_;
   ReactionType type_;
+  // std::string short_symbol_;
+  std::vector< std::string > symbols_;
   std::optional< ParticleID > residual_;
-//  std::string short_symbol_;
-  std::string long_symbol_;
 
   static std::optional< ParticleID >
   generateResidual( const ParticleID& projectile,
@@ -27,42 +27,71 @@ class Entry {
     }
   }
 
-  static std::string
-  generateLongSymbol( const ParticleID& projectile,
-                      const ParticleID& target,
-                      const ReactionType& type ) {
+  static std::vector< std::string >
+  generateSymbols( const ParticleID& projectile,
+                   const ParticleID& target,
+                   const ReactionType& type ) {
 
-    std::string symbol( projectile.symbol() + "," + target.symbol() + "->" );
-    if ( type.isSpecial() ) {
-
-      symbol += type.symbol();
-    }
-    else {
+    std::vector< std::string > symbols;
+    std::string incident( projectile.symbol() + "," + target.symbol() + "->" );
+    if ( ! type.isSpecial() ) {
 
       if ( type.particles()->size() == 0 ) {
 
-        symbol += "g,";
+        symbols.emplace_back( incident + "g" );
       }
       else {
 
-        for ( const auto& pair : type.particles().value() ) {
+        symbols.emplace_back( incident );
+        if ( type.particles().value().size() > 1 ) {
 
-          if ( pair.second > 1 ) {
+          symbols.emplace_back( incident );
+        }
 
-            symbol += std::to_string( pair.second );
+        auto size = type.particles().value().size() - 1;
+        for ( auto iter = type.particles().value().begin();
+              iter != type.particles().value().end(); ++iter ) {
+
+          std::string particle;
+          if ( iter->second > 1 ) {
+
+            particle = std::to_string( iter->second );
           }
-          symbol += pair.first.symbol();
-          symbol += ",";
+          particle += iter->first.symbol();
+          for ( auto& symbol: symbols ) {
+
+            symbol += particle;
+          }
+          if ( size != 0 ) {
+
+            symbols.front() += ",";
+            --size;
+          }
         }
       }
-      symbol += generateResidual( projectile, target, type ).value().symbol();
+
+      auto residual = generateResidual( projectile, target, type ).value().symbol();
+      for ( auto& symbol: symbols ) {
+
+        symbol += "," + residual;
+      }
 
       if ( type.hasPartialDesignator() ) {
 
-        symbol += "[" + type.partialDesignator().value() + "]";
+        std::string partial = "[" + type.partialDesignator().value() + "]";
+        for ( auto& symbol: symbols ) {
+
+          symbol += partial;
+        }
       }
     }
-    return symbol;
+
+    for ( const auto& symbol : type.symbols() ) {
+
+      symbols.emplace_back( incident + symbol );
+    }
+
+    return symbols;
   }
 
 public:
@@ -72,8 +101,8 @@ public:
     projectile_( std::move( projectile ) ),
     target_( std::move( target ) ),
     type_( std::move( type ) ),
-//    short_symbol_( generateShortSymbol( projectile, target, type ) ),
-    long_symbol_( generateLongSymbol( projectile, target, type ) ),
+    // short_symbol_( generateShortSymbol( projectile, target, type ) ),
+    symbols_( generateSymbols( projectile, target, type ) ),
     residual_( generateResidual( projectile, target, type ) ) {}
 
   /* methods */
@@ -81,6 +110,7 @@ public:
   const ParticleID& target() const noexcept { return this->target_; }
   const ReactionType& reactionType() const noexcept { return this->type_; }
   const std::optional< ParticleID >& residual() const noexcept { return this->residual_; }
-//  const std::string& shortSymbol() const noexcept { return this->short_symbol_; }
-  const std::string& longSymbol() const noexcept { return this->long_symbol_; }
+  // const std::string& shortSymbol() const noexcept { return this->short_symbol_; }
+  const std::string& longSymbol() const noexcept { return this->symbols().front(); }
+  const std::vector< std::string >& symbols() const noexcept { return this->symbols_; }
 };

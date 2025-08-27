@@ -30,7 +30,7 @@ add_python_test( id.ElementID                            id/Test_dryad_id_Elemen
 add_python_test( id.LevelID                              id/Test_dryad_id_LevelID.py )
 add_python_test( id.ParticleID                           id/Test_dryad_id_ParticleID.py )
 add_python_test( id.ReactionType                         id/Test_dryad_id_ReactionType.py )
-add_python_test( id.ReactionID.                          id/Test_dryad_id_ReactionID.py )
+add_python_test( id.ReactionID                           id/Test_dryad_id_ReactionID.py )
 
 add_python_test( atomic.RadiativeTransitionData          atomic/Test_dryad_atomic_RadiativeTransitionData.py )
 add_python_test( atomic.NonRadiativeTransitionData       atomic/Test_dryad_atomic_NonRadiativeTransitionData.py )
