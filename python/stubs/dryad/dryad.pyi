@@ -60,6 +60,14 @@ class AtomicRelaxation:
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
         """
+    @typing.overload
+    def __init__(self, instance: AtomicRelaxation) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __ne__(self, arg0: AtomicRelaxation) -> bool:
         ...
     def calculate_transition_energies(self) -> None:
@@ -159,6 +167,14 @@ class CoherentDistributionData:
             scattering   the scattering function
             real         the real part of the anamolous form factor
             imaginary    the imaginary part of the anamolous form factor
+        """
+    @typing.overload
+    def __init__(self, instance: CoherentDistributionData) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: CoherentDistributionData) -> bool:
         ...
@@ -265,6 +281,7 @@ class Documentation:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: Documentation) -> bool:
         ...
+    @typing.overload
     def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
         """
         Initialise the documentation
@@ -275,6 +292,14 @@ class Documentation:
             library       the library number
             version       the version number
             description   the description
+        """
+    @typing.overload
+    def __init__(self, instance: Documentation) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: Documentation) -> bool:
         ...
@@ -325,6 +350,7 @@ class IncoherentDistributionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: IncoherentDistributionData) -> bool:
         ...
+    @typing.overload
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction) -> None:
         """
         Initialise the incoherent distribution data
@@ -333,6 +359,14 @@ class IncoherentDistributionData:
             self         the reaction product distribution data
             frame        the reference frame of the distribution data
             scattering   the scattering function
+        """
+    @typing.overload
+    def __init__(self, instance: IncoherentDistributionData) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
@@ -467,12 +501,21 @@ class IsotropicAngularDistributions:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: IsotropicAngularDistributions) -> bool:
         ...
+    @typing.overload
     def __init__(self) -> None:
         """
         Initialise the component
         
         Arguments:
             self   the component
+        """
+    @typing.overload
+    def __init__(self, instance: IsotropicAngularDistributions) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: IsotropicAngularDistributions) -> bool:
         ...
@@ -495,6 +538,7 @@ class LegendreAngularDistribution:
         """
     def __eq__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
+    @typing.overload
     def __init__(self, coefficients: list[float], normalise: bool = False) -> None:
         """
         Initialise the angular distribution
@@ -505,6 +549,14 @@ class LegendreAngularDistribution:
                            lowest to highest order coefficient) for the pdf
             normalise      option to indicate whether or not to normalise
                            all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, instance: LegendreAngularDistribution) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
@@ -582,6 +634,7 @@ class LegendreAngularDistributionFunction:
         ...
     def __imul__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
+    @typing.overload
     def __init__(self, coefficients: list[float]) -> None:
         """
         Initialise the angular distribution
@@ -590,6 +643,14 @@ class LegendreAngularDistributionFunction:
             self           the angular distribution
             coefficients   the coefficients of the Legendre series (from
                            lowest to highest order coefficient)
+        """
+    @typing.overload
+    def __init__(self, instance: LegendreAngularDistributionFunction) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> LegendreAngularDistributionFunction:
@@ -706,6 +767,14 @@ class LegendreAngularDistributions:
             normalise      option to indicate whether or not to normalise
                            all probability data (default: no normalisation)
         """
+    @typing.overload
+    def __init__(self, instance: LegendreAngularDistributions) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __ne__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
     def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
@@ -792,6 +861,7 @@ class PolynomialMultiplicity:
         ...
     def __imul__(self, arg0: float) -> PolynomialMultiplicity:
         ...
+    @typing.overload
     def __init__(self, lower: float, upper: float, coefficients: list[float]) -> None:
         """
         Initialise the multiplicity table
@@ -802,6 +872,14 @@ class PolynomialMultiplicity:
             upper          the upper limit of the domain
             coefficients   the coefficients of the polynomial series (from
                            lowest to highest order coefficient)
+        """
+    @typing.overload
+    def __init__(self, instance: PolynomialMultiplicity) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> PolynomialMultiplicity:
@@ -929,6 +1007,14 @@ class ProjectileTarget:
             reactions    the reaction data
             normalise    option to indicate whether or not to normalise
                          all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, instance: ProjectileTarget) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
@@ -1062,6 +1148,14 @@ class Reaction:
                         (defaults to no reaction products)
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, instance: Reaction) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: Reaction) -> bool:
         ...
@@ -1224,6 +1318,7 @@ class ReactionProduct:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
+    @typing.overload
     def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
         """
         Initialise the reaction
@@ -1236,6 +1331,14 @@ class ReactionProduct:
             average_energy   the optional average reaction product energy
             normalise        option to indicate whether or not to normalise
                              all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, instance: ReactionProduct) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
@@ -1376,6 +1479,14 @@ class TabulatedAngularDistribution:
             normalise      option to indicate whether or not to normalise
                            all probability data (default: no normalisation)
         """
+    @typing.overload
+    def __init__(self, instance: TabulatedAngularDistribution) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
     def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
@@ -1480,6 +1591,14 @@ class TabulatedAngularDistributionFunction:
             values         the probability values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: TabulatedAngularDistributionFunction) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAngularDistributionFunction:
@@ -1621,6 +1740,14 @@ class TabulatedAngularDistributions:
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
+    @typing.overload
+    def __init__(self, instance: TabulatedAngularDistributions) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
     def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
@@ -1725,6 +1852,14 @@ class TabulatedAverageCosine:
             values         the average energy values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: TabulatedAverageCosine) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageCosine:
@@ -1862,6 +1997,14 @@ class TabulatedAverageEnergy:
                            see InterpolationType for all interpolation types
         """
     @typing.overload
+    def __init__(self, instance: TabulatedAverageEnergy) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
     @typing.overload
@@ -1997,6 +2140,14 @@ class TabulatedCrossSection:
                            see InterpolationType for all interpolation types
         """
     @typing.overload
+    def __init__(self, instance: TabulatedCrossSection) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    @typing.overload
     def __isub__(self, arg0: float) -> TabulatedCrossSection:
         ...
     @typing.overload
@@ -2121,6 +2272,14 @@ class TabulatedEnergyDistribution:
             normalise      option to indicate whether or not to normalise
                            all probability data (default: no normalisation)
         """
+    @typing.overload
+    def __init__(self, instance: TabulatedEnergyDistribution) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
     def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistribution:
@@ -2225,6 +2384,14 @@ class TabulatedEnergyDistributionFunction:
             values         the cross section values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: TabulatedEnergyDistributionFunction) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
@@ -2358,6 +2525,14 @@ class TabulatedEnergyDistributions:
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
         """
+    @typing.overload
+    def __init__(self, instance: TabulatedEnergyDistributions) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
     def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistributions:
@@ -2462,6 +2637,14 @@ class TabulatedFormFactor:
             values         the form factor values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: TabulatedFormFactor) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedFormFactor:
@@ -2597,6 +2780,14 @@ class TabulatedMultiplicity:
             values         the multiplicity values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: TabulatedMultiplicity) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedMultiplicity:
@@ -2745,6 +2936,14 @@ class TabulatedScatteringFunction:
                               see InterpolationType for all interpolation types
         """
     @typing.overload
+    def __init__(self, instance: TabulatedScatteringFunction) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    @typing.overload
     def __isub__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
     @typing.overload
@@ -2863,6 +3062,7 @@ class ToleranceConvergence:
             yLeft        the left value on the y interval
             yRight       the right value on the y interval
         """
+    @typing.overload
     def __init__(self, tolerance: float = 0.001, threshold: float = 1e-10) -> None:
         """
         Initialise the convergence functor
@@ -2871,6 +3071,14 @@ class ToleranceConvergence:
             self        the functor
             tolerance   the linearisation tolerance (default 0.1 %)
             threshold   the lowest allowed absolute difference (default 1e-10)
+        """
+    @typing.overload
+    def __init__(self, instance: ToleranceConvergence) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @property
     def threshold(self) -> float:
@@ -2899,6 +3107,7 @@ class TwoBodyDistributionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
+    @typing.overload
     def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, normalise: bool = False) -> None:
         """
         Initialise the two-body distribution data
@@ -2909,6 +3118,14 @@ class TwoBodyDistributionData:
             angle       the angular distributions
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, instance: TwoBodyDistributionData) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: TwoBodyDistributionData) -> bool:
         ...
@@ -2955,6 +3172,7 @@ class UncorrelatedDistributionData:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
+    @typing.overload
     def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
         """
         Initialise the uncorrelated distribution data
@@ -2966,6 +3184,14 @@ class UncorrelatedDistributionData:
             energy      the energy distributions
             normalise   option to indicate whether or not to normalise
                         all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, instance: UncorrelatedDistributionData) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: UncorrelatedDistributionData) -> bool:
         ...
@@ -3009,6 +3235,7 @@ class UniformAngularDistribution:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: UniformAngularDistribution) -> bool:
         ...
+    @typing.overload
     def __init__(self, cosines: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the angular distribution
@@ -3017,6 +3244,14 @@ class UniformAngularDistribution:
             self       the angular distribution
             cosines    the cosine values
             type       the uniform distribution type
+        """
+    @typing.overload
+    def __init__(self, instance: UniformAngularDistribution) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: UniformAngularDistribution) -> bool:
         ...
@@ -3071,6 +3306,14 @@ class UniformAngularDistributions:
             distributions   the distributions
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: UniformAngularDistributions) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: UniformAngularDistributions) -> bool:
         ...
@@ -3163,6 +3406,7 @@ class UniformEnergyDistribution:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: UniformEnergyDistribution) -> bool:
         ...
+    @typing.overload
     def __init__(self, energies: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the energy distribution
@@ -3171,6 +3415,14 @@ class UniformEnergyDistribution:
             self       the energy distribution
             energies   the energy values
             type       the uniform distribution type
+        """
+    @typing.overload
+    def __init__(self, instance: UniformEnergyDistribution) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: UniformEnergyDistribution) -> bool:
         ...
@@ -3225,6 +3477,14 @@ class UniformEnergyDistributions:
             distributions   the distributions
             interpolant     the interpolation type (default lin-lin),
                             see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, instance: UniformEnergyDistributions) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __ne__(self, arg0: UniformEnergyDistributions) -> bool:
         ...

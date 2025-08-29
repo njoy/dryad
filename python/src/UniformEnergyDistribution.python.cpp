@@ -38,6 +38,14 @@ void wrapUniformEnergyDistribution( python::module& module ) {
     "    energies   the energy values\n"
     "    type       the uniform distribution type"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     "type",

@@ -47,6 +47,14 @@ void wrapRadiativeTransitionData( python::module& module ) {
     "    probability         the probability of the transition\n"
     "    energy              the energy of the emitted photon (default: undefined)"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     "type",

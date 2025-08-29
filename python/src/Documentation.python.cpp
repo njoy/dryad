@@ -42,6 +42,14 @@ void wrapDocumentation( python::module& module ) {
     "    version       the version number\n"
     "    description   the description"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property(
 
     "awr",

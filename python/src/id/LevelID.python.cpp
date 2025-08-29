@@ -47,6 +47,14 @@ void wrapLevelID( python::module& module ) {
     "    self     the identifier\n"
     "    string   the level symbol"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly_static(
 
     "continuum",

@@ -62,6 +62,14 @@ void wrapParticleID( python::module& module ) {
     "    self     the identifier\n"
     "    string   the particle symbol, name or alternative"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_static(
 
     "size",
