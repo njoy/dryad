@@ -276,7 +276,7 @@ class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
 
         verify_transition_energies( self, chunk )
 
-        # the data is given explicitly - no normalisation
+        # the data is given explicitly - with normalisation
         chunk = AtomicRelaxation(
                     element = ElementID( 1 ),
                     subshells = [ ElectronSubshellConfiguration(
