@@ -40,6 +40,14 @@ void wrapPolynomialMultiplicity( python::module& module ) {
     "    coefficients   the coefficients of the polynomial series (from\n"
     "                   lowest to highest order coefficient)"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     "lower_energy_limit",

@@ -35,6 +35,14 @@ class CrossSectionCovarianceBlock:
             relative           the relative covariance flag (default is true)
         """
     @typing.overload
+    def __init__(self, instance: CrossSectionCovarianceBlock) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    @typing.overload
     def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: dryad.id.ReactionID, energies: list[float], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
         """
         Initialise a diagonal cross section covariance block
@@ -173,6 +181,7 @@ class CrossSectionMetadata:
     """
     Metadata for the rows or columns of a covariance matrix block for cross section data
     """
+    @typing.overload
     def __init__(self, projectile: dryad.id.ParticleID, target: dryad.id.ParticleID, reaction: dryad.id.ReactionID, energies: list[float]) -> None:
         """
         Initialise the meta data
@@ -183,6 +192,14 @@ class CrossSectionMetadata:
             target       the target identifier
             reaction     the reaction identifier
             energies     the energy boundaries
+        """
+    @typing.overload
+    def __init__(self, instance: CrossSectionMetadata) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @property
     def energies(self) -> list[float]:
@@ -213,6 +230,7 @@ class LinearCombinationCovariance:
     """
     Covariance data for a reaction defined as a linear combination of other reactions' covariance data
     """
+    @typing.overload
     def __init__(self, lower: float, upper: float, reactions: list[dryad.id.ReactionID], coefficients: list[float]) -> None:
         """
         Initialise the derived covariance
@@ -223,6 +241,14 @@ class LinearCombinationCovariance:
             upper          the upper energy limit
             reactions      the reactions in the linear combination
             coefficients   the coefficients of the linear combination
+        """
+    @typing.overload
+    def __init__(self, instance: LinearCombinationCovariance) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @property
     def coefficients(self) -> list[float]:
@@ -306,6 +332,7 @@ class VarianceScaling:
     energy subgroup that includes a portion of the energy interval over which the
     factor is defined.
     """
+    @typing.overload
     def __init__(self, type: ScalingType, energies: list[float], factors: list[float]) -> None:
         """
         Initialise the metadata
@@ -315,6 +342,14 @@ class VarianceScaling:
             type        the scaling procedure type
             energies    the energy boundaries
             factors     the scaling factors
+        """
+    @typing.overload
+    def __init__(self, instance: VarianceScaling) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     @property
     def energies(self) -> list[float]:

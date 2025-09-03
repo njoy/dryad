@@ -89,6 +89,14 @@ class ElectronSubshellID:
             self     the identifier
             string   the subshell symbol, name or alternative name
         """
+    @typing.overload
+    def __init__(self, instance: ElectronSubshellID) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __le__(self, arg0: ElectronSubshellID) -> bool:
         ...
     def __lt__(self, arg0: ElectronSubshellID) -> bool:
@@ -145,6 +153,14 @@ class ElementID:
         Arguments:
             self     the identifier
             string   the element symbol, name or alternative name
+        """
+    @typing.overload
+    def __init__(self, instance: ElementID) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __le__(self, arg0: ElementID) -> bool:
         ...
@@ -204,6 +220,14 @@ class LevelID:
         Arguments:
             self     the identifier
             string   the level symbol
+        """
+    @typing.overload
+    def __init__(self, instance: LevelID) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __le__(self, arg0: LevelID) -> bool:
         ...
@@ -325,6 +349,14 @@ class ParticleID:
             self     the identifier
             string   the particle symbol, name or alternative
         """
+    @typing.overload
+    def __init__(self, instance: ParticleID) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
     def __le__(self, arg0: ParticleID) -> bool:
         ...
     def __lt__(self, arg0: ParticleID) -> bool:
@@ -398,6 +430,14 @@ class ReactionID:
         Arguments:
             self     the reaction identifier
             symbol   the reaction symbol
+        """
+    @typing.overload
+    def __init__(self, instance: ReactionID) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __le__(self, arg0: ReactionID) -> bool:
         ...
@@ -517,6 +557,14 @@ class ReactionType:
         Arguments:
             self     the reaction type
             string   the reaction type string
+        """
+    @typing.overload
+    def __init__(self, instance: ReactionType) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
         """
     def __le__(self, arg0: ReactionType) -> bool:
         ...

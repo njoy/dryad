@@ -63,6 +63,14 @@ void wrapCrossSectionCovarianceBlock( python::module& module ) {
   )
   .def(
 
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
+  .def(
+
     python::init< ParticleID, ParticleID, ReactionID,
                   std::vector< double >, Matrix, bool,
                   std::optional< VarianceScaling > >(),

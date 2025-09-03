@@ -42,6 +42,14 @@ void wrapLinearCombinationCovariance( python::module& module ) {
     "    reactions      the reactions in the linear combination\n"
     "    coefficients   the coefficients of the linear combination"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     "lower_energy_limit",

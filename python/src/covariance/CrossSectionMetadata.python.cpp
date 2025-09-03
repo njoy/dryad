@@ -43,6 +43,14 @@ void wrapCrossSectionMetadata( python::module& module ) {
     "    reaction     the reaction identifier\n"
     "    energies     the energy boundaries"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     "projectile_identifier",

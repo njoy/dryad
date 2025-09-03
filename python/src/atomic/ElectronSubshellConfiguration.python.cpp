@@ -60,6 +60,14 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "    normalise      option to indicate whether or not to normalise\n"
     "                   all probability data (default: no normalisation)"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property(
 
     "identifier",

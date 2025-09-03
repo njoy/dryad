@@ -58,6 +58,14 @@ void wrapCoherentDistributionData( python::module& module ) {
     "    real         the real part of the anamolous form factor\n"
     "    imaginary    the imaginary part of the anamolous form factor"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     // static constexpr function needs lambda

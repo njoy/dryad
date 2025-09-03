@@ -38,6 +38,14 @@ void wrapUniformAngularDistribution( python::module& module ) {
     "    cosines    the cosine values\n"
     "    type       the uniform distribution type"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly(
 
     "type",

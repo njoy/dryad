@@ -32,6 +32,14 @@ void wrapIsotropicAngularDistributions( python::module& module ) {
     "Initialise the component\n\n"
     "Arguments:\n"
     "    self   the component"
+  )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
   );
 
   // add standard equality comparison definitions

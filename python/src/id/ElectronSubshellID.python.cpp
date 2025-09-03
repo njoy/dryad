@@ -49,6 +49,14 @@ void wrapElectronSubshellID( python::module& module ) {
     "    self     the identifier\n"
     "    string   the subshell symbol, name or alternative name"
   )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
   .def_property_readonly_static( "K"  ,  [] ( python::object ) { return Component::K;   }, "The K shell" )
   .def_property_readonly_static( "L1" ,  [] ( python::object ) { return Component::L1;  }, "The L1 shell" )
   .def_property_readonly_static( "L2" ,  [] ( python::object ) { return Component::L2;  }, "The L2 shell" )
