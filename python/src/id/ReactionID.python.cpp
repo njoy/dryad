@@ -46,6 +46,31 @@ void wrapReactionID( python::module& module ) {
   )
   .def(
 
+    python::init< const ParticleID&, const ParticleID&, int >(),
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "mt" ),
+    "Initialise the reaction identifier\n\n"
+    "Arguments:\n"
+    "    self         the reaction identifier\n"
+    "    projectile   the projectile\n"
+    "    target       the target\n"
+    "    mt           the mt number"
+  )
+  .def(
+
+    python::init< const ParticleID&, const ParticleID&,
+                  const std::string& >(),
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "type" ),
+    "Initialise the reaction identifier\n\n"
+    "Arguments:\n"
+    "    self         the reaction identifier\n"
+    "    projectile   the projectile\n"
+    "    target       the target\n"
+    "    type         the string representing the reaction type"
+  )
+  .def(
+
     python::init< const std::string& >(),
     python::arg( "symbol" ),
     "Initialise the reaction identifier\n\n"

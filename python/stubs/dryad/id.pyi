@@ -423,6 +423,28 @@ class ReactionID:
             type         the reaction type
         """
     @typing.overload
+    def __init__(self, projectile: ParticleID, target: ParticleID, mt: int) -> None:
+        """
+        Initialise the reaction identifier
+        
+        Arguments:
+            self         the reaction identifier
+            projectile   the projectile
+            target       the target
+            mt           the mt number
+        """
+    @typing.overload
+    def __init__(self, projectile: ParticleID, target: ParticleID, type: str) -> None:
+        """
+        Initialise the reaction identifier
+        
+        Arguments:
+            self         the reaction identifier
+            projectile   the projectile
+            target       the target
+            type         the string representing the reaction type
+        """
+    @typing.overload
     def __init__(self, symbol: str) -> None:
         """
         Initialise the reaction identifier

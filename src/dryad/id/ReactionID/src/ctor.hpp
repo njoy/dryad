@@ -29,28 +29,27 @@ ReactionID( const ParticleID& projectile, const ParticleID& target,
             const ReactionType& type ) :
   index_( getIndex( projectile, target, type ) ) {}
 
-// these are shortcuts to the previous constructor
-// /**
-//  *  @brief Constructor
-//  *
-//  *  @param projectile   the projectile
-//  *  @param target       the target
-//  *  @param mt           the mt number
-//  */
-// ReactionID( const ParticleID& projectile, const ParticleID& target, int mt ) :
-//   ReactionID( projectile, target, ReactionType( projectile, mt ) ) {}
-//
-// /**
-//  *  @brief Constructor
-//  *
-//  *  @param projectile   the projectile
-//  *  @param target       the target
-//  *  @param string       the reaction type
-//  */
-// ReactionID( const ParticleID& projectile, const ParticleID& target,
-//                const std::string& string ) :
-//   ReactionID( projectile, target, ReactionType( string ) ) {}
-//
+/**
+ *  @brief Constructor
+ *
+ *  @param projectile   the projectile
+ *  @param target       the target
+ *  @param mt           the mt number
+ */
+ReactionID( const ParticleID& projectile, const ParticleID& target, int mt ) :
+  ReactionID( projectile, target, ReactionType( projectile, mt, target.e() ) ) {}
+
+/**
+ *  @brief Constructor
+ *
+ *  @param projectile   the projectile
+ *  @param target       the target
+ *  @param type         the string representing the reaction type
+ */
+ReactionID( const ParticleID& projectile, const ParticleID& target,
+            const std::string& type ) :
+  ReactionID( projectile, target, ReactionType( type ) ) {}
+
 // /**
 //  *  @brief Constructor
 //  *
@@ -63,7 +62,7 @@ ReactionID( const ParticleID& projectile, const ParticleID& target,
 //                const std::map< ParticleID, short >& particles, int level ) :
 //   ReactionID( projectile, target, ReactionType( particles, level ) ) {}
 
-  /**
+/**
  *  @brief Constructor
  *
  *  @param string   the reaction symbol
