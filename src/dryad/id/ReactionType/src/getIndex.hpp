@@ -26,24 +26,27 @@ static std::size_t getIndex( int mt ) {
  *
  *  @param projectile   the projectile
  *  @param mt           the mt number
+ *  @param level        the level number of the target (default is zero)
  */
-static std::size_t getIndex( const ParticleID& projectile, int mt ) {
+static std::size_t getIndex( const ParticleID& projectile, int mt, int level ) {
 
   // Yes, magic numbers. Sue me.
 
   if ( mt == 2 ) {
 
-    if      ( projectile == ParticleID::neutron() )  { return 131; }
-    else if ( projectile == ParticleID::photon() )   { return 30; }
-    else if ( projectile == ParticleID::proton() )   { return 198; }
-    else if ( projectile == ParticleID::deuteron() ) { return 264; }
-    else if ( projectile == ParticleID::triton() )   { return 322; }
-    else if ( projectile == ParticleID::helion() )   { return 383; }
-    else if ( projectile == ParticleID::alpha() )    { return 443; }
-    else {
+    if ( level >= 0 && level < 100 ) {
 
-      throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' is not defined" );
+      if      ( projectile == ParticleID::neutron() )  { return 132 + level; }
+      else if ( projectile == ParticleID::photon() )   { return 30 + level; }
+      else if ( projectile == ParticleID::proton() )   { return 258 + level; }
+      else if ( projectile == ParticleID::deuteron() ) { return 375 + level; }
+      else if ( projectile == ParticleID::triton() )   { return 484 + level; }
+      else if ( projectile == ParticleID::helion() )   { return 596 + level; }
+      else if ( projectile == ParticleID::alpha() )    { return 707 + level; }
     }
+
+    throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' "
+                                 "to level \'" + std::to_string( level ) + "\' is not defined" );
   }
   else if ( ( ( mt < 534 ) || ( mt > 572 ) ) && ( mt != 522 ) ) {
 
@@ -53,8 +56,8 @@ static std::size_t getIndex( const ParticleID& projectile, int mt ) {
   else {
 
     std::size_t offset = 0;
-    if      ( projectile == ParticleID::electron() ) { offset = 584; }
-    else if ( projectile == ParticleID::photon() )   { offset = 534; }
+    if      ( projectile == ParticleID::electron() ) { offset = 899; }
+    else if ( projectile == ParticleID::photon() )   { offset = 849; }
     else {
 
       throw std::invalid_argument( "Ionisation is not defined for \'" + projectile.symbol() + "\'" );

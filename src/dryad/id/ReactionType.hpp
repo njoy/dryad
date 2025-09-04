@@ -175,6 +175,7 @@ namespace id {
       Entry{       1096,      InteractionType::Nuclear, { "g(96)" }                                     , {}, 96 },
       Entry{       1097,      InteractionType::Nuclear, { "g(97)" }                                     , {}, 97 },
       Entry{       1098,      InteractionType::Nuclear, { "g(98)" }                                     , {}, 98 },
+      Entry{       1099,      InteractionType::Nuclear, { "g(99)" }                                     , {}, 99 },
       Entry{       1150,      InteractionType::Nuclear, { "g(c)" }                                      , {}, LevelID::continuum },
       Entry{       1151, 102, InteractionType::Nuclear, { "g(t)", "capture", "g" }                      , {}, LevelID::all },
 
@@ -219,6 +220,65 @@ namespace id {
       Entry{      10038,  88, InteractionType::Nuclear, { "n(38)" }                                     , { { ParticleID::neutron(), 1 } }, 38 },
       Entry{      10039,  89, InteractionType::Nuclear, { "n(39)" }                                     , { { ParticleID::neutron(), 1 } }, 39 },
       Entry{      10040,  90, InteractionType::Nuclear, { "n(40)" }                                     , { { ParticleID::neutron(), 1 } }, 40 },
+      Entry{      10041,      InteractionType::Nuclear, { "n(41)" }                                     , { { ParticleID::neutron(), 1 } }, 41 },
+      Entry{      10042,      InteractionType::Nuclear, { "n(42)" }                                     , { { ParticleID::neutron(), 1 } }, 42 },
+      Entry{      10043,      InteractionType::Nuclear, { "n(43)" }                                     , { { ParticleID::neutron(), 1 } }, 43 },
+      Entry{      10044,      InteractionType::Nuclear, { "n(44)" }                                     , { { ParticleID::neutron(), 1 } }, 44 },
+      Entry{      10045,      InteractionType::Nuclear, { "n(45)" }                                     , { { ParticleID::neutron(), 1 } }, 45 },
+      Entry{      10046,      InteractionType::Nuclear, { "n(46)" }                                     , { { ParticleID::neutron(), 1 } }, 46 },
+      Entry{      10047,      InteractionType::Nuclear, { "n(47)" }                                     , { { ParticleID::neutron(), 1 } }, 47 },
+      Entry{      10048,      InteractionType::Nuclear, { "n(48)" }                                     , { { ParticleID::neutron(), 1 } }, 48 },
+      Entry{      10049,      InteractionType::Nuclear, { "n(49)" }                                     , { { ParticleID::neutron(), 1 } }, 49 },
+      Entry{      10050,      InteractionType::Nuclear, { "n(50)" }                                     , { { ParticleID::neutron(), 1 } }, 50 },
+      Entry{      10051,      InteractionType::Nuclear, { "n(51)" }                                     , { { ParticleID::neutron(), 1 } }, 51 },
+      Entry{      10052,      InteractionType::Nuclear, { "n(52)" }                                     , { { ParticleID::neutron(), 1 } }, 52 },
+      Entry{      10053,      InteractionType::Nuclear, { "n(53)" }                                     , { { ParticleID::neutron(), 1 } }, 53 },
+      Entry{      10054,      InteractionType::Nuclear, { "n(54)" }                                     , { { ParticleID::neutron(), 1 } }, 54 },
+      Entry{      10055,      InteractionType::Nuclear, { "n(55)" }                                     , { { ParticleID::neutron(), 1 } }, 55 },
+      Entry{      10056,      InteractionType::Nuclear, { "n(56)" }                                     , { { ParticleID::neutron(), 1 } }, 56 },
+      Entry{      10057,      InteractionType::Nuclear, { "n(57)" }                                     , { { ParticleID::neutron(), 1 } }, 57 },
+      Entry{      10058,      InteractionType::Nuclear, { "n(58)" }                                     , { { ParticleID::neutron(), 1 } }, 58 },
+      Entry{      10059,      InteractionType::Nuclear, { "n(59)" }                                     , { { ParticleID::neutron(), 1 } }, 59 },
+      Entry{      10060,      InteractionType::Nuclear, { "n(60)" }                                     , { { ParticleID::neutron(), 1 } }, 60 },
+      Entry{      10061,      InteractionType::Nuclear, { "n(61)" }                                     , { { ParticleID::neutron(), 1 } }, 61 },
+      Entry{      10062,      InteractionType::Nuclear, { "n(62)" }                                     , { { ParticleID::neutron(), 1 } }, 62 },
+      Entry{      10063,      InteractionType::Nuclear, { "n(63)" }                                     , { { ParticleID::neutron(), 1 } }, 63 },
+      Entry{      10064,      InteractionType::Nuclear, { "n(64)" }                                     , { { ParticleID::neutron(), 1 } }, 64 },
+      Entry{      10065,      InteractionType::Nuclear, { "n(65)" }                                     , { { ParticleID::neutron(), 1 } }, 65 },
+      Entry{      10066,      InteractionType::Nuclear, { "n(66)" }                                     , { { ParticleID::neutron(), 1 } }, 66 },
+      Entry{      10067,      InteractionType::Nuclear, { "n(67)" }                                     , { { ParticleID::neutron(), 1 } }, 67 },
+      Entry{      10068,      InteractionType::Nuclear, { "n(68)" }                                     , { { ParticleID::neutron(), 1 } }, 68 },
+      Entry{      10069,      InteractionType::Nuclear, { "n(69)" }                                     , { { ParticleID::neutron(), 1 } }, 69 },
+      Entry{      10070,      InteractionType::Nuclear, { "n(70)" }                                     , { { ParticleID::neutron(), 1 } }, 70 },
+      Entry{      10071,      InteractionType::Nuclear, { "n(71)" }                                     , { { ParticleID::neutron(), 1 } }, 71 },
+      Entry{      10072,      InteractionType::Nuclear, { "n(72)" }                                     , { { ParticleID::neutron(), 1 } }, 72 },
+      Entry{      10073,      InteractionType::Nuclear, { "n(73)" }                                     , { { ParticleID::neutron(), 1 } }, 73 },
+      Entry{      10074,      InteractionType::Nuclear, { "n(74)" }                                     , { { ParticleID::neutron(), 1 } }, 74 },
+      Entry{      10075,      InteractionType::Nuclear, { "n(75)" }                                     , { { ParticleID::neutron(), 1 } }, 75 },
+      Entry{      10076,      InteractionType::Nuclear, { "n(76)" }                                     , { { ParticleID::neutron(), 1 } }, 76 },
+      Entry{      10077,      InteractionType::Nuclear, { "n(77)" }                                     , { { ParticleID::neutron(), 1 } }, 77 },
+      Entry{      10078,      InteractionType::Nuclear, { "n(78)" }                                     , { { ParticleID::neutron(), 1 } }, 78 },
+      Entry{      10079,      InteractionType::Nuclear, { "n(79)" }                                     , { { ParticleID::neutron(), 1 } }, 79 },
+      Entry{      10080,      InteractionType::Nuclear, { "n(80)" }                                     , { { ParticleID::neutron(), 1 } }, 80 },
+      Entry{      10081,      InteractionType::Nuclear, { "n(81)" }                                     , { { ParticleID::neutron(), 1 } }, 81 },
+      Entry{      10082,      InteractionType::Nuclear, { "n(82)" }                                     , { { ParticleID::neutron(), 1 } }, 82 },
+      Entry{      10083,      InteractionType::Nuclear, { "n(83)" }                                     , { { ParticleID::neutron(), 1 } }, 83 },
+      Entry{      10084,      InteractionType::Nuclear, { "n(84)" }                                     , { { ParticleID::neutron(), 1 } }, 84 },
+      Entry{      10085,      InteractionType::Nuclear, { "n(85)" }                                     , { { ParticleID::neutron(), 1 } }, 85 },
+      Entry{      10086,      InteractionType::Nuclear, { "n(86)" }                                     , { { ParticleID::neutron(), 1 } }, 86 },
+      Entry{      10087,      InteractionType::Nuclear, { "n(87)" }                                     , { { ParticleID::neutron(), 1 } }, 87 },
+      Entry{      10088,      InteractionType::Nuclear, { "n(88)" }                                     , { { ParticleID::neutron(), 1 } }, 88 },
+      Entry{      10089,      InteractionType::Nuclear, { "n(89)" }                                     , { { ParticleID::neutron(), 1 } }, 89 },
+      Entry{      10090,      InteractionType::Nuclear, { "n(90)" }                                     , { { ParticleID::neutron(), 1 } }, 90 },
+      Entry{      10091,      InteractionType::Nuclear, { "n(91)" }                                     , { { ParticleID::neutron(), 1 } }, 91 },
+      Entry{      10092,      InteractionType::Nuclear, { "n(92)" }                                     , { { ParticleID::neutron(), 1 } }, 92 },
+      Entry{      10093,      InteractionType::Nuclear, { "n(93)" }                                     , { { ParticleID::neutron(), 1 } }, 93 },
+      Entry{      10094,      InteractionType::Nuclear, { "n(94)" }                                     , { { ParticleID::neutron(), 1 } }, 94 },
+      Entry{      10095,      InteractionType::Nuclear, { "n(95)" }                                     , { { ParticleID::neutron(), 1 } }, 95 },
+      Entry{      10096,      InteractionType::Nuclear, { "n(96)" }                                     , { { ParticleID::neutron(), 1 } }, 96 },
+      Entry{      10097,      InteractionType::Nuclear, { "n(97)" }                                     , { { ParticleID::neutron(), 1 } }, 97 },
+      Entry{      10098,      InteractionType::Nuclear, { "n(98)" }                                     , { { ParticleID::neutron(), 1 } }, 98 },
+      Entry{      10099,      InteractionType::Nuclear, { "n(99)" }                                     , { { ParticleID::neutron(), 1 } }, 99 },
       Entry{      10150,  91, InteractionType::Nuclear, { "n(c)" }                                      , { { ParticleID::neutron(), 1 } }, LevelID::continuum },
       Entry{      10151,   4, InteractionType::Nuclear, { "n(t)", "n" }                                 , { { ParticleID::neutron(), 1 } }, LevelID::all },
 
@@ -296,6 +356,57 @@ namespace id {
       Entry{     100046, 646, InteractionType::Nuclear, { "p(46)" }                                     , { { ParticleID::proton(), 1 } }, 46 },
       Entry{     100047, 647, InteractionType::Nuclear, { "p(47)" }                                     , { { ParticleID::proton(), 1 } }, 47 },
       Entry{     100048, 648, InteractionType::Nuclear, { "p(48)" }                                     , { { ParticleID::proton(), 1 } }, 48 },
+      Entry{     100049,      InteractionType::Nuclear, { "p(49)" }                                     , { { ParticleID::proton(), 1 } }, 49 },
+      Entry{     100050,      InteractionType::Nuclear, { "p(50)" }                                     , { { ParticleID::proton(), 1 } }, 50 },
+      Entry{     100051,      InteractionType::Nuclear, { "p(51)" }                                     , { { ParticleID::proton(), 1 } }, 51 },
+      Entry{     100052,      InteractionType::Nuclear, { "p(52)" }                                     , { { ParticleID::proton(), 1 } }, 52 },
+      Entry{     100053,      InteractionType::Nuclear, { "p(53)" }                                     , { { ParticleID::proton(), 1 } }, 53 },
+      Entry{     100054,      InteractionType::Nuclear, { "p(54)" }                                     , { { ParticleID::proton(), 1 } }, 54 },
+      Entry{     100055,      InteractionType::Nuclear, { "p(55)" }                                     , { { ParticleID::proton(), 1 } }, 55 },
+      Entry{     100056,      InteractionType::Nuclear, { "p(56)" }                                     , { { ParticleID::proton(), 1 } }, 56 },
+      Entry{     100057,      InteractionType::Nuclear, { "p(57)" }                                     , { { ParticleID::proton(), 1 } }, 57 },
+      Entry{     100058,      InteractionType::Nuclear, { "p(58)" }                                     , { { ParticleID::proton(), 1 } }, 58 },
+      Entry{     100059,      InteractionType::Nuclear, { "p(59)" }                                     , { { ParticleID::proton(), 1 } }, 59 },
+      Entry{     100060,      InteractionType::Nuclear, { "p(60)" }                                     , { { ParticleID::proton(), 1 } }, 60 },
+      Entry{     100061,      InteractionType::Nuclear, { "p(61)" }                                     , { { ParticleID::proton(), 1 } }, 61 },
+      Entry{     100062,      InteractionType::Nuclear, { "p(62)" }                                     , { { ParticleID::proton(), 1 } }, 62 },
+      Entry{     100063,      InteractionType::Nuclear, { "p(63)" }                                     , { { ParticleID::proton(), 1 } }, 63 },
+      Entry{     100064,      InteractionType::Nuclear, { "p(64)" }                                     , { { ParticleID::proton(), 1 } }, 64 },
+      Entry{     100065,      InteractionType::Nuclear, { "p(65)" }                                     , { { ParticleID::proton(), 1 } }, 65 },
+      Entry{     100066,      InteractionType::Nuclear, { "p(66)" }                                     , { { ParticleID::proton(), 1 } }, 66 },
+      Entry{     100067,      InteractionType::Nuclear, { "p(67)" }                                     , { { ParticleID::proton(), 1 } }, 67 },
+      Entry{     100068,      InteractionType::Nuclear, { "p(68)" }                                     , { { ParticleID::proton(), 1 } }, 68 },
+      Entry{     100069,      InteractionType::Nuclear, { "p(69)" }                                     , { { ParticleID::proton(), 1 } }, 69 },
+      Entry{     100070,      InteractionType::Nuclear, { "p(70)" }                                     , { { ParticleID::proton(), 1 } }, 70 },
+      Entry{     100071,      InteractionType::Nuclear, { "p(71)" }                                     , { { ParticleID::proton(), 1 } }, 71 },
+      Entry{     100072,      InteractionType::Nuclear, { "p(72)" }                                     , { { ParticleID::proton(), 1 } }, 72 },
+      Entry{     100073,      InteractionType::Nuclear, { "p(73)" }                                     , { { ParticleID::proton(), 1 } }, 73 },
+      Entry{     100074,      InteractionType::Nuclear, { "p(74)" }                                     , { { ParticleID::proton(), 1 } }, 74 },
+      Entry{     100075,      InteractionType::Nuclear, { "p(75)" }                                     , { { ParticleID::proton(), 1 } }, 75 },
+      Entry{     100076,      InteractionType::Nuclear, { "p(76)" }                                     , { { ParticleID::proton(), 1 } }, 76 },
+      Entry{     100077,      InteractionType::Nuclear, { "p(77)" }                                     , { { ParticleID::proton(), 1 } }, 77 },
+      Entry{     100078,      InteractionType::Nuclear, { "p(78)" }                                     , { { ParticleID::proton(), 1 } }, 78 },
+      Entry{     100079,      InteractionType::Nuclear, { "p(79)" }                                     , { { ParticleID::proton(), 1 } }, 79 },
+      Entry{     100080,      InteractionType::Nuclear, { "p(80)" }                                     , { { ParticleID::proton(), 1 } }, 80 },
+      Entry{     100081,      InteractionType::Nuclear, { "p(81)" }                                     , { { ParticleID::proton(), 1 } }, 81 },
+      Entry{     100082,      InteractionType::Nuclear, { "p(82)" }                                     , { { ParticleID::proton(), 1 } }, 82 },
+      Entry{     100083,      InteractionType::Nuclear, { "p(83)" }                                     , { { ParticleID::proton(), 1 } }, 83 },
+      Entry{     100084,      InteractionType::Nuclear, { "p(84)" }                                     , { { ParticleID::proton(), 1 } }, 84 },
+      Entry{     100085,      InteractionType::Nuclear, { "p(85)" }                                     , { { ParticleID::proton(), 1 } }, 85 },
+      Entry{     100086,      InteractionType::Nuclear, { "p(86)" }                                     , { { ParticleID::proton(), 1 } }, 86 },
+      Entry{     100087,      InteractionType::Nuclear, { "p(87)" }                                     , { { ParticleID::proton(), 1 } }, 87 },
+      Entry{     100088,      InteractionType::Nuclear, { "p(88)" }                                     , { { ParticleID::proton(), 1 } }, 88 },
+      Entry{     100089,      InteractionType::Nuclear, { "p(89)" }                                     , { { ParticleID::proton(), 1 } }, 89 },
+      Entry{     100090,      InteractionType::Nuclear, { "p(90)" }                                     , { { ParticleID::proton(), 1 } }, 90 },
+      Entry{     100091,      InteractionType::Nuclear, { "p(91)" }                                     , { { ParticleID::proton(), 1 } }, 91 },
+      Entry{     100092,      InteractionType::Nuclear, { "p(92)" }                                     , { { ParticleID::proton(), 1 } }, 92 },
+      Entry{     100093,      InteractionType::Nuclear, { "p(93)" }                                     , { { ParticleID::proton(), 1 } }, 93 },
+      Entry{     100094,      InteractionType::Nuclear, { "p(94)" }                                     , { { ParticleID::proton(), 1 } }, 94 },
+      Entry{     100095,      InteractionType::Nuclear, { "p(95)" }                                     , { { ParticleID::proton(), 1 } }, 95 },
+      Entry{     100096,      InteractionType::Nuclear, { "p(96)" }                                     , { { ParticleID::proton(), 1 } }, 96 },
+      Entry{     100097,      InteractionType::Nuclear, { "p(97)" }                                     , { { ParticleID::proton(), 1 } }, 97 },
+      Entry{     100098,      InteractionType::Nuclear, { "p(98)" }                                     , { { ParticleID::proton(), 1 } }, 98 },
+      Entry{     100099,      InteractionType::Nuclear, { "p(99)" }                                     , { { ParticleID::proton(), 1 } }, 99 },
       Entry{     100150, 649, InteractionType::Nuclear, { "p(c)" }                                      , { { ParticleID::proton(), 1 } }, LevelID::continuum },
       Entry{     100151, 103, InteractionType::Nuclear, { "p(t)", "p" }                                 , { { ParticleID::proton(), 1 } }, LevelID::all },
       Entry{     110151,  28, InteractionType::Nuclear, { "np(t)", "np" , "n,p(t)", "n,p" }             , { { ParticleID::neutron(), 1 }, { ParticleID::proton(), 1 } }, LevelID::all },
@@ -363,6 +474,57 @@ namespace id {
       Entry{    1000046, 696, InteractionType::Nuclear, { "d(46)" }                                     , { { ParticleID::deuteron(), 1 } }, 46 },
       Entry{    1000047, 697, InteractionType::Nuclear, { "d(47)" }                                     , { { ParticleID::deuteron(), 1 } }, 47 },
       Entry{    1000048, 698, InteractionType::Nuclear, { "d(48)" }                                     , { { ParticleID::deuteron(), 1 } }, 48 },
+      Entry{    1000049,      InteractionType::Nuclear, { "d(49)" }                                     , { { ParticleID::deuteron(), 1 } }, 49 },
+      Entry{    1000050,      InteractionType::Nuclear, { "d(50)" }                                     , { { ParticleID::deuteron(), 1 } }, 50 },
+      Entry{    1000051,      InteractionType::Nuclear, { "d(51)" }                                     , { { ParticleID::deuteron(), 1 } }, 51 },
+      Entry{    1000052,      InteractionType::Nuclear, { "d(52)" }                                     , { { ParticleID::deuteron(), 1 } }, 52 },
+      Entry{    1000053,      InteractionType::Nuclear, { "d(53)" }                                     , { { ParticleID::deuteron(), 1 } }, 53 },
+      Entry{    1000054,      InteractionType::Nuclear, { "d(54)" }                                     , { { ParticleID::deuteron(), 1 } }, 54 },
+      Entry{    1000055,      InteractionType::Nuclear, { "d(55)" }                                     , { { ParticleID::deuteron(), 1 } }, 55 },
+      Entry{    1000056,      InteractionType::Nuclear, { "d(56)" }                                     , { { ParticleID::deuteron(), 1 } }, 56 },
+      Entry{    1000057,      InteractionType::Nuclear, { "d(57)" }                                     , { { ParticleID::deuteron(), 1 } }, 57 },
+      Entry{    1000058,      InteractionType::Nuclear, { "d(58)" }                                     , { { ParticleID::deuteron(), 1 } }, 58 },
+      Entry{    1000059,      InteractionType::Nuclear, { "d(59)" }                                     , { { ParticleID::deuteron(), 1 } }, 59 },
+      Entry{    1000060,      InteractionType::Nuclear, { "d(60)" }                                     , { { ParticleID::deuteron(), 1 } }, 60 },
+      Entry{    1000061,      InteractionType::Nuclear, { "d(61)" }                                     , { { ParticleID::deuteron(), 1 } }, 61 },
+      Entry{    1000062,      InteractionType::Nuclear, { "d(62)" }                                     , { { ParticleID::deuteron(), 1 } }, 62 },
+      Entry{    1000063,      InteractionType::Nuclear, { "d(63)" }                                     , { { ParticleID::deuteron(), 1 } }, 63 },
+      Entry{    1000064,      InteractionType::Nuclear, { "d(64)" }                                     , { { ParticleID::deuteron(), 1 } }, 64 },
+      Entry{    1000065,      InteractionType::Nuclear, { "d(65)" }                                     , { { ParticleID::deuteron(), 1 } }, 65 },
+      Entry{    1000066,      InteractionType::Nuclear, { "d(66)" }                                     , { { ParticleID::deuteron(), 1 } }, 66 },
+      Entry{    1000067,      InteractionType::Nuclear, { "d(67)" }                                     , { { ParticleID::deuteron(), 1 } }, 67 },
+      Entry{    1000068,      InteractionType::Nuclear, { "d(68)" }                                     , { { ParticleID::deuteron(), 1 } }, 68 },
+      Entry{    1000069,      InteractionType::Nuclear, { "d(69)" }                                     , { { ParticleID::deuteron(), 1 } }, 69 },
+      Entry{    1000070,      InteractionType::Nuclear, { "d(70)" }                                     , { { ParticleID::deuteron(), 1 } }, 70 },
+      Entry{    1000071,      InteractionType::Nuclear, { "d(71)" }                                     , { { ParticleID::deuteron(), 1 } }, 71 },
+      Entry{    1000072,      InteractionType::Nuclear, { "d(72)" }                                     , { { ParticleID::deuteron(), 1 } }, 72 },
+      Entry{    1000073,      InteractionType::Nuclear, { "d(73)" }                                     , { { ParticleID::deuteron(), 1 } }, 73 },
+      Entry{    1000074,      InteractionType::Nuclear, { "d(74)" }                                     , { { ParticleID::deuteron(), 1 } }, 74 },
+      Entry{    1000075,      InteractionType::Nuclear, { "d(75)" }                                     , { { ParticleID::deuteron(), 1 } }, 75 },
+      Entry{    1000076,      InteractionType::Nuclear, { "d(76)" }                                     , { { ParticleID::deuteron(), 1 } }, 76 },
+      Entry{    1000077,      InteractionType::Nuclear, { "d(77)" }                                     , { { ParticleID::deuteron(), 1 } }, 77 },
+      Entry{    1000078,      InteractionType::Nuclear, { "d(78)" }                                     , { { ParticleID::deuteron(), 1 } }, 78 },
+      Entry{    1000079,      InteractionType::Nuclear, { "d(79)" }                                     , { { ParticleID::deuteron(), 1 } }, 79 },
+      Entry{    1000080,      InteractionType::Nuclear, { "d(80)" }                                     , { { ParticleID::deuteron(), 1 } }, 80 },
+      Entry{    1000081,      InteractionType::Nuclear, { "d(81)" }                                     , { { ParticleID::deuteron(), 1 } }, 81 },
+      Entry{    1000082,      InteractionType::Nuclear, { "d(82)" }                                     , { { ParticleID::deuteron(), 1 } }, 82 },
+      Entry{    1000083,      InteractionType::Nuclear, { "d(83)" }                                     , { { ParticleID::deuteron(), 1 } }, 83 },
+      Entry{    1000084,      InteractionType::Nuclear, { "d(84)" }                                     , { { ParticleID::deuteron(), 1 } }, 84 },
+      Entry{    1000085,      InteractionType::Nuclear, { "d(85)" }                                     , { { ParticleID::deuteron(), 1 } }, 85 },
+      Entry{    1000086,      InteractionType::Nuclear, { "d(86)" }                                     , { { ParticleID::deuteron(), 1 } }, 86 },
+      Entry{    1000087,      InteractionType::Nuclear, { "d(87)" }                                     , { { ParticleID::deuteron(), 1 } }, 87 },
+      Entry{    1000088,      InteractionType::Nuclear, { "d(88)" }                                     , { { ParticleID::deuteron(), 1 } }, 88 },
+      Entry{    1000089,      InteractionType::Nuclear, { "d(89)" }                                     , { { ParticleID::deuteron(), 1 } }, 89 },
+      Entry{    1000090,      InteractionType::Nuclear, { "d(90)" }                                     , { { ParticleID::deuteron(), 1 } }, 90 },
+      Entry{    1000091,      InteractionType::Nuclear, { "d(91)" }                                     , { { ParticleID::deuteron(), 1 } }, 91 },
+      Entry{    1000092,      InteractionType::Nuclear, { "d(92)" }                                     , { { ParticleID::deuteron(), 1 } }, 92 },
+      Entry{    1000093,      InteractionType::Nuclear, { "d(93)" }                                     , { { ParticleID::deuteron(), 1 } }, 93 },
+      Entry{    1000094,      InteractionType::Nuclear, { "d(94)" }                                     , { { ParticleID::deuteron(), 1 } }, 94 },
+      Entry{    1000095,      InteractionType::Nuclear, { "d(95)" }                                     , { { ParticleID::deuteron(), 1 } }, 95 },
+      Entry{    1000096,      InteractionType::Nuclear, { "d(96)" }                                     , { { ParticleID::deuteron(), 1 } }, 96 },
+      Entry{    1000097,      InteractionType::Nuclear, { "d(97)" }                                     , { { ParticleID::deuteron(), 1 } }, 97 },
+      Entry{    1000098,      InteractionType::Nuclear, { "d(98)" }                                     , { { ParticleID::deuteron(), 1 } }, 98 },
+      Entry{    1000099,      InteractionType::Nuclear, { "d(99)" }                                     , { { ParticleID::deuteron(), 1 } }, 99 },
       Entry{    1000150, 699, InteractionType::Nuclear, { "d(c)" }                                      , { { ParticleID::deuteron(), 1 } }, LevelID::continuum },
       Entry{    1000151, 104, InteractionType::Nuclear, { "d(t)", "d" }                                 , { { ParticleID::deuteron(), 1 } }, LevelID::all },
       Entry{    1010151,  32, InteractionType::Nuclear, { "nd(t)", "nd", "n,d(t)", "n,d" }              , { { ParticleID::neutron(), 1 }, { ParticleID::deuteron(), 1 } }, LevelID::all },
@@ -422,6 +584,57 @@ namespace id {
       Entry{   10000046, 746, InteractionType::Nuclear, { "t(46)" }                                     , { { ParticleID::triton(), 1 } }, 46 },
       Entry{   10000047, 747, InteractionType::Nuclear, { "t(47)" }                                     , { { ParticleID::triton(), 1 } }, 47 },
       Entry{   10000048, 748, InteractionType::Nuclear, { "t(48)" }                                     , { { ParticleID::triton(), 1 } }, 48 },
+      Entry{   10000049,      InteractionType::Nuclear, { "t(49)" }                                     , { { ParticleID::triton(), 1 } }, 49 },
+      Entry{   10000050,      InteractionType::Nuclear, { "t(50)" }                                     , { { ParticleID::triton(), 1 } }, 50 },
+      Entry{   10000051,      InteractionType::Nuclear, { "t(51)" }                                     , { { ParticleID::triton(), 1 } }, 51 },
+      Entry{   10000052,      InteractionType::Nuclear, { "t(52)" }                                     , { { ParticleID::triton(), 1 } }, 52 },
+      Entry{   10000053,      InteractionType::Nuclear, { "t(53)" }                                     , { { ParticleID::triton(), 1 } }, 53 },
+      Entry{   10000054,      InteractionType::Nuclear, { "t(54)" }                                     , { { ParticleID::triton(), 1 } }, 54 },
+      Entry{   10000055,      InteractionType::Nuclear, { "t(55)" }                                     , { { ParticleID::triton(), 1 } }, 55 },
+      Entry{   10000056,      InteractionType::Nuclear, { "t(56)" }                                     , { { ParticleID::triton(), 1 } }, 56 },
+      Entry{   10000057,      InteractionType::Nuclear, { "t(57)" }                                     , { { ParticleID::triton(), 1 } }, 57 },
+      Entry{   10000058,      InteractionType::Nuclear, { "t(58)" }                                     , { { ParticleID::triton(), 1 } }, 58 },
+      Entry{   10000059,      InteractionType::Nuclear, { "t(59)" }                                     , { { ParticleID::triton(), 1 } }, 59 },
+      Entry{   10000060,      InteractionType::Nuclear, { "t(60)" }                                     , { { ParticleID::triton(), 1 } }, 60 },
+      Entry{   10000061,      InteractionType::Nuclear, { "t(61)" }                                     , { { ParticleID::triton(), 1 } }, 61 },
+      Entry{   10000062,      InteractionType::Nuclear, { "t(62)" }                                     , { { ParticleID::triton(), 1 } }, 62 },
+      Entry{   10000063,      InteractionType::Nuclear, { "t(63)" }                                     , { { ParticleID::triton(), 1 } }, 63 },
+      Entry{   10000064,      InteractionType::Nuclear, { "t(64)" }                                     , { { ParticleID::triton(), 1 } }, 64 },
+      Entry{   10000065,      InteractionType::Nuclear, { "t(65)" }                                     , { { ParticleID::triton(), 1 } }, 65 },
+      Entry{   10000066,      InteractionType::Nuclear, { "t(66)" }                                     , { { ParticleID::triton(), 1 } }, 66 },
+      Entry{   10000067,      InteractionType::Nuclear, { "t(67)" }                                     , { { ParticleID::triton(), 1 } }, 67 },
+      Entry{   10000068,      InteractionType::Nuclear, { "t(68)" }                                     , { { ParticleID::triton(), 1 } }, 68 },
+      Entry{   10000069,      InteractionType::Nuclear, { "t(69)" }                                     , { { ParticleID::triton(), 1 } }, 69 },
+      Entry{   10000070,      InteractionType::Nuclear, { "t(70)" }                                     , { { ParticleID::triton(), 1 } }, 70 },
+      Entry{   10000071,      InteractionType::Nuclear, { "t(71)" }                                     , { { ParticleID::triton(), 1 } }, 71 },
+      Entry{   10000072,      InteractionType::Nuclear, { "t(72)" }                                     , { { ParticleID::triton(), 1 } }, 72 },
+      Entry{   10000073,      InteractionType::Nuclear, { "t(73)" }                                     , { { ParticleID::triton(), 1 } }, 73 },
+      Entry{   10000074,      InteractionType::Nuclear, { "t(74)" }                                     , { { ParticleID::triton(), 1 } }, 74 },
+      Entry{   10000075,      InteractionType::Nuclear, { "t(75)" }                                     , { { ParticleID::triton(), 1 } }, 75 },
+      Entry{   10000076,      InteractionType::Nuclear, { "t(76)" }                                     , { { ParticleID::triton(), 1 } }, 76 },
+      Entry{   10000077,      InteractionType::Nuclear, { "t(77)" }                                     , { { ParticleID::triton(), 1 } }, 77 },
+      Entry{   10000078,      InteractionType::Nuclear, { "t(78)" }                                     , { { ParticleID::triton(), 1 } }, 78 },
+      Entry{   10000079,      InteractionType::Nuclear, { "t(79)" }                                     , { { ParticleID::triton(), 1 } }, 79 },
+      Entry{   10000080,      InteractionType::Nuclear, { "t(80)" }                                     , { { ParticleID::triton(), 1 } }, 80 },
+      Entry{   10000081,      InteractionType::Nuclear, { "t(81)" }                                     , { { ParticleID::triton(), 1 } }, 81 },
+      Entry{   10000082,      InteractionType::Nuclear, { "t(82)" }                                     , { { ParticleID::triton(), 1 } }, 82 },
+      Entry{   10000083,      InteractionType::Nuclear, { "t(83)" }                                     , { { ParticleID::triton(), 1 } }, 83 },
+      Entry{   10000084,      InteractionType::Nuclear, { "t(84)" }                                     , { { ParticleID::triton(), 1 } }, 84 },
+      Entry{   10000085,      InteractionType::Nuclear, { "t(85)" }                                     , { { ParticleID::triton(), 1 } }, 85 },
+      Entry{   10000086,      InteractionType::Nuclear, { "t(86)" }                                     , { { ParticleID::triton(), 1 } }, 86 },
+      Entry{   10000087,      InteractionType::Nuclear, { "t(87)" }                                     , { { ParticleID::triton(), 1 } }, 87 },
+      Entry{   10000088,      InteractionType::Nuclear, { "t(88)" }                                     , { { ParticleID::triton(), 1 } }, 88 },
+      Entry{   10000089,      InteractionType::Nuclear, { "t(89)" }                                     , { { ParticleID::triton(), 1 } }, 89 },
+      Entry{   10000090,      InteractionType::Nuclear, { "t(90)" }                                     , { { ParticleID::triton(), 1 } }, 90 },
+      Entry{   10000091,      InteractionType::Nuclear, { "t(91)" }                                     , { { ParticleID::triton(), 1 } }, 91 },
+      Entry{   10000092,      InteractionType::Nuclear, { "t(92)" }                                     , { { ParticleID::triton(), 1 } }, 92 },
+      Entry{   10000093,      InteractionType::Nuclear, { "t(93)" }                                     , { { ParticleID::triton(), 1 } }, 93 },
+      Entry{   10000094,      InteractionType::Nuclear, { "t(94)" }                                     , { { ParticleID::triton(), 1 } }, 94 },
+      Entry{   10000095,      InteractionType::Nuclear, { "t(95)" }                                     , { { ParticleID::triton(), 1 } }, 95 },
+      Entry{   10000096,      InteractionType::Nuclear, { "t(96)" }                                     , { { ParticleID::triton(), 1 } }, 96 },
+      Entry{   10000097,      InteractionType::Nuclear, { "t(97)" }                                     , { { ParticleID::triton(), 1 } }, 97 },
+      Entry{   10000098,      InteractionType::Nuclear, { "t(98)" }                                     , { { ParticleID::triton(), 1 } }, 98 },
+      Entry{   10000099,      InteractionType::Nuclear, { "t(99)" }                                     , { { ParticleID::triton(), 1 } }, 99 },
       Entry{   10000150, 749, InteractionType::Nuclear, { "t(c)" }                                      , { { ParticleID::triton(), 1 } }, LevelID::continuum },
       Entry{   10000151, 105, InteractionType::Nuclear, { "t(t)", "t" }                                 , { { ParticleID::triton(), 1 } }, LevelID::all },
       Entry{   10010151,  33, InteractionType::Nuclear, { "nt(t)", "nt" , "n,t(t)", "n,t" }             , { { ParticleID::neutron(), 1 }, { ParticleID::triton(), 1 } }, LevelID::all },
@@ -484,6 +697,57 @@ namespace id {
       Entry{  100000046, 796, InteractionType::Nuclear, { "h(46)" }                                     , { { ParticleID::helion(), 1 } }, 46 },
       Entry{  100000047, 797, InteractionType::Nuclear, { "h(47)" }                                     , { { ParticleID::helion(), 1 } }, 47 },
       Entry{  100000048, 798, InteractionType::Nuclear, { "h(48)" }                                     , { { ParticleID::helion(), 1 } }, 48 },
+      Entry{  100000049,      InteractionType::Nuclear, { "h(49)" }                                     , { { ParticleID::helion(), 1 } }, 49 },
+      Entry{  100000050,      InteractionType::Nuclear, { "h(50)" }                                     , { { ParticleID::helion(), 1 } }, 50 },
+      Entry{  100000051,      InteractionType::Nuclear, { "h(51)" }                                     , { { ParticleID::helion(), 1 } }, 51 },
+      Entry{  100000052,      InteractionType::Nuclear, { "h(52)" }                                     , { { ParticleID::helion(), 1 } }, 52 },
+      Entry{  100000053,      InteractionType::Nuclear, { "h(53)" }                                     , { { ParticleID::helion(), 1 } }, 53 },
+      Entry{  100000054,      InteractionType::Nuclear, { "h(54)" }                                     , { { ParticleID::helion(), 1 } }, 54 },
+      Entry{  100000055,      InteractionType::Nuclear, { "h(55)" }                                     , { { ParticleID::helion(), 1 } }, 55 },
+      Entry{  100000056,      InteractionType::Nuclear, { "h(56)" }                                     , { { ParticleID::helion(), 1 } }, 56 },
+      Entry{  100000057,      InteractionType::Nuclear, { "h(57)" }                                     , { { ParticleID::helion(), 1 } }, 57 },
+      Entry{  100000058,      InteractionType::Nuclear, { "h(58)" }                                     , { { ParticleID::helion(), 1 } }, 58 },
+      Entry{  100000059,      InteractionType::Nuclear, { "h(59)" }                                     , { { ParticleID::helion(), 1 } }, 59 },
+      Entry{  100000060,      InteractionType::Nuclear, { "h(60)" }                                     , { { ParticleID::helion(), 1 } }, 60 },
+      Entry{  100000061,      InteractionType::Nuclear, { "h(61)" }                                     , { { ParticleID::helion(), 1 } }, 61 },
+      Entry{  100000062,      InteractionType::Nuclear, { "h(62)" }                                     , { { ParticleID::helion(), 1 } }, 62 },
+      Entry{  100000063,      InteractionType::Nuclear, { "h(63)" }                                     , { { ParticleID::helion(), 1 } }, 63 },
+      Entry{  100000064,      InteractionType::Nuclear, { "h(64)" }                                     , { { ParticleID::helion(), 1 } }, 64 },
+      Entry{  100000065,      InteractionType::Nuclear, { "h(65)" }                                     , { { ParticleID::helion(), 1 } }, 65 },
+      Entry{  100000066,      InteractionType::Nuclear, { "h(66)" }                                     , { { ParticleID::helion(), 1 } }, 66 },
+      Entry{  100000067,      InteractionType::Nuclear, { "h(67)" }                                     , { { ParticleID::helion(), 1 } }, 67 },
+      Entry{  100000068,      InteractionType::Nuclear, { "h(68)" }                                     , { { ParticleID::helion(), 1 } }, 68 },
+      Entry{  100000069,      InteractionType::Nuclear, { "h(69)" }                                     , { { ParticleID::helion(), 1 } }, 69 },
+      Entry{  100000070,      InteractionType::Nuclear, { "h(70)" }                                     , { { ParticleID::helion(), 1 } }, 70 },
+      Entry{  100000071,      InteractionType::Nuclear, { "h(71)" }                                     , { { ParticleID::helion(), 1 } }, 71 },
+      Entry{  100000072,      InteractionType::Nuclear, { "h(72)" }                                     , { { ParticleID::helion(), 1 } }, 72 },
+      Entry{  100000073,      InteractionType::Nuclear, { "h(73)" }                                     , { { ParticleID::helion(), 1 } }, 73 },
+      Entry{  100000074,      InteractionType::Nuclear, { "h(74)" }                                     , { { ParticleID::helion(), 1 } }, 74 },
+      Entry{  100000075,      InteractionType::Nuclear, { "h(75)" }                                     , { { ParticleID::helion(), 1 } }, 75 },
+      Entry{  100000076,      InteractionType::Nuclear, { "h(76)" }                                     , { { ParticleID::helion(), 1 } }, 76 },
+      Entry{  100000077,      InteractionType::Nuclear, { "h(77)" }                                     , { { ParticleID::helion(), 1 } }, 77 },
+      Entry{  100000078,      InteractionType::Nuclear, { "h(78)" }                                     , { { ParticleID::helion(), 1 } }, 78 },
+      Entry{  100000079,      InteractionType::Nuclear, { "h(79)" }                                     , { { ParticleID::helion(), 1 } }, 79 },
+      Entry{  100000080,      InteractionType::Nuclear, { "h(80)" }                                     , { { ParticleID::helion(), 1 } }, 80 },
+      Entry{  100000081,      InteractionType::Nuclear, { "h(81)" }                                     , { { ParticleID::helion(), 1 } }, 81 },
+      Entry{  100000082,      InteractionType::Nuclear, { "h(82)" }                                     , { { ParticleID::helion(), 1 } }, 82 },
+      Entry{  100000083,      InteractionType::Nuclear, { "h(83)" }                                     , { { ParticleID::helion(), 1 } }, 83 },
+      Entry{  100000084,      InteractionType::Nuclear, { "h(84)" }                                     , { { ParticleID::helion(), 1 } }, 84 },
+      Entry{  100000085,      InteractionType::Nuclear, { "h(85)" }                                     , { { ParticleID::helion(), 1 } }, 85 },
+      Entry{  100000086,      InteractionType::Nuclear, { "h(86)" }                                     , { { ParticleID::helion(), 1 } }, 86 },
+      Entry{  100000087,      InteractionType::Nuclear, { "h(87)" }                                     , { { ParticleID::helion(), 1 } }, 87 },
+      Entry{  100000088,      InteractionType::Nuclear, { "h(88)" }                                     , { { ParticleID::helion(), 1 } }, 88 },
+      Entry{  100000089,      InteractionType::Nuclear, { "h(89)" }                                     , { { ParticleID::helion(), 1 } }, 89 },
+      Entry{  100000090,      InteractionType::Nuclear, { "h(90)" }                                     , { { ParticleID::helion(), 1 } }, 90 },
+      Entry{  100000091,      InteractionType::Nuclear, { "h(91)" }                                     , { { ParticleID::helion(), 1 } }, 91 },
+      Entry{  100000092,      InteractionType::Nuclear, { "h(92)" }                                     , { { ParticleID::helion(), 1 } }, 92 },
+      Entry{  100000093,      InteractionType::Nuclear, { "h(93)" }                                     , { { ParticleID::helion(), 1 } }, 93 },
+      Entry{  100000094,      InteractionType::Nuclear, { "h(94)" }                                     , { { ParticleID::helion(), 1 } }, 94 },
+      Entry{  100000095,      InteractionType::Nuclear, { "h(95)" }                                     , { { ParticleID::helion(), 1 } }, 95 },
+      Entry{  100000096,      InteractionType::Nuclear, { "h(96)" }                                     , { { ParticleID::helion(), 1 } }, 96 },
+      Entry{  100000097,      InteractionType::Nuclear, { "h(97)" }                                     , { { ParticleID::helion(), 1 } }, 97 },
+      Entry{  100000098,      InteractionType::Nuclear, { "h(98)" }                                     , { { ParticleID::helion(), 1 } }, 98 },
+      Entry{  100000099,      InteractionType::Nuclear, { "h(99)" }                                     , { { ParticleID::helion(), 1 } }, 99 },
       Entry{  100000150, 799, InteractionType::Nuclear, { "h(c)" }                                      , { { ParticleID::helion(), 1 } }, LevelID::continuum },
       Entry{  100000151, 106, InteractionType::Nuclear, { "h(t)", "h" }                                 , { { ParticleID::helion(), 1 } }, LevelID::all },
       Entry{  100010151,  34, InteractionType::Nuclear, { "nh(t)", "nh" , "n,h(t)", "n,h" }             , { { ParticleID::neutron(), 1 }, { ParticleID::helion(), 1 } }, LevelID::all },
@@ -545,6 +809,57 @@ namespace id {
       Entry{ 1000000046, 846, InteractionType::Nuclear, { "a(46)" }                                     , { { ParticleID::alpha(), 1 } }, 46 },
       Entry{ 1000000047, 847, InteractionType::Nuclear, { "a(47)" }                                     , { { ParticleID::alpha(), 1 } }, 47 },
       Entry{ 1000000048, 848, InteractionType::Nuclear, { "a(48)" }                                     , { { ParticleID::alpha(), 1 } }, 48 },
+      Entry{ 1000000049,      InteractionType::Nuclear, { "a(49)" }                                     , { { ParticleID::alpha(), 1 } }, 49 },
+      Entry{ 1000000050,      InteractionType::Nuclear, { "a(50)" }                                     , { { ParticleID::alpha(), 1 } }, 50 },
+      Entry{ 1000000051,      InteractionType::Nuclear, { "a(51)" }                                     , { { ParticleID::alpha(), 1 } }, 51 },
+      Entry{ 1000000052,      InteractionType::Nuclear, { "a(52)" }                                     , { { ParticleID::alpha(), 1 } }, 52 },
+      Entry{ 1000000053,      InteractionType::Nuclear, { "a(53)" }                                     , { { ParticleID::alpha(), 1 } }, 53 },
+      Entry{ 1000000054,      InteractionType::Nuclear, { "a(54)" }                                     , { { ParticleID::alpha(), 1 } }, 54 },
+      Entry{ 1000000055,      InteractionType::Nuclear, { "a(55)" }                                     , { { ParticleID::alpha(), 1 } }, 55 },
+      Entry{ 1000000056,      InteractionType::Nuclear, { "a(56)" }                                     , { { ParticleID::alpha(), 1 } }, 56 },
+      Entry{ 1000000057,      InteractionType::Nuclear, { "a(57)" }                                     , { { ParticleID::alpha(), 1 } }, 57 },
+      Entry{ 1000000058,      InteractionType::Nuclear, { "a(58)" }                                     , { { ParticleID::alpha(), 1 } }, 58 },
+      Entry{ 1000000059,      InteractionType::Nuclear, { "a(59)" }                                     , { { ParticleID::alpha(), 1 } }, 59 },
+      Entry{ 1000000060,      InteractionType::Nuclear, { "a(60)" }                                     , { { ParticleID::alpha(), 1 } }, 60 },
+      Entry{ 1000000061,      InteractionType::Nuclear, { "a(61)" }                                     , { { ParticleID::alpha(), 1 } }, 61 },
+      Entry{ 1000000062,      InteractionType::Nuclear, { "a(62)" }                                     , { { ParticleID::alpha(), 1 } }, 62 },
+      Entry{ 1000000063,      InteractionType::Nuclear, { "a(63)" }                                     , { { ParticleID::alpha(), 1 } }, 63 },
+      Entry{ 1000000064,      InteractionType::Nuclear, { "a(64)" }                                     , { { ParticleID::alpha(), 1 } }, 64 },
+      Entry{ 1000000065,      InteractionType::Nuclear, { "a(65)" }                                     , { { ParticleID::alpha(), 1 } }, 65 },
+      Entry{ 1000000066,      InteractionType::Nuclear, { "a(66)" }                                     , { { ParticleID::alpha(), 1 } }, 66 },
+      Entry{ 1000000067,      InteractionType::Nuclear, { "a(67)" }                                     , { { ParticleID::alpha(), 1 } }, 67 },
+      Entry{ 1000000068,      InteractionType::Nuclear, { "a(68)" }                                     , { { ParticleID::alpha(), 1 } }, 68 },
+      Entry{ 1000000069,      InteractionType::Nuclear, { "a(69)" }                                     , { { ParticleID::alpha(), 1 } }, 69 },
+      Entry{ 1000000070,      InteractionType::Nuclear, { "a(70)" }                                     , { { ParticleID::alpha(), 1 } }, 70 },
+      Entry{ 1000000071,      InteractionType::Nuclear, { "a(71)" }                                     , { { ParticleID::alpha(), 1 } }, 71 },
+      Entry{ 1000000072,      InteractionType::Nuclear, { "a(72)" }                                     , { { ParticleID::alpha(), 1 } }, 72 },
+      Entry{ 1000000073,      InteractionType::Nuclear, { "a(73)" }                                     , { { ParticleID::alpha(), 1 } }, 73 },
+      Entry{ 1000000074,      InteractionType::Nuclear, { "a(74)" }                                     , { { ParticleID::alpha(), 1 } }, 74 },
+      Entry{ 1000000075,      InteractionType::Nuclear, { "a(75)" }                                     , { { ParticleID::alpha(), 1 } }, 75 },
+      Entry{ 1000000076,      InteractionType::Nuclear, { "a(76)" }                                     , { { ParticleID::alpha(), 1 } }, 76 },
+      Entry{ 1000000077,      InteractionType::Nuclear, { "a(77)" }                                     , { { ParticleID::alpha(), 1 } }, 77 },
+      Entry{ 1000000078,      InteractionType::Nuclear, { "a(78)" }                                     , { { ParticleID::alpha(), 1 } }, 78 },
+      Entry{ 1000000079,      InteractionType::Nuclear, { "a(79)" }                                     , { { ParticleID::alpha(), 1 } }, 79 },
+      Entry{ 1000000080,      InteractionType::Nuclear, { "a(80)" }                                     , { { ParticleID::alpha(), 1 } }, 80 },
+      Entry{ 1000000081,      InteractionType::Nuclear, { "a(81)" }                                     , { { ParticleID::alpha(), 1 } }, 81 },
+      Entry{ 1000000082,      InteractionType::Nuclear, { "a(82)" }                                     , { { ParticleID::alpha(), 1 } }, 82 },
+      Entry{ 1000000083,      InteractionType::Nuclear, { "a(83)" }                                     , { { ParticleID::alpha(), 1 } }, 83 },
+      Entry{ 1000000084,      InteractionType::Nuclear, { "a(84)" }                                     , { { ParticleID::alpha(), 1 } }, 84 },
+      Entry{ 1000000085,      InteractionType::Nuclear, { "a(85)" }                                     , { { ParticleID::alpha(), 1 } }, 85 },
+      Entry{ 1000000086,      InteractionType::Nuclear, { "a(86)" }                                     , { { ParticleID::alpha(), 1 } }, 86 },
+      Entry{ 1000000087,      InteractionType::Nuclear, { "a(87)" }                                     , { { ParticleID::alpha(), 1 } }, 87 },
+      Entry{ 1000000088,      InteractionType::Nuclear, { "a(88)" }                                     , { { ParticleID::alpha(), 1 } }, 88 },
+      Entry{ 1000000089,      InteractionType::Nuclear, { "a(89)" }                                     , { { ParticleID::alpha(), 1 } }, 89 },
+      Entry{ 1000000090,      InteractionType::Nuclear, { "a(90)" }                                     , { { ParticleID::alpha(), 1 } }, 90 },
+      Entry{ 1000000091,      InteractionType::Nuclear, { "a(91)" }                                     , { { ParticleID::alpha(), 1 } }, 91 },
+      Entry{ 1000000092,      InteractionType::Nuclear, { "a(92)" }                                     , { { ParticleID::alpha(), 1 } }, 92 },
+      Entry{ 1000000093,      InteractionType::Nuclear, { "a(93)" }                                     , { { ParticleID::alpha(), 1 } }, 93 },
+      Entry{ 1000000094,      InteractionType::Nuclear, { "a(94)" }                                     , { { ParticleID::alpha(), 1 } }, 94 },
+      Entry{ 1000000095,      InteractionType::Nuclear, { "a(95)" }                                     , { { ParticleID::alpha(), 1 } }, 95 },
+      Entry{ 1000000096,      InteractionType::Nuclear, { "a(96)" }                                     , { { ParticleID::alpha(), 1 } }, 96 },
+      Entry{ 1000000097,      InteractionType::Nuclear, { "a(97)" }                                     , { { ParticleID::alpha(), 1 } }, 97 },
+      Entry{ 1000000098,      InteractionType::Nuclear, { "a(98)" }                                     , { { ParticleID::alpha(), 1 } }, 98 },
+      Entry{ 1000000099,      InteractionType::Nuclear, { "a(99)" }                                     , { { ParticleID::alpha(), 1 } }, 99 },
       Entry{ 1000000150, 849, InteractionType::Nuclear, { "a(c)" }                                      , { { ParticleID::alpha(), 1 } }, LevelID::continuum },
       Entry{ 1000000151, 107, InteractionType::Nuclear, { "a(t)", "a" }                                 , { { ParticleID::alpha(), 1 } }, LevelID::all },
       Entry{ 1000010151,  22, InteractionType::Nuclear, { "na(t)", "na", "n,a(t)", "n,a" }              , { { ParticleID::neutron(), 1 }, { ParticleID::alpha(), 1 } }, LevelID::all },
@@ -760,6 +1075,11 @@ namespace id {
 
     /* predefined identifiers */
 
+    /**
+     *  @brief Return the total reaction type
+     *
+     *  @param[in] type   the interaction type (nuclear or atomic)
+     */
     static ReactionType
     total( const InteractionType& type = InteractionType::Nuclear ) {
 
@@ -769,46 +1089,54 @@ namespace id {
       }
       else {
 
-        return ReactionType( static_cast< std::size_t >( 533 ) );
+        return ReactionType( static_cast< std::size_t >( 848 ) );
       }
     };
 
+    /**
+     *  @brief Return the elastic reaction type
+     *
+     *  @param[in] projectile   the projectile
+     *  @param[in] level.       the level number of the target (default = 0)
+     */
     static ReactionType
-    elastic( const ParticleID& projectile ) {
+    elastic( const ParticleID& projectile, int level = 0 ) {
 
-      if ( projectile == ParticleID::neutron() ) {
+      if ( level >= 0 && level < 100 ) {
 
-        return ReactionType( static_cast< std::size_t >( 131 ) );
+        if ( projectile == ParticleID::neutron() ) {
+
+          return ReactionType( static_cast< std::size_t >( 132 + level ) );
+        }
+        else if ( projectile == ParticleID::photon() ) {
+
+          return ReactionType( static_cast< std::size_t >( 30 + level ) );
+        }
+        else if ( projectile == ParticleID::proton() ) {
+
+          return ReactionType( static_cast< std::size_t >( 258 + level ) );
+        }
+        else if ( projectile == ParticleID::deuteron() ) {
+
+          return ReactionType( static_cast< std::size_t >( 375 + level ) );
+        }
+        else if ( projectile == ParticleID::triton() ) {
+
+          return ReactionType( static_cast< std::size_t >( 484 + level ) );
+        }
+        else if ( projectile == ParticleID::helion() ) {
+
+          return ReactionType( static_cast< std::size_t >( 596 + level ) );
+        }
+        else if ( projectile == ParticleID::alpha() ) {
+
+          return ReactionType( static_cast< std::size_t >( 707 + level ) );
+        }
       }
-      else if ( projectile == ParticleID::photon() ) {
 
-        return ReactionType( static_cast< std::size_t >( 30 ) );
-      }
-      else if ( projectile == ParticleID::proton() ) {
-
-        return ReactionType( static_cast< std::size_t >( 198 ) );
-      }
-      else if ( projectile == ParticleID::deuteron() ) {
-
-        return ReactionType( static_cast< std::size_t >( 264 ) );
-      }
-      else if ( projectile == ParticleID::triton() ) {
-
-        return ReactionType( static_cast< std::size_t >( 322 ) );
-      }
-      else if ( projectile == ParticleID::helion() ) {
-
-        return ReactionType( static_cast< std::size_t >( 383 ) );
-      }
-      else if ( projectile == ParticleID::alpha() ) {
-
-        return ReactionType( static_cast< std::size_t >( 443 ) );
-      }
-      else {
-
-        Log::error( "Elastic scattering for \'{}\' is not defined", projectile.symbol() );
-        throw std::exception();
-      }
+      Log::error( "Elastic scattering for \'{}\' to level \'{}\' is not defined",
+                  projectile.symbol(), level );
+      throw std::exception();
     };
 
     /* static methods */

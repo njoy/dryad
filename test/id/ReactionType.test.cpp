@@ -30,6 +30,7 @@ SCENARIO( "ReactionType" ) {
     auto eplus = ParticleID::positron();
 
     auto u238 = ParticleID( 92238 );
+    auto u238_e2 = ParticleID( 92238, 2 );
     auto u = ParticleID( 92000 );
 
     auto nuclear = InteractionType::Nuclear;
@@ -189,6 +190,8 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       // standard incident neutron and charged particle reaction types
+
+      // elastic for a ground state target
       id = ReactionType::elastic( g );
       CHECK( 1000 == id.number() );
       CHECK( std::nullopt == id.mt() );
@@ -200,9 +203,12 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isCompatibleWithENDF() );
       CHECK( std::nullopt == id.partialDesignator() );
       CHECK( false == id.hasPartialDesignator() );
+      CHECK( id == ReactionType( g, 2 ) );
+      CHECK( id == ReactionType( g, 2, 0 ) );
       CHECK( id == ReactionType( empty, 0 ) );
       CHECK( id == ReactionType( { { g, 1 } }, 0 ) );
       CHECK( id == ReactionType( "g(0)" ) );
+      CHECK( id == ReactionType::elastic( g, 0 ) );
       CHECK( u238 == id.resolve( g, u238 ) );
 
       id = ReactionType::elastic( n );
@@ -217,8 +223,10 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( n, 2 ) );
+      CHECK( id == ReactionType( n, 2, 0 ) );
       CHECK( id == ReactionType( { { n, 1 } }, 0 ) );
       CHECK( id == ReactionType( "n(0)" ) );
+      CHECK( id == ReactionType::elastic( n, 0 ) );
       CHECK( u238 == id.resolve( n, u238 ) );
 
       id = ReactionType::elastic( p );
@@ -233,8 +241,10 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( p, 2 ) );
+      CHECK( id == ReactionType( p, 2, 0 ) );
       CHECK( id == ReactionType( { { p, 1 } }, 0 ) );
       CHECK( id == ReactionType( "p(0)" ) );
+      CHECK( id == ReactionType::elastic( p, 0 ) );
       CHECK( u238 == id.resolve( p, u238 ) );
 
       id = ReactionType::elastic( d );
@@ -249,8 +259,10 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( d, 2 ) );
+      CHECK( id == ReactionType( d, 2, 0 ) );
       CHECK( id == ReactionType( { { d, 1 } }, 0 ) );
       CHECK( id == ReactionType( "d(0)" ) );
+      CHECK( id == ReactionType::elastic( d, 0 ) );
       CHECK( u238 == id.resolve( d, u238 ) );
 
       id = ReactionType::elastic( t );
@@ -265,8 +277,10 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( t, 2 ) );
+      CHECK( id == ReactionType( t, 2, 0 ) );
       CHECK( id == ReactionType( { { t, 1 } }, 0 ) );
       CHECK( id == ReactionType( "t(0)" ) );
+      CHECK( id == ReactionType::elastic( t, 0 ) );
       CHECK( u238 == id.resolve( t, u238 ) );
 
       id = ReactionType::elastic( h );
@@ -281,8 +295,10 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( h, 2 ) );
+      CHECK( id == ReactionType( h, 2, 0 ) );
       CHECK( id == ReactionType( { { h, 1 } }, 0 ) );
       CHECK( id == ReactionType( "h(0)" ) );
+      CHECK( id == ReactionType::elastic( h, 0 ) );
       CHECK( u238 == id.resolve( h, u238 ) );
 
       id = ReactionType::elastic( a );
@@ -297,10 +313,127 @@ SCENARIO( "ReactionType" ) {
       CHECK( false == id.isSpecial() );
       CHECK( true == id.isCompatibleWithENDF() );
       CHECK( id == ReactionType( a, 2 ) );
+      CHECK( id == ReactionType( a, 2, 0 ) );
       CHECK( id == ReactionType( { { a, 1 } }, 0 ) );
       CHECK( id == ReactionType( "a(0)" ) );
+      CHECK( id == ReactionType::elastic( a, 0 ) );
       CHECK( u238 == id.resolve( a, u238 ) );
 
+      // elastic for an excited state target
+      id = ReactionType::elastic( g, 2 );
+      CHECK( 1002 == id.number() );
+      CHECK( std::nullopt == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "g(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{} == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( false == id.isSpecial() );
+      CHECK( false == id.isCompatibleWithENDF() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( id == ReactionType( g, 2, 2 ) );
+      CHECK( id == ReactionType( empty, 2 ) );
+      CHECK( id == ReactionType( { { g, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "g(2)" ) );
+      CHECK( u238_e2 == id.resolve( g, u238_e2 ) );
+
+      id = ReactionType::elastic( n, 2 );
+      CHECK( 10002 == id.number() );
+      CHECK( 52 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "n(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( n, 2, 2 ) );
+      CHECK( id == ReactionType( { { n, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "n(2)" ) );
+      CHECK( u238_e2 == id.resolve( n, u238_e2 ) );
+
+      id = ReactionType::elastic( p, 2 );
+      CHECK( 100002 == id.number() );
+      CHECK( 602 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "p(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { p, 1 } } == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( p, 2, 2 ) );
+      CHECK( id == ReactionType( { { p, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "p(2)" ) );
+      CHECK( u238_e2 == id.resolve( p, u238_e2 ) );
+
+      id = ReactionType::elastic( d, 2 );
+      CHECK( 1000002 == id.number() );
+      CHECK( 652 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "d(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { d, 1 } } == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( d, 2, 2 ) );
+      CHECK( id == ReactionType( { { d, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "d(2)" ) );
+      CHECK( u238_e2 == id.resolve( d, u238_e2 ) );
+
+      id = ReactionType::elastic( t, 2 );
+      CHECK( 10000002 == id.number() );
+      CHECK( 702 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "t(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { t, 1 } } == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( t, 2, 2 ) );
+      CHECK( id == ReactionType( { { t, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "t(2)" ) );
+      CHECK( u238_e2 == id.resolve( t, u238_e2 ) );
+
+      id = ReactionType::elastic( h, 2 );
+      CHECK( 100000002 == id.number() );
+      CHECK( 752 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "h(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { h, 1 } } == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( h, 2, 2 ) );
+      CHECK( id == ReactionType( { { h, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "h(2)" ) );
+      CHECK( u238_e2 == id.resolve( h, u238_e2 ) );
+
+      id = ReactionType::elastic( a, 2 );
+      CHECK( 1000000002 == id.number() );
+      CHECK( 802 == id.mt() );
+      CHECK( nuclear == id.interactionType() );
+      CHECK( "a(2)" == id.symbol() );
+      CHECK( std::map< ParticleID, short >{ { a, 1 } } == id.particles() );
+      CHECK( 2 == id.level() );
+      CHECK( std::nullopt == id.partialDesignator() );
+      CHECK( false == id.hasPartialDesignator() );
+      CHECK( false == id.isSpecial() );
+      CHECK( true == id.isCompatibleWithENDF() );
+      CHECK( id == ReactionType( a, 2, 2 ) );
+      CHECK( id == ReactionType( { { a, 1 } }, 2 ) );
+      CHECK( id == ReactionType( "a(2)" ) );
+      CHECK( u238_e2 == id.resolve( a, u238_e2 ) );
+
+      // tests for other reaction types
       id = ReactionType( 4 );
       CHECK( 10151 == id.number() );
       CHECK( 4 == id.mt() );

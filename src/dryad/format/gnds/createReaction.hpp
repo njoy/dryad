@@ -30,7 +30,8 @@ namespace gnds {
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 
       // metadata and miscellaneous information
-      id::ReactionID id( projectile, target, id::ReactionType( projectile, reaction.attribute( "ENDF_MT" ).as_int() ) );
+      id::ReactionType type( projectile, reaction.attribute( "ENDF_MT" ).as_int(), target.e() );
+      id::ReactionID id( projectile, target, type );
 
       // cross section
       auto section = reaction.child( "crossSection" );

@@ -57,7 +57,8 @@ namespace endf {
                            bool normalise ) {
 
     // metadata and miscellaneous information
-    id::ReactionID id( projectile, target, id::ReactionType( projectile, mt ) );
+    id::ReactionType type( projectile, mt, target.e() );
+    id::ReactionID id( projectile, target, type );
 
     if ( material.hasSection( 3, mt ) ) {
 

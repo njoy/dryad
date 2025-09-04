@@ -30,8 +30,10 @@ ReactionType( int mt ) : index_( getIndex( mt ) ) {}
  *
  *  @param projectile   the projectile
  *  @param mt           the mt number
+ *  @param level        the level number of the target (default is zero)
  */
-ReactionType( const ParticleID& projectile, int mt ) : index_( getIndex( projectile, mt ) ) {}
+ReactionType( const ParticleID& projectile, int mt, int level = 0 ) :
+  index_( getIndex( projectile, mt, level ) ) {}
 
 /**
  *  @brief Constructor
@@ -39,7 +41,7 @@ ReactionType( const ParticleID& projectile, int mt ) : index_( getIndex( project
  *  @param particles   the outgoing particles (excluding the residual)
  *  @param level       the level number of the residual
  */
-ReactionType( const std::map< ParticleID, short >& particles, int level ) : 
+ReactionType( const std::map< ParticleID, short >& particles, int level ) :
   index_( getIndex( particles, level ) ) {}
 
 /**
