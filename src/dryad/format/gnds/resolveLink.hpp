@@ -17,12 +17,52 @@ namespace gnds {
 
   /**
    *  @brief Convert the shape
+   *
+   *  @param[in] link   the xml node with an href link attribute
    */
   static pugi::xml_node resolveLink( const pugi::xml_node& link ) {
 
     pugi::xml_node node = link;
-
     std::string href = link.attribute( "href" ).as_string();
+
+    // lambda that reads the next entry in an href string
+    //   - they are split by '/' characters
+    //   - when a quote is encountered, skip beyond the closing one
+    auto get_entry = [] ( std::string& href, std::string& entry ) {
+
+      if ( href.size() == 0 ) {
+
+        return false;
+      }
+
+      auto next_slash_or_quote = [] ( auto&& value ) { return value == '/' || value == '\''; };
+      auto next_slash = [] ( auto&& value ) { return value == '/'; };
+      auto next_quote = [] ( auto&& value ) { return value == '\''; };
+
+      auto iter = std::find_if( href.begin(), href.end(), next_slash_or_quote );
+      if ( iter != href.end() ) {
+
+        // check if we are inside a 'label'
+        if ( *iter == '\'' ) {
+
+          iter = std::find_if( iter + 1, href.end(), next_quote );
+          iter = std::find_if( iter + 1, href.end(), next_slash );
+        }
+      }
+
+      if ( iter == href.end() ) {
+
+        entry = href;
+        href = "";
+      }
+      else {
+
+        entry = std::string( href.begin(), iter );
+        href = std::string( iter + 1, href.end() );
+      }
+
+      return true;
+    };
 
     // move to the top level if this is an absolute path
     if ( href.front() == '/' ) {
@@ -35,9 +75,8 @@ namespace gnds {
     }
 
     // read pieces of the path and act accordingly
-    std::istringstream list( href );
     std::string entry;
-    while ( std::getline( list, entry, '/' ) ) {
+    while ( get_entry( href, entry ) ) {
 
       if ( entry == ".." ) {
 
@@ -68,6 +107,7 @@ namespace gnds {
 
       if ( !node ) {
 
+        href = link.attribute( "href" ).as_string();
         Log::error( "The link could not be resolved properly" );
         Log::info( "Link reference: \'{}\'", href );
         throw std::exception();
