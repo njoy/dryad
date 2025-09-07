@@ -576,105 +576,146 @@ SCENARIO( "ReactionInformation" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "an ENDF material, mf and mt number" ) {
+  GIVEN( "an ENDF material for a ground state target, mf and mt number" ) {
 
     auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
     auto material = tape.materials().front();
+    auto n = njoy::dryad::id::ParticleID::neutron();
+    auto li7 = njoy::dryad::id::ParticleID( 3007 );
 
     THEN( "partial mt numbers can be obtained for the total reaction" ) {
 
-      auto n = njoy::dryad::id::ParticleID::neutron();
-      auto partials = ReactionInformation::partials( n, material, 3, 1 );
+      auto partials = ReactionInformation::partials( n, li7, material, 3, 1 );
 
       CHECK(  38 == partials.size() );
-      CHECK(  50 == partials[0].mt() );
-      CHECK(  16 == partials[1].mt() );
-      CHECK(  24 == partials[2].mt() );
-      CHECK(  25 == partials[3].mt() );
-      CHECK(  51 == partials[4].mt() );
-      CHECK(  52 == partials[5].mt() );
-      CHECK(  53 == partials[6].mt() );
-      CHECK(  54 == partials[7].mt() );
-      CHECK(  55 == partials[8].mt() );
-      CHECK(  56 == partials[9].mt() );
-      CHECK(  57 == partials[10].mt() );
-      CHECK(  58 == partials[11].mt() );
-      CHECK(  59 == partials[12].mt() );
-      CHECK(  60 == partials[13].mt() );
-      CHECK(  61 == partials[14].mt() );
-      CHECK(  62 == partials[15].mt() );
-      CHECK(  63 == partials[16].mt() );
-      CHECK(  64 == partials[17].mt() );
-      CHECK(  65 == partials[18].mt() );
-      CHECK(  66 == partials[19].mt() );
-      CHECK(  67 == partials[20].mt() );
-      CHECK(  68 == partials[21].mt() );
-      CHECK(  69 == partials[22].mt() );
-      CHECK(  70 == partials[23].mt() );
-      CHECK(  71 == partials[24].mt() );
-      CHECK(  72 == partials[25].mt() );
-      CHECK(  73 == partials[26].mt() );
-      CHECK(  74 == partials[27].mt() );
-      CHECK(  75 == partials[28].mt() );
-      CHECK(  76 == partials[29].mt() );
-      CHECK(  77 == partials[30].mt() );
-      CHECK(  78 == partials[31].mt() );
-      CHECK(  79 == partials[32].mt() );
-      CHECK(  80 == partials[33].mt() );
-      CHECK(  81 == partials[34].mt() );
-      CHECK(  82 == partials[35].mt() );
-      CHECK( 102 == partials[36].mt() );
-      CHECK( 104 == partials[37].mt() );
+      CHECK(  50 == partials[0].reactionType().mt() );
+      CHECK(  16 == partials[1].reactionType().mt() );
+      CHECK(  24 == partials[2].reactionType().mt() );
+      CHECK(  25 == partials[3].reactionType().mt() );
+      CHECK(  51 == partials[4].reactionType().mt() );
+      CHECK(  52 == partials[5].reactionType().mt() );
+      CHECK(  53 == partials[6].reactionType().mt() );
+      CHECK(  54 == partials[7].reactionType().mt() );
+      CHECK(  55 == partials[8].reactionType().mt() );
+      CHECK(  56 == partials[9].reactionType().mt() );
+      CHECK(  57 == partials[10].reactionType().mt() );
+      CHECK(  58 == partials[11].reactionType().mt() );
+      CHECK(  59 == partials[12].reactionType().mt() );
+      CHECK(  60 == partials[13].reactionType().mt() );
+      CHECK(  61 == partials[14].reactionType().mt() );
+      CHECK(  62 == partials[15].reactionType().mt() );
+      CHECK(  63 == partials[16].reactionType().mt() );
+      CHECK(  64 == partials[17].reactionType().mt() );
+      CHECK(  65 == partials[18].reactionType().mt() );
+      CHECK(  66 == partials[19].reactionType().mt() );
+      CHECK(  67 == partials[20].reactionType().mt() );
+      CHECK(  68 == partials[21].reactionType().mt() );
+      CHECK(  69 == partials[22].reactionType().mt() );
+      CHECK(  70 == partials[23].reactionType().mt() );
+      CHECK(  71 == partials[24].reactionType().mt() );
+      CHECK(  72 == partials[25].reactionType().mt() );
+      CHECK(  73 == partials[26].reactionType().mt() );
+      CHECK(  74 == partials[27].reactionType().mt() );
+      CHECK(  75 == partials[28].reactionType().mt() );
+      CHECK(  76 == partials[29].reactionType().mt() );
+      CHECK(  77 == partials[30].reactionType().mt() );
+      CHECK(  78 == partials[31].reactionType().mt() );
+      CHECK(  79 == partials[32].reactionType().mt() );
+      CHECK(  80 == partials[33].reactionType().mt() );
+      CHECK(  81 == partials[34].reactionType().mt() );
+      CHECK(  82 == partials[35].reactionType().mt() );
+      CHECK( 102 == partials[36].reactionType().mt() );
+      CHECK( 104 == partials[37].reactionType().mt() );
     } // THEN
 
-    THEN( "partial mt numbers can be obtained for a summation reaction" ) {
+    THEN( "partial mt numbers can be obtained for inelastic scattering" ) {
 
-      auto n = njoy::dryad::id::ParticleID::neutron();
-      auto partials = ReactionInformation::partials( n, material, 3, 4 );
+      auto partials = ReactionInformation::partials( n, li7, material, 3, 4 );
 
       CHECK(  32 == partials.size() );
-      CHECK(  51 == partials[0].mt() );
-      CHECK(  52 == partials[1].mt() );
-      CHECK(  53 == partials[2].mt() );
-      CHECK(  54 == partials[3].mt() );
-      CHECK(  55 == partials[4].mt() );
-      CHECK(  56 == partials[5].mt() );
-      CHECK(  57 == partials[6].mt() );
-      CHECK(  58 == partials[7].mt() );
-      CHECK(  59 == partials[8].mt() );
-      CHECK(  60 == partials[9].mt() );
-      CHECK(  61 == partials[10].mt() );
-      CHECK(  62 == partials[11].mt() );
-      CHECK(  63 == partials[12].mt() );
-      CHECK(  64 == partials[13].mt() );
-      CHECK(  65 == partials[14].mt() );
-      CHECK(  66 == partials[15].mt() );
-      CHECK(  67 == partials[16].mt() );
-      CHECK(  68 == partials[17].mt() );
-      CHECK(  69 == partials[18].mt() );
-      CHECK(  70 == partials[19].mt() );
-      CHECK(  71 == partials[20].mt() );
-      CHECK(  72 == partials[21].mt() );
-      CHECK(  73 == partials[22].mt() );
-      CHECK(  74 == partials[23].mt() );
-      CHECK(  75 == partials[24].mt() );
-      CHECK(  76 == partials[25].mt() );
-      CHECK(  77 == partials[26].mt() );
-      CHECK(  78 == partials[27].mt() );
-      CHECK(  79 == partials[28].mt() );
-      CHECK(  80 == partials[29].mt() );
-      CHECK(  81 == partials[30].mt() );
-      CHECK(  82 == partials[31].mt() );
+      CHECK(  51 == partials[0].reactionType().mt() );
+      CHECK(  52 == partials[1].reactionType().mt() );
+      CHECK(  53 == partials[2].reactionType().mt() );
+      CHECK(  54 == partials[3].reactionType().mt() );
+      CHECK(  55 == partials[4].reactionType().mt() );
+      CHECK(  56 == partials[5].reactionType().mt() );
+      CHECK(  57 == partials[6].reactionType().mt() );
+      CHECK(  58 == partials[7].reactionType().mt() );
+      CHECK(  59 == partials[8].reactionType().mt() );
+      CHECK(  60 == partials[9].reactionType().mt() );
+      CHECK(  61 == partials[10].reactionType().mt() );
+      CHECK(  62 == partials[11].reactionType().mt() );
+      CHECK(  63 == partials[12].reactionType().mt() );
+      CHECK(  64 == partials[13].reactionType().mt() );
+      CHECK(  65 == partials[14].reactionType().mt() );
+      CHECK(  66 == partials[15].reactionType().mt() );
+      CHECK(  67 == partials[16].reactionType().mt() );
+      CHECK(  68 == partials[17].reactionType().mt() );
+      CHECK(  69 == partials[18].reactionType().mt() );
+      CHECK(  70 == partials[19].reactionType().mt() );
+      CHECK(  71 == partials[20].reactionType().mt() );
+      CHECK(  72 == partials[21].reactionType().mt() );
+      CHECK(  73 == partials[22].reactionType().mt() );
+      CHECK(  74 == partials[23].reactionType().mt() );
+      CHECK(  75 == partials[24].reactionType().mt() );
+      CHECK(  76 == partials[25].reactionType().mt() );
+      CHECK(  77 == partials[26].reactionType().mt() );
+      CHECK(  78 == partials[27].reactionType().mt() );
+      CHECK(  79 == partials[28].reactionType().mt() );
+      CHECK(  80 == partials[29].reactionType().mt() );
+      CHECK(  81 == partials[30].reactionType().mt() );
+      CHECK(  82 == partials[31].reactionType().mt() );
     } // THEN
 
     THEN( "partial mt numbers can be obtained for lumped covariance reactions" ) {
 
-      auto n = njoy::dryad::id::ParticleID::neutron();
-      auto partials = ReactionInformation::partials( n, material, 33, 851 );
+      auto partials = ReactionInformation::partials( n, li7, material, 33, 851 );
 
       CHECK( 2 == partials.size() );
-      CHECK( 16 == partials[0].mt() );
-      CHECK( 24 == partials[1].mt() );
+      CHECK( 16 == partials[0].reactionType().mt() );
+      CHECK( 24 == partials[1].reactionType().mt() );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "an ENDF material for a metastable state target, mf and mt number" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+    auto material = tape.materials().front();
+    auto n = njoy::dryad::id::ParticleID::neutron();
+    auto np236m1 = njoy::dryad::id::ParticleID( 93236, 2 );
+
+    THEN( "partial mt numbers can be obtained for the total reaction" ) {
+
+      auto partials = ReactionInformation::partials( n, np236m1, material, 3, 1 );
+
+      CHECK(  13 == partials.size() );
+      CHECK(  52 == partials[0].reactionType().mt() );
+      CHECK(  16 == partials[1].reactionType().mt() );
+      CHECK(  17 == partials[2].reactionType().mt() );
+      CHECK(  18 == partials[3].reactionType().mt() );
+      CHECK(  37 == partials[4].reactionType().mt() );
+      CHECK(  50 == partials[5].reactionType().mt() );
+      CHECK(  51 == partials[6].reactionType().mt() );
+      CHECK(  53 == partials[7].reactionType().mt() );
+      CHECK(  54 == partials[8].reactionType().mt() );
+      CHECK(  55 == partials[9].reactionType().mt() );
+      CHECK(  56 == partials[10].reactionType().mt() );
+      CHECK(  91 == partials[11].reactionType().mt() );
+      CHECK( 102 == partials[12].reactionType().mt() );
+    } // THEN
+
+    THEN( "partial mt numbers can be obtained for inelastic scattering" ) {
+
+      auto partials = ReactionInformation::partials( n, np236m1, material, 3, 4 );
+
+      CHECK(   7 == partials.size() );
+      CHECK(  50 == partials[0].reactionType().mt() );
+      CHECK(  51 == partials[1].reactionType().mt() );
+      CHECK(  53 == partials[2].reactionType().mt() );
+      CHECK(  54 == partials[3].reactionType().mt() );
+      CHECK(  55 == partials[4].reactionType().mt() );
+      CHECK(  56 == partials[5].reactionType().mt() );
+      CHECK(  91 == partials[6].reactionType().mt() );
     } // THEN
   } // GIVEN
 } // SCENARIO
