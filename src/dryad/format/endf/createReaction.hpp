@@ -96,7 +96,7 @@ namespace endf {
         else {
 
           mass_q = section.massDifferenceQValue();
-          reaction_q = section.massDifferenceQValue();
+          reaction_q = section.reactionQValue();
         }
 
         // add missing reaction products - only for primary reactions
