@@ -68,6 +68,20 @@ SCENARIO( "createReactions" ) {
         neutron::np236m1::verifyElasticReaction( elastic );
         auto inelastic = reactions1[2];
         neutron::np236m1::verifyInelasticReaction( inelastic );
+        auto inelastic0 = reactions1[7];
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic0 );
+        auto inelastic1 = reactions1[8];
+        neutron::np236m1::verifyInelasticReactionLevel1( inelastic1 );
+        auto inelastic3 = reactions1[9];
+        neutron::np236m1::verifyInelasticReactionLevel3( inelastic3 );
+        auto inelastic4 = reactions1[10];
+        neutron::np236m1::verifyInelasticReactionLevel4( inelastic4 );
+        auto inelastic5 = reactions1[11];
+        neutron::np236m1::verifyInelasticReactionLevel5( inelastic5 );
+        auto inelastic6 = reactions1[12];
+        neutron::np236m1::verifyInelasticReactionLevel6( inelastic6 );
+        auto inelastic_cont = reactions1[13];
+        neutron::np236m1::verifyInelasticReactionContinuum( inelastic_cont );
         auto capture = reactions1[14];
         neutron::np236m1::verifyCaptureReaction( capture );
 
@@ -78,6 +92,20 @@ SCENARIO( "createReactions" ) {
         neutron::np236m1::verifyElasticReaction( elastic );
         inelastic = reactions2[2];
         neutron::np236m1::verifyInelasticReaction( inelastic );
+        inelastic0 = reactions2[7];
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic0 );
+        inelastic1 = reactions2[8];
+        neutron::np236m1::verifyInelasticReactionLevel1( inelastic1 );
+        inelastic3 = reactions2[9];
+        neutron::np236m1::verifyInelasticReactionLevel3( inelastic3 );
+        inelastic4 = reactions2[10];
+        neutron::np236m1::verifyInelasticReactionLevel4( inelastic4 );
+        inelastic5 = reactions2[11];
+        neutron::np236m1::verifyInelasticReactionLevel5( inelastic5 );
+        inelastic6 = reactions2[12];
+        neutron::np236m1::verifyInelasticReactionLevel6( inelastic6 );
+        inelastic_cont = reactions2[13];
+        neutron::np236m1::verifyInelasticReactionContinuum( inelastic_cont );
         capture = reactions2[14];
         neutron::np236m1::verifyCaptureReaction( capture );
       } // THEN
