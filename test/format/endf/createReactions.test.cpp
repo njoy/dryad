@@ -19,7 +19,7 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "ENDF materials - incident neutrons" ) {
 
-    WHEN( "a single ENDF material is given without lumped covariance reactions" ) {
+    WHEN( "a single ENDF material is given for a ground state target" ) {
 
       auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
       auto material = tape.materials().front();
@@ -46,6 +46,40 @@ SCENARIO( "createReactions" ) {
         neutron::h1::verifyElasticReaction( elastic );
         capture = reactions2[2];
         neutron::h1::verifyCaptureReaction( capture );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single ENDF material is given for a metastable target" ) {
+
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "all reactions can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Np236_e2" );
+        std::vector< Reaction > reactions1 = format::endf::createReactions( projectile, target, material, false );
+        std::vector< Reaction > reactions2 = format::endf::createReactions( projectile, target, material, true );
+
+        CHECK( 15 == reactions1.size() );
+        auto total = reactions1[0];
+        neutron::np236m1::verifyTotalReaction( total );
+        auto elastic = reactions1[1];
+        neutron::np236m1::verifyElasticReaction( elastic );
+        auto inelastic = reactions1[2];
+        neutron::np236m1::verifyInelasticReaction( inelastic );
+        auto capture = reactions1[14];
+        neutron::np236m1::verifyCaptureReaction( capture );
+
+        CHECK( 15 == reactions2.size() );
+        total = reactions2[0];
+        neutron::np236m1::verifyTotalReaction( total );
+        elastic = reactions2[1];
+        neutron::np236m1::verifyElasticReaction( elastic );
+        inelastic = reactions2[2];
+        neutron::np236m1::verifyInelasticReaction( inelastic );
+        capture = reactions2[14];
+        neutron::np236m1::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
 
