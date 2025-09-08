@@ -277,6 +277,236 @@ namespace np236m1 {
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
   }
 
+  void verifyN2NReaction( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) == reaction.identifier() );
+    CHECK( 16 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( -5676680, WithinRel( reaction.massDifferenceQValue().value() ) );
+    CHECK_THAT( -5676680, WithinRel( reaction.reactionQValue().value() ) );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 30 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 30 == reaction.crossSection().energies().size() );
+    CHECK( 30 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 29 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 5700940, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT(    2e+7, WithinRel( reaction.crossSection().energies()[29] ) );
+    CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( .110849100, WithinRel( reaction.crossSection().values()[29] ) );
+
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+
+    auto neutron = reaction.product( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageEnergy() );
+    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
+    auto multiplicity = std::get< int >( neutron.multiplicity() );
+    CHECK( 2 == multiplicity );
+    CHECK( std::nullopt == neutron.averageEnergy() );
+    CHECK( std::nullopt == neutron.distributionData() );
+
+    auto gamma = reaction.product( id::ParticleID( "g" ) );
+    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( false == gamma.hasAverageEnergy() );
+    CHECK( false == gamma.hasDistributionData() );
+    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
+    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
+    CHECK( true == table_multiplicity.isLinearised() );
+    CHECK( 30 == table_multiplicity.numberPoints() );
+    CHECK( 1 == table_multiplicity.numberRegions() );
+    CHECK( 30 == table_multiplicity.energies().size() );
+    CHECK( 30 == table_multiplicity.values().size() );
+    CHECK( 1 == table_multiplicity.boundaries().size() );
+    CHECK( 1 == table_multiplicity.interpolants().size() );
+    CHECK( 29 == table_multiplicity.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
+    CHECK_THAT(  5.700940e+6, WithinRel( table_multiplicity.energies()[0] ) );
+    CHECK_THAT(         2e+7, WithinRel( table_multiplicity.energies()[29] ) );
+    CHECK_THAT( 1.007610, WithinRel( table_multiplicity.values()[0] ) );
+    CHECK_THAT( 5.810220, WithinRel( table_multiplicity.values()[29] ) );
+    CHECK( std::nullopt == gamma.averageEnergy() );
+    CHECK( std::nullopt == gamma.distributionData() );
+  }
+
+  void verifyN3NReaction( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,Np236_e2->3n,Np234[all]" ) == reaction.identifier() );
+    CHECK( 17 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( -12659800, WithinRel( reaction.massDifferenceQValue().value() ) );
+    CHECK_THAT( -12659800, WithinRel( reaction.reactionQValue().value() ) );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 15 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 15 == reaction.crossSection().energies().size() );
+    CHECK( 15 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 14 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 12713900, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT(     2e+7, WithinRel( reaction.crossSection().energies()[14] ) );
+    CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( .080226890, WithinRel( reaction.crossSection().values()[14] ) );
+
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+
+    auto neutron = reaction.product( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageEnergy() );
+    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
+    auto multiplicity = std::get< int >( neutron.multiplicity() );
+    CHECK( 3 == multiplicity );
+    CHECK( std::nullopt == neutron.averageEnergy() );
+    CHECK( std::nullopt == neutron.distributionData() );
+
+    auto gamma = reaction.product( id::ParticleID( "g" ) );
+    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( false == gamma.hasAverageEnergy() );
+    CHECK( false == gamma.hasDistributionData() );
+    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
+    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
+    CHECK( true == table_multiplicity.isLinearised() );
+    CHECK( 15 == table_multiplicity.numberPoints() );
+    CHECK( 1 == table_multiplicity.numberRegions() );
+    CHECK( 15 == table_multiplicity.energies().size() );
+    CHECK( 15 == table_multiplicity.values().size() );
+    CHECK( 1 == table_multiplicity.boundaries().size() );
+    CHECK( 1 == table_multiplicity.interpolants().size() );
+    CHECK( 14 == table_multiplicity.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
+    CHECK_THAT( 1.271390e+7, WithinRel( table_multiplicity.energies()[0] ) );
+    CHECK_THAT(        2e+7, WithinRel( table_multiplicity.energies()[14] ) );
+    CHECK_THAT( 2.863370, WithinRel( table_multiplicity.values()[0] ) );
+    CHECK_THAT( 6.273080, WithinRel( table_multiplicity.values()[14] ) );
+    CHECK( std::nullopt == gamma.averageEnergy() );
+    CHECK( std::nullopt == gamma.distributionData() );
+  }
+
+  void verifyFissionReaction( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,Np236_e2->fission" ) == reaction.identifier() );
+    CHECK( 18 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( false == reaction.hasProducts() );
+
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt == reaction.reactionQValue() );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 159 == reaction.crossSection().numberPoints() );
+    CHECK( 2 == reaction.crossSection().numberRegions() );
+    CHECK( 159 == reaction.crossSection().energies().size() );
+    CHECK( 159 == reaction.crossSection().values().size() );
+    CHECK( 2 == reaction.crossSection().boundaries().size() );
+    CHECK( 2 == reaction.crossSection().interpolants().size() );
+    CHECK(   2 == reaction.crossSection().boundaries()[0] );
+    CHECK( 158 == reaction.crossSection().boundaries()[1] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[1] );
+    CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 21.5, WithinRel( reaction.crossSection().energies()[2] ) );
+    CHECK_THAT( 21.5, WithinRel( reaction.crossSection().energies()[3] ) );
+    CHECK_THAT( 2e+7, WithinRel( reaction.crossSection().energies()[158] ) );
+    CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[2] ) );
+    CHECK_THAT( 70.55598, WithinRel( reaction.crossSection().values()[3] ) );
+    CHECK_THAT( 2.549846, WithinRel( reaction.crossSection().values()[158] ) );
+
+    CHECK( 0 == reaction.numberProducts() );
+  }
+
+  void verifyN4NReaction( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) == reaction.identifier() );
+    CHECK( 37 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.massDifferenceQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( -18724200, WithinRel( reaction.massDifferenceQValue().value() ) );
+    CHECK_THAT( -18724200, WithinRel( reaction.reactionQValue().value() ) );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 3 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 3 == reaction.crossSection().energies().size() );
+    CHECK( 3 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 2 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 18804200, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT(     2e+7, WithinRel( reaction.crossSection().energies()[2] ) );
+    CHECK_THAT(           0, WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 5.265795E-6, WithinRel( reaction.crossSection().values()[2] ) );
+
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+
+    auto neutron = reaction.product( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageEnergy() );
+    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
+    auto multiplicity = std::get< int >( neutron.multiplicity() );
+    CHECK( 4 == multiplicity );
+    CHECK( std::nullopt == neutron.averageEnergy() );
+    CHECK( std::nullopt == neutron.distributionData() );
+
+    auto gamma = reaction.product( id::ParticleID( "g" ) );
+    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( false == gamma.hasAverageEnergy() );
+    CHECK( false == gamma.hasDistributionData() );
+    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
+    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
+    CHECK( true == table_multiplicity.isLinearised() );
+    CHECK( 3 == table_multiplicity.numberPoints() );
+    CHECK( 1 == table_multiplicity.numberRegions() );
+    CHECK( 3 == table_multiplicity.energies().size() );
+    CHECK( 3 == table_multiplicity.values().size() );
+    CHECK( 1 == table_multiplicity.boundaries().size() );
+    CHECK( 1 == table_multiplicity.interpolants().size() );
+    CHECK( 2 == table_multiplicity.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
+    CHECK_THAT( 1.880420e+7, WithinRel( table_multiplicity.energies()[0] ) );
+    CHECK_THAT(        2e+7, WithinRel( table_multiplicity.energies()[2] ) );
+    CHECK_THAT( .3181690, WithinRel( table_multiplicity.values()[0] ) );
+    CHECK_THAT( 1.294600, WithinRel( table_multiplicity.values()[2] ) );
+    CHECK( std::nullopt == gamma.averageEnergy() );
+    CHECK( std::nullopt == gamma.distributionData() );
+  }
+
   void verifyInelasticReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) == reaction.identifier() );
@@ -703,9 +933,21 @@ namespace np236m1 {
 
     CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->total" ) ) );
     CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->3n,Np234[all]" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->fission" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) ) );
     CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e1" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e3" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e4" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e5" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236_e6" ) ) );
+    CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->n,Np236[continuum]" ) ) );
     CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->g,Np237[all]" ) ) );
-//    CHECK( false == Np236m1.hasReaction( id::ReactionID( "some unknown reaction" ) ) );
+    CHECK( false == Np236m1.hasReaction( id::ReactionID( "n,H1->n,H1" ) ) );
 
     CHECK( 15 == Np236m1.reactions().size() );
 
@@ -718,10 +960,17 @@ namespace np236m1 {
     auto inelastic = Np236m1.reactions()[2];
     verifyInelasticReaction( inelastic );
 
-    // 3 is MT16
-    // 4 is MT17
-    // 5 is MT 18
-    // 6 is MT 37
+    auto n2n = Np236m1.reactions()[3];
+    verifyN2NReaction( n2n );
+
+    auto n3n = Np236m1.reactions()[4];
+    verifyN3NReaction( n3n );
+
+    auto fission = Np236m1.reactions()[5];
+    verifyFissionReaction( fission );
+
+    auto n4n = Np236m1.reactions()[6];
+    verifyN4NReaction( n4n );
 
     auto inelastic0 = Np236m1.reactions()[7];
     verifyInelasticReactionLevel0( inelastic0 );
@@ -752,6 +1001,18 @@ namespace np236m1 {
 
     elastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) );
     verifyElasticReaction( elastic );
+
+    n2n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) );
+    verifyN2NReaction( n2n );
+
+    n3n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->3n,Np234[all]" ) );
+    verifyN3NReaction( n3n );
+
+    fission = Np236m1.reaction( id::ReactionID( "n,Np236_e2->fission" ) );
+    verifyFissionReaction( fission );
+
+    n4n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) );
+    verifyN4NReaction( n4n );
 
     inelastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) );
     verifyInelasticReaction( inelastic );
