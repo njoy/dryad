@@ -21,7 +21,6 @@ SCENARIO( "createEndfFile3Section" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      id::ParticleID target( 3007 );
       double awr = 6.955732;
 
       Reaction reaction( id::ReactionID( "n,Li7->3n,a,H1[all]" ),
@@ -39,7 +38,7 @@ SCENARIO( "createEndfFile3Section" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::createEndfFile3Section( target, awr, reaction );
+        auto data = format::endf::createEndfFile3Section( awr, reaction );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
