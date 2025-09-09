@@ -50,7 +50,7 @@ SCENARIO( "createReactions" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a GNDS reaction suite is given" ) {
+    WHEN( "a GNDS reaction suite is given with lumped covariance reactions" ) {
 
       pugi::xml_document document;
       pugi::xml_parse_result result = document.load_file( "n-003_Li_007.endf.gnds.xml" );

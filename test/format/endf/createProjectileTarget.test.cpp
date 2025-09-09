@@ -17,9 +17,9 @@ using namespace njoy::dryad;
 
 SCENARIO( "createProjectileTarget" ) {
 
-  GIVEN( "ENDF materials - incident neutrons" ) {
+  GIVEN( "ENDF materials - incident neutrons - stable target" ) {
 
-    WHEN( "a single ENDF material is given for a ground state target" ) {
+    WHEN( "a single ENDF material is given" ) {
 
       auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
       auto material = tape.materials().front();
@@ -31,21 +31,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
-      } // THEN
-    } // WHEN
-
-    WHEN( "a single ENDF material is given for a metastable target" ) {
-
-      auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
-      auto material = tape.materials().front();
-
-      THEN( "it can be converted" ) {
-
-        ProjectileTarget first = format::endf::createProjectileTarget( material, false );
-        ProjectileTarget second = format::endf::createProjectileTarget( material, true );
-
-        neutron::np236m1::verifyNp236m1( first, false );
-        neutron::np236m1::verifyNp236m1( second, true );
       } // THEN
     } // WHEN
 
@@ -61,6 +46,24 @@ SCENARIO( "createProjectileTarget" ) {
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF materials - incident neutrons - metastable target" ) {
+
+    WHEN( "a single ENDF material is given" ) {
+
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget first = format::endf::createProjectileTarget( material, false );
+        ProjectileTarget second = format::endf::createProjectileTarget( material, true );
+
+        neutron::np236m1::verifyNp236m1( first, false );
+        neutron::np236m1::verifyNp236m1( second, true );
       } // THEN
     } // WHEN
   } // GIVEN
