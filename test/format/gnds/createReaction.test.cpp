@@ -17,7 +17,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "createReaction" ) {
 
-  GIVEN( "GNDS data - incident neutrons" ) {
+  GIVEN( "GNDS data - incident neutrons - stable target" ) {
 
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
@@ -49,6 +49,54 @@ SCENARIO( "createReaction" ) {
         Reaction capture2 = format::gnds::createReaction( projectile, target, suite, node, true );
         neutron::h1::verifyCaptureReaction( capture1 );
         neutron::h1::verifyCaptureReaction( capture2 );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS data - incident neutrons - metastable target" ) {
+
+    pugi::xml_document document;
+    pugi::xml_parse_result result = document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
+    pugi::xml_node suite = document.child( "reactionSuite" );
+    pugi::xml_node reactions = suite.child( "reactions" );
+    pugi::xml_node sums = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" );
+
+    WHEN( "a single GNDS reaction data node is given" ) {
+
+      THEN( "a Reaction can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Np236_e2" );
+
+        auto node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "1" );
+        Reaction total1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction total2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::np236m1::verifyTotalReaction( total1 );
+        neutron::np236m1::verifyTotalReaction( total2 );
+
+        node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "2" );
+        Reaction elastic1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction elastic2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::np236m1::verifyElasticReaction( elastic1 );
+        neutron::np236m1::verifyElasticReaction( elastic2 );
+
+        node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "51" );
+        Reaction inelastic01 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction inelastic02 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic01 );
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic02 );
+
+        node = sums.find_child_by_attribute( "crossSectionSum", "ENDF_MT", "4" );
+        Reaction inelastic1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction inelastic2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::np236m1::verifyInelasticReaction( inelastic1 );
+        neutron::np236m1::verifyInelasticReaction( inelastic2 );
+
+        node = reactions.find_child_by_attribute( "reaction", "ENDF_MT", "102" );
+        Reaction capture1 = format::gnds::createReaction( projectile, target, suite, node, false );
+        Reaction capture2 = format::gnds::createReaction( projectile, target, suite, node, true );
+        neutron::np236m1::verifyCaptureReaction( capture1 );
+        neutron::np236m1::verifyCaptureReaction( capture2 );
       } // THEN
     } // WHEN
   } // GIVEN

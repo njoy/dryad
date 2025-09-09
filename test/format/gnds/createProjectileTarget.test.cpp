@@ -17,7 +17,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "createProjectileTarget" ) {
 
-  GIVEN( "GNDS data - incident neutrons" ) {
+  GIVEN( "GNDS data - incident neutrons - stable target" ) {
 
     WHEN( "a GNDS XML document is given" ) {
 
@@ -46,6 +46,24 @@ SCENARIO( "createProjectileTarget" ) {
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS data - incident neutrons - metastable target" ) {
+
+    WHEN( "a GNDS XML document is given" ) {
+
+      pugi::xml_document document;
+      pugi::xml_parse_result result = document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+
+        neutron::np236m1::verifyNp236m1( first, false );
+        neutron::np236m1::verifyNp236m1( second, true );
       } // THEN
     } // WHEN
   } // GIVEN

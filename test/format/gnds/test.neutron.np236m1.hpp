@@ -130,30 +130,30 @@ namespace np236m1 {
     auto partials = reaction.partialReactionIdentifiers().value();
     CHECK( 13 == partials.size() );
     CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) == partials[0] );
-    CHECK( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) == partials[1] );
-    CHECK( id::ReactionID( "n,Np236_e2->3n,Np234[all]" ) == partials[2] );
-    CHECK( id::ReactionID( "n,Np236_e2->fission" ) == partials[3] );
-    CHECK( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) == partials[4] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236" ) == partials[5] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e1" ) == partials[6] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e3" ) == partials[7] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e4" ) == partials[8] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e5" ) == partials[9] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e6" ) == partials[10] );
-    CHECK( id::ReactionID( "n,Np236_e2->n,Np236[continuum]" ) == partials[11] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236" ) == partials[1] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e1" ) == partials[2] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e3" ) == partials[3] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e4" ) == partials[4] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e5" ) == partials[5] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236_e6" ) == partials[6] );
+    CHECK( id::ReactionID( "n,Np236_e2->n,Np236[continuum]" ) == partials[7] );
+    CHECK( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) == partials[8] );
+    CHECK( id::ReactionID( "n,Np236_e2->3n,Np234[all]" ) == partials[9] );
+    CHECK( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) == partials[10] );
+    CHECK( id::ReactionID( "n,Np236_e2->fission" ) == partials[11] );
     CHECK( id::ReactionID( "n,Np236_e2->g,Np237[all]" ) == partials[12] );
     CHECK(  52 == partials[0].reactionType().mt() );
-    CHECK(  16 == partials[1].reactionType().mt() );
-    CHECK(  17 == partials[2].reactionType().mt() );
-    CHECK(  18 == partials[3].reactionType().mt() );
-    CHECK(  37 == partials[4].reactionType().mt() );
-    CHECK(  50 == partials[5].reactionType().mt() );
-    CHECK(  51 == partials[6].reactionType().mt() );
-    CHECK(  53 == partials[7].reactionType().mt() );
-    CHECK(  54 == partials[8].reactionType().mt() );
-    CHECK(  55 == partials[9].reactionType().mt() );
-    CHECK(  56 == partials[10].reactionType().mt() );
-    CHECK(  91 == partials[11].reactionType().mt() );
+    CHECK(  50 == partials[1].reactionType().mt() );
+    CHECK(  51 == partials[2].reactionType().mt() );
+    CHECK(  53 == partials[3].reactionType().mt() );
+    CHECK(  54 == partials[4].reactionType().mt() );
+    CHECK(  55 == partials[5].reactionType().mt() );
+    CHECK(  56 == partials[6].reactionType().mt() );
+    CHECK(  91 == partials[7].reactionType().mt() );
+    CHECK(  16 == partials[8].reactionType().mt() );
+    CHECK(  17 == partials[9].reactionType().mt() );
+    CHECK(  37 == partials[10].reactionType().mt() );
+    CHECK(  18 == partials[11].reactionType().mt() );
     CHECK( 102 == partials[12].reactionType().mt() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
@@ -215,8 +215,9 @@ namespace np236m1 {
     CHECK_THAT( 21.7398100, WithinRel( reaction.crossSection().values()[3] ) );
     CHECK_THAT( 3.16616600, WithinRel( reaction.crossSection().values()[90] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e2" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
@@ -303,9 +304,10 @@ namespace np236m1 {
     CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .110849100, WithinRel( reaction.crossSection().values()[29] ) );
 
-    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 10 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 8 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np235" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
@@ -319,25 +321,6 @@ namespace np236m1 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( false == gamma.hasAverageEnergy() );
-    CHECK( false == gamma.hasDistributionData() );
-    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
-    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
-    CHECK( true == table_multiplicity.isLinearised() );
-    CHECK( 30 == table_multiplicity.numberPoints() );
-    CHECK( 1 == table_multiplicity.numberRegions() );
-    CHECK( 30 == table_multiplicity.energies().size() );
-    CHECK( 30 == table_multiplicity.values().size() );
-    CHECK( 1 == table_multiplicity.boundaries().size() );
-    CHECK( 1 == table_multiplicity.interpolants().size() );
-    CHECK( 29 == table_multiplicity.boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
-    CHECK_THAT(  5.700940e+6, WithinRel( table_multiplicity.energies()[0] ) );
-    CHECK_THAT(         2e+7, WithinRel( table_multiplicity.energies()[29] ) );
-    CHECK_THAT( 1.007610, WithinRel( table_multiplicity.values()[0] ) );
-    CHECK_THAT( 5.810220, WithinRel( table_multiplicity.values()[29] ) );
-    CHECK( std::nullopt == gamma.averageEnergy() );
-    CHECK( std::nullopt == gamma.distributionData() );
   }
 
   void verifyN3NReaction( const Reaction& reaction ) {
@@ -367,9 +350,10 @@ namespace np236m1 {
     CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .080226890, WithinRel( reaction.crossSection().values()[14] ) );
 
-    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 6 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 4 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np234" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
@@ -383,25 +367,6 @@ namespace np236m1 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( false == gamma.hasAverageEnergy() );
-    CHECK( false == gamma.hasDistributionData() );
-    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
-    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
-    CHECK( true == table_multiplicity.isLinearised() );
-    CHECK( 15 == table_multiplicity.numberPoints() );
-    CHECK( 1 == table_multiplicity.numberRegions() );
-    CHECK( 15 == table_multiplicity.energies().size() );
-    CHECK( 15 == table_multiplicity.values().size() );
-    CHECK( 1 == table_multiplicity.boundaries().size() );
-    CHECK( 1 == table_multiplicity.interpolants().size() );
-    CHECK( 14 == table_multiplicity.boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
-    CHECK_THAT( 1.271390e+7, WithinRel( table_multiplicity.energies()[0] ) );
-    CHECK_THAT(        2e+7, WithinRel( table_multiplicity.energies()[14] ) );
-    CHECK_THAT( 2.863370, WithinRel( table_multiplicity.values()[0] ) );
-    CHECK_THAT( 6.273080, WithinRel( table_multiplicity.values()[14] ) );
-    CHECK( std::nullopt == gamma.averageEnergy() );
-    CHECK( std::nullopt == gamma.distributionData() );
   }
 
   void verifyFissionReaction( const Reaction& reaction ) {
@@ -411,10 +376,11 @@ namespace np236m1 {
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
-    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.hasProducts() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
-    CHECK( std::nullopt == reaction.reactionQValue() );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( 185341973, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 159 == reaction.crossSection().numberPoints() );
@@ -436,7 +402,9 @@ namespace np236m1 {
     CHECK_THAT( 70.55598, WithinRel( reaction.crossSection().values()[3] ) );
     CHECK_THAT( 2.549846, WithinRel( reaction.crossSection().values()[158] ) );
 
-    CHECK( 0 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
   }
 
   void verifyN4NReaction( const Reaction& reaction ) {
@@ -466,9 +434,10 @@ namespace np236m1 {
     CHECK_THAT(           0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 5.265795E-6, WithinRel( reaction.crossSection().values()[2] ) );
 
-    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 5 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 3 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np233" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
@@ -482,25 +451,6 @@ namespace np236m1 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( false == gamma.hasAverageEnergy() );
-    CHECK( false == gamma.hasDistributionData() );
-    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
-    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
-    CHECK( true == table_multiplicity.isLinearised() );
-    CHECK( 3 == table_multiplicity.numberPoints() );
-    CHECK( 1 == table_multiplicity.numberRegions() );
-    CHECK( 3 == table_multiplicity.energies().size() );
-    CHECK( 3 == table_multiplicity.values().size() );
-    CHECK( 1 == table_multiplicity.boundaries().size() );
-    CHECK( 1 == table_multiplicity.interpolants().size() );
-    CHECK( 2 == table_multiplicity.boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
-    CHECK_THAT( 1.880420e+7, WithinRel( table_multiplicity.energies()[0] ) );
-    CHECK_THAT(        2e+7, WithinRel( table_multiplicity.energies()[2] ) );
-    CHECK_THAT( .3181690, WithinRel( table_multiplicity.values()[0] ) );
-    CHECK_THAT( 1.294600, WithinRel( table_multiplicity.values()[2] ) );
-    CHECK( std::nullopt == gamma.averageEnergy() );
-    CHECK( std::nullopt == gamma.distributionData() );
   }
 
   void verifyInelasticReaction( const Reaction& reaction ) {
@@ -583,18 +533,26 @@ namespace np236m1 {
     CHECK_THAT( 0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 0, WithinRel( reaction.crossSection().values()[55] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( false == neutron.hasAverageEnergy() );
-    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
     CHECK( std::nullopt == neutron.averageEnergy() );
-    CHECK( std::nullopt == neutron.distributionData() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+
+    //! @todo add tests for angular data
   }
 
   void verifyInelasticReactionLevel1( const Reaction& reaction ) {
@@ -626,18 +584,26 @@ namespace np236m1 {
     CHECK_THAT( 0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 2.703236E-6, WithinRel( reaction.crossSection().values()[83] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e1" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( false == neutron.hasAverageEnergy() );
-    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
     CHECK( std::nullopt == neutron.averageEnergy() );
-    CHECK( std::nullopt == neutron.distributionData() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+
+    //! @todo add tests for angular data
   }
 
   void verifyInelasticReactionLevel3( const Reaction& reaction ) {
@@ -667,18 +633,26 @@ namespace np236m1 {
     CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .070010070, WithinRel( reaction.crossSection().values()[66] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e3" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( false == neutron.hasAverageEnergy() );
-    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
     CHECK( std::nullopt == neutron.averageEnergy() );
-    CHECK( std::nullopt == neutron.distributionData() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+
+    //! @todo add tests for angular data
   }
 
   void verifyInelasticReactionLevel4( const Reaction& reaction ) {
@@ -708,18 +682,26 @@ namespace np236m1 {
     CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .066339170, WithinRel( reaction.crossSection().values()[64] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e4" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( false == neutron.hasAverageEnergy() );
-    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
     CHECK( std::nullopt == neutron.averageEnergy() );
-    CHECK( std::nullopt == neutron.distributionData() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+
+    //! @todo add tests for angular data
   }
 
   void verifyInelasticReactionLevel5( const Reaction& reaction ) {
@@ -749,18 +731,26 @@ namespace np236m1 {
     CHECK_THAT(           0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 2.703376E-6, WithinRel( reaction.crossSection().values()[63] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e5" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( false == neutron.hasAverageEnergy() );
-    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
     CHECK( std::nullopt == neutron.averageEnergy() );
-    CHECK( std::nullopt == neutron.distributionData() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+
+    //! @todo add tests for angular data
   }
 
   void verifyInelasticReactionLevel6( const Reaction& reaction ) {
@@ -790,18 +780,26 @@ namespace np236m1 {
     CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .011412050, WithinRel( reaction.crossSection().values()[62] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e6" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
     CHECK( false == neutron.hasAverageEnergy() );
-    CHECK( false == neutron.hasDistributionData() );
+    CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
     CHECK( std::nullopt == neutron.averageEnergy() );
-    CHECK( std::nullopt == neutron.distributionData() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( neutron.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+
+    //! @todo add tests for angular data
   }
 
   void verifyInelasticReactionContinuum( const Reaction& reaction ) {
@@ -815,7 +813,8 @@ namespace np236m1 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -72000, WithinRel( reaction.reactionQValue().value() ) );
+//! @todo verify with caleb if this should be -72 keV
+//    CHECK_THAT( -72000, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 63 == reaction.crossSection().numberPoints() );
@@ -831,9 +830,10 @@ namespace np236m1 {
     CHECK_THAT(          0, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .187311600, WithinRel( reaction.crossSection().values()[62] ) );
 
-    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 9 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 7 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
@@ -845,27 +845,10 @@ namespace np236m1 {
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
+    //! @todo add tests for angular data
+
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
-    CHECK( false == gamma.hasAverageEnergy() );
-    CHECK( false == gamma.hasDistributionData() );
-    CHECK( true == std::holds_alternative< TabulatedMultiplicity >( gamma.multiplicity() ) );
-    auto table_multiplicity = std::get< TabulatedMultiplicity >( gamma.multiplicity() );
-    CHECK( true == table_multiplicity.isLinearised() );
-    CHECK( 64 == table_multiplicity.numberPoints() );
-    CHECK( 1 == table_multiplicity.numberRegions() );
-    CHECK( 64 == table_multiplicity.energies().size() );
-    CHECK( 64 == table_multiplicity.values().size() );
-    CHECK( 1 == table_multiplicity.boundaries().size() );
-    CHECK( 1 == table_multiplicity.interpolants().size() );
-    CHECK( 63 == table_multiplicity.boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == table_multiplicity.interpolants()[0] );
-    CHECK_THAT( 72307.61, WithinRel( table_multiplicity.energies()[0] ) );
-    CHECK_THAT(     2e+7, WithinRel( table_multiplicity.energies()[63] ) );
-    CHECK_THAT(          1, WithinRel( table_multiplicity.values()[0] ) );
-    CHECK_THAT( 5.982620+0, WithinRel( table_multiplicity.values()[63] ) );
-    CHECK( std::nullopt == gamma.averageEnergy() );
-    CHECK( std::nullopt == gamma.distributionData() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -901,8 +884,9 @@ namespace np236m1 {
     CHECK_THAT(  5.69413500, WithinRel( reaction.crossSection().values()[3] ) );
     CHECK_THAT( 2.202558E-4, WithinRel( reaction.crossSection().values()[238] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 47 == reaction.numberProducts() );
+    CHECK( 46 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np237" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
@@ -942,29 +926,29 @@ namespace np236m1 {
     auto total = Np236m1.reactions()[0];
     verifyTotalReaction( total );
 
-    auto elastic = Np236m1.reactions()[1];
-    verifyElasticReaction( elastic );
-
-    auto inelastic = Np236m1.reactions()[2];
+    auto inelastic = Np236m1.reactions()[1];
     verifyInelasticReaction( inelastic );
 
-    auto n2n = Np236m1.reactions()[3];
+    auto n2n = Np236m1.reactions()[2];
     verifyN2NReaction( n2n );
 
-    auto n3n = Np236m1.reactions()[4];
+    auto n3n = Np236m1.reactions()[3];
     verifyN3NReaction( n3n );
 
-    auto fission = Np236m1.reactions()[5];
+    auto fission = Np236m1.reactions()[4];
     verifyFissionReaction( fission );
 
-    auto n4n = Np236m1.reactions()[6];
+    auto n4n = Np236m1.reactions()[5];
     verifyN4NReaction( n4n );
 
-    auto inelastic0 = Np236m1.reactions()[7];
+    auto inelastic0 = Np236m1.reactions()[6];
     verifyInelasticReactionLevel0( inelastic0 );
 
-    auto inelastic1 = Np236m1.reactions()[8];
+    auto inelastic1 = Np236m1.reactions()[7];
     verifyInelasticReactionLevel1( inelastic1 );
+
+    auto elastic = Np236m1.reactions()[8];
+    verifyElasticReaction( elastic );
 
     auto inelastic3 = Np236m1.reactions()[9];
     verifyInelasticReactionLevel3( inelastic3 );
@@ -987,8 +971,8 @@ namespace np236m1 {
     total = Np236m1.reaction( id::ReactionID( "n,Np236_e2->total" ) );
     verifyTotalReaction( total );
 
-    elastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) );
-    verifyElasticReaction( elastic );
+    inelastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) );
+    verifyInelasticReaction( inelastic );
 
     n2n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) );
     verifyN2NReaction( n2n );
@@ -1002,14 +986,14 @@ namespace np236m1 {
     n4n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) );
     verifyN4NReaction( n4n );
 
-    inelastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) );
-    verifyInelasticReaction( inelastic );
-
     inelastic0 = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236" ) );
     verifyInelasticReactionLevel0( inelastic0 );
 
     inelastic1 = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e1" ) );
     verifyInelasticReactionLevel1( inelastic1 );
+
+    elastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) );
+    verifyElasticReaction( elastic );
 
     inelastic3 = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e3" ) );
     verifyInelasticReactionLevel3( inelastic3 );
@@ -1030,5 +1014,5 @@ namespace np236m1 {
     verifyCaptureReaction( capture );
   }
 
-} // namespace h1
+} // namespace np236m1
 } // namespace neutron

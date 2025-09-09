@@ -69,6 +69,11 @@ SCENARIO( "createReaction" ) {
         neutron::np236m1::verifyElasticReaction( elastic1 );
         neutron::np236m1::verifyElasticReaction( elastic2 );
 
+        Reaction inelastic01 = format::endf::createReaction( projectile, target, material, 51, false );
+        Reaction inelastic02 = format::endf::createReaction( projectile, target, material, 51, true );
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic01 );
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic02 );
+
         Reaction inelastic1 = format::endf::createReaction( projectile, target, material, 4, false );
         Reaction inelastic2 = format::endf::createReaction( projectile, target, material, 4, true );
         neutron::np236m1::verifyInelasticReaction( inelastic1 );

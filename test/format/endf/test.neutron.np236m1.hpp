@@ -1042,5 +1042,5 @@ namespace np236m1 {
     verifyCaptureReaction( capture );
   }
 
-} // namespace h1
+} // namespace np236m1
 } // namespace neutron
