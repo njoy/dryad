@@ -954,29 +954,29 @@ namespace np236m1 {
     auto total = Np236m1.reactions()[0];
     verifyTotalReaction( total );
 
-    auto elastic = Np236m1.reactions()[1];
-    verifyElasticReaction( elastic );
-
-    auto inelastic = Np236m1.reactions()[2];
+    auto inelastic = Np236m1.reactions()[1];
     verifyInelasticReaction( inelastic );
 
-    auto n2n = Np236m1.reactions()[3];
+    auto n2n = Np236m1.reactions()[2];
     verifyN2NReaction( n2n );
 
-    auto n3n = Np236m1.reactions()[4];
+    auto n3n = Np236m1.reactions()[3];
     verifyN3NReaction( n3n );
 
-    auto fission = Np236m1.reactions()[5];
+    auto fission = Np236m1.reactions()[4];
     verifyFissionReaction( fission );
 
-    auto n4n = Np236m1.reactions()[6];
+    auto n4n = Np236m1.reactions()[5];
     verifyN4NReaction( n4n );
 
-    auto inelastic0 = Np236m1.reactions()[7];
+    auto inelastic0 = Np236m1.reactions()[6];
     verifyInelasticReactionLevel0( inelastic0 );
 
-    auto inelastic1 = Np236m1.reactions()[8];
+    auto inelastic1 = Np236m1.reactions()[7];
     verifyInelasticReactionLevel1( inelastic1 );
+
+    auto elastic = Np236m1.reactions()[8];
+    verifyElasticReaction( elastic );
 
     auto inelastic3 = Np236m1.reactions()[9];
     verifyInelasticReactionLevel3( inelastic3 );
@@ -999,8 +999,8 @@ namespace np236m1 {
     total = Np236m1.reaction( id::ReactionID( "n,Np236_e2->total" ) );
     verifyTotalReaction( total );
 
-    elastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) );
-    verifyElasticReaction( elastic );
+    inelastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) );
+    verifyInelasticReaction( inelastic );
 
     n2n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->2n,Np235[all]" ) );
     verifyN2NReaction( n2n );
@@ -1014,14 +1014,14 @@ namespace np236m1 {
     n4n = Np236m1.reaction( id::ReactionID( "n,Np236_e2->4n,Np233[all]" ) );
     verifyN4NReaction( n4n );
 
-    inelastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236[all]" ) );
-    verifyInelasticReaction( inelastic );
-
     inelastic0 = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236" ) );
     verifyInelasticReactionLevel0( inelastic0 );
 
     inelastic1 = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e1" ) );
     verifyInelasticReactionLevel1( inelastic1 );
+
+    elastic = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e2" ) );
+    verifyElasticReaction( elastic );
 
     inelastic3 = Np236m1.reaction( id::ReactionID( "n,Np236_e2->n,Np236_e3" ) );
     verifyInelasticReactionLevel3( inelastic3 );

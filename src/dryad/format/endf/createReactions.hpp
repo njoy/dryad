@@ -113,6 +113,12 @@ namespace endf {
         }
       }
 
+      // sort by MT
+      std::sort( reactions.begin(), reactions.end(),
+                 [] ( auto&& left, auto&&right )
+                    { return left.identifier().reactionType().mt()
+                             < right.identifier().reactionType().mt(); } );
+
       // calculate deficit reaction for elastic scattering in electro-atomic data
       if ( material.hasSection( 23, 526 ) && ReactionInformation::isSummation( material, 526 ) ) {
 

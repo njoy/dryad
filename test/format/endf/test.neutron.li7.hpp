@@ -1024,7 +1024,7 @@ namespace li7 {
     auto total = Li7.reactions()[0];
     neutron::li7::verifyTotalReaction( total );
 
-    auto elastic = Li7.reactions()[1];
+    auto elastic = Li7.reactions()[5];
     neutron::li7::verifyElasticReaction( elastic );
 
     auto capture = Li7.reactions()[38];

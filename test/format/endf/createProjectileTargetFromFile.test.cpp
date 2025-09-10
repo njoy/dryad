@@ -17,7 +17,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "projectileTarget" ) {
 
-  GIVEN( "ENDF materials - incident neutrons" ) {
+  GIVEN( "ENDF materials - incident neutrons " ) {
 
     WHEN( "a single ENDF material is given for a ground state target" ) {
 
@@ -31,18 +31,6 @@ SCENARIO( "projectileTarget" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a single ENDF material is given for a metastable target" ) {
-
-      THEN( "it can be converted" ) {
-
-        ProjectileTarget first = format::endf::createProjectileTargetFromFile( "n-093_Np_236m1.endf", false );
-        ProjectileTarget second = format::endf::createProjectileTargetFromFile( "n-093_Np_236m1.endf", true );
-
-        neutron::np236m1::verifyNp236m1( first, false );
-        neutron::np236m1::verifyNp236m1( second, true );
-      } // THEN
-    } // WHEN
-
     WHEN( "a single ENDF material is given with lumped covariance reactions" ) {
 
       THEN( "it can be converted" ) {
@@ -52,6 +40,21 @@ SCENARIO( "projectileTarget" ) {
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF materials - incident neutrons" ) {
+
+    WHEN( "a single ENDF material is given for a metastable target" ) {
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget first = format::endf::createProjectileTargetFromFile( "n-093_Np_236m1.endf", false );
+        ProjectileTarget second = format::endf::createProjectileTargetFromFile( "n-093_Np_236m1.endf", true );
+
+        neutron::np236m1::verifyNp236m1( first, false );
+        neutron::np236m1::verifyNp236m1( second, true );
       } // THEN
     } // WHEN
   } // GIVEN
