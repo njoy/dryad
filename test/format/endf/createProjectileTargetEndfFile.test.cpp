@@ -1039,7 +1039,6 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
       std::string filename = "apiehjcvuhrtoiahmxuherotalcnhoeureitcnisunhflk.endf";
       format::endf::createProjectileTargetEndfFile( transport, 9344, filename );
-      format::endf::createProjectileTargetEndfFile( transport, 9344, "test.endf" );
 
       CHECK( chunkForMetastableState() == readContentFromFile( filename ) );
 
