@@ -61,4 +61,60 @@ SCENARIO( "resolveLink" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "a GNDS xml node with an attribute in the link path" ) {
+
+    pugi::xml_document document;
+    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    pugi::xml_node summation = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" )
+                                       .find_child_by_attribute( "crossSectionSum", "ENDF_MT", "501" )
+                                       .child( "summands" );
+    pugi::xml_node target = document.child( "reactionSuite" ).child( "reactions" )
+                                    .find_child_by_attribute( "reaction", "ENDF_MT", "527" )
+                                    .child( "crossSection" );
+
+    WHEN( "a single GNDS link node" ) {
+
+      pugi::xml_node link =
+      summation.find_child_by_attribute(
+                  "add", "href",
+                  "/reactionSuite/reactions/reaction[@label='e- + H + photon [bremsstrahlung]']/crossSection" );
+
+      THEN( "it can be resolved" ) {
+
+        auto chunk = format::gnds::resolveLink( link );
+
+        CHECK( target == chunk );
+        CHECK( target.name() == chunk.name() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "a GNDS xml node with an attribute in the link path - with a '/' in the attribute the value" ) {
+
+    pugi::xml_document document;
+    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    pugi::xml_node summation = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" )
+                                       .find_child_by_attribute( "crossSectionSum", "ENDF_MT", "501" )
+                                       .child( "summands" );
+    pugi::xml_node target = document.child( "reactionSuite" ).child( "reactions" )
+                                    .find_child_by_attribute( "reaction", "ENDF_MT", "534" )
+                                    .child( "crossSection" );
+
+    WHEN( "a single GNDS link node" ) {
+
+      pugi::xml_node link =
+      summation.find_child_by_attribute(
+                  "add", "href",
+                  "/reactionSuite/reactions/reaction[@label='e- + e- + H{1s1/2}']/crossSection" );
+
+      THEN( "it can be resolved" ) {
+
+        auto chunk = format::gnds::resolveLink( link );
+
+        CHECK( target == chunk );
+        CHECK( target.name() == chunk.name() );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO

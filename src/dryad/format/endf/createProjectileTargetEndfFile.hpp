@@ -32,7 +32,10 @@ namespace endf {
                                        int mat,
                                        const std::string& filename ) {
 
-    int zaid = transport.targetIdentifier().za();
+    auto projectile = transport.projectileIdentifier();
+    auto target = transport.targetIdentifier();
+
+    int zaid = target.za();
     double awr = transport.documentation().awr().has_value()
                  ? transport.documentation().awr().value()
                  : 0.;
@@ -44,7 +47,7 @@ namespace endf {
     int nmod = 0;
     double elis = 0;
     double sta = 0;
-    int lis = transport.targetIdentifier().e();
+    int lis = target.e();
     int liso = 0;
     int nfor = 6;
     double awi = 0;
@@ -52,7 +55,7 @@ namespace endf {
     int lrel = transport.documentation().version().has_value()
                ? transport.documentation().version()->second
                : 0;
-    int nsub = createEndfSublibraryType( transport.projectileIdentifier(),
+    int nsub = createEndfSublibraryType( projectile,
                                          transport.interactionType() );
     int nver = transport.documentation().version().has_value()
                ? transport.documentation().version()->first
@@ -77,21 +80,21 @@ namespace endf {
 
       if ( transport.interactionType() == InteractionType::Nuclear ) {
 
-        material.insert( createEndfFile3Section( transport.targetIdentifier(), awr, reaction ) );
+        material.insert( createEndfFile3Section( awr, reaction ) );
       }
       else {
 
         if ( reaction.identifier().reactionType() != id::ReactionType( "deficit-scattering" ) ) {
 
-          material.insert( createEndfFile23Section( transport.targetIdentifier(), awr, reaction ) );
+          material.insert( createEndfFile23Section( awr, reaction ) );
         }
       }
     }
 
     ENDFtk::tree::updateDirectory( material );
 
-    ENDFtk::TapeIdentification id( transport.projectileIdentifier().symbol() + "+" +
-                                   transport.targetIdentifier().symbol() +
+    ENDFtk::TapeIdentification id( projectile.symbol() + "+" +
+                                   target.symbol() +
                                    " data" );
     ENDFtk::tree::Tape tape( std::move( id ) );
     tape.insert( std::move( material ) );

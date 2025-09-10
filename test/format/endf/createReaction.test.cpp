@@ -17,7 +17,7 @@ using namespace njoy::dryad;
 
 SCENARIO( "createReaction" ) {
 
-  GIVEN( "ENDF materials - incident neutrons" ) {
+  GIVEN( "ENDF materials - incident neutrons - stable target" ) {
 
     auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
     auto material = tape.materials().front();
@@ -43,6 +43,46 @@ SCENARIO( "createReaction" ) {
         Reaction capture2 = format::endf::createReaction( projectile, target, material, 102, true );
         neutron::h1::verifyCaptureReaction( capture1 );
         neutron::h1::verifyCaptureReaction( capture2 );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF materials - incident neutrons - metastable target" ) {
+
+    auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+    auto material = tape.materials().front();
+
+    WHEN( "a single ENDF material and MT number is given" ) {
+
+      THEN( "a Reaction can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Np236_e2" );
+
+        Reaction total1 = format::endf::createReaction( projectile, target, material, 1, false );
+        Reaction total2 = format::endf::createReaction( projectile, target, material, 1, true );
+        neutron::np236m1::verifyTotalReaction( total1 );
+        neutron::np236m1::verifyTotalReaction( total2 );
+
+        Reaction elastic1 = format::endf::createReaction( projectile, target, material, 2, false );
+        Reaction elastic2 = format::endf::createReaction( projectile, target, material, 2, true );
+        neutron::np236m1::verifyElasticReaction( elastic1 );
+        neutron::np236m1::verifyElasticReaction( elastic2 );
+
+        Reaction inelastic01 = format::endf::createReaction( projectile, target, material, 51, false );
+        Reaction inelastic02 = format::endf::createReaction( projectile, target, material, 51, true );
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic01 );
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic02 );
+
+        Reaction inelastic1 = format::endf::createReaction( projectile, target, material, 4, false );
+        Reaction inelastic2 = format::endf::createReaction( projectile, target, material, 4, true );
+        neutron::np236m1::verifyInelasticReaction( inelastic1 );
+        neutron::np236m1::verifyInelasticReaction( inelastic2 );
+
+        Reaction capture1 = format::endf::createReaction( projectile, target, material, 102, false );
+        Reaction capture2 = format::endf::createReaction( projectile, target, material, 102, true );
+        neutron::np236m1::verifyCaptureReaction( capture1 );
+        neutron::np236m1::verifyCaptureReaction( capture2 );
       } // THEN
     } // WHEN
   } // GIVEN

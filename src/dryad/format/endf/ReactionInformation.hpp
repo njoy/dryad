@@ -6,7 +6,7 @@
 #include <unordered_set>
 
 // other includes
-#include "dryad/id/ReactionType.hpp"
+#include "dryad/id/ReactionID.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
@@ -105,11 +105,11 @@ namespace endf {
 
       {   1, {  } },
       {   3, {  } },
-      {   4, {  51,  52,  53,  54,  55,  56,  57,  58,  59,  60,
-                61,  62,  63,  64,  65,  66,  67,  68,  69,  70,
-                71,  72,  73,  74,  75,  76,  77,  78,  79,  80,
-                81,  82,  83,  84,  85,  86,  87,  88,  89,  90,
-                91 } },
+      {   4, {  50,  51,  52,  53,  54,  55,  56,  57,  58,  59,
+                60,  61,  62,  63,  64,  65,  66,  67,  68,  69,
+                70,  71,  72,  73,  74,  75,  76,  77,  78,  79,
+                80,  81,  82,  83,  84,  85,  86,  87,  88,  89,
+                90,  91 } },
       {  16, { 875, 876, 877, 878, 879, 880, 881, 882, 883, 884,
                885, 886, 887, 888, 889, 890, 891 } },
       {  18, {  19,  20,  21,  38 } },
@@ -269,19 +269,36 @@ namespace endf {
     }
 
     /**
-     *  @brief Return the partial mt numbers for a summation mt number
+     *  @brief Return the partial reaction identifiers for a summation mt number
      *
      *  @param[in] projectile   the projectile identifier
+     *  @param[in] target.      the target identifier
      *  @param[in] material     the ENDF material
      *  @param[in] mf           the MF number
      *  @param[in] mt           the MT number
      */
-    static std::vector< id::ReactionType >
+    static std::vector< id::ReactionID >
     partials( const id::ParticleID& projectile,
+              const id::ParticleID& target,
               const ENDFtk::tree::Material& material,
               int mf, int mt ) {
 
-      std::vector< id::ReactionType > partials;
+      std::vector< id::ReactionID > partials;
+
+      auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
+
+        if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
+
+          int ground = id::ReactionID( projectile, id::ParticleID( target.za() ), 2 ).reactionType().mt().value();
+          int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+          if ( mt > ground && mt <= elastic ) {
+
+            return mt - 1;
+          }
+        }
+        return mt;
+      };
+
       if ( mf == 3 && mt == 1 ) {
 
         auto sections = material.file( mf ).sectionNumbers();
@@ -289,7 +306,7 @@ namespace endf {
 
           if ( isPrimary( material, number ) ) {
 
-            partials.emplace_back( projectile, number );
+            partials.emplace_back( projectile, target, adjust_scatter_level( number ) );
           }
         }
       }
@@ -300,7 +317,7 @@ namespace endf {
 
           if ( section.lumpedCovarianceIndex() == mt ) {
 
-            partials.emplace_back( projectile, section.MT() );
+            partials.emplace_back( projectile, target, adjust_scatter_level( section.MT() ) );
           }
         }
         std::sort( partials.begin(), partials.end() );
@@ -312,19 +329,21 @@ namespace endf {
 
           if ( material.hasSection( mf, number ) ) {
 
-            partials.emplace_back( projectile, number );
+            partials.emplace_back( projectile, target, adjust_scatter_level( number ) );
           }
         }
 
-        // add deficiency mt number for total elastic in electro-atomic data
-        id::ReactionType large_angle( "large-angle-scattering" );
-        auto iter = std::lower_bound( partials.begin(), partials.end(),
-                                      large_angle );
-        if ( iter != partials.end() ) {
+        if ( projectile == id::ParticleID::electron() ) {
 
-          if ( *iter == large_angle ) {
+          // add deficiency mt number for total elastic in electro-atomic data
+          id::ReactionID large_angle( projectile, target, "large-angle-scattering" );
+          auto iter = std::lower_bound( partials.begin(), partials.end(), large_angle );
+          if ( iter != partials.end() ) {
 
-            partials.insert( iter + 1, id::ReactionType( "deficit-scattering" ) );
+            if ( *iter == large_angle ) {
+
+              partials.insert( iter + 1, id::ReactionID( projectile, target, "deficit-scattering" ) );
+            }
           }
         }
       }

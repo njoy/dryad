@@ -22,9 +22,10 @@ namespace endf {
    *  @param[in] reaction   the reaction data
    */
   ENDFtk::section::Type< 23 >
-  createEndfFile23Section( const id::ParticleID& target,
-                           double awr,
+  createEndfFile23Section( double awr,
                            const dryad::Reaction& reaction ) {
+
+    auto target = reaction.identifier().target();
 
     int mt = reaction.identifier().reactionType().mt().value();
     double bindingenergy = reaction.reactionQValue().has_value()

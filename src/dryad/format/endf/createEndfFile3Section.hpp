@@ -22,15 +22,33 @@ namespace endf {
    *  @param[in] reaction   the reaction data
    */
   ENDFtk::section::Type< 3 >
-  createEndfFile3Section( const id::ParticleID& target,
-                          double awr,
+  createEndfFile3Section( double awr,
                           const dryad::Reaction& reaction ) {
 
-    int mt = reaction.identifier().reactionType().mt().value();
-    if ( reaction.identifier().projectile() == id::ParticleID::neutron() && mt == 50 ) {
+    auto projectile = reaction.identifier().projectile();
+    auto target = reaction.identifier().target();
 
-      mt = 2;
-    }
+    auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
+
+      int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+      if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
+
+        int ground = id::ReactionID( projectile, id::ParticleID( target.za() ), 2 ).reactionType().mt().value();
+        if ( mt >= ground && mt < elastic ) {
+
+          return mt + 1;
+        }
+      }
+
+      if ( mt == elastic ) {
+
+        mt = 2;
+      }
+
+      return mt;
+    };
+
+    int mt = adjust_scatter_level( reaction.identifier().reactionType().mt().value() );
     double qm = reaction.massDifferenceQValue().has_value()
                 ? reaction.massDifferenceQValue().value()
                 : 0;

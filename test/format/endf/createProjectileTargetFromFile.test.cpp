@@ -19,7 +19,7 @@ SCENARIO( "projectileTarget" ) {
 
   GIVEN( "ENDF materials - incident neutrons" ) {
 
-    WHEN( "a single ENDF material is given without lumped covariance reactions" ) {
+    WHEN( "a single ENDF material is given for a ground state target" ) {
 
       THEN( "it can be converted" ) {
 
@@ -28,6 +28,18 @@ SCENARIO( "projectileTarget" ) {
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single ENDF material is given for a metastable target" ) {
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget first = format::endf::createProjectileTargetFromFile( "n-093_Np_236m1.endf", false );
+        ProjectileTarget second = format::endf::createProjectileTargetFromFile( "n-093_Np_236m1.endf", true );
+
+        neutron::np236m1::verifyNp236m1( first, false );
+        neutron::np236m1::verifyNp236m1( second, true );
       } // THEN
     } // WHEN
 

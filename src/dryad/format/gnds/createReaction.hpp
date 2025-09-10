@@ -27,10 +27,25 @@ namespace gnds {
                   bool normalise,
                   const std::string& style = "eval" ) {
 
+    auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
+
+      if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
+
+        int ground = id::ReactionID( projectile, id::ParticleID( target.za() ), 2 ).reactionType().mt().value();
+        int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+        if ( mt > ground && mt <= elastic ) {
+
+          return mt - 1;
+        }
+      }
+      return mt;
+    };
+
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 
       // metadata and miscellaneous information
-      id::ReactionID id( projectile, target, id::ReactionType( projectile, reaction.attribute( "ENDF_MT" ).as_int() ) );
+      int mt = adjust_scatter_level( reaction.attribute( "ENDF_MT" ).as_int() );
+      id::ReactionID id( projectile, target, mt );
 
       // cross section
       auto section = reaction.child( "crossSection" );
@@ -56,8 +71,8 @@ namespace gnds {
 
           // GNDS classifies total elastic as a primary reaction
           // but we classify it as a summation with a deficit reaction
-          std::vector< id::ReactionID > partials = { id::ReactionID( projectile, target, id::ReactionType( projectile, 525 ) ),
-                                                     id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ) };
+          std::vector< id::ReactionID > partials = { id::ReactionID( projectile, target, "large-angle-scattering" ),
+                                                     id::ReactionID( projectile, target, "deficit-scattering" ) };
 
           // return the reaction data
           return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
@@ -72,7 +87,8 @@ namespace gnds {
     else if ( strcmp( reaction.name(), "crossSectionSum" ) == 0 ) {
 
       // metadata and miscellaneous information
-      id::ReactionID id( projectile, target, id::ReactionType( projectile, reaction.attribute( "ENDF_MT" ).as_int() ) );
+      int mt = adjust_scatter_level( reaction.attribute( "ENDF_MT" ).as_int() );
+      id::ReactionID id( projectile, target, mt );
 
       // Q values
       auto qvalue = reaction.child( "Q" );
@@ -87,24 +103,21 @@ namespace gnds {
       for ( pugi::xml_node partial = summands.child( "add" );
             partial; partial = partial.next_sibling( "add" ) ) {
 
-        std::string href = partial.attribute( "href" ).as_string();
-        auto start = href.find( '\'' ) + 1;
-        auto end = href.find( '\'', start );
-        href = href.substr( start, end - start );
-        int mt = suite.child( "reactions" ).find_child_by_attribute( "reaction", "label", href.c_str() ).attribute( "ENDF_MT" ).as_int();
-        partials.emplace_back( projectile, target, id::ReactionType( projectile, mt ) );
+        auto reaction = resolveLink( partial ).parent();
+        int mt = adjust_scatter_level( reaction.attribute( "ENDF_MT" ).as_int() );
+        partials.emplace_back( projectile, target, mt );
       }
 
       // special treatment for some incident electron data reactions
       if ( projectile == id::ParticleID( "e-" ) ) {
 
-        if ( id == id::ReactionID( projectile, target, id::ReactionType( projectile, 501 ) ) ) {
+        if ( id == id::ReactionID( projectile, target, 501 ) ) {
 
           // replace 526 by 525 and -526
-          auto total_elastic = id::ReactionID( projectile, target, id::ReactionType( projectile, 526 ) );
+          auto total_elastic = id::ReactionID( projectile, target, 526 );
           auto iter = std::find( partials.begin(), partials.end(), total_elastic );
-          *iter = id::ReactionID( projectile, target, id::ReactionType( projectile, 525 ) );
-          partials.insert( iter + 1, id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ) );
+          *iter = id::ReactionID( projectile, target, 525 );
+          partials.insert( iter + 1, id::ReactionID( projectile, target, "deficit-scattering" ) );
         }
       }
 

@@ -48,13 +48,15 @@ void wrapReactionType( python::module& module ) {
   )
   .def(
 
-    python::init< ParticleID, int >(),
+    python::init< ParticleID, int, int >(),
     python::arg( "projectile" ), python::arg( "mt" ),
+    python::arg( "level" ) = 0,
     "Initialise the reaction type\n\n"
     "Arguments:\n"
     "    self         the reaction type\n"
     "    projectile   the projectile\n"
-    "    mt           the mt number"
+    "    mt           the mt number\n"
+    "    level        the level number of the target (default = 0)"
   )
   .def(
 
@@ -88,14 +90,20 @@ void wrapReactionType( python::module& module ) {
     "total",
     &Component::total,
     python::arg( "type" ) = InteractionType::Nuclear,
-    "The total reaction type"
+    "The total reaction type\n\n"
+    "Arguments:\n"
+    "    type   the interaction type (nuclear or atomic)"
   )
   .def_static(
 
     "elastic",
     &Component::elastic,
     python::arg( "projectile" ),
-    "The elastic reaction type"
+    python::arg( "level" ) = 0,
+    "The elastic reaction type\n\n"
+    "Arguments:\n"
+    "    projectile   the projectile\n"
+    "    level.       the level number of the target (default = 0)"
   )
   .def_static(
 

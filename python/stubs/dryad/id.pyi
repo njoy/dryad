@@ -423,6 +423,28 @@ class ReactionID:
             type         the reaction type
         """
     @typing.overload
+    def __init__(self, projectile: ParticleID, target: ParticleID, mt: int) -> None:
+        """
+        Initialise the reaction identifier
+        
+        Arguments:
+            self         the reaction identifier
+            projectile   the projectile
+            target       the target
+            mt           the mt number
+        """
+    @typing.overload
+    def __init__(self, projectile: ParticleID, target: ParticleID, type: str) -> None:
+        """
+        Initialise the reaction identifier
+        
+        Arguments:
+            self         the reaction identifier
+            projectile   the projectile
+            target       the target
+            type         the string representing the reaction type
+        """
+    @typing.overload
     def __init__(self, symbol: str) -> None:
         """
         Initialise the reaction identifier
@@ -496,9 +518,13 @@ class ReactionType:
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     @staticmethod
-    def elastic(projectile: ParticleID) -> ReactionType:
+    def elastic(projectile: ParticleID, level: int = 0) -> ReactionType:
         """
         The elastic reaction type
+        
+        Arguments:
+            projectile   the projectile
+            level.       the level number of the target (default = 0)
         """
     @staticmethod
     def size() -> int:
@@ -509,6 +535,9 @@ class ReactionType:
     def total(type: dryad.InteractionType = ...) -> ReactionType:
         """
         The total reaction type
+        
+        Arguments:
+            type   the interaction type (nuclear or atomic)
         """
     def __eq__(self, arg0: ReactionType) -> bool:
         ...
@@ -530,7 +559,7 @@ class ReactionType:
             mt     the mt number
         """
     @typing.overload
-    def __init__(self, projectile: ParticleID, mt: int) -> None:
+    def __init__(self, projectile: ParticleID, mt: int, level: int = 0) -> None:
         """
         Initialise the reaction type
         
@@ -538,6 +567,7 @@ class ReactionType:
             self         the reaction type
             projectile   the projectile
             mt           the mt number
+            level        the level number of the target (default = 0)
         """
     @typing.overload
     def __init__(self, particles: dict[ParticleID, int], level: int) -> None:

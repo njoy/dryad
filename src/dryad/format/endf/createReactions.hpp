@@ -99,15 +99,11 @@ namespace endf {
             Log::info( "Reading data for MT{}", mt );
 
             // metadata and miscellaneous information
-            id::ReactionID id( projectile, target, id::ReactionType( mt ) );
+            id::ReactionID id( projectile, target, mt );
 
             // partials
-            std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 33, mt );
-            std::vector< id::ReactionID > partials( endf_partials.size() );
-            std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                            [&projectile, &target]
-                               ( auto&& type )
-                               { return id::ReactionID( projectile, target, type ); } );
+            std::vector< id::ReactionID > partials =
+            ReactionInformation::partials( projectile, target, material, 33, mt );
 
             // cross section
             TabulatedCrossSection xs = calculateSummationCrossSection( partials, reactions );
@@ -131,7 +127,7 @@ namespace endf {
         TabulatedCrossSection deficit = total->crossSection().linearise();
         deficit -= partial->crossSection().linearise();
 
-        reactions.emplace_back( Reaction( id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
+        reactions.emplace_back( Reaction( id::ReactionID( projectile, target, "deficit-scattering" ),
                                           deficit, {}, std::nullopt, 0. ) );
       }
 

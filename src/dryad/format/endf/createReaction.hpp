@@ -56,8 +56,22 @@ namespace endf {
                            int mt,
                            bool normalise ) {
 
+    auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
+
+      if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
+
+        int ground = id::ReactionID( projectile, id::ParticleID( target.za() ), 2 ).reactionType().mt().value();
+        int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+        if ( mt > ground && mt <= elastic ) {
+
+          return mt - 1;
+        }
+      }
+      return mt;
+    };
+
     // metadata and miscellaneous information
-    id::ReactionID id( projectile, target, id::ReactionType( projectile, mt ) );
+    id::ReactionID id( projectile, target, adjust_scatter_level( mt ) );
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -82,7 +96,7 @@ namespace endf {
         else {
 
           mass_q = section.massDifferenceQValue();
-          reaction_q = section.massDifferenceQValue();
+          reaction_q = section.reactionQValue();
         }
 
         // add missing reaction products - only for primary reactions
@@ -106,16 +120,10 @@ namespace endf {
           //! @todo handle fission Q value defined on MT18 if partials are defined
         }
 
-        // partials
-        std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 3, mt );
-        std::vector< id::ReactionID > partials( endf_partials.size() );
-        std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                        [&projectile, &target]
-                           ( auto&& type )
-                           { return id::ReactionID( projectile, target, type ); } );
-
         // return the reaction data
-        return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+        return Reaction( std::move( id ),
+                         ReactionInformation::partials( projectile, target, material, 3, mt ),
+                         std::move( xs ) );
       }
       else {
 
@@ -155,16 +163,10 @@ namespace endf {
       }
       else if ( endf::ReactionInformation::isSummation( material, mt ) ) {
 
-        // partials
-        std::vector< id::ReactionType > endf_partials = ReactionInformation::partials( projectile, material, 23, mt );
-        std::vector< id::ReactionID > partials( endf_partials.size() );
-        std::transform( endf_partials.begin(), endf_partials.end(), partials.begin(),
-                        [&projectile, &target]
-                           ( auto&& type )
-                           { return id::ReactionID( projectile, target, type ); } );
-
         // return the reaction data
-        return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+        return Reaction( std::move( id ),
+                         ReactionInformation::partials( projectile, target, material, 23, mt ),
+                         std::move( xs ) );
       }
       else {
 

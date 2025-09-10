@@ -19,7 +19,7 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "ENDF materials - incident neutrons" ) {
 
-    WHEN( "a single ENDF material is given without lumped covariance reactions" ) {
+    WHEN( "a single ENDF material is given for a ground state target" ) {
 
       auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
       auto material = tape.materials().front();
@@ -46,6 +46,84 @@ SCENARIO( "createReactions" ) {
         neutron::h1::verifyElasticReaction( elastic );
         capture = reactions2[2];
         neutron::h1::verifyCaptureReaction( capture );
+      } // THEN
+    } // WHEN
+
+    WHEN( "a single ENDF material is given for a metastable target" ) {
+
+      auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "all reactions can be created" ) {
+
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Np236_e2" );
+        std::vector< Reaction > reactions1 = format::endf::createReactions( projectile, target, material, false );
+        std::vector< Reaction > reactions2 = format::endf::createReactions( projectile, target, material, true );
+
+        CHECK( 15 == reactions1.size() );
+        auto total = reactions1[0];
+        neutron::np236m1::verifyTotalReaction( total );
+        auto elastic = reactions1[1];
+        neutron::np236m1::verifyElasticReaction( elastic );
+        auto inelastic = reactions1[2];
+        neutron::np236m1::verifyInelasticReaction( inelastic );
+        auto n2n = reactions1[3];
+        neutron::np236m1::verifyN2NReaction( n2n );
+        auto n3n = reactions1[4];
+        neutron::np236m1::verifyN3NReaction( n3n );
+        auto fission = reactions1[5];
+        neutron::np236m1::verifyFissionReaction( fission );
+        auto n4n = reactions1[6];
+        neutron::np236m1::verifyN4NReaction( n4n );
+        auto inelastic0 = reactions1[7];
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic0 );
+        auto inelastic1 = reactions1[8];
+        neutron::np236m1::verifyInelasticReactionLevel1( inelastic1 );
+        auto inelastic3 = reactions1[9];
+        neutron::np236m1::verifyInelasticReactionLevel3( inelastic3 );
+        auto inelastic4 = reactions1[10];
+        neutron::np236m1::verifyInelasticReactionLevel4( inelastic4 );
+        auto inelastic5 = reactions1[11];
+        neutron::np236m1::verifyInelasticReactionLevel5( inelastic5 );
+        auto inelastic6 = reactions1[12];
+        neutron::np236m1::verifyInelasticReactionLevel6( inelastic6 );
+        auto inelastic_cont = reactions1[13];
+        neutron::np236m1::verifyInelasticReactionContinuum( inelastic_cont );
+        auto capture = reactions1[14];
+        neutron::np236m1::verifyCaptureReaction( capture );
+
+        CHECK( 15 == reactions2.size() );
+        total = reactions2[0];
+        neutron::np236m1::verifyTotalReaction( total );
+        elastic = reactions2[1];
+        neutron::np236m1::verifyElasticReaction( elastic );
+        inelastic = reactions2[2];
+        neutron::np236m1::verifyInelasticReaction( inelastic );
+        n2n = reactions2[3];
+        neutron::np236m1::verifyN2NReaction( n2n );
+        n3n = reactions2[4];
+        neutron::np236m1::verifyN3NReaction( n3n );
+        fission = reactions2[5];
+        neutron::np236m1::verifyFissionReaction( fission );
+        n4n = reactions2[6];
+        neutron::np236m1::verifyN4NReaction( n4n );
+        inelastic0 = reactions2[7];
+        neutron::np236m1::verifyInelasticReactionLevel0( inelastic0 );
+        inelastic1 = reactions2[8];
+        neutron::np236m1::verifyInelasticReactionLevel1( inelastic1 );
+        inelastic3 = reactions2[9];
+        neutron::np236m1::verifyInelasticReactionLevel3( inelastic3 );
+        inelastic4 = reactions2[10];
+        neutron::np236m1::verifyInelasticReactionLevel4( inelastic4 );
+        inelastic5 = reactions2[11];
+        neutron::np236m1::verifyInelasticReactionLevel5( inelastic5 );
+        inelastic6 = reactions2[12];
+        neutron::np236m1::verifyInelasticReactionLevel6( inelastic6 );
+        inelastic_cont = reactions2[13];
+        neutron::np236m1::verifyInelasticReactionContinuum( inelastic_cont );
+        capture = reactions2[14];
+        neutron::np236m1::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN
 
