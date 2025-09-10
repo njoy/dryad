@@ -16,10 +16,10 @@ static void verifyMatrix( const Matrix< double >& matrix,
   }
 
   // check if the order of the square matrix is consistent with the
-  // order obtained from the metadata
+  // order obtained from the structure
   if ( matrix.rows() != order ) {
 
-    Log::error( "The order of the square matrix and the order from the metadata are not consistent" );
+    Log::error( "The order of the square matrix and the order from the structure are not consistent" );
     Log::info( "Number rows: {}", matrix.rows() );
     Log::info( "Number columns: {}", matrix.cols() );
     Log::info( "Expected order: {}", order );
@@ -31,11 +31,11 @@ static void verifyMatrix( const Matrix< double >& matrix,
                           unsigned int rows,
                           unsigned int columns ) {
 
-  // check if the matrix dimensions are consistent with the metadata
+  // check if the matrix dimensions are consistent with the structure
   if ( ( matrix.rows() != rows ) ||
        ( matrix.cols() != columns ) ) {
 
-    Log::error( "The matrix dimensions and the metadata are not consistent" );
+    Log::error( "The matrix dimensions and the structure are not consistent" );
     Log::info( "Number rows: {}", matrix.rows() );
     Log::info( "Number columns: {}", matrix.cols() );
     Log::info( "Expected number of rows: {}", rows );

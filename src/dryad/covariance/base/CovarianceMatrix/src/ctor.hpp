@@ -13,34 +13,34 @@ CovarianceBlock& operator=( CovarianceBlock&& ) = default;
  *  @brief Constructor for a diagonal covariance block using a covariance
  *         matrix (relative or absolute)
  *
- *  @param[in] metadata      the metadata associated with the covariance block
+ *  @param[in] structure     the structure associated with the covariance block
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-CovarianceBlock( Metadata metadata, Matrix< double > covariances, bool relative = true ) :
-  row_( std::move( metadata ) ), column_( std::nullopt ), relative_( relative ),
+CovarianceBlock( Structure structure, Matrix< double > covariances, bool relative = true ) :
+  row_( std::move( structure ) ), column_( std::nullopt ), relative_( relative ),
   covariances_( std::move( covariances ) ), sigmas_( std::nullopt ),
   correlations_( std::nullopt ) {
 
-  verifyMatrix( this->covariances().value(), this->rowMetadata().size() );
+  verifyMatrix( this->covariances().value(), this->rowStructure().size() );
 }
 
 /**
  *  @brief Constructor for an off-diagonal covariance block using a covariance
  *         matrix (relative or absolute)
  *
- *  @param[in] rowMetadata       the row metadata
- *  @param[in] columnMetadata    the column metadata
+ *  @param[in] rowStructure      the row structure
+ *  @param[in] columnStructure   the column structure
  *  @param[in] covariances       the covariance matrix
  *  @param[in] relative          the relative covariance flag
  */
-CovarianceBlock( Metadata rowMetadata, Metadata columnMetadata,
+CovarianceBlock( Structure rowStructure, Structure columnStructure,
                  Matrix< double > covariances, bool relative = true ) :
-  row_( std::move( rowMetadata ) ), column_( std::move( columnMetadata ) ),
+  row_( std::move( rowStructure ) ), column_( std::move( columnStructure ) ),
   relative_( relative ), covariances_( std::move( covariances ) ),
   sigmas_( std::nullopt ), correlations_( std::nullopt ) {
 
   verifyMatrix( this->covariances().value(),
-                this->rowMetadata().size(),
-                this->columnMetadata().size() );
+                this->rowStructure().size(),
+                this->columnStructure().size() );
 }

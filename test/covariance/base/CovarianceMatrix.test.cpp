@@ -5,36 +5,28 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/CovarianceBlock.hpp"
+#include "dryad/covariance/base/CovarianceMatrix.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;
+using List = std::vector< int >;
 
-// a dummy metadata object
+SCENARIO( "CovarianceMatrix" ) {
 
-struct Metadata {
+  GIVEN( "valid covariance data for an on-diagonal CovarianceMatrix" ) {
 
-  unsigned int number;
-
-  unsigned int size() const { return number; }
-};
-
-SCENARIO( "CovarianceBlock" ) {
-
-  GIVEN( "valid covariance data for a diagonal CovarianceBlock" ) {
-
-    Metadata metadata{ 3 };
+    List structure{ 1, 2, 3 };
 
     Matrix< double > matrix( 3, 3 );
     matrix << 1., 2., 3.,
               2., 4., 6.,
               3., 6., 9.;
 
-    CovarianceBlock< Metadata > chunk( std::move( metadata ), std::move( matrix ) );
+    base::CovarianceMatrix< List > chunk( std::move( structure ), std::move( matrix ) );
 
-    THEN( "a CovarianceBlock can be constructed and members can be tested" ) {
+    THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
       CHECK( 3 == chunk.rowMetadata().size() );
       CHECK( 3 == chunk.columnMetadata().size() );
@@ -106,21 +98,21 @@ SCENARIO( "CovarianceBlock" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "valid data for an off-diagonal CovarianceBlock" ) {
+  GIVEN( "valid data for an off-diagonal CovarianceMatrix" ) {
 
-    Metadata rows{ 3 };
-    Metadata columns{ 2 };
+    Structure rows{ 1, 2, 3 };
+    Structure columns{ 4, 5 };
 
     Matrix< double > matrix( 3, 2 );
     matrix << 1., 2.,
               2., 4.,
               3., 6.;
 
-    CovarianceBlock< Metadata > chunk( std::move( rows ),
-                                       std::move( columns ),
-                                       std::move( matrix ) );
+    base::CovarianceMatrix< Structure > chunk( std::move( rows ),
+                                               std::move( columns ),
+                                               std::move( matrix ) );
 
-    THEN( "a CovarianceBlock can be constructed and members can be tested" ) {
+    THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
       CHECK( 3 == chunk.rowMetadata().size() );
       CHECK( 2 == chunk.columnMetadata().size() );
@@ -177,7 +169,7 @@ SCENARIO( "CovarianceBlock" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "invalid data for a CovarianceBlock" ) {
+  GIVEN( "invalid data for a CovarianceMatrix" ) {
 
     WHEN( "the matrix is not square for a diagonal covariance block" ) {
 
@@ -190,7 +182,7 @@ SCENARIO( "CovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceBlock< Metadata >( std::move( metadata ),
+        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( metadata ),
                                                    std::move( matrix ) ) );
       } // THEN
     } // WHEN
@@ -206,7 +198,7 @@ SCENARIO( "CovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceBlock< Metadata >( std::move( metadata ),
+        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( metadata ),
                                                    std::move( matrix ) ) );
       } // THEN
     } // WHEN
@@ -223,7 +215,7 @@ SCENARIO( "CovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceBlock< Metadata >( std::move( metadata ),
+        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( metadata ),
                                                    std::move( matrix ) ) );
       } // THEN
     } // WHEN
@@ -241,7 +233,7 @@ SCENARIO( "CovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceBlock< Metadata >( std::move( rows ),
+        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( rows ),
                                                    std::move( columns ),
                                                    std::move( matrix ) ) );
       } // THEN
@@ -260,7 +252,7 @@ SCENARIO( "CovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceBlock< Metadata >( std::move( rows ),
+        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( rows ),
                                                    std::move( columns ),
                                                    std::move( matrix ) ) );
       } // THEN

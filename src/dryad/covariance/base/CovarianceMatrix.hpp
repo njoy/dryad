@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_COVARIANCE_COVARIANCEBLOCK
-#define NJOY_DRYAD_COVARIANCE_COVARIANCEBLOCK
+#ifndef NJOY_DRYAD_COVARIANCE_COVARIANCEMATRIX
+#define NJOY_DRYAD_COVARIANCE_COVARIANCEMATRIX
 
 // system includes
 #include <optional>
@@ -12,21 +12,27 @@
 namespace njoy {
 namespace dryad {
 namespace covariance {
+namespace base {
 
   /**
    *  @class
    *  @brief A base class representing a covariance matrix block with
-   *         associated metadata
+   *         structure information
    *
-   *  The only requirement on the Metadata template is that it has a size()
-   *  function.
+   *  The only requirement on the Structure template is that it has a size()
+   *  function. For example: the number of groups for an energy structure when
+   *  the matrix is related to grouped energy data (xs, spectrum, etc.) or the
+   *  number of fission products when the matrix is related to fission product
+   *  yields.
    */
-  template < typename Metadata >
-  class CovarianceBlock {
+  template < typename Structure >
+  class CovarianceMatrix {
 
-    /* fields - meta data */
-    Metadata row_;
-    std::optional< Metadata > column_;
+    /* fields - row and column structure data */
+    Structure row_;
+    std::optional< Structure > column_;
+
+    /* fields - flag to indicate relative or absolute data */
     bool relative_;
 
     /* fields - covariance matrix */
@@ -40,27 +46,27 @@ namespace covariance {
     std::optional< std::vector< double > > eigenvalues_;
 
     /* auxiliary function */
-    #include "dryad/covariance/CovarianceBlock/src/verifyMatrix.hpp"
-    #include "dryad/covariance/CovarianceBlock/src/verifyStandardDeviations.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/CovarianceBlock/src/ctor.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/ctor.hpp"
 
     /* methods */
 
     /**
-     *  @brief Return the row metadata
+     *  @brief Return the row structure data
      */
-    const Metadata& rowMetadata() const { return this->row_; }
+    const Structure& rowStructure() const { return this->row_; }
 
     /**
-     *  @brief Return the column metadata
+     *  @brief Return the column structure data
      *
-     *  This returns the row metadata if the covariance block is a diagonal block
+     *  This returns the row structure data if the covariance block is a diagonal block
      */
-    const Metadata& columnMetadata() const {
+    const Structure& columnStructure() const {
 
       if ( this->column_ ) {
 
@@ -136,11 +142,12 @@ namespace covariance {
       return this->eigenvalues_;
     }
 
-    #include "dryad/covariance/CovarianceBlock/src/calculateStandardDeviations.hpp"
-    #include "dryad/covariance/CovarianceBlock/src/calculateCorrelations.hpp"
-    #include "dryad/covariance/CovarianceBlock/src/calculateEigenvalues.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
   };
 
+} // base namespace
 } // covariance namespace
 } // dryad namespace
 } // njoy namespace

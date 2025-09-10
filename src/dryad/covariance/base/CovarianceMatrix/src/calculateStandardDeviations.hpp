@@ -10,7 +10,7 @@ void calculateStandardDeviations() {
   if ( this->isDiagonalBlock() ) {
 
     std::vector< double > sigmas;
-    sigmas.reserve( this->rowMetadata().size() );
+    sigmas.reserve( this->rowStructure().size() );
 
     for ( const auto& value : this->covariances().value().diagonal().reshaped() ) {
 
