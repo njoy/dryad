@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_COVARIANCE_VARIANCESCALING
-#define NJOY_DRYAD_COVARIANCE_VARIANCESCALING
+#ifndef NJOY_DRYAD_ID_ENERGYGROUP
+#define NJOY_DRYAD_ID_ENERGYGROUP
 
 // system includes
 #include <algorithm>
@@ -11,7 +11,7 @@
 
 namespace njoy {
 namespace dryad {
-namespace covariance {
+namespace id {
 
   /**
    *  @class
@@ -131,7 +131,7 @@ namespace covariance {
     }
   };
 
-} // covariance namespace
+} // id namespace
 } // dryad namespace
 } // njoy namespace
 
@@ -139,9 +139,9 @@ namespace std {
 
   // std::hash override for the ReactionType class
   template <>
-  struct hash< njoy::dryad::covariance::EnergyGroup > {
+  struct hash< njoy::dryad::id::EnergyGroup > {
 
-    size_t operator()( const njoy::dryad::covariance::EnergyGroup& key ) const {
+    size_t operator()( const njoy::dryad::id::EnergyGroup& key ) const {
 
       return std::hash< double >()( key.lowerEnergy() ) ^
              std::hash< double >()( key.upperEnergy() );

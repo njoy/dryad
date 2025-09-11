@@ -4,7 +4,7 @@ Identifiers for particles, elements, etc.
 from __future__ import annotations
 import dryad
 import typing
-__all__ = ['ElectronSubshellID', 'ElementID', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
+__all__ = ['ElectronSubshellID', 'ElementID', 'EnergyGroup', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
 class ElectronSubshellID:
     """
     The electron subshell identifier
@@ -186,6 +186,45 @@ class ElementID:
     def symbol(self) -> str:
         """
         The element symbol
+        """
+class EnergyGroup:
+    """
+    An energy group defined by two energy values
+    """
+    def __eq__(self, arg0: EnergyGroup) -> bool:
+        ...
+    def __ge__(self, arg0: EnergyGroup) -> bool:
+        ...
+    def __gt__(self, arg0: EnergyGroup) -> bool:
+        ...
+    def __hash__(self) -> int:
+        """
+        Hash function
+        """
+    def __init__(self, lower: float, upper: float) -> None:
+        """
+        Initialise the energy
+        
+        Arguments:
+            self    the identifier
+            lower   the lower energy value of the group
+            upper   the upper energy value of the group
+        """
+    def __le__(self, arg0: EnergyGroup) -> bool:
+        ...
+    def __lt__(self, arg0: EnergyGroup) -> bool:
+        ...
+    def __ne__(self, arg0: EnergyGroup) -> bool:
+        ...
+    @property
+    def lower_energy(self) -> float:
+        """
+        The lower energy value
+        """
+    @property
+    def upper_energy(self) -> float:
+        """
+        The upper energy value
         """
 class LevelID:
     """

@@ -40,6 +40,7 @@ add_cpp_test( covariance.base.CovarianceMatrix                           covaria
 #add_cpp_test( covariance.LinearCombinationCovariance                     covariance/LinearCombinationCovariance.test.cpp )
 #add_cpp_test( covariance.VarianceScaling                                 covariance/VarianceScaling.test.cpp )
 
+add_cpp_test( id.EnergyGroup                                             id/EnergyGroup.test.cpp )
 add_cpp_test( id.ElectronSubshellID                                      id/ElectronSubshellID.test.cpp )
 add_cpp_test( id.ElementID                                               id/ElementID.test.cpp )
 add_cpp_test( id.LevelID                                                 id/LevelID.test.cpp )

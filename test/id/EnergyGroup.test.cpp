@@ -5,14 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/EnergyGroup.hpp"
+#include "dryad/id/EnergyGroup.hpp"
 
 // other includes
 #include <map>
 #include <unordered_map>
 
 // convenience typedefs
-using namespace njoy::dryad::covariance;
+using namespace njoy::dryad::id;
 
 SCENARIO( "EnergyGroup" ) {
 
