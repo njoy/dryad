@@ -21,10 +21,10 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/matrix.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionMetadata.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/VarianceScaling.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/LinearCombinationCovariance.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionCovarianceBlock.python.cpp
+#        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionMetadata.python.cpp
+#        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/VarianceScaling.python.cpp
+#        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/LinearCombinationCovariance.python.cpp
+#        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionCovarianceBlock.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Documentation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/DistributionDataType.python.cpp
