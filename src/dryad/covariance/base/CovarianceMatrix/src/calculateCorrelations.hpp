@@ -8,13 +8,13 @@
  */
 void calculateCorrelations() {
 
-  if ( this->isDiagonalBlock() ) {
+  if ( this->isOnDiagonal() ) {
 
     this->calculateStandardDeviations();
 
-    DiagonalMatrix< double > temporary( this->rowStructure().size() );
+    DiagonalMatrix< double > temporary( this->rowKeys().size() );
     temporary.setIdentity();
-    for ( unsigned int i = 0; i < this->rowStructure().size(); ++i ) {
+    for ( unsigned int i = 0; i < this->rowKeys().size(); ++i ) {
 
       temporary.diagonal()[i] /= this->standardDeviations().value()[i];
     }
@@ -36,21 +36,21 @@ void calculateCorrelations() {
 void calculateCorrelations( const std::vector< double >& rowDeviations,
                             const std::vector< double >& columnDeviations ) {
 
-  verifyStandardDeviations( this->rowStructure().size(),
-                            this->columnStructure().size(),
+  verifyStandardDeviations( this->rowKeys().size(),
+                            this->columnKeys().size(),
                             rowDeviations.size(),
                             columnDeviations.size() );
 
-  DiagonalMatrix< double > left( this->rowStructure().size() );
+  DiagonalMatrix< double > left( this->rowKeys().size() );
   left.setIdentity();
-  for ( unsigned int i = 0; i < this->rowStructure().size(); ++i ) {
+  for ( unsigned int i = 0; i < this->rowKeys().size(); ++i ) {
 
     left.diagonal()[i] /= rowDeviations[i];
   }
 
-  DiagonalMatrix< double > right( this->columnStructure().size() );
+  DiagonalMatrix< double > right( this->columnKeys().size() );
   right.setIdentity();
-  for ( unsigned int i = 0; i < this->columnStructure().size(); ++i ) {
+  for ( unsigned int i = 0; i < this->columnKeys().size(); ++i ) {
 
     right.diagonal()[i] /= columnDeviations[i];
   }

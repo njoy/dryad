@@ -16,21 +16,14 @@ namespace base {
 
   /**
    *  @class
-   *  @brief A base class representing a covariance matrix block with
-   *         structure information
-   *
-   *  The only requirement on the Structure template is that it has a size()
-   *  function. For example: the number of groups for an energy structure when
-   *  the matrix is related to grouped energy data (xs, spectrum, etc.) or the
-   *  number of fission products when the matrix is related to fission product
-   *  yields.
+   *  @brief A base class representing a covariance matrix with row and column keys
    */
-  template < typename Structure >
+  template < typename Key >
   class CovarianceMatrix {
 
-    /* fields - row and column structure data */
-    Structure row_;
-    std::optional< Structure > column_;
+    /* fields - row and column keys */
+    std::vector< Key > row_;
+    std::optional< std::vector< Key > > column_;
 
     /* fields - flag to indicate relative or absolute data */
     bool relative_;
@@ -57,16 +50,16 @@ namespace base {
     /* methods */
 
     /**
-     *  @brief Return the row structure data
+     *  @brief Return the row keys
      */
-    const Structure& rowStructure() const { return this->row_; }
+    const std::vector< Key >& rowKeys() const { return this->row_; }
 
     /**
-     *  @brief Return the column structure data
+     *  @brief Return the column keys
      *
-     *  This returns the row structure data if the covariance block is a diagonal block
+     *  This returns the row heys if the covariance matrix is on-diagonal
      */
-    const Structure& columnStructure() const {
+    const std::vector< Key >& columnKeys() const {
 
       if ( this->column_ ) {
 
@@ -79,23 +72,23 @@ namespace base {
     }
 
     /**
-     *  @brief Return whether or not this covariance block is an off diagonal block
+     *  @brief Return whether or not this covariance matrix is off diagonal
      */
-    bool isOffDiagonalBlock() const {
+    bool isOffDiagonal() const {
 
       return this->column_.has_value();
     }
 
     /**
-     *  @brief Return whether or not this covariance block is a diagonal block
+     *  @brief Return whether or not this covariance matrix is on diagonal
      */
-    bool isDiagonalBlock() const {
+    bool isOnDiagonal() const {
 
-      return ! this->isOffDiagonalBlock();
+      return ! this->isOffDiagonal();
     }
 
     /**
-     *  @brief Return whether or not this covariance block is relative or not
+     *  @brief Return whether or not this covariance matrix is relative or not
      */
     bool isRelativeBlock() const {
 
@@ -103,7 +96,7 @@ namespace base {
     }
 
     /**
-     *  @brief Return whether or not this covariance block is absolute or not
+     *  @brief Return whether or not this covariance matrix is absolute or not
      */
     bool isAbsoluteBlock() const {
 

@@ -11,30 +11,29 @@ using Catch::Matchers::WithinAbs;
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;
-using List = std::vector< int >;
 
 SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "valid covariance data for an on-diagonal CovarianceMatrix" ) {
 
-    List structure{ 1, 2, 3 };
+    std::vector< int > keys{ 1, 2, 3 };
 
     Matrix< double > matrix( 3, 3 );
     matrix << 1., 2., 3.,
               2., 4., 6.,
               3., 6., 9.;
 
-    base::CovarianceMatrix< List > chunk( std::move( structure ), std::move( matrix ) );
+    base::CovarianceMatrix chunk( std::move( keys ), std::move( matrix ) );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-      CHECK( 3 == chunk.rowMetadata().size() );
-      CHECK( 3 == chunk.columnMetadata().size() );
+      CHECK( 3 == chunk.rowKeys().size() );
+      CHECK( 3 == chunk.columnKeys().size() );
 
       CHECK( true == chunk.isRelativeBlock() );
       CHECK( false == chunk.isAbsoluteBlock() );
-      CHECK( false == chunk.isOffDiagonalBlock() );
-      CHECK( true == chunk.isDiagonalBlock() );
+      CHECK( false == chunk.isOffDiagonal() );
+      CHECK( true == chunk.isOnDiagonal() );
 
       CHECK( std::nullopt != chunk.covariances() );
       CHECK( std::nullopt == chunk.standardDeviations() );
@@ -100,27 +99,27 @@ SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "valid data for an off-diagonal CovarianceMatrix" ) {
 
-    Structure rows{ 1, 2, 3 };
-    Structure columns{ 4, 5 };
+    std::vector< int > rows{ 1, 2, 3 };
+    std::vector< int > columns{ 4, 5 };
 
     Matrix< double > matrix( 3, 2 );
     matrix << 1., 2.,
               2., 4.,
               3., 6.;
 
-    base::CovarianceMatrix< Structure > chunk( std::move( rows ),
-                                               std::move( columns ),
-                                               std::move( matrix ) );
+    base::CovarianceMatrix chunk( std::move( rows ),
+                                  std::move( columns ),
+                                  std::move( matrix ) );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-      CHECK( 3 == chunk.rowMetadata().size() );
-      CHECK( 2 == chunk.columnMetadata().size() );
+      CHECK( 3 == chunk.rowKeys().size() );
+      CHECK( 2 == chunk.columnKeys().size() );
 
       CHECK( true == chunk.isRelativeBlock() );
       CHECK( false == chunk.isAbsoluteBlock() );
-      CHECK( true == chunk.isOffDiagonalBlock() );
-      CHECK( false == chunk.isDiagonalBlock() );
+      CHECK( true == chunk.isOffDiagonal() );
+      CHECK( false == chunk.isOnDiagonal() );
 
       CHECK( std::nullopt != chunk.covariances() );
       CHECK( std::nullopt == chunk.standardDeviations() );
@@ -173,7 +172,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
     WHEN( "the matrix is not square for a diagonal covariance block" ) {
 
-      Metadata metadata{ 3 };
+      std::vector< int > keys{ 1, 2, 3 };
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
@@ -182,14 +181,13 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( metadata ),
-                                                   std::move( matrix ) ) );
+        CHECK_THROWS( base::CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the matrix is not symmetric for a diagonal covariance block" ) {
 
-      Metadata metadata{ 3 };
+      std::vector< int > keys{ 1, 2, 3 };
 
       Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
@@ -198,15 +196,14 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( metadata ),
-                                                   std::move( matrix ) ) );
+        CHECK_THROWS( base::CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
-    WHEN( "the matrix order is not consistent with the energy boundaries "
+    WHEN( "the matrix order is not consistent with the keys "
           "for a diagonal covariance block" ) {
 
-      Metadata metadata{ 2 };
+      std::vector< int > keys{ 1, 2 };
 
       Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
@@ -215,16 +212,15 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( metadata ),
-                                                   std::move( matrix ) ) );
+        CHECK_THROWS( base::CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
-    WHEN( "the matrix order is not consistent with the energy boundaries "
+    WHEN( "the matrix order is not consistent with the keys "
           "for an off-diagonal covariance block (rows)" ) {
 
-      Metadata rows{ 2 };
-      Metadata columns{ 2 };
+      std::vector< int > rows{ 1, 2 };
+      std::vector< int > columns{ 3, 4 };
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
@@ -233,17 +229,17 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( rows ),
-                                                   std::move( columns ),
-                                                   std::move( matrix ) ) );
+        CHECK_THROWS(base::CovarianceMatrix( std::move( rows ),
+                                             std::move( columns ),
+                                             std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
-    WHEN( "the matrix order is not consistent with the energy boundaries "
+    WHEN( "the matrix order is not consistent with the keys "
           "for an off-diagonal covariance block (columns)" ) {
 
-      Metadata rows{ 3 };
-      Metadata columns{ 1 };
+      std::vector< int > rows{ 1, 2, 3 };
+      std::vector< int > columns{ 4 };
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
@@ -252,9 +248,9 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix< Metadata >( std::move( rows ),
-                                                   std::move( columns ),
-                                                   std::move( matrix ) ) );
+        CHECK_THROWS( base::CovarianceMatrix( std::move( rows ),
+                                              std::move( columns ),
+                                              std::move( matrix ) ) );
       } // THEN
     } // WHEN
   } // GIVEN

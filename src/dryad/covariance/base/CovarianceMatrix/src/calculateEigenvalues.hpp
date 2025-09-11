@@ -7,13 +7,13 @@
  */
 void calculateEigenvalues() {
 
-  if ( this->isDiagonalBlock() ) {
+  if ( this->isOnDiagonal() ) {
 
     // the SelfAdjointEigenSolver exploits the symmetric features of the matrix
     Eigen::SelfAdjointEigenSolver< Matrix< double > > solver( this->covariances().value() );
 
     std::vector< double > eigenvalues;
-    eigenvalues.reserve( this->rowStructure().size() );
+    eigenvalues.reserve( this->rowKeys().size() );
 
     for ( const auto& value : solver.eigenvalues().reshaped() ) {
 
