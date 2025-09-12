@@ -41,7 +41,9 @@ CovarianceMatrix( std::vector< Key > keys,
   covariances_( std::nullopt ), sigmas_( std::move( deviations ) ),
   correlations_( std::move( correlations ) ) {
 
-  verifyMatrix( this->correlations().value(), this->rowKeys().size() );
+  verifyMatrix( this->standardDeviations().value(),
+                this->correlations().value(),
+                this->rowKeys().size() );
 }
 
 /**

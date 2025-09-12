@@ -27,6 +27,24 @@ static void verifyMatrix( const Matrix< double >& matrix,
   }
 }
 
+static void verifyMatrix( const std::vector< double >& deviations,
+                          const Matrix< double >& matrix,
+                          unsigned int order ) {
+
+  verifyMatrix( matrix, order );
+
+  // check if the number of deviation values is consistent with the
+  // order obtained from the structure
+  if ( deviations.size() != order ) {
+
+    Log::error( "The number of standard deviation values and the order from the "
+                "structure are not consistent" );
+    Log::info( "Number standard deviation values: {}", deviations.size() );
+    Log::info( "Expected order: {}", order );
+    throw std::exception();
+  }
+}
+
 static void verifyMatrix( const Matrix< double >& matrix,
                           unsigned int rows,
                           unsigned int columns ) {
