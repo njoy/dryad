@@ -60,6 +60,6 @@ void calculateCovariances( const std::vector< double >& rowDeviations,
       right.diagonal()[i] = columnDeviations[i];
     }
 
-    this->covariances = left * this->correlations().value() * right;
+    this->covariances_ = left * this->correlations().value() * right;
   }
 }
