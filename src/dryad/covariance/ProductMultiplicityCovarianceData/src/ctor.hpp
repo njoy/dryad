@@ -12,31 +12,39 @@ ProductMultiplicityCovarianceData& operator=( ProductMultiplicityCovarianceData&
 /**
  *  @brief Constructor for product multiplicity covariance data
  *
+ *  @param[in] reaction      the reaction identifier
  *  @param[in] energies      the group structure
  *  @param[in] products      the product identifiers
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-ProductMultiplicityCovarianceData( std::vector< double > energies,
+ProductMultiplicityCovarianceData( id::ReactionID reaction,
+                                   std::vector< double > energies,
                                    std::vector< id::ParticleID > products,
                                    Matrix< double > covariances,
                                    bool relative = true ) :
-    Parent( generateKeys( std::move( energies ), std::move( products ) ),
+    Parent( generateKeys( std::move( reaction ),
+                          std::move( energies ),
+                          std::move( products ) ),
             std::move( covariances ), relative ) {}
 
 /**
  *  @brief Constructor for product multiplicity correlation data
  *
+ *  @param[in] reaction      the reaction identifier
  *  @param[in] energies      the group structure
  *  @param[in] products      the product identifiers
  *  @param[in] deviations    the product identifiers
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-ProductMultiplicityCovarianceData( std::vector< double > energies,
+ProductMultiplicityCovarianceData( id::ReactionID reaction,
+                                   std::vector< double > energies,
                                    std::vector< id::ParticleID > products,
                                    std::vector< double > deviations,
                                    Matrix< double > correlations,
                                    bool relative = true ) :
-    Parent( generateKeys( std::move( energies ), std::move( products ) ),
+    Parent( generateKeys( std::move( reaction ),
+                          std::move( energies ),
+                          std::move( products ) ),
             std::move( deviations ), std::move( correlations ), relative ) {}

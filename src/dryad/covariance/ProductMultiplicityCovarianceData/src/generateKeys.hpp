@@ -1,4 +1,5 @@
-static std::vector< Key > generateKeys( std::vector< double > energies,
+static std::vector< Key > generateKeys( id::ReactionID reaction,
+                                        std::vector< double > energies,
                                         std::vector< id::ParticleID > products ) {
 
   if ( energies.size() < 2 || products.size() == 0 ) {
@@ -13,7 +14,7 @@ static std::vector< Key > generateKeys( std::vector< double > energies,
 
     for ( unsigned int j = 0; j < products.size(); ++j ) {
 
-      keys.emplace_back( id::EnergyGroup( energies[i], energies[i+1] ), products[j] );
+      keys.emplace_back( reaction, id::EnergyGroup( energies[i], energies[i+1] ), products[j] );
     }
   }
 
