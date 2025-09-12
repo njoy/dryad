@@ -220,7 +220,6 @@ SCENARIO( "CovarianceMatrix" ) {
       CHECK_THAT(  8.72998692347036e-07, WithinRel( chunk.eigenvalues().value()[5] ) );
       CHECK_THAT(  2.77607998044769e-06, WithinRel( chunk.eigenvalues().value()[6] ) );
       CHECK_THAT(  7.93360907096512e-06, WithinRel( chunk.eigenvalues().value()[7] ) );
-
     } // THEN
   } // GIVEN
 } // SCENARIO

@@ -61,7 +61,7 @@ namespace base {
      */
     const std::vector< Key >& columnKeys() const {
 
-      if ( this->column_ ) {
+      if ( this->column_.has_value() ) {
 
         return this->column_.value();
       }

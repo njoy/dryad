@@ -26,6 +26,25 @@ CovarianceMatrix( std::vector< Key > keys, Matrix< double > covariances,
 }
 
 /**
+ *  @brief Constructor for an on-diagonal correlation matrix (relative or absolute)
+ *
+ *  @param[in] keys           the keys associated with the covariance block
+ *  @param[in] deviations     the standard deviations
+ *  @param[in] correlations   the correlation matrix
+ *  @param[in] relative       the relative covariance flag
+ */
+CovarianceMatrix( std::vector< Key > keys,
+                  std::vector< double > deviations,
+                  Matrix< double > correlations,
+                  bool relative = true ) :
+  row_( std::move( keys ) ), column_( std::nullopt ), relative_( relative ),
+  covariances_( std::nullopt ), sigmas_( std::move( deviations ) ),
+  correlations_( std::move( correlations ) ) {
+
+  verifyMatrix( this->correlations().value(), this->rowKeys().size() );
+}
+
+/**
  *  @brief Constructor for an off-diagonal covariance matrix (relative or absolute)
  *
  *  @param[in] rowKeys       the row keys
