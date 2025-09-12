@@ -135,6 +135,7 @@ namespace base {
       return this->eigenvalues_;
     }
 
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
