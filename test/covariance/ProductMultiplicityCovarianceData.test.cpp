@@ -8,8 +8,7 @@ using Catch::Matchers::WithinAbs;
 #include "dryad/covariance/ProductMultiplicityCovarianceData.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
+
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
@@ -213,7 +212,8 @@ SCENARIO( "CovarianceMatrix" ) {
 
       CHECK( 8 == chunk.eigenvalues().value().size() );
       CHECK_THAT( -2.39076849693257e-07, WithinRel( chunk.eigenvalues().value()[0] ) );
-      CHECK_THAT(  3.43367202411662e-10, WithinRel( chunk.eigenvalues().value()[1] ) );
+      // some CI machines have differences in the last 3 digits of the next eigenvalue
+      CHECK_THAT(  3.43367202411662e-10, WithinRel( chunk.eigenvalues().value()[1], 1e-12 ) );
       CHECK_THAT(  3.31256655183549e-09, WithinRel( chunk.eigenvalues().value()[2] ) );
       CHECK_THAT(  1.08751047007600e-07, WithinRel( chunk.eigenvalues().value()[3] ) );
       CHECK_THAT(  5.09348096171567e-07, WithinRel( chunk.eigenvalues().value()[4] ) );
