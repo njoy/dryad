@@ -1,13 +1,13 @@
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-ProductMultiplicityCovarianceData() = default;
+ProductMultiplicityCovarianceMatrix() = default;
 
-ProductMultiplicityCovarianceData( const ProductMultiplicityCovarianceData& ) = default;
-ProductMultiplicityCovarianceData( ProductMultiplicityCovarianceData&& ) = default;
+ProductMultiplicityCovarianceMatrix( const ProductMultiplicityCovarianceMatrix& ) = default;
+ProductMultiplicityCovarianceMatrix( ProductMultiplicityCovarianceMatrix&& ) = default;
 
-ProductMultiplicityCovarianceData& operator=( const ProductMultiplicityCovarianceData& ) = default;
-ProductMultiplicityCovarianceData& operator=( ProductMultiplicityCovarianceData&& ) = default;
+ProductMultiplicityCovarianceMatrix& operator=( const ProductMultiplicityCovarianceMatrix& ) = default;
+ProductMultiplicityCovarianceMatrix& operator=( ProductMultiplicityCovarianceMatrix&& ) = default;
 
 /**
  *  @brief Constructor for product multiplicity covariance data
@@ -18,7 +18,7 @@ ProductMultiplicityCovarianceData& operator=( ProductMultiplicityCovarianceData&
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-ProductMultiplicityCovarianceData( id::ReactionID reaction,
+ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                    std::vector< double > energies,
                                    std::vector< id::ParticleID > products,
                                    Matrix< double > covariances,
@@ -38,7 +38,7 @@ ProductMultiplicityCovarianceData( id::ReactionID reaction,
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-ProductMultiplicityCovarianceData( id::ReactionID reaction,
+ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                    std::vector< double > energies,
                                    std::vector< id::ParticleID > products,
                                    std::vector< double > deviations,

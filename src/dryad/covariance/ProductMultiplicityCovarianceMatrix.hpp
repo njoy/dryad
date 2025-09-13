@@ -19,7 +19,7 @@ namespace covariance {
    *  @class
    *  @brief A covariance matrix for product multiplicities
    */
-  class ProductMultiplicityCovarianceData :
+  class ProductMultiplicityCovarianceMatrix :
     protected base::CovarianceMatrix< std::tuple< id::ReactionID, id::EnergyGroup, id::ParticleID > > {
 
     /* type aliases */
@@ -29,13 +29,13 @@ namespace covariance {
 
     /* auxiliary functions */
 
-    #include "dryad/covariance/ProductMultiplicityCovarianceData/src/generateKeys.hpp"
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateKeys.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/covariance/ProductMultiplicityCovarianceData/src/ctor.hpp"
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/ctor.hpp"
 
     /* methods */
 

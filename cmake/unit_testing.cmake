@@ -39,7 +39,7 @@ add_cpp_test( covariance.base.CovarianceMatrix                           covaria
 #add_cpp_test( covariance.CrossSectionMetadata                            covariance/CrossSectionMetadata.test.cpp )
 #add_cpp_test( covariance.LinearCombinationCovariance                     covariance/LinearCombinationCovariance.test.cpp )
 #add_cpp_test( covariance.VarianceScaling                                 covariance/VarianceScaling.test.cpp )
-add_cpp_test( covariance.ProductMultiplicityCovarianceData               covariance/ProductMultiplicityCovarianceData.test.cpp )
+add_cpp_test( covariance.ProductMultiplicityCovarianceMatrix             covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 
 add_cpp_test( id.EnergyGroup                                             id/EnergyGroup.test.cpp )
 add_cpp_test( id.ElectronSubshellID                                      id/ElectronSubshellID.test.cpp )

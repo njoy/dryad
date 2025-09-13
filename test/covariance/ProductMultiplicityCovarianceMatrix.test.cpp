@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/ProductMultiplicityCovarianceData.hpp"
+#include "dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
 
 // other includes
 
@@ -34,7 +34,7 @@ SCENARIO( "CovarianceMatrix" ) {
                 8.550732e-08, -3.459165e-07,  3.036135e-06,  5.460586e-09, 4.742642e-07,  1.744701e-07,  4.887436e-06, -2.686310e-10,
                -1.352565e-09, -9.048060e-10, -2.642949e-09,  3.336860e-10, -1.127960e-09, -2.394143e-09, -2.686310e-10,  3.280511e-09;
 
-    ProductMultiplicityCovarianceData chunk( reaction, std::move( energies ),
+    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
                                              std::move( products ), std::move( matrix ),
                                              false );
 
@@ -45,6 +45,8 @@ SCENARIO( "CovarianceMatrix" ) {
 
       CHECK( false == chunk.isRelativeBlock() );
       CHECK( true == chunk.isAbsoluteBlock() );
+      CHECK( true == chunk.isOnDiagonal() );
+      CHECK( false == chunk.isOffDiagonal() );
 
       CHECK( std::nullopt != chunk.covariances() );
       CHECK( std::nullopt == chunk.standardDeviations() );
@@ -256,7 +258,7 @@ SCENARIO( "CovarianceMatrix" ) {
               -4.07974274908842e-02, -1.33953076941197e-02, -2.26988045368907e-02,  3.01753686987760e-01,
               -3.72648500015370e-02, -4.31946555113209e-02, -2.12150880161591e-03,  1.00000000000000e+00;
 
-    ProductMultiplicityCovarianceData chunk( reaction, std::move( energies ),
+    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
                                              std::move( products ), std::move( deviations ),
                                              std::move( matrix ), false );
 
@@ -267,6 +269,8 @@ SCENARIO( "CovarianceMatrix" ) {
 
       CHECK( false == chunk.isRelativeBlock() );
       CHECK( true == chunk.isAbsoluteBlock() );
+      CHECK( true == chunk.isOnDiagonal() );
+      CHECK( false == chunk.isOffDiagonal() );
 
       CHECK( std::nullopt == chunk.covariances() );
       CHECK( std::nullopt != chunk.standardDeviations() );

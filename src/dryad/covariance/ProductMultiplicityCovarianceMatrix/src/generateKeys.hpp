@@ -7,6 +7,16 @@ static std::vector< Key > generateKeys( id::ReactionID reaction,
     Log::error( "There should be at least 2 energy values and 1 product identifier." );
     throw std::exception();
   }
+  if ( ! std::is_sorted( energies.begin(), energies.end() ) ) {
+
+    Log::error( "The energy group values do note appear to be sorted." );
+    throw std::exception();
+  }
+  if ( ! std::is_sorted( products.begin(), products.end() ) ) {
+
+    Log::error( "The product identifiers do not appear to be sorted." );
+    throw std::exception();
+  }
 
   std::vector< Key > keys;
   keys.reserve( energies.size() * products.size() );
