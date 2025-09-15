@@ -1,6 +1,6 @@
-static std::vector< Key > generateKeys( id::ReactionID reaction,
-                                        std::vector< double > energies,
-                                        std::vector< id::ParticleID > products ) {
+static std::vector< Key > generateKeys( const id::ReactionID& reaction,
+                                        const std::vector< double >& energies,
+                                        const std::vector< id::ParticleID >& products ) {
 
   if ( energies.size() < 2 || products.size() == 0 ) {
 
@@ -20,11 +20,11 @@ static std::vector< Key > generateKeys( id::ReactionID reaction,
 
   std::vector< Key > keys;
   keys.reserve( energies.size() * products.size() );
-  for ( unsigned int i = 0; i < energies.size() - 1; ++i ) {
+  for ( std::size_t i = 0; i < energies.size() - 1; ++i ) {
 
-    for ( unsigned int j = 0; j < products.size(); ++j ) {
+    for ( std::size_t j = 0; j < products.size(); ++j ) {
 
-      keys.emplace_back( reaction, id::EnergyGroup( energies[i], energies[i+1] ), products[j] );
+      keys.emplace_back( Key{ 0, i, j } );
     }
   }
 

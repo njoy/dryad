@@ -16,10 +16,17 @@ namespace base {
 
   /**
    *  @class
-   *  @brief A base class representing a covariance matrix with row and column keys
+   *  @brief A base class representing a covariance matrix
    */
-  template < typename Key >
+  template < std::size_t N >
   class CovarianceMatrix {
+
+  public:
+
+    /* type aliases */
+    using Key = std::array< std::size_t, N >;
+
+  private:
 
     /* fields - row and column keys */
     std::vector< Key > row_;
