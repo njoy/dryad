@@ -35,11 +35,11 @@ add_cpp_test( atomic.RadiativeTransitionData                             atomic/
 
 add_cpp_test( covariance.matrix                                          covariance/matrix.test.cpp )
 add_cpp_test( covariance.base.CovarianceMatrix                           covariance/base/CovarianceMatrix.test.cpp )
+add_cpp_test( covariance.ProductMultiplicityCovarianceMatrix             covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 #add_cpp_test( covariance.CrossSectionCovarianceBlock                     covariance/CrossSectionCovarianceBlock.test.cpp )
 #add_cpp_test( covariance.CrossSectionMetadata                            covariance/CrossSectionMetadata.test.cpp )
 #add_cpp_test( covariance.LinearCombinationCovariance                     covariance/LinearCombinationCovariance.test.cpp )
 #add_cpp_test( covariance.VarianceScaling                                 covariance/VarianceScaling.test.cpp )
-add_cpp_test( covariance.ProductMultiplicityCovarianceMatrix             covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 
 add_cpp_test( id.EnergyGroup                                             id/EnergyGroup.test.cpp )
 add_cpp_test( id.ElectronSubshellID                                      id/ElectronSubshellID.test.cpp )
