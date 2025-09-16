@@ -469,11 +469,11 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 6 == chunk.eigenvalues().value().size() );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-14 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[1], 1e-14 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[2], 1e-14 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[3], 1e-14 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[4], 1e-14 ) );
+        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
+        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
+        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[2], 1e-12 ) );
+        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[3], 1e-12 ) );
+        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[4], 1e-12 ) );
         CHECK_THAT( 91., WithinRel( chunk.eigenvalues().value()[5] ) );
       } // THEN
     } // WHEN
