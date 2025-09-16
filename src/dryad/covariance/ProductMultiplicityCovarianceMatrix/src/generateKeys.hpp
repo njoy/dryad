@@ -24,7 +24,7 @@ static std::vector< Key > generateKeys( const id::ReactionID& reaction,
 
     for ( std::size_t j = 0; j < products.size(); ++j ) {
 
-      keys.emplace_back( Key{ products[j], { energies[i], energies[i+1] }, reaction } );
+      keys.emplace_back( Key{ reaction, { energies[i], energies[i+1] }, products[j] } );
     }
   }
 

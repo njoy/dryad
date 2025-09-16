@@ -8,14 +8,13 @@ using Catch::Matchers::WithinAbs;
 #include "dryad/covariance/base/CovarianceMatrix.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
+
 // convenience typedefs
 using namespace njoy::dryad::covariance;
 
 SCENARIO( "CovarianceMatrix" ) {
 
-  GIVEN( "valid covariance data a 1D covariance matrix" ) {
+  GIVEN( "valid covariance data for a 1D covariance matrix" ) {
 
     using CovarianceMatrix = base::CovarianceMatrix< int >;
     using Key = base::CovarianceMatrix< int >::Key;
@@ -480,90 +479,93 @@ SCENARIO( "CovarianceMatrix" ) {
     } // WHEN
   } // GIVEN
 
-//  GIVEN( "invalid data for a CovarianceMatrix" ) {
-//
-//    WHEN( "the matrix is not square for a diagonal covariance block" ) {
-//
-//      std::vector< int > keys{ 1, 2, 3 };
-//
-//      Matrix< double > matrix( 3, 2 );
-//      matrix << 1., 2.,
-//                3., 4.,
-//                5., 6.;
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( base::CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the matrix is not symmetric for a diagonal covariance block" ) {
-//
-//      std::vector< int > keys{ 1, 2, 3 };
-//
-//      Matrix< double > matrix( 3, 3 );
-//      matrix << 1., 2., 3.,
-//                2., 4., 6.,
-//           100000., 6., 9.;
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( base::CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the matrix order is not consistent with the keys "
-//          "for a diagonal covariance block" ) {
-//
-//      std::vector< int > keys{ 1, 2 };
-//
-//      Matrix< double > matrix( 3, 3 );
-//      matrix << 1., 2., 3.,
-//                2., 4., 5.,
-//                3., 5., 6.;
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( base::CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the matrix order is not consistent with the keys "
-//          "for an off-diagonal covariance block (rows)" ) {
-//
-//      std::vector< int > rows{ 1, 2 };
-//      std::vector< int > columns{ 3, 4 };
-//
-//      Matrix< double > matrix( 3, 2 );
-//      matrix << 1., 2.,
-//                3., 4.,
-//                5., 6.;
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS(base::CovarianceMatrix( std::move( rows ),
-//                                             std::move( columns ),
-//                                             std::move( matrix ) ) );
-//      } // THEN
-//    } // WHEN
-//
-//    WHEN( "the matrix order is not consistent with the keys "
-//          "for an off-diagonal covariance block (columns)" ) {
-//
-//      std::vector< int > rows{ 1, 2, 3 };
-//      std::vector< int > columns{ 4 };
-//
-//      Matrix< double > matrix( 3, 2 );
-//      matrix << 1., 2.,
-//                3., 4.,
-//                5., 6.;
-//
-//      THEN( "an exception is thrown" ) {
-//
-//        CHECK_THROWS( base::CovarianceMatrix( std::move( rows ),
-//                                              std::move( columns ),
-//                                              std::move( matrix ) ) );
-//      } // THEN
-//    } // WHEN
-//  } // GIVEN
+  GIVEN( "invalid data for a CovarianceMatrix" ) {
+
+    using CovarianceMatrix = base::CovarianceMatrix< int >;
+    using Key = base::CovarianceMatrix< int >::Key;
+
+    WHEN( "the matrix is not square for a diagonal covariance block" ) {
+
+      std::vector< Key > keys{ 1, 2, 3 };
+
+      Matrix< double > matrix( 3, 2 );
+      matrix << 1., 2.,
+                3., 4.,
+                5., 6.;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the matrix is not symmetric for a diagonal covariance block" ) {
+
+      std::vector< Key > keys{ 1, 2, 3 };
+
+      Matrix< double > matrix( 3, 3 );
+      matrix << 1., 2., 3.,
+                2., 4., 6.,
+           100000., 6., 9.;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the matrix order is not consistent with the keys "
+          "for a diagonal covariance block" ) {
+
+      std::vector< Key > keys{ 1, 2 };
+
+      Matrix< double > matrix( 3, 3 );
+      matrix << 1., 2., 3.,
+                2., 4., 5.,
+                3., 5., 6.;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the matrix order is not consistent with the keys "
+          "for an off-diagonal covariance block (rows)" ) {
+
+      std::vector< Key > rows{ 1, 2 };
+      std::vector< Key > columns{ 3, 4 };
+
+      Matrix< double > matrix( 3, 2 );
+      matrix << 1., 2.,
+                3., 4.,
+                5., 6.;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS(CovarianceMatrix( std::move( rows ),
+                                       std::move( columns ),
+                                       std::move( matrix ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the matrix order is not consistent with the keys "
+          "for an off-diagonal covariance block (columns)" ) {
+
+      std::vector< Key > rows{ 1, 2, 3 };
+      std::vector< Key > columns{ 4 };
+
+      Matrix< double > matrix( 3, 2 );
+      matrix << 1., 2.,
+                3., 4.,
+                5., 6.;
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( CovarianceMatrix( std::move( rows ),
+                                        std::move( columns ),
+                                        std::move( matrix ) ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
