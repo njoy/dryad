@@ -17,8 +17,8 @@ SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "valid covariance data a 1D covariance matrix" ) {
 
-    using CovarianceMatrix = base::CovarianceMatrix< 1 >;
-    using Key = base::CovarianceMatrix< 1 >::Key;
+    using CovarianceMatrix = base::CovarianceMatrix< int >;
+    using Key = base::CovarianceMatrix< int >::Key;
 
     WHEN( "using covariance data for an on-diagonal matrix" ) {
 
@@ -249,12 +249,87 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt == chunk.eigenvalues() );
       } // THEN
     } // WHEN
+
+    WHEN( "using correlation data for an off-diagonal matrix" ) {
+
+      std::vector< Key > rows{ Key{ 0 }, Key{ 1 }, Key{ 2 } };
+      std::vector< Key > columns{ Key{ 3 }, Key{ 4 } };
+
+      std::vector< double > rowDeviations = { 1., 2., 3. };
+      std::vector< double > columnDeviations = { 1., 2. };
+
+      Matrix< double > matrix( 3, 2 );
+      matrix << 1., 1.,
+                1., 1.,
+                1., 1.;
+
+      CovarianceMatrix chunk( std::move( rows ),
+                              std::move( columns ),
+                              rowDeviations,
+                              columnDeviations,
+                              std::move( matrix ) );
+
+      THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
+
+        CHECK( 3 == chunk.rowKeys().size() );
+        CHECK( 2 == chunk.columnKeys().size() );
+
+        CHECK( true == chunk.isRelativeBlock() );
+        CHECK( false == chunk.isAbsoluteBlock() );
+        CHECK( true == chunk.isOffDiagonal() );
+        CHECK( false == chunk.isOnDiagonal() );
+
+        CHECK( std::nullopt == chunk.covariances() );
+        CHECK( std::nullopt == chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( 3 == chunk.correlations().value().rows() );
+        CHECK( 2 == chunk.correlations().value().cols() );
+        CHECK( 1. == chunk.correlations().value()(0,0) );
+        CHECK( 1. == chunk.correlations().value()(0,1) );
+        CHECK( 1. == chunk.correlations().value()(1,0) );
+        CHECK( 1. == chunk.correlations().value()(1,1) );
+        CHECK( 1. == chunk.correlations().value()(2,0) );
+        CHECK( 1. == chunk.correlations().value()(2,1) );
+      } // THEN
+
+      chunk.calculateStandardDeviations();
+
+      THEN( "Standard deviations cannot be calculated" ) {
+
+        CHECK( std::nullopt == chunk.standardDeviations() );
+      } // THEN
+
+      std::vector< double > row = { 1., 2., 3. };
+      std::vector< double > column = { 1., 2. };
+      chunk.calculateCovariances( row, column );
+
+      THEN( "Covariances can be calculated" ) {
+
+        CHECK( std::nullopt != chunk.covariances() );
+
+        CHECK( 3 == chunk.covariances().value().rows() );
+        CHECK( 2 == chunk.covariances().value().cols() );
+        CHECK( 1. == chunk.covariances().value()(0,0) );
+        CHECK( 2. == chunk.covariances().value()(0,1) );
+        CHECK( 2. == chunk.covariances().value()(1,0) );
+        CHECK( 4. == chunk.covariances().value()(1,1) );
+        CHECK( 3. == chunk.covariances().value()(2,0) );
+        CHECK( 6. == chunk.covariances().value()(2,1) );
+      } // THEN
+
+      chunk.calculateEigenvalues();
+
+      THEN( "Eigenvalues cannot be calculated" ) {
+
+        CHECK( std::nullopt == chunk.eigenvalues() );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "valid covariance data for a higher dimensional covariance matrix" ) {
 
-    using CovarianceMatrix = base::CovarianceMatrix< 2 >;
-    using Key = base::CovarianceMatrix< 2 >::Key;
+    using CovarianceMatrix = base::CovarianceMatrix< int, int >;
+    using Key = base::CovarianceMatrix< int, int >::Key;
 
     WHEN( "using covariance data for an on-diagonal matrix" ) {
 

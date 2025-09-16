@@ -18,13 +18,13 @@ namespace base {
    *  @class
    *  @brief A base class representing a covariance matrix
    */
-  template < std::size_t N >
+  template < typename... Ts >
   class CovarianceMatrix {
 
   public:
 
     /* type aliases */
-    using Key = std::array< std::size_t, N >;
+    using Key = std::tuple< Ts... >;
 
   private:
 

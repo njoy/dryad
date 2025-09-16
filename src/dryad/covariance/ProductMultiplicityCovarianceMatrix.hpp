@@ -20,11 +20,12 @@ namespace covariance {
    *  @brief A covariance matrix for product multiplicities
    */
   class ProductMultiplicityCovarianceMatrix :
-    protected base::CovarianceMatrix< 3 > {
+    protected base::CovarianceMatrix< id::ParticleID, id::EnergyGroup, id::ReactionID > {
 
     /* type aliases */
 
-    using Parent = base::CovarianceMatrix< 3 >;
+    using Parent = base::CovarianceMatrix< id::ParticleID, id::EnergyGroup, id::ReactionID >;
+    using Key = Parent::Key;
 
     /* fields */
     id::ReactionID reaction_;
