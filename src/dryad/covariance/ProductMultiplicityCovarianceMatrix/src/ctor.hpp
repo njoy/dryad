@@ -31,12 +31,12 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
 /**
  *  @brief Constructor for full product multiplicity correlation data
  *
- *  @param[in] reaction      the reaction identifier
- *  @param[in] energies      the group structure
- *  @param[in] products      the product identifiers
- *  @param[in] deviations    the product identifiers
- *  @param[in] covariances   the covariance matrix
- *  @param[in] relative      the relative covariance flag
+ *  @param[in] reaction       the reaction identifier
+ *  @param[in] energies       the group structure
+ *  @param[in] products       the product identifiers
+ *  @param[in] deviations     the product identifiers
+ *  @param[in] correlations   the correlation matrix
+ *  @param[in] relative       the relative covariance flag
  */
 ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                      std::vector< double > energies,
@@ -76,13 +76,13 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
  *  @brief Constructor for product multiplicity correlation data for a
  *         single energy group
  *
- *  @param[in] reaction      the reaction identifier
- *  @param[in] lower         the lower energy value of the energy group
- *  @param[in] upper         the upper energy value of the energy group
- *  @param[in] products      the product identifiers
- *  @param[in] deviations    the product identifiers
- *  @param[in] covariances   the covariance matrix
- *  @param[in] relative      the relative covariance flag
+ *  @param[in] reaction       the reaction identifier
+ *  @param[in] lower          the lower energy value of the energy group
+ *  @param[in] upper          the upper energy value of the energy group
+ *  @param[in] products       the product identifiers
+ *  @param[in] deviations     the product identifiers
+ *  @param[in] correlations   the correlation matrix
+ *  @param[in] relative       the relative covariance flag
  */
 ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                      double lower,

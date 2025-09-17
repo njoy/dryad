@@ -1,10 +1,12 @@
 /**
- *  @brief Calculate the correlations (for on diagonal blocks on the diagonal)
+ *  @brief Calculate the correlations (for on diagonal blocks)
  *
- *  The correlations can only be calculated without input of the standard
- *  deviations for blocks on the diagonal of the matrix. When this method
- *  is called on an off diagonal block, the method has no effect. Standard
+ *  The correlations can be calculated without input of the standard
+ *  deviations for blocks on the diagonal of the matrix. Standard
  *  deviations will be calculated and stored as well.
+ *
+ *  When this method is called on an off diagonal block, the method has
+ *  no effect.
  *
  *  When this method is called on a block that has no covariances, the method
  *  has no effect.
@@ -69,7 +71,7 @@ void calculateCorrelations( const std::vector< double >& rowDeviations,
     for ( unsigned int i = 0; i < this->columnKeys().size(); ++i ) {
 
       right.diagonal()[i] /= columnDeviations[i];
-      if ( std::isnan( left.diagonal()[i] ) ) {
+      if ( std::isnan( right.diagonal()[i] ) ) {
 
         right.diagonal()[i] = 0;
       }

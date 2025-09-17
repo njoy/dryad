@@ -97,7 +97,7 @@ namespace base {
     /**
      *  @brief Return whether or not this covariance matrix is relative or not
      */
-    bool isRelativeBlock() const {
+    bool isRelativeMatrix() const {
 
       return this->relative_;
     }
@@ -105,9 +105,9 @@ namespace base {
     /**
      *  @brief Return whether or not this covariance matrix is absolute or not
      */
-    bool isAbsoluteBlock() const {
+    bool isAbsoluteMatrix() const {
 
-      return ! this->isRelativeBlock();
+      return ! this->isRelativeMatrix();
     }
 
     /**

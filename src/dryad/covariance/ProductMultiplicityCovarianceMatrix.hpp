@@ -46,8 +46,8 @@ namespace covariance {
 
     using Parent::rowKeys;
     using Parent::columnKeys;
-    using Parent::isRelativeBlock;
-    using Parent::isAbsoluteBlock;
+    using Parent::isRelativeMatrix;
+    using Parent::isAbsoluteMatrix;
     using Parent::isOnDiagonal;
     using Parent::isOffDiagonal;
     using Parent::covariances;

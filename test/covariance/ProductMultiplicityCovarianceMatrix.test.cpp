@@ -43,8 +43,8 @@ SCENARIO( "CovarianceMatrix" ) {
       CHECK( 8 == chunk.rowKeys().size() );
       CHECK( 8 == chunk.columnKeys().size() );
 
-      CHECK( false == chunk.isRelativeBlock() );
-      CHECK( true == chunk.isAbsoluteBlock() );
+      CHECK( false == chunk.isRelativeMatrix() );
+      CHECK( true == chunk.isAbsoluteMatrix() );
       CHECK( true == chunk.isOnDiagonal() );
       CHECK( false == chunk.isOffDiagonal() );
 
@@ -267,8 +267,8 @@ SCENARIO( "CovarianceMatrix" ) {
       CHECK( 8 == chunk.rowKeys().size() );
       CHECK( 8 == chunk.columnKeys().size() );
 
-      CHECK( false == chunk.isRelativeBlock() );
-      CHECK( true == chunk.isAbsoluteBlock() );
+      CHECK( false == chunk.isRelativeMatrix() );
+      CHECK( true == chunk.isAbsoluteMatrix() );
       CHECK( true == chunk.isOnDiagonal() );
       CHECK( false == chunk.isOffDiagonal() );
 

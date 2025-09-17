@@ -1,9 +1,10 @@
 /**
  *  @brief Calculate the covariances (for on diagonal blocks)
  *
- *  The covariances can only be calculated without input of the standard
- *  deviations for blocks on the diagonal of the matrix. When this method
- *  is called on an off diagonal block, the method has no effect.
+ *  The covariances can be calculated without input of the standard
+ *  deviations for blocks on the diagonal of the matrix.
+ *
+ *  When this method is called on an off diagonal block, the method has no effect.
  *
  *  When this method is called on a block that has no correlations, the method
  *  has no effect.

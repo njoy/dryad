@@ -7,7 +7,6 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/ScalingType.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -38,7 +37,9 @@ namespace id {
     EnergyGroup& operator=( EnergyGroup&& ) = default;
 
     /**
-     *  @brief Constructor for an on-diagonal covariance matrix (relative or absolute)
+     *  @brief Constructor for an energy group
+     *
+     *  Note: we do not check if lower < upper.
      *
      *  @param[in] lower   the lower energy value of the energy group
      *  @param[in] upper   the upper energy value of the energy group

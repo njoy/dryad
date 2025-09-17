@@ -35,8 +35,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 3 == chunk.columnKeys().size() );
 
-        CHECK( true == chunk.isRelativeBlock() );
-        CHECK( false == chunk.isAbsoluteBlock() );
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
@@ -120,8 +120,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 3 == chunk.columnKeys().size() );
 
-        CHECK( true == chunk.isRelativeBlock() );
-        CHECK( false == chunk.isAbsoluteBlock() );
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
@@ -197,8 +197,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 2 == chunk.columnKeys().size() );
 
-        CHECK( true == chunk.isRelativeBlock() );
-        CHECK( false == chunk.isAbsoluteBlock() );
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
         CHECK( true == chunk.isOffDiagonal() );
         CHECK( false == chunk.isOnDiagonal() );
 
@@ -273,8 +273,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 2 == chunk.columnKeys().size() );
 
-        CHECK( true == chunk.isRelativeBlock() );
-        CHECK( false == chunk.isAbsoluteBlock() );
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
         CHECK( true == chunk.isOffDiagonal() );
         CHECK( false == chunk.isOnDiagonal() );
 
@@ -351,8 +351,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 6 == chunk.rowKeys().size() );
         CHECK( 6 == chunk.columnKeys().size() );
 
-        CHECK( true == chunk.isRelativeBlock() );
-        CHECK( false == chunk.isAbsoluteBlock() );
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
