@@ -58,6 +58,8 @@ namespace covariance {
     using Parent::calculateCorrelations;
     using Parent::calculateCovariances;
     using Parent::calculateEigenvalues;
+
+    using Parent::extract;
   };
 
 } // covariance namespace
