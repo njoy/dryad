@@ -1,7 +1,7 @@
-static void verifyStandardDeviations( unsigned int rows,
-                                      unsigned int columns,
-                                      unsigned int rowDeviations,
-                                      unsigned int columnDeviations )
+static void verifyStandardDeviations( std::size_t rows,
+                                      std::size_t columns,
+                                      std::size_t rowDeviations,
+                                      std::size_t columnDeviations )
 {
 
   if ( ( rowDeviations != rows ) || ( columnDeviations != columns ) ) {

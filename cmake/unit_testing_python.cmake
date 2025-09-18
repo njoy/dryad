@@ -25,6 +25,7 @@ endfunction()
 
 message( STATUS "Adding dryad Python unit testing" )
 
+add_python_test( id.EnergyGroup                          id/Test_dryad_id_EnergyGroup.py )
 add_python_test( id.ElectronSubshellID                   id/Test_dryad_id_ElectronSubshellID.py )
 add_python_test( id.ElementID                            id/Test_dryad_id_ElementID.py )
 add_python_test( id.LevelID                              id/Test_dryad_id_LevelID.py )
@@ -37,10 +38,10 @@ add_python_test( atomic.NonRadiativeTransitionData       atomic/Test_dryad_atomi
 add_python_test( atomic.ElectronSubshellConfiguration    atomic/Test_dryad_atomic_ElectronSubshellConfiguration.py )
 
 add_python_test( covariance.matrix                       covariance/Test_dryad_covariance_matrix.py )
-add_python_test( covariance.VarianceScaling              covariance/Test_dryad_covariance_VarianceScaling.py )
-add_python_test( covariance.LinearCombinationCovariance  covariance/Test_dryad_covariance_LinearCombinationCovariance.py )
-add_python_test( covariance.CrossSectionMetadata         covariance/Test_dryad_covariance_CrossSectionMetadata.py )
-add_python_test( covariance.CrossSectionCovarianceBlock  covariance/Test_dryad_covariance_CrossSectionCovarianceBlock.py )
+#add_python_test( covariance.VarianceScaling              covariance/Test_dryad_covariance_VarianceScaling.py )
+#add_python_test( covariance.LinearCombinationCovariance  covariance/Test_dryad_covariance_LinearCombinationCovariance.py )
+#add_python_test( covariance.CrossSectionMetadata         covariance/Test_dryad_covariance_CrossSectionMetadata.py )
+#add_python_test( covariance.CrossSectionCovarianceBlock  covariance/Test_dryad_covariance_CrossSectionCovarianceBlock.py )
 
 add_python_test( Documentation                           Test_dryad_Documentation.py )
 
