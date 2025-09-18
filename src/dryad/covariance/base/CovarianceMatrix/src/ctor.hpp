@@ -44,6 +44,7 @@ CovarianceMatrix( std::vector< Key > keys,
   verifyMatrix( this->standardDeviations().value(),
                 this->correlations().value(),
                 this->rowKeys().size() );
+  this->calculateCovariances();
 }
 
 /**
@@ -88,4 +89,5 @@ CovarianceMatrix( std::vector< Key > rowKeys, std::vector< Key > columnKeys,
   verifyMatrix( this->correlations().value(),
                 this->rowKeys().size(),
                 this->columnKeys().size() );
+  this->calculateCovariances( rowDeviations, columnDeviations );
 }

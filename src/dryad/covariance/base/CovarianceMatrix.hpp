@@ -14,6 +14,28 @@ namespace dryad {
 namespace covariance {
 namespace base {
 
+  template < typename LeftTuple, typename RightTuple, std::size_t... Is >
+  auto compare_key_impl( const LeftTuple& left, const RightTuple& right, std::index_sequence< Is... > ) {
+
+      auto compare = [] ( auto&& left, auto&& right ) {
+
+        if ( left == std::nullopt || left == right ) {
+
+          return true;
+        }
+        return false;
+      };
+
+      return ( compare( std::get< Is >( left ), std::get< Is >( right ) ) && ... );
+  }
+
+  template < typename... Ts >
+  auto compare_key( const std::tuple< std::optional< Ts >... >& left,
+                    const std::tuple< Ts... >& right ) {
+
+    return compare_key_impl( left, right, std::make_index_sequence< sizeof...( Ts ) >{} );
+  }
+
   /**
    *  @class
    *  @brief A base class representing a covariance matrix
@@ -25,6 +47,7 @@ namespace base {
 
     /* type aliases */
     using Key = std::tuple< Ts... >;
+    using Selection = std::tuple< std::optional< Ts >... >;
 
   private:
 
@@ -146,6 +169,8 @@ namespace base {
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
+
+    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
   };
 
 } // base namespace

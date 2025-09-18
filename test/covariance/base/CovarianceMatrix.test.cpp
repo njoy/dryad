@@ -329,6 +329,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
     using CovarianceMatrix = base::CovarianceMatrix< int, int >;
     using Key = base::CovarianceMatrix< int, int >::Key;
+    using Selection = base::CovarianceMatrix< int, int >::Selection;
 
     WHEN( "using covariance data for an on-diagonal matrix" ) {
 
@@ -475,6 +476,31 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[3], 1e-12 ) );
         CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[4], 1e-12 ) );
         CHECK_THAT( 91., WithinRel( chunk.eigenvalues().value()[5] ) );
+      } // THEN
+
+      auto submatrix = chunk.extract( std::nullopt, 0 );
+
+      THEN( "A submatrix can be extracted" ) {
+
+        CHECK( 2 == submatrix.rowKeys().size() );
+        CHECK( 2 == submatrix.columnKeys().size() );
+
+        CHECK( true == submatrix.isRelativeMatrix() );
+        CHECK( false == submatrix.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isOffDiagonal() );
+        CHECK( true == submatrix.isOnDiagonal() );
+
+        CHECK( std::nullopt != submatrix.covariances() );
+        CHECK( std::nullopt == submatrix.standardDeviations() );
+        CHECK( std::nullopt == submatrix.correlations() );
+        CHECK( std::nullopt == submatrix.eigenvalues() );
+
+        CHECK( 2 == submatrix.covariances().value().rows() );
+        CHECK( 2 == submatrix.covariances().value().cols() );
+        CHECK(  1. == submatrix.covariances().value()(0,0) );
+        CHECK(  4. == submatrix.covariances().value()(0,1) );
+        CHECK(  4. == submatrix.covariances().value()(1,0) );
+        CHECK( 16. == submatrix.covariances().value()(1,1) );
       } // THEN
     } // WHEN
   } // GIVEN
