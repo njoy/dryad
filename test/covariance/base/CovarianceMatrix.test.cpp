@@ -486,7 +486,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
     CovarianceMatrix chunk( std::move( keys ), std::move( matrix ) );
 
-    WHEN( "extracting on the first dimension" ) {
+    WHEN( "extract row arguments - extracting on the first dimension" ) {
 
       auto submatrix = chunk.extract( std::nullopt, 0 );
 
@@ -604,6 +604,40 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 24. == chunk.covariances().value()(5,3) );
         CHECK( 30. == chunk.covariances().value()(5,4) );
         CHECK( 36. == chunk.covariances().value()(5,5) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "extract row and column arguments" ) {
+
+      auto submatrix = chunk.extract( 0, std::nullopt,
+                                      1, std::nullopt );
+
+      THEN( "A submatrix can be extracted" ) {
+
+        CHECK( 3 == submatrix.rowKeys().size() );
+        CHECK( 3 == submatrix.columnKeys().size() );
+
+        CHECK( true == submatrix.isRelativeMatrix() );
+        CHECK( false == submatrix.isAbsoluteMatrix() );
+        CHECK( true == submatrix.isOffDiagonal() );
+        CHECK( false == submatrix.isOnDiagonal() );
+
+        CHECK( std::nullopt != submatrix.covariances() );
+        CHECK( std::nullopt == submatrix.standardDeviations() );
+        CHECK( std::nullopt == submatrix.correlations() );
+        CHECK( std::nullopt == submatrix.eigenvalues() );
+
+        CHECK( 3 == submatrix.covariances().value().rows() );
+        CHECK( 3 == submatrix.covariances().value().cols() );
+        CHECK(  4. == submatrix.covariances().value()(0,0) );
+        CHECK(  5. == submatrix.covariances().value()(0,1) );
+        CHECK(  6. == submatrix.covariances().value()(0,2) );
+        CHECK(  8. == submatrix.covariances().value()(1,0) );
+        CHECK( 10. == submatrix.covariances().value()(1,1) );
+        CHECK( 12. == submatrix.covariances().value()(1,2) );
+        CHECK( 12. == submatrix.covariances().value()(2,0) );
+        CHECK( 15. == submatrix.covariances().value()(2,1) );
+        CHECK( 18. == submatrix.covariances().value()(2,2) );
       } // THEN
     } // WHEN
   } // GIVEN
