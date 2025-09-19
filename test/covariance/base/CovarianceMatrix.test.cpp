@@ -466,7 +466,7 @@ SCENARIO( "CovarianceMatrix" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "a covariance matrix" ) {
+  GIVEN( "a valid covariance matrix" ) {
 
     using CovarianceMatrix = base::CovarianceMatrix< int, int >;
     using Key = base::CovarianceMatrix< int, int >::Key;
@@ -486,7 +486,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
     CovarianceMatrix chunk( std::move( keys ), std::move( matrix ) );
 
-    WHEN( "" ) {
+    WHEN( "extracting on the first dimension" ) {
 
       auto submatrix = chunk.extract( std::nullopt, 0 );
 
@@ -511,6 +511,99 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK(  4. == submatrix.covariances().value()(0,1) );
         CHECK(  4. == submatrix.covariances().value()(1,0) );
         CHECK( 16. == submatrix.covariances().value()(1,1) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "extracting on the second dimension" ) {
+
+      auto submatrix = chunk.extract( 0, std::nullopt );
+
+      THEN( "A submatrix can be extracted" ) {
+
+        CHECK( 3 == submatrix.rowKeys().size() );
+        CHECK( 3 == submatrix.columnKeys().size() );
+
+        CHECK( true == submatrix.isRelativeMatrix() );
+        CHECK( false == submatrix.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isOffDiagonal() );
+        CHECK( true == submatrix.isOnDiagonal() );
+
+        CHECK( std::nullopt != submatrix.covariances() );
+        CHECK( std::nullopt == submatrix.standardDeviations() );
+        CHECK( std::nullopt == submatrix.correlations() );
+        CHECK( std::nullopt == submatrix.eigenvalues() );
+
+        CHECK( 3 == submatrix.covariances().value().rows() );
+        CHECK( 3 == submatrix.covariances().value().cols() );
+        CHECK(  1. == submatrix.covariances().value()(0,0) );
+        CHECK(  2. == submatrix.covariances().value()(0,1) );
+        CHECK(  3. == submatrix.covariances().value()(0,2) );
+        CHECK(  2. == submatrix.covariances().value()(1,0) );
+        CHECK(  4. == submatrix.covariances().value()(1,1) );
+        CHECK(  6. == submatrix.covariances().value()(1,2) );
+        CHECK(  3. == submatrix.covariances().value()(2,0) );
+        CHECK(  6. == submatrix.covariances().value()(2,1) );
+        CHECK(  9. == submatrix.covariances().value()(2,2) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "all arguments are std::nullopt" ) {
+
+      auto submatrix = chunk.extract( std::nullopt, std::nullopt );
+
+      THEN( "A submatrix can be extracted and it is the same as the original matrix" ) {
+
+        CHECK( 6 == chunk.rowKeys().size() );
+        CHECK( 6 == chunk.columnKeys().size() );
+
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
+        CHECK( false == chunk.isOffDiagonal() );
+        CHECK( true == chunk.isOnDiagonal() );
+
+        CHECK( std::nullopt != chunk.covariances() );
+        CHECK( std::nullopt == chunk.standardDeviations() );
+        CHECK( std::nullopt == chunk.correlations() );
+        CHECK( std::nullopt == chunk.eigenvalues() );
+
+        CHECK( 6 == chunk.covariances().value().rows() );
+        CHECK( 6 == chunk.covariances().value().cols() );
+        CHECK(  1. == chunk.covariances().value()(0,0) );
+        CHECK(  2. == chunk.covariances().value()(0,1) );
+        CHECK(  3. == chunk.covariances().value()(0,2) );
+        CHECK(  4. == chunk.covariances().value()(0,3) );
+        CHECK(  5. == chunk.covariances().value()(0,4) );
+        CHECK(  6. == chunk.covariances().value()(0,5) );
+        CHECK(  2. == chunk.covariances().value()(1,0) );
+        CHECK(  4. == chunk.covariances().value()(1,1) );
+        CHECK(  6. == chunk.covariances().value()(1,2) );
+        CHECK(  8. == chunk.covariances().value()(1,3) );
+        CHECK( 10. == chunk.covariances().value()(1,4) );
+        CHECK( 12. == chunk.covariances().value()(1,5) );
+        CHECK(  3. == chunk.covariances().value()(2,0) );
+        CHECK(  6. == chunk.covariances().value()(2,1) );
+        CHECK(  9. == chunk.covariances().value()(2,2) );
+        CHECK( 12. == chunk.covariances().value()(2,3) );
+        CHECK( 15. == chunk.covariances().value()(2,4) );
+        CHECK( 18. == chunk.covariances().value()(2,5) );
+        CHECK(  4. == chunk.covariances().value()(3,0) );
+        CHECK(  8. == chunk.covariances().value()(3,1) );
+        CHECK( 12. == chunk.covariances().value()(3,2) );
+        CHECK( 16. == chunk.covariances().value()(3,3) );
+        CHECK( 20. == chunk.covariances().value()(3,4) );
+        CHECK( 24. == chunk.covariances().value()(3,5) );
+        CHECK(  5. == chunk.covariances().value()(4,0) );
+        CHECK( 10. == chunk.covariances().value()(4,1) );
+        CHECK( 15. == chunk.covariances().value()(4,2) );
+        CHECK( 20. == chunk.covariances().value()(4,3) );
+        CHECK( 25. == chunk.covariances().value()(4,4) );
+        CHECK( 30. == chunk.covariances().value()(4,5) );
+        CHECK(  6. == chunk.covariances().value()(5,0) );
+        CHECK( 12. == chunk.covariances().value()(5,1) );
+        CHECK( 18. == chunk.covariances().value()(5,2) );
+        CHECK( 24. == chunk.covariances().value()(5,3) );
+        CHECK( 30. == chunk.covariances().value()(5,4) );
+        CHECK( 36. == chunk.covariances().value()(5,5) );
       } // THEN
     } // WHEN
   } // GIVEN

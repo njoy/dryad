@@ -29,7 +29,8 @@ CovarianceMatrix extract( const std::optional< Ts >&... args ) const {
       }
     }
 
-    return CovarianceMatrix( std::move( rowKeys ), std::move( matrix ) );
+    return CovarianceMatrix( std::move( rowKeys ), std::move( matrix ),
+                             this->isRelativeMatrix() );
   }
   else {
 
@@ -56,6 +57,6 @@ CovarianceMatrix extract( const std::optional< Ts >&... args ) const {
     }
 
     return CovarianceMatrix( std::move( rowKeys ), std::move( columnKeys ),
-                             std::move( matrix ) );
+                             std::move( matrix ), this->isRelativeMatrix() );
   }
 }
