@@ -16,7 +16,7 @@ ProductMultiplicityCovarianceMatrix& operator=( ProductMultiplicityCovarianceMat
  *  @param[in] energies      the group structure
  *  @param[in] products      the product identifiers
  *  @param[in] covariances   the covariance matrix
- *  @param[in] relative      the relative covariance flag
+ *  @param[in] relative      the relative covariance flag (default is true)
  */
 ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                      std::vector< double > energies,
@@ -36,7 +36,7 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
  *  @param[in] products       the product identifiers
  *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
- *  @param[in] relative       the relative covariance flag
+ *  @param[in] relative       the relative covariance flag (default is true)
  */
 ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                      std::vector< double > energies,
