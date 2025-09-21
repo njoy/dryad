@@ -44,6 +44,30 @@ namespace covariance {
 
     /* methods */
 
+    /**
+     *  @brief Return the reaction identifier
+     */
+    const id::ReactionID& reactionIdentifier() const {
+
+      return this->reaction_;
+    }
+
+    /**
+     *  @brief Return the energy group boundaries
+     */
+    const std::vector< double >& energies() const {
+
+      return this->energies_;
+    }
+
+    /**
+     *  @brief Return the reaction product identifiers
+     */
+    const std::vector< id::ParticleID >& productIdentifiers() const {
+
+      return this->products_;
+    }
+
     using Parent::rowKeys;
     using Parent::columnKeys;
     using Parent::isRelativeMatrix;

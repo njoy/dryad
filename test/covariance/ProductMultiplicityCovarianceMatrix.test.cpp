@@ -15,7 +15,7 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CovarianceMatrix" ) {
 
-  GIVEN( "valid covariance data for product multiplicities for on diagonal data" ) {
+  GIVEN( "valid covariance data for product multiplicities" ) {
 
     // matrix and test results provided by Amanda Lewis
 
@@ -39,6 +39,17 @@ SCENARIO( "CovarianceMatrix" ) {
                                              false );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
+
+      CHECK( id::ReactionID( "n,U235->fission" ) == chunk.reactionIdentifier() );
+      CHECK( 3 == chunk.energies().size() );
+      CHECK( 1e-5 == chunk.energies()[0] );
+      CHECK( 1e+6 == chunk.energies()[1] );
+      CHECK( 2e+7 == chunk.energies()[2] );
+      CHECK( 4 == chunk.productIdentifiers().size() );
+      CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
+      CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
+      CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
+      CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
 
       CHECK( 8 == chunk.rowKeys().size() );
       CHECK( 8 == chunk.columnKeys().size() );
@@ -227,7 +238,7 @@ SCENARIO( "CovarianceMatrix" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "valid correlation data for product multiplicities for on diagonal data" ) {
+  GIVEN( "valid correlation data for product multiplicities" ) {
 
     // matrix and test results provided by Amanda Lewis
 
@@ -263,6 +274,17 @@ SCENARIO( "CovarianceMatrix" ) {
                                              std::move( matrix ), false );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
+
+      CHECK( id::ReactionID( "n,U235->fission" ) == chunk.reactionIdentifier() );
+      CHECK( 3 == chunk.energies().size() );
+      CHECK( 1e-5 == chunk.energies()[0] );
+      CHECK( 1e+6 == chunk.energies()[1] );
+      CHECK( 2e+7 == chunk.energies()[2] );
+      CHECK( 4 == chunk.productIdentifiers().size() );
+      CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
+      CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
+      CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
+      CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
 
       CHECK( 8 == chunk.rowKeys().size() );
       CHECK( 8 == chunk.columnKeys().size() );
