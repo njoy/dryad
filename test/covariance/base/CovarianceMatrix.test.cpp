@@ -484,7 +484,9 @@ SCENARIO( "CovarianceMatrix" ) {
                5., 10., 15.,   20., 25., 30.,
                6., 12., 18.,   24., 30., 36.;
 
-    CovarianceMatrix chunk( std::move( keys ), std::move( matrix ) );
+    bool relative = false;
+
+    CovarianceMatrix chunk( std::move( keys ), std::move( matrix ), relative );
 
     WHEN( "extract row arguments - extracting on the first dimension" ) {
 
@@ -495,8 +497,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 2 == submatrix.rowKeys().size() );
         CHECK( 2 == submatrix.columnKeys().size() );
 
-        CHECK( true == submatrix.isRelativeMatrix() );
-        CHECK( false == submatrix.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isRelativeMatrix() );
+        CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
@@ -523,8 +525,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3 == submatrix.rowKeys().size() );
         CHECK( 3 == submatrix.columnKeys().size() );
 
-        CHECK( true == submatrix.isRelativeMatrix() );
-        CHECK( false == submatrix.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isRelativeMatrix() );
+        CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
@@ -556,8 +558,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 6 == chunk.rowKeys().size() );
         CHECK( 6 == chunk.columnKeys().size() );
 
-        CHECK( true == chunk.isRelativeMatrix() );
-        CHECK( false == chunk.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isRelativeMatrix() );
+        CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
@@ -617,8 +619,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3 == submatrix.rowKeys().size() );
         CHECK( 3 == submatrix.columnKeys().size() );
 
-        CHECK( true == submatrix.isRelativeMatrix() );
-        CHECK( false == submatrix.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isRelativeMatrix() );
+        CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( true == submatrix.isOffDiagonal() );
         CHECK( false == submatrix.isOnDiagonal() );
 
