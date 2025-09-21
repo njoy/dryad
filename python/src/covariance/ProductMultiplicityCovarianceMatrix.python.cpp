@@ -1,0 +1,191 @@
+// system includes
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/eigen.h>
+
+// local includes
+#include "dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
+
+// namespace aliases
+namespace python = pybind11;
+
+namespace covariance {
+
+void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
+
+  // type aliases
+  using Component = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
+  using ParticleID = njoy::dryad::id::ParticleID;
+  using ReactionID = njoy::dryad::id::ReactionID;
+  using Matrix = njoy::dryad::covariance::Matrix< double >;
+
+  // wrap views created by this component
+
+  // create the component
+  python::class_< Component > component(
+
+    module,
+    "ProductMultiplicityCovarianceMatrix",
+    "A covariance matrix for product multiplicities"
+  );
+
+  // wrap the component
+  component
+  .def(
+
+    python::init< ReactionID, std::vector< double >, 
+                  std::vector< ParticleID >, 
+                  Matrix, bool >(),
+    python::arg( "reaction" ), python::arg( "energies" ), 
+    python::arg( "products" ), python::arg( "covariances" ),
+    python::arg( "relative" ) = true,
+    "Initialise full product multiplicity covariance data\n\n"
+    "Arguments:\n"
+    "    self          the covariance matrix\n"
+    "    reaction      the reaction identifier\n"
+    "    energies      the group structure\n"
+    "    products      the product identifiers\n"
+    "    covariances   the covariance matrix\n"
+    "    relative      the relative covariance flag (default is true)"
+  )
+  .def(
+
+    python::init< ReactionID, std::vector< double >, 
+                  std::vector< ParticleID >, 
+                  std::vector< double >, 
+                  Matrix, bool >(),
+    python::arg( "reaction" ), python::arg( "energies" ), 
+    python::arg( "products" ), python::arg( "deviations" ),
+    python::arg( "correlations" ),
+    python::arg( "relative" ) = true,
+    "Initialise full product multiplicity covariance data\n\n"
+    "Arguments:\n"
+    "    self          the covariance matrix\n"
+    "    reaction       the reaction identifier\n"
+    "    energies       the group structure\n"
+    "    products       the product identifiers\n"
+    "    deviations     the standard deviations\n"
+    "    correlations   the correlation matrix\n"
+    "    relative       the relative covariance flag (default is true)"
+  )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
+  .def_property_readonly(
+
+    "is_relative_matrix",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isRelativeMatrix(); },
+    "Flag to indicate whether or not this covariance block is relative or not"
+  )
+  .def_property_readonly(
+
+    "is_absolute_matrix",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isAbsoluteMatrix(); },
+    "Flag to indicate whether or not this covariance block is absolute or not"
+  )
+  .def_property_readonly(
+
+    "is_off_diagonal",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isOffDiagonal(); },
+    "Flag to indicate whether or not this covariance block is an off-diagonal block"
+  )
+  .def_property_readonly(
+
+    "is_on_diagonal",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.isOnDiagonal(); },
+    "Flag to indicate whether or not this covariance block is a diagonal block"
+  )
+  .def_property_readonly(
+
+    // to ensure the matrix is not copied: reference_internal is used
+    // see pybind11 documentation for Eigen bindings for more information
+
+    "covariances",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.covariances(); },
+    "The covariance matrix",
+    python::return_value_policy::reference_internal
+  )
+  .def_property_readonly(
+
+    "standard_deviations",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.standardDeviations(); },
+    "The standard deviations",
+    python::return_value_policy::reference_internal
+  )
+  .def_property_readonly(
+
+    "correlations",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.correlations(); },
+    "The correlation matrix",
+    python::return_value_policy::reference_internal
+  )
+  .def_property_readonly(
+
+    "eigenvalues",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.eigenvalues(); },
+    "The eigenvalues",
+    python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "calculate_standard_deviations",
+    [] ( Component& self )
+       { return self.calculateStandardDeviations(); },
+    "Calculate the standard deviations from the covariances\n\n"
+    "The standard deviations can only be calculated from covariance blocks on the\n"
+    "diagonal of the covariance matrix. When this function is called on an\n"
+    "off diagonal block, the function has no effect."
+  )
+  .def(
+
+    "calculate_correlations",
+    [] ( Component& self )
+       { return self.calculateCorrelations(); },
+    "Calculate the correlations (for covariance blocks on the diagonal)\n\n"
+    "The correlations can only be calculated without input of the standard\n"
+    "deviations for covariance blocks on the diagonal of the covariance matrix.\n"
+    "When this method is called on an off diagonal block, the method has no effect.\n"
+    "Standard deviations will be calculated and stored as well."
+  )
+  .def(
+
+    "calculate_correlations",
+    [] ( Component& self, const std::vector< double >& row,
+         const std::vector< double >& column )
+       { return self.calculateCorrelations( row, column ); },
+    python::arg( "row_deviations" ), python::arg( "column_deviations" ),
+    "Calculate the correlations (for off diagonal covariance blocks)\n\n"
+    "The correlations can only be calculated with input of the standard deviations\n"
+    "for covariance blocks that are off diagonal in the covariance matrix.\n"
+    "Standard deviations will not be stored.\n\n"
+    "Arguments:\n"
+    "    self                 the covariance block\n"
+    "    row_deviations       the standard deviations to be applied to each row\n"
+    "    column_deviations    the standard deviations to be applied to each column"
+  )
+  .def(
+
+    "calculate_eigenvalues",
+    [] ( Component& self )
+       { return self.calculateEigenvalues(); },
+    "Calculate the eigenvalues from the covariances\n\n"
+    "The eigenvalues can only be calculated from covariance blocks on the\n"
+    "diagonal of the covariance matrix. When this function is called on an\n"
+    "off diagonal block, the function has no effect."
+  );
+}
+
+} // covariance namespace
