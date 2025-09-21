@@ -609,7 +609,7 @@ SCENARIO( "CovarianceMatrix" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "extract row and column arguments" ) {
+    WHEN( "extract row and column arguments: cross term" ) {
 
       auto submatrix = chunk.extract( 0, std::nullopt,
                                       1, std::nullopt );
