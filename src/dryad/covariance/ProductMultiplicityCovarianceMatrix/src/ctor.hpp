@@ -1,3 +1,13 @@
+private:
+
+ProductMultiplicityCovarianceMatrix( Parent&& base ) :
+  Parent( std::move( base ) ) {
+
+  // generate metadata
+}
+
+public:
+
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */

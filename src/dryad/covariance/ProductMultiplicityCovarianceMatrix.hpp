@@ -82,7 +82,7 @@ namespace covariance {
     using Parent::calculateCorrelations;
     using Parent::calculateEigenvalues;
 
-    using Parent::extract;
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal
