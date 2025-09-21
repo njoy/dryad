@@ -34,6 +34,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 3 == chunk.columnKeys().size() );
+        CHECK( chunk.rowKeys() == chunk.columnKeys() );
+        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -118,6 +122,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 3 == chunk.columnKeys().size() );
+        CHECK( chunk.rowKeys() == chunk.columnKeys() );
+        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -189,6 +197,12 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 2 == chunk.columnKeys().size() );
+        CHECK( chunk.rowKeys() != chunk.columnKeys() );
+        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
+        CHECK( std::tuple{ 3 } == chunk.columnKeys()[0] );
+        CHECK( std::tuple{ 4 } == chunk.columnKeys()[1] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -265,6 +279,12 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 3 == chunk.rowKeys().size() );
         CHECK( 2 == chunk.columnKeys().size() );
+        CHECK( chunk.rowKeys() != chunk.columnKeys() );
+        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
+        CHECK( std::tuple{ 3 } == chunk.columnKeys()[0] );
+        CHECK( std::tuple{ 4 } == chunk.columnKeys()[1] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -335,6 +355,13 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 6 == chunk.rowKeys().size() );
         CHECK( 6 == chunk.columnKeys().size() );
+        CHECK( chunk.rowKeys() == chunk.columnKeys() );
+        CHECK( std::tuple{ 0, 0 } == chunk.rowKeys()[0] );
+        CHECK( std::tuple{ 0, 1 } == chunk.rowKeys()[1] );
+        CHECK( std::tuple{ 0, 2 } == chunk.rowKeys()[2] );
+        CHECK( std::tuple{ 1, 0 } == chunk.rowKeys()[3] );
+        CHECK( std::tuple{ 1, 1 } == chunk.rowKeys()[4] );
+        CHECK( std::tuple{ 1, 2 } == chunk.rowKeys()[5] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -493,6 +520,9 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 2 == submatrix.rowKeys().size() );
         CHECK( 2 == submatrix.columnKeys().size() );
+        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
+        CHECK( std::tuple{ 0, 0 } == submatrix.rowKeys()[0] );
+        CHECK( std::tuple{ 1, 0 } == submatrix.rowKeys()[1] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
@@ -520,6 +550,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 3 == submatrix.rowKeys().size() );
         CHECK( 3 == submatrix.columnKeys().size() );
+        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
+        CHECK( std::tuple{ 0, 0 } == chunk.rowKeys()[0] );
+        CHECK( std::tuple{ 0, 1 } == chunk.rowKeys()[1] );
+        CHECK( std::tuple{ 0, 2 } == chunk.rowKeys()[2] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
@@ -550,56 +584,63 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted and it is the same as the original matrix" ) {
 
-        CHECK( 6 == chunk.rowKeys().size() );
-        CHECK( 6 == chunk.columnKeys().size() );
+        CHECK( 6 == submatrix.rowKeys().size() );
+        CHECK( 6 == submatrix.columnKeys().size() );
+        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
+        CHECK( std::tuple{ 0, 0 } == submatrix.rowKeys()[0] );
+        CHECK( std::tuple{ 0, 1 } == submatrix.rowKeys()[1] );
+        CHECK( std::tuple{ 0, 2 } == submatrix.rowKeys()[2] );
+        CHECK( std::tuple{ 1, 0 } == submatrix.rowKeys()[3] );
+        CHECK( std::tuple{ 1, 1 } == submatrix.rowKeys()[4] );
+        CHECK( std::tuple{ 1, 2 } == submatrix.rowKeys()[5] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
-        CHECK( false == chunk.isOffDiagonal() );
-        CHECK( true == chunk.isOnDiagonal() );
+        CHECK( false == submatrix.isOffDiagonal() );
+        CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk.standardDeviations() );
-        CHECK( std::nullopt == chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt == submatrix.standardDeviations() );
+        CHECK( std::nullopt == submatrix.correlations() );
+        CHECK( std::nullopt == submatrix.eigenvalues() );
 
-        CHECK( 6 == chunk.covariances().rows() );
-        CHECK( 6 == chunk.covariances().cols() );
-        CHECK(  1. == chunk.covariances()(0,0) );
-        CHECK(  2. == chunk.covariances()(0,1) );
-        CHECK(  3. == chunk.covariances()(0,2) );
-        CHECK(  4. == chunk.covariances()(0,3) );
-        CHECK(  5. == chunk.covariances()(0,4) );
-        CHECK(  6. == chunk.covariances()(0,5) );
-        CHECK(  2. == chunk.covariances()(1,0) );
-        CHECK(  4. == chunk.covariances()(1,1) );
-        CHECK(  6. == chunk.covariances()(1,2) );
-        CHECK(  8. == chunk.covariances()(1,3) );
-        CHECK( 10. == chunk.covariances()(1,4) );
-        CHECK( 12. == chunk.covariances()(1,5) );
-        CHECK(  3. == chunk.covariances()(2,0) );
-        CHECK(  6. == chunk.covariances()(2,1) );
-        CHECK(  9. == chunk.covariances()(2,2) );
-        CHECK( 12. == chunk.covariances()(2,3) );
-        CHECK( 15. == chunk.covariances()(2,4) );
-        CHECK( 18. == chunk.covariances()(2,5) );
-        CHECK(  4. == chunk.covariances()(3,0) );
-        CHECK(  8. == chunk.covariances()(3,1) );
-        CHECK( 12. == chunk.covariances()(3,2) );
-        CHECK( 16. == chunk.covariances()(3,3) );
-        CHECK( 20. == chunk.covariances()(3,4) );
-        CHECK( 24. == chunk.covariances()(3,5) );
-        CHECK(  5. == chunk.covariances()(4,0) );
-        CHECK( 10. == chunk.covariances()(4,1) );
-        CHECK( 15. == chunk.covariances()(4,2) );
-        CHECK( 20. == chunk.covariances()(4,3) );
-        CHECK( 25. == chunk.covariances()(4,4) );
-        CHECK( 30. == chunk.covariances()(4,5) );
-        CHECK(  6. == chunk.covariances()(5,0) );
-        CHECK( 12. == chunk.covariances()(5,1) );
-        CHECK( 18. == chunk.covariances()(5,2) );
-        CHECK( 24. == chunk.covariances()(5,3) );
-        CHECK( 30. == chunk.covariances()(5,4) );
-        CHECK( 36. == chunk.covariances()(5,5) );
+        CHECK( 6 == submatrix.covariances().rows() );
+        CHECK( 6 == submatrix.covariances().cols() );
+        CHECK(  1. == submatrix.covariances()(0,0) );
+        CHECK(  2. == submatrix.covariances()(0,1) );
+        CHECK(  3. == submatrix.covariances()(0,2) );
+        CHECK(  4. == submatrix.covariances()(0,3) );
+        CHECK(  5. == submatrix.covariances()(0,4) );
+        CHECK(  6. == submatrix.covariances()(0,5) );
+        CHECK(  2. == submatrix.covariances()(1,0) );
+        CHECK(  4. == submatrix.covariances()(1,1) );
+        CHECK(  6. == submatrix.covariances()(1,2) );
+        CHECK(  8. == submatrix.covariances()(1,3) );
+        CHECK( 10. == submatrix.covariances()(1,4) );
+        CHECK( 12. == submatrix.covariances()(1,5) );
+        CHECK(  3. == submatrix.covariances()(2,0) );
+        CHECK(  6. == submatrix.covariances()(2,1) );
+        CHECK(  9. == submatrix.covariances()(2,2) );
+        CHECK( 12. == submatrix.covariances()(2,3) );
+        CHECK( 15. == submatrix.covariances()(2,4) );
+        CHECK( 18. == submatrix.covariances()(2,5) );
+        CHECK(  4. == submatrix.covariances()(3,0) );
+        CHECK(  8. == submatrix.covariances()(3,1) );
+        CHECK( 12. == submatrix.covariances()(3,2) );
+        CHECK( 16. == submatrix.covariances()(3,3) );
+        CHECK( 20. == submatrix.covariances()(3,4) );
+        CHECK( 24. == submatrix.covariances()(3,5) );
+        CHECK(  5. == submatrix.covariances()(4,0) );
+        CHECK( 10. == submatrix.covariances()(4,1) );
+        CHECK( 15. == submatrix.covariances()(4,2) );
+        CHECK( 20. == submatrix.covariances()(4,3) );
+        CHECK( 25. == submatrix.covariances()(4,4) );
+        CHECK( 30. == submatrix.covariances()(4,5) );
+        CHECK(  6. == submatrix.covariances()(5,0) );
+        CHECK( 12. == submatrix.covariances()(5,1) );
+        CHECK( 18. == submatrix.covariances()(5,2) );
+        CHECK( 24. == submatrix.covariances()(5,3) );
+        CHECK( 30. == submatrix.covariances()(5,4) );
+        CHECK( 36. == submatrix.covariances()(5,5) );
       } // THEN
     } // WHEN
 
@@ -612,6 +653,13 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 3 == submatrix.rowKeys().size() );
         CHECK( 3 == submatrix.columnKeys().size() );
+        CHECK( submatrix.rowKeys() != submatrix.columnKeys() );
+        CHECK( std::tuple{ 0, 0 } == submatrix.rowKeys()[0] );
+        CHECK( std::tuple{ 0, 1 } == submatrix.rowKeys()[1] );
+        CHECK( std::tuple{ 0, 2 } == submatrix.rowKeys()[2] );
+        CHECK( std::tuple{ 1, 0 } == submatrix.columnKeys()[0] );
+        CHECK( std::tuple{ 1, 1 } == submatrix.columnKeys()[1] );
+        CHECK( std::tuple{ 1, 2 } == submatrix.columnKeys()[2] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );

@@ -78,6 +78,20 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   )
   .def_property_readonly(
 
+    "row_keys",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.rowKeys(); },
+    "The row keys of the matrix"
+  )
+  .def_property_readonly(
+
+    "column_keys",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.columnKeys(); },
+    "The column keys of the matrix"
+  )
+  .def_property_readonly(
+
     "is_relative_matrix",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isRelativeMatrix(); },
