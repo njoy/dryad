@@ -22,7 +22,7 @@ CovarianceMatrix( std::vector< Key > keys, Matrix< double > covariances,
   covariances_( std::move( covariances ) ), sigmas_( std::nullopt ),
   correlations_( std::nullopt ) {
 
-  verifyMatrix( this->covariances().value(), this->rowKeys().size() );
+  verifyMatrix( this->covariances(), this->rowKeys().size() );
 }
 
 /**
@@ -38,7 +38,7 @@ CovarianceMatrix( std::vector< Key > keys,
                   Matrix< double > correlations,
                   bool relative = true ) :
   row_( std::move( keys ) ), column_( std::nullopt ), relative_( relative ),
-  covariances_( std::nullopt ), sigmas_( std::move( deviations ) ),
+  sigmas_( std::move( deviations ) ),
   correlations_( std::move( correlations ) ) {
 
   verifyMatrix( this->standardDeviations().value(),
@@ -61,7 +61,7 @@ CovarianceMatrix( std::vector< Key > rowKeys, std::vector< Key > columnKeys,
   relative_( relative ), covariances_( std::move( covariances ) ),
   sigmas_( std::nullopt ), correlations_( std::nullopt ) {
 
-  verifyMatrix( this->covariances().value(),
+  verifyMatrix( this->covariances(),
                 this->rowKeys().size(),
                 this->columnKeys().size() );
 }
@@ -83,8 +83,8 @@ CovarianceMatrix( std::vector< Key > rowKeys, std::vector< Key > columnKeys,
                   const std::vector< double >& columnDeviations,
                   Matrix< double > correlations, bool relative = true ) :
   row_( std::move( rowKeys ) ), column_( std::move( columnKeys ) ),
-  relative_( relative ), covariances_( std::nullopt ),
-  sigmas_( std::nullopt ), correlations_( std::move( correlations ) ) {
+  relative_( relative ), sigmas_( std::nullopt ), 
+  correlations_( std::move( correlations ) ) {
 
   verifyMatrix( this->correlations().value(),
                 this->rowKeys().size(),

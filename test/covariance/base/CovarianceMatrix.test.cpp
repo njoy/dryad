@@ -40,22 +40,21 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt != chunk.covariances() );
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt == chunk.correlations() );
         CHECK( std::nullopt == chunk.eigenvalues() );
 
-        CHECK( 3 == chunk.covariances().value().rows() );
-        CHECK( 3 == chunk.covariances().value().cols() );
-        CHECK( 1. == chunk.covariances().value()(0,0) );
-        CHECK( 2. == chunk.covariances().value()(0,1) );
-        CHECK( 3. == chunk.covariances().value()(0,2) );
-        CHECK( 2. == chunk.covariances().value()(1,0) );
-        CHECK( 4. == chunk.covariances().value()(1,1) );
-        CHECK( 6. == chunk.covariances().value()(1,2) );
-        CHECK( 3. == chunk.covariances().value()(2,0) );
-        CHECK( 6. == chunk.covariances().value()(2,1) );
-        CHECK( 9. == chunk.covariances().value()(2,2) );
+        CHECK( 3 == chunk.covariances().rows() );
+        CHECK( 3 == chunk.covariances().cols() );
+        CHECK( 1. == chunk.covariances()(0,0) );
+        CHECK( 2. == chunk.covariances()(0,1) );
+        CHECK( 3. == chunk.covariances()(0,2) );
+        CHECK( 2. == chunk.covariances()(1,0) );
+        CHECK( 4. == chunk.covariances()(1,1) );
+        CHECK( 6. == chunk.covariances()(1,2) );
+        CHECK( 3. == chunk.covariances()(2,0) );
+        CHECK( 6. == chunk.covariances()(2,1) );
+        CHECK( 9. == chunk.covariances()(2,2) );
       } // THEN
 
       chunk.calculateStandardDeviations();
@@ -125,22 +124,21 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt != chunk.covariances() );
         CHECK( std::nullopt != chunk.standardDeviations() );
         CHECK( std::nullopt != chunk.correlations() );
         CHECK( std::nullopt == chunk.eigenvalues() );
 
-        CHECK( 3 == chunk.covariances().value().rows() );
-        CHECK( 3 == chunk.covariances().value().cols() );
-        CHECK( 1. == chunk.covariances().value()(0,0) );
-        CHECK( 2. == chunk.covariances().value()(0,1) );
-        CHECK( 3. == chunk.covariances().value()(0,2) );
-        CHECK( 2. == chunk.covariances().value()(1,0) );
-        CHECK( 4. == chunk.covariances().value()(1,1) );
-        CHECK( 6. == chunk.covariances().value()(1,2) );
-        CHECK( 3. == chunk.covariances().value()(2,0) );
-        CHECK( 6. == chunk.covariances().value()(2,1) );
-        CHECK( 9. == chunk.covariances().value()(2,2) );
+        CHECK( 3 == chunk.covariances().rows() );
+        CHECK( 3 == chunk.covariances().cols() );
+        CHECK( 1. == chunk.covariances()(0,0) );
+        CHECK( 2. == chunk.covariances()(0,1) );
+        CHECK( 3. == chunk.covariances()(0,2) );
+        CHECK( 2. == chunk.covariances()(1,0) );
+        CHECK( 4. == chunk.covariances()(1,1) );
+        CHECK( 6. == chunk.covariances()(1,2) );
+        CHECK( 3. == chunk.covariances()(2,0) );
+        CHECK( 6. == chunk.covariances()(2,1) );
+        CHECK( 9. == chunk.covariances()(2,2) );
 
         CHECK( 3 == chunk.standardDeviations().value().size() );
         CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
@@ -197,18 +195,18 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( true == chunk.isOffDiagonal() );
         CHECK( false == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt != chunk.covariances() );
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt == chunk.correlations() );
+        CHECK( std::nullopt == chunk.eigenvalues() );
 
-        CHECK( 3 == chunk.covariances().value().rows() );
-        CHECK( 2 == chunk.covariances().value().cols() );
-        CHECK( 1. == chunk.covariances().value()(0,0) );
-        CHECK( 2. == chunk.covariances().value()(0,1) );
-        CHECK( 2. == chunk.covariances().value()(1,0) );
-        CHECK( 4. == chunk.covariances().value()(1,1) );
-        CHECK( 3. == chunk.covariances().value()(2,0) );
-        CHECK( 6. == chunk.covariances().value()(2,1) );
+        CHECK( 3 == chunk.covariances().rows() );
+        CHECK( 2 == chunk.covariances().cols() );
+        CHECK( 1. == chunk.covariances()(0,0) );
+        CHECK( 2. == chunk.covariances()(0,1) );
+        CHECK( 2. == chunk.covariances()(1,0) );
+        CHECK( 4. == chunk.covariances()(1,1) );
+        CHECK( 3. == chunk.covariances()(2,0) );
+        CHECK( 6. == chunk.covariances()(2,1) );
       } // THEN
 
       chunk.calculateStandardDeviations();
@@ -273,18 +271,18 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( true == chunk.isOffDiagonal() );
         CHECK( false == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt != chunk.covariances() );
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt == chunk.eigenvalues() );
 
-        CHECK( 3 == chunk.covariances().value().rows() );
-        CHECK( 2 == chunk.covariances().value().cols() );
-        CHECK( 1. == chunk.covariances().value()(0,0) );
-        CHECK( 2. == chunk.covariances().value()(0,1) );
-        CHECK( 2. == chunk.covariances().value()(1,0) );
-        CHECK( 4. == chunk.covariances().value()(1,1) );
-        CHECK( 3. == chunk.covariances().value()(2,0) );
-        CHECK( 6. == chunk.covariances().value()(2,1) );
+        CHECK( 3 == chunk.covariances().rows() );
+        CHECK( 2 == chunk.covariances().cols() );
+        CHECK( 1. == chunk.covariances()(0,0) );
+        CHECK( 2. == chunk.covariances()(0,1) );
+        CHECK( 2. == chunk.covariances()(1,0) );
+        CHECK( 4. == chunk.covariances()(1,1) );
+        CHECK( 3. == chunk.covariances()(2,0) );
+        CHECK( 6. == chunk.covariances()(2,1) );
 
         CHECK( 3 == chunk.correlations().value().rows() );
         CHECK( 2 == chunk.correlations().value().cols() );
@@ -343,49 +341,48 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt != chunk.covariances() );
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt == chunk.correlations() );
         CHECK( std::nullopt == chunk.eigenvalues() );
 
-        CHECK( 6 == chunk.covariances().value().rows() );
-        CHECK( 6 == chunk.covariances().value().cols() );
-        CHECK(  1. == chunk.covariances().value()(0,0) );
-        CHECK(  2. == chunk.covariances().value()(0,1) );
-        CHECK(  3. == chunk.covariances().value()(0,2) );
-        CHECK(  4. == chunk.covariances().value()(0,3) );
-        CHECK(  5. == chunk.covariances().value()(0,4) );
-        CHECK(  6. == chunk.covariances().value()(0,5) );
-        CHECK(  2. == chunk.covariances().value()(1,0) );
-        CHECK(  4. == chunk.covariances().value()(1,1) );
-        CHECK(  6. == chunk.covariances().value()(1,2) );
-        CHECK(  8. == chunk.covariances().value()(1,3) );
-        CHECK( 10. == chunk.covariances().value()(1,4) );
-        CHECK( 12. == chunk.covariances().value()(1,5) );
-        CHECK(  3. == chunk.covariances().value()(2,0) );
-        CHECK(  6. == chunk.covariances().value()(2,1) );
-        CHECK(  9. == chunk.covariances().value()(2,2) );
-        CHECK( 12. == chunk.covariances().value()(2,3) );
-        CHECK( 15. == chunk.covariances().value()(2,4) );
-        CHECK( 18. == chunk.covariances().value()(2,5) );
-        CHECK(  4. == chunk.covariances().value()(3,0) );
-        CHECK(  8. == chunk.covariances().value()(3,1) );
-        CHECK( 12. == chunk.covariances().value()(3,2) );
-        CHECK( 16. == chunk.covariances().value()(3,3) );
-        CHECK( 20. == chunk.covariances().value()(3,4) );
-        CHECK( 24. == chunk.covariances().value()(3,5) );
-        CHECK(  5. == chunk.covariances().value()(4,0) );
-        CHECK( 10. == chunk.covariances().value()(4,1) );
-        CHECK( 15. == chunk.covariances().value()(4,2) );
-        CHECK( 20. == chunk.covariances().value()(4,3) );
-        CHECK( 25. == chunk.covariances().value()(4,4) );
-        CHECK( 30. == chunk.covariances().value()(4,5) );
-        CHECK(  6. == chunk.covariances().value()(5,0) );
-        CHECK( 12. == chunk.covariances().value()(5,1) );
-        CHECK( 18. == chunk.covariances().value()(5,2) );
-        CHECK( 24. == chunk.covariances().value()(5,3) );
-        CHECK( 30. == chunk.covariances().value()(5,4) );
-        CHECK( 36. == chunk.covariances().value()(5,5) );
+        CHECK( 6 == chunk.covariances().rows() );
+        CHECK( 6 == chunk.covariances().cols() );
+        CHECK(  1. == chunk.covariances()(0,0) );
+        CHECK(  2. == chunk.covariances()(0,1) );
+        CHECK(  3. == chunk.covariances()(0,2) );
+        CHECK(  4. == chunk.covariances()(0,3) );
+        CHECK(  5. == chunk.covariances()(0,4) );
+        CHECK(  6. == chunk.covariances()(0,5) );
+        CHECK(  2. == chunk.covariances()(1,0) );
+        CHECK(  4. == chunk.covariances()(1,1) );
+        CHECK(  6. == chunk.covariances()(1,2) );
+        CHECK(  8. == chunk.covariances()(1,3) );
+        CHECK( 10. == chunk.covariances()(1,4) );
+        CHECK( 12. == chunk.covariances()(1,5) );
+        CHECK(  3. == chunk.covariances()(2,0) );
+        CHECK(  6. == chunk.covariances()(2,1) );
+        CHECK(  9. == chunk.covariances()(2,2) );
+        CHECK( 12. == chunk.covariances()(2,3) );
+        CHECK( 15. == chunk.covariances()(2,4) );
+        CHECK( 18. == chunk.covariances()(2,5) );
+        CHECK(  4. == chunk.covariances()(3,0) );
+        CHECK(  8. == chunk.covariances()(3,1) );
+        CHECK( 12. == chunk.covariances()(3,2) );
+        CHECK( 16. == chunk.covariances()(3,3) );
+        CHECK( 20. == chunk.covariances()(3,4) );
+        CHECK( 24. == chunk.covariances()(3,5) );
+        CHECK(  5. == chunk.covariances()(4,0) );
+        CHECK( 10. == chunk.covariances()(4,1) );
+        CHECK( 15. == chunk.covariances()(4,2) );
+        CHECK( 20. == chunk.covariances()(4,3) );
+        CHECK( 25. == chunk.covariances()(4,4) );
+        CHECK( 30. == chunk.covariances()(4,5) );
+        CHECK(  6. == chunk.covariances()(5,0) );
+        CHECK( 12. == chunk.covariances()(5,1) );
+        CHECK( 18. == chunk.covariances()(5,2) );
+        CHECK( 24. == chunk.covariances()(5,3) );
+        CHECK( 30. == chunk.covariances()(5,4) );
+        CHECK( 36. == chunk.covariances()(5,5) );
       } // THEN
 
       chunk.calculateStandardDeviations();
@@ -502,17 +499,16 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt != submatrix.covariances() );
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
         CHECK( std::nullopt == submatrix.eigenvalues() );
 
-        CHECK( 2 == submatrix.covariances().value().rows() );
-        CHECK( 2 == submatrix.covariances().value().cols() );
-        CHECK(  1. == submatrix.covariances().value()(0,0) );
-        CHECK(  4. == submatrix.covariances().value()(0,1) );
-        CHECK(  4. == submatrix.covariances().value()(1,0) );
-        CHECK( 16. == submatrix.covariances().value()(1,1) );
+        CHECK( 2 == submatrix.covariances().rows() );
+        CHECK( 2 == submatrix.covariances().cols() );
+        CHECK(  1. == submatrix.covariances()(0,0) );
+        CHECK(  4. == submatrix.covariances()(0,1) );
+        CHECK(  4. == submatrix.covariances()(1,0) );
+        CHECK( 16. == submatrix.covariances()(1,1) );
       } // THEN
     } // WHEN
 
@@ -530,22 +526,21 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt != submatrix.covariances() );
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
         CHECK( std::nullopt == submatrix.eigenvalues() );
 
-        CHECK( 3 == submatrix.covariances().value().rows() );
-        CHECK( 3 == submatrix.covariances().value().cols() );
-        CHECK(  1. == submatrix.covariances().value()(0,0) );
-        CHECK(  2. == submatrix.covariances().value()(0,1) );
-        CHECK(  3. == submatrix.covariances().value()(0,2) );
-        CHECK(  2. == submatrix.covariances().value()(1,0) );
-        CHECK(  4. == submatrix.covariances().value()(1,1) );
-        CHECK(  6. == submatrix.covariances().value()(1,2) );
-        CHECK(  3. == submatrix.covariances().value()(2,0) );
-        CHECK(  6. == submatrix.covariances().value()(2,1) );
-        CHECK(  9. == submatrix.covariances().value()(2,2) );
+        CHECK( 3 == submatrix.covariances().rows() );
+        CHECK( 3 == submatrix.covariances().cols() );
+        CHECK(  1. == submatrix.covariances()(0,0) );
+        CHECK(  2. == submatrix.covariances()(0,1) );
+        CHECK(  3. == submatrix.covariances()(0,2) );
+        CHECK(  2. == submatrix.covariances()(1,0) );
+        CHECK(  4. == submatrix.covariances()(1,1) );
+        CHECK(  6. == submatrix.covariances()(1,2) );
+        CHECK(  3. == submatrix.covariances()(2,0) );
+        CHECK(  6. == submatrix.covariances()(2,1) );
+        CHECK(  9. == submatrix.covariances()(2,2) );
       } // THEN
     } // WHEN
 
@@ -563,49 +558,48 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt != chunk.covariances() );
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt == chunk.correlations() );
         CHECK( std::nullopt == chunk.eigenvalues() );
 
-        CHECK( 6 == chunk.covariances().value().rows() );
-        CHECK( 6 == chunk.covariances().value().cols() );
-        CHECK(  1. == chunk.covariances().value()(0,0) );
-        CHECK(  2. == chunk.covariances().value()(0,1) );
-        CHECK(  3. == chunk.covariances().value()(0,2) );
-        CHECK(  4. == chunk.covariances().value()(0,3) );
-        CHECK(  5. == chunk.covariances().value()(0,4) );
-        CHECK(  6. == chunk.covariances().value()(0,5) );
-        CHECK(  2. == chunk.covariances().value()(1,0) );
-        CHECK(  4. == chunk.covariances().value()(1,1) );
-        CHECK(  6. == chunk.covariances().value()(1,2) );
-        CHECK(  8. == chunk.covariances().value()(1,3) );
-        CHECK( 10. == chunk.covariances().value()(1,4) );
-        CHECK( 12. == chunk.covariances().value()(1,5) );
-        CHECK(  3. == chunk.covariances().value()(2,0) );
-        CHECK(  6. == chunk.covariances().value()(2,1) );
-        CHECK(  9. == chunk.covariances().value()(2,2) );
-        CHECK( 12. == chunk.covariances().value()(2,3) );
-        CHECK( 15. == chunk.covariances().value()(2,4) );
-        CHECK( 18. == chunk.covariances().value()(2,5) );
-        CHECK(  4. == chunk.covariances().value()(3,0) );
-        CHECK(  8. == chunk.covariances().value()(3,1) );
-        CHECK( 12. == chunk.covariances().value()(3,2) );
-        CHECK( 16. == chunk.covariances().value()(3,3) );
-        CHECK( 20. == chunk.covariances().value()(3,4) );
-        CHECK( 24. == chunk.covariances().value()(3,5) );
-        CHECK(  5. == chunk.covariances().value()(4,0) );
-        CHECK( 10. == chunk.covariances().value()(4,1) );
-        CHECK( 15. == chunk.covariances().value()(4,2) );
-        CHECK( 20. == chunk.covariances().value()(4,3) );
-        CHECK( 25. == chunk.covariances().value()(4,4) );
-        CHECK( 30. == chunk.covariances().value()(4,5) );
-        CHECK(  6. == chunk.covariances().value()(5,0) );
-        CHECK( 12. == chunk.covariances().value()(5,1) );
-        CHECK( 18. == chunk.covariances().value()(5,2) );
-        CHECK( 24. == chunk.covariances().value()(5,3) );
-        CHECK( 30. == chunk.covariances().value()(5,4) );
-        CHECK( 36. == chunk.covariances().value()(5,5) );
+        CHECK( 6 == chunk.covariances().rows() );
+        CHECK( 6 == chunk.covariances().cols() );
+        CHECK(  1. == chunk.covariances()(0,0) );
+        CHECK(  2. == chunk.covariances()(0,1) );
+        CHECK(  3. == chunk.covariances()(0,2) );
+        CHECK(  4. == chunk.covariances()(0,3) );
+        CHECK(  5. == chunk.covariances()(0,4) );
+        CHECK(  6. == chunk.covariances()(0,5) );
+        CHECK(  2. == chunk.covariances()(1,0) );
+        CHECK(  4. == chunk.covariances()(1,1) );
+        CHECK(  6. == chunk.covariances()(1,2) );
+        CHECK(  8. == chunk.covariances()(1,3) );
+        CHECK( 10. == chunk.covariances()(1,4) );
+        CHECK( 12. == chunk.covariances()(1,5) );
+        CHECK(  3. == chunk.covariances()(2,0) );
+        CHECK(  6. == chunk.covariances()(2,1) );
+        CHECK(  9. == chunk.covariances()(2,2) );
+        CHECK( 12. == chunk.covariances()(2,3) );
+        CHECK( 15. == chunk.covariances()(2,4) );
+        CHECK( 18. == chunk.covariances()(2,5) );
+        CHECK(  4. == chunk.covariances()(3,0) );
+        CHECK(  8. == chunk.covariances()(3,1) );
+        CHECK( 12. == chunk.covariances()(3,2) );
+        CHECK( 16. == chunk.covariances()(3,3) );
+        CHECK( 20. == chunk.covariances()(3,4) );
+        CHECK( 24. == chunk.covariances()(3,5) );
+        CHECK(  5. == chunk.covariances()(4,0) );
+        CHECK( 10. == chunk.covariances()(4,1) );
+        CHECK( 15. == chunk.covariances()(4,2) );
+        CHECK( 20. == chunk.covariances()(4,3) );
+        CHECK( 25. == chunk.covariances()(4,4) );
+        CHECK( 30. == chunk.covariances()(4,5) );
+        CHECK(  6. == chunk.covariances()(5,0) );
+        CHECK( 12. == chunk.covariances()(5,1) );
+        CHECK( 18. == chunk.covariances()(5,2) );
+        CHECK( 24. == chunk.covariances()(5,3) );
+        CHECK( 30. == chunk.covariances()(5,4) );
+        CHECK( 36. == chunk.covariances()(5,5) );
       } // THEN
     } // WHEN
 
@@ -624,22 +618,21 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( true == submatrix.isOffDiagonal() );
         CHECK( false == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt != submatrix.covariances() );
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
         CHECK( std::nullopt == submatrix.eigenvalues() );
 
-        CHECK( 3 == submatrix.covariances().value().rows() );
-        CHECK( 3 == submatrix.covariances().value().cols() );
-        CHECK(  4. == submatrix.covariances().value()(0,0) );
-        CHECK(  5. == submatrix.covariances().value()(0,1) );
-        CHECK(  6. == submatrix.covariances().value()(0,2) );
-        CHECK(  8. == submatrix.covariances().value()(1,0) );
-        CHECK( 10. == submatrix.covariances().value()(1,1) );
-        CHECK( 12. == submatrix.covariances().value()(1,2) );
-        CHECK( 12. == submatrix.covariances().value()(2,0) );
-        CHECK( 15. == submatrix.covariances().value()(2,1) );
-        CHECK( 18. == submatrix.covariances().value()(2,2) );
+        CHECK( 3 == submatrix.covariances().rows() );
+        CHECK( 3 == submatrix.covariances().cols() );
+        CHECK(  4. == submatrix.covariances()(0,0) );
+        CHECK(  5. == submatrix.covariances()(0,1) );
+        CHECK(  6. == submatrix.covariances()(0,2) );
+        CHECK(  8. == submatrix.covariances()(1,0) );
+        CHECK( 10. == submatrix.covariances()(1,1) );
+        CHECK( 12. == submatrix.covariances()(1,2) );
+        CHECK( 12. == submatrix.covariances()(2,0) );
+        CHECK( 15. == submatrix.covariances()(2,1) );
+        CHECK( 18. == submatrix.covariances()(2,2) );
       } // THEN
     } // WHEN
   } // GIVEN

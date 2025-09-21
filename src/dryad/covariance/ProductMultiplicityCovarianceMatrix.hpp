@@ -80,7 +80,6 @@ namespace covariance {
     using Parent::eigenvalues;
     using Parent::calculateStandardDeviations;
     using Parent::calculateCorrelations;
-    using Parent::calculateCovariances;
     using Parent::calculateEigenvalues;
 
     using Parent::extract;

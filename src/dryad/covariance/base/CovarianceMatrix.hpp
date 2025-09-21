@@ -59,7 +59,7 @@ namespace base {
     bool relative_;
 
     /* fields - covariance matrix */
-    std::optional< Matrix< double > > covariances_;
+    Matrix< double > covariances_;
 
     /* fields - standard deviations and correlations */
     std::optional< std::vector< double > > sigmas_;
@@ -71,6 +71,7 @@ namespace base {
     /* auxiliary function */
     #include "dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
 
   public:
 
@@ -136,7 +137,7 @@ namespace base {
     /**
      *  @brief Return the covariance matrix
      */
-    const std::optional< Matrix< double > >& covariances() const {
+    const Matrix< double >& covariances() const {
 
       return this->covariances_;
     }
@@ -165,7 +166,6 @@ namespace base {
       return this->eigenvalues_;
     }
 
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"

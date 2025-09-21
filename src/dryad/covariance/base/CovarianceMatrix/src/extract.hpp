@@ -25,7 +25,7 @@ CovarianceMatrix extract( const std::optional< Ts >&... args ) const {
 
       for ( unsigned int j = 0; j < size; ++j ) {
 
-        matrix( i, j ) = this->covariances()->operator()( rows[i], rows[j] );
+        matrix( i, j ) = this->covariances()( rows[i], rows[j] );
       }
     }
 
@@ -52,7 +52,7 @@ CovarianceMatrix extract( const std::optional< Ts >&... args ) const {
 
       for ( unsigned int j = 0; j < size2; ++j ) {
 
-        matrix( i, j ) = this->covariances()->operator()( rows[i], columns[j] );
+        matrix( i, j ) = this->covariances()( rows[i], columns[j] );
       }
     }
 
@@ -114,7 +114,7 @@ CovarianceMatrix extract( const std::optional< Ts >&... row_args,
 
       for ( unsigned int j = 0; j < size2; ++j ) {
 
-        matrix( i, j ) = this->covariances()->operator()( rows[i], columns[j] );
+        matrix( i, j ) = this->covariances()( rows[i], columns[j] );
       }
     }
 

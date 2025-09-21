@@ -25,7 +25,7 @@ void calculateCorrelations() {
       }
     }
 
-    this->correlations_ = temporary * this->covariances().value() * temporary;
+    this->correlations_ = temporary * this->covariances() * temporary;
   }
 }
 
@@ -69,5 +69,5 @@ void calculateCorrelations( const std::vector< double >& rowDeviations,
     }
   }
 
-  this->correlations_ = left * this->covariances().value() * right;
+  this->correlations_ = left * this->covariances() * right;
 }

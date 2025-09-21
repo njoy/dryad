@@ -12,7 +12,7 @@ void calculateStandardDeviations() {
     std::vector< double > sigmas;
     sigmas.reserve( this->rowKeys().size() );
 
-    for ( const auto& value : this->covariances().value().diagonal().reshaped() ) {
+    for ( const auto& value : this->covariances().diagonal().reshaped() ) {
 
       sigmas.emplace_back( std::sqrt( value ) );
     }
