@@ -171,6 +171,28 @@ namespace base {
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
 
     #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const CovarianceMatrix& right ) const {
+
+      return this->rowKeys() == right.rowKeys() &&
+             this->columnKeys() == right.columnKeys() &&
+             this->covariances() == right.covariances();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const CovarianceMatrix& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // base namespace

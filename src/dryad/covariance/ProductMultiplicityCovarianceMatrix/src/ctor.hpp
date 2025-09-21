@@ -34,7 +34,7 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
  *  @param[in] reaction       the reaction identifier
  *  @param[in] energies       the group structure
  *  @param[in] products       the product identifiers
- *  @param[in] deviations     the product identifiers
+ *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
  *  @param[in] relative       the relative covariance flag
  */
@@ -80,7 +80,7 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
  *  @param[in] lower          the lower energy value of the energy group
  *  @param[in] upper          the upper energy value of the energy group
  *  @param[in] products       the product identifiers
- *  @param[in] deviations     the product identifiers
+ *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
  *  @param[in] relative       the relative covariance flag
  */

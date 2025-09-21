@@ -84,6 +84,26 @@ namespace covariance {
     using Parent::calculateEigenvalues;
 
     using Parent::extract;
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ProductMultiplicityCovarianceMatrix& right ) const {
+
+      return Parent::operator==( right );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ProductMultiplicityCovarianceMatrix& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // covariance namespace
