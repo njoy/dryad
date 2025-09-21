@@ -81,28 +81,28 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "is_relative_matrix",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isRelativeMatrix(); },
-    "Flag to indicate whether or not this covariance block is relative or not"
+    "Flag to indicate whether or not this covariance matrix is relative or not"
   )
   .def_property_readonly(
 
     "is_absolute_matrix",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isAbsoluteMatrix(); },
-    "Flag to indicate whether or not this covariance block is absolute or not"
+    "Flag to indicate whether or not this covariance matrix is absolute or not"
   )
   .def_property_readonly(
 
     "is_off_diagonal",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isOffDiagonal(); },
-    "Flag to indicate whether or not this covariance block is an off-diagonal block"
+    "Flag to indicate whether or not this covariance matrix is off-diagonal"
   )
   .def_property_readonly(
 
     "is_on_diagonal",
     [] ( const Component& self ) -> decltype(auto)
        { return self.isOnDiagonal(); },
-    "Flag to indicate whether or not this covariance block is a diagonal block"
+    "Flag to indicate whether or not this covariance matrix is on-diagonal"
   )
   .def_property_readonly(
 
@@ -145,20 +145,21 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     [] ( Component& self )
        { return self.calculateStandardDeviations(); },
     "Calculate the standard deviations from the covariances\n\n"
-    "The standard deviations can only be calculated from covariance blocks on the\n"
-    "diagonal of the covariance matrix. When this function is called on an\n"
-    "off diagonal block, the function has no effect."
+    "The standard deviations can only be calculated from covariance matrices on the\n"
+    "diagonal of the full covariance matrix. When this function is called on an\n"
+    "off diagonal matrix, the function has no effect."
   )
   .def(
 
     "calculate_correlations",
     [] ( Component& self )
        { return self.calculateCorrelations(); },
-    "Calculate the correlations (for covariance blocks on the diagonal)\n\n"
-    "The correlations can only be calculated without input of the standard\n"
-    "deviations for covariance blocks on the diagonal of the covariance matrix.\n"
-    "When this method is called on an off diagonal block, the method has no effect.\n"
-    "Standard deviations will be calculated and stored as well."
+    "Calculate the correlations (for on diagonal matrices)\n\n"
+    "The correlations can be calculated without input of the standard\n"
+    "deviations for matrices on the diagonal of the full matrix. Standard\n"
+    "deviations will be calculated and stored as well.\n"
+    "When this method is called on an off diagonal matrix, the method has\n"
+    "no effect."
   )
   .def(
 
@@ -167,14 +168,14 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
          const std::vector< double >& column )
        { return self.calculateCorrelations( row, column ); },
     python::arg( "row_deviations" ), python::arg( "column_deviations" ),
-    "Calculate the correlations (for off diagonal covariance blocks)\n\n"
+    "Calculate the correlations (for off diagonal matrices)\n\n"
     "The correlations can only be calculated with input of the standard deviations\n"
-    "for covariance blocks that are off diagonal in the covariance matrix.\n"
+    "for covariance matrices that are off diagonal in the full covariance matrix.\n"
     "Standard deviations will not be stored.\n\n"
     "Arguments:\n"
-    "    self                 the covariance block\n"
-    "    row_deviations       the standard deviations to be applied to each row\n"
-    "    column_deviations    the standard deviations to be applied to each column"
+    "    self                the covariance matrix\n"
+    "    row_deviations      the standard deviations to be applied to each row\n"
+    "    column_deviations   the standard deviations to be applied to each column"
   )
   .def(
 
@@ -182,9 +183,9 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     [] ( Component& self )
        { return self.calculateEigenvalues(); },
     "Calculate the eigenvalues from the covariances\n\n"
-    "The eigenvalues can only be calculated from covariance blocks on the\n"
-    "diagonal of the covariance matrix. When this function is called on an\n"
-    "off diagonal block, the function has no effect."
+    "The eigenvalues can only be calculated from matrices on the diagonal\n"
+    "of the full matrix. When this function is called on an off diagonal matrix,\n"
+    "the function has no effect."
   );
 }
 
