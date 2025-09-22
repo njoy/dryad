@@ -16,6 +16,7 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
   using ParticleID = njoy::dryad::id::ParticleID;
+  using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
   using Matrix = njoy::dryad::covariance::Matrix< double >;
 
@@ -218,6 +219,34 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "The eigenvalues can only be calculated from matrices on the diagonal\n"
     "of the full matrix. When this function is called on an off diagonal matrix,\n"
     "the function has no effect."
+  )
+  .def(
+
+    "extract",
+    python::overload_cast< const std::optional< ReactionID >&, 
+                           const std::optional< EnergyGroup >&, 
+                           const std::optional< ParticleID >& >
+    ( &Component::extract, python::const_ ),
+    python::arg( "reaction" ),
+    python::arg( "group" ),
+    python::arg( "product" )
+  )
+  .def(
+
+    "extract",
+    python::overload_cast< const std::optional< ReactionID >&, 
+                           const std::optional< EnergyGroup >&, 
+                           const std::optional< ParticleID >&,
+                           const std::optional< ReactionID >&, 
+                           const std::optional< EnergyGroup >&, 
+                           const std::optional< ParticleID >& >
+    ( &Component::extract, python::const_ ),
+    python::arg( "row_reaction" ),
+    python::arg( "row_group" ),
+    python::arg( "row_product" ),
+    python::arg( "col_reaction" ),
+    python::arg( "col_group" ),
+    python::arg( "col_product" )
   );
 }
 
