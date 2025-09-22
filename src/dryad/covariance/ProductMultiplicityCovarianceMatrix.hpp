@@ -35,6 +35,7 @@ namespace covariance {
     /* auxiliary functions */
 
     #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateKeys.hpp"
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateMetadata.hpp"
 
   public:
 

@@ -61,7 +61,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
       CHECK( 8 == chunk.rowKeys().size() );
       CHECK( 8 == chunk.columnKeys().size() );
-      CHECK( chunk.rowKeys() == chunk.rowKeys() );
+      CHECK( chunk.rowKeys() == chunk.columnKeys() );
       CHECK( std::tuple{ reaction, group1, product1 } == chunk.rowKeys()[0] );
       CHECK( std::tuple{ reaction, group1, product2 } == chunk.rowKeys()[1] );
       CHECK( std::tuple{ reaction, group1, product3 } == chunk.rowKeys()[2] );
@@ -312,7 +312,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
       CHECK( 8 == chunk.rowKeys().size() );
       CHECK( 8 == chunk.columnKeys().size() );
-      CHECK( chunk.rowKeys() == chunk.rowKeys() );
+      CHECK( chunk.rowKeys() == chunk.columnKeys() );
       CHECK( std::tuple{ reaction, group1, product1 } == chunk.rowKeys()[0] );
       CHECK( std::tuple{ reaction, group1, product2 } == chunk.rowKeys()[1] );
       CHECK( std::tuple{ reaction, group1, product3 } == chunk.rowKeys()[2] );
@@ -532,17 +532,17 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-//        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
-//        CHECK( 3 == submatrix.energies().size() );
-//        CHECK( 1e-5 == submatrix.energies()[0] );
-//        CHECK( 1e+6 == submatrix.energies()[1] );
-//        CHECK( 2e+7 == submatrix.energies()[2] );
-//        CHECK( 4 == submatrix.productIdentifiers().size() );
-//        CHECK( id::ParticleID( "Pr148" ) == submatrix.productIdentifiers()[0] );
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
+        CHECK( 3 == submatrix.energies().size() );
+        CHECK( 1e-5 == submatrix.energies()[0] );
+        CHECK( 1e+6 == submatrix.energies()[1] );
+        CHECK( 2e+7 == submatrix.energies()[2] );
+        CHECK( 1 == submatrix.productIdentifiers().size() );
+        CHECK( id::ParticleID( "Pr148" ) == submatrix.productIdentifiers()[0] );
 
         CHECK( 2 == submatrix.rowKeys().size() );
         CHECK( 2 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() == submatrix.rowKeys() );
+        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
         CHECK( std::tuple{ reaction, group1, product3 } == submatrix.rowKeys()[0] );
         CHECK( std::tuple{ reaction, group2, product3 } == submatrix.rowKeys()[1] );
 
@@ -559,6 +559,116 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK_THAT(  3.036135e-06, WithinRel( submatrix.covariances()(0,1) ) );
         CHECK_THAT(  3.036135e-06, WithinRel( submatrix.covariances()(1,0) ) );
         CHECK_THAT(  4.887436e-06, WithinRel( submatrix.covariances()(1,1) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "extracting a covariance matrix for a single group" ) {
+
+      auto submatrix = chunk.extract( reaction, group2, std::nullopt );
+
+      THEN( "A submatrix can be extracted" ) {
+
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
+        CHECK( 2 == submatrix.energies().size() );
+        CHECK( 1e+6 == submatrix.energies()[0] );
+        CHECK( 2e+7 == submatrix.energies()[1] );
+        CHECK( 4 == submatrix.productIdentifiers().size() );
+        CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
+        CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
+        CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
+        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
+
+        CHECK( 4 == submatrix.rowKeys().size() );
+        CHECK( 4 == submatrix.columnKeys().size() );
+        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
+        CHECK( std::tuple{ reaction, group2, product1 } == submatrix.rowKeys()[0] );
+        CHECK( std::tuple{ reaction, group2, product2 } == submatrix.rowKeys()[1] );
+        CHECK( std::tuple{ reaction, group2, product3 } == submatrix.rowKeys()[2] );
+        CHECK( std::tuple{ reaction, group2, product4 } == submatrix.rowKeys()[3] );
+
+        CHECK( false == submatrix.isRelativeMatrix() );
+        CHECK( true == submatrix.isAbsoluteMatrix() );
+        CHECK( true == submatrix.isOnDiagonal() );
+        CHECK( false == submatrix.isOffDiagonal() );  
+
+        CHECK( std::nullopt == submatrix.standardDeviations() );
+        CHECK( std::nullopt == submatrix.correlations() );
+        CHECK( std::nullopt == submatrix.eigenvalues() );  
+
+        CHECK_THAT(  2.792847e-07, WithinRel( submatrix.covariances()(0,0) ) );
+        CHECK_THAT(  2.435102e-07, WithinRel( submatrix.covariances()(0,1) ) );
+        CHECK_THAT(  4.742642e-07, WithinRel( submatrix.covariances()(0,2) ) );
+        CHECK_THAT( -1.127960e-09, WithinRel( submatrix.covariances()(0,3) ) );
+        CHECK_THAT(  2.435102e-07, WithinRel( submatrix.covariances()(1,0) ) );
+        CHECK_THAT(  9.364803e-07, WithinRel( submatrix.covariances()(1,1) ) );
+        CHECK_THAT(  1.744701e-07, WithinRel( submatrix.covariances()(1,2) ) );
+        CHECK_THAT( -2.394143e-09, WithinRel( submatrix.covariances()(1,3) ) );
+        CHECK_THAT(  4.742642e-07, WithinRel( submatrix.covariances()(2,0) ) );
+        CHECK_THAT(  1.744701e-07, WithinRel( submatrix.covariances()(2,1) ) );
+        CHECK_THAT(  4.887436e-06, WithinRel( submatrix.covariances()(2,2) ) );
+        CHECK_THAT( -2.686310e-10, WithinRel( submatrix.covariances()(2,3) ) );
+        CHECK_THAT( -1.127960e-09, WithinRel( submatrix.covariances()(3,0) ) );
+        CHECK_THAT( -2.394143e-09, WithinRel( submatrix.covariances()(3,1) ) );
+        CHECK_THAT( -2.686310e-10, WithinRel( submatrix.covariances()(3,2) ) );
+        CHECK_THAT(  3.280511e-09, WithinRel( submatrix.covariances()(3,3) ) );    
+      } // THEN
+    } // WHEN
+
+    WHEN( "extracting a covariance matrix for an energy cross term" ) {
+
+      auto submatrix = chunk.extract( reaction, group1, std::nullopt,
+                                      reaction, group2, std::nullopt );
+
+      THEN( "A submatrix can be extracted" ) {
+
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
+        CHECK( 3 == submatrix.energies().size() );
+        CHECK( 1e-5 == submatrix.energies()[0] );
+        CHECK( 1e+6 == submatrix.energies()[1] );
+        CHECK( 2e+7 == submatrix.energies()[2] );
+        CHECK( 4 == submatrix.productIdentifiers().size() );
+        CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
+        CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
+        CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
+        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
+
+        CHECK( 4 == submatrix.rowKeys().size() );
+        CHECK( 4 == submatrix.columnKeys().size() );
+        CHECK( submatrix.rowKeys() != submatrix.columnKeys() );
+        CHECK( std::tuple{ reaction, group1, product1 } == submatrix.rowKeys()[0] );
+        CHECK( std::tuple{ reaction, group1, product2 } == submatrix.rowKeys()[1] );
+        CHECK( std::tuple{ reaction, group1, product3 } == submatrix.rowKeys()[2] );
+        CHECK( std::tuple{ reaction, group1, product4 } == submatrix.rowKeys()[3] );
+        CHECK( std::tuple{ reaction, group2, product1 } == submatrix.columnKeys()[0] );
+        CHECK( std::tuple{ reaction, group2, product2 } == submatrix.columnKeys()[1] );
+        CHECK( std::tuple{ reaction, group2, product3 } == submatrix.columnKeys()[2] );
+        CHECK( std::tuple{ reaction, group2, product4 } == submatrix.columnKeys()[3] );
+
+        CHECK( false == submatrix.isRelativeMatrix() );
+        CHECK( true == submatrix.isAbsoluteMatrix() );
+        CHECK( false == submatrix.isOnDiagonal() );
+        CHECK( true == submatrix.isOffDiagonal() );  
+
+        CHECK( std::nullopt == submatrix.standardDeviations() );
+        CHECK( std::nullopt == submatrix.correlations() );
+        CHECK( std::nullopt == submatrix.eigenvalues() );  
+
+        CHECK_THAT(  1.186658e-07, WithinRel( submatrix.covariances()(0,0) ) );
+        CHECK_THAT(  1.953402e-07, WithinRel( submatrix.covariances()(0,1) ) );
+        CHECK_THAT(  8.550732e-08, WithinRel( submatrix.covariances()(0,2) ) );
+        CHECK_THAT( -1.352565e-09, WithinRel( submatrix.covariances()(0,3) ) );
+        CHECK_THAT( -2.261425e-08, WithinRel( submatrix.covariances()(1,0) ) );
+        CHECK_THAT(  4.553737e-07, WithinRel( submatrix.covariances()(1,1) ) );
+        CHECK_THAT( -3.459165e-07, WithinRel( submatrix.covariances()(1,2) ) );
+        CHECK_THAT( -9.048060e-10, WithinRel( submatrix.covariances()(1,3) ) );
+        CHECK_THAT(  9.952311e-07, WithinRel( submatrix.covariances()(2,0) ) );
+        CHECK_THAT(  1.147504e-06, WithinRel( submatrix.covariances()(2,1) ) );
+        CHECK_THAT(  3.036135e-06, WithinRel( submatrix.covariances()(2,2) ) );
+        CHECK_THAT( -2.642949e-09, WithinRel( submatrix.covariances()(2,3) ) );
+        CHECK_THAT(  3.071510e-10, WithinRel( submatrix.covariances()(3,0) ) );
+        CHECK_THAT(  3.816056e-09, WithinRel( submatrix.covariances()(3,1) ) );
+        CHECK_THAT(  5.460586e-09, WithinRel( submatrix.covariances()(3,2) ) );
+        CHECK_THAT(  3.336860e-10, WithinRel( submatrix.covariances()(3,3) ) );    
       } // THEN
     } // WHEN
   } // GIVEN

@@ -3,7 +3,7 @@ private:
 ProductMultiplicityCovarianceMatrix( Parent&& base ) :
   Parent( std::move( base ) ) {
 
-  // generate metadata
+  this->generateMetadata();
 }
 
 public:
