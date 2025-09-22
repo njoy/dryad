@@ -78,6 +78,24 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   )
   .def_property_readonly(
 
+    "reaction_identifier",
+    &Component::reactionIdentifier,
+    "The reaction identifier"
+  )
+  .def_property_readonly(
+
+    "energies",
+    &Component::energies,
+    "The energy group boundaries"
+  )
+  .def_property_readonly(
+
+    "product_identifiers",
+    &Component::productIdentifiers,
+    "The reaction product identifiers"
+  )
+  .def_property_readonly(
+
     "row_keys",
     [] ( const Component& self ) -> decltype(auto)
        { return self.rowKeys(); },
