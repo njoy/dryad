@@ -14,28 +14,6 @@ namespace dryad {
 namespace covariance {
 namespace base {
 
-  template < typename LeftTuple, typename RightTuple, std::size_t... Is >
-  auto compare_key_impl( const LeftTuple& left, const RightTuple& right, std::index_sequence< Is... > ) {
-
-      auto compare = [] ( auto&& left, auto&& right ) {
-
-        if ( left == std::nullopt || left == right ) {
-
-          return true;
-        }
-        return false;
-      };
-
-      return ( compare( std::get< Is >( left ), std::get< Is >( right ) ) && ... );
-  }
-
-  template < typename... Ts >
-  auto compare_key( const std::tuple< std::optional< Ts >... >& left,
-                    const std::tuple< Ts... >& right ) {
-
-    return compare_key_impl( left, right, std::make_index_sequence< sizeof...( Ts ) >{} );
-  }
-
   /**
    *  @class
    *  @brief A base class representing a covariance matrix
@@ -46,13 +24,16 @@ namespace base {
   public:
 
     /* type aliases */
+    using Metadata = std::tuple< std::vector< Ts >... >;
     using Key = std::tuple< Ts... >;
     using Selection = std::tuple< std::optional< Ts >... >;
 
   private:
 
     /* fields - row and column keys */
+    Metadata row_metadata_;
     std::vector< Key > row_;
+    std::optional< Metadata > column_metadata_;
     std::optional< std::vector< Key > > column_;
 
     /* fields - flag to indicate relative or absolute data */
@@ -81,9 +62,19 @@ namespace base {
     /* methods */
 
     /**
+     *  @brief Return the row metadata
+     */
+    const Metadata& rowMetadata() const { return this->row_metadata_; }
+
+    /**
      *  @brief Return the row keys
      */
     const std::vector< Key >& rowKeys() const { return this->row_; }
+
+    /**
+     *  @brief Return the column metadata
+     */
+    const Metadata& columnMetadata() const { return this->column_metadata_; }
 
     /**
      *  @brief Return the column keys
