@@ -48,6 +48,8 @@ add_cpp_test( id.ParticleID                                              id/Part
 add_cpp_test( id.ReactionType                                            id/ReactionType.test.cpp )
 add_cpp_test( id.ReactionID                                              id/ReactionID.test.cpp )
 
+add_cpp_test( resonances.TabulatedRadius                                 resonances/TabulatedRadius.test.cpp )
+
 add_cpp_test( Documentation                                              Documentation.test.cpp )
 
 add_cpp_test( CoherentDistributionData                                   CoherentDistributionData.test.cpp )
