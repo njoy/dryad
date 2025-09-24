@@ -2,9 +2,161 @@
 Covariance data components
 """
 from __future__ import annotations
+import dryad.id
 import numpy
 import typing
-__all__ = ['ScalingType', 'is_square', 'is_symmetric']
+__all__: list[str] = ['ProductMultiplicityCovarianceMatrix', 'ScalingType', 'is_square', 'is_symmetric']
+class ProductMultiplicityCovarianceMatrix:
+    """
+    A covariance matrix for product multiplicities
+    """
+    @typing.overload
+    def __init__(self, reaction: dryad.id.ReactionID, energies: list[float], products: list[dryad.id.ParticleID], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise full product multiplicity covariance data
+        
+        Arguments:
+            self          the covariance matrix
+            reaction      the reaction identifier
+            energies      the group structure
+            products      the product identifiers
+            covariances   the covariance matrix
+            relative      the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, reaction: dryad.id.ReactionID, energies: list[float], products: list[dryad.id.ParticleID], deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise full product multiplicity covariance data
+        
+        Arguments:
+            self          the covariance matrix
+            reaction       the reaction identifier
+            energies       the group structure
+            products       the product identifiers
+            deviations     the standard deviations
+            correlations   the correlation matrix
+            relative       the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, instance: ProductMultiplicityCovarianceMatrix) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    @typing.overload
+    def calculate_correlations(self) -> None:
+        """
+        Calculate the correlations (for on diagonal matrices)
+        
+        The correlations can be calculated without input of the standard
+        deviations for matrices on the diagonal of the full matrix. Standard
+        deviations will be calculated and stored as well.
+        When this method is called on an off diagonal matrix, the method has
+        no effect.
+        """
+    @typing.overload
+    def calculate_correlations(self, row_deviations: list[float], column_deviations: list[float]) -> None:
+        """
+        Calculate the correlations (for off diagonal matrices)
+        
+        The correlations can only be calculated with input of the standard deviations
+        for covariance matrices that are off diagonal in the full covariance matrix.
+        Standard deviations will not be stored.
+        
+        Arguments:
+            self                the covariance matrix
+            row_deviations      the standard deviations to be applied to each row
+            column_deviations   the standard deviations to be applied to each column
+        """
+    def calculate_eigenvalues(self) -> None:
+        """
+        Calculate the eigenvalues from the covariances
+        
+        The eigenvalues can only be calculated from matrices on the diagonal
+        of the full matrix. When this function is called on an off diagonal matrix,
+        the function has no effect.
+        """
+    def calculate_standard_deviations(self) -> None:
+        """
+        Calculate the standard deviations from the covariances
+        
+        The standard deviations can only be calculated from covariance matrices on the
+        diagonal of the full covariance matrix. When this function is called on an
+        off diagonal matrix, the function has no effect.
+        """
+    @typing.overload
+    def extract(self, reaction: dryad.id.ReactionID | None, group: dryad.id.EnergyGroup | None, product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
+        ...
+    @typing.overload
+    def extract(self, row_reaction: dryad.id.ReactionID | None, row_group: dryad.id.EnergyGroup | None, row_product: dryad.id.ParticleID | None, col_reaction: dryad.id.ReactionID | None, col_group: dryad.id.EnergyGroup | None, col_product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
+        ...
+    @property
+    def column_keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
+        """
+        The column keys of the matrix
+        """
+    @property
+    def correlations(self) -> numpy.ndarray[numpy.float64[m, n]] | None:
+        """
+        The correlation matrix
+        """
+    @property
+    def covariances(self) -> numpy.ndarray[numpy.float64[m, n]]:
+        """
+        The covariance matrix
+        """
+    @property
+    def eigenvalues(self) -> list[float] | None:
+        """
+        The eigenvalues
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy group boundaries
+        """
+    @property
+    def is_absolute_matrix(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is absolute or not
+        """
+    @property
+    def is_off_diagonal(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is off-diagonal
+        """
+    @property
+    def is_on_diagonal(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is on-diagonal
+        """
+    @property
+    def is_relative_matrix(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is relative or not
+        """
+    @property
+    def product_identifiers(self) -> list[dryad.id.ParticleID]:
+        """
+        The reaction product identifiers
+        """
+    @property
+    def reaction_identifier(self) -> dryad.id.ReactionID:
+        """
+        The reaction identifier
+        """
+    @property
+    def row_keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
+        """
+        The row keys of the matrix
+        """
+    @property
+    def standard_deviations(self) -> list[float] | None:
+        """
+        The standard deviations
+        """
 class ScalingType:
     """
     The variance scaling type
