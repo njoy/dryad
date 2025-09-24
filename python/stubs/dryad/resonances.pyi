@@ -3,7 +3,7 @@ Resonance data
 """
 from __future__ import annotations
 import typing
-__all__ = ['ResonanceParameters']
+__all__: list[str] = ['ResonanceParameters']
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ResonanceParameters) -> bool:

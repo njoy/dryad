@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_COVARIANCE_PRODUCTMULTIPLICITYCOVARIANCEDATA
-#define NJOY_DRYAD_COVARIANCE_PRODUCTMULTIPLICITYCOVARIANCEDATA
+#ifndef NJOY_DRYAD_COVARIANCE_PRODUCTMULTIPLICITYCOVARIANCEMATRIX
+#define NJOY_DRYAD_COVARIANCE_PRODUCTMULTIPLICITYCOVARIANCEMATRIX
 
 // system includes
 #include <vector>
@@ -35,6 +35,7 @@ namespace covariance {
     /* auxiliary functions */
 
     #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateKeys.hpp"
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateMetadata.hpp"
 
   public:
 
@@ -43,6 +44,30 @@ namespace covariance {
     #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the reaction identifier
+     */
+    const id::ReactionID& reactionIdentifier() const {
+
+      return this->reaction_;
+    }
+
+    /**
+     *  @brief Return the energy group boundaries
+     */
+    const std::vector< double >& energies() const {
+
+      return this->energies_;
+    }
+
+    /**
+     *  @brief Return the reaction product identifiers
+     */
+    const std::vector< id::ParticleID >& productIdentifiers() const {
+
+      return this->products_;
+    }
 
     using Parent::rowKeys;
     using Parent::columnKeys;
@@ -56,8 +81,29 @@ namespace covariance {
     using Parent::eigenvalues;
     using Parent::calculateStandardDeviations;
     using Parent::calculateCorrelations;
-    using Parent::calculateCovariances;
     using Parent::calculateEigenvalues;
+
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ProductMultiplicityCovarianceMatrix& right ) const {
+
+      return Parent::operator==( right );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ProductMultiplicityCovarianceMatrix& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // covariance namespace

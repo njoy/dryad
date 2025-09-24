@@ -24,19 +24,23 @@ namespace base {
   public:
 
     /* type aliases */
+    using Metadata = std::tuple< std::vector< Ts >... >;
     using Key = std::tuple< Ts... >;
+    using Selection = std::tuple< std::optional< Ts >... >;
 
   private:
 
     /* fields - row and column keys */
+    Metadata row_metadata_;
     std::vector< Key > row_;
+    std::optional< Metadata > column_metadata_;
     std::optional< std::vector< Key > > column_;
 
     /* fields - flag to indicate relative or absolute data */
     bool relative_;
 
     /* fields - covariance matrix */
-    std::optional< Matrix< double > > covariances_;
+    Matrix< double > covariances_;
 
     /* fields - standard deviations and correlations */
     std::optional< std::vector< double > > sigmas_;
@@ -48,6 +52,7 @@ namespace base {
     /* auxiliary function */
     #include "dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
 
   public:
 
@@ -57,9 +62,19 @@ namespace base {
     /* methods */
 
     /**
+     *  @brief Return the row metadata
+     */
+    const Metadata& rowMetadata() const { return this->row_metadata_; }
+
+    /**
      *  @brief Return the row keys
      */
     const std::vector< Key >& rowKeys() const { return this->row_; }
+
+    /**
+     *  @brief Return the column metadata
+     */
+    const Metadata& columnMetadata() const { return this->column_metadata_; }
 
     /**
      *  @brief Return the column keys
@@ -113,7 +128,7 @@ namespace base {
     /**
      *  @brief Return the covariance matrix
      */
-    const std::optional< Matrix< double > >& covariances() const {
+    const Matrix< double >& covariances() const {
 
       return this->covariances_;
     }
@@ -142,10 +157,33 @@ namespace base {
       return this->eigenvalues_;
     }
 
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
+
+    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const CovarianceMatrix& right ) const {
+
+      return this->rowKeys() == right.rowKeys() &&
+             this->columnKeys() == right.columnKeys() &&
+             this->covariances() == right.covariances();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const CovarianceMatrix& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // base namespace
