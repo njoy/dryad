@@ -43,6 +43,8 @@ add_python_test( covariance.ProductMultiplicityCovarianceMatrix  covariance/Test
 #add_python_test( covariance.LinearCombinationCovariance  covariance/Test_dryad_covariance_LinearCombinationCovariance.py )
 #add_python_test( covariance.CrossSectionCovarianceBlock  covariance/Test_dryad_covariance_CrossSectionCovarianceBlock.py )
 
+add_python_test( resonances.TabulatedRadius              resonances/Test_dryad_resonances_TabulatedRadius.py )
+
 add_python_test( Documentation                           Test_dryad_Documentation.py )
 
 add_python_test( TabulatedMultiplicity                   Test_dryad_TabulatedMultiplicity.py )
