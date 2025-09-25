@@ -110,6 +110,7 @@ add_cpp_test( format.endf.createProjectileIdentifier                     format/
 add_cpp_test( format.endf.createProductIdentifier                        format/endf/createProductIdentifier.test.cpp )
 add_cpp_test( format.endf.createTargetIdentifier                         format/endf/createTargetIdentifier.test.cpp )
 add_cpp_test( format.endf.createInteractionType                          format/endf/createInteractionType.test.cpp )
+add_cpp_test( format.endf.resonances.createTabulatedRadius               format/endf/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellID                format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration     format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
 #add_cpp_test( format.endf.covariance.createMatrix                        format/endf/covariance/createMatrix.test.cpp )
