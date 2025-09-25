@@ -21,19 +21,17 @@ namespace resonances {
 
   /**
    *  @brief Create a TabulatedRadius from a GNDS multiplicity node
+   *
+   *  @param[in] node   the GNDS XYs1d or regions1d node
    */
   static dryad::resonances::TabulatedRadius
-  createTabulatedRadius( const pugi::xml_node& radius ) {
+  createTabulatedRadius( const pugi::xml_node& node ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    // check that this is a valid scatteringRadius node
-    throwExceptionOnWrongNode( radius, "scatteringRadius" );
-
-    auto node = radius.first_child();
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
       // read the multiplicity data

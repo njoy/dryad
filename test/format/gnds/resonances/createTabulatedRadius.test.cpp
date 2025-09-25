@@ -22,8 +22,8 @@ SCENARIO( "createTabulatedRadius" ) {
     pugi::xml_document document;
     pugi::xml_parse_result result = document.load_file( "n-069_Tm_168.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
-                                           child( "resolved" ).child( "BreitWigner" ).
-                                           child( "scatteringRadius" );
+                                     child( "resolved" ).child( "BreitWigner" ).
+                                     child( "scatteringRadius" ).child( "XYs1d" );
 
     WHEN( "a single scattering radius node is given" ) {
 

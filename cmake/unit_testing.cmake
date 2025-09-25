@@ -174,6 +174,7 @@ add_cpp_test( format.gnds.readPolynomial1d                               format/
 add_cpp_test( format.gnds.readXYs1d                                      format/gnds/readXYs1d.test.cpp )
 add_cpp_test( format.gnds.readArray                                      format/gnds/readArray.test.cpp )
 add_cpp_test( format.gnds.resonances.createTabulatedRadius               format/gnds/resonances/createTabulatedRadius.test.cpp )
+add_cpp_test( format.gnds.resonances.createRadius                        format/gnds/resonances/createRadius.test.cpp )
 add_cpp_test( format.gnds.readCovarianceMatrix                           format/gnds/readCovarianceMatrix.test.cpp )
 add_cpp_test( format.gnds.createPolynomialMultiplicity                   format/gnds/createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createTabulatedMultiplicity                    format/gnds/createTabulatedMultiplicity.test.cpp )
