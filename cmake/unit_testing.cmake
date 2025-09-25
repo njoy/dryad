@@ -156,6 +156,8 @@ add_cpp_test( format.gnds.convertCrossSections                           format/
 add_cpp_test( format.gnds.convertEnergies                                format/gnds/convertEnergies.test.cpp )
 add_cpp_test( format.gnds.convertInverseLengths                          format/gnds/convertInverseLengths.test.cpp )
 add_cpp_test( format.gnds.convertVarianceScalingFactors                  format/gnds/convertVarianceScalingFactors.test.cpp )
+add_cpp_test( format.gnds.convertRadius.                                 format/gnds/convertRadius.test.cpp )
+add_cpp_test( format.gnds.convertRadii.                                  format/gnds/convertRadii.test.cpp )
 add_cpp_test( format.gnds.createInteractionType                          format/gnds/createInteractionType.test.cpp )
 add_cpp_test( format.gnds.createInterpolationType                        format/gnds/createInterpolationType.test.cpp )
 add_cpp_test( format.gnds.createReferenceFrame                           format/gnds/createReferenceFrame.test.cpp )
