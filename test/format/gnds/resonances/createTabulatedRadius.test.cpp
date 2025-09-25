@@ -4,10 +4,10 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/resonances/createTabulatedRadius.hpp"
+#include "dryad/format/gnds/resonances/createTabulatedRadius.hpp"
 
 // other includes
-#include "ENDFtk/tree/fromFile.hpp"
+#include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -17,17 +17,19 @@ void verifyChunk( const TabulatedRadius& );
 
 SCENARIO( "createTabulatedRadius" ) {
 
-  GIVEN( "ENDF MF2 MT151 sections" ) {
+  GIVEN( "GNDS scattering radius node from incident neutron data" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-069_Tm_168.endf" );
-    auto section = tape.materials().front().section( 2, 151 ).parse< 2, 151 >();
-    auto radius = section.isotopes().front().resonanceRanges().front().scatteringRadius().value();
+    pugi::xml_document document;
+    pugi::xml_parse_result result = document.load_file( "n-069_Tm_168.endf.gnds.xml" );
+    pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
+                                           child( "resolved" ).child( "BreitWigner" ).
+                                           child( "scatteringRadius" );
 
-    WHEN( "a single parsed scattering radius from MF2 MT151 is given" ) {
+    WHEN( "a single scattering radius node is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::resonances::createTabulatedRadius( radius );
+        auto chunk = format::gnds::resonances::createTabulatedRadius( radius );
 
         verifyChunk( chunk );
       } // THEN

@@ -30,6 +30,8 @@ namespace resonances {
       Log::info( "Reading energy dependent scattering radius" );
       auto energies = createVector( radius.energies() );
       auto values = createVector( radius.radii() );
+      std::transform( values.begin(), values.end(), values.begin(),
+                      [] ( auto&& value ) { return value * 10.; } );
       auto boundaries = createBoundaries( radius.boundaries() );
       auto interpolants = createInterpolants( radius.interpolants() );
       return dryad::resonances::TabulatedRadius(
