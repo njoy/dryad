@@ -28,14 +28,11 @@ namespace covariance {
     using Key = Parent::Key;
 
     /* fields */
-    id::ReactionID reaction_;
-    std::vector< double > energies_;
-    std::vector< id::ParticleID > products_;
 
     /* auxiliary functions */
 
+    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateEnergyGroups.hpp"
     #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateKeys.hpp"
-    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateMetadata.hpp"
 
   public:
 
@@ -45,29 +42,29 @@ namespace covariance {
 
     /* methods */
 
-    /**
-     *  @brief Return the reaction identifier
-     */
-    const id::ReactionID& reactionIdentifier() const {
-
-      return this->reaction_;
-    }
-
-    /**
-     *  @brief Return the energy group boundaries
-     */
-    const std::vector< double >& energies() const {
-
-      return this->energies_;
-    }
-
-    /**
-     *  @brief Return the reaction product identifiers
-     */
-    const std::vector< id::ParticleID >& productIdentifiers() const {
-
-      return this->products_;
-    }
+//    /**
+//     *  @brief Return the reaction identifier
+//     */
+//    const id::ReactionID& reactionIdentifier() const {
+//
+//      return this->reaction_;
+//    }
+//
+//    /**
+//     *  @brief Return the energy group boundaries
+//     */
+//    const std::vector< double >& energies() const {
+//
+//      return this->energies_;
+//    }
+//
+//    /**
+//     *  @brief Return the reaction product identifiers
+//     */
+//    const std::vector< id::ParticleID >& productIdentifiers() const {
+//
+//      return this->products_;
+//    }
 
     using Parent::rowKeys;
     using Parent::columnKeys;
@@ -83,7 +80,7 @@ namespace covariance {
     using Parent::calculateCorrelations;
     using Parent::calculateEigenvalues;
 
-    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
+//    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal

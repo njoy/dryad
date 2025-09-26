@@ -21,6 +21,8 @@ namespace base {
   template < typename... Ts >
   class CovarianceMatrix {
 
+    //! @todo use cartesian product to generate keys from metadata
+
   public:
 
     /* type aliases */
@@ -30,9 +32,11 @@ namespace base {
 
   private:
 
-    /* fields - row and column keys */
+    /* fields - row metadata and keys */
     Metadata row_metadata_;
     std::vector< Key > row_;
+
+    /* fields - column metadata and keys */
     std::optional< Metadata > column_metadata_;
     std::optional< std::vector< Key > > column_;
 
@@ -74,7 +78,17 @@ namespace base {
     /**
      *  @brief Return the column metadata
      */
-    const Metadata& columnMetadata() const { return this->column_metadata_; }
+    const Metadata& columnMetadata() const {
+
+      if ( this->column_metadata_.has_value() ) {
+
+        return this->column_metadata_.value();
+      }
+      else {
+
+        return this->row_metadata_;
+      }
+    }
 
     /**
      *  @brief Return the column keys
@@ -161,7 +175,7 @@ namespace base {
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
 
-    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
+//    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal

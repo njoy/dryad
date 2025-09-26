@@ -1,12 +1,13 @@
-private:
-
-ProductMultiplicityCovarianceMatrix( Parent&& base ) :
-  Parent( std::move( base ) ) {
-
-  this->generateMetadata();
-}
-
-public:
+//private:
+//
+//ProductMultiplicityCovarianceMatrix( Parent&& base ) :
+//  Parent( std::move( base ) ) {
+//
+//  this->generateMetadata();
+//}
+//
+//public:
+//
 
 /**
  *  @brief Default constructor (for pybind11 purposes only)
@@ -34,9 +35,11 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                      Matrix< double > covariances,
                                      bool relative = true ) :
     Parent( generateKeys( reaction, energies, products ),
-            std::move( covariances ), relative ),
-    reaction_( std::move( reaction ) ), energies_( std::move( energies ) ),
-    products_( std::move( products ) ) {}
+            { reaction },
+            generateEnergyGroups( energies ),
+            std::move( products ),
+            std::move( covariances ),
+            relative ) {}
 
 /**
  *  @brief Constructor for full product multiplicity correlation data
@@ -55,9 +58,12 @@ ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
                                      Matrix< double > correlations,
                                      bool relative = true ) :
     Parent( generateKeys( reaction, energies, products ),
-            std::move( deviations ), std::move( correlations ), relative ),
-    reaction_( std::move( reaction ) ), energies_( std::move( energies ) ),
-    products_( std::move( products ) ) {}
+            { reaction },
+            generateEnergyGroups( energies ),
+            std::move( products ),
+            std::move( deviations ),
+            std::move( correlations ),
+            relative ) {}
 
 /**
  *  @brief Constructor for product multiplicity covariance data for a

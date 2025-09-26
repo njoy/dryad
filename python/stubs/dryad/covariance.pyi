@@ -86,12 +86,6 @@ class ProductMultiplicityCovarianceMatrix:
         diagonal of the full covariance matrix. When this function is called on an
         off diagonal matrix, the function has no effect.
         """
-    @typing.overload
-    def extract(self, reaction: dryad.id.ReactionID | None, group: dryad.id.EnergyGroup | None, product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
-        ...
-    @typing.overload
-    def extract(self, row_reaction: dryad.id.ReactionID | None, row_group: dryad.id.EnergyGroup | None, row_product: dryad.id.ParticleID | None, col_reaction: dryad.id.ReactionID | None, col_group: dryad.id.EnergyGroup | None, col_product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
-        ...
     @property
     def column_keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
         """
@@ -113,11 +107,6 @@ class ProductMultiplicityCovarianceMatrix:
         The eigenvalues
         """
     @property
-    def energies(self) -> list[float]:
-        """
-        The energy group boundaries
-        """
-    @property
     def is_absolute_matrix(self) -> bool:
         """
         Flag to indicate whether or not this covariance matrix is absolute or not
@@ -136,16 +125,6 @@ class ProductMultiplicityCovarianceMatrix:
     def is_relative_matrix(self) -> bool:
         """
         Flag to indicate whether or not this covariance matrix is relative or not
-        """
-    @property
-    def product_identifiers(self) -> list[dryad.id.ParticleID]:
-        """
-        The reaction product identifiers
-        """
-    @property
-    def reaction_identifier(self) -> dryad.id.ReactionID:
-        """
-        The reaction identifier
         """
     @property
     def row_keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
