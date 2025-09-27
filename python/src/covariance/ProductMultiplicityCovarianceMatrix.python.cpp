@@ -77,37 +77,19 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Arguments:\n"
     "    instance    the instance to be copied\n"
   )
-//  .def_property_readonly(
-//
-//    "reaction_identifier",
-//    &Component::reactionIdentifier,
-//    "The reaction identifier"
-//  )
-//  .def_property_readonly(
-//
-//    "energies",
-//    &Component::energies,
-//    "The energy group boundaries"
-//  )
-//  .def_property_readonly(
-//
-//    "product_identifiers",
-//    &Component::productIdentifiers,
-//    "The reaction product identifiers"
-//  )
   .def_property_readonly(
 
-    "row_keys",
+    "row_metadata",
     [] ( const Component& self ) -> decltype(auto)
-       { return self.rowKeys(); },
-    "The row keys of the matrix"
+       { return self.rowMetadata(); },
+    "The row metadata"
   )
   .def_property_readonly(
 
-    "column_keys",
+    "column_metadata",
     [] ( const Component& self ) -> decltype(auto)
-       { return self.columnKeys(); },
-    "The column keys of the matrix"
+       { return self.columnMetadata(); },
+    "The column metadata"
   )
   .def_property_readonly(
 
@@ -219,34 +201,34 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "The eigenvalues can only be calculated from matrices on the diagonal\n"
     "of the full matrix. When this function is called on an off diagonal matrix,\n"
     "the function has no effect."
-//  )
-//  .def(
-//
-//    "extract",
-//    python::overload_cast< const std::optional< ReactionID >&,
-//                           const std::optional< EnergyGroup >&,
-//                           const std::optional< ParticleID >& >
-//    ( &Component::extract, python::const_ ),
-//    python::arg( "reaction" ),
-//    python::arg( "group" ),
-//    python::arg( "product" )
-//  )
-//  .def(
-//
-//    "extract",
-//    python::overload_cast< const std::optional< ReactionID >&,
-//                           const std::optional< EnergyGroup >&,
-//                           const std::optional< ParticleID >&,
-//                           const std::optional< ReactionID >&,
-//                           const std::optional< EnergyGroup >&,
-//                           const std::optional< ParticleID >& >
-//    ( &Component::extract, python::const_ ),
-//    python::arg( "row_reaction" ),
-//    python::arg( "row_group" ),
-//    python::arg( "row_product" ),
-//    python::arg( "col_reaction" ),
-//    python::arg( "col_group" ),
-//    python::arg( "col_product" )
+  )
+  .def(
+
+    "extract",
+    python::overload_cast< const std::optional< ReactionID >&,
+                           const std::optional< EnergyGroup >&,
+                           const std::optional< ParticleID >& >
+    ( &Component::extract, python::const_ ),
+    python::arg( "reaction" ),
+    python::arg( "group" ),
+    python::arg( "product" )
+  )
+  .def(
+
+    "extract",
+    python::overload_cast< const std::optional< ReactionID >&,
+                           const std::optional< EnergyGroup >&,
+                           const std::optional< ParticleID >&,
+                           const std::optional< ReactionID >&,
+                           const std::optional< EnergyGroup >&,
+                           const std::optional< ParticleID >& >
+    ( &Component::extract, python::const_ ),
+    python::arg( "row_reaction" ),
+    python::arg( "row_group" ),
+    python::arg( "row_product" ),
+    python::arg( "col_reaction" ),
+    python::arg( "col_group" ),
+    python::arg( "col_product" )
   );
 }
 

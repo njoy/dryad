@@ -22,6 +22,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/matrix.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ProductMultiplicityMetadata.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ProductMultiplicityCovarianceMatrix.python.cpp
 #        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/VarianceScaling.python.cpp
 #        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/LinearCombinationCovariance.python.cpp

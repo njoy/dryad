@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad.id
 import numpy
 import typing
-__all__: list[str] = ['ProductMultiplicityCovarianceMatrix', 'ScalingType', 'is_square', 'is_symmetric']
+__all__: list[str] = ['ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'is_square', 'is_symmetric']
 class ProductMultiplicityCovarianceMatrix:
     """
     A covariance matrix for product multiplicities
@@ -86,10 +86,16 @@ class ProductMultiplicityCovarianceMatrix:
         diagonal of the full covariance matrix. When this function is called on an
         off diagonal matrix, the function has no effect.
         """
+    @typing.overload
+    def extract(self, reaction: dryad.id.ReactionID | None, group: dryad.id.EnergyGroup | None, product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
+        ...
+    @typing.overload
+    def extract(self, row_reaction: dryad.id.ReactionID | None, row_group: dryad.id.EnergyGroup | None, row_product: dryad.id.ParticleID | None, col_reaction: dryad.id.ReactionID | None, col_group: dryad.id.EnergyGroup | None, col_product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
+        ...
     @property
-    def column_keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
+    def column_metadata(self) -> ProductMultiplicityMetadata:
         """
-        The column keys of the matrix
+        The column metadata
         """
     @property
     def correlations(self) -> numpy.ndarray[numpy.float64[m, n]] | None:
@@ -127,14 +133,57 @@ class ProductMultiplicityCovarianceMatrix:
         Flag to indicate whether or not this covariance matrix is relative or not
         """
     @property
-    def row_keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
+    def row_metadata(self) -> ProductMultiplicityMetadata:
         """
-        The row keys of the matrix
+        The row metadata
         """
     @property
     def standard_deviations(self) -> list[float] | None:
         """
         The standard deviations
+        """
+class ProductMultiplicityMetadata:
+    """
+    Covariance metadata for product multiplicities
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: ProductMultiplicityMetadata) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, reactions: list[dryad.id.ReactionID], energies: list[float], products: list[dryad.id.ParticleID]) -> None:
+        """
+        Initialise the product multiplicity covariance metadata
+        
+        Arguments:
+            self          the covariance matrix
+            reactions     the reaction identifiers
+            energies      the group structure
+            products      the product identifiers
+        """
+    @typing.overload
+    def __init__(self, instance: ProductMultiplicityMetadata) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: ProductMultiplicityMetadata) -> bool:
+        ...
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy group boundaries
+        """
+    @property
+    def product_identifiers(self) -> list[dryad.id.ParticleID]:
+        """
+        The reaction product identifiers
+        """
+    @property
+    def reaction_identifiers(self) -> list[dryad.id.ReactionID]:
+        """
+        The reaction identifiers
         """
 class ScalingType:
     """
