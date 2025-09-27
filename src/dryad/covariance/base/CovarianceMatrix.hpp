@@ -18,27 +18,18 @@ namespace base {
    *  @class
    *  @brief A base class representing a covariance matrix
    */
-  template < typename... Ts >
+  template < typename Metadata, typename... Ts >
   class CovarianceMatrix {
 
-    //! @todo use cartesian product to generate keys from metadata
-
-  public:
-
     /* type aliases */
-    using Metadata = std::tuple< std::vector< Ts >... >;
     using Key = std::tuple< Ts... >;
     using Selection = std::tuple< std::optional< Ts >... >;
 
   private:
 
-    /* fields - row metadata and keys */
+    /* fields - row and column metadata */
     Metadata row_metadata_;
-    std::vector< Key > row_;
-
-    /* fields - column metadata and keys */
     std::optional< Metadata > column_metadata_;
-    std::optional< std::vector< Key > > column_;
 
     /* fields - flag to indicate relative or absolute data */
     bool relative_;
@@ -71,11 +62,6 @@ namespace base {
     const Metadata& rowMetadata() const { return this->row_metadata_; }
 
     /**
-     *  @brief Return the row keys
-     */
-    const std::vector< Key >& rowKeys() const { return this->row_; }
-
-    /**
      *  @brief Return the column metadata
      */
     const Metadata& columnMetadata() const {
@@ -91,28 +77,11 @@ namespace base {
     }
 
     /**
-     *  @brief Return the column keys
-     *
-     *  This returns the row heys if the covariance matrix is on-diagonal
-     */
-    const std::vector< Key >& columnKeys() const {
-
-      if ( this->column_.has_value() ) {
-
-        return this->column_.value();
-      }
-      else {
-
-        return this->row_;
-      }
-    }
-
-    /**
      *  @brief Return whether or not this covariance matrix is off diagonal
      */
     bool isOffDiagonal() const {
 
-      return this->column_.has_value();
+      return this->column_metadata_.has_value();
     }
 
     /**
@@ -175,7 +144,7 @@ namespace base {
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
 
-//    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal
@@ -184,8 +153,8 @@ namespace base {
      */
     bool operator==( const CovarianceMatrix& right ) const {
 
-      return this->rowKeys() == right.rowKeys() &&
-             this->columnKeys() == right.columnKeys() &&
+      return this->rowMetadata() == right.rowMetadata() &&
+             this->columnMetadata() == right.columnMetadata() &&
              this->covariances() == right.covariances();
     }
 

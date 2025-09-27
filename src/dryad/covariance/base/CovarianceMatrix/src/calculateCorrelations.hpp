@@ -14,9 +14,10 @@ void calculateCorrelations() {
 
     this->calculateStandardDeviations();
 
-    DiagonalMatrix< double > temporary( this->rowKeys().size() );
+    auto nrows = this->rowMetadata().keys().size();
+    DiagonalMatrix< double > temporary( nrows );
     temporary.setIdentity();
-    for ( unsigned int i = 0; i < this->rowKeys().size(); ++i ) {
+    for ( unsigned int i = 0; i < nrows; ++i ) {
 
       temporary.diagonal()[i] /= this->standardDeviations().value()[i];
       if ( std::isnan( temporary.diagonal()[i] ) ) {
@@ -42,14 +43,17 @@ void calculateCorrelations() {
 void calculateCorrelations( const std::vector< double >& rowDeviations,
                             const std::vector< double >& columnDeviations ) {
 
-  verifyStandardDeviations( this->rowKeys().size(),
-                            this->columnKeys().size(),
+  auto nrows = this->rowMetadata().keys().size();
+  auto ncols = this->columnMetadata().keys().size();
+
+  verifyStandardDeviations( nrows,
+                            ncols,
                             rowDeviations.size(),
                             columnDeviations.size() );
 
-  DiagonalMatrix< double > left( this->rowKeys().size() );
+  DiagonalMatrix< double > left( nrows );
   left.setIdentity();
-  for ( unsigned int i = 0; i < this->rowKeys().size(); ++i ) {
+  for ( unsigned int i = 0; i < nrows; ++i ) {
 
     left.diagonal()[i] /= rowDeviations[i];
     if ( std::isnan( left.diagonal()[i] ) ) {
@@ -58,9 +62,9 @@ void calculateCorrelations( const std::vector< double >& rowDeviations,
     }
   }
 
-  DiagonalMatrix< double > right( this->columnKeys().size() );
+  DiagonalMatrix< double > right( ncols );
   right.setIdentity();
-  for ( unsigned int i = 0; i < this->columnKeys().size(); ++i ) {
+  for ( unsigned int i = 0; i < ncols; ++i ) {
 
     right.diagonal()[i] /= columnDeviations[i];
     if ( std::isnan( right.diagonal()[i] ) ) {

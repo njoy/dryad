@@ -13,9 +13,10 @@ void calculateCovariances() {
 
   if ( this->isOnDiagonal() && this->correlations().has_value() ) {
 
-    DiagonalMatrix< double > temporary( this->rowKeys().size() );
+    auto nrows = this->rowMetadata().keys().size();
+    DiagonalMatrix< double > temporary( nrows );
     temporary.setIdentity();
-    for ( unsigned int i = 0; i < this->rowKeys().size(); ++i ) {
+    for ( unsigned int i = 0; i < nrows; ++i ) {
 
       temporary.diagonal()[i] = this->standardDeviations().value()[i];
     }
@@ -42,21 +43,24 @@ void calculateCovariances( const std::vector< double >& rowDeviations,
 
   if ( this->correlations().has_value() ) {
 
-    verifyStandardDeviations( this->rowKeys().size(),
-                              this->columnKeys().size(),
+    auto nrows = this->rowMetadata().keys().size();
+    auto ncols = this->columnMetadata().keys().size();
+
+    verifyStandardDeviations( nrows,
+                              ncols,
                               rowDeviations.size(),
                               columnDeviations.size() );
 
-    DiagonalMatrix< double > left( this->rowKeys().size() );
+    DiagonalMatrix< double > left( nrows );
     left.setIdentity();
-    for ( unsigned int i = 0; i < this->rowKeys().size(); ++i ) {
+    for ( unsigned int i = 0; i < nrows; ++i ) {
 
       left.diagonal()[i] = rowDeviations[i];
     }
 
-    DiagonalMatrix< double > right( this->columnKeys().size() );
+    DiagonalMatrix< double > right( ncols );
     right.setIdentity();
-    for ( unsigned int i = 0; i < this->columnKeys().size(); ++i ) {
+    for ( unsigned int i = 0; i < ncols; ++i ) {
 
       right.diagonal()[i] = columnDeviations[i];
     }

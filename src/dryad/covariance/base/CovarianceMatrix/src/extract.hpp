@@ -1,25 +1,33 @@
 private:
 
-template < typename LeftTuple, typename RightTuple, std::size_t... Is >
-static auto compare_key_impl( const LeftTuple& left, const RightTuple& right,
-                              std::index_sequence< Is... > ) {
+static std::vector< Key >
+extractKeys( const std::vector< std::size_t >& indices,
+             const std::vector< Key >& keys ) {
 
-  auto compare = [] ( auto&& left, auto&& right ) {
+  std::vector< Key > extracted;
+  extracted.reserve( indices.size() );
+  for ( std::size_t index : indices ) {
 
-    if ( left == std::nullopt || left == right ) {
-
-      return true;
-    }
-    return false;
-  };
-
-  return ( compare( std::get< Is >( left ), std::get< Is >( right ) ) && ... );
+    extracted.emplace_back( keys[index] );
+  }
+  return extracted;
 }
 
-static auto compare_key( const std::tuple< std::optional< Ts >... >& left,
-                         const std::tuple< Ts... >& right ) {
+dryad::covariance::Matrix< double >
+extractMatrix( const std::vector< std::size_t >& rows,
+               const std::vector< std::size_t >& columns ) const {
 
-  return compare_key_impl( left, right, std::make_index_sequence< sizeof...( Ts ) >{} );
+  auto size1 = rows.size();
+  auto size2 = columns.size();
+  dryad::covariance::Matrix< double > matrix( size1, size2 );
+  for ( unsigned int i = 0; i < size1; ++i ) {
+
+    for ( unsigned int j = 0; j < size2; ++j ) {
+
+      matrix( i, j ) = this->covariances()( rows[i], columns[j] );
+    }
+  }
+  return matrix;
 }
 
 public:
@@ -30,67 +38,30 @@ public:
  */
 CovarianceMatrix extract( const std::optional< Ts >&... args ) const {
 
-  Selection select = std::make_tuple( args... );
-
-  std::vector< std::size_t > rows;
-  std::vector< Key > rowKeys;
-  for ( std::size_t i = 0; i < this->rowKeys().size(); ++i ) {
-
-    if ( compare_key( select, this->rowKeys()[i] ) ) {
-
-      rows.emplace_back( i );
-      rowKeys.emplace_back( this->rowKeys()[i] );
-    }
-  }
-
+  auto rows = this->rowMetadata().selection( args... );
+  auto rowKeys = extractKeys( rows, this->rowMetadata().keys() );
   if ( this->isOnDiagonal() ) {
 
-    auto size = rows.size();
-    dryad::covariance::Matrix< double > matrix( size, size );
-    for ( unsigned int i = 0; i < size; ++i ) {
-
-      for ( unsigned int j = 0; j < size; ++j ) {
-
-        matrix( i, j ) = this->covariances()( rows[i], rows[j] );
-      }
-    }
-
-    return CovarianceMatrix( std::move( rowKeys ), std::move( matrix ),
+    return CovarianceMatrix( Metadata( std::move( rowKeys ) ),
+                             this->extractMatrix( rows, rows ),
                              this->isRelativeMatrix() );
   }
   else {
 
-    std::vector< std::size_t > columns;
-    std::vector< Key > columnKeys;
-    for ( std::size_t i = 0; i < this->columnKeys().size(); ++i ) {
-
-      if ( compare_key( select, this->columnKeys()[i] ) ) {
-
-        columns.emplace_back( i );
-        columnKeys.emplace_back( this->columnKeys()[i] );
-      }
-    }
-
-    auto size1 = rows.size();
-    auto size2 = columns.size();
-    dryad::covariance::Matrix< double > matrix( size1, size2 );
-    for ( unsigned int i = 0; i < size1; ++i ) {
-
-      for ( unsigned int j = 0; j < size2; ++j ) {
-
-        matrix( i, j ) = this->covariances()( rows[i], columns[j] );
-      }
-    }
-
+    auto columns = this->columnMetadata().selection( args... );
+    auto columnKeys = extractKeys( columns, this->columnMetadata().keys() );
     if ( rowKeys == columnKeys ) {
 
-      return CovarianceMatrix( std::move( rowKeys ), std::move( matrix ),
+      return CovarianceMatrix( Metadata( std::move( rowKeys ) ),
+                               this->extractMatrix( rows, columns ),
                                this->isRelativeMatrix() );
     }
     else {
 
-      return CovarianceMatrix( std::move( rowKeys ), std::move( columnKeys ),
-                               std::move( matrix ), this->isRelativeMatrix() );
+      return CovarianceMatrix( Metadata( std::move( rowKeys ) ),
+                               Metadata( std::move( columnKeys ) ),
+                               this->extractMatrix( rows, columns ),
+                               this->isRelativeMatrix() );
     }
   }
 }
@@ -108,51 +79,23 @@ CovarianceMatrix extract( const std::optional< Ts >&... row_args,
   }
   else {
 
-    Selection select_row = std::make_tuple( row_args... );
-    Selection select_col = std::make_tuple( col_args... );
-
-    std::vector< std::size_t > rows;
-    std::vector< Key > rowKeys;
-    for ( std::size_t i = 0; i < this->rowKeys().size(); ++i ) {
-
-      if ( compare_key( select_row, this->rowKeys()[i] ) ) {
-
-        rows.emplace_back( i );
-        rowKeys.emplace_back( this->rowKeys()[i] );
-      }
-    }
-
-    std::vector< std::size_t > columns;
-    std::vector< Key > columnKeys;
-    for ( std::size_t i = 0; i < this->columnKeys().size(); ++i ) {
-
-      if ( compare_key( select_col, this->columnKeys()[i] ) ) {
-
-        columns.emplace_back( i );
-        columnKeys.emplace_back( this->columnKeys()[i] );
-      }
-    }
-
-    auto size1 = rows.size();
-    auto size2 = columns.size();
-    dryad::covariance::Matrix< double > matrix( size1, size2 );
-    for ( unsigned int i = 0; i < size1; ++i ) {
-
-      for ( unsigned int j = 0; j < size2; ++j ) {
-
-        matrix( i, j ) = this->covariances()( rows[i], columns[j] );
-      }
-    }
+    auto rows = this->rowMetadata().selection( row_args... );
+    auto columns = this->columnMetadata().selection( col_args... );
+    auto rowKeys = extractKeys( rows, this->rowMetadata().keys() );
+    auto columnKeys = extractKeys( columns, this->columnMetadata().keys() );
 
     if ( rowKeys == columnKeys ) {
 
-      return CovarianceMatrix( std::move( rowKeys ), std::move( matrix ),
+      return CovarianceMatrix( Metadata( std::move( rowKeys ) ),
+                               this->extractMatrix( rows, columns ),
                                this->isRelativeMatrix() );
     }
     else {
 
-      return CovarianceMatrix( std::move( rowKeys ), std::move( columnKeys ),
-                               std::move( matrix ), this->isRelativeMatrix() );
+      return CovarianceMatrix( Metadata( std::move( rowKeys ) ),
+                               Metadata( std::move( columnKeys ) ),
+                               this->extractMatrix( rows, columns ),
+                               this->isRelativeMatrix() );
     }
   }
 }
