@@ -36,6 +36,7 @@ add_cpp_test( atomic.RadiativeTransitionData                             atomic/
 add_cpp_test( covariance.matrix                                          covariance/matrix.test.cpp )
 add_cpp_test( covariance.base.Metadata                                   covariance/base/Metadata.test.cpp )
 add_cpp_test( covariance.base.CovarianceMatrix                           covariance/base/CovarianceMatrix.test.cpp )
+add_cpp_test( covariance.CrossSectionMetadata                            covariance/CrossSectionMetadata.test.cpp )
 add_cpp_test( covariance.ProductMultiplicityMetadata                     covariance/ProductMultiplicityMetadata.test.cpp )
 add_cpp_test( covariance.ProductMultiplicityCovarianceMatrix             covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 #add_cpp_test( covariance.CrossSectionCovarianceBlock                     covariance/CrossSectionCovarianceBlock.test.cpp )
