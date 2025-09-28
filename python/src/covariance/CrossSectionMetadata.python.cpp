@@ -5,21 +5,20 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/covariance/ProductMultiplicityMetadata.hpp"
+#include "dryad/covariance/CrossSectionMetadata.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace covariance {
 
-void wrapProductMultiplicityMetadata( python::module& module ) {
+void wrapCrossSectionMetadata( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::covariance::ProductMultiplicityMetadata;
-  using ParticleID = njoy::dryad::id::ParticleID;
+  using Component = njoy::dryad::covariance::CrossSectionMetadata;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
-  using Key = std::tuple< ReactionID, EnergyGroup, ParticleID >;
+  using Key = std::tuple< ReactionID, EnergyGroup >;
 
   // wrap views created by this component
 
@@ -27,8 +26,8 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "ProductMultiplicityMetadata",
-    "Covariance metadata for product multiplicities"
+    "CrossSectionMetadata",
+    "Covariance metadata for cross sections"
   );
 
   // wrap the component
@@ -36,16 +35,13 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
   .def(
 
     python::init< std::vector< ReactionID >,
-                  std::vector< double >,
-                  std::vector< ParticleID > >(),
+                  std::vector< double > >(),
     python::arg( "reactions" ), python::arg( "energies" ),
-    python::arg( "products" ),
     "Initialise the product multiplicity covariance metadata\n\n"
     "Arguments:\n"
     "    self          the covariance metadata\n"
     "    reactions     the reaction identifiers\n"
-    "    energies      the group structure\n"
-    "    products      the product identifiers"
+    "    energies      the group structure"
   )
   .def(
 
@@ -75,12 +71,6 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
     "energies",
     &Component::energies,
     "The energy group boundaries"
-  )
-  .def_property_readonly(
-
-    "product_identifiers",
-    &Component::productIdentifiers,
-    "The reaction product identifiers"
   )
   .def_property_readonly(
 

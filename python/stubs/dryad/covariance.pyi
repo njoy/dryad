@@ -5,7 +5,58 @@ from __future__ import annotations
 import dryad.id
 import numpy
 import typing
-__all__: list[str] = ['ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'is_square', 'is_symmetric']
+__all__: list[str] = ['CrossSectionMetadata', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'is_square', 'is_symmetric']
+class CrossSectionMetadata:
+    """
+    Covariance metadata for cross sections
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: CrossSectionMetadata) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, reactions: list[dryad.id.ReactionID], energies: list[float]) -> None:
+        """
+        Initialise the product multiplicity covariance metadata
+        
+        Arguments:
+            self          the covariance metadata
+            reactions     the reaction identifiers
+            energies      the group structure
+        """
+    @typing.overload
+    def __init__(self, keys: list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup]]) -> None:
+        """
+        Initialise the product multiplicity covariance metadata
+        
+        Arguments:
+            self   the covariance metadata
+            keys   the metadata keys
+        """
+    @typing.overload
+    def __init__(self, instance: CrossSectionMetadata) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CrossSectionMetadata) -> bool:
+        ...
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy group boundaries
+        """
+    @property
+    def keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup]]:
+        """
+        The metadata keys
+        """
+    @property
+    def reaction_identifiers(self) -> list[dryad.id.ReactionID]:
+        """
+        The reaction identifiers
+        """
 class ProductMultiplicityCovarianceMatrix:
     """
     A covariance matrix for product multiplicities
@@ -155,7 +206,7 @@ class ProductMultiplicityMetadata:
         Initialise the product multiplicity covariance metadata
         
         Arguments:
-            self          the covariance matrix
+            self          the covariance metadata
             reactions     the reaction identifiers
             energies      the group structure
             products      the product identifiers
@@ -166,7 +217,7 @@ class ProductMultiplicityMetadata:
         Initialise the product multiplicity covariance metadata
         
         Arguments:
-            self   the covariance matrix
+            self   the covariance metadata
             keys   the metadata keys
         """
     @typing.overload
