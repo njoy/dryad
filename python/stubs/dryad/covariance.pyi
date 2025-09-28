@@ -161,6 +161,15 @@ class ProductMultiplicityMetadata:
             products      the product identifiers
         """
     @typing.overload
+    def __init__(self, keys: list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]) -> None:
+        """
+        Initialise the product multiplicity covariance metadata
+        
+        Arguments:
+            self   the covariance matrix
+            keys   the metadata keys
+        """
+    @typing.overload
     def __init__(self, instance: ProductMultiplicityMetadata) -> None:
         """
         Initialise a copy
@@ -174,6 +183,11 @@ class ProductMultiplicityMetadata:
     def energies(self) -> list[float]:
         """
         The energy group boundaries
+        """
+    @property
+    def keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
+        """
+        The metadata keys
         """
     @property
     def product_identifiers(self) -> list[dryad.id.ParticleID]:

@@ -38,6 +38,7 @@ add_python_test( atomic.NonRadiativeTransitionData       atomic/Test_dryad_atomi
 add_python_test( atomic.ElectronSubshellConfiguration    atomic/Test_dryad_atomic_ElectronSubshellConfiguration.py )
 
 add_python_test( covariance.matrix                               covariance/Test_dryad_covariance_matrix.py )
+add_python_test( covariance.ProductMultiplicityMetadata          covariance/Test_dryad_covariance_ProductMultiplicityMetadata.py )
 add_python_test( covariance.ProductMultiplicityCovarianceMatrix  covariance/Test_dryad_covariance_ProductMultiplicityCovarianceMatrix.py )
 #add_python_test( covariance.VarianceScaling              covariance/Test_dryad_covariance_VarianceScaling.py )
 #add_python_test( covariance.LinearCombinationCovariance  covariance/Test_dryad_covariance_LinearCombinationCovariance.py )

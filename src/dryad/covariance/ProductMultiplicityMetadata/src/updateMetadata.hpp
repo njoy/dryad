@@ -11,8 +11,12 @@ void updateMetadata() {
 
   // calculate stride on the energy dimension and loop
   auto stride = this->products_.size();
+  auto group = std::get< 1 >( this->keys().front() );
+  iter = std::find_if( this->keys().begin() + stride, this->keys().end(),
+                       [&group] ( const auto& tuple )
+                                { return group == std::get< 1 >( tuple ); } );
   this->energies_.emplace_back( std::get< 1 >( this->keys().front() ).lowerEnergy() );
-  for ( unsigned int i = 0; i < this->keys().size(); i = i + stride ) {
+  for ( unsigned int i = 0; i < std::distance( this->keys().begin(), iter ); i = i + stride ) {
 
     this->energies_.emplace_back( std::get< 1 >( this->keys()[i] ).upperEnergy() );
   }

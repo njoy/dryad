@@ -19,6 +19,7 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
   using ParticleID = njoy::dryad::id::ParticleID;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
+  using Key = std::tuple< ReactionID, EnergyGroup, ParticleID >;
 
   // wrap views created by this component
 
@@ -48,6 +49,15 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
   )
   .def(
 
+    python::init< std::vector< Key > >(),
+    python::arg( "keys" ),
+    "Initialise the product multiplicity covariance metadata\n\n"
+    "Arguments:\n"
+    "    self   the covariance matrix\n"
+    "    keys   the metadata keys"
+  )
+  .def(
+
     python::init< const Component& >(),
     python::arg( "instance" ),
     "Initialise a copy\n\n"
@@ -71,6 +81,13 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
     "product_identifiers",
     &Component::productIdentifiers,
     "The reaction product identifiers"
+  )
+  .def_property_readonly(
+
+    "keys",
+    [] ( Component& self ) -> decltype(auto)
+       { return self.keys(); },
+    "The metadata keys"
   );
 
   // add standard equality comparison definitions
