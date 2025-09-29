@@ -15,6 +15,7 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
+  using ProductMultiplicityMetadata = njoy::dryad::covariance::ProductMultiplicityMetadata;
   using ParticleID = njoy::dryad::id::ParticleID;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
@@ -34,40 +35,66 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   component
   .def(
 
-    python::init< ReactionID, std::vector< double >,
-                  std::vector< ParticleID >,
-                  Matrix, bool >(),
-    python::arg( "reaction" ), python::arg( "energies" ),
-    python::arg( "products" ), python::arg( "covariances" ),
+    python::init< ProductMultiplicityMetadata, Matrix, bool >(),
+    python::arg( "metadata" ), python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    "Initialise full product multiplicity covariance data\n\n"
+    "Initialise an on-diagonal product multiplicity covariance matrix\n\n"
     "Arguments:\n"
     "    self          the covariance matrix\n"
-    "    reaction      the reaction identifier\n"
-    "    energies      the group structure\n"
-    "    products      the product identifiers\n"
+    "    metadata      the row and column metadata\n"
     "    covariances   the covariance matrix\n"
     "    relative      the relative covariance flag (default is true)"
   )
   .def(
 
-    python::init< ReactionID, std::vector< double >,
-                  std::vector< ParticleID >,
-                  std::vector< double >,
+    python::init< ProductMultiplicityMetadata,
+                  ProductMultiplicityMetadata,
                   Matrix, bool >(),
-    python::arg( "reaction" ), python::arg( "energies" ),
-    python::arg( "products" ), python::arg( "deviations" ),
-    python::arg( "correlations" ),
+    python::arg( "row_metadata" ),
+    python::arg( "column_metadata" ),
+    python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    "Initialise full product multiplicity covariance data\n\n"
+    "Initialise an off-diagonal product multiplicity covariance matrix\n\n"
     "Arguments:\n"
-    "    self          the covariance matrix\n"
-    "    reaction       the reaction identifier\n"
-    "    energies       the group structure\n"
-    "    products       the product identifiers\n"
+    "    self             the covariance matrix\n"
+    "    rowMetadata      the row metadata\n"
+    "    columnMetadata   the column metadata\n"
+    "    covariances      the covariance matrix\n"
+    "    relative         the relative covariance flag (default is true)"
+  )
+  .def(
+
+    python::init< ProductMultiplicityMetadata,
+                  std::vector< double >, Matrix, bool >(),
+    python::arg( "metadata" ), python::arg( "deviations" ),
+    python::arg( "correlations" ), python::arg( "relative" ) = true,
+    "Initialise an on-diagonal product multiplicity correlation matrix\n\n"
+    "Arguments:\n"
+    "    self           the covariance matrix\n"
+    "    metadata       the row and column metadata\n"
     "    deviations     the standard deviations\n"
     "    correlations   the correlation matrix\n"
     "    relative       the relative covariance flag (default is true)"
+  )
+  .def(
+
+    python::init< ProductMultiplicityMetadata,
+                  ProductMultiplicityMetadata,
+                  std::vector< double >,
+                  std::vector< double >,
+                  Matrix, bool >(),
+    python::arg( "row_metadata" ), python::arg( "column_metadata" ),
+    python::arg( "row_deviations" ), python::arg( "column_deviations" ),
+    python::arg( "correlations" ), python::arg( "relative" ) = true,
+    "Initialise an on-diagonal product multiplicity correlation matrix\n\n"
+    "Arguments:\n"
+    "    self               the covariance matrix\n"
+    "    rowMetadata        the row metadata\n"
+    "    columnMetadata     the column metadata\n"
+    "    rowDeviations      the standard deviations to be applied to each row\n"
+    "    columnDeviations   the standard deviations to be applied to each column\n"
+    "    correlations       the correlation matrix\n"
+    "    relative           the relative covariance flag (default is true)"
   )
   .def(
 

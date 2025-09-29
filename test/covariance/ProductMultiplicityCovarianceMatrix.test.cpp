@@ -19,10 +19,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
     // matrix and test results provided by Amanda Lewis
 
-    id::ReactionID reaction( "n,U235->fission" );
-    std::vector< double > energies{ 1e-5, 1e+6, 2e+7 };
-    std::vector< id::ParticleID > products{ id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
-                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) };
+    ProductMultiplicityMetadata metadata( { id::ReactionID( "n,U235->fission" ) },
+                                          { 1e-5, 1e+6, 2e+7 },
+                                          { id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
+                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) } );
 
     Matrix< double > matrix( 8, 8 );
     matrix <<   3.350497e-07,  3.086034e-07,  1.031271e-06, -3.468670e-10, 1.186658e-07,  1.953402e-07,  8.550732e-08, -1.352565e-09,
@@ -34,8 +34,8 @@ SCENARIO( "CovarianceMatrix" ) {
                 8.550732e-08, -3.459165e-07,  3.036135e-06,  5.460586e-09, 4.742642e-07,  1.744701e-07,  4.887436e-06, -2.686310e-10,
                -1.352565e-09, -9.048060e-10, -2.642949e-09,  3.336860e-10, -1.127960e-09, -2.394143e-09, -2.686310e-10,  3.280511e-09;
 
-    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
-                                               std::move( products ), std::move( matrix ),
+    ProductMultiplicityCovarianceMatrix chunk( std::move( metadata ),
+                                               std::move( matrix ),
                                                false );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
@@ -240,10 +240,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
     // matrix and test results provided by Amanda Lewis
 
-    id::ReactionID reaction( "n,U235->fission" );
-    std::vector< double > energies{ 1e-5, 1e+6, 2e+7 };
-    std::vector< id::ParticleID > products{ id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
-                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) };
+    ProductMultiplicityMetadata metadata( { id::ReactionID( "n,U235->fission" ) },
+                                          { 1e-5, 1e+6, 2e+7 },
+                                          { id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
+                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) } );
 
     std::vector< double > deviations = {  5.78834777807968e-04, 1.17932099107919e-03,
                                           2.03289547198079e-03, 1.93069935515605e-05,
@@ -267,8 +267,7 @@ SCENARIO( "CovarianceMatrix" ) {
               -4.07974274908842e-02, -1.33953076941197e-02, -2.26988045368907e-02,  3.01753686987760e-01,
               -3.72648500015370e-02, -4.31946555113209e-02, -2.12150880161591e-03,  1.00000000000000e+00;
 
-    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
-                                               std::move( products ), std::move( deviations ),
+    ProductMultiplicityCovarianceMatrix chunk( std::move( metadata ), std::move( deviations ),
                                                std::move( matrix ), false );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
@@ -471,10 +470,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
     // matrix and test results provided by Amanda Lewis
 
-    id::ReactionID reaction( "n,U235->fission" );
-    std::vector< double > energies{ 1e-5, 1e+6, 2e+7 };
-    std::vector< id::ParticleID > products{ id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
-                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) };
+    ProductMultiplicityMetadata metadata( { id::ReactionID( "n,U235->fission" ) },
+                                          { 1e-5, 1e+6, 2e+7 },
+                                          { id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
+                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) } );
 
     Matrix< double > matrix( 8, 8 );
     matrix <<   3.350497e-07,  3.086034e-07,  1.031271e-06, -3.468670e-10, 1.186658e-07,  1.953402e-07,  8.550732e-08, -1.352565e-09,
@@ -486,11 +485,12 @@ SCENARIO( "CovarianceMatrix" ) {
                 8.550732e-08, -3.459165e-07,  3.036135e-06,  5.460586e-09, 4.742642e-07,  1.744701e-07,  4.887436e-06, -2.686310e-10,
                -1.352565e-09, -9.048060e-10, -2.642949e-09,  3.336860e-10, -1.127960e-09, -2.394143e-09, -2.686310e-10,  3.280511e-09;
 
-    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
-                                               std::move( products ), std::move( matrix ),
+    ProductMultiplicityCovarianceMatrix chunk( std::move( metadata ),
+                                               std::move( matrix ),
                                                false );
 
     // test variables
+    id::ReactionID reaction( "n,U235->fission" );
     id::EnergyGroup group1( 1e-5, 1e+6 );
     id::EnergyGroup group2( 1e+6, 2e+7 );
     id::ParticleID product1( "Y99" );
