@@ -37,9 +37,9 @@ add_cpp_test( covariance.matrix                                          covaria
 add_cpp_test( covariance.base.Metadata                                   covariance/base/Metadata.test.cpp )
 add_cpp_test( covariance.base.CovarianceMatrix                           covariance/base/CovarianceMatrix.test.cpp )
 add_cpp_test( covariance.CrossSectionMetadata                            covariance/CrossSectionMetadata.test.cpp )
+add_cpp_test( covariance.CrossSectionCovarianceMatrix                    covariance/CrossSectionCovarianceMatrix.test.cpp )
 add_cpp_test( covariance.ProductMultiplicityMetadata                     covariance/ProductMultiplicityMetadata.test.cpp )
 add_cpp_test( covariance.ProductMultiplicityCovarianceMatrix             covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
-#add_cpp_test( covariance.CrossSectionCovarianceBlock                     covariance/CrossSectionCovarianceBlock.test.cpp )
 #add_cpp_test( covariance.LinearCombinationCovariance                     covariance/LinearCombinationCovariance.test.cpp )
 #add_cpp_test( covariance.VarianceScaling                                 covariance/VarianceScaling.test.cpp )
 

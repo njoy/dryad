@@ -15,69 +15,53 @@ using namespace njoy::dryad::covariance;
 
 SCENARIO( "CrossSectionCovarianceMatrix" ) {
 
-  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceMatrix without "
+  GIVEN( "valid covariance data for an on-diagonal covariance matrix without "
          "variance scaling information" ) {
 
-    id::ParticleID projectile( "n" );
-    id::ParticleID target( "U235" );
-    id::ReactionID reaction( "n,U235->n,U235" );
-    std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
+    CrossSectionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
+                                   { 1e-5, 1., 1e+6, 2e+7 } );
 
     Matrix< double > matrix( 3, 3 );
     matrix << 1., 2., 3.,
               2., 4., 6.,
               3., 6., 9.;
 
-    CrossSectionCovarianceMatrix chunk( std::move( projectile ), std::move( target ),
-                                       std::move( reaction ), std::move( energies ),
-                                       std::move( matrix ) );
+    CrossSectionCovarianceMatrix chunk( std::move( metadata ), std::move( matrix ) );
 
     THEN( "a CrossSectionCovarianceMatrix can be constructed and members can be tested" ) {
 
-      CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
-      CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifier() );
+      CHECK( 1 == chunk.rowMetadata().reactionIdentifiers().size() );
+      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifiers()[0] );
       CHECK( 4 == chunk.rowMetadata().energies().size() );
-      CHECK( 3 == chunk.rowMetadata().numberGroups() );
       CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
       CHECK_THAT( 1.  , WithinRel( chunk.rowMetadata().energies()[1] ) );
       CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
-
-      CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
-      CHECK( id::ParticleID( "U235" ) == chunk.columnMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.columnMetadata().reactionIdentifier() );
-      CHECK( 4 == chunk.columnMetadata().energies().size() );
-      CHECK( 3 == chunk.columnMetadata().numberGroups() );
-      CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
-      CHECK_THAT( 1.  , WithinRel( chunk.columnMetadata().energies()[1] ) );
-      CHECK_THAT( 1e+6, WithinRel( chunk.columnMetadata().energies()[2] ) );
-      CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[3] ) );
+      CHECK( chunk.columnMetadata() == chunk.rowMetadata() );
 
       CHECK( false == chunk.hasVarianceScaling() );
       CHECK( std::nullopt == chunk.varianceScaling() );
 
-      CHECK( true == chunk.isRelativeBlock() );
-      CHECK( false == chunk.isAbsoluteBlock() );
-      CHECK( false == chunk.isOffDiagonalBlock() );
-      CHECK( true == chunk.isDiagonalBlock() );
+      CHECK( true == chunk.isRelativeMatrix() );
+      CHECK( false == chunk.isAbsoluteMatrix() );
+      CHECK( false == chunk.isOffDiagonal() );
+      CHECK( true == chunk.isOnDiagonal() );
 
-      CHECK( std::nullopt != chunk.covariances() );
       CHECK( std::nullopt == chunk.standardDeviations() );
       CHECK( std::nullopt == chunk.correlations() );
       CHECK( std::nullopt == chunk.eigenvalues() );
 
-      CHECK( 3 == chunk.covariances().value().rows() );
-      CHECK( 3 == chunk.covariances().value().cols() );
-      CHECK( 1. == chunk.covariances().value()(0,0) );
-      CHECK( 2. == chunk.covariances().value()(0,1) );
-      CHECK( 3. == chunk.covariances().value()(0,2) );
-      CHECK( 2. == chunk.covariances().value()(1,0) );
-      CHECK( 4. == chunk.covariances().value()(1,1) );
-      CHECK( 6. == chunk.covariances().value()(1,2) );
-      CHECK( 3. == chunk.covariances().value()(2,0) );
-      CHECK( 6. == chunk.covariances().value()(2,1) );
-      CHECK( 9. == chunk.covariances().value()(2,2) );
+      CHECK( 3 == chunk.covariances().rows() );
+      CHECK( 3 == chunk.covariances().cols() );
+      CHECK( 1. == chunk.covariances()(0,0) );
+      CHECK( 2. == chunk.covariances()(0,1) );
+      CHECK( 3. == chunk.covariances()(0,2) );
+      CHECK( 2. == chunk.covariances()(1,0) );
+      CHECK( 4. == chunk.covariances()(1,1) );
+      CHECK( 6. == chunk.covariances()(1,2) );
+      CHECK( 3. == chunk.covariances()(2,0) );
+      CHECK( 6. == chunk.covariances()(2,1) );
+      CHECK( 9. == chunk.covariances()(2,2) );
     } // THEN
 
     chunk.calculateStandardDeviations();
@@ -124,13 +108,11 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceMatrix with "
+  GIVEN( "valid covariance data for an on-diagonal covariance matrix with "
          "variance scaling information" ) {
 
-    id::ParticleID projectile( "n" );
-    id::ParticleID target( "U235" );
-    id::ReactionID reaction( "n,U235->n,U235" );
-    std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
+    CrossSectionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
+                                   { 1e-5, 1., 1e+6, 2e+7 } );
 
     Matrix< double > matrix( 3, 3 );
     matrix << 1., 2., 3.,
@@ -141,66 +123,53 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     VarianceScaling scaling( ScalingType::Inverse,
                              { 1e-5, 5., 2e+7 }, { 0.001, 0.1 } );
 
-    CrossSectionCovarianceMatrix chunk( std::move( projectile ), std::move( target ),
-                                       std::move( reaction ), std::move( energies ),
-                                       std::move( matrix ), relative, std::move( scaling ) );
+    CrossSectionCovarianceMatrix chunk( std::move( metadata ), std::move( matrix ),
+                                        relative, std::move( scaling ) );
 
     THEN( "a CrossSectionCovarianceMatrix can be constructed and members can be tested" ) {
 
-     CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
-     CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
-     CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifier() );
-     CHECK( 4 == chunk.rowMetadata().energies().size() );
-     CHECK( 3 == chunk.rowMetadata().numberGroups() );
-     CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
-     CHECK_THAT( 1.  , WithinRel( chunk.rowMetadata().energies()[1] ) );
-     CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
-     CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
+      CHECK( 1 == chunk.rowMetadata().reactionIdentifiers().size() );
+      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifiers()[0] );
+      CHECK( 4 == chunk.rowMetadata().energies().size() );
+      CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
+      CHECK_THAT( 1.  , WithinRel( chunk.rowMetadata().energies()[1] ) );
+      CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
+      CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
+      CHECK( chunk.columnMetadata() == chunk.rowMetadata() );
 
-     CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
-     CHECK( id::ParticleID( "U235" ) == chunk.columnMetadata().targetIdentifier() );
-     CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.columnMetadata().reactionIdentifier() );
-     CHECK( 4 == chunk.columnMetadata().energies().size() );
-     CHECK( 3 == chunk.columnMetadata().numberGroups() );
-     CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
-     CHECK_THAT( 1.  , WithinRel( chunk.columnMetadata().energies()[1] ) );
-     CHECK_THAT( 1e+6, WithinRel( chunk.columnMetadata().energies()[2] ) );
-     CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[3] ) );
+      CHECK( true == chunk.hasVarianceScaling() );
+      CHECK( std::nullopt != chunk.varianceScaling() );
+      auto scaling = chunk.varianceScaling().value();
+      CHECK( 2 == scaling.numberGroups() );
+      CHECK( 3 == scaling.energies().size() );
+      CHECK_THAT( 1e-5, WithinRel( scaling.energies()[0] ) );
+      CHECK_THAT( 5.  , WithinRel( scaling.energies()[1] ) );
+      CHECK_THAT( 2e+7, WithinRel( scaling.energies()[2] ) );
+      CHECK( 2 == scaling.factors().size() );
+      CHECK_THAT( 0.001, WithinRel( scaling.factors()[0] ) );
+      CHECK_THAT( 0.1  , WithinRel( scaling.factors()[1] ) );
+      CHECK( ScalingType::Inverse == scaling.type() );
 
-     CHECK( true == chunk.hasVarianceScaling() );
-     CHECK( std::nullopt != chunk.varianceScaling() );
-     auto scaling = chunk.varianceScaling().value();
-     CHECK( 2 == scaling.numberGroups() );
-     CHECK( 3 == scaling.energies().size() );
-     CHECK_THAT( 1e-5, WithinRel( scaling.energies()[0] ) );
-     CHECK_THAT( 5.  , WithinRel( scaling.energies()[1] ) );
-     CHECK_THAT( 2e+7, WithinRel( scaling.energies()[2] ) );
-     CHECK( 2 == scaling.factors().size() );
-     CHECK_THAT( 0.001, WithinRel( scaling.factors()[0] ) );
-     CHECK_THAT( 0.1  , WithinRel( scaling.factors()[1] ) );
-     CHECK( ScalingType::Inverse == scaling.type() );
+      CHECK( true == chunk.isRelativeMatrix() );
+      CHECK( false == chunk.isAbsoluteMatrix() );
+      CHECK( false == chunk.isOffDiagonal() );
+      CHECK( true == chunk.isOnDiagonal() );
 
-     CHECK( true == chunk.isRelativeBlock() );
-     CHECK( false == chunk.isAbsoluteBlock() );
-     CHECK( false == chunk.isOffDiagonalBlock() );
-     CHECK( true == chunk.isDiagonalBlock() );
+      CHECK( std::nullopt == chunk.standardDeviations() );
+      CHECK( std::nullopt == chunk.correlations() );
+      CHECK( std::nullopt == chunk.eigenvalues() );
 
-     CHECK( std::nullopt != chunk.covariances() );
-     CHECK( std::nullopt == chunk.standardDeviations() );
-     CHECK( std::nullopt == chunk.correlations() );
-     CHECK( std::nullopt == chunk.eigenvalues() );
-
-     CHECK( 3 == chunk.covariances().value().rows() );
-     CHECK( 3 == chunk.covariances().value().cols() );
-     CHECK( 1. == chunk.covariances().value()(0,0) );
-     CHECK( 2. == chunk.covariances().value()(0,1) );
-     CHECK( 3. == chunk.covariances().value()(0,2) );
-     CHECK( 2. == chunk.covariances().value()(1,0) );
-     CHECK( 4. == chunk.covariances().value()(1,1) );
-     CHECK( 6. == chunk.covariances().value()(1,2) );
-     CHECK( 3. == chunk.covariances().value()(2,0) );
-     CHECK( 6. == chunk.covariances().value()(2,1) );
-     CHECK( 9. == chunk.covariances().value()(2,2) );
+      CHECK( 3 == chunk.covariances().rows() );
+      CHECK( 3 == chunk.covariances().cols() );
+      CHECK( 1. == chunk.covariances()(0,0) );
+      CHECK( 2. == chunk.covariances()(0,1) );
+      CHECK( 3. == chunk.covariances()(0,2) );
+      CHECK( 2. == chunk.covariances()(1,0) );
+      CHECK( 4. == chunk.covariances()(1,1) );
+      CHECK( 6. == chunk.covariances()(1,2) );
+      CHECK( 3. == chunk.covariances()(2,0) );
+      CHECK( 6. == chunk.covariances()(2,1) );
+      CHECK( 9. == chunk.covariances()(2,2) );
     } // THEN
 
     chunk.calculateStandardDeviations();
@@ -247,72 +216,60 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "valid data for an off-diagonal CrossSectionCovarianceMatrix" ) {
+  GIVEN( "valid data for an off-diagonal covariance matrix" ) {
 
-    id::ParticleID rowProjectile( "n" );
-    id::ParticleID rowTarget( "U235" );
-    id::ReactionID rowReaction( "n,U235->n,U235" );
-    std::vector< double > rowEnergies = { 1e-5, 1., 1e+6, 2e+7 };
-    id::ParticleID columnProjectile( "n" );
-    id::ParticleID columnTarget( "U238" );
-    id::ReactionID columnReaction( "n,U235->fission(t)" );
-    std::vector< double > columnEnergies = { 1e-5, 2., 2e+7 };
+    CrossSectionMetadata rowMetadata( { id::ReactionID( "n,U235->n,U235" ) },
+                                      { 1e-5, 1., 1e+6, 2e+7 } );
+    CrossSectionMetadata columnMetadata( { id::ReactionID( "n,U235->fission(t)" ) },
+                                         { 1e-5, 2., 2e+7 } );
 
     Matrix< double > matrix( 3, 2 );
     matrix << 1., 2.,
               2., 4.,
               3., 6.;
 
-    CrossSectionCovarianceMatrix chunk( std::move( rowProjectile ),
-                                       std::move( rowTarget ),
-                                       std::move( rowReaction ),
-                                       std::move( rowEnergies ),
-                                       std::move( columnProjectile ),
-                                       std::move( columnTarget ),
-                                       std::move( columnReaction ),
-                                       std::move( columnEnergies ),
-                                       std::move( matrix ) );
+    CrossSectionCovarianceMatrix chunk( std::move( rowMetadata ),
+                                        std::move( columnMetadata ),
+                                        std::move( matrix ) );
 
     THEN( "a CrossSectionCovarianceMatrix can be constructed and members can be tested" ) {
 
-      CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
-      CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifier() );
-       CHECK( 4 == chunk.rowMetadata().energies().size() );
-      CHECK( 3 == chunk.rowMetadata().numberGroups() );
+      CHECK( chunk.columnMetadata() != chunk.rowMetadata() );
+
+      CHECK( 1 == chunk.rowMetadata().reactionIdentifiers().size() );
+      CHECK( id::ReactionID( "n,U235->n,U235" ) == chunk.rowMetadata().reactionIdentifiers()[0] );
+      CHECK( 4 == chunk.rowMetadata().energies().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.rowMetadata().energies()[0] ) );
       CHECK_THAT( 1.  , WithinRel( chunk.rowMetadata().energies()[1] ) );
       CHECK_THAT( 1e+6, WithinRel( chunk.rowMetadata().energies()[2] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.rowMetadata().energies()[3] ) );
 
-      CHECK( id::ParticleID( "n" ) == chunk.columnMetadata().projectileIdentifier() );
-      CHECK( id::ParticleID( "U238" ) == chunk.columnMetadata().targetIdentifier() );
-      CHECK( id::ReactionID( "n,U235->fission(t)" ) == chunk.columnMetadata().reactionIdentifier() );
-       CHECK( 3 == chunk.columnMetadata().energies().size() );
-      CHECK( 2 == chunk.columnMetadata().numberGroups() );
+      CHECK( 1 == chunk.columnMetadata().reactionIdentifiers().size() );
+      CHECK( id::ReactionID( "n,U235->fission(t)" ) == chunk.columnMetadata().reactionIdentifiers()[0] );
+      CHECK( 3 == chunk.columnMetadata().energies().size() );
       CHECK_THAT( 1e-5, WithinRel( chunk.columnMetadata().energies()[0] ) );
       CHECK_THAT( 2.  , WithinRel( chunk.columnMetadata().energies()[1] ) );
       CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[2] ) );
 
       CHECK( std::nullopt == chunk.varianceScaling() );
 
-      CHECK( true == chunk.isRelativeBlock() );
-      CHECK( false == chunk.isAbsoluteBlock() );
-      CHECK( true == chunk.isOffDiagonalBlock() );
-      CHECK( false == chunk.isDiagonalBlock() );
+      CHECK( true == chunk.isRelativeMatrix() );
+      CHECK( false == chunk.isAbsoluteMatrix() );
+      CHECK( true == chunk.isOffDiagonal() );
+      CHECK( false == chunk.isOnDiagonal() );
 
-      CHECK( std::nullopt != chunk.covariances() );
       CHECK( std::nullopt == chunk.standardDeviations() );
       CHECK( std::nullopt == chunk.correlations() );
+      CHECK( std::nullopt == chunk.eigenvalues() );
 
-      CHECK( 3 == chunk.covariances().value().rows() );
-      CHECK( 2 == chunk.covariances().value().cols() );
-      CHECK( 1. == chunk.covariances().value()(0,0) );
-      CHECK( 2. == chunk.covariances().value()(0,1) );
-      CHECK( 2. == chunk.covariances().value()(1,0) );
-      CHECK( 4. == chunk.covariances().value()(1,1) );
-      CHECK( 3. == chunk.covariances().value()(2,0) );
-      CHECK( 6. == chunk.covariances().value()(2,1) );
+      CHECK( 3 == chunk.covariances().rows() );
+      CHECK( 2 == chunk.covariances().cols() );
+      CHECK( 1. == chunk.covariances()(0,0) );
+      CHECK( 2. == chunk.covariances()(0,1) );
+      CHECK( 2. == chunk.covariances()(1,0) );
+      CHECK( 4. == chunk.covariances()(1,1) );
+      CHECK( 3. == chunk.covariances()(2,0) );
+      CHECK( 6. == chunk.covariances()(2,1) );
     } // THEN
 
     chunk.calculateStandardDeviations();
@@ -346,137 +303,5 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
 
       CHECK( std::nullopt == chunk.eigenvalues() );
     } // THEN
-  } // GIVEN
-
-  GIVEN( "invalid data for a CrossSectionCovarianceMatrix" ) {
-
-    WHEN( "the matrix is not square for a diagonal covariance block" ) {
-
-      id::ParticleID projectile( "n" );
-      id::ParticleID target( "U235" );
-      id::ReactionID reaction( "n,U235->n,U235" );
-      std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
-
-      Matrix< double > matrix( 3, 2 );
-      matrix << 1., 2.,
-                3., 4.,
-                5., 6.;
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( projectile ),
-                                                   std::move( target ),
-                                                   std::move( reaction ),
-                                                   std::move( energies ),
-                                                   std::move( matrix ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the matrix is not symmetric for a diagonal covariance block" ) {
-
-      id::ParticleID projectile( "n" );
-      id::ParticleID target( "U235" );
-      id::ReactionID reaction( "n,U235->n,U235" );
-      std::vector< double > energies = { 1e-5, 1., 1e+6, 2e+7 };
-
-      Matrix< double > matrix( 3, 3 );
-      matrix << 1., 2., 3.,
-                2., 4., 6.,
-           100000., 6., 9.;
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( projectile ),
-                                                   std::move( target ),
-                                                   std::move( reaction ),
-                                                   std::move( energies ),
-                                                   std::move( matrix ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the matrix order is not consistent with the energy boundaries "
-          "for a diagonal covariance block" ) {
-
-      id::ParticleID projectile( "n" );
-      id::ParticleID target( "U235" );
-      id::ReactionID reaction( "n,U235->n,U235" );
-      std::vector< double > energies = { 1e-5, 1., 2e+7 };
-
-      Matrix< double > matrix( 3, 3 );
-      matrix << 1., 2., 3.,
-                2., 4., 5.,
-                3., 5., 6.;
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( projectile ),
-                                                   std::move( target ),
-                                                   std::move( reaction ),
-                                                   std::move( energies ),
-                                                   std::move( matrix ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the matrix order is not consistent with the energy boundaries "
-          "for an off-diagonal covariance block (rows)" ) {
-
-      id::ParticleID rowProjectile( "n" );
-      id::ParticleID rowTarget( "U235" );
-      id::ReactionID rowReaction( "n,U235->n,U235" );
-      std::vector< double > rowEnergies = { 1e-5, 1., 2e+7 };
-      id::ParticleID columnProjectile( "n" );
-      id::ParticleID columnTarget( "U238" );
-      id::ReactionID columnReaction( "n,U235->fission(t)" );
-      std::vector< double > columnEnergies = { 1e-5, 2., 2e+7 };
-
-      Matrix< double > matrix( 3, 2 );
-      matrix << 1., 2.,
-                3., 4.,
-                5., 6.;
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( rowProjectile ),
-                                                   std::move( rowTarget ),
-                                                   std::move( rowReaction ),
-                                                   std::move( rowEnergies ),
-                                                   std::move( columnProjectile ),
-                                                   std::move( columnTarget ),
-                                                   std::move( columnReaction ),
-                                                   std::move( columnEnergies ),
-                                                   std::move( matrix ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the matrix order is not consistent with the energy boundaries "
-          "for an off-diagonal covariance block (columns)" ) {
-
-      id::ParticleID rowProjectile( "n" );
-      id::ParticleID rowTarget( "U235" );
-      id::ReactionID rowReaction( "n,U235->n,U235" );
-      std::vector< double > rowEnergies = { 1e-5, 1., 1e+6, 2e+7 };
-      id::ParticleID columnProjectile( "n" );
-      id::ParticleID columnTarget( "U238" );
-      id::ReactionID columnReaction( "n,U235->fission(t)" );
-      std::vector< double > columnEnergies = { 1e-5, 2e+7 };
-
-      Matrix< double > matrix( 3, 2 );
-      matrix << 1., 2.,
-                3., 4.,
-                5., 6.;
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( rowProjectile ),
-                                                   std::move( rowTarget ),
-                                                   std::move( rowReaction ),
-                                                   std::move( rowEnergies ),
-                                                   std::move( columnProjectile ),
-                                                   std::move( columnTarget ),
-                                                   std::move( columnReaction ),
-                                                   std::move( columnEnergies ),
-                                                   std::move( matrix ) ) );
-      } // THEN
-    } // WHEN
   } // GIVEN
 } // SCENARIO

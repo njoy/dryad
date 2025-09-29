@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-//#include "dryad/covariance/VarianceScaling.hpp"
+#include "dryad/covariance/VarianceScaling.hpp"
 #include "dryad/covariance/CrossSectionMetadata.hpp"
 #include "dryad/covariance/base/CovarianceMatrix.hpp"
 
@@ -28,6 +28,7 @@ namespace covariance {
                                            id::ReactionID, id::EnergyGroup >;
 
     /* fields */
+    std::optional< VarianceScaling > scaling_;
 
     /* auxiliary functions */
 
@@ -39,27 +40,25 @@ namespace covariance {
 
     /* methods */
 
-//    /**
-//     *  @brief Return the variance scaling information
-//     *
-//     *  If this type of information is given, it will be for an on-diagonal
-//     *  covariance block.
-//     */
-//    const std::optional< VarianceScaling >& varianceScaling() const {
-//
-//      return this->scaling_;
-//    }
-//
-//    /**
-//     *  @brief Return whether or not the covariance block has variance scaling
-//     *         information
-//     */
-//    bool hasVarianceScaling() const {
-//
-//      return this->scaling_.has_value();
-//    }
+    /**
+     *  @brief Return the variance scaling information
+     *
+     *  If this type of information is given, it will be for an on-diagonal
+     *  covariance block.
+     */
+    const std::optional< VarianceScaling >& varianceScaling() const {
 
-    /* methods */
+      return this->scaling_;
+    }
+
+    /**
+     *  @brief Return whether or not the covariance block has variance scaling
+     *         information
+     */
+    bool hasVarianceScaling() const {
+
+      return this->scaling_.has_value();
+    }
 
     using Parent::rowMetadata;
     using Parent::columnMetadata;
@@ -75,14 +74,14 @@ namespace covariance {
     using Parent::calculateCorrelations;
     using Parent::calculateEigenvalues;
 
-//    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
+    #include "dryad/covariance/CrossSectionCovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ProductMultiplicityCovarianceMatrix& right ) const {
+    bool operator==( const CrossSectionCovarianceMatrix& right ) const {
 
       return Parent::operator==( right );
     }
@@ -92,7 +91,7 @@ namespace covariance {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ProductMultiplicityCovarianceMatrix& right ) const {
+    bool operator!=( const CrossSectionCovarianceMatrix& right ) const {
 
       return ! this->operator==( right );
     }
