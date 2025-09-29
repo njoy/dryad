@@ -90,7 +90,7 @@ CovarianceMatrix( Metadata rowMetadata,
  *  @param[in] columnKeys         the column keys
  *  @param[in] rowDeviations      the standard deviations to be applied to each row
  *  @param[in] columnDeviations   the standard deviations to be applied to each column
- *  @param[in] correlations       the covariance matrix
+ *  @param[in] correlations       the correlation matrix
  *  @param[in] relative           the relative covariance flag
  */
 CovarianceMatrix( Metadata rowMetadata,

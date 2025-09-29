@@ -5,6 +5,7 @@ import unittest
 
 # local imports
 import numpy
+from dryad.covariance import ProductMultiplicityMetadata
 from dryad.covariance import ProductMultiplicityCovarianceMatrix
 from dryad.id import ParticleID
 from dryad.id import ReactionID
@@ -17,10 +18,10 @@ class Test_codex_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
 
         # valid covariance data for product multiplicities
         chunk = ProductMultiplicityCovarianceMatrix(
-                    reaction = ReactionID( 'n,U235->fission' ),
-                    energies = [ 1e-5, 1e+6, 2e+7 ],
-                    products = [ ParticleID( 'Y99' ), ParticleID( 'Mo99' ),
-                                 ParticleID( 'Pr148' ), ParticleID( 'Pr148_e1' ) ],
+                    metadata = ProductMultiplicityMetadata( [ ReactionID( 'n,U235->fission' ) ],
+                                                            [ 1e-5, 1e+6, 2e+7 ],
+                                                            [ ParticleID( 'Y99' ), ParticleID( 'Mo99' ),
+                                                              ParticleID( 'Pr148' ), ParticleID( 'Pr148_e1' ) ] ),
                     covariances = numpy.array( [ [  3.350497e-07,  3.086034e-07,  1.031271e-06, -3.468670e-10, 1.186658e-07,  1.953402e-07,  8.550732e-08, -1.352565e-09 ],
                                                  [  3.086034e-07,  1.390798e-06,  7.070720e-07,  8.186300e-10, -2.261425e-08,  4.553737e-07, -3.459165e-07, -9.048060e-10 ],
                                                  [  1.031271e-06,  7.070720e-07,  4.132664e-06, -4.264964e-09, 9.952311e-07,  1.147504e-06,  3.036135e-06, -2.642949e-09 ],
@@ -206,10 +207,10 @@ class Test_codex_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
 
         # valid correlation data for product multiplicities
         chunk = ProductMultiplicityCovarianceMatrix(
-                    reaction = ReactionID( 'n,U235->fission' ),
-                    energies = [ 1e-5, 1e+6, 2e+7 ],
-                    products = [ ParticleID( 'Y99' ), ParticleID( 'Mo99' ),
-                                 ParticleID( 'Pr148' ), ParticleID( 'Pr148_e1' ) ],
+                    metadata = ProductMultiplicityMetadata( [ ReactionID( 'n,U235->fission' ) ],
+                                                            [ 1e-5, 1e+6, 2e+7 ],
+                                                            [ ParticleID( 'Y99' ), ParticleID( 'Mo99' ),
+                                                              ParticleID( 'Pr148' ), ParticleID( 'Pr148_e1' ) ] ),
                     deviations = [ 5.78834777807968e-04, 1.17932099107919e-03,
                                    2.03289547198079e-03, 1.93069935515605e-05,
                                    5.28473935024236e-04, 9.67719122473045e-04,
@@ -407,10 +408,10 @@ class Test_codex_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
 
         # valid covariance data for product multiplicities
         chunk = ProductMultiplicityCovarianceMatrix(
-                    reaction = ReactionID( 'n,U235->fission' ),
-                    energies = [ 1e-5, 1e+6, 2e+7 ],
-                    products = [ ParticleID( 'Y99' ), ParticleID( 'Mo99' ),
-                                 ParticleID( 'Pr148' ), ParticleID( 'Pr148_e1' ) ],
+                    metadata = ProductMultiplicityMetadata( [ ReactionID( 'n,U235->fission' ) ],
+                                                            [ 1e-5, 1e+6, 2e+7 ],
+                                                            [ ParticleID( 'Y99' ), ParticleID( 'Mo99' ),
+                                                              ParticleID( 'Pr148' ), ParticleID( 'Pr148_e1' ) ] ),
                     covariances = numpy.array( [ [  3.350497e-07,  3.086034e-07,  1.031271e-06, -3.468670e-10, 1.186658e-07,  1.953402e-07,  8.550732e-08, -1.352565e-09 ],
                                                  [  3.086034e-07,  1.390798e-06,  7.070720e-07,  8.186300e-10, -2.261425e-08,  4.553737e-07, -3.459165e-07, -9.048060e-10 ],
                                                  [  1.031271e-06,  7.070720e-07,  4.132664e-06, -4.264964e-09, 9.952311e-07,  1.147504e-06,  3.036135e-06, -2.642949e-09 ],

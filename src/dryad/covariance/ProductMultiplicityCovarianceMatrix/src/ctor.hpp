@@ -17,89 +17,63 @@ ProductMultiplicityCovarianceMatrix& operator=( const ProductMultiplicityCovaria
 ProductMultiplicityCovarianceMatrix& operator=( ProductMultiplicityCovarianceMatrix&& ) = default;
 
 /**
- *  @brief Constructor for full product multiplicity covariance data
+ *  @brief Constructor for an on-diagonal product multiplicity covariance matrix
  *
- *  @param[in] reaction      the reaction identifier
- *  @param[in] energies      the group structure
- *  @param[in] products      the product identifiers
+ *  @param[in] metadata      the row and column metadata
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag (default is true)
  */
-ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
-                                     std::vector< double > energies,
-                                     std::vector< id::ParticleID > products,
+ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata metadata,
                                      Matrix< double > covariances,
                                      bool relative = true ) :
-    Parent( ProductMultiplicityMetadata( { reaction }, std::move( energies ), std::move( products ) ),
-            std::move( covariances ),
-            relative ) {}
+  Parent( std::move( metadata ), std::move( covariances ), relative ) {}
 
 /**
- *  @brief Constructor for full product multiplicity correlation data
+ *  @brief Constructor for an off-diagonal product multiplicity covariance matrix
  *
- *  @param[in] reaction       the reaction identifier
- *  @param[in] energies       the group structure
- *  @param[in] products       the product identifiers
+ *  @param[in] rowMetadata      the row metadata
+ *  @param[in] columnMetadata   the column metadata
+ *  @param[in] covariances      the covariance matrix
+ *  @param[in] relative         the relative covariance flag (default is true)
+ */
+ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata rowMetadata,
+                                     ProductMultiplicityMetadata columnMetadata,
+                                     Matrix< double > covariances,
+                                     bool relative = true ) :
+  Parent( std::move( rowMetadata ), std::move( columnMetadata ),
+          std::move( covariances ), relative ) {}
+
+/**
+ *  @brief Constructor for an on-diagonal product multiplicity correlation matrix
+ *
+ *  @param[in] metadata       the row and column metadata
  *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
  *  @param[in] relative       the relative covariance flag (default is true)
  */
-ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
-                                     std::vector< double > energies,
-                                     std::vector< id::ParticleID > products,
+ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata metadata,
                                      std::vector< double > deviations,
                                      Matrix< double > correlations,
                                      bool relative = true ) :
-    Parent( ProductMultiplicityMetadata( { reaction }, std::move( energies ), std::move( products ) ),
-            std::move( deviations ),
-            std::move( correlations ),
-            relative ) {}
+  Parent( std::move( metadata ), std::move( deviations ),
+          std::move( correlations ), relative ) {}
 
 /**
- *  @brief Constructor for product multiplicity covariance data for a
- *         single energy group
+ *  @brief Constructor for an off-diagonal product multiplicity correlation matrix
  *
- *  @param[in] reaction      the reaction identifier
- *  @param[in] lower         the lower energy value of the energy group
- *  @param[in] upper         the upper energy value of the energy group
- *  @param[in] products      the product identifiers
- *  @param[in] covariances   the covariance matrix
- *  @param[in] relative      the relative covariance flag
+ *  @param[in] rowMetadata        the row metadata
+ *  @param[in] columnMetadata     the column metadata
+ *  @param[in] rowDeviations      the standard deviations to be applied to each row
+ *  @param[in] columnDeviations   the standard deviations to be applied to each column
+ *  @param[in] correlations       the correlation matrix
+ *  @param[in] relative           the relative covariance flag (default is true)
  */
-ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
-                                     double lower,
-                                     double upper,
-                                     std::vector< id::ParticleID > products,
-                                     Matrix< double > covariances,
-                                     bool relative = true ) :
-    ProductMultiplicityCovarianceMatrix( std::move( reaction ),
-                                         { lower, upper },
-                                         std::move( products ),
-                                         std::move( covariances ),
-                                         relative ) {}
-
-/**
- *  @brief Constructor for product multiplicity correlation data for a
- *         single energy group
- *
- *  @param[in] reaction       the reaction identifier
- *  @param[in] lower          the lower energy value of the energy group
- *  @param[in] upper          the upper energy value of the energy group
- *  @param[in] products       the product identifiers
- *  @param[in] deviations     the standard deviations
- *  @param[in] correlations   the correlation matrix
- *  @param[in] relative       the relative covariance flag
- */
-ProductMultiplicityCovarianceMatrix( id::ReactionID reaction,
-                                     double lower,
-                                     double upper,
-                                     std::vector< id::ParticleID > products,
-                                     std::vector< double > deviations,
+ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata rowMetadata,
+                                     ProductMultiplicityMetadata columnMetadata,
+                                     const std::vector< double >& rowDeviations,
+                                     const std::vector< double >& columnDeviations,
                                      Matrix< double > correlations,
                                      bool relative = true ) :
-    ProductMultiplicityCovarianceMatrix( std::move( reaction ),
-                                         { lower, upper },
-                                         std::move( products ),
-                                         std::move( deviations ),
-                                         std::move( correlations ),
-                                         relative ) {}
+  Parent( std::move( rowMetadata ), std::move( columnMetadata ),
+          rowDeviations, columnDeviations,
+          std::move( correlations ), relative ) {}

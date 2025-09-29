@@ -11,31 +11,53 @@ class ProductMultiplicityCovarianceMatrix:
     A covariance matrix for product multiplicities
     """
     @typing.overload
-    def __init__(self, reaction: dryad.id.ReactionID, energies: list[float], products: list[dryad.id.ParticleID], covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, metadata: ProductMultiplicityMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
-        Initialise full product multiplicity covariance data
+        Initialise an on-diagonal product multiplicity covariance matrix
         
         Arguments:
             self          the covariance matrix
-            reaction      the reaction identifier
-            energies      the group structure
-            products      the product identifiers
+            metadata      the row and column metadata
             covariances   the covariance matrix
             relative      the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, reaction: dryad.id.ReactionID, energies: list[float], products: list[dryad.id.ParticleID], deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, row_metadata: ProductMultiplicityMetadata, column_metadata: ProductMultiplicityMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
-        Initialise full product multiplicity covariance data
+        Initialise an off-diagonal product multiplicity covariance matrix
         
         Arguments:
-            self          the covariance matrix
-            reaction       the reaction identifier
-            energies       the group structure
-            products       the product identifiers
+            self             the covariance matrix
+            rowMetadata      the row metadata
+            columnMetadata   the column metadata
+            covariances      the covariance matrix
+            relative         the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, metadata: ProductMultiplicityMetadata, deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise an on-diagonal product multiplicity correlation matrix
+        
+        Arguments:
+            self           the covariance matrix
+            metadata       the row and column metadata
             deviations     the standard deviations
             correlations   the correlation matrix
             relative       the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, row_metadata: ProductMultiplicityMetadata, column_metadata: ProductMultiplicityMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise an on-diagonal product multiplicity correlation matrix
+        
+        Arguments:
+            self               the covariance matrix
+            rowMetadata        the row metadata
+            columnMetadata     the column metadata
+            rowDeviations      the standard deviations to be applied to each row
+            columnDeviations   the standard deviations to be applied to each column
+            correlations       the correlation matrix
+            relative           the relative covariance flag (default is true)
         """
     @typing.overload
     def __init__(self, instance: ProductMultiplicityCovarianceMatrix) -> None:
