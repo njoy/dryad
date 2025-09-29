@@ -21,8 +21,8 @@ namespace endf {
 namespace covariance {
 
   /**
-   *  @brief Create a cross section covariance block from an ENDF ReactionBlock
-   *         that defines an on-diagonal covariance block
+   *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
+   *         that defines an on-diagonal covariance matrix
    */
   dryad::covariance::CrossSectionCovarianceMatrix
   createCrossSectionCovarianceMatrix(
@@ -128,8 +128,8 @@ namespace covariance {
   }
 
   /**
-   *  @brief Create a cross section covariance block from an ENDF ReactionBlock
-   *         that defines an off-diagonal covariance block
+   *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
+   *         that defines an off-diagonal covariance matrix (a cross term)
    */
   dryad::covariance::CrossSectionCovarianceMatrix
   createCrossSectionCovarianceMatrix(
@@ -199,7 +199,7 @@ namespace covariance {
         case 9: {
 
           Log::error( "Off-diagonal ENDF reaction covariance blocks cannot have "
-                      "variance scaling component." );
+                      "a variance scaling component." );
           throw std::exception();
         }
         case 5: {
