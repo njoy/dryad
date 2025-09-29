@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_COVARIANCE_PRODUCTMULTIPLICITYCOVARIANCEMATRIX
 
 // system includes
+#include <optional>
 #include <vector>
 
 // other includes
@@ -9,6 +10,7 @@
 #include "dryad/id/EnergyGroup.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/id/ReactionID.hpp"
+#include "dryad/covariance/ProductMultiplicityMetadata.hpp"
 #include "dryad/covariance/base/CovarianceMatrix.hpp"
 
 namespace njoy {
@@ -20,22 +22,17 @@ namespace covariance {
    *  @brief A covariance matrix for product multiplicities
    */
   class ProductMultiplicityCovarianceMatrix :
-    protected base::CovarianceMatrix< id::ReactionID, id::EnergyGroup, id::ParticleID > {
+    protected base::CovarianceMatrix< ProductMultiplicityMetadata,
+                                      id::ReactionID, id::EnergyGroup, id::ParticleID > {
 
     /* type aliases */
 
-    using Parent = base::CovarianceMatrix< id::ReactionID, id::EnergyGroup, id::ParticleID >;
-    using Key = Parent::Key;
+    using Parent = base::CovarianceMatrix< ProductMultiplicityMetadata,
+                                           id::ReactionID, id::EnergyGroup, id::ParticleID >;
 
     /* fields */
-    id::ReactionID reaction_;
-    std::vector< double > energies_;
-    std::vector< id::ParticleID > products_;
 
     /* auxiliary functions */
-
-    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateKeys.hpp"
-    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/generateMetadata.hpp"
 
   public:
 
@@ -45,32 +42,8 @@ namespace covariance {
 
     /* methods */
 
-    /**
-     *  @brief Return the reaction identifier
-     */
-    const id::ReactionID& reactionIdentifier() const {
-
-      return this->reaction_;
-    }
-
-    /**
-     *  @brief Return the energy group boundaries
-     */
-    const std::vector< double >& energies() const {
-
-      return this->energies_;
-    }
-
-    /**
-     *  @brief Return the reaction product identifiers
-     */
-    const std::vector< id::ParticleID >& productIdentifiers() const {
-
-      return this->products_;
-    }
-
-    using Parent::rowKeys;
-    using Parent::columnKeys;
+    using Parent::rowMetadata;
+    using Parent::columnMetadata;
     using Parent::isRelativeMatrix;
     using Parent::isAbsoluteMatrix;
     using Parent::isOnDiagonal;

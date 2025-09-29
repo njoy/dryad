@@ -8,6 +8,7 @@ using Catch::Matchers::WithinAbs;
 #include "dryad/covariance/base/CovarianceMatrix.hpp"
 
 // other includes
+#include "dryad/covariance/base/Metadata.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;
@@ -16,28 +17,30 @@ SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "valid covariance data for a 1D covariance matrix" ) {
 
-    using CovarianceMatrix = base::CovarianceMatrix< int >;
-    using Key = base::CovarianceMatrix< int >::Key;
+    using Key = std::tuple< int >;
+    using Metadata = base::Metadata< int >;
+    using CovarianceMatrix = base::CovarianceMatrix< Metadata, int >;
 
     WHEN( "using covariance data for an on-diagonal matrix" ) {
 
-      std::vector< Key > keys{ Key{ 0 }, Key{ 1 }, Key{ 2 } };
+      Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
       Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
                 2., 4., 6.,
                 3., 6., 9.;
 
-      CovarianceMatrix chunk( std::move( keys ), std::move( matrix ) );
+      CovarianceMatrix chunk( std::move( metadata ),
+                              std::move( matrix ) );
 
       THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-        CHECK( 3 == chunk.rowKeys().size() );
-        CHECK( 3 == chunk.columnKeys().size() );
-        CHECK( chunk.rowKeys() == chunk.columnKeys() );
-        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
-        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
-        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
+        CHECK( 3 == chunk.rowMetadata().keys().size() );
+        CHECK( 3 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
+        CHECK( std::tuple{ 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowMetadata().keys()[2] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -107,7 +110,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
     WHEN( "using correlation data for an on-diagonal matrix" ) {
 
-      std::vector< Key > keys{ Key{ 0 }, Key{ 1 }, Key{ 2 } };
+      Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
       std::vector< double > deviations{ 1, 2, 3 };
       Matrix< double > matrix( 3, 3 );
@@ -115,17 +118,18 @@ SCENARIO( "CovarianceMatrix" ) {
                 1., 1., 1.,
                 1., 1., 1.;
 
-      CovarianceMatrix chunk( std::move( keys ), std::move( deviations ),
+      CovarianceMatrix chunk( std::move( metadata ),
+                              std::move( deviations ),
                               std::move( matrix ) );
 
       THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-        CHECK( 3 == chunk.rowKeys().size() );
-        CHECK( 3 == chunk.columnKeys().size() );
-        CHECK( chunk.rowKeys() == chunk.columnKeys() );
-        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
-        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
-        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
+        CHECK( 3 == chunk.rowMetadata().keys().size() );
+        CHECK( 3 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
+        CHECK( std::tuple{ 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowMetadata().keys()[2] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -181,28 +185,29 @@ SCENARIO( "CovarianceMatrix" ) {
 
     WHEN( "using covariance data for an off-diagonal matrix" ) {
 
-      std::vector< Key > rows{ Key{ 0 }, Key{ 1 }, Key{ 2 } };
-      std::vector< Key > columns{ Key{ 3 }, Key{ 4 } };
+      Metadata rowMetadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
+      Metadata columnMetadata( { Key{ 3 }, Key{ 4 } } );
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
                 2., 4.,
                 3., 6.;
 
-      CovarianceMatrix chunk( std::move( rows ),
-                              std::move( columns ),
+      CovarianceMatrix chunk( std::move( rowMetadata ),
+                              std::move( columnMetadata ),
                               std::move( matrix ) );
 
       THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-        CHECK( 3 == chunk.rowKeys().size() );
-        CHECK( 2 == chunk.columnKeys().size() );
-        CHECK( chunk.rowKeys() != chunk.columnKeys() );
-        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
-        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
-        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
-        CHECK( std::tuple{ 3 } == chunk.columnKeys()[0] );
-        CHECK( std::tuple{ 4 } == chunk.columnKeys()[1] );
+
+        CHECK( 3 == chunk.rowMetadata().keys().size() );
+        CHECK( 2 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() != chunk.columnMetadata() );
+        CHECK( std::tuple{ 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowMetadata().keys()[2] );
+        CHECK( std::tuple{ 3 } == chunk.columnMetadata().keys()[0] );
+        CHECK( std::tuple{ 4 } == chunk.columnMetadata().keys()[1] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -258,8 +263,8 @@ SCENARIO( "CovarianceMatrix" ) {
 
     WHEN( "using correlation data for an off-diagonal matrix" ) {
 
-      std::vector< Key > rows{ Key{ 0 }, Key{ 1 }, Key{ 2 } };
-      std::vector< Key > columns{ Key{ 3 }, Key{ 4 } };
+      Metadata rowMetadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
+      Metadata columnMetadata( { Key{ 3 }, Key{ 4 } } );
 
       std::vector< double > rowDeviations = { 1., 2., 3. };
       std::vector< double > columnDeviations = { 1., 2. };
@@ -269,22 +274,22 @@ SCENARIO( "CovarianceMatrix" ) {
                 1., 1.,
                 1., 1.;
 
-      CovarianceMatrix chunk( std::move( rows ),
-                              std::move( columns ),
+      CovarianceMatrix chunk( std::move( rowMetadata ),
+                              std::move( columnMetadata ),
                               rowDeviations,
                               columnDeviations,
                               std::move( matrix ) );
 
       THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-        CHECK( 3 == chunk.rowKeys().size() );
-        CHECK( 2 == chunk.columnKeys().size() );
-        CHECK( chunk.rowKeys() != chunk.columnKeys() );
-        CHECK( std::tuple{ 0 } == chunk.rowKeys()[0] );
-        CHECK( std::tuple{ 1 } == chunk.rowKeys()[1] );
-        CHECK( std::tuple{ 2 } == chunk.rowKeys()[2] );
-        CHECK( std::tuple{ 3 } == chunk.columnKeys()[0] );
-        CHECK( std::tuple{ 4 } == chunk.columnKeys()[1] );
+        CHECK( 3 == chunk.rowMetadata().keys().size() );
+        CHECK( 2 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() != chunk.columnMetadata() );
+        CHECK( std::tuple{ 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowMetadata().keys()[2] );
+        CHECK( std::tuple{ 3 } == chunk.columnMetadata().keys()[0] );
+        CHECK( std::tuple{ 4 } == chunk.columnMetadata().keys()[1] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -332,13 +337,14 @@ SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "valid covariance data for a higher dimensional covariance matrix" ) {
 
-    using CovarianceMatrix = base::CovarianceMatrix< int, int >;
-    using Key = base::CovarianceMatrix< int, int >::Key;
+    using Key = std::tuple< int, int >;
+    using Metadata = base::Metadata< int, int >;
+    using CovarianceMatrix = base::CovarianceMatrix< Metadata, int, int >;
 
     WHEN( "using covariance data for an on-diagonal matrix" ) {
 
-      std::vector< Key > keys{ Key{ 0, 0 }, Key{ 0, 1 }, Key{ 0, 2 },
-                               Key{ 1, 0 }, Key{ 1, 1 }, Key{ 1, 2 } };
+      Metadata metadata( { Key{ 0, 0 }, Key{ 0, 1 }, Key{ 0, 2 },
+                           Key{ 1, 0 }, Key{ 1, 1 }, Key{ 1, 2 } } );
 
       Matrix< double > matrix( 6, 6 );
       matrix <<  1.,  2.,  3.,    4.,  5.,  6.,
@@ -349,19 +355,20 @@ SCENARIO( "CovarianceMatrix" ) {
                  5., 10., 15.,   20., 25., 30.,
                  6., 12., 18.,   24., 30., 36.;
 
-      CovarianceMatrix chunk( std::move( keys ), std::move( matrix ) );
+      CovarianceMatrix chunk( std::move( metadata ),
+                              std::move( matrix ) );
 
       THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-        CHECK( 6 == chunk.rowKeys().size() );
-        CHECK( 6 == chunk.columnKeys().size() );
-        CHECK( chunk.rowKeys() == chunk.columnKeys() );
-        CHECK( std::tuple{ 0, 0 } == chunk.rowKeys()[0] );
-        CHECK( std::tuple{ 0, 1 } == chunk.rowKeys()[1] );
-        CHECK( std::tuple{ 0, 2 } == chunk.rowKeys()[2] );
-        CHECK( std::tuple{ 1, 0 } == chunk.rowKeys()[3] );
-        CHECK( std::tuple{ 1, 1 } == chunk.rowKeys()[4] );
-        CHECK( std::tuple{ 1, 2 } == chunk.rowKeys()[5] );
+        CHECK( 6 == chunk.rowMetadata().keys().size() );
+        CHECK( 6 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
+        CHECK( std::tuple{ 0, 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 0, 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 0, 2 } == chunk.rowMetadata().keys()[2] );
+        CHECK( std::tuple{ 1, 0 } == chunk.rowMetadata().keys()[3] );
+        CHECK( std::tuple{ 1, 1 } == chunk.rowMetadata().keys()[4] );
+        CHECK( std::tuple{ 1, 2 } == chunk.rowMetadata().keys()[5] );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -492,12 +499,12 @@ SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "a valid covariance matrix" ) {
 
-    using CovarianceMatrix = base::CovarianceMatrix< int, int >;
-    using Key = base::CovarianceMatrix< int, int >::Key;
-    using Selection = base::CovarianceMatrix< int, int >::Selection;
+    using Key = std::tuple< int, int >;
+    using Metadata = base::Metadata< int, int >;
+    using CovarianceMatrix = base::CovarianceMatrix< Metadata, int, int >;
 
-    std::vector< Key > keys{ Key{ 0, 0 }, Key{ 0, 1 }, Key{ 0, 2 },
-                             Key{ 1, 0 }, Key{ 1, 1 }, Key{ 1, 2 } };
+    Metadata metadata( { Key{ 0, 0 }, Key{ 0, 1 }, Key{ 0, 2 },
+                         Key{ 1, 0 }, Key{ 1, 1 }, Key{ 1, 2 } } );
 
     Matrix< double > matrix( 6, 6 );
     matrix <<  1.,  2.,  3.,    4.,  5.,  6.,
@@ -510,7 +517,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
     bool relative = false;
 
-    CovarianceMatrix chunk( std::move( keys ), std::move( matrix ), relative );
+    CovarianceMatrix chunk( std::move( metadata ), std::move( matrix ), relative );
 
     WHEN( "extract row arguments - extracting on the first dimension" ) {
 
@@ -518,11 +525,11 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-        CHECK( 2 == submatrix.rowKeys().size() );
-        CHECK( 2 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
-        CHECK( std::tuple{ 0, 0 } == submatrix.rowKeys()[0] );
-        CHECK( std::tuple{ 1, 0 } == submatrix.rowKeys()[1] );
+        CHECK( 2 == submatrix.rowMetadata().keys().size() );
+        CHECK( 2 == submatrix.columnMetadata().keys().size() );
+        CHECK( submatrix.rowMetadata() == submatrix.columnMetadata() );
+        CHECK( std::tuple{ 0, 0 } == submatrix.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1, 0 } == submatrix.rowMetadata().keys()[1] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
@@ -548,12 +555,12 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-        CHECK( 3 == submatrix.rowKeys().size() );
-        CHECK( 3 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
-        CHECK( std::tuple{ 0, 0 } == chunk.rowKeys()[0] );
-        CHECK( std::tuple{ 0, 1 } == chunk.rowKeys()[1] );
-        CHECK( std::tuple{ 0, 2 } == chunk.rowKeys()[2] );
+        CHECK( 3 == submatrix.rowMetadata().keys().size() );
+        CHECK( 3 == submatrix.columnMetadata().keys().size() );
+        CHECK( submatrix.rowMetadata() == submatrix.columnMetadata() );
+        CHECK( std::tuple{ 0, 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 0, 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 0, 2 } == chunk.rowMetadata().keys()[2] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
@@ -584,15 +591,15 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted and it is the same as the original matrix" ) {
 
-        CHECK( 6 == submatrix.rowKeys().size() );
-        CHECK( 6 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
-        CHECK( std::tuple{ 0, 0 } == submatrix.rowKeys()[0] );
-        CHECK( std::tuple{ 0, 1 } == submatrix.rowKeys()[1] );
-        CHECK( std::tuple{ 0, 2 } == submatrix.rowKeys()[2] );
-        CHECK( std::tuple{ 1, 0 } == submatrix.rowKeys()[3] );
-        CHECK( std::tuple{ 1, 1 } == submatrix.rowKeys()[4] );
-        CHECK( std::tuple{ 1, 2 } == submatrix.rowKeys()[5] );
+        CHECK( 6 == submatrix.rowMetadata().keys().size() );
+        CHECK( 6 == submatrix.columnMetadata().keys().size() );
+        CHECK( submatrix.rowMetadata() == submatrix.columnMetadata() );
+        CHECK( std::tuple{ 0, 0 } == submatrix.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 0, 1 } == submatrix.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 0, 2 } == submatrix.rowMetadata().keys()[2] );
+        CHECK( std::tuple{ 1, 0 } == submatrix.rowMetadata().keys()[3] );
+        CHECK( std::tuple{ 1, 1 } == submatrix.rowMetadata().keys()[4] );
+        CHECK( std::tuple{ 1, 2 } == submatrix.rowMetadata().keys()[5] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
@@ -651,15 +658,15 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-        CHECK( 3 == submatrix.rowKeys().size() );
-        CHECK( 3 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() != submatrix.columnKeys() );
-        CHECK( std::tuple{ 0, 0 } == submatrix.rowKeys()[0] );
-        CHECK( std::tuple{ 0, 1 } == submatrix.rowKeys()[1] );
-        CHECK( std::tuple{ 0, 2 } == submatrix.rowKeys()[2] );
-        CHECK( std::tuple{ 1, 0 } == submatrix.columnKeys()[0] );
-        CHECK( std::tuple{ 1, 1 } == submatrix.columnKeys()[1] );
-        CHECK( std::tuple{ 1, 2 } == submatrix.columnKeys()[2] );
+        CHECK( 3 == submatrix.rowMetadata().keys().size() );
+        CHECK( 3 == submatrix.columnMetadata().keys().size() );
+        CHECK( submatrix.rowMetadata() != submatrix.columnMetadata() );
+        CHECK( std::tuple{ 0, 0 } == submatrix.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 0, 1 } == submatrix.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 0, 2 } == submatrix.rowMetadata().keys()[2] );
+        CHECK( std::tuple{ 1, 0 } == submatrix.columnMetadata().keys()[0] );
+        CHECK( std::tuple{ 1, 1 } == submatrix.columnMetadata().keys()[1] );
+        CHECK( std::tuple{ 1, 2 } == submatrix.columnMetadata().keys()[2] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
@@ -687,12 +694,13 @@ SCENARIO( "CovarianceMatrix" ) {
 
   GIVEN( "invalid data for a CovarianceMatrix" ) {
 
-    using CovarianceMatrix = base::CovarianceMatrix< int >;
-    using Key = base::CovarianceMatrix< int >::Key;
+    using Key = std::tuple< int >;
+    using Metadata = base::Metadata< int >;
+    using CovarianceMatrix = base::CovarianceMatrix< Metadata, int >;
 
     WHEN( "the matrix is not square for a diagonal covariance block" ) {
 
-      std::vector< Key > keys{ 1, 2, 3 };
+      Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
@@ -701,13 +709,13 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
+        CHECK_THROWS( CovarianceMatrix( std::move( metadata ), std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the matrix is not symmetric for a diagonal covariance block" ) {
 
-      std::vector< Key > keys{ 1, 2, 3 };
+      Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
       Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
@@ -716,14 +724,14 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
+        CHECK_THROWS( CovarianceMatrix( std::move( metadata ), std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the matrix order is not consistent with the keys "
           "for a diagonal covariance block" ) {
 
-      std::vector< Key > keys{ 1, 2 };
+      Metadata metadata( { Key{ 0 }, Key{ 1 } } );
 
       Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
@@ -732,15 +740,15 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CovarianceMatrix( std::move( keys ), std::move( matrix ) ) );
+        CHECK_THROWS( CovarianceMatrix( std::move( metadata ), std::move( matrix ) ) );
       } // THEN
     } // WHEN
 
     WHEN( "the matrix order is not consistent with the keys "
           "for an off-diagonal covariance block (rows)" ) {
 
-      std::vector< Key > rows{ 1, 2 };
-      std::vector< Key > columns{ 3, 4 };
+      Metadata rows( { Key{ 0 }, Key{ 1 } } );
+      Metadata columns( { Key{ 3 }, Key{ 4 } } );
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
@@ -758,8 +766,8 @@ SCENARIO( "CovarianceMatrix" ) {
     WHEN( "the matrix order is not consistent with the keys "
           "for an off-diagonal covariance block (columns)" ) {
 
-      std::vector< Key > rows{ 1, 2, 3 };
-      std::vector< Key > columns{ 4 };
+      Metadata rows( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
+      Metadata columns( { Key{ 4 } } );
 
       Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,

@@ -18,23 +18,18 @@ namespace base {
    *  @class
    *  @brief A base class representing a covariance matrix
    */
-  template < typename... Ts >
+  template < typename Metadata, typename... Ts >
   class CovarianceMatrix {
 
-  public:
-
     /* type aliases */
-    using Metadata = std::tuple< std::vector< Ts >... >;
     using Key = std::tuple< Ts... >;
     using Selection = std::tuple< std::optional< Ts >... >;
 
   private:
 
-    /* fields - row and column keys */
+    /* fields - row and column metadata */
     Metadata row_metadata_;
-    std::vector< Key > row_;
     std::optional< Metadata > column_metadata_;
-    std::optional< std::vector< Key > > column_;
 
     /* fields - flag to indicate relative or absolute data */
     bool relative_;
@@ -67,29 +62,17 @@ namespace base {
     const Metadata& rowMetadata() const { return this->row_metadata_; }
 
     /**
-     *  @brief Return the row keys
-     */
-    const std::vector< Key >& rowKeys() const { return this->row_; }
-
-    /**
      *  @brief Return the column metadata
      */
-    const Metadata& columnMetadata() const { return this->column_metadata_; }
+    const Metadata& columnMetadata() const {
 
-    /**
-     *  @brief Return the column keys
-     *
-     *  This returns the row heys if the covariance matrix is on-diagonal
-     */
-    const std::vector< Key >& columnKeys() const {
+      if ( this->column_metadata_.has_value() ) {
 
-      if ( this->column_.has_value() ) {
-
-        return this->column_.value();
+        return this->column_metadata_.value();
       }
       else {
 
-        return this->row_;
+        return this->row_metadata_;
       }
     }
 
@@ -98,7 +81,7 @@ namespace base {
      */
     bool isOffDiagonal() const {
 
-      return this->column_.has_value();
+      return this->column_metadata_.has_value();
     }
 
     /**
@@ -170,8 +153,8 @@ namespace base {
      */
     bool operator==( const CovarianceMatrix& right ) const {
 
-      return this->rowKeys() == right.rowKeys() &&
-             this->columnKeys() == right.columnKeys() &&
+      return this->rowMetadata() == right.rowMetadata() &&
+             this->columnMetadata() == right.columnMetadata() &&
              this->covariances() == right.covariances();
     }
 

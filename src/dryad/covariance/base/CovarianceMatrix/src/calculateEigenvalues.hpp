@@ -13,7 +13,7 @@ void calculateEigenvalues() {
     Eigen::SelfAdjointEigenSolver< Matrix< double > > solver( this->covariances() );
 
     std::vector< double > eigenvalues;
-    eigenvalues.reserve( this->rowKeys().size() );
+    eigenvalues.reserve( this->rowMetadata().keys().size() );
 
     for ( const auto& value : solver.eigenvalues().reshaped() ) {
 

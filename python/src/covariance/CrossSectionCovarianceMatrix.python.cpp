@@ -4,22 +4,22 @@
 #include <pybind11/eigen.h>
 
 // local includes
-#include "dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
+#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace covariance {
 
-void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
+void wrapCrossSectionCovarianceMatrix( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
-  using ProductMultiplicityMetadata = njoy::dryad::covariance::ProductMultiplicityMetadata;
-  using ParticleID = njoy::dryad::id::ParticleID;
-  using EnergyGroup = njoy::dryad::id::EnergyGroup;
+  using Component = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
+  using CrossSectionMetadata = njoy::dryad::covariance::CrossSectionMetadata;
   using ReactionID = njoy::dryad::id::ReactionID;
+  using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using Matrix = njoy::dryad::covariance::Matrix< double >;
+  using VarianceScaling = njoy::dryad::covariance::VarianceScaling;
 
   // wrap views created by this component
 
@@ -27,34 +27,34 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "ProductMultiplicityCovarianceMatrix",
-    "A covariance matrix for product multiplicities"
+    "CrossSectionCovarianceMatrix",
+    "A cross section covariance matrix"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< ProductMultiplicityMetadata, Matrix, bool >(),
-    python::arg( "metadata" ), python::arg( "covariances" ),
+    python::init< CrossSectionMetadata, Matrix, bool,
+                  std::optional< VarianceScaling > >(),
+    python::arg( "metadata" ),
+    python::arg( "covariances" ),
     python::arg( "relative" ) = true,
-    "Initialise an on-diagonal product multiplicity covariance matrix\n\n"
+    python::arg( "scaling" ) = std::nullopt,
+    "Initialise an on-diagonal cross section covariance matrix\n\n"
     "Arguments:\n"
     "    self          the covariance matrix\n"
     "    metadata      the row and column metadata\n"
     "    covariances   the covariance matrix\n"
-    "    relative      the relative covariance flag (default is true)"
+    "    relative      the relative covariance flag (default is true)\n"
+    "    scaling       the variance scaling information (default is none)"
   )
   .def(
 
-    python::init< ProductMultiplicityMetadata,
-                  ProductMultiplicityMetadata,
-                  Matrix, bool >(),
-    python::arg( "row_metadata" ),
-    python::arg( "column_metadata" ),
-    python::arg( "covariances" ),
-    python::arg( "relative" ) = true,
-    "Initialise an off-diagonal product multiplicity covariance matrix\n\n"
+    python::init< CrossSectionMetadata, CrossSectionMetadata, Matrix, bool >(),
+    python::arg( "row_metadata" ), python::arg( "column_metadata" ),
+    python::arg( "covariances" ), python::arg( "relative" ) = true,
+    "Initialise an off-diagonal cross section covariance matrix\n\n"
     "Arguments:\n"
     "    self             the covariance matrix\n"
     "    rowMetadata      the row metadata\n"
@@ -64,29 +64,32 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   )
   .def(
 
-    python::init< ProductMultiplicityMetadata,
-                  std::vector< double >, Matrix, bool >(),
+    python::init< CrossSectionMetadata,
+                  std::vector< double >, Matrix, bool,
+                  std::optional< VarianceScaling > >(),
     python::arg( "metadata" ), python::arg( "deviations" ),
     python::arg( "correlations" ), python::arg( "relative" ) = true,
-    "Initialise an on-diagonal product multiplicity correlation matrix\n\n"
+    python::arg( "scaling" ) = std::nullopt,
+    "Initialise an on-diagonal cross section correlation matrix\n\n"
     "Arguments:\n"
     "    self           the covariance matrix\n"
     "    metadata       the row and column metadata\n"
     "    deviations     the standard deviations\n"
     "    correlations   the correlation matrix\n"
-    "    relative       the relative covariance flag (default is true)"
+    "    relative       the relative covariance flag (default is true)\n"
+    "    scaling       the variance scaling information (default is none)"
   )
   .def(
 
-    python::init< ProductMultiplicityMetadata,
-                  ProductMultiplicityMetadata,
+    python::init< CrossSectionMetadata,
+                  CrossSectionMetadata,
                   std::vector< double >,
                   std::vector< double >,
                   Matrix, bool >(),
     python::arg( "row_metadata" ), python::arg( "column_metadata" ),
     python::arg( "row_deviations" ), python::arg( "column_deviations" ),
     python::arg( "correlations" ), python::arg( "relative" ) = true,
-    "Initialise an on-diagonal product multiplicity correlation matrix\n\n"
+    "Initialise an on-diagonal cross section correlation matrix\n\n"
     "Arguments:\n"
     "    self               the covariance matrix\n"
     "    rowMetadata        the row metadata\n"
@@ -103,6 +106,20 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Initialise a copy\n\n"
     "Arguments:\n"
     "    instance    the instance to be copied\n"
+  )
+  .def_property_readonly(
+
+    "variance_scaling",
+    &Component::varianceScaling,
+    "The variance scaling information\n\n"
+    " If this type of information is given, it will be for an on-diagonal covariance block."
+  )
+  .def_property_readonly(
+
+    "has_variance_scaling",
+    &Component::hasVarianceScaling,
+    "Flag indicating whether or not the covariance block has variance scaling "
+    "information"
   )
   .def_property_readonly(
 
@@ -233,29 +250,23 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
 
     "extract",
     python::overload_cast< const std::optional< ReactionID >&,
-                           const std::optional< EnergyGroup >&,
-                           const std::optional< ParticleID >& >
+                           const std::optional< EnergyGroup >& >
     ( &Component::extract, python::const_ ),
     python::arg( "reaction" ),
-    python::arg( "group" ),
-    python::arg( "product" )
+    python::arg( "group" )
   )
   .def(
 
     "extract",
     python::overload_cast< const std::optional< ReactionID >&,
                            const std::optional< EnergyGroup >&,
-                           const std::optional< ParticleID >&,
                            const std::optional< ReactionID >&,
-                           const std::optional< EnergyGroup >&,
-                           const std::optional< ParticleID >& >
+                           const std::optional< EnergyGroup >& >
     ( &Component::extract, python::const_ ),
     python::arg( "row_reaction" ),
     python::arg( "row_group" ),
-    python::arg( "row_product" ),
     python::arg( "col_reaction" ),
-    python::arg( "col_group" ),
-    python::arg( "col_product" )
+    python::arg( "col_group" )
   );
 }
 

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEBLOCK
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEBLOCK
+#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECrossSectionCovarianceMatrix
+#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECrossSectionCovarianceMatrix
 
 // system includes
 
@@ -7,7 +7,7 @@
 #include "tools/Log.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/CrossSectionCovarianceBlock.hpp"
+#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 #include "dryad/format/gnds/readCovarianceMatrix.hpp"
 #include "dryad/format/gnds/covariance/createVarianceScaling.hpp"
 
@@ -20,8 +20,8 @@ namespace covariance {
   /**
    *  @brief Create a cross section covariance block from a GNDS covariance section
    */
-  dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock(
+  dryad::covariance::CrossSectionCovarianceMatrix
+  createCrossSectionCovarianceMatrix(
       const dryad::id::ParticleID& projectile,
       const dryad::id::ParticleID& target,
       const pugi::xml_node& covariance ) {
@@ -111,21 +111,21 @@ namespace covariance {
 
       if ( cross ) {
 
-        return dryad::covariance::CrossSectionCovarianceBlock(
-                 dryad::covariance::CrossSectionMetadata( projectile, target, rowReaction,
+        return dryad::covariance::CrossSectionCovarianceMatrix(
+                 dryad::covariance::CrossSectionMetadata( { rowReaction },
                                                           std::move( rowStructures.front() ) ),
-                 dryad::covariance::CrossSectionMetadata( projectile, target, columnReaction,
+                 dryad::covariance::CrossSectionMetadata( { columnReaction },
                                                           std::move( columnStructures.front() ) ),
                  std::move( matrices.front() ), relative );
       }
       else {
 
-        return dryad::covariance::CrossSectionCovarianceBlock(
-                 dryad::covariance::CrossSectionMetadata( projectile, target, rowReaction,
+        return dryad::covariance::CrossSectionCovarianceMatrix(
+                 dryad::covariance::CrossSectionMetadata( { rowReaction },
                                                           std::move( rowStructures.front() ) ),
                  std::move( matrices.front() ),
                  relative, std::move( scaling ) );
-}
+      }
     }
     else {
 

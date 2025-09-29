@@ -19,10 +19,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
     // matrix and test results provided by Amanda Lewis
 
-    id::ReactionID reaction( "n,U235->fission" );
-    std::vector< double > energies{ 1e-5, 1e+6, 2e+7 };
-    std::vector< id::ParticleID > products{ id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
-                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) };
+    ProductMultiplicityMetadata metadata( { id::ReactionID( "n,U235->fission" ) },
+                                          { 1e-5, 1e+6, 2e+7 },
+                                          { id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
+                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) } );
 
     Matrix< double > matrix( 8, 8 );
     matrix <<   3.350497e-07,  3.086034e-07,  1.031271e-06, -3.468670e-10, 1.186658e-07,  1.953402e-07,  8.550732e-08, -1.352565e-09,
@@ -34,42 +34,24 @@ SCENARIO( "CovarianceMatrix" ) {
                 8.550732e-08, -3.459165e-07,  3.036135e-06,  5.460586e-09, 4.742642e-07,  1.744701e-07,  4.887436e-06, -2.686310e-10,
                -1.352565e-09, -9.048060e-10, -2.642949e-09,  3.336860e-10, -1.127960e-09, -2.394143e-09, -2.686310e-10,  3.280511e-09;
 
-    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
-                                               std::move( products ), std::move( matrix ),
+    ProductMultiplicityCovarianceMatrix chunk( std::move( metadata ),
+                                               std::move( matrix ),
                                                false );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-      // test variables
-      id::EnergyGroup group1( 1e-5, 1e+6 );
-      id::EnergyGroup group2( 1e+6, 2e+7 );
-      id::ParticleID product1( "Y99" );
-      id::ParticleID product2( "Mo99" );
-      id::ParticleID product3( "Pr148" );
-      id::ParticleID product4( "Pr148_e1" );
-
-      CHECK( id::ReactionID( "n,U235->fission" ) == chunk.reactionIdentifier() );
-      CHECK( 3 == chunk.energies().size() );
-      CHECK( 1e-5 == chunk.energies()[0] );
-      CHECK( 1e+6 == chunk.energies()[1] );
-      CHECK( 2e+7 == chunk.energies()[2] );
-      CHECK( 4 == chunk.productIdentifiers().size() );
-      CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
-      CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
-      CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
-      CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
-
-      CHECK( 8 == chunk.rowKeys().size() );
-      CHECK( 8 == chunk.columnKeys().size() );
-      CHECK( chunk.rowKeys() == chunk.columnKeys() );
-      CHECK( std::tuple{ reaction, group1, product1 } == chunk.rowKeys()[0] );
-      CHECK( std::tuple{ reaction, group1, product2 } == chunk.rowKeys()[1] );
-      CHECK( std::tuple{ reaction, group1, product3 } == chunk.rowKeys()[2] );
-      CHECK( std::tuple{ reaction, group1, product4 } == chunk.rowKeys()[3] );
-      CHECK( std::tuple{ reaction, group2, product1 } == chunk.rowKeys()[4] );
-      CHECK( std::tuple{ reaction, group2, product2 } == chunk.rowKeys()[5] );
-      CHECK( std::tuple{ reaction, group2, product3 } == chunk.rowKeys()[6] );
-      CHECK( std::tuple{ reaction, group2, product4 } == chunk.rowKeys()[7] );
+      CHECK( 1 == chunk.rowMetadata().reactionIdentifiers().size() );
+      CHECK( id::ReactionID( "n,U235->fission" ) == chunk.rowMetadata().reactionIdentifiers()[0] );
+      CHECK( 3 == chunk.rowMetadata().energies().size() );
+      CHECK( 1e-5 == chunk.rowMetadata().energies()[0] );
+      CHECK( 1e+6 == chunk.rowMetadata().energies()[1] );
+      CHECK( 2e+7 == chunk.rowMetadata().energies()[2] );
+      CHECK( 4 == chunk.rowMetadata().productIdentifiers().size() );
+      CHECK( id::ParticleID( "Y99" ) == chunk.rowMetadata().productIdentifiers()[0] );
+      CHECK( id::ParticleID( "Mo99" ) == chunk.rowMetadata().productIdentifiers()[1] );
+      CHECK( id::ParticleID( "Pr148" ) == chunk.rowMetadata().productIdentifiers()[2] );
+      CHECK( id::ParticleID( "Pr148_e1" ) == chunk.rowMetadata().productIdentifiers()[3] );
+      CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
 
       CHECK( false == chunk.isRelativeMatrix() );
       CHECK( true == chunk.isAbsoluteMatrix() );
@@ -258,10 +240,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
     // matrix and test results provided by Amanda Lewis
 
-    id::ReactionID reaction( "n,U235->fission" );
-    std::vector< double > energies{ 1e-5, 1e+6, 2e+7 };
-    std::vector< id::ParticleID > products{ id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
-                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) };
+    ProductMultiplicityMetadata metadata( { id::ReactionID( "n,U235->fission" ) },
+                                          { 1e-5, 1e+6, 2e+7 },
+                                          { id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
+                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) } );
 
     std::vector< double > deviations = {  5.78834777807968e-04, 1.17932099107919e-03,
                                           2.03289547198079e-03, 1.93069935515605e-05,
@@ -285,8 +267,7 @@ SCENARIO( "CovarianceMatrix" ) {
               -4.07974274908842e-02, -1.33953076941197e-02, -2.26988045368907e-02,  3.01753686987760e-01,
               -3.72648500015370e-02, -4.31946555113209e-02, -2.12150880161591e-03,  1.00000000000000e+00;
 
-    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
-                                               std::move( products ), std::move( deviations ),
+    ProductMultiplicityCovarianceMatrix chunk( std::move( metadata ), std::move( deviations ),
                                                std::move( matrix ), false );
 
     THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
@@ -299,28 +280,18 @@ SCENARIO( "CovarianceMatrix" ) {
       id::ParticleID product3( "Pr148" );
       id::ParticleID product4( "Pr148_e1" );
 
-      CHECK( id::ReactionID( "n,U235->fission" ) == chunk.reactionIdentifier() );
-      CHECK( 3 == chunk.energies().size() );
-      CHECK( 1e-5 == chunk.energies()[0] );
-      CHECK( 1e+6 == chunk.energies()[1] );
-      CHECK( 2e+7 == chunk.energies()[2] );
-      CHECK( 4 == chunk.productIdentifiers().size() );
-      CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
-      CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
-      CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
-      CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
-
-      CHECK( 8 == chunk.rowKeys().size() );
-      CHECK( 8 == chunk.columnKeys().size() );
-      CHECK( chunk.rowKeys() == chunk.columnKeys() );
-      CHECK( std::tuple{ reaction, group1, product1 } == chunk.rowKeys()[0] );
-      CHECK( std::tuple{ reaction, group1, product2 } == chunk.rowKeys()[1] );
-      CHECK( std::tuple{ reaction, group1, product3 } == chunk.rowKeys()[2] );
-      CHECK( std::tuple{ reaction, group1, product4 } == chunk.rowKeys()[3] );
-      CHECK( std::tuple{ reaction, group2, product1 } == chunk.rowKeys()[4] );
-      CHECK( std::tuple{ reaction, group2, product2 } == chunk.rowKeys()[5] );
-      CHECK( std::tuple{ reaction, group2, product3 } == chunk.rowKeys()[6] );
-      CHECK( std::tuple{ reaction, group2, product4 } == chunk.rowKeys()[7] );
+      CHECK( 1 == chunk.rowMetadata().reactionIdentifiers().size() );
+      CHECK( id::ReactionID( "n,U235->fission" ) == chunk.rowMetadata().reactionIdentifiers()[0] );
+      CHECK( 3 == chunk.rowMetadata().energies().size() );
+      CHECK( 1e-5 == chunk.rowMetadata().energies()[0] );
+      CHECK( 1e+6 == chunk.rowMetadata().energies()[1] );
+      CHECK( 2e+7 == chunk.rowMetadata().energies()[2] );
+      CHECK( 4 == chunk.rowMetadata().productIdentifiers().size() );
+      CHECK( id::ParticleID( "Y99" ) == chunk.rowMetadata().productIdentifiers()[0] );
+      CHECK( id::ParticleID( "Mo99" ) == chunk.rowMetadata().productIdentifiers()[1] );
+      CHECK( id::ParticleID( "Pr148" ) == chunk.rowMetadata().productIdentifiers()[2] );
+      CHECK( id::ParticleID( "Pr148_e1" ) == chunk.rowMetadata().productIdentifiers()[3] );
+      CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
 
       CHECK( false == chunk.isRelativeMatrix() );
       CHECK( true == chunk.isAbsoluteMatrix() );
@@ -499,10 +470,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
     // matrix and test results provided by Amanda Lewis
 
-    id::ReactionID reaction( "n,U235->fission" );
-    std::vector< double > energies{ 1e-5, 1e+6, 2e+7 };
-    std::vector< id::ParticleID > products{ id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
-                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) };
+    ProductMultiplicityMetadata metadata( { id::ReactionID( "n,U235->fission" ) },
+                                          { 1e-5, 1e+6, 2e+7 },
+                                          { id::ParticleID( "Y99" ), id::ParticleID( "Mo99" ),
+                                            id::ParticleID( "Pr148" ), id::ParticleID( "Pr148_e1" ) } );
 
     Matrix< double > matrix( 8, 8 );
     matrix <<   3.350497e-07,  3.086034e-07,  1.031271e-06, -3.468670e-10, 1.186658e-07,  1.953402e-07,  8.550732e-08, -1.352565e-09,
@@ -514,11 +485,12 @@ SCENARIO( "CovarianceMatrix" ) {
                 8.550732e-08, -3.459165e-07,  3.036135e-06,  5.460586e-09, 4.742642e-07,  1.744701e-07,  4.887436e-06, -2.686310e-10,
                -1.352565e-09, -9.048060e-10, -2.642949e-09,  3.336860e-10, -1.127960e-09, -2.394143e-09, -2.686310e-10,  3.280511e-09;
 
-    ProductMultiplicityCovarianceMatrix chunk( reaction, std::move( energies ),
-                                               std::move( products ), std::move( matrix ),
+    ProductMultiplicityCovarianceMatrix chunk( std::move( metadata ),
+                                               std::move( matrix ),
                                                false );
 
     // test variables
+    id::ReactionID reaction( "n,U235->fission" );
     id::EnergyGroup group1( 1e-5, 1e+6 );
     id::EnergyGroup group2( 1e+6, 2e+7 );
     id::ParticleID product1( "Y99" );
@@ -532,28 +504,24 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
-        CHECK( 3 == submatrix.energies().size() );
-        CHECK( 1e-5 == submatrix.energies()[0] );
-        CHECK( 1e+6 == submatrix.energies()[1] );
-        CHECK( 2e+7 == submatrix.energies()[2] );
-        CHECK( 1 == submatrix.productIdentifiers().size() );
-        CHECK( id::ParticleID( "Pr148" ) == submatrix.productIdentifiers()[0] );
-
-        CHECK( 2 == submatrix.rowKeys().size() );
-        CHECK( 2 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
-        CHECK( std::tuple{ reaction, group1, product3 } == submatrix.rowKeys()[0] );
-        CHECK( std::tuple{ reaction, group2, product3 } == submatrix.rowKeys()[1] );
+        CHECK( 1 == submatrix.rowMetadata().reactionIdentifiers().size() );
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.rowMetadata().reactionIdentifiers()[0] );
+        CHECK( 3 == submatrix.rowMetadata().energies().size() );
+        CHECK( 1e-5 == submatrix.rowMetadata().energies()[0] );
+        CHECK( 1e+6 == submatrix.rowMetadata().energies()[1] );
+        CHECK( 2e+7 == submatrix.rowMetadata().energies()[2] );
+        CHECK( 1 == submatrix.rowMetadata().productIdentifiers().size() );
+        CHECK( id::ParticleID( "Pr148" ) == submatrix.rowMetadata().productIdentifiers()[0] );
+        CHECK( submatrix.rowMetadata() == submatrix.columnMetadata() );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( true == submatrix.isOnDiagonal() );
-        CHECK( false == submatrix.isOffDiagonal() );  
+        CHECK( false == submatrix.isOffDiagonal() );
 
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );  
+        CHECK( std::nullopt == submatrix.eigenvalues() );
 
         CHECK_THAT(  4.132664e-06, WithinRel( submatrix.covariances()(0,0) ) );
         CHECK_THAT(  3.036135e-06, WithinRel( submatrix.covariances()(0,1) ) );
@@ -568,32 +536,26 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
-        CHECK( 2 == submatrix.energies().size() );
-        CHECK( 1e+6 == submatrix.energies()[0] );
-        CHECK( 2e+7 == submatrix.energies()[1] );
-        CHECK( 4 == submatrix.productIdentifiers().size() );
-        CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
-        CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
-        CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
-        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
-
-        CHECK( 4 == submatrix.rowKeys().size() );
-        CHECK( 4 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() == submatrix.columnKeys() );
-        CHECK( std::tuple{ reaction, group2, product1 } == submatrix.rowKeys()[0] );
-        CHECK( std::tuple{ reaction, group2, product2 } == submatrix.rowKeys()[1] );
-        CHECK( std::tuple{ reaction, group2, product3 } == submatrix.rowKeys()[2] );
-        CHECK( std::tuple{ reaction, group2, product4 } == submatrix.rowKeys()[3] );
+        CHECK( 1 == submatrix.rowMetadata().reactionIdentifiers().size() );
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.rowMetadata().reactionIdentifiers()[0] );
+        CHECK( 2 == submatrix.rowMetadata().energies().size() );
+        CHECK( 1e+6 == submatrix.rowMetadata().energies()[0] );
+        CHECK( 2e+7 == submatrix.rowMetadata().energies()[1] );
+        CHECK( 4 == submatrix.rowMetadata().productIdentifiers().size() );
+        CHECK( id::ParticleID( "Y99" ) == chunk.rowMetadata().productIdentifiers()[0] );
+        CHECK( id::ParticleID( "Mo99" ) == chunk.rowMetadata().productIdentifiers()[1] );
+        CHECK( id::ParticleID( "Pr148" ) == chunk.rowMetadata().productIdentifiers()[2] );
+        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.rowMetadata().productIdentifiers()[3] );
+        CHECK( submatrix.rowMetadata() == submatrix.columnMetadata() );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( true == submatrix.isOnDiagonal() );
-        CHECK( false == submatrix.isOffDiagonal() );  
+        CHECK( false == submatrix.isOffDiagonal() );
 
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );  
+        CHECK( std::nullopt == submatrix.eigenvalues() );
 
         CHECK_THAT(  2.792847e-07, WithinRel( submatrix.covariances()(0,0) ) );
         CHECK_THAT(  2.435102e-07, WithinRel( submatrix.covariances()(0,1) ) );
@@ -610,7 +572,7 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK_THAT( -1.127960e-09, WithinRel( submatrix.covariances()(3,0) ) );
         CHECK_THAT( -2.394143e-09, WithinRel( submatrix.covariances()(3,1) ) );
         CHECK_THAT( -2.686310e-10, WithinRel( submatrix.covariances()(3,2) ) );
-        CHECK_THAT(  3.280511e-09, WithinRel( submatrix.covariances()(3,3) ) );    
+        CHECK_THAT(  3.280511e-09, WithinRel( submatrix.covariances()(3,3) ) );
       } // THEN
     } // WHEN
 
@@ -621,37 +583,36 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "A submatrix can be extracted" ) {
 
-        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.reactionIdentifier() );
-        CHECK( 3 == submatrix.energies().size() );
-        CHECK( 1e-5 == submatrix.energies()[0] );
-        CHECK( 1e+6 == submatrix.energies()[1] );
-        CHECK( 2e+7 == submatrix.energies()[2] );
-        CHECK( 4 == submatrix.productIdentifiers().size() );
-        CHECK( id::ParticleID( "Y99" ) == chunk.productIdentifiers()[0] );
-        CHECK( id::ParticleID( "Mo99" ) == chunk.productIdentifiers()[1] );
-        CHECK( id::ParticleID( "Pr148" ) == chunk.productIdentifiers()[2] );
-        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.productIdentifiers()[3] );
+        CHECK( 1 == submatrix.rowMetadata().reactionIdentifiers().size() );
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.rowMetadata().reactionIdentifiers()[0] );
+        CHECK( 2 == submatrix.rowMetadata().energies().size() );
+        CHECK( 1e-5 == submatrix.rowMetadata().energies()[0] );
+        CHECK( 1e+6 == submatrix.rowMetadata().energies()[1] );
+        CHECK( 4 == submatrix.rowMetadata().productIdentifiers().size() );
+        CHECK( id::ParticleID( "Y99" ) == chunk.rowMetadata().productIdentifiers()[0] );
+        CHECK( id::ParticleID( "Mo99" ) == chunk.rowMetadata().productIdentifiers()[1] );
+        CHECK( id::ParticleID( "Pr148" ) == chunk.rowMetadata().productIdentifiers()[2] );
+        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.rowMetadata().productIdentifiers()[3] );
 
-        CHECK( 4 == submatrix.rowKeys().size() );
-        CHECK( 4 == submatrix.columnKeys().size() );
-        CHECK( submatrix.rowKeys() != submatrix.columnKeys() );
-        CHECK( std::tuple{ reaction, group1, product1 } == submatrix.rowKeys()[0] );
-        CHECK( std::tuple{ reaction, group1, product2 } == submatrix.rowKeys()[1] );
-        CHECK( std::tuple{ reaction, group1, product3 } == submatrix.rowKeys()[2] );
-        CHECK( std::tuple{ reaction, group1, product4 } == submatrix.rowKeys()[3] );
-        CHECK( std::tuple{ reaction, group2, product1 } == submatrix.columnKeys()[0] );
-        CHECK( std::tuple{ reaction, group2, product2 } == submatrix.columnKeys()[1] );
-        CHECK( std::tuple{ reaction, group2, product3 } == submatrix.columnKeys()[2] );
-        CHECK( std::tuple{ reaction, group2, product4 } == submatrix.columnKeys()[3] );
+        CHECK( 1 == submatrix.columnMetadata().reactionIdentifiers().size() );
+        CHECK( id::ReactionID( "n,U235->fission" ) == submatrix.columnMetadata().reactionIdentifiers()[0] );
+        CHECK( 2 == submatrix.columnMetadata().energies().size() );
+        CHECK( 1e+6 == submatrix.columnMetadata().energies()[0] );
+        CHECK( 2e+7 == submatrix.columnMetadata().energies()[1] );
+        CHECK( 4 == submatrix.columnMetadata().productIdentifiers().size() );
+        CHECK( id::ParticleID( "Y99" ) == chunk.columnMetadata().productIdentifiers()[0] );
+        CHECK( id::ParticleID( "Mo99" ) == chunk.columnMetadata().productIdentifiers()[1] );
+        CHECK( id::ParticleID( "Pr148" ) == chunk.columnMetadata().productIdentifiers()[2] );
+        CHECK( id::ParticleID( "Pr148_e1" ) == chunk.columnMetadata().productIdentifiers()[3] );
 
         CHECK( false == submatrix.isRelativeMatrix() );
         CHECK( true == submatrix.isAbsoluteMatrix() );
         CHECK( false == submatrix.isOnDiagonal() );
-        CHECK( true == submatrix.isOffDiagonal() );  
+        CHECK( true == submatrix.isOffDiagonal() );
 
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );  
+        CHECK( std::nullopt == submatrix.eigenvalues() );
 
         CHECK_THAT(  1.186658e-07, WithinRel( submatrix.covariances()(0,0) ) );
         CHECK_THAT(  1.953402e-07, WithinRel( submatrix.covariances()(0,1) ) );
@@ -668,7 +629,7 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK_THAT(  3.071510e-10, WithinRel( submatrix.covariances()(3,0) ) );
         CHECK_THAT(  3.816056e-09, WithinRel( submatrix.covariances()(3,1) ) );
         CHECK_THAT(  5.460586e-09, WithinRel( submatrix.covariances()(3,2) ) );
-        CHECK_THAT(  3.336860e-10, WithinRel( submatrix.covariances()(3,3) ) );    
+        CHECK_THAT(  3.336860e-10, WithinRel( submatrix.covariances()(3,3) ) );
       } // THEN
     } // WHEN
   } // GIVEN

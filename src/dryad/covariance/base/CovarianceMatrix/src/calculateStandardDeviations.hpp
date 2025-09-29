@@ -10,7 +10,7 @@ void calculateStandardDeviations() {
   if ( this->isOnDiagonal() ) {
 
     std::vector< double > sigmas;
-    sigmas.reserve( this->rowKeys().size() );
+    sigmas.reserve( this->rowMetadata().keys().size() );
 
     for ( const auto& value : this->covariances().diagonal().reshaped() ) {
 
