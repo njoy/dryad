@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_COVARIANCE_BASE_METADATA
 
 // system includes
+#include <optional>
 #include <vector>
 
 // other includes
