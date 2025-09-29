@@ -10,7 +10,7 @@
 #include "dryad/format/endf/resonances/createTabulatedRadius.hpp"
 
 #include "dryad/format/endf/covariance/createMatrix.hpp"
-//#include "dryad/format/endf/covariance/createCrossSectionCovarianceBlock.hpp"
+#include "dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.hpp"
 #include "dryad/format/endf/covariance/createVarianceScaling.hpp"
 
 #include "dryad/format/endf/createProjectileIdentifier.hpp"
