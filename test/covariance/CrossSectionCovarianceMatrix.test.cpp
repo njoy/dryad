@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/CrossSectionCovarianceBlock.hpp"
+#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 // other includes
 
@@ -13,9 +13,9 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "CrossSectionCovarianceBlock" ) {
+SCENARIO( "CrossSectionCovarianceMatrix" ) {
 
-  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock without "
+  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceMatrix without "
          "variance scaling information" ) {
 
     id::ParticleID projectile( "n" );
@@ -28,11 +28,11 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
               2., 4., 6.,
               3., 6., 9.;
 
-    CrossSectionCovarianceBlock chunk( std::move( projectile ), std::move( target ),
+    CrossSectionCovarianceMatrix chunk( std::move( projectile ), std::move( target ),
                                        std::move( reaction ), std::move( energies ),
                                        std::move( matrix ) );
 
-    THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
+    THEN( "a CrossSectionCovarianceMatrix can be constructed and members can be tested" ) {
 
       CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
       CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
@@ -124,7 +124,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceBlock with "
+  GIVEN( "valid covariance data for a diagonal CrossSectionCovarianceMatrix with "
          "variance scaling information" ) {
 
     id::ParticleID projectile( "n" );
@@ -141,11 +141,11 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
     VarianceScaling scaling( ScalingType::Inverse,
                              { 1e-5, 5., 2e+7 }, { 0.001, 0.1 } );
 
-    CrossSectionCovarianceBlock chunk( std::move( projectile ), std::move( target ),
+    CrossSectionCovarianceMatrix chunk( std::move( projectile ), std::move( target ),
                                        std::move( reaction ), std::move( energies ),
                                        std::move( matrix ), relative, std::move( scaling ) );
 
-    THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
+    THEN( "a CrossSectionCovarianceMatrix can be constructed and members can be tested" ) {
 
      CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
      CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
@@ -247,7 +247,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "valid data for an off-diagonal CrossSectionCovarianceBlock" ) {
+  GIVEN( "valid data for an off-diagonal CrossSectionCovarianceMatrix" ) {
 
     id::ParticleID rowProjectile( "n" );
     id::ParticleID rowTarget( "U235" );
@@ -263,7 +263,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
               2., 4.,
               3., 6.;
 
-    CrossSectionCovarianceBlock chunk( std::move( rowProjectile ),
+    CrossSectionCovarianceMatrix chunk( std::move( rowProjectile ),
                                        std::move( rowTarget ),
                                        std::move( rowReaction ),
                                        std::move( rowEnergies ),
@@ -273,7 +273,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
                                        std::move( columnEnergies ),
                                        std::move( matrix ) );
 
-    THEN( "a CrossSectionCovarianceBlock can be constructed and members can be tested" ) {
+    THEN( "a CrossSectionCovarianceMatrix can be constructed and members can be tested" ) {
 
       CHECK( id::ParticleID( "n" ) == chunk.rowMetadata().projectileIdentifier() );
       CHECK( id::ParticleID( "U235" ) == chunk.rowMetadata().targetIdentifier() );
@@ -348,7 +348,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "invalid data for a CrossSectionCovarianceBlock" ) {
+  GIVEN( "invalid data for a CrossSectionCovarianceMatrix" ) {
 
     WHEN( "the matrix is not square for a diagonal covariance block" ) {
 
@@ -364,7 +364,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionCovarianceBlock( std::move( projectile ),
+        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( projectile ),
                                                    std::move( target ),
                                                    std::move( reaction ),
                                                    std::move( energies ),
@@ -386,7 +386,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionCovarianceBlock( std::move( projectile ),
+        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( projectile ),
                                                    std::move( target ),
                                                    std::move( reaction ),
                                                    std::move( energies ),
@@ -409,7 +409,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionCovarianceBlock( std::move( projectile ),
+        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( projectile ),
                                                    std::move( target ),
                                                    std::move( reaction ),
                                                    std::move( energies ),
@@ -436,7 +436,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionCovarianceBlock( std::move( rowProjectile ),
+        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( rowProjectile ),
                                                    std::move( rowTarget ),
                                                    std::move( rowReaction ),
                                                    std::move( rowEnergies ),
@@ -467,7 +467,7 @@ SCENARIO( "CrossSectionCovarianceBlock" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( CrossSectionCovarianceBlock( std::move( rowProjectile ),
+        CHECK_THROWS( CrossSectionCovarianceMatrix( std::move( rowProjectile ),
                                                    std::move( rowTarget ),
                                                    std::move( rowReaction ),
                                                    std::move( rowEnergies ),

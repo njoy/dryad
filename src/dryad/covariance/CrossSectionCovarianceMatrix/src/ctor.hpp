@@ -1,99 +1,92 @@
+private:
+
+CrossSectionCovarianceMatrix( Parent&& base ) :
+  Parent( std::move( base ) ) {}
+
+public:
+
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-CrossSectionCovarianceBlock() = default;
+CrossSectionCovarianceMatrix() = default;
 
-CrossSectionCovarianceBlock( const CrossSectionCovarianceBlock& ) = default;
-CrossSectionCovarianceBlock( CrossSectionCovarianceBlock&& ) = default;
+CrossSectionCovarianceMatrix( const CrossSectionCovarianceMatrix& ) = default;
+CrossSectionCovarianceMatrix( CrossSectionCovarianceMatrix&& ) = default;
 
-CrossSectionCovarianceBlock& operator=( const CrossSectionCovarianceBlock& ) = default;
-CrossSectionCovarianceBlock& operator=( CrossSectionCovarianceBlock&& ) = default;
+CrossSectionCovarianceMatrix& operator=( const CrossSectionCovarianceMatrix& ) = default;
+CrossSectionCovarianceMatrix& operator=( CrossSectionCovarianceMatrix&& ) = default;
 
 /**
- *  @brief Constructor for a diagonal cross section covariance block
+ *  @brief Constructor for an on-diagonal cross section covariance matrix
  *
- *  @param[in] metadata      the metadata associated with the covariance block
+ *  @param[in] metadata      the row and column metadata
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag (default is true)
  *  @param[in] scaling       the variance scaling information (default is none)
  */
-CrossSectionCovarianceBlock( CrossSectionMetadata metadata,
-                             Matrix< double > covariances,
-                             bool relative = true,
-                             std::optional< VarianceScaling > scaling = std::nullopt ) :
+CrossSectionCovarianceMatrix( CrossSectionMetadata metadata,
+                              Matrix< double > covariances,
+                              bool relative = true,
+                              std::optional< VarianceScaling > scaling = std::nullopt ) :
   CovarianceBlock( std::move( metadata ), std::move( covariances ), relative ),
   scaling_( std::move( scaling ) ) {}
 
 /**
- *  @brief Constructor for an off-diagonal cross section covariance block
+ *  @brief Constructor for an off-diagonal cross section covariance matrix
  *
  *  @param[in] rowMetadata       the row metadata
  *  @param[in] columnMetadata    the column metadata
  *  @param[in] covariances       the covariance matrix
  *  @param[in] relative          the relative covariance flag (default is true)
  */
-CrossSectionCovarianceBlock( CrossSectionMetadata rowMetadata,
-                             CrossSectionMetadata columnMetadata,
-                             Matrix< double > covariances,
-                             bool relative = true ) :
+CrossSectionCovarianceMatrix( CrossSectionMetadata rowMetadata,
+                              CrossSectionMetadata columnMetadata,
+                              Matrix< double > covariances,
+                              bool relative = true ) :
   CovarianceBlock( std::move( rowMetadata ), std::move( columnMetadata ),
                    std::move( covariances ), relative ),
   scaling_( std::nullopt ) {}
 
 /**
- *  @brief Constructor for a diagonal cross section covariance block
+ *  @brief Constructor for an on-diagonal cross section covariance matrix
  *
- *  @param[in] projectile    the projectile identifier
- *  @param[in] target        the target identifier
  *  @param[in] reaction      the reaction identifier
  *  @param[in] energies      the energy boundaries
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag (default is true)
  *  @param[in] scaling       the variance scaling information (default is none)
  */
-CrossSectionCovarianceBlock( id::ParticleID projectile,
-                             id::ParticleID target,
-                             id::ReactionID reaction,
-                             std::vector< double > energies,
-                             Matrix< double > covariances,
-                             bool relative = true,
-                             std::optional< VarianceScaling > scaling = std::nullopt ) :
-    CrossSectionCovarianceBlock( CrossSectionMetadata( std::move( projectile ),
-                                                       std::move( target ),
-                                                       std::move( reaction ),
-                                                       std::move( energies ) ),
-                                 std::move( covariances ), relative, std::move( scaling ) ) {}
+CrossSectionCovarianceMatrix( id::ParticleID projectile,
+                              id::ParticleID target,
+                              id::ReactionID reaction,
+                              std::vector< double > energies,
+                              Matrix< double > covariances,
+                              bool relative = true,
+                              std::optional< VarianceScaling > scaling = std::nullopt ) :
+    CrossSectionCovarianceMatrix( CrossSectionMetadata( std::move( projectile ),
+                                                        std::move( target ),
+                                                        std::move( reaction ),
+                                                        std::move( energies ) ),
+                                  std::move( covariances ), relative, std::move( scaling ) ) {}
 
 /**
- *  @brief Constructor for an off-diagonal cross section covariance block
+ *  @brief Constructor for an off-diagonal cross section covariance matrix
  *
- *  @param[in] rowProjectile       the row projectile identifier
- *  @param[in] rowTarget           the row target identifier
  *  @param[in] rowReaction         the row reaction identifier
  *  @param[in] rowEnergies         the row energy boundaries
- *  @param[in] columnProjectile    the column projectile identifier
- *  @param[in] columnTarget        the column target identifier
  *  @param[in] columnReaction      the column reaction identifier
  *  @param[in] columnEnergies      the column energy boundaries
  *  @param[in] covariances         the covariance matrix
  *  @param[in] relative            the relative covariance flag (default is true)
  */
-CrossSectionCovarianceBlock( id::ParticleID rowProjectile,
-                             id::ParticleID rowTarget,
-                             id::ReactionID rowReaction,
-                             std::vector< double > rowEnergies,
-                             id::ParticleID columnProjectile,
-                             id::ParticleID columnTarget,
-                             id::ReactionID columnReaction,
-                             std::vector< double > columnEnergies,
-                             Matrix< double > covariances,
-                             bool relative = true ) :
-  CrossSectionCovarianceBlock( CrossSectionMetadata( std::move( rowProjectile ),
-                                                     std::move( rowTarget ),
-                                                     std::move( rowReaction ),
-                                                     std::move( rowEnergies ) ),
-                               CrossSectionMetadata( std::move( columnProjectile ),
-                                                     std::move( columnTarget ),
-                                                     std::move( columnReaction ),
-                                                     std::move( columnEnergies ) ),
-                               std::move( covariances ), relative ) {}
+CrossSectionCovarianceMatrix( id::ReactionID rowReaction,
+                              std::vector< double > rowEnergies,
+                              id::ReactionID columnReaction,
+                              std::vector< double > columnEnergies,
+                              Matrix< double > covariances,
+                              bool relative = true ) :
+  CrossSectionCovarianceMatrix( CrossSectionMetadata( std::move( rowReaction ),
+                                                      std::move( rowEnergies ) ),
+                                CrossSectionMetadata( std::move( columnReaction ),
+                                                      std::move( columnEnergies ) ),
+                                std::move( covariances ), relative ) {}

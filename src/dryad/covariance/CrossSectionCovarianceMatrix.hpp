@@ -1,14 +1,14 @@
-#ifndef NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEBLOCK
-#define NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEBLOCK
+#ifndef NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEMATRIX
+#define NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEMATRIX
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/VarianceScaling.hpp"
+//#include "dryad/covariance/VarianceScaling.hpp"
 #include "dryad/covariance/CrossSectionMetadata.hpp"
-#include "dryad/covariance/CovarianceBlock.hpp"
+#include "dryad/covariance/base/CovarianceMatrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -18,52 +18,84 @@ namespace covariance {
    *  @class
    *  @brief A cross section covariance matrix block
    */
-  class CrossSectionCovarianceBlock :
-    protected CovarianceBlock< CrossSectionMetadata > {
+  class CrossSectionCovarianceMatrix :
+    protected base::CovarianceMatrix< CrossSectionMetadata,
+                                      id::ReactionID, id::EnergyGroup > {
+
+    /* type aliases */
+
+    using Parent = base::CovarianceMatrix< CrossSectionMetadata,
+                                           id::ReactionID, id::EnergyGroup >;
 
     /* fields */
-    std::optional< VarianceScaling > scaling_;
+
+    /* auxiliary functions */
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/CrossSectionCovarianceBlock/src/ctor.hpp"
+
+    #include "dryad/covariance/CrossSectionCovarianceMatrix/src/ctor.hpp"
 
     /* methods */
 
+//    /**
+//     *  @brief Return the variance scaling information
+//     *
+//     *  If this type of information is given, it will be for an on-diagonal
+//     *  covariance block.
+//     */
+//    const std::optional< VarianceScaling >& varianceScaling() const {
+//
+//      return this->scaling_;
+//    }
+//
+//    /**
+//     *  @brief Return whether or not the covariance block has variance scaling
+//     *         information
+//     */
+//    bool hasVarianceScaling() const {
+//
+//      return this->scaling_.has_value();
+//    }
+
+    /* methods */
+
+    using Parent::rowMetadata;
+    using Parent::columnMetadata;
+    using Parent::isRelativeMatrix;
+    using Parent::isAbsoluteMatrix;
+    using Parent::isOnDiagonal;
+    using Parent::isOffDiagonal;
+    using Parent::covariances;
+    using Parent::standardDeviations;
+    using Parent::correlations;
+    using Parent::eigenvalues;
+    using Parent::calculateStandardDeviations;
+    using Parent::calculateCorrelations;
+    using Parent::calculateEigenvalues;
+
+//    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
+
     /**
-     *  @brief Return the variance scaling information
+     *  @brief Comparison operator: equal
      *
-     *  If this type of information is given, it will be for an on-diagonal
-     *  covariance block.
+     *  @param[in] right   the object on the right hand side
      */
-    const std::optional< VarianceScaling >& varianceScaling() const {
+    bool operator==( const ProductMultiplicityCovarianceMatrix& right ) const {
 
-      return this->scaling_;
+      return Parent::operator==( right );
     }
 
     /**
-     *  @brief Return whether or not the covariance block has variance scaling
-     *         information
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
      */
-    bool hasVarianceScaling() const {
+    bool operator!=( const ProductMultiplicityCovarianceMatrix& right ) const {
 
-      return this->scaling_.has_value();
+      return ! this->operator==( right );
     }
-
-    using CovarianceBlock::rowMetadata;
-    using CovarianceBlock::columnMetadata;
-    using CovarianceBlock::isOffDiagonalBlock;
-    using CovarianceBlock::isDiagonalBlock;
-    using CovarianceBlock::isRelativeBlock;
-    using CovarianceBlock::isAbsoluteBlock;
-    using CovarianceBlock::covariances;
-    using CovarianceBlock::standardDeviations;
-    using CovarianceBlock::correlations;
-    using CovarianceBlock::eigenvalues;
-    using CovarianceBlock::calculateStandardDeviations;
-    using CovarianceBlock::calculateCorrelations;
-    using CovarianceBlock::calculateEigenvalues;
   };
 
 } // covariance namespace
