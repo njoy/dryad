@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_COVARIANCE_BASE_METADATA
 
 // system includes
+#include <optional>
 #include <vector>
 
 // other includes
@@ -16,7 +17,7 @@ namespace base {
    *  @class
    *  @brief A base class representing covariance metadata
    *
-   *  This metadata class stores the keys asscoaited to the
+   *  This metadata class stores the keys associated to the
    *  rows and columns of the covariance matrix. It also has
    *  the functionality to return the indices of the rows or
    *  columns of the matrix corresponding to a selection of
