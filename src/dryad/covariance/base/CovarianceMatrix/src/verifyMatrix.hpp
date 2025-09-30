@@ -57,7 +57,7 @@ static void verifyMatrix( const Matrix< double >& matrix,
     Log::info( "Number rows: {}", matrix.rows() );
     Log::info( "Number columns: {}", matrix.cols() );
     Log::info( "Expected number of rows: {}", rows );
-    Log::info( "Expected nNumber of columns: {}", columns );
+    Log::info( "Expected number of columns: {}", columns );
     throw std::exception();
   }
 }

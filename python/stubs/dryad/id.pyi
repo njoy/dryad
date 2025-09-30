@@ -4,7 +4,7 @@ Identifiers for particles, elements, etc.
 from __future__ import annotations
 import dryad
 import typing
-__all__ = ['ElectronSubshellID', 'ElementID', 'EnergyGroup', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
+__all__: list[str] = ['ElectronSubshellID', 'ElementID', 'EnergyGroup', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
 class ElectronSubshellID:
     """
     The electron subshell identifier

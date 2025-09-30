@@ -18,25 +18,24 @@ namespace base {
    *  @class
    *  @brief A base class representing a covariance matrix
    */
-  template < typename... Ts >
+  template < typename Metadata, typename... Ts >
   class CovarianceMatrix {
-
-  public:
 
     /* type aliases */
     using Key = std::tuple< Ts... >;
+    using Selection = std::tuple< std::optional< Ts >... >;
 
   private:
 
-    /* fields - row and column keys */
-    std::vector< Key > row_;
-    std::optional< std::vector< Key > > column_;
+    /* fields - row and column metadata */
+    Metadata row_metadata_;
+    std::optional< Metadata > column_metadata_;
 
     /* fields - flag to indicate relative or absolute data */
     bool relative_;
 
     /* fields - covariance matrix */
-    std::optional< Matrix< double > > covariances_;
+    Matrix< double > covariances_;
 
     /* fields - standard deviations and correlations */
     std::optional< std::vector< double > > sigmas_;
@@ -48,6 +47,7 @@ namespace base {
     /* auxiliary function */
     #include "dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
+    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
 
   public:
 
@@ -57,24 +57,22 @@ namespace base {
     /* methods */
 
     /**
-     *  @brief Return the row keys
+     *  @brief Return the row metadata
      */
-    const std::vector< Key >& rowKeys() const { return this->row_; }
+    const Metadata& rowMetadata() const { return this->row_metadata_; }
 
     /**
-     *  @brief Return the column keys
-     *
-     *  This returns the row heys if the covariance matrix is on-diagonal
+     *  @brief Return the column metadata
      */
-    const std::vector< Key >& columnKeys() const {
+    const Metadata& columnMetadata() const {
 
-      if ( this->column_.has_value() ) {
+      if ( this->column_metadata_.has_value() ) {
 
-        return this->column_.value();
+        return this->column_metadata_.value();
       }
       else {
 
-        return this->row_;
+        return this->row_metadata_;
       }
     }
 
@@ -83,7 +81,7 @@ namespace base {
      */
     bool isOffDiagonal() const {
 
-      return this->column_.has_value();
+      return this->column_metadata_.has_value();
     }
 
     /**
@@ -113,7 +111,7 @@ namespace base {
     /**
      *  @brief Return the covariance matrix
      */
-    const std::optional< Matrix< double > >& covariances() const {
+    const Matrix< double >& covariances() const {
 
       return this->covariances_;
     }
@@ -142,10 +140,33 @@ namespace base {
       return this->eigenvalues_;
     }
 
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
+
+    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const CovarianceMatrix& right ) const {
+
+      return this->rowMetadata() == right.rowMetadata() &&
+             this->columnMetadata() == right.columnMetadata() &&
+             this->covariances() == right.covariances();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const CovarianceMatrix& right ) const {
+
+      return ! this->operator==( right );
+    }
   };
 
 } // base namespace

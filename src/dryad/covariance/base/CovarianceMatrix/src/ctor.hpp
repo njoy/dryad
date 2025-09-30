@@ -1,3 +1,6 @@
+//! @todo the keys are currently required in the ctors. they can be removed
+//!       when we are capable of using cartesian_product
+
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
@@ -12,38 +15,46 @@ CovarianceMatrix& operator=( CovarianceMatrix&& ) = default;
 /**
  *  @brief Constructor for an on-diagonal covariance matrix (relative or absolute)
  *
- *  @param[in] keys          the keys associated with the covariance block
+ *  @param[in] metadata      the metadata
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-CovarianceMatrix( std::vector< Key > keys, Matrix< double > covariances,
+CovarianceMatrix( Metadata metadata,
+                  Matrix< double > covariances,
                   bool relative = true ) :
-  row_( std::move( keys ) ), column_( std::nullopt ), relative_( relative ),
-  covariances_( std::move( covariances ) ), sigmas_( std::nullopt ),
-  correlations_( std::nullopt ) {
+    row_metadata_( std::move( metadata ) ),
+    column_metadata_( std::nullopt ),
+    relative_( relative ),
+    covariances_( std::move( covariances ) ),
+    sigmas_( std::nullopt ),
+    correlations_( std::nullopt ) {
 
-  verifyMatrix( this->covariances().value(), this->rowKeys().size() );
+  verifyMatrix( this->covariances(), this->rowMetadata().keys().size() );
 }
 
 /**
  *  @brief Constructor for an on-diagonal correlation matrix (relative or absolute)
  *
- *  @param[in] keys           the keys associated with the covariance block
+ *  @param[in] metadata       the metadata from which the keys are derived
+ *  @param[in] keys           the row and column keys
  *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
  *  @param[in] relative       the relative covariance flag
  */
-CovarianceMatrix( std::vector< Key > keys,
+CovarianceMatrix( Metadata metadata,
                   std::vector< double > deviations,
                   Matrix< double > correlations,
                   bool relative = true ) :
-  row_( std::move( keys ) ), column_( std::nullopt ), relative_( relative ),
-  covariances_( std::nullopt ), sigmas_( std::move( deviations ) ),
-  correlations_( std::move( correlations ) ) {
+    row_metadata_( std::move( metadata ) ),
+    column_metadata_( std::nullopt ),
+    relative_( relative ),
+    sigmas_( std::move( deviations ) ),
+    correlations_( std::move( correlations ) ) {
 
   verifyMatrix( this->standardDeviations().value(),
                 this->correlations().value(),
-                this->rowKeys().size() );
+                this->rowMetadata().keys().size() );
+  this->calculateCovariances();
 }
 
 /**
@@ -54,15 +65,20 @@ CovarianceMatrix( std::vector< Key > keys,
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag
  */
-CovarianceMatrix( std::vector< Key > rowKeys, std::vector< Key > columnKeys,
-                  Matrix< double > covariances, bool relative = true ) :
-  row_( std::move( rowKeys ) ), column_( std::move( columnKeys ) ),
-  relative_( relative ), covariances_( std::move( covariances ) ),
-  sigmas_( std::nullopt ), correlations_( std::nullopt ) {
+CovarianceMatrix( Metadata rowMetadata,
+                  Metadata columnMetadata,
+                  Matrix< double > covariances,
+                  bool relative = true ) :
+    row_metadata_( std::move( rowMetadata ) ),
+    column_metadata_( std::move( columnMetadata ) ),
+    relative_( relative ),
+    covariances_( std::move( covariances ) ),
+    sigmas_( std::nullopt ),
+    correlations_( std::nullopt ) {
 
-  verifyMatrix( this->covariances().value(),
-                this->rowKeys().size(),
-                this->columnKeys().size() );
+  verifyMatrix( this->covariances(),
+                this->rowMetadata().keys().size(),
+                this->columnMetadata().keys().size() );
 }
 
 /**
@@ -74,18 +90,23 @@ CovarianceMatrix( std::vector< Key > rowKeys, std::vector< Key > columnKeys,
  *  @param[in] columnKeys         the column keys
  *  @param[in] rowDeviations      the standard deviations to be applied to each row
  *  @param[in] columnDeviations   the standard deviations to be applied to each column
- *  @param[in] correlations       the covariance matrix
+ *  @param[in] correlations       the correlation matrix
  *  @param[in] relative           the relative covariance flag
  */
-CovarianceMatrix( std::vector< Key > rowKeys, std::vector< Key > columnKeys,
+CovarianceMatrix( Metadata rowMetadata,
+                  Metadata columnMetadata,
                   const std::vector< double >& rowDeviations,
                   const std::vector< double >& columnDeviations,
-                  Matrix< double > correlations, bool relative = true ) :
-  row_( std::move( rowKeys ) ), column_( std::move( columnKeys ) ),
-  relative_( relative ), covariances_( std::nullopt ),
-  sigmas_( std::nullopt ), correlations_( std::move( correlations ) ) {
+                  Matrix< double > correlations,
+                  bool relative = true ) :
+    row_metadata_( std::move( rowMetadata ) ),
+    column_metadata_( std::move( columnMetadata ) ),
+    relative_( relative ),
+    sigmas_( std::nullopt ),
+    correlations_( std::move( correlations ) ) {
 
   verifyMatrix( this->correlations().value(),
-                this->rowKeys().size(),
-                this->columnKeys().size() );
+                this->rowMetadata().keys().size(),
+                this->columnMetadata().keys().size() );
+  this->calculateCovariances( rowDeviations, columnDeviations );
 }
