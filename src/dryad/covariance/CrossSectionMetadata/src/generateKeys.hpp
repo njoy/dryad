@@ -8,7 +8,7 @@ static std::vector< Key > generateKeys( const std::vector< id::ReactionID >& rea
   }
   if ( ! std::is_sorted( energies.begin(), energies.end() ) ) {
 
-    Log::error( "The energy group values do note appear to be sorted." );
+    Log::error( "The energy group values do not appear to be sorted." );
     throw std::exception();
   }
 
