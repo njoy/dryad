@@ -1,14 +1,14 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEBLOCK
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEBLOCK
+#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECrossSectionCovarianceMatrix
+#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECrossSectionCovarianceMatrix
 
 // system includes
 
 // other includes
 #include "tools/Log.hpp"
-#include "tools/std20/algorithm.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/CrossSectionCovarianceBlock.hpp"
+#include "dryad/covariance/CrossSectionMetadata.hpp"
+#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/format/endf/covariance/createMatrix.hpp"
 #include "dryad/format/endf/covariance/createVarianceScaling.hpp"
@@ -21,13 +21,11 @@ namespace endf {
 namespace covariance {
 
   /**
-   *  @brief Create a cross section covariance block from an ENDF ReactionBlock
-   *         that defines an on-diagonal covariance block
+   *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
+   *         that defines an on-diagonal covariance matrix
    */
-  dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock(
-      const dryad::id::ParticleID& projectile,
-      const dryad::id::ParticleID& target,
+  dryad::covariance::CrossSectionCovarianceMatrix
+  createCrossSectionCovarianceMatrix(
       const dryad::id::ReactionID& reaction,
       const ENDFtk::section::ReactionBlock& block ) {
 
@@ -116,8 +114,8 @@ namespace covariance {
 
     if ( structures.size() == 1 ) {
 
-      return dryad::covariance::CrossSectionCovarianceBlock(
-                 dryad::covariance::CrossSectionMetadata( projectile, target, reaction,
+      return dryad::covariance::CrossSectionCovarianceMatrix(
+                 dryad::covariance::CrossSectionMetadata( { reaction },
                                                           std::move( structures.front() ) ),
                  std::move( matrices.front() ),
                  relative, std::move( scaling ) );
@@ -130,16 +128,12 @@ namespace covariance {
   }
 
   /**
-   *  @brief Create a cross section covariance block from an ENDF ReactionBlock
-   *         that defines an off-diagonal covariance block
+   *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
+   *         that defines an off-diagonal covariance matrix (a cross term)
    */
-  dryad::covariance::CrossSectionCovarianceBlock
-  createCrossSectionCovarianceBlock(
-      const dryad::id::ParticleID& rowProjectile,
-      const dryad::id::ParticleID& rowTarget,
+  dryad::covariance::CrossSectionCovarianceMatrix
+  createCrossSectionCovarianceMatrix(
       const dryad::id::ReactionID& rowReaction,
-      const dryad::id::ParticleID& columnProjectile,
-      const dryad::id::ParticleID& columnTarget,
       const dryad::id::ReactionID& columnReaction,
       const ENDFtk::section::ReactionBlock& block ) {
 
@@ -205,7 +199,7 @@ namespace covariance {
         case 9: {
 
           Log::error( "Off-diagonal ENDF reaction covariance blocks cannot have "
-                      "variance scaling component." );
+                      "a variance scaling component." );
           throw std::exception();
         }
         case 5: {
@@ -238,10 +232,10 @@ namespace covariance {
 
     if ( rowStructures.size() == 1 ) {
 
-      return dryad::covariance::CrossSectionCovarianceBlock(
-                 dryad::covariance::CrossSectionMetadata( rowProjectile, rowTarget, rowReaction,
+      return dryad::covariance::CrossSectionCovarianceMatrix(
+                 dryad::covariance::CrossSectionMetadata( { rowReaction },
                                                           std::move( rowStructures.front() ) ),
-                 dryad::covariance::CrossSectionMetadata( columnProjectile, columnTarget, columnReaction,
+                 dryad::covariance::CrossSectionMetadata( { columnReaction },
                                                           std::move( columnStructures.front() ) ),
                  std::move( matrices.front() ), relative );
     }

@@ -2,9 +2,9 @@ static std::vector< Key > generateKeys( const std::vector< id::ReactionID >& rea
                                         const std::vector< double >& energies,
                                         const std::vector< id::ParticleID >& products ) {
 
-  if ( energies.size() < 2 || products.size() == 0 ) {
+  if ( energies.size() < 2 || reactions.size() == 0 || products.size() == 0 ) {
 
-    Log::error( "There should be at least 2 energy values and 1 product identifier." );
+    Log::error( "There should be at least 2 energy values, 1 reaction and 1 product identifier." );
     throw std::exception();
   }
   if ( ! std::is_sorted( energies.begin(), energies.end() ) ) {
