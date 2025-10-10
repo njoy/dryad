@@ -39,10 +39,10 @@ SCENARIO( "createRadius" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "GNDS scattering radius node - constant" ) {
+  GIVEN( "GNDS scattering radius node (top level) - constant" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-017_Cl_035.endf.gnds.xml" );
+    pugi::xml_parse_result result = document.load_file( "n-082_Pb_208.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                      child( "scatteringRadius" );
 
@@ -57,14 +57,40 @@ SCENARIO( "createRadius" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "GNDS scattering radius node (in channel) - constant" ) {
+
+    pugi::xml_document document;
+    pugi::xml_parse_result result = document.load_file( "n-082_Pb_208.endf.gnds.xml" );
+    pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
+                                     child( "resolved" ).child( "RMatrix" ).
+                                     child( "spinGroups" ).
+                                     find_child_by_attribute( "spinGroup", "label", "0" ).
+                                     child( "channels" ).
+                                     find_child_by_attribute( "channel", "label", "1" ).
+                                     child( "scatteringRadius" );
+
+    WHEN( "a single scattering radius node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        // the scattering and hard sphere radius are the same for this channel
+        auto chunk = format::gnds::resonances::createRadius( radius );
+
+        verifyConstantHardSphereRadiusChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "GNDS hard sphere radius node - constant" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-017_Cl_035.endf.gnds.xml" );
+    pugi::xml_parse_result result = document.load_file( "n-082_Pb_208.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                      child( "resolved" ).child( "RMatrix" ).
-                                     child( "resonanceReactions" ).
-                                     find_child_by_attribute( "resonanceReaction", "label", "n + Cl35" ).
+                                     child( "spinGroups" ).
+                                     find_child_by_attribute( "spinGroup", "label", "0" ).
+                                     child( "channels" ).
+                                     find_child_by_attribute( "channel", "label", "1" ).
                                      child( "hardSphereRadius" );
 
     WHEN( "a hard sphere radius node is given" ) {
@@ -73,6 +99,7 @@ SCENARIO( "createRadius" ) {
 
         auto chunk = format::gnds::resonances::createRadius( radius );
 
+        // the scattering and hard sphere radius are the same for this channel
         verifyConstantHardSphereRadiusChunk( chunk );
       } // THEN
     } // WHEN
@@ -106,7 +133,7 @@ void verifyConstantScatteringRadiusChunk( const Radius& chunk ) {
   CHECK( true == std::holds_alternative< double >( chunk ) );
 
   auto radius = std::get< double >( chunk );
-  CHECK_THAT( 4.82222, WithinRel( radius ) );
+  CHECK_THAT( 9.75, WithinRel( radius ) );
 }
 
 void verifyConstantHardSphereRadiusChunk( const Radius& chunk ) {
@@ -114,5 +141,5 @@ void verifyConstantHardSphereRadiusChunk( const Radius& chunk ) {
   CHECK( true == std::holds_alternative< double >( chunk ) );
 
   auto radius = std::get< double >( chunk );
-  CHECK_THAT( 4.88875, WithinRel( radius ) );
+  CHECK_THAT( 9.67, WithinRel( radius ) );
 }

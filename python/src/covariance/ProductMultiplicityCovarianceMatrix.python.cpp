@@ -57,8 +57,8 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Initialise an off-diagonal product multiplicity covariance matrix\n\n"
     "Arguments:\n"
     "    self             the covariance matrix\n"
-    "    rowMetadata      the row metadata\n"
-    "    columnMetadata   the column metadata\n"
+    "    row_metadata     the row metadata\n"
+    "    column_metadata  the column metadata\n"
     "    covariances      the covariance matrix\n"
     "    relative         the relative covariance flag (default is true)"
   )
@@ -86,13 +86,13 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     python::arg( "row_metadata" ), python::arg( "column_metadata" ),
     python::arg( "row_deviations" ), python::arg( "column_deviations" ),
     python::arg( "correlations" ), python::arg( "relative" ) = true,
-    "Initialise an on-diagonal product multiplicity correlation matrix\n\n"
+    "Initialise an off-diagonal product multiplicity correlation matrix\n\n"
     "Arguments:\n"
     "    self               the covariance matrix\n"
-    "    rowMetadata        the row metadata\n"
-    "    columnMetadata     the column metadata\n"
-    "    rowDeviations      the standard deviations to be applied to each row\n"
-    "    columnDeviations   the standard deviations to be applied to each column\n"
+    "    row_metadata       the row metadata\n"
+    "    column_metadata    the column metadata\n"
+    "    row_deviations     the standard deviations to be applied to each row\n"
+    "    column_deviations  the standard deviations to be applied to each column\n"
     "    correlations       the correlation matrix\n"
     "    relative           the relative covariance flag (default is true)"
   )
