@@ -24,11 +24,8 @@ HardSpherePenetrability& operator=( HardSpherePenetrability&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param ratios         the ratio values
- *  @param values         the wave function values
- *  @param boundaries     the boundaries of the interpolation regions
- *  @param interpolants   the interpolation types of the interpolation regions
+ *  @param orbitalMomentum   the value of the orbital momentum
  */
-HardSpherePenetrability( unsigned int l ) :
-  PolynomialSeriesRatio( generateFunction( l ) ),
-  orbital_momentum_( l ) {}
+HardSpherePenetrability( unsigned int orbitalMomentum ) :
+  PolynomialSeriesRatio( generateFunction( orbitalMomentum ) ),
+  orbital_momentum_( orbitalMomentum ) {}

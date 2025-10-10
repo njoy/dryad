@@ -4,7 +4,7 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/resonances/HardSpherePenetrability.hpp"
+#include "dryad/resonances/HardSphereShiftFactor.hpp"
 
 #include "scion/math/horner.hpp"
 
@@ -13,10 +13,10 @@ namespace python = pybind11;
 
 namespace resonances {
 
-void wrapHardSpherePenetrability( python::module& module ) {
+void wrapHardSphereShiftFactor( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::resonances::HardSpherePenetrability;
+  using Component = njoy::dryad::resonances::HardSphereShiftFactor;
 
   // wrap views created by this component
 
@@ -24,8 +24,8 @@ void wrapHardSpherePenetrability( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "HardSpherePenetrability",
-    "Hardsphere penetrability functions"
+    "HardSphereShiftFactor",
+    "Hard sphere shift factor functions"
    );
 
   // wrap the component
@@ -34,7 +34,7 @@ void wrapHardSpherePenetrability( python::module& module ) {
 
     python::init< unsigned int >(),
     python::arg( "orbital_momentum" ),
-    "Initialise the hard sphere penetrability function\n\n"
+    "Initialise the hard sphere shift factor function\n\n"
     "Arguments:\n"
     "    self               the function\n"
     "    orbital_momentum   the value of the orbital momentum"
@@ -52,10 +52,10 @@ void wrapHardSpherePenetrability( python::module& module ) {
     "__call__",
     [] ( const Component& self, double ratio ) -> decltype(auto)
        { return self( ratio ); },
-    python::arg( "cosine" ),
-    "Evaluate the penetrability for a given ratio value\n\n"
+    python::arg( "ratio" ),
+    "Evaluate the shift factor for a given ratio value\n\n"
     "Arguments:\n"
-    "    self    the penetrability function\n"
+    "    self    the shift factor function\n"
     "    ratio   the ratio value"
   );
 

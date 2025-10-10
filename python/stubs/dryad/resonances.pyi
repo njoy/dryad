@@ -4,7 +4,7 @@ Resonance data
 from __future__ import annotations
 import dryad
 import typing
-__all__: list[str] = ['ChannelRadii', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['ChannelRadii', 'HardSpherePenetrability', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
 class ChannelRadii:
     """
     Channel radii used in wave function calculations
@@ -112,6 +112,74 @@ class ChannelRadii:
         """
     @shift_factor_radius.setter
     def shift_factor_radius(self, arg1: float | TabulatedRadius | None) -> None:
+        ...
+class HardSpherePenetrability:
+    """
+    Hardsphere penetrability functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the penetrability for a given ratio value
+        
+        Arguments:
+            self    the penetrability function
+            ratio   the ratio value
+        """
+    def __eq__(self, arg0: HardSpherePenetrability) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the hardsphere penetrability function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: HardSpherePenetrability) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: HardSpherePenetrability) -> bool:
+        ...
+class HardSphereShiftFactor:
+    """
+    Hardsphere shift factor functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, ratio: float) -> float:
+        """
+        Evaluate the shift factor for a given ratio value
+        
+        Arguments:
+            self    the shift factor function
+            ratio   the ratio value
+        """
+    def __eq__(self, arg0: HardSphereShiftFactor) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the hardsphere shift factor function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: HardSphereShiftFactor) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
