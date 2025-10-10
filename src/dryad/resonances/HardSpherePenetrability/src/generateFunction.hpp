@@ -9,6 +9,8 @@ static PolynomialSeriesRatio generateFunction( unsigned int l ) {
     case 4 : return { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 }, { 11025, 0, 1575, 0, 135, 0, 10, 0, 1 } };
     default : {
 
+      Log::error( "Cannot handle wave functions with l above 4, got \'{}\', "
+                  "contact dryad developers", l );
       throw std::exception();
     }
   }
