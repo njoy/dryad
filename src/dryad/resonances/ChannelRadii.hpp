@@ -19,7 +19,7 @@ namespace resonances {
    *
    *  The penetrability P, shift factor S and phase shift phi require knowledge
    *  of the channel radius in their calculation. The ChannelRadii class provides
-   *  these radii for each on of these.
+   *  these radii for each one of these.
    */
   class ChannelRadii {
 
@@ -112,7 +112,7 @@ namespace resonances {
      *
      *  @param radius  the radius
      */
-    void phaseShiftRadius(std::optional< Radius > radius ) {
+    void phaseShiftRadius( std::optional< Radius > radius ) {
 
       this->phase_shift_ = std::move( radius );
     }
@@ -149,6 +149,28 @@ namespace resonances {
       return this->hasPhaseShiftRadius()
                ? radius( energy, this->phaseShiftRadius().value() )
                : this->calculatePenetrabilityRadius( energy );
+    }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const ChannelRadii& right ) const {
+
+      return this->penetrabilityRadius() == right.penetrabilityRadius() &&
+             this->shiftFactorRadius() == right.shiftFactorRadius() &&
+             this->phaseShiftRadius() == right.phaseShiftRadius();
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const ChannelRadii& right ) const {
+
+      return ! this->operator==( right );
     }
   };
 

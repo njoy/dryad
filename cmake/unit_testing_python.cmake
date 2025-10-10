@@ -47,6 +47,7 @@ add_python_test( covariance.LinearCombinationCovariance          covariance/Test
 
 add_python_test( resonances.TabulatedRadius              resonances/Test_dryad_resonances_TabulatedRadius.py )
 add_python_test( resonances.TabulatedWaveFunction        resonances/Test_dryad_resonances_TabulatedWaveFunction.py )
+add_python_test( resonances.ChannelRadii                 resonances/Test_dryad_resonances_ChannelRadii.py )
 
 add_python_test( Documentation                           Test_dryad_Documentation.py )
 
