@@ -1,10 +1,9 @@
-#ifndef NJOY_DRYAD_RESONANCES_HARDSPHEREPHASESHIFT
-#define NJOY_DRYAD_RESONANCES_HARDSPHEREPHASESHIFT
+#ifndef NJOY_DRYAD_RESONANCES_COULOMBPHASESHIFTDIFFERENCE
+#define NJOY_DRYAD_RESONANCES_COULOMBPHASESHIFTDIFFERENCE
 
 // system includes
 
 // other includes
-#include "scion/math/PolynomialSeriesRatio.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -12,23 +11,20 @@ namespace resonances {
 
   /**
    *  @class
-   *  @brief Hard sphere phase shift functions
+   *  @brief Coulomb phase shift difference functions
    */
-  class HardSpherePhaseShift {
+  class CoulombPhaseShiftDifference {
 
     /* fields */
-    scion::math::PolynomialSeriesRatio< double, double > ratio_;
     unsigned int orbital_momentum_;
 
     /* auxiliary functions */
-
-    #include "dryad/resonances/HardSpherePhaseShift/src/generateFunction.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/HardSpherePhaseShift/src/ctor.hpp"
+    #include "dryad/resonances/CoulombPhaseShiftDifference/src/ctor.hpp"
 
     /* methods */
 
@@ -41,13 +37,18 @@ namespace resonances {
     }
 
     /**
-     *  @brief Evaluate the phase shift for a given ratio value
+     *  @brief Evaluate the Coulomb phase shift difference for a given eta
      *
-     *  @param[in] ratio   the ratio value
+     *  @param[in] eta   the eta value
      */
-    double operator()( double ratio ) const {
+    double operator()( double eta ) const {
 
-      return ratio - std::atan( this->ratio_( ratio ) );
+      double w = 0;
+      for ( unsigned int i = 1; i < this->orbitalMomentum() + 1; ++i ) {
+
+        w += std::atan( eta / i );
+      }
+      return w;
     }
 
     /**
@@ -55,7 +56,7 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const HardSpherePhaseShift& right ) const {
+    bool operator==( const CoulombPhaseShiftDifference& right ) const {
 
       return this->orbitalMomentum() == right.orbitalMomentum();
     }
@@ -65,7 +66,7 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const HardSpherePhaseShift& right ) const {
+    bool operator!=( const CoulombPhaseShiftDifference& right ) const {
 
       return ! this->operator==( right );
     }
