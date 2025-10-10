@@ -4,17 +4,17 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/resonances/TabulatedRadius.hpp"
+#include "dryad/resonances/TabulatedWaveFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace resonances {
 
-void wrapTabulatedRadius( python::module& module ) {
+void wrapTabulatedWaveFunction( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::resonances::TabulatedRadius;
+  using Component = njoy::dryad::resonances::TabulatedWaveFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -24,8 +24,8 @@ void wrapTabulatedRadius( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedRadius",
-    "A radius table"
+    "TabulatedWaveFunction",
+    "A tabulated function representing penetrability, shift or phase shift"
   );
 
   // wrap the component
@@ -36,13 +36,13 @@ void wrapTabulatedRadius( python::module& module ) {
                   std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "ratios" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the radius table\n\n"
+    "Initialise the wave function table\n\n"
     "Arguments:\n"
-    "    self           the radius table\n"
-    "    energies       the energy values\n"
-    "    values         the radius values\n"
+    "    self           the wave function table\n"
+    "    ratios.        the ratio values\n"
+    "    values         the wave function values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
     "    interpolants   the interpolation types of the interpolation regions,\n"
     "                   see InterpolationType for all interpolation types"
@@ -52,13 +52,13 @@ void wrapTabulatedRadius( python::module& module ) {
     python::init< std::vector< double >,
                   std::vector< double >,
                   InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "ratios" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     "Initialise the radius table\n\n"
     "Arguments:\n"
     "    self           the radius table\n"
-    "    energies       the energy values\n"
-    "    values         the radius values\n"
+    "    ratios         the ratio values\n"
+    "    values         the wave function values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
@@ -72,38 +72,38 @@ void wrapTabulatedRadius( python::module& module ) {
   )
   .def_property_readonly(
 
-    "energies",
-    &Component::energies,
-    "The energy values"
+    "ratios",
+    &Component::ratios,
+    "The ratio values"
   )
   .def_property_readonly(
 
     "values",
     &Component::values,
-    "The radius values"
+    "The wave function values"
   )
   .def_property_readonly(
 
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
+    "lower_ratio_limit",
+    &Component::lowerRatioLimit,
+    "The lower ratio limit"
   )
   .def_property_readonly(
 
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
+    "upper_ratio_limit",
+    &Component::upperRatioLimit,
+    "The upper ratio limit"
   )
   .def(
 
     "__call__",
-    [] ( const Component& self, double energy ) -> decltype(auto)
-       { return self( energy ); },
-    python::arg( "energy" ),
-    "Evaluate the table for a given energy value\n\n"
+    [] ( const Component& self, double ratio ) -> decltype(auto)
+       { return self( ratio ); },
+    python::arg( "ratio" ),
+    "Evaluate the table for a given ratio value\n\n"
     "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "    self    the table\n"
+    "    ratio   the ratio value"
   );
 
   // add standard equality comparison definitions

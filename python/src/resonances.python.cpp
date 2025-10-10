@@ -11,6 +11,7 @@ namespace resonances {
 
   // declarations - components
   void wrapTabulatedRadius( python::module& );
+  void wrapTabulatedWaveFunction( python::module& );
 
   void wrapResonanceParameters( python::module& );
 }
@@ -26,6 +27,7 @@ void wrapResonances( python::module& module ) {
 
   // components
   resonances::wrapTabulatedRadius( submodule );
+  resonances::wrapTabulatedWaveFunction( submodule );
 
   resonances::wrapResonanceParameters( submodule );
 }
