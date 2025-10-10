@@ -131,7 +131,7 @@ class HardSpherePenetrability:
     @typing.overload
     def __init__(self, orbital_momentum: int) -> None:
         """
-        Initialise the hardsphere penetrability function
+        Initialise the hard sphere penetrability function
         
         Arguments:
             self               the function
@@ -149,7 +149,7 @@ class HardSpherePenetrability:
         ...
 class HardSphereShiftFactor:
     """
-    Hardsphere shift factor functions
+    Hard sphere shift factor functions
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -165,7 +165,7 @@ class HardSphereShiftFactor:
     @typing.overload
     def __init__(self, orbital_momentum: int) -> None:
         """
-        Initialise the hardsphere shift factor function
+        Initialise the hard sphere shift factor function
         
         Arguments:
             self               the function

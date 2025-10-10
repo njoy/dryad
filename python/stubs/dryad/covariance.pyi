@@ -29,8 +29,8 @@ class CrossSectionCovarianceMatrix:
         
         Arguments:
             self             the covariance matrix
-            rowMetadata      the row metadata
-            columnMetadata   the column metadata
+            row_metadata     the row metadata
+            column_metadata  the column metadata
             covariances      the covariance matrix
             relative         the relative covariance flag (default is true)
         """
@@ -45,19 +45,19 @@ class CrossSectionCovarianceMatrix:
             deviations     the standard deviations
             correlations   the correlation matrix
             relative       the relative covariance flag (default is true)
-            scaling       the variance scaling information (default is none)
+            scaling        the variance scaling information (default is none)
         """
     @typing.overload
     def __init__(self, row_metadata: CrossSectionMetadata, column_metadata: CrossSectionMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
-        Initialise an on-diagonal cross section correlation matrix
+        Initialise an off-diagonal cross section correlation matrix
         
         Arguments:
             self               the covariance matrix
-            rowMetadata        the row metadata
-            columnMetadata     the column metadata
-            rowDeviations      the standard deviations to be applied to each row
-            columnDeviations   the standard deviations to be applied to each column
+            row_metadata       the row metadata
+            column_metadata    the column metadata
+            row_deviations     the standard deviations to be applied to each row
+            column_deviations  the standard deviations to be applied to each column
             correlations       the correlation matrix
             relative           the relative covariance flag (default is true)
         """
@@ -300,8 +300,8 @@ class ProductMultiplicityCovarianceMatrix:
         
         Arguments:
             self             the covariance matrix
-            rowMetadata      the row metadata
-            columnMetadata   the column metadata
+            row_metadata     the row metadata
+            column_metadata  the column metadata
             covariances      the covariance matrix
             relative         the relative covariance flag (default is true)
         """
@@ -320,14 +320,14 @@ class ProductMultiplicityCovarianceMatrix:
     @typing.overload
     def __init__(self, row_metadata: ProductMultiplicityMetadata, column_metadata: ProductMultiplicityMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
-        Initialise an on-diagonal product multiplicity correlation matrix
+        Initialise an off-diagonal product multiplicity correlation matrix
         
         Arguments:
             self               the covariance matrix
-            rowMetadata        the row metadata
-            columnMetadata     the column metadata
-            rowDeviations      the standard deviations to be applied to each row
-            columnDeviations   the standard deviations to be applied to each column
+            row_metadata       the row metadata
+            column_metadata    the column metadata
+            row_deviations     the standard deviations to be applied to each row
+            column_deviations  the standard deviations to be applied to each column
             correlations       the correlation matrix
             relative           the relative covariance flag (default is true)
         """
