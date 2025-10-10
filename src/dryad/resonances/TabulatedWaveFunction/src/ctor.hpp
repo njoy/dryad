@@ -24,7 +24,7 @@ TabulatedWaveFunction& operator=( TabulatedWaveFunction&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param ratios.        the ratio values
+ *  @param ratios         the ratio values
  *  @param values         the wave function values
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
