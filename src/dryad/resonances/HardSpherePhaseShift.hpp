@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_HARDSPHEREPENETRABILITY
-#define NJOY_DRYAD_RESONANCES_HARDSPHEREPENETRABILITY
+#ifndef NJOY_DRYAD_RESONANCES_HARDSPHEREPHASESHIFT
+#define NJOY_DRYAD_RESONANCES_HARDSPHEREPHASESHIFT
 
 // system includes
 
@@ -12,23 +12,23 @@ namespace resonances {
 
   /**
    *  @class
-   *  @brief Hard sphere penetrability functions
+   *  @brief Hard sphere phase shift functions
    */
-  class HardSpherePenetrability :
-      protected scion::math::PolynomialSeriesRatio< double, double > {
+  class HardSpherePhaseShift {
 
     /* fields */
+    scion::math::PolynomialSeriesRatio< double, double > ratio_;
     unsigned int orbital_momentum_;
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/HardSpherePenetrability/src/generateFunction.hpp"
+    #include "dryad/resonances/HardSpherePhaseShift/src/generateFunction.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/HardSpherePenetrability/src/ctor.hpp"
+    #include "dryad/resonances/HardSpherePhaseShift/src/ctor.hpp"
 
     /* methods */
 
@@ -40,14 +40,22 @@ namespace resonances {
       return this->orbital_momentum_;
     }
 
-    using PolynomialSeriesRatio::operator();
+    /**
+     *  @brief Evaluate the phasse shift for a given ratio value
+     *
+     *  @param[in] ratio   the ratio value
+     */
+    double operator()( double ratio ) const {
+
+      return ratio - std::atan( this->ratio_( ratio ) );
+    }
 
     /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const HardSpherePenetrability& right ) const {
+    bool operator==( const HardSpherePhaseShift& right ) const {
 
       return this->orbitalMomentum() == right.orbitalMomentum();
     }
@@ -57,7 +65,7 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const HardSpherePenetrability& right ) const {
+    bool operator!=( const HardSpherePhaseShift& right ) const {
 
       return ! this->operator==( right );
     }

@@ -55,6 +55,7 @@ add_cpp_test( resonances.TabulatedRadius                                 resonan
 add_cpp_test( resonances.ChannelRadii                                    resonances/ChannelRadii.test.cpp )
 add_cpp_test( resonances.HardSpherePenetrability                         resonances/HardSpherePenetrability.test.cpp )
 add_cpp_test( resonances.HardSphereShiftFactor                           resonances/HardSphereShiftFactor.test.cpp )
+add_cpp_test( resonances.HardSpherePhaseShift                            resonances/HardSpherePhaseShift.test.cpp )
 add_cpp_test( resonances.TabulatedWaveFunction                           resonances/TabulatedWaveFunction.test.cpp )
 
 add_cpp_test( Documentation                                              Documentation.test.cpp )

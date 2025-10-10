@@ -32,6 +32,14 @@ namespace resonances {
 
     /* methods */
 
+    /**
+     *  @brief Return the value of the orbital momentum
+     */
+    unsigned int orbitalMomentum() const {
+
+      return this->orbital_momentum_;
+    }
+
     using PolynomialSeriesRatio::operator();
 
     /**
@@ -41,7 +49,7 @@ namespace resonances {
      */
     bool operator==( const HardSphereShiftFactor& right ) const {
 
-      return PolynomialSeriesRatio::operator==( right );
+      return this->orbitalMomentum() == right.orbitalMomentum();
     }
 
     /**
