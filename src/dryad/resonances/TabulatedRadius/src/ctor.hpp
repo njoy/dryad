@@ -30,9 +30,9 @@ TabulatedRadius& operator=( TabulatedRadius&& ) = default;
  *  @param interpolants   the interpolation types of the interpolation regions
  */
 TabulatedRadius( std::vector< double > energies,
-                       std::vector< double > values,
-                       std::vector< std::size_t > boundaries,
-                       std::vector< InterpolationType > interpolants ) :
+                 std::vector< double > values,
+                 std::vector< std::size_t > boundaries,
+                 std::vector< InterpolationType > interpolants ) :
   InterpolationTable( std::move( energies ), std::move( values ),
                       std::move( boundaries ), std::move( interpolants ) ) {}
 
@@ -44,6 +44,6 @@ TabulatedRadius( std::vector< double > energies,
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
 TabulatedRadius( std::vector< double > energies,
-                       std::vector< double > values,
-                       InterpolationType interpolant = InterpolationType::LinearLinear ) :
+                 std::vector< double > values,
+                 InterpolationType interpolant = InterpolationType::LinearLinear ) :
   InterpolationTable( std::move( energies ), std::move( values ), interpolant ) {}
