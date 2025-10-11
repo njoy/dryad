@@ -47,6 +47,12 @@ void wrapHardSpherePenetrability( python::module& module ) {
     "Arguments:\n"
     "    instance    the instance to be copied\n"
   )
+  .def_property_readonly(
+
+    "orbital_momentum",
+    &Component::orbitalMomentum,
+    "The value of the orbital momentum"
+  )
   .def(
 
     "__call__",

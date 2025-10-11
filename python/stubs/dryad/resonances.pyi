@@ -4,7 +4,7 @@ Resonance data
 from __future__ import annotations
 import dryad
 import typing
-__all__: list[str] = ['ChannelRadii', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
 class ChannelRadii:
     """
     Channel radii used in wave function calculations
@@ -113,6 +113,45 @@ class ChannelRadii:
     @shift_factor_radius.setter
     def shift_factor_radius(self, arg1: float | TabulatedRadius | None) -> None:
         ...
+class CoulombPhaseShiftDifference:
+    """
+    Coulomb phase shift difference functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the phase shift difference for a given eta value
+        
+        Arguments:
+            self    the phase shift function
+            eta     the eta value
+        """
+    def __eq__(self, arg0: CoulombPhaseShiftDifference) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the Coulomb phase shift difference function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: CoulombPhaseShiftDifference) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CoulombPhaseShiftDifference) -> bool:
+        ...
+    @property
+    def orbital_momentum(self) -> int:
+        """
+        The value of the orbital momentum
+        """
 class HardSpherePenetrability:
     """
     Hardsphere penetrability functions
@@ -147,6 +186,11 @@ class HardSpherePenetrability:
         """
     def __ne__(self, arg0: HardSpherePenetrability) -> bool:
         ...
+    @property
+    def orbital_momentum(self) -> int:
+        """
+        The value of the orbital momentum
+        """
 class HardSpherePhaseShift:
     """
     Hardsphere phase shift functions
@@ -181,6 +225,11 @@ class HardSpherePhaseShift:
         """
     def __ne__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
+    @property
+    def orbital_momentum(self) -> int:
+        """
+        The value of the orbital momentum
+        """
 class HardSphereShiftFactor:
     """
     Hard sphere shift factor functions
@@ -215,6 +264,11 @@ class HardSphereShiftFactor:
         """
     def __ne__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
+    @property
+    def orbital_momentum(self) -> int:
+        """
+        The value of the orbital momentum
+        """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ResonanceParameters) -> bool:

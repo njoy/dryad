@@ -14,6 +14,7 @@ class Test_dryad_resonances_HardSphereShiftFactor( unittest.TestCase ) :
 
         shift_factor = HardSphereShiftFactor( 0 )
 
+        self.assertEqual( 0, shift_factor.orbital_momentum )
         self.assertAlmostEqual( 0., shift_factor( 0.00 ) )
         self.assertAlmostEqual( 0., shift_factor( 0.25 ) )
         self.assertAlmostEqual( 0., shift_factor( 0.50 ) )
@@ -38,6 +39,7 @@ class Test_dryad_resonances_HardSphereShiftFactor( unittest.TestCase ) :
 
         shift_factor = HardSphereShiftFactor( 1 )
 
+        self.assertEqual( 1, shift_factor.orbital_momentum )
         self.assertAlmostEqual( -1.0                 , shift_factor( 0.00 ) )
         self.assertAlmostEqual( -0.94117647058823528 , shift_factor( 0.25 ) )
         self.assertAlmostEqual( -0.80000000000000004 , shift_factor( 0.50 ) )
@@ -62,6 +64,7 @@ class Test_dryad_resonances_HardSphereShiftFactor( unittest.TestCase ) :
 
         shift_factor = HardSphereShiftFactor( 2 )
 
+        self.assertEqual( 2, shift_factor.orbital_momentum )
         self.assertAlmostEqual( -2.0                , shift_factor( 0.00 ) )
         self.assertAlmostEqual( -1.9787505312367191 , shift_factor( 0.25 ) )
         self.assertAlmostEqual( -1.910828025477707  , shift_factor( 0.50 ) )
@@ -86,6 +89,7 @@ class Test_dryad_resonances_HardSphereShiftFactor( unittest.TestCase ) :
 
         shift_factor = HardSphereShiftFactor( 3 )
 
+        self.assertEqual( 3, shift_factor.orbital_momentum )
         self.assertAlmostEqual( -3.0                , shift_factor( 0.00 ) )
         self.assertAlmostEqual( -2.9874466496002539 , shift_factor( 0.25 ) )
         self.assertAlmostEqual( -2.9490921096071312 , shift_factor( 0.50 ) )
@@ -110,6 +114,7 @@ class Test_dryad_resonances_HardSphereShiftFactor( unittest.TestCase ) :
 
         shift_factor = HardSphereShiftFactor( 4 )
 
+        self.assertEqual( 4, shift_factor.orbital_momentum )
         self.assertAlmostEqual( -4.0                , shift_factor( 0.00 ) )
         self.assertAlmostEqual( -3.99105538787855   , shift_factor( 0.25 ) )
         self.assertAlmostEqual( -3.9640240773828954 , shift_factor( 0.50 ) )
