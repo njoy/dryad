@@ -21,7 +21,7 @@ SCENARIO( "HardSpherePhaseShift" ) {
 
     HardSpherePhaseShift phaseShift( 0 );
 
-    CHECK( 0 == phaseShift.orbitalMomentum() );
+    CHECK( 0 == phaseShift.orbitalAngularMomentum() );
     CHECK_THAT( 0.00, WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 0.25, WithinRel( phaseShift( 0.25 ) ) );
     CHECK_THAT( 0.50, WithinRel( phaseShift( 0.50 ) ) );
@@ -46,7 +46,7 @@ SCENARIO( "HardSpherePhaseShift" ) {
 
     phaseShift = HardSpherePhaseShift( 1 );
 
-    CHECK( 1 == phaseShift.orbitalMomentum() );
+    CHECK( 1 == phaseShift.orbitalAngularMomentum() );
     CHECK_THAT( 0.                  , WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 0.005021336873135857, WithinRel( phaseShift( 0.25 ) ) );
     CHECK_THAT( 0.03635239099919385 , WithinRel( phaseShift( 0.50 ) ) );
@@ -71,7 +71,7 @@ SCENARIO( "HardSpherePhaseShift" ) {
 
     phaseShift = HardSpherePhaseShift( 2 );
 
-    CHECK( 2 == phaseShift.orbitalMomentum() );
+    CHECK( 2 == phaseShift.orbitalAngularMomentum() );
     CHECK_THAT( 0.                   , WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 2.137853917755228e-05, WithinRel( phaseShift( 0.25 ) ) );
     CHECK_THAT( 0.0006532783198699432, WithinRel( phaseShift( 0.50 ) ) );
@@ -96,7 +96,7 @@ SCENARIO( "HardSpherePhaseShift" ) {
 
     phaseShift = HardSpherePhaseShift( 3 );
 
-    CHECK( 3 == phaseShift.orbitalMomentum() );
+    CHECK( 3 == phaseShift.orbitalAngularMomentum() );
     CHECK_THAT( 0.                   , WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 3.837699555364615e-08, WithinRel( phaseShift( 0.25 ) ) );
     CHECK_THAT( 4.769980173235933e-06, WithinRel( phaseShift( 0.50 ) ) );
@@ -121,7 +121,7 @@ SCENARIO( "HardSpherePhaseShift" ) {
 
     phaseShift = HardSpherePhaseShift( 4 );
 
-    CHECK( 4 == phaseShift.orbitalMomentum() );
+    CHECK( 4 == phaseShift.orbitalAngularMomentum() );
     CHECK_THAT( 0.                   , WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 3.816491567221192e-11, WithinRel( phaseShift( 0.25 ) ) );
     CHECK_THAT( 1.911551589239835e-08, WithinRel( phaseShift( 0.50 ) ) );

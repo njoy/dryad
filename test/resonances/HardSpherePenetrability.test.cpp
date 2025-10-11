@@ -18,7 +18,7 @@ SCENARIO( "HardSpherePenetrability" ) {
 
     HardSpherePenetrability penetrability( 0 );
 
-    CHECK( 0 == penetrability.orbitalMomentum() );
+    CHECK( 0 == penetrability.orbitalAngularMomentum() );
     CHECK_THAT( 0.00, WithinRel( penetrability( 0.00 ) ) );
     CHECK_THAT( 0.25, WithinRel( penetrability( 0.25 ) ) );
     CHECK_THAT( 0.50, WithinRel( penetrability( 0.50 ) ) );
@@ -43,7 +43,7 @@ SCENARIO( "HardSpherePenetrability" ) {
 
     penetrability = HardSpherePenetrability( 1 );
 
-    CHECK( 1 == penetrability.orbitalMomentum() );
+    CHECK( 1 == penetrability.orbitalAngularMomentum() );
     CHECK_THAT( 0.0                   , WithinRel( penetrability( 0.00 ) ) );
     CHECK_THAT( 0.014705882352941176  , WithinRel( penetrability( 0.25 ) ) );
     CHECK_THAT( 0.10000000000000001   , WithinRel( penetrability( 0.50 ) ) );
@@ -68,7 +68,7 @@ SCENARIO( "HardSpherePenetrability" ) {
 
     penetrability = HardSpherePenetrability( 2 );
 
-    CHECK( 2 == penetrability.orbitalMomentum() );
+    CHECK( 2 == penetrability.orbitalAngularMomentum() );
     CHECK_THAT( 0.0                   , WithinRel( penetrability( 0.00 ) ) );
     CHECK_THAT( 0.00010624734381640459, WithinRel( penetrability( 0.25 ) ) );
     CHECK_THAT( 0.0031847133757961785 , WithinRel( penetrability( 0.50 ) ) );
@@ -93,7 +93,7 @@ SCENARIO( "HardSpherePenetrability" ) {
 
     penetrability = HardSpherePenetrability( 3 );
 
-    CHECK( 3 == penetrability.orbitalMomentum() );
+    CHECK( 3 == penetrability.orbitalAngularMomentum() );
     CHECK_THAT( 0.0                   , WithinRel( penetrability( 0.00 ) ) );
     CHECK_THAT( 2.6789053349863964e-07, WithinRel( penetrability( 0.25 ) ) );
     CHECK_THAT( 3.3014196104324863e-05, WithinRel( penetrability( 0.50 ) ) );
@@ -118,7 +118,7 @@ SCENARIO( "HardSpherePenetrability" ) {
 
     penetrability = HardSpherePenetrability( 4 );
 
-    CHECK( 4 == penetrability.orbitalMomentum() );
+    CHECK( 4 == penetrability.orbitalAngularMomentum() );
     CHECK_THAT( 0.0                   , WithinRel( penetrability( 0.00 ) ) );
     CHECK_THAT( 3.4292596900052667e-10, WithinRel( penetrability( 0.25 ) ) );
     CHECK_THAT( 1.7091673927779473e-07, WithinRel( penetrability( 0.50 ) ) );

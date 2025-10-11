@@ -148,9 +148,9 @@ class CoulombPhaseShiftDifference:
     def __ne__(self, arg0: CoulombPhaseShiftDifference) -> bool:
         ...
     @property
-    def orbital_momentum(self) -> int:
+    def orbital_angular_momentum(self) -> int:
         """
-        The value of the orbital momentum
+        The value of the orbital angular momentum
         """
 class HardSpherePenetrability:
     """
@@ -187,9 +187,9 @@ class HardSpherePenetrability:
     def __ne__(self, arg0: HardSpherePenetrability) -> bool:
         ...
     @property
-    def orbital_momentum(self) -> int:
+    def orbital_angular_momentum(self) -> int:
         """
-        The value of the orbital momentum
+        The value of the orbital angular momentum
         """
 class HardSpherePhaseShift:
     """
@@ -226,9 +226,9 @@ class HardSpherePhaseShift:
     def __ne__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
     @property
-    def orbital_momentum(self) -> int:
+    def orbital_angular_momentum(self) -> int:
         """
-        The value of the orbital momentum
+        The value of the orbital angular momentum
         """
 class HardSphereShiftFactor:
     """
@@ -265,9 +265,9 @@ class HardSphereShiftFactor:
     def __ne__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
     @property
-    def orbital_momentum(self) -> int:
+    def orbital_angular_momentum(self) -> int:
         """
-        The value of the orbital momentum
+        The value of the orbital angular momentum
         """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None

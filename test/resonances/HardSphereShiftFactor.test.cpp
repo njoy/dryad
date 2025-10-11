@@ -18,7 +18,7 @@ SCENARIO( "HardSphereShiftFactor" ) {
 
     HardSphereShiftFactor shiftFactor( 0 );
 
-    CHECK( 0 == shiftFactor.orbitalMomentum() );
+    CHECK( 0 == shiftFactor.orbitalAngularMomentum() );
     CHECK_THAT( 0., WithinRel( shiftFactor( 0.00 ) ) );
     CHECK_THAT( 0., WithinRel( shiftFactor( 0.25 ) ) );
     CHECK_THAT( 0., WithinRel( shiftFactor( 0.50 ) ) );
@@ -43,7 +43,7 @@ SCENARIO( "HardSphereShiftFactor" ) {
 
     shiftFactor = HardSphereShiftFactor( 1 );
 
-    CHECK( 1 == shiftFactor.orbitalMomentum() );
+    CHECK( 1 == shiftFactor.orbitalAngularMomentum() );
     CHECK_THAT( -1.0                 , WithinRel( shiftFactor( 0.00 ) ) );
     CHECK_THAT( -0.94117647058823528 , WithinRel( shiftFactor( 0.25 ) ) );
     CHECK_THAT( -0.80000000000000004 , WithinRel( shiftFactor( 0.50 ) ) );
@@ -68,7 +68,7 @@ SCENARIO( "HardSphereShiftFactor" ) {
 
     shiftFactor = HardSphereShiftFactor( 2 );
 
-    CHECK( 2 == shiftFactor.orbitalMomentum() );
+    CHECK( 2 == shiftFactor.orbitalAngularMomentum() );
     CHECK_THAT( -2.0                , WithinRel( shiftFactor( 0.00 ) ) );
     CHECK_THAT( -1.9787505312367191 , WithinRel( shiftFactor( 0.25 ) ) );
     CHECK_THAT( -1.910828025477707  , WithinRel( shiftFactor( 0.50 ) ) );
@@ -93,7 +93,7 @@ SCENARIO( "HardSphereShiftFactor" ) {
 
     shiftFactor = HardSphereShiftFactor( 3 );
 
-    CHECK( 3 == shiftFactor.orbitalMomentum() );
+    CHECK( 3 == shiftFactor.orbitalAngularMomentum() );
     CHECK_THAT( -3.0                , WithinRel( shiftFactor( 0.00 ) ) );
     CHECK_THAT( -2.9874466496002539 , WithinRel( shiftFactor( 0.25 ) ) );
     CHECK_THAT( -2.9490921096071312 , WithinRel( shiftFactor( 0.50 ) ) );
@@ -118,7 +118,7 @@ SCENARIO( "HardSphereShiftFactor" ) {
 
     shiftFactor = HardSphereShiftFactor( 4 );
 
-    CHECK( 4 == shiftFactor.orbitalMomentum() );
+    CHECK( 4 == shiftFactor.orbitalAngularMomentum() );
     CHECK_THAT( -4.0                , WithinRel( shiftFactor( 0.00 ) ) );
     CHECK_THAT( -3.99105538787855   , WithinRel( shiftFactor( 0.25 ) ) );
     CHECK_THAT( -3.9640240773828954 , WithinRel( shiftFactor( 0.50 ) ) );

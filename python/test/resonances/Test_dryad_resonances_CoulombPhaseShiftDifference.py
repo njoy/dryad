@@ -14,7 +14,7 @@ class Test_dryad_resonances_CoulombPhaseShiftDifference( unittest.TestCase ) :
 
         w = CoulombPhaseShiftDifference( 0 )
 
-        self.assertEqual( 0, w.orbital_momentum )
+        self.assertEqual( 0, w.orbital_angular_momentum )
         self.assertAlmostEqual( 0., w( 0.00 ) )
         self.assertAlmostEqual( 0., w( 0.25 ) )
         self.assertAlmostEqual( 0., w( 0.50 ) )
@@ -39,7 +39,7 @@ class Test_dryad_resonances_CoulombPhaseShiftDifference( unittest.TestCase ) :
 
         w = CoulombPhaseShiftDifference( 1 )
 
-        self.assertEqual( 1, w.orbital_momentum )
+        self.assertEqual( 1, w.orbital_angular_momentum )
         self.assertAlmostEqual( 0                , w( 0.00 ) )
         self.assertAlmostEqual( 0.244978663126864, w( 0.25 ) )
         self.assertAlmostEqual( 0.463647609000806, w( 0.50 ) )
@@ -64,7 +64,7 @@ class Test_dryad_resonances_CoulombPhaseShiftDifference( unittest.TestCase ) :
 
         w = CoulombPhaseShiftDifference( 2 )
 
-        self.assertEqual( 2, w.orbital_momentum )
+        self.assertEqual( 2, w.orbital_angular_momentum )
         self.assertAlmostEqual( 0                , w( 0.00 ) )
         self.assertAlmostEqual( 0.369333657673626, w( 0.25 ) )
         self.assertAlmostEqual( 0.708626272127670, w( 0.50 ) )
@@ -89,7 +89,7 @@ class Test_dryad_resonances_CoulombPhaseShiftDifference( unittest.TestCase ) :
 
         w = CoulombPhaseShiftDifference( 3 )
 
-        self.assertEqual( 3, w.orbital_momentum )
+        self.assertEqual( 3, w.orbital_angular_momentum )
         self.assertAlmostEqual( 0                , w( 0.00 ) )
         self.assertAlmostEqual( 0.452474889562067, w( 0.25 ) )
         self.assertAlmostEqual( 0.873774949542297, w( 0.50 ) )
@@ -114,7 +114,7 @@ class Test_dryad_resonances_CoulombPhaseShiftDifference( unittest.TestCase ) :
 
         w = CoulombPhaseShiftDifference( 4 )
 
-        self.assertEqual( 4, w.orbital_momentum )
+        self.assertEqual( 4, w.orbital_angular_momentum )
         self.assertAlmostEqual( 0                , w( 0.00 ) )
         self.assertAlmostEqual( 0.514893699558024, w( 0.25 ) )
         self.assertAlmostEqual( 0.998129944089059, w( 0.50 ) )

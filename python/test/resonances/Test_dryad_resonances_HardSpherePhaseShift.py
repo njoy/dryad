@@ -14,7 +14,7 @@ class Test_dryad_resonances_HardSpherePhaseShift( unittest.TestCase ) :
 
         phase_shift = HardSpherePhaseShift( 0 )
 
-        self.assertEqual( 0, phase_shift.orbital_momentum )
+        self.assertEqual( 0, phase_shift.orbital_angular_momentum )
         self.assertAlmostEqual( 0.00, phase_shift( 0.00 ) )
         self.assertAlmostEqual( 0.25, phase_shift( 0.25 ) )
         self.assertAlmostEqual( 0.50, phase_shift( 0.50 ) )
@@ -39,7 +39,7 @@ class Test_dryad_resonances_HardSpherePhaseShift( unittest.TestCase ) :
 
         phase_shift = HardSpherePhaseShift( 1 )
 
-        self.assertEqual( 1, phase_shift.orbital_momentum )
+        self.assertEqual( 1, phase_shift.orbital_angular_momentum )
         self.assertAlmostEqual( 0.                  , phase_shift( 0.00 ) )
         self.assertAlmostEqual( 0.005021336873135857, phase_shift( 0.25 ) )
         self.assertAlmostEqual( 0.03635239099919385 , phase_shift( 0.50 ) )
@@ -64,7 +64,7 @@ class Test_dryad_resonances_HardSpherePhaseShift( unittest.TestCase ) :
 
         phase_shift = HardSpherePhaseShift( 2 )
 
-        self.assertEqual( 2, phase_shift.orbital_momentum )
+        self.assertEqual( 2, phase_shift.orbital_angular_momentum )
         self.assertAlmostEqual( 0.                   , phase_shift( 0.00 ) )
         self.assertAlmostEqual( 2.137853917755228e-05, phase_shift( 0.25 ) )
         self.assertAlmostEqual( 0.0006532783198699432, phase_shift( 0.50 ) )
@@ -89,7 +89,7 @@ class Test_dryad_resonances_HardSpherePhaseShift( unittest.TestCase ) :
 
         phase_shift = HardSpherePhaseShift( 3 )
 
-        self.assertEqual( 3, phase_shift.orbital_momentum )
+        self.assertEqual( 3, phase_shift.orbital_angular_momentum )
         self.assertAlmostEqual( 0.                   , phase_shift( 0.00 ) )
         self.assertAlmostEqual( 3.837699555364615e-08, phase_shift( 0.25 ) )
         self.assertAlmostEqual( 4.769980173235933e-06, phase_shift( 0.50 ) )
@@ -114,7 +114,7 @@ class Test_dryad_resonances_HardSpherePhaseShift( unittest.TestCase ) :
 
         phase_shift = HardSpherePhaseShift( 4 )
 
-        self.assertEqual( 4, phase_shift.orbital_momentum )
+        self.assertEqual( 4, phase_shift.orbital_angular_momentum )
         self.assertAlmostEqual( 0.                   , phase_shift( 0.00 ) )
         self.assertAlmostEqual( 3.816491567221192e-11, phase_shift( 0.25 ) )
         self.assertAlmostEqual( 1.911551589239835e-08, phase_shift( 0.50 ) )

@@ -49,9 +49,9 @@ void wrapCoulombPhaseShiftDifference( python::module& module ) {
   )
   .def_property_readonly(
 
-    "orbital_momentum",
-    &Component::orbitalMomentum,
-    "The value of the orbital momentum"
+    "orbital_angular_momentum",
+    &Component::orbitalAngularMomentum,
+    "The value of the orbital angular momentum"
   )
   .def(
 

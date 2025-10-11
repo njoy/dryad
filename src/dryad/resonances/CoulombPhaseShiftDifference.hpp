@@ -29,9 +29,9 @@ namespace resonances {
     /* methods */
 
     /**
-     *  @brief Return the value of the orbital momentum
+     *  @brief Return the value of the orbital angular momentum
      */
-    unsigned int orbitalMomentum() const {
+    unsigned int orbitalAngularMomentum() const {
 
       return this->orbital_momentum_;
     }
@@ -44,7 +44,7 @@ namespace resonances {
     double operator()( double eta ) const {
 
       double w = 0;
-      for ( unsigned int i = 1; i < this->orbitalMomentum() + 1; ++i ) {
+      for ( unsigned int i = 1; i < this->orbitalAngularMomentum() + 1; ++i ) {
 
         w += std::atan( eta / i );
       }
@@ -58,7 +58,7 @@ namespace resonances {
      */
     bool operator==( const CoulombPhaseShiftDifference& right ) const {
 
-      return this->orbitalMomentum() == right.orbitalMomentum();
+      return this->orbitalAngularMomentum() == right.orbitalAngularMomentum();
     }
 
     /**
