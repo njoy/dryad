@@ -21,6 +21,7 @@ SCENARIO( "CoulombPhaseShiftDifference" ) {
 
     CoulombPhaseShiftDifference w( 0 );
 
+    CHECK( 0 == w.orbitalMomentum() );
     CHECK_THAT( 0., WithinRel( w( 0.00 ) ) );
     CHECK_THAT( 0., WithinRel( w( 0.25 ) ) );
     CHECK_THAT( 0., WithinRel( w( 0.50 ) ) );
@@ -45,6 +46,7 @@ SCENARIO( "CoulombPhaseShiftDifference" ) {
 
     w = CoulombPhaseShiftDifference( 1 );
 
+    CHECK( 1 == w.orbitalMomentum() );
     CHECK_THAT( 0                , WithinRel( w( 0.00 ) ) );
     CHECK_THAT( 0.244978663126864, WithinRel( w( 0.25 ) ) );
     CHECK_THAT( 0.463647609000806, WithinRel( w( 0.50 ) ) );
@@ -69,6 +71,7 @@ SCENARIO( "CoulombPhaseShiftDifference" ) {
 
     w = CoulombPhaseShiftDifference( 2 );
 
+    CHECK( 2 == w.orbitalMomentum() );
     CHECK_THAT( 0                , WithinRel( w( 0.00 ) ) );
     CHECK_THAT( 0.369333657673626, WithinRel( w( 0.25 ) ) );
     CHECK_THAT( 0.708626272127670, WithinRel( w( 0.50 ) ) );
@@ -93,6 +96,7 @@ SCENARIO( "CoulombPhaseShiftDifference" ) {
 
     w = CoulombPhaseShiftDifference( 3 );
 
+    CHECK( 3 == w.orbitalMomentum() );
     CHECK_THAT( 0                , WithinRel( w( 0.00 ) ) );
     CHECK_THAT( 0.452474889562067, WithinRel( w( 0.25 ) ) );
     CHECK_THAT( 0.873774949542297, WithinRel( w( 0.50 ) ) );
@@ -117,6 +121,7 @@ SCENARIO( "CoulombPhaseShiftDifference" ) {
 
     w = CoulombPhaseShiftDifference( 4 );
 
+    CHECK( 4 == w.orbitalMomentum() );
     CHECK_THAT( 0                , WithinRel( w( 0.00 ) ) );
     CHECK_THAT( 0.514893699558024, WithinRel( w( 0.25 ) ) );
     CHECK_THAT( 0.998129944089059, WithinRel( w( 0.50 ) ) );
