@@ -32,4 +32,25 @@ SCENARIO( "ChannelQuantumNumbers" ) {
 //      CHECK( "{1,1/2,3/2+}" == numbers.toString() );
     } // THEN
   } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of Documentation are given" ) {
+
+      ChannelQuantumNumbers left( 1, 0.5, 1.5, +1 );
+      ChannelQuantumNumbers equal( 1, 0.5, 1.5, +1 );
+      ChannelQuantumNumbers different( 0, 0.5, 1.5, -1 );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
