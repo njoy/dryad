@@ -1,0 +1,72 @@
+// system includes
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+// local includes
+#include "definitions.hpp"
+#include "dryad/resonances/CoulombPhaseShiftDifference.hpp"
+
+#include "scion/math/horner.hpp"
+
+// namespace aliases
+namespace python = pybind11;
+
+namespace resonances {
+
+void wrapCoulombPhaseShiftDifference( python::module& module ) {
+
+  // type aliases
+  using Component = njoy::dryad::resonances::CoulombPhaseShiftDifference;
+
+  // wrap views created by this component
+
+  // create the component
+  python::class_< Component > component(
+
+    module,
+    "CoulombPhaseShiftDifference",
+    "Coulomb phase shift difference functions"
+   );
+
+  // wrap the component
+  component
+  .def(
+
+    python::init< unsigned int >(),
+    python::arg( "orbital_momentum" ),
+    "Initialise the Coulomb phase shift difference function\n\n"
+    "Arguments:\n"
+    "    self               the function\n"
+    "    orbital_momentum   the value of the orbital momentum"
+  )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
+  .def_property_readonly(
+
+    "orbital_momentum",
+    &Component::orbitalMomentum,
+    "The value of the orbital momentum"
+  )
+  .def(
+
+    "__call__",
+    [] ( const Component& self, double ratio ) -> decltype(auto)
+       { return self( ratio ); },
+    python::arg( "cosine" ),
+    "Evaluate the phase shift difference for a given eta value\n\n"
+    "Arguments:\n"
+    "    self    the phase shift function\n"
+    "    eta     the eta value"
+  );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+}
+
+} // resonances namespace

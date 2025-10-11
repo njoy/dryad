@@ -50,6 +50,7 @@ add_python_test( resonances.ChannelRadii                 resonances/Test_dryad_r
 add_python_test( resonances.HardSpherePenetrability      resonances/Test_dryad_resonances_HardSpherePenetrability.py )
 add_python_test( resonances.HardSphereShiftFactor        resonances/Test_dryad_resonances_HardSphereShiftFactor.py )
 add_python_test( resonances.HardSpherePhaseShift         resonances/Test_dryad_resonances_HardSpherePhaseShift.py )
+add_python_test( resonances.CoulombPhaseShiftDifference  resonances/Test_dryad_resonances_CoulombPhaseShiftDifference.py )
 add_python_test( resonances.TabulatedWaveFunction        resonances/Test_dryad_resonances_TabulatedWaveFunction.py )
 
 add_python_test( Documentation                           Test_dryad_Documentation.py )
