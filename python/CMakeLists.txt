@@ -19,6 +19,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/ElectronSubshellConfiguration.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceParameters.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelQuantumNumbers.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/TabulatedRadius.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelRadii.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/HardSpherePenetrability.python.cpp

@@ -4,7 +4,60 @@ Resonance data
 from __future__ import annotations
 import dryad
 import typing
-__all__: list[str] = ['ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+class ChannelQuantumNumbers:
+    """
+    The l,S,Jpi quantum numbers of a reaction channel
+    
+    The ChannelQuantumNumbers class contains the quantum numbers associated to
+    a given reaction channel. Only channels that have the same Jpi contribute
+    to the cross section of a given reaction.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, l: int, s: float, J: float, parity: int) -> None:
+        """
+        Initialise the channel quantum numbers
+        
+        Arguments:
+            self     the quantum numbers
+            l        the orbital angular momentum
+            s        the channel spin
+            J        the total angular momentum
+            parity   the parity
+        """
+    @typing.overload
+    def __init__(self, instance: ChannelQuantumNumbers) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum l of the channel
+        """
+    @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def spin(self) -> float:
+        """
+        The channel spin
+        """
+    @property
+    def total_angular_momentum(self) -> float:
+        """
+        The total angular momentum J of the channels
+        """
 class ChannelRadii:
     """
     Channel radii used in wave function calculations

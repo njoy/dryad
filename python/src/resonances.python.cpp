@@ -10,6 +10,7 @@ namespace python = pybind11;
 namespace resonances {
 
   // declarations - components
+  void wrapChannelQuantumNumbers( python::module& );
   void wrapTabulatedRadius( python::module& );
   void wrapChannelRadii( python::module& );
   void wrapHardSpherePenetrability( python::module& );
@@ -31,6 +32,7 @@ void wrapResonances( python::module& module ) {
   );
 
   // components
+  resonances::wrapChannelQuantumNumbers( submodule );
   resonances::wrapTabulatedRadius( submodule );
   resonances::wrapChannelRadii( submodule );
   resonances::wrapHardSpherePenetrability( submodule );
