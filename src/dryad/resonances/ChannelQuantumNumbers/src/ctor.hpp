@@ -1,4 +1,15 @@
 /**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+ChannelQuantumNumbers() = default;
+
+ChannelQuantumNumbers( const ChannelQuantumNumbers& ) = default;
+ChannelQuantumNumbers( ChannelQuantumNumbers&& ) = default;
+
+ChannelQuantumNumbers& operator=( const ChannelQuantumNumbers& ) = default;
+ChannelQuantumNumbers& operator=( ChannelQuantumNumbers&& ) = default;
+
+/**
  *  @brief Constructor
  *
  *  @param[in] l        the orbital angular momentum
