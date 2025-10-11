@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_HARDSPHEREPHASESHIFT
 
 // system includes
+#include <cmath>
 
 // other includes
 #include "scion/math/PolynomialSeriesRatio.hpp"
