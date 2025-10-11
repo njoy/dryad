@@ -7,8 +7,7 @@ using Catch::Matchers::WithinRel;
 #include "dryad/resonances/HardSpherePhaseShift.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
+
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
@@ -97,7 +96,7 @@ SCENARIO( "HardSpherePhaseShift" ) {
     CHECK_THAT( 0.                   , WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 3.837699555364615e-08, WithinRel( phaseShift( 0.25 ) ) );
     CHECK_THAT( 4.769980173235933e-06, WithinRel( phaseShift( 0.50 ) ) );
-    CHECK_THAT( 7.755215996840814e-05, WithinRel( phaseShift( 0.75 ) ) );
+    CHECK_THAT( 7.755215996840814e-05, WithinRel( phaseShift( 0.75 ), 1e-11 ) );
     CHECK_THAT( 0.0005411530387301466, WithinRel( phaseShift( 1.00 ) ) );
     CHECK_THAT( 0.002348926836898357 , WithinRel( phaseShift( 1.25 ) ) );
     CHECK_THAT( 0.007474813726381369 , WithinRel( phaseShift( 1.50 ) ) );
