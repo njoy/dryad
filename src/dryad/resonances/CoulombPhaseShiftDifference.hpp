@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_COULOMBPHASESHIFTDIFFERENCE
 
 // system includes
+#include <cmath>
 
 // other includes
 
