@@ -13,6 +13,8 @@ namespace resonances {
   /**
    *  @class
    *  @brief Hard sphere penetrability functions
+
+   *  @todo c++20 : use defaulted comparison operators
    */
   class HardSpherePenetrability :
       protected scion::math::PolynomialSeriesRatio< double, double > {
@@ -43,23 +45,27 @@ namespace resonances {
     using PolynomialSeriesRatio::operator();
 
     /**
-     *  @brief Comparison operator: equal
+     *  @brief Equality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const HardSpherePenetrability& right ) const {
+    friend bool operator==( const HardSpherePenetrability& left,
+                            const HardSpherePenetrability& right ) {
 
-      return this->orbitalAngularMomentum() == right.orbitalAngularMomentum();
+      return left.orbitalAngularMomentum() == right.orbitalAngularMomentum();
     }
 
     /**
-     *  @brief Comparison operator: not equal
+     *  @brief Inequality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const HardSpherePenetrability& right ) const {
+    friend bool operator!=( const HardSpherePenetrability& left,
+                            const HardSpherePenetrability& right ) {
 
-      return ! this->operator==( right );
+      return ! ( left == right );
     }
   };
 

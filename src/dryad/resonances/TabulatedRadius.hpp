@@ -17,6 +17,8 @@ namespace resonances {
    *  @brief A radius table
    *
    *  The radius is given in femto meters (fm).
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
   class TabulatedRadius :
       protected scion::math::InterpolationTable< double, double > {
