@@ -29,7 +29,206 @@ SCENARIO( "ChannelQuantumNumbers" ) {
       CHECK( 0.5 == numbers.spin() );
       CHECK( 1.5 == numbers.totalAngularMomentum() );
       CHECK( +1 == numbers.parity() );
-//      CHECK( "{1,1/2,3/2+}" == numbers.toString() );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "valid values for l, i, I and s quantum numbers" ) {
+
+    THEN( "the allowed channel spin values are generated" ) {
+
+      // i=0.0, I=0.0, 0.5, 1.0
+      auto values = ChannelQuantumNumbers::allowedChannelSpinValues( 0, 0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 0.0, 0.5 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 0.0, 1.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      // i=0.5, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 0.5, 0.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 0.5, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 0.5, 1.0 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      // i=1.0, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 1.0, 0.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 1.0, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedChannelSpinValues( 1.0, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+    } // THEN
+
+    THEN( "the allowed total angular momentum values are generated "
+          "using the incident particle and target spins" ) {
+
+      // l=0, i=0.0, I=0.0, 0.5, 1.0
+      auto values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0, 0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0.0, 0.5 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0.0, 1.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      // l=0, i=0.5, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0.5, 0.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0.5, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0.5, 1.0 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      // l=0, i=1.0, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 1.0, 0.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 1.0, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 1.0, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+
+      // l=1, i=0.0, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.0, 0.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.0, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.0, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+
+      // l=1, i=0.5, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.5, 0.0 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.5, 0.5 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.5, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+      CHECK_THAT( 2.5, WithinRel( values[2] ) );
+
+      // l=1, i=1.0, I=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 1.0, 0.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 1.0, 0.5 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+      CHECK_THAT( 2.5, WithinRel( values[2] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 1.0, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+      CHECK_THAT( 2.0, WithinRel( values[1] ) );
+      CHECK_THAT( 3.0, WithinRel( values[2] ) );
+    } // THEN
+
+    THEN( "the allowed total angular momentum values are generated "
+          "using the channel spin" ) {
+
+      // l=0, s=0.0, 0.5, 1.0
+      auto values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 0.5 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 0, 1.0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      // l=1, s=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 0.5, WithinRel( values[0] ) );
+      CHECK_THAT( 1.5, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+
+      // l=2, s=0.0, 0.5, 1.0
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 2, 0 );
+      CHECK( 1 == values.size() );
+      CHECK_THAT( 2.0, WithinRel( values[0] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 2, 0.5 );
+      CHECK( 2 == values.size() );
+      CHECK_THAT( 1.5, WithinRel( values[0] ) );
+      CHECK_THAT( 2.5, WithinRel( values[1] ) );
+
+      values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 2, 1.0 );
+      CHECK( 3 == values.size() );
+      CHECK_THAT( 1.0, WithinRel( values[0] ) );
+      CHECK_THAT( 2.0, WithinRel( values[1] ) );
+      CHECK_THAT( 3.0, WithinRel( values[2] ) );
     } // THEN
   } // GIVEN
 

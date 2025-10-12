@@ -28,6 +28,16 @@ namespace resonances {
 
     /* auxiliary functions */
 
+    static std::vector< double > generateValues( double min, double max ) {
+
+      std::vector< double > values = { min };
+      while ( max > values.back() ) {
+
+        values.push_back( values.back() + 1.0 );
+      }
+      return values;
+    }
+
   public:
 
     /* constructor */
@@ -52,6 +62,57 @@ namespace resonances {
      *  @brief Return the parity
      */
     short parity() const { return this->parity_; }
+
+    /**
+     *  @brief Calculate allowed values for the channel spin s
+     *
+     *  The channel spin s can only have values between abs(i - I) and i + I
+     *  where i is the spin of the incident particle (for a neutron that
+     *  would be 0.5) and I is the spin of the target nucleus.
+     *
+     *  @param[in] i   the spin of the incident particle
+     *  @param[in] I   the spin of the target nucleus
+     */
+    static std::vector< double >
+    allowedChannelSpinValues( double i, double I ) {
+
+      return generateValues( std::abs( i - I ), i + I );
+    }
+
+    /**
+     *  @brief Calculate allowed values for the total angular momentum J
+     *
+     *  The total angular momentum J for a channel can only have values between
+     *  abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
+     *  of the incoming wave, i is the spin of the incident particle and I is the
+     *  spin of the target nucleus.
+     *
+     *  @param[in] l   the orbital angular momentum
+     *  @param[in] i   the spin of the incident particle
+     *  @param[in] I   the spin of the target nucleus
+     */
+    static std::vector< double >
+    allowedTotalAngularMomentumValues( unsigned int l, double i, double I ) {
+
+      return generateValues( std::abs( std::abs( l - I ) - i ), l + I +i );
+    }
+
+    /**
+     *  @brief Calculate possible values for the total angular momentum J
+     *
+     *  The total angular momentum J for a channel can only have values between
+     *  abs(l - s) and l + s where l is the orbital momentum of the incoming wave
+     *  and s is the channel spin (which in turn depends on the spin i of the
+     *  incident particle and spin I of the target nucleus).
+     *
+     *  @param[in] l   the orbital angular momentum
+     *  @param[in] s   the channel spin
+     */
+    static std::vector< double >
+    allowedTotalAngularMomentumValues( unsigned int l, double s ) {
+
+      return generateValues( std::abs(l - s), l + s );
+    }
 
     /**
      *  @brief Comparison operator: equal
