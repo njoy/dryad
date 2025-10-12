@@ -120,8 +120,8 @@ void wrapChannelQuantumNumbers( python::module& module ) {
   )
   ;
 
-  // add standard equality comparison definitions
-  addStandardEqualityComparisonDefinitions< Component >( component );
+  // add standard comparison definitions
+  addStandardComparisonDefinitions< Component >( component );
 }
 
 } // resonances namespace

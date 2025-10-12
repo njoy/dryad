@@ -252,17 +252,27 @@ class Test_dryad_resonances_ChannelQuantumNumbers( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = ChannelQuantumNumbers( l = 1, s = 0.5, J = 1.5, parity = +1 )
-        equal = ChannelQuantumNumbers( l = 1, s = 0.5, J = 1.5, parity = +1 )
-        different = ChannelQuantumNumbers( l = 0, s = 0.5, J = 1.5, parity = -1 )
+        id1 = ChannelQuantumNumbers( 0, 0.5, 0.5, +1 )
+        id2 = ChannelQuantumNumbers( 1, 0.5, 0.5, +1 )
 
-        self.assertEqual( True, ( left == left ) )
-        self.assertEqual( True, ( left == equal ) )
-        self.assertEqual( False, ( left == different ) )
-
-        self.assertEqual( False, ( left != left ) )
-        self.assertEqual( False, ( left != equal ) )
-        self.assertEqual( True, ( left != different ) )
+        self.assertEqual( id1 <  id1, False )
+        self.assertEqual( id1 <= id1, True )
+        self.assertEqual( id1 >  id1, False )
+        self.assertEqual( id1 >= id1, True )
+        self.assertEqual( id1 == id1, True )
+        self.assertEqual( id1 != id1, False )
+        self.assertEqual( id1 <  id2, True )
+        self.assertEqual( id1 <= id2, True )
+        self.assertEqual( id1 >  id2, False )
+        self.assertEqual( id1 >= id2, False )
+        self.assertEqual( id1 == id2, False )
+        self.assertEqual( id1 != id2, True )
+        self.assertEqual( id2 <  id1, False )
+        self.assertEqual( id2 <= id1, False )
+        self.assertEqual( id2 >  id1, True )
+        self.assertEqual( id2 >= id1, True )
+        self.assertEqual( id2 == id1, False )
+        self.assertEqual( id2 != id1, True )
 
 if __name__ == '__main__' :
 

@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_CHANNELQUANTUMNUMBERS
 
 // system includes
+#include <tuple>
 
 // other includes
 
@@ -12,6 +13,8 @@ namespace resonances {
   /**
    *  @class
    *  @brief The l,S,Jpi quantum numbers of a reaction channel
+   *
+   *  @todo c++20 : use defaulted comparison operators instead of std::tie
    *
    *  The ChannelQuantumNumbers class contains the quantum numbers associated to
    *  a given reaction channel. Only channels that have the same Jpi contribute
@@ -115,26 +118,81 @@ namespace resonances {
     }
 
     /**
-     *  @brief Comparison operator: equal
+     *  @brief Equality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ChannelQuantumNumbers& right ) const {
+    friend bool operator==( const ChannelQuantumNumbers& left,
+                            const ChannelQuantumNumbers& right ) {
 
-      return this->orbitalAngularMomentum() == right.orbitalAngularMomentum() &&
-             this->spin() == right.spin() &&
-             this->totalAngularMomentum() == right.totalAngularMomentum() &&
-             this->parity() == right.parity();
+      return std::tie( left.l_, left.s_,
+                       left.J_, left.parity_ ) ==
+             std::tie( right.l_, right.s_,
+                       right.J_, right.parity_ );
     }
 
     /**
-     *  @brief Comparison operator: not equal
+     *  @brief Inequality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ChannelQuantumNumbers& right ) const {
+    friend bool operator!=( const ChannelQuantumNumbers& left,
+                            const ChannelQuantumNumbers& right ) {
 
-      return ! this->operator==( right );
+      return ! ( left == right );
+    }
+
+    /**
+     *  @brief Less than comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend bool operator<( const ChannelQuantumNumbers& left,
+                           const ChannelQuantumNumbers& right ) {
+
+      return std::tie( left.l_, left.s_,
+                       left.J_, left.parity_ ) <
+             std::tie( right.l_, right.s_,
+                       right.J_, right.parity_ );
+    }
+
+    /**
+     *  @brief Greater than comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend auto operator>( const ChannelQuantumNumbers& left,
+                           const ChannelQuantumNumbers& right ) {
+
+      return right < left;
+    }
+
+    /**
+     *  @brief Less than or equality comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend auto operator<=( const ChannelQuantumNumbers& left,
+                            const ChannelQuantumNumbers& right ) {
+
+      return ! ( right < left );
+    }
+
+    /**
+     *  @brief Greater than or equality comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend auto operator>=( const ChannelQuantumNumbers& left,
+                            const ChannelQuantumNumbers& right ) {
+
+      return ! ( left < right );
     }
   };
 

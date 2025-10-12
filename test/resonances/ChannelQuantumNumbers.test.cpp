@@ -232,24 +232,31 @@ SCENARIO( "ChannelQuantumNumbers" ) {
     } // THEN
   } // GIVEN
 
-  GIVEN( "comparison operators" ) {
+  GIVEN( "valid ChannelQuantumNumbers instances" ) {
 
-    WHEN( "two instances of Documentation are given" ) {
+    ChannelQuantumNumbers id1( 0, 0.5, 0.5, +1 );
+    ChannelQuantumNumbers id2( 1, 0.5, 0.5, +1 );
 
-      ChannelQuantumNumbers left( 1, 0.5, 1.5, +1 );
-      ChannelQuantumNumbers equal( 1, 0.5, 1.5, +1 );
-      ChannelQuantumNumbers different( 0, 0.5, 1.5, -1 );
+    THEN( "instances can be compared" ) {
 
-      THEN( "they can be compared" ) {
-
-        CHECK( true == ( left == left ) );
-        CHECK( true == ( left == equal ) );
-        CHECK( false == ( left == different ) );
-
-        CHECK( false == ( left != left ) );
-        CHECK( false == ( left != equal ) );
-        CHECK( true == ( left != different ) );
-      } // THEN
-    } // WHEN
+      CHECK( ( id1 <  id1 ) == false );
+      CHECK( ( id1 <= id1 ) == true );
+      CHECK( ( id1 >  id1 ) == false );
+      CHECK( ( id1 >= id1 ) == true );
+      CHECK( ( id1 == id1 ) == true );
+      CHECK( ( id1 != id1 ) == false );
+      CHECK( ( id1 <  id2 ) == true );
+      CHECK( ( id1 <= id2 ) == true );
+      CHECK( ( id1 >  id2 ) == false );
+      CHECK( ( id1 >= id2 ) == false );
+      CHECK( ( id1 == id2 ) == false );
+      CHECK( ( id1 != id2 ) == true );
+      CHECK( ( id2 <  id1 ) == false );
+      CHECK( ( id2 <= id1 ) == false );
+      CHECK( ( id2 >  id1 ) == true );
+      CHECK( ( id2 >= id1 ) == true );
+      CHECK( ( id2 == id1 ) == false );
+      CHECK( ( id2 != id1 ) == true );
+    } // THEN
   } // GIVEN
 } // SCENARIO

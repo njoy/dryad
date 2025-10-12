@@ -56,6 +56,10 @@ class ChannelQuantumNumbers:
         """
     def __eq__(self, arg0: ChannelQuantumNumbers) -> bool:
         ...
+    def __ge__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    def __gt__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
     @typing.overload
     def __init__(self, l: int, s: float, J: float, parity: int) -> None:
         """
@@ -76,6 +80,10 @@ class ChannelQuantumNumbers:
         Arguments:
             instance    the instance to be copied
         """
+    def __le__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    def __lt__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
     def __ne__(self, arg0: ChannelQuantumNumbers) -> bool:
         ...
     @property
