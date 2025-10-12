@@ -14,6 +14,46 @@ class ChannelQuantumNumbers:
     to the cross section of a given reaction.
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def allowed_channel_spin_values(i: float, I: float) -> list[float]:
+        """
+        Calculate allowed values for the channel spin s
+        
+        The channel spin s can only have values between abs(i - I) and i + I
+        where i is the spin of the incident particle (for a neutron that
+        would be 0.5) and I is the spin of the target nucleus.
+        
+        Arguments:
+            i   the spin of the incident particle
+            I   the spin of the target nucleus
+        """
+    @staticmethod
+    @typing.overload
+    def allowed_total_angular_momentum_values(l: int, i: float, I: float) -> list[float]:
+        """
+        The total angular momentum J for a channel can only have values between
+        abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
+        of the incoming wave, i is the spin of the incident particle and I is the
+        spin of the target nucleus.
+        
+        Arguments:
+            l   the orbital angular momentum
+            i   the spin of the incident particle
+            I   the spin of the target nucleus
+        """
+    @staticmethod
+    @typing.overload
+    def allowed_total_angular_momentum_values(l: int, s: float) -> list[float]:
+        """
+        The total angular momentum J for a channel can only have values between
+        abs(l - s) and l + s where l is the orbital momentum of the incoming wave
+        and s is the channel spin (which in turn depends on the spin i of the
+        incident particle and spin I of the target nucleus).
+        
+        Arguments:
+            l   the orbital angular momentum
+            s   the channel spin
+        """
     def __eq__(self, arg0: ChannelQuantumNumbers) -> bool:
         ...
     @typing.overload

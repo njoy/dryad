@@ -75,7 +75,50 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "parity",
     &Component::parity,
     "The parity"
-  );
+  )
+  .def_static(
+
+    "allowed_channel_spin_values",
+    &Component::allowedChannelSpinValues,
+    python::arg( "i" ), python::arg( "I" ),
+    "Calculate allowed values for the channel spin s\n\n"
+    "The channel spin s can only have values between abs(i - I) and i + I\n"
+    "where i is the spin of the incident particle (for a neutron that\n"
+    "would be 0.5) and I is the spin of the target nucleus.\n\n"
+    "Arguments:\n"
+    "    i   the spin of the incident particle\n"
+    "    I   the spin of the target nucleus"
+
+  )
+  .def_static(
+
+    "allowed_total_angular_momentum_values",
+    python::overload_cast< unsigned int, double, double >( &Component::allowedTotalAngularMomentumValues ),
+    python::arg( "l" ), python::arg( "i" ), python::arg( "I" ),
+    "The total angular momentum J for a channel can only have values between\n"
+    "abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum\n"
+    "of the incoming wave, i is the spin of the incident particle and I is the\n"
+    "spin of the target nucleus.\n\n"
+    "Arguments:\n"
+    "    l   the orbital angular momentum\n"
+    "    i   the spin of the incident particle\n"
+    "    I   the spin of the target nucleus"
+  )
+  .def_static(
+
+    "allowed_total_angular_momentum_values",
+    python::overload_cast< unsigned int, double >( &Component::allowedTotalAngularMomentumValues ),
+    python::arg( "l" ), python::arg( "s" ),
+    "The total angular momentum J for a channel can only have values between\n"
+    "abs(l - s) and l + s where l is the orbital momentum of the incoming wave\n"
+    "and s is the channel spin (which in turn depends on the spin i of the\n"
+    "incident particle and spin I of the target nucleus).\n\n"
+    "Arguments:\n"
+    "    l   the orbital angular momentum\n"
+    "    s   the channel spin"
+
+  )
+  ;
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
