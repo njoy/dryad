@@ -52,6 +52,7 @@ add_cpp_test( id.ReactionType                                            id/Reac
 add_cpp_test( id.ReactionID                                              id/ReactionID.test.cpp )
 
 add_cpp_test( resonances.TabulatedRadius                                 resonances/TabulatedRadius.test.cpp )
+add_cpp_test( resonances.Particle                                        resonances/Particle.test.cpp )
 add_cpp_test( resonances.ChannelRadii                                    resonances/ChannelRadii.test.cpp )
 add_cpp_test( resonances.ChannelQuantumNumbers                           resonances/ChannelQuantumNumbers.test.cpp )
 add_cpp_test( resonances.HardSpherePenetrability                         resonances/HardSpherePenetrability.test.cpp )
