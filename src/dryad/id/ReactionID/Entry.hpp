@@ -8,7 +8,7 @@ class Entry {
   ParticleID projectile_;
   ParticleID target_;
   ReactionType type_;
-  // std::string short_symbol_;
+
   std::vector< std::string > symbols_;
   std::optional< ParticleID > residual_;
 

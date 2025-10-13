@@ -161,8 +161,8 @@ namespace resonances {
      */
     friend bool operator==( const ChannelRadii& left, const ChannelRadii& right ) {
 
-      return std::tie( left.penetrability_, left.shift_factor_, left.phase_shift_ ) ==
-             std::tie( right.penetrability_, right.shift_factor_, right.phase_shift_ );
+      return std::tie( left.penetrabilityRadius(), left.shiftFactorRadius(), left.phaseShiftRadius() ) ==
+             std::tie( right.penetrabilityRadius(), right.shiftFactorRadius(), right.phaseShiftRadius() );
     }
 
     /**

@@ -15,11 +15,14 @@ namespace id {
   /**
    *  @class
    *  @brief An energy group defined by two energy values
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
-  class EnergyGroup : protected std::pair< double, double > {
+  class EnergyGroup {
 
-    /* type alias */
-    using Parent = std::pair< double, double >;
+    /* fields */
+    double lower_;
+    double upper_;
 
   public:
 
@@ -45,7 +48,7 @@ namespace id {
      *  @param[in] upper   the upper energy value of the energy group
      */
     EnergyGroup( double lower, double upper ) :
-      std::pair< double, double >( lower, upper ) {}
+      lower_( lower ), upper_( upper ) {}
 
     /* methods */
 
@@ -54,7 +57,7 @@ namespace id {
      */
     double lowerEnergy() const {
 
-      return this->first;
+      return this->lower_;
     }
 
     /**
@@ -62,25 +65,26 @@ namespace id {
      */
     double upperEnergy() const {
 
-      return this->second;
+      return this->upper_;
     }
 
     /**
      *  @brief Equality comparison
      *
-     *  @param[in] left    the group on the left
-     *  @param[in] right   the group on the right
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
      */
     friend auto operator==( const EnergyGroup& left, const EnergyGroup& right ) {
 
-      return static_cast< const Parent& >( left ) == static_cast< const Parent& >( right );
+      return std::tie( left.lower_, left.upper_ ) ==
+             std::tie( right.lower_, right.upper_ );
     }
 
     /**
      *  @brief Inequality comparison
      *
-     *  @param[in] left    the id on the left
-     *  @param[in] right   the id on the right
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
      */
     friend auto operator!=( const EnergyGroup& left, const EnergyGroup& right ) {
 
@@ -90,19 +94,20 @@ namespace id {
     /**
      *  @brief Less than comparison
      *
-     *  @param[in] left    the id on the left
-     *  @param[in] right   the id on the right
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
      */
     friend auto operator<( const EnergyGroup& left, const EnergyGroup& right ) {
 
-      return static_cast< const Parent& >( left ) < static_cast< const Parent& >( right );
+      return std::tie( left.lower_, left.upper_ ) <
+             std::tie( right.lower_, right.upper_ );
     }
 
     /**
      *  @brief Greater than comparison
      *
-     *  @param[in] left    the id on the left
-     *  @param[in] right   the id on the right
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
      */
     friend auto operator>( const EnergyGroup& left, const EnergyGroup& right ) {
 
@@ -112,8 +117,8 @@ namespace id {
     /**
      *  @brief Less than or equality comparison
      *
-     *  @param[in] left    the id on the left
-     *  @param[in] right   the id on the right
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
      */
     friend auto operator<=( const EnergyGroup& left, const EnergyGroup& right ) {
 
@@ -123,8 +128,8 @@ namespace id {
     /**
      *  @brief Greater than or equality comparison
      *
-     *  @param[in] left    the id on the left
-     *  @param[in] right   the id on the right
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
      */
     friend auto operator>=( const EnergyGroup& left, const EnergyGroup& right ) {
 
