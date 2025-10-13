@@ -408,7 +408,7 @@ class Particle:
     @property
     def charge(self) -> int:
         """
-        The electrical charge of the particle
+        The electrical charge of the particle (in units of the elementary charge)
         """
     @property
     def identifier(self) -> dryad.id.ParticleID:
@@ -418,7 +418,7 @@ class Particle:
     @property
     def mass(self) -> float:
         """
-        The atomic mass of the particle
+        The atomic mass of the particle (in atomic mass units)
         """
     @property
     def parity(self) -> int:

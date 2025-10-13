@@ -63,13 +63,14 @@ void wrapParticle( python::module& module ) {
 
     "mass",
     &Component::mass,
-    "The atomic mass of the particle"
+    "The atomic mass of the particle (in atomic mass units)"
   )
   .def_property_readonly(
 
     "charge",
     &Component::charge,
-    "The electrical charge of the particle"
+    "The electrical charge of the particle (in units of the "
+    "elementary charge)"
   )
   .def_property_readonly(
 

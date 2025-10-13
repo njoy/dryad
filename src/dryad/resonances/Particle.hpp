@@ -41,12 +41,13 @@ namespace resonances {
     const id::ParticleID& identifier() const { return this->identifier_; }
 
     /**
-     *  @brief Return the atomic mass of the particle
+     *  @brief Return the atomic mass of the particle (in atomic mass units)
      */
     double mass() const { return this->mass_; }
 
     /**
-     *  @brief Return the electrical charge of the particle
+     *  @brief Return the electrical charge of the particle (in units of the
+     *         elementary charge)
      */
     int charge() const { return this->identifier().z(); }
 
