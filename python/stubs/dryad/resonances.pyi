@@ -3,8 +3,9 @@ Resonance data
 """
 from __future__ import annotations
 import dryad
+import dryad.id
 import typing
-__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
 class ChannelQuantumNumbers:
     """
     The l,S,Jpi quantum numbers of a reaction channel
@@ -369,6 +370,65 @@ class HardSphereShiftFactor:
     def orbital_angular_momentum(self) -> int:
         """
         The value of the orbital angular momentum
+        """
+class Particle:
+    """
+    Particle information for resonance reconstruction
+    
+    The Particle class contains specific information for a particle as used
+    during resonance reconstruction. The Particle has an atomic mass, an
+    electrical charge, a spin and a parity (either + or -).
+    
+    These variables are used to calculate quantities like the wave number k.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: Particle) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, id: dryad.id.ParticleID, mass: float, spin: float, parity: int) -> None:
+        """
+        Initialise the particle information
+        
+        Arguments:
+            self     the particle information
+            mass     the atomic mass
+            spin     the channel spin
+            parity   the parity
+        """
+    @typing.overload
+    def __init__(self, instance: Particle) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: Particle) -> bool:
+        ...
+    @property
+    def charge(self) -> int:
+        """
+        The electrical charge of the particle
+        """
+    @property
+    def identifier(self) -> dryad.id.ParticleID:
+        """
+        The particle identifier
+        """
+    @property
+    def mass(self) -> float:
+        """
+        The atomic mass of the particle
+        """
+    @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def spin(self) -> float:
+        """
+        The particle spin
         """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None

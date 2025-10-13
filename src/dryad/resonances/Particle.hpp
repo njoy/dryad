@@ -18,9 +18,6 @@ namespace resonances {
    *  The Particle class contains specific information for a particle as used
    *  during resonance reconstruction. The Particle has an atomic mass, an
    *  electrical charge, a spin and a parity (either + or -).
-   *
-   *  These variables are used to calculate quantities like the wave number k for
-   *  an incident reaction channel.
    */
   class Particle {
 
@@ -51,7 +48,7 @@ namespace resonances {
     /**
      *  @brief Return the electrical charge of the particle
      */
-    double charge() const { return this->identifier().z(); }
+    int charge() const { return this->identifier().z(); }
 
     /**
      *  @brief Return the spin of the particle

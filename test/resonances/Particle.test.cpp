@@ -19,47 +19,47 @@ SCENARIO( "Particle" ) {
     // neutron
     auto neutronID = id::ParticleID::neutron();
     double neutronMass = 1.008664;
-    double neutrondouble = 0.5;
-    short neutronSpin = +1;
+    double neutronSpin = 0.5;
+    short neutronParity = +1;
 
     // proton
     auto protonID = id::ParticleID::proton();
     double protonMass = 1.007276;
-    double protondouble = 0.5;
-    short protonSpin = +1;
+    double protonSpin = 0.5;
+    short protonParity = +1;
 
     // U235
     id::ParticleID u235ID( "U235" );
     double u235Mass = 235.0439299;
-    double u235double = 0.0;
-    short u235Spin = +1;
+    double u235Spin = 0.0;
+    short u235Parity = +1;
 
     THEN( "a Particle can be constructed" ) {
 
       Particle neutron( neutronID, neutronMass,
-                        neutrondouble, neutronSpin );
+                        neutronSpin, neutronParity );
 
       CHECK( id::ParticleID::neutron() == neutron.identifier() );
       CHECK_THAT( 1.008664, WithinRel( neutron.mass() ) );
-      CHECK_THAT( 0.0, WithinRel( neutron.charge() ) );
       CHECK_THAT( 0.5, WithinRel( neutron.spin() ) );
+      CHECK( 0.0 == neutron.charge() );
       CHECK( +1 == neutron.parity() );
 
       Particle proton( protonID, protonMass,
-                       protondouble, protonSpin );
+                       protonSpin, protonParity );
 
       CHECK( id::ParticleID::proton() == proton.identifier() );
       CHECK_THAT( 1.007276, WithinRel( proton.mass() ) );
-      CHECK( 1 == proton.charge() );
       CHECK_THAT( 0.5, WithinRel( proton.spin() ) );
+      CHECK( 1 == proton.charge() );
       CHECK( +1 == proton.parity() );
 
-      Particle u235( u235ID, u235Mass, u235double, u235Spin );
+      Particle u235( u235ID, u235Mass, u235Spin, u235Parity );
 
       CHECK( id::ParticleID( "U235" ) == u235.identifier() );
       CHECK_THAT( 235.0439299, WithinRel( u235.mass() ) );
-      CHECK( 92 == u235.charge() );
       CHECK_THAT( 0., WithinRel( u235.spin() ) );
+      CHECK( 92 == u235.charge() );
       CHECK( +1 == u235.parity() );
     } // THEN
   } // GIVEN

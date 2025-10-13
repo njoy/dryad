@@ -45,6 +45,7 @@ add_python_test( covariance.ProductMultiplicityMetadata          covariance/Test
 add_python_test( covariance.ProductMultiplicityCovarianceMatrix  covariance/Test_dryad_covariance_ProductMultiplicityCovarianceMatrix.py )
 add_python_test( covariance.LinearCombinationCovariance          covariance/Test_dryad_covariance_LinearCombinationCovariance.py )
 
+add_python_test( resonances.Particle                     resonances/Test_dryad_resonances_Particle.py )
 add_python_test( resonances.ChannelQuantumNumbers        resonances/Test_dryad_resonances_ChannelQuantumNumbers.py )
 add_python_test( resonances.TabulatedRadius              resonances/Test_dryad_resonances_TabulatedRadius.py )
 add_python_test( resonances.ChannelRadii                 resonances/Test_dryad_resonances_ChannelRadii.py )
