@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
 class ChannelQuantumNumbers:
     """
     The l,S,Jpi quantum numbers of a reaction channel
@@ -429,6 +429,72 @@ class Particle:
     def spin(self) -> float:
         """
         The particle spin
+        """
+class ParticlePair:
+    """
+    Particle information for resonance reconstruction
+    
+    A ParticlePair represents the two particles involved in a entrance or exit
+    reaction channel (we assume that the reaction is a two-body reaction). The
+    pair consists of a "small" incident or outgoing particle (e.g. a neutron,
+    photon, alpha, etc.) and a "larger" target or residual nucleus (e.g. H1,
+    He4, U235, etc.).
+    
+    The ParticlePair class gives us access to information related to the
+    pair of particles such as the mass ratio and the reduced mass.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: ParticlePair) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, particle: Particle, residual: Particle) -> None:
+        """
+        Initialise the particle pair information
+        
+        Arguments:
+            self       the particle pair information
+            particle   the light particle
+            residual   the heavy residual
+        """
+    @typing.overload
+    def __init__(self, instance: ParticlePair) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: ParticlePair) -> bool:
+        ...
+    @property
+    def mass_ratio(self) -> float:
+        """
+        The mass ratio of the particle pair (dimensionless)
+        
+        The mass ratio of the two particles is defined as follows:
+           ratio = mb / ( ma + mb )
+        in which ma and mb are the atomic mass values of the particles
+        in the particle pair.
+        """
+    @property
+    def particle(self) -> Particle:
+        """
+        The light particle in the particle pair
+        """
+    @property
+    def reduced_mass(self) -> float:
+        """
+        The reduced mass of the particle pair (in atomic mass units)
+        
+        The reduced mass mu of the two particles is defined as follows:
+           mu = ma * mb / ( ma + mb )
+        in which ma and mb are the atomic mass values of the particles in the
+        particle pair.
+        """
+    @property
+    def residual(self) -> Particle:
+        """
+        The heavy residual in the particle pair
         """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None

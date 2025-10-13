@@ -42,12 +42,12 @@ namespace resonances {
     #include "dryad/resonances/ParticlePair/src/ctor.hpp"
 
     /**
-     *  @brief Return the light particle
+     *  @brief Return the light particle in the particle pair
      */
     const Particle& particle() const { return this->particle_; }
 
     /**
-     *  @brief Return the heavy particle
+     *  @brief Return the heavy residual in the particle pair
      */
     const Particle& residual() const { return this->residual_; }
 
