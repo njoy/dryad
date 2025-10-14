@@ -5,6 +5,7 @@
 #include <optional>
 
 // other includes
+#include "tools/overload.hpp"
 #include "dryad/id/ChannelID.hpp"
 #include "dryad/id/ReactionID.hpp"
 #include "dryad/resonances/ChannelQuantumNumbers.hpp"
@@ -50,9 +51,12 @@ namespace resonances {
     ShiftFactor shift_factor_;
     PhaseShift phase_shift_;
 
+    double spin_factor_;
+
     /* auxiliary functions */
 
     #include "dryad/resonances/Channel/src/selectWaveFunctions.hpp"
+    #include "dryad/resonances/Channel/src/calculateSpinFactor.hpp"
 
   public:
 
@@ -124,6 +128,16 @@ namespace resonances {
 
       return this->radii_;
     }
+
+    /**
+     *  @brief Return the statistical spin factor
+     *
+     *  The statistical spin factor g of a channel is defined as follows:
+     *     g = ( 2 * J + 1 ) / ( 2 * ia + 1 ) / ( 2 * ib + 1 )
+     *  in which J is the total angular momentum of the channel and ia and ib
+     *  are the spins of the particles in the outgoing particle pair.
+     */
+    double statisticalSpinFactor() const { return this->spin_factor_; }
 
     /**
      *  @brief Equality comparison

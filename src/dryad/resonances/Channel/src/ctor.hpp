@@ -41,7 +41,8 @@ Channel( id::ChannelID identifier,
     radii_( std::move( radii ) ),
     penetrability_( std::move( penetrability ) ),
     shift_factor_( std::move( shiftFactor ) ),
-    phase_shift_( std::move( phaseShift ) ) {}
+    phase_shift_( std::move( phaseShift ) ),
+    spin_factor_( calculateSpinFactor( identifier.quantumNumbers(), outgoing ) ) {}
 
 /**
  *  @brief Constructor without wave functions

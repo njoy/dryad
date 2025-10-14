@@ -67,12 +67,62 @@ SCENARIO( "Channel" ) {
 
     THEN( "a Channel can be constructed without wave functions" ) {
 
+      Channel capture( captureID, elasticPair, capturePair,
+                       captureQ, captureBoundary, captureRadii );
       Channel elastic( elasticID, elasticPair, elasticPair,
                        elasticQ, elasticBoundary, elasticRadii );
       Channel inelastic( inelasticID, elasticPair, inelasticPair,
                          inelasticQ, inelasticBoundary, inelasticRadii );
       Channel proton( protonID, elasticPair, protonPair,
                       protonQ, protonBoundary, protonRadii );
+
+      // photon channel, not an incident channel, no threshold
+      CHECK( captureID == capture.identifier() );
+      CHECK( captureRID == capture.reaction() );
+      CHECK( captureNumbers == capture.quantumNumbers() );
+      CHECK( elasticPair == capture.incidentParticlePair() );
+      CHECK( capturePair == capture.outgoingParticlePair() );
+      CHECK_THAT( captureQ, WithinRel( capture.qValue() ) );
+      CHECK( std::nullopt == capture.boundaryCondition() );
+      CHECK( captureRadii == capture.channelRadii() );
+      CHECK( false == capture.isIncidentChannel() );
+      CHECK_THAT( 1., WithinRel( capture.statisticalSpinFactor() ) );
+
+      // neutron channel, incident channel, no threshold
+      CHECK( elasticID == elastic.identifier() );
+      CHECK( elasticRID == elastic.reaction() );
+      CHECK( elasticNumbers == elastic.quantumNumbers() );
+      CHECK( elasticPair == elastic.incidentParticlePair() );
+      CHECK( elasticPair == elastic.outgoingParticlePair() );
+      CHECK_THAT( elasticQ, WithinRel( elastic.qValue() ) );
+      CHECK( std::nullopt == elastic.boundaryCondition() );
+      CHECK( elasticRadii == elastic.channelRadii() );
+      CHECK( true == elastic.isIncidentChannel() );
+      CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
+
+      // neutron channel, not incident channel, threshold
+      CHECK( inelasticID == inelastic.identifier() );
+      CHECK( inelasticRID == inelastic.reaction() );
+      CHECK( inelasticNumbers == inelastic.quantumNumbers() );
+      CHECK( elasticPair == inelastic.incidentParticlePair() );
+      CHECK( inelasticPair == inelastic.outgoingParticlePair() );
+      CHECK_THAT( inelasticQ, WithinRel( inelastic.qValue() ) );
+      CHECK( std::nullopt == inelastic.boundaryCondition() );
+      CHECK( elasticRadii == inelastic.channelRadii() );
+      CHECK( false == inelastic.isIncidentChannel() );
+      CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
+
+      // proton channel, not an incident channel, no threshold
+      CHECK( protonID == proton.identifier() );
+      CHECK( protonRID == proton.reaction() );
+      CHECK( protonNumbers == proton.quantumNumbers() );
+      CHECK( elasticPair == proton.incidentParticlePair() );
+      CHECK( protonPair == proton.outgoingParticlePair() );
+      CHECK_THAT( protonQ, WithinRel( proton.qValue() ) );
+      CHECK( std::nullopt == proton.boundaryCondition() );
+      CHECK( elasticRadii == proton.channelRadii() );
+      CHECK( false == proton.isIncidentChannel() );
+      CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );
     } // THEN
   } // GIVEN
 
