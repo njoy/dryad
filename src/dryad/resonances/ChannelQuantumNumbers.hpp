@@ -180,21 +180,6 @@ namespace resonances {
     }
 
     /**
-     *  @brief Equality comparison
-     *
-     *  @param[in] left    the object on the left hand side
-     *  @param[in] right   the object on the right hand side
-     */
-    friend bool operator==( const ChannelQuantumNumbers& left,
-                            const ChannelQuantumNumbers& right ) {
-
-      return std::tie( left.l_, left.s_,
-                       left.J_, left.parity_ ) ==
-             std::tie( right.l_, right.s_,
-                       right.J_, right.parity_ );
-    }
-
-    /**
      *  @brief Return a string representation of the quantum numbers
      */
     std::string symbol() const {
@@ -213,6 +198,21 @@ namespace resonances {
                  + toHalfIntegerString( this->spin() ) + ","
                  + toHalfIntegerString( this->totalAngularMomentum() )
                  + ( this->parity() > 0 ? "+" : "-" ) + "}";
+    }
+
+    /**
+     *  @brief Equality comparison
+     *
+     *  @param[in] left    the object on the left hand side
+     *  @param[in] right   the object on the right hand side
+     */
+    friend bool operator==( const ChannelQuantumNumbers& left,
+                            const ChannelQuantumNumbers& right ) {
+
+      return std::tie( left.l_, left.s_,
+                       left.J_, left.parity_ ) ==
+             std::tie( right.l_, right.s_,
+                       right.J_, right.parity_ );
     }
 
     /**
