@@ -158,7 +158,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the channel wave number (given in fm^-1) at a given energy
+     *  @brief Calculate the channel wave number (given in fm^-1) at a given energy
      *
      *  The wave number k is an energy dependent quantity defined as follows:
      *     hbar^2 k^2 = 2 * mu * ( energy * ratio + q )
@@ -179,6 +179,36 @@ namespace resonances {
       const auto q = this->qValue();                               // eV
       return std::sqrt( 2. * mu * ( std::abs( energy * ratio + q ) ) )
              / constants::hbar * conversion;
+    }
+
+    /**
+     *  @brief Calcualte the Sommerfeld parameter for the channel at a
+     *         given energy
+     *
+     *  The Sommerfeld parameter eta is an energy dependent quantity defined as
+     *  follows:
+     *     eta = z * Z * mu / ( 4 * pi * epsilon0 * hbar^2 * k )
+     *  in which z and Z are the electrical charge of the particles in the
+     *  particle pair, mu is the reduced mass of the particle pair, hbar is the
+     *  Planck constant, k is the wave number and epsilon0 is the vacuum
+     *  permittivity.
+     *
+     *  It is a dimensionless parameter.
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double sommerfeldParameter( double energy ) const {
+
+      // conversion constant to convert the final value to a dimensionless value
+      const double conversion = constants::amu * 1e-15;
+
+      const auto zZ = this->outgoingParticlePair()->particle().charge() *
+                      this->outgoingParticlePair()->residual().charge(); // e^2
+      const auto mu = this->outgoingParticlePair()->reducedMass();       // amu
+      const auto k = this->waveNumber( energy );                         // fm^-1
+      return zZ * mu * conversion
+             / ( 4. * k * constants::pi * constants::epsilon0
+                        * constants::hbar * constants::hbar );
     }
 
     /**

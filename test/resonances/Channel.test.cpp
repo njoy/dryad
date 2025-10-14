@@ -92,6 +92,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 1., WithinRel( capture.statisticalSpinFactor() ) );
       CHECK( false == capture.isBelowThreshold( energy ) );
       CHECK_THAT( 0., WithinRel( capture.waveNumber( energy ) ) );
+      CHECK_THAT( 0., WithinRel( capture.sommerfeldParameter( energy ) ) );
 
       // neutron channel, incident channel, no threshold
       CHECK( elasticID == elastic.identifier() );
@@ -106,6 +107,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
       CHECK( false == elastic.isBelowThreshold( energy ) );
       CHECK_THAT( 6.752152278684156e-7, WithinRel( elastic.waveNumber( energy ) ) );
+      CHECK_THAT( 0., WithinRel( elastic.sommerfeldParameter( energy ) ) );
 
       // neutron channel, not incident channel, threshold
       CHECK( inelasticID == inelastic.identifier() );
@@ -120,6 +122,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
       CHECK( true == inelastic.isBelowThreshold( energy ) );
       CHECK_THAT( 2.391648503730464e-1, WithinRel( inelastic.waveNumber( energy ) ) );
+      CHECK_THAT( 0., WithinRel( inelastic.sommerfeldParameter( energy ) ) );
 
       // proton channel, not an incident channel, no threshold
       CHECK( protonID == proton.identifier() );
@@ -134,6 +137,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );
       CHECK( false == proton.isBelowThreshold( energy ) );
       CHECK_THAT( 1.697421616532552e-1, WithinRel( proton.waveNumber( energy ) ) );
+      CHECK_THAT( 3.179105369595768, WithinRel( proton.sommerfeldParameter( energy ) ) );
     } // THEN
   } // GIVEN
 
