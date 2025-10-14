@@ -67,6 +67,8 @@ SCENARIO( "Channel" ) {
 
     THEN( "a Channel can be constructed without wave functions" ) {
 
+      double energy = 1e-5;
+
       Channel capture( captureID, elasticPair, capturePair,
                        captureQ, captureBoundary, captureRadii );
       Channel elastic( elasticID, elasticPair, elasticPair,
@@ -87,6 +89,7 @@ SCENARIO( "Channel" ) {
       CHECK( captureRadii == capture.channelRadii() );
       CHECK( false == capture.isIncidentChannel() );
       CHECK_THAT( 1., WithinRel( capture.statisticalSpinFactor() ) );
+      CHECK( false == capture.isBelowThreshold( energy ) );
 
       // neutron channel, incident channel, no threshold
       CHECK( elasticID == elastic.identifier() );
@@ -99,6 +102,7 @@ SCENARIO( "Channel" ) {
       CHECK( elasticRadii == elastic.channelRadii() );
       CHECK( true == elastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
+      CHECK( false == elastic.isBelowThreshold( energy ) );
 
       // neutron channel, not incident channel, threshold
       CHECK( inelasticID == inelastic.identifier() );
@@ -111,6 +115,7 @@ SCENARIO( "Channel" ) {
       CHECK( elasticRadii == inelastic.channelRadii() );
       CHECK( false == inelastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
+      CHECK( true == inelastic.isBelowThreshold( energy ) );
 
       // proton channel, not an incident channel, no threshold
       CHECK( protonID == proton.identifier() );
@@ -123,6 +128,7 @@ SCENARIO( "Channel" ) {
       CHECK( elasticRadii == proton.channelRadii() );
       CHECK( false == proton.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );
+      CHECK( false == proton.isBelowThreshold( energy ) );
     } // THEN
   } // GIVEN
 
