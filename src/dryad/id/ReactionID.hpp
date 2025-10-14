@@ -8,7 +8,6 @@
 #include <vector>
 
 // other includes
-#include "tools/Log.hpp"
 #include "tools/split.hpp"
 #include "dryad/InteractionType.hpp"
 #include "dryad/id/ParticleID.hpp"

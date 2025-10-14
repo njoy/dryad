@@ -112,7 +112,9 @@ SCENARIO( "ChannelID" ) {
 
     THEN( "an exception is thrown" ) {
 
-
+      CHECK_THROWS( ChannelID( "n,U235->n,U235{0,1/2,1/2+}1]" ) );  // improperly formatted partial
+      CHECK_THROWS( ChannelID( "n,U235->n,U2350,1/2,1/2+}" ) );     // improperly formatted quantum numbers
+      CHECK_THROWS( ChannelID( "not a reaction id{0,1/2,1/2+}" ) ); // not a proper reaction
     } // THEN
   } // GIVEN
 } // SCENARIO

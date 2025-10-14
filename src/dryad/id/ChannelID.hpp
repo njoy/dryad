@@ -8,7 +8,6 @@
 #include <vector>
 
 // other includes
-#include "tools/Log.hpp"
 #include "dryad/id/ReactionID.hpp"
 #include "dryad/resonances/ChannelQuantumNumbers.hpp"
 
