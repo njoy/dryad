@@ -23,6 +23,7 @@ ChannelID& operator=( ChannelID&& ) = default;
  *
  *  @param reaction   the reaction
  *  @param numbers    the channel quantum numbers
+ *  @param partial    the optional partial index
  */
 ChannelID( const ReactionID& reaction,
            const resonances::ChannelQuantumNumbers& numbers,

@@ -57,7 +57,7 @@ namespace id {
     /* methods */
 
     /**
-     *  @brief Return the projectile
+     *  @brief Return the reaction
      */
     const ReactionID& reaction() const {
 
@@ -65,7 +65,7 @@ namespace id {
     }
 
     /**
-     *  @brief Return the target
+     *  @brief Return the quantum numbers
      */
     const resonances::ChannelQuantumNumbers& quantumNumbers() const {
 
