@@ -21,7 +21,9 @@ SCENARIO( "ChannelQuantumNumbers" ) {
     double J = 1.5;
     short pi = +1;
 
-    THEN( "a ChannelQuantumNumbers can be constructed" ) {
+    std::string symbol( "{1,1/2,3/2+}" );
+
+    THEN( "a ChannelQuantumNumbers can be constructed from numbers" ) {
 
       ChannelQuantumNumbers numbers( l, s, J, pi );
 
@@ -29,6 +31,20 @@ SCENARIO( "ChannelQuantumNumbers" ) {
       CHECK( 0.5 == numbers.spin() );
       CHECK( 1.5 == numbers.totalAngularMomentum() );
       CHECK( +1 == numbers.parity() );
+
+      CHECK( symbol == numbers.symbol() );
+    } // THEN
+
+    THEN( "a ChannelQuantumNumbers can be constructed from a string" ) {
+
+      ChannelQuantumNumbers numbers( symbol );
+
+      CHECK( 1 == numbers.orbitalAngularMomentum() );
+      CHECK( 0.5 == numbers.spin() );
+      CHECK( 1.5 == numbers.totalAngularMomentum() );
+      CHECK( +1 == numbers.parity() );
+
+      CHECK( symbol == numbers.symbol() );
     } // THEN
   } // GIVEN
 
