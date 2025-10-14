@@ -50,6 +50,7 @@ add_cpp_test( id.LevelID                                                 id/Leve
 add_cpp_test( id.ParticleID                                              id/ParticleID.test.cpp )
 add_cpp_test( id.ReactionType                                            id/ReactionType.test.cpp )
 add_cpp_test( id.ReactionID                                              id/ReactionID.test.cpp )
+add_cpp_test( id.ChannelID                                               id/ChannelID.test.cpp )
 
 add_cpp_test( resonances.Particle                                        resonances/Particle.test.cpp )
 add_cpp_test( resonances.ParticlePair                                    resonances/ParticlePair.test.cpp )
