@@ -200,15 +200,22 @@ namespace resonances {
     double sommerfeldParameter( double energy ) const {
 
       // conversion constant to convert the final value to a dimensionless value
-      const double conversion = constants::amu * 1e-15;
+      constexpr double conversion = constants::amu * 1e-15;
 
-      const auto zZ = this->outgoingParticlePair()->particle().charge() *
-                      this->outgoingParticlePair()->residual().charge(); // e^2
-      const auto mu = this->outgoingParticlePair()->reducedMass();       // amu
-      const auto k = this->waveNumber( energy );                         // fm^-1
-      return zZ * mu * conversion
-             / ( 4. * k * constants::pi * constants::epsilon0
-                        * constants::hbar * constants::hbar );
+      if ( this->outgoingParticlePair()->particle().charge() != 0 ) {
+
+        const auto zZ = this->outgoingParticlePair()->particle().charge() *
+                        this->outgoingParticlePair()->residual().charge(); // e^2
+        const auto mu = this->outgoingParticlePair()->reducedMass();       // amu
+        const auto k = this->waveNumber( energy );                         // fm^-1
+        return zZ * mu * conversion
+               / ( 4. * k * constants::pi * constants::epsilon0
+                          * constants::hbar * constants::hbar );
+      }
+      else {
+
+        return 0.;
+      }
     }
 
     /**
