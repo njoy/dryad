@@ -62,6 +62,7 @@ add_cpp_test( resonances.HardSphereShiftFactor                           resonan
 add_cpp_test( resonances.HardSpherePhaseShift                            resonances/HardSpherePhaseShift.test.cpp )
 add_cpp_test( resonances.CoulombPhaseShiftDifference                     resonances/CoulombPhaseShiftDifference.test.cpp )
 add_cpp_test( resonances.TabulatedWaveFunction                           resonances/TabulatedWaveFunction.test.cpp )
+add_cpp_test( resonances.Channel                                         resonances/Channel.test.cpp )
 
 add_cpp_test( Documentation                                              Documentation.test.cpp )
 
