@@ -42,3 +42,31 @@ Channel( id::ChannelID identifier,
     penetrability_( std::move( penetrability ) ),
     shift_factor_( std::move( shiftFactor ) ),
     phase_shift_( std::move( phaseShift ) ) {}
+
+/**
+ *  @brief Constructor without wave functions
+ *
+ *  @param[in] identifier      the channel identifier
+ *  @param[in] incident        the current incident particle pair
+ *  @param[in] outgoing        the outgoing particle pair
+ *  @param[in] qValue          the Q value associated with the transition from
+ *                             the incident to the outgoing particle pair
+ *  @param[in] boundary        the boundary condition
+ *  @param[in] radii           the channel radii for the calculation of the
+ *                             wave functions
+ */
+Channel( id::ChannelID identifier,
+         ParticlePair incident,
+         std::optional< ParticlePair > outgoing,
+         double qValue,
+         std::optional< double > boundary,
+         ChannelRadii radii ) :
+    Channel( std::move( identifier ), std::move( incident ),
+             std::move( outgoing ), qValue,
+             std::move( boundary ), std::move( radii ),
+             selectPenetrabilityFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                          outgoing ),
+             selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                        outgoing ),
+             selectPhaseShiftFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                       outgoing ) ) {}

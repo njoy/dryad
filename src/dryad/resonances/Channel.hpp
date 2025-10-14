@@ -52,6 +52,8 @@ namespace resonances {
 
     /* auxiliary functions */
 
+    #include "dryad/resonances/Channel/src/selectWaveFunctions.hpp"
+
   public:
 
     /* constructor */
