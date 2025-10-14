@@ -7,7 +7,8 @@ using Catch::Matchers::WithinRel;
 #include "dryad/resonances/Channel.hpp"
 
 // other includes
-
+#include <iostream>
+#include <iomanip>
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
@@ -90,6 +91,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == capture.isIncidentChannel() );
       CHECK_THAT( 1., WithinRel( capture.statisticalSpinFactor() ) );
       CHECK( false == capture.isBelowThreshold( energy ) );
+      CHECK_THAT( 0., WithinRel( capture.waveNumber( energy ) ) );
 
       // neutron channel, incident channel, no threshold
       CHECK( elasticID == elastic.identifier() );
@@ -103,6 +105,7 @@ SCENARIO( "Channel" ) {
       CHECK( true == elastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
       CHECK( false == elastic.isBelowThreshold( energy ) );
+      CHECK_THAT( 6.752152278684156e-7, WithinRel( elastic.waveNumber( energy ) ) );
 
       // neutron channel, not incident channel, threshold
       CHECK( inelasticID == inelastic.identifier() );
@@ -116,6 +119,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == inelastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
       CHECK( true == inelastic.isBelowThreshold( energy ) );
+      CHECK_THAT( 2.391648503730464e-1, WithinRel( inelastic.waveNumber( energy ) ) );
 
       // proton channel, not an incident channel, no threshold
       CHECK( protonID == proton.identifier() );
@@ -129,6 +133,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == proton.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );
       CHECK( false == proton.isBelowThreshold( energy ) );
+      CHECK_THAT( 1.697421616532552e-1, WithinRel( proton.waveNumber( energy ) ) );
     } // THEN
   } // GIVEN
 

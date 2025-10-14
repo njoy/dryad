@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/overload.hpp"
+#include "dryad/constants.hpp"
 #include "dryad/id/ChannelID.hpp"
 #include "dryad/id/ReactionID.hpp"
 #include "dryad/resonances/ChannelQuantumNumbers.hpp"
@@ -154,6 +155,30 @@ namespace resonances {
 
       double value = this->incidentParticlePair().massRatio() * energy;
       return ( value + this->qValue() ) < 0.0;
+    }
+
+    /**
+     *  @brief Return the channel wave number (given in fm^-1) at a given energy
+     *
+     *  The wave number k is an energy dependent quantity defined as follows:
+     *     hbar^2 k^2 = 2 * mu * ( energy * ratio + q )
+     *  in which mu is the reduced mass of the channel's particle pair and ratio
+     *  is the mass ratio M / ( m + M ) for the incident particle pair, q is the
+     *  Q value associated to the transition of the incident particle pair to the
+     *  channel's particle pair and hbar is the reduced Planck constant.
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double waveNumber( double energy ) const {
+
+      // conversion constant to convert the final value to fm^-1
+      const double conversion = std::sqrt( constants::amu / constants::e ) * 1e-15;
+
+      const auto mu = this->outgoingParticlePair()->reducedMass(); // amu
+      const auto ratio = this->incidentParticlePair().massRatio(); // dimensionless
+      const auto q = this->qValue();                               // eV
+      return std::sqrt( 2. * mu * ( std::abs( energy * ratio + q ) ) )
+             / constants::hbar * conversion;
     }
 
     /**
