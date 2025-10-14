@@ -145,20 +145,48 @@ SCENARIO( "Channel" ) {
 
     WHEN( "two instances of Channel are given" ) {
 
-//      ChannelRadii left( .1 );
-//      ChannelRadii equal( .1 );
-//      ChannelRadii different( .2 );
-//
-//      THEN( "they can be compared" ) {
-//
-//        CHECK( true == ( left == left ) );
-//        CHECK( true == ( left == equal ) );
-//        CHECK( false == ( left == different ) );
-//
-//        CHECK( false == ( left != left ) );
-//        CHECK( false == ( left != equal ) );
-//        CHECK( true == ( left != different ) );
-//      } // THEN
+      // identifiers
+      id::ChannelID elasticID( "n,Cl35->n,Cl35{0,1,1+}" );
+      id::ChannelID inelasticID( "n,Cl35->n,Cl35_e1{0,1,1+}" );
+
+      // particles
+      Particle neutron( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
+      Particle cl35( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 );
+      Particle cl35_e1( id::ParticleID( "Cl35_e1" ), 34.9688491981, 1.5, +1 );
+
+      // particle pairs
+      ParticlePair elasticPair( neutron, cl35 );
+      ParticlePair inelasticPair( neutron, cl35_e1 );
+
+      // Q values
+      double elasticQ = 0.0;
+      double inelasticQ = -1.219440e+6;
+
+      // boundary conditions
+      std::optional< double > elasticBoundary = std::nullopt;
+      std::optional< double > inelasticBoundary = std::nullopt;
+
+      // channel radii
+      ChannelRadii elasticRadii( 4.822220, 3.667980 );
+      ChannelRadii inelasticRadii( 4.822220, 3.667980 );
+
+      Channel left( elasticID, elasticPair, elasticPair,
+                    elasticQ, elasticBoundary, elasticRadii );
+      Channel equal( elasticID, elasticPair, elasticPair,
+                     elasticQ, elasticBoundary, elasticRadii );
+      Channel different( inelasticID, elasticPair, inelasticPair,
+                         inelasticQ, inelasticBoundary, inelasticRadii );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
