@@ -241,6 +241,50 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the shift factor
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double shiftFactor( double energy ) const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> double { return value; },
+        //! @todo add Coulomb penetrability here
+        [&] ( auto&& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculateShiftFactorRadius( energy );
+          return function( k * a );
+        }
+      };
+
+      return std::visit( visitor, this->shift_factor_ );
+    }
+
+    /**
+     *  @brief Return the phase shift
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double phaseShift( double energy ) const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> double { return value; },
+        //! @todo add Coulomb penetrability here
+        [&] ( auto&& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculatePhaseShiftRadius( energy );
+          return function( k * a );
+        }
+      };
+
+      return std::visit( visitor, this->phase_shift_ );
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side
