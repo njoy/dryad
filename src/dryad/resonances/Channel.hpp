@@ -3,6 +3,7 @@
 
 // system includes
 #include <optional>
+#include <variant>
 
 // other includes
 #include "tools/overload.hpp"
@@ -27,6 +28,8 @@ namespace resonances {
    */
   class Channel {
 
+  public:
+
     /* type aliases */
 
     using Penetrability = std::variant< double,
@@ -38,6 +41,8 @@ namespace resonances {
     using PhaseShift = std::variant< double,
                                      HardSpherePhaseShift,
                                      TabulatedWaveFunction >;
+
+  private:
 
     /* fields */
 
@@ -65,7 +70,7 @@ namespace resonances {
     #include "dryad/resonances/Channel/src/ctor.hpp"
 
     /**
-     *  @brief Return the channel spin
+     *  @brief Return the channel identifier
      */
     const id::ChannelID& identifier() const { return this->id_; }
 
@@ -115,7 +120,7 @@ namespace resonances {
     double qValue() const { return this->q_; }
 
     /**
-     *  @brief Return the q value of the transition
+     *  @brief Return the boundary condition value (if defined)
      */
     const std::optional< double >& boundaryCondition() const {
 
@@ -219,7 +224,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the penetrability
+     *  @brief Calculate the penetrability for the channel at a given energy
      *
      *  @param[in] energy   the energy (given in eV)
      */
@@ -241,7 +246,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the shift factor
+     *  @brief Calculate the shift factor for the channel at a given energy
      *
      *  @param[in] energy   the energy (given in eV)
      */
@@ -263,7 +268,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the phase shift
+     *  @brief Calculate the phase shift for the channel at a given energy
      *
      *  @param[in] energy   the energy (given in eV)
      */
