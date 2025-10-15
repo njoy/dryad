@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/TabulatedEnergyDistributionFunction.hpp"
 #include "ACEtk/electroatomic/TabulatedEnergyDistribution.hpp"
@@ -28,7 +29,7 @@ namespace ace {
 
       auto convertEnergy = [] ( auto&& energy ) {
 
-        return energy * 1e+6;
+        return energy * constants::mega;
       };
 
       auto energies = createVector( distribution.outgoingEnergies() );

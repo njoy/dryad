@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
@@ -28,7 +29,7 @@ namespace electroatomic {
 
     auto convertEnergy = [] ( auto&& energy ) {
 
-      return energy * 1e+6;
+      return energy * constants::mega;
     };
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {

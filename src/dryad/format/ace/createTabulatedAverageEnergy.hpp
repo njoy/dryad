@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/TabulatedAverageEnergy.hpp"
 #include "ACEtk/electroatomic/ExcitationBlock.hpp"
@@ -29,14 +30,18 @@ namespace ace {
 
       auto convertEnergy = [] ( auto&& energy ) {
 
-        return energy * 1e+6;
+        return energy * constants::mega;
+      };
+      auto convertEnergyDifference = [] ( auto&& left, auto&& right ) {
+
+        return ( left - right ) * constants::mega;
       };
 
       Log::info( "Reading average energy data" );
       auto energies = createVector( block.energies() );
       auto values = createVector( block.excitationEnergyLoss() );
       std::transform( energies.begin(), energies.end(), values.begin(), values.begin(),
-                      [] ( auto&& left, auto&& right ) { return ( left - right ) * 1e+6; } );
+                      convertEnergyDifference );
       std::transform( energies.begin(), energies.end(), energies.begin(), convertEnergy );
       std::vector< std::size_t > boundaries = { energies.size() - 1 };
       std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
@@ -64,14 +69,18 @@ namespace ace {
 
       auto convertEnergy = [] ( auto&& energy ) {
 
-        return energy * 1e+6;
+        return energy * constants::mega;
+      };
+      auto convertEnergyDifference = [] ( auto&& left, auto&& right ) {
+
+        return ( left - right ) * constants::mega;
       };
 
       Log::info( "Reading average energy data" );
       auto energies = createVector( block.energies() );
       auto values = createVector( block.energyAfterBremsstrahlung() );
       std::transform( energies.begin(), energies.end(), values.begin(), values.begin(),
-                      [] ( auto&& left, auto&& right ) { return ( left - right ) * 1e+6; } );
+                      convertEnergyDifference );
       std::transform( energies.begin(), energies.end(), energies.begin(), convertEnergy );
       std::vector< std::size_t > boundaries = { energies.size() - 1 };
       std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
