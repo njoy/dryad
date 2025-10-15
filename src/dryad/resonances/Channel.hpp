@@ -187,7 +187,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Calcualte the Sommerfeld parameter for the channel at a
+     *  @brief Calculate the Sommerfeld parameter for the channel at a
      *         given energy
      *
      *  The Sommerfeld parameter eta is an energy dependent quantity defined as

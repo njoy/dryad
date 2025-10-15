@@ -195,7 +195,7 @@ void wrapChannel( python::module& module ) {
     "sommerfeld_parameter",
     &Component::sommerfeldParameter,
     python::arg( "energy" ),
-    "Calcualte the Sommerfeld parameter for the channel at a given energy\n\n"
+    "Calculate the Sommerfeld parameter for the channel at a given energy\n\n"
     "The Sommerfeld parameter eta is an energy dependent quantity defined as\n"
     "follows:\n"
     "   eta = z * Z * mu / ( 4 * pi * epsilon0 * hbar^2 * k )\n"
