@@ -33,19 +33,19 @@ SCENARIO( "Channel" ) {
     ChannelQuantumNumbers protonNumbers( 0, 1, 1, +1 );
 
     // particles
-    Particle photon( id::ParticleID::photon(), 0, 1, +1 );
-    Particle neutron( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
-    Particle proton( id::ParticleID::proton(), 1.00727646662, 0.5, +1 );
+    Particle g( id::ParticleID::photon(), 0, 1, +1 );
+    Particle n( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
+    Particle p( id::ParticleID::proton(), 1.00727646662, 0.5, +1 );
     Particle cl36( id::ParticleID( "Cl36" ), 35.9683050031, 0, +1 );
     Particle cl35( id::ParticleID( "Cl35" ), 34.9688491981, 1.5, +1 );
     Particle cl35_e1( id::ParticleID( "Cl35_e1" ), 34.9688491981, 1.5, +1 );
     Particle s35( id::ParticleID( "S35" ), 34.9690307578, 1.5, +1 );
 
     // particle pairs
-    ParticlePair elasticPair( neutron, cl35 );
-    ParticlePair inelasticPair( neutron, cl35_e1 );
-    ParticlePair capturePair( photon, cl36 );
-    ParticlePair protonPair( proton, s35 );
+    ParticlePair elasticPair( n, cl35 );
+    ParticlePair inelasticPair( n, cl35_e1 );
+    ParticlePair capturePair( g, cl36 );
+    ParticlePair protonPair( p, s35 );
 
     // Q values
     double elasticQ = 0.0;
