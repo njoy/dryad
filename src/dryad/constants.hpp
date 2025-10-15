@@ -27,6 +27,8 @@ namespace constants {
   constexpr double giga = 1e+9;
   constexpr double mega = 1e+6;
   constexpr double kilo = 1e+3;
+  constexpr double hecto = 1e+2;
+  constexpr double deca = 1e+1;
   constexpr double deci = 1e-1;
   constexpr double centi = 1e-2;
   constexpr double mili = 1e-3;

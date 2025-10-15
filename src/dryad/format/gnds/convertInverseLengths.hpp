@@ -19,7 +19,7 @@ namespace gnds {
 
     if ( unit != "1/Ang" ) {
 
-      Log::error( "Cannot convert energy with unit \'{}\' to eV, "
+      Log::error( "Cannot convert energy with unit \'{}\' to 1/Ang, "
                   "contact dryad developers", unit );
       throw std::exception();
     }

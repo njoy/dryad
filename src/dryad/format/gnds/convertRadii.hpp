@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,7 +24,7 @@ namespace gnds {
       if ( unit == "nm" ) {
 
         std::for_each( radii.begin(), radii.end(),
-                       [] ( double& radius ) { radius *= 1e+6; } );
+                       [] ( double& radius ) { radius *= constants::mega; } );
       }
       else {
 
