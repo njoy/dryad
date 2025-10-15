@@ -62,12 +62,12 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the number of channels
+     *  @brief Return the number of channels in the table
      */
     std::size_t numberChannels() const { return this->channels().size(); }
 
     /**
-     *  @brief Return the number of resonances
+     *  @brief Return the number of resonances int he table
      */
     std::size_t numberResonances() const { return this->energies().size(); }
 

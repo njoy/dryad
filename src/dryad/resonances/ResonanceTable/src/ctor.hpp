@@ -13,7 +13,7 @@ ResonanceTable& operator=( ResonanceTable&& ) = default;
  *  @brief Constructor
  *
  *  The ResonanceTable class takes the reduced amplitude widths for a
- *  number of channels (at least one needs to be defined).
+ *  number of channels (at least one channel must be given).
  *
  *  @param[in] channels     the channel identifiers (nc values)
  *  @param[in] energies     the resonance energies (ne values)
