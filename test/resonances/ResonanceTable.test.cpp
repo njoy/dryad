@@ -14,7 +14,7 @@ using namespace njoy::dryad::resonances;
 
 SCENARIO( "ResonanceTable" ) {
 
-  GIVEN( "valid data for a ResonanceTable" ) {
+  GIVEN( "valid data for a ResonanceTable involving multiple channels" ) {
 
     std::vector< id::ChannelID > channels = {
 
@@ -55,6 +55,34 @@ SCENARIO( "ResonanceTable" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "valid data for a ResonanceTable involving a single channels" ) {
+
+    id::ChannelID channel( "n,U235->n,U235{0,1/2,1/2+}" );
+    std::vector< double > energies = { 1., 2., 3., 4. };
+    std::vector< double > amplitudes = { 11., 12., 13., 14. };
+
+    THEN( "a ResonanceTable can be constructed" ) {
+
+      ResonanceTable table( std::move( channel ), std::move( energies ),
+                            std::move( amplitudes ) );
+
+      CHECK( 1 == table.numberChannels() );
+      CHECK( 4 == table.numberResonances() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+
+      CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
+      CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
+      CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
+      CHECK_THAT( 4., WithinRel( table.energies()[3] ) );
+
+      CHECK_THAT( 11., WithinRel( table.reducedWidthAmplitudes()[0][0] ) );
+      CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
+      CHECK_THAT( 13., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
+      CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+    } // THEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of ResonanceTable are given" ) {
@@ -69,9 +97,9 @@ SCENARIO( "ResonanceTable" ) {
                             { 1., 2., 3., 4. },
                             { { 11., 12., 13., 14. },
                               { 21., 22., 23., 24. } } );
-      ResonanceTable different( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) },
+      ResonanceTable different( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
                                 { 1., 2., 3. },
-                                { { 11., 12., 13. } } );
+                                { 11., 12., 13. } );
 
       THEN( "they can be compared" ) {
 

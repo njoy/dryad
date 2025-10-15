@@ -49,6 +49,20 @@ void wrapResonanceTable( python::module& module ) {
   )
   .def(
 
+    python::init< ChannelID,
+                  std::vector< double >,
+                  std::vector< double > >(),
+    python::arg( "channel" ), python::arg( "energies" ),
+    python::arg( "amplitudes" ),
+    "Initialise the resonance table\n\n"
+    "Arguments:\n"
+    "    self         the resonance table\n"
+    "    channel      the channel identifier\n"
+    "    energies     the resonance energies\n"
+    "    amplitudes   the reduced amplitude widths"
+  )
+  .def(
+
     python::init< const Component& >(),
     python::arg( "instance" ),
     "Initialise a copy\n\n"

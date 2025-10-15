@@ -24,9 +24,22 @@ ResonanceTable( std::vector< id::ChannelID > channels,
                 std::vector< std::vector< double > > amplitudes ) :
     channels_( std::move( channels ) ),
     energies_( std::move( energies ) ),
-    amplitudes_( amplitudes ) {
+    amplitudes_( std::move( amplitudes ) ) {
 
   this->verifyTable( this->channels(), this->energies(),
                      this->reducedWidthAmplitudes() );
 }
 
+/**
+ *  @brief Constructor
+ *
+ *  @param[in] channel      the channel identifier
+ *  @param[in] energies     the resonance energies
+ *  @param[in] amplitudes   the reduced amplitude widths
+ */
+ResonanceTable( id::ChannelID channel,
+                std::vector< double > energies,
+                std::vector< double > amplitudes ) :
+    ResonanceTable( std::vector< id::ChannelID >{ std::move( channel ) },
+                    std::move( energies ),
+                    std::vector< std::vector< double > >{ std::move( amplitudes ) } ) {}

@@ -702,6 +702,17 @@ class ResonanceTable:
             amplitudes   the reduced amplitude widths (nc arrays of ne values)
         """
     @typing.overload
+    def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
+        """
+        Initialise the resonance table
+        
+        Arguments:
+            self         the resonance table
+            channel      the channel identifier
+            energies     the resonance energies
+            amplitudes   the reduced amplitude widths
+        """
+    @typing.overload
     def __init__(self, instance: ResonanceTable) -> None:
         """
         Initialise a copy
