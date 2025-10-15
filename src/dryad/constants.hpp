@@ -23,6 +23,18 @@ namespace constants {
   // CODATA 2022 - vacuum electric permittivity in F / m = Coulomb^2 kg^−1 m^−3 s^2
   constexpr double epsilon0 = 8.8541878188e-12;
 
+  // SI prefixes
+  constexpr double giga = 1e+9;
+  constexpr double mega = 1e+6;
+  constexpr double kilo = 1e+3;
+  constexpr double deci = 1e-1;
+  constexpr double centi = 1e-2;
+  constexpr double mili = 1e-3;
+  constexpr double micro = 1e-6;
+  constexpr double nano = 1e-9;
+  constexpr double pico = 1e-12;
+  constexpr double femto = 1e-15;
+
 } // constants namespace
 } // dryad namespace
 } // njoy namespace

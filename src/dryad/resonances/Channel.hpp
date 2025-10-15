@@ -177,7 +177,7 @@ namespace resonances {
     double waveNumber( double energy ) const {
 
       // conversion constant to convert the final value to fm^-1
-      const double conversion = std::sqrt( constants::amu / constants::e ) * 1e-15;
+      const double conversion = std::sqrt( constants::amu / constants::e ) * constants::femto;
 
       const auto mu = this->outgoingParticlePair()->reducedMass(); // amu
       const auto ratio = this->incidentParticlePair().massRatio(); // dimensionless
@@ -205,7 +205,7 @@ namespace resonances {
     double sommerfeldParameter( double energy ) const {
 
       // conversion constant to convert the final value to a dimensionless value
-      constexpr double conversion = constants::amu * 1e-15;
+      constexpr double conversion = constants::amu * constants::femto;
 
       if ( this->outgoingParticlePair()->particle().charge() != 0 ) {
 
