@@ -34,6 +34,7 @@ namespace resonances {
     std::optional< Radius > phase_shift_;
 
     /* auxiliary functions */
+
     static double radius( double energy, const Radius& radius ) {
 
       return std::visit(

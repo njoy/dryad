@@ -10,7 +10,7 @@ selectPenetrabilityFunction( unsigned int l,
     }
     //! @todo add charged particle channels
   }
-  return 1;
+  return 1.;
 }
 
 static ShiftFactor
@@ -25,7 +25,7 @@ selectShiftFactorFunction( unsigned int l,
     }
     //! @todo add charged particle channels
   }
-  return 1;
+  return 0.;
 }
 
 static PhaseShift
@@ -40,5 +40,5 @@ selectPhaseShiftFunction( unsigned int l,
     }
     //! @todo add charged particle channels
   }
-  return 1;
+  return 0.;
 }

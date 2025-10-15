@@ -93,6 +93,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == capture.isBelowThreshold( energy ) );
       CHECK_THAT( 0., WithinRel( capture.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.sommerfeldParameter( energy ) ) );
+      CHECK_THAT( 1., WithinRel( capture.penetrability( energy ) ) );
 
       // neutron channel, incident channel, no threshold
       CHECK( elasticID == elastic.identifier() );
@@ -108,6 +109,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == elastic.isBelowThreshold( energy ) );
       CHECK_THAT( 6.752152278684156e-7, WithinRel( elastic.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( elastic.sommerfeldParameter( energy ) ) );
+      CHECK_THAT( 3.256036376131631e-6, WithinRel( elastic.penetrability( energy ) ) );
 
       // neutron channel, not incident channel, threshold
       CHECK( inelasticID == inelastic.identifier() );
@@ -123,6 +125,7 @@ SCENARIO( "Channel" ) {
       CHECK( true == inelastic.isBelowThreshold( energy ) );
       CHECK_THAT( 0.2391648503730464, WithinRel( inelastic.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( inelastic.sommerfeldParameter( energy ) ) );
+      CHECK_THAT( 1.153305524765912, WithinRel( inelastic.penetrability( energy ) ) );
 
       // proton channel, not an incident channel, no threshold
       CHECK( protonID == proton.identifier() );
@@ -138,6 +141,8 @@ SCENARIO( "Channel" ) {
       CHECK( false == proton.isBelowThreshold( energy ) );
       CHECK_THAT( 0.1697421616532552, WithinRel( proton.waveNumber( energy ) ) );
       CHECK_THAT( 3.179105369595768, WithinRel( proton.sommerfeldParameter( energy ) ) );
+      //! @todo change these when we have proper coulomb wave functions
+      CHECK_THAT( 1., WithinRel( proton.penetrability( energy ) ) );
     } // THEN
   } // GIVEN
 

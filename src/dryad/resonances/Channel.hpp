@@ -219,6 +219,28 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the penetrability
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double penetrability( double energy ) const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> double { return value; },
+        //! @todo add Coulomb penetrability here
+        [&] ( auto&& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculatePenetrabilityRadius( energy );
+          return function( k * a );
+        }
+      };
+
+      return std::visit( visitor, this->penetrability_ );
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side
