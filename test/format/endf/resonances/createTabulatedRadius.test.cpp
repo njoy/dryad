@@ -19,7 +19,8 @@ SCENARIO( "createTabulatedRadius" ) {
 
   GIVEN( "ENDF MF2 MT151 sections" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-069_Tm_168.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-069_Tm_168.endf" );
     auto section = tape.materials().front().section( 2, 151 ).parse< 2, 151 >();
     auto radius = section.isotopes().front().resonanceRanges().front().scatteringRadius().value();
 

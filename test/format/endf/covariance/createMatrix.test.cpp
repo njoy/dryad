@@ -21,7 +21,8 @@ SCENARIO( "createMatrix" ) {
 
   GIVEN( "an instance of CovariancePairs using LB=0/1 (diagonal elements)" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 4 ).parse< 33 >();
     CovariancePairs covariance = std::get< CovariancePairs >( section.reactions()[0].explicitCovariances()[0] );
@@ -111,7 +112,8 @@ SCENARIO( "createMatrix" ) {
 
   GIVEN( "an instance of SquareMatrix that is symmetric" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 4 ).parse< 33 >();
     SquareMatrix covariance = std::get< SquareMatrix >( section.reactions()[0].explicitCovariances()[1] );
@@ -171,7 +173,8 @@ SCENARIO( "createMatrix" ) {
 
   GIVEN( "an instance of SquareMatrix that is asymmetric" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 4 ).parse< 33 >();
     SquareMatrix covariance = std::get< SquareMatrix >( section.reactions()[1].explicitCovariances()[0] );
@@ -231,7 +234,8 @@ SCENARIO( "createMatrix" ) {
 
   GIVEN( "an instance of RectangularMatrix" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-010_Ne_022.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-010_Ne_022.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 16 ).parse< 33 >();
     RectangularMatrix covariance = std::get< RectangularMatrix >( section.reactions()[1].explicitCovariances()[0] );

@@ -19,7 +19,8 @@ SCENARIO( "createReaction" ) {
 
   GIVEN( "ENDF materials - incident neutrons - stable target" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material and MT number is given" ) {
@@ -49,7 +50,8 @@ SCENARIO( "createReaction" ) {
 
   GIVEN( "ENDF materials - incident neutrons - metastable target" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-093_Np_236m1.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material and MT number is given" ) {
@@ -89,7 +91,8 @@ SCENARIO( "createReaction" ) {
 
   GIVEN( "ENDF materials - electro-atomic" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material and MT number is given" ) {
@@ -139,7 +142,8 @@ SCENARIO( "createReaction" ) {
 
   GIVEN( "ENDF materials - photo-atomic" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "photoat-001_H_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material and MT number is given" ) {

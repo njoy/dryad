@@ -22,7 +22,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
     using LegendreDistributions = njoy::ENDFtk::section::Type< 4 >::LegendreDistributions;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
     auto section = tape.materials().front().section( 4, 2 ).parse< 4 >();
     auto distribution = std::get< LegendreDistributions >( section.distributions() );
 
@@ -45,7 +46,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
     using ContinuumEnergyAngle = njoy::ENDFtk::section::Type< 6 >::ContinuumEnergyAngle;
     using LegendreCoefficients = ContinuumEnergyAngle::LegendreCoefficients;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto section = tape.materials().front().section( 6, 16 ).parse< 6 >();
     auto product = section.reactionProduct( 1 );
     auto distribution = std::get< ContinuumEnergyAngle >( product.distribution() );
@@ -70,7 +72,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
     using DiscreteTwoBodyScattering = njoy::ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering;
     using LegendreCoefficients = DiscreteTwoBodyScattering::LegendreCoefficients;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
     auto section = tape.materials().front().section( 6, 102 ).parse< 6 >();
     auto distribution = std::get< DiscreteTwoBodyScattering >( section.reactionProduct( 0 ).distribution() );
     auto entry = std::get< LegendreCoefficients >( distribution.distributions()[0] );

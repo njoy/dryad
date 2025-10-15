@@ -20,7 +20,8 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
   GIVEN( "ENDF MF1 nubar tabulated multiplicities" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_237.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-093_Np_237.endf" );
     auto section = tape.materials().front().section( 1, 456 ).parse< 1, 456 >();
     auto multiplicity = std::get< njoy::ENDFtk::section::TabulatedMultiplicity >( section.nubar() );
 
@@ -37,7 +38,8 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
   GIVEN( "ENDF MF6 multiplicities" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
     auto section = tape.materials().front().section( 6, 102 ).parse< 6 >();
     auto multiplicity = section.reactionProduct( 0 ).multiplicity();
 
@@ -54,7 +56,8 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
   GIVEN( "ENDF MF26 multiplicities" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto section = tape.materials().front().section( 26, 527 ).parse< 26 >();
     auto multiplicity = section.reactionProduct( 11 ).multiplicity();
 

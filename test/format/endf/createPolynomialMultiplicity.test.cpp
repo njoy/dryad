@@ -18,7 +18,8 @@ SCENARIO( "createPolynomialMultiplicity" ) {
 
   GIVEN( "ENDF MF1 nubar polynomial multiplicities" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-094_Pu_237-jeff33.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-094_Pu_237-jeff33.endf" );
     auto section = tape.materials().front().section( 1, 452 ).parse< 1, 452 >();
     auto multiplicity = std::get< njoy::ENDFtk::section::PolynomialMultiplicity >( section.nubar() );
 

@@ -18,7 +18,8 @@ SCENARIO( "createAtomicRelaxation" ) {
 
   GIVEN( "ENDF material with atomic relaxation data" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "atom-008_O_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "atom-008_O_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material is given" ) {

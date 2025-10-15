@@ -20,7 +20,8 @@ SCENARIO( "createTabulatedAverageEnergy" ) {
 
     using EnergyTransfer = njoy::ENDFtk::section::Type< 26 >::EnergyTransfer;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto section = tape.materials().front().section( 26, 527 ).parse< 26 >();
     auto distribution = std::get< EnergyTransfer >( section.reactionProducts()[1].distribution() );
 

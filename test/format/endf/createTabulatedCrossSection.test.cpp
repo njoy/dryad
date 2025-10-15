@@ -19,7 +19,8 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
   GIVEN( "ENDF MF3 sections" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
     auto section = tape.materials().front().section( 3, 102 );
 
     WHEN( "a single unparsed MF3 section is given" ) {
@@ -45,7 +46,8 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
   GIVEN( "ENDF MF23 sections" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto section = tape.materials().front().section( 23, 527 );
 
     WHEN( "a single unparsed MF23 section is given" ) {
