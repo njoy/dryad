@@ -65,6 +65,7 @@ add_cpp_test( resonances.CoulombPhaseShiftDifference                     resonan
 add_cpp_test( resonances.TabulatedWaveFunction                           resonances/TabulatedWaveFunction.test.cpp )
 add_cpp_test( resonances.Channel                                         resonances/Channel.test.cpp )
 add_cpp_test( resonances.ResonanceTable                                  resonances/ResonanceTable.test.cpp )
+add_cpp_test( resonances.SpinGroup                                       resonances/SpinGroup.test.cpp )
 
 add_cpp_test( Documentation                                              Documentation.test.cpp )
 
