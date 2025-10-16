@@ -21,7 +21,7 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     CrossSectionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
                                    { 1e-5, 1., 1e+6, 2e+7 } );
 
-    Matrix< double > matrix( 3, 3 );
+    matrix::Matrix< double > matrix( 3, 3 );
     matrix << 1., 2., 3.,
               2., 4., 6.,
               3., 6., 9.;
@@ -114,7 +114,7 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     CrossSectionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
                                    { 1e-5, 1., 1e+6, 2e+7 } );
 
-    Matrix< double > matrix( 3, 3 );
+    matrix::Matrix< double > matrix( 3, 3 );
     matrix << 1., 2., 3.,
               2., 4., 6.,
               3., 6., 9.;
@@ -223,7 +223,7 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     CrossSectionMetadata columnMetadata( { id::ReactionID( "n,U235->fission(t)" ) },
                                          { 1e-5, 2., 2e+7 } );
 
-    Matrix< double > matrix( 3, 2 );
+    matrix::Matrix< double > matrix( 3, 2 );
     matrix << 1., 2.,
               2., 4.,
               3., 6.;

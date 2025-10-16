@@ -4,6 +4,7 @@ if(dryad.python)
     pybind11_add_module( dryad.python
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/ToleranceConvergence.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/matrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/EnergyGroup.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ElectronSubshellID.python.cpp
@@ -34,7 +35,6 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceTable.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ScalingType.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/matrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/VarianceScaling.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionMetadata.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/CrossSectionCovarianceMatrix.python.cpp

@@ -11,7 +11,7 @@
 #include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "dryad/format/gnds/readShape.hpp"
 #include "dryad/format/gnds/readValues.hpp"
-#include "dryad/covariance/matrix.hpp"
+#include "dryad/matrix.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
@@ -22,7 +22,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS array node
    */
-  static dryad::covariance::Matrix< double > readArray( const pugi::xml_node& array ) {
+  static dryad::matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
 
     throwExceptionOnWrongNode( array, "array" );
 
@@ -74,7 +74,7 @@ namespace gnds {
 
     if ( shape.size() == 2 ) {
 
-      dryad::covariance::Matrix< double > matrix( shape[0], shape[1] );
+      dryad::matrix::Matrix< double > matrix( shape[0], shape[1] );
       if ( compression.has_value() && compression.value() == "diagonal" ) {
 
         for ( unsigned int i = 0; i < matrix.rows(); ++i ) {

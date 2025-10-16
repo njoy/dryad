@@ -5,9 +5,9 @@ import unittest
 
 # local imports
 import numpy
-from dryad.covariance import is_square, is_symmetric
+from dryad.matrix import is_square, is_symmetric
 
-class Test_dryad_covariance_matrix( unittest.TestCase ) :
+class Test_dryad_matrix( unittest.TestCase ) :
     """Unit test for matrix functions."""
 
     def test_diagonal_covariance_block( self ) :

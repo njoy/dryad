@@ -15,7 +15,7 @@ void calculateCorrelations() {
     this->calculateStandardDeviations();
 
     auto nrows = this->rowMetadata().keys().size();
-    DiagonalMatrix< double > temporary( nrows );
+    matrix::DiagonalMatrix< double > temporary( nrows );
     temporary.setIdentity();
     for ( unsigned int i = 0; i < nrows; ++i ) {
 
@@ -51,7 +51,7 @@ void calculateCorrelations( const std::vector< double >& rowDeviations,
                             rowDeviations.size(),
                             columnDeviations.size() );
 
-  DiagonalMatrix< double > left( nrows );
+  matrix::DiagonalMatrix< double > left( nrows );
   left.setIdentity();
   for ( unsigned int i = 0; i < nrows; ++i ) {
 
@@ -62,7 +62,7 @@ void calculateCorrelations( const std::vector< double >& rowDeviations,
     }
   }
 
-  DiagonalMatrix< double > right( ncols );
+  matrix::DiagonalMatrix< double > right( ncols );
   right.setIdentity();
   for ( unsigned int i = 0; i < ncols; ++i ) {
 

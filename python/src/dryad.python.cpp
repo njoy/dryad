@@ -10,6 +10,9 @@ namespace python = pybind11;
 // declarations - scion objects
 void wrapToleranceConvergence( python::module& );
 
+// declarations - matrix functions
+void wrapMatrix( python::module& );
+
 // declarations - identifiers
 void wrapID( python::module& );
 
@@ -86,6 +89,9 @@ PYBIND11_MODULE( dryad, module ) {
   wrapReactionCategory( module );
   wrapReferenceFrame( module );
   wrapUniformDistributionType( module );
+
+  // wrap components - matrix functions
+  wrapMatrix( module );
 
   // wrap components - identifiers
   wrapID( module );

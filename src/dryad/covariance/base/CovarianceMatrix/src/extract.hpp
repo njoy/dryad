@@ -13,13 +13,13 @@ extractKeys( const std::vector< std::size_t >& indices,
   return extracted;
 }
 
-dryad::covariance::Matrix< double >
+matrix::Matrix< double >
 extractMatrix( const std::vector< std::size_t >& rows,
                const std::vector< std::size_t >& columns ) const {
 
   auto size1 = rows.size();
   auto size2 = columns.size();
-  dryad::covariance::Matrix< double > matrix( size1, size2 );
+  matrix::Matrix< double > matrix( size1, size2 );
   for ( unsigned int i = 0; i < size1; ++i ) {
 
     for ( unsigned int j = 0; j < size2; ++j ) {

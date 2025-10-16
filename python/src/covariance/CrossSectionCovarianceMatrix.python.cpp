@@ -18,7 +18,7 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
   using CrossSectionMetadata = njoy::dryad::covariance::CrossSectionMetadata;
   using ReactionID = njoy::dryad::id::ReactionID;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
-  using Matrix = njoy::dryad::covariance::Matrix< double >;
+  using Matrix = njoy::dryad::matrix::Matrix< double >;
   using VarianceScaling = njoy::dryad::covariance::VarianceScaling;
 
   // wrap views created by this component

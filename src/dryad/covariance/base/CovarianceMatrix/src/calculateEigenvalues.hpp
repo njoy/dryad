@@ -10,7 +10,7 @@ void calculateEigenvalues() {
   if ( this->isOnDiagonal() ) {
 
     // the SelfAdjointEigenSolver exploits the symmetric features of the matrix
-    Eigen::SelfAdjointEigenSolver< Matrix< double > > solver( this->covariances() );
+    Eigen::SelfAdjointEigenSolver< matrix::Matrix< double > > solver( this->covariances() );
 
     std::vector< double > eigenvalues;
     eigenvalues.reserve( this->rowMetadata().keys().size() );

@@ -25,7 +25,7 @@ CrossSectionCovarianceMatrix& operator=( CrossSectionCovarianceMatrix&& ) = defa
  *  @param[in] scaling       the variance scaling information (default is none)
  */
 CrossSectionCovarianceMatrix( CrossSectionMetadata metadata,
-                              Matrix< double > covariances,
+                              matrix::Matrix< double > covariances,
                               bool relative = true,
                               std::optional< VarianceScaling > scaling = std::nullopt ) :
   Parent( std::move( metadata ), std::move( covariances ), relative ),
@@ -41,7 +41,7 @@ CrossSectionCovarianceMatrix( CrossSectionMetadata metadata,
  */
 CrossSectionCovarianceMatrix( CrossSectionMetadata rowMetadata,
                               CrossSectionMetadata columnMetadata,
-                              Matrix< double > covariances,
+                              matrix::Matrix< double > covariances,
                               bool relative = true ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           std::move( covariances ), relative ),
@@ -58,7 +58,7 @@ CrossSectionCovarianceMatrix( CrossSectionMetadata rowMetadata,
  */
 CrossSectionCovarianceMatrix( CrossSectionMetadata metadata,
                               std::vector< double > deviations,
-                              Matrix< double > correlations,
+                              matrix::Matrix< double > correlations,
                               bool relative = true,
                               std::optional< VarianceScaling > scaling = std::nullopt ) :
   Parent( std::move( metadata ), std::move( deviations ),
@@ -79,7 +79,7 @@ CrossSectionCovarianceMatrix( CrossSectionMetadata rowMetadata,
                               CrossSectionMetadata columnMetadata,
                               const std::vector< double >& rowDeviations,
                               const std::vector< double >& columnDeviations,
-                              Matrix< double > correlations,
+                              matrix::Matrix< double > correlations,
                               bool relative = true ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           rowDeviations, columnDeviations,
