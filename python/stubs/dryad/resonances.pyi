@@ -685,7 +685,11 @@ class ResonanceTable:
     all given as column data.
     """
     __hash__: typing.ClassVar[None] = None
+    def __add__(self, arg0: ResonanceTable) -> ResonanceTable:
+        ...
     def __eq__(self, arg0: ResonanceTable) -> bool:
+        ...
+    def __iadd__(self, arg0: ResonanceTable) -> ResonanceTable:
         ...
     @typing.overload
     def __init__(self, channels: list[dryad.id.ChannelID], energies: list[float], amplitudes: list[list[float]]) -> None:
@@ -722,6 +726,14 @@ class ResonanceTable:
         """
     def __ne__(self, arg0: ResonanceTable) -> bool:
         ...
+    def has_channel(self, channel: dryad.id.ChannelID) -> bool:
+        """
+        Return whether or not a channel is present
+        
+        Arguments:
+            self      the resonance table
+            channel   the channel identifier
+        """
     @property
     def channels(self) -> list[dryad.id.ChannelID]:
         """

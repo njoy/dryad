@@ -39,6 +39,10 @@ SCENARIO( "ResonanceTable" ) {
       CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
       CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
 
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
+      CHECK( false == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{1,1/2,1/2+}" ) ) );
+
       CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
       CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
       CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
@@ -80,6 +84,70 @@ SCENARIO( "ResonanceTable" ) {
       CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
       CHECK_THAT( 13., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
       CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "two independent ResonanceTable objects" ) {
+
+    ResonanceTable left( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                         {  1.,  2.,  4. },
+                         { 11., 12., 14. } );
+    ResonanceTable right( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
+                          {  2.,  3.,  5. },
+                          { 22., 23., 25. } );
+
+    THEN( "they can be mergeed" ) {
+
+      auto table = left;
+      table += right;
+
+      CHECK( 2 == table.numberChannels() );
+      CHECK( 5 == table.numberResonances() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+      CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
+
+      CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
+      CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
+      CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
+      CHECK_THAT( 4., WithinRel( table.energies()[3] ) );
+      CHECK_THAT( 5., WithinRel( table.energies()[4] ) );
+
+      CHECK_THAT( 11., WithinRel( table.reducedWidthAmplitudes()[0][0] ) );
+      CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
+      CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[0][4] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[1][0] ) );
+      CHECK_THAT( 22., WithinRel( table.reducedWidthAmplitudes()[1][1] ) );
+      CHECK_THAT( 23., WithinRel( table.reducedWidthAmplitudes()[1][2] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[1][3] ) );
+      CHECK_THAT( 25., WithinRel( table.reducedWidthAmplitudes()[1][4] ) );
+
+      table = left + right;
+
+      CHECK( 2 == table.numberChannels() );
+      CHECK( 5 == table.numberResonances() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+      CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
+
+      CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
+      CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
+      CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
+      CHECK_THAT( 4., WithinRel( table.energies()[3] ) );
+      CHECK_THAT( 5., WithinRel( table.energies()[4] ) );
+
+      CHECK_THAT( 11., WithinRel( table.reducedWidthAmplitudes()[0][0] ) );
+      CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
+      CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[0][4] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[1][0] ) );
+      CHECK_THAT( 22., WithinRel( table.reducedWidthAmplitudes()[1][1] ) );
+      CHECK_THAT( 23., WithinRel( table.reducedWidthAmplitudes()[1][2] ) );
+      CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[1][3] ) );
+      CHECK_THAT( 25., WithinRel( table.reducedWidthAmplitudes()[1][4] ) );
     } // THEN
   } // GIVEN
 

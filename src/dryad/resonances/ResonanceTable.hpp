@@ -46,9 +46,25 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the channel identifiers
+     */
+    std::vector< id::ChannelID >& channels() {
+
+      return this->channels_;
+    }
+
+    /**
      *  @brief Return the resonance energies
      */
     const std::vector< double >& energies() const {
+
+      return this->energies_;
+    }
+
+    /**
+     *  @brief Return the resonance energies
+     */
+    std::vector< double >& energies() {
 
       return this->energies_;
     }
@@ -62,6 +78,14 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the reduced width amplitudes
+     */
+    std::vector< std::vector< double > >& reducedWidthAmplitudes() {
+
+      return this->amplitudes_;
+    }
+
+    /**
      *  @brief Return the number of channels in the table
      */
     std::size_t numberChannels() const { return this->channels().size(); }
@@ -70,6 +94,83 @@ namespace resonances {
      *  @brief Return the number of resonances int he table
      */
     std::size_t numberResonances() const { return this->energies().size(); }
+
+    /**
+     *  @brief Return whether or not a given channel is present
+     */
+    bool hasChannel( const id::ChannelID& id ) const {
+
+      auto iter = std::find_if( this->channels().begin(), this->channels().end(),
+                                [&] ( auto&& channel ) { return channel ==id; } );
+      return iter == this->channels().end() ? false : true;
+    }
+
+    /**
+     *  @brief Inplace merge of two resonance tables
+     *
+     *  @param[in] right   the table to be merged with
+     */
+    ResonanceTable& operator+=( const ResonanceTable& right ) {
+
+      auto nc = this->numberChannels();
+
+      // check the channels in the table
+      for ( const auto& id : right.channels() ) {
+
+        // throw an exception if the current table has this channel already
+        if ( this->hasChannel( id ) ) {
+
+          Log::error( "Channel \'{}\' is present in both tables", id.symbol() );
+          throw std::exception();
+        }
+
+        // add the channel identifier and add a column for this channel
+        this->channels().emplace_back( id );
+        this->reducedWidthAmplitudes().emplace_back( this->numberResonances(), 0. );
+      }
+
+      // go over all resonances in the other table
+      for ( unsigned int i = 0; i < right.energies().size(); ++i ) {
+
+        // the current energy
+        auto energy = right.energies()[i];
+
+        // look for the energy and determine the index of the row
+        auto iter = std::lower_bound( this->energies().begin(), this->energies().end(), energy );
+        auto row = std::distance( this->energies().begin(), iter );
+
+        // insert a row if the energy is not present yet
+        if ( iter == this->energies().end() ||
+             ( iter != this->energies().end() && *iter != energy ) ) {
+
+          this->energies().insert( iter, energy );
+          for ( auto& column : this->reducedWidthAmplitudes() ) {
+
+            column.insert( column.begin() + row, 0. );
+          }
+        }
+
+        // assign amplitudes
+        for ( unsigned int j = 0; j < right.numberChannels(); ++j ) {
+
+          this->reducedWidthAmplitudes()[nc + j][row] = right.reducedWidthAmplitudes()[j][i];
+        }
+      }
+
+      return *this;
+    }
+
+    /**
+     *  @brief Merge two resonance tables together
+     *
+     *  @param[in] right   the table to be merged with
+     */
+    ResonanceTable operator+( const ResonanceTable& right ) const {
+
+      ResonanceTable result = *this;
+      result += right;
+      return result;
+    }
 
     /**
      *  @brief Equality comparison

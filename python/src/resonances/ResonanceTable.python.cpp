@@ -72,19 +72,19 @@ void wrapResonanceTable( python::module& module ) {
   .def_property_readonly(
 
     "channels",
-    &Component::channels,
+    python::overload_cast<>( &Component::channels, python::const_ ),
     "The channel identifiers"
   )
   .def_property_readonly(
 
     "energies",
-    &Component::energies,
+    python::overload_cast<>( &Component::energies, python::const_ ),
     "The resonance energies"
   )
   .def_property_readonly(
 
     "reduced_width_amplitudes",
-    &Component::reducedWidthAmplitudes,
+    python::overload_cast<>( &Component::reducedWidthAmplitudes, python::const_ ),
     "The reduced width amplitudes"
   )
   .def_property_readonly(
@@ -98,7 +98,19 @@ void wrapResonanceTable( python::module& module ) {
     "number_resonances",
     &Component::numberResonances,
     "The number of resonance in the table"
-  );
+  )
+  .def(
+
+    "has_channel",
+    &Component::hasChannel,
+    python::arg( "channel" ),
+    "Return whether or not a channel is present\n\n"
+    "Arguments:\n"
+    "    self      the resonance table\n"
+    "    channel   the channel identifier"
+  )
+  .def( python::self += python::self )
+  .def( python::self + python::self );
 
   // add standard comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
