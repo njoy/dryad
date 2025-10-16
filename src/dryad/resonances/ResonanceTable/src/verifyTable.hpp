@@ -14,6 +14,20 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
     throw std::exception();
   }
 
+  if ( ! std::is_sorted( energies.begin(), energies.end() ) ) {
+
+    Log::error( "The energies are not sorted" );
+    throw std::exception();
+  }
+
+  auto iter = std::adjacent_find( energies.begin(), energies.end() );
+  if ( iter != energies.end() ) {
+
+    Log::error( "The energies are not unique" );
+    Log::info( "The energy = {} appears more than once", *iter );
+    throw std::exception();
+  }
+
   if ( nc != amplitudes.size() ) {
 
     Log::error( "The number of channel identifiers and the number of columns of "

@@ -127,6 +127,30 @@ SCENARIO( "ResonanceTable" ) {
       } // THEN
     } // WHEN
 
+    WHEN( "the energies are not sorted" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( ResonanceTable( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                        id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) },
+                                      { 1., 3., 2., 4. },
+                                      { { 11., 12., 13., 14. },
+                                        { 21., 22., 23., 24. } } ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the energies are not unique" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( ResonanceTable( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                        id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) },
+                                      { 1., 2., 2., 4. },
+                                      { { 11., 12., 13., 14. },
+                                        { 21., 22., 23., 24. } } ) );
+      } // THEN
+    } // WHEN
+
     WHEN( "the number of energies and number of amplitudes is inconsistent" ) {
 
       THEN( "an exception is thrown" ) {

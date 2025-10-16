@@ -90,6 +90,21 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                     energies = [ 1., 2., 3., 4. ],
                                     amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
+        # the energies are not sorted orunique
+        with self.assertRaises( Exception ) :
+
+            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+                                    energies = [ 1., 3., 2., 4. ],
+                                    amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
+
+        with self.assertRaises( Exception ) :
+
+            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+                                    energies = [ 1., 2., 2., 4. ],
+                                    amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
+
         # the number of energies and number of amplitudes is inconsistent
         with self.assertRaises( Exception ) :
 
