@@ -25,7 +25,7 @@ SCENARIO( "ResonanceTable" ) {
     std::vector< std::vector< double > > amplitudes = {
 
       { 11., 12., 13., 14. },
-      { 21., 22., 23., 24. },
+      { 21., 22., 23., 24. }
     };
 
     THEN( "a ResonanceTable can be constructed" ) {
