@@ -28,6 +28,12 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertEqual( True, table.has_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ) )
         self.assertEqual( False, table.has_channel( ChannelID( 'n,U235->n,U235_e1{1,1/2,1/2+}' ) ) )
 
+        self.assertEqual( True, table.has_energy( 1. ) )
+        self.assertEqual( True, table.has_energy( 2. ) )
+        self.assertEqual( True, table.has_energy( 3. ) )
+        self.assertEqual( True, table.has_energy( 4. ) )
+        self.assertEqual( False, table.has_energy( 5. ) )
+
         self.assertAlmostEqual( 1., table.energies[0] )
         self.assertAlmostEqual( 2., table.energies[1] )
         self.assertAlmostEqual( 3., table.energies[2] )

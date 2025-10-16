@@ -102,7 +102,16 @@ namespace resonances {
 
       auto iter = std::find_if( this->channels().begin(), this->channels().end(),
                                 [&] ( auto&& channel ) { return channel ==id; } );
-      return iter == this->channels().end() ? false : true;
+      return iter != this->channels().end();
+    }
+
+    /**
+     *  @brief Return whether or not a given energy is present
+     */
+    bool hasEnergy( double energy ) const {
+
+      auto iter = std::lower_bound( this->energies().begin(), this->energies().end(), energy );
+      return iter != this->energies().end() && *iter == energy;
     }
 
     /**

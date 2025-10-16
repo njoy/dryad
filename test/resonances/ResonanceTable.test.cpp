@@ -43,6 +43,12 @@ SCENARIO( "ResonanceTable" ) {
       CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
       CHECK( false == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{1,1/2,1/2+}" ) ) );
 
+      CHECK( true == table.hasEnergy( 1. ) );
+      CHECK( true == table.hasEnergy( 2. ) );
+      CHECK( true == table.hasEnergy( 3. ) );
+      CHECK( true == table.hasEnergy( 4. ) );
+      CHECK( false == table.hasEnergy( 5. ) );
+
       CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
       CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
       CHECK_THAT( 3., WithinRel( table.energies()[2] ) );

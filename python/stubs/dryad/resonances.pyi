@@ -734,6 +734,14 @@ class ResonanceTable:
             self      the resonance table
             channel   the channel identifier
         """
+    def has_energy(self, energy: float) -> bool:
+        """
+        Return whether or not an energy is present
+        
+        Arguments:
+            self     the resonance table
+            energy   the energy value
+        """
     @property
     def channels(self) -> list[dryad.id.ChannelID]:
         """

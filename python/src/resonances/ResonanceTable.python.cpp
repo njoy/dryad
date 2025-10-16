@@ -109,6 +109,16 @@ void wrapResonanceTable( python::module& module ) {
     "    self      the resonance table\n"
     "    channel   the channel identifier"
   )
+  .def(
+
+    "has_energy",
+    &Component::hasEnergy,
+    python::arg( "energy" ),
+    "Return whether or not an energy is present\n\n"
+    "Arguments:\n"
+    "    self     the resonance table\n"
+    "    energy   the energy value"
+  )
   .def( python::self += python::self )
   .def( python::self + python::self );
 
