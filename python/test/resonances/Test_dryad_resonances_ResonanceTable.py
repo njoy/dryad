@@ -105,6 +105,20 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                     energies = [ 1., 2., 3., 4. ],
                                     amplitudes = [ [ 11., 12., 13. ], [ 21., 22., 23., 24. ] ] )
 
+        # the number of channels or resonances is zero
+        with self.assertRaises( Exception ) :
+
+            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+                                    energies = [],
+                                    amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
+
+        with self.assertRaises( Exception ) :
+
+            table = ResonanceTable( channels = [],
+                                    energies = [ 1., 2., 3., 4. ],
+                                    amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
+
 if __name__ == '__main__' :
 
     unittest.main()

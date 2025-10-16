@@ -6,6 +6,14 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
   std::size_t nc = channels.size();
   std::size_t ne = energies.size();
 
+  if ( nc  == 0 || ne == 0 ) {
+
+    Log::error( "At least one channel and one resonance should be defined" );
+    Log::info( "Number channels: {}", nc );
+    Log::info( "Number resonances: {}", ne );
+    throw std::exception();
+  }
+
   if ( nc != amplitudes.size() ) {
 
     Log::error( "The number of channel identifiers and the number of columns of "

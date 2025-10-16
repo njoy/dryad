@@ -143,5 +143,21 @@ SCENARIO( "ResonanceTable" ) {
                                         { 21., 22., 23., 24. } } ) );
       } // THEN
     } // WHEN
+
+    WHEN( "the number of channels or resonances is zero" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( ResonanceTable( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                        id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) },
+                                      {},
+                                      { { 11., 12., 13., 14. },
+                                        { 21., 22., 23., 24. } } ) );
+        CHECK_THROWS( ResonanceTable( {},
+                                      { 1., 2., 3., 4. },
+                                      { { 11., 12., 13., 14. },
+                                        { 21., 22., 23., 24. } } ) );
+      } // THEN
+    } // WHEN
   } // GIVEN
 } // SCENARIO
