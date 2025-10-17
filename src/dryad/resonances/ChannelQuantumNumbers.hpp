@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_CHANNELQUANTUMNUMBERS
 
 // system includes
+#include <algorithm>
 #include <cmath>
 #include <tuple>
 
