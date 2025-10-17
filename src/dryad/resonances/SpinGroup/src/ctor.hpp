@@ -12,12 +12,8 @@ SpinGroup& operator=( SpinGroup&& ) = default;
 /**
  *  @brief Constructor
  *
- *  The SpinGroup class takes the reduced amplitude widths for a
- *  number of channels (at least one channel must be given).
- *
- *  @param[in] channels     the channel identifiers (nc values)
- *  @param[in] energies     the resonance energies (ne values)
- *  @param[in] amplitudes   the reduced amplitude widths (nc arrays of ne values)
+ *  @param[in] channels     the channels in the spingroup
+ *  @param[in] resonances   the resonance table of the spingroup
  */
 SpinGroup( std::vector< Channel > channels,
            ResonanceTable resonances ) :

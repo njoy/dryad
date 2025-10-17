@@ -248,6 +248,34 @@ SCENARIO( "ChannelQuantumNumbers" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "valid values for lmax, i and I" ) {
+
+    THEN( "the allowed channel quantum numbers are generated" ) {
+
+      auto values = ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, 0, 2 );
+      CHECK( 5 == values.size() );
+      CHECK( ChannelQuantumNumbers( 0, 0.5, 0.5, +1 ) == values[0] );
+      CHECK( ChannelQuantumNumbers( 1, 0.5, 0.5, -1 ) == values[1] );
+      CHECK( ChannelQuantumNumbers( 1, 0.5, 1.5, -1 ) == values[2] );
+      CHECK( ChannelQuantumNumbers( 2, 0.5, 1.5, +1 ) == values[3] );
+      CHECK( ChannelQuantumNumbers( 2, 0.5, 2.5, +1 ) == values[4] );
+
+      values = ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, 0.5, 2 );
+
+      CHECK( 10 == values.size() );
+      CHECK( ChannelQuantumNumbers( 0, 0, 0, +1 ) == values[0] );
+      CHECK( ChannelQuantumNumbers( 0, 1, 1, +1 ) == values[1] );
+      CHECK( ChannelQuantumNumbers( 1, 0, 1, -1 ) == values[2] );
+      CHECK( ChannelQuantumNumbers( 1, 1, 0, -1 ) == values[3] );
+      CHECK( ChannelQuantumNumbers( 1, 1, 1, -1 ) == values[4] );
+      CHECK( ChannelQuantumNumbers( 1, 1, 2, -1 ) == values[5] );
+      CHECK( ChannelQuantumNumbers( 2, 0, 2, +1 ) == values[6] );
+      CHECK( ChannelQuantumNumbers( 2, 1, 1, +1 ) == values[7] );
+      CHECK( ChannelQuantumNumbers( 2, 1, 2, +1 ) == values[8] );
+      CHECK( ChannelQuantumNumbers( 2, 1, 3, +1 ) == values[9] );
+    } // THEN
+  } // GIVEN
+
   GIVEN( "valid ChannelQuantumNumbers instances" ) {
 
     ChannelQuantumNumbers id1( 0, 0.5, 0.5, +1 );
