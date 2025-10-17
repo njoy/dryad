@@ -191,6 +191,16 @@ class ChannelQuantumNumbers:
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
+    def allowed_channel_quantum_numbers(i: float, I: float, lmax: int) -> list[ChannelQuantumNumbers]:
+        """
+        Calculate possible combinations of channel quantum numbers
+        
+        Arguments:
+            i      the spin of the incident particle
+            I      the spin of the target nucleus
+            lmax   the max value of the orbital angular momentum
+        """
+    @staticmethod
     def allowed_channel_spin_values(i: float, I: float) -> list[float]:
         """
         Calculate allowed values for the channel spin s
@@ -207,6 +217,8 @@ class ChannelQuantumNumbers:
     @typing.overload
     def allowed_total_angular_momentum_values(l: int, i: float, I: float) -> list[float]:
         """
+        Calculate possible values for the total angular momentum J
+        
         The total angular momentum J for a channel can only have values between
         abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
         of the incoming wave, i is the spin of the incident particle and I is the
@@ -221,6 +233,8 @@ class ChannelQuantumNumbers:
     @typing.overload
     def allowed_total_angular_momentum_values(l: int, s: float) -> list[float]:
         """
+        Calculate possible values for the total angular momentum J
+        
         The total angular momentum J for a channel can only have values between
         abs(l - s) and l + s where l is the orbital momentum of the incoming wave
         and s is the channel spin (which in turn depends on the spin i of the
