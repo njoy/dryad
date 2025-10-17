@@ -7,8 +7,6 @@
 // other includes
 #include "tools/Log.hpp"
 #include "dryad/resonances/Channel.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
 #include "dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
@@ -26,7 +24,7 @@ namespace lrf7 {
    *  @param[in] pairs           the particle pairs
    *  @param[in] reactions       the reaction identifiers
    *  @param[in] qvalues         the q values
-   *  @param[in] boundaries.     flag to indicate whether or not to read the boundary conditions
+   *  @param[in] boundaries      flag to indicate whether or not to read the boundary conditions
    *  @param[in] endfChannels    the parsed ENDF channels
    */
   auto createChannels(
@@ -57,7 +55,8 @@ namespace lrf7 {
                              incident,
                              pairs[index],
                              qvalues[index],
-                             boundaries ? std::nullopt : endfChannels.boundaryConditionValues()[i],
+                             boundaries ? std::nullopt
+                                        : std::make_optional( endfChannels.boundaryConditionValues()[i] ),
                              std::move( radii ) );
     }
 
