@@ -26,7 +26,7 @@ namespace resonances {
    */
   auto createChannelRadii( int naps,
                            const std::optional< dryad::resonances::TabulatedRadius >& nro,
-                           const std::optional< double >& ap,
+                           double ap,
                            double awri ) {
 
     double a = ( 0.123 * std::pow( awri, 1. / 3. ) + 0.08 ) * constants::deca;
@@ -40,7 +40,7 @@ namespace resonances {
         // use energy dependent scattering radius for P, S and phi
         case 1 : return dryad::resonances::ChannelRadii( nro.value() );
         // use ap for P and S and energy dependent scattering radius for phi
-        case 2 : return dryad::resonances::ChannelRadii( ap.value(), nro.value() );
+        case 2 : return dryad::resonances::ChannelRadii( ap, nro.value() );
         default : {
 
           Log::error( "Encountered unknown value for NAPS = {}", naps );
@@ -53,9 +53,9 @@ namespace resonances {
       switch ( naps ) {
 
         // use a for P and S, ap for phi
-        case 0 : return dryad::resonances::ChannelRadii( a, ap.value() );
+        case 0 : return dryad::resonances::ChannelRadii( a, ap );
         // use ap for P, S and phi
-        case 1 : return dryad::resonances::ChannelRadii( ap.value() );
+        case 1 : return dryad::resonances::ChannelRadii( ap );
         default : {
 
           Log::error( "Encountered unknown value for NAPS = {}", naps );

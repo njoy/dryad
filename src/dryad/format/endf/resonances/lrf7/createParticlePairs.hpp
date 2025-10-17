@@ -23,7 +23,7 @@ namespace lrf7 {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
-   *  @param[in] awr    the atomic weight ratio as given in the ENDF file
+   *  @param[in] endfPairs    the parsed ENDF particle pairs
    */
   auto createParticlePairs(
            const id::ParticleID& projectile,
