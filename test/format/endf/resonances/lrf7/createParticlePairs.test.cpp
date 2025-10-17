@@ -30,9 +30,13 @@ SCENARIO( "createParticlePairs" ) {
 
       THEN( "it can be converted" ) {
 
-        id::ParticleID projectile( "n" );
-        id::ParticleID target( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createParticlePairs( projectile, target, pairs );
+        std::vector< id::ReactionID > reactions = {
+
+          id::ReactionID( "n,Cl35->g,Cl36[all]" ),
+          id::ReactionID( "n,Cl35->n,Cl35" ),
+          id::ReactionID( "n,Cl35->p,S35" )
+        };
+        auto chunk = format::endf::resonances::lrf7::createParticlePairs( reactions, pairs );
 
         verifyChunk( chunk );
       } // THEN

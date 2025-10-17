@@ -21,31 +21,28 @@ namespace lrf7 {
   /**
    *  @brief Create the particle pairs
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
-   *  @param[in] endfPairs    the parsed ENDF particle pairs
+   *  @param[in] reactions   the reactions
+   *  @param[in] endfPairs   the parsed ENDF particle pairs
    */
   auto createParticlePairs(
-           const id::ParticleID& projectile,
-           const id::ParticleID& target,
+           const std::vector< id::ReactionID >& reactions,
            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
     std::vector< std::optional< dryad::resonances::ParticlePair > > pairs;
     for ( unsigned int i = 0; i < endfPairs.numberParticlePairs(); ++i ) {
 
-      id::ReactionID reaction( projectile, target, endfPairs.MT()[i] );
-      if ( reaction.particles().has_value() ) {
+      if ( reactions[i].particles().has_value() ) {
 
         // an empty particles map means there's only photons
-        auto id = reaction.particles()->size() > 0 ? reaction.particles()->begin()->first
-                                                   : dryad::id::ParticleID::photon();
+        auto id = reactions[i].particles()->size() > 0 ? reactions[i].particles()->begin()->first
+                                                       : dryad::id::ParticleID::photon();
         dryad::resonances::Particle a( id,
                                        endfPairs.massParticleA()[i] * constants::neutron_mass,
                                        endfPairs.spinParticleA()[i],
                                        endfPairs.spinParticleA()[i] == 0.
                                          ? endfPairs.parityParticleA()[i] >= 0 ? +1 : -1
                                          : endfPairs.spinParticleA()[i] > 0 ? +1 : -1 );
-        dryad::resonances::Particle b( reaction.residual().value(),
+        dryad::resonances::Particle b( reactions[i].residual().value(),
                                        endfPairs.massParticleB()[i] * constants::neutron_mass,
                                        endfPairs.spinParticleB()[i],
                                        endfPairs.spinParticleB()[i] == 0.
