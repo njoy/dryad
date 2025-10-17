@@ -122,7 +122,7 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK( true == chunk[1].isIncidentChannel() );
   CHECK( 0 == chunk[1].qValue() );
   CHECK( std::nullopt == chunk[1].boundaryCondition() );
-  CHECK( resonances::ChannelRadii( 3.66798, 4.82222 ) == chunk[1].channelRadii() );
+  CHECK( resonances::ChannelRadii( 4.82222, 3.66798 ) == chunk[1].channelRadii() );
 
   CHECK( id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) == chunk[2].identifier() );
   incident = chunk[2].incidentParticlePair();
@@ -150,5 +150,5 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK( false == chunk[2].isIncidentChannel() );
   CHECK( 615220 == chunk[2].qValue() );
   CHECK( std::nullopt == chunk[2].boundaryCondition() );
-  CHECK( resonances::ChannelRadii( 3.66798, 4.82222 ) == chunk[2].channelRadii() );
+  CHECK( resonances::ChannelRadii( 4.82222, 3.66798 ) == chunk[2].channelRadii() );
 }

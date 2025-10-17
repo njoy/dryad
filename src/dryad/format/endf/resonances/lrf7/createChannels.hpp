@@ -48,15 +48,15 @@ namespace lrf7 {
       dryad::resonances::ChannelQuantumNumbers numbers( endfChannels.orbitalMomentumValues()[i],
                                                         endfChannels.channelSpinValues()[i],
                                                         spin, parity );
-      dryad::resonances::ChannelRadii radii( endfChannels.trueChannelRadii()[i],
-                                             endfChannels.effectiveChannelRadii()[i] );
+      dryad::resonances::ChannelRadii radii( endfChannels.trueChannelRadii()[i] * constants::deca,
+                                             endfChannels.effectiveChannelRadii()[i] * constants::deca );
 
       channels.emplace_back( id::ChannelID( reactions[index], std::move( numbers ) ),
                              incident,
                              pairs[index],
                              qvalues[index],
-                             boundaries ? std::nullopt
-                                        : std::make_optional( endfChannels.boundaryConditionValues()[i] ),
+                             boundaries ? std::make_optional( endfChannels.boundaryConditionValues()[i] )
+                                        : std::nullopt,
                              std::move( radii ) );
     }
 
