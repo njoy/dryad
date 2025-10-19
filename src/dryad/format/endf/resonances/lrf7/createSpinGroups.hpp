@@ -84,8 +84,8 @@ namespace lrf7 {
           auto to_reduced_width = [&] ( auto&& width, auto&& energy ) {
 
             double penetrability = channels[i].penetrability( energy );
-            return ( width < 0. ? -1. : +1. ) * 0.5 *
-                   std::sqrt( std::abs( width ) / penetrability );
+            return ( width < 0. ? -1. : +1. ) *
+                   std::sqrt( 0.5 * std::abs( width ) / penetrability );
           };
 
           std::transform( amplitudes.back().begin(), amplitudes.back().end(),
