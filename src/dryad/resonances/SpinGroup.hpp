@@ -19,12 +19,23 @@ namespace resonances {
    */
   class SpinGroup {
 
+  public:
+
+    /* type aliases */
+
+    using ChannelData = std::pair< Channel, ResonanceTable >;
+
+  private:
+
     /* fields */
 
     std::vector< Channel > channels_;
     ResonanceTable resonances_;
 
     /* auxiliary functions */
+
+    #include "dryad/resonances/SpinGroup/src/createChannels.hpp"
+    #include "dryad/resonances/SpinGroup/src/createResonanceTable.hpp"
 
   public:
 
