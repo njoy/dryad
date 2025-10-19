@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__: list[str] = ['Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__ = ['Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
 class Channel:
     """
     A resonance reaction channel

@@ -4,7 +4,7 @@ Atomic relaxation data components
 from __future__ import annotations
 import dryad.id
 import typing
-__all__: list[str] = ['ElectronSubshellConfiguration', 'NonRadiativeTransitionData', 'RadiativeTransitionData', 'TransitionType']
+__all__ = ['ElectronSubshellConfiguration', 'NonRadiativeTransitionData', 'RadiativeTransitionData', 'TransitionType']
 class ElectronSubshellConfiguration:
     """
     Electron subshell configuration information
