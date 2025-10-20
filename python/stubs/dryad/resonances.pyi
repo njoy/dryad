@@ -5,7 +5,54 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
+class BoundaryCondition:
+    """
+    The boundary condition options
+    
+    Members:
+    
+      EliminateShift
+    
+      Constant
+    """
+    Constant: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.Constant: 2>
+    EliminateShift: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.EliminateShift: 1>
+    __members__: typing.ClassVar[dict[str, BoundaryCondition]]  # value = {'EliminateShift': <BoundaryCondition.EliminateShift: 1>, 'Constant': <BoundaryCondition.Constant: 2>}
+    def __eq__(self, other: typing.Any) -> bool:
+        ...
+    def __ge__(self, other: typing.Any) -> bool:
+        ...
+    def __getstate__(self) -> int:
+        ...
+    def __gt__(self, other: typing.Any) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
+    def __index__(self) -> int:
+        ...
+    def __init__(self, value: int) -> None:
+        ...
+    def __int__(self) -> int:
+        ...
+    def __le__(self, other: typing.Any) -> bool:
+        ...
+    def __lt__(self, other: typing.Any) -> bool:
+        ...
+    def __ne__(self, other: typing.Any) -> bool:
+        ...
+    def __repr__(self) -> str:
+        ...
+    def __setstate__(self, state: int) -> None:
+        ...
+    def __str__(self) -> str:
+        ...
+    @property
+    def name(self) -> str:
+        ...
+    @property
+    def value(self) -> int:
+        ...
 class Channel:
     """
     A resonance reaction channel

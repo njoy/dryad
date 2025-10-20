@@ -9,6 +9,9 @@ namespace python = pybind11;
 
 namespace resonances {
 
+  // declarations - enums
+  void wrapBoundaryCondition( python::module& );
+
   // declarations - components
   void wrapParticle( python::module& );
   void wrapParticlePair( python::module& );
@@ -34,6 +37,9 @@ void wrapResonances( python::module& module ) {
     "resonances",
     "Resonance data"
   );
+
+  // enums
+  resonances::wrapBoundaryCondition( submodule );
 
   // components
   resonances::wrapParticle( submodule );
