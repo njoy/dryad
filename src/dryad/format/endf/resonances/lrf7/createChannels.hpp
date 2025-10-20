@@ -6,7 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/resonances/BoundaryCondition.hpp"
 #include "dryad/resonances/Channel.hpp"
+#include "dryad/format/createVector.hpp"
+#include "dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
 #include "dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
@@ -20,27 +23,45 @@ namespace lrf7 {
   /**
    *  @brief Create the channels for a spin group
    *
-   *  @param[in] incident        the incident particle pair
-   *  @param[in] pairs           the particle pairs
-   *  @param[in] reactions       the reaction identifiers
-   *  @param[in] qvalues         the q values
-   *  @param[in] boundaries      flag to indicate whether or not to read the boundary conditions
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] endfPairs    the parsed ENDF particle pairs
    *  @param[in] endfChannels    the parsed ENDF channels
    */
   auto createChannels(
-           const dryad::resonances::ParticlePair& incident,
-           const std::vector< std::optional< dryad::resonances::ParticlePair > >& pairs,
-           const std::vector< id::ReactionID >& reactions,
-           const std::vector< double >& qvalues,
-           bool boundaries,
+           const id::ParticleID& projectile,
+           const id::ParticleID& target,
+           const dryad::resonances::BoundaryCondition& boundary_condition,
+           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels& endfChannels ) {
 
     std::vector< dryad::resonances::Channel > channels;
 
-    double spin = endfChannels.spin();
+    // get spin and parity
+    double spin = std::abs( endfChannels.spin() );
     short parity = spin == 0.0 ? endfChannels.parity() >= 0 ? +1 : -1
-                               : spin > 0 ? +1 : -1;
+                               : endfChannels.spin() >= 0 ? +1 : -1;
 
+    // get the reaction identifiers for resonance reactions
+    auto reactions = lrf7::createReactionIdentifiers( projectile, target, endfPairs );
+
+    // get the particle pairs for these reactions
+    auto pairs = lrf7::createParticlePairs( projectile, target, endfPairs );
+
+    // get the incident particle pair
+    auto pair = std::find_if( pairs.begin(), pairs.end(),
+                              [&] ( auto&& pair ) {
+
+                                return pair.has_value() ? ( pair->particle().identifier() == projectile &&
+                                                            pair->residual().identifier() == target )
+                                                        : false;
+                              } );
+    dryad::resonances::ParticlePair incident = pair->value();
+
+    // get the q values
+    auto qvalues = format::createVector( endfPairs.Q() );
+
+    // go over the channels
     for ( unsigned int i = 0; i < endfChannels.numberChannels(); ++i ) {
 
       std::size_t index = endfChannels.particlePairNumbers()[i] - 1;
@@ -50,13 +71,17 @@ namespace lrf7 {
                                                         spin, parity );
       dryad::resonances::ChannelRadii radii( endfChannels.trueChannelRadii()[i] * constants::deca,
                                              endfChannels.effectiveChannelRadii()[i] * constants::deca );
+      std::optional< double > boundary = std::nullopt;
+      if ( boundary_condition == dryad::resonances::BoundaryCondition::Constant ) {
+
+        boundary = endfChannels.boundaryConditionValues()[i];
+      }
 
       channels.emplace_back( id::ChannelID( reactions[index], std::move( numbers ) ),
                              incident,
                              pairs[index],
                              qvalues[index],
-                             boundaries ? std::make_optional( endfChannels.boundaryConditionValues()[i] )
-                                        : std::nullopt,
+                             std::move( boundary ),
                              std::move( radii ) );
     }
 

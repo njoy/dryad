@@ -8,6 +8,7 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
+#include "dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -24,39 +25,18 @@ SCENARIO( "createChannels" ) {
     auto section = tape.materials().front().section( 2, 151 ).parse< 2, 151 >();
     auto parameters = std::get< njoy::ENDFtk::section::Type<2,151>::RMatrixLimited >(
                         section.isotopes().front().resonanceRanges().front().parameters() );
+    auto pairs = parameters.particlePairs();
     auto channels = parameters.spinGroups().front().channels();
 
     WHEN( "a single parsed scattering radius from MF2 MT151 is given" ) {
 
       THEN( "it can be converted" ) {
 
-        std::vector< id::ReactionID > reactions = {
-
-          id::ReactionID( "n,Cl35->g,Cl36[all]" ),
-          id::ReactionID( "n,Cl35->n,Cl35" ),
-          id::ReactionID( "n,Cl35->p,S35" )
-        };
-        std::vector< std::optional< resonances::ParticlePair > > pairs = {
-
-          resonances::ParticlePair
-          { resonances::Particle( id::ParticleID::photon(), 0, 1, +1 ),
-            resonances::Particle( id::ParticleID( "Cl36[all]" ),
-                                  35.65932 * constants::neutron_mass, 0, +1 ) },
-          resonances::ParticlePair
-          { resonances::Particle( id::ParticleID::neutron(), constants::neutron_mass, 0.5, +1 ),
-            resonances::Particle( id::ParticleID( "Cl35" ),
-                                  34.66845 * constants::neutron_mass, 1.5, +1 ) },
-          resonances::ParticlePair
-          { resonances::Particle( id::ParticleID::proton(), .9986235 * constants::neutron_mass, 0.5, +1 ),
-            resonances::Particle( id::ParticleID( "S35" ),
-                                  34.66863 * constants::neutron_mass, 1.5, +1 ) }
-        };
-        ParticlePair incident = pairs[1].value();
-        std::vector< double > qvalues = { 0, 0, 615220 };
-        bool boundaries = false;
-
+        id::ParticleID projectile( "n" );
+        id::ParticleID target( "Cl35" );
+        auto boundary_condition = format::endf::resonances::lrf7::createBoundaryCondition( pairs );
         auto chunk = format::endf::resonances::lrf7::createChannels(
-                       incident, pairs, reactions, qvalues, boundaries, channels );
+                       projectile, target, boundary_condition, pairs, channels );
 
         verifyChunk( chunk );
       } // THEN
