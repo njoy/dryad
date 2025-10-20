@@ -9,6 +9,7 @@
 #include "dryad/constants.hpp"
 #include "dryad/id/ReactionID.hpp"
 #include "dryad/resonances/ParticlePair.hpp"
+#include "dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -21,14 +22,18 @@ namespace lrf7 {
   /**
    *  @brief Create the particle pairs
    *
-   *  @param[in] reactions   the reactions
-   *  @param[in] endfPairs   the parsed ENDF particle pairs
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] endfPairs    the parsed ENDF particle pairs
    */
   auto createParticlePairs(
-           const std::vector< id::ReactionID >& reactions,
+           const id::ParticleID& projectile,
+           const id::ParticleID& target,
            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
     std::vector< std::optional< dryad::resonances::ParticlePair > > pairs;
+
+    auto reactions = lrf7::createReactionIdentifiers( projectile, target, endfPairs );
     for ( unsigned int i = 0; i < endfPairs.numberParticlePairs(); ++i ) {
 
       if ( reactions[i].particles().has_value() ) {
