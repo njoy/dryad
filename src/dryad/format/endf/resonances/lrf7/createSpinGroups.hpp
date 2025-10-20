@@ -9,8 +9,8 @@
 #include "tools/Log.hpp"
 #include "dryad/resonances/SpinGroup.hpp"
 #include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
-#include "dryad/format/endf/resonances/lrf7/createChannels.hpp"
+#include "dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
+#include "dryad/format/endf/resonances/lrf7/createChannelData.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -21,7 +21,11 @@ namespace resonances {
 namespace lrf7 {
 
   /**
-   *  @brief Create the spin groups
+   *  @brief Create the spin groups for LRF7 resonance parameters
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] endf         the parsed ENDF LRF7 data
    */
   auto createSpinGroups( const id::ParticleID& projectile,
                          const id::ParticleID& target,
@@ -32,70 +36,99 @@ namespace lrf7 {
     // check the type of resonances
     bool reduced_amplitudes = endf.reducedWidths();
 
-    // get the reaction identifiers for resonance reactions
-    std::vector< id::ReactionID > reactions( endf.particlePairs().numberParticlePairs() );
-    std::transform( endf.particlePairs().MT().begin(), endf.particlePairs().MT().end(),
-                    reactions.begin(),
-                    [&] ( int mt ) { return id::ReactionID( projectile, target, mt ); } );
+    // determine the boundary condition
+    auto boundary_condition = lrf7::createBoundaryCondition( endf.particlePairs() );
 
-    // get the particle pairs for these reactions
-    auto pairs = lrf7::createParticlePairs( reactions, endf.particlePairs() );
-
-    // get the incident particle pair
-    auto find_incident = [&] ( auto&& pair ) {
-
-      return pair.has_value() ? ( pair->particle().identifier() == projectile &&
-                                  pair->residual().identifier() == target )
-                              : false;
-    };
-    auto iter = std::find_if( pairs.begin(), pairs.end(), find_incident );
-    dryad::resonances::ParticlePair incident = iter->value();
-
-    // get the q values
-    auto qvalues = format::createVector( endf.particlePairs().Q() );
-
-    // see if we have to read boundary conditions
-    bool boundaries = std::any_of( endf.particlePairs().shiftFactorFlag().begin(),
-                                   endf.particlePairs().shiftFactorFlag().end(),
-                                   [] ( auto&& flag ) { return flag == 1; } );
-
-    // go over each spin group
+    // go over each spin group and collect all channel data
+    std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
     for ( const auto& group : endf.spinGroups() ) {
 
-      // get the channels in this spin group
-      auto channels = lrf7::createChannels( incident, pairs, reactions, qvalues,
-                                            boundaries, group.channels() );
+      // get the channel data in this spin group
+      auto data = lrf7::createChannelData( projectile, target,
+                                           boundary_condition, reduced_amplitudes,
+                                           endf.particlePairs(), group );
 
-      // get the channel identifiers
-      std::vector< id::ChannelID > identifiers( channels.size() );
-      std::transform( channels.begin(), channels.end(), identifiers.begin(),
-                      [] ( auto&& channel ) { return channel.identifier(); } );
+      // add each to the final channel data
+      for ( auto&& channel : data ) {
 
-      // get the resonance energies
-      auto energies = format::createVector( group.parameters().resonanceEnergies() );
+        auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
+                                      channel.first.identifier(),
+                                      [] ( auto&& left, auto&& right )
+                                         { return left.first.identifier() < right; } );
+        if ( iter != channel_data.end() ) {
 
-      // get the reduced width amplitudes
-      std::vector< std::vector< double > > amplitudes;
-      for ( unsigned int i = 0; i < channels.size(); ++i ) {
+          // if the channel is already present: consolidate
+          if ( iter->first.identifier() == channel.first.identifier() ) {
 
-        amplitudes.emplace_back( format::createVector( group.parameters().GAM(i) ) );
-        if ( ! reduced_amplitudes ) {
+            if ( channel.first == iter->first ) {
 
-          auto to_reduced_width = [&] ( auto&& width, auto&& energy ) {
+              // add the resonances to the table
+              for ( unsigned int i = 0; i < channel.second.numberResonances(); ++i ) {
 
-            double penetrability = channels[i].penetrability( energy );
-            return ( width < 0. ? -1. : +1. ) *
-                   std::sqrt( 0.5 * std::abs( width ) / penetrability );
-          };
+                auto energy = std::lower_bound( iter->second.energies().begin(), iter->second.energies().begin(),
+                                                channel.second.energies()[i] );
+                auto amplitude = iter->second.reducedWidthAmplitudes().front().begin() +
+                                 std::distance( iter->second.energies().begin(), energy );
+                if ( energy != iter->second.energies().begin() ) {
 
-          std::transform( amplitudes.back().begin(), amplitudes.back().end(),
-                          energies.begin(), amplitudes.back().begin(), to_reduced_width );
+                  // if the energies are equal: throw exception
+                  if ( *energy == channel.second.energies()[i] ) {
+
+                    Log::error( "Found the same channel in two spin groups with overlapping resonance energies" );
+                    Log::info( "Channel: {}", channel.first.identifier().symbol() );
+                    throw std::exception();
+                  }
+                }
+                iter->second.energies().insert( energy, channel.second.energies()[i] );
+                iter->second.reducedWidthAmplitudes().front().insert( amplitude, channel.second.reducedWidthAmplitudes().front()[i] );
+              }
+
+              continue;
+            }
+            else {
+
+              Log::error( "Found at least two channels with equal quantum numbers but with "
+                          "differences in other channel data" );
+              Log::info( "Quantum numbers: {}", channel.first.quantumNumbers().symbol() );
+              Log::info( "Equal incident particle pair: {}", channel.first.incidentParticlePair() == iter->first.incidentParticlePair() );
+              Log::info( "Equal outgoing particle pair: {}", channel.first.outgoingParticlePair() == iter->first.outgoingParticlePair() );
+              Log::info( "Equal boundary condition: {}", channel.first.boundaryCondition() == iter->first.boundaryCondition() );
+              Log::info( "Equal Q value: {}", channel.first.qValue() == iter->first.qValue() );
+              throw std::exception();
+            }
+          }
         }
+        channel_data.insert( iter, std::move( channel ) );
       }
+    }
 
-      dryad::resonances::ResonanceTable table( std::move( identifiers ), std::move( energies ),
-                                               std::move( amplitudes ) );
-      groups.emplace_back( std::move( channels ), std::move(table ) );
+    // sort by Jpi,l,s
+    const auto getQuantumNumbers = [] ( const auto& data ) {
+
+      return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
+                              data.first.quantumNumbers().parity(),
+                              data.first.quantumNumbers().orbitalAngularMomentum(),
+                              data.first.quantumNumbers().spin() );
+    };
+    std::sort( channel_data.begin(), channel_data.end(),
+               [&] ( auto&& left, auto&& right )
+                   { return getQuantumNumbers( left ) < getQuantumNumbers( right ); } );
+
+    // create the spin groups
+    const auto getJpi = [] ( const auto& data ) {
+
+      return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
+                              data.first.quantumNumbers().parity() );
+    };
+    auto iter = channel_data.begin();
+    while ( iter != channel_data.end() ) {
+
+      auto begin = iter;
+      iter = std::upper_bound( begin, channel_data.end(),
+                               getJpi( *begin ),
+                               [&] ( auto&& left, auto&& right )
+                                   { return left < getJpi( right ); } );
+      groups.emplace_back( std::vector< dryad::resonances::SpinGroup::ChannelData >{ begin, iter } );
     }
 
     return groups;

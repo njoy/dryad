@@ -23,10 +23,11 @@ namespace lrf7 {
   /**
    *  @brief Create the channels for a spin group
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
-   *  @param[in] endfPairs    the parsed ENDF particle pairs
-   *  @param[in] endfChannels    the parsed ENDF channels
+   *  @param[in] projectile           the projectile identifier
+   *  @param[in] target               the target identifier
+   *  @param[in] boundary_condition   the boundary condition option
+   *  @param[in] endfPairs            the parsed ENDF particle pairs
+   *  @param[in] endfChannels         the parsed ENDF channels
    */
   auto createChannels(
            const id::ParticleID& projectile,

@@ -128,6 +128,8 @@ add_cpp_test( format.endf.createProductIdentifier                        format/
 add_cpp_test( format.endf.createTargetIdentifier                         format/endf/createTargetIdentifier.test.cpp )
 add_cpp_test( format.endf.createInteractionType                          format/endf/createInteractionType.test.cpp )
 add_cpp_test( format.endf.resonances.createTabulatedRadius               format/endf/resonances/createTabulatedRadius.test.cpp )
+add_cpp_test( format.endf.resonances.lrf7.createBoundaryCondition        format/endf/resonances/lrf7/createBoundaryCondition.test.cpp )
+add_cpp_test( format.endf.resonances.lrf7.createReactionIdentifiers      format/endf/resonances/lrf7/createReactionIdentifiers.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createParticlePairs            format/endf/resonances/lrf7/createParticlePairs.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createChannels                 format/endf/resonances/lrf7/createChannels.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createSpinGroups               format/endf/resonances/lrf7/createSpinGroups.test.cpp )
