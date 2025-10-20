@@ -61,7 +61,7 @@ namespace lrf7 {
     // get the q values
     auto qvalues = format::createVector( endfPairs.Q() );
 
-    // go over the channels
+    // go over the channel information
     for ( unsigned int i = 0; i < endfChannels.numberChannels(); ++i ) {
 
       std::size_t index = endfChannels.particlePairNumbers()[i] - 1;
