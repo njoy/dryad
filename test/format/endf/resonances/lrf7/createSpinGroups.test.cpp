@@ -8,7 +8,7 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
-#include <iostream>
+
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
@@ -54,6 +54,17 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   auto cl36 = id::ParticleID( "Cl36[all]" );
   auto s35 = id::ParticleID( "S35" );
 
+  ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                            Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
+  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
+                             Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
+  ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
+                            Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
+
+  ChannelRadii zero_radii( 0., 0. );
+  ChannelRadii radii1( 4.822220, 4.888750 );
+  ChannelRadii radii2( 4.822220, 3.667980 );
+
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -70,50 +81,23 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   auto channels = spingroup.channels();
 
   CHECK( 2 == channels.size() );
-  for ( const auto& channel : channels ) {
 
-    std::cout << channel.identifier().symbol() << std::endl;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 0: capture (eliminated)
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   auto channel0 = channels[0];
   CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ) == channel0.identifier() );
   CHECK( false == channel0.isIncidentChannel() );
 
   // incident particle pair
-  auto incident = channel0.incidentParticlePair();
-  CHECK( neutron == incident.particle().identifier() );
-  CHECK_THAT( constants::neutron_mass, WithinRel( incident.particle().mass() ) );
-  CHECK( 0 == incident.particle().charge() );
-  CHECK( 0.5 == incident.particle().spin() );
-  CHECK( +1 == incident.particle().parity() );
-  CHECK( cl35 == incident.residual().identifier() );
-  CHECK_THAT( 34.66845 * constants::neutron_mass, WithinRel( incident.residual().mass() ) );
-  CHECK( 17 == incident.residual().charge() );
-  CHECK( 1.5 == incident.residual().spin() );
-  CHECK( +1 == incident.residual().parity() );
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
 
   // outgoing particle pair
-  auto outgoing = channel0.outgoingParticlePair().value();
-  CHECK( photon == outgoing.particle().identifier() );
-  CHECK_THAT( 0., WithinRel( outgoing.particle().mass() ) );
-  CHECK( 0 == outgoing.particle().charge() );
-  CHECK( 1 == outgoing.particle().spin() );
-  CHECK( +1 == outgoing.particle().parity() );
-  CHECK( cl36 == outgoing.residual().identifier() );
-  CHECK_THAT( 35.65932 * constants::neutron_mass, WithinRel( outgoing.residual().mass() ) );
-  CHECK( 17 == outgoing.residual().charge() );
-  CHECK( 0 == outgoing.residual().spin() );
-  CHECK( +1 == outgoing.residual().parity() );
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
 
   // radii
-  auto radii = channel0.channelRadii();
-  CHECK_THAT( 0., WithinRel( radii.calculatePenetrabilityRadius( 1e-5 ) ) );
-  CHECK_THAT( 0., WithinRel( radii.calculateShiftFactorRadius( 1e-5 ) ) );
-  CHECK_THAT( 0., WithinRel( radii.calculatePhaseShiftRadius( 1e-5 ) ) );
+  CHECK( zero_radii == channel0.channelRadii() );
 
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
@@ -121,45 +105,22 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 1: elastic
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   auto channel1 = channels[1];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) == channel1.identifier() );
   CHECK( true == channel1.isIncidentChannel() );
 
   // incident particle pair
-  incident = channel1.incidentParticlePair();
-  CHECK( neutron == incident.particle().identifier() );
-  CHECK_THAT( constants::neutron_mass, WithinRel( incident.particle().mass() ) );
-  CHECK( 0 == incident.particle().charge() );
-  CHECK( 0.5 == incident.particle().spin() );
-  CHECK( +1 == incident.particle().parity() );
-  CHECK( cl35 == incident.residual().identifier() );
-  CHECK_THAT( 34.66845 * constants::neutron_mass, WithinRel( incident.residual().mass() ) );
-  CHECK( 17 == incident.residual().charge() );
-  CHECK( 1.5 == incident.residual().spin() );
-  CHECK( +1 == incident.residual().parity() );
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
 
   // outgoing particle pair
-  outgoing = channel1.outgoingParticlePair().value();
-  CHECK( neutron == outgoing.particle().identifier() );
-  CHECK_THAT( constants::neutron_mass, WithinRel( outgoing.particle().mass() ) );
-  CHECK( 0 == outgoing.particle().charge() );
-  CHECK( 0.5 == outgoing.particle().spin() );
-  CHECK( +1 == outgoing.particle().parity() );
-  CHECK( cl35 == outgoing.residual().identifier() );
-  CHECK_THAT( 34.66845 * constants::neutron_mass, WithinRel( outgoing.residual().mass() ) );
-  CHECK( 17 == outgoing.residual().charge() );
-  CHECK( 1.5 == outgoing.residual().spin() );
-  CHECK( +1 == outgoing.residual().parity() );
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  radii = channel1.channelRadii();
-  CHECK_THAT( 4.822220, WithinRel( radii.calculatePenetrabilityRadius( 1e-5 ) ) );
-  CHECK_THAT( 4.822220, WithinRel( radii.calculateShiftFactorRadius( 1e-5 ) ) );
-  CHECK_THAT( 4.888750, WithinRel( radii.calculatePhaseShiftRadius( 1e-5 ) ) );
+  CHECK( radii1 == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
@@ -167,9 +128,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, resonance table
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   auto table = spingroup.resonanceTable();
   CHECK( 2 == table.numberChannels() );
@@ -194,11 +155,121 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   channels = spingroup.channels();
 
   CHECK( 5 == channels.size() );
-  std::cout << " - - - - - - - - - - - - " << std::endl;
-  for ( const auto& channel : channels ) {
 
-    std::cout << channel.identifier().symbol() << std::endl;
-  }
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 2: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 3: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel3 = channels[3];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ) == channel3.identifier() );
+  CHECK( true == channel3.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel3.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel3.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel3.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel3.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0, WithinRel( channel3.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 4: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel4 = channels[4];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) == channel4.identifier() );
+  CHECK( false == channel4.isIncidentChannel() );
+
+    // incident particle pair
+  CHECK( neutron_pair == channel4.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel4.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel4.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel4.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 2
@@ -209,11 +280,75 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   channels = spingroup.channels();
 
   CHECK( 3 == channels.size() );
-  std::cout << " - - - - - - - - - - - - " << std::endl;
-  for ( const auto& channel : channels ) {
 
-    std::cout << channel.identifier().symbol() << std::endl;
-  }
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, channel 2: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 3
@@ -224,11 +359,121 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   channels = spingroup.channels();
 
   CHECK( 5 == channels.size() );
-  std::cout << " - - - - - - - - - - - - " << std::endl;
-  for ( const auto& channel : channels ) {
 
-    std::cout << channel.identifier().symbol() << std::endl;
-  }
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 2: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 3: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel3 = channels[3];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ) == channel3.identifier() );
+  CHECK( true == channel3.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel3.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel3.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel3.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel3.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 4: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel4 = channels[4];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ) == channel4.identifier() );
+  CHECK( false == channel4.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel4.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel4.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel4.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel4.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4
@@ -239,11 +484,75 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   channels = spingroup.channels();
 
   CHECK( 3 == channels.size() );
-  std::cout << " - - - - - - - - - - - - " << std::endl;
-  for ( const auto& channel : channels ) {
 
-    std::cout << channel.identifier().symbol() << std::endl;
-  }
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 2: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 5
@@ -254,10 +563,73 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   channels = spingroup.channels();
 
   CHECK( 3 == channels.size() );
-  std::cout << " - - - - - - - - - - - - " << std::endl;
-  for ( const auto& channel : channels ) {
 
-    std::cout << channel.identifier().symbol() << std::endl;
-  }
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 0, WithinRel( channel1.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, channel 2: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 }
