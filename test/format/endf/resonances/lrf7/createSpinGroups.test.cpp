@@ -17,6 +17,8 @@ void verifyChunkCl35( const std::vector< SpinGroup >& );
 
 SCENARIO( "createSpinGroups" ) {
 
+  //! @todo add a test using Sr88 since it has background elements in it.
+
   GIVEN( "ENDF MF2 MT151 RML data - Cl35" ) {
 
     // Cl35 ENDF/B-VIII.1 LRF=7 resonance evaluation
@@ -137,14 +139,14 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK( 9 == table.numberResonances() );
 
   auto energies = table.energies();
-  CHECK_THAT( 2.239640e+4, WithinRel( energies.front() ) );
-  CHECK_THAT( 5.478545e+5, WithinRel( energies.back() ) );
+  CHECK_THAT( 2.239640e+4, WithinRel( energies[0] ) );
+  CHECK_THAT( 5.478545e+5, WithinRel( energies[8] ) );
 
   auto resonances = table.reducedWidthAmplitudes();
-  CHECK_THAT( std::sqrt( 1.724800 / 2. ), WithinRel( resonances[0].front() ) );
-  CHECK_THAT( std::sqrt( 0.86 / 2. ), WithinRel( resonances[0].back() ) );
-  CHECK_THAT( std::sqrt( .9663670 / 2. / channel1.penetrability( 2.239640e+4 ) ), WithinRel( resonances[1].front() ) );
-  CHECK_THAT( std::sqrt( 7.640130e+2 / 2. / channel1.penetrability( 5.478545e+5 ) ),WithinRel( resonances[1].back() ) );
+  CHECK_THAT( std::sqrt( 1.724800 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 0.86 / 2. ), WithinRel( resonances[0][8] ) );
+  CHECK_THAT( std::sqrt( .9663670 / 2. / channel1.penetrability( 2.239640e+4 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 7.640130e+2 / 2. / channel1.penetrability( 5.478545e+5 ) ),WithinRel( resonances[1][8] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 1
@@ -271,6 +273,30 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // Q value
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
 
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 5 == table.numberChannels() );
+  CHECK( 56 == table.numberResonances() );
+
+  energies = table.energies();
+  CHECK_THAT( 4.250762e+3, WithinRel( energies[0] ) );
+  CHECK_THAT( 1.435502e+6, WithinRel( energies[55] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 0.472 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 0.860 / 2. ), WithinRel( resonances[0][55] ) );
+  CHECK_THAT( std::sqrt( .628 / 2. / channel1.penetrability( 4.250762e+3 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 5.365630e+3 / 2. / channel1.penetrability( 1.435502e+6 ) ), WithinRel( resonances[1][55] ) );
+  CHECK_THAT( std::sqrt( .23 / 2. / channel2.penetrability( 4.250762e+3 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.435502e+6 ) ), WithinRel( resonances[2][55] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( 4.250762e+3 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( 1.435502e+6 ) ), WithinRel( resonances[3][55] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 4.250762e+3 ) ), WithinRel( resonances[4][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 1.435502e+6 ) ), WithinRel( resonances[4][55] ) );
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 2
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -349,6 +375,26 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 23 == table.numberResonances() );
+
+  energies = table.energies();
+  CHECK_THAT( 5.493200e+4, WithinRel( energies[0] ) );
+  CHECK_THAT( 1.205687e+6, WithinRel( energies[22] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 0.36726 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 0.606 / 2. ), WithinRel( resonances[0][22] ) );
+  CHECK_THAT( std::sqrt( 46.44240 / 2. / channel1.penetrability( 5.493200e+4 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 642.5840 / 2. / channel1.penetrability( 1.205687e+6 ) ), WithinRel( resonances[1][22] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 5.493200e+4 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.205687e+6 ) ), WithinRel( resonances[2][22] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 3
@@ -475,6 +521,30 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // Q value
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
 
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 5 == table.numberChannels() );
+  CHECK( 95 == table.numberResonances() );
+
+  energies = table.energies();
+  CHECK_THAT( -3.369334e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 1.441365e+6, WithinRel( energies[94] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 0.53401 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 0.860 / 2. ), WithinRel( resonances[0][94] ) );
+  CHECK_THAT( std::sqrt( 3.820180e+4 / 2. / channel1.penetrability( -3.369334e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel1.penetrability( 1.441365e+6 ) ), WithinRel( resonances[1][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( -3.369334e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.441365e+6 ) ), WithinRel( resonances[2][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( -3.369334e+5 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 1.608740e+3 / 2. / channel3.penetrability( 1.441365e+6 ) ), WithinRel( resonances[3][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( -3.369334e+5 ) ), WithinRel( resonances[4][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 1.441365e+6 ) ), WithinRel( resonances[4][94] ) );
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -554,6 +624,26 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 32 == table.numberResonances() );
+
+  energies = table.energies();
+  CHECK_THAT( -1.806500e+2, WithinRel( energies[0] ) );
+  CHECK_THAT(  7.563145e+6, WithinRel( energies[31] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 0.53015 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 0.38398 / 2. ), WithinRel( resonances[0][31] ) );
+  CHECK_THAT( std::sqrt( 13.277 / 2. / channel1.penetrability( -1.806500e+2 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 6.219050e+5 / 2. / channel1.penetrability( 7.563145e+6 ) ), WithinRel( resonances[1][31] ) );
+  CHECK_THAT( std::sqrt( 5.992300e-3 / 2. / channel2.penetrability( -1.806500e+2 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 1000. / 2. / channel2.penetrability( 7.563145e+6 ) ), WithinRel( resonances[2][31] ) );
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 5
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -632,4 +722,24 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 57 == table.numberResonances() );
+
+  energies = table.energies();
+  CHECK_THAT( 1.635612e+4, WithinRel( energies[0] ) );
+  CHECK_THAT( 1.485128e+6, WithinRel( energies[56] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 0.3865 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 0.86 / 2. ), WithinRel( resonances[0][31] ) );
+  CHECK_THAT( std::sqrt( 5.9818 / 2. / channel1.penetrability( 1.635612e+4 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 1.054090e+4 / 2. / channel1.penetrability( 1.485128e+6 ) ), WithinRel( resonances[1][56] ) );
+  CHECK_THAT( std::sqrt( 0.164019 / 2. / channel2.penetrability( 1.635612e+4 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 1.485128e+6 ) ), WithinRel( resonances[2][56] ) );
 }

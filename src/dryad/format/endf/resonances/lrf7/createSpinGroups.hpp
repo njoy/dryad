@@ -65,11 +65,11 @@ namespace lrf7 {
               // add the resonances to the table
               for ( unsigned int i = 0; i < channel.second.numberResonances(); ++i ) {
 
-                auto energy = std::lower_bound( iter->second.energies().begin(), iter->second.energies().begin(),
+                auto energy = std::lower_bound( iter->second.energies().begin(), iter->second.energies().end(),
                                                 channel.second.energies()[i] );
                 auto amplitude = iter->second.reducedWidthAmplitudes().front().begin() +
                                  std::distance( iter->second.energies().begin(), energy );
-                if ( energy != iter->second.energies().begin() ) {
+                if ( energy != iter->second.energies().end() ) {
 
                   // if the energies are equal: throw exception
                   if ( *energy == channel.second.energies()[i] ) {
@@ -102,8 +102,8 @@ namespace lrf7 {
       }
     }
 
-    // sort by Jpi,l,s
-    const auto getQuantumNumbers = [] ( const auto& data ) {
+    // lexographical sort by Jpi,l,s,reaction
+    const auto getSortingOrder = [] ( const auto& data ) {
 
       return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
                               data.first.quantumNumbers().parity(),
@@ -113,7 +113,7 @@ namespace lrf7 {
     };
     std::sort( channel_data.begin(), channel_data.end(),
                [&] ( auto&& left, auto&& right )
-                   { return getQuantumNumbers( left ) < getQuantumNumbers( right ); } );
+                   { return getSortingOrder( left ) < getSortingOrder( right ); } );
 
     // create the spin groups
     const auto getJpi = [] ( const auto& data ) {
