@@ -22,6 +22,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceParameters.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/BoundaryCondition.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Formalism.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Particle.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ParticlePair.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelQuantumNumbers.python.cpp
