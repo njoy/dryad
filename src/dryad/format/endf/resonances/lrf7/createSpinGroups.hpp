@@ -108,7 +108,8 @@ namespace lrf7 {
       return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
                               data.first.quantumNumbers().parity(),
                               data.first.quantumNumbers().orbitalAngularMomentum(),
-                              data.first.quantumNumbers().spin() );
+                              data.first.quantumNumbers().spin(),
+                              data.first.reaction() );
     };
     std::sort( channel_data.begin(), channel_data.end(),
                [&] ( auto&& left, auto&& right )
