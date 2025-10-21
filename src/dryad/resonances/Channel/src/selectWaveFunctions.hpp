@@ -51,3 +51,17 @@ selectPhaseShiftFunction( unsigned int l,
   }
   return 0.;
 }
+
+static PhaseShiftDifference
+selectPhaseShiftDifferenceFunction( unsigned int l,
+                                    const std::optional< ParticlePair >& outgoing ) {
+
+  if ( outgoing.has_value() ) {
+
+    if ( outgoing->particle().charge() > 0 ) {
+
+      return CoulombPhaseShiftDifference( l );
+    }
+  }
+  return 0.;
+}

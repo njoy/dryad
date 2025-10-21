@@ -61,23 +61,24 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shiftFactor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phaseShift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
         Arguments:
-            self            the channel
-            identifier      the channel identifier
-            incident        the current incident particle pair
-            outgoing        the outgoing particle pair
-            qValue          the Q value associated with the transition from
-                            the incident to the outgoing particle pair
-            boundary        the boundary condition
-            radii           the channel radii for the calculation of the
-                            wave functions
-            penetrability   the penetrability of the channel
-            shiftFactor     the shift factor of the channel
-            phaseshift      the phase shift of the channel
+            self                     the channel
+            identifier               the channel identifier
+            incident                 the current incident particle pair
+            outgoing                 the outgoing particle pair
+            qValue                   the Q value associated with the transition from
+                                     the incident to the outgoing particle pair
+            boundary                 the boundary condition
+            radii                    the channel radii for the calculation of the
+                                     wave functions
+            penetrability            the penetrability of the channel
+            shift_factor             the shift factor of the channel
+            phase_shift              the phase shift of the channel
+            phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
     def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii) -> None:
@@ -129,6 +130,14 @@ class Channel:
     def phase_shift(self, energy: float) -> float:
         """
         Calculate the phase shift for the channel at a given energy
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    def phase_shift_difference(self, energy: float) -> float:
+        """
+        Calculate the phase shift difference for the channel at a given energy
         
         Arguments:
             self     the channel

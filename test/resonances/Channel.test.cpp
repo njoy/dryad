@@ -95,6 +95,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 1., WithinRel( capture.penetrability( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.shiftFactor( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.phaseShift( energy ) ) );
+      CHECK_THAT( 0., WithinRel( capture.phaseShiftDifference( energy ) ) );
 
       // neutron channel, incident channel, no threshold
       CHECK( elasticID == elastic.identifier() );
@@ -113,6 +114,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 3.256036376131631e-6, WithinRel( elastic.penetrability( energy ) ) );
       CHECK_THAT( 0., WithinRel( elastic.shiftFactor( energy ) ) );
       CHECK_THAT( 2.476675951516791e-6, WithinRel( elastic.phaseShift( energy ) ) );
+      CHECK_THAT( 0., WithinRel( elastic.phaseShiftDifference( energy ) ) );
 
       // neutron channel, not incident channel, threshold
       CHECK( inelasticID == inelastic.identifier() );
@@ -131,6 +133,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 1.153305524765912, WithinRel( inelastic.penetrability( energy ) ) );
       CHECK_THAT( 0., WithinRel( inelastic.shiftFactor( energy ) ) );
       CHECK_THAT( 8.772518878713266e-1, WithinRel( inelastic.phaseShift( energy ) ) );
+      CHECK_THAT( 0., WithinRel( inelastic.phaseShiftDifference( energy ) ) );
 
       // proton channel, not an incident channel, no threshold
       CHECK( protonID == proton.identifier() );
@@ -149,6 +152,7 @@ SCENARIO( "Channel" ) {
       CHECK_THAT( 2.896705590727021e-5, WithinRel( proton.penetrability( energy ) ) );
       CHECK_THAT( -1.872686299035523, WithinRel( proton.shiftFactor( energy ) ) );
       CHECK_THAT( 2.168669356291763e-6, WithinRel( proton.phaseShift( energy ) ) );
+      CHECK_THAT( 0., WithinRel( proton.phaseShiftDifference( energy ) ) );
     } // THEN
   } // GIVEN
 

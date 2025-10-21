@@ -19,6 +19,7 @@
 #include "dryad/resonances/CoulombPenetrability.hpp"
 #include "dryad/resonances/CoulombShiftFactor.hpp"
 #include "dryad/resonances/CoulombPhaseShift.hpp"
+#include "dryad/resonances/CoulombPhaseShiftDifference.hpp"
 #include "dryad/resonances/TabulatedWaveFunction.hpp"
 
 namespace njoy {
@@ -47,6 +48,8 @@ namespace resonances {
                                      HardSpherePhaseShift,
                                      CoulombPhaseShift,
                                      TabulatedWaveFunction >;
+    using PhaseShiftDifference = std::variant< double,
+                                               CoulombPhaseShiftDifference >;
 
   private:
 
@@ -62,6 +65,7 @@ namespace resonances {
     Penetrability penetrability_;
     ShiftFactor shift_factor_;
     PhaseShift phase_shift_;
+    PhaseShiftDifference phase_shift_difference_;
 
     double spin_factor_;
 
@@ -329,6 +333,26 @@ namespace resonances {
       };
 
       return std::visit( visitor, this->phase_shift_ );
+    }
+
+    /**
+     *  @brief Calculate the phase shift difference for the channel at a given energy
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double phaseShiftDifference( double energy ) const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> double { return value; },
+        [&] ( const CoulombPhaseShiftDifference& function ) -> double {
+
+          const auto eta = this->sommerfeldParameter( energy );
+          return function( eta );
+        }
+      };
+
+      return std::visit( visitor, this->phase_shift_difference_ );
     }
 
     /**

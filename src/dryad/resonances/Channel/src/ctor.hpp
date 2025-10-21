@@ -23,6 +23,7 @@ Channel& operator=( Channel&& ) = default;
  *  @param[in] penetrability   the penetrability of the channel
  *  @param[in] shiftFactor     the shift factor of the channel
  *  @param[in] phaseshift      the phase shift of the channel
+ *  @param[in] difference      the phase shift differenceof the channel
  */
 Channel( id::ChannelID identifier,
          ParticlePair incident,
@@ -32,7 +33,8 @@ Channel( id::ChannelID identifier,
          ChannelRadii radii,
          Penetrability penetrability,
          ShiftFactor shiftFactor,
-         PhaseShift phaseShift ) :
+         PhaseShift phaseShift,
+         PhaseShiftDifference difference ) :
     id_( std::move( identifier ) ),
     incident_pair_( std::move( incident ) ),
     outgoing_pair_( std::move( outgoing ) ),
@@ -42,6 +44,7 @@ Channel( id::ChannelID identifier,
     penetrability_( std::move( penetrability ) ),
     shift_factor_( std::move( shiftFactor ) ),
     phase_shift_( std::move( phaseShift ) ),
+    phase_shift_difference_( std::move( difference ) ),
     spin_factor_( calculateSpinFactor( identifier.quantumNumbers(), outgoing ) ) {}
 
 /**
@@ -70,4 +73,6 @@ Channel( id::ChannelID identifier,
              selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
                                         outgoing ),
              selectPhaseShiftFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
-                                       outgoing ) ) {}
+                                       outgoing ),
+             selectPhaseShiftDifferenceFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
+                                                 outgoing ) ) {}

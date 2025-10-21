@@ -21,6 +21,7 @@ void wrapChannel( python::module& module ) {
   using Penetrability = njoy::dryad::resonances::Channel::Penetrability;
   using ShiftFactor = njoy::dryad::resonances::Channel::ShiftFactor;
   using PhaseShift = njoy::dryad::resonances::Channel::PhaseShift;
+  using PhaseShiftDifference = njoy::dryad::resonances::Channel::PhaseShiftDifference;
 
   // wrap views created by this component
 
@@ -44,26 +45,28 @@ void wrapChannel( python::module& module ) {
                   ChannelRadii,
                   Penetrability,
                   ShiftFactor,
-                  PhaseShift >(),
+                  PhaseShift,
+                  PhaseShiftDifference >(),
     python::arg( "identifier" ), python::arg( "incident" ),
-    python::arg( "outgoing" ), python::arg( "qValue" ),
+    python::arg( "outgoing" ), python::arg( "q_value" ),
     python::arg( "boundary" ), python::arg( "radii" ),
-    python::arg( "penetrability" ), python::arg( "shiftFactor" ),
-    python::arg( "phaseShift" ),
+    python::arg( "penetrability" ), python::arg( "shift_factor" ),
+    python::arg( "phase_shift" ), python::arg( "phase_shift_difference" ),
     "Initialise the channel\n\n"
     "Arguments:\n"
-    "    self            the channel\n"
-    "    identifier      the channel identifier\n"
-    "    incident        the current incident particle pair\n"
-    "    outgoing        the outgoing particle pair\n"
-    "    qValue          the Q value associated with the transition from\n"
-    "                    the incident to the outgoing particle pair\n"
-    "    boundary        the boundary condition\n"
-    "    radii           the channel radii for the calculation of the\n"
-    "                    wave functions\n"
-    "    penetrability   the penetrability of the channel\n"
-    "    shiftFactor     the shift factor of the channel\n"
-    "    phaseshift      the phase shift of the channel"
+    "    self                     the channel\n"
+    "    identifier               the channel identifier\n"
+    "    incident                 the current incident particle pair\n"
+    "    outgoing                 the outgoing particle pair\n"
+    "    qValue                   the Q value associated with the transition from\n"
+    "                             the incident to the outgoing particle pair\n"
+    "    boundary                 the boundary condition\n"
+    "    radii                    the channel radii for the calculation of the\n"
+    "                             wave functions\n"
+    "    penetrability            the penetrability of the channel\n"
+    "    shift_factor             the shift factor of the channel\n"
+    "    phase_shift              the phase shift of the channel\n"
+    "    phase_shift_difference   the phase shift difference of the channel"
   )
   .def(
 
@@ -233,6 +236,16 @@ void wrapChannel( python::module& module ) {
     &Component::phaseShift,
     python::arg( "energy" ),
     "Calculate the phase shift for the channel at a given energy\n\n"
+    "Arguments:\n"
+    "    self     the channel\n"
+    "    energy   the energy (given in eV)"
+  )
+  .def(
+
+    "phase_shift_difference",
+    &Component::phaseShiftDifference,
+    python::arg( "energy" ),
+    "Calculate the phase shift difference for the channel at a given energy\n\n"
     "Arguments:\n"
     "    self     the channel\n"
     "    energy   the energy (given in eV)"
