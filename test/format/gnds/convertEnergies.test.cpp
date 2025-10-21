@@ -26,10 +26,10 @@ SCENARIO( "convertEnergies" ) {
         CHECK( 1000. == energies[1] );
 
         energies = { 1., 1000. };
-        format::gnds::convertEnergies( energies, "eV" );
+        format::gnds::convertEnergies( energies, "MeV" );
         CHECK( 2 == energies.size() );
-        CHECK(    1. == energies[0] );
-        CHECK( 1000. == energies[1] );
+        CHECK( 1e+6 == energies[0] );
+        CHECK( 1e+9 == energies[1] );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {

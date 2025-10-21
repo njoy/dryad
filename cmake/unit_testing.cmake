@@ -51,6 +51,8 @@ add_cpp_test( id.ParticleID                                              id/Part
 add_cpp_test( id.ReactionType                                            id/ReactionType.test.cpp )
 add_cpp_test( id.ReactionID                                              id/ReactionID.test.cpp )
 
+add_cpp_test( resonances.TabulatedRadius                                 resonances/TabulatedRadius.test.cpp )
+
 add_cpp_test( Documentation                                              Documentation.test.cpp )
 
 add_cpp_test( CoherentDistributionData                                   CoherentDistributionData.test.cpp )
@@ -111,6 +113,7 @@ add_cpp_test( format.endf.createProjectileIdentifier                     format/
 add_cpp_test( format.endf.createProductIdentifier                        format/endf/createProductIdentifier.test.cpp )
 add_cpp_test( format.endf.createTargetIdentifier                         format/endf/createTargetIdentifier.test.cpp )
 add_cpp_test( format.endf.createInteractionType                          format/endf/createInteractionType.test.cpp )
+add_cpp_test( format.endf.resonances.createTabulatedRadius               format/endf/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellID                format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration     format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
 add_cpp_test( format.endf.covariance.createMatrix                        format/endf/covariance/createMatrix.test.cpp )
@@ -146,8 +149,8 @@ add_cpp_test( format.endf.createEndfInterpolants                         format/
 add_cpp_test( format.endf.createEndfSublibraryType                       format/endf/createEndfSublibraryType.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellDesignator            format/endf/atomic/createEndfSubshellDesignator.test.cpp )
 add_cpp_test( format.endf.atomic.createEndfSubshellData                  format/endf/atomic/createEndfSubshellData.test.cpp )
-add_cpp_test( format.endf.createEndfFile3Section.                        format/endf/createEndfFile3Section.test.cpp )
-add_cpp_test( format.endf.createEndfFile23Section.                       format/endf/createEndfFile23Section.test.cpp )
+add_cpp_test( format.endf.createEndfFile3Section                         format/endf/createEndfFile3Section.test.cpp )
+add_cpp_test( format.endf.createEndfFile23Section                        format/endf/createEndfFile23Section.test.cpp )
 add_cpp_test( format.endf.createAtomicRelaxationEndfFile                 format/endf/createAtomicRelaxationEndfFile.test.cpp )
 add_cpp_test( format.endf.createProjectileTargetEndfFile                 format/endf/createProjectileTargetEndfFile.test.cpp )
 
@@ -156,6 +159,8 @@ add_cpp_test( format.gnds.convertCrossSections                           format/
 add_cpp_test( format.gnds.convertEnergies                                format/gnds/convertEnergies.test.cpp )
 add_cpp_test( format.gnds.convertInverseLengths                          format/gnds/convertInverseLengths.test.cpp )
 add_cpp_test( format.gnds.convertVarianceScalingFactors                  format/gnds/convertVarianceScalingFactors.test.cpp )
+add_cpp_test( format.gnds.convertRadius                                  format/gnds/convertRadius.test.cpp )
+add_cpp_test( format.gnds.convertRadii                                   format/gnds/convertRadii.test.cpp )
 add_cpp_test( format.gnds.createInteractionType                          format/gnds/createInteractionType.test.cpp )
 add_cpp_test( format.gnds.createInterpolationType                        format/gnds/createInterpolationType.test.cpp )
 add_cpp_test( format.gnds.createReferenceFrame                           format/gnds/createReferenceFrame.test.cpp )
@@ -171,6 +176,8 @@ add_cpp_test( format.gnds.readLegendre                                   format/
 add_cpp_test( format.gnds.readPolynomial1d                               format/gnds/readPolynomial1d.test.cpp )
 add_cpp_test( format.gnds.readXYs1d                                      format/gnds/readXYs1d.test.cpp )
 add_cpp_test( format.gnds.readArray                                      format/gnds/readArray.test.cpp )
+add_cpp_test( format.gnds.resonances.createTabulatedRadius               format/gnds/resonances/createTabulatedRadius.test.cpp )
+add_cpp_test( format.gnds.resonances.createRadius                        format/gnds/resonances/createRadius.test.cpp )
 add_cpp_test( format.gnds.readCovarianceMatrix                           format/gnds/readCovarianceMatrix.test.cpp )
 add_cpp_test( format.gnds.createPolynomialMultiplicity                   format/gnds/createPolynomialMultiplicity.test.cpp )
 add_cpp_test( format.gnds.createTabulatedMultiplicity                    format/gnds/createTabulatedMultiplicity.test.cpp )

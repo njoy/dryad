@@ -10,6 +10,8 @@ namespace python = pybind11;
 namespace resonances {
 
   // declarations - components
+  void wrapTabulatedRadius( python::module& );
+
   void wrapResonanceParameters( python::module& );
 }
 
@@ -21,6 +23,9 @@ void wrapResonances( python::module& module ) {
     "resonances",
     "Resonance data"
   );
+
+  // components
+  resonances::wrapTabulatedRadius( submodule );
 
   resonances::wrapResonanceParameters( submodule );
 }

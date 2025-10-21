@@ -19,7 +19,10 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Create an integer or tabulated multiplicity from a GNDS multiplicity node
+   *  @brief Create an integer, tabulated or polynomial multiplicity from a GNDS multiplicity node
+   *
+   *  @param[in] multiplicity   the GNDS multiplicity node
+   *  @param[in] style          the style to be extracted (default is "eval")
    */
   static std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
   createMultiplicity( pugi::xml_node multiplicity, const std::string& style = "eval" ) {

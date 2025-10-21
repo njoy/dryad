@@ -1,6 +1,8 @@
 #include "dryad/format/gnds/atomic/createElectronSubshellID.hpp"
 #include "dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
 
+#include "dryad/format/gnds/resonances/createTabulatedRadius.hpp"
+
 #include "dryad/format/gnds/covariance/createScalingType.hpp"
 #include "dryad/format/gnds/covariance/createVarianceScaling.hpp"
 

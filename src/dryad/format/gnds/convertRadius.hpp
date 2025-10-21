@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTENERGY
+#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTRADIUS
+#define NJOY_DRYAD_FORMAT_GNDS_CONVERTRADIUS
 
 // system includes
 #include <vector>
@@ -13,19 +13,19 @@ namespace format {
 namespace gnds {
 
   /**
-   *  @brief Convert an energy value from GNDS into eV
+   *  @brief Convert a radius value from GNDS into fm
    */
-  static void convertEnergy( double& energy, const std::string& unit ) {
+  static void convertRadius( double& radius, const std::string& unit ) {
 
-    if ( unit != "eV" ) {
+    if ( unit != "fm" ) {
 
-      if ( unit == "MeV" ) {
+      if ( unit == "nm" ) {
 
-        energy *= 1e+6;
+        radius *= 1e+6;
       }
       else {
 
-        Log::error( "Cannot convert energy with unit \'{}\' to eV, "
+        Log::error( "Cannot convert radius with unit \'{}\' to fm, "
                     "contact dryad developers", unit );
         throw std::exception();
       }
