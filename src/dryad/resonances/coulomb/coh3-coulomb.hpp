@@ -18,7 +18,7 @@ const int MAX_L0           =  100;     /* maximum iteration for F function    */
 #include "coh3-asympt.hpp"
 #include "coh3-extwave.hpp"
 
-void coulombWaveFunctions( int l, double ratio, double eta,
+inline void coulombWaveFunctions( int l, double ratio, double eta,
                            std::complex<double>& gf,
                            std::complex<double>& dgf ) {
 

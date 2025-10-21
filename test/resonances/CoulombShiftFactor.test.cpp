@@ -16,29 +16,34 @@ SCENARIO( "CoulombShiftFactor" ) {
 
   GIVEN( "valid orbital momentum values for a CoulombShiftFactor" ) {
 
-    CoulombShiftFactor penetrability( 0 );
+    CoulombShiftFactor shiftFactor( 0 );
 
-    CHECK( 0 == penetrability.orbitalAngularMomentum() );
+    CHECK( 0 == shiftFactor.orbitalAngularMomentum() );
+    shiftFactor( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombShiftFactor( 1 );
+    shiftFactor = CoulombShiftFactor( 1 );
 
-    CHECK( 1 == penetrability.orbitalAngularMomentum() );
+    CHECK( 1 == shiftFactor.orbitalAngularMomentum() );
+    shiftFactor( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombShiftFactor( 2 );
+    shiftFactor = CoulombShiftFactor( 2 );
 
-    CHECK( 2 == penetrability.orbitalAngularMomentum() );
+    CHECK( 2 == shiftFactor.orbitalAngularMomentum() );
+    shiftFactor( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombShiftFactor( 3 );
+    shiftFactor = CoulombShiftFactor( 3 );
 
-    CHECK( 3 == penetrability.orbitalAngularMomentum() );
+    CHECK( 3 == shiftFactor.orbitalAngularMomentum() );
+    shiftFactor( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombShiftFactor( 4 );
+    shiftFactor = CoulombShiftFactor( 4 );
 
-    CHECK( 4 == penetrability.orbitalAngularMomentum() );
+    CHECK( 4 == shiftFactor.orbitalAngularMomentum() );
+    shiftFactor( 1., 1. );
     //! @todo test against values
   } // GIVEN
 } // SCENARIO

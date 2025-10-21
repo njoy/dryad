@@ -19,26 +19,31 @@ SCENARIO( "CoulombPenetrability" ) {
     CoulombPenetrability penetrability( 0 );
 
     CHECK( 0 == penetrability.orbitalAngularMomentum() );
+    penetrability( 1., 1. );
     //! @todo test against values
 
     penetrability = CoulombPenetrability( 1 );
 
     CHECK( 1 == penetrability.orbitalAngularMomentum() );
+    penetrability( 1., 1. );
     //! @todo test against values
 
     penetrability = CoulombPenetrability( 2 );
 
     CHECK( 2 == penetrability.orbitalAngularMomentum() );
+    penetrability( 1., 1. );
     //! @todo test against values
 
     penetrability = CoulombPenetrability( 3 );
 
     CHECK( 3 == penetrability.orbitalAngularMomentum() );
+    penetrability( 1., 1. );
     //! @todo test against values
 
     penetrability = CoulombPenetrability( 4 );
 
     CHECK( 4 == penetrability.orbitalAngularMomentum() );
+    penetrability( 1., 1. );
     //! @todo test against values
   } // GIVEN
 } // SCENARIO

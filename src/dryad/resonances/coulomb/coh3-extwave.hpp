@@ -16,7 +16,7 @@
 /**********************************************************/
 /*      Coulomb Function -- G at Matching Radius          */
 /**********************************************************/
-double omGfunction(int l, double eta, double rho, double g1, double g2)
+inline double omGfunction(int l, double eta, double rho, double g1, double g2)
 {
   double j  = (double)l;
   double j1 = (double)(l+1);
@@ -27,7 +27,7 @@ double omGfunction(int l, double eta, double rho, double g1, double g2)
 /**********************************************************/
 /*      Coulomb Function -- F at Matching Radius          */
 /**********************************************************/
-double omFfunction(int l, double eta, double rho, double g1, double g2)
+inline double omFfunction(int l, double eta, double rho, double g1, double g2)
 {
   double j  = (double)l;
   double j1 = (double)(l+1);
@@ -38,7 +38,7 @@ double omFfunction(int l, double eta, double rho, double g1, double g2)
 /**********************************************************/
 /*      Derivarive of Coulomb Function at Matching Radius */
 /**********************************************************/
-double omDfunction(int l, double eta, double rho, double g1, double g2)
+inline double omDfunction(int l, double eta, double rho, double g1, double g2)
 {
   double j1 = (double)(l+1);
   return( ((eta+j1*j1/rho)*g1-std::sqrt(j1*j1+eta*eta)*g2)/j1 );
@@ -48,7 +48,7 @@ double omDfunction(int l, double eta, double rho, double g1, double g2)
 /*      I.A.Stegun and M.Abramowitz                       */
 /*      Phys. Rev. 98, 1851(1955)                         */
 /**********************************************************/
-int omExternalFunction(int lmax, double rho_match, double coulomb, double coulomb_scat0, std::complex<double>* wfn, std::complex<double>* dfn)
+inline int omExternalFunction(int lmax, double rho_match, double coulomb, double coulomb_scat0, std::complex<double>* wfn, std::complex<double>* dfn)
 {
   double g0,g1,p1,p2,p3;
   int    l;
@@ -125,7 +125,7 @@ int omExternalFunction(int lmax, double rho_match, double coulomb, double coulom
 /**********************************************************/
 /*      Coulomb Function for Negative Energy              */
 /**********************************************************/
-int omExternalClosed(int lmax, double rho_match, double coulomb, std::complex<double> *wfn, std::complex<double>*dfn)
+inline int omExternalClosed(int lmax, double rho_match, double coulomb, std::complex<double> *wfn, std::complex<double>*dfn)
 {
   double p1, p2, p3;
 

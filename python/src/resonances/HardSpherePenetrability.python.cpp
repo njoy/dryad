@@ -58,7 +58,7 @@ void wrapHardSpherePenetrability( python::module& module ) {
     "__call__",
     [] ( const Component& self, double ratio ) -> decltype(auto)
        { return self( ratio ); },
-    python::arg( "cosine" ),
+    python::arg( "ratio" ),
     "Evaluate the penetrability for a given ratio value\n\n"
     "Arguments:\n"
     "    self    the penetrability function\n"

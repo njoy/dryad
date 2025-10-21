@@ -22,7 +22,7 @@ const double EULER      =  0.577215664901532860607 ;  /* Euler-Mascheroni     */
 /***************************************/
 /*     Riccati - 1                     */
 /***************************************/
-void omGcase1(double ra, double y, double *p0, double *p1)
+inline void omGcase1(double ra, double y, double *p0, double *p1)
 {
   double t,t1,t2,t3,y1,g0,g1,g2,g3,g4,g5,g6,g7,q;
 
@@ -73,7 +73,7 @@ void omGcase1(double ra, double y, double *p0, double *p1)
 /***************************************/
 /*     Special Case of Airty Integral  */
 /***************************************/
-void omGcase2(double y, double *p0, double *p1)
+inline void omGcase2(double y, double *p0, double *p1)
 {
   *p0=  1.223404016 *pow(y, 1.0/6.0)
       *(1+0.04959570165  *pow(y, -4.0/3.0)-0.008888888889 *pow(y,-2.0)
@@ -88,7 +88,7 @@ void omGcase2(double y, double *p0, double *p1)
 /***************************************/
 /*     Asymptotic Formula              */
 /***************************************/
-void omGcase3(double ra, double y, double sig, double *p0, double *p1)
+inline void omGcase3(double ra, double y, double sig, double *p0, double *p1)
 {
   double gs,gs0,gs1,gt,gt0,gt1,ps,ps0,ps1,pt,pt0,pt1;
 
@@ -137,7 +137,7 @@ void omGcase3(double ra, double y, double sig, double *p0, double *p1)
 /***************************************/
 /*     Riccati - 2                     */
 /***************************************/
-void omGcase4(double ra, double y, double *p0, double *p1)
+inline void omGcase4(double ra, double y, double *p0, double *p1)
 {
   double x,x1,x2,y1,y2,fai,psi,a,b,m,g0,g1,g2,g3,g4;
 
@@ -188,7 +188,7 @@ void omGcase4(double ra, double y, double *p0, double *p1)
 /*     Proc. American Society of                 */
 /*     Civil Engineering, EM 3, 67(1959)         */
 /*************************************************/
-void omNewmark(int n, double h, double y, double ra, double *p0, double *p1)
+inline void omNewmark(int n, double h, double y, double ra, double *p0, double *p1)
 {
   double e,g1,f1,r0,r1,s1;
 
@@ -228,7 +228,7 @@ void omNewmark(int n, double h, double y, double ra, double *p0, double *p1)
 /*      C.E.Froeberg                                       */
 /*      Rev. Mod. Phys., 27, 399(1955)                     */
 /***********************************************************/
-void omAsymptotic(double rm, double coulomb, double sigma0, double *g0, double *g1)
+inline void omAsymptotic(double rm, double coulomb, double sigma0, double *g0, double *g1)
 {
   double ra,mesh,dr,p0,p1;
   int n;
@@ -279,7 +279,7 @@ void omAsymptotic(double rm, double coulomb, double sigma0, double *g0, double *
 /*      Closed Channel Coulomb Function                    */
 /*      This part was taken from ECIS, coverted into C++   */
 /***********************************************************/
-double omAsymptoticClosed(double rm, double coulomb)
+inline double omAsymptoticClosed(double rm, double coulomb)
 {
   const int max_itr = 1000;
   const double eps = 1e-16;

@@ -16,29 +16,34 @@ SCENARIO( "CoulombPhaseShift" ) {
 
   GIVEN( "valid orbital momentum values for a CoulombPhaseShift" ) {
 
-    CoulombPhaseShift penetrability( 0 );
+    CoulombPhaseShift phaseShift( 0 );
 
-    CHECK( 0 == penetrability.orbitalAngularMomentum() );
+    CHECK( 0 == phaseShift.orbitalAngularMomentum() );
+    phaseShift( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombPhaseShift( 1 );
+    phaseShift = CoulombPhaseShift( 1 );
 
-    CHECK( 1 == penetrability.orbitalAngularMomentum() );
+    CHECK( 1 == phaseShift.orbitalAngularMomentum() );
+    phaseShift( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombPhaseShift( 2 );
+    phaseShift = CoulombPhaseShift( 2 );
 
-    CHECK( 2 == penetrability.orbitalAngularMomentum() );
+    CHECK( 2 == phaseShift.orbitalAngularMomentum() );
+    phaseShift( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombPhaseShift( 3 );
+    phaseShift = CoulombPhaseShift( 3 );
 
-    CHECK( 3 == penetrability.orbitalAngularMomentum() );
+    CHECK( 3 == phaseShift.orbitalAngularMomentum() );
+    phaseShift( 1., 1. );
     //! @todo test against values
 
-    penetrability = CoulombPhaseShift( 4 );
+    phaseShift = CoulombPhaseShift( 4 );
 
-    CHECK( 4 == penetrability.orbitalAngularMomentum() );
+    CHECK( 4 == phaseShift.orbitalAngularMomentum() );
+    phaseShift( 1., 1. );
     //! @todo test against values
   } // GIVEN
 } // SCENARIO
