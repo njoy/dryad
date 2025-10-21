@@ -147,10 +147,9 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertEqual( False, proton.is_below_threshold( energy ) )
         self.assertAlmostEqual( 0.1697421616532552, proton.wave_number( energy ) )
         self.assertAlmostEqual( 3.179105369595768, proton.sommerfeld_parameter( energy ) )
-        # @todo change these when we have proper coulomb wave functions
-        self.assertAlmostEqual( 1., proton.penetrability( energy ) )
-        self.assertAlmostEqual( 0., proton.shift_factor( energy ) )
-        self.assertAlmostEqual( 0., proton.phase_shift( energy ) )
+        self.assertAlmostEqual(  2.896705590727021e-5, proton.penetrability( energy ) )
+        self.assertAlmostEqual( -1.872686299035523   , proton.shift_factor( energy ) )
+        self.assertAlmostEqual(  2.168669356291763e-6, proton.phase_shift( energy ) )
 
     def test_comparison( self ) :
 

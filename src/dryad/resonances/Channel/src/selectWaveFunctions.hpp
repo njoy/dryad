@@ -8,7 +8,10 @@ selectPenetrabilityFunction( unsigned int l,
 
       return HardSpherePenetrability( l );
     }
-    //! @todo add charged particle channels
+    else if ( outgoing->particle().charge() > 0 ) {
+
+      return CoulombPenetrability( l );
+    }
   }
   return 1.;
 }
@@ -23,7 +26,10 @@ selectShiftFactorFunction( unsigned int l,
 
       return HardSphereShiftFactor( l );
     }
-    //! @todo add charged particle channels
+    else if ( outgoing->particle().charge() > 0 ) {
+
+      return CoulombShiftFactor( l );
+    }
   }
   return 0.;
 }
@@ -38,7 +44,10 @@ selectPhaseShiftFunction( unsigned int l,
 
       return HardSpherePhaseShift( l );
     }
-    //! @todo add charged particle channels
+    else if ( outgoing->particle().charge() > 0 ) {
+
+      return CoulombPhaseShift( l );
+    }
   }
   return 0.;
 }

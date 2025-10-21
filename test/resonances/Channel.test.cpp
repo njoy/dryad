@@ -146,10 +146,9 @@ SCENARIO( "Channel" ) {
       CHECK( false == proton.isBelowThreshold( energy ) );
       CHECK_THAT( 0.1697421616532552, WithinRel( proton.waveNumber( energy ) ) );
       CHECK_THAT( 3.179105369595768, WithinRel( proton.sommerfeldParameter( energy ) ) );
-      //! @todo change these when we have proper coulomb wave functions
-      CHECK_THAT( 1., WithinRel( proton.penetrability( energy ) ) );
-      CHECK_THAT( 0., WithinRel( proton.shiftFactor( energy ) ) );
-      CHECK_THAT( 0., WithinRel( proton.phaseShift( energy ) ) );
+      CHECK_THAT( 2.896705590727021e-5, WithinRel( proton.penetrability( energy ) ) );
+      CHECK_THAT( -1.872686299035523, WithinRel( proton.shiftFactor( energy ) ) );
+      CHECK_THAT( 2.168669356291763e-6, WithinRel( proton.phaseShift( energy ) ) );
     } // THEN
   } // GIVEN
 

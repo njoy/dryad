@@ -61,7 +61,7 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | TabulatedWaveFunction, shiftFactor: float | HardSphereShiftFactor | TabulatedWaveFunction, phaseShift: float | HardSpherePhaseShift | TabulatedWaveFunction) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shiftFactor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phaseShift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction) -> None:
         """
         Initialise the channel
         
