@@ -25,7 +25,7 @@ void wrapHardSpherePenetrability( python::module& module ) {
 
     module,
     "HardSpherePenetrability",
-    "Hardsphere penetrability functions"
+    "Hard sphere penetrability functions"
    );
 
   // wrap the component

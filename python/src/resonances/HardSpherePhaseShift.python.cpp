@@ -25,7 +25,7 @@ void wrapHardSpherePhaseShift( python::module& module ) {
 
     module,
     "HardSpherePhaseShift",
-    "Hardsphere phase shift functions"
+    "Hard sphere phase shift functions"
    );
 
   // wrap the component

@@ -379,7 +379,8 @@ class ChannelRadii:
         
         Arguments:
             self               the radii
-            true_radius        the channel radius to be used for P and S    effective_radius   the channel radius to be used for phi
+            true_radius        the channel radius to be used for P and S
+            effective_radius   the channel radius to be used for phi
         """
     @typing.overload
     def __init__(self, penetrability: float | TabulatedRadius, shift_factor: float | TabulatedRadius, phase_shift: float | TabulatedRadius) -> None:
@@ -668,7 +669,7 @@ class Formalism:
         ...
 class HardSpherePenetrability:
     """
-    Hardsphere penetrability functions
+    Hard sphere penetrability functions
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -707,7 +708,7 @@ class HardSpherePenetrability:
         """
 class HardSpherePhaseShift:
     """
-    Hardsphere phase shift functions
+    Hard sphere phase shift functions
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
