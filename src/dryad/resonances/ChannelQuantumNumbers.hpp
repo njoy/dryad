@@ -160,7 +160,7 @@ namespace resonances {
     static std::vector< double >
     allowedTotalAngularMomentumValues( unsigned int l, double i, double I ) {
 
-      return generateValues( std::abs( std::abs( l - I ) - i ), l + I +i );
+      return generateValues( std::abs( std::abs( l - I ) - i ), l + I + i );
     }
 
     /**
@@ -177,7 +177,7 @@ namespace resonances {
     static std::vector< double >
     allowedTotalAngularMomentumValues( unsigned int l, double s ) {
 
-      return generateValues( std::abs(l - s), l + s );
+      return generateValues( std::abs( l - s ), l + s );
     }
 
     /**
