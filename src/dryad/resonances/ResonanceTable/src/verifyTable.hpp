@@ -8,9 +8,9 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
 
   if ( nc  == 0 || ne == 0 ) {
 
-    Log::error( "At least one channel and one resonance should be defined" );
+    Log::error( "At least one channel and one level energy should be defined" );
     Log::info( "Number channels: {}", nc );
-    Log::info( "Number resonances: {}", ne );
+    Log::info( "Number energies: {}", ne );
     throw std::exception();
   }
 
