@@ -34,7 +34,7 @@ SCENARIO( "ResonanceTable" ) {
                             std::move( amplitudes ) );
 
       CHECK( 2 == table.numberChannels() );
-      CHECK( 4 == table.numberResonances() );
+      CHECK( 4 == table.numberEnergies() );
 
       CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
       CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
@@ -77,7 +77,7 @@ SCENARIO( "ResonanceTable" ) {
                             std::move( amplitudes ) );
 
       CHECK( 1 == table.numberChannels() );
-      CHECK( 4 == table.numberResonances() );
+      CHECK( 4 == table.numberEnergies() );
 
       CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
 
@@ -108,7 +108,7 @@ SCENARIO( "ResonanceTable" ) {
       table += right;
 
       CHECK( 2 == table.numberChannels() );
-      CHECK( 5 == table.numberResonances() );
+      CHECK( 5 == table.numberEnergies() );
 
       CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
       CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
@@ -133,7 +133,7 @@ SCENARIO( "ResonanceTable" ) {
       table = left + right;
 
       CHECK( 2 == table.numberChannels() );
-      CHECK( 5 == table.numberResonances() );
+      CHECK( 5 == table.numberEnergies() );
 
       CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
       CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );

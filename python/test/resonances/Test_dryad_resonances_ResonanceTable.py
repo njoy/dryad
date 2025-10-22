@@ -19,7 +19,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                 amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
         self.assertEqual( 2, table.number_channels )
-        self.assertEqual( 4, table.number_resonances )
+        self.assertEqual( 4, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
         self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )
@@ -53,7 +53,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                 amplitudes = [ 11., 12., 13., 14. ] )
 
         self.assertEqual( 1, table.number_channels )
-        self.assertEqual( 4, table.number_resonances )
+        self.assertEqual( 4, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
 
@@ -80,7 +80,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         table += right
 
         self.assertEqual( 2, table.number_channels )
-        self.assertEqual( 5, table.number_resonances )
+        self.assertEqual( 5, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
         self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )
@@ -105,7 +105,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         table = left + right
 
         self.assertEqual( 2, table.number_channels )
-        self.assertEqual( 5, table.number_resonances )
+        self.assertEqual( 5, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
         self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )

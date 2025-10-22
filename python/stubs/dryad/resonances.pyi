@@ -917,9 +917,9 @@ class ResonanceParameters:
         ...
 class ResonanceTable:
     """
-    A table of resonance parameters for a set of channels
+    A table of parameters for a set of channels
     
-    The table contains resonance energies and reduced amplitude widths,
+    The table contains level energies and reduced amplitude widths,
     all given as column data.
     """
     __hash__: typing.ClassVar[None] = None
@@ -932,26 +932,26 @@ class ResonanceTable:
     @typing.overload
     def __init__(self, channels: list[dryad.id.ChannelID], energies: list[float], amplitudes: list[list[float]]) -> None:
         """
-        Initialise the resonance table
+        Initialise the table
         
         The ResonanceTable class takes the reduced amplitude widths for a
         number of channels (at least one channel must be given).
         
         Arguments:
-            self         the resonance table
+            self         the table
             channels     the channel identifiers (nc values)
-            energies     the resonance energies (ne values)
+            energies     the level energies (ne values)
             amplitudes   the reduced amplitude widths (nc arrays of ne values)
         """
     @typing.overload
     def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
         """
-        Initialise the resonance table
+        Initialise the table
         
         Arguments:
-            self         the resonance table
+            self         the table
             channel      the channel identifier
-            energies     the resonance energies
+            energies     the level energies
             amplitudes   the reduced amplitude widths
         """
     @typing.overload
@@ -969,7 +969,7 @@ class ResonanceTable:
         Return whether or not a channel is present
         
         Arguments:
-            self      the resonance table
+            self      the table
             channel   the channel identifier
         """
     def has_energy(self, energy: float) -> bool:
@@ -977,7 +977,7 @@ class ResonanceTable:
         Return whether or not an energy is present
         
         Arguments:
-            self     the resonance table
+            self     the table
             energy   the energy value
         """
     @property
@@ -988,7 +988,7 @@ class ResonanceTable:
     @property
     def energies(self) -> list[float]:
         """
-        The resonance energies
+        The level energies
         """
     @property
     def number_channels(self) -> int:
@@ -996,9 +996,9 @@ class ResonanceTable:
         The number of channels in the table
         """
     @property
-    def number_resonances(self) -> int:
+    def number_energies(self) -> int:
         """
-        The number of resonance in the table
+        The number of level energies in the table
         """
     @property
     def reduced_width_amplitudes(self) -> list[list[float]]:

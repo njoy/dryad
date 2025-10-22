@@ -14,9 +14,9 @@ namespace resonances {
 
   /**
    *  @class
-   *  @brief A table of resonance parameters for a set of channels
+   *  @brief A table of parameters for a set of channels
    *
-   *  The table contains resonance energies and reduced amplitude widths,
+   *  The table contains level energies and reduced amplitude widths,
    *  all given as column data.
    */
   class ResonanceTable {
@@ -91,9 +91,9 @@ namespace resonances {
     std::size_t numberChannels() const { return this->channels().size(); }
 
     /**
-     *  @brief Return the number of resonances int he table
+     *  @brief Return the number of level energies in the table
      */
-    std::size_t numberResonances() const { return this->energies().size(); }
+    std::size_t numberEnergies() const { return this->energies().size(); }
 
     /**
      *  @brief Return whether or not a given channel is present
@@ -115,7 +115,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Inplace merge of two resonance tables
+     *  @brief Inplace merge of two tables
      *
      *  @param[in] right   the table to be merged with
      */
@@ -135,7 +135,7 @@ namespace resonances {
 
         // add the channel identifier and add a column for this channel
         this->channels().emplace_back( id );
-        this->reducedWidthAmplitudes().emplace_back( this->numberResonances(), 0. );
+        this->reducedWidthAmplitudes().emplace_back( this->numberEnergies(), 0. );
       }
 
       // go over all resonances in the other table
@@ -170,7 +170,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Merge two resonance tables together
+     *  @brief Merge two tables together
      *
      *  @param[in] right   the table to be merged with
      */

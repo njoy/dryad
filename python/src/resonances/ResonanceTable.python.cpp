@@ -24,8 +24,8 @@ void wrapResonanceTable( python::module& module ) {
 
     module,
     "ResonanceTable",
-    "A table of resonance parameters for a set of channels\n\n"
-    "The table contains resonance energies and reduced amplitude widths,\n"
+    "A table of parameters for a set of channels\n\n"
+    "The table contains level energies and reduced amplitude widths,\n"
     "all given as column data."
    );
 
@@ -38,13 +38,13 @@ void wrapResonanceTable( python::module& module ) {
                   std::vector< std::vector< double > > >(),
     python::arg( "channels" ), python::arg( "energies" ),
     python::arg( "amplitudes" ),
-    "Initialise the resonance table\n\n"
+    "Initialise the table\n\n"
     "The ResonanceTable class takes the reduced amplitude widths for a\n"
     "number of channels (at least one channel must be given).\n\n"
     "Arguments:\n"
-    "    self         the resonance table\n"
+    "    self         the table\n"
     "    channels     the channel identifiers (nc values)\n"
-    "    energies     the resonance energies (ne values)\n"
+    "    energies     the level energies (ne values)\n"
     "    amplitudes   the reduced amplitude widths (nc arrays of ne values)"
   )
   .def(
@@ -54,11 +54,11 @@ void wrapResonanceTable( python::module& module ) {
                   std::vector< double > >(),
     python::arg( "channel" ), python::arg( "energies" ),
     python::arg( "amplitudes" ),
-    "Initialise the resonance table\n\n"
+    "Initialise the table\n\n"
     "Arguments:\n"
-    "    self         the resonance table\n"
+    "    self         the table\n"
     "    channel      the channel identifier\n"
-    "    energies     the resonance energies\n"
+    "    energies     the level energies\n"
     "    amplitudes   the reduced amplitude widths"
   )
   .def(
@@ -79,7 +79,7 @@ void wrapResonanceTable( python::module& module ) {
 
     "energies",
     python::overload_cast<>( &Component::energies, python::const_ ),
-    "The resonance energies"
+    "The level energies"
   )
   .def_property_readonly(
 
@@ -95,9 +95,9 @@ void wrapResonanceTable( python::module& module ) {
   )
   .def_property_readonly(
 
-    "number_resonances",
-    &Component::numberResonances,
-    "The number of resonance in the table"
+    "number_energies",
+    &Component::numberEnergies,
+    "The number of level energies in the table"
   )
   .def(
 
@@ -106,7 +106,7 @@ void wrapResonanceTable( python::module& module ) {
     python::arg( "channel" ),
     "Return whether or not a channel is present\n\n"
     "Arguments:\n"
-    "    self      the resonance table\n"
+    "    self      the table\n"
     "    channel   the channel identifier"
   )
   .def(
@@ -116,7 +116,7 @@ void wrapResonanceTable( python::module& module ) {
     python::arg( "energy" ),
     "Return whether or not an energy is present\n\n"
     "Arguments:\n"
-    "    self     the resonance table\n"
+    "    self     the table\n"
     "    energy   the energy value"
   )
   .def( python::self += python::self )

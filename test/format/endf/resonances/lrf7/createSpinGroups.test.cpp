@@ -136,7 +136,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   auto table = spingroup.resonanceTable();
   CHECK( 2 == table.numberChannels() );
-  CHECK( 9 == table.numberResonances() );
+  CHECK( 9 == table.numberEnergies() );
 
   auto energies = table.energies();
   CHECK_THAT( 2.239640e+4, WithinRel( energies[0] ) );
@@ -279,7 +279,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   table = spingroup.resonanceTable();
   CHECK( 5 == table.numberChannels() );
-  CHECK( 56 == table.numberResonances() );
+  CHECK( 56 == table.numberEnergies() );
 
   energies = table.energies();
   CHECK_THAT( 4.250762e+3, WithinRel( energies[0] ) );
@@ -382,7 +382,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   table = spingroup.resonanceTable();
   CHECK( 3 == table.numberChannels() );
-  CHECK( 23 == table.numberResonances() );
+  CHECK( 23 == table.numberEnergies() );
 
   energies = table.energies();
   CHECK_THAT( 5.493200e+4, WithinRel( energies[0] ) );
@@ -527,7 +527,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   table = spingroup.resonanceTable();
   CHECK( 5 == table.numberChannels() );
-  CHECK( 95 == table.numberResonances() );
+  CHECK( 95 == table.numberEnergies() );
 
   energies = table.energies();
   CHECK_THAT( -3.369334e+5, WithinRel( energies[0] ) );
@@ -630,7 +630,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   table = spingroup.resonanceTable();
   CHECK( 3 == table.numberChannels() );
-  CHECK( 32 == table.numberResonances() );
+  CHECK( 32 == table.numberEnergies() );
 
   energies = table.energies();
   CHECK_THAT( -1.806500e+2, WithinRel( energies[0] ) );
@@ -729,7 +729,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   table = spingroup.resonanceTable();
   CHECK( 3 == table.numberChannels() );
-  CHECK( 57 == table.numberResonances() );
+  CHECK( 57 == table.numberEnergies() );
 
   energies = table.energies();
   CHECK_THAT( 1.635612e+4, WithinRel( energies[0] ) );

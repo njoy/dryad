@@ -63,7 +63,7 @@ namespace lrf7 {
             if ( channel.first == iter->first ) {
 
               // add the resonances to the table
-              for ( unsigned int i = 0; i < channel.second.numberResonances(); ++i ) {
+              for ( unsigned int i = 0; i < channel.second.numberEnergies(); ++i ) {
 
                 auto energy = std::lower_bound( iter->second.energies().begin(), iter->second.energies().end(),
                                                 channel.second.energies()[i] );
