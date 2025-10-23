@@ -47,6 +47,15 @@ void wrapChannelQuantumNumbers( python::module& module ) {
   )
   .def(
 
+    python::init< const std::string& >(),
+    python::arg( "symbol" ),
+    "Initialise the channel qunatum numbers\n\n"
+    "Arguments:\n"
+    "    self     the quantum numbers\n"
+    "    symbol   the quantum numbers symbol"
+  )
+  .def(
+
     python::init< const Component& >(),
     python::arg( "instance" ),
     "Initialise a copy\n\n"

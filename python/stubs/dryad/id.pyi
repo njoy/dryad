@@ -28,10 +28,10 @@ class ChannelID:
         Initialise the channel identifier
         
         Arguments:
-            self       the channel identifier
-            reaction   the reaction
-            numbers    the channel quantum numbers
-            partial    the optional partial index
+            self              the channel identifier
+            reaction          the reaction
+            quantum_numbers   the channel quantum numbers
+            partial           the optional partial index
         """
     @typing.overload
     def __init__(self, symbol: str) -> None:

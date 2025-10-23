@@ -21,17 +21,17 @@ class Test_dryad_resonances_Particle( unittest.TestCase ) :
 
         pair = ParticlePair( neutron, u235 )
 
-        self.assertEqual( ParticleID.neutron(), pair.particle.identifier )
-        self.assertAlmostEqual( 1.008664, pair.particle.mass )
-        self.assertAlmostEqual( 0.5, pair.particle.spin )
-        self.assertEqual( 0, pair.particle.charge )
-        self.assertEqual( +1, pair.particle.parity )
+        self.assertEqual( ParticleID.neutron(), pair.light_particle.identifier )
+        self.assertAlmostEqual( 1.008664, pair.light_particle.mass )
+        self.assertAlmostEqual( 0.5, pair.light_particle.spin )
+        self.assertEqual( 0, pair.light_particle.charge )
+        self.assertEqual( +1, pair.light_particle.parity )
 
-        self.assertEqual( ParticleID( 'U235' ), pair.residual.identifier )
-        self.assertAlmostEqual( 235.0439299, pair.residual.mass )
-        self.assertAlmostEqual( 0., pair.residual.spin )
-        self.assertEqual( 92, pair.residual.charge )
-        self.assertEqual( +1, pair.residual.parity )
+        self.assertEqual( ParticleID( 'U235' ), pair.heavy_particle.identifier )
+        self.assertAlmostEqual( 235.0439299, pair.heavy_particle.mass )
+        self.assertAlmostEqual( 0., pair.heavy_particle.spin )
+        self.assertEqual( 92, pair.heavy_particle.charge )
+        self.assertEqual( +1, pair.heavy_particle.parity )
 
         self.assertAlmostEqual( 235.0439299 / ( 1.008664 + 235.0439299 ), pair.mass_ratio )
         self.assertAlmostEqual( 1.008664 * 235.0439299 / ( 1.008664 + 235.0439299 ), pair.reduced_mass )

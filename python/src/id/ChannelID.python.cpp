@@ -41,10 +41,10 @@ void wrapChannelID( python::module& module ) {
     python::arg( "partial" ) = std::nullopt,
     "Initialise the channel identifier\n\n"
     "Arguments:\n"
-    "    self       the channel identifier\n"
-    "    reaction   the reaction\n"
-    "    numbers    the channel quantum numbers\n"
-    "    partial    the optional partial index"
+    "    self              the channel identifier\n"
+    "    reaction          the reaction\n"
+    "    quantum_numbers   the channel quantum numbers\n"
+    "    partial           the optional partial index"
   )
   .def(
 

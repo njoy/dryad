@@ -316,6 +316,15 @@ class ChannelQuantumNumbers:
             parity   the parity
         """
     @typing.overload
+    def __init__(self, symbol: str) -> None:
+        """
+        Initialise the channel qunatum numbers
+        
+        Arguments:
+            self     the quantum numbers
+            symbol   the quantum numbers symbol
+        """
+    @typing.overload
     def __init__(self, instance: ChannelQuantumNumbers) -> None:
         """
         Initialise a copy
@@ -787,9 +796,8 @@ class Particle:
     
     The Particle class contains specific information for a particle as used
     during resonance reconstruction. The Particle has an atomic mass, an
-    electrical charge, a spin and a parity (either + or -).
-    
-    These variables are used to calculate quantities like the wave number k.
+    electrical charge, an excited state number, a spin and a parity (which is
+    either + or -).
     """
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: Particle) -> bool:
@@ -801,6 +809,7 @@ class Particle:
         
         Arguments:
             self     the particle information
+            id       the particle identifier
             mass     the atomic mass
             spin     the channel spin
             parity   the parity
@@ -819,6 +828,11 @@ class Particle:
     def charge(self) -> int:
         """
         The electrical charge of the particle (in units of the elementary charge)
+        """
+    @property
+    def excited_state(self) -> int:
+        """
+        The excited state number of the particle
         """
     @property
     def identifier(self) -> dryad.id.ParticleID:
@@ -846,8 +860,8 @@ class ParticlePair:
     
     A ParticlePair represents the two particles involved in a entrance or exit
     reaction channel (we assume that the reaction is a two-body reaction). The
-    pair consists of a "small" incident or outgoing particle (e.g. a neutron,
-    photon, alpha, etc.) and a "larger" target or residual nucleus (e.g. H1,
+    pair consists of a "light" incident or outgoing particle (e.g. a neutron,
+    photon, alpha, etc.) and a "heavy" target or residual nucleus (e.g. H1,
     He4, U235, etc.).
     
     The ParticlePair class gives us access to information related to the
@@ -857,14 +871,14 @@ class ParticlePair:
     def __eq__(self, arg0: ParticlePair) -> bool:
         ...
     @typing.overload
-    def __init__(self, particle: Particle, residual: Particle) -> None:
+    def __init__(self, light_particle: Particle, heavy_particle: Particle) -> None:
         """
         Initialise the particle pair information
         
         Arguments:
-            self       the particle pair information
-            particle   the light particle
-            residual   the heavy residual
+            self             the particle pair information
+            light_particle   the light particle
+            heavy_particle   the heavy particle
         """
     @typing.overload
     def __init__(self, instance: ParticlePair) -> None:
@@ -877,6 +891,16 @@ class ParticlePair:
     def __ne__(self, arg0: ParticlePair) -> bool:
         ...
     @property
+    def heavy_particle(self) -> Particle:
+        """
+        The heavy particle in the particle pair
+        """
+    @property
+    def light_particle(self) -> Particle:
+        """
+        The light particle in the particle pair
+        """
+    @property
     def mass_ratio(self) -> float:
         """
         The mass ratio of the particle pair (dimensionless)
@@ -887,11 +911,6 @@ class ParticlePair:
         in the particle pair.
         """
     @property
-    def particle(self) -> Particle:
-        """
-        The light particle in the particle pair
-        """
-    @property
     def reduced_mass(self) -> float:
         """
         The reduced mass of the particle pair (in atomic mass units)
@@ -900,11 +919,6 @@ class ParticlePair:
            mu = ma * mb / ( ma + mb )
         in which ma and mb are the atomic mass values of the particles in the
         particle pair.
-        """
-    @property
-    def residual(self) -> Particle:
-        """
-        The heavy residual in the particle pair
         """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None

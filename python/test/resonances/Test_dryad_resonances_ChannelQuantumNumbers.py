@@ -12,8 +12,16 @@ class Test_dryad_resonances_ChannelQuantumNumbers( unittest.TestCase ) :
 
     def test_component( self ) :
 
-        # the data is given explicitly
+        # the data is given as number
         chunk = ChannelQuantumNumbers( l = 1, s = 0.5, J = 1.5, parity = +1 )
+
+        self.assertEqual( 1, chunk.orbital_angular_momentum )
+        self.assertEqual( 0.5, chunk.spin )
+        self.assertEqual( 1.5, chunk.total_angular_momentum )
+        self.assertEqual( +1, chunk.parity )
+
+        # the data is given as a string
+        chunk = ChannelQuantumNumbers( '{1,1/2,3/2+}' )
 
         self.assertEqual( 1, chunk.orbital_angular_momentum )
         self.assertEqual( 0.5, chunk.spin )

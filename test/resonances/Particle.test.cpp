@@ -34,6 +34,9 @@ SCENARIO( "Particle" ) {
     double u235Spin = 0.0;
     short u235Parity = +1;
 
+    // U235
+    id::ParticleID u235e1ID( "U235_e1" );
+
     THEN( "a Particle can be constructed" ) {
 
       Particle neutron( neutronID, neutronMass,
@@ -43,6 +46,7 @@ SCENARIO( "Particle" ) {
       CHECK_THAT( 1.008664, WithinRel( neutron.mass() ) );
       CHECK_THAT( 0.5, WithinRel( neutron.spin() ) );
       CHECK( 0.0 == neutron.charge() );
+      CHECK( 0 == neutron.excitedState() );
       CHECK( +1 == neutron.parity() );
 
       Particle proton( protonID, protonMass,
@@ -52,6 +56,7 @@ SCENARIO( "Particle" ) {
       CHECK_THAT( 1.007276, WithinRel( proton.mass() ) );
       CHECK_THAT( 0.5, WithinRel( proton.spin() ) );
       CHECK( 1 == proton.charge() );
+      CHECK( 0 == proton.excitedState() );
       CHECK( +1 == proton.parity() );
 
       Particle u235( u235ID, u235Mass, u235Spin, u235Parity );
@@ -60,7 +65,17 @@ SCENARIO( "Particle" ) {
       CHECK_THAT( 235.0439299, WithinRel( u235.mass() ) );
       CHECK_THAT( 0., WithinRel( u235.spin() ) );
       CHECK( 92 == u235.charge() );
+      CHECK( 0 == u235.excitedState() );
       CHECK( +1 == u235.parity() );
+
+      Particle u235_e1( u235e1ID, u235Mass, u235Spin, u235Parity );
+
+      CHECK( id::ParticleID( "U235_e1" ) == u235_e1.identifier() );
+      CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass() ) );
+      CHECK_THAT( 0., WithinRel( u235_e1.spin() ) );
+      CHECK( 92 == u235_e1.charge() );
+      CHECK( 1 == u235_e1.excitedState() );
+      CHECK( +1 == u235_e1.parity() );
     } // THEN
   } // GIVEN
 

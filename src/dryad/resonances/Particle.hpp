@@ -17,7 +17,8 @@ namespace resonances {
    *
    *  The Particle class contains specific information for a particle as used
    *  during resonance reconstruction. The Particle has an atomic mass, an
-   *  electrical charge, a spin and a parity (either + or -).
+   *  electrical charge, an excited state number, a spin and a parity (which is
+   *  either + or -).
    */
   class Particle {
 
@@ -50,6 +51,11 @@ namespace resonances {
      *         elementary charge)
      */
     int charge() const { return this->identifier().z(); }
+
+    /**
+     *  @brief Return the excited state number of the particle
+     */
+    int excitedState() const { return this->identifier().e(); }
 
     /**
      *  @brief Return the spin of the particle

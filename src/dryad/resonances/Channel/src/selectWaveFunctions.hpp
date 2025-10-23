@@ -4,11 +4,11 @@ selectPenetrabilityFunction( unsigned int l,
 
   if ( outgoing.has_value() ) {
 
-    if ( outgoing->particle().identifier() == id::ParticleID::neutron() ) {
+    if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
 
       return HardSpherePenetrability( l );
     }
-    else if ( outgoing->particle().charge() > 0 ) {
+    else if ( outgoing->lightParticle().charge() > 0 ) {
 
       return CoulombPenetrability( l );
     }
@@ -22,11 +22,11 @@ selectShiftFactorFunction( unsigned int l,
 
   if ( outgoing.has_value() ) {
 
-    if ( outgoing->particle().identifier() == id::ParticleID::neutron() ) {
+    if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
 
       return HardSphereShiftFactor( l );
     }
-    else if ( outgoing->particle().charge() > 0 ) {
+    else if ( outgoing->lightParticle().charge() > 0 ) {
 
       return CoulombShiftFactor( l );
     }
@@ -40,11 +40,11 @@ selectPhaseShiftFunction( unsigned int l,
 
   if ( outgoing.has_value() ) {
 
-    if ( outgoing->particle().identifier() == id::ParticleID::neutron() ) {
+    if ( outgoing->lightParticle().identifier() == id::ParticleID::neutron() ) {
 
       return HardSpherePhaseShift( l );
     }
-    else if ( outgoing->particle().charge() > 0 ) {
+    else if ( outgoing->lightParticle().charge() > 0 ) {
 
       return CoulombPhaseShift( l );
     }
@@ -58,7 +58,7 @@ selectPhaseShiftDifferenceFunction( unsigned int l,
 
   if ( outgoing.has_value() ) {
 
-    if ( outgoing->particle().charge() > 0 ) {
+    if ( outgoing->lightParticle().charge() > 0 ) {
 
       return CoulombPhaseShiftDifference( l );
     }
