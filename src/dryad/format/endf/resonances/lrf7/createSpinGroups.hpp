@@ -87,7 +87,7 @@ namespace lrf7 {
             }
             else {
 
-              Log::error( "Found at least two channels with the smae qunatum numbers, reaction and partial but with "
+              Log::error( "Found at least two channels with the same quantum numbers, reaction and partial but with "
                           "differences in other channel data" );
               Log::info( "Channel identifier: {}", channel.first.identifier().symbol() );
               Log::info( "Equal incident particle pair: {}", channel.first.incidentParticlePair() == iter->first.incidentParticlePair() );

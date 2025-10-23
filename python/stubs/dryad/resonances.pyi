@@ -243,7 +243,7 @@ class ChannelQuantumNumbers:
     
     The ChannelQuantumNumbers class contains the quantum numbers associated to
     a given reaction channel. Only channels that have the same Jpi contribute
-    to the cross section of a given reaction.
+    to the cross section for a spin group.
     
     When using comparison on the quantum numbers, we use a Jpi,l,s ordering.
     """
