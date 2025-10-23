@@ -12,7 +12,7 @@ CoulombPhaseShift& operator=( CoulombPhaseShift&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param orbitalMomentum   the value of the orbital momentum
+ *  @param orbitalAngularMomentum   the value of the orbital angular momentum
  */
-CoulombPhaseShift( unsigned int orbitalMomentum ) :
-  orbital_momentum_( orbitalMomentum ) {}
+CoulombPhaseShift( unsigned int orbitalAngularMomentum ) :
+  orbital_momentum_( orbitalAngularMomentum ) {}

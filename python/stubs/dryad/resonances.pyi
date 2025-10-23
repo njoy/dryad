@@ -480,8 +480,8 @@ class CoulombPenetrability:
         Initialise the Coulomb penetrability function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombPenetrability) -> None:
@@ -520,8 +520,8 @@ class CoulombPhaseShift:
         Initialise the Coulomb phase shift function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombPhaseShift) -> None:
@@ -559,8 +559,8 @@ class CoulombPhaseShiftDifference:
         Initialise the Coulomb phase shift difference function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombPhaseShiftDifference) -> None:
@@ -599,8 +599,8 @@ class CoulombShiftFactor:
         Initialise the Coulomb shift factor function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombShiftFactor) -> None:
@@ -685,8 +685,8 @@ class HardSpherePenetrability:
         Initialise the hard sphere penetrability function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: HardSpherePenetrability) -> None:
@@ -724,8 +724,8 @@ class HardSpherePhaseShift:
         Initialise the hard sphere phase shift function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: HardSpherePhaseShift) -> None:
@@ -763,8 +763,8 @@ class HardSphereShiftFactor:
         Initialise the hard sphere shift factor function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: HardSphereShiftFactor) -> None:
