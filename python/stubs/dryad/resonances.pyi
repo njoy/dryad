@@ -475,7 +475,7 @@ class CoulombPenetrability:
     def __eq__(self, arg0: CoulombPenetrability) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb penetrability function
         
@@ -515,7 +515,7 @@ class CoulombPhaseShift:
     def __eq__(self, arg0: CoulombPhaseShift) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb phase shift function
         
@@ -554,7 +554,7 @@ class CoulombPhaseShiftDifference:
     def __eq__(self, arg0: CoulombPhaseShiftDifference) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb phase shift difference function
         
@@ -594,7 +594,7 @@ class CoulombShiftFactor:
     def __eq__(self, arg0: CoulombShiftFactor) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb shift factor function
         
@@ -680,7 +680,7 @@ class HardSpherePenetrability:
     def __eq__(self, arg0: HardSpherePenetrability) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere penetrability function
         
@@ -719,7 +719,7 @@ class HardSpherePhaseShift:
     def __eq__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere phase shift function
         
@@ -758,7 +758,7 @@ class HardSphereShiftFactor:
     def __eq__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere shift factor function
         

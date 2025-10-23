@@ -33,7 +33,7 @@ void wrapHardSphereShiftFactor( python::module& module ) {
   .def(
 
     python::init< unsigned int >(),
-    python::arg( "orbital_momentum" ),
+    python::arg( "orbital_angular_momentum" ),
     "Initialise the hard sphere shift factor function\n\n"
     "Arguments:\n"
     "    self                       the function\n"
