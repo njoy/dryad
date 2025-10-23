@@ -5,8 +5,8 @@
 class Entry {
 
   /* fields */
-  ReactionID reaction_;
   resonances::ChannelQuantumNumbers numbers_;
+  ReactionID reaction_;
   std::optional< std::size_t > partial_;
 
   std::vector< std::string > symbols_;
@@ -30,8 +30,8 @@ public:
   Entry( ReactionID reaction,
          resonances::ChannelQuantumNumbers numbers,
          std::optional< std::size_t > partial ) :
-    reaction_( std::move( reaction ) ),
     numbers_( std::move( numbers ) ),
+    reaction_( std::move( reaction ) ),
     partial_( std::move( partial ) ),
     symbols_( generateSymbols( reaction, numbers, partial ) ) {}
 

@@ -40,7 +40,7 @@ class Test_elementary_ChannelID( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        id1 = ChannelID( 'n,U235->fission(t){0,1/2,1/2+}[1]' )
+        id1 = ChannelID( 'n,U235->fission(t){1,1/2,1/2-}[1]' )
         id2 = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' )
 
         self.assertEqual( id1 <  id1, False )
@@ -64,15 +64,15 @@ class Test_elementary_ChannelID( unittest.TestCase ) :
 
     def test_key( self ) :
 
-        id1 = ChannelID( 'n,U235->fission(t){0,1/2,1/2+}[1]' )
-        id2 = ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' )
+        id1 = ChannelID( 'n,U235->fission(t){1,1/2,1/2-}[1]' )
+        id2 = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' )
 
         map = { id1 : '1', id2 : '2' }
 
         self.assertEqual( map[ id1 ], '1' )
         self.assertEqual( map[ id2 ], '2' )
-        self.assertEqual( map[ ChannelID( 'n,U235->fission(t){0,1/2,1/2+}[1]' ) ], '1' )
-        self.assertEqual( map[ ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' ) ], '2' )
+        self.assertEqual( map[ ChannelID( 'n,U235->fission(t){1,1/2,1/2-}[1]' ) ], '1' )
+        self.assertEqual( map[ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ], '2' )
 
     def test_failures( self ) :
 
