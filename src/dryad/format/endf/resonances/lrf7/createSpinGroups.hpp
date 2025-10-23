@@ -39,7 +39,7 @@ namespace lrf7 {
     // determine the boundary condition
     auto boundary_condition = lrf7::createBoundaryCondition( endf.particlePairs() );
 
-    // go over each spin group and collect all channel data
+    // go over each spin group and collect all channel data - keep it sorted
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
     for ( const auto& group : endf.spinGroups() ) {
 
@@ -87,9 +87,9 @@ namespace lrf7 {
             }
             else {
 
-              Log::error( "Found at least two channels with equal quantum numbers but with "
+              Log::error( "Found at least two channels with the smae qunatum numbers, reaction and partial but with "
                           "differences in other channel data" );
-              Log::info( "Quantum numbers: {}", channel.first.quantumNumbers().symbol() );
+              Log::info( "Channel identifier: {}", channel.first.identifier().symbol() );
               Log::info( "Equal incident particle pair: {}", channel.first.incidentParticlePair() == iter->first.incidentParticlePair() );
               Log::info( "Equal outgoing particle pair: {}", channel.first.outgoingParticlePair() == iter->first.outgoingParticlePair() );
               Log::info( "Equal boundary condition: {}", channel.first.boundaryCondition() == iter->first.boundaryCondition() );
@@ -101,19 +101,6 @@ namespace lrf7 {
         channel_data.insert( iter, std::move( channel ) );
       }
     }
-
-    // lexographical sort by Jpi,l,s,reaction
-    const auto getSortingOrder = [] ( const auto& data ) {
-
-      return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
-                              data.first.quantumNumbers().parity(),
-                              data.first.quantumNumbers().orbitalAngularMomentum(),
-                              data.first.quantumNumbers().spin(),
-                              data.first.reaction() );
-    };
-    std::sort( channel_data.begin(), channel_data.end(),
-               [&] ( auto&& left, auto&& right )
-                   { return getSortingOrder( left ) < getSortingOrder( right ); } );
 
     // create the spin groups
     const auto getJpi = [] ( const auto& data ) {
