@@ -186,6 +186,8 @@ namespace resonances {
      */
     double waveNumber( double energy ) const {
 
+      // see Sammy manual equation II C4.4 and ENDF manual equation D.82
+
       // conversion constant to convert the final value to fm^-1
       const double conversion = std::sqrt( constants::amu / constants::e ) * constants::femto;
 

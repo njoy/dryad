@@ -58,7 +58,7 @@ void wrapCoulombPhaseShiftDifference( python::module& module ) {
     "__call__",
     [] ( const Component& self, double ratio ) -> decltype(auto)
        { return self( ratio ); },
-    python::arg( "cosine" ),
+    python::arg( "eta" ),
     "Evaluate the phase shift difference for a given eta value\n\n"
     "Arguments:\n"
     "    self    the phase shift function\n"

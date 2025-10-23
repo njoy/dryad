@@ -543,7 +543,7 @@ class CoulombPhaseShiftDifference:
     Coulomb phase shift difference functions
     """
     __hash__: typing.ClassVar[None] = None
-    def __call__(self, cosine: float) -> float:
+    def __call__(self, eta: float) -> float:
         """
         Evaluate the phase shift difference for a given eta value
         
