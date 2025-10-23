@@ -16,7 +16,7 @@ set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         a684ba757dcdd634cdc9901076f24727b7fd48fb  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         5e0313457cfffa058ff27e2b711fdfb268b74f63  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( scion

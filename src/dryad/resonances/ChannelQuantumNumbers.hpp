@@ -30,7 +30,7 @@ namespace resonances {
     /* fields */
 
     double J_;
-    short parity_;
+    short parity_;  //! @todo how do we handle the channel spin parity?
     unsigned int l_;
     double s_;
 

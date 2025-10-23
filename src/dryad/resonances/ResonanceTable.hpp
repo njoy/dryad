@@ -6,6 +6,7 @@
 #include <vector>
 
 // other includes
+#include "tools/apply_permutation.hpp"
 #include "dryad/id/ChannelID.hpp"
 
 namespace njoy {
