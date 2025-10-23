@@ -8,6 +8,9 @@ __all__ = ['ChannelID', 'ElectronSubshellID', 'ElementID', 'EnergyGroup', 'Level
 class ChannelID:
     """
     The channel identifier, with associated reaction and quantum numbers
+    
+    When using comparison on the channel identifier, we use a Jpi,l,s,reaction,partial
+    ordering.
     """
     def __eq__(self, arg0: ChannelID) -> bool:
         ...
