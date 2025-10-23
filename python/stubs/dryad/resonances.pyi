@@ -930,7 +930,7 @@ class ResonanceTable:
     """
     A table of parameters for a set of channels
     
-    The table contains level energies and reduced amplitude widths,
+    The table contains level energies and reduced width amplitudes,
     all given as column data.
     """
     __hash__: typing.ClassVar[None] = None
@@ -945,14 +945,14 @@ class ResonanceTable:
         """
         Initialise the table
         
-        The ResonanceTable class takes the reduced amplitude widths for a
+        The ResonanceTable class takes the reduced width amplitudes for a
         number of channels (at least one channel must be given).
         
         Arguments:
             self         the table
             channels     the channel identifiers (nc values)
             energies     the level energies (ne values)
-            amplitudes   the reduced amplitude widths (nc arrays of ne values)
+            amplitudes   the reduced width amplitudes (nc arrays of ne values)
         """
     @typing.overload
     def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
@@ -963,7 +963,7 @@ class ResonanceTable:
             self         the table
             channel      the channel identifier
             energies     the level energies
-            amplitudes   the reduced amplitude widths
+            amplitudes   the reduced width amplitudes
         """
     @typing.overload
     def __init__(self, instance: ResonanceTable) -> None:

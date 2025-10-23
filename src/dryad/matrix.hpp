@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_COVARIANCE_MATRIX
-#define NJOY_DRYAD_COVARIANCE_MATRIX
+#ifndef NJOY_DRYAD_MATRIX
+#define NJOY_DRYAD_MATRIX
 
 // system includes
 

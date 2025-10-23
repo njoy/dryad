@@ -17,7 +17,7 @@ namespace resonances {
    *  @class
    *  @brief A table of parameters for a set of channels
    *
-   *  The table contains level energies and reduced amplitude widths,
+   *  The table contains level energies and reduced width amplitudes,
    *  all given as column data.
    */
   class ResonanceTable {
@@ -55,7 +55,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the resonance energies
+     *  @brief Return the level energies
      */
     const std::vector< double >& energies() const {
 
@@ -63,7 +63,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the resonance energies
+     *  @brief Return the level energies
      */
     std::vector< double >& energies() {
 

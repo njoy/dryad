@@ -31,7 +31,7 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
   if ( nc != amplitudes.size() ) {
 
     Log::error( "The number of channel identifiers and the number of columns of "
-                "reduced amplitude widths is not as expected" );
+                "reduced width amplitudes is not as expected" );
     Log::info( "Number channel identifiers: {}", nc );
     Log::info( "Number columns: {}", amplitudes.size() );
     throw std::exception();
@@ -41,8 +41,8 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
 
     if ( ne != amplitudes[i].size() ) {
 
-      Log::error( "The number of reduced amplitude widths for channel \'{}\' is not as expected" );
-      Log::info( "Number widhts: {}", amplitudes[i].size() );
+      Log::error( "The number of reduced width amplitudes for channel \'{}\' is not as expected" );
+      Log::info( "Number widths: {}", amplitudes[i].size() );
       Log::info( "Expected number: {}", ne );
       throw std::exception();
     }

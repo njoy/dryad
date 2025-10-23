@@ -17,7 +17,7 @@ ResonanceTable& operator=( ResonanceTable&& ) = default;
  *
  *  @param[in] channels     the channel identifiers (nc values)
  *  @param[in] energies     the resonance energies (ne values)
- *  @param[in] amplitudes   the reduced amplitude widths (nc arrays of ne values)
+ *  @param[in] amplitudes   the reduced width amplitudes (nc arrays of ne values)
  */
 ResonanceTable( std::vector< id::ChannelID > channels,
                 std::vector< double > energies,
@@ -35,7 +35,7 @@ ResonanceTable( std::vector< id::ChannelID > channels,
  *
  *  @param[in] channel      the channel identifier
  *  @param[in] energies     the resonance energies
- *  @param[in] amplitudes   the reduced amplitude widths
+ *  @param[in] amplitudes   the reduced width amplitudes
  */
 ResonanceTable( id::ChannelID channel,
                 std::vector< double > energies,
