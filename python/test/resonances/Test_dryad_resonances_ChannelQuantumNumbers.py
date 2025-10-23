@@ -189,10 +189,11 @@ class Test_dryad_resonances_ChannelQuantumNumbers( unittest.TestCase ) :
 
         values = ChannelQuantumNumbers.allowed_total_angular_momentum_values( l = 1, i = 1, I = 1 )
 
-        self.assertEqual( 3, len( values ) )
-        self.assertAlmostEqual( 1., values[0] )
-        self.assertAlmostEqual( 2., values[1] )
-        self.assertAlmostEqual( 3., values[2] )
+        self.assertEqual( 4, len( values ) )
+        self.assertAlmostEqual( 0., values[0] )
+        self.assertAlmostEqual( 1., values[1] )
+        self.assertAlmostEqual( 2., values[2] )
+        self.assertAlmostEqual( 3., values[3] )
 
         # l,s
 

@@ -150,11 +150,6 @@ namespace resonances {
     /**
      *  @brief Calculate allowed values for the total angular momentum J
      *
-     *  The total angular momentum J for a channel can only have values between
-     *  abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
-     *  of the incoming wave, i is the spin of the incident particle and I is the
-     *  spin of the target nucleus.
-     *
      *  @param[in] l   the orbital angular momentum
      *  @param[in] i   the spin of the incident particle
      *  @param[in] I   the spin of the target nucleus
@@ -162,7 +157,19 @@ namespace resonances {
     static std::vector< double >
     allowedTotalAngularMomentumValues( unsigned int l, double i, double I ) {
 
-      return generateValues( std::abs( std::abs( l - I ) - i ), l + I + i );
+      std::vector< double > values;
+      auto s_values = allowedChannelSpinValues( i, I );
+
+      for ( unsigned int s = 0; s < s_values.size(); ++s ) {
+
+        auto j_values = allowedTotalAngularMomentumValues( l, s_values[s] );
+        values.insert( values.end(), j_values.begin(), j_values.end() );
+      }
+
+      std::sort( values.begin(), values.end() );
+      values.erase( std::unique( values.begin(), values.end() ), values.end() );
+
+      return values;
     }
 
     /**

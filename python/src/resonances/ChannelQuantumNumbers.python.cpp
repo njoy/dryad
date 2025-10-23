@@ -97,10 +97,6 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     python::overload_cast< unsigned int, double, double >( &Component::allowedTotalAngularMomentumValues ),
     python::arg( "l" ), python::arg( "i" ), python::arg( "I" ),
     "Calculate possible values for the total angular momentum J\n\n"
-    "The total angular momentum J for a channel can only have values between\n"
-    "abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum\n"
-    "of the incoming wave, i is the spin of the incident particle and I is the\n"
-    "spin of the target nucleus.\n\n"
     "Arguments:\n"
     "    l   the orbital angular momentum\n"
     "    i   the spin of the incident particle\n"

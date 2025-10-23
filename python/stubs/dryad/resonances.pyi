@@ -277,11 +277,6 @@ class ChannelQuantumNumbers:
         """
         Calculate possible values for the total angular momentum J
         
-        The total angular momentum J for a channel can only have values between
-        abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
-        of the incoming wave, i is the spin of the incident particle and I is the
-        spin of the target nucleus.
-        
         Arguments:
             l   the orbital angular momentum
             i   the spin of the incident particle

@@ -192,10 +192,11 @@ SCENARIO( "ChannelQuantumNumbers" ) {
       CHECK_THAT( 2.5, WithinRel( values[2] ) );
 
       values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 1.0, 1.0 );
-      CHECK( 3 == values.size() );
-      CHECK_THAT( 1.0, WithinRel( values[0] ) );
-      CHECK_THAT( 2.0, WithinRel( values[1] ) );
-      CHECK_THAT( 3.0, WithinRel( values[2] ) );
+      CHECK( 4 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+      CHECK_THAT( 3.0, WithinRel( values[3] ) );
     } // THEN
 
     THEN( "the allowed total angular momentum values are generated "
