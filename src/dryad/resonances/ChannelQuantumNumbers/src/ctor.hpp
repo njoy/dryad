@@ -21,7 +21,7 @@ ChannelQuantumNumbers( unsigned int l,
                        double s,
                        double J,
                        short parity ) :
-  l_( l ), s_( s ), J_( J ), parity_( parity ) {}
+  J_( J ), parity_( parity ), l_( l ), s_( s ) {}
 
 private:
 

@@ -26,7 +26,8 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "The l,S,Jpi quantum numbers of a reaction channel\n\n"
     "The ChannelQuantumNumbers class contains the quantum numbers associated to\n"
     "a given reaction channel. Only channels that have the same Jpi contribute\n"
-    "to the cross section of a given reaction."
+    "to the cross section of a given reaction.\n\n"
+    "When using comparison on the quantum numbers, we use a Jpi,l,s ordering."
    );
 
   // wrap the component

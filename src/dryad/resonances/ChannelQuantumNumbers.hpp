@@ -21,16 +21,18 @@ namespace resonances {
    *  a given reaction channel. Only channels that have the same Jpi contribute
    *  to the cross section of a given reaction.
    *
+   *  When using comparison on the quantum numbers, we use a Jpi,l,s ordering.
+   *
    *  @todo c++20 : use defaulted comparison operators
    */
   class ChannelQuantumNumbers {
 
     /* fields */
 
-    unsigned int l_;
-    double s_;
     double J_;
     short parity_;
+    unsigned int l_;
+    double s_;
 
     /* auxiliary functions */
 
@@ -239,10 +241,8 @@ namespace resonances {
     friend bool operator==( const ChannelQuantumNumbers& left,
                             const ChannelQuantumNumbers& right ) {
 
-      return std::tie( left.l_, left.s_,
-                       left.J_, left.parity_ ) ==
-             std::tie( right.l_, right.s_,
-                       right.J_, right.parity_ );
+      return std::tie( left.J_, left.parity_, left.l_, left.s_ ) ==
+             std::tie( right.J_, right.parity_, right.l_, right.s_ );
     }
 
     /**
@@ -266,10 +266,8 @@ namespace resonances {
     friend bool operator<( const ChannelQuantumNumbers& left,
                            const ChannelQuantumNumbers& right ) {
 
-      return std::tie( left.l_, left.s_,
-                       left.J_, left.parity_ ) <
-             std::tie( right.l_, right.s_,
-                       right.J_, right.parity_ );
+      return std::tie( left.J_, left.parity_, left.l_, left.s_ ) <
+             std::tie( right.J_, right.parity_, right.l_, right.s_ );
     }
 
     /**
