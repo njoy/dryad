@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_TABULATEDRADIUS
-#define NJOY_DRYAD_RESONANCES_TABULATEDRADIUS
+#ifndef NJOY_DRYAD_RESONANCES_TABULATEDPENETRABILITY
+#define NJOY_DRYAD_RESONANCES_TABULATEDPENETRABILITY
 
 // system includes
 #include <vector>
@@ -14,11 +14,9 @@ namespace resonances {
 
   /**
    *  @class
-   *  @brief A radius table
-   *
-   *  The radius is given in femto meters (fm).
+   *  @brief A tabulated function representing penetrability, shift or phase shift
    */
-  class TabulatedRadius :
+  class TabulatedWaveFunction :
       protected scion::math::InterpolationTable< double, double > {
 
   public:
@@ -29,20 +27,20 @@ namespace resonances {
 
     /* constructor */
 
-    #include "dryad/resonances/TabulatedRadius/src/ctor.hpp"
+    #include "dryad/resonances/TabulatedWaveFunction/src/ctor.hpp"
 
     /* methods */
 
     /**
-     *  @brief Return the energy values
+     *  @brief Return the ratio values
      */
-    const std::vector< double >& energies() const {
+    const std::vector< double >& ratios() const {
 
       return this->x();
     }
 
     /**
-     *  @brief Return the radius values
+     *  @brief Return the wave function values
      */
     const std::vector< double >& values() const {
 
@@ -50,17 +48,17 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the lower energy limit
+     *  @brief Return the lower ratio limit
      */
-    double lowerEnergyLimit() const {
+    double lowerRatioLimit() const {
 
       return this->x().front();
     }
 
     /**
-     *  @brief Return the upper energy limit
+     *  @brief Return the upper ratio limit
      */
-    double upperEnergyLimit() const {
+    double upperRatioLimit() const {
 
       return this->x().back();
     }
@@ -74,13 +72,13 @@ namespace resonances {
     using InterpolationTable::operator();
 
     /**
-     *  @brief Return a linearised radius table
+     *  @brief Return a linearised penetrability table
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedRadius linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedWaveFunction linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return TabulatedRadius( InterpolationTable::linearise( tolerance ) );
+      return TabulatedWaveFunction( InterpolationTable::linearise( tolerance ) );
     }
 
     /**
@@ -88,7 +86,7 @@ namespace resonances {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius& operator+=( double right ) {
+    TabulatedWaveFunction& operator+=( double right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
@@ -99,7 +97,7 @@ namespace resonances {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius& operator-=( double right ) {
+    TabulatedWaveFunction& operator-=( double right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
@@ -110,7 +108,7 @@ namespace resonances {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius& operator*=( double right ) {
+    TabulatedWaveFunction& operator*=( double right ) {
 
       InterpolationTable::operator*=( right );
       return *this;
@@ -121,48 +119,48 @@ namespace resonances {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius& operator/=( double right ) {
+    TabulatedWaveFunction& operator/=( double right ) {
 
       InterpolationTable::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedRadius and scalar addition
+     *  @brief TabulatedWaveFunction and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius operator+( double right ) const {
+    TabulatedWaveFunction operator+( double right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedRadius and scalar subtraction
+     *  @brief TabulatedWaveFunction and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius operator-( double right ) const {
+    TabulatedWaveFunction operator-( double right ) const {
 
       return InterpolationTable::operator-( right );
     }
 
     /**
-     *  @brief TabulatedRadius and scalar multiplication
+     *  @brief TabulatedWaveFunction and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius operator*( double right ) const {
+    TabulatedWaveFunction operator*( double right ) const {
 
       return InterpolationTable::operator*( right );
     }
 
     /**
-     *  @brief TabulatedRadius and scalar division
+     *  @brief TabulatedWaveFunction and scalar division
      *
      *  @param[in] right    the scalar
      */
-    TabulatedRadius operator/( double right ) const {
+    TabulatedWaveFunction operator/( double right ) const {
 
       return InterpolationTable::operator/( right );
     }
@@ -170,49 +168,49 @@ namespace resonances {
     /**
      *  @brief Unary minus
      */
-    TabulatedRadius operator-() const {
+    TabulatedWaveFunction operator-() const {
 
       return InterpolationTable::operator-();
     }
 
     /**
-     *  @brief Inplace TabulatedRadius addition
+     *  @brief Inplace TabulatedWaveFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedRadius& operator+=( const TabulatedRadius& right ) {
+    TabulatedWaveFunction& operator+=( const TabulatedWaveFunction& right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace TabulatedRadius subtraction
+     *  @brief Inplace TabulatedWaveFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedRadius& operator-=( const TabulatedRadius& right ) {
+    TabulatedWaveFunction& operator-=( const TabulatedWaveFunction& right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedRadius and TabulatedRadius addition
+     *  @brief TabulatedWaveFunction and TabulatedWaveFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedRadius operator+( const TabulatedRadius& right ) const {
+    TabulatedWaveFunction operator+( const TabulatedWaveFunction& right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedRadius and TabulatedRadius subtraction
+     *  @brief TabulatedWaveFunction and TabulatedWaveFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedRadius operator-( const TabulatedRadius& right ) const {
+    TabulatedWaveFunction operator-( const TabulatedWaveFunction& right ) const {
 
       return InterpolationTable::operator-( right );
     }
@@ -222,7 +220,7 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedRadius& right ) const {
+    bool operator==( const TabulatedWaveFunction& right ) const {
 
       return InterpolationTable::operator==( right );
     }
@@ -232,30 +230,30 @@ namespace resonances {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedRadius& right ) const {
+    bool operator!=( const TabulatedWaveFunction& right ) const {
 
       return ! this->operator==( right );
     }
   };
 
   /**
-   *  @brief Scalar and TabulatedRadius addition
+   *  @brief Scalar and TabulatedWaveFunction addition
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedRadius operator+( double left, const TabulatedRadius& right ) {
+  inline TabulatedWaveFunction operator+( double left, const TabulatedWaveFunction& right ) {
 
     return right + left;
   }
 
   /**
-   *  @brief Scalar and TabulatedRadius subtraction
+   *  @brief Scalar and TabulatedWaveFunction subtraction
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedRadius operator-( double left, const TabulatedRadius& right ) {
+  inline TabulatedWaveFunction operator-( double left, const TabulatedWaveFunction& right ) {
 
     auto result = -right;
     result += left;
@@ -263,12 +261,12 @@ namespace resonances {
   }
 
   /**
-   *  @brief Scalar and TabulatedRadius multiplication
+   *  @brief Scalar and TabulatedWaveFunction multiplication
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedRadius operator*( double left, const TabulatedRadius& right ) {
+  inline TabulatedWaveFunction operator*( double left, const TabulatedWaveFunction& right ) {
 
     return right * left;
   }

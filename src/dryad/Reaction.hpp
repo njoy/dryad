@@ -60,7 +60,7 @@ namespace dryad {
     /**
      *  @brief Set the reaction identifier
      *
-     *  @param id.  the reaction identifier
+     *  @param id  the reaction identifier
      */
     void identifier( id::ReactionID id ) {
 

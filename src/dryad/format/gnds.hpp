@@ -5,6 +5,7 @@
 
 #include "dryad/format/gnds/covariance/createScalingType.hpp"
 #include "dryad/format/gnds/covariance/createVarianceScaling.hpp"
+#include "dryad/format/gnds/covariance/createCrossSectionCovarianceMatrix.hpp"
 
 #include "dryad/format/gnds/convertCrossSections.hpp"
 #include "dryad/format/gnds/convertEnergies.hpp"

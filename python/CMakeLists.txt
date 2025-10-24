@@ -20,6 +20,8 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceParameters.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/TabulatedRadius.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/TabulatedWaveFunction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelRadii.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/matrix.python.cpp
