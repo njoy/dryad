@@ -15,6 +15,8 @@ namespace resonances {
   /**
    *  @class
    *  @brief A tabulated function representing penetrability, shift or phase shift
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
   class TabulatedWaveFunction :
       protected scion::math::InterpolationTable< double, double > {

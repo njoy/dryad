@@ -14,11 +14,11 @@ namespace resonances {
    *  @class
    *  @brief The l,S,Jpi quantum numbers of a reaction channel
    *
-   *  @todo c++20 : use defaulted comparison operators instead of std::tie
-   *
    *  The ChannelQuantumNumbers class contains the quantum numbers associated to
    *  a given reaction channel. Only channels that have the same Jpi contribute
    *  to the cross section of a given reaction.
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
   class ChannelQuantumNumbers {
 

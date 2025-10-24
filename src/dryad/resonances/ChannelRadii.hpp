@@ -20,6 +20,8 @@ namespace resonances {
    *  The penetrability P, shift factor S and phase shift phi require knowledge
    *  of the channel radius in their calculation. The ChannelRadii class provides
    *  these radii for each one of these.
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
   class ChannelRadii {
 
@@ -152,25 +154,26 @@ namespace resonances {
     }
 
     /**
-     *  @brief Comparison operator: equal
+     *  @brief Equality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ChannelRadii& right ) const {
+    friend bool operator==( const ChannelRadii& left, const ChannelRadii& right ) {
 
-      return this->penetrabilityRadius() == right.penetrabilityRadius() &&
-             this->shiftFactorRadius() == right.shiftFactorRadius() &&
-             this->phaseShiftRadius() == right.phaseShiftRadius();
+      return std::tie( left.penetrabilityRadius(), left.shiftFactorRadius(), left.phaseShiftRadius() ) ==
+             std::tie( right.penetrabilityRadius(), right.shiftFactorRadius(), right.phaseShiftRadius() );
     }
 
     /**
-     *  @brief Comparison operator: not equal
+     *  @brief Inequality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ChannelRadii& right ) const {
+    friend bool operator!=( const ChannelRadii& left, const ChannelRadii& right ) {
 
-      return ! this->operator==( right );
+      return ! ( left == right );
     }
   };
 

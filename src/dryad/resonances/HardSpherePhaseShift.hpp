@@ -14,6 +14,8 @@ namespace resonances {
   /**
    *  @class
    *  @brief Hard sphere phase shift functions
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
   class HardSpherePhaseShift {
 
@@ -52,23 +54,27 @@ namespace resonances {
     }
 
     /**
-     *  @brief Comparison operator: equal
+     *  @brief Equality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const HardSpherePhaseShift& right ) const {
+    friend bool operator==( const HardSpherePhaseShift& left,
+                            const HardSpherePhaseShift& right ) {
 
-      return this->orbitalAngularMomentum() == right.orbitalAngularMomentum();
+      return left.orbitalAngularMomentum() == right.orbitalAngularMomentum();
     }
 
     /**
-     *  @brief Comparison operator: not equal
+     *  @brief Inequality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const HardSpherePhaseShift& right ) const {
+    friend bool operator!=( const HardSpherePhaseShift& left,
+                            const HardSpherePhaseShift& right ) {
 
-      return ! this->operator==( right );
+      return ! ( left == right );
     }
   };
 

@@ -13,6 +13,8 @@ namespace resonances {
   /**
    *  @class
    *  @brief Coulomb phase shift difference functions
+   *
+   *  @todo c++20 : use defaulted comparison operators
    */
   class CoulombPhaseShiftDifference {
 
@@ -53,23 +55,27 @@ namespace resonances {
     }
 
     /**
-     *  @brief Comparison operator: equal
+     *  @brief Equality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const CoulombPhaseShiftDifference& right ) const {
+    friend bool operator==( const CoulombPhaseShiftDifference& left,
+                            const CoulombPhaseShiftDifference& right ) {
 
-      return this->orbitalAngularMomentum() == right.orbitalAngularMomentum();
+      return left.orbitalAngularMomentum() == right.orbitalAngularMomentum();
     }
 
     /**
-     *  @brief Comparison operator: not equal
+     *  @brief Inequality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const CoulombPhaseShiftDifference& right ) const {
+    friend bool operator!=( const CoulombPhaseShiftDifference& left,
+                            const CoulombPhaseShiftDifference& right ) {
 
-      return ! this->operator==( right );
+      return ! ( left == right );
     }
   };
 
