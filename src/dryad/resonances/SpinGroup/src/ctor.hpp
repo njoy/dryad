@@ -9,6 +9,20 @@ SpinGroup( SpinGroup&& ) = default;
 SpinGroup& operator=( const SpinGroup& ) = default;
 SpinGroup& operator=( SpinGroup&& ) = default;
 
+private:
+
+/**
+ *  @brief Private intermediate constructor
+ */
+SpinGroup( std::tuple< std::vector< Channel >, ResonanceTable > data ) :
+    channels_( std::move( std::get< 0 >( data ) ) ),
+    table_( std::move( std::get< 1 >( data ) ) ) {
+
+  verifySpinGroup( this->channels(), this->resonanceTable() );
+}
+
+public:
+
 /**
  *  @brief Constructor
  *
@@ -17,8 +31,7 @@ SpinGroup& operator=( SpinGroup&& ) = default;
  */
 SpinGroup( std::vector< Channel > channels,
            ResonanceTable resonances ) :
-    channels_( std::move( channels ) ),
-    resonances_( std::move( resonances ) ) {}
+    SpinGroup( createData( std::move( channels ), std::move( resonances ) ) ) {}
 
 /**
  *  @brief Constructor
@@ -26,5 +39,4 @@ SpinGroup( std::vector< Channel > channels,
  *  @param[in] channels     the channel data in the spingroup
  */
 SpinGroup( std::vector< ChannelData > channels ) :
-    channels_( createChannels( channels ) ),
-    resonances_( createResonanceTable( channels ) ) {}
+    SpinGroup( createData( std::move( channels ) ) ) {}

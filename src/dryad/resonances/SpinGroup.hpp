@@ -30,12 +30,12 @@ namespace resonances {
     /* fields */
 
     std::vector< Channel > channels_;
-    ResonanceTable resonances_;
+    ResonanceTable table_;
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/SpinGroup/src/createChannels.hpp"
-    #include "dryad/resonances/SpinGroup/src/createResonanceTable.hpp"
+    #include "dryad/resonances/SpinGroup/src/createData.hpp"
+    #include "dryad/resonances/SpinGroup/src/verifySpinGroup.hpp"
 
   public:
 
@@ -74,7 +74,7 @@ namespace resonances {
      */
     const ResonanceTable& resonanceTable() const {
 
-      return this->resonances_;
+      return this->table_;
     }
 
     /**
@@ -82,7 +82,7 @@ namespace resonances {
      */
     ResonanceTable& resonanceTable() {
 
-      return this->resonances_;
+      return this->table_;
     }
 
     /**
@@ -92,7 +92,7 @@ namespace resonances {
      */
     void resonanceTable( ResonanceTable table ) {
 
-      this->resonances_ = std::move( table );
+      this->table_ = std::move( table );
     }
 
     /**

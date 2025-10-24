@@ -48,57 +48,21 @@ namespace lrf7 {
                                            boundary_condition, reduced_amplitudes,
                                            endf.particlePairs(), group );
 
-      // add each to the final channel data
+      // add each to the final channel data, keep it sorted and consolidate duplicate channels
       for ( auto&& channel : data ) {
 
         auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
                                       channel.first.identifier(),
                                       [] ( auto&& left, auto&& right )
                                          { return left.first.identifier() < right; } );
-        if ( iter != channel_data.end() ) {
+        if ( iter != channel_data.end() && iter->first.identifier() == channel.first.identifier() ) {
 
-          // if the channel is already present: consolidate
-          if ( iter->first.identifier() == channel.first.identifier() ) {
-
-            if ( channel.first == iter->first ) {
-
-              // add the resonances to the table
-              for ( unsigned int i = 0; i < channel.second.numberEnergies(); ++i ) {
-
-                auto energy = std::lower_bound( iter->second.energies().begin(), iter->second.energies().end(),
-                                                channel.second.energies()[i] );
-                auto amplitude = iter->second.reducedWidthAmplitudes().front().begin() +
-                                 std::distance( iter->second.energies().begin(), energy );
-                if ( energy != iter->second.energies().end() ) {
-
-                  // if the energies are equal: throw exception
-                  if ( *energy == channel.second.energies()[i] ) {
-
-                    Log::error( "Found the same channel in two spin groups with overlapping resonance energies" );
-                    Log::info( "Channel: {}", channel.first.identifier().symbol() );
-                    throw std::exception();
-                  }
-                }
-                iter->second.energies().insert( energy, channel.second.energies()[i] );
-                iter->second.reducedWidthAmplitudes().front().insert( amplitude, channel.second.reducedWidthAmplitudes().front()[i] );
-              }
-
-              continue;
-            }
-            else {
-
-              Log::error( "Found at least two channels with the same quantum numbers, reaction and partial but with "
-                          "differences in other channel data" );
-              Log::info( "Channel identifier: {}", channel.first.identifier().symbol() );
-              Log::info( "Equal incident particle pair: {}", channel.first.incidentParticlePair() == iter->first.incidentParticlePair() );
-              Log::info( "Equal outgoing particle pair: {}", channel.first.outgoingParticlePair() == iter->first.outgoingParticlePair() );
-              Log::info( "Equal boundary condition: {}", channel.first.boundaryCondition() == iter->first.boundaryCondition() );
-              Log::info( "Equal Q value: {}", channel.first.qValue() == iter->first.qValue() );
-              throw std::exception();
-            }
-          }
+          iter->second += channel.second;
         }
-        channel_data.insert( iter, std::move( channel ) );
+        else {
+
+          channel_data.insert( iter, std::move( channel ) );
+        }
       }
     }
 
