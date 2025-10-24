@@ -5,7 +5,182 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+class Channel:
+    """
+    A resonance reaction channel
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: Channel) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | TabulatedWaveFunction, shiftFactor: float | HardSphereShiftFactor | TabulatedWaveFunction, phaseShift: float | HardSpherePhaseShift | TabulatedWaveFunction) -> None:
+        """
+        Initialise the channel
+        
+        Arguments:
+            self            the channel
+            identifier      the channel identifier
+            incident        the current incident particle pair
+            outgoing        the outgoing particle pair
+            qValue          the Q value associated with the transition from
+                            the incident to the outgoing particle pair
+            boundary        the boundary condition
+            radii           the channel radii for the calculation of the
+                            wave functions
+            penetrability   the penetrability of the channel
+            shiftFactor     the shift factor of the channel
+            phaseshift      the phase shift of the channel
+        """
+    @typing.overload
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii) -> None:
+        """
+        Initialise the channel
+        
+        Arguments:
+            self            the channel
+            identifier      the channel identifier
+            incident        the current incident particle pair
+            outgoing        the outgoing particle pair
+            qValue          the Q value associated with the transition from
+                            the incident to the outgoing particle pair
+            boundary        the boundary condition
+            radii           the channel radii for the calculation of the
+                            wave functions
+        """
+    @typing.overload
+    def __init__(self, instance: Channel) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: Channel) -> bool:
+        ...
+    def is_below_threshold(self, energy: float) -> bool:
+        """
+        Return whether or not the energy is below the threshold for this channel
+        
+        The incident energy is below the threshold energy for the channel if
+            energy * ratio + q < 0.0
+        where energy is the incident energy, ratio is the mass ratio M / ( m + M )
+        for the incident particle pair and q is the Q value for this channel.
+        
+        Arguments:
+            self     the channel
+            energy   the energy to be tested
+        """
+    def penetrability(self, energy: float) -> float:
+        """
+        Calculate the penetrability for the channel at a given energy
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    def phase_shift(self, energy: float) -> float:
+        """
+        Calculate the phase shift for the channel at a given energy
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    def shift_factor(self, energy: float) -> float:
+        """
+        Calculate the shift factor for the channel at a given energy
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    def sommerfeld_parameter(self, energy: float) -> float:
+        """
+        Calcualte the Sommerfeld parameter for the channel at a given energy
+        
+        The Sommerfeld parameter eta is an energy dependent quantity defined as
+        follows:
+           eta = z * Z * mu / ( 4 * pi * epsilon0 * hbar^2 * k )
+        in which z and Z are the electrical charge of the particles in the
+        particle pair, mu is the reduced mass of the particle pair, hbar is the
+        Planck constant, k is the wave number and epsilon0 is the vacuum
+        permittivity.
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    def wave_number(self, energy: float) -> float:
+        """
+        Calculate the channel wave number (given in fm^-1) at a given energy
+        
+        The wave number k is an energy dependent quantity defined as follows:
+           hbar^2 k^2 = 2 * mu * ( energy * ratio + q )
+        in which mu is the reduced mass of the channel's particle pair and ratio
+        is the mass ratio M / ( m + M ) for the incident particle pair, q is the
+        Q value associated to the transition of the incident particle pair to the
+        channel's particle pair and hbar is the reduced Planck constant.
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    @property
+    def boundary_condition(self) -> float | None:
+        """
+        The boundary condition value (if defined)
+        """
+    @property
+    def channel_radii(self) -> ChannelRadii:
+        """
+        The channel radii
+        """
+    @property
+    def identifier(self) -> dryad.id.ChannelID:
+        """
+        The channel identifier
+        """
+    @property
+    def incident_particle_pair(self) -> ParticlePair:
+        """
+        The incident particle pair
+        """
+    @property
+    def is_incident_channel(self) -> bool:
+        """
+        Flag to indicate whether or not the channel is an incident channel
+        """
+    @property
+    def outgoing_particle_pair(self) -> ParticlePair | None:
+        """
+        The outgoing particle pair (if defined)
+        """
+    @property
+    def q_value(self) -> float:
+        """
+        The q value of the transition
+        """
+    @property
+    def quantum_numbers(self) -> ChannelQuantumNumbers:
+        """
+        The quantum numbers of the channel
+        """
+    @property
+    def reaction(self) -> dryad.id.ReactionID:
+        """
+        The reaction this channel contributes to
+        """
+    @property
+    def statistical_spin_factor(self) -> float:
+        """
+        The statistical spin factor
+        
+        The statistical spin factor g of a channel is defined as follows:
+           g = ( 2 * J + 1 ) / ( 2 * ia + 1 ) / ( 2 * ib + 1 )
+        in which J is the total angular momentum of the channel and ia and ib
+        are the spins of the particles in the outgoing particle pair.
+        """
 class ChannelQuantumNumbers:
     """
     The l,S,Jpi quantum numbers of a reaction channel
