@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,7 +24,7 @@ namespace gnds {
       if ( unit == "Mb" ) {
 
         std::for_each( xs.begin(), xs.end(),
-                       [] ( double& xs ) { xs *= 1e+6; } );
+                       [] ( double& xs ) { xs *= constants::mega; } );
       }
       else {
 

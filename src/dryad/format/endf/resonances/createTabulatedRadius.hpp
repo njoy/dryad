@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/format/endf/createBoundaries.hpp"
 #include "dryad/format/endf/createInterpolants.hpp"
@@ -27,11 +28,13 @@ namespace resonances {
 
     try {
 
+      // ENDF gives a radius in 1e-12 cm, dryad stores it in fm
+
       Log::info( "Reading energy dependent scattering radius" );
       auto energies = createVector( radius.energies() );
       auto values = createVector( radius.radii() );
       std::transform( values.begin(), values.end(), values.begin(),
-                      [] ( auto&& value ) { return value * 10.; } );
+                      [] ( auto&& value ) { return value * constants::deca; } );
       auto boundaries = createBoundaries( radius.boundaries() );
       auto interpolants = createInterpolants( radius.interpolants() );
       return dryad::resonances::TabulatedRadius(

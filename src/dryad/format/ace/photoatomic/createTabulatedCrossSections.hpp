@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 #include "dryad/format/createVector.hpp"
 #include "dryad/TabulatedCrossSection.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
@@ -30,7 +31,7 @@ namespace photoatomic {
     // is exactly 0 (in which case it is zero)
     auto convertEnergy = [] ( auto&& energy ) {
 
-      return energy == 0. ? energy : std::exp( energy ) * 1e+6;
+      return energy == 0. ? energy : std::exp( energy ) * constants::mega;
     };
     auto convertValue = [] ( auto&& value ) {
 

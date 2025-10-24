@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "dryad/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -23,7 +24,7 @@ namespace gnds {
       if ( unit == "MeV" ) {
 
         std::for_each( energies.begin(), energies.end(),
-                       [] ( double& energy ) { energy *= 1e+6; } );
+                       [] ( double& energy ) { energy *= constants::mega; } );
       }
       else {
 
