@@ -29,6 +29,7 @@ namespace resonances {
   void wrapTabulatedWaveFunction( python::module& );
   void wrapChannel( python::module& );
   void wrapResonanceTable( python::module& );
+  void wrapSpinGroup( python::module& );
 
   void wrapResonanceParameters( python::module& );
 }
@@ -62,6 +63,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapTabulatedWaveFunction( submodule );
   resonances::wrapChannel( submodule );
   resonances::wrapResonanceTable( submodule );
+  resonances::wrapSpinGroup( submodule );
 
   resonances::wrapResonanceParameters( submodule );
 }

@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -1018,6 +1018,58 @@ class ResonanceTable:
         """
         The reduced width amplitudes
         """
+class SpinGroup:
+    """
+    A spin group corresponding to a Jpi quantum number set
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: SpinGroup) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, channels: list[Channel], resonances: ResonanceTable) -> None:
+        """
+        Initialise the spin group
+        
+        Arguments:
+            self         the spin group
+            channels     the channels in the spingroup
+            resonances   the resonance table of the spingroup
+        """
+    @typing.overload
+    def __init__(self, channels: list[tuple[Channel, ResonanceTable]]) -> None:
+        """
+        Initialise the spin group
+        
+        Arguments:
+            self       the spin group
+            channels   the channel data in the spingroup
+        """
+    @typing.overload
+    def __init__(self, instance: SpinGroup) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: SpinGroup) -> bool:
+        ...
+    @property
+    def channels(self) -> list[Channel]:
+        """
+        The channels in the spin group
+        """
+    @channels.setter
+    def channels(self, arg1: list[Channel]) -> None:
+        ...
+    @property
+    def resonance_table(self) -> ResonanceTable:
+        """
+        The resonance table of the spin group
+        """
+    @resonance_table.setter
+    def resonance_table(self, arg1: ResonanceTable) -> None:
+        ...
 class TabulatedRadius:
     """
     A radius table
