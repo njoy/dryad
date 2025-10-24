@@ -23,8 +23,7 @@ SpinGroup( std::vector< Channel > channels,
 /**
  *  @brief Constructor
  *
- *  @param[in] channels     the channels in the spingroup
- *  @param[in] resonances   the resonance table of the spingroup
+ *  @param[in] channels     the channel data in the spingroup
  */
 SpinGroup( std::vector< ChannelData > channels ) :
     channels_( createChannels( channels ) ),
