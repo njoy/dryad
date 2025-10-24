@@ -4,7 +4,79 @@ Identifiers for particles, elements, etc.
 from __future__ import annotations
 import dryad
 import typing
-__all__: list[str] = ['ElectronSubshellID', 'ElementID', 'EnergyGroup', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
+__all__: list[str] = ['ChannelID', 'ElectronSubshellID', 'ElementID', 'EnergyGroup', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
+class ChannelID:
+    """
+    The channel identifier, with associated reaction and quantum numbers
+    """
+    def __eq__(self, arg0: ChannelID) -> bool:
+        ...
+    def __ge__(self, arg0: ChannelID) -> bool:
+        ...
+    def __gt__(self, arg0: ChannelID) -> bool:
+        ...
+    def __hash__(self) -> int:
+        """
+        Hash function
+        """
+    @typing.overload
+    def __init__(self, reaction: ReactionID, quantum_numbers: ..., partial: int | None = None) -> None:
+        """
+        Initialise the channel identifier
+        
+        Arguments:
+            self       the channel identifier
+            reaction   the reaction
+            numbers    the channel quantum numbers
+            partial    the optional partial index
+        """
+    @typing.overload
+    def __init__(self, symbol: str) -> None:
+        """
+        Initialise the channel identifier
+        
+        Arguments:
+            self     the channel identifier
+            symbol   the channel symbol
+        """
+    @typing.overload
+    def __init__(self, instance: ChannelID) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __le__(self, arg0: ChannelID) -> bool:
+        ...
+    def __lt__(self, arg0: ChannelID) -> bool:
+        ...
+    def __ne__(self, arg0: ChannelID) -> bool:
+        ...
+    def __str__(self) -> str:
+        """
+        Convenience function for printing the identifier
+        """
+    @property
+    def partial(self) -> int | None:
+        """
+        The partial number (if defined)
+        """
+    @property
+    def quantum_numbers(self) -> ...:
+        """
+        The quantum numbers
+        """
+    @property
+    def reaction(self) -> ReactionID:
+        """
+        The reaction
+        """
+    @property
+    def symbol(self) -> str:
+        """
+        The channel identifier's symbol
+        """
 class ElectronSubshellID:
     """
     The electron subshell identifier

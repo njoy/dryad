@@ -12,6 +12,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ParticleID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ReactionType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ReactionID.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/id/ChannelID.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/TransitionType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/RadiativeTransitionData.python.cpp
@@ -19,6 +20,8 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/atomic/ElectronSubshellConfiguration.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceParameters.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Particle.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ParticlePair.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelQuantumNumbers.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/TabulatedRadius.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelRadii.python.cpp

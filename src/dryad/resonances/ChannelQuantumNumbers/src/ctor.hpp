@@ -23,3 +23,21 @@ ChannelQuantumNumbers( unsigned int l,
                        short parity ) :
   l_( l ), s_( s ), J_( J ), parity_( parity ) {}
 
+private:
+
+/**
+ *  @brief Private intermediate constructor
+ */
+ChannelQuantumNumbers( const std::tuple< unsigned int, double, double, short >& numbers ) :
+  ChannelQuantumNumbers( std::get< 0 >( numbers ), std::get< 1 >( numbers ),
+                         std::get< 2 >( numbers ), std::get< 3 >( numbers ) ) {}
+
+public:
+
+/**
+ *  @brief Constructor
+ *
+ *  @param[in] string   the string representation
+ */
+ChannelQuantumNumbers( const std::string& string ) :
+  ChannelQuantumNumbers( parseNumbers( string ) ) {}

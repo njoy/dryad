@@ -2,11 +2,9 @@
 #define NJOY_DRYAD_ID_ENERGYGROUP
 
 // system includes
-#include <algorithm>
-#include <vector>
+#include <tuple>
 
 // other includes
-#include "tools/Log.hpp"
 
 namespace njoy {
 namespace dryad {

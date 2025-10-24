@@ -2,9 +2,11 @@
 #define NJOY_DRYAD_RESONANCES_CHANNELQUANTUMNUMBERS
 
 // system includes
+#include <cmath>
 #include <tuple>
 
 // other includes
+#include "tools/split.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -30,6 +32,66 @@ namespace resonances {
     short parity_;
 
     /* auxiliary functions */
+
+    static std::tuple< unsigned int, double, double, short >
+    parseNumbers( const std::string& numbers ) {
+
+      std::tuple< unsigned int, double, double, short > tuple;
+
+      auto convert_ratio = [] ( const std::string& string ) -> double {
+
+        auto fractions = tools::split( string, '/' );
+        if ( fractions.size() == 1 || fractions.size() == 2 ) {
+
+          auto value = std::stoi( fractions.front() );
+          if ( fractions.size() == 1 ) {
+
+            return value;
+          }
+          else {
+
+            if ( fractions.back() == "2" ) {
+
+              return 0.5 * static_cast< double >( value );
+            }
+          }
+        }
+
+        throw std::exception();
+      };
+
+      if ( numbers.front() == '{' && numbers.back() == '}' ) {
+
+        auto entries = tools::split( numbers.substr( 1, numbers.size() - 2 ), ',' );
+        if ( entries.size() == 3 ) {
+
+          if ( entries[2].back() == '+' || entries[2].back() == '-' ) {
+
+            std::get< 3 >( tuple ) = entries[2].back() == '+' ? +1 : -1;
+            entries[2].erase( entries[2].size() - 1 );
+
+            try {
+
+              std::get< 0 >( tuple ) = std::stoi( entries[0] );
+              std::get< 1 >( tuple ) = convert_ratio( entries[1] );
+              std::get< 2 >( tuple ) = convert_ratio( entries[2] );
+            }
+            catch ( ... ) {
+
+              // if you get to this point, this is not a numbers string
+              throw std::invalid_argument( "\'" + numbers + "\' does not define "
+                                           "channel quantum numbers" );
+            }
+
+            return tuple;
+          }
+        }
+      }
+
+      // if you get to this point, this is not a numbers string
+      throw std::invalid_argument( "\'" + numbers + "\' does not define "
+                                   "channel quantum numbers" );
+    }
 
     static std::vector< double > generateValues( double min, double max ) {
 
@@ -115,6 +177,27 @@ namespace resonances {
     allowedTotalAngularMomentumValues( unsigned int l, double s ) {
 
       return generateValues( std::abs(l - s), l + s );
+    }
+
+    /**
+     *  @brief Return a string representation of the quantum numbers
+     */
+    std::string symbol() const {
+
+      auto toHalfIntegerString = [] ( const double a ) {
+
+        double half;
+        return std::modf( a, &half ) == 0. ?
+                   // a is a full integer
+                   std::to_string( static_cast< int >( half ) ) :
+                   // a is a half integer value
+                   std::to_string( 2 * static_cast< int >( half ) + 1 ) + "/2";
+      };
+
+      return "{" + std::to_string( this->orbitalAngularMomentum() ) + ","
+                 + toHalfIntegerString( this->spin() ) + ","
+                 + toHalfIntegerString( this->totalAngularMomentum() )
+                 + ( this->parity() > 0 ? "+" : "-" ) + "}";
     }
 
     /**

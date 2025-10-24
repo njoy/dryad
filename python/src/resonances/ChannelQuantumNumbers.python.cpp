@@ -117,8 +117,7 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "    l   the orbital angular momentum\n"
     "    s   the channel spin"
 
-  )
-  ;
+  );
 
   // add standard comparison definitions
   addStandardComparisonDefinitions< Component >( component );

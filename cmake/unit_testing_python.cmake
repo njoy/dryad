@@ -32,6 +32,7 @@ add_python_test( id.LevelID                              id/Test_dryad_id_LevelI
 add_python_test( id.ParticleID                           id/Test_dryad_id_ParticleID.py )
 add_python_test( id.ReactionType                         id/Test_dryad_id_ReactionType.py )
 add_python_test( id.ReactionID                           id/Test_dryad_id_ReactionID.py )
+add_python_test( id.ChannelID                            id/Test_dryad_id_ChannelID.py )
 
 add_python_test( atomic.RadiativeTransitionData          atomic/Test_dryad_atomic_RadiativeTransitionData.py )
 add_python_test( atomic.NonRadiativeTransitionData       atomic/Test_dryad_atomic_NonRadiativeTransitionData.py )
@@ -45,6 +46,8 @@ add_python_test( covariance.ProductMultiplicityMetadata          covariance/Test
 add_python_test( covariance.ProductMultiplicityCovarianceMatrix  covariance/Test_dryad_covariance_ProductMultiplicityCovarianceMatrix.py )
 add_python_test( covariance.LinearCombinationCovariance          covariance/Test_dryad_covariance_LinearCombinationCovariance.py )
 
+add_python_test( resonances.Particle                     resonances/Test_dryad_resonances_Particle.py )
+add_python_test( resonances.ParticlePair                 resonances/Test_dryad_resonances_ParticlePair.py )
 add_python_test( resonances.ChannelQuantumNumbers        resonances/Test_dryad_resonances_ChannelQuantumNumbers.py )
 add_python_test( resonances.TabulatedRadius              resonances/Test_dryad_resonances_TabulatedRadius.py )
 add_python_test( resonances.ChannelRadii                 resonances/Test_dryad_resonances_ChannelRadii.py )

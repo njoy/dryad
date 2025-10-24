@@ -1,5 +1,6 @@
 // components
 #include "dryad/resonances/TabulatedRadius.hpp"
+#include "dryad/resonances/Particle.hpp"
 #include "dryad/resonances/ChannelRadii.hpp"
 #include "dryad/resonances/ChannelQuantumNumbers.hpp"
 #include "dryad/resonances/HardSpherePenetrability.hpp"
