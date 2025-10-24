@@ -14,7 +14,7 @@ using namespace njoy::dryad::resonances;
 
 SCENARIO( "ResonanceTable" ) {
 
-  GIVEN( "valid data for a ResonanceTable involving multiple channels" ) {
+  GIVEN( "valid data for a ResonanceTable involving multiple channels - fully ordered" ) {
 
     std::vector< id::ChannelID > channels = {
 
@@ -29,6 +29,57 @@ SCENARIO( "ResonanceTable" ) {
     };
 
     THEN( "a ResonanceTable can be constructed" ) {
+
+      ResonanceTable table( std::move( channels ), std::move( energies ),
+                            std::move( amplitudes ) );
+
+      CHECK( 2 == table.numberChannels() );
+      CHECK( 4 == table.numberEnergies() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+      CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
+
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
+      CHECK( false == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{1,1/2,1/2+}" ) ) );
+
+      CHECK( true == table.hasEnergy( 1. ) );
+      CHECK( true == table.hasEnergy( 2. ) );
+      CHECK( true == table.hasEnergy( 3. ) );
+      CHECK( true == table.hasEnergy( 4. ) );
+      CHECK( false == table.hasEnergy( 5. ) );
+
+      CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
+      CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
+      CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
+      CHECK_THAT( 4., WithinRel( table.energies()[3] ) );
+
+      CHECK_THAT( 11., WithinRel( table.reducedWidthAmplitudes()[0][0] ) );
+      CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
+      CHECK_THAT( 13., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
+      CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+      CHECK_THAT( 21., WithinRel( table.reducedWidthAmplitudes()[1][0] ) );
+      CHECK_THAT( 22., WithinRel( table.reducedWidthAmplitudes()[1][1] ) );
+      CHECK_THAT( 23., WithinRel( table.reducedWidthAmplitudes()[1][2] ) );
+      CHECK_THAT( 24., WithinRel( table.reducedWidthAmplitudes()[1][3] ) );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "valid data for a ResonanceTable involving multiple channels - unordered" ) {
+
+    std::vector< id::ChannelID > channels = {
+
+      id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
+      id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" )
+    };
+    std::vector< double > energies = { 4., 3., 2., 1. };
+    std::vector< std::vector< double > > amplitudes = {
+
+      { 24., 23., 22., 21. },
+      { 14., 13., 12., 11. }
+    };
+
+    THEN( "a ResonanceTable can be constructed and everything will be ordered" ) {
 
       ResonanceTable table( std::move( channels ), std::move( energies ),
                             std::move( amplitudes ) );
@@ -95,12 +146,24 @@ SCENARIO( "ResonanceTable" ) {
 
   GIVEN( "two independent ResonanceTable objects" ) {
 
+    // common energies but no common channels
     ResonanceTable left( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
                          {  1.,  2.,  4. },
                          { 11., 12., 14. } );
     ResonanceTable right( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
                           {  2.,  3.,  5. },
                           { 22., 23., 25. } );
+
+
+    // common channel with zero width at the common energy
+    ResonanceTable right2( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                           {  2.,  3.,  5. },
+                           {  0., 23., 25. } );
+
+    // common channel with non-zero width at the common energy
+    ResonanceTable right3( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                           {  2.,  3.,  5. },
+                           { 22., 23., 25. } );
 
     THEN( "they can be mergeed" ) {
 
@@ -154,6 +217,51 @@ SCENARIO( "ResonanceTable" ) {
       CHECK_THAT( 23., WithinRel( table.reducedWidthAmplitudes()[1][2] ) );
       CHECK_THAT(  0., WithinRel( table.reducedWidthAmplitudes()[1][3] ) );
       CHECK_THAT( 25., WithinRel( table.reducedWidthAmplitudes()[1][4] ) );
+
+      table = left;
+      table += right2;
+
+      CHECK( 1 == table.numberChannels() );
+      CHECK( 5 == table.numberEnergies() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+
+      CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
+      CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
+      CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
+      CHECK_THAT( 4., WithinRel( table.energies()[3] ) );
+      CHECK_THAT( 5., WithinRel( table.energies()[4] ) );
+
+      CHECK_THAT( 11., WithinRel( table.reducedWidthAmplitudes()[0][0] ) );
+      CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
+      CHECK_THAT( 23., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
+      CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+      CHECK_THAT( 25., WithinRel( table.reducedWidthAmplitudes()[0][4] ) );
+
+      table = left + right2;
+
+      CHECK( 1 == table.numberChannels() );
+      CHECK( 5 == table.numberEnergies() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+
+      CHECK_THAT( 1., WithinRel( table.energies()[0] ) );
+      CHECK_THAT( 2., WithinRel( table.energies()[1] ) );
+      CHECK_THAT( 3., WithinRel( table.energies()[2] ) );
+      CHECK_THAT( 4., WithinRel( table.energies()[3] ) );
+      CHECK_THAT( 5., WithinRel( table.energies()[4] ) );
+
+      CHECK_THAT( 11., WithinRel( table.reducedWidthAmplitudes()[0][0] ) );
+      CHECK_THAT( 12., WithinRel( table.reducedWidthAmplitudes()[0][1] ) );
+      CHECK_THAT( 23., WithinRel( table.reducedWidthAmplitudes()[0][2] ) );
+      CHECK_THAT( 14., WithinRel( table.reducedWidthAmplitudes()[0][3] ) );
+      CHECK_THAT( 25., WithinRel( table.reducedWidthAmplitudes()[0][4] ) );
+
+      table = left;
+      CHECK_THROWS( table += right3 );
+      CHECK( table == left );
+      CHECK_THROWS( table = left + right3 );
+      CHECK( table == left );
     } // THEN
   } // GIVEN
 
@@ -196,18 +304,6 @@ SCENARIO( "ResonanceTable" ) {
 
         CHECK_THROWS( ResonanceTable( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) },
                                       { 1., 2., 3., 4. },
-                                      { { 11., 12., 13., 14. },
-                                        { 21., 22., 23., 24. } } ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the energies are not sorted" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( ResonanceTable( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                        id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) },
-                                      { 1., 3., 2., 4. },
                                       { { 11., 12., 13., 14. },
                                         { 21., 22., 23., 24. } } ) );
       } // THEN

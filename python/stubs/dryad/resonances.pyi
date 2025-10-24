@@ -945,19 +945,21 @@ class ResonanceTable:
         """
         Initialise the table
         
-        The ResonanceTable class takes the reduced width amplitudes for a
-        number of channels (at least one channel must be given).
+        The energies and channels do not have to be sorted (they will be sorted
+        upon construction).
         
         Arguments:
             self         the table
-            channels     the channel identifiers (nc values)
-            energies     the level energies (ne values)
+            channels     the channel identifiers (nc values, at least 1)
+            energies     the level energies (ne values, at least 1)
             amplitudes   the reduced width amplitudes (nc arrays of ne values)
         """
     @typing.overload
     def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
         """
         Initialise the table
+        
+        The energies do not have to be sorted (they will be sorted upon construction).
         
         Arguments:
             self         the table

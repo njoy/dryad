@@ -39,12 +39,12 @@ void wrapResonanceTable( python::module& module ) {
     python::arg( "channels" ), python::arg( "energies" ),
     python::arg( "amplitudes" ),
     "Initialise the table\n\n"
-    "The ResonanceTable class takes the reduced width amplitudes for a\n"
-    "number of channels (at least one channel must be given).\n\n"
+    "The energies and channels do not have to be sorted (they will be sorted\n"
+    "upon construction).\n\n"
     "Arguments:\n"
     "    self         the table\n"
-    "    channels     the channel identifiers (nc values)\n"
-    "    energies     the level energies (ne values)\n"
+    "    channels     the channel identifiers (nc values, at least 1)\n"
+    "    energies     the level energies (ne values, at least 1)\n"
     "    amplitudes   the reduced width amplitudes (nc arrays of ne values)"
   )
   .def(
@@ -55,6 +55,7 @@ void wrapResonanceTable( python::module& module ) {
     python::arg( "channel" ), python::arg( "energies" ),
     python::arg( "amplitudes" ),
     "Initialise the table\n\n"
+    "The energies do not have to be sorted (they will be sorted upon construction).\n\n"
     "Arguments:\n"
     "    self         the table\n"
     "    channel      the channel identifier\n"

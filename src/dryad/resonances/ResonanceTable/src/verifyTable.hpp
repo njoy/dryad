@@ -14,12 +14,6 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
     throw std::exception();
   }
 
-  if ( ! std::is_sorted( energies.begin(), energies.end() ) ) {
-
-    Log::error( "The energies are not sorted" );
-    throw std::exception();
-  }
-
   auto iter = std::adjacent_find( energies.begin(), energies.end() );
   if ( iter != energies.end() ) {
 

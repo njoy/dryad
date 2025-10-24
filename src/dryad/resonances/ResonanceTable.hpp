@@ -30,7 +30,9 @@ namespace resonances {
 
     /* auxiliary functions */
 
+    #include "dryad/resonances/ResonanceTable/src/processTable.hpp"
     #include "dryad/resonances/ResonanceTable/src/verifyTable.hpp"
+    #include "dryad/resonances/ResonanceTable/src/verifyCompatibility.hpp"
 
   public:
 
@@ -101,9 +103,8 @@ namespace resonances {
      */
     bool hasChannel( const id::ChannelID& id ) const {
 
-      auto iter = std::find_if( this->channels().begin(), this->channels().end(),
-                                [&] ( auto&& channel ) { return channel ==id; } );
-      return iter != this->channels().end();
+      auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), id );
+      return iter != this->channels().end() && *iter == id;
     }
 
     /**
@@ -118,25 +119,32 @@ namespace resonances {
     /**
      *  @brief Inplace merge of two tables
      *
+     *  When the two tables contain the same channel, the tables can only be merged
+     *  if, for every common level energy between the two tables, one of the tables
+     *  has a zero width value.
+     *
      *  @param[in] right   the table to be merged with
      */
     ResonanceTable& operator+=( const ResonanceTable& right ) {
 
       auto nc = this->numberChannels();
 
-      // check the channels in the table
+      // check if both tables can be merged
+      verifyCompatibility( *this, right );
+
+      // loop over the channels and add a column in the correct spot if required
+      std::vector< std::size_t > indices;
       for ( const auto& id : right.channels() ) {
 
-        // throw an exception if the current table has this channel already
-        if ( this->hasChannel( id ) ) {
+        auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), id );
+        auto index = std::distance( this->channels().begin(), iter );
+        indices.emplace_back( index );
+        if ( ! ( iter != this->channels().end() && *iter == id ) ) {
 
-          Log::error( "Channel \'{}\' is present in both tables", id.symbol() );
-          throw std::exception();
+          this->channels().insert( iter, id );
+          this->reducedWidthAmplitudes().insert( this->reducedWidthAmplitudes().begin() + index,
+                                                 std::vector< double >( this->numberEnergies(), 0. ) );
         }
-
-        // add the channel identifier and add a column for this channel
-        this->channels().emplace_back( id );
-        this->reducedWidthAmplitudes().emplace_back( this->numberEnergies(), 0. );
       }
 
       // go over all resonances in the other table
@@ -150,8 +158,7 @@ namespace resonances {
         auto row = std::distance( this->energies().begin(), iter );
 
         // insert a row if the energy is not present yet
-        if ( iter == this->energies().end() ||
-             ( iter != this->energies().end() && *iter != energy ) ) {
+        if ( ! ( iter != this->energies().end() && *iter == energy ) ) {
 
           this->energies().insert( iter, energy );
           for ( auto& column : this->reducedWidthAmplitudes() ) {
@@ -163,7 +170,10 @@ namespace resonances {
         // assign amplitudes
         for ( unsigned int j = 0; j < right.numberChannels(); ++j ) {
 
-          this->reducedWidthAmplitudes()[nc + j][row] = right.reducedWidthAmplitudes()[j][i];
+          if ( right.reducedWidthAmplitudes()[j][i] != 0. ) {
+
+            this->reducedWidthAmplitudes()[indices[j]][row] = right.reducedWidthAmplitudes()[j][i];
+          }
         }
       }
 
