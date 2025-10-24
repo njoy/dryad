@@ -34,15 +34,15 @@ namespace resonances {
     /* methods */
 
     /**
-     *  @brief Return the value of the orbital momentum
+     *  @brief Return the value of the orbital angular momentum
      */
-    unsigned int orbitalMomentum() const {
+    unsigned int orbitalAngularMomentum() const {
 
       return this->orbital_momentum_;
     }
 
     /**
-     *  @brief Evaluate the phasse shift for a given ratio value
+     *  @brief Evaluate the phase shift for a given ratio value
      *
      *  @param[in] ratio   the ratio value
      */
@@ -58,7 +58,7 @@ namespace resonances {
      */
     bool operator==( const HardSpherePhaseShift& right ) const {
 
-      return this->orbitalMomentum() == right.orbitalMomentum();
+      return this->orbitalAngularMomentum() == right.orbitalAngularMomentum();
     }
 
     /**

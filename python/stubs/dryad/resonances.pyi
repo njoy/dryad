@@ -4,7 +4,108 @@ Resonance data
 from __future__ import annotations
 import dryad
 import typing
-__all__: list[str] = ['ChannelRadii', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+class ChannelQuantumNumbers:
+    """
+    The l,S,Jpi quantum numbers of a reaction channel
+    
+    The ChannelQuantumNumbers class contains the quantum numbers associated to
+    a given reaction channel. Only channels that have the same Jpi contribute
+    to the cross section of a given reaction.
+    """
+    __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def allowed_channel_spin_values(i: float, I: float) -> list[float]:
+        """
+        Calculate allowed values for the channel spin s
+        
+        The channel spin s can only have values between abs(i - I) and i + I
+        where i is the spin of the incident particle (for a neutron that
+        would be 0.5) and I is the spin of the target nucleus.
+        
+        Arguments:
+            i   the spin of the incident particle
+            I   the spin of the target nucleus
+        """
+    @staticmethod
+    @typing.overload
+    def allowed_total_angular_momentum_values(l: int, i: float, I: float) -> list[float]:
+        """
+        The total angular momentum J for a channel can only have values between
+        abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
+        of the incoming wave, i is the spin of the incident particle and I is the
+        spin of the target nucleus.
+        
+        Arguments:
+            l   the orbital angular momentum
+            i   the spin of the incident particle
+            I   the spin of the target nucleus
+        """
+    @staticmethod
+    @typing.overload
+    def allowed_total_angular_momentum_values(l: int, s: float) -> list[float]:
+        """
+        The total angular momentum J for a channel can only have values between
+        abs(l - s) and l + s where l is the orbital momentum of the incoming wave
+        and s is the channel spin (which in turn depends on the spin i of the
+        incident particle and spin I of the target nucleus).
+        
+        Arguments:
+            l   the orbital angular momentum
+            s   the channel spin
+        """
+    def __eq__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    def __ge__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    def __gt__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, l: int, s: float, J: float, parity: int) -> None:
+        """
+        Initialise the channel quantum numbers
+        
+        Arguments:
+            self     the quantum numbers
+            l        the orbital angular momentum
+            s        the channel spin
+            J        the total angular momentum
+            parity   the parity
+        """
+    @typing.overload
+    def __init__(self, instance: ChannelQuantumNumbers) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __le__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    def __lt__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    def __ne__(self, arg0: ChannelQuantumNumbers) -> bool:
+        ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The orbital angular momentum l of the channel
+        """
+    @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def spin(self) -> float:
+        """
+        The channel spin
+        """
+    @property
+    def total_angular_momentum(self) -> float:
+        """
+        The total angular momentum J of the channels
+        """
 class ChannelRadii:
     """
     Channel radii used in wave function calculations
@@ -113,6 +214,45 @@ class ChannelRadii:
     @shift_factor_radius.setter
     def shift_factor_radius(self, arg1: float | TabulatedRadius | None) -> None:
         ...
+class CoulombPhaseShiftDifference:
+    """
+    Coulomb phase shift difference functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, cosine: float) -> float:
+        """
+        Evaluate the phase shift difference for a given eta value
+        
+        Arguments:
+            self    the phase shift function
+            eta     the eta value
+        """
+    def __eq__(self, arg0: CoulombPhaseShiftDifference) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the Coulomb phase shift difference function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: CoulombPhaseShiftDifference) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CoulombPhaseShiftDifference) -> bool:
+        ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
 class HardSpherePenetrability:
     """
     Hardsphere penetrability functions
@@ -147,6 +287,11 @@ class HardSpherePenetrability:
         """
     def __ne__(self, arg0: HardSpherePenetrability) -> bool:
         ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
 class HardSpherePhaseShift:
     """
     Hardsphere phase shift functions
@@ -181,6 +326,11 @@ class HardSpherePhaseShift:
         """
     def __ne__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
 class HardSphereShiftFactor:
     """
     Hard sphere shift factor functions
@@ -215,6 +365,11 @@ class HardSphereShiftFactor:
         """
     def __ne__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ResonanceParameters) -> bool:

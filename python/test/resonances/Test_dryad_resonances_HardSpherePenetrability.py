@@ -14,6 +14,7 @@ class Test_dryad_resonances_HardSpherePenetrability( unittest.TestCase ) :
 
         penetrability = HardSpherePenetrability( 0 )
 
+        self.assertEqual( 0, penetrability.orbital_angular_momentum )
         self.assertAlmostEqual( 0.00, penetrability( 0.00 ) )
         self.assertAlmostEqual( 0.25, penetrability( 0.25 ) )
         self.assertAlmostEqual( 0.50, penetrability( 0.50 ) )
@@ -38,6 +39,7 @@ class Test_dryad_resonances_HardSpherePenetrability( unittest.TestCase ) :
 
         penetrability = HardSpherePenetrability( 1 )
 
+        self.assertEqual( 1, penetrability.orbital_angular_momentum )
         self.assertAlmostEqual( 0.0                   , penetrability( 0.00 ) )
         self.assertAlmostEqual( 0.014705882352941176  , penetrability( 0.25 ) )
         self.assertAlmostEqual( 0.10000000000000001   , penetrability( 0.50 ) )
@@ -62,6 +64,7 @@ class Test_dryad_resonances_HardSpherePenetrability( unittest.TestCase ) :
 
         penetrability = HardSpherePenetrability( 2 )
 
+        self.assertEqual( 2, penetrability.orbital_angular_momentum )
         self.assertAlmostEqual( 0.0                   , penetrability( 0.00 ) )
         self.assertAlmostEqual( 0.00010624734381640459, penetrability( 0.25 ) )
         self.assertAlmostEqual( 0.0031847133757961785 , penetrability( 0.50 ) )
@@ -86,6 +89,7 @@ class Test_dryad_resonances_HardSpherePenetrability( unittest.TestCase ) :
 
         penetrability = HardSpherePenetrability( 3 )
 
+        self.assertEqual( 3, penetrability.orbital_angular_momentum )
         self.assertAlmostEqual( 0.0                   , penetrability( 0.00 ) )
         self.assertAlmostEqual( 2.6789053349863964e-07, penetrability( 0.25 ) )
         self.assertAlmostEqual( 3.3014196104324863e-05, penetrability( 0.50 ) )
@@ -110,6 +114,7 @@ class Test_dryad_resonances_HardSpherePenetrability( unittest.TestCase ) :
 
         penetrability = HardSpherePenetrability( 4 )
 
+        self.assertEqual( 4, penetrability.orbital_angular_momentum )
         self.assertAlmostEqual( 0.0                   , penetrability( 0.00 ) )
         self.assertAlmostEqual( 3.4292596900052667e-10, penetrability( 0.25 ) )
         self.assertAlmostEqual( 1.7091673927779473e-07, penetrability( 0.50 ) )

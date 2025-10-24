@@ -1,4 +1,15 @@
 /**
+ *  @brief Default constructor (for pybind11 purposes only)
+ */
+ChannelRadii() = default;
+
+ChannelRadii( const ChannelRadii& ) = default;
+ChannelRadii( ChannelRadii&& ) = default;
+
+ChannelRadii& operator=( const ChannelRadii& ) = default;
+ChannelRadii& operator=( ChannelRadii&& ) = default;
+
+/**
  *  @brief Constructor
  *
  *  @param[in] radius   the channel radius to be used for P, S and phi

@@ -4,7 +4,7 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/resonances/HardSphereShiftFactor.hpp"
+#include "dryad/resonances/CoulombPhaseShiftDifference.hpp"
 
 #include "scion/math/horner.hpp"
 
@@ -13,10 +13,10 @@ namespace python = pybind11;
 
 namespace resonances {
 
-void wrapHardSphereShiftFactor( python::module& module ) {
+void wrapCoulombPhaseShiftDifference( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::resonances::HardSphereShiftFactor;
+  using Component = njoy::dryad::resonances::CoulombPhaseShiftDifference;
 
   // wrap views created by this component
 
@@ -24,8 +24,8 @@ void wrapHardSphereShiftFactor( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "HardSphereShiftFactor",
-    "Hard sphere shift factor functions"
+    "CoulombPhaseShiftDifference",
+    "Coulomb phase shift difference functions"
    );
 
   // wrap the component
@@ -34,7 +34,7 @@ void wrapHardSphereShiftFactor( python::module& module ) {
 
     python::init< unsigned int >(),
     python::arg( "orbital_momentum" ),
-    "Initialise the hard sphere shift factor function\n\n"
+    "Initialise the Coulomb phase shift difference function\n\n"
     "Arguments:\n"
     "    self               the function\n"
     "    orbital_momentum   the value of the orbital momentum"
@@ -58,11 +58,11 @@ void wrapHardSphereShiftFactor( python::module& module ) {
     "__call__",
     [] ( const Component& self, double ratio ) -> decltype(auto)
        { return self( ratio ); },
-    python::arg( "ratio" ),
-    "Evaluate the shift factor for a given ratio value\n\n"
+    python::arg( "cosine" ),
+    "Evaluate the phase shift difference for a given eta value\n\n"
     "Arguments:\n"
-    "    self    the shift factor function\n"
-    "    ratio   the ratio value"
+    "    self    the phase shift function\n"
+    "    eta     the eta value"
   );
 
   // add standard equality comparison definitions
