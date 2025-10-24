@@ -38,6 +38,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/TabulatedWaveFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Channel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceTable.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/SpinGroup.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/ScalingType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/covariance/VarianceScaling.python.cpp

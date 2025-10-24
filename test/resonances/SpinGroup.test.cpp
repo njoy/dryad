@@ -24,16 +24,6 @@ SCENARIO( "SpinGroup" ) {
     id::ChannelID captureID( "n,Cl35->g,Cl36[all]{0,0,1+}" );
     id::ChannelID protonID( "n,Cl35->p,S35{0,1,1+}" );
 
-    id::ReactionID elasticRID( "n,Cl35->n,Cl35" );
-    id::ReactionID inelasticRID( "n,Cl35->n,Cl35_e1" );
-    id::ReactionID captureRID( "n,Cl35->g,Cl36[all]" );
-    id::ReactionID protonRID( "n,Cl35->p,S35" );
-
-    ChannelQuantumNumbers elasticNumbers( 0, 1, 1, +1 );
-    ChannelQuantumNumbers inelasticNumbers( 0, 1, 1, +1 );
-    ChannelQuantumNumbers captureNumbers( 0, 0, 1, +1 );
-    ChannelQuantumNumbers protonNumbers( 0, 1, 1, +1 );
-
     // particles
     Particle g( id::ParticleID::photon(), 0, 1, +1 );
     Particle n( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
