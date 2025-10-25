@@ -18,6 +18,7 @@ SpinGroup( std::tuple< std::vector< Channel >, ResonanceTable > data ) :
     channels_( std::move( std::get< 0 >( data ) ) ),
     table_( std::move( std::get< 1 >( data ) ) ) {
 
+  this->processChannels();
   verifySpinGroup( this->channels(), this->resonanceTable() );
 }
 

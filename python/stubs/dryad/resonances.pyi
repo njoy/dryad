@@ -1063,6 +1063,16 @@ class SpinGroup:
     def channels(self, arg1: list[Channel]) -> None:
         ...
     @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def reactions(self) -> list[dryad.id.ReactionID]:
+        """
+        The reactions to which this spin group contributes
+        """
+    @property
     def resonance_table(self) -> ResonanceTable:
         """
         The resonance table of the spin group
@@ -1070,6 +1080,11 @@ class SpinGroup:
     @resonance_table.setter
     def resonance_table(self, arg1: ResonanceTable) -> None:
         ...
+    @property
+    def total_angular_momentum(self) -> float:
+        """
+        The total angular momentum J of the channels
+        """
 class TabulatedRadius:
     """
     A radius table

@@ -13,6 +13,7 @@ from dryad.resonances import ResonanceTable
 from dryad.resonances import SpinGroup
 from dryad.id import ChannelID
 from dryad.id import ParticleID
+from dryad.id import ReactionID
 
 def verify_chunk( self, chunk ) :
 
@@ -75,6 +76,15 @@ def verify_chunk( self, chunk ) :
                               [ 21., 22., 23., 24. ],
                               [ 31., 32., 33., 34. ],
                               [ 41., 42., 43., 44. ] ] )
+
+    self.assertEqual( 1, chunk.total_angular_momentum )
+    self.assertEqual( +1, chunk.parity )
+
+    self.assertEqual( 4, len( chunk.reactions ) )
+    self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
+    self.assertEqual( ReactionID( 'n,Cl35->n,Cl35' ), chunk.reactions[1] )
+    self.assertEqual( ReactionID( 'n,Cl35->n,Cl35_e1' ), chunk.reactions[2] )
+    self.assertEqual( ReactionID( 'n,Cl35->p,S35' ), chunk.reactions[3] )
 
     self.assertEqual( capture, chunk.channels[0] )
     self.assertEqual( elastic, chunk.channels[1] )

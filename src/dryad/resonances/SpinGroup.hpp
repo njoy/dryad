@@ -32,8 +32,11 @@ namespace resonances {
     std::vector< Channel > channels_;
     ResonanceTable table_;
 
+    std::vector< id::ReactionID > reactions_;
+
     /* auxiliary functions */
 
+    #include "dryad/resonances/SpinGroup/src/processChannels.hpp"
     #include "dryad/resonances/SpinGroup/src/createData.hpp"
     #include "dryad/resonances/SpinGroup/src/verifySpinGroup.hpp"
 
@@ -67,6 +70,7 @@ namespace resonances {
     void channels( std::vector< Channel > channels ) {
 
       this->channels_ = std::move( channels );
+      this->processChannels();
     }
 
     /**
@@ -93,6 +97,38 @@ namespace resonances {
     void resonanceTable( ResonanceTable table ) {
 
       this->table_ = std::move( table );
+    }
+
+    /**
+     *  @brief Return the total angular momentum J of the spin group
+     */
+    double totalAngularMomentum() const {
+
+      return this->channels().front().quantumNumbers().totalAngularMomentum();
+    }
+
+    /**
+     *  @brief Return the parity
+     */
+    short parity() const {
+
+      return this->channels().front().quantumNumbers().parity();
+    }
+
+    /**
+     *  @brief Return the reactions to which this spin group contributes
+     */
+    const std::vector< id::ReactionID >& reactions() const {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions to which this spin group contributes
+     */
+    std::vector< id::ReactionID >& reactions() {
+
+      return this->reactions_;
     }
 
     /**

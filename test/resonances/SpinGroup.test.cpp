@@ -108,7 +108,7 @@ SCENARIO( "SpinGroup" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of Channel are given" ) {
+    WHEN( "two instances of SpinGroup are given" ) {
 
       // identifiers
       id::ChannelID elasticID( "n,Cl35->n,Cl35{0,1,1+}" );
@@ -256,6 +256,15 @@ void verifyChunk( const SpinGroup& chunk ) {
                           { 21., 22., 23., 24. },
                           { 31., 32., 33., 34. },
                           { 41., 42., 43., 44. } } );
+
+  CHECK( 1 == chunk.totalAngularMomentum() );
+  CHECK( +1 == chunk.parity() );
+
+  CHECK( 4 == chunk.reactions().size() );
+  CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
+  CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
+  CHECK( id::ReactionID( "n,Cl35->n,Cl35_e1" ) == chunk.reactions()[2] );
+  CHECK( id::ReactionID( "n,Cl35->p,S35" ) == chunk.reactions()[3] );
 
   CHECK( capture == chunk.channels()[0] );
   CHECK( elastic == chunk.channels()[1] );

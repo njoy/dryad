@@ -71,6 +71,24 @@ void wrapSpinGroup( python::module& module ) {
     python::overload_cast<>( &Component::resonanceTable, python::const_ ),
     python::overload_cast< ResonanceTable >( &Component::resonanceTable ),
     "The resonance table of the spin group"
+  )
+  .def_property_readonly(
+
+    "total_angular_momentum",
+    &Component::totalAngularMomentum,
+    "The total angular momentum J of the channels"
+  )
+  .def_property_readonly(
+
+    "parity",
+    &Component::parity,
+    "The parity"
+  )
+  .def_property_readonly(
+
+    "reactions",
+    python::overload_cast<>( &Component::reactions, python::const_ ),
+    "The reactions to which this spin group contributes"
   );
 
   // add standard comparison definitions
