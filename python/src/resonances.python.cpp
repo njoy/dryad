@@ -30,6 +30,7 @@ namespace resonances {
   void wrapChannel( python::module& );
   void wrapResonanceTable( python::module& );
   void wrapSpinGroup( python::module& );
+  void wrapCompoundSystem( python::module& );
 
   void wrapResonanceParameters( python::module& );
 }
@@ -64,6 +65,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapChannel( submodule );
   resonances::wrapResonanceTable( submodule );
   resonances::wrapSpinGroup( submodule );
+  resonances::wrapCompoundSystem( submodule );
 
   resonances::wrapResonanceParameters( submodule );
 }

@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -466,6 +466,40 @@ class ChannelRadii:
         """
     @shift_factor_radius.setter
     def shift_factor_radius(self, arg1: float | TabulatedRadius | None) -> None:
+        ...
+class CompoundSystem:
+    """
+    The compound nucleus system
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: CompoundSystem) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, spin_groups: list[SpinGroup]) -> None:
+        """
+        Initialise the spin group
+        
+        Arguments:
+            self          the compound system
+            spin_groups   the spin groups that make up the compound system
+        """
+    @typing.overload
+    def __init__(self, instance: CompoundSystem) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CompoundSystem) -> bool:
+        ...
+    @property
+    def spin_groups(self) -> list[SpinGroup]:
+        """
+        The spin groups that make up the compound system
+        """
+    @spin_groups.setter
+    def spin_groups(self, arg1: list[SpinGroup]) -> None:
         ...
 class CoulombPenetrability:
     """
