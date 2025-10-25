@@ -21,7 +21,8 @@ SCENARIO( "createReactions" ) {
 
     WHEN( "a single ENDF material is given" ) {
 
-      auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+      using Tape = njoy::ENDFtk::tree::Tape;
+      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
       auto material = tape.materials().front();
 
       THEN( "all reactions can be created" ) {
@@ -51,7 +52,8 @@ SCENARIO( "createReactions" ) {
 
     WHEN( "a single ENDF material is given with lumped covariance reactions" ) {
 
-      auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
+      using Tape = njoy::ENDFtk::tree::Tape;
+      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );
       auto material = tape.materials().front();
 
       THEN( "all reactions can be created" ) {
@@ -120,7 +122,8 @@ SCENARIO( "createReactions" ) {
 
     WHEN( "a single ENDF material is given" ) {
 
-      auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+      using Tape = njoy::ENDFtk::tree::Tape;
+      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-093_Np_236m1.endf" );
       auto material = tape.materials().front();
 
       THEN( "all reactions can be created" ) {
@@ -199,7 +202,8 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "ENDF materials - electro-atomic" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material is given" ) {
@@ -252,7 +256,8 @@ SCENARIO( "createReactions" ) {
 
   GIVEN( "ENDF materials - photo-atomic" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "photoat-001_H_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material is given" ) {

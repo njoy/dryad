@@ -256,7 +256,8 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
   GIVEN( "an instance of an off-diagonal ReactionBlock with a single symmetric "
          "SquareMatrix and variance scaling information" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 16 ).parse< 33 >();
     ReactionBlock covariance = section.reactions()[0];
@@ -361,7 +362,8 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
   GIVEN( "an instance of an off-diagonal ReactionBlock with a single symmetric "
          "SquareMatrix and without variance scaling information" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 104 ).parse< 33 >();
     ReactionBlock covariance = section.reactions()[0];
@@ -450,7 +452,8 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
   GIVEN( "an instance of an off-diagonal ReactionBlock with a single asymmetric "
          "SquareMatrix" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 4 ).parse< 33 >();
     ReactionBlock covariance = section.reactions()[1];
@@ -550,7 +553,8 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 
   GIVEN( "an instance of an off-diagonal ReactionBlock with a single RectangularMatrix" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-010_Ne_022.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-010_Ne_022.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 16 ).parse< 33 >();
     ReactionBlock covariance = section.reactions()[1];

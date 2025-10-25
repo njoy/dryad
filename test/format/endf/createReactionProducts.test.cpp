@@ -20,7 +20,8 @@ SCENARIO( "createReactionProducts" ) {
 
   GIVEN( "ENDF reaction products - electro-atomic interactions" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material is given" ) {
@@ -46,7 +47,8 @@ SCENARIO( "createReactionProducts" ) {
 
   GIVEN( "ENDF reaction products - photo-atomic interactions" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "photoat-001_H_000.endf" );
     auto material = tape.materials().front();
 
     WHEN( "a single ENDF material is given" ) {

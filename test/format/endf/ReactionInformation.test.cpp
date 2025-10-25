@@ -578,7 +578,8 @@ SCENARIO( "ReactionInformation" ) {
 
   GIVEN( "an ENDF material for a ground state target, mf and mt number" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-003_Li_007.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );
     auto material = tape.materials().front();
     auto n = njoy::dryad::id::ParticleID::neutron();
     auto li7 = njoy::dryad::id::ParticleID( 3007 );
@@ -679,7 +680,8 @@ SCENARIO( "ReactionInformation" ) {
 
   GIVEN( "an ENDF material for a metastable state target, mf and mt number" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-093_Np_236m1.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-093_Np_236m1.endf" );
     auto material = tape.materials().front();
     auto n = njoy::dryad::id::ParticleID::neutron();
     auto np236m1 = njoy::dryad::id::ParticleID( 93236, 2 );

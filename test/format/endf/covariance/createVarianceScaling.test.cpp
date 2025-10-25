@@ -21,7 +21,8 @@ SCENARIO( "createVarianceScaling" ) {
 
   GIVEN( "an instance of CovariancePairs using LB=8/9" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 4 ).parse< 33 >();
     CovariancePairs covariance = std::get< CovariancePairs >( section.reactions()[0].explicitCovariances()[2] );
@@ -70,7 +71,8 @@ SCENARIO( "createVarianceScaling" ) {
 
   GIVEN( "an instance of CovariancePairs not using LB=8/9" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-009_F_019.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-009_F_019.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 33 ).section( 4 ).parse< 33 >();
     CovariancePairs covariance = std::get< CovariancePairs >( section.reactions()[0].explicitCovariances()[0] );

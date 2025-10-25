@@ -20,7 +20,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
     using LegendreDistributions = njoy::ENDFtk::section::Type< 4 >::LegendreDistributions;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-001_H_001.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-001_H_001.endf" );
     auto section = tape.materials().front().section( 4, 2 ).parse< 4 >();
     auto distribution = std::get< LegendreDistributions >( section.distributions() );
 

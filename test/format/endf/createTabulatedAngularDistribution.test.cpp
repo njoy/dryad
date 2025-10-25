@@ -28,7 +28,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
     using DiscreteTwoBodyScattering = njoy::ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering;
     using TabulatedDistribution = DiscreteTwoBodyScattering::TabulatedDistribution;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-017_Cl_035.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-017_Cl_035.endf" );
     auto section = tape.materials().front().section( 6, 51 ).parse< 6 >();
     auto distribution = std::get< DiscreteTwoBodyScattering >( section.reactionProduct( 1 ).distribution() );
 
@@ -51,7 +52,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
     using DiscreteTwoBodyScattering = njoy::ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering;
     using TabulatedDistribution = DiscreteTwoBodyScattering::TabulatedDistribution;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "n-017_Cl_035.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-017_Cl_035.endf" );
     auto section = tape.materials().front().section( 6, 51 ).parse< 6 >();
     auto distribution = std::get< DiscreteTwoBodyScattering >( section.reactionProduct( 1 ).distribution() );
 
@@ -73,7 +75,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
     using DiscreteTwoBodyScattering = njoy::ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering;
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "e-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
     auto section = tape.materials().front().section( 26, 525 ).parse< 26 >();
     auto distribution = std::get< DiscreteTwoBodyScattering >( section.reactionProduct( 11 ).distribution() );
 

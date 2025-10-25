@@ -29,7 +29,7 @@ namespace endf {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
-    auto tape = ENDFtk::tree::fromFile( filename );
+    auto tape = ENDFtk::tree::fromFile< ENDFtk::tree::Tape >( filename );
     return createAtomicRelaxation( tape.materials().front(), normalise );
   }
 

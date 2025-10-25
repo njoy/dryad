@@ -18,7 +18,8 @@ SCENARIO( "createTabulatedFormFactor" ) {
 
   GIVEN( "ENDF MF3 sections" ) {
 
-    auto tape = njoy::ENDFtk::tree::fromFile( "photoat-001_H_000.endf" );
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "photoat-001_H_000.endf" );
     auto section = tape.materials().front().section( 27, 505 );
 
     WHEN( "a single unparsed MF27 section is given" ) {
