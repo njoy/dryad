@@ -93,8 +93,8 @@ def verify_chunk( self, chunk ) :
 
     self.assertEqual( table, chunk.resonance_table )
 
-class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
-    """Unit test for the ResonanceTable class."""
+class Test_dryad_resonances_SpinGroup( unittest.TestCase ) :
+    """Unit test for the SpinGroup class."""
 
     def test_component( self ) :
 
@@ -247,7 +247,6 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                  [ [ 11., 12., 13., 14. ],
                                    [ 31., 32., 33., 34. ],
                                    [ 41., 42., 43., 44. ] ] )
-
 
         left = SpinGroup( [ capture, elastic, inelastic, proton ], table1 )
         equal = SpinGroup( [ capture, elastic, inelastic, proton ], table1 )

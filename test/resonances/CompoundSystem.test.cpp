@@ -147,60 +147,59 @@ SCENARIO( "CompoundSystem" ) {
 
     WHEN( "two instances of CompoundSystem are given" ) {
 
+      auto photon = id::ParticleID::photon();
+      auto neutron = id::ParticleID::neutron();
+      auto proton = id::ParticleID::proton();
+      auto cl35 = id::ParticleID( "Cl35" );
+      auto cl35_e1 = id::ParticleID( "Cl35_e1" );
+      auto cl36 = id::ParticleID( "Cl36[all]" );
+      auto s35 = id::ParticleID( "S35" );
 
-  auto photon = id::ParticleID::photon();
-  auto neutron = id::ParticleID::neutron();
-  auto proton = id::ParticleID::proton();
-  auto cl35 = id::ParticleID( "Cl35" );
-  auto cl35_e1 = id::ParticleID( "Cl35_e1" );
-  auto cl36 = id::ParticleID( "Cl36[all]" );
-  auto s35 = id::ParticleID( "S35" );
+      ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
+      ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
+                                 Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
+      ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
+                                Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
 
-  ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
-  ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
-                            Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
+      ChannelRadii zero_radii( 0., 0. );
+      ChannelRadii radii1( 4.822220, 4.888750 );
+      ChannelRadii radii2( 4.822220, 3.667980 );
 
-  ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 4.822220, 4.888750 );
-  ChannelRadii radii2( 4.822220, 3.667980 );
+      SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                                neutron_pair, photon_pair, 0., std::nullopt,
+                                zero_radii },
+                              { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+                                neutron_pair, neutron_pair, 0., std::nullopt,
+                                radii1 } },
+                            { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                                id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
+                              { 1. }, { { 2. }, { 3. } } } );
+      SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
+                                neutron_pair, photon_pair, 0., std::nullopt,
+                                zero_radii },
+                              { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
+                                neutron_pair, neutron_pair, 0., std::nullopt,
+                                radii1 },
+                              { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
+                                neutron_pair, proton_pair, 615220, std::nullopt,
+                                radii1 },
+                              { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+                                neutron_pair, neutron_pair, 0., std::nullopt,
+                                radii1 },
+                              { id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ),
+                                neutron_pair, proton_pair, 615220, std::nullopt,
+                                radii1 } },
+                            { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                                id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+                                id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
+                                id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+                                id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
+                              { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } } );
 
-  SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
-                          { 1. }, { { 2. }, { 3. } } } );
-  SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
-                            id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
-                          { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } } );
-
-      SpinGroup left( { spingroup0 } );
-      SpinGroup equal( { spingroup0 } );
-      SpinGroup different( { spingroup1 } );
+      CompoundSystem left( { spingroup0 } );
+      CompoundSystem equal( { spingroup0 } );
+      CompoundSystem different( { spingroup1 } );
 
       THEN( "they can be compared" ) {
 

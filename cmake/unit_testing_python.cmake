@@ -63,6 +63,7 @@ add_python_test( resonances.TabulatedWaveFunction        resonances/Test_dryad_r
 add_python_test( resonances.Channel                      resonances/Test_dryad_resonances_Channel.py )
 add_python_test( resonances.ResonanceTable               resonances/Test_dryad_resonances_ResonanceTable.py )
 add_python_test( resonances.SpinGroup                    resonances/Test_dryad_resonances_SpinGroup.py )
+add_python_test( resonances.CompoundSystem               resonances/Test_dryad_resonances_CompoundSystem.py )
 
 add_python_test( Documentation                           Test_dryad_Documentation.py )
 
