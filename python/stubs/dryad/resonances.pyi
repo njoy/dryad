@@ -12,13 +12,13 @@ class BoundaryCondition:
     
     Members:
     
-      EliminateShift
+      ShiftFactor
     
       Constant
     """
     Constant: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.Constant: 2>
-    EliminateShift: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.EliminateShift: 1>
-    __members__: typing.ClassVar[dict[str, BoundaryCondition]]  # value = {'EliminateShift': <BoundaryCondition.EliminateShift: 1>, 'Constant': <BoundaryCondition.Constant: 2>}
+    ShiftFactor: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.ShiftFactor: 1>
+    __members__: typing.ClassVar[dict[str, BoundaryCondition]]  # value = {'ShiftFactor': <BoundaryCondition.ShiftFactor: 1>, 'Constant': <BoundaryCondition.Constant: 2>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:

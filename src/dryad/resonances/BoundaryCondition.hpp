@@ -22,7 +22,7 @@ enum class BoundaryCondition : short {
    *  The boundary condition eliminates the energy dependent shift factor so
    *  that L = S - B + iP = iP
    */
-  EliminateShift = 1,
+  ShiftFactor = 1,
   /**
    *  The boundary condition is constant (often equal to the orbital angular momentum)
    */

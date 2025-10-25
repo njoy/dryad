@@ -138,6 +138,7 @@ add_cpp_test( format.endf.resonances.lrf7.createReactionIdentifiers      format/
 add_cpp_test( format.endf.resonances.lrf7.createParticlePairs            format/endf/resonances/lrf7/createParticlePairs.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createChannels                 format/endf/resonances/lrf7/createChannels.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createSpinGroups               format/endf/resonances/lrf7/createSpinGroups.test.cpp )
+add_cpp_test( format.endf.resonances.lrf7.createCompoundSystem           format/endf/resonances/lrf7/createCompoundSystem.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellID                format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration     format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
 add_cpp_test( format.endf.covariance.createMatrix                        format/endf/covariance/createMatrix.test.cpp )

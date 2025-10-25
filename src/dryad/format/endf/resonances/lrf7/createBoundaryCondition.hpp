@@ -28,7 +28,7 @@ namespace lrf7 {
                                    endfPairs.shiftFactorFlag().end(),
                                    [] ( auto&& flag ) { return flag == 1; } );
     return boundaries ? dryad::resonances::BoundaryCondition::Constant
-                      : dryad::resonances::BoundaryCondition::EliminateShift;
+                      : dryad::resonances::BoundaryCondition::ShiftFactor;
   }
 
 } // lrf7 namespace

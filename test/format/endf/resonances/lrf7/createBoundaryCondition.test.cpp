@@ -15,7 +15,7 @@ using namespace njoy::dryad::resonances;
 
 SCENARIO( "createBoundaryCondition" ) {
 
-  GIVEN( "ENDF MF2 MT151 sections" ) {
+  GIVEN( "ENDF MF2 MT151 sections - Cl35 - ShiftFactor boundary condition" ) {
 
     using Tape = njoy::ENDFtk::tree::Tape;
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-017_Cl_035.endf" );
@@ -28,7 +28,26 @@ SCENARIO( "createBoundaryCondition" ) {
 
       THEN( "the boundary condition can be derived" ) {
 
-        CHECK( resonances::BoundaryCondition::EliminateShift
+        CHECK( resonances::BoundaryCondition::ShiftFactor
+               == format::endf::resonances::lrf7::createBoundaryCondition( pairs ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "ENDF MF2 MT151 sections - Cu63 - Constant boundary condition" ) {
+
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-029_Cu_063.endf" );
+    auto section = tape.materials().front().section( 2, 151 ).parse< 2, 151 >();
+    auto parameters = std::get< njoy::ENDFtk::section::Type<2,151>::RMatrixLimited >(
+                        section.isotopes().front().resonanceRanges().front().parameters() );
+    auto pairs = parameters.particlePairs();
+
+    WHEN( "a single parsed particle pair component from MF2 MT151 is given" ) {
+
+      THEN( "the boundary condition can be derived" ) {
+
+        CHECK( resonances::BoundaryCondition::Constant
                == format::endf::resonances::lrf7::createBoundaryCondition( pairs ) );
       } // THEN
     } // WHEN
