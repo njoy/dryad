@@ -12,9 +12,6 @@ namespace covariance {
   // declarations - enumerators
   void wrapScalingType( python::module& );
 
-  // declarations - matrices
-  void wrapMatrixFunctions( python::module& );
-
   // declarations - metadata components
   void wrapVarianceScaling( python::module& );
 
@@ -37,9 +34,6 @@ void wrapCovariance( python::module& module ) {
 
   // wrap components - enumerators
   covariance::wrapScalingType( submodule );
-
-  // wrap components - matrices
-  covariance::wrapMatrixFunctions( submodule );
 
   // declarations - metadata components
   covariance::wrapVarianceScaling( submodule );

@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__: list[str] = ['Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
 class Channel:
     """
     A resonance reaction channel
@@ -677,6 +677,96 @@ class ResonanceParameters:
         ...
     def __ne__(self, arg0: ResonanceParameters) -> bool:
         ...
+class ResonanceTable:
+    """
+    A table of resonance parameters for a set of channels
+    
+    The table contains resonance energies and reduced amplitude widths,
+    all given as column data.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __add__(self, arg0: ResonanceTable) -> ResonanceTable:
+        ...
+    def __eq__(self, arg0: ResonanceTable) -> bool:
+        ...
+    def __iadd__(self, arg0: ResonanceTable) -> ResonanceTable:
+        ...
+    @typing.overload
+    def __init__(self, channels: list[dryad.id.ChannelID], energies: list[float], amplitudes: list[list[float]]) -> None:
+        """
+        Initialise the resonance table
+        
+        The ResonanceTable class takes the reduced amplitude widths for a
+        number of channels (at least one channel must be given).
+        
+        Arguments:
+            self         the resonance table
+            channels     the channel identifiers (nc values)
+            energies     the resonance energies (ne values)
+            amplitudes   the reduced amplitude widths (nc arrays of ne values)
+        """
+    @typing.overload
+    def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
+        """
+        Initialise the resonance table
+        
+        Arguments:
+            self         the resonance table
+            channel      the channel identifier
+            energies     the resonance energies
+            amplitudes   the reduced amplitude widths
+        """
+    @typing.overload
+    def __init__(self, instance: ResonanceTable) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: ResonanceTable) -> bool:
+        ...
+    def has_channel(self, channel: dryad.id.ChannelID) -> bool:
+        """
+        Return whether or not a channel is present
+        
+        Arguments:
+            self      the resonance table
+            channel   the channel identifier
+        """
+    def has_energy(self, energy: float) -> bool:
+        """
+        Return whether or not an energy is present
+        
+        Arguments:
+            self     the resonance table
+            energy   the energy value
+        """
+    @property
+    def channels(self) -> list[dryad.id.ChannelID]:
+        """
+        The channel identifiers
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The resonance energies
+        """
+    @property
+    def number_channels(self) -> int:
+        """
+        The number of channels in the table
+        """
+    @property
+    def number_resonances(self) -> int:
+        """
+        The number of resonance in the table
+        """
+    @property
+    def reduced_width_amplitudes(self) -> list[list[float]]:
+        """
+        The reduced width amplitudes
+        """
 class TabulatedRadius:
     """
     A radius table

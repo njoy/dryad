@@ -17,7 +17,7 @@ namespace format {
 namespace gnds {
 
   using CovarianceMatrix = std::tuple< bool, std::vector< double >, std::vector< double >,
-                                       dryad::covariance::Matrix< double >,
+                                       dryad::matrix::Matrix< double >,
                                        std::string, std::string, std::string >;
 
   /**

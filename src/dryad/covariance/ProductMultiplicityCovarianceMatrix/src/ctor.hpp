@@ -24,7 +24,7 @@ ProductMultiplicityCovarianceMatrix& operator=( ProductMultiplicityCovarianceMat
  *  @param[in] relative      the relative covariance flag (default is true)
  */
 ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata metadata,
-                                     Matrix< double > covariances,
+                                     matrix::Matrix< double > covariances,
                                      bool relative = true ) :
   Parent( std::move( metadata ), std::move( covariances ), relative ) {}
 
@@ -38,7 +38,7 @@ ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata metadata,
  */
 ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata rowMetadata,
                                      ProductMultiplicityMetadata columnMetadata,
-                                     Matrix< double > covariances,
+                                     matrix::Matrix< double > covariances,
                                      bool relative = true ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           std::move( covariances ), relative ) {}
@@ -53,7 +53,7 @@ ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata rowMetadata,
  */
 ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata metadata,
                                      std::vector< double > deviations,
-                                     Matrix< double > correlations,
+                                     matrix::Matrix< double > correlations,
                                      bool relative = true ) :
   Parent( std::move( metadata ), std::move( deviations ),
           std::move( correlations ), relative ) {}
@@ -72,7 +72,7 @@ ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata rowMetadata,
                                      ProductMultiplicityMetadata columnMetadata,
                                      const std::vector< double >& rowDeviations,
                                      const std::vector< double >& columnDeviations,
-                                     Matrix< double > correlations,
+                                     matrix::Matrix< double > correlations,
                                      bool relative = true ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           rowDeviations, columnDeviations,

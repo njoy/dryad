@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad.id
 import numpy
 import typing
-__all__: list[str] = ['CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling', 'is_square', 'is_symmetric']
+__all__: list[str] = ['CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
 class CrossSectionCovarianceMatrix:
     """
     A cross section covariance matrix
@@ -589,11 +589,3 @@ class VarianceScaling:
         """
         The scaling procedure type
         """
-def is_square(arg0: numpy.ndarray[numpy.float64[m, n]]) -> bool:
-    """
-    Return whether or not a matrix is square
-    """
-def is_symmetric(arg0: numpy.ndarray[numpy.float64[m, n]]) -> bool:
-    """
-    Return whether or not a matrix is symmetric
-    """

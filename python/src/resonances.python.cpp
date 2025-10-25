@@ -21,6 +21,7 @@ namespace resonances {
   void wrapCoulombPhaseShiftDifference( python::module& );
   void wrapTabulatedWaveFunction( python::module& );
   void wrapChannel( python::module& );
+  void wrapResonanceTable( python::module& );
 
   void wrapResonanceParameters( python::module& );
 }
@@ -46,6 +47,7 @@ void wrapResonances( python::module& module ) {
   resonances::wrapCoulombPhaseShiftDifference( submodule );
   resonances::wrapTabulatedWaveFunction( submodule );
   resonances::wrapChannel( submodule );
+  resonances::wrapResonanceTable( submodule );
 
   resonances::wrapResonanceParameters( submodule );
 }

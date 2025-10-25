@@ -12,8 +12,8 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-void verifyDiagonalChunk( const covariance::Matrix< double >& );
-void verifyLowerSymmetricChunk( const covariance::Matrix< double >& );
+void verifyDiagonalChunk( const matrix::Matrix< double >& );
+void verifyLowerSymmetricChunk( const matrix::Matrix< double >& );
 
 SCENARIO( "readArray" ) {
 
@@ -80,7 +80,7 @@ SCENARIO( "readArray" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyDiagonalChunk( const covariance::Matrix< double >& chunk ) {
+void verifyDiagonalChunk( const matrix::Matrix< double >& chunk ) {
 
   CHECK( 12 == chunk.rows() );
   CHECK( 12 == chunk.rows() );
@@ -110,7 +110,7 @@ void verifyDiagonalChunk( const covariance::Matrix< double >& chunk ) {
   CHECK_THAT( 4.1382e-9, WithinRel( chunk(11,11) ) );
 }
 
-void verifyLowerSymmetricChunk( const covariance::Matrix< double >& chunk ) {
+void verifyLowerSymmetricChunk( const matrix::Matrix< double >& chunk ) {
 
   CHECK( 6 == chunk.rows() );
   CHECK( 6 == chunk.rows() );

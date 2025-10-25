@@ -33,7 +33,8 @@ add_cpp_test( atomic.ElectronSubshellConfiguration                       atomic/
 add_cpp_test( atomic.NonRadiativeTransitionData                          atomic/NonRadiativeTransitionData.test.cpp )
 add_cpp_test( atomic.RadiativeTransitionData                             atomic/RadiativeTransitionData.test.cpp )
 
-add_cpp_test( covariance.matrix                                          covariance/matrix.test.cpp )
+add_cpp_test( matrix                                                     matrix.test.cpp )
+
 add_cpp_test( covariance.base.Metadata                                   covariance/base/Metadata.test.cpp )
 add_cpp_test( covariance.base.CovarianceMatrix                           covariance/base/CovarianceMatrix.test.cpp )
 add_cpp_test( covariance.VarianceScaling                                 covariance/VarianceScaling.test.cpp )
@@ -63,6 +64,7 @@ add_cpp_test( resonances.HardSpherePhaseShift                            resonan
 add_cpp_test( resonances.CoulombPhaseShiftDifference                     resonances/CoulombPhaseShiftDifference.test.cpp )
 add_cpp_test( resonances.TabulatedWaveFunction                           resonances/TabulatedWaveFunction.test.cpp )
 add_cpp_test( resonances.Channel                                         resonances/Channel.test.cpp )
+add_cpp_test( resonances.ResonanceTable                                  resonances/ResonanceTable.test.cpp )
 
 add_cpp_test( Documentation                                              Documentation.test.cpp )
 

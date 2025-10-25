@@ -4,12 +4,12 @@
 #include <pybind11/eigen.h>
 
 // local includes
-#include "dryad/covariance/matrix.hpp"
+#include "dryad/matrix.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
-namespace covariance {
+namespace matrix {
 
 /**
  *  @brief Wrap matrix test function for a specific template type
@@ -21,18 +21,25 @@ void wrapFunctionsForMatrix( python::module& module ) {
 
   module
   .def( "is_square",
-        [] ( const njoy::dryad::covariance::Matrix< T >& matrix )
-           { return njoy::dryad::covariance::isSquare( matrix ); },
+        [] ( const njoy::dryad::matrix::Matrix< T >& matrix )
+           { return njoy::dryad::matrix::isSquare( matrix ); },
         "Return whether or not a matrix is square" )
   .def( "is_symmetric",
-        [] ( const njoy::dryad::covariance::Matrix< T >& matrix )
-           { return njoy::dryad::covariance::isSymmetric( matrix ); },
+        [] ( const njoy::dryad::matrix::Matrix< T >& matrix )
+           { return njoy::dryad::matrix::isSymmetric( matrix ); },
         "Return whether or not a matrix is symmetric" );
 }
 
-void wrapMatrixFunctions( python::module& module ) {
+} // matrix namespace
 
-  wrapFunctionsForMatrix< double >( module );
+void wrapMatrix( python::module& module ) {
+
+  // create the submodule
+  python::module submodule = module.def_submodule(
+
+    "matrix",
+    "Matrix functions"
+  );
+
+  matrix::wrapFunctionsForMatrix< double >( submodule );
 }
-
-} // covariance namespace

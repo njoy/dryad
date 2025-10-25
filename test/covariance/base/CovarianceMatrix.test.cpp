@@ -11,6 +11,7 @@ using Catch::Matchers::WithinAbs;
 #include "dryad/covariance/base/Metadata.hpp"
 
 // convenience typedefs
+using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
 
 SCENARIO( "CovarianceMatrix" ) {
@@ -25,7 +26,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
       Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
-      Matrix< double > matrix( 3, 3 );
+      matrix::Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
                 2., 4., 6.,
                 3., 6., 9.;
@@ -113,7 +114,7 @@ SCENARIO( "CovarianceMatrix" ) {
       Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
       std::vector< double > deviations{ 1, 2, 3 };
-      Matrix< double > matrix( 3, 3 );
+      matrix::Matrix< double > matrix( 3, 3 );
       matrix << 1., 1., 1.,
                 1., 1., 1.,
                 1., 1., 1.;
@@ -188,7 +189,7 @@ SCENARIO( "CovarianceMatrix" ) {
       Metadata rowMetadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
       Metadata columnMetadata( { Key{ 3 }, Key{ 4 } } );
 
-      Matrix< double > matrix( 3, 2 );
+      matrix::Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
                 2., 4.,
                 3., 6.;
@@ -269,7 +270,7 @@ SCENARIO( "CovarianceMatrix" ) {
       std::vector< double > rowDeviations = { 1., 2., 3. };
       std::vector< double > columnDeviations = { 1., 2. };
 
-      Matrix< double > matrix( 3, 2 );
+      matrix::Matrix< double > matrix( 3, 2 );
       matrix << 1., 1.,
                 1., 1.,
                 1., 1.;
@@ -346,7 +347,7 @@ SCENARIO( "CovarianceMatrix" ) {
       Metadata metadata( { Key{ 0, 0 }, Key{ 0, 1 }, Key{ 0, 2 },
                            Key{ 1, 0 }, Key{ 1, 1 }, Key{ 1, 2 } } );
 
-      Matrix< double > matrix( 6, 6 );
+      matrix::Matrix< double > matrix( 6, 6 );
       matrix <<  1.,  2.,  3.,    4.,  5.,  6.,
                  2.,  4.,  6.,    8., 10., 12.,
                  3.,  6.,  9.,   12., 15., 18.,
@@ -506,7 +507,7 @@ SCENARIO( "CovarianceMatrix" ) {
     Metadata metadata( { Key{ 0, 0 }, Key{ 0, 1 }, Key{ 0, 2 },
                          Key{ 1, 0 }, Key{ 1, 1 }, Key{ 1, 2 } } );
 
-    Matrix< double > matrix( 6, 6 );
+    matrix::Matrix< double > matrix( 6, 6 );
     matrix <<  1.,  2.,  3.,    4.,  5.,  6.,
                2.,  4.,  6.,    8., 10., 12.,
                3.,  6.,  9.,   12., 15., 18.,
@@ -702,7 +703,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
       Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
-      Matrix< double > matrix( 3, 2 );
+      matrix::Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
                 3., 4.,
                 5., 6.;
@@ -717,7 +718,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
       Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
-      Matrix< double > matrix( 3, 3 );
+      matrix::Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
                 2., 4., 6.,
            100000., 6., 9.;
@@ -733,7 +734,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
       Metadata metadata( { Key{ 0 }, Key{ 1 } } );
 
-      Matrix< double > matrix( 3, 3 );
+      matrix::Matrix< double > matrix( 3, 3 );
       matrix << 1., 2., 3.,
                 2., 4., 5.,
                 3., 5., 6.;
@@ -750,7 +751,7 @@ SCENARIO( "CovarianceMatrix" ) {
       Metadata rows( { Key{ 0 }, Key{ 1 } } );
       Metadata columns( { Key{ 3 }, Key{ 4 } } );
 
-      Matrix< double > matrix( 3, 2 );
+      matrix::Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
                 3., 4.,
                 5., 6.;
@@ -769,7 +770,7 @@ SCENARIO( "CovarianceMatrix" ) {
       Metadata rows( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
       Metadata columns( { Key{ 4 } } );
 
-      Matrix< double > matrix( 3, 2 );
+      matrix::Matrix< double > matrix( 3, 2 );
       matrix << 1., 2.,
                 3., 4.,
                 5., 6.;

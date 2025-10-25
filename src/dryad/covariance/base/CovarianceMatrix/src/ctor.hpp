@@ -20,7 +20,7 @@ CovarianceMatrix& operator=( CovarianceMatrix&& ) = default;
  *  @param[in] relative      the relative covariance flag
  */
 CovarianceMatrix( Metadata metadata,
-                  Matrix< double > covariances,
+                  matrix::Matrix< double > covariances,
                   bool relative = true ) :
     row_metadata_( std::move( metadata ) ),
     column_metadata_( std::nullopt ),
@@ -43,7 +43,7 @@ CovarianceMatrix( Metadata metadata,
  */
 CovarianceMatrix( Metadata metadata,
                   std::vector< double > deviations,
-                  Matrix< double > correlations,
+                  matrix::Matrix< double > correlations,
                   bool relative = true ) :
     row_metadata_( std::move( metadata ) ),
     column_metadata_( std::nullopt ),
@@ -67,7 +67,7 @@ CovarianceMatrix( Metadata metadata,
  */
 CovarianceMatrix( Metadata rowMetadata,
                   Metadata columnMetadata,
-                  Matrix< double > covariances,
+                  matrix::Matrix< double > covariances,
                   bool relative = true ) :
     row_metadata_( std::move( rowMetadata ) ),
     column_metadata_( std::move( columnMetadata ) ),
@@ -97,7 +97,7 @@ CovarianceMatrix( Metadata rowMetadata,
                   Metadata columnMetadata,
                   const std::vector< double >& rowDeviations,
                   const std::vector< double >& columnDeviations,
-                  Matrix< double > correlations,
+                  matrix::Matrix< double > correlations,
                   bool relative = true ) :
     row_metadata_( std::move( rowMetadata ) ),
     column_metadata_( std::move( columnMetadata ) ),

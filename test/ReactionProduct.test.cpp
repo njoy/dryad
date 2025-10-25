@@ -177,7 +177,6 @@ SCENARIO( "ReactionProduct" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-
 } // SCENARIO
 
 void verifyChunk( const ReactionProduct& chunk, bool normalise ) {

@@ -7,8 +7,7 @@ using Catch::Matchers::WithinRel;
 #include "dryad/resonances/CoulombPhaseShiftDifference.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
+
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;

@@ -29,7 +29,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "creating a matric from the CovariancePairs instance" ) {
 
-      covariance::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 
@@ -120,7 +120,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "constructing a diagonal CovarianceBlock from a SquareMatrix" ) {
 
-      covariance::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 
@@ -181,7 +181,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "constructing a diagonal CovarianceBlock from a SquareMatrix" ) {
 
-      covariance::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 
@@ -242,7 +242,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "constructing a diagonal CovarianceBlock from a RectangularMatrix" ) {
 
-      covariance::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 

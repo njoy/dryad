@@ -1,15 +1,15 @@
-static void verifyMatrix( const Matrix< double >& matrix,
+static void verifyMatrix( const matrix::Matrix< double >& matrix,
                           unsigned int order ) {
 
   // check if the matrix is square
-  if ( ! isSquare( matrix ) ) {
+  if ( ! matrix::isSquare( matrix ) ) {
 
     Log::error( "The matrix for a diagonal block must be square" );
     throw std::exception();
   }
 
   // check if the matrix is symmetric
-  if ( ! isSymmetric( matrix ) ) {
+  if ( ! matrix::isSymmetric( matrix ) ) {
 
     Log::error( "The matrix for a diagonal block must be symmetric" );
     throw std::exception();
@@ -28,7 +28,7 @@ static void verifyMatrix( const Matrix< double >& matrix,
 }
 
 static void verifyMatrix( const std::vector< double >& deviations,
-                          const Matrix< double >& matrix,
+                          const matrix::Matrix< double >& matrix,
                           unsigned int order ) {
 
   verifyMatrix( matrix, order );
@@ -45,7 +45,7 @@ static void verifyMatrix( const std::vector< double >& deviations,
   }
 }
 
-static void verifyMatrix( const Matrix< double >& matrix,
+static void verifyMatrix( const matrix::Matrix< double >& matrix,
                           unsigned int rows,
                           unsigned int columns ) {
 

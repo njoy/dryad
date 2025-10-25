@@ -9,7 +9,7 @@
 
 namespace njoy {
 namespace dryad {
-namespace covariance {
+namespace matrix {
 
   /* type aliases */
   template < typename T > using Matrix = Eigen::Matrix< T, Eigen::Dynamic, Eigen::Dynamic >;
@@ -38,7 +38,7 @@ namespace covariance {
     return isSquare( matrix ) && matrix.isApprox( matrix.transpose() );
   }
 
-} // covariance namespace
+} // matrix namespace
 } // dryad namespace
 } // njoy namespace
 

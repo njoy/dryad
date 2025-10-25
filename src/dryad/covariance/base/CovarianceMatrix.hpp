@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/matrix.hpp"
+#include "dryad/matrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -35,11 +35,11 @@ namespace base {
     bool relative_;
 
     /* fields - covariance matrix */
-    Matrix< double > covariances_;
+    matrix::Matrix< double > covariances_;
 
     /* fields - standard deviations and correlations */
     std::optional< std::vector< double > > sigmas_;
-    std::optional< Matrix< double > > correlations_;
+    std::optional< matrix::Matrix< double > > correlations_;
 
     /* fields - eigenvalues */
     std::optional< std::vector< double > > eigenvalues_;
@@ -111,7 +111,7 @@ namespace base {
     /**
      *  @brief Return the covariance matrix
      */
-    const Matrix< double >& covariances() const {
+    const matrix::Matrix< double >& covariances() const {
 
       return this->covariances_;
     }
@@ -127,7 +127,7 @@ namespace base {
     /**
      *  @brief Return the correlation matrix
      */
-    const std::optional< Matrix< double > >& correlations() const {
+    const std::optional< matrix::Matrix< double > >& correlations() const {
 
       return this->correlations_;
     }
