@@ -43,16 +43,16 @@ namespace lrf7 {
                                                        : dryad::id::ParticleID::photon();
         dryad::resonances::Particle a( id,
                                        endfPairs.massParticleA()[i] * constants::neutron_mass,
-                                       endfPairs.spinParticleA()[i],
+                                       std::abs( endfPairs.spinParticleA()[i] ),
                                        endfPairs.spinParticleA()[i] == 0.
                                          ? endfPairs.parityParticleA()[i] >= 0 ? +1 : -1
-                                         : endfPairs.spinParticleA()[i] > 0 ? +1 : -1 );
+                                         : endfPairs.spinParticleA()[i] >= 0 ? +1 : -1 );
         dryad::resonances::Particle b( reactions[i].residual().value(),
                                        endfPairs.massParticleB()[i] * constants::neutron_mass,
-                                       endfPairs.spinParticleB()[i],
+                                       std::abs( endfPairs.spinParticleB()[i] ),
                                        endfPairs.spinParticleB()[i] == 0.
                                          ? endfPairs.parityParticleB()[i] >= 0 ? +1 : -1
-                                         : endfPairs.spinParticleB()[i] > 0 ? +1 : -1 );
+                                         : endfPairs.spinParticleB()[i] >= 0 ? +1 : -1 );
         pairs.emplace_back( dryad::resonances::ParticlePair( std::move( a ), std::move( b ) ) );
 
         //! @todo compare spins and parity to particle database to detect errors
