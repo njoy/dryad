@@ -36,6 +36,9 @@ void wrapSpinGroup( python::module& module ) {
     python::init< std::vector< Channel >, ResonanceTable >(),
     python::arg( "channels" ), python::arg( "resonances" ),
     "Initialise the spin group\n\n"
+    "If the channels are not sorted, they will get sorted through the order\n"
+    "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
+    "sorting order).\n\n"
     "Arguments:\n"
     "    self         the spin group\n"
     "    channels     the channels in the spingroup\n"
@@ -46,6 +49,9 @@ void wrapSpinGroup( python::module& module ) {
     python::init< std::vector< ChannelData > >(),
     python::arg( "channels" ),
     "Initialise the spin group\n\n"
+    "If the channels are not sorted, they will get sorted through the order\n"
+    "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
+    "sorting order).\n\n"
     "Arguments:\n"
     "    self       the spin group\n"
     "    channels   the channel data in the spingroup"

@@ -1064,6 +1064,10 @@ class SpinGroup:
         """
         Initialise the spin group
         
+        If the channels are not sorted, they will get sorted through the order
+        of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+        sorting order).
+        
         Arguments:
             self         the spin group
             channels     the channels in the spingroup
@@ -1073,6 +1077,10 @@ class SpinGroup:
     def __init__(self, channels: list[tuple[Channel, ResonanceTable]]) -> None:
         """
         Initialise the spin group
+        
+        If the channels are not sorted, they will get sorted through the order
+        of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+        sorting order).
         
         Arguments:
             self       the spin group
