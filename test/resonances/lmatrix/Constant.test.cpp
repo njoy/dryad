@@ -19,6 +19,8 @@ SCENARIO( "Constant" ) {
     lmatrix::Constant lmatrix( 3 );
 
     CHECK( 3 == lmatrix.numberChannels() );
+    CHECK( 3 == lmatrix.matrix().rows() );
+    CHECK( 3 == lmatrix.matrix().cols() );
     CHECK( std::complex< double >(0,0) == lmatrix.matrix().diagonal()[0] );
     CHECK( std::complex< double >(0,0) == lmatrix.matrix().diagonal()[1] );
     CHECK( std::complex< double >(0,0) == lmatrix.matrix().diagonal()[2] );
