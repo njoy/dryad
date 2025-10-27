@@ -85,7 +85,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
                              Particle( cu63, 62.389 * constants::neutron_mass, 1.5, -1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 6.7, 6.7 );
+  ChannelRadii radii( 6.7, 6.7 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
@@ -145,7 +145,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -221,7 +221,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
@@ -297,7 +297,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -320,7 +320,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel2.channelRadii() );
+  CHECK( radii == channel2.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
@@ -398,7 +398,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
@@ -474,7 +474,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -497,7 +497,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel2.channelRadii() );
+  CHECK( radii == channel2.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
@@ -561,7 +561,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 1: elastic
+  // spin group 5, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   channel1 = channels[1];
@@ -575,7 +575,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
