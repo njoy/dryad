@@ -20,9 +20,6 @@ namespace endf {
    */
   class ReactionInformation {
 
-    /* helper class */
-    #include "dryad/format/endf/ReactionInformation/Entry.hpp"
-
     inline static const std::unordered_set< int > fission_ = {
 
        18,  19,  20,  21,  38

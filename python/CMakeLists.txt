@@ -22,6 +22,7 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ResonanceParameters.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/BoundaryCondition.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Formalism.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Particle.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ParticlePair.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/ChannelQuantumNumbers.python.cpp
@@ -30,6 +31,9 @@ if(dryad.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/HardSpherePenetrability.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/HardSphereShiftFactor.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/HardSpherePhaseShift.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/CoulombPenetrability.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/CoulombShiftFactor.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/CoulombPhaseShift.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/CoulombPhaseShiftDifference.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/TabulatedWaveFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/resonances/Channel.python.cpp

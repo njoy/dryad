@@ -96,6 +96,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertAlmostEqual( 1., capture.penetrability( energy ) )
         self.assertAlmostEqual( 0., capture.shift_factor( energy ) )
         self.assertAlmostEqual( 0., capture.phase_shift( energy ) )
+        self.assertAlmostEqual( 0., capture.phase_shift_difference( energy ) )
 
         # neutron channel, incident channel, no threshold
         self.assertEqual( elasticID, elastic.identifier )
@@ -114,6 +115,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertAlmostEqual( 3.256036376131631e-6, elastic.penetrability( energy ) )
         self.assertAlmostEqual( 0., elastic.shift_factor( energy ) )
         self.assertAlmostEqual( 2.476675951516791e-6, elastic.phase_shift( energy ) )
+        self.assertAlmostEqual( 0., elastic.phase_shift_difference( energy ) )
 
         # neutron channel, not incident channel, threshold
         self.assertEqual( inelasticID, inelastic.identifier )
@@ -132,6 +134,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertAlmostEqual( 1.153305524765912, inelastic.penetrability( energy ) )
         self.assertAlmostEqual( 0., inelastic.shift_factor( energy ) )
         self.assertAlmostEqual( 8.772518878713266e-1, inelastic.phase_shift( energy ) )
+        self.assertAlmostEqual( 0., inelastic.phase_shift_difference( energy ) )
 
         # proton channel, not an incident channel, no threshold
         self.assertEqual( protonID, proton.identifier )
@@ -147,10 +150,10 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertEqual( False, proton.is_below_threshold( energy ) )
         self.assertAlmostEqual( 0.1697421616532552, proton.wave_number( energy ) )
         self.assertAlmostEqual( 3.179105369595768, proton.sommerfeld_parameter( energy ) )
-        # @todo change these when we have proper coulomb wave functions
-        self.assertAlmostEqual( 1., proton.penetrability( energy ) )
-        self.assertAlmostEqual( 0., proton.shift_factor( energy ) )
-        self.assertAlmostEqual( 0., proton.phase_shift( energy ) )
+        self.assertAlmostEqual(  2.896705590727021e-5, proton.penetrability( energy ) )
+        self.assertAlmostEqual( -1.872686299035523   , proton.shift_factor( energy ) )
+        self.assertAlmostEqual(  2.168669356291763e-6, proton.phase_shift( energy ) )
+        self.assertAlmostEqual( 0., proton.phase_shift_difference( energy ) )
 
     def test_comparison( self ) :
 

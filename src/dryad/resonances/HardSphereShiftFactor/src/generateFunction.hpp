@@ -1,5 +1,8 @@
 static PolynomialSeriesRatio generateFunction( unsigned int l ) {
 
+  // see Table D.1 from the ENDF manual
+  // ENDF-6 Formats Manual, CSEWG Document ENDF-102, NNDC, Brookhaven National Laboratory
+  // https://www.nndc.bnl.gov/endf
   switch ( l ) {
 
     case 0 : return { { 0 } };

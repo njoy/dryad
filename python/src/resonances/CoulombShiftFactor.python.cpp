@@ -4,7 +4,7 @@
 
 // local includes
 #include "definitions.hpp"
-#include "dryad/resonances/HardSpherePhaseShift.hpp"
+#include "dryad/resonances/CoulombShiftFactor.hpp"
 
 #include "scion/math/horner.hpp"
 
@@ -13,10 +13,10 @@ namespace python = pybind11;
 
 namespace resonances {
 
-void wrapHardSpherePhaseShift( python::module& module ) {
+void wrapCoulombShiftFactor( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::resonances::HardSpherePhaseShift;
+  using Component = njoy::dryad::resonances::CoulombShiftFactor;
 
   // wrap views created by this component
 
@@ -24,8 +24,8 @@ void wrapHardSpherePhaseShift( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "HardSpherePhaseShift",
-    "Hardsphere phase shift functions"
+    "CoulombShiftFactor",
+    "Coulomb shift factor functions"
    );
 
   // wrap the component
@@ -34,7 +34,7 @@ void wrapHardSpherePhaseShift( python::module& module ) {
 
     python::init< unsigned int >(),
     python::arg( "orbital_momentum" ),
-    "Initialise the hard sphere phase shift function\n\n"
+    "Initialise the Coulomb shift factor function\n\n"
     "Arguments:\n"
     "    self               the function\n"
     "    orbital_momentum   the value of the orbital momentum"
@@ -56,13 +56,14 @@ void wrapHardSpherePhaseShift( python::module& module ) {
   .def(
 
     "__call__",
-    [] ( const Component& self, double ratio ) -> decltype(auto)
-       { return self( ratio ); },
-    python::arg( "ratio" ),
-    "Evaluate the phase shift for a given ratio value\n\n"
+    [] ( const Component& self, double ratio, double eta ) -> decltype(auto)
+       { return self( ratio, eta ); },
+    python::arg( "ratio" ), python::arg( "eta" ),
+    "Evaluate the shift factor for a given ratio and eta value\n\n"
     "Arguments:\n"
-    "    self    the phase shift function\n"
-    "    ratio   the ratio value"
+    "    self    the shift factor function\n"
+    "    ratio   the ratio value\n"
+    "    eta     the eta value"
   );
 
   // add standard equality comparison definitions

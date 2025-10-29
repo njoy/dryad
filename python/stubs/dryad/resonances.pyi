@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPhaseShiftDifference', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -61,23 +61,24 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | TabulatedWaveFunction, shiftFactor: float | HardSphereShiftFactor | TabulatedWaveFunction, phaseShift: float | HardSpherePhaseShift | TabulatedWaveFunction) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
         Arguments:
-            self            the channel
-            identifier      the channel identifier
-            incident        the current incident particle pair
-            outgoing        the outgoing particle pair
-            qValue          the Q value associated with the transition from
-                            the incident to the outgoing particle pair
-            boundary        the boundary condition
-            radii           the channel radii for the calculation of the
-                            wave functions
-            penetrability   the penetrability of the channel
-            shiftFactor     the shift factor of the channel
-            phaseshift      the phase shift of the channel
+            self                     the channel
+            identifier               the channel identifier
+            incident                 the current incident particle pair
+            outgoing                 the outgoing particle pair
+            qValue                   the Q value associated with the transition from
+                                     the incident to the outgoing particle pair
+            boundary                 the boundary condition
+            radii                    the channel radii for the calculation of the
+                                     wave functions
+            penetrability            the penetrability of the channel
+            shift_factor             the shift factor of the channel
+            phase_shift              the phase shift of the channel
+            phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
     def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii) -> None:
@@ -129,6 +130,14 @@ class Channel:
     def phase_shift(self, energy: float) -> float:
         """
         Calculate the phase shift for the channel at a given energy
+        
+        Arguments:
+            self     the channel
+            energy   the energy (given in eV)
+        """
+    def phase_shift_difference(self, energy: float) -> float:
+        """
+        Calculate the phase shift difference for the channel at a given energy
         
         Arguments:
             self     the channel
@@ -451,6 +460,86 @@ class ChannelRadii:
     @shift_factor_radius.setter
     def shift_factor_radius(self, arg1: float | TabulatedRadius | None) -> None:
         ...
+class CoulombPenetrability:
+    """
+    Coulomb penetrability functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, ratio: float, eta: float) -> float:
+        """
+        Evaluate the penetrability for a given ratio and eta value
+        
+        Arguments:
+            self    the penetrability function
+            ratio   the ratio value
+            eta     the eta value
+        """
+    def __eq__(self, arg0: CoulombPenetrability) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the Coulomb penetrability function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: CoulombPenetrability) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CoulombPenetrability) -> bool:
+        ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
+class CoulombPhaseShift:
+    """
+    Coulomb phase shift functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, ratio: float, eta: float) -> float:
+        """
+        Evaluate the phase shift for a given ratio and eta value
+        
+        Arguments:
+            self    the phase shift function
+            ratio   the ratio value
+            eta     the eta value
+        """
+    def __eq__(self, arg0: CoulombPhaseShift) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the Coulomb phase shift function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: CoulombPhaseShift) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CoulombPhaseShift) -> bool:
+        ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
 class CoulombPhaseShiftDifference:
     """
     Coulomb phase shift difference functions
@@ -490,12 +579,99 @@ class CoulombPhaseShiftDifference:
         """
         The value of the orbital angular momentum
         """
+class CoulombShiftFactor:
+    """
+    Coulomb shift factor functions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, ratio: float, eta: float) -> float:
+        """
+        Evaluate the shift factor for a given ratio and eta value
+        
+        Arguments:
+            self    the shift factor function
+            ratio   the ratio value
+            eta     the eta value
+        """
+    def __eq__(self, arg0: CoulombShiftFactor) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, orbital_momentum: int) -> None:
+        """
+        Initialise the Coulomb shift factor function
+        
+        Arguments:
+            self               the function
+            orbital_momentum   the value of the orbital momentum
+        """
+    @typing.overload
+    def __init__(self, instance: CoulombShiftFactor) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CoulombShiftFactor) -> bool:
+        ...
+    @property
+    def orbital_angular_momentum(self) -> int:
+        """
+        The value of the orbital angular momentum
+        """
+class Formalism:
+    """
+    The resonance formalism
+    
+    Members:
+    
+      ReichMoore
+    
+      GeneralRMatrix
+    """
+    GeneralRMatrix: typing.ClassVar[Formalism]  # value = <Formalism.GeneralRMatrix: 2>
+    ReichMoore: typing.ClassVar[Formalism]  # value = <Formalism.ReichMoore: 1>
+    __members__: typing.ClassVar[dict[str, Formalism]]  # value = {'ReichMoore': <Formalism.ReichMoore: 1>, 'GeneralRMatrix': <Formalism.GeneralRMatrix: 2>}
+    def __eq__(self, other: typing.Any) -> bool:
+        ...
+    def __ge__(self, other: typing.Any) -> bool:
+        ...
+    def __getstate__(self) -> int:
+        ...
+    def __gt__(self, other: typing.Any) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
+    def __index__(self) -> int:
+        ...
+    def __init__(self, value: int) -> None:
+        ...
+    def __int__(self) -> int:
+        ...
+    def __le__(self, other: typing.Any) -> bool:
+        ...
+    def __lt__(self, other: typing.Any) -> bool:
+        ...
+    def __ne__(self, other: typing.Any) -> bool:
+        ...
+    def __repr__(self) -> str:
+        ...
+    def __setstate__(self, state: int) -> None:
+        ...
+    def __str__(self) -> str:
+        ...
+    @property
+    def name(self) -> str:
+        ...
+    @property
+    def value(self) -> int:
+        ...
 class HardSpherePenetrability:
     """
     Hardsphere penetrability functions
     """
     __hash__: typing.ClassVar[None] = None
-    def __call__(self, cosine: float) -> float:
+    def __call__(self, ratio: float) -> float:
         """
         Evaluate the penetrability for a given ratio value
         
@@ -534,7 +710,7 @@ class HardSpherePhaseShift:
     Hardsphere phase shift functions
     """
     __hash__: typing.ClassVar[None] = None
-    def __call__(self, cosine: float) -> float:
+    def __call__(self, ratio: float) -> float:
         """
         Evaluate the phase shift for a given ratio value
         

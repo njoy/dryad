@@ -107,7 +107,7 @@ SCENARIO( "SpinGroup" ) {
       verifyChunk( chunk );
     } // THEN
 
-    THEN( "a SpinGroup can be constructed using a channel data" ) {
+    THEN( "a SpinGroup can be constructed using channel data objects" ) {
 
       SpinGroup chunk( { { capture, captureTable }, { elastic, elasticTable },
                          { inelastic, inelasticTable }, { proton, protonTable } } );

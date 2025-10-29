@@ -16,6 +16,10 @@
 #include "dryad/resonances/HardSpherePenetrability.hpp"
 #include "dryad/resonances/HardSphereShiftFactor.hpp"
 #include "dryad/resonances/HardSpherePhaseShift.hpp"
+#include "dryad/resonances/CoulombPenetrability.hpp"
+#include "dryad/resonances/CoulombShiftFactor.hpp"
+#include "dryad/resonances/CoulombPhaseShift.hpp"
+#include "dryad/resonances/CoulombPhaseShiftDifference.hpp"
 #include "dryad/resonances/TabulatedWaveFunction.hpp"
 
 namespace njoy {
@@ -34,13 +38,18 @@ namespace resonances {
 
     using Penetrability = std::variant< double,
                                         HardSpherePenetrability,
+                                        CoulombPenetrability,
                                         TabulatedWaveFunction >;
     using ShiftFactor = std::variant< double,
                                       HardSphereShiftFactor,
+                                      CoulombShiftFactor,
                                       TabulatedWaveFunction >;
     using PhaseShift = std::variant< double,
                                      HardSpherePhaseShift,
+                                     CoulombPhaseShift,
                                      TabulatedWaveFunction >;
+    using PhaseShiftDifference = std::variant< double,
+                                               CoulombPhaseShiftDifference >;
 
   private:
 
@@ -56,6 +65,7 @@ namespace resonances {
     Penetrability penetrability_;
     ShiftFactor shift_factor_;
     PhaseShift phase_shift_;
+    PhaseShiftDifference phase_shift_difference_;
 
     double spin_factor_;
 
@@ -233,8 +243,20 @@ namespace resonances {
       tools::overload visitor{
 
         [] ( double value ) -> double { return value; },
-        //! @todo add Coulomb penetrability here
-        [&] ( auto&& function ) -> double {
+        [&] ( const HardSpherePenetrability& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculatePenetrabilityRadius( energy );
+          return function( k * a );
+        },
+        [&] ( const CoulombPenetrability& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculatePenetrabilityRadius( energy );
+          const auto eta = this->sommerfeldParameter( energy );
+          return function( k * a, eta );
+        },
+        [&] ( const TabulatedWaveFunction& function ) -> double {
 
           const auto k = this->waveNumber( energy );
           const auto a = this->channelRadii().calculatePenetrabilityRadius( energy );
@@ -255,8 +277,20 @@ namespace resonances {
       tools::overload visitor{
 
         [] ( double value ) -> double { return value; },
-        //! @todo add Coulomb penetrability here
-        [&] ( auto&& function ) -> double {
+        [&] ( const HardSphereShiftFactor& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculateShiftFactorRadius( energy );
+          return function( k * a );
+        },
+        [&] ( const CoulombShiftFactor& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculateShiftFactorRadius( energy );
+          const auto eta = this->sommerfeldParameter( energy );
+          return function( k * a, eta );
+        },
+        [&] ( const TabulatedWaveFunction& function ) -> double {
 
           const auto k = this->waveNumber( energy );
           const auto a = this->channelRadii().calculateShiftFactorRadius( energy );
@@ -277,8 +311,20 @@ namespace resonances {
       tools::overload visitor{
 
         [] ( double value ) -> double { return value; },
-        //! @todo add Coulomb penetrability here
-        [&] ( auto&& function ) -> double {
+        [&] ( const HardSpherePhaseShift& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculatePhaseShiftRadius( energy );
+          return function( k * a );
+        },
+        [&] ( const CoulombPhaseShift& function ) -> double {
+
+          const auto k = this->waveNumber( energy );
+          const auto a = this->channelRadii().calculatePhaseShiftRadius( energy );
+          const auto eta = this->sommerfeldParameter( energy );
+          return function( k * a, eta );
+        },
+        [&] ( const TabulatedWaveFunction& function ) -> double {
 
           const auto k = this->waveNumber( energy );
           const auto a = this->channelRadii().calculatePhaseShiftRadius( energy );
@@ -287,6 +333,26 @@ namespace resonances {
       };
 
       return std::visit( visitor, this->phase_shift_ );
+    }
+
+    /**
+     *  @brief Calculate the phase shift difference for the channel at a given energy
+     *
+     *  @param[in] energy   the energy (given in eV)
+     */
+    double phaseShiftDifference( double energy ) const {
+
+      tools::overload visitor{
+
+        [] ( double value ) -> double { return value; },
+        [&] ( const CoulombPhaseShiftDifference& function ) -> double {
+
+          const auto eta = this->sommerfeldParameter( energy );
+          return function( eta );
+        }
+      };
+
+      return std::visit( visitor, this->phase_shift_difference_ );
     }
 
     /**
