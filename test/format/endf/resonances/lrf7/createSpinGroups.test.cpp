@@ -37,7 +37,11 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target, parameters );
+        Formalism formalism = Formalism::ReichMoore;
+        BoundaryCondition boundary = BoundaryCondition::Constant;
+        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target,
+                                                                       formalism, boundary,
+                                                                       parameters );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -63,7 +67,11 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target, parameters );
+        Formalism formalism = Formalism::ReichMoore;
+        BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target,
+                                                                       formalism, boundary,
+                                                                       parameters );
 
         verifyChunkCl35( chunk );
       } // THEN

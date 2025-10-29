@@ -90,9 +90,13 @@ SCENARIO( "SpinGroup" ) {
                                 { 1., 2., 3., 4. },
                                 { 41., 42., 43., 44. } );
 
+    Formalism formalism = Formalism::ReichMoore;
+    BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+
     THEN( "a SpinGroup can be constructed using a single table" ) {
 
-      SpinGroup chunk( { capture, elastic, inelastic, proton }, table );
+      SpinGroup chunk( { capture, elastic, inelastic, proton }, table,
+                       formalism, boundary );
 
       verifyChunk( chunk );
     } // THEN
@@ -100,7 +104,8 @@ SCENARIO( "SpinGroup" ) {
     THEN( "a SpinGroup can be constructed using channel data objects" ) {
 
       SpinGroup chunk( { { capture, captureTable }, { elastic, elasticTable },
-                         { inelastic, inelasticTable }, { proton, protonTable } } );
+                         { inelastic, inelasticTable }, { proton, protonTable } },
+                       formalism, boundary );
 
       verifyChunk( chunk );
     } // THEN
@@ -177,9 +182,12 @@ SCENARIO( "SpinGroup" ) {
                                { 21., 22., 23., 24. },
                                { 31., 32., 33., 34. } } );
 
-      SpinGroup left( { capture, elastic, inelastic, proton }, table1 );
-      SpinGroup equal( { capture, elastic, inelastic, proton }, table1 );
-      SpinGroup different( { capture, elastic, inelastic }, table2 );
+      Formalism formalism = Formalism::ReichMoore;
+      BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+
+      SpinGroup left( { capture, elastic, inelastic, proton }, table1, formalism, boundary );
+      SpinGroup equal( { capture, elastic, inelastic, proton }, table1, formalism, boundary );
+      SpinGroup different( { capture, elastic, inelastic }, table2, formalism, boundary );
 
       THEN( "they can be compared" ) {
 

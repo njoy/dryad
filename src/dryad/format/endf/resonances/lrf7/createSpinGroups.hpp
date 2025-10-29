@@ -29,6 +29,8 @@ namespace lrf7 {
    */
   auto createSpinGroups( const id::ParticleID& projectile,
                          const id::ParticleID& target,
+                         const dryad::resonances::Formalism& formalism,
+                         const dryad::resonances::BoundaryCondition& boundary,
                          const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     std::vector< dryad::resonances::SpinGroup > groups;
@@ -80,7 +82,8 @@ namespace lrf7 {
                                getJpi( *begin ),
                                [&] ( auto&& left, auto&& right )
                                    { return left < getJpi( right ); } );
-      groups.emplace_back( std::vector< dryad::resonances::SpinGroup::ChannelData >{ begin, iter } );
+      groups.emplace_back( std::vector< dryad::resonances::SpinGroup::ChannelData >{ begin, iter },
+                           formalism, boundary );
     }
 
     return groups;

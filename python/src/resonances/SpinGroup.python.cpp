@@ -18,6 +18,8 @@ void wrapSpinGroup( python::module& module ) {
   using ChannelData = njoy::dryad::resonances::SpinGroup::ChannelData;
   using Channel = njoy::dryad::resonances::Channel;
   using ResonanceTable = njoy::dryad::resonances::ResonanceTable;
+  using Formalism = njoy::dryad::resonances::Formalism;
+  using BoundaryCondition = njoy::dryad::resonances::BoundaryCondition;
 
   // wrap views created by this component
 
@@ -33,8 +35,10 @@ void wrapSpinGroup( python::module& module ) {
   component
   .def(
 
-    python::init< std::vector< Channel >, ResonanceTable >(),
+    python::init< std::vector< Channel >, ResonanceTable,
+                  Formalism, BoundaryCondition >(),
     python::arg( "channels" ), python::arg( "resonances" ),
+    python::arg( "formalism" ), python::arg( "boundary" ),
     "Initialise the spin group\n\n"
     "If the channels are not sorted, they will get sorted through the order\n"
     "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
@@ -42,19 +46,26 @@ void wrapSpinGroup( python::module& module ) {
     "Arguments:\n"
     "    self         the spin group\n"
     "    channels     the channels in the spingroup\n"
-    "    resonances   the resonance table of the spingroup"
+    "    resonances   the resonance table of the spingroup\n"
+    "    formalism    the r matrix formalism option to be applied\n"
+    "    boundary     the boundary condition option to be applied"
   )
   .def(
 
-    python::init< std::vector< ChannelData > >(),
+    python::init< std::vector< ChannelData >,
+                  Formalism, BoundaryCondition >(),
     python::arg( "channels" ),
+    python::arg( "formalism" ),
+    python::arg( "boundary" ),
     "Initialise the spin group\n\n"
     "If the channels are not sorted, they will get sorted through the order\n"
     "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
     "sorting order).\n\n"
     "Arguments:\n"
     "    self       the spin group\n"
-    "    channels   the channel data in the spingroup"
+    "    channels   the channel data in the spingroup\n"
+    "    formalism    the r matrix formalism option to be applied\n"
+    "    boundary     the boundary condition option to be applied"
   )
   .def(
 

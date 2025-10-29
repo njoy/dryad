@@ -1060,7 +1060,7 @@ class SpinGroup:
     def __eq__(self, arg0: SpinGroup) -> bool:
         ...
     @typing.overload
-    def __init__(self, channels: list[Channel], resonances: ResonanceTable) -> None:
+    def __init__(self, channels: list[Channel], resonances: ResonanceTable, formalism: Formalism, boundary: BoundaryCondition) -> None:
         """
         Initialise the spin group
         
@@ -1072,9 +1072,11 @@ class SpinGroup:
             self         the spin group
             channels     the channels in the spingroup
             resonances   the resonance table of the spingroup
+            formalism    the r matrix formalism option to be applied
+            boundary     the boundary condition option to be applied
         """
     @typing.overload
-    def __init__(self, channels: list[tuple[Channel, ResonanceTable]]) -> None:
+    def __init__(self, channels: list[tuple[Channel, ResonanceTable]], formalism: Formalism, boundary: BoundaryCondition) -> None:
         """
         Initialise the spin group
         
@@ -1085,6 +1087,8 @@ class SpinGroup:
         Arguments:
             self       the spin group
             channels   the channel data in the spingroup
+            formalism    the r matrix formalism option to be applied
+            boundary     the boundary condition option to be applied
         """
     @typing.overload
     def __init__(self, instance: SpinGroup) -> None:

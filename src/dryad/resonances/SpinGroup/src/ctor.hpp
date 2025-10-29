@@ -31,13 +31,15 @@ public:
  *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
  *  sorting order).
  *
- *  @param[in] formalism    the r matrix formalism option to be applied
- *  @param[in] boundary     the boundary condition option to be applied
  *  @param[in] channels     the channels in the spingroup
  *  @param[in] resonances   the resonance table of the spingroup
+ *  @param[in] formalism    the r matrix formalism option to be applied
+ *  @param[in] boundary     the boundary condition option to be applied
  */
 SpinGroup( std::vector< Channel > channels,
-           ResonanceTable resonances ) :
+           ResonanceTable resonances,
+           const Formalism& formalism,
+           const BoundaryCondition& boundary ) :
     SpinGroup( createData( std::move( channels ), std::move( resonances ) ) ) {}
 
 /**
@@ -47,9 +49,11 @@ SpinGroup( std::vector< Channel > channels,
  *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
  *  sorting order).
  *
+ *  @param[in] channels     the channel data in the spingroup
  *  @param[in] formalism    the r matrix formalism option to be applied
  *  @param[in] boundary     the boundary condition option to be applied
- *  @param[in] channels     the channel data in the spingroup
  */
-SpinGroup( std::vector< ChannelData > channels ) :
+SpinGroup( std::vector< ChannelData > channels,
+           const Formalism& formalism,
+           const BoundaryCondition& boundary ) :
     SpinGroup( createData( std::move( channels ) ) ) {}

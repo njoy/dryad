@@ -10,6 +10,8 @@ from dryad.resonances import ParticlePair
 from dryad.resonances import ChannelRadii
 from dryad.resonances import Channel
 from dryad.resonances import ResonanceTable
+from dryad.resonances import Formalism
+from dryad.resonances import BoundaryCondition
 from dryad.resonances import SpinGroup
 from dryad.resonances import CompoundSystem
 from dryad.id import ChannelID
@@ -714,6 +716,9 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
         radii1 = ChannelRadii( 4.822220, 4.888750 )
         radii2 = ChannelRadii( 4.822220, 3.667980 )
 
+        formalism = Formalism.ReichMoore
+        boundary = BoundaryCondition.ShiftFactor
+
         spingroup0 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -722,7 +727,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                            radii1 ) ],
                                 ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ) ],
-                                                [ 1. ], [ [ 2. ], [ 3. ] ] ) )
+                                                [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                                formalism, boundary )
         spingroup1 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,1-}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -743,7 +749,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                                   ChannelID( 'n,Cl35->n,Cl35{1,1,1-}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{1,2,1-}' ),
                                                   ChannelID( 'n,Cl35->p,S35{1,2,1-}' ) ],
-                                                [ 11. ], [ [ 12. ], [ 13. ], [ 14. ], [ 15. ], [ 16. ] ] ) )
+                                                [ 11. ], [ [ 12. ], [ 13. ], [ 14. ], [ 15. ], [ 16. ] ] ),
+                                formalism, boundary )
         spingroup2 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -756,7 +763,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                 ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{0,0,1+}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{0,1,1+}' ),
                                                   ChannelID( 'n,Cl35->p,S35{0,1,1+}' ) ],
-                                                [ 21. ], [ [ 22. ], [ 23. ], [ 24. ] ] ) )
+                                                [ 21. ], [ [ 22. ], [ 23. ], [ 24. ] ] ),
+                                formalism, boundary )
         spingroup3 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,2-}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -777,7 +785,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                                   ChannelID( 'n,Cl35->p,S35{1,1,2-}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{1,2,2-}' ),
                                                   ChannelID( 'n,Cl35->p,S35{1,2,2-}' ) ],
-                                                [ 31. ], [ [ 32. ], [ 33. ], [ 34. ], [ 35. ], [ 36. ] ] ) )
+                                                [ 31. ], [ [ 32. ], [ 33. ], [ 34. ], [ 35. ], [ 36. ] ] ),
+                                formalism, boundary )
         spingroup4 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{0,0,2+}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -790,7 +799,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                 ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{0,0,2+}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{0,2,2+}' ),
                                                   ChannelID( 'n,Cl35->p,S35{0,2,2+}' ) ],
-                                                [ 41. ], [ [ 42. ], [ 43. ], [ 44. ] ] ) )
+                                                [ 41. ], [ [ 42. ], [ 43. ], [ 44. ] ] ),
+                                formalism, boundary )
         spingroup5 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,3-}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -803,7 +813,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                 ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{1,0,3-}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{1,2,3-}' ),
                                                   ChannelID( 'n,Cl35->p,S35{1,2,3-}' ) ],
-                                                [ 51. ], [ [ 52. ], [ 53. ], [ 54. ] ] ) )
+                                                [ 51. ], [ [ 52. ], [ 53. ], [ 54. ] ] ),
+                                formalism, boundary )
 
         chunk = CompoundSystem( [ spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 ] )
 
@@ -835,6 +846,9 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
         radii1 = ChannelRadii( 4.822220, 4.888750 )
         radii2 = ChannelRadii( 4.822220, 3.667980 )
 
+        formalism = Formalism.ReichMoore
+        boundary = BoundaryCondition.ShiftFactor
+
         spingroup0 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -843,7 +857,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                            radii1 ) ],
                                 ResonanceTable( [ ChannelID( 'n,Cl35->g,Cl36[all]{1,0,0-}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{1,1,0-}' ) ],
-                                                [ 1. ], [ [ 2. ], [ 3. ] ] ) )
+                                                [ 1. ], [ [ 2. ], [ 3. ] ] ),
+                                formalism, boundary )
         spingroup1 = SpinGroup( [ Channel( ChannelID( 'n,Cl35->g,Cl36[all]{1,0,1-}' ),
                                            neutron_pair, photon_pair, 0., None,
                                            zero_radii ),
@@ -864,7 +879,8 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                                   ChannelID( 'n,Cl35->n,Cl35{1,1,1-}' ),
                                                   ChannelID( 'n,Cl35->n,Cl35{1,2,1-}' ),
                                                   ChannelID( 'n,Cl35->p,S35{1,2,1-}' ) ],
-                                                [ 11. ], [ [ 12. ], [ 13. ], [ 14. ], [ 15. ], [ 16. ] ] ) )
+                                                [ 11. ], [ [ 12. ], [ 13. ], [ 14. ], [ 15. ], [ 16. ] ] ),
+                                formalism, boundary )
 
         left = CompoundSystem( [ spingroup0 ] )
         equal = CompoundSystem( [ spingroup0 ]  )

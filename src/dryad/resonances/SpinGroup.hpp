@@ -8,6 +8,8 @@
 // other includes
 #include "dryad/resonances/Channel.hpp"
 #include "dryad/resonances/ResonanceTable.hpp"
+#include "dryad/resonances/BoundaryCondition.hpp"
+#include "dryad/resonances/Formalism.hpp"
 
 namespace njoy {
 namespace dryad {

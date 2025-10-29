@@ -10,6 +10,8 @@ from dryad.resonances import ParticlePair
 from dryad.resonances import ChannelRadii
 from dryad.resonances import Channel
 from dryad.resonances import ResonanceTable
+from dryad.resonances import Formalism
+from dryad.resonances import BoundaryCondition
 from dryad.resonances import SpinGroup
 from dryad.id import ChannelID
 from dryad.id import ParticleID
@@ -170,12 +172,16 @@ class Test_dryad_resonances_SpinGroup( unittest.TestCase ) :
                                       [ 1., 2., 3., 4. ],
                                       [ 41., 42., 43., 44. ] )
 
-        chunk = SpinGroup( [ capture, elastic, inelastic, proton ], table )
+        formalism = Formalism.ReichMoore
+        boundary = BoundaryCondition.ShiftFactor
+
+        chunk = SpinGroup( [ capture, elastic, inelastic, proton ], table, formalism, boundary )
 
         verify_chunk( self, chunk )
 
         chunk = SpinGroup( [ ( capture, captureTable ), ( elastic, elasticTable ),
-                             ( inelastic, inelasticTable ), ( proton, protonTable ) ] )
+                             ( inelastic, inelasticTable ), ( proton, protonTable ) ],
+                           formalism, boundary )
 
         verify_chunk( self, chunk )
 
@@ -248,9 +254,12 @@ class Test_dryad_resonances_SpinGroup( unittest.TestCase ) :
                                    [ 31., 32., 33., 34. ],
                                    [ 41., 42., 43., 44. ] ] )
 
-        left = SpinGroup( [ capture, elastic, inelastic, proton ], table1 )
-        equal = SpinGroup( [ capture, elastic, inelastic, proton ], table1 )
-        different = SpinGroup( [ capture, elastic, inelastic ], table2 )
+        formalism = Formalism.ReichMoore
+        boundary = BoundaryCondition.ShiftFactor
+
+        left = SpinGroup( [ capture, elastic, inelastic, proton ], table1, formalism, boundary )
+        equal = SpinGroup( [ capture, elastic, inelastic, proton ], table1, formalism, boundary )
+        different = SpinGroup( [ capture, elastic, inelastic ], table2, formalism, boundary )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

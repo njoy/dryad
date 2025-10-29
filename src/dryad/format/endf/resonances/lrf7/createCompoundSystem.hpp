@@ -23,6 +23,8 @@ namespace lrf7 {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
+   *  @param[in] formalism    the r matrix formalism option to be applied
+   *  @param[in] boundary     the boundary condition option to be applied
    *  @param[in] endf         the parsed ENDF LRF7 data
    */
   auto createCompoundSystem( const id::ParticleID& projectile,
@@ -30,7 +32,8 @@ namespace lrf7 {
                              const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     auto formalism = lrf7::createFormalism( endf );
-    auto groups = lrf7::createSpinGroups( projectile, target, endf );
+    auto boundary = lrf7::createBoundaryCondition( endf.particlePairs() );
+    auto groups = lrf7::createSpinGroups( projectile, target, formalism, boundary, endf );
 
     return dryad::resonances::CompoundSystem( std::move( groups ) );
   }
