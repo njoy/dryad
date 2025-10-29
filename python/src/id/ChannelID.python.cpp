@@ -26,7 +26,9 @@ void wrapChannelID( python::module& module ) {
 
     module,
     "ChannelID",
-    "The channel identifier, with associated reaction and quantum numbers"
+    "The channel identifier, with associated reaction and quantum numbers\n\n"
+    "When using comparison on the channel identifier, we use a Jpi,l,s,reaction,partial\n"
+    "ordering."
   );
 
   // wrap the component
@@ -39,10 +41,10 @@ void wrapChannelID( python::module& module ) {
     python::arg( "partial" ) = std::nullopt,
     "Initialise the channel identifier\n\n"
     "Arguments:\n"
-    "    self       the channel identifier\n"
-    "    reaction   the reaction\n"
-    "    numbers    the channel quantum numbers\n"
-    "    partial    the optional partial index"
+    "    self              the channel identifier\n"
+    "    reaction          the reaction\n"
+    "    quantum_numbers   the channel quantum numbers\n"
+    "    partial           the optional partial index"
   )
   .def(
 

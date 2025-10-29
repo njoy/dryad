@@ -9,33 +9,49 @@ ResonanceTable( ResonanceTable&& ) = default;
 ResonanceTable& operator=( const ResonanceTable& ) = default;
 ResonanceTable& operator=( ResonanceTable&& ) = default;
 
+private:
+
 /**
- *  @brief Constructor
- *
- *  The ResonanceTable class takes the reduced amplitude widths for a
- *  number of channels (at least one channel must be given).
- *
- *  @param[in] channels     the channel identifiers (nc values)
- *  @param[in] energies     the resonance energies (ne values)
- *  @param[in] amplitudes   the reduced amplitude widths (nc arrays of ne values)
+ *  @brief Private intermediate constructor
  */
-ResonanceTable( std::vector< id::ChannelID > channels,
-                std::vector< double > energies,
-                std::vector< std::vector< double > > amplitudes ) :
-    channels_( std::move( channels ) ),
-    energies_( std::move( energies ) ),
-    amplitudes_( std::move( amplitudes ) ) {
+ResonanceTable( std::tuple< std::vector< id::ChannelID >,
+                            std::vector< double >,
+                            std::vector< std::vector< double > > >&& data ) :
+    channels_( std::move( std::get< 0 >( data ) ) ),
+    energies_( std::move( std::get< 1 >( data ) ) ),
+    amplitudes_( std::move( std::get< 2 >( data ) ) ) {
 
   this->verifyTable( this->channels(), this->energies(),
                      this->reducedWidthAmplitudes() );
 }
 
+public:
+
 /**
  *  @brief Constructor
  *
+ *  The energies and channels do not have to be sorted (they will be sorted
+ *  upon construction).
+ *
+ *  @param[in] channels     the channel identifiers (nc values, at least 1)
+ *  @param[in] energies     the level energies (ne values, at least 1)
+ *  @param[in] amplitudes   the reduced width amplitudes (nc arrays of ne values)
+ */
+ResonanceTable( std::vector< id::ChannelID > channels,
+                std::vector< double > energies,
+                std::vector< std::vector< double > > amplitudes ) :
+    ResonanceTable( processTable( std::move( channels ),
+                                  std::move( energies ),
+                                  std::move( amplitudes ) ) ) {}
+
+/**
+ *  @brief Constructor
+ *
+ *  The energies do not have to be sorted (they will be sorted upon construction).
+ *
  *  @param[in] channel      the channel identifier
- *  @param[in] energies     the resonance energies
- *  @param[in] amplitudes   the reduced amplitude widths
+ *  @param[in] energies     the level energies
+ *  @param[in] amplitudes   the reduced width amplitudes
  */
 ResonanceTable( id::ChannelID channel,
                 std::vector< double > energies,

@@ -24,8 +24,8 @@ HardSphereShiftFactor& operator=( HardSphereShiftFactor&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param orbitalMomentum   the value of the orbital momentum
+ *  @param orbitalAngularMomentum   the value of the orbital angular momentum
  */
-HardSphereShiftFactor( unsigned int orbitalMomentum ) :
-  PolynomialSeriesRatio( generateFunction( orbitalMomentum ) ),
-  orbital_momentum_( orbitalMomentum ) {}
+HardSphereShiftFactor( unsigned int orbitalAngularMomentum ) :
+  PolynomialSeriesRatio( generateFunction( orbitalAngularMomentum ) ),
+  orbital_momentum_( orbitalAngularMomentum ) {}

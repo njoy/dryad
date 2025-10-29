@@ -186,6 +186,8 @@ namespace resonances {
      */
     double waveNumber( double energy ) const {
 
+      // see Sammy manual equation II C4.4 and ENDF manual equation D.82
+
       // conversion constant to convert the final value to fm^-1
       const double conversion = std::sqrt( constants::amu / constants::e ) * constants::femto;
 
@@ -217,12 +219,12 @@ namespace resonances {
       // conversion constant to convert the final value to a dimensionless value
       constexpr double conversion = constants::amu * constants::femto;
 
-      if ( this->outgoingParticlePair()->particle().charge() != 0 ) {
+      if ( this->outgoingParticlePair()->lightParticle().charge() != 0 ) {
 
-        const auto zZ = this->outgoingParticlePair()->particle().charge() *
-                        this->outgoingParticlePair()->residual().charge(); // e^2
-        const auto mu = this->outgoingParticlePair()->reducedMass();       // amu
-        const auto k = this->waveNumber( energy );                         // fm^-1
+        const auto zZ = this->outgoingParticlePair()->lightParticle().charge() *
+                        this->outgoingParticlePair()->heavyParticle().charge(); // e^2
+        const auto mu = this->outgoingParticlePair()->reducedMass();            // amu
+        const auto k = this->waveNumber( energy );                              // fm^-1
         return zZ * mu * conversion
                / ( 4. * k * constants::pi * constants::epsilon0
                           * constants::hbar * constants::hbar );

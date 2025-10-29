@@ -12,7 +12,7 @@ CoulombPhaseShiftDifference& operator=( CoulombPhaseShiftDifference&& ) = defaul
 /**
  *  @brief Constructor
  *
- *  @param orbitalMomentum   the value of the orbital momentum
+ *  @param orbitalAngularMomentum   the value of the orbital angular momentum
  */
-CoulombPhaseShiftDifference( unsigned int orbitalMomentum ) :
-  orbital_momentum_( orbitalMomentum ) {}
+CoulombPhaseShiftDifference( unsigned int orbitalAngularMomentum ) :
+  orbital_momentum_( orbitalAngularMomentum ) {}

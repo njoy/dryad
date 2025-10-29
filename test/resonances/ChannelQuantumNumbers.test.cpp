@@ -192,10 +192,11 @@ SCENARIO( "ChannelQuantumNumbers" ) {
       CHECK_THAT( 2.5, WithinRel( values[2] ) );
 
       values = ChannelQuantumNumbers::allowedTotalAngularMomentumValues( 1, 1.0, 1.0 );
-      CHECK( 3 == values.size() );
-      CHECK_THAT( 1.0, WithinRel( values[0] ) );
-      CHECK_THAT( 2.0, WithinRel( values[1] ) );
-      CHECK_THAT( 3.0, WithinRel( values[2] ) );
+      CHECK( 4 == values.size() );
+      CHECK_THAT( 0.0, WithinRel( values[0] ) );
+      CHECK_THAT( 1.0, WithinRel( values[1] ) );
+      CHECK_THAT( 2.0, WithinRel( values[2] ) );
+      CHECK_THAT( 3.0, WithinRel( values[3] ) );
     } // THEN
 
     THEN( "the allowed total angular momentum values are generated "
@@ -254,8 +255,8 @@ SCENARIO( "ChannelQuantumNumbers" ) {
 
       auto values = ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, 0, 2 );
       CHECK( 5 == values.size() );
-      CHECK( ChannelQuantumNumbers( 0, 0.5, 0.5, +1 ) == values[0] );
-      CHECK( ChannelQuantumNumbers( 1, 0.5, 0.5, -1 ) == values[1] );
+      CHECK( ChannelQuantumNumbers( 1, 0.5, 0.5, -1 ) == values[0] );
+      CHECK( ChannelQuantumNumbers( 0, 0.5, 0.5, +1 ) == values[1] );
       CHECK( ChannelQuantumNumbers( 1, 0.5, 1.5, -1 ) == values[2] );
       CHECK( ChannelQuantumNumbers( 2, 0.5, 1.5, +1 ) == values[3] );
       CHECK( ChannelQuantumNumbers( 2, 0.5, 2.5, +1 ) == values[4] );
@@ -263,14 +264,14 @@ SCENARIO( "ChannelQuantumNumbers" ) {
       values = ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, 0.5, 2 );
 
       CHECK( 10 == values.size() );
-      CHECK( ChannelQuantumNumbers( 0, 0, 0, +1 ) == values[0] );
-      CHECK( ChannelQuantumNumbers( 0, 1, 1, +1 ) == values[1] );
+      CHECK( ChannelQuantumNumbers( 1, 1, 0, -1 ) == values[0] );
+      CHECK( ChannelQuantumNumbers( 0, 0, 0, +1 ) == values[1] );
       CHECK( ChannelQuantumNumbers( 1, 0, 1, -1 ) == values[2] );
-      CHECK( ChannelQuantumNumbers( 1, 1, 0, -1 ) == values[3] );
-      CHECK( ChannelQuantumNumbers( 1, 1, 1, -1 ) == values[4] );
-      CHECK( ChannelQuantumNumbers( 1, 1, 2, -1 ) == values[5] );
-      CHECK( ChannelQuantumNumbers( 2, 0, 2, +1 ) == values[6] );
-      CHECK( ChannelQuantumNumbers( 2, 1, 1, +1 ) == values[7] );
+      CHECK( ChannelQuantumNumbers( 1, 1, 1, -1 ) == values[3] );
+      CHECK( ChannelQuantumNumbers( 0, 1, 1, +1 ) == values[4] );
+      CHECK( ChannelQuantumNumbers( 2, 1, 1, +1 ) == values[5] );
+      CHECK( ChannelQuantumNumbers( 1, 1, 2, -1 ) == values[6] );
+      CHECK( ChannelQuantumNumbers( 2, 0, 2, +1 ) == values[7] );
       CHECK( ChannelQuantumNumbers( 2, 1, 2, +1 ) == values[8] );
       CHECK( ChannelQuantumNumbers( 2, 1, 3, +1 ) == values[9] );
     } // THEN
@@ -279,7 +280,7 @@ SCENARIO( "ChannelQuantumNumbers" ) {
   GIVEN( "valid ChannelQuantumNumbers instances" ) {
 
     ChannelQuantumNumbers id1( 0, 0.5, 0.5, +1 );
-    ChannelQuantumNumbers id2( 1, 0.5, 0.5, +1 );
+    ChannelQuantumNumbers id2( 0, 0.5, 1.0, -1 );
 
     THEN( "instances can be compared" ) {
 

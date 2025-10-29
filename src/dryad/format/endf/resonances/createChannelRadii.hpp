@@ -21,13 +21,17 @@ namespace resonances {
    *
    *  @param[in] naps   the channel radius option as given in the ENDF file
    *  @param[in] nro    the energy dependent scattering radius (if defined)
-   *  @param[in] ap     the l-dependent scatttering radius (if defined, given in fm)
+   *  @param[in] ap     the l-dependent scattering radius (if defined, given in fm)
    *  @param[in] awr    the atomic weight ratio as given in the ENDF file
    */
   auto createChannelRadii( int naps,
                            const std::optional< dryad::resonances::TabulatedRadius >& nro,
                            double ap,
                            double awri ) {
+
+    // see equation D.14 from the ENDF manual
+    // ENDF-6 Formats Manual, CSEWG Document ENDF-102, NNDC, Brookhaven National Laboratory
+    // https://www.nndc.bnl.gov/endf
 
     double a = ( 0.123 * std::pow( awri, 1. / 3. ) + 0.08 ) * constants::deca;
 

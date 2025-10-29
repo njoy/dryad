@@ -20,6 +20,7 @@ class Test_dryad_resonances_Particle( unittest.TestCase ) :
         self.assertAlmostEqual( 1.008664, neutron.mass )
         self.assertAlmostEqual( 0.5, neutron.spin )
         self.assertEqual( 0, neutron.charge )
+        self.assertEqual( 0, neutron.excited_state )
         self.assertEqual( +1, neutron.parity )
 
         proton = Particle( id = ParticleID.proton(), mass = 1.007276,
@@ -29,6 +30,7 @@ class Test_dryad_resonances_Particle( unittest.TestCase ) :
         self.assertAlmostEqual( 1.007276, proton.mass )
         self.assertAlmostEqual( 0.5, proton.spin )
         self.assertEqual( 1, proton.charge )
+        self.assertEqual( 0, proton.excited_state )
         self.assertEqual( +1, proton.parity )
 
         u235 = Particle( id = ParticleID( 'U235' ), mass = 235.0439299,
@@ -38,7 +40,18 @@ class Test_dryad_resonances_Particle( unittest.TestCase ) :
         self.assertAlmostEqual( 235.0439299, u235.mass )
         self.assertAlmostEqual( 0., u235.spin )
         self.assertEqual( 92, u235.charge )
+        self.assertEqual( 0, u235.excited_state )
         self.assertEqual( +1, u235.parity )
+
+        u235_e1 = Particle( id = ParticleID( 'U235_e1' ), mass = 235.0439299,
+                            spin = 0., parity = +1 )
+
+        self.assertEqual( ParticleID( 'U235_e1' ), u235_e1.identifier )
+        self.assertAlmostEqual( 235.0439299, u235_e1.mass )
+        self.assertAlmostEqual( 0., u235_e1.spin )
+        self.assertEqual( 92, u235_e1.charge )
+        self.assertEqual( 1, u235_e1.excited_state )
+        self.assertEqual( +1, u235_e1.parity )
 
     def test_comparison( self ) :
 

@@ -24,8 +24,8 @@ HardSpherePenetrability& operator=( HardSpherePenetrability&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param orbitalMomentum   the value of the orbital momentum
+ *  @param orbitalAngularMomentum   the value of the orbital angular momentum
  */
-HardSpherePenetrability( unsigned int orbitalMomentum ) :
-  PolynomialSeriesRatio( generateFunction( orbitalMomentum ) ),
-  orbital_momentum_( orbitalMomentum ) {}
+HardSpherePenetrability( unsigned int orbitalAngularMomentum ) :
+  PolynomialSeriesRatio( generateFunction( orbitalAngularMomentum ) ),
+  orbital_momentum_( orbitalAngularMomentum ) {}

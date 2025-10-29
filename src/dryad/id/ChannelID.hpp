@@ -18,6 +18,9 @@ namespace id {
   /**
    *  @class
    *  @brief The channel identifier, with associated reaction and quantum numbers.
+   *
+   *  When using comparison on the channel identifier, we use a Jpi,l,s,reaction,partial
+   *  ordering.
    */
   class ChannelID {
 
@@ -96,8 +99,8 @@ namespace id {
      */
     friend auto operator==( const ChannelID& left, const ChannelID& right ) {
 
-      return std::tie( left.reaction(), left.quantumNumbers(), left.partial() ) ==
-             std::tie( right.reaction(), right.quantumNumbers(), right.partial() );
+      return std::tie( left.quantumNumbers(), left.reaction(), left.partial() ) ==
+             std::tie( right.quantumNumbers(), right.reaction(), right.partial() );
     }
 
     /**
@@ -119,8 +122,8 @@ namespace id {
      */
     friend auto operator<( const ChannelID& left, const ChannelID& right ) {
 
-      return std::tie( left.reaction(), left.quantumNumbers(), left.partial() ) <
-             std::tie( right.reaction(), right.quantumNumbers(), right.partial() );
+      return std::tie( left.quantumNumbers(), left.reaction(), left.partial() ) <
+             std::tie( right.quantumNumbers(), right.reaction(), right.partial() );
     }
 
     /**

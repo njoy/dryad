@@ -33,11 +33,11 @@ void wrapCoulombPhaseShift( python::module& module ) {
   .def(
 
     python::init< unsigned int >(),
-    python::arg( "orbital_momentum" ),
+    python::arg( "orbital_angular_momentum" ),
     "Initialise the Coulomb phase shift function\n\n"
     "Arguments:\n"
-    "    self               the function\n"
-    "    orbital_momentum   the value of the orbital momentum"
+    "    self                       the function\n"
+    "    orbital_angular_momentum   the value of the orbital momentum"
   )
   .def(
 

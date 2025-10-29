@@ -27,8 +27,8 @@ void wrapParticlePair( python::module& module ) {
     "Particle information for resonance reconstruction\n\n"
     "A ParticlePair represents the two particles involved in a entrance or exit\n"
     "reaction channel (we assume that the reaction is a two-body reaction). The\n"
-    "pair consists of a \"small\" incident or outgoing particle (e.g. a neutron,\n"
-    "photon, alpha, etc.) and a \"larger\" target or residual nucleus (e.g. H1,\n"
+    "pair consists of a \"light\" incident or outgoing particle (e.g. a neutron,\n"
+    "photon, alpha, etc.) and a \"heavy\" target or residual nucleus (e.g. H1,\n"
     "He4, U235, etc.).\n\n"
     "The ParticlePair class gives us access to information related to the\n"
     "pair of particles such as the mass ratio and the reduced mass."
@@ -39,12 +39,12 @@ void wrapParticlePair( python::module& module ) {
   .def(
 
     python::init< Particle, Particle >(),
-    python::arg( "particle" ), python::arg( "residual" ),
+    python::arg( "light_particle" ), python::arg( "heavy_particle" ),
     "Initialise the particle pair information\n\n"
     "Arguments:\n"
-    "    self       the particle pair information\n"
-    "    particle   the light particle\n"
-    "    residual   the heavy residual"
+    "    self             the particle pair information\n"
+    "    light_particle   the light particle\n"
+    "    heavy_particle   the heavy particle"
   )
   .def(
 
@@ -56,15 +56,15 @@ void wrapParticlePair( python::module& module ) {
   )
   .def_property_readonly(
 
-    "particle",
-    &Component::particle,
+    "light_particle",
+    &Component::lightParticle,
     "The light particle in the particle pair"
   )
   .def_property_readonly(
 
-    "residual",
-    &Component::residual,
-    "The heavy residual in the particle pair"
+    "heavy_particle",
+    &Component::heavyParticle,
+    "The heavy particle in the particle pair"
   )
   .def_property_readonly(
 

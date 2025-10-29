@@ -13,13 +13,14 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
 
     def test_component( self ) :
 
+        # everything sorted
         table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
                                              ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
                                 energies = [ 1., 2., 3., 4. ],
                                 amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
         self.assertEqual( 2, table.number_channels )
-        self.assertEqual( 4, table.number_resonances )
+        self.assertEqual( 4, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
         self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )
@@ -48,12 +49,49 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertAlmostEqual( 23., table.reduced_width_amplitudes[1][2] )
         self.assertAlmostEqual( 24., table.reduced_width_amplitudes[1][3] )
 
+        # everything unsorted
+        table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
+                                             ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ],
+                                energies = [ 4., 3., 2., 1. ],
+                                amplitudes = [ [ 24., 23., 22., 21. ], [ 14., 13., 12., 11. ] ] )
+
+        self.assertEqual( 2, table.number_channels )
+        self.assertEqual( 4, table.number_energies )
+
+        self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
+        self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )
+
+        self.assertEqual( True, table.has_channel( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ) )
+        self.assertEqual( True, table.has_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ) )
+        self.assertEqual( False, table.has_channel( ChannelID( 'n,U235->n,U235_e1{1,1/2,1/2+}' ) ) )
+
+        self.assertEqual( True, table.has_energy( 1. ) )
+        self.assertEqual( True, table.has_energy( 2. ) )
+        self.assertEqual( True, table.has_energy( 3. ) )
+        self.assertEqual( True, table.has_energy( 4. ) )
+        self.assertEqual( False, table.has_energy( 5. ) )
+
+        self.assertAlmostEqual( 1., table.energies[0] )
+        self.assertAlmostEqual( 2., table.energies[1] )
+        self.assertAlmostEqual( 3., table.energies[2] )
+        self.assertAlmostEqual( 4., table.energies[3] )
+
+        self.assertAlmostEqual( 11., table.reduced_width_amplitudes[0][0] )
+        self.assertAlmostEqual( 12., table.reduced_width_amplitudes[0][1] )
+        self.assertAlmostEqual( 13., table.reduced_width_amplitudes[0][2] )
+        self.assertAlmostEqual( 14., table.reduced_width_amplitudes[0][3] )
+        self.assertAlmostEqual( 21., table.reduced_width_amplitudes[1][0] )
+        self.assertAlmostEqual( 22., table.reduced_width_amplitudes[1][1] )
+        self.assertAlmostEqual( 23., table.reduced_width_amplitudes[1][2] )
+        self.assertAlmostEqual( 24., table.reduced_width_amplitudes[1][3] )
+
+        # single channel
         table = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
                                 energies = [ 1., 2., 3., 4. ],
                                 amplitudes = [ 11., 12., 13., 14. ] )
 
         self.assertEqual( 1, table.number_channels )
-        self.assertEqual( 4, table.number_resonances )
+        self.assertEqual( 4, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
 
@@ -76,11 +114,20 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                 energies = [ 2., 3., 5. ],
                                 amplitudes = [ 22., 23., 25. ] )
 
+        # common channel, zero width for common energy
+        right2 = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                 energies = [ 2., 3., 5. ],
+                                 amplitudes = [ 0., 23., 25. ] )
+        # common channel, non-zero width for common energy
+        right3 = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                 energies = [ 2., 3., 5. ],
+                                 amplitudes = [ 22., 23., 25. ] )
+
         table = ResonanceTable( left )
         table += right
 
         self.assertEqual( 2, table.number_channels )
-        self.assertEqual( 5, table.number_resonances )
+        self.assertEqual( 5, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
         self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )
@@ -105,7 +152,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         table = left + right
 
         self.assertEqual( 2, table.number_channels )
-        self.assertEqual( 5, table.number_resonances )
+        self.assertEqual( 5, table.number_energies )
 
         self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
         self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), table.channels[1] )
@@ -126,6 +173,51 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertAlmostEqual( 23., table.reduced_width_amplitudes[1][2] )
         self.assertAlmostEqual(  0., table.reduced_width_amplitudes[1][3] )
         self.assertAlmostEqual( 25., table.reduced_width_amplitudes[1][4] )
+
+        table = ResonanceTable( left )
+        table += right2
+
+        self.assertEqual( 1, table.number_channels )
+        self.assertEqual( 5, table.number_energies )
+
+        self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
+
+        self.assertAlmostEqual( 1., table.energies[0] )
+        self.assertAlmostEqual( 2., table.energies[1] )
+        self.assertAlmostEqual( 3., table.energies[2] )
+        self.assertAlmostEqual( 4., table.energies[3] )
+        self.assertAlmostEqual( 5., table.energies[4] )
+
+        self.assertAlmostEqual( 11., table.reduced_width_amplitudes[0][0] )
+        self.assertAlmostEqual( 12., table.reduced_width_amplitudes[0][1] )
+        self.assertAlmostEqual( 23., table.reduced_width_amplitudes[0][2] )
+        self.assertAlmostEqual( 14., table.reduced_width_amplitudes[0][3] )
+        self.assertAlmostEqual( 25., table.reduced_width_amplitudes[0][4] )
+
+        table = left + right2
+
+        self.assertEqual( 1, table.number_channels )
+        self.assertEqual( 5, table.number_energies )
+
+        self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), table.channels[0] )
+
+        self.assertAlmostEqual( 1., table.energies[0] )
+        self.assertAlmostEqual( 2., table.energies[1] )
+        self.assertAlmostEqual( 3., table.energies[2] )
+        self.assertAlmostEqual( 4., table.energies[3] )
+        self.assertAlmostEqual( 5., table.energies[4] )
+
+        self.assertAlmostEqual( 11., table.reduced_width_amplitudes[0][0] )
+        self.assertAlmostEqual( 12., table.reduced_width_amplitudes[0][1] )
+        self.assertAlmostEqual( 23., table.reduced_width_amplitudes[0][2] )
+        self.assertAlmostEqual( 14., table.reduced_width_amplitudes[0][3] )
+        self.assertAlmostEqual( 25., table.reduced_width_amplitudes[0][4] )
+
+        table = ResonanceTable( left )
+        with self.assertRaises( Exception ) : table += right3
+        self.assertEqual( left, table )
+        with self.assertRaises( Exception ) : table = left + right3
+        self.assertEqual( left, table )
 
     def test_comparison( self ) :
 
@@ -160,14 +252,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                     energies = [ 1., 2., 3., 4. ],
                                     amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
-        # the energies are not sorted orunique
-        with self.assertRaises( Exception ) :
-
-            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
-                                    energies = [ 1., 3., 2., 4. ],
-                                    amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
-
+        # the energies are not unique
         with self.assertRaises( Exception ) :
 
             table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),

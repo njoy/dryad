@@ -25,7 +25,7 @@ void wrapHardSpherePhaseShift( python::module& module ) {
 
     module,
     "HardSpherePhaseShift",
-    "Hardsphere phase shift functions"
+    "Hard sphere phase shift functions"
    );
 
   // wrap the component
@@ -33,11 +33,11 @@ void wrapHardSpherePhaseShift( python::module& module ) {
   .def(
 
     python::init< unsigned int >(),
-    python::arg( "orbital_momentum" ),
+    python::arg( "orbital_angular_momentum" ),
     "Initialise the hard sphere phase shift function\n\n"
     "Arguments:\n"
-    "    self               the function\n"
-    "    orbital_momentum   the value of the orbital momentum"
+    "    self                       the function\n"
+    "    orbital_angular_momentum   the value of the orbital momentum"
   )
   .def(
 

@@ -50,7 +50,7 @@ void wrapChannelRadii( python::module& module ) {
     "Initialise the channel radii\n\n"
     "Arguments:\n"
     "    self               the radii\n"
-    "    true_radius        the channel radius to be used for P and S"
+    "    true_radius        the channel radius to be used for P and S\n"
     "    effective_radius   the channel radius to be used for phi"
   )
   .def(

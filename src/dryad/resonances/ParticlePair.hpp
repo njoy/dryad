@@ -17,8 +17,8 @@ namespace resonances {
    *
    *  A ParticlePair represents the two particles involved in a entrance or exit
    *  reaction channel (we assume that the reaction is a two-body reaction). The
-   *  pair consists of a "small" incident or outgoing particle (e.g. a neutron,
-   *  photon, alpha, etc.) and a "larger" target or residual nucleus (e.g. H1,
+   *  pair consists of a "light" incident or outgoing particle (e.g. a neutron,
+   *  photon, alpha, etc.) and a "heavy" target or residual nucleus (e.g. H1,
    *  He4, U235, etc.).
    *
    *  The ParticlePair class gives us access to information related to the
@@ -28,8 +28,8 @@ namespace resonances {
 
     /* fields */
 
-    Particle particle_;
-    Particle residual_;
+    Particle light_particle_;
+    Particle heavy_particle_;
 
     double reduced_mass_;
     double mass_ratio_;
@@ -44,12 +44,12 @@ namespace resonances {
     /**
      *  @brief Return the light particle in the particle pair
      */
-    const Particle& particle() const { return this->particle_; }
+    const Particle& lightParticle() const { return this->light_particle_; }
 
     /**
-     *  @brief Return the heavy residual in the particle pair
+     *  @brief Return the heavy particle in the particle pair
      */
-    const Particle& residual() const { return this->residual_; }
+    const Particle& heavyParticle() const { return this->heavy_particle_; }
 
     /**
      *  @brief Return the reduced mass of the particle pair (in atomic mass units)
@@ -79,8 +79,8 @@ namespace resonances {
      */
     friend bool operator==( const ParticlePair& left, const ParticlePair& right ) {
 
-      return std::tie( left.particle(), left.residual() ) ==
-             std::tie( right.particle(), right.residual() );
+      return std::tie( left.lightParticle(), left.heavyParticle() ) ==
+             std::tie( right.lightParticle(), right.heavyParticle() );
     }
 
     /**

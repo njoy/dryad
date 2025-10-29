@@ -27,8 +27,8 @@ void wrapParticle( python::module& module ) {
     "Particle information for resonance reconstruction\n\n"
     "The Particle class contains specific information for a particle as used\n"
     "during resonance reconstruction. The Particle has an atomic mass, an\n"
-    "electrical charge, a spin and a parity (either + or -).\n\n"
-    "These variables are used to calculate quantities like the wave number k."
+    "electrical charge, an excited state number, a spin and a parity (which is\n"
+    "either + or -)."
    );
 
   // wrap the component
@@ -41,6 +41,7 @@ void wrapParticle( python::module& module ) {
     "Initialise the particle information\n\n"
     "Arguments:\n"
     "    self     the particle information\n"
+    "    id       the particle identifier\n"
     "    mass     the atomic mass\n"
     "    spin     the channel spin\n"
     "    parity   the parity"
@@ -71,6 +72,12 @@ void wrapParticle( python::module& module ) {
     &Component::charge,
     "The electrical charge of the particle (in units of the "
     "elementary charge)"
+  )
+  .def_property_readonly(
+
+    "excited_state",
+    &Component::excitedState,
+    "The excited state number of the particle"
   )
   .def_property_readonly(
 

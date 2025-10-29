@@ -8,30 +8,32 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
 
   if ( nc  == 0 || ne == 0 ) {
 
-    Log::error( "At least one channel and one resonance should be defined" );
+    Log::error( "At least one channel and one level energy should be defined" );
     Log::info( "Number channels: {}", nc );
-    Log::info( "Number resonances: {}", ne );
+    Log::info( "Number energies: {}", ne );
     throw std::exception();
   }
 
-  if ( ! std::is_sorted( energies.begin(), energies.end() ) ) {
-
-    Log::error( "The energies are not sorted" );
-    throw std::exception();
-  }
-
-  auto iter = std::adjacent_find( energies.begin(), energies.end() );
-  if ( iter != energies.end() ) {
+  auto energy = std::adjacent_find( energies.begin(), energies.end() );
+  if ( energy != energies.end() ) {
 
     Log::error( "The energies are not unique" );
-    Log::info( "The energy = {} appears more than once", *iter );
+    Log::info( "The energy = {} appears more than once", *energy );
+    throw std::exception();
+  }
+
+  auto channel = std::adjacent_find( channels.begin(), channels.end() );
+  if ( channel != channels.end() ) {
+
+    Log::error( "The channels are not unique" );
+    Log::info( "The channel = {} appears more than once", channel->symbol() );
     throw std::exception();
   }
 
   if ( nc != amplitudes.size() ) {
 
     Log::error( "The number of channel identifiers and the number of columns of "
-                "reduced amplitude widths is not as expected" );
+                "reduced width amplitudes is not as expected" );
     Log::info( "Number channel identifiers: {}", nc );
     Log::info( "Number columns: {}", amplitudes.size() );
     throw std::exception();
@@ -41,8 +43,8 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
 
     if ( ne != amplitudes[i].size() ) {
 
-      Log::error( "The number of reduced amplitude widths for channel \'{}\' is not as expected" );
-      Log::info( "Number widhts: {}", amplitudes[i].size() );
+      Log::error( "The number of reduced width amplitudes for channel \'{}\' is not as expected" );
+      Log::info( "Number widths: {}", amplitudes[i].size() );
       Log::info( "Expected number: {}", ne );
       throw std::exception();
     }

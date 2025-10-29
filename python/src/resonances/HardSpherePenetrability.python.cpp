@@ -25,7 +25,7 @@ void wrapHardSpherePenetrability( python::module& module ) {
 
     module,
     "HardSpherePenetrability",
-    "Hardsphere penetrability functions"
+    "Hard sphere penetrability functions"
    );
 
   // wrap the component
@@ -33,11 +33,11 @@ void wrapHardSpherePenetrability( python::module& module ) {
   .def(
 
     python::init< unsigned int >(),
-    python::arg( "orbital_momentum" ),
+    python::arg( "orbital_angular_momentum" ),
     "Initialise the hard sphere penetrability function\n\n"
     "Arguments:\n"
-    "    self               the function\n"
-    "    orbital_momentum   the value of the orbital momentum"
+    "    self                       the function\n"
+    "    orbital_angular_momentum   the value of the orbital momentum"
   )
   .def(
 

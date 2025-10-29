@@ -12,7 +12,7 @@ CoulombPenetrability& operator=( CoulombPenetrability&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param orbitalMomentum   the value of the orbital momentum
+ *  @param orbitalAngularMomentum   the value of the orbital angular momentum
  */
-CoulombPenetrability( unsigned int orbitalMomentum ) :
-  orbital_momentum_( orbitalMomentum ) {}
+CoulombPenetrability( unsigned int orbitalAngularMomentum ) :
+  orbital_momentum_( orbitalAngularMomentum ) {}

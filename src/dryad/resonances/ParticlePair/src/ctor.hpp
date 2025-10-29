@@ -12,15 +12,15 @@ ParticlePair& operator=( ParticlePair&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param[in] particle   the light particle
- *  @param[in] residual   the heavy residual
+ *  @param[in] lightParticle   the light particle
+ *  @param[in] heavyParticle   the heavy particle
  */
-ParticlePair( Particle particle, Particle residual ) :
-    particle_( std::move( particle ) ), residual_( std::move( residual ) ) {
+ParticlePair( Particle lightParticle, Particle heavyParticle ) :
+    light_particle_( std::move( lightParticle ) ),
+    heavy_particle_( std::move( heavyParticle ) ) {
 
-  const auto ma = this->particle().mass();
-  const auto mb = this->residual().mass();
+  const auto ma = this->lightParticle().mass();
+  const auto mb = this->heavyParticle().mass();
   this->reduced_mass_ = ma * mb / ( ma + mb );
   this->mass_ratio_ = mb / ( ma + mb );
 }
-

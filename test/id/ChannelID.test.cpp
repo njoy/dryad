@@ -56,7 +56,7 @@ SCENARIO( "ChannelID" ) {
 
   GIVEN( "valid ReactionID instances" ) {
 
-    ChannelID id1( "n,U235->fission(t){0,1/2,1/2+}[1]" );
+    ChannelID id1( "n,U235->fission(t){1,1/2,1/2-}[1]" );
     ChannelID id2( "n,U235->n,U235{0,1/2,1/2+}" );
 
     THEN( "instances can be compared" ) {
@@ -90,7 +90,7 @@ SCENARIO( "ChannelID" ) {
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ ChannelID( "n,U235->fission(t){0,1/2,1/2+}[1]" ) ] == "1" );
+      CHECK( map[ ChannelID( "n,U235->fission(t){1,1/2,1/2-}[1]" ) ] == "1" );
       CHECK( map[ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ] == "2" );
     } // THEN
 
@@ -103,7 +103,7 @@ SCENARIO( "ChannelID" ) {
 
       CHECK( map[ id1 ] == "1" );
       CHECK( map[ id2 ] == "2" );
-      CHECK( map[ ChannelID( "n,U235->fission(t){0,1/2,1/2+}[1]" ) ] == "1" );
+      CHECK( map[ ChannelID( "n,U235->fission(t){1,1/2,1/2-}[1]" ) ] == "1" );
       CHECK( map[ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ] == "2" );
     } // THEN
   } // GIVEN

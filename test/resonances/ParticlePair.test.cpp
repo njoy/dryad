@@ -23,17 +23,17 @@ SCENARIO( "ParticlePair" ) {
 
       ParticlePair pair( std::move( neutron ), std::move( u235 ) );
 
-      CHECK( id::ParticleID::neutron() == pair.particle().identifier() );
-      CHECK_THAT( 1.008664, WithinRel( pair.particle().mass() ) );
-      CHECK_THAT( 0.5, WithinRel( pair.particle().spin() ) );
-      CHECK( 0.0 == pair.particle().charge() );
-      CHECK( +1 == pair.particle().parity() );
+      CHECK( id::ParticleID::neutron() == pair.lightParticle().identifier() );
+      CHECK_THAT( 1.008664, WithinRel( pair.lightParticle().mass() ) );
+      CHECK_THAT( 0.5, WithinRel( pair.lightParticle().spin() ) );
+      CHECK( 0.0 == pair.lightParticle().charge() );
+      CHECK( +1 == pair.lightParticle().parity() );
 
-      CHECK( id::ParticleID( "U235" ) == pair.residual().identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( pair.residual().mass() ) );
-      CHECK_THAT( 0., WithinRel( pair.residual().spin() ) );
-      CHECK( 92 == pair.residual().charge() );
-      CHECK( +1 == pair.residual().parity() );
+      CHECK( id::ParticleID( "U235" ) == pair.heavyParticle().identifier() );
+      CHECK_THAT( 235.0439299, WithinRel( pair.heavyParticle().mass() ) );
+      CHECK_THAT( 0., WithinRel( pair.heavyParticle().spin() ) );
+      CHECK( 92 == pair.heavyParticle().charge() );
+      CHECK( +1 == pair.heavyParticle().parity() );
 
       CHECK_THAT( 235.0439299 / ( 1.008664 + 235.0439299 ), WithinRel( pair.massRatio() ) );
       CHECK_THAT( 1.008664 * 235.0439299 / ( 1.008664 + 235.0439299 ), WithinRel( pair.reducedMass() ) );

@@ -33,11 +33,11 @@ void wrapCoulombPhaseShiftDifference( python::module& module ) {
   .def(
 
     python::init< unsigned int >(),
-    python::arg( "orbital_momentum" ),
+    python::arg( "orbital_angular_momentum" ),
     "Initialise the Coulomb phase shift difference function\n\n"
     "Arguments:\n"
-    "    self               the function\n"
-    "    orbital_momentum   the value of the orbital momentum"
+    "    self                       the function\n"
+    "    orbital_angular_momentum   the value of the orbital momentum"
   )
   .def(
 
@@ -58,7 +58,7 @@ void wrapCoulombPhaseShiftDifference( python::module& module ) {
     "__call__",
     [] ( const Component& self, double ratio ) -> decltype(auto)
        { return self( ratio ); },
-    python::arg( "cosine" ),
+    python::arg( "eta" ),
     "Evaluate the phase shift difference for a given eta value\n\n"
     "Arguments:\n"
     "    self    the phase shift function\n"

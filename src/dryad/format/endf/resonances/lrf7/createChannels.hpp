@@ -53,8 +53,8 @@ namespace lrf7 {
     auto pair = std::find_if( pairs.begin(), pairs.end(),
                               [&] ( auto&& pair ) {
 
-                                return pair.has_value() ? ( pair->particle().identifier() == projectile &&
-                                                            pair->residual().identifier() == target )
+                                return pair.has_value() ? ( pair->lightParticle().identifier() == projectile &&
+                                                            pair->heavyParticle().identifier() == target )
                                                         : false;
                               } );
     dryad::resonances::ParticlePair incident = pair->value();

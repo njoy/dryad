@@ -243,7 +243,9 @@ class ChannelQuantumNumbers:
     
     The ChannelQuantumNumbers class contains the quantum numbers associated to
     a given reaction channel. Only channels that have the same Jpi contribute
-    to the cross section of a given reaction.
+    to the cross section for a spin group.
+    
+    When using comparison on the quantum numbers, we use a Jpi,l,s ordering.
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -274,11 +276,6 @@ class ChannelQuantumNumbers:
     def allowed_total_angular_momentum_values(l: int, i: float, I: float) -> list[float]:
         """
         Calculate possible values for the total angular momentum J
-        
-        The total angular momentum J for a channel can only have values between
-        abs(abs(l - I) - i) and l + I +i where l is the orbital angular momentum
-        of the incoming wave, i is the spin of the incident particle and I is the
-        spin of the target nucleus.
         
         Arguments:
             l   the orbital angular momentum
@@ -317,6 +314,15 @@ class ChannelQuantumNumbers:
             s        the channel spin
             J        the total angular momentum
             parity   the parity
+        """
+    @typing.overload
+    def __init__(self, symbol: str) -> None:
+        """
+        Initialise the channel qunatum numbers
+        
+        Arguments:
+            self     the quantum numbers
+            symbol   the quantum numbers symbol
         """
     @typing.overload
     def __init__(self, instance: ChannelQuantumNumbers) -> None:
@@ -379,7 +385,8 @@ class ChannelRadii:
         
         Arguments:
             self               the radii
-            true_radius        the channel radius to be used for P and S    effective_radius   the channel radius to be used for phi
+            true_radius        the channel radius to be used for P and S
+            effective_radius   the channel radius to be used for phi
         """
     @typing.overload
     def __init__(self, penetrability: float | TabulatedRadius, shift_factor: float | TabulatedRadius, phase_shift: float | TabulatedRadius) -> None:
@@ -477,13 +484,13 @@ class CoulombPenetrability:
     def __eq__(self, arg0: CoulombPenetrability) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb penetrability function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombPenetrability) -> None:
@@ -517,13 +524,13 @@ class CoulombPhaseShift:
     def __eq__(self, arg0: CoulombPhaseShift) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb phase shift function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombPhaseShift) -> None:
@@ -545,7 +552,7 @@ class CoulombPhaseShiftDifference:
     Coulomb phase shift difference functions
     """
     __hash__: typing.ClassVar[None] = None
-    def __call__(self, cosine: float) -> float:
+    def __call__(self, eta: float) -> float:
         """
         Evaluate the phase shift difference for a given eta value
         
@@ -556,13 +563,13 @@ class CoulombPhaseShiftDifference:
     def __eq__(self, arg0: CoulombPhaseShiftDifference) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb phase shift difference function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombPhaseShiftDifference) -> None:
@@ -596,13 +603,13 @@ class CoulombShiftFactor:
     def __eq__(self, arg0: CoulombShiftFactor) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb shift factor function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: CoulombShiftFactor) -> None:
@@ -668,7 +675,7 @@ class Formalism:
         ...
 class HardSpherePenetrability:
     """
-    Hardsphere penetrability functions
+    Hard sphere penetrability functions
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -682,13 +689,13 @@ class HardSpherePenetrability:
     def __eq__(self, arg0: HardSpherePenetrability) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere penetrability function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: HardSpherePenetrability) -> None:
@@ -707,7 +714,7 @@ class HardSpherePenetrability:
         """
 class HardSpherePhaseShift:
     """
-    Hardsphere phase shift functions
+    Hard sphere phase shift functions
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -721,13 +728,13 @@ class HardSpherePhaseShift:
     def __eq__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere phase shift function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: HardSpherePhaseShift) -> None:
@@ -760,13 +767,13 @@ class HardSphereShiftFactor:
     def __eq__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
     @typing.overload
-    def __init__(self, orbital_momentum: int) -> None:
+    def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere shift factor function
         
         Arguments:
-            self               the function
-            orbital_momentum   the value of the orbital momentum
+            self                       the function
+            orbital_angular_momentum   the value of the orbital momentum
         """
     @typing.overload
     def __init__(self, instance: HardSphereShiftFactor) -> None:
@@ -789,9 +796,8 @@ class Particle:
     
     The Particle class contains specific information for a particle as used
     during resonance reconstruction. The Particle has an atomic mass, an
-    electrical charge, a spin and a parity (either + or -).
-    
-    These variables are used to calculate quantities like the wave number k.
+    electrical charge, an excited state number, a spin and a parity (which is
+    either + or -).
     """
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: Particle) -> bool:
@@ -803,6 +809,7 @@ class Particle:
         
         Arguments:
             self     the particle information
+            id       the particle identifier
             mass     the atomic mass
             spin     the channel spin
             parity   the parity
@@ -821,6 +828,11 @@ class Particle:
     def charge(self) -> int:
         """
         The electrical charge of the particle (in units of the elementary charge)
+        """
+    @property
+    def excited_state(self) -> int:
+        """
+        The excited state number of the particle
         """
     @property
     def identifier(self) -> dryad.id.ParticleID:
@@ -848,8 +860,8 @@ class ParticlePair:
     
     A ParticlePair represents the two particles involved in a entrance or exit
     reaction channel (we assume that the reaction is a two-body reaction). The
-    pair consists of a "small" incident or outgoing particle (e.g. a neutron,
-    photon, alpha, etc.) and a "larger" target or residual nucleus (e.g. H1,
+    pair consists of a "light" incident or outgoing particle (e.g. a neutron,
+    photon, alpha, etc.) and a "heavy" target or residual nucleus (e.g. H1,
     He4, U235, etc.).
     
     The ParticlePair class gives us access to information related to the
@@ -859,14 +871,14 @@ class ParticlePair:
     def __eq__(self, arg0: ParticlePair) -> bool:
         ...
     @typing.overload
-    def __init__(self, particle: Particle, residual: Particle) -> None:
+    def __init__(self, light_particle: Particle, heavy_particle: Particle) -> None:
         """
         Initialise the particle pair information
         
         Arguments:
-            self       the particle pair information
-            particle   the light particle
-            residual   the heavy residual
+            self             the particle pair information
+            light_particle   the light particle
+            heavy_particle   the heavy particle
         """
     @typing.overload
     def __init__(self, instance: ParticlePair) -> None:
@@ -879,6 +891,16 @@ class ParticlePair:
     def __ne__(self, arg0: ParticlePair) -> bool:
         ...
     @property
+    def heavy_particle(self) -> Particle:
+        """
+        The heavy particle in the particle pair
+        """
+    @property
+    def light_particle(self) -> Particle:
+        """
+        The light particle in the particle pair
+        """
+    @property
     def mass_ratio(self) -> float:
         """
         The mass ratio of the particle pair (dimensionless)
@@ -887,11 +909,6 @@ class ParticlePair:
            ratio = mb / ( ma + mb )
         in which ma and mb are the atomic mass values of the particles
         in the particle pair.
-        """
-    @property
-    def particle(self) -> Particle:
-        """
-        The light particle in the particle pair
         """
     @property
     def reduced_mass(self) -> float:
@@ -903,11 +920,6 @@ class ParticlePair:
         in which ma and mb are the atomic mass values of the particles in the
         particle pair.
         """
-    @property
-    def residual(self) -> Particle:
-        """
-        The heavy residual in the particle pair
-        """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ResonanceParameters) -> bool:
@@ -916,9 +928,9 @@ class ResonanceParameters:
         ...
 class ResonanceTable:
     """
-    A table of resonance parameters for a set of channels
+    A table of parameters for a set of channels
     
-    The table contains resonance energies and reduced amplitude widths,
+    The table contains level energies and reduced width amplitudes,
     all given as column data.
     """
     __hash__: typing.ClassVar[None] = None
@@ -931,27 +943,29 @@ class ResonanceTable:
     @typing.overload
     def __init__(self, channels: list[dryad.id.ChannelID], energies: list[float], amplitudes: list[list[float]]) -> None:
         """
-        Initialise the resonance table
+        Initialise the table
         
-        The ResonanceTable class takes the reduced amplitude widths for a
-        number of channels (at least one channel must be given).
+        The energies and channels do not have to be sorted (they will be sorted
+        upon construction).
         
         Arguments:
-            self         the resonance table
-            channels     the channel identifiers (nc values)
-            energies     the resonance energies (ne values)
-            amplitudes   the reduced amplitude widths (nc arrays of ne values)
+            self         the table
+            channels     the channel identifiers (nc values, at least 1)
+            energies     the level energies (ne values, at least 1)
+            amplitudes   the reduced width amplitudes (nc arrays of ne values)
         """
     @typing.overload
     def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
         """
-        Initialise the resonance table
+        Initialise the table
+        
+        The energies do not have to be sorted (they will be sorted upon construction).
         
         Arguments:
-            self         the resonance table
+            self         the table
             channel      the channel identifier
-            energies     the resonance energies
-            amplitudes   the reduced amplitude widths
+            energies     the level energies
+            amplitudes   the reduced width amplitudes
         """
     @typing.overload
     def __init__(self, instance: ResonanceTable) -> None:
@@ -968,7 +982,7 @@ class ResonanceTable:
         Return whether or not a channel is present
         
         Arguments:
-            self      the resonance table
+            self      the table
             channel   the channel identifier
         """
     def has_energy(self, energy: float) -> bool:
@@ -976,7 +990,7 @@ class ResonanceTable:
         Return whether or not an energy is present
         
         Arguments:
-            self     the resonance table
+            self     the table
             energy   the energy value
         """
     @property
@@ -987,7 +1001,7 @@ class ResonanceTable:
     @property
     def energies(self) -> list[float]:
         """
-        The resonance energies
+        The level energies
         """
     @property
     def number_channels(self) -> int:
@@ -995,9 +1009,9 @@ class ResonanceTable:
         The number of channels in the table
         """
     @property
-    def number_resonances(self) -> int:
+    def number_energies(self) -> int:
         """
-        The number of resonance in the table
+        The number of level energies in the table
         """
     @property
     def reduced_width_amplitudes(self) -> list[list[float]]:
