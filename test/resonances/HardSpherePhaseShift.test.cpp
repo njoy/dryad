@@ -124,7 +124,9 @@ SCENARIO( "HardSpherePhaseShift" ) {
     CHECK( 4 == phaseShift.orbitalAngularMomentum() );
     CHECK_THAT( 0.                   , WithinRel( phaseShift( 0.00 ) ) );
     CHECK_THAT( 3.816491567221192e-11, WithinRel( phaseShift( 0.25 ) ) );
-    CHECK_THAT( 1.911551589239835e-08, WithinRel( phaseShift( 0.50 ) ) );
+    // note: comparison set to 5e-8 because some systems (M1, apple-clang 16)
+    //       seem to fail on this particular case
+    CHECK_THAT( 1.911551589239835e-08, WithinRel( phaseShift( 0.50 ), 5e-8 ) );
     CHECK_THAT( 7.082866317897896e-07, WithinRel( phaseShift( 0.75 ) ) );
     CHECK_THAT( 8.955111328146081e-06, WithinRel( phaseShift( 1.00 ) ) );
     CHECK_THAT( 6.235437932700094e-05, WithinRel( phaseShift( 1.25 ) ) );

@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_CHANNELQUANTUMNUMBERS
 
 // system includes
+#include <algorithm>
 #include <cmath>
 #include <tuple>
 
@@ -177,6 +178,35 @@ namespace resonances {
     allowedTotalAngularMomentumValues( unsigned int l, double s ) {
 
       return generateValues( std::abs(l - s), l + s );
+    }
+
+    /**
+     *  @brief Calculate possible combinations of channel quantum numbers
+     *
+     *  @param[in] i      the spin of the incident particle
+     *  @param[in] I      the spin of the target nucleus
+     *  @param[in] lmax   the max value of the orbital angular momentum
+     */
+    static std::vector< ChannelQuantumNumbers >
+    allowedChannelQuantumNumbers( double i, double I, unsigned int lmax ) {
+
+      std::vector< ChannelQuantumNumbers > numbers;
+      auto s_values = allowedChannelSpinValues( i, I );
+
+      for ( unsigned int l = 0; l <= lmax; ++l ) {
+
+        for ( unsigned int s = 0; s < s_values.size(); ++s ) {
+
+          auto j_values = allowedTotalAngularMomentumValues( l, s_values[s] );
+          for ( unsigned int j = 0; j < j_values.size(); ++j ) {
+
+            numbers.emplace_back( l, s_values[s], j_values[j],
+                                  l%2 == 0 ? +1 : -1 );
+          }
+        }
+      }
+      std::sort( numbers.begin(), numbers.end() );
+      return numbers;
     }
 
     /**
