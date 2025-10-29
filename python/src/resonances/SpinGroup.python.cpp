@@ -45,8 +45,8 @@ void wrapSpinGroup( python::module& module ) {
     "sorting order).\n\n"
     "Arguments:\n"
     "    self         the spin group\n"
-    "    channels     the channels in the spingroup\n"
-    "    resonances   the resonance table of the spingroup\n"
+    "    channels     the channels in the spin group\n"
+    "    resonances   the resonance table of the spin group\n"
     "    formalism    the r matrix formalism option to be applied\n"
     "    boundary     the boundary condition option to be applied"
   )
@@ -63,7 +63,7 @@ void wrapSpinGroup( python::module& module ) {
     "sorting order).\n\n"
     "Arguments:\n"
     "    self       the spin group\n"
-    "    channels   the channel data in the spingroup\n"
+    "    channels   the channel data in the spin group\n"
     "    formalism    the r matrix formalism option to be applied\n"
     "    boundary     the boundary condition option to be applied"
   )

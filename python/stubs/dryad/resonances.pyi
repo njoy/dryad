@@ -1070,8 +1070,8 @@ class SpinGroup:
         
         Arguments:
             self         the spin group
-            channels     the channels in the spingroup
-            resonances   the resonance table of the spingroup
+            channels     the channels in the spin group
+            resonances   the resonance table of the spin group
             formalism    the r matrix formalism option to be applied
             boundary     the boundary condition option to be applied
         """
@@ -1086,7 +1086,7 @@ class SpinGroup:
         
         Arguments:
             self       the spin group
-            channels   the channel data in the spingroup
+            channels   the channel data in the spin group
             formalism    the r matrix formalism option to be applied
             boundary     the boundary condition option to be applied
         """
