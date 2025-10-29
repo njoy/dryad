@@ -70,7 +70,7 @@ class Channel:
             identifier               the channel identifier
             incident                 the current incident particle pair
             outgoing                 the outgoing particle pair
-            qValue                   the Q value associated with the transition from
+            q_value                  the Q value associated with the transition from
                                      the incident to the outgoing particle pair
             boundary                 the boundary condition
             radii                    the channel radii for the calculation of the
@@ -90,7 +90,7 @@ class Channel:
             identifier      the channel identifier
             incident        the current incident particle pair
             outgoing        the outgoing particle pair
-            qValue          the Q value associated with the transition from
+            q_value         the Q value associated with the transition from
                             the incident to the outgoing particle pair
             boundary        the boundary condition
             radii           the channel radii for the calculation of the

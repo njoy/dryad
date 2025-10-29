@@ -67,7 +67,7 @@ SCENARIO( "ReichMoore" ) {
       return result;
     };
 
-    // test shift factor
+    // test shift factor boundary condition
 
     CHECK( 1 == rlmatrix_shiftfactor.matrix().cols() );
     CHECK( 1 == rlmatrix_shiftfactor.matrix().rows() );
@@ -90,7 +90,7 @@ SCENARIO( "ReichMoore" ) {
     CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
     CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
 
-    // test constant
+    // test constant boundary condition
 
     CHECK( 1 == rlmatrix_constant.matrix().cols() );
     CHECK( 1 == rlmatrix_constant.matrix().rows() );
