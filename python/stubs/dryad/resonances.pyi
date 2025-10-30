@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options

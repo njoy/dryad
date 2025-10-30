@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad.id
 import numpy
 import typing
-__all__ = ['CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+__all__: list[str] = ['CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
 class CrossSectionCovarianceMatrix:
     """
     A cross section covariance matrix
