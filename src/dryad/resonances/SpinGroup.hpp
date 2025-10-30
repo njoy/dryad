@@ -33,6 +33,8 @@ namespace resonances {
 
     std::vector< Channel > channels_;
     ResonanceTable table_;
+    Formalism formalism_;
+    BoundaryCondition boundary_condition_;
 
     std::vector< id::ReactionID > reactions_;
 
