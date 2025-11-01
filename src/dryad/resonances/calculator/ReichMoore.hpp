@@ -426,6 +426,14 @@ namespace calculator {
       return this->u_matrix_;
     }
 
+    /**
+     *  @brief Evaluate and return the cross section values
+     *
+     *  @param[in] energy     the energy
+     *  @param[in] channels   the channels of the spin group
+     *  @param[in] table      the resonance table
+     *  @param[in] xs.        the cross section values
+     */
     void crossSections( double energy,
                         const std::vector< Channel >& channels,
                         const ResonanceTable& table,

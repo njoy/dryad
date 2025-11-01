@@ -59,6 +59,20 @@ namespace resonances {
     }
 
     /**
+     *  @brief Calculate the cross section values at a given energy
+     *
+     *  @param[in] energy   the energy
+     *  @param[in] xs       the cross section values
+     */
+    void crossSections( double energy, std::map< id::ReactionID, double > xs ) {
+
+      for ( auto& group : this->spinGroups() ) {
+
+        group.crossSections( energy, xs );
+      }
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side

@@ -52,6 +52,18 @@ void wrapCompoundSystem( python::module& module ) {
     python::overload_cast<>( &Component::spinGroups, python::const_ ),
     python::overload_cast< std::vector< SpinGroup > >( &Component::spinGroups ),
     "The spin groups that make up the compound system"
+  )
+  .def(
+
+    "cross_sections",
+    &Component::crossSections,
+    python::arg( "energy" ),
+    python::arg( "xs" ),
+    "Calculate the cross section values at a given energy\n\n"
+    "Arguments:\n"
+    "    self     the spin group\n"
+    "    energy   the energy\n"
+    "    xs       the cross section values"
   );
 
   // add standard comparison definitions

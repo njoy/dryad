@@ -160,17 +160,19 @@ namespace resonances {
     }
 
     /**
-     *  @brief Return the cross section values at a given energy
+     *  @brief Calculate the cross section values at a given energy
+     *
+     *  @param[in] energy   the energy
+     *  @param[in] xs       the cross section values
      */
     void crossSections( double energy, std::map< id::ReactionID, double > xs ) {
 
-      return std::visit(
-               [&] ( auto&& calculator ) {
+      std::visit( [&] ( auto&& calculator ) {
 
-                 return calculator.crossSections( energy, this->channels(),
-                                                  this->resonanceTable(), xs );
-               },
-               this->calculator_ );
+                    return calculator.crossSections( energy, this->channels(),
+                                                    this->resonanceTable(), xs );
+                  },
+                  this->calculator_ );
     }
 
     /**

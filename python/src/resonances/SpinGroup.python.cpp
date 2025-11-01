@@ -91,6 +91,18 @@ void wrapSpinGroup( python::module& module ) {
   )
   .def_property_readonly(
 
+    "formalism",
+    python::overload_cast<>( &Component::formalism, python::const_ ),
+    "The formalism"
+  )
+  .def_property_readonly(
+
+    "boundary_condition",
+    python::overload_cast<>( &Component::boundaryCondition, python::const_ ),
+    "The boundary condition option"
+  )
+  .def_property_readonly(
+
     "total_angular_momentum",
     &Component::totalAngularMomentum,
     "The total angular momentum J of the channels"
@@ -106,6 +118,18 @@ void wrapSpinGroup( python::module& module ) {
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which this spin group contributes"
+  )
+  .def(
+
+    "cross_sections",
+    &Component::crossSections,
+    python::arg( "energy" ),
+    python::arg( "xs" ),
+    "Calculate the cross section values at a given energy\n\n"
+    "Arguments:\n"
+    "    self     the spin group\n"
+    "    energy   the energy\n"
+    "    xs       the cross section values"
   );
 
   // add standard comparison definitions

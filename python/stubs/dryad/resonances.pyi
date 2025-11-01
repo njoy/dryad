@@ -493,6 +493,15 @@ class CompoundSystem:
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
+    def cross_sections(self, energy: float, xs: dict[dryad.id.ReactionID, float]) -> None:
+        """
+        Calculate the cross section values at a given energy
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+            xs       the cross section values
+        """
     @property
     def spin_groups(self) -> list[SpinGroup]:
         """
@@ -1100,6 +1109,15 @@ class SpinGroup:
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
+    def cross_sections(self, energy: float, xs: dict[dryad.id.ReactionID, float]) -> None:
+        """
+        Calculate the cross section values at a given energy
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+            xs       the cross section values
+        """
     @property
     def boundary_condition(self) -> BoundaryCondition:
         """
