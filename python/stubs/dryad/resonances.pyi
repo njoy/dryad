@@ -1101,6 +1101,11 @@ class SpinGroup:
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
     @property
+    def boundary_condition(self) -> BoundaryCondition:
+        """
+        The boundary condition option
+        """
+    @property
     def channels(self) -> list[Channel]:
         """
         The channels in the spin group
@@ -1108,6 +1113,11 @@ class SpinGroup:
     @channels.setter
     def channels(self, arg1: list[Channel]) -> None:
         ...
+    @property
+    def formalism(self) -> Formalism:
+        """
+        The formalism
+        """
     @property
     def parity(self) -> int:
         """

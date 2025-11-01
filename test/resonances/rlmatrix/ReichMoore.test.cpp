@@ -69,13 +69,36 @@ SCENARIO( "ReichMoore" ) {
 
     // test shift factor boundary condition
 
-    CHECK( 1 == rlmatrix_shiftfactor.matrix().cols() );
-    CHECK( 1 == rlmatrix_shiftfactor.matrix().rows() );
+    CHECK( 1 == rlmatrix_shiftfactor.r_l_matrix().cols() );
+    CHECK( 1 == rlmatrix_shiftfactor.r_l_matrix().rows() );
 
     double e = 1.;
 
-    auto matrix = rlmatrix_shiftfactor( e, { elastic.penetrability( e ) }, { capture, elastic }, table );
+    auto omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+
+    auto matrix = rlmatrix_shiftfactor.r_l_matrix( e, { capture, elastic }, table );
     auto result = calculate_shiftfactor( e );
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_shiftfactor.t_matrix( e, { capture, elastic }, table );
+    result = elastic.penetrability( e ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_shiftfactor.w_matrix( e, { capture, elastic }, table );
+    result = 1. + std::complex< double >( 0., 2. ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_shiftfactor.u_matrix( e, { capture, elastic }, table );
+    result = omega * result * omega;
     CHECK( 1 == matrix.cols() );
     CHECK( 1 == matrix.rows() );
     CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
@@ -83,8 +106,31 @@ SCENARIO( "ReichMoore" ) {
 
     e = 2.;
 
-    matrix = rlmatrix_shiftfactor( e, { elastic.penetrability( e ) }, { capture, elastic }, table );
+    omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+
+    matrix = rlmatrix_shiftfactor.r_l_matrix( e, { capture, elastic }, table );
     result = calculate_shiftfactor( e );
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_shiftfactor.t_matrix( e, { capture, elastic }, table );
+    result = elastic.penetrability( e ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_shiftfactor.w_matrix( e, { capture, elastic }, table );
+    result = 1. + std::complex< double >( 0., 2. ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_shiftfactor.u_matrix( e, { capture, elastic }, table );
+    result = omega * result * omega;
     CHECK( 1 == matrix.cols() );
     CHECK( 1 == matrix.rows() );
     CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
@@ -92,13 +138,36 @@ SCENARIO( "ReichMoore" ) {
 
     // test constant boundary condition
 
-    CHECK( 1 == rlmatrix_constant.matrix().cols() );
-    CHECK( 1 == rlmatrix_constant.matrix().rows() );
+    CHECK( 1 == rlmatrix_constant.r_l_matrix().cols() );
+    CHECK( 1 == rlmatrix_constant.r_l_matrix().rows() );
 
     e = 1.;
 
-    matrix = rlmatrix_constant( e, { elastic.penetrability( e ) }, { capture, elastic }, table );
+    omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+
+    matrix = rlmatrix_constant.r_l_matrix( e, { capture, elastic }, table );
     result = calculate_constant( e );
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_constant.t_matrix( e, { capture, elastic }, table );
+    result = elastic.penetrability( e ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_constant.w_matrix( e, { capture, elastic }, table );
+    result = 1. + std::complex< double >( 0., 2. ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_constant.u_matrix( e, { capture, elastic }, table );
+    result = omega * result * omega;
     CHECK( 1 == matrix.cols() );
     CHECK( 1 == matrix.rows() );
     CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
@@ -106,8 +175,31 @@ SCENARIO( "ReichMoore" ) {
 
     e = 2.;
 
-    matrix = rlmatrix_constant( e, { elastic.penetrability( e ) }, { capture, elastic }, table );
+    omega = std::exp( std::complex< double >( 0., -elastic.phaseShift( e ) ) );
+
+    matrix = rlmatrix_constant.r_l_matrix( e, { capture, elastic }, table );
     result = calculate_constant( e );
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_constant.t_matrix( e, { capture, elastic }, table );
+    result = elastic.penetrability( e ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_constant.w_matrix( e, { capture, elastic }, table );
+    result = 1. + std::complex< double >( 0., 2. ) * result;
+    CHECK( 1 == matrix.cols() );
+    CHECK( 1 == matrix.rows() );
+    CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
+    CHECK_THAT( result.imag(), WithinRel( matrix(0,0).imag() ) );
+
+    matrix = rlmatrix_constant.u_matrix( e, { capture, elastic }, table );
+    result = omega * result * omega;
     CHECK( 1 == matrix.cols() );
     CHECK( 1 == matrix.rows() );
     CHECK_THAT( result.real(), WithinRel( matrix(0,0).real() ) );
