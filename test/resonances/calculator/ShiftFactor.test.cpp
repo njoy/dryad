@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/lmatrix/ShiftFactor.hpp"
+#include "dryad/resonances/calculator/ShiftFactor.hpp"
 
 // other includes
 
@@ -16,7 +16,7 @@ SCENARIO( "ShiftFactor" ) {
 
   GIVEN( "valid number of channels" ) {
 
-    lmatrix::ShiftFactor lmatrix( 3 );
+    calculator::ShiftFactor lmatrix( 3 );
 
     CHECK( 3 == lmatrix.numberChannels() );
     CHECK( std::complex< double >(0,0) == lmatrix.matrix().diagonal()[0] );

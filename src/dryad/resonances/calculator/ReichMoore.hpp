@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_RLMATRIX_REICHMOORE
-#define NJOY_DRYAD_RESONANCES_RLMATRIX_REICHMOORE
+#ifndef NJOY_DRYAD_RESONANCES_CALCULATOR_REICHMOORE
+#define NJOY_DRYAD_RESONANCES_CALCULATOR_REICHMOORE
 
 // system includes
 #include <algorithm>
@@ -13,12 +13,13 @@
 #include "dryad/resonances/BoundaryCondition.hpp"
 #include "dryad/resonances/Channel.hpp"
 #include "dryad/resonances/ResonanceTable.hpp"
-#include "dryad/resonances/lmatrix.hpp"
+#include "dryad/resonances/calculator/Constant.hpp"
+#include "dryad/resonances/calculator/ShiftFactor.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace resonances {
-namespace rlmatrix {
+namespace calculator {
 
   /**
    *  @class
@@ -28,7 +29,7 @@ namespace rlmatrix {
 
     /* type aliases */
 
-    using LMatrix = std::variant< lmatrix::Constant, lmatrix::ShiftFactor >;
+    using LMatrix = std::variant< calculator::Constant, calculator::ShiftFactor >;
 
     /* fields */
 
@@ -50,8 +51,8 @@ namespace rlmatrix {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/rlmatrix/ReichMoore/src/selectLMatrix.hpp"
-    #include "dryad/resonances/rlmatrix/ReichMoore/src/verifyEliminatedChannel.hpp"
+    #include "dryad/resonances/calculator/ReichMoore/src/selectLMatrix.hpp"
+    #include "dryad/resonances/calculator/ReichMoore/src/verifyEliminatedChannel.hpp"
 
     std::vector< bool >&
     belowThreshold( double energy, const std::vector< Channel >& channels ) {
@@ -70,11 +71,11 @@ namespace rlmatrix {
       using Matrix = matrix::DiagonalMatrix< std::complex< double > >;
       tools::overload visitor{
 
-        [&] ( lmatrix::ShiftFactor& function ) -> decltype(auto) {
+        [&] ( ShiftFactor& function ) -> decltype(auto) {
 
           return function( this->penetrabilities() );
         },
-        [&] ( lmatrix::Constant& function ) -> decltype(auto) {
+        [&] ( Constant& function ) -> decltype(auto) {
 
           return function( this->shiftFactors( energy, channels ),
                            this->penetrabilities(),
@@ -89,7 +90,7 @@ namespace rlmatrix {
 
     /* constructor */
 
-    #include "dryad/resonances/rlmatrix/ReichMoore/src/ctor.hpp"
+    #include "dryad/resonances/calculator/ReichMoore/src/ctor.hpp"
 
     /* methods */
 
@@ -473,7 +474,7 @@ namespace rlmatrix {
     }
   };
 
-} // rlmatrix namespace
+} // calculator namespace
 } // resonances namespace
 } // dryad namespace
 } // njoy namespace

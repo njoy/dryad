@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_RLMATRIX_GENERALRMATRIX
-#define NJOY_DRYAD_RESONANCES_RLMATRIX_GENERALRMATRIX
+#ifndef NJOY_DRYAD_RESONANCES_CALCULATOR_GENERALRMATRIX
+#define NJOY_DRYAD_RESONANCES_CALCULATOR_GENERALRMATRIX
 
 // system includes
 
@@ -8,7 +8,7 @@
 namespace njoy {
 namespace dryad {
 namespace resonances {
-namespace rlmatrix {
+namespace calculator {
 
   /**
    *  @class
@@ -30,7 +30,7 @@ namespace rlmatrix {
 
   };
 
-} // rlmatrix namespace
+} // calculator namespace
 } // resonances namespace
 } // dryad namespace
 } // njoy namespace

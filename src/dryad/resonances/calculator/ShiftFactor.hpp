@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_LMATRIX_SHIFTFACTOR
-#define NJOY_DRYAD_RESONANCES_LMATRIX_SHIFTFACTOR
+#ifndef NJOY_DRYAD_RESONANCES_CALCULATOR_SHIFTFACTOR
+#define NJOY_DRYAD_RESONANCES_CALCULATOR_SHIFTFACTOR
 
 // system includes
 
@@ -9,7 +9,7 @@
 namespace njoy {
 namespace dryad {
 namespace resonances {
-namespace lmatrix {
+namespace calculator {
 
   /**
    *  @class
@@ -28,7 +28,7 @@ namespace lmatrix {
 
     /* constructor */
 
-    #include "dryad/resonances/lmatrix/ShiftFactor/src/ctor.hpp"
+    #include "dryad/resonances/calculator/ShiftFactor/src/ctor.hpp"
 
     /* methods */
 
@@ -74,7 +74,7 @@ namespace lmatrix {
     }
   };
 
-} // lmatrix namespace
+} // calculator namespace
 } // resonances namespace
 } // dryad namespace
 } // njoy namespace

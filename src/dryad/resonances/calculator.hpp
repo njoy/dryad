@@ -1,2 +1,2 @@
-#include "dryad/resonances/rlmatrix/GeneralRMatrix.hpp"
-#include "dryad/resonances/rlmatrix/ReichMoore.hpp"
+#include "dryad/resonances/calculator/GeneralRMatrix.hpp"
+#include "dryad/resonances/calculator/ReichMoore.hpp"

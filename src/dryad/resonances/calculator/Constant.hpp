@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_LMATRIX_CONSTANT
-#define NJOY_DRYAD_RESONANCES_LMATRIX_CONSTANT
+#ifndef NJOY_DRYAD_RESONANCES_CALCULATOR_CONSTANT
+#define NJOY_DRYAD_RESONANCES_CALCULATOR_CONSTANT
 
 // system includes
 
@@ -9,7 +9,7 @@
 namespace njoy {
 namespace dryad {
 namespace resonances {
-namespace lmatrix {
+namespace calculator {
 
   /**
    *  @class
@@ -28,7 +28,7 @@ namespace lmatrix {
 
     /* constructor */
 
-    #include "dryad/resonances/lmatrix/Constant/src/ctor.hpp"
+    #include "dryad/resonances/calculator/Constant/src/ctor.hpp"
 
     /* methods */
 
@@ -77,7 +77,7 @@ namespace lmatrix {
     }
   };
 
-} // lmatrix namespace
+} // calculator namespace
 } // resonances namespace
 } // dryad namespace
 } // njoy namespace

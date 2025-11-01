@@ -68,9 +68,9 @@ add_cpp_test( resonances.CoulombPhaseShiftDifference                     resonan
 add_cpp_test( resonances.TabulatedWaveFunction                           resonances/TabulatedWaveFunction.test.cpp )
 add_cpp_test( resonances.Channel                                         resonances/Channel.test.cpp )
 add_cpp_test( resonances.ResonanceTable                                  resonances/ResonanceTable.test.cpp )
-add_cpp_test( resonances.lmatrix.Constant                                resonances/lmatrix/Constant.test.cpp )
-add_cpp_test( resonances.lmatrix.ShiftFactor                             resonances/lmatrix/ShiftFactor.test.cpp )
-add_cpp_test( resonances.rlmatrix.ReichMoore                             resonances/rlmatrix/ReichMoore.test.cpp )
+add_cpp_test( resonances.calculator.Constant                             resonances/calculator/Constant.test.cpp )
+add_cpp_test( resonances.calculator.ShiftFactor                          resonances/calculator/ShiftFactor.test.cpp )
+add_cpp_test( resonances.calculator.ReichMoore                           resonances/calculator/ReichMoore.test.cpp )
 add_cpp_test( resonances.SpinGroup                                       resonances/SpinGroup.test.cpp )
 add_cpp_test( resonances.CompoundSystem                                  resonances/CompoundSystem.test.cpp )
 

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/rlmatrix/ReichMoore.hpp"
+#include "dryad/resonances/calculator/ReichMoore.hpp"
 
 // other includes
 
@@ -44,10 +44,10 @@ SCENARIO( "ReichMoore" ) {
                           { 1. },
                           { { 2. }, { 3. } } );
 
-    rlmatrix::ReichMoore rlmatrix_constant( BoundaryCondition::Constant,
-                                            { capture, elastic } );
-    rlmatrix::ReichMoore rlmatrix_shiftfactor( BoundaryCondition::ShiftFactor,
-                                               { capture, elastic } );
+    calculator::ReichMoore rlmatrix_constant( BoundaryCondition::Constant,
+                                              { capture, elastic } );
+    calculator::ReichMoore rlmatrix_shiftfactor( BoundaryCondition::ShiftFactor,
+                                                 { capture, elastic } );
 
     auto calculate_shiftfactor = [&] ( double energy ) {
 

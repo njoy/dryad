@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/lmatrix/Constant.hpp"
+#include "dryad/resonances/calculator/Constant.hpp"
 
 // other includes
 
@@ -16,7 +16,7 @@ SCENARIO( "Constant" ) {
 
   GIVEN( "valid number of channels" ) {
 
-    lmatrix::Constant lmatrix( 3 );
+    calculator::Constant lmatrix( 3 );
 
     CHECK( 3 == lmatrix.numberChannels() );
     CHECK( 3 == lmatrix.matrix().rows() );
