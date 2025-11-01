@@ -9,21 +9,6 @@ SpinGroup( SpinGroup&& ) = default;
 SpinGroup& operator=( const SpinGroup& ) = default;
 SpinGroup& operator=( SpinGroup&& ) = default;
 
-private:
-
-/**
- *  @brief Private intermediate constructor
- */
-SpinGroup( std::tuple< std::vector< Channel >, ResonanceTable > data ) :
-    channels_( std::move( std::get< 0 >( data ) ) ),
-    table_( std::move( std::get< 1 >( data ) ) ) {
-
-  this->processChannels();
-  verifySpinGroup( this->channels(), this->resonanceTable() );
-}
-
-public:
-
 /**
  *  @brief Constructor
  *
@@ -40,7 +25,30 @@ SpinGroup( std::vector< Channel > channels,
            ResonanceTable resonances,
            const Formalism& formalism,
            const BoundaryCondition& boundary ) :
-    SpinGroup( createData( std::move( channels ), std::move( resonances ) ) ) {}
+    channels_( std::move( channels ) ),
+    table_( std::move( resonances ) ),
+    formalism_( formalism ),
+    boundary_condition_( boundary ) {
+
+  this->processChannels();
+  this->calculator_ = selectCalculator( this->formalism(), this->boundaryCondition(),
+                                        this->channels() );
+  verifySpinGroup( this->channels(), this->resonanceTable() );
+}
+
+private:
+
+/**
+ *  @brief Private intermediate constructor
+ */
+SpinGroup( std::tuple< std::vector< Channel >, ResonanceTable > data,
+           const Formalism& formalism,
+           const BoundaryCondition& boundary ) :
+    SpinGroup( std::move( std::get< 0 >( data ) ),
+               std::move( std::get< 1 >( data ) ),
+               formalism, boundary ) {}
+
+public:
 
 /**
  *  @brief Constructor
@@ -56,4 +64,4 @@ SpinGroup( std::vector< Channel > channels,
 SpinGroup( std::vector< ChannelData > channels,
            const Formalism& formalism,
            const BoundaryCondition& boundary ) :
-    SpinGroup( createData( std::move( channels ) ) ) {}
+    SpinGroup( createData( std::move( channels ) ), formalism, boundary ) {}

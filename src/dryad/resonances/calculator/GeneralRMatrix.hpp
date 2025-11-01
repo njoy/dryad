@@ -28,6 +28,13 @@ namespace calculator {
 
     /* methods */
 
+    void crossSections( double energy,
+                        const std::vector< Channel >& channels,
+                        const ResonanceTable& table,
+                        std::map< id::ReactionID, double >& xs ) {
+
+
+    }
   };
 
 } // calculator namespace
