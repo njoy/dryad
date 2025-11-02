@@ -37,18 +37,26 @@ namespace resonances {
 
       if ( range.type() == 1 ) {
 
+        Log::info( "Reading resolved resonance region between {} and {} eV", lower, upper );
         switch ( range.representation() ) {
 
           case 7 : {
 
             decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::RMatrixLimited >( range.parameters() );
             resolved.emplace_back( lrf7::createCompoundSystem( projectile, target, lower, upper, parameters ) );
+            break;
           }
           default : {
 
+            Log::info( "  Resolved formalism {} is currently uinsupported, skipping", range.representation() );
             continue;
           }
         }
+      }
+      else {
+
+        Log::info( "Reading unresolved resonance region between {} and {} eV", lower, upper );
+        Log::info( "  Unresolved formalism {} is currently uinsupported, skipping", range.representation() );
       }
     }
 

@@ -15,6 +15,7 @@ void wrapResonanceParameters( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::resonances::ResonanceParameters;
+  using CompoundSystem = njoy::dryad::resonances::CompoundSystem;
 
   // wrap views created by this component
 
@@ -23,6 +24,25 @@ void wrapResonanceParameters( python::module& module ) {
 
     module,
     "ResonanceParameters"
+  );
+
+  // wrap the component
+  component
+  .def(
+
+    python::init< std::vector< CompoundSystem > >(),
+    python::arg( "resolved" ),
+    "Initialise the resonance parameters\n\n"
+    "Arguments:\n"
+    "    self       the resonance parameters\n"
+    "    resolved   the resolved resonance compound systems"
+  )
+  .def_property(
+
+    "resolved",
+    python::overload_cast<>( &Component::resolved, python::const_ ),
+    python::overload_cast< std::vector< CompoundSystem > >( &Component::resolved ),
+    "The compound systems that make up the resolved resonance data"
   );
 
   // add standard equality comparison definitions
