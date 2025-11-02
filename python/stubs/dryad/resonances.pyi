@@ -495,14 +495,13 @@ class CompoundSystem:
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
-    def cross_sections(self, energy: float, xs: dict[dryad.id.ReactionID, float]) -> None:
+    def cross_sections(self, energy: float) -> dict[dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
         
         Arguments:
             self     the spin group
             energy   the energy
-            xs       the cross section values
         """
     @property
     def lower_energy_limit(self) -> float:
@@ -985,7 +984,23 @@ class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ResonanceParameters) -> bool:
         ...
+    def __init__(self, resolved: list[CompoundSystem]) -> None:
+        """
+        Initialise the resonance parameters
+        
+        Arguments:
+            self       the resonance parameters
+            resolved   the resolved resonance compound systems
+        """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
+        ...
+    @property
+    def resolved(self) -> list[CompoundSystem]:
+        """
+        The compound systems that make up the resolved resonance data
+        """
+    @resolved.setter
+    def resolved(self, arg1: list[CompoundSystem]) -> None:
         ...
 class ResonanceTable:
     """
@@ -1127,14 +1142,13 @@ class SpinGroup:
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
-    def cross_sections(self, energy: float, xs: dict[dryad.id.ReactionID, float]) -> None:
+    def cross_sections(self, energy: float) -> dict[dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
         
         Arguments:
             self     the spin group
             energy   the energy
-            xs       the cross section values
         """
     @property
     def boundary_condition(self) -> BoundaryCondition:

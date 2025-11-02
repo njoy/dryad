@@ -432,7 +432,7 @@ namespace calculator {
      *  @param[in] energy     the energy
      *  @param[in] channels   the channels of the spin group
      *  @param[in] table      the resonance table
-     *  @param[in] xs.        the cross section values
+     *  @param[in] xs         the cross section values
      */
     void crossSections( double energy,
                         const std::vector< Channel >& channels,
@@ -452,7 +452,10 @@ namespace calculator {
 
         if ( channels[c+1].isIncidentChannel() ) {
 
-          double k = channels[c+1].waveNumber( energy );
+          // wave numbers are stored in fm, we need to convert to 1e-12 cm
+          // so the cross section will be returned in barn
+
+          double k = channels[c+1].waveNumber( energy ) * constants::deca;
           double gj = channels[c+1].statisticalSpinFactor();
           double factor = constants::pi / k / k * gj;
 
@@ -460,7 +463,7 @@ namespace calculator {
           //! @todo check this formula: SAMMY says exp( 2 i w_c ), endf102 says exp( i w_c )
           auto exp = std::exp( std::complex< double >( 0., 2. * this->phaseShiftDifferences()[c] ) );
 
-          for ( unsigned int cprime = 0; c < number_channels; ++c ) {
+          for ( unsigned int cprime = 0; cprime < number_channels; ++cprime ) {
 
             if ( c != cprime ) {
 

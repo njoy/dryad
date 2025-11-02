@@ -102,7 +102,7 @@ namespace resonances {
      *  @param[in] energy   the energy
      *  @param[in] xs       the cross section values
      */
-    void crossSections( double energy, std::map< id::ReactionID, double > xs ) {
+    void crossSections( double energy, std::map< id::ReactionID, double >& xs ) {
 
       for ( auto& group : this->spinGroups() ) {
 

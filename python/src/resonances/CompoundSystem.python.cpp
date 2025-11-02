@@ -16,6 +16,7 @@ void wrapCompoundSystem( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::resonances::CompoundSystem;
   using SpinGroup = njoy::dryad::resonances::SpinGroup;
+  using ReactionID = njoy::dryad::id::ReactionID;
 
   // wrap views created by this component
 
@@ -74,14 +75,17 @@ void wrapCompoundSystem( python::module& module ) {
   .def(
 
     "cross_sections",
-    &Component::crossSections,
+    [] ( Component& self, double energy ) -> std::map< ReactionID, double > {
+
+      std::map< ReactionID, double > xs;
+      self.crossSections( energy, xs );
+      return xs;
+    },
     python::arg( "energy" ),
-    python::arg( "xs" ),
     "Calculate the cross section values at a given energy\n\n"
     "Arguments:\n"
     "    self     the spin group\n"
-    "    energy   the energy\n"
-    "    xs       the cross section values"
+    "    energy   the energy"
   );
 
   // add standard comparison definitions

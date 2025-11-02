@@ -20,6 +20,7 @@ void wrapSpinGroup( python::module& module ) {
   using ResonanceTable = njoy::dryad::resonances::ResonanceTable;
   using Formalism = njoy::dryad::resonances::Formalism;
   using BoundaryCondition = njoy::dryad::resonances::BoundaryCondition;
+  using ReactionID = njoy::dryad::id::ReactionID;
 
   // wrap views created by this component
 
@@ -122,14 +123,17 @@ void wrapSpinGroup( python::module& module ) {
   .def(
 
     "cross_sections",
-    &Component::crossSections,
+    [] ( Component& self, double energy ) -> std::map< ReactionID, double > {
+
+      std::map< ReactionID, double > xs;
+      self.crossSections( energy, xs );
+      return xs;
+    },
     python::arg( "energy" ),
-    python::arg( "xs" ),
     "Calculate the cross section values at a given energy\n\n"
     "Arguments:\n"
     "    self     the spin group\n"
-    "    energy   the energy\n"
-    "    xs       the cross section values"
+    "    energy   the energy"
   );
 
   // add standard comparison definitions
