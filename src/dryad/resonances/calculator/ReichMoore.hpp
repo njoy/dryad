@@ -79,7 +79,7 @@ namespace calculator {
 
           return function( this->shiftFactors( energy, channels ),
                            this->penetrabilities(),
-                           this->boundaryConditions( channels ) );
+                           this->boundaryConditions() );
         }
       };
 

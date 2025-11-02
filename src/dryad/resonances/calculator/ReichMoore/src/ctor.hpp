@@ -32,10 +32,19 @@ ReichMoore( const BoundaryCondition& boundary,
     boundaries_( channels.size() - 1 ),
     below_threshold_( channels.size() - 1 ) {
 
+  // set the matrices to zero
   this->r_matrix_.setZero();
   this->r_l_matrix_.setZero();
   this->t_matrix_.setZero();
   this->w_matrix_.setZero();
   this->u_matrix_.setZero();
+
+  // verify that the first channel is an eliminated capture channel
   verifyEliminatedChannel( channels );
+
+  // precalculate stuff
+  if ( boundary == BoundaryCondition::Constant ) {
+
+    this->boundaryConditions( channels );
+  }
 }
