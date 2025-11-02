@@ -41,9 +41,9 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param documentation   the documentation
  *  @param projectile      the projectile identifier
  *  @param target          the target identifier
- *  @param type         the interaction type
  *  @param type            the interaction type
  *  @param reactions       the reaction data
+ *  @param resonances      the optional resonance parameters (default: none)
  *  @param normalise       option to indicate whether or not to normalise
  *                         all probability data (default: no normalisation)
  */
@@ -52,12 +52,13 @@ ProjectileTarget( Documentation documentation,
                   id::ParticleID target,
                   InteractionType type,
                   std::vector< Reaction > reactions,
+                  std::optional< resonances::ResonanceParameters > resonances = std::nullopt,
                   bool normalise = false ) :
     ProjectileTarget( std::move( documentation ),
                       std::move( projectile ),
                       std::move( target ),
                       type,
-                      std::nullopt,
+                      std::move( resonances ),
                       std::move( reactions ),
                       normalise ) {}
 
@@ -68,6 +69,7 @@ ProjectileTarget( Documentation documentation,
  *  @param target       the target identifier
  *  @param type.        the interaction type
  *  @param reactions    the reaction data
+ *  @param resonances   the optional resonance parameters (default: none)
  *  @param normalise    option to indicate whether or not to normalise
  *                      all probability data (default: no normalisation)
  */
@@ -75,11 +77,12 @@ ProjectileTarget( id::ParticleID projectile,
                   id::ParticleID target,
                   InteractionType type,
                   std::vector< Reaction > reactions,
+                  std::optional< resonances::ResonanceParameters > resonances = std::nullopt,
                   bool normalise = false ) :
     ProjectileTarget( {},
                       std::move( projectile ),
                       std::move( target ),
                       type,
-                      std::nullopt,
+                      std::move( resonances ),
                       std::move( reactions ),
                       normalise ) {}

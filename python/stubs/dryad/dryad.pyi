@@ -981,7 +981,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -992,11 +992,12 @@ class ProjectileTarget:
             target          the target identifier
             type            the interaction type
             reactions       the reaction data
+            resonances      the optional resonance parameters (default: none)
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1006,6 +1007,7 @@ class ProjectileTarget:
             target       the target identifier
             type         the interaction type
             reactions    the reaction data
+            resonances   the optional resonance parameters (default: none)
             normalise    option to indicate whether or not to normalise
                          all probability data (default: no normalisation)
         """

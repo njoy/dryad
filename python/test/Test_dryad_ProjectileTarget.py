@@ -661,6 +661,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                                                                       InterpolationType.LinearLinear ),
                                              [],
                                              0, 0 ) ],
+                     resonances = None,
                      normalise = False )
         chunk2 = ProjectileTarget(
                      projectile = ParticleID( 'n' ),
@@ -719,6 +720,7 @@ class Test_dryad_ProjectileTarget( unittest.TestCase ) :
                                                                       InterpolationType.LinearLinear ),
                                              [],
                                              0, 0 ) ],
+                     resonances = None,
                      normalise = True )
 
         verify_chunk( self, chunk1, False )

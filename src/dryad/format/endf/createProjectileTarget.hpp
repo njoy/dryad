@@ -12,6 +12,7 @@
 #include "dryad/format/endf/createInteractionType.hpp"
 #include "dryad/format/endf/createReactions.hpp"
 #include "dryad/format/endf/createDocumentation.hpp"
+#include "dryad/format/endf/resonances/createResonanceParameters.hpp"
 #include "dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -39,10 +40,18 @@ namespace endf {
     id::ParticleID target = createTargetIdentifier( information.ZA(), information.excitedLevel() );
     InteractionType type = createInteractionType( information.subLibrary() );
 
+    std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
+    if ( type == InteractionType::Nuclear && projectile == id::ParticleID::neutron() ) {
+
+      resonances = resonances::createResonanceParameters( projectile, target,
+                                                          material.section( 2, 151 ).parse< 2, 151 >() );
+    }
+
     std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
 
     return ProjectileTarget( std::move( documentation ), std::move( projectile ),
-                             std::move( target ), type, std::move( reactions ) );
+                             std::move( target ), type, std::move( reactions ),
+                             std::move( resonances ) );
   }
 
 } // endf namespace
