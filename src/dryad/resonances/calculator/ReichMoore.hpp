@@ -23,7 +23,7 @@ namespace calculator {
 
   /**
    *  @class
-   *  @brief A functor to calculate the R_L matrix for the Reich-Moore formalism
+   *  @brief A matrix and cross section calculator for the Reich-Moore formalism
    */
   class ReichMoore {
 

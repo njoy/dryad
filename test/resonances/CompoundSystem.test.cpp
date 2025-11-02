@@ -139,14 +139,14 @@ SCENARIO( "CompoundSystem" ) {
 
     THEN( "a CompoundSystem can be constructed - with ordered spin groups" ) {
 
-      CompoundSystem chunk( { spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 } );
+      CompoundSystem chunk( 1e-5, 2e+3, { spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 } );
 
       verifyChunk( chunk );
     } // THEN
 
     THEN( "a CompoundSystem can be constructed - with unordered spin groups" ) {
 
-      CompoundSystem chunk( { spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 } );
+      CompoundSystem chunk( 1e-5, 2e+3, { spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 } );
 
       verifyChunk( chunk );
     } // THEN
@@ -211,9 +211,9 @@ SCENARIO( "CompoundSystem" ) {
                               { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } },
                             formalism, boundary );
 
-      CompoundSystem left( { spingroup0 } );
-      CompoundSystem equal( { spingroup0 } );
-      CompoundSystem different( { spingroup1 } );
+      CompoundSystem left( 1e-5, 2e+3, { spingroup0 } );
+      CompoundSystem equal( 1e-5, 2e+3, { spingroup0 } );
+      CompoundSystem different( 1e-5, 2e+3, { spingroup1 } );
 
       THEN( "they can be compared" ) {
 
@@ -253,6 +253,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 2e+3, WithinRel( chunk.upperEnergyLimit() ) );
 
   auto groups = chunk.spinGroups();
 

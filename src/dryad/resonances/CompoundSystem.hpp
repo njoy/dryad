@@ -19,6 +19,8 @@ namespace resonances {
 
     /* fields */
 
+    double lower_;
+    double upper_;
     std::vector< SpinGroup > spin_groups_;
 
     /* auxiliary functions */
@@ -30,6 +32,42 @@ namespace resonances {
     /* constructor */
 
     #include "dryad/resonances/CompoundSystem/src/ctor.hpp"
+
+    /**
+     *  @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->lower_;
+    }
+
+    /**
+     *  @brief Set the lower energy limit
+     *
+     *  @param[in] lowerEnergy   the lower energy limit for the compound system
+     */
+    void lowerEnergyLimit( double lowerEnergy ) {
+
+      this->lower_ = lowerEnergy;
+    }
+
+    /**
+     *  @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->upper_;
+    }
+
+    /**
+     *  @brief Set the upper energy limit
+     *
+     *  @param[in] upperEnergy   the upper energy limit for the compound system
+     */
+    void upperEnergyLimit( double upperEnergy ) {
+
+      this->upper_ = upperEnergy;
+    }
 
     /**
      *  @brief Return the spin groups that make up the compound system

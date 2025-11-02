@@ -37,7 +37,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, parameters );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1e+5, parameters );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -63,7 +63,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, parameters );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1.2e+6, parameters );
 
         verifyChunkCl35( chunk );
       } // THEN
@@ -90,6 +90,10 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  // energies
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 1e+5, WithinRel( chunk.upperEnergyLimit() ) );
 
   // spin groups
   auto groups = chunk.spinGroups();
@@ -626,6 +630,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  // energies
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 1.2e+6, WithinRel( chunk.upperEnergyLimit() ) );
 
   // spin groups
   auto groups = chunk.spinGroups();

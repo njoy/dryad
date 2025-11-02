@@ -12,7 +12,7 @@ namespace calculator {
 
   /**
    *  @class
-   *  @brief A functor to calculate the R_L matrix for the general R-matrix formalism
+   *  @brief A matrix and cross section calculator for the general R-matrix formalism
    */
   class GeneralRMatrix {
 
