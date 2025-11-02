@@ -29,13 +29,17 @@ namespace lrf7 {
    */
   auto createCompoundSystem( const id::ParticleID& projectile,
                              const id::ParticleID& target,
-                             const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+                             const ENDFtk::section::Type< 2, 151 >::ResonanceRange& endf ) {
 
-    auto formalism = lrf7::createFormalism( endf );
-    auto boundary = lrf7::createBoundaryCondition( endf.particlePairs() );
-    auto groups = lrf7::createSpinGroups( projectile, target, formalism, boundary, endf );
+    double lower = endf.lowerEnergy();
+    double upper = endf.upperEnergy();
 
-    return dryad::resonances::CompoundSystem( std::move( groups ) );
+    decltype(auto) parameters = std::get< ENDFtk::section::Type< 2, 151 >::RMatrixLimited >( endf.parameters() );
+    auto formalism = lrf7::createFormalism( parameters );
+    auto boundary = lrf7::createBoundaryCondition( parameters.particlePairs() );
+    auto groups = lrf7::createSpinGroups( projectile, target, formalism, boundary, parameters );
+
+    return dryad::resonances::CompoundSystem( lower, upper, std::move( groups ) );
   }
 
 } // lrf7 namespace

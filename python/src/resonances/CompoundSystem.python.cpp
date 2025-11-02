@@ -31,12 +31,16 @@ void wrapCompoundSystem( python::module& module ) {
   component
   .def(
 
-    python::init< std::vector< SpinGroup > >(),
+    python::init< double, double, std::vector< SpinGroup > >(),
+    python::arg( "lower_energy" ),
+    python::arg( "upper_energy" ),
     python::arg( "spin_groups" ),
     "Initialise the spin group\n\n"
     "Arguments:\n"
-    "    self          the compound system\n"
-    "    spin_groups   the spin groups that make up the compound system"
+    "    self           the compound system\n"
+    "    lower_energy   the lower energy limit for the compound system\n"
+    "    upper_energy   the upper energy limit for the compound system\n"
+    "    spin_groups    the spin groups that make up the compound system"
   )
   .def(
 
@@ -45,6 +49,20 @@ void wrapCompoundSystem( python::module& module ) {
     "Initialise a copy\n\n"
     "Arguments:\n"
     "    instance    the instance to be copied\n"
+  )
+  .def_property(
+
+    "lower_energy_limit",
+    python::overload_cast<>( &Component::lowerEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::lowerEnergyLimit ),
+    "The lower energy limit"
+  )
+  .def_property(
+
+    "upper_energy_limit",
+    python::overload_cast<>( &Component::upperEnergyLimit, python::const_ ),
+    python::overload_cast< double >( &Component::upperEnergyLimit ),
+    "The upper energy limit"
   )
   .def_property(
 

@@ -44,6 +44,9 @@ def verify_chunk( self, chunk ) :
     # content verification
     # * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
+    self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
+    self.assertAlmostEqual( 2e+3, chunk.upper_energy_limit )
+
     groups = chunk.spin_groups
 
     # spin groups
@@ -816,11 +819,13 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                                 [ 51. ], [ [ 52. ], [ 53. ], [ 54. ] ] ),
                                 formalism, boundary )
 
-        chunk = CompoundSystem( [ spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 ] )
+        chunk = CompoundSystem( 1e-5, 2e+3,
+                                [ spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 ] )
 
         verify_chunk( self, chunk )
 
-        chunk = CompoundSystem( [ spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 ] )
+        chunk = CompoundSystem( 1e-5, 2e+3,
+                                [ spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 ] )
 
         verify_chunk( self, chunk )
 
@@ -882,9 +887,9 @@ class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
                                                 [ 11. ], [ [ 12. ], [ 13. ], [ 14. ], [ 15. ], [ 16. ] ] ),
                                 formalism, boundary )
 
-        left = CompoundSystem( [ spingroup0 ] )
-        equal = CompoundSystem( [ spingroup0 ]  )
-        different = CompoundSystem( [ spingroup1 ] )
+        left = CompoundSystem( 1e-5, 2e+3, [ spingroup0 ] )
+        equal = CompoundSystem( 1e-5, 2e+3, [ spingroup0 ]  )
+        different = CompoundSystem( 1e-5, 2e+3, [ spingroup1 ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

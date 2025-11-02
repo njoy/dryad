@@ -475,13 +475,15 @@ class CompoundSystem:
     def __eq__(self, arg0: CompoundSystem) -> bool:
         ...
     @typing.overload
-    def __init__(self, spin_groups: list[SpinGroup]) -> None:
+    def __init__(self, lower_energy: float, upper_energy: float, spin_groups: list[SpinGroup]) -> None:
         """
         Initialise the spin group
         
         Arguments:
-            self          the compound system
-            spin_groups   the spin groups that make up the compound system
+            self           the compound system
+            lower_energy   the lower energy limit for the compound system
+            upper_energy   the upper energy limit for the compound system
+            spin_groups    the spin groups that make up the compound system
         """
     @typing.overload
     def __init__(self, instance: CompoundSystem) -> None:
@@ -503,12 +505,28 @@ class CompoundSystem:
             xs       the cross section values
         """
     @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
+        ...
+    @property
     def spin_groups(self) -> list[SpinGroup]:
         """
         The spin groups that make up the compound system
         """
     @spin_groups.setter
     def spin_groups(self, arg1: list[SpinGroup]) -> None:
+        ...
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
         ...
 class CoulombPenetrability:
     """
