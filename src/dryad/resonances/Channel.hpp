@@ -65,8 +65,8 @@ namespace resonances {
     double q_;
     std::optional< double > boundary_condition_;
 
-    WaveNumber wave_number_;
     ChannelRadii radii_;
+    WaveNumber wave_number_;
     Penetrability penetrability_;
     ShiftFactor shift_factor_;
     PhaseShift phase_shift_;

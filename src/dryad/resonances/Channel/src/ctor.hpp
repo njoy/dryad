@@ -20,6 +20,7 @@ Channel& operator=( Channel&& ) = default;
  *  @param[in] boundary        the boundary condition
  *  @param[in] radii           the channel radii for the calculation of the
  *                             wave functions
+ *  @param[in] waveNumber      the wave number of the channel
  *  @param[in] penetrability   the penetrability of the channel
  *  @param[in] shiftFactor     the shift factor of the channel
  *  @param[in] phaseshift      the phase shift of the channel
@@ -31,6 +32,7 @@ Channel( id::ChannelID identifier,
          double qValue,
          std::optional< double > boundary,
          ChannelRadii radii,
+         WaveNumber waveNumber,
          Penetrability penetrability,
          ShiftFactor shiftFactor,
          PhaseShift phaseShift,
