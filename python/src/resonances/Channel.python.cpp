@@ -187,12 +187,6 @@ void wrapChannel( python::module& module ) {
     &Component::waveNumber,
     python::arg( "energy" ),
     "Calculate the channel wave number (given in fm^-1) at a given energy\n\n"
-    "The wave number k is an energy dependent quantity defined as follows:\n"
-    "   hbar^2 k^2 = 2 * mu * ( energy * ratio + q )\n"
-    "in which mu is the reduced mass of the channel's particle pair and ratio\n"
-    "is the mass ratio M / ( m + M ) for the incident particle pair, q is the\n"
-    "Q value associated to the transition of the incident particle pair to the\n"
-    "channel's particle pair and hbar is the reduced Planck constant.\n\n"
     "Arguments:\n"
     "    self     the channel\n"
     "    energy   the energy (given in eV)"

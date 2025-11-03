@@ -36,11 +36,38 @@ namespace resonances {
     /* methods */
 
     /**
-     *  @brief Calculate the channel wave number (given in fm^-1) at a given energy
+     *  @brief Return the relativistic wave number at a given energy
+     *
+     *  The relativistic wave number k is an energy dependent quantity defined as
+     *  follows:
+     *     k^2 = ( s - ( ( ma + mb ) c^2 )^2 ) ( s - ( ( ma - mb ) c^2 )^2 ) / 4 / s
+     *  in which s is the Mandelstam variable s, ma and mb are the atomic masses
+     *  of the first and second particles in the particle pair and c is the light
+     *  speed (converting the mass into energy).
+     *
+     *  The Mandelstam variable s is defined as:
+     *     s = ( ( ma + mb ) c^2 )^2 + 2 mb c^2 energy
+     *  in which ma and mb are the atomic masses of the first and second particles
+     *  in the particle pair and c is the light speed (converting the mass into
+     *  energy).
+     *
+     *  @param[in] energy     the energy (given in eV)
+     *  @param[in] incident   the incident particle pair information
      */
-    double operator()() const {
+    double operator()( double energy, const ParticlePair& incident ) const {
 
-      throw std::runtime_error( "not implemented yet" );
+      // conversion constant to convert amu m^2 s^-2 into eV
+      constexpr double conversion = constants::amu * constants::c * constants::c / constants::e;
+
+      // conversion constant to convert the result to fm^-1
+      constexpr double final = constants::c * constants::hbar * constants::peta;
+
+      const auto particle = incident.lightParticle().mass();
+      const auto residual = incident.heavyParticle().mass();
+      const auto pair = ( particle + residual ) * conversion;  // eV
+      const auto delta = ( particle - residual ) * conversion; // eV
+      const auto mandelstam = pair * pair + 2. * residual * conversion * energy; // ev^2
+      return 0.5 * sqrt( ( mandelstam - pair * pair ) * ( mandelstam - delta * delta ) / mandelstam ) / final;
     }
   };
 

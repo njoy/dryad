@@ -195,7 +195,7 @@ namespace resonances {
         },
         [&] ( const RelativisticWaveNumber& function ) -> double {
 
-          return function();
+          return function( energy, this->incidentParticlePair() );
         }
       };
 

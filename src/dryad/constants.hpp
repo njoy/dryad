@@ -26,6 +26,11 @@ namespace constants {
   // CODATA 2022 - reduced Planck constant in ev s
   constexpr double hbar = 6.582119569e-16;
 
+  // CODATA 2018 - light speed in m / s
+  // constexpr double c = 29979245;
+  // CODATA 2022 - light speed in m / s
+  constexpr double c = 29979245;
+
   // CODATA 2018 - vacuum electric permittivity in F / m = Coulomb^2 kg^−1 m^−3 s^2
   // constexpr double epsilon0 = 8.8541878128e-12;
   // CODATA 2022 - vacuum electric permittivity in F / m = Coulomb^2 kg^−1 m^−3 s^2
@@ -37,6 +42,8 @@ namespace constants {
   constexpr double neutron_mass = 1.00866491606;
 
   // SI prefixes
+  constexpr double peta = 1e+15;
+  constexpr double tera = 1e+12;
   constexpr double giga = 1e+9;
   constexpr double mega = 1e+6;
   constexpr double kilo = 1e+3;
