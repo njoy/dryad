@@ -18,6 +18,7 @@ void wrapChannel( python::module& module ) {
   using ChannelID = njoy::dryad::id::ChannelID;
   using ParticlePair = njoy::dryad::resonances::ParticlePair;
   using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
+  using WaveNumber = njoy::dryad::resonances::Channel::WaveNumber;
   using Penetrability = njoy::dryad::resonances::Channel::Penetrability;
   using ShiftFactor = njoy::dryad::resonances::Channel::ShiftFactor;
   using PhaseShift = njoy::dryad::resonances::Channel::PhaseShift;
