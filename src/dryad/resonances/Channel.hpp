@@ -13,6 +13,8 @@
 #include "dryad/resonances/ChannelQuantumNumbers.hpp"
 #include "dryad/resonances/ChannelRadii.hpp"
 #include "dryad/resonances/ParticlePair.hpp"
+#include "dryad/resonances/NonRelativisticWaveNumber.hpp"
+#include "dryad/resonances/RelativisticWaveNumber.hpp"
 #include "dryad/resonances/HardSpherePenetrability.hpp"
 #include "dryad/resonances/HardSphereShiftFactor.hpp"
 #include "dryad/resonances/HardSpherePhaseShift.hpp"
@@ -36,6 +38,8 @@ namespace resonances {
 
     /* type aliases */
 
+    using WaveNumber = std::variant< NonRelativisticWaveNumber,
+                                     RelativisticWaveNumber >;
     using Penetrability = std::variant< double,
                                         HardSpherePenetrability,
                                         CoulombPenetrability,
@@ -61,6 +65,7 @@ namespace resonances {
     double q_;
     std::optional< double > boundary_condition_;
 
+    WaveNumber wave_number_;
     ChannelRadii radii_;
     Penetrability penetrability_;
     ShiftFactor shift_factor_;
@@ -71,6 +76,7 @@ namespace resonances {
 
     /* auxiliary functions */
 
+    #include "dryad/resonances/Channel/src/selectWaveNumber.hpp"
     #include "dryad/resonances/Channel/src/selectWaveFunctions.hpp"
     #include "dryad/resonances/Channel/src/calculateSpinFactor.hpp"
 
@@ -175,27 +181,25 @@ namespace resonances {
     /**
      *  @brief Calculate the channel wave number (given in fm^-1) at a given energy
      *
-     *  The wave number k is an energy dependent quantity defined as follows:
-     *     hbar^2 k^2 = 2 * mu * ( energy * ratio + q )
-     *  in which mu is the reduced mass of the channel's particle pair and ratio
-     *  is the mass ratio M / ( m + M ) for the incident particle pair, q is the
-     *  Q value associated to the transition of the incident particle pair to the
-     *  channel's particle pair and hbar is the reduced Planck constant.
-     *
      *  @param[in] energy   the energy (given in eV)
      */
     double waveNumber( double energy ) const {
 
-      // see Sammy manual equation II C4.4 and ENDF manual equation D.82
+      tools::overload visitor{
 
-      // conversion constant to convert the final value to fm^-1
-      const double conversion = std::sqrt( constants::amu / constants::e ) * constants::femto;
+        [&] ( const NonRelativisticWaveNumber& function ) -> double {
 
-      const auto mu = this->outgoingParticlePair()->reducedMass(); // amu
-      const auto ratio = this->incidentParticlePair().massRatio(); // dimensionless
-      const auto q = this->qValue();                               // eV
-      return std::sqrt( 2. * mu * ( std::abs( energy * ratio + q ) ) )
-             / constants::hbar * conversion;
+          return function( energy, this->qValue(),
+                           this->incidentParticlePair(),
+                           this->outgoingParticlePair() );
+        },
+        [&] ( const RelativisticWaveNumber& function ) -> double {
+
+          return function();
+        }
+      };
+
+      return std::visit( visitor, this->wave_number_ );
     }
 
     /**

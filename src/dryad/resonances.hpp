@@ -6,6 +6,8 @@
 #include "dryad/resonances/ChannelQuantumNumbers.hpp"
 #include "dryad/resonances/Particle.hpp"
 #include "dryad/resonances/ParticlePair.hpp"
+#include "dryad/resonances/NonRelativisticWaveNumber.hpp"
+#include "dryad/resonances/RelativisticWaveNumber.hpp"
 #include "dryad/resonances/HardSpherePenetrability.hpp"
 #include "dryad/resonances/HardSphereShiftFactor.hpp"
 #include "dryad/resonances/HardSpherePhaseShift.hpp"
