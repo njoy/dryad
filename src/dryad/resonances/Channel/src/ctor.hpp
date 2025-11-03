@@ -43,7 +43,7 @@ Channel( id::ChannelID identifier,
     q_( qValue ),
     boundary_condition_( std::move( boundary ) ),
     radii_( std::move( radii ) ),
-    wave_number_( std::move( waveNumber ) )
+    wave_number_( std::move( waveNumber ) ),
     penetrability_( std::move( penetrability ) ),
     shift_factor_( std::move( shiftFactor ) ),
     phase_shift_( std::move( phaseShift ) ),
