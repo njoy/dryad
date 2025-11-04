@@ -24,16 +24,6 @@ SCENARIO( "SpinGroup" ) {
     id::ChannelID captureID( "n,Cl35->g,Cl36[all]{0,0,1+}" );
     id::ChannelID protonID( "n,Cl35->p,S35{0,1,1+}" );
 
-    id::ReactionID elasticRID( "n,Cl35->n,Cl35" );
-    id::ReactionID inelasticRID( "n,Cl35->n,Cl35_e1" );
-    id::ReactionID captureRID( "n,Cl35->g,Cl36[all]" );
-    id::ReactionID protonRID( "n,Cl35->p,S35" );
-
-    ChannelQuantumNumbers elasticNumbers( 0, 1, 1, +1 );
-    ChannelQuantumNumbers inelasticNumbers( 0, 1, 1, +1 );
-    ChannelQuantumNumbers captureNumbers( 0, 0, 1, +1 );
-    ChannelQuantumNumbers protonNumbers( 0, 1, 1, +1 );
-
     // particles
     Particle g( id::ParticleID::photon(), 0, 1, +1 );
     Particle n( id::ParticleID::neutron(), 1.00866491574, 0.5, +1 );
@@ -118,7 +108,7 @@ SCENARIO( "SpinGroup" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of Channel are given" ) {
+    WHEN( "two instances of SpinGroup are given" ) {
 
       // identifiers
       id::ChannelID elasticID( "n,Cl35->n,Cl35{0,1,1+}" );
@@ -266,6 +256,15 @@ void verifyChunk( const SpinGroup& chunk ) {
                           { 21., 22., 23., 24. },
                           { 31., 32., 33., 34. },
                           { 41., 42., 43., 44. } } );
+
+  CHECK( 1 == chunk.totalAngularMomentum() );
+  CHECK( +1 == chunk.parity() );
+
+  CHECK( 4 == chunk.reactions().size() );
+  CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
+  CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );
+  CHECK( id::ReactionID( "n,Cl35->n,Cl35_e1" ) == chunk.reactions()[2] );
+  CHECK( id::ReactionID( "n,Cl35->p,S35" ) == chunk.reactions()[3] );
 
   CHECK( capture == chunk.channels()[0] );
   CHECK( elastic == chunk.channels()[1] );

@@ -69,6 +69,7 @@ add_cpp_test( resonances.TabulatedWaveFunction                           resonan
 add_cpp_test( resonances.Channel                                         resonances/Channel.test.cpp )
 add_cpp_test( resonances.ResonanceTable                                  resonances/ResonanceTable.test.cpp )
 add_cpp_test( resonances.SpinGroup                                       resonances/SpinGroup.test.cpp )
+add_cpp_test( resonances.CompoundSystem                                  resonances/CompoundSystem.test.cpp )
 
 add_cpp_test( Documentation                                              Documentation.test.cpp )
 
@@ -137,6 +138,7 @@ add_cpp_test( format.endf.resonances.lrf7.createReactionIdentifiers      format/
 add_cpp_test( format.endf.resonances.lrf7.createParticlePairs            format/endf/resonances/lrf7/createParticlePairs.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createChannels                 format/endf/resonances/lrf7/createChannels.test.cpp )
 add_cpp_test( format.endf.resonances.lrf7.createSpinGroups               format/endf/resonances/lrf7/createSpinGroups.test.cpp )
+add_cpp_test( format.endf.resonances.lrf7.createCompoundSystem           format/endf/resonances/lrf7/createCompoundSystem.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellID                format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( format.endf.atomic.createElectronSubshellConfiguration     format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
 add_cpp_test( format.endf.covariance.createMatrix                        format/endf/covariance/createMatrix.test.cpp )

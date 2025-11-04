@@ -28,7 +28,7 @@ void wrapBoundaryCondition( python::module& module ) {
 
   // wrap the component
   component
-  .value( "EliminateShift", Component::EliminateShift )
+  .value( "ShiftFactor", Component::ShiftFactor )
   .value( "Constant", Component::Constant );
 }
 

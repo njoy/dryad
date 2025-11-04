@@ -4,17 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/resonances/lrf7/createSpinGroups.hpp"
+#include "dryad/format/endf/resonances/lrf7/createCompoundSystem.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
-#include <iostream>
+
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 
-void verifyChunkCu63( const std::vector< SpinGroup >& );
-void verifyChunkCl35( const std::vector< SpinGroup >& );
+void verifyChunkCu63( const CompoundSystem& );
+void verifyChunkCl35( const CompoundSystem& );
 
 SCENARIO( "createSpinGroups" ) {
 
@@ -37,7 +37,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target, parameters );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, parameters );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -63,7 +63,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target, parameters );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, parameters );
 
         verifyChunkCl35( chunk );
       } // THEN
@@ -71,7 +71,7 @@ SCENARIO( "createSpinGroups" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
+void verifyChunkCu63( const CompoundSystem& chunk ) {
 
   auto photon = id::ParticleID::photon();
   auto neutron = id::ParticleID::neutron();
@@ -92,12 +92,13 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
   // spin groups
-  CHECK( 6 == chunk.size() );
+  auto groups = chunk.spinGroups();
+  CHECK( 6 == groups.size() );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 0
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  auto spingroup = chunk[0];
+  auto spingroup = groups[0];
   CHECK( 0 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
 
@@ -173,7 +174,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 1
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[1];
+  spingroup = groups[1];
   CHECK( 1 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
 
@@ -249,7 +250,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 2
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[2];
+  spingroup = groups[2];
   CHECK( 1 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
 
@@ -350,7 +351,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 3
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[3];
+  spingroup = groups[3];
   CHECK( 2 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
 
@@ -426,7 +427,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[4];
+  spingroup = groups[4];
   CHECK( 2 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
 
@@ -527,7 +528,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 5
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[5];
+  spingroup = groups[5];
   CHECK( 3 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
 
@@ -601,7 +602,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( std::sqrt( 9.099094e+2 / 2. / channel1.penetrability( 3.006336e+5 ) ),WithinRel( resonances[1][176] ) );
 }
 
-void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
+void verifyChunkCl35( const CompoundSystem& chunk ) {
 
   auto photon = id::ParticleID::photon();
   auto neutron = id::ParticleID::neutron();
@@ -627,14 +628,13 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
   // spin groups
-  CHECK( 6 == chunk.size() );
+  auto groups = chunk.spinGroups();
+  CHECK( 6 == groups.size() );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 0
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  auto spingroup = chunk[0];
-  CHECK( 0 == spingroup.totalAngularMomentum() );
-  CHECK( -1 == spingroup.parity() );
+  auto spingroup = groups[0];
 
   // channels
   auto channels = spingroup.channels();
@@ -708,9 +708,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 1
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[1];
-  CHECK( 1 == spingroup.totalAngularMomentum() );
-  CHECK( -1 == spingroup.parity() );
+  spingroup = groups[1];
 
   // channels
   channels = spingroup.channels();
@@ -859,9 +857,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 2
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[2];
-  CHECK( 1 == spingroup.totalAngularMomentum() );
-  CHECK( +1 == spingroup.parity() );
+  spingroup = groups[2];
 
   // channels
   channels = spingroup.channels();
@@ -960,9 +956,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 3
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[3];
-  CHECK( 2 == spingroup.totalAngularMomentum() );
-  CHECK( -1 == spingroup.parity() );
+  spingroup = groups[3];
 
   // channels
   channels = spingroup.channels();
@@ -1111,9 +1105,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[4];
-  CHECK( 2 == spingroup.totalAngularMomentum() );
-  CHECK( +1 == spingroup.parity() );
+  spingroup = groups[4];
 
   // channels
   channels = spingroup.channels();
@@ -1212,9 +1204,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 5
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  spingroup = chunk[5];
-  CHECK( 3 == spingroup.totalAngularMomentum() );
-  CHECK( -1 == spingroup.parity() );
+  spingroup = groups[5];
 
   // channels
   channels = spingroup.channels();

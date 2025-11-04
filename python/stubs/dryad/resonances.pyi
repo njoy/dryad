@@ -5,20 +5,20 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
     
     Members:
     
-      EliminateShift
+      ShiftFactor
     
       Constant
     """
     Constant: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.Constant: 2>
-    EliminateShift: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.EliminateShift: 1>
-    __members__: typing.ClassVar[dict[str, BoundaryCondition]]  # value = {'EliminateShift': <BoundaryCondition.EliminateShift: 1>, 'Constant': <BoundaryCondition.Constant: 2>}
+    ShiftFactor: typing.ClassVar[BoundaryCondition]  # value = <BoundaryCondition.ShiftFactor: 1>
+    __members__: typing.ClassVar[dict[str, BoundaryCondition]]  # value = {'ShiftFactor': <BoundaryCondition.ShiftFactor: 1>, 'Constant': <BoundaryCondition.Constant: 2>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:
@@ -466,6 +466,40 @@ class ChannelRadii:
         """
     @shift_factor_radius.setter
     def shift_factor_radius(self, arg1: float | TabulatedRadius | None) -> None:
+        ...
+class CompoundSystem:
+    """
+    The compound nucleus system
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: CompoundSystem) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, spin_groups: list[SpinGroup]) -> None:
+        """
+        Initialise the spin group
+        
+        Arguments:
+            self          the compound system
+            spin_groups   the spin groups that make up the compound system
+        """
+    @typing.overload
+    def __init__(self, instance: CompoundSystem) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: CompoundSystem) -> bool:
+        ...
+    @property
+    def spin_groups(self) -> list[SpinGroup]:
+        """
+        The spin groups that make up the compound system
+        """
+    @spin_groups.setter
+    def spin_groups(self, arg1: list[SpinGroup]) -> None:
         ...
 class CoulombPenetrability:
     """
@@ -1017,6 +1051,73 @@ class ResonanceTable:
     def reduced_width_amplitudes(self) -> list[list[float]]:
         """
         The reduced width amplitudes
+        """
+class SpinGroup:
+    """
+    A spin group corresponding to a Jpi quantum number set
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __eq__(self, arg0: SpinGroup) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, channels: list[Channel], resonances: ResonanceTable) -> None:
+        """
+        Initialise the spin group
+        
+        Arguments:
+            self         the spin group
+            channels     the channels in the spingroup
+            resonances   the resonance table of the spingroup
+        """
+    @typing.overload
+    def __init__(self, channels: list[tuple[Channel, ResonanceTable]]) -> None:
+        """
+        Initialise the spin group
+        
+        Arguments:
+            self       the spin group
+            channels   the channel data in the spingroup
+        """
+    @typing.overload
+    def __init__(self, instance: SpinGroup) -> None:
+        """
+        Initialise a copy
+        
+        Arguments:
+            instance    the instance to be copied
+        """
+    def __ne__(self, arg0: SpinGroup) -> bool:
+        ...
+    @property
+    def channels(self) -> list[Channel]:
+        """
+        The channels in the spin group
+        """
+    @channels.setter
+    def channels(self, arg1: list[Channel]) -> None:
+        ...
+    @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def reactions(self) -> list[dryad.id.ReactionID]:
+        """
+        The reactions to which this spin group contributes
+        """
+    @property
+    def resonance_table(self) -> ResonanceTable:
+        """
+        The resonance table of the spin group
+        """
+    @resonance_table.setter
+    def resonance_table(self, arg1: ResonanceTable) -> None:
+        ...
+    @property
+    def total_angular_momentum(self) -> float:
+        """
+        The total angular momentum J of the channels
         """
 class TabulatedRadius:
     """

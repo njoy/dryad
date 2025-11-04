@@ -14,8 +14,8 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
     def test_component( self ) :
 
         # everything sorted
-        table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                             ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+        table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                             ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                 energies = [ 1., 2., 3., 4. ],
                                 amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
@@ -50,8 +50,8 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertAlmostEqual( 24., table.reduced_width_amplitudes[1][3] )
 
         # everything unsorted
-        table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
-                                             ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ],
+        table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ),
+                                             ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ],
                                 energies = [ 4., 3., 2., 1. ],
                                 amplitudes = [ [ 24., 23., 22., 21. ], [ 14., 13., 12., 11. ] ] )
 
@@ -86,7 +86,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertAlmostEqual( 24., table.reduced_width_amplitudes[1][3] )
 
         # single channel
-        table = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+        table = ResonanceTable( channel = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
                                 energies = [ 1., 2., 3., 4. ],
                                 amplitudes = [ 11., 12., 13., 14. ] )
 
@@ -107,19 +107,19 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
 
     def test_merge( self ) :
 
-        left = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+        left = ResonanceTable( channel = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
                                energies = [ 1., 2., 4. ],
                                 amplitudes = [ 11., 12., 14. ] )
-        right = ResonanceTable( channel = ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
+        right = ResonanceTable( channel = ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ),
                                 energies = [ 2., 3., 5. ],
                                 amplitudes = [ 22., 23., 25. ] )
 
         # common channel, zero width for common energy
-        right2 = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+        right2 = ResonanceTable( channel = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
                                  energies = [ 2., 3., 5. ],
                                  amplitudes = [ 0., 23., 25. ] )
         # common channel, non-zero width for common energy
-        right3 = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+        right3 = ResonanceTable( channel = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
                                  energies = [ 2., 3., 5. ],
                                  amplitudes = [ 22., 23., 25. ] )
 
@@ -221,15 +221,15 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                            ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+        left = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                            ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                energies = [ 1., 2., 3., 4. ],
                                amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
-        equal = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                             ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+        equal = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                             ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                 energies = [ 1., 2., 3., 4. ],
                                 amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
-        different = ResonanceTable( channel = ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+        different = ResonanceTable( channel = ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
                                     energies = [ 1., 2., 3., 4. ],
                                     amplitudes = [ 11., 12., 13., 14. ] )
 
@@ -248,38 +248,38 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         # the number of channels and column is inconsistent
         with self.assertRaises( Exception ) :
 
-            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ],
+            table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ],
                                     energies = [ 1., 2., 3., 4. ],
                                     amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
         # the energies are not unique
         with self.assertRaises( Exception ) :
 
-            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+            table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                     energies = [ 1., 2., 2., 4. ],
                                     amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
         # the number of energies and number of amplitudes is inconsistent
         with self.assertRaises( Exception ) :
 
-            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+            table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                     energies = [ 1., 2., 3. ],
                                     amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
         with self.assertRaises( Exception ) :
 
-            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+            table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                     energies = [ 1., 2., 3., 4. ],
                                     amplitudes = [ [ 11., 12., 13. ], [ 21., 22., 23., 24. ] ] )
 
         # the number of channels or resonances is zero
         with self.assertRaises( Exception ) :
 
-            table = ResonanceTable( channels = [ ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-                                                 ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ],
+            table = ResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                                                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ],
                                     energies = [],
                                     amplitudes = [ [ 11., 12., 13., 14. ], [ 21., 22., 23., 24. ] ] )
 
