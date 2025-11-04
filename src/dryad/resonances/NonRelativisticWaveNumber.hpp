@@ -6,6 +6,7 @@
 // other includes
 #include "dryad/constants.hpp"
 #include "dryad/resonances/ParticlePair.hpp"
+#include "dryad/resonances/Kinematics.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -34,6 +35,11 @@ namespace resonances {
     NonRelativisticWaveNumber& operator=( NonRelativisticWaveNumber&& ) = default;
 
     /* methods */
+
+    /**
+     *  @brief Return the kinematics type
+     */
+    static constexpr Kinematics kinematicsType() { return Kinematics::NonRelativistic; }
 
     /**
      *  @brief Calculate the channel wave number (given in fm^-1) at a given energy

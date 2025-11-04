@@ -18,6 +18,7 @@ void wrapChannel( python::module& module ) {
   using ChannelID = njoy::dryad::id::ChannelID;
   using ParticlePair = njoy::dryad::resonances::ParticlePair;
   using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
+  using Kinematics = njoy::dryad::resonances::Kinematics;
   using WaveNumber = njoy::dryad::resonances::Channel::WaveNumber;
   using Penetrability = njoy::dryad::resonances::Channel::Penetrability;
   using ShiftFactor = njoy::dryad::resonances::Channel::ShiftFactor;
@@ -79,21 +80,25 @@ void wrapChannel( python::module& module ) {
                   std::optional< ParticlePair >,
                   double,
                   std::optional< double >,
-                  ChannelRadii >(),
+                  ChannelRadii,
+                  Kinematics >(),
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "qValue" ),
     python::arg( "boundary" ), python::arg( "radii" ),
+    python::arg( "kinematics" ) = Kinematics::NonRelativistic,
     "Initialise the channel\n\n"
     "Arguments:\n"
-    "    self            the channel\n"
-    "    identifier      the channel identifier\n"
-    "    incident        the current incident particle pair\n"
-    "    outgoing        the outgoing particle pair\n"
-    "    q_value         the Q value associated with the transition from\n"
-    "                    the incident to the outgoing particle pair\n"
-    "    boundary        the boundary condition\n"
-    "    radii           the channel radii for the calculation of the\n"
-    "                    wave functions"
+    "    self         the channel\n"
+    "    identifier   the channel identifier\n"
+    "    incident     the current incident particle pair\n"
+    "    outgoing     the outgoing particle pair\n"
+    "    q_value      the Q value associated with the transition from\n"
+    "                 the incident to the outgoing particle pair\n"
+    "    boundary     the boundary condition\n"
+    "    radii        the channel radii for the calculation of the\n"
+    "                 wave functions\n"
+    "    kinematics   the kinematics type applied to the channel (default is\n"
+    "                 non-relativistic)"
   )
   .def(
 
@@ -156,6 +161,12 @@ void wrapChannel( python::module& module ) {
     "channel_radii",
     &Component::channelRadii,
     "The channel radii"
+  )
+  .def_property_readonly(
+
+    "kinematics_type",
+    &Component::kinematicsType,
+    "The kinematics type applied to the channel"
   )
   .def_property_readonly(
 

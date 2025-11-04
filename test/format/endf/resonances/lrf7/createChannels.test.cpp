@@ -35,8 +35,9 @@ SCENARIO( "createChannels" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Cl35" );
         auto boundary_condition = format::endf::resonances::lrf7::createBoundaryCondition( pairs );
+        auto kinematics = Kinematics::NonRelativistic;
         auto chunk = format::endf::resonances::lrf7::createChannels(
-                       projectile, target, boundary_condition, pairs, channels );
+                       projectile, target, boundary_condition, kinematics, pairs, channels );
 
         verifyChunk( chunk );
       } // THEN
@@ -75,6 +76,7 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK( 0 == chunk[0].qValue() );
   CHECK( std::nullopt == chunk[0].boundaryCondition() );
   CHECK( resonances::ChannelRadii( 0., 0. ) == chunk[0].channelRadii() );
+  CHECK( Kinematics::NonRelativistic == chunk[0].kinematicsType() );
 
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) == chunk[1].identifier() );
   incident = chunk[1].incidentParticlePair();
@@ -103,6 +105,7 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK( 0 == chunk[1].qValue() );
   CHECK( std::nullopt == chunk[1].boundaryCondition() );
   CHECK( resonances::ChannelRadii( 4.82222, 3.66798 ) == chunk[1].channelRadii() );
+  CHECK( Kinematics::NonRelativistic == chunk[1].kinematicsType() );
 
   CHECK( id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) == chunk[2].identifier() );
   incident = chunk[2].incidentParticlePair();
@@ -131,4 +134,5 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK( 615220 == chunk[2].qValue() );
   CHECK( std::nullopt == chunk[2].boundaryCondition() );
   CHECK( resonances::ChannelRadii( 4.82222, 3.66798 ) == chunk[2].channelRadii() );
+  CHECK( Kinematics::NonRelativistic == chunk[2].kinematicsType() );
 }

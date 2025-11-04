@@ -82,20 +82,22 @@ class Channel:
             phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ...) -> None:
         """
         Initialise the channel
         
         Arguments:
-            self            the channel
-            identifier      the channel identifier
-            incident        the current incident particle pair
-            outgoing        the outgoing particle pair
-            q_value         the Q value associated with the transition from
-                            the incident to the outgoing particle pair
-            boundary        the boundary condition
-            radii           the channel radii for the calculation of the
-                            wave functions
+            self         the channel
+            identifier   the channel identifier
+            incident     the current incident particle pair
+            outgoing     the outgoing particle pair
+            q_value      the Q value associated with the transition from
+                         the incident to the outgoing particle pair
+            boundary     the boundary condition
+            radii        the channel radii for the calculation of the
+                         wave functions
+            kinematics   the kinematics type applied to the channel (default is
+                         non-relativistic)
         """
     @typing.overload
     def __init__(self, instance: Channel) -> None:
@@ -200,6 +202,11 @@ class Channel:
     def is_incident_channel(self) -> bool:
         """
         Flag to indicate whether or not the channel is an incident channel
+        """
+    @property
+    def kinematics_type(self) -> Kinematics:
+        """
+        The kinematics type applied to the channel
         """
     @property
     def outgoing_particle_pair(self) -> ParticlePair | None:

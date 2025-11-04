@@ -10,6 +10,7 @@ from dryad.resonances import ChannelQuantumNumbers
 from dryad.resonances import ChannelRadii
 from dryad.resonances import Particle
 from dryad.resonances import ParticlePair
+from dryad.resonances import Kinematics
 from dryad.id import ChannelID
 from dryad.id import ReactionID
 from dryad.id import ParticleID
@@ -91,6 +92,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertEqual( False, capture.is_incident_channel )
         self.assertAlmostEqual( 1., capture.statistical_spin_factor )
         self.assertEqual( False, capture.is_below_threshold( energy ) )
+        self.assertEqual( Kinematics.NonRelativistic, capture.kinematics_type )
         self.assertAlmostEqual( 0., capture.wave_number( energy ) )
         self.assertAlmostEqual( 0., capture.sommerfeld_parameter( energy ) )
         self.assertAlmostEqual( 1., capture.penetrability( energy ) )
@@ -110,6 +112,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertEqual( True, elastic.is_incident_channel )
         self.assertAlmostEqual( 0.375, elastic.statistical_spin_factor )
         self.assertEqual( False, elastic.is_below_threshold( energy ) )
+        self.assertEqual( Kinematics.NonRelativistic, elastic.kinematics_type )
         self.assertAlmostEqual( 6.752152278684156e-7, elastic.wave_number( energy ) )
         self.assertAlmostEqual( 0., elastic.sommerfeld_parameter( energy ) )
         self.assertAlmostEqual( 3.256036376131631e-6, elastic.penetrability( energy ) )
@@ -129,6 +132,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertEqual( False, inelastic.is_incident_channel )
         self.assertAlmostEqual( 0.375, inelastic.statistical_spin_factor )
         self.assertEqual( True, inelastic.is_below_threshold( energy ) )
+        self.assertEqual( Kinematics.NonRelativistic, inelastic.kinematics_type )
         self.assertAlmostEqual( 0.2391648503730464, inelastic.wave_number( energy ) )
         self.assertAlmostEqual( 0., inelastic.sommerfeld_parameter( energy ) )
         self.assertAlmostEqual( 1.153305524765912, inelastic.penetrability( energy ) )
@@ -148,6 +152,7 @@ class Test_dryad_resonances_Channel( unittest.TestCase ) :
         self.assertEqual( False, proton.is_incident_channel )
         self.assertAlmostEqual( 0.375, proton.statistical_spin_factor )
         self.assertEqual( False, proton.is_below_threshold( energy ) )
+        self.assertEqual( Kinematics.NonRelativistic, proton.kinematics_type )
         self.assertAlmostEqual( 0.1697421616532552, proton.wave_number( energy ) )
         self.assertAlmostEqual( 3.179105369595768, proton.sommerfeld_parameter( energy ) )
         self.assertAlmostEqual(  2.896705590727021e-5, proton.penetrability( energy ) )

@@ -1,4 +1,11 @@
-static WaveNumber selectWaveNumber() {
+static WaveNumber selectWaveNumber( const Kinematics& kinematics ) {
 
-  return NonRelativisticWaveNumber();
+  if ( kinematics == Kinematics::NonRelativistic ) {
+
+    return NonRelativisticWaveNumber();
+  }
+  else {
+
+    return RelativisticWaveNumber();
+  }
 }

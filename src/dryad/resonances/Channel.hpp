@@ -152,6 +152,16 @@ namespace resonances {
     }
 
     /**
+     *  @brief The kinematics type applied to the channel
+     */
+    Kinematics kinematicsType() const {
+
+      return std::visit( [] ( auto&& function ) -> Kinematics
+                            { return function.kinematicsType(); },
+                         this->wave_number_ );
+    }
+
+    /**
      *  @brief Return the statistical spin factor
      *
      *  The statistical spin factor g of a channel is defined as follows:

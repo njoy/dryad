@@ -36,6 +36,11 @@ namespace resonances {
     /* methods */
 
     /**
+     *  @brief Return the kinematics type
+     */
+    static constexpr Kinematics kinematicsType() { return Kinematics::Relativistic; }
+
+    /**
      *  @brief Return the relativistic wave number at a given energy
      *
      *  The relativistic wave number k is an energy dependent quantity defined as
