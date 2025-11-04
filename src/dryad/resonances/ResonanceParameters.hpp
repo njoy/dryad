@@ -49,7 +49,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Set the spin groups that make up the compound system
+     *  @brief Set the compound systems that make up resolved resonance data
      *
      *  @param[in] resolved   the resolved resonance compound systems
      */
