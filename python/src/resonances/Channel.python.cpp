@@ -66,7 +66,7 @@ void wrapChannel( python::module& module ) {
     "    boundary                 the boundary condition\n"
     "    radii                    the channel radii for the calculation of the\n"
     "                             wave functions\n"
-    "    wave_number.             the wave number of the channel\n"
+    "    wave_number              the wave number of the channel\n"
     "    penetrability            the penetrability of the channel\n"
     "    shift_factor             the shift factor of the channel\n"
     "    phase_shift              the phase shift of the channel\n"

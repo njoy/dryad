@@ -61,7 +61,7 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, wave_number: ... | ..., penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
@@ -75,6 +75,7 @@ class Channel:
             boundary                 the boundary condition
             radii                    the channel radii for the calculation of the
                                      wave functions
+            wave_number              the wave number of the channel
             penetrability            the penetrability of the channel
             shift_factor             the shift factor of the channel
             phase_shift              the phase shift of the channel
@@ -170,13 +171,6 @@ class Channel:
     def wave_number(self, energy: float) -> float:
         """
         Calculate the channel wave number (given in fm^-1) at a given energy
-        
-        The wave number k is an energy dependent quantity defined as follows:
-           hbar^2 k^2 = 2 * mu * ( energy * ratio + q )
-        in which mu is the reduced mass of the channel's particle pair and ratio
-        is the mass ratio M / ( m + M ) for the incident particle pair, q is the
-        Q value associated to the transition of the incident particle pair to the
-        channel's particle pair and hbar is the reduced Planck constant.
         
         Arguments:
             self     the channel
