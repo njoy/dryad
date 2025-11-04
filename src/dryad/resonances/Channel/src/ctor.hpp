@@ -20,7 +20,7 @@ Channel& operator=( Channel&& ) = default;
  *  @param[in] boundary        the boundary condition
  *  @param[in] radii           the channel radii for the calculation of the
  *                             wave functions
- *  @param[in] waveNumber      the wave number of the channel
+ *  @param[in] kinematics      the kinematics type applied to the channel
  *  @param[in] penetrability   the penetrability of the channel
  *  @param[in] shiftFactor     the shift factor of the channel
  *  @param[in] phaseshift      the phase shift of the channel
@@ -32,7 +32,7 @@ Channel( id::ChannelID identifier,
          double qValue,
          std::optional< double > boundary,
          ChannelRadii radii,
-         WaveNumber waveNumber,
+         Kinematics kinematics,
          Penetrability penetrability,
          ShiftFactor shiftFactor,
          PhaseShift phaseShift,
@@ -43,7 +43,7 @@ Channel( id::ChannelID identifier,
     q_( qValue ),
     boundary_condition_( std::move( boundary ) ),
     radii_( std::move( radii ) ),
-    wave_number_( std::move( waveNumber ) ),
+    wave_number_( selectWaveNumber( kinematics ) ),
     penetrability_( std::move( penetrability ) ),
     shift_factor_( std::move( shiftFactor ) ),
     phase_shift_( std::move( phaseShift ) ),
@@ -74,7 +74,7 @@ Channel( id::ChannelID identifier,
     Channel( std::move( identifier ), std::move( incident ),
              std::move( outgoing ), qValue,
              std::move( boundary ), std::move( radii ),
-             selectWaveNumber( kinematics ),
+             std::move( kinematics ),
              selectPenetrabilityFunction( identifier.quantumNumbers().orbitalAngularMomentum(),
                                           outgoing ),
              selectShiftFactorFunction( identifier.quantumNumbers().orbitalAngularMomentum(),

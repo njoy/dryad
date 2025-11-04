@@ -19,7 +19,6 @@ void wrapChannel( python::module& module ) {
   using ParticlePair = njoy::dryad::resonances::ParticlePair;
   using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
   using Kinematics = njoy::dryad::resonances::Kinematics;
-  using WaveNumber = njoy::dryad::resonances::Channel::WaveNumber;
   using Penetrability = njoy::dryad::resonances::Channel::Penetrability;
   using ShiftFactor = njoy::dryad::resonances::Channel::ShiftFactor;
   using PhaseShift = njoy::dryad::resonances::Channel::PhaseShift;
@@ -45,7 +44,7 @@ void wrapChannel( python::module& module ) {
                   double,
                   std::optional< double >,
                   ChannelRadii,
-                  WaveNumber,
+                  Kinematics,
                   Penetrability,
                   ShiftFactor,
                   PhaseShift,
@@ -53,7 +52,7 @@ void wrapChannel( python::module& module ) {
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "q_value" ),
     python::arg( "boundary" ), python::arg( "radii" ),
-    python::arg( "wave_number" ), python::arg( "penetrability" ),
+    python::arg( "kinematics" ), python::arg( "penetrability" ),
     python::arg( "shift_factor" ), python::arg( "phase_shift" ),
     python::arg( "phase_shift_difference" ),
     "Initialise the channel\n\n"
@@ -67,7 +66,7 @@ void wrapChannel( python::module& module ) {
     "    boundary                 the boundary condition\n"
     "    radii                    the channel radii for the calculation of the\n"
     "                             wave functions\n"
-    "    wave_number              the wave number of the channel\n"
+    "    kinematics               the kinematics type applied to the channel\n"
     "    penetrability            the penetrability of the channel\n"
     "    shift_factor             the shift factor of the channel\n"
     "    phase_shift              the phase shift of the channel\n"
