@@ -11,6 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
+ProjectileTarget makeProjectiletarget( bool );
 void verifyChunk( const ProjectileTarget&, bool );
 void verifyCorrectSummation( const ProjectileTarget& );
 
@@ -20,72 +21,8 @@ SCENARIO( "ProjectileTarget" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      id::ParticleID projectile( "n" );
-      id::ParticleID target( "Fe56" );
-
-      InteractionType type = InteractionType::Nuclear;
-
-      std::vector< Reaction > reactions = {
-
-        Reaction( id::ReactionID( "n,Fe56->total" ),
-                  { id::ReactionID( "n,Fe56->n,Fe56" ),
-                    id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
-                    id::ReactionID( "n,Fe56->p,Mn56[all]" ),
-                    id::ReactionID( "n,Fe56->a,Cr53[all]" ) },
-                  TabulatedCrossSection( { 1e-5, 20. }, { 1000001., 1000001. },
-                                           InterpolationType::Histogram ),
-                  {} ),
-        Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
-                  TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
-                                           InterpolationType::LinearLinear ),
-                  { ReactionProduct( id::ParticleID( "n" ), 1,
-                                     TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
-                                                               LegendreAngularDistributions(
-                                                                 { 1e-5, 20. },
-                                                                 { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ) },
-                  0, 0 ),
-        Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
-                  { id::ReactionID( "n,Fe56->2n,Fe55" ),
-                    id::ReactionID( "n,Fe56->2n,Fe55_e1" ) },
-                  TabulatedCrossSection( { 1., 20. }, { 0., 3. },
-                                           InterpolationType::Histogram ),
-                  {} ),
-        Reaction( id::ReactionID( "n,Fe56->2n,Fe55" ),
-                  TabulatedCrossSection( { 1., 20. }, { 0., 2.00001 },
-                                           InterpolationType::LinearLinear ),
-                  {},
-                  0, -1 ),
-        Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
-                  TabulatedCrossSection( { 1., 20. }, { 0., 1. },
-                                           InterpolationType::LinearLinear ),
-                  {},
-                  0, -1 ),
-        Reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ),
-                  { id::ReactionID( "n,Fe56->p,Mn56" ),
-                    id::ReactionID( "n,Fe56->p,Mn56_e1" ) },
-                  TabulatedCrossSection( { 5., 20. }, { 0., 5. },
-                                           InterpolationType::Histogram ),
-                  {} ),
-        Reaction( id::ReactionID( "n,Fe56->p,Mn56" ),
-                  TabulatedCrossSection( { 5., 20. }, { 0., 3.00001 },
-                                           InterpolationType::LinearLinear ),
-                  {},
-                  0, -5 ),
-        Reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ),
-                  TabulatedCrossSection( { 5., 20. }, { 0., 2. },
-                                           InterpolationType::LinearLinear ),
-                  {},
-                  0, -5 ),
-        Reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ),
-                  TabulatedCrossSection( { 1e-5, 20. }, { 1., 1. },
-                                           InterpolationType::LinearLinear ),
-                  {},
-                  0, 0 )
-      };
-
-      ProjectileTarget chunk1( projectile, target, type, reactions, std::nullopt, false );
-      ProjectileTarget chunk2( std::move( projectile ), std::move( target ),
-                               type, std::move( reactions ), std::nullopt, true );
+      ProjectileTarget chunk1 = makeProjectiletarget( false );
+      ProjectileTarget chunk2 = makeProjectiletarget( true );;
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );
@@ -95,12 +32,21 @@ SCENARIO( "ProjectileTarget" ) {
 
       verifyChunk( chunk1, true );
       verifyChunk( chunk2, true );
+    } // WHEN
+  } // GIVEN
 
-      chunk1.calculateSummationCrossSections();
-      chunk2.calculateSummationCrossSections();
+  GIVEN( "calculateSummationCrossSections" ) {
 
-      verifyCorrectSummation( chunk1 );
-      verifyCorrectSummation( chunk2 );
+    WHEN( "an instance of ProjectileTarget is given" ) {
+
+      ProjectileTarget chunk = makeProjectiletarget( false );
+
+      THEN( "the summation cross sections can be recalculated" ) {
+
+        chunk.calculateSummationCrossSections();
+
+        verifyCorrectSummation( chunk );
+      } // THEN
     } // WHEN
   } // GIVEN
 
@@ -108,62 +54,7 @@ SCENARIO( "ProjectileTarget" ) {
 
     WHEN( "an instance of ProjectileTarget is given" ) {
 
-      ProjectileTarget chunk( id::ParticleID::neutron(), id::ParticleID( 26056 ),
-                              InteractionType::Nuclear,
-                              { Reaction( id::ReactionID( "n,Fe56->total" ),
-                                          { id::ReactionID( "n,Fe56->n,Fe56" ),
-                                            id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
-                                            id::ReactionID( "n,Fe56->p,Mn56[all]" ),
-                                            id::ReactionID( "n,Fe56->a,Cr53[all]" ) },
-                                          TabulatedCrossSection( { 1e-5, 20. }, { 1000001., 1000001. },
-                                                                   InterpolationType::Histogram ),
-                                          {} ),
-                                Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
-                                          TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
-                                                                   InterpolationType::LinearLinear ),
-                                          { ReactionProduct( id::ParticleID( "n" ), 1,
-                                                             TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
-                                                                                       LegendreAngularDistributions(
-                                                                                         { 1e-5, 20. },
-                                                                                         { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ) },
-                                          0, 0 ),
-                                Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
-                                          { id::ReactionID( "n,Fe56->2n,Fe55" ),
-                                            id::ReactionID( "n,Fe56->2n,Fe55_e1" ) },
-                                          TabulatedCrossSection( { 1., 20. }, { 0., 3. },
-                                                                   InterpolationType::Histogram ),
-                                          {} ),
-                                Reaction( id::ReactionID( "n,Fe56->2n,Fe55" ),
-                                          TabulatedCrossSection( { 1., 20. }, { 0., 2.00001 },
-                                                                   InterpolationType::LinearLinear ),
-                                          {},
-                                          0, -1 ),
-                                Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
-                                          TabulatedCrossSection( { 1., 20. }, { 0., 1. },
-                                                                   InterpolationType::LinearLinear ),
-                                          {},
-                                          0, -1 ),
-                                Reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ),
-                                          { id::ReactionID( "n,Fe56->p,Mn56" ),
-                                            id::ReactionID( "n,Fe56->p,Mn56_e1" ) },
-                                          TabulatedCrossSection( { 5., 20. }, { 0., 5. },
-                                                                   InterpolationType::Histogram ),
-                                          {} ),
-                                Reaction( id::ReactionID( "n,Fe56->p,Mn56" ),
-                                          TabulatedCrossSection( { 5., 20. }, { 0., 3.00001 },
-                                                                   InterpolationType::LinearLinear ),
-                                          {},
-                                          0, -5 ),
-                                Reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ),
-                                          TabulatedCrossSection( { 5., 20. }, { 0., 2. },
-                                                                   InterpolationType::LinearLinear ),
-                                          {},
-                                          0, -5 ),
-                                Reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ),
-                                          TabulatedCrossSection( { 1e-5, 20. }, { 1., 1. },
-                                                                   InterpolationType::LinearLinear ),
-                                          {},
-                                          0, 0 ) } );
+      ProjectileTarget chunk = makeProjectiletarget( false );
 
       THEN( "the projectile identifier can be changed" ) {
 
@@ -336,6 +227,75 @@ SCENARIO( "ProjectileTarget" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+ProjectileTarget makeProjectiletarget( bool normalise ) {
+
+  id::ParticleID projectile( "n" );
+  id::ParticleID target( "Fe56" );
+
+  InteractionType type = InteractionType::Nuclear;
+
+  std::vector< Reaction > reactions = {
+
+    Reaction( id::ReactionID( "n,Fe56->total" ),
+              { id::ReactionID( "n,Fe56->n,Fe56" ),
+                id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+                id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+                id::ReactionID( "n,Fe56->a,Cr53[all]" ) },
+              TabulatedCrossSection( { 1e-5, 20. }, { 1000001., 1000001. },
+                                       InterpolationType::Histogram ),
+              {} ),
+    Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
+              TabulatedCrossSection( { 1e-5, 20. }, { 1e+6, 1e+6 },
+                                       InterpolationType::LinearLinear ),
+              { ReactionProduct( id::ParticleID( "n" ), 1,
+                                 TwoBodyDistributionData ( ReferenceFrame::CentreOfMass,
+                                                           LegendreAngularDistributions(
+                                                             { 1e-5, 20. },
+                                                             { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ) },
+              0, 0 ),
+    Reaction( id::ReactionID( "n,Fe56->2n,Fe55[all]" ),
+              { id::ReactionID( "n,Fe56->2n,Fe55" ),
+                id::ReactionID( "n,Fe56->2n,Fe55_e1" ) },
+              TabulatedCrossSection( { 1., 20. }, { 0., 3. },
+                                       InterpolationType::Histogram ),
+              {} ),
+    Reaction( id::ReactionID( "n,Fe56->2n,Fe55" ),
+              TabulatedCrossSection( { 1., 20. }, { 0., 2.00001 },
+                                       InterpolationType::LinearLinear ),
+              {},
+              0, -1 ),
+    Reaction( id::ReactionID( "n,Fe56->2n,Fe55_e1" ),
+              TabulatedCrossSection( { 1., 20. }, { 0., 1. },
+                                       InterpolationType::LinearLinear ),
+              {},
+              0, -1 ),
+    Reaction( id::ReactionID( "n,Fe56->p,Mn56[all]" ),
+              { id::ReactionID( "n,Fe56->p,Mn56" ),
+                id::ReactionID( "n,Fe56->p,Mn56_e1" ) },
+              TabulatedCrossSection( { 5., 20. }, { 0., 5. },
+                                       InterpolationType::Histogram ),
+              {} ),
+    Reaction( id::ReactionID( "n,Fe56->p,Mn56" ),
+              TabulatedCrossSection( { 5., 20. }, { 0., 3.00001 },
+                                       InterpolationType::LinearLinear ),
+              {},
+              0, -5 ),
+    Reaction( id::ReactionID( "n,Fe56->p,Mn56_e1" ),
+              TabulatedCrossSection( { 5., 20. }, { 0., 2. },
+                                       InterpolationType::LinearLinear ),
+              {},
+              0, -5 ),
+    Reaction( id::ReactionID( "n,Fe56->a,Cr53[all]" ),
+              TabulatedCrossSection( { 1e-5, 20. }, { 1., 1. },
+                                       InterpolationType::LinearLinear ),
+              {},
+              0, 0 )
+  };
+
+  return ProjectileTarget( std::move( projectile ), std::move( target ),
+                           type, std::move( reactions ), std::nullopt, normalise );
+}
 
 void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
 
