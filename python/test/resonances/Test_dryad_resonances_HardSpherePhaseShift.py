@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import HardSpherePhaseShift
+from njoy.dryad.resonances import HardSpherePhaseShift
 
 class Test_dryad_resonances_HardSpherePhaseShift( unittest.TestCase ) :
     """Unit test for the HardSpherePhaseShift class."""

@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import CoulombPhaseShiftDifference
+from njoy.dryad.resonances import CoulombPhaseShiftDifference
 
 class Test_dryad_resonances_CoulombPhaseShiftDifference( unittest.TestCase ) :
     """Unit test for the CoulombPhaseShiftDifference class."""

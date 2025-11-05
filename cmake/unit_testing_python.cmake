@@ -6,10 +6,10 @@ enable_testing()
 
 function( add_python_test name source )
 
-  set(PYTHONPATH_PARTS ${dryad_PYTHONPATH} $ENV{PYTHONPATH})
+  set(PYTHONPATH_PARTS ${njoy_PYTHONPATH} $ENV{PYTHONPATH})
   string( JOIN "${PATH_DELIM}" PYTHONPATH_VALUE ${PYTHONPATH_PARTS})
 
-  set( test_name "dryad.python.${name}.test" )
+  set( test_name "njoy.python.${name}.test" )
   add_test( NAME ${test_name}
             COMMAND ${PYTHON_EXECUTABLE} -m unittest -v test/${source}
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/python )
@@ -23,7 +23,7 @@ endfunction()
 # Python unit testing
 #######################################################################
 
-message( STATUS "Adding dryad Python unit testing" )
+message( STATUS "Adding njoy Python unit testing" )
 
 add_python_test( id.EnergyGroup                          id/Test_dryad_id_EnergyGroup.py )
 add_python_test( id.ElectronSubshellID                   id/Test_dryad_id_ElectronSubshellID.py )

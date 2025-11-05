@@ -2,7 +2,7 @@
 Atomic relaxation data components
 """
 from __future__ import annotations
-import dryad.id
+import njoy.dryad.id
 import typing
 __all__: list[str] = ['ElectronSubshellConfiguration', 'NonRadiativeTransitionData', 'RadiativeTransitionData', 'TransitionType']
 class ElectronSubshellConfiguration:
@@ -23,7 +23,7 @@ class ElectronSubshellConfiguration:
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     @typing.overload
-    def __init__(self, id: dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
+    def __init__(self, id: njoy.dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
         """
         Initialise the subshell configuration
         
@@ -75,12 +75,12 @@ class ElectronSubshellConfiguration:
         Flag to indicate whether or not transitions are available
         """
     @property
-    def identifier(self) -> dryad.id.ElectronSubshellID:
+    def identifier(self) -> njoy.dryad.id.ElectronSubshellID:
         """
         The electron subshell identifier
         """
     @identifier.setter
-    def identifier(self, arg1: dryad.id.ElectronSubshellID) -> None:
+    def identifier(self, arg1: njoy.dryad.id.ElectronSubshellID) -> None:
         ...
     @property
     def non_radiative_transitions(self) -> list[NonRadiativeTransitionData]:
@@ -146,7 +146,7 @@ class NonRadiativeTransitionData:
     def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     @typing.overload
-    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, emitting_shell: dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
+    def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
         """
         Initialise the non-radiative transition data
         
@@ -170,12 +170,12 @@ class NonRadiativeTransitionData:
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     @property
-    def emitting_shell(self) -> dryad.id.ElectronSubshellID:
+    def emitting_shell(self) -> njoy.dryad.id.ElectronSubshellID:
         """
         The identifier of the subshell from which the emitted electron originated
         """
     @emitting_shell.setter
-    def emitting_shell(self, arg1: dryad.id.ElectronSubshellID) -> None:
+    def emitting_shell(self, arg1: njoy.dryad.id.ElectronSubshellID) -> None:
         ...
     @property
     def energy(self) -> float | None:
@@ -186,12 +186,12 @@ class NonRadiativeTransitionData:
     def energy(self, arg1: float | None) -> None:
         ...
     @property
-    def originating_shell(self) -> dryad.id.ElectronSubshellID:
+    def originating_shell(self) -> njoy.dryad.id.ElectronSubshellID:
         """
         The identifier of the subshell from which the electron filling the vacancy originated
         """
     @originating_shell.setter
-    def originating_shell(self, arg1: dryad.id.ElectronSubshellID) -> None:
+    def originating_shell(self, arg1: njoy.dryad.id.ElectronSubshellID) -> None:
         ...
     @property
     def probability(self) -> float:
@@ -220,7 +220,7 @@ class RadiativeTransitionData:
     def __eq__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     @typing.overload
-    def __init__(self, originating_shell: dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
+    def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
         """
         Initialise the radiative transition data
         
@@ -250,12 +250,12 @@ class RadiativeTransitionData:
     def energy(self, arg1: float | None) -> None:
         ...
     @property
-    def originating_shell(self) -> dryad.id.ElectronSubshellID:
+    def originating_shell(self) -> njoy.dryad.id.ElectronSubshellID:
         """
         The identifier of the subshell from which the electron filling the vacancy originated
         """
     @originating_shell.setter
-    def originating_shell(self, arg1: dryad.id.ElectronSubshellID) -> None:
+    def originating_shell(self, arg1: njoy.dryad.id.ElectronSubshellID) -> None:
         ...
     @property
     def probability(self) -> float:

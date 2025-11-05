@@ -4,8 +4,8 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.covariance import VarianceScaling
-from dryad.covariance import ScalingType
+from njoy.dryad.covariance import VarianceScaling
+from njoy.dryad.covariance import ScalingType
 
 class Test_dryad_covariance_VarianceScaling( unittest.TestCase ) :
     """Unit test for the VarianceScaling class."""

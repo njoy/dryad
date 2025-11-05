@@ -4,7 +4,7 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.id import ElectronSubshellID
+from njoy.dryad.id import ElectronSubshellID
 
 class Test_dryad_id_ElectronSubshellID( unittest.TestCase ) :
     """Unit test for the ElectronSubshellID class."""

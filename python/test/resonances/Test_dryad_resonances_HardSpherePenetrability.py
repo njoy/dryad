@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import HardSpherePenetrability
+from njoy.dryad.resonances import HardSpherePenetrability
 
 class Test_dryad_resonances_HardSpherePenetrability( unittest.TestCase ) :
     """Unit test for the HardSpherePenetrability class."""

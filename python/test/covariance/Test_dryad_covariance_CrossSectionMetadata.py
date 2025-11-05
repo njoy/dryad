@@ -5,9 +5,9 @@ import unittest
 
 # local imports
 import numpy
-from dryad.covariance import CrossSectionMetadata
-from dryad.id import ReactionID
-from dryad.id import EnergyGroup
+from njoy.dryad.covariance import CrossSectionMetadata
+from njoy.dryad.id import ReactionID
+from njoy.dryad.id import EnergyGroup
 
 class Test_codex_CrossSectionMetadata( unittest.TestCase ) :
     """Unit test for the CrossSectionMetadata class."""

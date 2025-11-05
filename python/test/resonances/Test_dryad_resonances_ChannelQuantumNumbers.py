@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import ChannelQuantumNumbers
+from njoy.dryad.resonances import ChannelQuantumNumbers
 
 class Test_dryad_resonances_ChannelQuantumNumbers( unittest.TestCase ) :
     """Unit test for the ChannelQuantumNumbers class."""

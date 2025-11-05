@@ -4,7 +4,7 @@
 #include <pybind11/operators.h>
 
 // local includes
-#include "definitions.hpp"
+#include "dryad/definitions.hpp"
 #include "dryad/id/ReactionID.hpp"
 
 // namespace aliases

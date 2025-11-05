@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedAverageCosine
-from dryad import InterpolationType
+from njoy.dryad import TabulatedAverageCosine
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedAverageCosine( unittest.TestCase ) :
     """Unit test for the TabulatedAverageCosine class."""

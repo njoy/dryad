@@ -5,11 +5,11 @@ import unittest
 
 # local imports
 import numpy
-from dryad.covariance import ProductMultiplicityMetadata
-from dryad.covariance import ProductMultiplicityCovarianceMatrix
-from dryad.id import ParticleID
-from dryad.id import ReactionID
-from dryad.id import EnergyGroup
+from njoy.dryad.covariance import ProductMultiplicityMetadata
+from njoy.dryad.covariance import ProductMultiplicityCovarianceMatrix
+from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ReactionID
+from njoy.dryad.id import EnergyGroup
 
 class Test_codex_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
     """Unit test for the ProductMultiplicityCovarianceMatrix class."""

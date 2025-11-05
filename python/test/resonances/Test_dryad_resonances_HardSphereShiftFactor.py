@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import HardSphereShiftFactor
+from njoy.dryad.resonances import HardSphereShiftFactor
 
 class Test_dryad_resonances_HardSphereShiftFactor( unittest.TestCase ) :
     """Unit test for the HardSphereShiftFactor class."""

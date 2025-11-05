@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedCrossSection
-from dryad import InterpolationType
+from njoy.dryad import TabulatedCrossSection
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
     """Unit test for the TabulatedCrossSection class."""

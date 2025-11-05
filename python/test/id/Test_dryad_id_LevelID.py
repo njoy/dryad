@@ -4,7 +4,7 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.id import LevelID
+from njoy.dryad.id import LevelID
 
 class Test_elementary_LevelID( unittest.TestCase ) :
     """Unit test for the Level class."""

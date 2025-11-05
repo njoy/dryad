@@ -5,13 +5,13 @@ import sys
 # third party imports
 
 # local imports
-from dryad import AtomicRelaxation
-from dryad.id import ElementID
-from dryad.id import ElectronSubshellID
-from dryad.atomic import TransitionType
-from dryad.atomic import ElectronSubshellConfiguration
-from dryad.atomic import RadiativeTransitionData
-from dryad.atomic import NonRadiativeTransitionData
+from njoy.dryad import AtomicRelaxation
+from njoy.dryad.id import ElementID
+from njoy.dryad.id import ElectronSubshellID
+from njoy.dryad.atomic import TransitionType
+from njoy.dryad.atomic import ElectronSubshellConfiguration
+from njoy.dryad.atomic import RadiativeTransitionData
+from njoy.dryad.atomic import NonRadiativeTransitionData
 
 def verify_chunk( self, chunk, normalise ) :
 

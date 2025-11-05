@@ -5,11 +5,11 @@ import sys
 # third party imports
 
 # local imports
-from dryad.atomic import TransitionType
-from dryad.atomic import RadiativeTransitionData
-from dryad.atomic import NonRadiativeTransitionData
-from dryad.atomic import ElectronSubshellConfiguration
-from dryad.id import ElectronSubshellID
+from njoy.dryad.atomic import TransitionType
+from njoy.dryad.atomic import RadiativeTransitionData
+from njoy.dryad.atomic import NonRadiativeTransitionData
+from njoy.dryad.atomic import ElectronSubshellConfiguration
+from njoy.dryad.id import ElectronSubshellID
 
 def verify_chunk_without_transitions( self, chunk ) :
 

@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "definitions.hpp"
+#include "dryad/definitions.hpp"
 #include "dryad/IsotropicAngularDistributions.hpp"
 
 // namespace aliases

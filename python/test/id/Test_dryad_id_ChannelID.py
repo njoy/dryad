@@ -4,9 +4,9 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.id import ChannelID
-from dryad.id import ReactionID
-from dryad.resonances import ChannelQuantumNumbers
+from njoy.dryad.id import ChannelID
+from njoy.dryad.id import ReactionID
+from njoy.dryad.resonances import ChannelQuantumNumbers
 
 class Test_elementary_ChannelID( unittest.TestCase ) :
     """Unit test for the ChannelID class."""

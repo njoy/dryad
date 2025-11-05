@@ -5,10 +5,10 @@ import sys
 # third party imports
 
 # local imports
-from dryad import UniformAngularDistribution
-from dryad import UniformAngularDistributions
-from dryad import UniformDistributionType
-from dryad import InterpolationType
+from njoy.dryad import UniformAngularDistribution
+from njoy.dryad import UniformAngularDistributions
+from njoy.dryad import UniformDistributionType
+from njoy.dryad import InterpolationType
 
 class Test_dryad_UniformAngularDistributions( unittest.TestCase ) :
     """Unit test for the UniformAngularDistribution class."""

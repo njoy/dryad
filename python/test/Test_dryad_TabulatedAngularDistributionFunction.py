@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedAngularDistributionFunction
-from dryad import InterpolationType
+from njoy.dryad import TabulatedAngularDistributionFunction
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedAngularDistributionFunction( unittest.TestCase ) :
     """Unit test for the TabulatedAngularDistributionFunction class."""

@@ -5,7 +5,7 @@ import unittest
 
 # local imports
 import numpy
-from dryad.matrix import is_square, is_symmetric
+from njoy.dryad.matrix import is_square, is_symmetric
 
 class Test_dryad_matrix( unittest.TestCase ) :
     """Unit test for matrix functions."""

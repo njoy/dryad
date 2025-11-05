@@ -5,17 +5,17 @@ import sys
 # third party imports
 
 # local imports
-from dryad import UncorrelatedDistributionData
-from dryad import DistributionDataType
-from dryad import ReferenceFrame
-from dryad import InterpolationType
-from dryad import IsotropicAngularDistributions
-from dryad import LegendreAngularDistribution
-from dryad import LegendreAngularDistributions
-from dryad import TabulatedAngularDistribution
-from dryad import TabulatedAngularDistributions
-from dryad import TabulatedEnergyDistribution
-from dryad import TabulatedEnergyDistributions
+from njoy.dryad import UncorrelatedDistributionData
+from njoy.dryad import DistributionDataType
+from njoy.dryad import ReferenceFrame
+from njoy.dryad import InterpolationType
+from njoy.dryad import IsotropicAngularDistributions
+from njoy.dryad import LegendreAngularDistribution
+from njoy.dryad import LegendreAngularDistributions
+from njoy.dryad import TabulatedAngularDistribution
+from njoy.dryad import TabulatedAngularDistributions
+from njoy.dryad import TabulatedEnergyDistribution
+from njoy.dryad import TabulatedEnergyDistributions
 
 def verify_isotropic_and_tabulated_chunk( self, chunk, normalise ) :
 

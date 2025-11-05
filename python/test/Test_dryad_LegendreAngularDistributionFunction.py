@@ -5,9 +5,9 @@ import sys
 # third party imports
 
 # local imports
-from dryad import LegendreAngularDistributionFunction
-from dryad import InterpolationType
-from dryad import ToleranceConvergence
+from njoy.dryad import LegendreAngularDistributionFunction
+from njoy.dryad import InterpolationType
+from njoy.dryad import ToleranceConvergence
 
 class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
     """Unit test for the LegendreAngularDistributionFunction class."""

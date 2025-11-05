@@ -5,12 +5,12 @@ import sys
 # third party imports
 
 # local imports
-from dryad import CoherentDistributionData
-from dryad import DistributionDataType
-from dryad import ReferenceFrame
-from dryad import InterpolationType
-from dryad import TabulatedScatteringFunction
-from dryad import TabulatedFormFactor
+from njoy.dryad import CoherentDistributionData
+from njoy.dryad import DistributionDataType
+from njoy.dryad import ReferenceFrame
+from njoy.dryad import InterpolationType
+from njoy.dryad import TabulatedScatteringFunction
+from njoy.dryad import TabulatedFormFactor
 
 def verify_chunk_without_anomolous_form_factor( self, chunk ) :
 

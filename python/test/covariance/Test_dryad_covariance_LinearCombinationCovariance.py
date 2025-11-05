@@ -4,10 +4,10 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.id import ReactionID
-from dryad.id import ReactionType
-from dryad.id import ParticleID
-from dryad.covariance import LinearCombinationCovariance
+from njoy.dryad.id import ReactionID
+from njoy.dryad.id import ReactionType
+from njoy.dryad.id import ParticleID
+from njoy.dryad.covariance import LinearCombinationCovariance
 
 class Test_dryad_covariance_LinearCombinationCovariance( unittest.TestCase ) :
     """Unit test for the LinearCombinationCovariance class."""

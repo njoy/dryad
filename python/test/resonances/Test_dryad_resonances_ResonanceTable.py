@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import ResonanceTable
-from dryad.id import ChannelID
+from njoy.dryad.resonances import ResonanceTable
+from njoy.dryad.id import ChannelID
 
 class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
     """Unit test for the ResonanceTable class."""

@@ -2,8 +2,8 @@
 Resonance data
 """
 from __future__ import annotations
-import dryad
-import dryad.id
+import njoy.dryad
+import njoy.dryad.id
 import typing
 __all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
@@ -61,7 +61,7 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
@@ -82,7 +82,7 @@ class Channel:
             phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ...) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ...) -> None:
         """
         Initialise the channel
         
@@ -189,7 +189,7 @@ class Channel:
         The channel radii
         """
     @property
-    def identifier(self) -> dryad.id.ChannelID:
+    def identifier(self) -> njoy.dryad.id.ChannelID:
         """
         The channel identifier
         """
@@ -224,7 +224,7 @@ class Channel:
         The quantum numbers of the channel
         """
     @property
-    def reaction(self) -> dryad.id.ReactionID:
+    def reaction(self) -> njoy.dryad.id.ReactionID:
         """
         The reaction this channel contributes to
         """
@@ -496,7 +496,7 @@ class CompoundSystem:
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
-    def cross_sections(self, energy: float) -> dict[dryad.id.ReactionID, float]:
+    def cross_sections(self, energy: float) -> dict[njoy.dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
         
@@ -911,7 +911,7 @@ class Particle:
     def __eq__(self, arg0: Particle) -> bool:
         ...
     @typing.overload
-    def __init__(self, id: dryad.id.ParticleID, mass: float, spin: float, parity: int) -> None:
+    def __init__(self, id: njoy.dryad.id.ParticleID, mass: float, spin: float, parity: int) -> None:
         """
         Initialise the particle information
         
@@ -943,7 +943,7 @@ class Particle:
         The excited state number of the particle
         """
     @property
-    def identifier(self) -> dryad.id.ParticleID:
+    def identifier(self) -> njoy.dryad.id.ParticleID:
         """
         The particle identifier
         """
@@ -1065,7 +1065,7 @@ class ResonanceTable:
     def __iadd__(self, arg0: ResonanceTable) -> ResonanceTable:
         ...
     @typing.overload
-    def __init__(self, channels: list[dryad.id.ChannelID], energies: list[float], amplitudes: list[list[float]]) -> None:
+    def __init__(self, channels: list[njoy.dryad.id.ChannelID], energies: list[float], amplitudes: list[list[float]]) -> None:
         """
         Initialise the table
         
@@ -1079,7 +1079,7 @@ class ResonanceTable:
             amplitudes   the reduced width amplitudes (nc arrays of ne values)
         """
     @typing.overload
-    def __init__(self, channel: dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
+    def __init__(self, channel: njoy.dryad.id.ChannelID, energies: list[float], amplitudes: list[float]) -> None:
         """
         Initialise the table
         
@@ -1101,7 +1101,7 @@ class ResonanceTable:
         """
     def __ne__(self, arg0: ResonanceTable) -> bool:
         ...
-    def has_channel(self, channel: dryad.id.ChannelID) -> bool:
+    def has_channel(self, channel: njoy.dryad.id.ChannelID) -> bool:
         """
         Return whether or not a channel is present
         
@@ -1118,7 +1118,7 @@ class ResonanceTable:
             energy   the energy value
         """
     @property
-    def channels(self) -> list[dryad.id.ChannelID]:
+    def channels(self) -> list[njoy.dryad.id.ChannelID]:
         """
         The channel identifiers
         """
@@ -1190,7 +1190,7 @@ class SpinGroup:
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
-    def cross_sections(self, energy: float) -> dict[dryad.id.ReactionID, float]:
+    def cross_sections(self, energy: float) -> dict[njoy.dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
         
@@ -1222,7 +1222,7 @@ class SpinGroup:
         The parity
         """
     @property
-    def reactions(self) -> list[dryad.id.ReactionID]:
+    def reactions(self) -> list[njoy.dryad.id.ReactionID]:
         """
         The reactions to which this spin group contributes
         """
@@ -1269,7 +1269,7 @@ class TabulatedRadius:
     def __imul__(self, arg0: float) -> TabulatedRadius:
         ...
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[dryad.InterpolationType]) -> None:
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
         Initialise the radius table
         
@@ -1282,7 +1282,7 @@ class TabulatedRadius:
                            see InterpolationType for all interpolation types
         """
     @typing.overload
-    def __init__(self, energies: list[float], values: list[float], interpolant: dryad.InterpolationType = ...) -> None:
+    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
         Initialise the radius table
         
@@ -1329,7 +1329,7 @@ class TabulatedRadius:
         ...
     def __truediv__(self, arg0: float) -> TabulatedRadius:
         ...
-    def linearise(self, tolerance: dryad.ToleranceConvergence = ...) -> TabulatedRadius:
+    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedRadius:
         """
         Linearise the table
         
@@ -1348,7 +1348,7 @@ class TabulatedRadius:
         The energy values
         """
     @property
-    def interpolants(self) -> list[dryad.InterpolationType]:
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
         """
@@ -1412,7 +1412,7 @@ class TabulatedWaveFunction:
     def __imul__(self, arg0: float) -> TabulatedWaveFunction:
         ...
     @typing.overload
-    def __init__(self, ratios: list[float], values: list[float], boundaries: list[int], interpolants: list[dryad.InterpolationType]) -> None:
+    def __init__(self, ratios: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
         """
         Initialise the wave function table
         
@@ -1425,7 +1425,7 @@ class TabulatedWaveFunction:
                            see InterpolationType for all interpolation types
         """
     @typing.overload
-    def __init__(self, ratios: list[float], values: list[float], interpolant: dryad.InterpolationType = ...) -> None:
+    def __init__(self, ratios: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
         """
         Initialise the radius table
         
@@ -1472,7 +1472,7 @@ class TabulatedWaveFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedWaveFunction:
         ...
-    def linearise(self, tolerance: dryad.ToleranceConvergence = ...) -> TabulatedWaveFunction:
+    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedWaveFunction:
         """
         Linearise the table
         
@@ -1486,7 +1486,7 @@ class TabulatedWaveFunction:
         The boundaries of the interpolation regions
         """
     @property
-    def interpolants(self) -> list[dryad.InterpolationType]:
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
         """
         The interpolation types of the interpolation regions
         """

@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import TabulatedWaveFunction
-from dryad import InterpolationType
+from njoy.dryad.resonances import TabulatedWaveFunction
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedWaveFunction( unittest.TestCase ) :
     """Unit test for the TabulatedWaveFunction class."""

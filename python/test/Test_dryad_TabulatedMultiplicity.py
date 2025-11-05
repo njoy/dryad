@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedMultiplicity
-from dryad import InterpolationType
+from njoy.dryad import TabulatedMultiplicity
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedMultiplicity( unittest.TestCase ) :
     """Unit test for the TabulatedMultiplicity class."""

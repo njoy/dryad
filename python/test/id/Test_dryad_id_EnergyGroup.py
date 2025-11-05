@@ -4,7 +4,7 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.id import EnergyGroup
+from njoy.dryad.id import EnergyGroup
 
 class Test_elementary_EnergyGroup( unittest.TestCase ) :
     """Unit test for the Level class."""

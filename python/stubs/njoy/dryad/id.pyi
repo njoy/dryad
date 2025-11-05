@@ -2,7 +2,7 @@
 Identifiers for particles, elements, etc.
 """
 from __future__ import annotations
-import dryad
+import njoy.dryad
 import typing
 __all__: list[str] = ['ChannelID', 'ElectronSubshellID', 'ElementID', 'EnergyGroup', 'LevelID', 'ParticleID', 'ReactionID', 'ReactionType']
 class ChannelID:
@@ -586,7 +586,7 @@ class ReactionID:
         Convenience function for printing the identifier
         """
     @property
-    def interaction_type(self) -> dryad.InteractionType:
+    def interaction_type(self) -> njoy.dryad.InteractionType:
         """
         The interaction type (nuclear or atomic) associated to the reaction
         """
@@ -646,7 +646,7 @@ class ReactionType:
         The number of currently registered types
         """
     @staticmethod
-    def total(type: dryad.InteractionType = ...) -> ReactionType:
+    def total(type: njoy.dryad.InteractionType = ...) -> ReactionType:
         """
         The total reaction type
         
@@ -730,7 +730,7 @@ class ReactionType:
             target       the target
         """
     @property
-    def interaction_type(self) -> dryad.InteractionType:
+    def interaction_type(self) -> njoy.dryad.InteractionType:
         """
         The interaction type (nuclear or atomic) associated to the reaction type
         """

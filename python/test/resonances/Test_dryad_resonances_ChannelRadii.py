@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import TabulatedRadius
-from dryad.resonances import ChannelRadii
+from njoy.dryad.resonances import TabulatedRadius
+from njoy.dryad.resonances import ChannelRadii
 
 class Test_dryad_resonances_ChannelRadii( unittest.TestCase ) :
     """Unit test for the ChannelRadii class."""

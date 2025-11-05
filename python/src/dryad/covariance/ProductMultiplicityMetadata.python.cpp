@@ -4,7 +4,7 @@
 #include <pybind11/eigen.h>
 
 // local includes
-#include "definitions.hpp"
+#include "dryad/definitions.hpp"
 #include "dryad/covariance/ProductMultiplicityMetadata.hpp"
 
 // namespace aliases

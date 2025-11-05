@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedAverageEnergy
-from dryad import InterpolationType
+from njoy.dryad import TabulatedAverageEnergy
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedAverageEnergy( unittest.TestCase ) :
     """Unit test for the TabulatedAverageEnergy class."""

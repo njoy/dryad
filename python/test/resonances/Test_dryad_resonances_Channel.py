@@ -5,15 +5,15 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import Channel
-from dryad.resonances import ChannelQuantumNumbers
-from dryad.resonances import ChannelRadii
-from dryad.resonances import Particle
-from dryad.resonances import ParticlePair
-from dryad.resonances import Kinematics
-from dryad.id import ChannelID
-from dryad.id import ReactionID
-from dryad.id import ParticleID
+from njoy.dryad.resonances import Channel
+from njoy.dryad.resonances import ChannelQuantumNumbers
+from njoy.dryad.resonances import ChannelRadii
+from njoy.dryad.resonances import Particle
+from njoy.dryad.resonances import ParticlePair
+from njoy.dryad.resonances import Kinematics
+from njoy.dryad.id import ChannelID
+from njoy.dryad.id import ReactionID
+from njoy.dryad.id import ParticleID
 
 class Test_dryad_resonances_Channel( unittest.TestCase ) :
     """Unit test for the Channel class."""

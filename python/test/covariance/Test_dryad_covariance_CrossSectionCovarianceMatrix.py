@@ -5,13 +5,13 @@ import unittest
 
 # local imports
 import numpy
-from dryad.covariance import CrossSectionCovarianceMatrix
-from dryad.covariance import CrossSectionMetadata
-from dryad.covariance import ScalingType
-from dryad.covariance import VarianceScaling
-from dryad.id import ParticleID
-from dryad.id import ReactionID
-from dryad.id import ReactionType
+from njoy.dryad.covariance import CrossSectionCovarianceMatrix
+from njoy.dryad.covariance import CrossSectionMetadata
+from njoy.dryad.covariance import ScalingType
+from njoy.dryad.covariance import VarianceScaling
+from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ReactionID
+from njoy.dryad.id import ReactionType
 
 class Test_codex_CrossSectionCovarianceMatrix( unittest.TestCase ) :
     """Unit test for the CrossSectionCovarianceMatrix class."""

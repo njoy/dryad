@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad import Documentation
+from njoy.dryad import Documentation
 
 def verify_chunk( self, chunk ) :
 

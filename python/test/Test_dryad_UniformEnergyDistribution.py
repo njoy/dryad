@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import UniformEnergyDistribution
-from dryad import UniformDistributionType
+from njoy.dryad import UniformEnergyDistribution
+from njoy.dryad import UniformDistributionType
 
 class Test_dryad_UniformEnergyDistribution( unittest.TestCase ) :
     """Unit test for the UniformEnergyDistribution class."""

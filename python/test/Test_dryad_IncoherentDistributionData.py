@@ -5,11 +5,11 @@ import sys
 # third party imports
 
 # local imports
-from dryad import IncoherentDistributionData
-from dryad import DistributionDataType
-from dryad import ReferenceFrame
-from dryad import InterpolationType
-from dryad import TabulatedScatteringFunction
+from njoy.dryad import IncoherentDistributionData
+from njoy.dryad import DistributionDataType
+from njoy.dryad import ReferenceFrame
+from njoy.dryad import InterpolationType
+from njoy.dryad import TabulatedScatteringFunction
 
 def verify_chunk( self, chunk ) :
 

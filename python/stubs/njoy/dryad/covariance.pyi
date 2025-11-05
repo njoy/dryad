@@ -2,7 +2,7 @@
 Covariance data components
 """
 from __future__ import annotations
-import dryad.id
+import njoy.dryad.id
 import numpy
 import typing
 __all__: list[str] = ['CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
@@ -111,10 +111,10 @@ class CrossSectionCovarianceMatrix:
         off diagonal matrix, the function has no effect.
         """
     @typing.overload
-    def extract(self, reaction: dryad.id.ReactionID | None, group: dryad.id.EnergyGroup | None) -> CrossSectionCovarianceMatrix:
+    def extract(self, reaction: njoy.dryad.id.ReactionID | None, group: njoy.dryad.id.EnergyGroup | None) -> CrossSectionCovarianceMatrix:
         ...
     @typing.overload
-    def extract(self, row_reaction: dryad.id.ReactionID | None, row_group: dryad.id.EnergyGroup | None, col_reaction: dryad.id.ReactionID | None, col_group: dryad.id.EnergyGroup | None) -> CrossSectionCovarianceMatrix:
+    def extract(self, row_reaction: njoy.dryad.id.ReactionID | None, row_group: njoy.dryad.id.EnergyGroup | None, col_reaction: njoy.dryad.id.ReactionID | None, col_group: njoy.dryad.id.EnergyGroup | None) -> CrossSectionCovarianceMatrix:
         ...
     @property
     def column_metadata(self) -> CrossSectionMetadata:
@@ -186,7 +186,7 @@ class CrossSectionMetadata:
     def __eq__(self, arg0: CrossSectionMetadata) -> bool:
         ...
     @typing.overload
-    def __init__(self, reactions: list[dryad.id.ReactionID], energies: list[float]) -> None:
+    def __init__(self, reactions: list[njoy.dryad.id.ReactionID], energies: list[float]) -> None:
         """
         Initialise the product multiplicity covariance metadata
         
@@ -196,7 +196,7 @@ class CrossSectionMetadata:
             energies      the group structure
         """
     @typing.overload
-    def __init__(self, keys: list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup]]) -> None:
+    def __init__(self, keys: list[tuple[njoy.dryad.id.ReactionID, njoy.dryad.id.EnergyGroup]]) -> None:
         """
         Initialise the product multiplicity covariance metadata
         
@@ -220,12 +220,12 @@ class CrossSectionMetadata:
         The energy group boundaries
         """
     @property
-    def keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup]]:
+    def keys(self) -> list[tuple[njoy.dryad.id.ReactionID, njoy.dryad.id.EnergyGroup]]:
         """
         The metadata keys
         """
     @property
-    def reaction_identifiers(self) -> list[dryad.id.ReactionID]:
+    def reaction_identifiers(self) -> list[njoy.dryad.id.ReactionID]:
         """
         The reaction identifiers
         """
@@ -234,7 +234,7 @@ class LinearCombinationCovariance:
     Covariance data for a reaction defined as a linear combination of other reactions' covariance data
     """
     @typing.overload
-    def __init__(self, lower: float, upper: float, reactions: list[dryad.id.ReactionID], coefficients: list[float]) -> None:
+    def __init__(self, lower: float, upper: float, reactions: list[njoy.dryad.id.ReactionID], coefficients: list[float]) -> None:
         """
         Initialise the derived covariance
         
@@ -269,7 +269,7 @@ class LinearCombinationCovariance:
         The number of reactions
         """
     @property
-    def reactions(self) -> list[dryad.id.ReactionID]:
+    def reactions(self) -> list[njoy.dryad.id.ReactionID]:
         """
         The reactions in the linear combination
         """
@@ -381,10 +381,10 @@ class ProductMultiplicityCovarianceMatrix:
         off diagonal matrix, the function has no effect.
         """
     @typing.overload
-    def extract(self, reaction: dryad.id.ReactionID | None, group: dryad.id.EnergyGroup | None, product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
+    def extract(self, reaction: njoy.dryad.id.ReactionID | None, group: njoy.dryad.id.EnergyGroup | None, product: njoy.dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
         ...
     @typing.overload
-    def extract(self, row_reaction: dryad.id.ReactionID | None, row_group: dryad.id.EnergyGroup | None, row_product: dryad.id.ParticleID | None, col_reaction: dryad.id.ReactionID | None, col_group: dryad.id.EnergyGroup | None, col_product: dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
+    def extract(self, row_reaction: njoy.dryad.id.ReactionID | None, row_group: njoy.dryad.id.EnergyGroup | None, row_product: njoy.dryad.id.ParticleID | None, col_reaction: njoy.dryad.id.ReactionID | None, col_group: njoy.dryad.id.EnergyGroup | None, col_product: njoy.dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
         ...
     @property
     def column_metadata(self) -> ProductMultiplicityMetadata:
@@ -444,7 +444,7 @@ class ProductMultiplicityMetadata:
     def __eq__(self, arg0: ProductMultiplicityMetadata) -> bool:
         ...
     @typing.overload
-    def __init__(self, reactions: list[dryad.id.ReactionID], energies: list[float], products: list[dryad.id.ParticleID]) -> None:
+    def __init__(self, reactions: list[njoy.dryad.id.ReactionID], energies: list[float], products: list[njoy.dryad.id.ParticleID]) -> None:
         """
         Initialise the product multiplicity covariance metadata
         
@@ -455,7 +455,7 @@ class ProductMultiplicityMetadata:
             products      the product identifiers
         """
     @typing.overload
-    def __init__(self, keys: list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]) -> None:
+    def __init__(self, keys: list[tuple[njoy.dryad.id.ReactionID, njoy.dryad.id.EnergyGroup, njoy.dryad.id.ParticleID]]) -> None:
         """
         Initialise the product multiplicity covariance metadata
         
@@ -479,17 +479,17 @@ class ProductMultiplicityMetadata:
         The energy group boundaries
         """
     @property
-    def keys(self) -> list[tuple[dryad.id.ReactionID, dryad.id.EnergyGroup, dryad.id.ParticleID]]:
+    def keys(self) -> list[tuple[njoy.dryad.id.ReactionID, njoy.dryad.id.EnergyGroup, njoy.dryad.id.ParticleID]]:
         """
         The metadata keys
         """
     @property
-    def product_identifiers(self) -> list[dryad.id.ParticleID]:
+    def product_identifiers(self) -> list[njoy.dryad.id.ParticleID]:
         """
         The reaction product identifiers
         """
     @property
-    def reaction_identifiers(self) -> list[dryad.id.ReactionID]:
+    def reaction_identifiers(self) -> list[njoy.dryad.id.ReactionID]:
         """
         The reaction identifiers
         """

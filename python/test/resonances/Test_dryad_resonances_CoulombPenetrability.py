@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import CoulombPenetrability
+from njoy.dryad.resonances import CoulombPenetrability
 
 class Test_dryad_resonances_CoulombPenetrability( unittest.TestCase ) :
     """Unit test for the CoulombPenetrability class."""

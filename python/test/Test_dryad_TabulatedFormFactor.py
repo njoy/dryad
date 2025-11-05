@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedFormFactor
-from dryad import InterpolationType
+from njoy.dryad import TabulatedFormFactor
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedFormFactor( unittest.TestCase ) :
     """Unit test for the TabulatedFormFactor class."""

@@ -5,8 +5,8 @@ import sys
 # third party imports
 
 # local imports
-from dryad import UniformAngularDistribution
-from dryad import UniformDistributionType
+from njoy.dryad import UniformAngularDistribution
+from njoy.dryad import UniformDistributionType
 
 class Test_dryad_UniformAngularDistribution( unittest.TestCase ) :
     """Unit test for the UniformAngularDistribution class."""

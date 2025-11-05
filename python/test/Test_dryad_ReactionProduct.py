@@ -5,17 +5,17 @@ import sys
 # third party imports
 
 # local imports
-from dryad import ReactionProduct
-from dryad import TabulatedMultiplicity
-from dryad import InterpolationType
-from dryad import ReferenceFrame
-from dryad import TabulatedAverageEnergy
-from dryad import TwoBodyDistributionData
-from dryad import IsotropicAngularDistributions
-from dryad import TabulatedAngularDistribution
-from dryad import TabulatedAngularDistributions
-from dryad import DistributionDataType
-from dryad.id import ParticleID
+from njoy.dryad import ReactionProduct
+from njoy.dryad import TabulatedMultiplicity
+from njoy.dryad import InterpolationType
+from njoy.dryad import ReferenceFrame
+from njoy.dryad import TabulatedAverageEnergy
+from njoy.dryad import TwoBodyDistributionData
+from njoy.dryad import IsotropicAngularDistributions
+from njoy.dryad import TabulatedAngularDistribution
+from njoy.dryad import TabulatedAngularDistributions
+from njoy.dryad import DistributionDataType
+from njoy.dryad.id import ParticleID
 
 def verify_chunk( self, chunk, normalise ) :
 

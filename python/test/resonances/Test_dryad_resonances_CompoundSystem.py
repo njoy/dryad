@@ -5,18 +5,18 @@ import sys
 # third party imports
 
 # local imports
-from dryad.resonances import Particle
-from dryad.resonances import ParticlePair
-from dryad.resonances import ChannelRadii
-from dryad.resonances import Channel
-from dryad.resonances import ResonanceTable
-from dryad.resonances import Formalism
-from dryad.resonances import BoundaryCondition
-from dryad.resonances import SpinGroup
-from dryad.resonances import CompoundSystem
-from dryad.id import ChannelID
-from dryad.id import ParticleID
-from dryad.id import ReactionID
+from njoy.dryad.resonances import Particle
+from njoy.dryad.resonances import ParticlePair
+from njoy.dryad.resonances import ChannelRadii
+from njoy.dryad.resonances import Channel
+from njoy.dryad.resonances import ResonanceTable
+from njoy.dryad.resonances import Formalism
+from njoy.dryad.resonances import BoundaryCondition
+from njoy.dryad.resonances import SpinGroup
+from njoy.dryad.resonances import CompoundSystem
+from njoy.dryad.id import ChannelID
+from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ReactionID
 
 def verify_chunk( self, chunk ) :
 

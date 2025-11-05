@@ -5,21 +5,21 @@ import sys
 # third party imports
 
 # local imports
-from dryad import ProjectileTarget
-from dryad import Reaction
-from dryad import TabulatedCrossSection
-from dryad import InterpolationType
-from dryad import InteractionType
-from dryad import ReactionCategory
-from dryad.id import ReactionType
-from dryad.id import ReactionID
-from dryad import DistributionDataType
-from dryad import ReferenceFrame
-from dryad import TabulatedAngularDistribution
-from dryad import TabulatedAngularDistributions
-from dryad import ReactionProduct
-from dryad import TwoBodyDistributionData
-from dryad.id import ParticleID
+from njoy.dryad import ProjectileTarget
+from njoy.dryad import Reaction
+from njoy.dryad import TabulatedCrossSection
+from njoy.dryad import InterpolationType
+from njoy.dryad import InteractionType
+from njoy.dryad import ReactionCategory
+from njoy.dryad.id import ReactionType
+from njoy.dryad.id import ReactionID
+from njoy.dryad import DistributionDataType
+from njoy.dryad import ReferenceFrame
+from njoy.dryad import TabulatedAngularDistribution
+from njoy.dryad import TabulatedAngularDistributions
+from njoy.dryad import ReactionProduct
+from njoy.dryad import TwoBodyDistributionData
+from njoy.dryad.id import ParticleID
 
 def verify_chunk( self, chunk, normalise ) :
 

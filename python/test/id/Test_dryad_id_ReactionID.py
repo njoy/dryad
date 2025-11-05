@@ -4,11 +4,11 @@ import unittest
 # third party imports
 
 # local imports
-from dryad import InteractionType
-from dryad.id import LevelID
-from dryad.id import ParticleID
-from dryad.id import ReactionType
-from dryad.id import ReactionID
+from njoy.dryad import InteractionType
+from njoy.dryad.id import LevelID
+from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ReactionType
+from njoy.dryad.id import ReactionID
 
 class Test_elementary_ReactionID( unittest.TestCase ) :
     """Unit test for the ReactionID class."""

@@ -4,7 +4,7 @@ import unittest
 # third party imports
 
 # local imports
-from dryad.id import ElementID
+from njoy.dryad.id import ElementID
 
 class Test_dryad_id_ElementID( unittest.TestCase ) :
     """Unit test for the ElementID class."""

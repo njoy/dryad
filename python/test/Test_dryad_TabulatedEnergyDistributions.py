@@ -5,9 +5,9 @@ import sys
 # third party imports
 
 # local imports
-from dryad import TabulatedEnergyDistribution
-from dryad import TabulatedEnergyDistributions
-from dryad import InterpolationType
+from njoy.dryad import TabulatedEnergyDistribution
+from njoy.dryad import TabulatedEnergyDistributions
+from njoy.dryad import InterpolationType
 
 class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
     """Unit test for the TabulatedEnergyDistribution class."""

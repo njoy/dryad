@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "definitions.hpp"
+#include "dryad/definitions.hpp"
 #include "dryad/resonances/HardSphereShiftFactor.hpp"
 
 #include "scion/math/horner.hpp"
