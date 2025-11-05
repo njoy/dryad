@@ -37,7 +37,11 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target, parameters );
+        Formalism formalism = Formalism::ReichMoore;
+        BoundaryCondition boundary = BoundaryCondition::Constant;
+        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target,
+                                                                       formalism, boundary,
+                                                                       parameters );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -63,7 +67,11 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target, parameters );
+        Formalism formalism = Formalism::ReichMoore;
+        BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target,
+                                                                       formalism, boundary,
+                                                                       parameters );
 
         verifyChunkCl35( chunk );
       } // THEN
@@ -85,7 +93,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
                              Particle( cu63, 62.389 * constants::neutron_mass, 1.5, -1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 6.7, 6.7 );
+  ChannelRadii radii( 6.7, 6.7 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
@@ -144,7 +152,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -220,7 +228,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
@@ -296,7 +304,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -319,7 +327,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel2.channelRadii() );
+  CHECK( radii == channel2.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
@@ -397,7 +405,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
@@ -473,7 +481,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -496,7 +504,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel2.channelRadii() );
+  CHECK( radii == channel2.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
@@ -574,7 +582,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );

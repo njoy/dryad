@@ -3,11 +3,15 @@
 
 // system includes
 #include <algorithm>
+#include <variant>
 #include <vector>
 
 // other includes
 #include "dryad/resonances/Channel.hpp"
 #include "dryad/resonances/ResonanceTable.hpp"
+#include "dryad/resonances/BoundaryCondition.hpp"
+#include "dryad/resonances/Formalism.hpp"
+#include "dryad/resonances/calculator.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -27,18 +31,26 @@ namespace resonances {
 
   private:
 
+    /* type aliases */
+
+    using Calculator = std::variant< calculator::ReichMoore, calculator::GeneralRMatrix >;
+
     /* fields */
 
     std::vector< Channel > channels_;
     ResonanceTable table_;
+    Formalism formalism_;
+    BoundaryCondition boundary_condition_;
 
+    Calculator calculator_;
     std::vector< id::ReactionID > reactions_;
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/SpinGroup/src/processChannels.hpp"
     #include "dryad/resonances/SpinGroup/src/createData.hpp"
+    #include "dryad/resonances/SpinGroup/src/processChannels.hpp"
     #include "dryad/resonances/SpinGroup/src/verifySpinGroup.hpp"
+    #include "dryad/resonances/SpinGroup/src/selectCalculator.hpp"
 
   public:
 
@@ -100,6 +112,22 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the formalism
+     */
+    const Formalism& formalism() const {
+
+      return this->formalism_;
+    }
+
+    /**
+     *  @brief Return the boundary condition option
+     */
+    const BoundaryCondition boundaryCondition() const {
+
+      return this->boundary_condition_;
+    }
+
+    /**
      *  @brief Return the total angular momentum J of the spin group
      */
     double totalAngularMomentum() const {
@@ -129,6 +157,22 @@ namespace resonances {
     std::vector< id::ReactionID >& reactions() {
 
       return this->reactions_;
+    }
+
+    /**
+     *  @brief Calculate the cross section values at a given energy
+     *
+     *  @param[in] energy   the energy
+     *  @param[in] xs       the cross section values
+     */
+    void crossSections( double energy, std::map< id::ReactionID, double >& xs ) {
+
+      std::visit( [&] ( auto&& calculator ) {
+
+                    return calculator.crossSections( energy, this->channels(),
+                                                     this->resonanceTable(), xs );
+                  },
+                  this->calculator_ );
     }
 
     /**

@@ -37,6 +37,9 @@ SCENARIO( "CompoundSystem" ) {
   ChannelRadii radii1( 4.822220, 4.888750 );
   ChannelRadii radii2( 4.822220, 3.667980 );
 
+  Formalism formalism = Formalism::ReichMoore;
+  BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+
   SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
                             neutron_pair, photon_pair, 0., std::nullopt,
                             zero_radii },
@@ -45,7 +48,8 @@ SCENARIO( "CompoundSystem" ) {
                             radii1 } },
                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
                             id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
-                          { 1. }, { { 2. }, { 3. } } } );
+                          { 1. }, { { 2. }, { 3. } } },
+                        formalism, boundary );
   SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
                             neutron_pair, photon_pair, 0., std::nullopt,
                             zero_radii },
@@ -66,7 +70,8 @@ SCENARIO( "CompoundSystem" ) {
                             id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
                             id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
                             id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
-                          { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } } );
+                          { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } },
+                        formalism, boundary );
   SpinGroup spingroup2( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
                             neutron_pair, photon_pair, 0., std::nullopt,
                             zero_radii },
@@ -79,7 +84,8 @@ SCENARIO( "CompoundSystem" ) {
                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
                             id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
                             id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
-                          { 21. }, { { 22. }, { 23. }, { 24. } } } );
+                          { 21. }, { { 22. }, { 23. }, { 24. } } },
+                        formalism, boundary );
   SpinGroup spingroup3( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
                             neutron_pair, photon_pair, 0., std::nullopt,
                             zero_radii },
@@ -100,7 +106,8 @@ SCENARIO( "CompoundSystem" ) {
                             id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
                             id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
                             id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ) },
-                          { 31. }, { { 32. }, { 33. }, { 34. }, { 35. }, { 36. } } } );
+                          { 31. }, { { 32. }, { 33. }, { 34. }, { 35. }, { 36. } } },
+                        formalism, boundary );
   SpinGroup spingroup4( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
                             neutron_pair, photon_pair, 0., std::nullopt,
                             zero_radii },
@@ -113,7 +120,8 @@ SCENARIO( "CompoundSystem" ) {
                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
                             id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
                             id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ) },
-                          { 41. }, { { 42. }, { 43. }, { 44. } } } );
+                          { 41. }, { { 42. }, { 43. }, { 44. } } },
+                        formalism, boundary );
   SpinGroup spingroup5( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
                             neutron_pair, photon_pair, 0., std::nullopt,
                             zero_radii },
@@ -126,18 +134,19 @@ SCENARIO( "CompoundSystem" ) {
                         { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
                             id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
                             id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ) },
-                          { 51. }, { { 52. }, { 53. }, { 54. } } } );
+                          { 51. }, { { 52. }, { 53. }, { 54. } } },
+                        formalism, boundary );
 
     THEN( "a CompoundSystem can be constructed - with ordered spin groups" ) {
 
-      CompoundSystem chunk( { spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 } );
+      CompoundSystem chunk( 1e-5, 2e+3, { spingroup0, spingroup1, spingroup2, spingroup3, spingroup4, spingroup5 } );
 
       verifyChunk( chunk );
     } // THEN
 
     THEN( "a CompoundSystem can be constructed - with unordered spin groups" ) {
 
-      CompoundSystem chunk( { spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 } );
+      CompoundSystem chunk( 1e-5, 2e+3, { spingroup5, spingroup4, spingroup3, spingroup2, spingroup1, spingroup0 } );
 
       verifyChunk( chunk );
     } // THEN
@@ -166,6 +175,9 @@ SCENARIO( "CompoundSystem" ) {
       ChannelRadii radii1( 4.822220, 4.888750 );
       ChannelRadii radii2( 4.822220, 3.667980 );
 
+      Formalism formalism = Formalism::ReichMoore;
+      BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+
       SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
                                 neutron_pair, photon_pair, 0., std::nullopt,
                                 zero_radii },
@@ -174,7 +186,8 @@ SCENARIO( "CompoundSystem" ) {
                                 radii1 } },
                             { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
                                 id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
-                              { 1. }, { { 2. }, { 3. } } } );
+                              { 1. }, { { 2. }, { 3. } } },
+                            formalism, boundary );
       SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
                                 neutron_pair, photon_pair, 0., std::nullopt,
                                 zero_radii },
@@ -195,11 +208,12 @@ SCENARIO( "CompoundSystem" ) {
                                 id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
                                 id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
                                 id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
-                              { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } } );
+                              { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } },
+                            formalism, boundary );
 
-      CompoundSystem left( { spingroup0 } );
-      CompoundSystem equal( { spingroup0 } );
-      CompoundSystem different( { spingroup1 } );
+      CompoundSystem left( 1e-5, 2e+3, { spingroup0 } );
+      CompoundSystem equal( 1e-5, 2e+3, { spingroup0 } );
+      CompoundSystem different( 1e-5, 2e+3, { spingroup1 } );
 
       THEN( "they can be compared" ) {
 
@@ -239,6 +253,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 2e+3, WithinRel( chunk.upperEnergyLimit() ) );
 
   auto groups = chunk.spinGroups();
 

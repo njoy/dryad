@@ -23,16 +23,21 @@ namespace lrf7 {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
+   *  @param[in] lower        the lower energy limit
+   *  @param[in] upper        the upper energy limit
    *  @param[in] endf         the parsed ENDF LRF7 data
    */
   auto createCompoundSystem( const id::ParticleID& projectile,
                              const id::ParticleID& target,
+                             double lower,
+                             double upper,
                              const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     auto formalism = lrf7::createFormalism( endf );
-    auto groups = lrf7::createSpinGroups( projectile, target, endf );
+    auto boundary = lrf7::createBoundaryCondition( endf.particlePairs() );
+    auto groups = lrf7::createSpinGroups( projectile, target, formalism, boundary, endf );
 
-    return dryad::resonances::CompoundSystem( std::move( groups ) );
+    return dryad::resonances::CompoundSystem( lower, upper, std::move( groups ) );
   }
 
 } // lrf7 namespace

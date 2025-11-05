@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__ = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -70,7 +70,7 @@ class Channel:
             identifier               the channel identifier
             incident                 the current incident particle pair
             outgoing                 the outgoing particle pair
-            qValue                   the Q value associated with the transition from
+            q_value                  the Q value associated with the transition from
                                      the incident to the outgoing particle pair
             boundary                 the boundary condition
             radii                    the channel radii for the calculation of the
@@ -90,7 +90,7 @@ class Channel:
             identifier      the channel identifier
             incident        the current incident particle pair
             outgoing        the outgoing particle pair
-            qValue          the Q value associated with the transition from
+            q_value         the Q value associated with the transition from
                             the incident to the outgoing particle pair
             boundary        the boundary condition
             radii           the channel radii for the calculation of the
@@ -475,13 +475,15 @@ class CompoundSystem:
     def __eq__(self, arg0: CompoundSystem) -> bool:
         ...
     @typing.overload
-    def __init__(self, spin_groups: list[SpinGroup]) -> None:
+    def __init__(self, lower_energy: float, upper_energy: float, spin_groups: list[SpinGroup]) -> None:
         """
         Initialise the spin group
         
         Arguments:
-            self          the compound system
-            spin_groups   the spin groups that make up the compound system
+            self           the compound system
+            lower_energy   the lower energy limit for the compound system
+            upper_energy   the upper energy limit for the compound system
+            spin_groups    the spin groups that make up the compound system
         """
     @typing.overload
     def __init__(self, instance: CompoundSystem) -> None:
@@ -493,6 +495,22 @@ class CompoundSystem:
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
+    def cross_sections(self, energy: float) -> dict[dryad.id.ReactionID, float]:
+        """
+        Calculate the cross section values at a given energy
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @lower_energy_limit.setter
+    def lower_energy_limit(self, arg1: float) -> None:
+        ...
     @property
     def spin_groups(self) -> list[SpinGroup]:
         """
@@ -500,6 +518,14 @@ class CompoundSystem:
         """
     @spin_groups.setter
     def spin_groups(self, arg1: list[SpinGroup]) -> None:
+        ...
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @upper_energy_limit.setter
+    def upper_energy_limit(self, arg1: float) -> None:
         ...
 class CoulombPenetrability:
     """
@@ -958,7 +984,23 @@ class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
     def __eq__(self, arg0: ResonanceParameters) -> bool:
         ...
+    def __init__(self, resolved: list[CompoundSystem]) -> None:
+        """
+        Initialise the resonance parameters
+        
+        Arguments:
+            self       the resonance parameters
+            resolved   the resolved resonance compound systems
+        """
     def __ne__(self, arg0: ResonanceParameters) -> bool:
+        ...
+    @property
+    def resolved(self) -> list[CompoundSystem]:
+        """
+        The compound systems that make up the resolved resonance data
+        """
+    @resolved.setter
+    def resolved(self, arg1: list[CompoundSystem]) -> None:
         ...
 class ResonanceTable:
     """
@@ -1060,23 +1102,35 @@ class SpinGroup:
     def __eq__(self, arg0: SpinGroup) -> bool:
         ...
     @typing.overload
-    def __init__(self, channels: list[Channel], resonances: ResonanceTable) -> None:
+    def __init__(self, channels: list[Channel], resonances: ResonanceTable, formalism: Formalism, boundary: BoundaryCondition) -> None:
         """
         Initialise the spin group
+        
+        If the channels are not sorted, they will get sorted through the order
+        of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+        sorting order).
         
         Arguments:
             self         the spin group
-            channels     the channels in the spingroup
-            resonances   the resonance table of the spingroup
+            channels     the channels in the spin group
+            resonances   the resonance table of the spin group
+            formalism    the r matrix formalism option to be applied
+            boundary     the boundary condition option to be applied
         """
     @typing.overload
-    def __init__(self, channels: list[tuple[Channel, ResonanceTable]]) -> None:
+    def __init__(self, channels: list[tuple[Channel, ResonanceTable]], formalism: Formalism, boundary: BoundaryCondition) -> None:
         """
         Initialise the spin group
         
+        If the channels are not sorted, they will get sorted through the order
+        of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+        sorting order).
+        
         Arguments:
             self       the spin group
-            channels   the channel data in the spingroup
+            channels   the channel data in the spin group
+            formalism    the r matrix formalism option to be applied
+            boundary     the boundary condition option to be applied
         """
     @typing.overload
     def __init__(self, instance: SpinGroup) -> None:
@@ -1088,6 +1142,19 @@ class SpinGroup:
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
+    def cross_sections(self, energy: float) -> dict[dryad.id.ReactionID, float]:
+        """
+        Calculate the cross section values at a given energy
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+        """
+    @property
+    def boundary_condition(self) -> BoundaryCondition:
+        """
+        The boundary condition option
+        """
     @property
     def channels(self) -> list[Channel]:
         """
@@ -1096,6 +1163,11 @@ class SpinGroup:
     @channels.setter
     def channels(self, arg1: list[Channel]) -> None:
         ...
+    @property
+    def formalism(self) -> Formalism:
+        """
+        The formalism
+        """
     @property
     def parity(self) -> int:
         """

@@ -5,7 +5,7 @@ from . import covariance
 from . import id
 from . import matrix
 from . import resonances
-__all__ = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'matrix', 'resonances']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'matrix', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -981,7 +981,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -992,11 +992,12 @@ class ProjectileTarget:
             target          the target identifier
             type            the interaction type
             reactions       the reaction data
+            resonances      the optional resonance parameters (default: none)
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1006,6 +1007,7 @@ class ProjectileTarget:
             target       the target identifier
             type         the interaction type
             reactions    the reaction data
+            resonances   the optional resonance parameters (default: none)
             normalise    option to indicate whether or not to normalise
                          all probability data (default: no normalisation)
         """

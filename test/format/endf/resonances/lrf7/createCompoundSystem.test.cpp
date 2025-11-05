@@ -37,7 +37,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, parameters );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1e+5, parameters );
 
         verifyChunkCu63( chunk );
       } // THEN
@@ -63,7 +63,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, parameters );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 1.2e+6, parameters );
 
         verifyChunkCl35( chunk );
       } // THEN
@@ -85,11 +85,15 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
                              Particle( cu63, 62.389 * constants::neutron_mass, 1.5, -1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 6.7, 6.7 );
+  ChannelRadii radii( 6.7, 6.7 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  // energies
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 1e+5, WithinRel( chunk.upperEnergyLimit() ) );
 
   // spin groups
   auto groups = chunk.spinGroups();
@@ -145,7 +149,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -221,7 +225,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
@@ -297,7 +301,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -320,7 +324,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel2.channelRadii() );
+  CHECK( radii == channel2.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
@@ -398,7 +402,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
@@ -474,7 +478,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -497,7 +501,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel2.channelRadii() );
+  CHECK( radii == channel2.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
@@ -561,7 +565,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 1: elastic
+  // spin group 5, channel 1: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   channel1 = channels[1];
@@ -575,7 +579,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
 
   // radii
-  CHECK( radii1 == channel1.channelRadii() );
+  CHECK( radii == channel1.channelRadii() );
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
@@ -626,6 +630,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  // energies
+  CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 1.2e+6, WithinRel( chunk.upperEnergyLimit() ) );
 
   // spin groups
   auto groups = chunk.spinGroups();

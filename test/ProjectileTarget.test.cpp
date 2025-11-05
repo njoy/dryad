@@ -83,9 +83,9 @@ SCENARIO( "ProjectileTarget" ) {
                   0, 0 )
       };
 
-      ProjectileTarget chunk1( projectile, target, type, reactions, false );
+      ProjectileTarget chunk1( projectile, target, type, reactions, std::nullopt, false );
       ProjectileTarget chunk2( std::move( projectile ), std::move( target ),
-                               type, std::move( reactions ), true );
+                               type, std::move( reactions ), std::nullopt, true );
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );

@@ -2,8 +2,11 @@
 #define NJOY_DRYAD_RESONANCES_RESONANCEPARAMETERS
 
 // system includes
+#include <variant>
+#include <vector>
 
 // other includes
+#include "dryad/resonances/CompoundSystem.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -19,11 +22,41 @@ namespace resonances {
 
     /* fields */
 
+    std::vector< CompoundSystem > resolved_;
+
   public:
 
     /* constructor */
 
+    #include "dryad/resonances/ResonanceParameters/src/ctor.hpp"
+
     /* methods */
+
+    /**
+     *  @brief Return the compound systems that make up the resolved resonance data
+     */
+    const std::vector< CompoundSystem >& resolved() const {
+
+      return this->resolved_;
+    }
+
+    /**
+     *  @brief Return the compound systems that make up the resolved resonance data
+     */
+    std::vector< CompoundSystem >& resolved() {
+
+      return this->resolved_;
+    }
+
+    /**
+     *  @brief Set the spin groups that make up the compound system
+     *
+     *  @param[in] resolved   the resolved resonance compound systems
+     */
+    void resolved( std::vector< CompoundSystem > resolved ) {
+
+      this->resolved_ = std::move( resolved );
+    }
 
     /**
      *  @brief Comparison operator: equal

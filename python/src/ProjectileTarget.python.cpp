@@ -39,13 +39,17 @@ void wrapProjectileTarget( python::module& module ) {
   component
   .def(
 
-    python::init< Documentation, ParticleID, ParticleID,
+    python::init< Documentation,
+                  ParticleID,
+                  ParticleID,
                   InteractionType,
                   std::vector< Reaction >,
+                  std::optional< ResonanceParameters >,
                   bool >(),
     python::arg( "documentation" ), python::arg( "projectile" ),
     python::arg( "target" ), python::arg( "type" ),
     python::arg( "reactions" ),
+    python::arg( "resonances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
@@ -55,16 +59,23 @@ void wrapProjectileTarget( python::module& module ) {
     "    target          the target identifier\n"
     "    type            the interaction type\n"
     "    reactions       the reaction data\n"
+    "    resonances      the optional resonance parameters (default: none)\n"
     "    normalise       option to indicate whether or not to normalise\n"
     "                    all probability data (default: no normalisation)"
   )
   .def(
 
-    python::init< ParticleID, ParticleID, InteractionType,
+    python::init< ParticleID,
+                  ParticleID,
+                  InteractionType,
                   std::vector< Reaction >,
+                  std::optional< ResonanceParameters >,
                   bool >(),
-    python::arg( "projectile" ), python::arg( "target" ),
-    python::arg( "type" ), python::arg( "reactions" ),
+    python::arg( "projectile" ),
+    python::arg( "target" ),
+    python::arg( "type" ),
+    python::arg( "reactions" ),
+    python::arg( "resonances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
@@ -73,6 +84,7 @@ void wrapProjectileTarget( python::module& module ) {
     "    target       the target identifier\n"
     "    type         the interaction type\n"
     "    reactions    the reaction data\n"
+    "    resonances   the optional resonance parameters (default: none)\n"
     "    normalise    option to indicate whether or not to normalise\n"
     "                 all probability data (default: no normalisation)"
   )
