@@ -71,7 +71,7 @@ namespace resonances {
       const auto residual = incident.heavyParticle().mass();
       const auto pair = ( particle + residual ) * conversion;  // eV
       const auto delta = ( particle - residual ) * conversion; // eV
-      const auto mandelstam = pair * pair + 2. * residual * conversion * energy; // ev^2
+      const auto mandelstam = pair * pair + 2. * residual * conversion * std::abs( energy ); // ev^2
       return 0.5 * sqrt( ( mandelstam - pair * pair ) * ( mandelstam - delta * delta ) / mandelstam ) / final;
     }
   };
