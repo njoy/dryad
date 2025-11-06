@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/overload.hpp"
-#include "njoy/dryad/constants.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/id/ChannelID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/resonances/ChannelQuantumNumbers.hpp"

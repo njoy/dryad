@@ -20,7 +20,7 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
   using ParticleID = njoy::dryad::id::ParticleID;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
-  using Matrix = njoy::dryad::matrix::Matrix< double >;
+  using Matrix = njoy::matrix::Matrix< double >;
 
   // wrap views created by this component
 

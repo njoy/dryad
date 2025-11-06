@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/constants.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/format/endf/createBoundaries.hpp"
 #include "njoy/dryad/format/endf/createInterpolants.hpp"

@@ -39,7 +39,7 @@ namespace covariance {
 
     bool relative = true;
     std::vector< std::vector< double > > structures;
-    std::vector< dryad::matrix::Matrix< double > > matrices;
+    std::vector< matrix::Matrix< double > > matrices;
     std::optional< dryad::covariance::VarianceScaling > scaling = std::nullopt;
 
     for ( const auto& component : components ) {
@@ -148,7 +148,7 @@ namespace covariance {
     bool relative = true;
     std::vector< std::vector< double > > rowStructures;
     std::vector< std::vector< double > > columnStructures;
-    std::vector< dryad::matrix::Matrix< double > > matrices;
+    std::vector< matrix::Matrix< double > > matrices;
 
     for ( const auto& component : components ) {
 

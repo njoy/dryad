@@ -27,13 +27,13 @@ endfunction()
 
 message( STATUS "Adding njoy C++ unit testing" )
 
+add_cpp_test( matrix                                                           matrix.test.cpp )
+
 add_cpp_test( dryad.base.UniformDistribution                                   dryad/base/UniformDistribution.test.cpp )
 
 add_cpp_test( dryad.atomic.ElectronSubshellConfiguration                       dryad/atomic/ElectronSubshellConfiguration.test.cpp )
 add_cpp_test( dryad.atomic.NonRadiativeTransitionData                          dryad/atomic/NonRadiativeTransitionData.test.cpp )
 add_cpp_test( dryad.atomic.RadiativeTransitionData                             dryad/atomic/RadiativeTransitionData.test.cpp )
-
-add_cpp_test( dryad.matrix                                                     dryad/matrix.test.cpp )
 
 add_cpp_test( dryad.covariance.base.Metadata                                   dryad/covariance/base/Metadata.test.cpp )
 add_cpp_test( dryad.covariance.base.CovarianceMatrix                           dryad/covariance/base/CovarianceMatrix.test.cpp )

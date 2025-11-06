@@ -21,12 +21,12 @@ void wrapFunctionsForMatrix( python::module& module ) {
 
   module
   .def( "is_square",
-        [] ( const njoy::dryad::matrix::Matrix< T >& matrix )
-           { return njoy::dryad::matrix::isSquare( matrix ); },
+        [] ( const njoy::matrix::Matrix< T >& matrix )
+           { return njoy::matrix::isSquare( matrix ); },
         "Return whether or not a matrix is square" )
   .def( "is_symmetric",
-        [] ( const njoy::dryad::matrix::Matrix< T >& matrix )
-           { return njoy::dryad::matrix::isSymmetric( matrix ); },
+        [] ( const njoy::matrix::Matrix< T >& matrix )
+           { return njoy::matrix::isSymmetric( matrix ); },
         "Return whether or not a matrix is symmetric" );
 }
 

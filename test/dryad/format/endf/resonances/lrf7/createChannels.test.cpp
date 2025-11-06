@@ -11,6 +11,7 @@ using Catch::Matchers::WithinRel;
 #include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
 
 // convenience typedefs
+using namespace njoy;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 

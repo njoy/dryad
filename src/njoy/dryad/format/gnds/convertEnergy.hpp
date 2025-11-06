@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/constants.hpp"
+#include "njoy/constants.hpp"
 
 namespace njoy {
 namespace dryad {

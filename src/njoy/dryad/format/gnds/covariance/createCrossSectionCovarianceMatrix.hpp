@@ -31,7 +31,7 @@ namespace covariance {
     dryad::id::ReactionID columnReaction;
     std::vector< std::vector< double > > rowStructures;
     std::vector< std::vector< double > > columnStructures;
-    std::vector< dryad::matrix::Matrix< double > > matrices;
+    std::vector< matrix::Matrix< double > > matrices;
     std::optional< dryad::covariance::VarianceScaling > scaling = std::nullopt;
 
     auto row = covariance.child( "rowData" );

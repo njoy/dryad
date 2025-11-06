@@ -9,6 +9,7 @@ using Catch::Matchers::WithinRel;
 // other includes
 
 // convenience typedefs
+using namespace njoy;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 

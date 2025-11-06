@@ -22,7 +22,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS array node
    */
-  static dryad::matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
+  static matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
 
     throwExceptionOnWrongNode( array, "array" );
 
@@ -74,7 +74,7 @@ namespace gnds {
 
     if ( shape.size() == 2 ) {
 
-      dryad::matrix::Matrix< double > matrix( shape[0], shape[1] );
+      matrix::Matrix< double > matrix( shape[0], shape[1] );
       if ( compression.has_value() && compression.value() == "diagonal" ) {
 
         for ( unsigned int i = 0; i < matrix.rows(); ++i ) {

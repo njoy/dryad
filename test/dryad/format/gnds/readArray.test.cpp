@@ -8,12 +8,13 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include "pugixml.hpp"
-#include <iostream>
+
 // convenience typedefs
+using namespace njoy::matrix;
 using namespace njoy::dryad;
 
-void verifyDiagonalChunk( const matrix::Matrix< double >& );
-void verifyLowerSymmetricChunk( const matrix::Matrix< double >& );
+void verifyDiagonalChunk( const Matrix< double >& );
+void verifyLowerSymmetricChunk( const Matrix< double >& );
 
 SCENARIO( "readArray" ) {
 
@@ -80,7 +81,7 @@ SCENARIO( "readArray" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyDiagonalChunk( const matrix::Matrix< double >& chunk ) {
+void verifyDiagonalChunk( const Matrix< double >& chunk ) {
 
   CHECK( 12 == chunk.rows() );
   CHECK( 12 == chunk.rows() );
@@ -110,7 +111,7 @@ void verifyDiagonalChunk( const matrix::Matrix< double >& chunk ) {
   CHECK_THAT( 4.1382e-9, WithinRel( chunk(11,11) ) );
 }
 
-void verifyLowerSymmetricChunk( const matrix::Matrix< double >& chunk ) {
+void verifyLowerSymmetricChunk( const Matrix< double >& chunk ) {
 
   CHECK( 6 == chunk.rows() );
   CHECK( 6 == chunk.rows() );

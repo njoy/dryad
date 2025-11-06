@@ -10,6 +10,7 @@ using Catch::Matchers::WithinRel;
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
+using namespace njoy;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 

@@ -11,6 +11,7 @@ using Catch::Matchers::WithinAbs;
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
+using namespace njoy::matrix;
 using namespace njoy::dryad;
 using namespace njoy::ENDFtk;
 using CovariancePairs = section::CovariancePairs;
@@ -29,7 +30,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "creating a matric from the CovariancePairs instance" ) {
 
-      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 
@@ -120,7 +121,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "constructing a diagonal CovarianceBlock from a SquareMatrix" ) {
 
-      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 
@@ -181,7 +182,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "constructing a diagonal CovarianceBlock from a SquareMatrix" ) {
 
-      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 
@@ -242,7 +243,7 @@ SCENARIO( "createMatrix" ) {
 
     WHEN( "constructing a diagonal CovarianceBlock from a RectangularMatrix" ) {
 
-      matrix::Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
+      Matrix< double > chunk = format::endf::covariance::createMatrix( covariance );
 
       THEN( "a matrix can be created and members can be tested" ) {
 

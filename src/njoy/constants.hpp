@@ -1,12 +1,11 @@
-#ifndef NJOY_DRYAD_CONSTANTS
-#define NJOY_DRYAD_CONSTANTS
+#ifndef NJOY_CONSTANTS
+#define NJOY_CONSTANTS
 
 // system includes
 
 // other includes
 
 namespace njoy {
-namespace dryad {
 namespace constants {
 
   constexpr double pi = 3.141592653589793;
@@ -58,7 +57,6 @@ namespace constants {
   constexpr double femto = 1e-15;
 
 } // constants namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

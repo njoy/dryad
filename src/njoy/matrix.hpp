@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_MATRIX
-#define NJOY_DRYAD_MATRIX
+#ifndef NJOY_MATRIX
+#define NJOY_MATRIX
 
 // system includes
 
@@ -8,7 +8,6 @@
 #include <Eigen/Eigenvalues>
 
 namespace njoy {
-namespace dryad {
 namespace matrix {
 
   /* type aliases */
@@ -39,7 +38,6 @@ namespace matrix {
   }
 
 } // matrix namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
