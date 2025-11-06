@@ -47,6 +47,13 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/.cmake)
 include( cmake/dependencies.cmake )
 
 ########################################################################
+# Sphinx documentation
+########################################################################
+# when using find_program, cmake will look specifically for ${CMAKE_MODULE_PATH}/Find{program}.cmake
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+add_subdirectory( docs )
+
+########################################################################
 # Project targets
 ########################################################################
 
