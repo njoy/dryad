@@ -9,6 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace resonances {
 
 void wrapSpinGroup( python::module& module ) {
@@ -141,3 +142,4 @@ void wrapSpinGroup( python::module& module ) {
 }
 
 } // resonances namespace
+} // dryad namespace

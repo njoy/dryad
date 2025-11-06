@@ -7,6 +7,9 @@
 // namespace aliases
 namespace python = pybind11;
 
+// declarations - matrix functions
+void wrapMatrix( python::module& );
+
 // declarations
 void wrapDryad( python::module& );
 
@@ -17,6 +20,9 @@ void wrapDryad( python::module& );
  *  set on the PROPERTIES OUTPUT_NAME in the CMakeLists.txt file.
  */
 PYBIND11_MODULE( njoy, module ) {
+
+  // wrap matrix functions
+  wrapMatrix( module );
 
   // wrap dryad
   wrapDryad( module );

@@ -8,6 +8,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace atomic {
 
 void wrapTransitionType( python::module& module ) {
@@ -33,3 +34,4 @@ void wrapTransitionType( python::module& module ) {
 }
 
 } // namespace atomic
+} // namespace dryad

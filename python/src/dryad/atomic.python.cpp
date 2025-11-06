@@ -7,6 +7,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace atomic {
 
   // declarations - enumerators
@@ -35,3 +36,5 @@ void wrapAtomic( python::module& module ) {
   atomic::wrapNonRadiativeTransitionData( submodule );
   atomic::wrapElectronSubshellConfiguration( submodule );
 }
+
+} // dryad namespace

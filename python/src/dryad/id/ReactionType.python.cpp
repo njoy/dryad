@@ -11,6 +11,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace id {
 
 void wrapReactionType( python::module& module ) {
@@ -182,3 +183,4 @@ void wrapReactionType( python::module& module ) {
 }
 
 } // namespace id
+} // dryad namespace

@@ -12,6 +12,8 @@
 
 namespace python = pybind11;
 
+namespace dryad {
+
 /**
  *  @brief Add standard equal and not equal comparison definitions
  *
@@ -234,5 +236,7 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
   // add math operators
   addStandardMathOperatorDefinitions< Component >( component );
 }
+
+} // dryad namespace
 
 #endif

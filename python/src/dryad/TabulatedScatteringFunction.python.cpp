@@ -9,6 +9,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapTabulatedScatteringFunction( python::module& module ) {
 
   // type aliases
@@ -130,3 +132,5 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
 }
+
+} // dryad namespace

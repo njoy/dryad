@@ -11,6 +11,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace resonances {
 
 void wrapHardSphereShiftFactor( python::module& module ) {
@@ -70,3 +71,4 @@ void wrapHardSphereShiftFactor( python::module& module ) {
 }
 
 } // resonances namespace
+} // dryad namespace

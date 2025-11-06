@@ -9,6 +9,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapUniformAngularDistributions( python::module& module ) {
 
   // type aliases
@@ -96,3 +98,5 @@ void wrapUniformAngularDistributions( python::module& module ) {
   // add standard tabulated data definitions
   addStandardInterpolationTableDefinitions< Component >( component );
 }
+
+} // dryad namespace

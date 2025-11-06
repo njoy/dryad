@@ -7,6 +7,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace id {
 
   // declarations - identifiers
@@ -38,3 +39,5 @@ void wrapID( python::module& module ) {
   id::wrapReactionID( submodule );
   id::wrapChannelID( submodule );
 }
+
+} // dryad namespace

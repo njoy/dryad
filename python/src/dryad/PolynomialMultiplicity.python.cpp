@@ -9,6 +9,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapPolynomialMultiplicity( python::module& module ) {
 
   // type aliases
@@ -78,3 +80,5 @@ void wrapPolynomialMultiplicity( python::module& module ) {
   // add standard series data definitions
   addStandardSeriesDefinitions< Component >( component );
 }
+
+} // dryad namespace

@@ -8,6 +8,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace covariance {
 
 void wrapVarianceScaling( python::module& module ) {
@@ -79,3 +80,4 @@ void wrapVarianceScaling( python::module& module ) {
 }
 
 } // covariance namespace
+} // dryad namespace

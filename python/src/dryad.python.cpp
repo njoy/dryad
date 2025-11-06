@@ -7,11 +7,10 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
   // declarations - scion objects
   void wrapToleranceConvergence( python::module& );
-
-  // declarations - matrix functions
-  void wrapMatrix( python::module& );
 
   // declarations - identifiers
   void wrapID( python::module& );
@@ -68,6 +67,8 @@ namespace python = pybind11;
   void wrapReaction( python::module& );
   void wrapProjectileTarget( python::module& );
 
+} // dryad namespace
+
 void wrapDryad( python::module& module ) {
 
   // create the submodule
@@ -78,67 +79,64 @@ void wrapDryad( python::module& module ) {
   );
 
   // wrap components - documentation
-  wrapDocumentation( submodule );
+  dryad::wrapDocumentation( submodule );
 
   // wrap components - scion objects
-  wrapToleranceConvergence( submodule );
+  dryad::wrapToleranceConvergence( submodule );
 
   // wrap components - enumerators
-  wrapInterpolationType( submodule );
-  wrapDistributionDataType( submodule );
-  wrapInteractionType( submodule );
-  wrapReactionCategory( submodule );
-  wrapReferenceFrame( submodule );
-  wrapUniformDistributionType( submodule );
-
-  // wrap components - matrix functions
-  wrapMatrix( submodule );
+  dryad::wrapInterpolationType( submodule );
+  dryad::wrapDistributionDataType( submodule );
+  dryad::wrapInteractionType( submodule );
+  dryad::wrapReactionCategory( submodule );
+  dryad::wrapReferenceFrame( submodule );
+  dryad::wrapUniformDistributionType( submodule );
 
   // wrap components - identifiers
-  wrapID( submodule );
+  dryad::wrapID( submodule );
 
   // wrap components - resonances
-  wrapResonances( submodule );
+  dryad::wrapResonances( submodule );
 
   // wrap components - covariance data
-  wrapCovariance( submodule );
+  dryad::wrapCovariance( submodule );
 
   // wrap components - atomic data
-  wrapAtomic( submodule );
+  dryad::wrapAtomic( submodule );
 
   // wrap components - reaction products
-  wrapTabulatedMultiplicity( submodule );
-  wrapPolynomialMultiplicity( submodule );
-  wrapTabulatedAverageCosine( submodule );
-  wrapTabulatedAverageEnergy( submodule );
-  wrapIsotropicAngularDistributions( submodule );
-  wrapTabulatedAngularDistributionFunction( submodule );
-  wrapTabulatedAngularDistribution( submodule );
-  wrapTabulatedAngularDistributions( submodule );
-  wrapLegendreAngularDistributionFunction( submodule );
-  wrapLegendreAngularDistribution( submodule );
-  wrapLegendreAngularDistributions( submodule );
-  wrapUniformAngularDistribution( submodule );
-  wrapUniformAngularDistributions( submodule );
-  wrapTabulatedEnergyDistributionFunction( submodule );
-  wrapTabulatedEnergyDistribution( submodule );
-  wrapTabulatedEnergyDistributions( submodule );
-  wrapUniformEnergyDistribution( submodule );
-  wrapUniformEnergyDistributions( submodule );
-  wrapMultiEnergyDistributions( submodule );
-  wrapTabulatedFormFactor( submodule );
-  wrapTabulatedScatteringFunction( submodule );
-  wrapTwoBodyDistributionData( submodule );
-  wrapUncorrelatedDistributionData( submodule );
-  wrapCoherentDistributionData( submodule );
-  wrapIncoherentDistributionData( submodule );
-  wrapReactionProduct( submodule );
+  dryad::wrapTabulatedMultiplicity( submodule );
+  dryad::wrapPolynomialMultiplicity( submodule );
+  dryad::wrapTabulatedAverageCosine( submodule );
+  dryad::wrapTabulatedAverageEnergy( submodule );
+  dryad::wrapIsotropicAngularDistributions( submodule );
+  dryad::wrapTabulatedAngularDistributionFunction( submodule );
+  dryad::wrapTabulatedAngularDistribution( submodule );
+  dryad::wrapTabulatedAngularDistributions( submodule );
+  dryad::wrapLegendreAngularDistributionFunction( submodule );
+  dryad::wrapLegendreAngularDistribution( submodule );
+  dryad::wrapLegendreAngularDistributions( submodule );
+  dryad::wrapUniformAngularDistribution( submodule );
+  dryad::wrapUniformAngularDistributions( submodule );
+  dryad::wrapTabulatedEnergyDistributionFunction( submodule );
+  dryad::wrapTabulatedEnergyDistribution( submodule );
+  dryad::wrapTabulatedEnergyDistributions( submodule );
+  dryad::wrapUniformEnergyDistribution( submodule );
+  dryad::wrapUniformEnergyDistributions( submodule );
+  dryad::wrapMultiEnergyDistributions( submodule );
+  dryad::wrapTabulatedFormFactor( submodule );
+  dryad::wrapTabulatedScatteringFunction( submodule );
+  dryad::wrapTwoBodyDistributionData( submodule );
+  dryad::wrapUncorrelatedDistributionData( submodule );
+  dryad::wrapCoherentDistributionData( submodule );
+  dryad::wrapIncoherentDistributionData( submodule );
+  dryad::wrapReactionProduct( submodule );
 
   // wrap components - reactions
-  wrapTabulatedCrossSection( submodule );
-  wrapReaction( submodule );
+  dryad::wrapTabulatedCrossSection( submodule );
+  dryad::wrapReaction( submodule );
 
   // wrap components - top level
-  wrapProjectileTarget( submodule );
-  wrapAtomicRelaxation( submodule );
+  dryad::wrapProjectileTarget( submodule );
+  dryad::wrapAtomicRelaxation( submodule );
 }

@@ -8,6 +8,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapDistributionDataType( python::module& module ) {
 
   // type aliases
@@ -31,3 +33,5 @@ void wrapDistributionDataType( python::module& module ) {
   .value( "Coherent",     Component::Coherent )
   .value( "Incoherent",   Component::Incoherent );
 }
+
+} // dryad namespace

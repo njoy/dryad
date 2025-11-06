@@ -3,7 +3,7 @@ if(njoy.python)
     find_package( Python3 REQUIRED )
     pybind11_add_module( njoy.python
         ${CMAKE_CURRENT_SOURCE_DIR}/src/njoy.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/matrix.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/matrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ToleranceConvergence.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id.python.cpp

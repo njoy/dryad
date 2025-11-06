@@ -8,6 +8,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapInterpolationType( python::module& module ) {
 
   // type aliases
@@ -32,3 +34,5 @@ void wrapInterpolationType( python::module& module ) {
   .value( "LogLinear", Component::LogLinear )
   .value( "LogLog", Component::LogLog );
 }
+
+} // dryad namespace

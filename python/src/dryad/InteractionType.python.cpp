@@ -8,6 +8,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapInteractionType( python::module& module ) {
 
   // type aliases
@@ -29,3 +31,5 @@ void wrapInteractionType( python::module& module ) {
   .value( "Atomic",  Component::Atomic )
   .value( "Nuclear", Component::Nuclear );
 }
+
+} // dryad namespace

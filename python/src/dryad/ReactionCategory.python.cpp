@@ -8,6 +8,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapReactionCategory( python::module& module ) {
 
   // type aliases
@@ -29,3 +31,5 @@ void wrapReactionCategory( python::module& module ) {
   .value( "Primary",   Component::Primary )
   .value( "Summation", Component::Summation );
 }
+
+} // dryad namespace

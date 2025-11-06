@@ -10,6 +10,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace id {
 
 void wrapEnergyGroup( python::module& module ) {
@@ -63,3 +64,4 @@ void wrapEnergyGroup( python::module& module ) {
 }
 
 } // namespace id
+} // dryad namespace

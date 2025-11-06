@@ -8,6 +8,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapReferenceFrame( python::module& module ) {
 
   // type aliases
@@ -29,3 +31,5 @@ void wrapReferenceFrame( python::module& module ) {
   .value( "Laboratory",   Component::Laboratory )
   .value( "CentreOfMass", Component::CentreOfMass );
 }
+
+} // dryad namespace

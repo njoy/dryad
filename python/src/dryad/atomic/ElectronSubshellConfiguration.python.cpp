@@ -9,6 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace atomic {
 
 void wrapElectronSubshellConfiguration( python::module& module ) {
@@ -163,3 +164,4 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
 }
 
 } // atomic namespace
+} // dryad namespace

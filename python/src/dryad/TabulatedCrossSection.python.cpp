@@ -9,6 +9,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapTabulatedCrossSection( python::module& module ) {
 
   // type aliases
@@ -108,3 +110,5 @@ void wrapTabulatedCrossSection( python::module& module ) {
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
 }
+
+} // dryad namespace

@@ -9,6 +9,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 void wrapIncoherentDistributionData( python::module& module ) {
 
   // type aliases
@@ -77,3 +79,5 @@ void wrapIncoherentDistributionData( python::module& module ) {
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
 }
+
+} // dryad namespace

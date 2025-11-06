@@ -9,6 +9,8 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
+
 template < typename X, typename Y = X >
 void wrapToleranceConvergenceFor( python::module& module, const std::string& name ) {
 
@@ -94,3 +96,5 @@ void wrapToleranceConvergence( python::module& module ) {
 
   wrapToleranceConvergenceFor< double >( module, "ToleranceConvergence" );
 }
+
+} // dryad namespace

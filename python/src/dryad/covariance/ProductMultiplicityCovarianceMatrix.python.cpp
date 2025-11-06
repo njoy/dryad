@@ -9,6 +9,7 @@
 // namespace aliases
 namespace python = pybind11;
 
+namespace dryad {
 namespace covariance {
 
 void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
@@ -260,3 +261,4 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
 }
 
 } // covariance namespace
+} // dryad namespace
