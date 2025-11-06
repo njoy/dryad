@@ -1,6 +1,7 @@
 # standard imports
 import unittest
 import sys
+from copy import copy, deepcopy
 
 # third party imports
 
@@ -23,7 +24,7 @@ def verify_chunk_with_transition_energy( self, chunk ) :
     self.assertAlmostEqual( 1e-3, chunk.probability )
     self.assertAlmostEqual( 550, chunk.energy )
 
-class Test_dryad_RadiativeTransitionData( unittest.TestCase ) :
+class Test_RadiativeTransitionData( unittest.TestCase ) :
     """Unit test for the RadiativeTransitionData class."""
 
     def test_component( self ) :
@@ -93,6 +94,17 @@ class Test_dryad_RadiativeTransitionData( unittest.TestCase ) :
         self.assertEqual( False, ( left != left ) )
         self.assertEqual( False, ( left != equal ) )
         self.assertEqual( True, ( left != different ) )
+
+    def test_copy( self ) :
+
+        k_shell = ElectronSubshellID( ElectronSubshellID.K )
+        instance = RadiativeTransitionData( k_shell, 1e-3 )
+
+        test1 = copy( instance )
+        test2 = deepcopy( instance )
+
+        self.assertEqual( False, test1 is instance )
+        self.assertEqual( False, test2 is instance )
 
 if __name__ == '__main__' :
 
