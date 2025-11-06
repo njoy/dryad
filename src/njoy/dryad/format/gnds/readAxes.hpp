@@ -6,9 +6,9 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/readAxis.hpp"
-#include "dryad/format/gnds/readGrid.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/readAxis.hpp"
+#include "njoy/dryad/format/gnds/readGrid.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {

@@ -5,13 +5,13 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/CrossSectionMetadata.hpp"
-#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/covariance/createMatrix.hpp"
-#include "dryad/format/endf/covariance/createVarianceScaling.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/covariance/CrossSectionMetadata.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/covariance/createMatrix.hpp"
+#include "njoy/dryad/format/endf/covariance/createVarianceScaling.hpp"
 #include "ENDFtk/section/ReactionBlock.hpp"
 
 namespace njoy {

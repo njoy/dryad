@@ -109,7 +109,7 @@ namespace resonances {
   public:
 
     /* constructor */
-    #include "dryad/resonances/ChannelQuantumNumbers/src/ctor.hpp"
+    #include "njoy/dryad/resonances/ChannelQuantumNumbers/src/ctor.hpp"
 
     /**
      *  @brief Return the orbital angular momentum l of the channel

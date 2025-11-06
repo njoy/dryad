@@ -5,7 +5,7 @@
 #include <vector>
 
 // other includes
-#include "dryad/type-aliases.hpp"
+#include "njoy/dryad/type-aliases.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
 namespace njoy {
@@ -30,7 +30,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedMultiplicity/src/ctor.hpp"
+    #include "njoy/dryad/TabulatedMultiplicity/src/ctor.hpp"
 
     /* methods */
 

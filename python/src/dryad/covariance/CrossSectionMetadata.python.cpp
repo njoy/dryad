@@ -5,7 +5,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/covariance/CrossSectionMetadata.hpp"
+#include "njoy/dryad/covariance/CrossSectionMetadata.hpp"
 
 // namespace aliases
 namespace python = pybind11;

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createEndfSublibraryType.hpp"
+#include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
 
 // other includes
 

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/HardSphereShiftFactor.hpp"
+#include "njoy/dryad/resonances/HardSphereShiftFactor.hpp"
 
 // other includes
 

@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
-#include "dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
-#include "dryad/TabulatedAngularDistributions.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
+#include "njoy/dryad/TabulatedAngularDistributions.hpp"
 #include "ACEtk/electroatomic/ElasticAngularDistributionBlock.hpp"
 
 namespace njoy {

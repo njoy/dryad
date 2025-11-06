@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/InteractionType.hpp"
+#include "njoy/dryad/InteractionType.hpp"
 
 // namespace aliases
 namespace python = pybind11;

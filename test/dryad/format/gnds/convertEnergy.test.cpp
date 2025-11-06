@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/format/gnds/convertEnergy.hpp"
 
 // other includes
 

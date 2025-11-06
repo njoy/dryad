@@ -28,7 +28,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/Documentation/src/ctor.hpp"
+    #include "njoy/dryad/Documentation/src/ctor.hpp"
 
     /**
      *  @brief Return the awr (temporary)

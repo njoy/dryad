@@ -7,11 +7,11 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/createParticleIdentifier.hpp"
-#include "dryad/format/gnds/createInteractionType.hpp"
-#include "dryad/format/gnds/createReactions.hpp"
-#include "dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
+#include "njoy/dryad/format/gnds/createInteractionType.hpp"
+#include "njoy/dryad/format/gnds/createReactions.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
 
 namespace njoy {
 namespace dryad {

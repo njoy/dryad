@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/CoulombShiftFactor.hpp"
+#include "njoy/dryad/resonances/CoulombShiftFactor.hpp"
 
 // other includes
 

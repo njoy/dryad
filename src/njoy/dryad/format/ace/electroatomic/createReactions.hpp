@@ -6,11 +6,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/Reaction.hpp"
-#include "dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
-#include "dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
-#include "dryad/format/ace/electroatomic/createTabulatedCrossSections.hpp"
-#include "dryad/format/ace/electroatomic/createReactionProducts.hpp"
+#include "njoy/dryad/Reaction.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createTabulatedCrossSections.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createReactionProducts.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {

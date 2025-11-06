@@ -6,8 +6,8 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "dryad/ProjectileTarget.hpp"
-#include "dryad/format/gnds/createProjectileTarget.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/gnds/createProjectileTarget.hpp"
 
 namespace njoy {
 namespace dryad {

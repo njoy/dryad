@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
 
 namespace njoy {
 namespace dryad {

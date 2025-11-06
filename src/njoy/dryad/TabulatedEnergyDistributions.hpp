@@ -4,9 +4,9 @@
 // system includes
 
 // other includes
-#include "dryad/base/GridDistributions.hpp"
-#include "dryad/TabulatedEnergyDistribution.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/dryad/base/GridDistributions.hpp"
+#include "njoy/dryad/TabulatedEnergyDistribution.hpp"
+#include "njoy/dryad/TabulatedAverageEnergy.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -25,7 +25,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedEnergyDistributions/src/ctor.hpp"
+    #include "njoy/dryad/TabulatedEnergyDistributions/src/ctor.hpp"
 
     /* methods */
 

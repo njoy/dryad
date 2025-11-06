@@ -5,11 +5,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
-#include "dryad/format/gnds/readCovarianceMatrix.hpp"
-#include "dryad/format/gnds/covariance/createVarianceScaling.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
+#include "njoy/dryad/format/gnds/covariance/createVarianceScaling.hpp"
 
 namespace njoy {
 namespace dryad {

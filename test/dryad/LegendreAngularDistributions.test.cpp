@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/LegendreAngularDistributions.hpp"
+#include "njoy/dryad/LegendreAngularDistributions.hpp"
 
 // other includes
 

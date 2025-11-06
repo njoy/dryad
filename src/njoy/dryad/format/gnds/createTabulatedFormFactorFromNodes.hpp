@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createInterpolationType.hpp"
-#include "dryad/format/gnds/readXYs1d.hpp"
-#include "dryad/format/gnds/convertEnergies.hpp"
-#include "dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
+#include "njoy/dryad/format/gnds/readXYs1d.hpp"
+#include "njoy/dryad/format/gnds/convertEnergies.hpp"
+#include "njoy/dryad/TabulatedFormFactor.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedFormFactor from a GNDS form factor node
    */
-  static TabulatedFormFactor 
+  static TabulatedFormFactor
   createTabulatedFormFactorFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;
@@ -52,7 +52,7 @@ namespace gnds {
 
       // loop over the children of function1ds
       pugi::xml_node function1ds = node.child( "function1ds" );
-      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" ); 
+      for ( pugi::xml_node xys1d = function1ds.child( "XYs1d" );
             xys1d; xys1d = xys1d.next_sibling(  "XYs1d"  ) ) {
 
         // read the current interpolation region

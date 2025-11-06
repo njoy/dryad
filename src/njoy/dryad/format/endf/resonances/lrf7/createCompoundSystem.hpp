@@ -5,11 +5,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/resonances/CompoundSystem.hpp"
-#include "dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
-#include "dryad/format/endf/resonances/lrf7/createKinematics.hpp"
-#include "dryad/format/endf/resonances/lrf7/createFormalism.hpp"
-#include "dryad/format/endf/resonances/lrf7/createSpinGroups.hpp"
+#include "njoy/dryad/resonances/CompoundSystem.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createKinematics.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createFormalism.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createSpinGroups.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

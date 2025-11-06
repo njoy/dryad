@@ -5,7 +5,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/id/ElementID.hpp"
+#include "njoy/dryad/id/ElementID.hpp"
 
 // namespace aliases
 namespace python = pybind11;

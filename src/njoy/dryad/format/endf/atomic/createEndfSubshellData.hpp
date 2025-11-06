@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/atomic/ElectronSubshellConfiguration.hpp"
-#include "dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
+#include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "njoy/dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
 #include "ENDFtk/section/28.hpp"
 
 namespace njoy {

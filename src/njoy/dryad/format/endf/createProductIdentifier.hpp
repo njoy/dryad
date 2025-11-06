@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/format/endf/createTargetIdentifier.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/format/endf/createTargetIdentifier.hpp"
 
 namespace njoy {
 namespace dryad {

@@ -7,13 +7,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/covariance/createScalingType.hpp"
-#include "dryad/format/gnds/readAxes.hpp"
-#include "dryad/format/gnds/readArray.hpp"
-#include "dryad/format/gnds/convertEnergies.hpp"
-#include "dryad/format/gnds/convertVarianceScalingFactors.hpp"
-#include "dryad/covariance/VarianceScaling.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/covariance/createScalingType.hpp"
+#include "njoy/dryad/format/gnds/readAxes.hpp"
+#include "njoy/dryad/format/gnds/readArray.hpp"
+#include "njoy/dryad/format/gnds/convertEnergies.hpp"
+#include "njoy/dryad/format/gnds/convertVarianceScalingFactors.hpp"
+#include "njoy/dryad/covariance/VarianceScaling.hpp"
 
 namespace njoy {
 namespace dryad {

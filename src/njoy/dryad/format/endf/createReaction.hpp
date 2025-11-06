@@ -7,11 +7,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/ReactionInformation.hpp"
-#include "dryad/format/endf/createTabulatedCrossSection.hpp"
-#include "dryad/format/endf/createMultiplicity.hpp"
-#include "dryad/format/endf/createReactionProducts.hpp"
-#include "dryad/Reaction.hpp"
+#include "njoy/dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/dryad/format/endf/createTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/endf/createMultiplicity.hpp"
+#include "njoy/dryad/format/endf/createReactionProducts.hpp"
+#include "njoy/dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 

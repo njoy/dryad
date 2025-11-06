@@ -24,13 +24,13 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/HardSpherePenetrability/src/generateFunction.hpp"
+    #include "njoy/dryad/resonances/HardSpherePenetrability/src/generateFunction.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/HardSpherePenetrability/src/ctor.hpp"
+    #include "njoy/dryad/resonances/HardSpherePenetrability/src/ctor.hpp"
 
     /* methods */
 

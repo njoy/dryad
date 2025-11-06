@@ -4,11 +4,11 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createLegendreAngularDistribution.hpp"
+#include "njoy/dryad/format/gnds/createLegendreAngularDistribution.hpp"
 
 // other includes
 #include "pugixml.hpp"
-#include "dryad/format/gnds/readAxes.hpp"
+#include "njoy/dryad/format/gnds/readAxes.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;

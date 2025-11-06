@@ -6,7 +6,7 @@
 #include <vector>
 
 // other includes
-#include "dryad/resonances/CompoundSystem.hpp"
+#include "njoy/dryad/resonances/CompoundSystem.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -28,7 +28,7 @@ namespace resonances {
 
     /* constructor */
 
-    #include "dryad/resonances/ResonanceParameters/src/ctor.hpp"
+    #include "njoy/dryad/resonances/ResonanceParameters/src/ctor.hpp"
 
     /* methods */
 

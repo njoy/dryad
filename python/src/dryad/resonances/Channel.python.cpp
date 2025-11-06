@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/resonances/Channel.hpp"
+#include "njoy/dryad/resonances/Channel.hpp"
 
 // namespace aliases
 namespace python = pybind11;

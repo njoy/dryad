@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/apply_permutation.hpp"
-#include "dryad/id/ChannelID.hpp"
+#include "njoy/dryad/id/ChannelID.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -30,15 +30,15 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/ResonanceTable/src/processTable.hpp"
-    #include "dryad/resonances/ResonanceTable/src/verifyTable.hpp"
-    #include "dryad/resonances/ResonanceTable/src/verifyCompatibility.hpp"
+    #include "njoy/dryad/resonances/ResonanceTable/src/processTable.hpp"
+    #include "njoy/dryad/resonances/ResonanceTable/src/verifyTable.hpp"
+    #include "njoy/dryad/resonances/ResonanceTable/src/verifyCompatibility.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/ResonanceTable/src/ctor.hpp"
+    #include "njoy/dryad/resonances/ResonanceTable/src/ctor.hpp"
 
     /**
      *  @brief Return the channel identifiers

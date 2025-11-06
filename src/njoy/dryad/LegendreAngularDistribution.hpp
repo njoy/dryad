@@ -6,10 +6,10 @@
 #include <optional>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/LegendreAngularDistributionFunction.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
-#include "dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
+#include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -30,7 +30,7 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "dryad/LegendreAngularDistribution/src/calculateCdf.hpp"
+    #include "njoy/dryad/LegendreAngularDistribution/src/calculateCdf.hpp"
 
   public:
 
@@ -41,7 +41,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/LegendreAngularDistribution/src/ctor.hpp"
+    #include "njoy/dryad/LegendreAngularDistribution/src/ctor.hpp"
 
     /* methods */
 

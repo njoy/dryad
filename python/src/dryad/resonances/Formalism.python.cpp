@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/resonances/Formalism.hpp"
+#include "njoy/dryad/resonances/Formalism.hpp"
 
 // namespace aliases
 namespace python = pybind11;

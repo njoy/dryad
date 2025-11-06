@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/createTabulatedScatteringFunction.hpp"
+#include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/readValues.hpp"
+#include "njoy/dryad/format/gnds/readValues.hpp"
 
 // other includes
 #include "pugixml.hpp"

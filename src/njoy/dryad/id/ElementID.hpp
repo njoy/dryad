@@ -23,7 +23,7 @@ namespace id {
   class ElementID {
 
     /* helper class */
-    #include "dryad/id/ElementID/Entry.hpp"
+    #include "njoy/dryad/id/ElementID/Entry.hpp"
 
     /* static fields */
     static inline const std::vector< Entry > entries{
@@ -167,12 +167,12 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/ElementID/src/getIndex.hpp"
+    #include "njoy/dryad/id/ElementID/src/getIndex.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/id/ElementID/src/ctor.hpp"
+    #include "njoy/dryad/id/ElementID/src/ctor.hpp"
 
     /* methods */
 

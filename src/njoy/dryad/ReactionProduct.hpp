@@ -6,15 +6,15 @@
 #include <variant>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/PolynomialMultiplicity.hpp"
-#include "dryad/TabulatedMultiplicity.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
-#include "dryad/TwoBodyDistributionData.hpp"
-#include "dryad/UncorrelatedDistributionData.hpp"
-#include "dryad/CoherentDistributionData.hpp"
-#include "dryad/IncoherentDistributionData.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/TabulatedMultiplicity.hpp"
+#include "njoy/dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/dryad/TwoBodyDistributionData.hpp"
+#include "njoy/dryad/UncorrelatedDistributionData.hpp"
+#include "njoy/dryad/CoherentDistributionData.hpp"
+#include "njoy/dryad/IncoherentDistributionData.hpp"
 #include "tools/overload.hpp"
 
 namespace njoy {
@@ -47,7 +47,7 @@ namespace dryad {
   public:
 
     /* constructor */
-    #include "dryad/ReactionProduct/src/ctor.hpp"
+    #include "njoy/dryad/ReactionProduct/src/ctor.hpp"
 
     /* methods */
 

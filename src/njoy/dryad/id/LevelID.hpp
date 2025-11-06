@@ -33,7 +33,7 @@ namespace id {
   private:
 
     /* helper class */
-    #include "dryad/id/LevelID/Entry.hpp"
+    #include "njoy/dryad/id/LevelID/Entry.hpp"
 
     /* static fields */
     static inline const std::vector< Entry > entries = [] () {
@@ -64,12 +64,12 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/LevelID/src/getIndex.hpp"
+    #include "njoy/dryad/id/LevelID/src/getIndex.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/id/LevelID/src/ctor.hpp"
+    #include "njoy/dryad/id/LevelID/src/ctor.hpp"
 
     /* methods */
 

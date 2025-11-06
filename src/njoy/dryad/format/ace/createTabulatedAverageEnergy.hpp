@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/TabulatedAverageEnergy.hpp"
 #include "ACEtk/electroatomic/ExcitationBlock.hpp"
 #include "ACEtk/electroatomic/BremsstrahlungBlock.hpp"
 

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/photoatomic/createReactionProducts.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createReactionProducts.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"

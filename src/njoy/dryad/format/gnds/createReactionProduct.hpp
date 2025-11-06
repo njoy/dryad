@@ -7,16 +7,16 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/createParticleIdentifier.hpp"
-#include "dryad/format/gnds/createMultiplicity.hpp"
-#include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
-#include "dryad/format/gnds/createUncorrelatedDistributionData.hpp"
-#include "dryad/format/gnds/createCoherentDistributionData.hpp"
-#include "dryad/format/gnds/createIncoherentDistributionData.hpp"
-#include "dryad/format/gnds/createTabulatedAverageEnergy.hpp"
-#include "dryad/format/gnds/resolveLink.hpp"
-#include "dryad/ReactionProduct.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
+#include "njoy/dryad/format/gnds/createMultiplicity.hpp"
+#include "njoy/dryad/format/gnds/createTwoBodyDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createUncorrelatedDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createCoherentDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createIncoherentDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedAverageEnergy.hpp"
+#include "njoy/dryad/format/gnds/resolveLink.hpp"
+#include "njoy/dryad/ReactionProduct.hpp"
 
 namespace njoy {
 namespace dryad {

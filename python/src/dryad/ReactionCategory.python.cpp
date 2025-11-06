@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/ReactionCategory.hpp"
+#include "njoy/dryad/ReactionCategory.hpp"
 
 // namespace aliases
 namespace python = pybind11;

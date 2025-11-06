@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/atomic/RadiativeTransitionData.hpp"
+#include "njoy/dryad/atomic/RadiativeTransitionData.hpp"
 
 // other includes
 

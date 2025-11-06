@@ -7,9 +7,9 @@
 #include <vector>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/base/UniformDistribution.hpp"
-#include "dryad/UniformDistributionType.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/base/UniformDistribution.hpp"
+#include "njoy/dryad/UniformDistributionType.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -38,7 +38,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/UniformAngularDistribution/src/ctor.hpp"
+    #include "njoy/dryad/UniformAngularDistribution/src/ctor.hpp"
 
     /* methods */
 

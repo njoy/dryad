@@ -7,9 +7,9 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createReferenceFrame.hpp"
-#include "dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
-#include "dryad/IncoherentDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
+#include "njoy/dryad/IncoherentDistributionData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -19,7 +19,7 @@ namespace gnds {
   /**
    *  @brief Create a IncoherentDistributionData from a GNDS coherentPhotonScattering node
    */
-  static IncoherentDistributionData 
+  static IncoherentDistributionData
   createIncoherentDistributionData( const pugi::xml_node& incoherent ) {
 
     // check that this is a valid coherentPhotonScattering node

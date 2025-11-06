@@ -7,7 +7,7 @@
 #include "ENDFtk/section/CovariancePairs.hpp"
 #include "ENDFtk/section/SquareMatrix.hpp"
 #include "ENDFtk/section/RectangularMatrix.hpp"
-#include "dryad/matrix.hpp"
+#include "njoy/matrix.hpp"
 
 namespace njoy {
 namespace dryad {

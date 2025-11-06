@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/resonances/HardSpherePhaseShift.hpp"
+#include "njoy/dryad/resonances/HardSpherePhaseShift.hpp"
 
 #include "scion/math/horner.hpp"
 

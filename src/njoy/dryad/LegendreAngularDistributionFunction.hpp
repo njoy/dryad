@@ -5,9 +5,9 @@
 #include <vector>
 
 // other includes
-#include "dryad/type-aliases.hpp"
+#include "njoy/dryad/type-aliases.hpp"
 #include "scion/math/LegendreSeries.hpp"
-#include "dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -79,7 +79,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/LegendreAngularDistributionFunction/src/ctor.hpp"
+    #include "njoy/dryad/LegendreAngularDistributionFunction/src/ctor.hpp"
 
     /* methods */
 

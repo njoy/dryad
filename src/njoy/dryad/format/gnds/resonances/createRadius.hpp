@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/resonances/createTabulatedRadius.hpp"
-#include "dryad/format/gnds/readConstant1d.hpp"
-#include "dryad/format/gnds/convertRadius.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
+#include "njoy/dryad/format/gnds/readConstant1d.hpp"
+#include "njoy/dryad/format/gnds/convertRadius.hpp"
 
 namespace njoy {
 namespace dryad {

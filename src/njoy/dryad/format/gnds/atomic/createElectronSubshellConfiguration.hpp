@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/id/ElementID.hpp"
-#include "dryad/atomic/ElectronSubshellConfiguration.hpp"
-#include "dryad/format/gnds/convertEnergy.hpp"
-#include "dryad/format/gnds/atomic/createElectronSubshellID.hpp"
+#include "njoy/dryad/id/ElementID.hpp"
+#include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/format/gnds/atomic/createElectronSubshellID.hpp"
 
 namespace njoy {
 namespace dryad {

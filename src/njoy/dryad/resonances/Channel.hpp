@@ -7,22 +7,22 @@
 
 // other includes
 #include "tools/overload.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/id/ChannelID.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/resonances/ChannelQuantumNumbers.hpp"
-#include "dryad/resonances/ChannelRadii.hpp"
-#include "dryad/resonances/ParticlePair.hpp"
-#include "dryad/resonances/NonRelativisticWaveNumber.hpp"
-#include "dryad/resonances/RelativisticWaveNumber.hpp"
-#include "dryad/resonances/HardSpherePenetrability.hpp"
-#include "dryad/resonances/HardSphereShiftFactor.hpp"
-#include "dryad/resonances/HardSpherePhaseShift.hpp"
-#include "dryad/resonances/CoulombPenetrability.hpp"
-#include "dryad/resonances/CoulombShiftFactor.hpp"
-#include "dryad/resonances/CoulombPhaseShift.hpp"
-#include "dryad/resonances/CoulombPhaseShiftDifference.hpp"
-#include "dryad/resonances/TabulatedWaveFunction.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/id/ChannelID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/resonances/ChannelQuantumNumbers.hpp"
+#include "njoy/dryad/resonances/ChannelRadii.hpp"
+#include "njoy/dryad/resonances/ParticlePair.hpp"
+#include "njoy/dryad/resonances/NonRelativisticWaveNumber.hpp"
+#include "njoy/dryad/resonances/RelativisticWaveNumber.hpp"
+#include "njoy/dryad/resonances/HardSpherePenetrability.hpp"
+#include "njoy/dryad/resonances/HardSphereShiftFactor.hpp"
+#include "njoy/dryad/resonances/HardSpherePhaseShift.hpp"
+#include "njoy/dryad/resonances/CoulombPenetrability.hpp"
+#include "njoy/dryad/resonances/CoulombShiftFactor.hpp"
+#include "njoy/dryad/resonances/CoulombPhaseShift.hpp"
+#include "njoy/dryad/resonances/CoulombPhaseShiftDifference.hpp"
+#include "njoy/dryad/resonances/TabulatedWaveFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -76,14 +76,14 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/Channel/src/selectWaveNumber.hpp"
-    #include "dryad/resonances/Channel/src/selectWaveFunctions.hpp"
-    #include "dryad/resonances/Channel/src/calculateSpinFactor.hpp"
+    #include "njoy/dryad/resonances/Channel/src/selectWaveNumber.hpp"
+    #include "njoy/dryad/resonances/Channel/src/selectWaveFunctions.hpp"
+    #include "njoy/dryad/resonances/Channel/src/calculateSpinFactor.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/resonances/Channel/src/ctor.hpp"
+    #include "njoy/dryad/resonances/Channel/src/ctor.hpp"
 
     /**
      *  @brief Return the channel identifier

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TwoBodyDistributionData.hpp"
+#include "njoy/dryad/TwoBodyDistributionData.hpp"
 
 // other includes
 

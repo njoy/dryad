@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/covariance/ScalingType.hpp"
+#include "njoy/dryad/covariance/ScalingType.hpp"
 
 // namespace aliases
 namespace python = pybind11;

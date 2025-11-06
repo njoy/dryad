@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/atomic/TransitionType.hpp"
+#include "njoy/dryad/atomic/TransitionType.hpp"
 
 // namespace aliases
 namespace python = pybind11;

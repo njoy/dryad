@@ -7,9 +7,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/Documentation.hpp"
-#include "dryad/id/ElementID.hpp"
-#include "dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "njoy/dryad/Documentation.hpp"
+#include "njoy/dryad/id/ElementID.hpp"
+#include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -27,14 +27,14 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "dryad/AtomicRelaxation/src/sort.hpp"
-    #include "dryad/AtomicRelaxation/src/iterator.hpp"
+    #include "njoy/dryad/AtomicRelaxation/src/sort.hpp"
+    #include "njoy/dryad/AtomicRelaxation/src/iterator.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/AtomicRelaxation/src/ctor.hpp"
+    #include "njoy/dryad/AtomicRelaxation/src/ctor.hpp"
 
     /* methods */
 

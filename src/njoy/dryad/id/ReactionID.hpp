@@ -9,9 +9,9 @@
 
 // other includes
 #include "tools/split.hpp"
-#include "dryad/InteractionType.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/id/ReactionType.hpp"
+#include "njoy/dryad/InteractionType.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionType.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -24,7 +24,7 @@ namespace id {
   class ReactionID {
 
     /* helper class */
-    #include "dryad/id/ReactionID/Entry.hpp"
+    #include "njoy/dryad/id/ReactionID/Entry.hpp"
 
     /* type aliases */
     using Key = std::tuple< ParticleID, ParticleID, ReactionType >;
@@ -38,12 +38,12 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/ReactionID/src/getIndex.hpp"
+    #include "njoy/dryad/id/ReactionID/src/getIndex.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/id/ReactionID/src/ctor.hpp"
+    #include "njoy/dryad/id/ReactionID/src/ctor.hpp"
 
     /* static methods */
 

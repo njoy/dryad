@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/CoulombPhaseShift.hpp"
+#include "njoy/dryad/resonances/CoulombPhaseShift.hpp"
 
 // other includes
 

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/convertCrossSections.hpp"
+#include "njoy/dryad/format/gnds/convertCrossSections.hpp"
 
 // other includes
 

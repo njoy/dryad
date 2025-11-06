@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/TabulatedEnergyDistributions.hpp"
+#include "njoy/dryad/TabulatedEnergyDistributions.hpp"
 
 // other includes
 

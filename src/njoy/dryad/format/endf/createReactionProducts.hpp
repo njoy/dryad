@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/createProductIdentifier.hpp"
-#include "dryad/format/endf/createReactionProduct.hpp"
-#include "dryad/format/endf/createTabulatedMultiplicity.hpp"
-#include "dryad/ReactionProduct.hpp"
+#include "njoy/dryad/format/endf/createProductIdentifier.hpp"
+#include "njoy/dryad/format/endf/createReactionProduct.hpp"
+#include "njoy/dryad/format/endf/createTabulatedMultiplicity.hpp"
+#include "njoy/dryad/ReactionProduct.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 

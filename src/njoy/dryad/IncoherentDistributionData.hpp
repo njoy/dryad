@@ -5,9 +5,9 @@
 #include <variant>
 
 // other includes
-#include "dryad/DistributionDataType.hpp"
-#include "dryad/ReferenceFrame.hpp"
-#include "dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/DistributionDataType.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
+#include "njoy/dryad/TabulatedScatteringFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -35,7 +35,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/IncoherentDistributionData/src/ctor.hpp"
+    #include "njoy/dryad/IncoherentDistributionData/src/ctor.hpp"
 
     /* methods */
 

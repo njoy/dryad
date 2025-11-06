@@ -4,7 +4,7 @@
 // system includes
 
 // other includes
-#include "dryad/matrix.hpp"
+#include "njoy/matrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -28,7 +28,7 @@ namespace calculator {
 
     /* constructor */
 
-    #include "dryad/resonances/calculator/ShiftFactor/src/ctor.hpp"
+    #include "njoy/dryad/resonances/calculator/ShiftFactor/src/ctor.hpp"
 
     /* methods */
 

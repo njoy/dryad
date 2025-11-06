@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/TabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 #include "ACEtk/electroatomic/TabulatedEnergyDistribution.hpp"
 
 namespace njoy {

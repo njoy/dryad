@@ -4,10 +4,10 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/Reaction.hpp"
+#include "njoy/dryad/Reaction.hpp"
 
 // other includes
-#include "dryad/TwoBodyDistributionData.hpp"
+#include "njoy/dryad/TwoBodyDistributionData.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;

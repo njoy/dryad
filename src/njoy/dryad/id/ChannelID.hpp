@@ -8,8 +8,8 @@
 #include <vector>
 
 // other includes
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/resonances/ChannelQuantumNumbers.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/resonances/ChannelQuantumNumbers.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -25,7 +25,7 @@ namespace id {
   class ChannelID {
 
     /* helper class */
-    #include "dryad/id/ChannelID/Entry.hpp"
+    #include "njoy/dryad/id/ChannelID/Entry.hpp"
 
     /* type aliases */
     using Key = std::tuple< ReactionID, resonances::ChannelQuantumNumbers,
@@ -40,12 +40,12 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/ChannelID/src/getIndex.hpp"
+    #include "njoy/dryad/id/ChannelID/src/getIndex.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/id/ChannelID/src/ctor.hpp"
+    #include "njoy/dryad/id/ChannelID/src/ctor.hpp"
 
     /* static methods */
 

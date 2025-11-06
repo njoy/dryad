@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/resonances/Kinematics.hpp"
+#include "njoy/dryad/resonances/Kinematics.hpp"
 
 // namespace aliases
 namespace python = pybind11;

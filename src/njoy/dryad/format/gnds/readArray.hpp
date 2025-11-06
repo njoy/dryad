@@ -8,10 +8,10 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/readShape.hpp"
-#include "dryad/format/gnds/readValues.hpp"
-#include "dryad/matrix.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/readShape.hpp"
+#include "njoy/dryad/format/gnds/readValues.hpp"
+#include "njoy/matrix.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {

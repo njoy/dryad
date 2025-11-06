@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/CoulombPenetrability.hpp"
+#include "njoy/dryad/resonances/CoulombPenetrability.hpp"
 
 // other includes
 

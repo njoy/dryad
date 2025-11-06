@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/ProjectileTarget.hpp"
-#include "dryad/format/ace/createTargetIdentifier.hpp"
-#include "dryad/format/ace/electroatomic/createReactions.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createReactions.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {

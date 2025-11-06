@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/TabulatedFormFactor.hpp"
 
 // other includes
 

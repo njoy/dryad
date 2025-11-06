@@ -8,7 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/std20/ranges.hpp"
-#include "dryad/format/endf/createEndfIndex.hpp"
+#include "njoy/dryad/format/endf/createEndfIndex.hpp"
 
 namespace njoy {
 namespace dryad {

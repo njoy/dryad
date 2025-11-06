@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/id/ReactionID.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

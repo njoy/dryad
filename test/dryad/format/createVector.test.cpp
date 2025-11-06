@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/createVector.hpp"
+#include "njoy/dryad/format/createVector.hpp"
 
 // other includes
 #include "tools/std20/views.hpp"

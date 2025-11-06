@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createInterpolationType.hpp"
-#include "dryad/format/gnds/readXYs1d.hpp"
-#include "dryad/format/gnds/convertEnergies.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
+#include "njoy/dryad/format/gnds/readXYs1d.hpp"
+#include "njoy/dryad/format/gnds/convertEnergies.hpp"
+#include "njoy/dryad/TabulatedAverageEnergy.hpp"
 
 namespace njoy {
 namespace dryad {

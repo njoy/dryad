@@ -5,7 +5,7 @@
 #include <tuple>
 
 // other includes
-#include "dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -34,7 +34,7 @@ namespace resonances {
   public:
 
     /* constructor */
-    #include "dryad/resonances/Particle/src/ctor.hpp"
+    #include "njoy/dryad/resonances/Particle/src/ctor.hpp"
 
     /**
      *  @brief Return the particle identifier

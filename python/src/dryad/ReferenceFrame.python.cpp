@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/ReferenceFrame.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
 
 // namespace aliases
 namespace python = pybind11;

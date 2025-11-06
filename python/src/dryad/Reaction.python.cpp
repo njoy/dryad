@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/Reaction.hpp"
+#include "njoy/dryad/Reaction.hpp"
 
 // namespace aliases
 namespace python = pybind11;

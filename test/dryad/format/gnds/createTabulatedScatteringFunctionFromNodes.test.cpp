@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
 
 // other includes
 #include "pugixml.hpp"

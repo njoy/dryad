@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/covariance/LinearCombinationCovariance.hpp"
+#include "njoy/dryad/covariance/LinearCombinationCovariance.hpp"
 
 // namespace aliases
 namespace python = pybind11;

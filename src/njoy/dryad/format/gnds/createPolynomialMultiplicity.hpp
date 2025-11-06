@@ -7,9 +7,9 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/readPolynomial1d.hpp"
-#include "dryad/format/gnds/convertEnergy.hpp"
-#include "dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/format/gnds/readPolynomial1d.hpp"
+#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
 
 namespace njoy {
 namespace dryad {

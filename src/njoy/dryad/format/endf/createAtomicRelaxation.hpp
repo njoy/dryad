@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
-#include "dryad/format/endf/createDocumentation.hpp"
-#include "dryad/AtomicRelaxation.hpp"
+#include "njoy/dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
+#include "njoy/dryad/format/endf/createDocumentation.hpp"
+#include "njoy/dryad/AtomicRelaxation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 

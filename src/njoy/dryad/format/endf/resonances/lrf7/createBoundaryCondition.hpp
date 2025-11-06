@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/resonances/BoundaryCondition.hpp"
+#include "njoy/dryad/resonances/BoundaryCondition.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/VarianceScaling.hpp"
-#include "dryad/covariance/CrossSectionMetadata.hpp"
-#include "dryad/covariance/base/CovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/VarianceScaling.hpp"
+#include "njoy/dryad/covariance/CrossSectionMetadata.hpp"
+#include "njoy/dryad/covariance/base/CovarianceMatrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -36,7 +36,7 @@ namespace covariance {
 
     /* constructor */
 
-    #include "dryad/covariance/CrossSectionCovarianceMatrix/src/ctor.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix/src/ctor.hpp"
 
     /* methods */
 
@@ -74,7 +74,7 @@ namespace covariance {
     using Parent::calculateCorrelations;
     using Parent::calculateEigenvalues;
 
-    #include "dryad/covariance/CrossSectionCovarianceMatrix/src/extract.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal

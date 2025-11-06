@@ -78,7 +78,7 @@ namespace id {
   private:
 
     /* helper class */
-    #include "dryad/id/ElectronSubshellID/Entry.hpp"
+    #include "njoy/dryad/id/ElectronSubshellID/Entry.hpp"
 
     /* static fields */
     static inline const std::vector< Entry > entries{
@@ -159,12 +159,12 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/ElectronSubshellID/src/getIndex.hpp"
+    #include "njoy/dryad/id/ElectronSubshellID/src/getIndex.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/id/ElectronSubshellID/src/ctor.hpp"
+    #include "njoy/dryad/id/ElectronSubshellID/src/ctor.hpp"
 
     /* methods */
 

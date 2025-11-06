@@ -7,11 +7,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/EnergyGroup.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/ProductMultiplicityMetadata.hpp"
-#include "dryad/covariance/base/CovarianceMatrix.hpp"
+#include "njoy/dryad/id/EnergyGroup.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/covariance/ProductMultiplicityMetadata.hpp"
+#include "njoy/dryad/covariance/base/CovarianceMatrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -38,7 +38,7 @@ namespace covariance {
 
     /* constructor */
 
-    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/ctor.hpp"
+    #include "njoy/dryad/covariance/ProductMultiplicityCovarianceMatrix/src/ctor.hpp"
 
     /* methods */
 
@@ -56,7 +56,7 @@ namespace covariance {
     using Parent::calculateCorrelations;
     using Parent::calculateEigenvalues;
 
-    #include "dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
+    #include "njoy/dryad/covariance/ProductMultiplicityCovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal

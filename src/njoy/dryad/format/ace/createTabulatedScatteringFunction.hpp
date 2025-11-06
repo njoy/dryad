@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "ACEtk/photoatomic/CoherentFormFactorBlock.hpp"
 #include "ACEtk/photoatomic/IncoherentScatteringFunctionBlock.hpp"
 

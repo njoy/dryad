@@ -27,7 +27,7 @@ namespace resonances {
 
     /* constructor */
 
-    #include "dryad/resonances/CoulombPhaseShiftDifference/src/ctor.hpp"
+    #include "njoy/dryad/resonances/CoulombPhaseShiftDifference/src/ctor.hpp"
 
     /* methods */
 

@@ -4,9 +4,9 @@
 // system includes
 
 // other includes
-#include "dryad/constants.hpp"
-#include "dryad/resonances/ParticlePair.hpp"
-#include "dryad/resonances/Kinematics.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/resonances/ParticlePair.hpp"
+#include "njoy/dryad/resonances/Kinematics.hpp"
 
 namespace njoy {
 namespace dryad {

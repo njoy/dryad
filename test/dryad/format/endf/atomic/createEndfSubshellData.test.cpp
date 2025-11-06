@@ -4,10 +4,10 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/atomic/createEndfSubshellData.hpp"
+#include "njoy/dryad/format/endf/atomic/createEndfSubshellData.hpp"
 
 // other includes
-#include "dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;

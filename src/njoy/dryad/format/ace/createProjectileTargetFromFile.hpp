@@ -5,9 +5,9 @@
 
 // other includes
 #include "ACEtk/fromFile.hpp"
-#include "dryad/ProjectileTarget.hpp"
-#include "dryad/format/ace/electroatomic/createProjectileTarget.hpp"
-#include "dryad/format/ace/photoatomic/createProjectileTarget.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
 
 namespace njoy {
 namespace dryad {

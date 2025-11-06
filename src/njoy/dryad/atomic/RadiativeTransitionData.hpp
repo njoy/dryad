@@ -5,8 +5,8 @@
 #include <optional>
 
 // other includes
-#include "dryad/id/ElectronSubshellID.hpp"
-#include "dryad/atomic/TransitionType.hpp"
+#include "njoy/dryad/id/ElectronSubshellID.hpp"
+#include "njoy/dryad/atomic/TransitionType.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -33,7 +33,7 @@ namespace atomic {
 
     /* constructor */
 
-    #include "dryad/atomic/RadiativeTransitionData/src/ctor.hpp"
+    #include "njoy/dryad/atomic/RadiativeTransitionData/src/ctor.hpp"
 
     /* methods */
 

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/atomic/createElectronSubshellID.hpp"
+#include "njoy/dryad/format/endf/atomic/createElectronSubshellID.hpp"
 
 // other includes
 

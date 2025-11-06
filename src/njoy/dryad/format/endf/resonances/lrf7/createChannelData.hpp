@@ -7,9 +7,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/resonances/SpinGroup.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/resonances/lrf7/createChannels.hpp"
+#include "njoy/dryad/resonances/SpinGroup.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createChannels.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

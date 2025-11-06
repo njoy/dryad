@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedAverageCosine.hpp"
+#include "njoy/dryad/TabulatedAverageCosine.hpp"
 
 // other includes
 

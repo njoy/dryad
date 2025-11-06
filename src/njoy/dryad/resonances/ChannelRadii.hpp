@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/overload.hpp"
-#include "dryad/resonances/TabulatedRadius.hpp"
+#include "njoy/dryad/resonances/TabulatedRadius.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -48,7 +48,7 @@ namespace resonances {
   public:
 
     /* constructor */
-    #include "dryad/resonances/ChannelRadii/src/ctor.hpp"
+    #include "njoy/dryad/resonances/ChannelRadii/src/ctor.hpp"
 
     /**
      *  @brief Return whether or not a shift factor radius is defined

@@ -5,7 +5,7 @@
 #include <vector>
 
 // other includes
-#include "dryad/resonances/SpinGroup.hpp"
+#include "njoy/dryad/resonances/SpinGroup.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -25,13 +25,13 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/CompoundSystem/src/processSpinGroups.hpp"
+    #include "njoy/dryad/resonances/CompoundSystem/src/processSpinGroups.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/CompoundSystem/src/ctor.hpp"
+    #include "njoy/dryad/resonances/CompoundSystem/src/ctor.hpp"
 
     /**
      *  @brief Return the lower energy limit

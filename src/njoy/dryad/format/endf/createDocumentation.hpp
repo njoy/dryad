@@ -5,7 +5,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/Documentation.hpp"
+#include "njoy/dryad/Documentation.hpp"
 #include "ENDFtk/section/1/451.hpp"
 
 namespace njoy {

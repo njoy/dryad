@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/TabulatedScatteringFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;

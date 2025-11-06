@@ -3,8 +3,8 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/type-aliases.hpp"
-#include "definitions.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "dryad/definitions.hpp"
 
 // namespace aliases
 namespace python = pybind11;

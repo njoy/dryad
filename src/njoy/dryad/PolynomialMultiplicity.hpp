@@ -5,8 +5,8 @@
 #include <vector>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/TabulatedMultiplicity.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/TabulatedMultiplicity.hpp"
 #include "scion/math/PolynomialSeries.hpp"
 
 namespace njoy {
@@ -27,7 +27,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/PolynomialMultiplicity/src/ctor.hpp"
+    #include "njoy/dryad/PolynomialMultiplicity/src/ctor.hpp"
 
     /* methods */
 

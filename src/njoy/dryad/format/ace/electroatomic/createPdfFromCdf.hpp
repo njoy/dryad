@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/TabulatedAngularDistributionFunction.hpp"
-#include "dryad/TabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {

@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/EnergyGroup.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/base/Metadata.hpp"
+#include "njoy/dryad/id/EnergyGroup.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/covariance/base/Metadata.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -34,14 +34,14 @@ namespace covariance {
 
     /* auxiliary functions */
 
-    #include "dryad/covariance/ProductMultiplicityMetadata/src/generateEnergyGroups.hpp"
-    #include "dryad/covariance/ProductMultiplicityMetadata/src/generateKeys.hpp"
-    #include "dryad/covariance/ProductMultiplicityMetadata/src/updateMetadata.hpp"
+    #include "njoy/dryad/covariance/ProductMultiplicityMetadata/src/generateEnergyGroups.hpp"
+    #include "njoy/dryad/covariance/ProductMultiplicityMetadata/src/generateKeys.hpp"
+    #include "njoy/dryad/covariance/ProductMultiplicityMetadata/src/updateMetadata.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/ProductMultiplicityMetadata/src/ctor.hpp"
+    #include "njoy/dryad/covariance/ProductMultiplicityMetadata/src/ctor.hpp"
 
     /* methods */
 

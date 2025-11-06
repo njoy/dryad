@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/resonances/ParticlePair.hpp"
-#include "dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/resonances/ParticlePair.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

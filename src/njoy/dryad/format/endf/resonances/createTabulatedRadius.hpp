@@ -6,11 +6,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/createBoundaries.hpp"
-#include "dryad/format/endf/createInterpolants.hpp"
-#include "dryad/resonances/TabulatedRadius.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/createBoundaries.hpp"
+#include "njoy/dryad/format/endf/createInterpolants.hpp"
+#include "njoy/dryad/resonances/TabulatedRadius.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

@@ -4,7 +4,7 @@
 #include <pybind11/eigen.h>
 
 // local includes
-#include "dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 // namespace aliases
 namespace python = pybind11;

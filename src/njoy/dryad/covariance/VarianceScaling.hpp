@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/ScalingType.hpp"
+#include "njoy/dryad/covariance/ScalingType.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -33,12 +33,12 @@ namespace covariance {
     ScalingType type_;
 
     /* auxiliary functions */
-    #include "dryad/covariance/VarianceScaling/src/verifySize.hpp"
+    #include "njoy/dryad/covariance/VarianceScaling/src/verifySize.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/VarianceScaling/src/ctor.hpp"
+    #include "njoy/dryad/covariance/VarianceScaling/src/ctor.hpp"
 
     /* methods */
 

@@ -8,8 +8,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/type-aliases.hpp"
-#include "dryad/UniformDistributionType.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/UniformDistributionType.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -31,7 +31,7 @@ namespace base {
     std::vector< double > values_;
 
     /* auxiliary functions */
-    #include "dryad/base/UniformDistribution/src/verifySize.hpp"
+    #include "njoy/dryad/base/UniformDistribution/src/verifySize.hpp"
 
   public:
 
@@ -39,7 +39,7 @@ namespace base {
 
     /* constructor */
 
-    #include "dryad/base/UniformDistribution/src/ctor.hpp"
+    #include "njoy/dryad/base/UniformDistribution/src/ctor.hpp"
 
     /* methods */
 

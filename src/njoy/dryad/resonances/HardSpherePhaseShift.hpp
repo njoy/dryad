@@ -25,13 +25,13 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/HardSpherePhaseShift/src/generateFunction.hpp"
+    #include "njoy/dryad/resonances/HardSpherePhaseShift/src/generateFunction.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/HardSpherePhaseShift/src/ctor.hpp"
+    #include "njoy/dryad/resonances/HardSpherePhaseShift/src/ctor.hpp"
 
     /* methods */
 

@@ -6,7 +6,7 @@
 
 // other includes
 #include "scion/math/InterpolationTableFunction.hpp"
-#include "dryad/type-aliases.hpp"
+#include "njoy/dryad/type-aliases.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -27,7 +27,7 @@ namespace base {
 
     /* constructor */
 
-    #include "dryad/base/GridDistributions/src/ctor.hpp"
+    #include "njoy/dryad/base/GridDistributions/src/ctor.hpp"
 
     /* methods */
 

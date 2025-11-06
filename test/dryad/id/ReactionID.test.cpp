@@ -2,7 +2,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "dryad/id/ReactionID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 
 // other includes
 #include <map>

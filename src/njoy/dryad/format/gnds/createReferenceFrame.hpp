@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/ReferenceFrame.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
 
 namespace njoy {
 namespace dryad {

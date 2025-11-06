@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/UniformEnergyDistributions.hpp"
+#include "njoy/dryad/UniformEnergyDistributions.hpp"
 
 // namespace aliases
 namespace python = pybind11;

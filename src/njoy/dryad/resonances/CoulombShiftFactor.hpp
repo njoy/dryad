@@ -4,7 +4,7 @@
 // system includes
 
 // other includes
-#include "dryad/resonances/coulomb/coh3-coulomb.hpp"
+#include "njoy/dryad/resonances/coulomb/coh3-coulomb.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -27,7 +27,7 @@ namespace resonances {
 
     /* constructor */
 
-    #include "dryad/resonances/CoulombShiftFactor/src/ctor.hpp"
+    #include "njoy/dryad/resonances/CoulombShiftFactor/src/ctor.hpp"
 
     /* methods */
 

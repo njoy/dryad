@@ -7,11 +7,11 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createInterpolationType.hpp"
-#include "dryad/format/gnds/readXYs1d.hpp"
-#include "dryad/format/gnds/convertEnergies.hpp"
-#include "dryad/format/gnds/convertCrossSections.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
+#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
+#include "njoy/dryad/format/gnds/readXYs1d.hpp"
+#include "njoy/dryad/format/gnds/convertEnergies.hpp"
+#include "njoy/dryad/format/gnds/convertCrossSections.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {

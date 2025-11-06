@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/resonances/BoundaryCondition.hpp"
+#include "njoy/dryad/resonances/BoundaryCondition.hpp"
 
 // namespace aliases
 namespace python = pybind11;

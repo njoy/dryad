@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedCrossSection.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 
 // other includes
 

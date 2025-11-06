@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/LegendreAngularDistribution.hpp"
+#include "njoy/dryad/LegendreAngularDistribution.hpp"
 
 // namespace aliases
 namespace python = pybind11;

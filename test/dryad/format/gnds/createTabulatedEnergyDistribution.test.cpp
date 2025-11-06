@@ -4,10 +4,10 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createTabulatedEnergyDistribution.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedEnergyDistribution.hpp"
 
 // other includes
-#include "dryad/format/gnds/readAxes.hpp"
+#include "njoy/dryad/format/gnds/readAxes.hpp"
 #include "pugixml.hpp"
 
 // convenience typedefs

@@ -4,7 +4,7 @@
 #include <pybind11/eigen.h>
 
 // local includes
-#include "dryad/matrix.hpp"
+#include "njoy/matrix.hpp"
 
 // namespace aliases
 namespace python = pybind11;

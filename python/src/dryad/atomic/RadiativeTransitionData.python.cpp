@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/atomic/RadiativeTransitionData.hpp"
+#include "njoy/dryad/atomic/RadiativeTransitionData.hpp"
 
 // namespace aliases
 namespace python = pybind11;

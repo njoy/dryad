@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/createBoundaries.hpp"
-#include "dryad/format/endf/createInterpolants.hpp"
-#include "dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/createBoundaries.hpp"
+#include "njoy/dryad/format/endf/createInterpolants.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "ENDFtk/section/1/PolynomialMultiplicity.hpp"
 
 namespace njoy {

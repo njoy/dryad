@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
 
 // other includes
 

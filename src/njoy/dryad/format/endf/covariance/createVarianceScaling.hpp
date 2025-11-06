@@ -6,10 +6,10 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/std20/algorithm.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/covariance/VarianceScaling.hpp"
-#include "dryad/format/createVector.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/covariance/VarianceScaling.hpp"
+#include "njoy/dryad/format/createVector.hpp"
 #include "ENDFtk/section/CovariancePairs.hpp"
 
 namespace njoy {

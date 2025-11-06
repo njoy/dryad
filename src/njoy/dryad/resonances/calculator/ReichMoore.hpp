@@ -9,12 +9,12 @@
 
 // other includes
 #include "tools/overload.hpp"
-#include "dryad/matrix.hpp"
-#include "dryad/resonances/BoundaryCondition.hpp"
-#include "dryad/resonances/Channel.hpp"
-#include "dryad/resonances/ResonanceTable.hpp"
-#include "dryad/resonances/calculator/Constant.hpp"
-#include "dryad/resonances/calculator/ShiftFactor.hpp"
+#include "njoy/matrix.hpp"
+#include "njoy/dryad/resonances/BoundaryCondition.hpp"
+#include "njoy/dryad/resonances/Channel.hpp"
+#include "njoy/dryad/resonances/ResonanceTable.hpp"
+#include "njoy/dryad/resonances/calculator/Constant.hpp"
+#include "njoy/dryad/resonances/calculator/ShiftFactor.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -51,8 +51,8 @@ namespace calculator {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/calculator/ReichMoore/src/selectLMatrix.hpp"
-    #include "dryad/resonances/calculator/ReichMoore/src/verifyEliminatedChannel.hpp"
+    #include "njoy/dryad/resonances/calculator/ReichMoore/src/selectLMatrix.hpp"
+    #include "njoy/dryad/resonances/calculator/ReichMoore/src/verifyEliminatedChannel.hpp"
 
     std::vector< bool >&
     belowThreshold( double energy, const std::vector< Channel >& channels ) {
@@ -90,7 +90,7 @@ namespace calculator {
 
     /* constructor */
 
-    #include "dryad/resonances/calculator/ReichMoore/src/ctor.hpp"
+    #include "njoy/dryad/resonances/calculator/ReichMoore/src/ctor.hpp"
 
     /* methods */
 

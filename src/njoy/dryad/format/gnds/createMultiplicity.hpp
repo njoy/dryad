@@ -7,11 +7,11 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/PolynomialMultiplicity.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "dryad/format/gnds/createPolynomialMultiplicity.hpp"
-#include "dryad/format/gnds/createTabulatedMultiplicity.hpp"
-#include "dryad/format/gnds/readConstant1d.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/createPolynomialMultiplicity.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedMultiplicity.hpp"
+#include "njoy/dryad/format/gnds/readConstant1d.hpp"
 
 namespace njoy {
 namespace dryad {

@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
 
 // other includes
 

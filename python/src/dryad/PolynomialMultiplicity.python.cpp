@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
 
 // namespace aliases
 namespace python = pybind11;

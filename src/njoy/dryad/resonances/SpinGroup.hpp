@@ -7,11 +7,11 @@
 #include <vector>
 
 // other includes
-#include "dryad/resonances/Channel.hpp"
-#include "dryad/resonances/ResonanceTable.hpp"
-#include "dryad/resonances/BoundaryCondition.hpp"
-#include "dryad/resonances/Formalism.hpp"
-#include "dryad/resonances/calculator.hpp"
+#include "njoy/dryad/resonances/Channel.hpp"
+#include "njoy/dryad/resonances/ResonanceTable.hpp"
+#include "njoy/dryad/resonances/BoundaryCondition.hpp"
+#include "njoy/dryad/resonances/Formalism.hpp"
+#include "njoy/dryad/resonances/calculator.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -47,16 +47,16 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/SpinGroup/src/createData.hpp"
-    #include "dryad/resonances/SpinGroup/src/processChannels.hpp"
-    #include "dryad/resonances/SpinGroup/src/verifySpinGroup.hpp"
-    #include "dryad/resonances/SpinGroup/src/selectCalculator.hpp"
+    #include "njoy/dryad/resonances/SpinGroup/src/createData.hpp"
+    #include "njoy/dryad/resonances/SpinGroup/src/processChannels.hpp"
+    #include "njoy/dryad/resonances/SpinGroup/src/verifySpinGroup.hpp"
+    #include "njoy/dryad/resonances/SpinGroup/src/selectCalculator.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/SpinGroup/src/ctor.hpp"
+    #include "njoy/dryad/resonances/SpinGroup/src/ctor.hpp"
 
     /**
      *  @brief Return the channels in the spin group

@@ -7,7 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "tools/disco/FreeFormatReal.hpp"
 
 namespace njoy {

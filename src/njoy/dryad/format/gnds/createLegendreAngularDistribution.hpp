@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/readAxes.hpp"
-#include "dryad/format/gnds/readLegendre.hpp"
-#include "dryad/format/gnds/convertEnergy.hpp"
-#include "dryad/LegendreAngularDistribution.hpp"
+#include "njoy/dryad/format/gnds/readAxes.hpp"
+#include "njoy/dryad/format/gnds/readLegendre.hpp"
+#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/LegendreAngularDistribution.hpp"
 
 namespace njoy {
 namespace dryad {

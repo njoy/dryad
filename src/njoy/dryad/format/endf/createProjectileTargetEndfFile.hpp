@@ -7,11 +7,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/createEndfSublibraryType.hpp"
-#include "dryad/format/endf/createEndfFile3Section.hpp"
-#include "dryad/format/endf/createEndfFile23Section.hpp"
-#include "dryad/format/endf/createDocumentation.hpp"
-#include "dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
+#include "njoy/dryad/format/endf/createEndfFile3Section.hpp"
+#include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
+#include "njoy/dryad/format/endf/createDocumentation.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 #include "ENDFtk/tree/updateDirectory.hpp"

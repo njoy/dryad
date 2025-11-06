@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createReferenceFrame.hpp"
+#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
 
 // other includes
 

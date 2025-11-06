@@ -9,9 +9,9 @@
 #include <vector>
 
 // other includes
-#include "dryad/id/ElectronSubshellID.hpp"
-#include "dryad/id/ElementID.hpp"
-#include "dryad/id/LevelID.hpp"
+#include "njoy/dryad/id/ElectronSubshellID.hpp"
+#include "njoy/dryad/id/ElementID.hpp"
+#include "njoy/dryad/id/LevelID.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -41,7 +41,7 @@ namespace id {
   class ParticleID {
 
     /* helper class */
-    #include "dryad/id/ParticleID/Entry.hpp"
+    #include "njoy/dryad/id/ParticleID/Entry.hpp"
 
     /* static fields */
     static inline const std::regex nuclide_id_regex{ "^(([A-Z][a-z]?)(\\d{1,3}))((_e(\\d+))|(\\[all\\])|(\\[continuum\\]))?$" };
@@ -207,12 +207,12 @@ namespace id {
     std::size_t index_;
 
     /* auxiliary functions */
-    #include "dryad/id/ParticleID/src/getIndex.hpp"
+    #include "njoy/dryad/id/ParticleID/src/getIndex.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/id/ParticleID/src/ctor.hpp"
+    #include "njoy/dryad/id/ParticleID/src/ctor.hpp"
 
     /* predefined identifiers */
 

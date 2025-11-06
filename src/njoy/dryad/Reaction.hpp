@@ -8,11 +8,11 @@
 #include <vector>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/id/ReactionID.hpp"
-#include "dryad/ReactionCategory.hpp"
-#include "dryad/ReactionProduct.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/ReactionCategory.hpp"
+#include "njoy/dryad/ReactionProduct.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -38,12 +38,12 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "dryad/Reaction/src/iterator.hpp"
+    #include "njoy/dryad/Reaction/src/iterator.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/Reaction/src/ctor.hpp"
+    #include "njoy/dryad/Reaction/src/ctor.hpp"
 
     /* methods */
 

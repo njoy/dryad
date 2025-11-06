@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createReferenceFrame.hpp"
-#include "dryad/format/gnds/createTabulatedFormFactorFromNodes.hpp"
-#include "dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
-#include "dryad/CoherentDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedFormFactorFromNodes.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
+#include "njoy/dryad/CoherentDistributionData.hpp"
 
 namespace njoy {
 namespace dryad {

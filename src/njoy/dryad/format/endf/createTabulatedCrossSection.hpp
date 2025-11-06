@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/createBoundaries.hpp"
-#include "dryad/format/endf/createInterpolants.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/createBoundaries.hpp"
+#include "njoy/dryad/format/endf/createInterpolants.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 #include "ENDFtk/section/3.hpp"
 #include "ENDFtk/section/23.hpp"
 #include "ENDFtk/tree/Section.hpp"

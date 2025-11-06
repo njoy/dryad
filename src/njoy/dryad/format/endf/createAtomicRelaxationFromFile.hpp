@@ -6,8 +6,8 @@
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
-#include "dryad/AtomicRelaxation.hpp"
-#include "dryad/format/endf/createAtomicRelaxation.hpp"
+#include "njoy/dryad/AtomicRelaxation.hpp"
+#include "njoy/dryad/format/endf/createAtomicRelaxation.hpp"
 
 namespace njoy {
 namespace dryad {

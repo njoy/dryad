@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/ReactionProduct.hpp"
-#include "dryad/format/ace/createTabulatedAverageEnergy.hpp"
-#include "dryad/format/ace/createTabulatedAngularDistributions.hpp"
-#include "dryad/format/ace/createTabulatedEnergyDistributions.hpp"
+#include "njoy/dryad/ReactionProduct.hpp"
+#include "njoy/dryad/format/ace/createTabulatedAverageEnergy.hpp"
+#include "njoy/dryad/format/ace/createTabulatedAngularDistributions.hpp"
+#include "njoy/dryad/format/ace/createTabulatedEnergyDistributions.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {

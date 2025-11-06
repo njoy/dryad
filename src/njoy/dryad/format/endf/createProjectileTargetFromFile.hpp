@@ -6,8 +6,8 @@
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
-#include "dryad/ProjectileTarget.hpp"
-#include "dryad/format/endf/createProjectileTarget.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/endf/createProjectileTarget.hpp"
 
 namespace njoy {
 namespace dryad {

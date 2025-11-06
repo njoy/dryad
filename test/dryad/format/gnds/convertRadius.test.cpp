@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/convertRadius.hpp"
+#include "njoy/dryad/format/gnds/convertRadius.hpp"
 
 // other includes
 

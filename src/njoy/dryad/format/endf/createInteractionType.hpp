@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/InteractionType.hpp"
+#include "njoy/dryad/InteractionType.hpp"
 
 namespace njoy {
 namespace dryad {

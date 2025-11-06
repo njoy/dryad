@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 
 // other includes
 

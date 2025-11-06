@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/covariance/ScalingType.hpp"
+#include "njoy/dryad/covariance/ScalingType.hpp"
 
 namespace njoy {
 namespace dryad {

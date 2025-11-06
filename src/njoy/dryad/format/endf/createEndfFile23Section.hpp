@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/Reaction.hpp"
-#include "dryad/format/endf/createEndfInterpolants.hpp"
-#include "dryad/format/endf/createEndfBoundaries.hpp"
+#include "njoy/dryad/Reaction.hpp"
+#include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
+#include "njoy/dryad/format/endf/createEndfBoundaries.hpp"
 #include "ENDFtk/section/23.hpp"
 
 namespace njoy {

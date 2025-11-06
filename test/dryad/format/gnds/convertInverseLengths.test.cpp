@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/convertInverseLengths.hpp"
+#include "njoy/dryad/format/gnds/convertInverseLengths.hpp"
 
 // other includes
 

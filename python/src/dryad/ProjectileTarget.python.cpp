@@ -4,11 +4,11 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/ProjectileTarget.hpp"
-#include "dryad/format/ace/createProjectileTargetFromFile.hpp"
-#include "dryad/format/endf/createProjectileTargetFromFile.hpp"
-#include "dryad/format/endf/createProjectileTargetEndfFile.hpp"
-#include "dryad/format/gnds/createProjectileTargetFromFile.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
+#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"
+#include "njoy/dryad/format/gnds/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;

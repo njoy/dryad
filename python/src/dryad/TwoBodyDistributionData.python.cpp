@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/TwoBodyDistributionData.hpp"
+#include "njoy/dryad/TwoBodyDistributionData.hpp"
 
 // namespace aliases
 namespace python = pybind11;

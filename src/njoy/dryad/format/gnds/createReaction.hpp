@@ -7,11 +7,11 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/convertEnergy.hpp"
-#include "dryad/format/gnds/createQValue.hpp"
-#include "dryad/format/gnds/createReactionProducts.hpp"
-#include "dryad/format/gnds/createTabulatedCrossSection.hpp"
-#include "dryad/Reaction.hpp"
+#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/format/gnds/createQValue.hpp"
+#include "njoy/dryad/format/gnds/createReactionProducts.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedCrossSection.hpp"
+#include "njoy/dryad/Reaction.hpp"
 
 namespace njoy {
 namespace dryad {

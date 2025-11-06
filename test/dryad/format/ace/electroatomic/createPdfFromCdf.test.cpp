@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
-#include "dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
-#include "dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;

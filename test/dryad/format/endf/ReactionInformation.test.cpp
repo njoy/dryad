@@ -2,7 +2,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/dryad/format/endf/ReactionInformation.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

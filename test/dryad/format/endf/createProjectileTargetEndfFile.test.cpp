@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createProjectileTargetEndfFile.hpp"
+#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"
 
 // other includes
 #include <cstdio>

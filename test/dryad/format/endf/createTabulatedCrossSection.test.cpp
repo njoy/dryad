@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/endf/createTabulatedCrossSection.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

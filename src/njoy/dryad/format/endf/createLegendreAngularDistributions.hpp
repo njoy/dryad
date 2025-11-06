@@ -6,11 +6,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/createBoundaries.hpp"
-#include "dryad/format/endf/createInterpolants.hpp"
-#include "dryad/format/endf/createLegendreAngularDistribution.hpp"
-#include "dryad/LegendreAngularDistributions.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/createBoundaries.hpp"
+#include "njoy/dryad/format/endf/createInterpolants.hpp"
+#include "njoy/dryad/format/endf/createLegendreAngularDistribution.hpp"
+#include "njoy/dryad/LegendreAngularDistributions.hpp"
 #include "ENDFtk/section/4.hpp"
 
 namespace njoy {

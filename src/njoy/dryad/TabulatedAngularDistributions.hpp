@@ -4,9 +4,9 @@
 // system includes
 
 // other includes
-#include "dryad/base/GridDistributions.hpp"
-#include "dryad/TabulatedAngularDistribution.hpp"
-#include "dryad/TabulatedAverageCosine.hpp"
+#include "njoy/dryad/base/GridDistributions.hpp"
+#include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/dryad/TabulatedAverageCosine.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -25,7 +25,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedAngularDistributions/src/ctor.hpp"
+    #include "njoy/dryad/TabulatedAngularDistributions/src/ctor.hpp"
 
     /* methods */
 

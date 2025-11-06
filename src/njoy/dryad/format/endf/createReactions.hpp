@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/ReactionInformation.hpp"
-#include "dryad/format/endf/createReaction.hpp"
-#include "dryad/Reaction.hpp"
+#include "njoy/dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/dryad/format/endf/createReaction.hpp"
+#include "njoy/dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 

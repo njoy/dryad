@@ -7,8 +7,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ElementID.hpp"
-#include "dryad/id/ElectronSubshellID.hpp"
+#include "njoy/dryad/id/ElementID.hpp"
+#include "njoy/dryad/id/ElectronSubshellID.hpp"
 
 namespace njoy {
 namespace dryad {

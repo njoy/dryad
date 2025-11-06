@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/resonances/ResonanceTable.hpp"
+#include "njoy/dryad/resonances/ResonanceTable.hpp"
 
 // other includes
 

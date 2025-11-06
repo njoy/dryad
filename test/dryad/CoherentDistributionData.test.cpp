@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/CoherentDistributionData.hpp"
+#include "njoy/dryad/CoherentDistributionData.hpp"
 
 // other includes
 

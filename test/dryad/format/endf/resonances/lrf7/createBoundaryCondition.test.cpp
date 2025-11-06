@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

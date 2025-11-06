@@ -4,10 +4,10 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/AtomicRelaxation.hpp"
-#include "dryad/format/endf/createAtomicRelaxationFromFile.hpp"
-#include "dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
-#include "dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
+#include "njoy/dryad/AtomicRelaxation.hpp"
+#include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+#include "njoy/dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
+#include "njoy/dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;

@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
-#include "dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
-#include "dryad/TabulatedEnergyDistributions.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
+#include "njoy/dryad/TabulatedEnergyDistributions.hpp"
 #include "ACEtk/electroatomic/EnergyDistributionBlock.hpp"
 
 namespace njoy {

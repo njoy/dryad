@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ReactionID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -26,12 +26,12 @@ namespace covariance {
     std::vector< double > coefficients_;
 
     /* auxiliary function */
-    #include "dryad/covariance/LinearCombinationCovariance/src/verifySize.hpp"
+    #include "njoy/dryad/covariance/LinearCombinationCovariance/src/verifySize.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/LinearCombinationCovariance/src/ctor.hpp"
+    #include "njoy/dryad/covariance/LinearCombinationCovariance/src/ctor.hpp"
 
     /* methods */
 

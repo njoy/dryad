@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"

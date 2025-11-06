@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/resonances/createRadius.hpp"
+#include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
 
 // other includes
 #include "pugixml.hpp"

@@ -8,8 +8,8 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/std20/ranges.hpp"
-#include "dryad/type-aliases.hpp"
-#include "dryad/format/endf/createEndfInterpolant.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/format/endf/createEndfInterpolant.hpp"
 
 namespace njoy {
 namespace dryad {

@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/resonances/Kinematics.hpp"
+#include "njoy/dryad/resonances/Kinematics.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

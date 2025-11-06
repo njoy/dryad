@@ -6,7 +6,7 @@
 #include <unordered_set>
 
 // other includes
-#include "dryad/id/ReactionID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 

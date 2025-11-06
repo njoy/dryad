@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createInterpolants.hpp"
+#include "njoy/dryad/format/endf/createInterpolants.hpp"
 
 // other includes
 

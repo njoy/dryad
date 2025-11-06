@@ -7,10 +7,10 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createReferenceFrame.hpp"
-#include "dryad/format/gnds/createLegendreAngularDistribution.hpp"
-#include "dryad/format/gnds/createTabulatedAngularDistribution.hpp"
-#include "dryad/TwoBodyDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
+#include "njoy/dryad/format/gnds/createLegendreAngularDistribution.hpp"
+#include "njoy/dryad/format/gnds/createTabulatedAngularDistribution.hpp"
+#include "njoy/dryad/TwoBodyDistributionData.hpp"
 
 namespace njoy {
 namespace dryad {

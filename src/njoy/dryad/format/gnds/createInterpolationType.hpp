@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/type-aliases.hpp"
+#include "njoy/dryad/type-aliases.hpp"
 
 namespace njoy {
 namespace dryad {

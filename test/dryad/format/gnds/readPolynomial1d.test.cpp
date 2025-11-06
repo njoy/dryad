@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/readPolynomial1d.hpp"
+#include "njoy/dryad/format/gnds/readPolynomial1d.hpp"
 
 // other includes
 #include "pugixml.hpp"

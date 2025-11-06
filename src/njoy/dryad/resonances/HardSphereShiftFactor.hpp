@@ -24,13 +24,13 @@ namespace resonances {
 
     /* auxiliary functions */
 
-    #include "dryad/resonances/HardSphereShiftFactor/src/generateFunction.hpp"
+    #include "njoy/dryad/resonances/HardSphereShiftFactor/src/generateFunction.hpp"
 
   public:
 
     /* constructor */
 
-    #include "dryad/resonances/HardSphereShiftFactor/src/ctor.hpp"
+    #include "njoy/dryad/resonances/HardSphereShiftFactor/src/ctor.hpp"
 
     /* methods */
 

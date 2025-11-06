@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createProjectileTarget.hpp"
+#include "njoy/dryad/format/gnds/createProjectileTarget.hpp"
 
 // other includes
 #include "pugixml.hpp"

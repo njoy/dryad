@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/constants.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/TabulatedCrossSection.hpp"
+#include "njoy/dryad/constants.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/TabulatedCrossSection.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {

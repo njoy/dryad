@@ -6,8 +6,8 @@
 #include <optional>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/TabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -28,7 +28,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedEnergyDistribution/src/calculateCdf.hpp"
+    #include "njoy/dryad/TabulatedEnergyDistribution/src/calculateCdf.hpp"
 
   public:
 
@@ -39,7 +39,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TabulatedEnergyDistribution/src/ctor.hpp"
+    #include "njoy/dryad/TabulatedEnergyDistribution/src/ctor.hpp"
 
     /* methods */
 

@@ -7,13 +7,13 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/createProjectileIdentifier.hpp"
-#include "dryad/format/endf/createTargetIdentifier.hpp"
-#include "dryad/format/endf/createInteractionType.hpp"
-#include "dryad/format/endf/createReactions.hpp"
-#include "dryad/format/endf/createDocumentation.hpp"
-#include "dryad/format/endf/resonances/createResonanceParameters.hpp"
-#include "dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/endf/createProjectileIdentifier.hpp"
+#include "njoy/dryad/format/endf/createTargetIdentifier.hpp"
+#include "njoy/dryad/format/endf/createInteractionType.hpp"
+#include "njoy/dryad/format/endf/createReactions.hpp"
+#include "njoy/dryad/format/endf/createDocumentation.hpp"
+#include "njoy/dryad/format/endf/resonances/createResonanceParameters.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 

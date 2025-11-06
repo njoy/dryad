@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/TabulatedAverageCosine.hpp"
+#include "njoy/dryad/TabulatedAverageCosine.hpp"
 
 // namespace aliases
 namespace python = pybind11;

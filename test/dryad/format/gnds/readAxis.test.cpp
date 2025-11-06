@@ -2,7 +2,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "dryad/format/gnds/readAxis.hpp"
+#include "njoy/dryad/format/gnds/readAxis.hpp"
 
 // other includes
 #include "pugixml.hpp"

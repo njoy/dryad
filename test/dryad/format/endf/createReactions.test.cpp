@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createReactions.hpp"
+#include "njoy/dryad/format/endf/createReactions.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

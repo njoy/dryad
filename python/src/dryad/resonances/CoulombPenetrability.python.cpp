@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/resonances/CoulombPenetrability.hpp"
+#include "njoy/dryad/resonances/CoulombPenetrability.hpp"
 
 #include "scion/math/horner.hpp"
 

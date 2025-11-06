@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/ReactionProduct.hpp"
-#include "dryad/format/ace/createTabulatedScatteringFunction.hpp"
+#include "njoy/dryad/ReactionProduct.hpp"
+#include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {

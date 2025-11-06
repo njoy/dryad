@@ -6,12 +6,12 @@
 #include <vector>
 
 // other includes
-#include "dryad/type-aliases.hpp"
-#include "dryad/InteractionType.hpp"
-#include "dryad/Documentation.hpp"
-#include "dryad/Reaction.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/resonances/ResonanceParameters.hpp"
+#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InteractionType.hpp"
+#include "njoy/dryad/Documentation.hpp"
+#include "njoy/dryad/Reaction.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/resonances/ResonanceParameters.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -35,12 +35,12 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "dryad/ProjectileTarget/src/iterator.hpp"
+    #include "njoy/dryad/ProjectileTarget/src/iterator.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/ProjectileTarget/src/ctor.hpp"
+    #include "njoy/dryad/ProjectileTarget/src/ctor.hpp"
 
     /* methods */
 

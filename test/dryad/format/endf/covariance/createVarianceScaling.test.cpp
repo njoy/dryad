@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/format/endf/covariance/createVarianceScaling.hpp"
+#include "njoy/dryad/format/endf/covariance/createVarianceScaling.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

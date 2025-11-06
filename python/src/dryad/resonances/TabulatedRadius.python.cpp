@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/resonances/TabulatedRadius.hpp"
+#include "njoy/dryad/resonances/TabulatedRadius.hpp"
 
 // namespace aliases
 namespace python = pybind11;

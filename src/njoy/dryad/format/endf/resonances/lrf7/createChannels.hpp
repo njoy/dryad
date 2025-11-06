@@ -6,11 +6,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/resonances/BoundaryCondition.hpp"
-#include "dryad/resonances/Channel.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
-#include "dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
+#include "njoy/dryad/resonances/BoundaryCondition.hpp"
+#include "njoy/dryad/resonances/Channel.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

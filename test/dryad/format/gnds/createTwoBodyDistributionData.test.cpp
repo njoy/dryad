@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/gnds/createTwoBodyDistributionData.hpp"
+#include "njoy/dryad/format/gnds/createTwoBodyDistributionData.hpp"
 
 // other includes
 #include "pugixml.hpp"

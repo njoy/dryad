@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ReactionID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {

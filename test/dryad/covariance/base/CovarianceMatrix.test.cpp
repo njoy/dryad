@@ -5,10 +5,10 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "dryad/covariance/base/CovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/base/CovarianceMatrix.hpp"
 
 // other includes
-#include "dryad/covariance/base/Metadata.hpp"
+#include "njoy/dryad/covariance/base/Metadata.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;

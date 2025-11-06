@@ -38,7 +38,7 @@ namespace base {
   public:
 
     /* constructor */
-    #include "dryad/covariance/base/Metadata/src/ctor.hpp"
+    #include "njoy/dryad/covariance/base/Metadata/src/ctor.hpp"
 
     /* methods */
 
@@ -47,7 +47,7 @@ namespace base {
      */
     const std::vector< Key >& keys() const { return this->keys_; }
 
-    #include "dryad/covariance/base/Metadata/src/selection.hpp"
+    #include "njoy/dryad/covariance/base/Metadata/src/selection.hpp"
 
     /**
      *  @brief Comparison operator: equal

@@ -6,11 +6,11 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/id/ParticleID.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/format/endf/createBoundaries.hpp"
-#include "dryad/format/endf/createInterpolants.hpp"
-#include "dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/createBoundaries.hpp"
+#include "njoy/dryad/format/endf/createInterpolants.hpp"
+#include "njoy/dryad/TabulatedAverageEnergy.hpp"
 #include "ENDFtk/section/26.hpp"
 
 namespace njoy {

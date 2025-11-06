@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/matrix.hpp"
+#include "njoy/matrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -45,14 +45,14 @@ namespace base {
     std::optional< std::vector< double > > eigenvalues_;
 
     /* auxiliary function */
-    #include "dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
-    #include "dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
 
   public:
 
     /* constructor */
-    #include "dryad/covariance/base/CovarianceMatrix/src/ctor.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/ctor.hpp"
 
     /* methods */
 
@@ -140,11 +140,11 @@ namespace base {
       return this->eigenvalues_;
     }
 
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
-    #include "dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
 
-    #include "dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/extract.hpp"
 
     /**
      *  @brief Comparison operator: equal

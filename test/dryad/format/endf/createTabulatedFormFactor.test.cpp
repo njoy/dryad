@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createTabulatedFormFactor.hpp"
+#include "njoy/dryad/format/endf/createTabulatedFormFactor.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

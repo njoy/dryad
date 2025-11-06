@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/TabulatedScatteringFunction.hpp"
 
 // other includes
 

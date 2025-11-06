@@ -5,10 +5,10 @@
 #include <optional>
 
 // other includes
-#include "dryad/DistributionDataType.hpp"
-#include "dryad/ReferenceFrame.hpp"
-#include "dryad/TabulatedScatteringFunction.hpp"
-#include "dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/DistributionDataType.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
+#include "njoy/dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/TabulatedFormFactor.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -41,7 +41,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/CoherentDistributionData/src/ctor.hpp"
+    #include "njoy/dryad/CoherentDistributionData/src/ctor.hpp"
 
     /* methods */
 

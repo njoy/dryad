@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/format/endf/createTabulatedEnergyDistribution.hpp"
+#include "njoy/dryad/format/endf/createTabulatedEnergyDistribution.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

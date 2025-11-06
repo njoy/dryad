@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/createVector.hpp"
-#include "dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "ACEtk/electroatomic/TabulatedAngularDistribution.hpp"
 
 namespace njoy {

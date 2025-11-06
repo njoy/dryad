@@ -6,8 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/resonances/ResonanceParameters.hpp"
-#include "dryad/format/endf/resonances/lrf7/createCompoundSystem.hpp"
+#include "njoy/dryad/resonances/ResonanceParameters.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createCompoundSystem.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {

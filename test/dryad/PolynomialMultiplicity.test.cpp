@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
 
 // other includes
 

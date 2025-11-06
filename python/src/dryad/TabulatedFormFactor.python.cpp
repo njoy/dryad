@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/TabulatedFormFactor.hpp"
 
 // namespace aliases
 namespace python = pybind11;

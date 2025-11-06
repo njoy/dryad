@@ -8,8 +8,8 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/createReaction.hpp"
-#include "dryad/Reaction.hpp"
+#include "njoy/dryad/format/gnds/createReaction.hpp"
+#include "njoy/dryad/Reaction.hpp"
 
 namespace njoy {
 namespace dryad {

@@ -4,8 +4,8 @@
 // system includes
 
 // other includes
-#include "dryad/base/GridDistributions.hpp"
-#include "dryad/LegendreAngularDistribution.hpp"
+#include "njoy/dryad/base/GridDistributions.hpp"
+#include "njoy/dryad/LegendreAngularDistribution.hpp"
 
 namespace njoy {
 namespace dryad {

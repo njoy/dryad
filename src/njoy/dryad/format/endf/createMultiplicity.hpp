@@ -6,10 +6,10 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "dryad/format/endf/createPolynomialMultiplicity.hpp"
-#include "dryad/format/endf/createTabulatedMultiplicity.hpp"
-#include "dryad/PolynomialMultiplicity.hpp"
-#include "dryad/TabulatedMultiplicity.hpp"
+#include "njoy/dryad/format/endf/createPolynomialMultiplicity.hpp"
+#include "njoy/dryad/format/endf/createTabulatedMultiplicity.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
+#include "njoy/dryad/TabulatedMultiplicity.hpp"
 #include "ENDFtk/section/6.hpp"
 #include "ENDFtk/section/26.hpp"
 

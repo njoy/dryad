@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "dryad/UniformDistributionType.hpp"
+#include "njoy/dryad/UniformDistributionType.hpp"
 
 // namespace aliases
 namespace python = pybind11;

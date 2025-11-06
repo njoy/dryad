@@ -7,8 +7,8 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
-#include "dryad/AtomicRelaxation.hpp"
+#include "njoy/dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
+#include "njoy/dryad/AtomicRelaxation.hpp"
 
 namespace njoy {
 namespace dryad {

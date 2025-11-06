@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "dryad/ReactionProduct.hpp"
+#include "njoy/dryad/ReactionProduct.hpp"
 
 // other includes
 

@@ -5,11 +5,11 @@
 #include <variant>
 
 // other includes
-#include "dryad/DistributionDataType.hpp"
-#include "dryad/ReferenceFrame.hpp"
-#include "dryad/IsotropicAngularDistributions.hpp"
-#include "dryad/LegendreAngularDistributions.hpp"
-#include "dryad/TabulatedAngularDistributions.hpp"
+#include "njoy/dryad/DistributionDataType.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
+#include "njoy/dryad/IsotropicAngularDistributions.hpp"
+#include "njoy/dryad/LegendreAngularDistributions.hpp"
+#include "njoy/dryad/TabulatedAngularDistributions.hpp"
 #include "tools/overload.hpp"
 
 namespace njoy {
@@ -48,7 +48,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "dryad/TwoBodyDistributionData/src/ctor.hpp"
+    #include "njoy/dryad/TwoBodyDistributionData/src/ctor.hpp"
 
     /* methods */
 
