@@ -19,7 +19,7 @@ namespace atomic {
    *
    *  @param[in] subshell   the subshell identifier
    */
-  unsigned int createEndfSubshellDesignator( const id::ElectronSubshellID& id ) {
+  inline unsigned int createEndfSubshellDesignator( const id::ElectronSubshellID& id ) {
 
     return id.number() - id::ElectronSubshellID::K + 1;
   }

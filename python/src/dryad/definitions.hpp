@@ -15,6 +15,37 @@ namespace python = pybind11;
 namespace dryad {
 
 /**
+ *  @brief Add standard copy and deepcopy definitions
+ *
+ *  This adds the following standard functions:
+ *    __copy__
+ *    __deepcopy__
+ *
+ *  @param[in] component   the component to which the definitions have to be added
+ */
+template < typename Component, typename PythonClass >
+void addStandardCopyDefinitions( PythonClass& component ) {
+
+  component
+  .def(
+
+    "__copy__",
+    [] ( const Component& self ) -> Component {
+
+      return Component( self );
+    }
+  )
+  .def(
+
+    "__deepcopy__",
+    [] ( const Component& self, python::dict ) -> Component {
+
+      return Component( self );
+    }
+  );
+}
+
+/**
  *  @brief Add standard equal and not equal comparison definitions
  *
  *  This adds the following standard properties:

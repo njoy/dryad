@@ -21,7 +21,7 @@ namespace covariance {
   /**
    *  @brief Create variance scaling information from ENDF covariance pair data
    */
-  dryad::covariance::VarianceScaling
+  inline dryad::covariance::VarianceScaling
   createVarianceScaling( const ENDFtk::section::CovariancePairs& block ) {
 
     if ( block.LB() == 8 || block.LB() == 9 ) {

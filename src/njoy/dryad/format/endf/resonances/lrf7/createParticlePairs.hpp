@@ -26,10 +26,10 @@ namespace lrf7 {
    *  @param[in] target       the target identifier
    *  @param[in] endfPairs    the parsed ENDF particle pairs
    */
-  auto createParticlePairs(
-           const id::ParticleID& projectile,
-           const id::ParticleID& target,
-           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
+  inline auto createParticlePairs(
+                  const id::ParticleID& projectile,
+                  const id::ParticleID& target,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
     std::vector< std::optional< dryad::resonances::ParticlePair > > pairs;
 

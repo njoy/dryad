@@ -21,7 +21,7 @@ namespace lrf7 {
    *
    *  @param[in] endf   the parsed ENDF LRF7 data
    */
-  auto createKinematics( const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+  inline auto createKinematics( const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     //! @todo this ENDFtk function is misleading, false means non-relativistic
     return endf.nonRelativisticKinematics() ? dryad::resonances::Kinematics::Relativistic

@@ -21,7 +21,7 @@ namespace atomic {
    *
    *  @param[in] subshell    the subshell data
    */
-  ENDFtk::section::Type< 28 >::SubshellData
+  inline ENDFtk::section::Type< 28 >::SubshellData
   createEndfSubshellData( const dryad::atomic::ElectronSubshellConfiguration& subshell ) {
 
     unsigned int designator = createEndfSubshellDesignator( subshell.identifier() );

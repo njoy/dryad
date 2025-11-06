@@ -217,9 +217,12 @@ class RadiativeTransitionData:
     electron filling the vacancy originated from.
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> RadiativeTransitionData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> RadiativeTransitionData:
+        ...
     def __eq__(self, arg0: RadiativeTransitionData) -> bool:
         ...
-    @typing.overload
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
         """
         Initialise the radiative transition data
@@ -230,14 +233,6 @@ class RadiativeTransitionData:
                                 vacancy filling electron originated
             probability         the probability of the transition
             energy              the energy of the emitted photon (default: undefined)
-        """
-    @typing.overload
-    def __init__(self, instance: RadiativeTransitionData) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: RadiativeTransitionData) -> bool:
         ...

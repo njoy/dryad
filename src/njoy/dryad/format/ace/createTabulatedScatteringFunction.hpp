@@ -19,7 +19,7 @@ namespace ace {
   /**
    *  @brief Create a TabulatedScatteringFunction from a CoherentFormFactorBlock
    */
-  TabulatedScatteringFunction
+  inline TabulatedScatteringFunction
   createTabulatedScatteringFunction( const njoy::ACEtk::photoatomic::CoherentFormFactorBlock& block ) {
 
     try {

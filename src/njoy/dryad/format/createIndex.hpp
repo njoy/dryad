@@ -14,7 +14,7 @@ namespace format {
   /**
    *  @brief Create an index from a one-based index
    */
-  std::size_t createIndex( int index ) {
+  inline std::size_t createIndex( int index ) {
 
     if ( index < 1 ) {
 

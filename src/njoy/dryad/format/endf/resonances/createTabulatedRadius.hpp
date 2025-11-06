@@ -24,7 +24,7 @@ namespace resonances {
    *
    *  @param[in] radius   the energy dependent scattering radius record
    */
-  auto createTabulatedRadius( const ENDFtk::section::Type< 2, 151 >::ScatteringRadius& radius ) {
+  inline auto createTabulatedRadius( const ENDFtk::section::Type< 2, 151 >::ScatteringRadius& radius ) {
 
     try {
 

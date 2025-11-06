@@ -22,7 +22,7 @@ namespace electroatomic {
    *
    *  @param[in] table   the ace table
    */
-  std::vector< TabulatedCrossSection >
+  inline std::vector< TabulatedCrossSection >
   createTabulatedCrossSections( const ACEtk::PhotoatomicTable& table ) {
 
     std::vector< TabulatedCrossSection > xs;

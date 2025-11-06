@@ -22,7 +22,7 @@ namespace covariance {
    *  covariance matrix. Depending on the LB flag, this can be a square
    *  or rectangular matrix and be relative or absolute covariances.
    */
-  matrix::Matrix< double >
+  inline matrix::Matrix< double >
   createMatrix( const ENDFtk::section::CovariancePairs& endf ) {
 
     switch ( endf.procedure() ) {
@@ -123,7 +123,7 @@ namespace covariance {
    *  This interprets the data based on the LS flag and returns a full
    *  covariance matrix.
    */
-  matrix::Matrix< double >
+  inline matrix::Matrix< double >
   createMatrix( const ENDFtk::section::SquareMatrix& endf ) {
 
     unsigned int size = endf.numberEnergies() - 1;

@@ -23,7 +23,7 @@ namespace electroatomic {
    *
    *  @param[in] table   the ace table
    */
-  std::vector< std::vector< ReactionProduct > >
+  inline std::vector< std::vector< ReactionProduct > >
   createReactionProducts( const ACEtk::PhotoatomicTable& table ) {
 
     std::vector< std::vector< ReactionProduct > > products;
