@@ -17,7 +17,7 @@ namespace covariance {
   /**
    *  @brief Create the scaling type from a GNDS string value
    */
-  static dryad::covariance::ScalingType createScalingType( const std::string& type ) {
+  inline dryad::covariance::ScalingType createScalingType( const std::string& type ) {
 
     if ( type == "inverse" ) {
 

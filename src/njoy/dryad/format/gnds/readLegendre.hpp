@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS legendre node
    */
-  static Legendre readLegendre( const pugi::xml_node& legendre ) {
+  inline Legendre readLegendre( const pugi::xml_node& legendre ) {
 
     throwExceptionOnWrongNode( legendre, "Legendre" );
 

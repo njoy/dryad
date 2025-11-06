@@ -21,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS XYs1d or regions1d node
    */
-  static TabulatedCrossSection
+  inline TabulatedCrossSection
   createTabulatedCrossSectionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;

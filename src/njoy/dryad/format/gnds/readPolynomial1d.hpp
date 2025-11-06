@@ -23,7 +23,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS polynomial1d node
    */
-  static Polynomial1d readPolynomial1d( const pugi::xml_node& polynomial1d ) {
+  inline Polynomial1d readPolynomial1d( const pugi::xml_node& polynomial1d ) {
 
     throwExceptionOnWrongNode( polynomial1d, "polynomial1d" );
 

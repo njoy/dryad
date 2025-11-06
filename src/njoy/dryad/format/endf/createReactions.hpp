@@ -23,7 +23,7 @@ namespace endf {
    *  @param[in] partials    the identifiers for the partials that compose the summation
    *  @param[in] reactions   all reactions found
    */
-  TabulatedCrossSection
+  inline TabulatedCrossSection
   calculateSummationCrossSection( const std::vector< id::ReactionID >& partials,
                                   const std::vector< Reaction >& reactions ) {
 

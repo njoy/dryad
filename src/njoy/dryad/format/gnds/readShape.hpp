@@ -17,7 +17,7 @@ namespace gnds {
   /**
    *  @brief Convert the shape
    */
-  static std::vector< std::size_t > readShape( const std::string& shape ) {
+  inline std::vector< std::size_t > readShape( const std::string& shape ) {
 
     std::vector< std::size_t > ints;
     std::istringstream list( shape );

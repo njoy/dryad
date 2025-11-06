@@ -26,7 +26,7 @@ namespace atomic {
    *  @param[in] normalise       option to indicate whether or not to normalise
    *                             all probability data
    */
-  dryad::atomic::ElectronSubshellConfiguration
+  inline dryad::atomic::ElectronSubshellConfiguration
   createElectronSubshellConfiguration( const id::ElementID& element,
                                        const pugi::xml_node& configuration,
                                        bool normalise ) {

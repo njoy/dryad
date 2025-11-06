@@ -22,7 +22,7 @@ namespace gnds {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  static AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document,
+  inline AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document,
                                                   bool normalise ) {
 
     //! @todo verify validity of the file

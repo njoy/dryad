@@ -21,7 +21,7 @@ namespace atomic {
    *
    *  @param[in] subshell   the string denoting the subshell
    */
-  id::ElectronSubshellID createElectronSubshellID( std::string subshell ) {
+  inline id::ElectronSubshellID createElectronSubshellID( std::string subshell ) {
 
     return id::ElectronSubshellID( std::move( subshell ) );
   }
@@ -33,7 +33,7 @@ namespace atomic {
    *  @param[in] element   the element identifier
    *  @param[in] vacancy   the string denoting the vacancy
    */
-  id::ElectronSubshellID
+  inline id::ElectronSubshellID
   createRadiativeTransitionElectronSubshellID( const id::ElementID& element,
                                                std::string vacancy ) {
 
@@ -47,7 +47,7 @@ namespace atomic {
    *  @param[in] element     the element identifier
    *  @param[in] vacancies   the string denoting the vacancies
    */
-  std::pair< id::ElectronSubshellID, id::ElectronSubshellID >
+  inline std::pair< id::ElectronSubshellID, id::ElectronSubshellID >
   createNonRadiativeTransitionElectronSubshellID( const id::ElementID& element,
                                                   std::string vacancies ) {
 

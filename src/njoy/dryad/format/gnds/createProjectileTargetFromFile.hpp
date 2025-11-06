@@ -21,7 +21,7 @@ namespace gnds {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  static ProjectileTarget createProjectileTargetFromFile( const std::string& filename,
+  inline ProjectileTarget createProjectileTargetFromFile( const std::string& filename,
                                                           bool normalise ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );

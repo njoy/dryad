@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedMultiplicity from a GNDS multiplicity node
    */
-  static TabulatedMultiplicity
+  inline TabulatedMultiplicity
   createTabulatedMultiplicity( const pugi::xml_node& multiplicity,
                                const std::string& style = "eval" ) {
 

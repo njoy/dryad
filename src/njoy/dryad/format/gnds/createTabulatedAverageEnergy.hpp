@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedAverageEnergy from a GNDS average node
    */
-  static TabulatedAverageEnergy
+  inline TabulatedAverageEnergy
   createTabulatedAverageEnergy( const pugi::xml_node& average,
                                 const std::string& style = "eval" ) {
 

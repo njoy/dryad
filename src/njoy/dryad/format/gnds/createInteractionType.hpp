@@ -16,7 +16,7 @@ namespace gnds {
   /**
    *  @brief Create the interpolation type from a GNDS string value
    */
-  static InteractionType createInteractionType( const std::string& type ) {
+  inline InteractionType createInteractionType( const std::string& type ) {
 
     if ( type == "nuclear" ) {
 

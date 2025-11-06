@@ -15,7 +15,7 @@ namespace gnds {
   /**
    *  @brief Convert an inverse length range from GNDS into Angstrom
    */
-  static void convertInverseLengths( std::vector< double >& energies, const std::string& unit ) {
+  inline void convertInverseLengths( std::vector< double >& energies, const std::string& unit ) {
 
     if ( unit != "1/Ang" ) {
 

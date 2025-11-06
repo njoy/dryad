@@ -22,7 +22,7 @@ namespace endf {
    *  @brief Create a TabulatedAverageEnergy from a parsed ENDF MF26
    *         energy transfer component
    */
-  TabulatedAverageEnergy
+  inline TabulatedAverageEnergy
   createTabulatedAverageEnergy( const ENDFtk::section::Type< 26 >::EnergyTransfer& transfer ) {
 
     try {

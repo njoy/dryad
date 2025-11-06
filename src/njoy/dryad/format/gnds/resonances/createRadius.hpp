@@ -23,7 +23,7 @@ namespace resonances {
    *
    *  @param[in] radius   the GNDS scattering radius or hardsphere radius node
    */
-  static std::variant< double, dryad::resonances::TabulatedRadius >
+  inline std::variant< double, dryad::resonances::TabulatedRadius >
   createRadius( pugi::xml_node radius ) {
 
     // check that this is a valid hard sphere or scattering radius node
