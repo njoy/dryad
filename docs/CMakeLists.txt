@@ -1,7 +1,7 @@
 find_package( sphinx )
 
 if ( SPHINX_EXECUTABLE )
-    set( SPHINX_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/source )
+    set( SPHINX_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/src )
     set( SPHINX_BUILD ${CMAKE_CURRENT_SOURCE_DIR}/build )
 
     add_custom_target( sphinx  
