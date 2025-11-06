@@ -91,7 +91,7 @@ def verify_chunk( self, chunk, normalise ) :
     self.assertAlmostEqual( 0.00570795 / normalisation, chunk.total_radiative_probability )
     self.assertAlmostEqual( 0.9942922  / normalisation, chunk.total_non_radiative_probability )
 
-class Test_dryad_ElectronSubshellConfiguration( unittest.TestCase ) :
+class Test_ElectronSubshellConfiguration( unittest.TestCase ) :
     """Unit test for the ElectronSubshellConfiguration class."""
 
     def test_component( self ) :

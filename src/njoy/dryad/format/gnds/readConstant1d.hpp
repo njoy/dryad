@@ -21,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS constant1d node as a double
    */
-  static RealConstant1d readConstant1dAsDouble( const pugi::xml_node& constant1d ) {
+  inline RealConstant1d readConstant1dAsDouble( const pugi::xml_node& constant1d ) {
 
     // check that this is a valid constant1d node
     throwExceptionOnWrongNode( constant1d, "constant1d" );

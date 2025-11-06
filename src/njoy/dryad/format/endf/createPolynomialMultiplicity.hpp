@@ -20,7 +20,7 @@ namespace endf {
   /**
    *  @brief Create a PolynomialMultiplicity from a parsed ENDF multiplicity
    */
-  PolynomialMultiplicity
+  inline PolynomialMultiplicity
   createPolynomialMultiplicity( double lower, double upper,
                                 const ENDFtk::section::PolynomialMultiplicity& multiplicity ) {
 

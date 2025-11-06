@@ -21,7 +21,7 @@ namespace gnds {
   /**
    *  @brief Create a Reaction from GNDS node (reaction or crossSectionSum)
    */
-  static Reaction
+  inline Reaction
   createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
                   pugi::xml_node suite, pugi::xml_node reaction,
                   bool normalise,

@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import TabulatedAverageCosine
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedAverageCosine( unittest.TestCase ) :
+class Test_TabulatedAverageCosine( unittest.TestCase ) :
     """Unit test for the TabulatedAverageCosine class."""
 
     def test_component( self ) :

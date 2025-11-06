@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedFormFactor from a GNDS form factor node
    */
-  static TabulatedFormFactor
+  inline TabulatedFormFactor
   createTabulatedFormFactorFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;

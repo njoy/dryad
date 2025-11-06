@@ -24,7 +24,7 @@ namespace gnds {
    *  @param[in] multiplicity   the GNDS multiplicity node
    *  @param[in] style          the style to be extracted (default is "eval")
    */
-  static std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
+  inline std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
   createMultiplicity( pugi::xml_node multiplicity, const std::string& style = "eval" ) {
 
     // check that this is a valid multiplicity node

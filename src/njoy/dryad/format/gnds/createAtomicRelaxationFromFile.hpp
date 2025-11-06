@@ -21,7 +21,7 @@ namespace gnds {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  static AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
+  inline AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
                                                           bool normalise ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );

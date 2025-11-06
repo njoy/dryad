@@ -1,6 +1,7 @@
 # standard imports
 import unittest
 import sys
+from copy import copy
 
 # third party imports
 
@@ -8,7 +9,7 @@ import sys
 from njoy.dryad.resonances import ResonanceTable
 from njoy.dryad.id import ChannelID
 
-class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
+class Test_ResonanceTable( unittest.TestCase ) :
     """Unit test for the ResonanceTable class."""
 
     def test_component( self ) :
@@ -123,7 +124,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
                                  energies = [ 2., 3., 5. ],
                                  amplitudes = [ 22., 23., 25. ] )
 
-        table = ResonanceTable( left )
+        table = copy( left )
         table += right
 
         self.assertEqual( 2, table.number_channels )
@@ -174,7 +175,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertAlmostEqual(  0., table.reduced_width_amplitudes[1][3] )
         self.assertAlmostEqual( 25., table.reduced_width_amplitudes[1][4] )
 
-        table = ResonanceTable( left )
+        table = copy( left )
         table += right2
 
         self.assertEqual( 1, table.number_channels )
@@ -213,7 +214,7 @@ class Test_dryad_resonances_ResonanceTable( unittest.TestCase ) :
         self.assertAlmostEqual( 14., table.reduced_width_amplitudes[0][3] )
         self.assertAlmostEqual( 25., table.reduced_width_amplitudes[0][4] )
 
-        table = ResonanceTable( left )
+        table = copy( left )
         with self.assertRaises( Exception ) : table += right3
         self.assertEqual( left, table )
         with self.assertRaises( Exception ) : table = left + right3

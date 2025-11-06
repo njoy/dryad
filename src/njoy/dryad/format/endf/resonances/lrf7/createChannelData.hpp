@@ -30,14 +30,14 @@ namespace lrf7 {
    *  @param[in] endfPairs            the parsed ENDF particle pairs
    *  @param[in] endfSpinGroup        the parsed ENDF spin group
    */
-  auto createChannelData(
-           const id::ParticleID& projectile,
-           const id::ParticleID& target,
-           const dryad::resonances::BoundaryCondition& boundary_condition,
-           const dryad::resonances::Kinematics& kinematics,
-           bool reduced_amplitudes,
-           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
-           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup& endfSpinGroup ) {
+  inline auto createChannelData(
+                  const id::ParticleID& projectile,
+                  const id::ParticleID& target,
+                  const dryad::resonances::BoundaryCondition& boundary_condition,
+                  const dryad::resonances::Kinematics& kinematics,
+                  bool reduced_amplitudes,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup& endfSpinGroup ) {
 
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
 

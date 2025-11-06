@@ -19,7 +19,7 @@ namespace gnds {
   /**
    *  @brief Create a PolynomialMultiplicity from a GNDS multiplicity node
    */
-  static PolynomialMultiplicity
+  inline PolynomialMultiplicity
   createPolynomialMultiplicity( const pugi::xml_node& multiplicity,
                                 const std::string& style = "eval" ) {
 

@@ -15,7 +15,7 @@ from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import ParticleID
 
-class Test_dryad_resonances_Channel( unittest.TestCase ) :
+class Test_Channel( unittest.TestCase ) :
     """Unit test for the Channel class."""
 
     def test_component( self ) :

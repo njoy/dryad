@@ -24,7 +24,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS grid node
    */
-  static Grid readGrid( const pugi::xml_node& grid ) {
+  inline Grid readGrid( const pugi::xml_node& grid ) {
 
     throwExceptionOnWrongNode( grid, "grid" );
 

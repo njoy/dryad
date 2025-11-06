@@ -21,7 +21,7 @@ namespace endf {
   /**
    *  @brief Create an integer multiplicity
    */
-  std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
+  inline std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
   createMultiplicity( int multiplicity ) {
 
     return multiplicity;

@@ -22,7 +22,7 @@ namespace ace {
    *
    *  @param[in] distribution   the electroatomic angular distribution block
    */
-  TabulatedAngularDistributions
+  inline TabulatedAngularDistributions
   createTabulatedAngularDistributions(
       const njoy::ACEtk::electroatomic::ElasticAngularDistributionBlock& block ) {
 

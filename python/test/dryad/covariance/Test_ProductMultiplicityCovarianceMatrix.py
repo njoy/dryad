@@ -11,7 +11,7 @@ from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import EnergyGroup
 
-class Test_codex_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
+class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
     """Unit test for the ProductMultiplicityCovarianceMatrix class."""
 
     def test_matrix( self ) :

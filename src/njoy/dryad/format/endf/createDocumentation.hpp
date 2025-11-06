@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create a Documentation instance from a parsed MF1 MT451 section
    */
-  static Documentation
+  inline Documentation
   createDocumentation( const ENDFtk::section::Type< 1, 451 >& information ) {
 
     Log::info( "Reading documentation" );

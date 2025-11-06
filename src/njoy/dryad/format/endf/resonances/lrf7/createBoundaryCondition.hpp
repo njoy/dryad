@@ -21,7 +21,7 @@ namespace lrf7 {
    *
    *  @param[in] endfPairs    the parsed ENDF particle pairs
    */
-  auto createBoundaryCondition( const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
+  inline auto createBoundaryCondition( const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
     // see if we have to read boundary conditions
     bool boundaries = std::any_of( endfPairs.shiftFactorFlag().begin(),

@@ -19,7 +19,7 @@ namespace atomic {
    *
    *  @param[in] subshell   the integer denoting the subshell
    */
-  id::ElectronSubshellID createElectronSubshellID( int subshell ) {
+  inline id::ElectronSubshellID createElectronSubshellID( int subshell ) {
 
     switch ( subshell ) {
 

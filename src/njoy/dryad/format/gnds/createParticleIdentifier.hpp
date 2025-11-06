@@ -16,7 +16,7 @@ namespace gnds {
   /**
    *  @brief Create the particle identifier
    */
-  id::ParticleID createParticleIdentifier( const char* str ) {
+  inline id::ParticleID createParticleIdentifier( const char* str ) {
 
     std::string pid( str );
     if ( pid == "photon" ) {

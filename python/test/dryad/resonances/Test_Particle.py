@@ -8,7 +8,7 @@ import sys
 from njoy.dryad.resonances import Particle
 from njoy.dryad.id import ParticleID
 
-class Test_dryad_resonances_Particle( unittest.TestCase ) :
+class Test_Particle( unittest.TestCase ) :
     """Unit test for the Particle class."""
 
     def test_component( self ) :

@@ -48,14 +48,6 @@ void wrapRadiativeTransitionData( python::module& module ) {
     "    probability         the probability of the transition\n"
     "    energy              the energy of the emitted photon (default: undefined)"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "type",
@@ -87,6 +79,9 @@ void wrapRadiativeTransitionData( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // atomic namespace

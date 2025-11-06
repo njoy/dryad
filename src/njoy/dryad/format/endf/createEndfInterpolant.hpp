@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create an interpolation type from an ENDF interpolation type
    */
-  long createEndfInterpolant( InterpolationType interpolant ) {
+  inline long createEndfInterpolant( InterpolationType interpolant ) {
 
     switch ( interpolant ) {
 

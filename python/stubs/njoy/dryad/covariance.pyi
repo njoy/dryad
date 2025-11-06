@@ -10,6 +10,10 @@ class CrossSectionCovarianceMatrix:
     """
     A cross section covariance matrix
     """
+    def __copy__(self) -> CrossSectionCovarianceMatrix:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CrossSectionCovarianceMatrix:
+        ...
     @typing.overload
     def __init__(self, metadata: CrossSectionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
         """
@@ -60,14 +64,6 @@ class CrossSectionCovarianceMatrix:
             column_deviations  the standard deviations to be applied to each column
             correlations       the correlation matrix
             relative           the relative covariance flag (default is true)
-        """
-    @typing.overload
-    def __init__(self, instance: CrossSectionCovarianceMatrix) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     @typing.overload
     def calculate_correlations(self) -> None:
@@ -183,6 +179,10 @@ class CrossSectionMetadata:
     Covariance metadata for cross sections
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> CrossSectionMetadata:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CrossSectionMetadata:
+        ...
     def __eq__(self, arg0: CrossSectionMetadata) -> bool:
         ...
     @typing.overload
@@ -203,14 +203,6 @@ class CrossSectionMetadata:
         Arguments:
             self   the covariance metadata
             keys   the metadata keys
-        """
-    @typing.overload
-    def __init__(self, instance: CrossSectionMetadata) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: CrossSectionMetadata) -> bool:
         ...
@@ -233,7 +225,10 @@ class LinearCombinationCovariance:
     """
     Covariance data for a reaction defined as a linear combination of other reactions' covariance data
     """
-    @typing.overload
+    def __copy__(self) -> LinearCombinationCovariance:
+        ...
+    def __deepcopy__(self, arg0: dict) -> LinearCombinationCovariance:
+        ...
     def __init__(self, lower: float, upper: float, reactions: list[njoy.dryad.id.ReactionID], coefficients: list[float]) -> None:
         """
         Initialise the derived covariance
@@ -244,14 +239,6 @@ class LinearCombinationCovariance:
             upper          the upper energy limit
             reactions      the reactions in the linear combination
             coefficients   the coefficients of the linear combination
-        """
-    @typing.overload
-    def __init__(self, instance: LinearCombinationCovariance) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     @property
     def coefficients(self) -> list[float]:
@@ -282,6 +269,10 @@ class ProductMultiplicityCovarianceMatrix:
     """
     A covariance matrix for product multiplicities
     """
+    def __copy__(self) -> ProductMultiplicityCovarianceMatrix:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ProductMultiplicityCovarianceMatrix:
+        ...
     @typing.overload
     def __init__(self, metadata: ProductMultiplicityMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
@@ -330,14 +321,6 @@ class ProductMultiplicityCovarianceMatrix:
             column_deviations  the standard deviations to be applied to each column
             correlations       the correlation matrix
             relative           the relative covariance flag (default is true)
-        """
-    @typing.overload
-    def __init__(self, instance: ProductMultiplicityCovarianceMatrix) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     @typing.overload
     def calculate_correlations(self) -> None:
@@ -441,6 +424,10 @@ class ProductMultiplicityMetadata:
     Covariance metadata for product multiplicities
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ProductMultiplicityMetadata:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ProductMultiplicityMetadata:
+        ...
     def __eq__(self, arg0: ProductMultiplicityMetadata) -> bool:
         ...
     @typing.overload
@@ -462,14 +449,6 @@ class ProductMultiplicityMetadata:
         Arguments:
             self   the covariance metadata
             keys   the metadata keys
-        """
-    @typing.overload
-    def __init__(self, instance: ProductMultiplicityMetadata) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: ProductMultiplicityMetadata) -> bool:
         ...
@@ -550,7 +529,10 @@ class VarianceScaling:
     energy subgroup that includes a portion of the energy interval over which the
     factor is defined.
     """
-    @typing.overload
+    def __copy__(self) -> VarianceScaling:
+        ...
+    def __deepcopy__(self, arg0: dict) -> VarianceScaling:
+        ...
     def __init__(self, type: ScalingType, energies: list[float], factors: list[float]) -> None:
         """
         Initialise the metadata
@@ -560,14 +542,6 @@ class VarianceScaling:
             type        the scaling procedure type
             energies    the energy boundaries
             factors     the scaling factors
-        """
-    @typing.overload
-    def __init__(self, instance: VarianceScaling) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     @property
     def energies(self) -> list[float]:

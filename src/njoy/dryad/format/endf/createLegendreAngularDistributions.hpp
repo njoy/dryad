@@ -22,7 +22,7 @@ namespace endf {
    *  @brief Create a LegendreAngularDistributions instance from a parsed
    *         ENDF MF4 section
    */
-  LegendreAngularDistributions
+  inline LegendreAngularDistributions
   createLegendreAngularDistributions(
       const ENDFtk::section::Type< 4 >::LegendreDistributions& distribution,
       bool ) {

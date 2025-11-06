@@ -16,7 +16,7 @@ namespace gnds {
   /**
    *  @brief Create the interpolation type from a GNDS string value
    */
-  static InterpolationType createInterpolationType( const std::string& type ) {
+  inline InterpolationType createInterpolationType( const std::string& type ) {
 
     // when no interpolation type is given, assume lin-lin
     if ( type == "" || type == "lin-lin" ) {

@@ -40,14 +40,6 @@ void wrapHardSpherePenetrability( python::module& module ) {
     "    self                       the function\n"
     "    orbital_angular_momentum   the value of the orbital momentum"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "orbital_angular_momentum",
@@ -68,6 +60,9 @@ void wrapHardSpherePenetrability( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

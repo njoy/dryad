@@ -21,7 +21,7 @@ namespace lrf7 {
    *
    *  @param[in] endf   the parsed ENDF LRF7 data
    */
-  auto createFormalism( const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+  inline auto createFormalism( const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     switch ( endf.formalism() ) {
 

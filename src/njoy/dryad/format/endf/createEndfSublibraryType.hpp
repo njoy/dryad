@@ -17,8 +17,8 @@ namespace endf {
    *  @brief Create the ENDF sublibrary type based on the interaction
    *         type and projectile type
    */
-  int createEndfSublibraryType( const id::ParticleID& projectile,
-                                const InteractionType& interaction ) {
+  inline int createEndfSublibraryType( const id::ParticleID& projectile,
+                                       const InteractionType& interaction ) {
 
     if ( interaction == InteractionType::Atomic ) {
 

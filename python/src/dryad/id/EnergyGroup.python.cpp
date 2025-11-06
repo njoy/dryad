@@ -61,6 +61,9 @@ void wrapEnergyGroup( python::module& module ) {
 
   // add standard comparison definitions
   addStandardComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // namespace id

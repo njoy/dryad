@@ -48,14 +48,6 @@ void wrapElementID( python::module& module ) {
     "    self     the identifier\n"
     "    string   the element symbol, name or alternative name"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "number",
@@ -86,6 +78,9 @@ void wrapElementID( python::module& module ) {
 
   // add standard print definitions
   addStandardPrintDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // namespace id

@@ -20,7 +20,7 @@ namespace electroatomic {
    *
    *  @param[in] cdf   the tabulated cdf from which to calculate a pdf
    */
-  TabulatedAngularDistributionFunction
+  inline TabulatedAngularDistributionFunction
   createPdfFromCdf( const TabulatedAngularDistributionFunction& cdf ) {
 
     if ( ( cdf.numberRegions() != 1 ) ||

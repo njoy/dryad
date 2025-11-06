@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import TabulatedFormFactor
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedFormFactor( unittest.TestCase ) :
+class Test_TabulatedFormFactor( unittest.TestCase ) :
     """Unit test for the TabulatedFormFactor class."""
 
     def test_component( self ) :

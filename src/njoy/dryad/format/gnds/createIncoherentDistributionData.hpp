@@ -19,7 +19,7 @@ namespace gnds {
   /**
    *  @brief Create a IncoherentDistributionData from a GNDS coherentPhotonScattering node
    */
-  static IncoherentDistributionData
+  inline IncoherentDistributionData
   createIncoherentDistributionData( const pugi::xml_node& incoherent ) {
 
     // check that this is a valid coherentPhotonScattering node

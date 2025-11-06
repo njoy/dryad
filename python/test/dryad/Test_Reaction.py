@@ -174,7 +174,7 @@ def verify_summation_chunk( self, chunk ) :
     self.assertEqual( False, chunk.has_product( ParticleID( 'g' ) ) )
     self.assertEqual( 0, len( chunk.products ) )
 
-class Test_dryad_Reaction( unittest.TestCase ) :
+class Test_Reaction( unittest.TestCase ) :
     """Unit test for the Reaction class."""
 
     def test_component( self ) :

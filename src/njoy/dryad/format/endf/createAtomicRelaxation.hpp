@@ -24,8 +24,8 @@ namespace endf {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  AtomicRelaxation createAtomicRelaxation( const ENDFtk::tree::Material& material,
-                                           bool normalise ) {
+  inline AtomicRelaxation
+  createAtomicRelaxation( const ENDFtk::tree::Material& material, bool normalise ) {
 
     if ( material.hasSection( 28, 533 ) ) {
 

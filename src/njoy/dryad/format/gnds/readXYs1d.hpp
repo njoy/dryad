@@ -27,7 +27,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS XYs1D node
    */
-  static XYs1d readXYs1D( const pugi::xml_node& xys1d ) {
+  inline XYs1d readXYs1D( const pugi::xml_node& xys1d ) {
 
     throwExceptionOnWrongNode( xys1d, "XYs1d" );
 
@@ -93,8 +93,8 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS XYs1D node
    */
-  XYs1d readXYs1D( const pugi::xml_node& xys1d,
-                   const Axes& units ) {
+  inline XYs1d
+  readXYs1D( const pugi::xml_node& xys1d, const Axes& units ) {
 
     XYs1d data = readXYs1D( xys1d );
 

@@ -23,7 +23,7 @@ namespace atomic {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  dryad::atomic::ElectronSubshellConfiguration
+  inline dryad::atomic::ElectronSubshellConfiguration
   createElectronSubshellConfiguration( const ENDFtk::section::Type< 28 >::SubshellData& subshell,
                                        bool normalise ) {
 

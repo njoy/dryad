@@ -7,7 +7,7 @@ import sys
 # local imports
 from njoy.dryad.resonances import CoulombShiftFactor
 
-class Test_dryad_resonances_CoulombShiftFactor( unittest.TestCase ) :
+class Test_CoulombShiftFactor( unittest.TestCase ) :
     """Unit test for the CoulombShiftFactor class."""
 
     def test_component( self ) :

@@ -6,7 +6,7 @@ import unittest
 # local imports
 from njoy.dryad.id import ElectronSubshellID
 
-class Test_dryad_id_ElectronSubshellID( unittest.TestCase ) :
+class Test_ElectronSubshellID( unittest.TestCase ) :
     """Unit test for the ElectronSubshellID class."""
 
     numbers = range( 534, 580 )

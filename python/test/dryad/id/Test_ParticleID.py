@@ -8,7 +8,7 @@ from njoy.dryad.id import ElectronSubshellID
 from njoy.dryad.id import LevelID
 from njoy.dryad.id import ParticleID
 
-class Test_elementary_ParticleID( unittest.TestCase ) :
+class Test_ParticleID( unittest.TestCase ) :
     """Unit test for the ParticleID class."""
 
     def test_values( self ) :

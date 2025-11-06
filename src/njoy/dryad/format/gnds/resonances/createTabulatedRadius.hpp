@@ -24,7 +24,7 @@ namespace resonances {
    *
    *  @param[in] node   the GNDS XYs1d or regions1d node
    */
-  static dryad::resonances::TabulatedRadius
+  inline dryad::resonances::TabulatedRadius
   createTabulatedRadius( const pugi::xml_node& node ) {
 
     std::vector< double > energies;

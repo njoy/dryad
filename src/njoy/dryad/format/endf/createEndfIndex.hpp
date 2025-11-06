@@ -14,7 +14,7 @@ namespace format {
   /**
    *  @brief Create an one-based index from a zero-based index
    */
-  long createEndfIndex( int index ) {
+  inline long createEndfIndex( int index ) {
 
     if ( index < 0 ) {
 

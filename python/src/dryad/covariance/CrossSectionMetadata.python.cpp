@@ -53,14 +53,6 @@ void wrapCrossSectionMetadata( python::module& module ) {
     "    self   the covariance metadata\n"
     "    keys   the metadata keys"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "reaction_identifiers",
@@ -83,6 +75,9 @@ void wrapCrossSectionMetadata( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // covariance namespace

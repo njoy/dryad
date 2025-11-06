@@ -23,7 +23,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS covarianceMatrix node
    */
-  static CovarianceMatrix readCovarianceMatrix( const pugi::xml_node& covariance ) {
+  inline CovarianceMatrix readCovarianceMatrix( const pugi::xml_node& covariance ) {
 
     throwExceptionOnWrongNode( covariance, "covarianceMatrix" );
 

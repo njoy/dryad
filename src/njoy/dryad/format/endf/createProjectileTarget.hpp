@@ -29,8 +29,8 @@ namespace endf {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  ProjectileTarget createProjectileTarget( const ENDFtk::tree::Material& material,
-                                           bool normalise ) {
+  inline ProjectileTarget
+  createProjectileTarget( const ENDFtk::tree::Material& material, bool normalise ) {
 
     auto information = material.section( 1, 451 ).parse< 1, 451 >();
 

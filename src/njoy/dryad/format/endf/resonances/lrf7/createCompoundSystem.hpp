@@ -28,11 +28,11 @@ namespace lrf7 {
    *  @param[in] upper        the upper energy limit
    *  @param[in] endf         the parsed ENDF LRF7 data
    */
-  auto createCompoundSystem( const id::ParticleID& projectile,
-                             const id::ParticleID& target,
-                             double lower,
-                             double upper,
-                             const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+  inline auto createCompoundSystem( const id::ParticleID& projectile,
+                                    const id::ParticleID& target,
+                                    double lower,
+                                    double upper,
+                                    const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     auto formalism = lrf7::createFormalism( endf );
     auto kinematics = lrf7::createKinematics( endf );

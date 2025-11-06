@@ -30,12 +30,12 @@ namespace lrf7 {
    *  @param[in] kinematics   the kinematics type to be applied
    *  @param[in] endf         the parsed ENDF LRF7 data
    */
-  auto createSpinGroups( const id::ParticleID& projectile,
-                         const id::ParticleID& target,
-                         const dryad::resonances::Formalism& formalism,
-                         const dryad::resonances::BoundaryCondition& boundary,
-                         const dryad::resonances::Kinematics& kinematics,
-                         const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+  inline auto createSpinGroups( const id::ParticleID& projectile,
+                                const id::ParticleID& target,
+                                const dryad::resonances::Formalism& formalism,
+                                const dryad::resonances::BoundaryCondition& boundary,
+                                const dryad::resonances::Kinematics& kinematics,
+                                const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     std::vector< dryad::resonances::SpinGroup > groups;
 

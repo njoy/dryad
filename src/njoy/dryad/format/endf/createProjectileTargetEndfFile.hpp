@@ -28,9 +28,9 @@ namespace endf {
    *  @param[in] mat         the ENDF mat number
    *  @param[in] filename    the file name for the ENDF file
    */
-  void createProjectileTargetEndfFile( const ProjectileTarget& transport,
-                                       int mat,
-                                       const std::string& filename ) {
+  inline void createProjectileTargetEndfFile( const ProjectileTarget& transport,
+                                              int mat,
+                                              const std::string& filename ) {
 
     auto projectile = transport.projectileIdentifier();
     auto target = transport.targetIdentifier();

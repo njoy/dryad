@@ -24,8 +24,8 @@ namespace endf {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
-                                                   bool normalise ) {
+  inline AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
+                                                          bool normalise ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 

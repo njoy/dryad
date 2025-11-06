@@ -21,7 +21,7 @@ namespace ace {
    *
    *  @param[in] distribution   the electroatomic tabulated energy distribution
    */
-  TabulatedEnergyDistributionFunction
+  inline TabulatedEnergyDistributionFunction
   createTabulatedEnergyDistributionFunction(
       const njoy::ACEtk::electroatomic::TabulatedEnergyDistribution& distribution ) {
 
