@@ -226,6 +226,61 @@ namespace dryad {
     }
 
     /**
+     *  @brief Unionise cross section data
+     *
+     *  This function takes all cross section data and unionises the cross section
+     *  grids. It does not linearise the data but reevaluates the data using the
+     *  proper interpolation types of the cross section data.
+     *
+     *  By default, summation cross sections are included in the unionisation process.
+     *  unless explicitly excluded by the user. Switching on the exclusion of summation
+     *  cross sections may be useful when the user is going to recalculate the summation
+     *  cross sections after unionisation.
+     *
+     *  @param[in] exclude_summation   option to exclude summation reactions in the
+     *                                 unionisation (default: false)
+     */
+    void unioniseCrossSections( bool exclude_summation = false ) {
+
+      // generate the union grid for the cross section data
+      scion::unionisation::Unioniser< std::vector< double > > unioniser;
+      for ( const dryad::Reaction& reaction : this->reactions() ) {
+
+        // exclude summation when requested
+        if ( ! ( exclude_summation && reaction.isSummationReaction() ) ) {
+
+          unioniser.addGrid( reaction.crossSection().energies(), reaction.crossSection().values() );
+        }
+      }
+      std::vector< double > energies = unioniser.unionise();
+
+      // reevaluate all cross section data on the new union grid
+      for ( dryad::Reaction& reaction : this->reactions() ) {
+
+        // exclude summation when requested
+        if ( ! ( exclude_summation && reaction.isSummationReaction() ) ) {
+
+          decltype(auto) xs = reaction.crossSection();
+          std::vector< double > values = unioniser.evaluate( xs.energies(), xs.values(), xs.boundaries(), xs.interpolants() );
+          std::vector< std::size_t > boundaries = { values.size() - 1 };
+          std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
+
+          if ( ! xs.isLinearised() ) {
+
+            auto pair = unioniser.updateBoundariesAndInterpolants( xs.energies(), xs.boundaries(), xs.interpolants() );
+            boundaries = std::move( pair.first );
+            interpolants = std::move( pair.second );
+          }
+
+          dryad::TabulatedCrossSection newxs( energies, std::move( values ),
+                                              std::move( boundaries ), std::move( interpolants ) );
+
+          reaction.crossSection( std::move( newxs ) );
+        }
+      }
+    }
+
+    /**
      *  @brief Calculate summation cross sections
      *
      *  This function recalculates the cross section of all summation reactions.
