@@ -21,6 +21,68 @@ from njoy.dryad import ReactionProduct
 from njoy.dryad import TwoBodyDistributionData
 from njoy.dryad.id import ParticleID
 
+def make_projectile_target( normalise ) :
+
+    return ProjectileTarget(
+               projectile = ParticleID( 'n' ),
+               target = ParticleID( 'Fe56' ),
+               type = InteractionType.Nuclear,
+               reactions = [ Reaction( ReactionID( 'n,Fe56->total' ),
+                                       [ ReactionID( 'n,Fe56->n,Fe56' ), ReactionID( 'n,Fe56->2n,Fe55[all]' ),
+                                         ReactionID( 'n,Fe56->p,Mn56[all]' ), ReactionID( 'n,Fe56->a,Cr53[all]' ) ],
+                                       TabulatedCrossSection( [ 1e-5, 20. ], [ 1000001., 1000001. ],
+                                                                InterpolationType.Histogram ),
+                                       [] ),
+                             Reaction( ReactionID( 'n,Fe56->n,Fe56' ),
+                                       TabulatedCrossSection( [ 1e-5, 20. ], [ 1e+6, 1e+6 ],
+                                                                InterpolationType.LinearLinear ),
+                                       [ ReactionProduct( ParticleID( 'n' ), 1,
+                                                          TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
+                                                                                   TabulatedAngularDistributions(
+                                                                                     [ 1e-5, 20. ],
+                                                                                     [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
+                                                                                       TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ) ],
+                                       0, 0 ),
+                             Reaction( ReactionID( 'n,Fe56->2n,Fe55[all]' ),
+                                       [ ReactionID( 'n,Fe56->2n,Fe55' ),
+                                        ReactionID( 'n,Fe56->2n,Fe55_e1' ) ],
+                                       TabulatedCrossSection( [ 1., 20. ], [ 0., 3. ],
+                                                                InterpolationType.Histogram ),
+                                       [] ),
+                             Reaction( ReactionID( 'n,Fe56->2n,Fe55' ),
+                                       TabulatedCrossSection( [ 1., 20. ], [ 0., 2.00001 ],
+                                                                InterpolationType.LinearLinear ),
+                                       [],
+                                       0, -1 ),
+                             Reaction( ReactionID( 'n,Fe56->2n,Fe55_e1' ),
+                                       TabulatedCrossSection( [ 1., 20. ], [ 0., 1. ],
+                                                                InterpolationType.LinearLinear ),
+                                       [],
+                                       0, -1 ),
+                             Reaction( ReactionID( 'n,Fe56->p,Mn56[all]' ),
+                                       [ ReactionID( 'n,Fe56->p,Mn56' ),
+                                        ReactionID( 'n,Fe56->p,Mn56_e1' ) ],
+                                       TabulatedCrossSection( [ 5., 20. ], [ 0., 5. ],
+                                                                InterpolationType.Histogram ),
+                                       [] ),
+                             Reaction( ReactionID( 'n,Fe56->p,Mn56' ),
+                                       TabulatedCrossSection( [ 5., 20. ], [ 0., 3.00001 ],
+                                                                InterpolationType.LinearLinear ),
+                                       [],
+                                       0, -5 ),
+                             Reaction( ReactionID( 'n,Fe56->p,Mn56_e1' ),
+                                       TabulatedCrossSection( [ 5., 20. ], [ 0., 2. ],
+                                                                InterpolationType.LinearLinear ),
+                                       [],
+                                       0, -5 ),
+                             Reaction( ReactionID( 'n,Fe56->a,Cr53[all]' ),
+                                       TabulatedCrossSection( [ 1e-5, 20. ], [ 1., 1. ],
+                                                                InterpolationType.LinearLinear ),
+                                       [],
+                                       0, 0 ) ],
+               resonances = None,
+               normalise = normalise )
+
 def verify_chunk( self, chunk, normalise ) :
 
     # documentation
@@ -604,124 +666,8 @@ class Test_ProjectileTarget( unittest.TestCase ) :
     def test_component( self ) :
 
         # the data is given explicitly
-        chunk1 = ProjectileTarget(
-                     projectile = ParticleID( 'n' ),
-                     target = ParticleID( 'Fe56' ),
-                     type = InteractionType.Nuclear,
-                     reactions = [ Reaction( ReactionID( 'n,Fe56->total' ),
-                                             [ ReactionID( 'n,Fe56->n,Fe56' ), ReactionID( 'n,Fe56->2n,Fe55[all]' ),
-                                               ReactionID( 'n,Fe56->p,Mn56[all]' ), ReactionID( 'n,Fe56->a,Cr53[all]' ) ],
-                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000001., 1000001. ],
-                                                                      InterpolationType.Histogram ),
-                                             [] ),
-                                   Reaction( ReactionID( 'n,Fe56->n,Fe56' ),
-                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1e+6, 1e+6 ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [ ReactionProduct( ParticleID( 'n' ), 1,
-                                                                TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
-                                                                                         TabulatedAngularDistributions(
-                                                                                           [ 1e-5, 20. ],
-                                                                                           [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
-                                                                                             TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ) ],
-                                             0, 0 ),
-                                   Reaction( ReactionID( 'n,Fe56->2n,Fe55[all]' ),
-                                             [ ReactionID( 'n,Fe56->2n,Fe55' ),
-                                              ReactionID( 'n,Fe56->2n,Fe55_e1' ) ],
-                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 3. ],
-                                                                      InterpolationType.Histogram ),
-                                             [] ),
-                                   Reaction( ReactionID( 'n,Fe56->2n,Fe55' ),
-                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 2.00001 ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -1 ),
-                                   Reaction( ReactionID( 'n,Fe56->2n,Fe55_e1' ),
-                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 1. ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -1 ),
-                                   Reaction( ReactionID( 'n,Fe56->p,Mn56[all]' ),
-                                             [ ReactionID( 'n,Fe56->p,Mn56' ),
-                                              ReactionID( 'n,Fe56->p,Mn56_e1' ) ],
-                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 5. ],
-                                                                      InterpolationType.Histogram ),
-                                             [] ),
-                                   Reaction( ReactionID( 'n,Fe56->p,Mn56' ),
-                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 3.00001 ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -5 ),
-                                   Reaction( ReactionID( 'n,Fe56->p,Mn56_e1' ),
-                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 2. ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -5 ),
-                                   Reaction( ReactionID( 'n,Fe56->a,Cr53[all]' ),
-                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1., 1. ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, 0 ) ],
-                     resonances = None,
-                     normalise = False )
-        chunk2 = ProjectileTarget(
-                     projectile = ParticleID( 'n' ),
-                     target = ParticleID( 'Fe56' ),
-                     type = InteractionType.Nuclear,
-                     reactions = [ Reaction( ReactionID( 'n,Fe56->total' ),
-                                             [ ReactionID( 'n,Fe56->n,Fe56' ), ReactionID( 'n,Fe56->2n,Fe55[all]' ),
-                                               ReactionID( 'n,Fe56->p,Mn56[all]' ), ReactionID( 'n,Fe56->a,Cr53[all]' ) ],
-                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1000001., 1000001. ],
-                                                                      InterpolationType.Histogram ),
-                                             [] ),
-                                   Reaction( ReactionID( 'n,Fe56->n,Fe56' ),
-                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1e+6, 1e+6 ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [ ReactionProduct( ParticleID( 'n' ), 1,
-                                                                TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
-                                                                                         TabulatedAngularDistributions(
-                                                                                           [ 1e-5, 20. ],
-                                                                                           [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
-                                                                                             TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ) ],
-                                             0, 0 ),
-                                   Reaction( ReactionID( 'n,Fe56->2n,Fe55[all]' ),
-                                             [ ReactionID( 'n,Fe56->2n,Fe55' ),
-                                              ReactionID( 'n,Fe56->2n,Fe55_e1' ) ],
-                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 3. ],
-                                                                      InterpolationType.Histogram ),
-                                             [] ),
-                                   Reaction( ReactionID( 'n,Fe56->2n,Fe55' ),
-                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 2.00001 ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -1 ),
-                                   Reaction( ReactionID( 'n,Fe56->2n,Fe55_e1' ),
-                                             TabulatedCrossSection( [ 1., 20. ], [ 0., 1. ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -1 ),
-                                   Reaction( ReactionID( 'n,Fe56->p,Mn56[all]' ),
-                                             [ ReactionID( 'n,Fe56->p,Mn56' ),
-                                              ReactionID( 'n,Fe56->p,Mn56_e1' ) ],
-                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 5. ],
-                                                                      InterpolationType.Histogram ),
-                                             [] ),
-                                   Reaction( ReactionID( 'n,Fe56->p,Mn56' ),
-                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 3.00001 ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -5 ),
-                                   Reaction( ReactionID( 'n,Fe56->p,Mn56_e1' ),
-                                             TabulatedCrossSection( [ 5., 20. ], [ 0., 2. ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, -5 ),
-                                   Reaction( ReactionID( 'n,Fe56->a,Cr53[all]' ),
-                                             TabulatedCrossSection( [ 1e-5, 20. ], [ 1., 1. ],
-                                                                      InterpolationType.LinearLinear ),
-                                             [],
-                                             0, 0 ) ],
-                     resonances = None,
-                     normalise = True )
+        chunk1 = make_projectile_target( False )
+        chunk2 = make_projectile_target( True )
 
         verify_chunk( self, chunk1, False )
         verify_chunk( self, chunk2, True )
@@ -732,11 +678,20 @@ class Test_ProjectileTarget( unittest.TestCase ) :
         verify_chunk( self, chunk1, True )
         verify_chunk( self, chunk2, True )
 
-        chunk1.calculate_summation_cross_sections()
-        chunk2.calculate_summation_cross_sections()
+    def test_unionisation( self ) :
 
-        verify_correct_summation( self, chunk1 )
-        verify_correct_summation( self, chunk2 )
+        chunk = make_projectile_target( False )
+        chunk.unionise_cross_sections( False )
+
+        chunk = make_projectile_target( False )
+        chunk.unionise_cross_sections( True )
+
+    def test_summation( self ) :
+
+        chunk = make_projectile_target( False )
+        chunk.calculate_summation_cross_sections()
+
+        verify_correct_summation( self, chunk )
 
     def test_setter_functions( self ) :
 
