@@ -5,7 +5,7 @@ from __future__ import annotations
 import dryad
 import dryad.id
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -61,7 +61,7 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
@@ -75,26 +75,29 @@ class Channel:
             boundary                 the boundary condition
             radii                    the channel radii for the calculation of the
                                      wave functions
+            kinematics               the kinematics type applied to the channel
             penetrability            the penetrability of the channel
             shift_factor             the shift factor of the channel
             phase_shift              the phase shift of the channel
             phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
-    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii) -> None:
+    def __init__(self, identifier: dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ...) -> None:
         """
         Initialise the channel
         
         Arguments:
-            self            the channel
-            identifier      the channel identifier
-            incident        the current incident particle pair
-            outgoing        the outgoing particle pair
-            q_value         the Q value associated with the transition from
-                            the incident to the outgoing particle pair
-            boundary        the boundary condition
-            radii           the channel radii for the calculation of the
-                            wave functions
+            self         the channel
+            identifier   the channel identifier
+            incident     the current incident particle pair
+            outgoing     the outgoing particle pair
+            q_value      the Q value associated with the transition from
+                         the incident to the outgoing particle pair
+            boundary     the boundary condition
+            radii        the channel radii for the calculation of the
+                         wave functions
+            kinematics   the kinematics type applied to the channel (default is
+                         non-relativistic)
         """
     @typing.overload
     def __init__(self, instance: Channel) -> None:
@@ -171,13 +174,6 @@ class Channel:
         """
         Calculate the channel wave number (given in fm^-1) at a given energy
         
-        The wave number k is an energy dependent quantity defined as follows:
-           hbar^2 k^2 = 2 * mu * ( energy * ratio + q )
-        in which mu is the reduced mass of the channel's particle pair and ratio
-        is the mass ratio M / ( m + M ) for the incident particle pair, q is the
-        Q value associated to the transition of the incident particle pair to the
-        channel's particle pair and hbar is the reduced Planck constant.
-        
         Arguments:
             self     the channel
             energy   the energy (given in eV)
@@ -206,6 +202,11 @@ class Channel:
     def is_incident_channel(self) -> bool:
         """
         Flag to indicate whether or not the channel is an incident channel
+        """
+    @property
+    def kinematics_type(self) -> Kinematics:
+        """
+        The kinematics type applied to the channel
         """
     @property
     def outgoing_particle_pair(self) -> ParticlePair | None:
@@ -850,6 +851,53 @@ class HardSphereShiftFactor:
         """
         The value of the orbital angular momentum
         """
+class Kinematics:
+    """
+    The kinematics option
+    
+    Members:
+    
+      NonRelativistic
+    
+      Relativistic
+    """
+    NonRelativistic: typing.ClassVar[Kinematics]  # value = <Kinematics.NonRelativistic: 0>
+    Relativistic: typing.ClassVar[Kinematics]  # value = <Kinematics.Relativistic: 1>
+    __members__: typing.ClassVar[dict[str, Kinematics]]  # value = {'NonRelativistic': <Kinematics.NonRelativistic: 0>, 'Relativistic': <Kinematics.Relativistic: 1>}
+    def __eq__(self, other: typing.Any) -> bool:
+        ...
+    def __ge__(self, other: typing.Any) -> bool:
+        ...
+    def __getstate__(self) -> int:
+        ...
+    def __gt__(self, other: typing.Any) -> bool:
+        ...
+    def __hash__(self) -> int:
+        ...
+    def __index__(self) -> int:
+        ...
+    def __init__(self, value: int) -> None:
+        ...
+    def __int__(self) -> int:
+        ...
+    def __le__(self, other: typing.Any) -> bool:
+        ...
+    def __lt__(self, other: typing.Any) -> bool:
+        ...
+    def __ne__(self, other: typing.Any) -> bool:
+        ...
+    def __repr__(self) -> str:
+        ...
+    def __setstate__(self, state: int) -> None:
+        ...
+    def __str__(self) -> str:
+        ...
+    @property
+    def name(self) -> str:
+        ...
+    @property
+    def value(self) -> int:
+        ...
 class Particle:
     """
     Particle information for resonance reconstruction

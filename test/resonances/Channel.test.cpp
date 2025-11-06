@@ -90,6 +90,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == capture.isIncidentChannel() );
       CHECK_THAT( 1., WithinRel( capture.statisticalSpinFactor() ) );
       CHECK( false == capture.isBelowThreshold( energy ) );
+      CHECK( Kinematics::NonRelativistic == capture.kinematicsType() );
       CHECK_THAT( 0., WithinRel( capture.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( capture.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 1., WithinRel( capture.penetrability( energy ) ) );
@@ -109,6 +110,7 @@ SCENARIO( "Channel" ) {
       CHECK( true == elastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
       CHECK( false == elastic.isBelowThreshold( energy ) );
+      CHECK( Kinematics::NonRelativistic == elastic.kinematicsType() );
       CHECK_THAT( 6.752152278684156e-7, WithinRel( elastic.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( elastic.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 3.256036376131631e-6, WithinRel( elastic.penetrability( energy ) ) );
@@ -128,6 +130,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == inelastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
       CHECK( true == inelastic.isBelowThreshold( energy ) );
+      CHECK( Kinematics::NonRelativistic == inelastic.kinematicsType() );
       CHECK_THAT( 0.2391648503730464, WithinRel( inelastic.waveNumber( energy ) ) );
       CHECK_THAT( 0., WithinRel( inelastic.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 1.153305524765912, WithinRel( inelastic.penetrability( energy ) ) );
@@ -147,6 +150,7 @@ SCENARIO( "Channel" ) {
       CHECK( false == proton.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );
       CHECK( false == proton.isBelowThreshold( energy ) );
+      CHECK( Kinematics::NonRelativistic == proton.kinematicsType() );
       CHECK_THAT( 0.1697421616532552, WithinRel( proton.waveNumber( energy ) ) );
       CHECK_THAT( 3.179105369595768, WithinRel( proton.sommerfeldParameter( energy ) ) );
       CHECK_THAT( 2.896705590727021e-5, WithinRel( proton.penetrability( energy ) ) );

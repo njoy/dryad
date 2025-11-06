@@ -18,6 +18,7 @@ void wrapChannel( python::module& module ) {
   using ChannelID = njoy::dryad::id::ChannelID;
   using ParticlePair = njoy::dryad::resonances::ParticlePair;
   using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
+  using Kinematics = njoy::dryad::resonances::Kinematics;
   using Penetrability = njoy::dryad::resonances::Channel::Penetrability;
   using ShiftFactor = njoy::dryad::resonances::Channel::ShiftFactor;
   using PhaseShift = njoy::dryad::resonances::Channel::PhaseShift;
@@ -43,6 +44,7 @@ void wrapChannel( python::module& module ) {
                   double,
                   std::optional< double >,
                   ChannelRadii,
+                  Kinematics,
                   Penetrability,
                   ShiftFactor,
                   PhaseShift,
@@ -50,8 +52,9 @@ void wrapChannel( python::module& module ) {
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "q_value" ),
     python::arg( "boundary" ), python::arg( "radii" ),
-    python::arg( "penetrability" ), python::arg( "shift_factor" ),
-    python::arg( "phase_shift" ), python::arg( "phase_shift_difference" ),
+    python::arg( "kinematics" ), python::arg( "penetrability" ),
+    python::arg( "shift_factor" ), python::arg( "phase_shift" ),
+    python::arg( "phase_shift_difference" ),
     "Initialise the channel\n\n"
     "Arguments:\n"
     "    self                     the channel\n"
@@ -63,6 +66,7 @@ void wrapChannel( python::module& module ) {
     "    boundary                 the boundary condition\n"
     "    radii                    the channel radii for the calculation of the\n"
     "                             wave functions\n"
+    "    kinematics               the kinematics type applied to the channel\n"
     "    penetrability            the penetrability of the channel\n"
     "    shift_factor             the shift factor of the channel\n"
     "    phase_shift              the phase shift of the channel\n"
@@ -75,21 +79,25 @@ void wrapChannel( python::module& module ) {
                   std::optional< ParticlePair >,
                   double,
                   std::optional< double >,
-                  ChannelRadii >(),
+                  ChannelRadii,
+                  Kinematics >(),
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "qValue" ),
     python::arg( "boundary" ), python::arg( "radii" ),
+    python::arg( "kinematics" ) = Kinematics::NonRelativistic,
     "Initialise the channel\n\n"
     "Arguments:\n"
-    "    self            the channel\n"
-    "    identifier      the channel identifier\n"
-    "    incident        the current incident particle pair\n"
-    "    outgoing        the outgoing particle pair\n"
-    "    q_value         the Q value associated with the transition from\n"
-    "                    the incident to the outgoing particle pair\n"
-    "    boundary        the boundary condition\n"
-    "    radii           the channel radii for the calculation of the\n"
-    "                    wave functions"
+    "    self         the channel\n"
+    "    identifier   the channel identifier\n"
+    "    incident     the current incident particle pair\n"
+    "    outgoing     the outgoing particle pair\n"
+    "    q_value      the Q value associated with the transition from\n"
+    "                 the incident to the outgoing particle pair\n"
+    "    boundary     the boundary condition\n"
+    "    radii        the channel radii for the calculation of the\n"
+    "                 wave functions\n"
+    "    kinematics   the kinematics type applied to the channel (default is\n"
+    "                 non-relativistic)"
   )
   .def(
 
@@ -155,6 +163,12 @@ void wrapChannel( python::module& module ) {
   )
   .def_property_readonly(
 
+    "kinematics_type",
+    &Component::kinematicsType,
+    "The kinematics type applied to the channel"
+  )
+  .def_property_readonly(
+
     "statistical_spin_factor",
     &Component::statisticalSpinFactor,
     "The statistical spin factor\n\n"
@@ -183,12 +197,6 @@ void wrapChannel( python::module& module ) {
     &Component::waveNumber,
     python::arg( "energy" ),
     "Calculate the channel wave number (given in fm^-1) at a given energy\n\n"
-    "The wave number k is an energy dependent quantity defined as follows:\n"
-    "   hbar^2 k^2 = 2 * mu * ( energy * ratio + q )\n"
-    "in which mu is the reduced mass of the channel's particle pair and ratio\n"
-    "is the mass ratio M / ( m + M ) for the incident particle pair, q is the\n"
-    "Q value associated to the transition of the incident particle pair to the\n"
-    "channel's particle pair and hbar is the reduced Planck constant.\n\n"
     "Arguments:\n"
     "    self     the channel\n"
     "    energy   the energy (given in eV)"

@@ -32,7 +32,7 @@ SpinGroup( std::vector< Channel > channels,
 
   this->processChannels();
   this->calculator_ = selectCalculator( this->formalism(), this->boundaryCondition(),
-                                        this->channels() );
+                                        this->channels(), this->resonanceTable() );
   verifySpinGroup( this->channels(), this->resonanceTable() );
 }
 

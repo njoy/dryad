@@ -12,6 +12,7 @@ namespace resonances {
   // declarations - enums
   void wrapBoundaryCondition( python::module& );
   void wrapFormalism( python::module& );
+  void wrapKinematics( python::module& );
 
   // declarations - components
   void wrapParticle( python::module& );
@@ -47,6 +48,7 @@ void wrapResonances( python::module& module ) {
   // enums
   resonances::wrapBoundaryCondition( submodule );
   resonances::wrapFormalism( submodule );
+  resonances::wrapKinematics( submodule );
 
   // components
   resonances::wrapParticle( submodule );

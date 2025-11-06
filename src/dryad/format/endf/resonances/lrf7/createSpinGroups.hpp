@@ -25,12 +25,16 @@ namespace lrf7 {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
+   *  @param[in] formalism    the formalism to be applied
+   *  @param[in] boundary     the boundary condition to be applied
+   *  @param[in] kinematics   the kinematics type to be applied
    *  @param[in] endf         the parsed ENDF LRF7 data
    */
   auto createSpinGroups( const id::ParticleID& projectile,
                          const id::ParticleID& target,
                          const dryad::resonances::Formalism& formalism,
                          const dryad::resonances::BoundaryCondition& boundary,
+                         const dryad::resonances::Kinematics& kinematics,
                          const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
 
     std::vector< dryad::resonances::SpinGroup > groups;
@@ -46,8 +50,8 @@ namespace lrf7 {
     for ( const auto& group : endf.spinGroups() ) {
 
       // get the channel data in this spin group
-      auto data = lrf7::createChannelData( projectile, target,
-                                           boundary_condition, reduced_amplitudes,
+      auto data = lrf7::createChannelData( projectile, target, boundary_condition,
+                                           kinematics, reduced_amplitudes,
                                            endf.particlePairs(), group );
 
       // add each to the final channel data, keep it sorted and consolidate duplicate channels

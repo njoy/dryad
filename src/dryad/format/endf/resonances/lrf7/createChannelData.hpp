@@ -25,6 +25,7 @@ namespace lrf7 {
    *  @param[in] projectile           the projectile identifier
    *  @param[in] target               the target identifier
    *  @param[in] boundary_condition   the boundary condition option
+   *  @param[in] kinematics           the kinematics type to be applied
    *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
    *  @param[in] endfPairs            the parsed ENDF particle pairs
    *  @param[in] endfSpinGroup        the parsed ENDF spin group
@@ -33,6 +34,7 @@ namespace lrf7 {
            const id::ParticleID& projectile,
            const id::ParticleID& target,
            const dryad::resonances::BoundaryCondition& boundary_condition,
+           const dryad::resonances::Kinematics& kinematics,
            bool reduced_amplitudes,
            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup& endfSpinGroup ) {
@@ -41,7 +43,7 @@ namespace lrf7 {
 
     // get the channels
     auto channels = lrf7::createChannels( projectile, target, boundary_condition,
-                                          endfPairs, endfSpinGroup.channels() );
+                                          kinematics, endfPairs, endfSpinGroup.channels() );
 
     // go over all channels
     for ( unsigned int i = 0; i < channels.size(); ++i ) {

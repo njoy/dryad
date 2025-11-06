@@ -452,7 +452,7 @@ namespace calculator {
 
         if ( channels[c+1].isIncidentChannel() ) {
 
-          // wave numbers are stored in fm, we need to convert to 1e-12 cm
+          // wave numbers are stored in fm^-1, we need to convert to barn^-1/2
           // so the cross section will be returned in barn
 
           double k = channels[c+1].waveNumber( energy ) * constants::deca;
