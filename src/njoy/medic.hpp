@@ -1,0 +1,1 @@
+#include "njoy/medic/pruneCrossSection.hpp"

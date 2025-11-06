@@ -29,6 +29,8 @@ message( STATUS "Adding njoy C++ unit testing" )
 
 add_cpp_test( matrix                                                           matrix.test.cpp )
 
+# dryad tests
+
 add_cpp_test( dryad.base.UniformDistribution                                   dryad/base/UniformDistribution.test.cpp )
 
 add_cpp_test( dryad.atomic.ElectronSubshellConfiguration                       dryad/atomic/ElectronSubshellConfiguration.test.cpp )
@@ -233,3 +235,8 @@ add_cpp_test( dryad.format.gnds.createProjectileTarget                         d
 add_cpp_test( dryad.format.gnds.createProjectileTargetFromFile                 dryad/format/gnds/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxation                         dryad/format/gnds/createAtomicRelaxation.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxationFromFile                 dryad/format/gnds/createAtomicRelaxationFromFile.test.cpp )
+
+# medic tests
+
+add_cpp_test( medic.pruneCrossSection                                          medic/pruneCrossSection.test.cpp )
+add_cpp_test( medic.pruneCrossSections                                         medic/pruneCrossSections.test.cpp )

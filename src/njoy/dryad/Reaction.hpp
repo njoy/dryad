@@ -195,6 +195,14 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the cross section
+     */
+    TabulatedCrossSection& crossSection() {
+
+      return this->xs_;
+    }
+
+    /**
      *  @brief Set the cross section
      *
      *  @param[in] xs   the new tabulated cross section
