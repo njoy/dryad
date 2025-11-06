@@ -12,25 +12,19 @@ on:
     branches: 'master'
 
 # ubuntu-22.04 is x64
-# macos-13 is intel
-# macos-14 is arm64 (M1) - currently disabled (numpy install issue)
+# macos-15-intel is intel
+# macos-15 is arm64 (M1)
 jobs:
   build:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [ ubuntu-22.04, macos-13, macos-14 ]
+        os: [ ubuntu-22.04, macos-15, macos-15-intel ]
         cxx: [ clang++, g++-12 ]
         build_type: [ Debug, Release ]
 
     steps:
     - name: Install numpy using pip
-      if: ${{matrix.os != 'macos-14'}}
-      run: |
-        python -m pip install --upgrade pip
-        pip install numpy
-    - name: Install numpy using brew
-      if: ${{matrix.os == 'macos-14'}}
       run: |
         brew install numpy
     - name: which CXX
