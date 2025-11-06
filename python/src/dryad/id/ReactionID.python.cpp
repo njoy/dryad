@@ -79,14 +79,6 @@ void wrapReactionID( python::module& module ) {
     "    self     the reaction identifier\n"
     "    symbol   the reaction symbol"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "projectile",
@@ -141,6 +133,9 @@ void wrapReactionID( python::module& module ) {
 
   // add standard print definitions
   addStandardPrintDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // namespace id

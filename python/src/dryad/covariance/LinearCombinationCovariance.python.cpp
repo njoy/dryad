@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/LinearCombinationCovariance.hpp"
 
 // namespace aliases
@@ -43,14 +44,6 @@ void wrapLinearCombinationCovariance( python::module& module ) {
     "    reactions      the reactions in the linear combination\n"
     "    coefficients   the coefficients of the linear combination"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "lower_energy_limit",
@@ -81,6 +74,9 @@ void wrapLinearCombinationCovariance( python::module& module ) {
     &Component::numberReactions,
     "The number of reactions"
   );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // covariance namespace

@@ -55,14 +55,6 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "    self     the quantum numbers\n"
     "    symbol   the quantum numbers symbol"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "orbital_angular_momentum",
@@ -142,6 +134,9 @@ void wrapChannelQuantumNumbers( python::module& module ) {
 
   // add standard comparison definitions
   addStandardComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

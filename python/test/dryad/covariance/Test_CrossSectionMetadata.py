@@ -9,7 +9,7 @@ from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import EnergyGroup
 
-class Test_codex_CrossSectionMetadata( unittest.TestCase ) :
+class Test_CrossSectionMetadata( unittest.TestCase ) :
     """Unit test for the CrossSectionMetadata class."""
 
     def test_metadata( self ) :

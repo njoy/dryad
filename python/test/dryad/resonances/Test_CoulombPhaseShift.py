@@ -7,7 +7,7 @@ import sys
 # local imports
 from njoy.dryad.resonances import CoulombPhaseShift
 
-class Test_dryad_resonances_CoulombPhaseShift( unittest.TestCase ) :
+class Test_CoulombPhaseShift( unittest.TestCase ) :
     """Unit test for the CoulombPhaseShift class."""
 
     def test_component( self ) :

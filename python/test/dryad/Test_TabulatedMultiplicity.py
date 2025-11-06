@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import TabulatedMultiplicity
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedMultiplicity( unittest.TestCase ) :
+class Test_TabulatedMultiplicity( unittest.TestCase ) :
     """Unit test for the TabulatedMultiplicity class."""
 
     def test_component( self ) :

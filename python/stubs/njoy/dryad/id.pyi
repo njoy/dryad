@@ -12,6 +12,10 @@ class ChannelID:
     When using comparison on the channel identifier, we use a Jpi,l,s,reaction,partial
     ordering.
     """
+    def __copy__(self) -> ChannelID:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ChannelID:
+        ...
     def __eq__(self, arg0: ChannelID) -> bool:
         ...
     def __ge__(self, arg0: ChannelID) -> bool:
@@ -41,14 +45,6 @@ class ChannelID:
         Arguments:
             self     the channel identifier
             symbol   the channel symbol
-        """
-    @typing.overload
-    def __init__(self, instance: ChannelID) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ChannelID) -> bool:
         ...
@@ -136,6 +132,10 @@ class ElectronSubshellID:
     Q7: typing.ClassVar[int] = 576
     Q8: typing.ClassVar[int] = 577
     Q9: typing.ClassVar[int] = 578
+    def __copy__(self) -> ElectronSubshellID:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ElectronSubshellID:
+        ...
     def __eq__(self, arg0: ElectronSubshellID) -> bool:
         ...
     def __ge__(self, arg0: ElectronSubshellID) -> bool:
@@ -163,14 +163,6 @@ class ElectronSubshellID:
         Arguments:
             self     the identifier
             string   the subshell symbol, name or alternative name
-        """
-    @typing.overload
-    def __init__(self, instance: ElectronSubshellID) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ElectronSubshellID) -> bool:
         ...
@@ -201,6 +193,10 @@ class ElementID:
     """
     The element identifier
     """
+    def __copy__(self) -> ElementID:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ElementID:
+        ...
     def __eq__(self, arg0: ElementID) -> bool:
         ...
     def __ge__(self, arg0: ElementID) -> bool:
@@ -228,14 +224,6 @@ class ElementID:
         Arguments:
             self     the identifier
             string   the element symbol, name or alternative name
-        """
-    @typing.overload
-    def __init__(self, instance: ElementID) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ElementID) -> bool:
         ...
@@ -266,6 +254,10 @@ class EnergyGroup:
     """
     An energy group defined by two energy values
     """
+    def __copy__(self) -> EnergyGroup:
+        ...
+    def __deepcopy__(self, arg0: dict) -> EnergyGroup:
+        ...
     def __eq__(self, arg0: EnergyGroup) -> bool:
         ...
     def __ge__(self, arg0: EnergyGroup) -> bool:
@@ -307,6 +299,10 @@ class LevelID:
     """
     all: typing.ClassVar[int] = 151
     continuum: typing.ClassVar[int] = 150
+    def __copy__(self) -> LevelID:
+        ...
+    def __deepcopy__(self, arg0: dict) -> LevelID:
+        ...
     def __eq__(self, arg0: LevelID) -> bool:
         ...
     def __ge__(self, arg0: LevelID) -> bool:
@@ -334,14 +330,6 @@ class LevelID:
         Arguments:
             self     the identifier
             string   the level symbol
-        """
-    @typing.overload
-    def __init__(self, instance: LevelID) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: LevelID) -> bool:
         ...
@@ -434,6 +422,10 @@ class ParticleID:
         """
         The particle identifier for tritons
         """
+    def __copy__(self) -> ParticleID:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ParticleID:
+        ...
     def __eq__(self, arg0: ParticleID) -> bool:
         ...
     def __ge__(self, arg0: ParticleID) -> bool:
@@ -462,14 +454,6 @@ class ParticleID:
         Arguments:
             self     the identifier
             string   the particle symbol, name or alternative
-        """
-    @typing.overload
-    def __init__(self, instance: ParticleID) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ParticleID) -> bool:
         ...
@@ -515,6 +499,10 @@ class ReactionID:
     """
     The reaction identifier
     """
+    def __copy__(self) -> ReactionID:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ReactionID:
+        ...
     def __eq__(self, arg0: ReactionID) -> bool:
         ...
     def __ge__(self, arg0: ReactionID) -> bool:
@@ -566,14 +554,6 @@ class ReactionID:
         Arguments:
             self     the reaction identifier
             symbol   the reaction symbol
-        """
-    @typing.overload
-    def __init__(self, instance: ReactionID) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ReactionID) -> bool:
         ...
@@ -653,6 +633,10 @@ class ReactionType:
         Arguments:
             type   the interaction type (nuclear or atomic)
         """
+    def __copy__(self) -> ReactionType:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ReactionType:
+        ...
     def __eq__(self, arg0: ReactionType) -> bool:
         ...
     def __ge__(self, arg0: ReactionType) -> bool:
@@ -701,14 +685,6 @@ class ReactionType:
         Arguments:
             self     the reaction type
             string   the reaction type string
-        """
-    @typing.overload
-    def __init__(self, instance: ReactionType) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ReactionType) -> bool:
         ...

@@ -9,7 +9,7 @@ from njoy.dryad import LegendreAngularDistributionFunction
 from njoy.dryad import InterpolationType
 from njoy.dryad import ToleranceConvergence
 
-class Test_dryad_LegendreAngularDistributionFunction( unittest.TestCase ) :
+class Test_LegendreAngularDistributionFunction( unittest.TestCase ) :
     """Unit test for the LegendreAngularDistributionFunction class."""
 
     def test_component( self ) :

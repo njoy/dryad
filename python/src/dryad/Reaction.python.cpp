@@ -80,14 +80,6 @@ void wrapReaction( python::module& module ) {
     "    normalise   option to indicate whether or not to normalise\n"
     "                all probability data (default: no normalisation)"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property(
 
     "identifier",
@@ -206,6 +198,9 @@ void wrapReaction( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // dryad namespace

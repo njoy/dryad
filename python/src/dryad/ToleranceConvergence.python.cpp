@@ -49,14 +49,6 @@ void wrapToleranceConvergenceFor( python::module& module, const std::string& nam
     "    tolerance   the linearisation tolerance (default 0.1 %)\n"
     "    threshold   the lowest allowed absolute difference (default 1e-10)"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "tolerance",
@@ -90,6 +82,9 @@ void wrapToleranceConvergenceFor( python::module& module, const std::string& nam
     "    yLeft        the left value on the y interval\n"
     "    yRight       the right value on the y interval"
   );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 void wrapToleranceConvergence( python::module& module ) {

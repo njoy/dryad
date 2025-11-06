@@ -9,7 +9,7 @@ from njoy.dryad import TabulatedEnergyDistribution
 from njoy.dryad import TabulatedEnergyDistributions
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedEnergyDistributions( unittest.TestCase ) :
+class Test_TabulatedEnergyDistributions( unittest.TestCase ) :
     """Unit test for the TabulatedEnergyDistribution class."""
 
     def test_component( self ) :

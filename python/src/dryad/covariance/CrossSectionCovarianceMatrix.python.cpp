@@ -4,6 +4,7 @@
 #include <pybind11/eigen.h>
 
 // local includes
+#include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 // namespace aliases
@@ -99,14 +100,6 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "    column_deviations  the standard deviations to be applied to each column\n"
     "    correlations       the correlation matrix\n"
     "    relative           the relative covariance flag (default is true)"
-  )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
   )
   .def_property_readonly(
 
@@ -269,6 +262,9 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     python::arg( "col_reaction" ),
     python::arg( "col_group" )
   );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // covariance namespace

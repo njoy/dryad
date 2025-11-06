@@ -598,7 +598,7 @@ def verify_correct_summation( self, chunk ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
-class Test_dryad_ProjectileTarget( unittest.TestCase ) :
+class Test_ProjectileTarget( unittest.TestCase ) :
     """Unit test for the ProjectileTarget class."""
 
     def test_component( self ) :

@@ -60,14 +60,6 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     "    interpolant       the interpolation type (default lin-lin),\n"
     "                      see InterpolationType for all interpolation types"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "inverse_lengths",
@@ -131,6 +123,9 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
 
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // dryad namespace

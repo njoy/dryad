@@ -78,14 +78,6 @@ void wrapReactionType( python::module& module ) {
     "    self     the reaction type\n"
     "    string   the reaction type string"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_static(
 
     "total",
@@ -180,6 +172,9 @@ void wrapReactionType( python::module& module ) {
 
   // add standard print definitions
   addStandardPrintDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // namespace id

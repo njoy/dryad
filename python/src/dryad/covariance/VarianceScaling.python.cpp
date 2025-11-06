@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/VarianceScaling.hpp"
 
 // namespace aliases
@@ -45,14 +46,6 @@ void wrapVarianceScaling( python::module& module ) {
     "    energies    the energy boundaries\n"
     "    factors     the scaling factors"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "energies",
@@ -77,6 +70,9 @@ void wrapVarianceScaling( python::module& module ) {
     &Component::type,
     "The scaling procedure type"
   );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // covariance namespace

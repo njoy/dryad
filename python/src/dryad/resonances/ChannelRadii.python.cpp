@@ -67,14 +67,6 @@ void wrapChannelRadii( python::module& module ) {
     "    shift_factor          the channel radius to be used for S\n"
     "    phase_shift           the channel radius to be used for phi"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "has_shift_factor_radius",
@@ -141,6 +133,9 @@ void wrapChannelRadii( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

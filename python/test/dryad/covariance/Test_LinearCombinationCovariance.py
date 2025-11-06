@@ -9,7 +9,7 @@ from njoy.dryad.id import ReactionType
 from njoy.dryad.id import ParticleID
 from njoy.dryad.covariance import LinearCombinationCovariance
 
-class Test_dryad_covariance_LinearCombinationCovariance( unittest.TestCase ) :
+class Test_LinearCombinationCovariance( unittest.TestCase ) :
     """Unit test for the LinearCombinationCovariance class."""
 
     def test_component( self ) :

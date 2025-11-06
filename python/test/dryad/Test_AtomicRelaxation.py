@@ -241,7 +241,7 @@ def verify_transition_energies( self, chunk ) :
     self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[4].energy )
     self.assertAlmostEqual( 538 - 13.62 - 13.62, chunk.subshells[0].non_radiative_transitions[5].energy )
 
-class Test_dryad_AtomicRelaxation( unittest.TestCase ) :
+class Test_AtomicRelaxation( unittest.TestCase ) :
     """Unit test for the AtomicRelaxation class."""
 
     def test_component( self ) :
