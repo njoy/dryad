@@ -13,6 +13,19 @@
 #include "njoy/dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.hpp"
 #include "njoy/dryad/format/endf/covariance/createVarianceScaling.hpp"
 
+#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createChannelData.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createChannels.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createCompoundSystem.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createFormalism.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createKinematics.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createSpinGroups.hpp"
+#include "njoy/dryad/format/endf/resonances/createChannelRadii.hpp"
+#include "njoy/dryad/format/endf/resonances/createResonanceParameters.hpp"
+#include "njoy/dryad/format/endf/resonances/createTabulatedRadius.hpp"
+
 #include "njoy/dryad/format/endf/createProjectileIdentifier.hpp"
 #include "njoy/dryad/format/endf/createTargetIdentifier.hpp"
 #include "njoy/dryad/format/endf/createProductIdentifier.hpp"
@@ -36,6 +49,8 @@
 #include "njoy/dryad/format/endf/createReaction.hpp"
 #include "njoy/dryad/format/endf/createReactions.hpp"
 
+#include "njoy/dryad/format/endf/createDocumentation.hpp"
+
 #include "njoy/dryad/format/endf/createProjectileTarget.hpp"
 #include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/endf/createAtomicRelaxation.hpp"
@@ -46,7 +61,14 @@
 #include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
 #include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
 
+#include "njoy/dryad/format/endf/createEndfFile3Section.hpp"
+#include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
+#include "njoy/dryad/format/endf/createEndfIndex.hpp"
+
 #include "njoy/dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
 #include "njoy/dryad/format/endf/atomic/createEndfSubshellData.hpp"
+#include "njoy/dryad/format/endf/atomic/createElectronSubshellID.hpp"
+#include "njoy/dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
 
 #include "njoy/dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
+#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"

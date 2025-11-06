@@ -1,6 +1,21 @@
+#include "njoy/dryad/format/gnds/readArray.hpp"
+#include "njoy/dryad/format/gnds/readAxes.hpp"
+#include "njoy/dryad/format/gnds/readAxis.hpp"
+#include "njoy/dryad/format/gnds/readConstant1d.hpp"
+#include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
+#include "njoy/dryad/format/gnds/readGrid.hpp"
+#include "njoy/dryad/format/gnds/readLegendre.hpp"
+#include "njoy/dryad/format/gnds/readPolynomial1d.hpp"
+#include "njoy/dryad/format/gnds/readShape.hpp"
+#include "njoy/dryad/format/gnds/readValues.hpp"
+#include "njoy/dryad/format/gnds/readXYs1d.hpp"
+#include "njoy/dryad/format/gnds/resolveLink.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+
 #include "njoy/dryad/format/gnds/atomic/createElectronSubshellID.hpp"
 #include "njoy/dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
 
+#include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
 #include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
 
 #include "njoy/dryad/format/gnds/covariance/createScalingType.hpp"
@@ -11,6 +26,9 @@
 #include "njoy/dryad/format/gnds/convertEnergies.hpp"
 #include "njoy/dryad/format/gnds/convertEnergy.hpp"
 #include "njoy/dryad/format/gnds/convertInverseLengths.hpp"
+#include "njoy/dryad/format/gnds/convertRadii.hpp"
+#include "njoy/dryad/format/gnds/convertRadius.hpp"
+#include "njoy/dryad/format/gnds/convertVarianceScalingFactors.hpp"
 
 #include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
 #include "njoy/dryad/format/gnds/createInteractionType.hpp"

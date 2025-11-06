@@ -17,6 +17,9 @@
 #include "njoy/dryad/ReactionCategory.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
 
+// components - atomic
+#include "njoy/dryad/atomic.hpp"
+
 // components - resonances
 #include "njoy/dryad/resonances.hpp"
 
@@ -26,6 +29,7 @@
 #include "njoy/dryad/IncoherentDistributionData.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "njoy/dryad/TabulatedFormFactor.hpp"
+#include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
@@ -51,6 +55,9 @@
 // components - reactions
 #include "njoy/dryad/TabulatedCrossSection.hpp"
 #include "njoy/dryad/Reaction.hpp"
+
+// components - documentation
+#include "njoy/dryad/Documentation.hpp"
 
 // components - covariances
 #include "njoy/dryad/covariance.hpp"
