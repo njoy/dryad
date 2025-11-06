@@ -23,7 +23,7 @@ namespace ace {
    *
    *  @param[in] filename   the ACE file name
    */
-  std::variant< ProjectileTarget, std::pair< ProjectileTarget, ProjectileTarget > >
+  inline std::variant< ProjectileTarget, std::pair< ProjectileTarget, ProjectileTarget > >
   createProjectileTargetFromFile( const std::string& filename ) {
 
     Log::info( "Reading ACE file \'{}\'", filename );

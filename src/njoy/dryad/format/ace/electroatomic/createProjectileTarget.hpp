@@ -22,7 +22,7 @@ namespace electroatomic {
    *
    *  @param[in] table   the ace table
    */
-  ProjectileTarget createProjectileTarget( const ACEtk::PhotoatomicTable& table ) {
+  inline ProjectileTarget createProjectileTarget( const ACEtk::PhotoatomicTable& table ) {
 
     auto projectile = id::ParticleID::electron();
     auto target = createTargetIdentifier( table.ZAID() );

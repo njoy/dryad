@@ -22,7 +22,7 @@ namespace ace {
    *
    *  @param[in] distribution   the electroatomic energy distribution block
    */
-  TabulatedEnergyDistributions
+  inline TabulatedEnergyDistributions
   createTabulatedEnergyDistributions(
       const njoy::ACEtk::electroatomic::EnergyDistributionBlock& block ) {
 

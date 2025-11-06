@@ -22,7 +22,7 @@ namespace electroatomic {
    *  @param[in] target       the target identifier
    *  @param[in] table        the ace table
    */
-  std::vector< id::ReactionID >
+  inline std::vector< id::ReactionID >
   createReactionIdentifiers( const id::ParticleID& projectile,
                              const id::ParticleID& target,
                              const ACEtk::PhotoatomicTable& table ) {

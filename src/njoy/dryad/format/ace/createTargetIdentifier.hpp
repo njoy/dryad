@@ -17,7 +17,7 @@ namespace ace {
    *
    *  @param[in] zaid   the target zaid name
    */
-  id::ParticleID createTargetIdentifier( const std::string& zaid ) {
+  inline id::ParticleID createTargetIdentifier( const std::string& zaid ) {
 
     std::string za( zaid.begin(), std::find( zaid.begin(), zaid.end(), '.' ) );
     return id::ParticleID( std::stoi( za ) );

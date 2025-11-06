@@ -30,13 +30,13 @@ namespace lrf7 {
    *  @param[in] endfPairs            the parsed ENDF particle pairs
    *  @param[in] endfChannels         the parsed ENDF channels
    */
-  auto createChannels(
-           const id::ParticleID& projectile,
-           const id::ParticleID& target,
-           const dryad::resonances::BoundaryCondition& boundary_condition,
-           const dryad::resonances::Kinematics& kinematics,
-           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
-           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels& endfChannels ) {
+  inline auto createChannels(
+                  const id::ParticleID& projectile,
+                  const id::ParticleID& target,
+                  const dryad::resonances::BoundaryCondition& boundary_condition,
+                  const dryad::resonances::Kinematics& kinematics,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels& endfChannels ) {
 
     std::vector< dryad::resonances::Channel > channels;
 

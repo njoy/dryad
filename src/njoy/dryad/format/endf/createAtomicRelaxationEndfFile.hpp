@@ -26,9 +26,9 @@ namespace endf {
    *  @param[in] mat          the ENDF mat number
    *  @param[in] filename     the file name for the ENDF file
    */
-  void createAtomicRelaxationEndfFile( const AtomicRelaxation& relaxation,
-                                       int mat,
-                                       const std::string& filename ) {
+  inline void createAtomicRelaxationEndfFile( const AtomicRelaxation& relaxation,
+                                              int mat,
+                                              const std::string& filename ) {
 
     int zaid = relaxation.elementIdentifier().number() * 1000;
     double awr = relaxation.documentation().awr().has_value()

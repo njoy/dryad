@@ -20,7 +20,7 @@ namespace ace {
    *
    *  @param[in] distribution   the electroatomic tabulated angular distribution
    */
-  TabulatedAngularDistributionFunction
+  inline TabulatedAngularDistributionFunction
   createTabulatedAngularDistributionFunction(
       const njoy::ACEtk::electroatomic::TabulatedAngularDistribution& distribution ) {
 

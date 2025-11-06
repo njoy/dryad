@@ -24,7 +24,7 @@ namespace covariance {
    *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
    *         that defines an on-diagonal covariance matrix
    */
-  dryad::covariance::CrossSectionCovarianceMatrix
+  inline dryad::covariance::CrossSectionCovarianceMatrix
   createCrossSectionCovarianceMatrix(
       const dryad::id::ReactionID& reaction,
       const ENDFtk::section::ReactionBlock& block ) {
@@ -131,7 +131,7 @@ namespace covariance {
    *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
    *         that defines an off-diagonal covariance matrix (a cross term)
    */
-  dryad::covariance::CrossSectionCovarianceMatrix
+  inline dryad::covariance::CrossSectionCovarianceMatrix
   createCrossSectionCovarianceMatrix(
       const dryad::id::ReactionID& rowReaction,
       const dryad::id::ReactionID& columnReaction,

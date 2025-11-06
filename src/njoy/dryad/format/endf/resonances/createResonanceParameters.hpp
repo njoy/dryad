@@ -23,7 +23,7 @@ namespace resonances {
    *  @param[in] target       the target identifier
    *  @param[in] section      the parsed MF2 MT151 section
    */
-  std::optional< dryad::resonances::ResonanceParameters >
+  inline std::optional< dryad::resonances::ResonanceParameters >
   createResonanceParameters( const id::ParticleID& projectile,
                              const id::ParticleID& target,
                              const ENDFtk::section::Type< 2, 151 >& section ) {

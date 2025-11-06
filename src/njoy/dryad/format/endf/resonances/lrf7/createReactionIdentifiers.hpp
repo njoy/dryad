@@ -23,10 +23,10 @@ namespace lrf7 {
    *  @param[in] target       the target identifier
    *  @param[in] endfPairs    the parsed ENDF particle pairs
    */
-  auto createReactionIdentifiers(
-           const id::ParticleID& projectile,
-           const id::ParticleID& target,
-           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
+  inline auto createReactionIdentifiers(
+                  const id::ParticleID& projectile,
+                  const id::ParticleID& target,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
     std::vector< id::ReactionID > reactions;
     for ( const auto& mt : endfPairs.MT() ) {
