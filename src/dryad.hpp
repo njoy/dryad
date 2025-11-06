@@ -2,15 +2,19 @@
 #include "dryad/type-aliases.hpp"
 
 // identifiers
+#include "dryad/id/ChannelID.hpp"
 #include "dryad/id/ElectronSubshellID.hpp"
 #include "dryad/id/ElementID.hpp"
+#include "dryad/id/EnergyGroup.hpp"
+#include "dryad/id/LevelID.hpp"
 #include "dryad/id/ParticleID.hpp"
 #include "dryad/id/ReactionID.hpp"
+#include "dryad/id/ReactionType.hpp"
 
 // enumerators
 #include "dryad/DistributionDataType.hpp"
 #include "dryad/InteractionType.hpp"
-#include "dryad/ReactionType.hpp"
+#include "dryad/ReactionCategory.hpp"
 #include "dryad/ReferenceFrame.hpp"
 
 // components - resonances
