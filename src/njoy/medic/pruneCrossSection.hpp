@@ -17,8 +17,8 @@ namespace medic {
    *  @param[in]     upperEnergy   the new upper energy limit
    *  @param[in,out] xs            the cross section table to be modified
    */
-  void pruneCrossSection( double lowerEnergy, double upperEnergy,
-                          dryad::TabulatedCrossSection& xs ) {
+  inline void pruneCrossSection( double lowerEnergy, double upperEnergy,
+                                 dryad::TabulatedCrossSection& xs ) {
 
     if ( upperEnergy <= lowerEnergy ) {
 

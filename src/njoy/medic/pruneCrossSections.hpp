@@ -18,8 +18,8 @@ namespace medic {
    *  @param[in]     upperEnergy   the new upper energy limit
    *  @param[in,out] pt            the projectile-target data to be modified
    */
-  void pruneCrossSections( double lowerEnergy, double upperEnergy,
-                              dryad::ProjectileTarget& pt ) {
+  inline void pruneCrossSections( double lowerEnergy, double upperEnergy,
+                                  dryad::ProjectileTarget& pt ) {
 
     for ( dryad::Reaction& reaction : pt.reactions() ) {
 
