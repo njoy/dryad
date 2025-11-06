@@ -7,6 +7,6 @@ find_program( SPHINX_EXECUTABLE
 include( FindPackageHandleStandardArgs )
 
 find_package_handle_standard_args( sphinx
-    "No sphinx executable found"
+    "No sphinx executable found, documentation cannot be built."
     SPHINX_EXECUTABLE
 )
