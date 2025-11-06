@@ -24,7 +24,7 @@ namespace covariance {
   /**
    *  @brief Create a VarianceScaling from a GNDS variance scaling node
    */
-  static dryad::covariance::VarianceScaling
+  inline dryad::covariance::VarianceScaling
   createVarianceScaling( const pugi::xml_node& scaling ) {
 
     // check that this is a valid variance scaling node

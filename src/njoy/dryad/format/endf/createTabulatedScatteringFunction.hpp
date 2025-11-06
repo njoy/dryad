@@ -21,7 +21,7 @@ namespace endf {
   /**
    *  @brief Create a TabulatedScatteringFunction from a parsed ENDF section
    */
-  TabulatedScatteringFunction
+  inline TabulatedScatteringFunction
   createTabulatedScatteringFunction( const ENDFtk::section::Type< 27 >& section ) {
 
     if ( ( section.sectionNumber() != 502 ) && ( section.sectionNumber() != 504 ) ) {

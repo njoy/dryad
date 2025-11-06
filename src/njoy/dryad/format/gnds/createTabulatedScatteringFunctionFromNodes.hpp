@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedScatteringFunction from a GNDS scattering function node
    */
-  static TabulatedScatteringFunction
+  inline TabulatedScatteringFunction
   createTabulatedScatteringFunctionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > x;

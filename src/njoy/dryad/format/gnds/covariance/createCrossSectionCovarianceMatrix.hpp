@@ -20,7 +20,7 @@ namespace covariance {
   /**
    *  @brief Create a cross section covariance block from a GNDS covariance section
    */
-  dryad::covariance::CrossSectionCovarianceMatrix
+  inline dryad::covariance::CrossSectionCovarianceMatrix
   createCrossSectionCovarianceMatrix(
       const dryad::id::ParticleID& projectile,
       const dryad::id::ParticleID& target,

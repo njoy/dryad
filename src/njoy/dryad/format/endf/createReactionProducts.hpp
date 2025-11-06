@@ -28,7 +28,7 @@ namespace endf {
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
-  std::vector< ReactionProduct >
+  inline std::vector< ReactionProduct >
   createReactionProducts( const id::ParticleID& projectile,
                           const id::ParticleID& target,
                           const ENDFtk::tree::Material& material,

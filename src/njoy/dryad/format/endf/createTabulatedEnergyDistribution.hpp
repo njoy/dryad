@@ -22,7 +22,7 @@ namespace endf {
    *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF6 LAW = 1
    *         LegendreCoefficients entry
    */
-  TabulatedEnergyDistribution
+  inline TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(
     const ENDFtk::section::Type< 6 >::ContinuumEnergyAngle::LegendreCoefficients& distribution,
     const InterpolationType& interpolant,

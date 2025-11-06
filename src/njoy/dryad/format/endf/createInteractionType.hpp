@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create the interaction type based of the sublibrary value
    */
-  InteractionType createInteractionType( int sublibrary ) {
+  inline InteractionType createInteractionType( int sublibrary ) {
 
     switch ( sublibrary ) {
 

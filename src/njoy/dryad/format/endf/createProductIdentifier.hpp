@@ -22,7 +22,7 @@ namespace endf {
    *  @param[in] multiple   flag to indicate whether or not there is multiple
    *                        emission of the product
    */
-  id::ParticleID createProductIdentifier( int zap, int lip ) {
+  inline id::ParticleID createProductIdentifier( int zap, int lip ) {
 
     switch ( zap ) {
 

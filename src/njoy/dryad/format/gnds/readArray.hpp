@@ -22,7 +22,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS array node
    */
-  static matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
+  inline matrix::Matrix< double > readArray( const pugi::xml_node& array ) {
 
     throwExceptionOnWrongNode( array, "array" );
 

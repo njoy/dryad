@@ -17,7 +17,7 @@ namespace gnds {
   /**
    *  @brief Convert a cross section range from GNDS into b
    */
-  static void convertCrossSections( std::vector< double >& xs, const std::string& unit ) {
+  inline void convertCrossSections( std::vector< double >& xs, const std::string& unit ) {
 
     if ( unit != "b" ) {
 

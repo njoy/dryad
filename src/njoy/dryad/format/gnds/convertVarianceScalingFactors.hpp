@@ -16,7 +16,7 @@ namespace gnds {
   /**
    *  @brief Convert a variance scaling factor range from GNDS into b**2
    */
-  static void convertVarianceScalingFactors( std::vector< double >& factors, const std::string& unit ) {
+  inline void convertVarianceScalingFactors( std::vector< double >& factors, const std::string& unit ) {
 
     if ( unit != "b**2" ) {
 
