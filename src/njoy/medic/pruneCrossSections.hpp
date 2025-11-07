@@ -23,7 +23,6 @@ namespace medic {
 
     for ( dryad::Reaction& reaction : pt.reactions() ) {
 
-      // prune this cross section data
       pruneCrossSection( lowerEnergy, upperEnergy, reaction.crossSection() );
     }
   }

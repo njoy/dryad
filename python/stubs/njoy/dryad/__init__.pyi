@@ -1014,6 +1014,24 @@ class ProjectileTarget:
             mat         the ENDF mat number to be used
             filename    the ENDF file name
         """
+    def unionise_cross_sections(self, exclude_summation: bool = False) -> None:
+        """
+        Unionise cross section data
+        
+        This function takes all cross section data and unionises the cross section
+        grids. It does not linearise the data but reevaluates the data using the
+        proper interpolation types of the cross section data.
+        
+        By default, summation cross sections are included in the unionisation process.
+        unless explicitly excluded by the user. Switching on the exclusion of summation
+        cross sections may be useful when the user is going to recalculate the summation
+        cross sections after unionisation.
+        
+        Arguments:
+            self                the ProjectileTarget data
+            exclude_summation   option to exclude summation reactions in the
+                                unionisation (default: false)
+        """
     @property
     def documentation(self) -> Documentation:
         """
