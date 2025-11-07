@@ -11,12 +11,12 @@ namespace njoy {
 namespace reconr {
 
   /**
-   *  @brief Unionise cross section data
+   *  @brief Unionise cross section data in a ProjectileTarget instance
    *
-   *  This function takes all cross section data and unionises the cross section
-   *  grids of a projectile target instance. It does not linearise the data but
-   *  reevaluates the data using the proper interpolation types of the cross section
-   *  data.
+   *  This function takes all cross section data in the ProjectileTarget
+   *  instance and unionises the cross section grids. It does not linearise
+   *  the data but reevaluates the data using the proper interpolation types
+   *  of the cross section data.
    *
    *  By default, summation cross sections are included in the unionisation process.
    *  unless explicitly excluded by the user. Switching on the exclusion of summation
