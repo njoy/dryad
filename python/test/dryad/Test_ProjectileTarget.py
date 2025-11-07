@@ -11,7 +11,6 @@ from njoy.dryad import TabulatedCrossSection
 from njoy.dryad import InterpolationType
 from njoy.dryad import InteractionType
 from njoy.dryad import ReactionCategory
-from njoy.dryad.id import ReactionType
 from njoy.dryad.id import ReactionID
 from njoy.dryad import DistributionDataType
 from njoy.dryad import ReferenceFrame
