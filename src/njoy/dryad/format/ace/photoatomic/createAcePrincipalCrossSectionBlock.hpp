@@ -2,10 +2,10 @@
 #define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEPRINCIPALCROSSSECTIONBLOCK
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
-#include "tools/Log.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "ACEtk/photoatomic/PrincipalCrossSectionBlock.hpp"
 
