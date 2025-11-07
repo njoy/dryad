@@ -27,11 +27,6 @@ namespace electroatomic {
   createAcePrincipalCrossSectionBlock( const ProjectileTarget& electroatomic ) {
 
     // energy is converted to MeV
-
-    // photoatomic data is stored as log values, except when the value
-    // is exactly 0 (in which case it is zero). If the value is exactly 1,
-    // the final value is shifted by 1e-13 to avoid having a zero value
-    // (this practice in found in older eprdata files)
     auto convertEnergy = [] ( auto&& energy ) {
 
       return energy * constants::micro;
@@ -40,16 +35,22 @@ namespace electroatomic {
     // identifiers
     decltype(auto) projectile = electroatomic.projectileIdentifier();
     decltype(auto) target = electroatomic.targetIdentifier();
-    dryad::id::ReactionID largeangle_id( projectile, target, dryad::id::ReactionType( projectile, 525 ) );
     dryad::id::ReactionID bremsstrahlung_id( projectile, target, dryad::id::ReactionType( projectile, 527 ) );
     dryad::id::ReactionID excitation_id( projectile, target, dryad::id::ReactionType( projectile, 528 ) );
     dryad::id::ReactionID totalionisation_id( projectile, target, dryad::id::ReactionType( projectile, 522 ) );
+
+    // check which eprdata format we want: only total elastic or large angle and total elastic
+    dryad::id::ReactionID elastic_id( projectile, target, dryad::id::ReactionType( projectile, 525 ) );
+    if ( ! electroatomic.hasReaction( elastic_id ) ) {
+
+      elastic_id = dryad::id::ReactionID( projectile, target, dryad::id::ReactionType( projectile, 526 ) );
+    }
 
     // collect all cross section data: large angle elastic, bremsstrahlung, excitation, ionisation
     std::vector< double > energies = electroatomic.reactions().front().crossSection().energies();
     std::transform( energies.begin(), energies.end(), energies.begin(), convertEnergy );
 
-    std::vector< double > elastic = electroatomic.reaction( largeangle_id ).crossSection().values();
+    std::vector< double > elastic = electroatomic.reaction( elastic_id ).crossSection().values();
     std::vector< double > bremsstrahlung = electroatomic.reaction( bremsstrahlung_id ).crossSection().values();
 
     std::vector< std::vector< double > > ionisonisation;

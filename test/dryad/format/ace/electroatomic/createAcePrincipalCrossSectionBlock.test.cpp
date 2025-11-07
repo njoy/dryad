@@ -18,7 +18,7 @@ SCENARIO( "createAcePrincipalCrossSectionBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto electroatomic = format::endf::createProjectileTargetFromFile( "e-001_H_000.endf", false );
+      auto electroatomic = format::endf::createProjectileTargetFromFile( "e-001_H_000.endf", true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 

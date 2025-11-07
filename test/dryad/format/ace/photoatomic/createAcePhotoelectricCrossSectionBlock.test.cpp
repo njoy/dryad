@@ -18,7 +18,7 @@ SCENARIO( "createAcePhotoelectricCrossSectionBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
