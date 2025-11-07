@@ -21,7 +21,7 @@ namespace reconr {
       "calculate_summation_cross_sections",
       &njoy::reconr::calculateSummationCrossSections,
       python::arg( "pt" ),
-      python::arg( "exclude_summation" ) = false,
+      python::arg( "tolerance" ) = njoy::dryad::ToleranceConvergence(),
       "This function recalculates the cross section of all summation reactions of\n"
       "a ProjectileTarget instance. It does so by linearising the cross sections of\n"
       "the partials (if required) and summing them together.\n\n"
