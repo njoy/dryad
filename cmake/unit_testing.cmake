@@ -128,6 +128,8 @@ add_cpp_test( dryad.format.ace.photoatomic.createReactions                      
 add_cpp_test( dryad.format.ace.photoatomic.createProjectileTarget                       dryad/format/ace/photoatomic/createProjectileTarget.test.cpp )
 add_cpp_test( dryad.format.ace.createProjectileTargetFromFile                           dryad/format/ace/createProjectileTargetFromFile.test.cpp )
 
+add_cpp_test( dryad.format.ace.electroatomic.createAcePrincipalCrossSectionBlock        dryad/format/ace/electroatomic/createAcePrincipalCrossSectionBlock.test.cpp )
+
 add_cpp_test( dryad.format.ace.photoatomic.createAcePrincipalCrossSectionBlock          dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createAcePhotoelectricCrossSectionBlock      dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createAceIncoherentScatteringFunctionBlock   dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.test.cpp )

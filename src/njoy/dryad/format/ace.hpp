@@ -5,6 +5,11 @@
 #include "njoy/dryad/format/ace/photoatomic/createReactions.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
 
+#include "njoy/dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAceCoherentFormFactorBlock.hpp"
+
 #include "njoy/dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
@@ -12,6 +17,8 @@
 #include "njoy/dryad/format/ace/electroatomic/createTabulatedCrossSections.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createReactions.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
+
+#include "njoy/dryad/format/ace/electroatomic/createAcePrincipalCrossSectionBlock.hpp"
 
 #include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
@@ -22,7 +29,3 @@
 #include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
 #include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
 
-#include "njoy/dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.hpp"
-#include "njoy/dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.hpp"
-#include "njoy/dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.hpp"
-#include "njoy/dryad/format/ace/photoatomic/createAceCoherentFormFactorBlock.hpp"

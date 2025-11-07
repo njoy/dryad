@@ -8,12 +8,11 @@ using Catch::Matchers::WithinRel;
 
 // other includes
 #include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
-#include <iostream>
-#include <iomanip>
+
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "createAcePhotoelectricCrossSectionBlock" ) {
+SCENARIO( "createAcePrincipalCrossSectionBlock" ) {
 
   GIVEN( "instances of ProjectileTarget" ) {
 
