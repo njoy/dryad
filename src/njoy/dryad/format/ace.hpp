@@ -21,3 +21,6 @@
 #include "njoy/dryad/format/ace/createTabulatedEnergyDistributions.hpp"
 #include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
 #include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
+
+#include "njoy/dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.hpp"
