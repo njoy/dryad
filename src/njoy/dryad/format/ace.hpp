@@ -19,6 +19,9 @@
 #include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
 
 #include "njoy/dryad/format/ace/electroatomic/createAcePrincipalCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceElasticCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceExcitationBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceBremsstrahlungBlock.hpp"
 
 #include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
