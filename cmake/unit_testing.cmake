@@ -239,6 +239,7 @@ add_cpp_test( dryad.format.gnds.createAtomicRelaxationFromFile                 d
 # reconr tests
 
 add_cpp_test( reconr.unioniseCrossSections                                     reconr/unioniseCrossSections.test.cpp )
+add_cpp_test( reconr.calculateSummationCrossSections                           reconr/calculateSummationCrossSections.test.cpp )
 
 # medic tests
 
