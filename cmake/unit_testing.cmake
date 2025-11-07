@@ -236,6 +236,10 @@ add_cpp_test( dryad.format.gnds.createProjectileTargetFromFile                 d
 add_cpp_test( dryad.format.gnds.createAtomicRelaxation                         dryad/format/gnds/createAtomicRelaxation.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxationFromFile                 dryad/format/gnds/createAtomicRelaxationFromFile.test.cpp )
 
+# reconr tests
+
+add_cpp_test( reconr.unioniseCrossSections                                     reconr/unioniseCrossSections.test.cpp )
+
 # medic tests
 
 add_cpp_test( medic.pruneCrossSection                                          medic/pruneCrossSection.test.cpp )
