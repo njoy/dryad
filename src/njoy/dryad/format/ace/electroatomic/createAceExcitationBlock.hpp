@@ -7,6 +7,7 @@
 #include <vector>
 
 // other includes
+#include "njoy/constants.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "ACEtk/electroatomic/ExcitationBlock.hpp"
 
@@ -27,6 +28,12 @@ namespace electroatomic {
   inline njoy::ACEtk::electroatomic::ExcitationBlock
   createAceExcitationBlock( const ProjectileTarget& electroatomic ) {
 
+    // energy is converted to MeV
+    auto convertEnergy = [] ( auto&& energy ) {
+
+      return energy * constants::micro;
+    };
+
     // identifiers
     decltype(auto) projectile = electroatomic.projectileIdentifier();
     decltype(auto) target = electroatomic.targetIdentifier();
@@ -39,13 +46,12 @@ namespace electroatomic {
     std::vector< double > values = electron.values();
     std::transform( energies.begin(), energies.end(), values.begin(), values.begin(),
                     [] ( auto&& incident, auto&& average ) { return ( incident - average ) * constants::micro; } );
-    std::transform( energies.begin(), energies.end(), energies.begin(),
-                    [] ( auto&& incident ) { return incident * constants::micro; } );
+    std::transform( energies.begin(), energies.end(), energies.begin(), convertEnergy );
 
     return njoy::ACEtk::electroatomic::ExcitationBlock( std::move( energies ), std::move( values ) );
   }
 
-} // photoatomic namespace
+} // electroatomic namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace

@@ -7,6 +7,7 @@
 #include <vector>
 
 // other includes
+#include "njoy/constants.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "ACEtk/electroatomic/EnergyDistributionBlock.hpp"
 
@@ -68,7 +69,7 @@ namespace electroatomic {
     return njoy::ACEtk::electroatomic::EnergyDistributionBlock( std::move( distributions ) );
   }
 
-} // photoatomic namespace
+} // electroatomic namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace

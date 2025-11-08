@@ -85,7 +85,7 @@ namespace electroatomic {
     }
   }
 
-} // photoatomic namespace
+} // electroatomic namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace
