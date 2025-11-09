@@ -45,7 +45,7 @@ namespace atomic {
 
         for ( const auto& transition : shell.radiativeTransitions() ) {
 
-          primary.emplace_back( transition.originatingShell().number() - 533 );
+          primary.emplace_back( transition.originatingShell().number() - offset );
           secondary.emplace_back( 0 );
           energies.emplace_back( transition.energy().value() * constants::micro );
 
@@ -55,8 +55,8 @@ namespace atomic {
 
         for ( const auto& transition : shell.nonRadiativeTransitions() ) {
 
-          primary.emplace_back( transition.originatingShell().number() - 533 );
-          secondary.emplace_back( transition.emittingShell().number() - 533 );
+          primary.emplace_back( transition.originatingShell().number() - offset );
+          secondary.emplace_back( transition.emittingShell().number() - offset );
           energies.emplace_back( transition.energy().value() * constants::micro );
 
           probability += transition.probability();
