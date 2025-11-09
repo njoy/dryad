@@ -20,6 +20,11 @@ namespace constants {
   // CODATA 2022 - elementary charge in Coulomb
   constexpr double e = 1.602176634e-19;
 
+  // CODATA 2018 - Planck constant in J s
+  // constexpr double h = 6.62607015e-34;
+  // CODATA 2022 - Planck constant in J s
+  constexpr double h = 6.62607015e-34;
+
   // CODATA 2018 - reduced Planck constant in ev s
   // constexpr double hbar = 6.582119569e-16;
   // CODATA 2022 - reduced Planck constant in ev s
