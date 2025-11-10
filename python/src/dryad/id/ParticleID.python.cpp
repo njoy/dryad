@@ -117,7 +117,7 @@ void wrapParticleID( python::module& module ) {
   .def(
 
     "__hash__",
-    [] ( const Component& self ) { return self.number(); },
+    [] ( const Component& self ) { return std::hash< Component >{}( self ); },
     "Hash function"
   );
 
