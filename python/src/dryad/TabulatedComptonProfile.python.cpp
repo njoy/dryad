@@ -4,17 +4,17 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
+#include "njoy/dryad/TabulatedComptonProfile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
 
-void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
+void wrapTabulatedComptonProfile( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::TabulatedEnergyDistributionFunction;
+  using Component = njoy::dryad::TabulatedComptonProfile;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -24,8 +24,8 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedEnergyDistributionFunction",
-    "An energy distribution function using tabulated data"
+    "TabulatedComptonProfile",
+    "A Compton profile using tabulated data"
   );
 
   // wrap the component
@@ -35,13 +35,13 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     python::init< std::vector< double >, std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "momentum" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the energy distribution function\n\n"
+    "Initialise the Compton profile\n\n"
     "Arguments:\n"
-    "    self           the energy distribution function\n"
-    "    energies       the energy values\n"
-    "    values         the cross section values\n"
+    "    self           the compton profile\n"
+    "    momentum       the momentum values\n"
+    "    values         the probability values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
     "    interpolants   the interpolation types of the interpolation regions,\n"
     "                   see InterpolationType for all interpolation types"
@@ -50,21 +50,21 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
 
     python::init< std::vector< double >, std::vector< double >,
                   InterpolationType >(),
-    python::arg( "energies" ), python::arg( "values" ),
+    python::arg( "momentum" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the energy distribution function\n\n"
+    "Initialise the Compton profile\n\n"
     "Arguments:\n"
-    "    self           the energy distribution function\n"
-    "    energies       the energy values\n"
-    "    values         the cross section values\n"
+    "    self           the Compton profile\n"
+    "    momentum       the momentum values\n"
+    "    values         the probability values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
   .def_property_readonly(
 
-    "energies",
-    &Component::energies,
-    "The energy values"
+    "momentum",
+    &Component::momentum,
+    "The momentum values"
   )
   .def_property_readonly(
 
@@ -74,50 +74,38 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
   )
   .def_property_readonly(
 
-    "lower_energy_limit",
-    &Component::lowerEnergyLimit,
-    "The lower energy limit"
+    "lower_momentum_limit",
+    &Component::lowerMomentumLimit,
+    "The lower momentum limit"
   )
   .def_property_readonly(
 
-    "upper_energy_limit",
-    &Component::upperEnergyLimit,
-    "The upper energy limit"
+    "upper_momentum_limit",
+    &Component::upperMomentumLimit,
+    "The upper momentum limit"
   )
   .def(
 
     "__call__",
-    [] ( const Component& self, double energy ) -> decltype(auto)
-       { return self( energy ); },
-    python::arg( "energy" ),
-    "Evaluate the table for a given energy value\n\n"
+    [] ( const Component& self, double momentum ) -> decltype(auto)
+       { return self( momentum ); },
+    python::arg( "momentum" ),
+    "Evaluate the table for a given momentum value\n\n"
     "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "    self        the table\n"
+    "    momentum    the momentum value"
   )
   .def_property_readonly(
 
     "integral",
     [] ( const Component& self ) { return self.integral(); },
-    "The integral (zeroth order moment) of the distribution function over its domain"
-  )
-  .def_property_readonly(
-
-    "mean",
-    [] ( const Component& self ) { return self.mean(); },
-    "The mean (first order raw moment) of the distribution function over its domain"
+    "The integral (zeroth order moment) of the Compton profile over its domain"
   )
   .def_property_readonly(
 
     "cumulative_integral",
     [] ( const Component& self ) { return self.cumulativeIntegral(); },
-    "The cumulative integral of the distribution function over its domain"
-  )
-  .def(
-
-    "normalise",
-    &Component::normalise,
-    "Normalise the distribution function"
+    "The cumulative integral of the Compton profile over its domain"
   );
 
   // add standard equality comparison definitions

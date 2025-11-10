@@ -107,6 +107,12 @@ void wrapTabulatedAngularDistributionFunction( python::module& module ) {
     [] ( const Component& self ) { return self.mean(); },
     "The mean (first order raw moment) of the distribution function over its domain"
   )
+  .def_property_readonly(
+
+    "cumulative_integral",
+    [] ( const Component& self ) { return self.cumulativeIntegral(); },
+    "The cumulative integral of the distribution function over its domain"
+  )
   .def(
 
     "normalise",
