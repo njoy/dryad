@@ -22,15 +22,20 @@ public:
   Entry( short n, short l, double j, short mt,
          std::string symbol,
          std::vector< std::string > alternatives = {} ) :
-    n_( n ), l_( l ), j_( std::move( j ) ), mt_( mt ),
-    symbol_( std::move( symbol ) ),
-    alternatives_( std::move( alternatives ) ),
-    hash_( std::hash< std::string >{}( this->symbol() ) ) {}
+      n_( n ), l_( l ), j_( std::move( j ) ), mt_( mt ),
+      symbol_( std::move( symbol ) ),
+      alternatives_( std::move( alternatives ) ) {
+
+    this->hash_ = std::hash< std::string >{}( this->symbol() );
+  }
+
   Entry( short n, short l,
          std::string symbol ) :
-    n_( n ), l_( l ), j_( std::nullopt ), mt_( std::nullopt ),
-    symbol_( std::move( symbol ) ),
-    hash_( std::hash< std::string >{}( this->symbol() ) ) {}
+      n_( n ), l_( l ), j_( std::nullopt ), mt_( std::nullopt ),
+      symbol_( std::move( symbol ) ) {
+
+    this->hash_ = std::hash< std::string >{}( this->symbol() );
+  }
 
   /* methods */
   const short& principalQuantumNumber() const { return this->n_; }

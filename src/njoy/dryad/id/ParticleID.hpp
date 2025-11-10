@@ -26,10 +26,9 @@ namespace id {
    *    - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),
    *      t (1003), h (2003), a (2004)
    *    - elements (z * 1000000)
-   *    - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 150 with 150 being
+   *    - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 151 with 150 being
    *      defined as the continuum )
-   *    - ions (z * 1000000 + s, with s = K(534) .. Q11(580) - basically the ENDF
-   *      mt numbers for the subshell ionisation)
+   *    - ions
    *
    *  Comparison operators are provided using the logical order given by the
    *  element number. A hash function and override for std::hash is also
@@ -311,6 +310,14 @@ namespace id {
     }
 
     /**
+     *  @brief Return the hash
+     */
+    std::size_t hash() const {
+
+      return entries[ this->index_ ].hash();
+    }
+
+    /**
      *  @brief Return the particle's subshell
      */
     const std::optional< ElectronSubshellID >& subshell() const {
@@ -397,7 +404,7 @@ namespace std {
 
     size_t operator()( const njoy::dryad::id::ParticleID& key ) const {
 
-      return key.number();
+      return key.hash();
     }
   };
 

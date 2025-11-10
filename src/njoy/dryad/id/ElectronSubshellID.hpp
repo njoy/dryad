@@ -261,7 +261,7 @@ namespace id {
     }
 
     /**
-     *  @brief Return the subshell hash
+     *  @brief Return the hash
      */
     std::size_t hash() const {
 

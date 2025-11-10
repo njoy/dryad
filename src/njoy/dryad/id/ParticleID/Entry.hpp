@@ -14,23 +14,32 @@ class Entry {
   std::string symbol_;
   std::vector< std::string > alternatives_;
 
+  std::size_t hash_;
+
 public:
 
   /* constructor */
   Entry( int number, short z, short a, short e,
          std::string symbol, std::vector< std::string > alternatives ) :
-    number_( number ), z_( z ), a_( a ), e_( e ),
-    za_( static_cast< int >( z ) * 1000 + a ),
-    subshell_( std::nullopt ),
-    symbol_( std::move( symbol ) ),
-    alternatives_( std::move( alternatives ) ) {}
+      number_( number ), z_( z ), a_( a ), e_( e ),
+      za_( static_cast< int >( z ) * 1000 + a ),
+      subshell_( std::nullopt ),
+      symbol_( std::move( symbol ) ),
+      alternatives_( std::move( alternatives ) ) {
+
+    this->hash_ = std::hash< std::string >{}( this->symbol() );
+  }
+
   Entry( int number, short z, id::ElectronSubshellID subshell,
          std::string symbol, std::vector< std::string > alternatives ) :
-     number_( number ), z_( z ), a_( 0 ), e_( 0 ),
-     za_( static_cast< int >( z ) * 1000 ),
-     subshell_( std::move( subshell ) ),
-     symbol_( std::move( symbol ) ),
-     alternatives_( std::move( alternatives ) ) {}
+      number_( number ), z_( z ), a_( 0 ), e_( 0 ),
+      za_( static_cast< int >( z ) * 1000 ),
+      subshell_( std::move( subshell ) ),
+      symbol_( std::move( symbol ) ),
+      alternatives_( std::move( alternatives ) ) {
+
+    this->hash_ = std::hash< std::string >{}( this->symbol() );
+  }
 
   /* methods */
   int number() const { return this->number_; }
@@ -41,4 +50,6 @@ public:
   const std::optional< id::ElectronSubshellID >& subshell() const { return this->subshell_; }
   const std::string& symbol() const { return this->symbol_; }
   const std::vector< std::string >& alternatives() const { return this->alternatives_; }
+
+  std::size_t hash() const { return this->hash_; }
 };
