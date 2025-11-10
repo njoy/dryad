@@ -18,30 +18,39 @@ SCENARIO( "ElectronSubshellID" ) {
     THEN( "an ElectronSubshellID can be created" ) {
 
       ElectronSubshellID id( ElectronSubshellID::K );
-      CHECK( 534 == id.number() );
+      CHECK( 1 == id.principalQuantumNumber() );
+      CHECK( 0 == id.azimuthalQuantumNumber() );
+      CHECK( 0.5 == id.totalAngularMomentum() );
+      CHECK( 534 == id.mt() );
       CHECK( "1s1/2" == id.symbol() );
-      CHECK( "K" == id.name() );
-
-      id = ElectronSubshellID( "1s1/2" );
-      CHECK( 534 == id.number() );
-      CHECK( "K" == id.name() );
-
-      id = ElectronSubshellID( "K" );
-      CHECK( 534 == id.number() );
-      CHECK( "K" == id.name() );
+      CHECK( id == ElectronSubshellID( "1s1/2" ) );
+      CHECK( id == ElectronSubshellID( "1s" ) );
+      CHECK( id == ElectronSubshellID( "1s+" ) );
+      CHECK( id == ElectronSubshellID( "K" ) );
+      CHECK( true == id.isRelativistic() );
+      CHECK( false == id.isNonRelativistic() );
 
       id = ElectronSubshellID( ElectronSubshellID::L1 );
-      CHECK( 535 == id.number() );
+      CHECK( 2 == id.principalQuantumNumber() );
+      CHECK( 0 == id.azimuthalQuantumNumber() );
+      CHECK( 0.5 == id.totalAngularMomentum() );
+      CHECK( 535 == id.mt() );
       CHECK( "2s1/2" == id.symbol() );
-      CHECK( "L1" == id.name() );
+      CHECK( id == ElectronSubshellID( "2s1/2" ) );
+      CHECK( id == ElectronSubshellID( "2s" ) );
+      CHECK( id == ElectronSubshellID( "2s+" ) );
+      CHECK( id == ElectronSubshellID( "L1" ) );
+      CHECK( true == id.isRelativistic() );
+      CHECK( false == id.isNonRelativistic() );
 
-      id = ElectronSubshellID( "2s1/2" );
-      CHECK( 535 == id.number() );
-      CHECK( "L1" == id.name() );
-
-      id = ElectronSubshellID( "L1" );
-      CHECK( 535 == id.number() );
-      CHECK( "L1" == id.name() );
+      id = ElectronSubshellID( "2p" );
+      CHECK( 2 == id.principalQuantumNumber() );
+      CHECK( 1 == id.azimuthalQuantumNumber() );
+      CHECK( std::nullopt == id.totalAngularMomentum() );
+      CHECK( std::nullopt == id.mt() );
+      CHECK( "2p" == id.symbol() );
+      CHECK( false == id.isRelativistic() );
+      CHECK( true == id.isNonRelativistic() );
     } // THEN
   } // GIVEN
 

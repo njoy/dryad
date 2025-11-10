@@ -79,9 +79,6 @@ class ChannelID:
 class ElectronSubshellID:
     """
     The electron subshell identifier
-    
-    For more information on how to create instances of ElectronSubshellID, see the
-    Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     K: typing.ClassVar[int] = 534
     L1: typing.ClassVar[int] = 535
@@ -175,19 +172,39 @@ class ElectronSubshellID:
         Convenience function for printing the identifier
         """
     @property
-    def name(self) -> str:
+    def azimuthal_quantum_number(self) -> int:
         """
-        The subshell name
+        The subshell azimuthal quantum number
         """
     @property
-    def number(self) -> int:
+    def is_non_relativistic(self) -> bool:
         """
-        The subshell number
+        Flag to indicate whether or not the subshell identifier is non-relativistic
+        """
+    @property
+    def is_relativistic(self) -> bool:
+        """
+        Flag to indicate whether or not the subshell identifier is relativistic
+        """
+    @property
+    def mt(self) -> int | None:
+        """
+        The subshell mt number (if defined)
+        """
+    @property
+    def principal_quantum_number(self) -> int:
+        """
+        The subshell principal quantum number
         """
     @property
     def symbol(self) -> str:
         """
         The subshell symbol
+        """
+    @property
+    def total_angular_momentum(self) -> float | None:
+        """
+        The subshell total angular momentum
         """
 class ElementID:
     """

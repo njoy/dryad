@@ -48,24 +48,44 @@ class Test_ElectronSubshellID( unittest.TestCase ) :
             i = s - self.numbers[0]
 
             id = ElectronSubshellID( s )
-            self.assertEqual( id.number, s )
+            self.assertEqual( id.mt, s )
             self.assertEqual( id.symbol, self.symbols[i] )
-            self.assertEqual( id.name, self.names[i] )
 
             id = ElectronSubshellID( self.symbols[i] )
-            self.assertEqual( id.number, s )
+            self.assertEqual( id.mt, s )
             self.assertEqual( id.symbol, self.symbols[i] )
-            self.assertEqual( id.name, self.names[i] )
 
             id = ElectronSubshellID( self.names[i] )
-            self.assertEqual( id.number, s )
+            self.assertEqual( id.mt, s )
             self.assertEqual( id.symbol, self.symbols[i] )
-            self.assertEqual( id.name, self.names[i] )
 
             id = ElectronSubshellID( self.predefined[i] )
-            self.assertEqual( id.number, s )
+            self.assertEqual( id.mt, s )
             self.assertEqual( id.symbol, self.symbols[i] )
-            self.assertEqual( id.name, self.names[i] )
+
+    def test_component( self ) :
+
+        id = ElectronSubshellID( ElectronSubshellID.K )
+        self.assertEqual( 1, id.principal_quantum_number )
+        self.assertEqual( 0, id.azimuthal_quantum_number )
+        self.assertEqual( 0.5, id.total_angular_momentum )
+        self.assertEqual( 534, id.mt )
+        self.assertEqual( '1s1/2', id.symbol )
+        self.assertEqual( id, ElectronSubshellID( '1s' ) )
+        self.assertEqual( id, ElectronSubshellID( '1s+' ) )
+        self.assertEqual( id, ElectronSubshellID( '1s1/2' ) )
+        self.assertEqual( id, ElectronSubshellID( 'K' ) )
+        self.assertEqual( True, id.is_relativistic )
+        self.assertEqual( False, id.is_non_relativistic )
+
+        id = ElectronSubshellID( '2p' )
+        self.assertEqual( 2, id.principal_quantum_number )
+        self.assertEqual( 1, id.azimuthal_quantum_number )
+        self.assertEqual( None, id.total_angular_momentum )
+        self.assertEqual( None, id.mt )
+        self.assertEqual( '2p', id.symbol )
+        self.assertEqual( False, id.is_relativistic )
+        self.assertEqual( True, id.is_non_relativistic )
 
     def test_comparison( self ) :
 

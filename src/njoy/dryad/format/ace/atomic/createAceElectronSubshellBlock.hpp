@@ -43,7 +43,7 @@ namespace atomic {
       total += shell.population();
       electrons.emplace_back( shell.population() );
       probabilities.emplace_back( total );
-      designators.emplace_back( shell.identifier().number() - offset );
+      designators.emplace_back( shell.identifier().mt().value() - offset );
       binding_energies.emplace_back( shell.bindingEnergy() * constants::micro );
       number_transitions.emplace_back( shell.numberTransitions() );
     }
