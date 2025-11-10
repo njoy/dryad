@@ -54,9 +54,18 @@ static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshel
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  int number = element.number() * 1000000 + subshell.number();
+  if ( subshell.isNonRelativistic() ) {
+
+    throw std::invalid_argument( "Electron subshell identifiers used for particle identifiers must be relativistic" );
+  }
+
+  int number = element.number() * 1000000 + subshell.mt().value();
   std::string symbol = element.symbol() + std::string( "{" ) + subshell.symbol() + std::string( "}" );
-  std::vector< std::string > alternatives = { element.symbol() + std::string( "{" ) + subshell.name() + std::string( "}" ) };
+  std::vector< std::string > alternatives;
+  for ( const auto& alternative : subshell.alternatives() ) {
+
+    alternatives.emplace_back( element.symbol() + std::string( "{" ) + alternative + std::string( "}" ) );
+  }
 
   // create the data entry and set conversion
   entries.emplace_back( number, element.number(),
