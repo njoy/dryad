@@ -21,15 +21,6 @@ namespace id {
    *  @class
    *  @brief The particle identifier, with associated symbol and aliases
    *
-   *  The ParticleID can be used to identify the following particle types (the
-   *  numbers between parentheses are the internal logic numbers assigned to them):
-   *    - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),
-   *      t (1003), h (2003), a (2004)
-   *    - elements (z * 1000000)
-   *    - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 151 with 150 being
-   *      defined as the continuum )
-   *    - ions
-   *
    *  Comparison operators are provided using the logical order given by the
    *  element number. A hash function and override for std::hash is also
    *  provided.
@@ -225,6 +216,24 @@ namespace id {
     static constexpr ParticleID helion() { return ParticleID{ static_cast< std::size_t >( 7 ) }; };
     static constexpr ParticleID alpha() { return ParticleID{ static_cast< std::size_t >( 8 ) }; };
 
+    /**
+     *  @brief Create a particle identifier for a nuclide
+     *
+     *  @param[in] za      the za number of the nuclide
+     *  @param[in] level   the level number of the nuclide
+     */
+    static ParticleID nuclide( int za, int level = 0 ) {
+
+      try {
+
+        return ParticleID( number_conversion_dictionary.at( za * 1000 + level ) );
+      }
+      catch ( ... ) {
+
+        return ParticleID( updateRegistry( ElementID( std::round( za / 1000. ) ), za % 1000, LevelID( level ) ) );
+      }
+    }
+
     /* static methods */
 
     /**
@@ -307,6 +316,21 @@ namespace id {
     int za() const {
 
       return entries[ this->index_ ].za();
+    }
+
+    /**
+     *  @brief Return the identifier for the particle's ground state
+     */
+    ParticleID groundState() const {
+
+      if ( entries[ this->index_ ].subshell().has_value() ) {
+
+        return ParticleID( this->index_ );
+      }
+      else {
+
+        return ParticleID::nuclide( this->za(), 0 );
+      }
     }
 
     /**

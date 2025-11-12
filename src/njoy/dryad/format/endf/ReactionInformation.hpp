@@ -286,7 +286,7 @@ namespace endf {
 
         if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
 
-          int ground = id::ReactionID( projectile, id::ParticleID( target.za() ), 2 ).reactionType().mt().value();
+          int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
           int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
           if ( mt > ground && mt <= elastic ) {
 

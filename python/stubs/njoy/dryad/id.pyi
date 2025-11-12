@@ -415,6 +415,15 @@ class ParticleID:
         The particle identifier for neutrons
         """
     @staticmethod
+    def nuclide(za: int, level: int = 0) -> ParticleID:
+        """
+        Create a particle identifier for a nuclide
+        
+        Arguments:
+            za      the za number of the nuclide
+            level   the level number of the nuclide
+        """
+    @staticmethod
     def photon() -> ParticleID:
         """
         The particle identifier for photons
@@ -454,14 +463,25 @@ class ParticleID:
         Hash function
         """
     @typing.overload
-    def __init__(self, za: int, number: int = 0) -> None:
+    def __init__(self, element: ElementID, mass: int, level: LevelID) -> None:
         """
         Initialise the particle identifier
         
         Arguments:
-            self     the identifier
-            za       the particle za number
-            number   the particle level number or subshell number (default is zero)
+            self      the identifier
+            element   the particle element
+            mass      the particle mass number
+            level     the particle level
+        """
+    @typing.overload
+    def __init__(self, element: ElementID, subshell: ElectronSubshellID) -> None:
+        """
+        Initialise the particle identifier
+        
+        Arguments:
+            self       the identifier
+            element    the particle element
+            subshell   the particle subshell
         """
     @typing.overload
     def __init__(self, string: str) -> None:

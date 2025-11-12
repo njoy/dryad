@@ -34,7 +34,7 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -95,7 +95,7 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -163,7 +163,7 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 

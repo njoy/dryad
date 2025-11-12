@@ -19,7 +19,7 @@ SCENARIO( "Reaction" ) {
 
   id::ParticleID g = id::ParticleID::photon();
   id::ParticleID n = id::ParticleID::neutron();
-  id::ParticleID fe56( 26056 );
+  id::ParticleID fe56( "Fe56" );
 
   GIVEN( "valid data for a primary reaction" ) {
 
@@ -245,7 +245,7 @@ void verifyChunk( const Reaction& chunk, bool normalise ) {
   id::ParticleID g = id::ParticleID::photon();
   id::ParticleID n = id::ParticleID::neutron();
   id::ParticleID h = id::ParticleID::helion();
-  id::ParticleID fe56( 26056 );
+  id::ParticleID fe56( "Fe56" );
 
   // reaction identifier
   CHECK( "n,Fe56->n,Fe56_e1" == chunk.identifier().symbol() );
@@ -345,7 +345,7 @@ void verifySummationChunk( const Reaction& chunk ) {
 
   id::ParticleID g = id::ParticleID::photon();
   id::ParticleID n = id::ParticleID::neutron();
-  id::ParticleID fe56( 26056 );
+  id::ParticleID fe56( "Fe56" );
 
   // reaction identifier
   CHECK( id::ReactionID( "n,Fe56->total" ) == chunk.identifier() );
