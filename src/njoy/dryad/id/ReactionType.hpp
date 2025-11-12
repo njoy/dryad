@@ -1298,7 +1298,7 @@ namespace id {
       if ( this->interactionType() == InteractionType::Nuclear ) {
 
         int za = projectile.za() + target.za() - entries[ this->index_ ].dza().value();
-        return ParticleID( za, this->level().value() );
+        return ParticleID::nuclide( za, this->level().value() );
       }
       else {
 
@@ -1312,7 +1312,7 @@ namespace id {
         // assign the subshell ID for the ion if we need to, otherwise just return the target
         if ( this->level().has_value() ) {
 
-          return ParticleID( target.za(), this->level().value() );
+          return ParticleID( ElementID( target.z() ), this->level().value() );
         }
         else {
 
