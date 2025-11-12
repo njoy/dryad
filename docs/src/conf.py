@@ -16,8 +16,7 @@ release = '0.0.0'
 
 extensions = [
     "sphinx.ext.autodoc",
-    'sphinx.ext.napoleon',
-    "sphinx_autodoc_typehints",
+    'sphinx.ext.napoleon'
     ]
 
 templates_path = ['_templates']
@@ -32,15 +31,16 @@ napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = True
 napoleon_use_admonition_for_notes = True
 napoleon_use_admonition_for_references = True
-napoleon_use_ivar = False
+napoleon_use_ivar = True
 napoleon_use_param = True
-napoleon_use_rtype = False
+napoleon_use_rtype = True
 napoleon_preprocess_types = True
 napoleon_type_aliases = None
-napoleon_attr_annotations = False
+napoleon_attr_annotations = True
 
 
-autodoc_class_signature = "separated"
+
+autodoc_docstring_signature = True
 
 
 # -- Options for HTML output -------------------------------------------------

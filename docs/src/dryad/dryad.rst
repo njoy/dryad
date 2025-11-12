@@ -1,14 +1,11 @@
 dryad
 =====
 
-The `dryad` module contains the data structures used throughout `njoy`.
+The ``dryad`` module contains the data structures used throughout ``njoy``.
 
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: Modules:
 
    atomic
-..    covariance
-..    identifiers
-..    resonances

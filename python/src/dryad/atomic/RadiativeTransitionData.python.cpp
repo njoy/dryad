@@ -30,7 +30,27 @@ void wrapRadiativeTransitionData( python::module& module ) {
     "vacancy in the current shell while emitting a photon. The energy of\n"
     "the emitted photon is equal to the difference in binding energies\n"
     "between the subshell with the vacancy and the subshell from which the\n"
-    "electron filling the vacancy originated from."
+    "electron filling the vacancy originated from.\n\n"
+    "\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell: njoy.dryad.id.ElectronSubshellID \n"
+    "                       the identifier of the subshell from which the\n"
+    "                       vacancy filling electron originated\n"
+    "    probability: float\n"
+    "                  the probability of the transition\n"
+    "    energy: float,  default: None\n"
+    "              the energy of the emitted photon (default: undefined)\n\n"
+    "Attributes\n"
+    "----------\n"
+    "    type : njoy.dryad.atomic.TransitionType\n"
+    "          The transition type\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "          The identifier of the subshell from which the electron filling the vacancy originated\n"
+    "    probability : float\n"
+    "           The transition probability\n"
+    "    energy : float or None\n"
+    "            The energy of the emitted photon\n"
   );
 
   // wrap the component
@@ -41,12 +61,6 @@ void wrapRadiativeTransitionData( python::module& module ) {
     python::arg( "originating_shell" ), python::arg( "probability" ),
     python::arg( "energy" ) = std::nullopt,
     "Initialise the radiative transition data\n\n"
-    "Arguments:\n"
-    "    self                the radiative transition data\n"
-    "    originating_shell   the identifier of the subshell from which the\n"
-    "                        vacancy filling electron originated\n"
-    "    probability         the probability of the transition\n"
-    "    energy              the energy of the emitted photon (default: undefined)"
   )
   .def_property_readonly(
 

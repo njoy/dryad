@@ -3,20 +3,19 @@ atomic
 
 .. automodule:: njoy.dryad.atomic
 
-Components
-==========
 
-.. autoclass:: njoy.dryad.atomic.RadiativeTransitionData 
-    :members:
-    :special-members: __init__
+.. toctree::
+   :maxdepth: 1
+   :caption: Classes:
 
-.. class:: njoy.dryad.atomic.NonRadiativeTransitionData()
-    :no-index:
-    
+   atomic/RadiativeTransitionData
+   atomic/NonRadiativeTransitionData
+   atomic/ElectronSubshellConfiguration
 
 
-Enumerators
-===========
+.. toctree::
+   :maxdepth: 1
+   :caption: Enumerators:
 
-.. autodata:: njoy.dryad.atomic.TransitionType
+   atomic/TransitionType
 
