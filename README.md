@@ -9,18 +9,17 @@ Documentation is provided using [Sphinx](https://www.sphinx-doc.org/). The follo
 
 ```python
 pip install sphinx
-pip install pydata-sphinx-theme
 ```
 
-The documentation is not built by default. To build the documentation after building `dryad`, move into the `build` directory and run:
+The documentation is not built by default. To build the documentation after building `dryad`, in the `dryad/build` directory run:
 
 ```bash
 make sphinx
 ```
 
-This will build the HTML documentation within the `docs/build` directory.
+This will build the HTML documentation within the `dryad/docs/build` directory.
 
-To clean the documentation, move into the `docs` directory and run:
+To clean the documentation, move into the `dryad/docs` directory and run:
 
 ```bash
 make clean

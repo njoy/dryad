@@ -31,8 +31,9 @@ napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = True
 napoleon_use_admonition_for_notes = True
 napoleon_use_admonition_for_references = True
-napoleon_use_ivar = True
+napoleon_use_ivar = False
 napoleon_use_param = True
+napoleon_usekeyword = True
 napoleon_use_rtype = True
 napoleon_preprocess_types = True
 napoleon_type_aliases = None
@@ -47,5 +48,6 @@ autodoc_docstring_signature = True
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 
-html_theme = 'pydata_sphinx_theme'
+# html_theme = 'pydata_sphinx_theme'
+html_theme = 'haiku'
 html_static_path = ['_static']
