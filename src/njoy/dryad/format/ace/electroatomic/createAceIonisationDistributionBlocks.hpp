@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEBREMSSTRAHLUNGDISTRIBUTIONBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEBREMSSTRAHLUNGDISTRIBUTIONBLOCK
+#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEIONISATIONDISTRIBUTIONBLOCKS
+#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEIONISATIONDISTRIBUTIONBLOCKS
 
 // system includes
 #include <algorithm>
@@ -18,7 +18,7 @@ namespace ace {
 namespace electroatomic {
 
   /**
-   *  @brief Create the Bremsstrahlung photon energy distribution block for electroatomic data
+   *  @brief Create the ionisation electron energy distribution block for electroatomic data
    *
    *  It is assumed that the ProjectileTarget instance used is valid electroatomic
    *  data, and ACE compatible (i.e. unionised energy grid, etc.)
