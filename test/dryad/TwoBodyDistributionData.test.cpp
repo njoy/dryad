@@ -1,0 +1,241 @@
+// include Catch2
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+using Catch::Matchers::WithinRel;
+
+// what we are testing
+#include "njoy/dryad/TwoBodyDistributionData.hpp"
+
+// other includes
+
+// convenience typedefs
+using namespace njoy::dryad;
+
+void verifyIsotropicChunk( const TwoBodyDistributionData& );
+void verifyLegendreChunk( const TwoBodyDistributionData&, bool );
+void verifyTabulatedChunk( const TwoBodyDistributionData&, bool );
+
+SCENARIO( "TwoBodyDistributionData" ) {
+
+  GIVEN( "valid data for two body distribution data that is fully isotropic" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      ReferenceFrame frame = ReferenceFrame::CentreOfMass;
+      IsotropicAngularDistributions angle;
+
+      TwoBodyDistributionData chunk1( frame, angle, false );
+      TwoBodyDistributionData chunk2( std::move( frame ), std::move( angle ), true );
+
+      verifyIsotropicChunk( chunk1 );
+      verifyIsotropicChunk( chunk2 );
+
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyIsotropicChunk( chunk1 );
+      verifyIsotropicChunk( chunk2 );
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "valid data for two body distribution data using Legendre distributions" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      ReferenceFrame frame = ReferenceFrame::CentreOfMass;
+      LegendreAngularDistributions angle(
+
+        { 1e-5, 20. },
+        { { { 1.0 } }, { { 1.0, 0.2 } } }
+      );
+
+      TwoBodyDistributionData chunk1( frame, angle, false );
+      TwoBodyDistributionData chunk2( std::move( frame ), std::move( angle ), true );
+
+      verifyLegendreChunk( chunk1, false );
+      verifyLegendreChunk( chunk2, true );
+
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyLegendreChunk( chunk1, true );
+      verifyLegendreChunk( chunk2, true );
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "valid data for two body distribution data using tabulated distributions" ) {
+
+    WHEN( "the data is given explicitly" ) {
+
+      ReferenceFrame frame = ReferenceFrame::CentreOfMass;
+      TabulatedAngularDistributions angle(
+
+        { 1e-5, 20. },
+        { { { -1., +1. }, { 1., 1.0 } },
+          { { -1., +1. }, { 0.8, 1.2 } } }
+      );
+
+      TwoBodyDistributionData chunk1( frame, angle, false );
+      TwoBodyDistributionData chunk2( std::move( frame ), std::move( angle ), true );
+
+      verifyTabulatedChunk( chunk1, false );
+      verifyTabulatedChunk( chunk2, true );
+
+      chunk1.normalise();
+      chunk2.normalise();
+
+      verifyTabulatedChunk( chunk1, true );
+      verifyTabulatedChunk( chunk2, true );
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of TwoBodyDistributionData is given" ) {
+
+      TwoBodyDistributionData chunk( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+
+      THEN( "the reference frame can be changed" ) {
+
+        ReferenceFrame newframe = ReferenceFrame::Laboratory;
+        ReferenceFrame original = ReferenceFrame::CentreOfMass;
+
+        chunk.frame( newframe );
+
+        CHECK( newframe == chunk.frame() );
+
+        chunk.frame( original );
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+
+      THEN( "the distribution data can be changed" ) {
+
+        TwoBodyDistributionData::AngularDistributions
+        newdistribution = LegendreAngularDistributions( { 1e-5, 20. },
+                                                        { { { 1. } }, { { 1., 0.2 } } } );
+        TwoBodyDistributionData::AngularDistributions
+        original = IsotropicAngularDistributions();
+
+        chunk.angle( newdistribution );
+
+        verifyLegendreChunk( chunk, false );
+
+        chunk.angle( original );
+
+        verifyIsotropicChunk( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "comparison operators" ) {
+
+    WHEN( "two instances of TwoBodyDistributionData are given" ) {
+
+      TwoBodyDistributionData left( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+      TwoBodyDistributionData equal( ReferenceFrame::CentreOfMass, IsotropicAngularDistributions() );
+      TwoBodyDistributionData different( ReferenceFrame::CentreOfMass,
+                                         LegendreAngularDistributions( { 1e-5, 20. },
+                                                                       { { { 0.5 } }, { { 0.5, 0.1 } } } ) );
+
+      THEN( "they can be compared" ) {
+
+        CHECK( true == ( left == left ) );
+        CHECK( true == ( left == equal ) );
+        CHECK( false == ( left == different ) );
+
+        CHECK( false == ( left != left ) );
+        CHECK( false == ( left != equal ) );
+        CHECK( true == ( left != different ) );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+} // SCENARIO
+
+void verifyIsotropicChunk( const TwoBodyDistributionData& chunk ) {
+
+  CHECK( DistributionDataType::TwoBody == chunk.type() );
+  CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
+
+  CHECK( true == std::holds_alternative< IsotropicAngularDistributions >( chunk.angle() ) );
+}
+
+void verifyLegendreChunk( const TwoBodyDistributionData& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2. : 1.;
+
+  CHECK( DistributionDataType::TwoBody == chunk.type() );
+  CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
+
+  CHECK( true == std::holds_alternative< LegendreAngularDistributions >( chunk.angle() ) );
+
+  LegendreAngularDistributions angle = std::get< LegendreAngularDistributions >( chunk.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 1 == angle.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().coefficients().size() );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.  / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2 / normalisation, WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().coefficients().size() );
+  CHECK( 3 == angle.distributions()[1].cdf().coefficients().size() );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.                 / normalisation, WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.9333333333333333 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0                / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+  CHECK_THAT( 0.0666666666666666 / normalisation, WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+}
+
+void verifyTabulatedChunk( const TwoBodyDistributionData& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2. : 1.;
+
+  CHECK( DistributionDataType::TwoBody == chunk.type() );
+  CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
+
+  CHECK( true == std::holds_alternative< TabulatedAngularDistributions >( chunk.angle() ) );
+
+  TabulatedAngularDistributions angle = std::get< TabulatedAngularDistributions >( chunk.angle() );
+  CHECK( 2 == angle.numberPoints() );
+  CHECK( 1 == angle.numberRegions() );
+  CHECK( 2 == angle.grid().size() );
+  CHECK( 2 == angle.distributions().size() );
+  CHECK( 1 == angle.boundaries().size() );
+  CHECK( 1 == angle.interpolants().size() );
+  CHECK_THAT( 1e-5, WithinRel( angle.grid()[0] ) );
+  CHECK_THAT( 20. , WithinRel( angle.grid()[1] ) );
+  CHECK( 2 == angle.distributions()[0].pdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[0].pdf().values().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[1].pdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].pdf().cosines()[1] ) );
+  CHECK_THAT(  1. / normalisation, WithinRel( angle.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  1. / normalisation, WithinRel( angle.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].pdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.8 / normalisation, WithinRel( angle.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  1.2 / normalisation, WithinRel( angle.distributions()[1].pdf().values()[1] ) );
+  CHECK( 2 == angle.distributions()[0].cdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[0].cdf().values().size() );
+  CHECK( 2 == angle.distributions()[1].cdf().cosines().size() );
+  CHECK( 2 == angle.distributions()[1].cdf().values().size() );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( angle.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( angle.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT( -1.  , WithinRel( angle.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT(  1.  , WithinRel( angle.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT(  0. / normalisation, WithinRel( angle.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  2. / normalisation, WithinRel( angle.distributions()[1].cdf().values()[1] ) );
+  CHECK( 1 == angle.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+}

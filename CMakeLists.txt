@@ -9,7 +9,7 @@ if( DEFINED PROJECT_NAME )
   set( subproject ON )
 endif()
 
-project( dryad
+project( njoy
   VERSION 0.1.0
   LANGUAGES CXX
 )
@@ -26,18 +26,18 @@ set( CMAKE_CXX_STANDARD 17 )
 set( CMAKE_CXX_STANDARD_REQUIRED YES )
 
 cmake_dependent_option(
-  dryad.tests
-  "Build the dryad unit tests and integrate with ctest" ON
+  njoy.tests
+  "Build the njoy unit tests and integrate with ctest" ON
   "BUILD_TESTING AND NOT ${subproject}" OFF
 )
 
 cmake_dependent_option(
-  dryad.python
-  "Build dryad python bindings" ON
-  "NOT ${subproject} OR DEFINED require.dryad.python " OFF
+  njoy.python
+  "Build njoy python bindings" ON
+  "NOT ${subproject} OR DEFINED require.njoy.python " OFF
 )
 
-option( dryad.installation "Install dryad" ON )
+option( njoy.installation "Install njoy" ON )
 
 ########################################################################
 # Dependencies
@@ -56,15 +56,14 @@ string( CONCAT prefix
 )
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# dryad : library
+# njoy : library
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-add_library( dryad INTERFACE )
-add_library( njoy::dryad ALIAS dryad )
+add_library( njoy INTERFACE )
 
-target_include_directories( dryad INTERFACE ${prefix} )
+target_include_directories( njoy INTERFACE ${prefix} )
 
-target_link_libraries( dryad
+target_link_libraries( njoy
   INTERFACE
     pugixml
     eigen
@@ -76,19 +75,19 @@ target_link_libraries( dryad
 
 if(MSVC)
   add_compile_options(/bigobj)
-  target_link_options(dryad INTERFACE "/STACK:8388608")
+  target_link_options(njoy INTERFACE "/STACK:8388608")
 endif()
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-# dryad : python bindings
+# njoy : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-if ( dryad.python )
+if ( njoy.python )
   add_subdirectory( python )
 endif()
 
-if( dryad.tests )
+if( njoy.tests )
   add_subdirectory( test )
 endif()
 
@@ -96,19 +95,18 @@ endif()
 # Installation
 #######################################################################
 
-if(dryad.installation)
+if(njoy.installation)
     include(CMakePackageConfigHelpers)
 
-    install(TARGETS dryad EXPORT dryad-targets
+    install(TARGETS njoy EXPORT njoy-targets
       ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     )
 
-    install(EXPORT dryad-targets
-      FILE "dryad-targets.cmake"
-      NAMESPACE njoy::
-      DESTINATION share/cmake/dryad
+    install(EXPORT njoy-targets
+      FILE "njoy-targets.cmake"
+      DESTINATION share/cmake/njoy
     )
 
     install(DIRECTORY src/
@@ -117,7 +115,7 @@ if(dryad.installation)
       PATTERN "*test*" EXCLUDE
     )
 
-    string(TOLOWER dryad lowercasePackageName)
+    string(TOLOWER njoy lowercasePackageName)
 
     write_basic_package_version_file("${lowercasePackageName}-config-version.cmake"
       VERSION ${PROJECT_VERSION}
@@ -126,13 +124,13 @@ if(dryad.installation)
     configure_package_config_file(
       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${lowercasePackageName}-config.cmake.in
       ${PROJECT_BINARY_DIR}/${lowercasePackageName}-config.cmake
-      INSTALL_DESTINATION share/cmake/dryad
+      INSTALL_DESTINATION share/cmake/njoy
     )
 
     install(FILES
       "${PROJECT_BINARY_DIR}/${lowercasePackageName}-config.cmake"
       "${PROJECT_BINARY_DIR}/${lowercasePackageName}-config-version.cmake"
-      DESTINATION share/cmake/dryad
+      DESTINATION share/cmake/njoy
     )
 
     if(NOT subproject)

@@ -1,0 +1,111 @@
+#ifndef NJOY_DRYAD_TABULATEDENERGYDISTRIBUTIONS
+#define NJOY_DRYAD_TABULATEDENERGYDISTRIBUTIONS
+
+// system includes
+
+// other includes
+#include "njoy/dryad/base/GridDistributions.hpp"
+#include "njoy/dryad/TabulatedEnergyDistribution.hpp"
+#include "njoy/dryad/TabulatedAverageEnergy.hpp"
+
+namespace njoy {
+namespace dryad {
+
+  /**
+   *  @class
+   *  @brief Energy distribution data given using tables
+   */
+  class TabulatedEnergyDistributions :
+      protected base::GridDistributions< TabulatedEnergyDistribution > {
+
+    /* type aliases */
+    using Parent = base::GridDistributions< TabulatedEnergyDistribution >;
+
+  public:
+
+    /* constructor */
+
+    #include "njoy/dryad/TabulatedEnergyDistributions/src/ctor.hpp"
+
+    /* methods */
+
+    using Parent::grid;
+    using Parent::distributions;
+    using Parent::boundaries;
+    using Parent::interpolants;
+    using Parent::numberPoints;
+    using Parent::numberRegions;
+    using Parent::operator();
+
+    /**
+     *  @brief Normalise the distributions
+     */
+    void normalise() {
+
+      for ( auto& distribution : this->distributions() ) {
+
+        distribution.normalise();
+      }
+    }
+
+    /**
+     *  @brief Return the average energy values
+     */
+    TabulatedAverageEnergy averageEnergies() const {
+
+      std::vector< double > energies;
+      energies.reserve( this->numberPoints() );
+      std::transform( this->distributions().begin(), this->distributions().end(),
+                      std::back_inserter( energies ),
+                      [] ( auto&& distribution ) { return distribution.averageEnergy(); } );
+      return TabulatedAverageEnergy( this->grid(), std::move( energies ),
+                                     this->boundaries(),
+                                     this->interpolants() );
+    }
+
+    /**
+     *  @brief Return linearised energy distributions
+     *
+     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
+     */
+    TabulatedEnergyDistributions linearise( ToleranceConvergence tolerance = {},
+                                            bool normalise = false ) const {
+
+      std::vector< TabulatedEnergyDistribution > distributions;
+      distributions.reserve( this->numberPoints() );
+      std::transform( this->distributions().begin(), this->distributions().end(),
+                      std::back_inserter( distributions ),
+                      [tolerance, normalise]
+                        ( auto&& distribution )
+                        { return distribution.linearise( std::move( tolerance ), normalise ); } );
+      return TabulatedEnergyDistributions( this->grid(), std::move( distributions ),
+                                           this->boundaries(), this->interpolants() );
+    }
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const TabulatedEnergyDistributions& right ) const {
+
+      return Parent::operator==( right );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const TabulatedEnergyDistributions& right ) const {
+
+      return ! this->operator==( right );
+    }
+  };
+
+} // dryad namespace
+} // njoy namespace
+
+#endif

@@ -1,0 +1,32 @@
+// system includes
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+// local includes
+#include "dryad/definitions.hpp"
+#include "njoy/dryad/MultiEnergyDistributions.hpp"
+
+// namespace aliases
+namespace python = pybind11;
+
+namespace dryad {
+
+void wrapMultiEnergyDistributions( python::module& module ) {
+
+  // type aliases
+  using Component = njoy::dryad::MultiEnergyDistributions;
+
+  // wrap views created by this component
+
+  // create the component
+  python::class_< Component > component(
+
+    module,
+    "MultiEnergyDistributions"
+  );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+}
+
+} // dryad namespace

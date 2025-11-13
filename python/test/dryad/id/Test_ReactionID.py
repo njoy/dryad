@@ -1,0 +1,280 @@
+# standard imports
+import unittest
+
+# third party imports
+
+# local imports
+from njoy.dryad import InteractionType
+from njoy.dryad.id import LevelID
+from njoy.dryad.id import ParticleID
+from njoy.dryad.id import ReactionType
+from njoy.dryad.id import ReactionID
+
+class Test_elementary_ReactionID( unittest.TestCase ) :
+    """Unit test for the ReactionID class."""
+
+    def test_values( self ) :
+
+        g = ParticleID.photon()
+        n = ParticleID.neutron()
+        p = ParticleID.proton()
+        d = ParticleID.deuteron()
+        t = ParticleID.triton()
+        h = ParticleID.helion()
+        a = ParticleID.alpha()
+        eminus = ParticleID.electron()
+        eplus = ParticleID.positron()
+
+        u = ParticleID( 92000 )
+        u235 = ParticleID( 92235 )
+        u238 = ParticleID( 92238 )
+        am242 = ParticleID( 95242 )
+        am242_e2 = ParticleID( 95242, 2 )
+
+        nuclear = InteractionType.Nuclear
+        atomic = InteractionType.Atomic
+
+        empty = {}
+
+        id = ReactionID( 'n,U238->total' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertIsNone( id.particles )
+        self.assertIsNone( id.residual )
+        self.assertEqual( ReactionType( 1 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->total', id.symbol )
+        self.assertEqual( id, ReactionID( n, u238, 1 ) )
+        self.assertEqual( id, ReactionID( n, u238, 'total' ) )
+        self.assertEqual( id, ReactionID( n, u238, 'total[nuclear]' ) )
+        self.assertEqual( id, ReactionID( n, u238, ReactionType( 1 ) ) )
+
+        id = ReactionID( 'n,U238->n,U238' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( u238, id.residual )
+        self.assertEqual( ReactionType( 50 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->n,U238', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->n(0)' ) )
+        self.assertEqual( id, ReactionID( n, u238, 2 ) )
+        self.assertEqual( id, ReactionID( n, u238, 'n(0)' ) )
+        self.assertEqual( id, ReactionID( n, u238, ReactionType.elastic( n ) ) )
+
+        id = ReactionID( 'n,U238->g,U239[all]' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( empty, id.particles )
+        self.assertEqual( ParticleID( 92239, LevelID.all ), id.residual )
+        self.assertEqual( ReactionType( 102 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->g,U239[all]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->g' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->g(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->capture' ) )
+        self.assertEqual( id, ReactionID( n, u238, 102 ) )
+        self.assertEqual( id, ReactionID( n, u238, 'g' ) )
+        self.assertEqual( id, ReactionID( n, u238, 'g(t)' ) )
+        self.assertEqual( id, ReactionID( n, u238, 'capture' ) )
+        self.assertEqual( id, ReactionID( n, u238, ReactionType( 102 ) ) )
+
+        id = ReactionID( 'n,U238->3n,2p,a,Ra230[all]' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( { a : 1, p : 2, n : 3 }, id.particles )
+        self.assertEqual( ParticleID( 88230, LevelID.all ), id.residual )
+        self.assertEqual( ReactionType( 199 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->3n,2p,a,Ra230[all]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->3n2pa,Ra230[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n2pa(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n2pa' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n,2p,a(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U238->3n,2p,a' ) )
+        self.assertEqual( id, ReactionID( n, u238, 199 ) )
+        self.assertEqual( id, ReactionID( n, u238, '3n2pa(t)' ) )
+        self.assertEqual( id, ReactionID( n, u238, '3n2pa' ) )
+        self.assertEqual( id, ReactionID( n, u238, '3n,2p,a(t)' ) )
+        self.assertEqual( id, ReactionID( n, u238, '3n,2p,a' ) )
+        self.assertEqual( id, ReactionID( n, u238, ReactionType( 199 ) ) )
+
+        id = ReactionID( n, u235, 1 )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u235, id.target )
+        self.assertIsNone( id.particles )
+        self.assertIsNone( id.residual )
+        self.assertEqual( ReactionType( 1 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U235->total', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U235->total' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->total[nuclear]' ) )
+        self.assertEqual( id, ReactionID( n, u235, 'total' ) )
+        self.assertEqual( id, ReactionID( n, u235, 'total[nuclear]' ) )
+        self.assertEqual( id, ReactionID( n, u235, ReactionType( 1 ) ) )
+
+        id = ReactionID( n, u235, 2 )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u235, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( u235, id.residual )
+        self.assertEqual( ReactionType( 50 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U235->n,U235', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U235->n,U235' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->n(0)' ) )
+        self.assertEqual( id, ReactionID( n, u235, 50 ) )
+        self.assertEqual( id, ReactionID( n, u235, ReactionType.elastic( n ) ) )
+
+        id = ReactionID( n, u235, 102 )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u235, id.target )
+        self.assertEqual( empty, id.particles )
+        self.assertEqual( ParticleID( 92236, LevelID.all ), id.residual )
+        self.assertEqual( ReactionType( 102 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U235->g,U236[all]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U235->g,U236[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->g(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->g' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->capture' ) )
+        self.assertEqual( id, ReactionID( n, u235, 'g(t)' ) )
+        self.assertEqual( id, ReactionID( n, u235, 'g' ) )
+        self.assertEqual( id, ReactionID( n, u235, 'capture' ) )
+        self.assertEqual( id, ReactionID( n, u235, ReactionType( 102 ) ) )
+
+        id = ReactionID( n, u235, 199 )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u235, id.target )
+        self.assertEqual( { a : 1, p : 2, n : 3 }, id.particles )
+        self.assertEqual( ParticleID( 88227, LevelID.all ), id.residual )
+        self.assertEqual( ReactionType( 199 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U235->3n,2p,a,Ra227[all]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U235->3n,2p,a,Ra227[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n2pa,Ra227[all]' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n,2p,a(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n,2p,a' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n2pa(t)' ) )
+        self.assertEqual( id, ReactionID( 'n,U235->3n2pa' ) )
+        self.assertEqual( id, ReactionID( n, u235, '3n,2p,a(t)' ) )
+        self.assertEqual( id, ReactionID( n, u235, '3n,2p,a' ) )
+        self.assertEqual( id, ReactionID( n, u235, '3n2pa(t)' ) )
+        self.assertEqual( id, ReactionID( n, u235, '3n2pa' ) )
+        self.assertEqual( id, ReactionID( n, u235, ReactionType( 199 ) ) )
+
+        id = ReactionID( 'e-,U->e-,U[large-angle-scattering]' )
+        self.assertEqual( eminus, id.projectile )
+        self.assertEqual( u, id.target )
+        self.assertEqual( { eminus : 1 }, id.particles )
+        self.assertEqual( u, id.residual )
+        self.assertEqual( ReactionType( 525 ), id.reaction_type )
+        self.assertEqual( InteractionType.Atomic, id.interaction_type )
+        self.assertEqual( 'e-,U->e-,U[large-angle-scattering]', id.symbol )
+        self.assertEqual( id, ReactionID( eminus, u, 525 ) )
+        self.assertEqual( id, ReactionID( eminus, u, 'large-angle-scattering' ) )
+        self.assertEqual( id, ReactionID( eminus, u, ReactionType( 525 ) ) )
+
+        id = ReactionID( 'e-,U->e-,U[total-scattering]' )
+        self.assertEqual( eminus, id.projectile )
+        self.assertEqual( u, id.target )
+        self.assertEqual( { eminus : 1 }, id.particles )
+        self.assertEqual( u, id.residual )
+        self.assertEqual( ReactionType( 526 ), id.reaction_type )
+        self.assertEqual( InteractionType.Atomic, id.interaction_type )
+        self.assertEqual( 'e-,U->e-,U[total-scattering]', id.symbol )
+        self.assertEqual( id, ReactionID( eminus, u, 526 ) )
+        self.assertEqual( id, ReactionID( eminus, u, 'total-scattering' ) )
+        self.assertEqual( id, ReactionID( eminus, u, ReactionType( 526 ) ) )
+
+        id = ReactionID( 'n,U238->n,U238[continuum]' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( u238, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( ParticleID( 92238, LevelID.continuum ), id.residual )
+        self.assertEqual( ReactionType( 91 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,U238->n,U238[continuum]', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,U238->n(c)' ) )
+        self.assertEqual( id, ReactionID( n, u238, 91 ) )
+        self.assertEqual( id, ReactionID( n, u238, 'n(c)' ) )
+        self.assertEqual( id, ReactionID( n, u238, ReactionType( 91 ) ) )
+
+        id = ReactionID( 'n,Am242_e2->n,Am242_e2' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( am242_e2, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( am242_e2, id.residual )
+        self.assertEqual( ReactionType( 52 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,Am242_e2->n,Am242_e2', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,Am242_e2->n(2)' ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, 2 ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, 52 ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, 'n(2)' ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, ReactionType.elastic( n, 2 ) ) )
+
+        id = ReactionID( 'n,Am242_e2->n,Am242' )
+        self.assertEqual( n, id.projectile )
+        self.assertEqual( am242_e2, id.target )
+        self.assertEqual( { n : 1 }, id.particles )
+        self.assertEqual( am242, id.residual )
+        self.assertEqual( ReactionType( 50 ), id.reaction_type )
+        self.assertEqual( InteractionType.Nuclear, id.interaction_type )
+        self.assertEqual( 'n,Am242_e2->n,Am242', id.symbol )
+        self.assertEqual( id, ReactionID( 'n,Am242_e2->n(0)' ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, 50 ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, 'n(0)' ) )
+        self.assertEqual( id, ReactionID( n, am242_e2, ReactionType( 50 ) ) )
+
+    def test_comparison( self ) :
+
+        n = ParticleID.neutron()
+        p = ParticleID.proton()
+        u238 = ParticleID( 92238 )
+
+        id1 = ReactionID( n, u238, ReactionType( n, 52 ) )
+        id2 = ReactionID( p, u238, ReactionType( n, 52 ) )
+
+        self.assertEqual( id1 <  id1, False )
+        self.assertEqual( id1 <= id1, True )
+        self.assertEqual( id1 >  id1, False )
+        self.assertEqual( id1 >= id1, True )
+        self.assertEqual( id1 == id1, True )
+        self.assertEqual( id1 != id1, False )
+        self.assertEqual( id1 <  id2, True )
+        self.assertEqual( id1 <= id2, True )
+        self.assertEqual( id1 >  id2, False )
+        self.assertEqual( id1 >= id2, False )
+        self.assertEqual( id1 == id2, False )
+        self.assertEqual( id1 != id2, True )
+        self.assertEqual( id2 <  id1, False )
+        self.assertEqual( id2 <= id1, False )
+        self.assertEqual( id2 >  id1, True )
+        self.assertEqual( id2 >= id1, True )
+        self.assertEqual( id2 == id1, False )
+        self.assertEqual( id2 != id1, True )
+
+    def test_key( self ) :
+
+        n = ParticleID.neutron()
+        u238 = ParticleID( 92238 )
+        pu239 = ParticleID( 94239 )
+
+        id1 = ReactionID( n, u238, ReactionType( 1 ) )
+        id2 = ReactionID( n, pu239, ReactionType( 18 ) )
+
+        map = { id1 : '1', id2 : '2' }
+
+        self.assertEqual( map[ id1 ], '1' )
+        self.assertEqual( map[ id2 ], '2' )
+        self.assertEqual( map[ ReactionID( 'n,U238->total' ) ], '1' )
+        self.assertEqual( map[ ReactionID( 'n,Pu239->fission(t)' ) ], '2' )
+
+    def test_failures( self ) :
+
+        pass
+
+if __name__ == '__main__' :
+
+    unittest.main()

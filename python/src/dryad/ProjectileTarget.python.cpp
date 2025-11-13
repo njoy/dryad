@@ -1,0 +1,250 @@
+// system includes
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+// local includes
+#include "dryad/definitions.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
+#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"
+#include "njoy/dryad/format/gnds/createProjectileTargetFromFile.hpp"
+
+// namespace aliases
+namespace python = pybind11;
+
+namespace dryad {
+
+void wrapProjectileTarget( python::module& module ) {
+
+  // type aliases
+  using Component = njoy::dryad::ProjectileTarget;
+  using Documentation = njoy::dryad::Documentation;
+  using ParticleID = njoy::dryad::id::ParticleID;
+  using ReactionID = njoy::dryad::id::ReactionID;
+  using Reaction = njoy::dryad::Reaction;
+  using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
+  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
+  using InteractionType = njoy::dryad::InteractionType;
+
+  // wrap views created by this component
+
+  // create the component
+  python::class_< Component > component(
+
+    module,
+    "ProjectileTarget",
+    "Data associated to a given projectile and target"
+  );
+
+  // wrap the component
+  component
+  .def(
+
+    python::init< Documentation,
+                  ParticleID,
+                  ParticleID,
+                  InteractionType,
+                  std::vector< Reaction >,
+                  std::optional< ResonanceParameters >,
+                  bool >(),
+    python::arg( "documentation" ), python::arg( "projectile" ),
+    python::arg( "target" ), python::arg( "type" ),
+    python::arg( "reactions" ),
+    python::arg( "resonances" ) = std::nullopt,
+    python::arg( "normalise" ) = false,
+    "Initialise the ProjectileTarget\n\n"
+    "Arguments:\n"
+    "    self            the reaction\n"
+    "    documentation   the documentation\n"
+    "    projectile      the particle identifier\n"
+    "    target          the target identifier\n"
+    "    type            the interaction type\n"
+    "    reactions       the reaction data\n"
+    "    resonances      the optional resonance parameters (default: none)\n"
+    "    normalise       option to indicate whether or not to normalise\n"
+    "                    all probability data (default: no normalisation)"
+  )
+  .def(
+
+    python::init< ParticleID,
+                  ParticleID,
+                  InteractionType,
+                  std::vector< Reaction >,
+                  std::optional< ResonanceParameters >,
+                  bool >(),
+    python::arg( "projectile" ),
+    python::arg( "target" ),
+    python::arg( "type" ),
+    python::arg( "reactions" ),
+    python::arg( "resonances" ) = std::nullopt,
+    python::arg( "normalise" ) = false,
+    "Initialise the ProjectileTarget\n\n"
+    "Arguments:\n"
+    "    self         the reaction\n"
+    "    projectile   the particle identifier\n"
+    "    target       the target identifier\n"
+    "    type         the interaction type\n"
+    "    reactions    the reaction data\n"
+    "    resonances   the optional resonance parameters (default: none)\n"
+    "    normalise    option to indicate whether or not to normalise\n"
+    "                 all probability data (default: no normalisation)"
+  )
+  .def(
+
+    python::init< const Component& >(),
+    python::arg( "instance" ),
+    "Initialise a copy\n\n"
+    "Arguments:\n"
+    "    instance    the instance to be copied\n"
+  )
+  .def_property(
+
+    "documentation",
+    python::overload_cast<>( &Component::documentation, python::const_ ),
+    python::overload_cast< Documentation >( &Component::documentation ),
+    "The documentation"
+  )
+  .def_property(
+
+    "projectile_identifier",
+    python::overload_cast<>( &Component::projectileIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::projectileIdentifier ),
+    "The projectile identifier"
+  )
+  .def_property(
+
+    "target_identifier",
+    python::overload_cast<>( &Component::targetIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::targetIdentifier ),
+    "The target identifier"
+  )
+  .def_property(
+
+    "interaction_type",
+    python::overload_cast<>( &Component::interactionType, python::const_ ),
+    python::overload_cast< InteractionType >( &Component::interactionType ),
+    "The interaction type (atomic or nuclear)"
+  )
+  .def_property(
+
+    "resonances",
+    python::overload_cast<>( &Component::resonances, python::const_ ),
+    python::overload_cast< std::optional< ResonanceParameters > >( &Component::resonances ),
+    "The resonance parameters"
+  )
+  .def_property(
+
+    "reactions",
+    python::overload_cast<>( &Component::reactions, python::const_ ),
+    python::overload_cast< std::vector< Reaction > >( &Component::reactions ),
+    "The reactions"
+  )
+  .def_property_readonly(
+
+    "number_reactions",
+    &Component::numberReactions,
+    "The number of reactions"
+  )
+  .def(
+
+    "has_reaction",
+    &Component::hasReaction,
+    python::arg( "id" ),
+    "Return whether or not a reaction is present\n\n"
+    "Arguments:\n"
+    "    self   the ProjectileTarget data\n"
+    "    id     the reaction identifier"
+  )
+  .def(
+
+    "reaction",
+    python::overload_cast< const ReactionID& >( &Component::reaction, python::const_ ),
+    python::arg( "id" ),
+    "Return the requested reaction\n\n"
+    "Arguments:\n"
+    "    self   the ProjectileTarget data\n"
+    "    id     the reaction identifier",
+    python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "calculate_summation_cross_sections",
+    &Component::calculateSummationCrossSections,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    "Calculate summation cross sections\n\n"
+    "Arguments:\n"
+    "    self        the ProjectileTarget data\n"
+    "    tolerance   the linearisation tolerance"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution data"
+  )
+  .def_static(
+
+    "from_endf_file",
+    [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
+
+      return njoy::dryad::format::endf::createProjectileTargetFromFile( filename, normalise );
+    },
+    python::arg( "filename" ), python::arg( "normalise" ) = false,
+    "Create ProjectileTarget data from an ENDF file\n\n"
+    "If there are multiple materials in the ENDF file, only the first material\n"
+    "will be transformed into a ProjectileTarget.\n\n"
+    "Arguments:\n"
+    "    filename    the ENDF file name\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
+  )
+  .def_static(
+
+    "from_gnds_file",
+    [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
+
+      return njoy::dryad::format::gnds::createProjectileTargetFromFile( filename, normalise );
+    },
+    python::arg( "filename" ), python::arg( "normalise" ) = false,
+    "Create ProjectileTarget data from a GNDS file\n\n"
+    "Arguments:\n"
+    "    filename    the GNDS file name\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
+  )
+  .def_static(
+
+    "from_ace_file",
+    [] ( const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::ace::createProjectileTargetFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create ProjectileTarget data from an ACE file\n\n"
+    "Most files will produce a single ProjectileTarget. The exception here is the\n"
+    "photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two\n"
+    "ProjectileTarget for eprdata files.\n\n"
+    "Arguments:\n"
+    "    filename   the ENDF file name"
+  )
+  .def(
+
+    "to_endf_file",
+    [] ( const Component& self, int mat, const std::string& filename ) {
+
+      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename );
+    },
+    python::arg( "mat" ), python::arg( "filename" ),
+    "Write the ProjectileTarget data to an ENDF file\n\n"
+    "Arguments:\n"
+    "    self        the ProjectileTarget data\n"
+    "    mat         the ENDF mat number to be used\n"
+    "    filename    the ENDF file name"
+  );
+
+  // add standard equality comparison definitions
+  addStandardEqualityComparisonDefinitions< Component >( component );
+}
+
+} // dryad namespace
