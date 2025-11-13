@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_ID_PARTICLEID
 
 // system includes
+#include <cmath>
 #include <regex>
 #include <string>
 #include <optional>
