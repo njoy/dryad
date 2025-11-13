@@ -96,3 +96,6 @@ add_python_test( dryad.Reaction                                        dryad/Tes
 
 add_python_test( dryad.ProjectileTarget                                dryad/Test_ProjectileTarget.py )
 add_python_test( dryad.AtomicRelaxation                                dryad/Test_AtomicRelaxation.py )
+
+add_python_test( medic.prune_cross_section                             medic/Test_prune_cross_section.py )
+add_python_test( medic.prune_cross_sections                            medic/Test_prune_cross_sections.py )
