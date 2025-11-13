@@ -209,7 +209,7 @@ def verify_tabulated_and_tabulated_chunk( self, chunk, normalise ) :
     self.assertEqual( 1, chunk.energy.boundaries[0] )
     self.assertEqual( InterpolationType.LinearLinear, chunk.energy.interpolants[0] )
 
-class Test_dryad_UncorrelatedDistributionData( unittest.TestCase ) :
+class Test_UncorrelatedDistributionData( unittest.TestCase ) :
     """Unit test for the UncorrelatedDistributionData class."""
 
     def test_component( self ) :

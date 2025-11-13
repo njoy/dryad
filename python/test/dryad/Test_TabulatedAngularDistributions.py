@@ -9,7 +9,7 @@ from njoy.dryad import TabulatedAngularDistribution
 from njoy.dryad import TabulatedAngularDistributions
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedAngularDistributions( unittest.TestCase ) :
+class Test_TabulatedAngularDistributions( unittest.TestCase ) :
     """Unit test for the TabulatedAngularDistributions class."""
 
     def test_component( self ) :

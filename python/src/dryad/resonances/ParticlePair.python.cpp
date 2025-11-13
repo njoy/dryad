@@ -47,14 +47,6 @@ void wrapParticlePair( python::module& module ) {
     "    light_particle   the light particle\n"
     "    heavy_particle   the heavy particle"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "light_particle",
@@ -90,6 +82,9 @@ void wrapParticlePair( python::module& module ) {
 
   // add standard comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

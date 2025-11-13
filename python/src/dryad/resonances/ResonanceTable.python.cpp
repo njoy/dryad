@@ -63,14 +63,6 @@ void wrapResonanceTable( python::module& module ) {
     "    energies     the level energies\n"
     "    amplitudes   the reduced width amplitudes"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "channels",
@@ -126,6 +118,9 @@ void wrapResonanceTable( python::module& module ) {
 
   // add standard comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

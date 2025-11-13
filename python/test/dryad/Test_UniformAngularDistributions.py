@@ -10,7 +10,7 @@ from njoy.dryad import UniformAngularDistributions
 from njoy.dryad import UniformDistributionType
 from njoy.dryad import InterpolationType
 
-class Test_dryad_UniformAngularDistributions( unittest.TestCase ) :
+class Test_UniformAngularDistributions( unittest.TestCase ) :
     """Unit test for the UniformAngularDistribution class."""
 
     def test_component( self ) :

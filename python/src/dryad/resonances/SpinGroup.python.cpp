@@ -69,14 +69,6 @@ void wrapSpinGroup( python::module& module ) {
     "    formalism    the r matrix formalism option to be applied\n"
     "    boundary     the boundary condition option to be applied"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property(
 
     "channels",
@@ -139,6 +131,9 @@ void wrapSpinGroup( python::module& module ) {
 
   // add standard comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

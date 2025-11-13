@@ -58,6 +58,10 @@ class Channel:
     A resonance reaction channel
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> Channel:
+        ...
+    def __deepcopy__(self, arg0: dict) -> Channel:
+        ...
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
@@ -98,14 +102,6 @@ class Channel:
                          wave functions
             kinematics   the kinematics type applied to the channel (default is
                          non-relativistic)
-        """
-    @typing.overload
-    def __init__(self, instance: Channel) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: Channel) -> bool:
         ...
@@ -298,6 +294,10 @@ class ChannelQuantumNumbers:
             l   the orbital angular momentum
             s   the channel spin
         """
+    def __copy__(self) -> ChannelQuantumNumbers:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ChannelQuantumNumbers:
+        ...
     def __eq__(self, arg0: ChannelQuantumNumbers) -> bool:
         ...
     def __ge__(self, arg0: ChannelQuantumNumbers) -> bool:
@@ -324,14 +324,6 @@ class ChannelQuantumNumbers:
         Arguments:
             self     the quantum numbers
             symbol   the quantum numbers symbol
-        """
-    @typing.overload
-    def __init__(self, instance: ChannelQuantumNumbers) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __le__(self, arg0: ChannelQuantumNumbers) -> bool:
         ...
@@ -368,6 +360,10 @@ class ChannelRadii:
     these radii for each one of these.
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ChannelRadii:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ChannelRadii:
+        ...
     def __eq__(self, arg0: ChannelRadii) -> bool:
         ...
     @typing.overload
@@ -399,14 +395,6 @@ class ChannelRadii:
             penetrability         the channel radius to be used for P
             shift_factor          the channel radius to be used for S
             phase_shift           the channel radius to be used for phi
-        """
-    @typing.overload
-    def __init__(self, instance: ChannelRadii) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: ChannelRadii) -> bool:
         ...
@@ -473,9 +461,12 @@ class CompoundSystem:
     The compound nucleus system
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> CompoundSystem:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CompoundSystem:
+        ...
     def __eq__(self, arg0: CompoundSystem) -> bool:
         ...
-    @typing.overload
     def __init__(self, lower_energy: float, upper_energy: float, spin_groups: list[SpinGroup]) -> None:
         """
         Initialise the spin group
@@ -485,14 +476,6 @@ class CompoundSystem:
             lower_energy   the lower energy limit for the compound system
             upper_energy   the upper energy limit for the compound system
             spin_groups    the spin groups that make up the compound system
-        """
-    @typing.overload
-    def __init__(self, instance: CompoundSystem) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
@@ -542,9 +525,12 @@ class CoulombPenetrability:
             ratio   the ratio value
             eta     the eta value
         """
+    def __copy__(self) -> CoulombPenetrability:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CoulombPenetrability:
+        ...
     def __eq__(self, arg0: CoulombPenetrability) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb penetrability function
@@ -552,14 +538,6 @@ class CoulombPenetrability:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: CoulombPenetrability) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: CoulombPenetrability) -> bool:
         ...
@@ -582,9 +560,12 @@ class CoulombPhaseShift:
             ratio   the ratio value
             eta     the eta value
         """
+    def __copy__(self) -> CoulombPhaseShift:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CoulombPhaseShift:
+        ...
     def __eq__(self, arg0: CoulombPhaseShift) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb phase shift function
@@ -592,14 +573,6 @@ class CoulombPhaseShift:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: CoulombPhaseShift) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: CoulombPhaseShift) -> bool:
         ...
@@ -621,9 +594,12 @@ class CoulombPhaseShiftDifference:
             self    the phase shift function
             eta     the eta value
         """
+    def __copy__(self) -> CoulombPhaseShiftDifference:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CoulombPhaseShiftDifference:
+        ...
     def __eq__(self, arg0: CoulombPhaseShiftDifference) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb phase shift difference function
@@ -631,14 +607,6 @@ class CoulombPhaseShiftDifference:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: CoulombPhaseShiftDifference) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: CoulombPhaseShiftDifference) -> bool:
         ...
@@ -661,9 +629,12 @@ class CoulombShiftFactor:
             ratio   the ratio value
             eta     the eta value
         """
+    def __copy__(self) -> CoulombShiftFactor:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CoulombShiftFactor:
+        ...
     def __eq__(self, arg0: CoulombShiftFactor) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the Coulomb shift factor function
@@ -671,14 +642,6 @@ class CoulombShiftFactor:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: CoulombShiftFactor) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: CoulombShiftFactor) -> bool:
         ...
@@ -747,9 +710,12 @@ class HardSpherePenetrability:
             self    the penetrability function
             ratio   the ratio value
         """
+    def __copy__(self) -> HardSpherePenetrability:
+        ...
+    def __deepcopy__(self, arg0: dict) -> HardSpherePenetrability:
+        ...
     def __eq__(self, arg0: HardSpherePenetrability) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere penetrability function
@@ -757,14 +723,6 @@ class HardSpherePenetrability:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: HardSpherePenetrability) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: HardSpherePenetrability) -> bool:
         ...
@@ -786,9 +744,12 @@ class HardSpherePhaseShift:
             self    the phase shift function
             ratio   the ratio value
         """
+    def __copy__(self) -> HardSpherePhaseShift:
+        ...
+    def __deepcopy__(self, arg0: dict) -> HardSpherePhaseShift:
+        ...
     def __eq__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere phase shift function
@@ -796,14 +757,6 @@ class HardSpherePhaseShift:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: HardSpherePhaseShift) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: HardSpherePhaseShift) -> bool:
         ...
@@ -825,9 +778,12 @@ class HardSphereShiftFactor:
             self    the shift factor function
             ratio   the ratio value
         """
+    def __copy__(self) -> HardSphereShiftFactor:
+        ...
+    def __deepcopy__(self, arg0: dict) -> HardSphereShiftFactor:
+        ...
     def __eq__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
-    @typing.overload
     def __init__(self, orbital_angular_momentum: int) -> None:
         """
         Initialise the hard sphere shift factor function
@@ -835,14 +791,6 @@ class HardSphereShiftFactor:
         Arguments:
             self                       the function
             orbital_angular_momentum   the value of the orbital momentum
-        """
-    @typing.overload
-    def __init__(self, instance: HardSphereShiftFactor) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: HardSphereShiftFactor) -> bool:
         ...
@@ -908,9 +856,12 @@ class Particle:
     either + or -).
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> Particle:
+        ...
+    def __deepcopy__(self, arg0: dict) -> Particle:
+        ...
     def __eq__(self, arg0: Particle) -> bool:
         ...
-    @typing.overload
     def __init__(self, id: njoy.dryad.id.ParticleID, mass: float, spin: float, parity: int) -> None:
         """
         Initialise the particle information
@@ -921,14 +872,6 @@ class Particle:
             mass     the atomic mass
             spin     the channel spin
             parity   the parity
-        """
-    @typing.overload
-    def __init__(self, instance: Particle) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: Particle) -> bool:
         ...
@@ -976,9 +919,12 @@ class ParticlePair:
     pair of particles such as the mass ratio and the reduced mass.
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ParticlePair:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ParticlePair:
+        ...
     def __eq__(self, arg0: ParticlePair) -> bool:
         ...
-    @typing.overload
     def __init__(self, light_particle: Particle, heavy_particle: Particle) -> None:
         """
         Initialise the particle pair information
@@ -987,14 +933,6 @@ class ParticlePair:
             self             the particle pair information
             light_particle   the light particle
             heavy_particle   the heavy particle
-        """
-    @typing.overload
-    def __init__(self, instance: ParticlePair) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: ParticlePair) -> bool:
         ...
@@ -1030,6 +968,10 @@ class ParticlePair:
         """
 class ResonanceParameters:
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ResonanceParameters:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ResonanceParameters:
+        ...
     def __eq__(self, arg0: ResonanceParameters) -> bool:
         ...
     def __init__(self, resolved: list[CompoundSystem]) -> None:
@@ -1059,6 +1001,10 @@ class ResonanceTable:
     """
     __hash__: typing.ClassVar[None] = None
     def __add__(self, arg0: ResonanceTable) -> ResonanceTable:
+        ...
+    def __copy__(self) -> ResonanceTable:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ResonanceTable:
         ...
     def __eq__(self, arg0: ResonanceTable) -> bool:
         ...
@@ -1090,14 +1036,6 @@ class ResonanceTable:
             channel      the channel identifier
             energies     the level energies
             amplitudes   the reduced width amplitudes
-        """
-    @typing.overload
-    def __init__(self, instance: ResonanceTable) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: ResonanceTable) -> bool:
         ...
@@ -1147,6 +1085,10 @@ class SpinGroup:
     A spin group corresponding to a Jpi quantum number set
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> SpinGroup:
+        ...
+    def __deepcopy__(self, arg0: dict) -> SpinGroup:
+        ...
     def __eq__(self, arg0: SpinGroup) -> bool:
         ...
     @typing.overload
@@ -1179,14 +1121,6 @@ class SpinGroup:
             channels   the channel data in the spin group
             formalism    the r matrix formalism option to be applied
             boundary     the boundary condition option to be applied
-        """
-    @typing.overload
-    def __init__(self, instance: SpinGroup) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
@@ -1258,6 +1192,10 @@ class TabulatedRadius:
             self      the table
             energy    the energy value
         """
+    def __copy__(self) -> TabulatedRadius:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedRadius:
+        ...
     def __eq__(self, arg0: TabulatedRadius) -> bool:
         ...
     @typing.overload
@@ -1292,14 +1230,6 @@ class TabulatedRadius:
             values         the radius values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
-        """
-    @typing.overload
-    def __init__(self, instance: TabulatedRadius) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedRadius:
@@ -1401,6 +1331,10 @@ class TabulatedWaveFunction:
             self    the table
             ratio   the ratio value
         """
+    def __copy__(self) -> TabulatedWaveFunction:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedWaveFunction:
+        ...
     def __eq__(self, arg0: TabulatedWaveFunction) -> bool:
         ...
     @typing.overload
@@ -1435,14 +1369,6 @@ class TabulatedWaveFunction:
             values         the wave function values
             interpolant    the interpolation type (default lin-lin),
                            see InterpolationType for all interpolation types
-        """
-    @typing.overload
-    def __init__(self, instance: TabulatedWaveFunction) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedWaveFunction:

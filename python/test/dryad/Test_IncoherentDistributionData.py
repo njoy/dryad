@@ -32,7 +32,7 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( InterpolationType.LinearLinear, chunk.scattering_function.interpolants[0] )
     self.assertEqual( True, chunk.scattering_function.is_linearised )
 
-class Test_dryad_IncoherentDistributionData( unittest.TestCase ) :
+class Test_IncoherentDistributionData( unittest.TestCase ) :
     """Unit test for the IncoherentDistributionData class."""
 
     def test_component( self ) :

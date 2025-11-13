@@ -13,7 +13,7 @@ from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import ReactionType
 
-class Test_codex_CrossSectionCovarianceMatrix( unittest.TestCase ) :
+class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
     """Unit test for the CrossSectionCovarianceMatrix class."""
 
     def test_diagonal_covariance_block( self ) :

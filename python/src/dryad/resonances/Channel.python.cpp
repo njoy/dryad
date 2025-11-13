@@ -100,14 +100,6 @@ void wrapChannel( python::module& module ) {
     "    kinematics   the kinematics type applied to the channel (default is\n"
     "                 non-relativistic)"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "identifier",
@@ -262,6 +254,9 @@ void wrapChannel( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

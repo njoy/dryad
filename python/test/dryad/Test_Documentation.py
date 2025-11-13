@@ -27,7 +27,7 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 1, chunk.version[1] )
     self.assertEqual( description, chunk.description )
 
-class Test_dryad_Documentation( unittest.TestCase ) :
+class Test_Documentation( unittest.TestCase ) :
     """Unit test for the Documentation class."""
 
     def test_component( self ) :

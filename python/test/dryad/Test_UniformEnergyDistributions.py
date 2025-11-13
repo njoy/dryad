@@ -10,7 +10,7 @@ from njoy.dryad import UniformEnergyDistributions
 from njoy.dryad import UniformDistributionType
 from njoy.dryad import InterpolationType
 
-class Test_dryad_UniformEnergyDistributions( unittest.TestCase ) :
+class Test_UniformEnergyDistributions( unittest.TestCase ) :
     """Unit test for the UniformEnergyDistribution class."""
 
     def test_component( self ) :

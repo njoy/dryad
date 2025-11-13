@@ -44,14 +44,6 @@ void wrapCompoundSystem( python::module& module ) {
     "    upper_energy   the upper energy limit for the compound system\n"
     "    spin_groups    the spin groups that make up the compound system"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property(
 
     "lower_energy_limit",
@@ -91,6 +83,9 @@ void wrapCompoundSystem( python::module& module ) {
 
   // add standard comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

@@ -6,7 +6,7 @@ import unittest
 # local imports
 from njoy.dryad.id import ElementID
 
-class Test_dryad_id_ElementID( unittest.TestCase ) :
+class Test_ElementID( unittest.TestCase ) :
     """Unit test for the ElementID class."""
 
     numbers = range( 1, 119 )
