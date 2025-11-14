@@ -6,6 +6,7 @@
 #include <vector>
 
 // other includes
+#include "njoy/constants.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "ACEtk/electroatomic/PrincipalCrossSectionBlock.hpp"
 
@@ -66,7 +67,7 @@ namespace electroatomic {
                std::move( excitation ), std::move( ionisonisation ) );
   }
 
-} // photoatomic namespace
+} // electroatomic namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace

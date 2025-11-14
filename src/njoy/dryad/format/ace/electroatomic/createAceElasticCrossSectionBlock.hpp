@@ -54,7 +54,7 @@ namespace electroatomic {
         std::vector< double > mu = distribution.cosines();
         std::transform( mu.begin(), mu.end(), mu.begin(), [] ( auto&& value ) { return 1. - value; } );
 
-        // reverse the vectors
+        // reverse the vectors to get pdf(1-mu)
         std::reverse( mu.begin(), mu.end() );
         std::reverse( values.begin(), values.end() );
 
@@ -85,7 +85,7 @@ namespace electroatomic {
     }
   }
 
-} // photoatomic namespace
+} // electroatomic namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace
