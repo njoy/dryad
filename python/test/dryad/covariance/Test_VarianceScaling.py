@@ -7,7 +7,7 @@ import unittest
 from njoy.dryad.covariance import VarianceScaling
 from njoy.dryad.covariance import ScalingType
 
-class Test_dryad_covariance_VarianceScaling( unittest.TestCase ) :
+class Test_VarianceScaling( unittest.TestCase ) :
     """Unit test for the VarianceScaling class."""
 
     def test_component( self ) :

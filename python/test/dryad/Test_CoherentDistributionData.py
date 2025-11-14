@@ -93,7 +93,7 @@ def verify_chunk_with_anomolous_form_factor( self, chunk ) :
     self.assertEqual( InterpolationType.LinearLinear, factor.interpolants[0] )
     self.assertEqual( True, factor.is_linearised )
 
-class Test_dryad_CoherentDistributionData( unittest.TestCase ) :
+class Test_CoherentDistributionData( unittest.TestCase ) :
     """Unit test for the CoherentDistributionData class."""
 
     def test_component( self ) :

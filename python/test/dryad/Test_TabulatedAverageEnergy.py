@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import TabulatedAverageEnergy
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedAverageEnergy( unittest.TestCase ) :
+class Test_TabulatedAverageEnergy( unittest.TestCase ) :
     """Unit test for the TabulatedAverageEnergy class."""
 
     def test_component( self ) :

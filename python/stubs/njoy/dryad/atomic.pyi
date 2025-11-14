@@ -20,9 +20,12 @@ class ElectronSubshellConfiguration:
     can be normalised to 1 upon construction.
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ElectronSubshellConfiguration:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ElectronSubshellConfiguration:
+        ...
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
-    @typing.overload
     def __init__(self, id: njoy.dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
         """
         Initialise the subshell configuration
@@ -36,14 +39,6 @@ class ElectronSubshellConfiguration:
             nonradiative   the non-radiative transitions that are available (default: an empty list)
             normalise      option to indicate whether or not to normalise
                            all probability data (default: no normalisation)
-        """
-    @typing.overload
-    def __init__(self, instance: ElectronSubshellConfiguration) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
@@ -143,9 +138,12 @@ class NonRadiativeTransitionData:
     from which the emitted electron came from.
     """
     __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> NonRadiativeTransitionData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> NonRadiativeTransitionData:
+        ...
     def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
-    @typing.overload
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
         """
         Initialise the non-radiative transition data
@@ -158,14 +156,6 @@ class NonRadiativeTransitionData:
                                 emitted electron originated
             probability         the probability of the transition
             energy              the energy of the emitted electron (default: undefined)
-        """
-    @typing.overload
-    def __init__(self, instance: NonRadiativeTransitionData) -> None:
-        """
-        Initialise a copy
-        
-        Arguments:
-            instance    the instance to be copied
         """
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...

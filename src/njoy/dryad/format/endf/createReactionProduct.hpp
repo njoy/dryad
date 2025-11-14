@@ -32,7 +32,7 @@ namespace endf {
    *  @param[in] normalise       the flag to indicate whether or not distributions
    *                             need to be normalised
    */
-  ReactionProduct
+  inline ReactionProduct
   createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
                          const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions,
                          bool normalise ) {

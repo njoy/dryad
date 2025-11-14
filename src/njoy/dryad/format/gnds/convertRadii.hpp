@@ -17,7 +17,7 @@ namespace gnds {
   /**
    *  @brief Convert a range of radii from GNDS into fm
    */
-  static void convertRadii( std::vector< double >& radii, const std::string& unit ) {
+  inline void convertRadii( std::vector< double >& radii, const std::string& unit ) {
 
     if ( unit != "fm" ) {
 

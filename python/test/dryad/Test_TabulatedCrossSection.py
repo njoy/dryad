@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import TabulatedCrossSection
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedCrossSection( unittest.TestCase ) :
+class Test_TabulatedCrossSection( unittest.TestCase ) :
     """Unit test for the TabulatedCrossSection class."""
 
     def test_component( self ) :

@@ -21,7 +21,7 @@ namespace endf {
   /**
    *  @brief Create a TabulatedFormFactor from a parsed ENDF section
    */
-  TabulatedFormFactor
+  inline TabulatedFormFactor
   createTabulatedFormFactor( const ENDFtk::section::Type< 27 >& section ) {
 
     if ( ( section.sectionNumber() != 505 ) && ( section.sectionNumber() != 506 ) ) {

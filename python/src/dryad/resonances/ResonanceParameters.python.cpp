@@ -48,6 +48,9 @@ void wrapResonanceParameters( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // resonances namespace

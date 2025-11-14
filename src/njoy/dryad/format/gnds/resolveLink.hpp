@@ -20,7 +20,7 @@ namespace gnds {
    *
    *  @param[in] link   the xml node with an href link attribute
    */
-  static pugi::xml_node resolveLink( const pugi::xml_node& link ) {
+  inline pugi::xml_node resolveLink( const pugi::xml_node& link ) {
 
     pugi::xml_node node = link;
     std::string href = link.attribute( "href" ).as_string();

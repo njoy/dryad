@@ -22,7 +22,7 @@ namespace gnds {
    *
    *  @todo is it possible to have a regions1d version?
    */
-  static std::pair< std::optional< double >,
+  inline std::pair< std::optional< double >,
                     TabulatedAngularDistribution >
   createTabulatedAngularDistribution( pugi::xml_node node, const Axes& units,
                                       bool normalise ) {

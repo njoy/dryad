@@ -23,7 +23,7 @@ namespace endf {
    *  @brief Create a TabulatedEnergyDistributions instance from a parsed
    *         ENDF MF26 ContinuumEnergyAngle component
    */
-  TabulatedEnergyDistributions
+  inline TabulatedEnergyDistributions
   createTabulatedEnergyDistributions(
       const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle& distribution,
       bool normalise ) {

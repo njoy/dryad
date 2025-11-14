@@ -6,7 +6,7 @@ import unittest
 # local imports
 from njoy.dryad.id import LevelID
 
-class Test_elementary_LevelID( unittest.TestCase ) :
+class Test_LevelID( unittest.TestCase ) :
     """Unit test for the Level class."""
 
     def test_values( self ) :

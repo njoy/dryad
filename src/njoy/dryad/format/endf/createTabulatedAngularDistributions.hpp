@@ -23,7 +23,7 @@ namespace endf {
    *  @brief Create a TabulatedAngularDistributions instance from a parsed
    *         ENDF MF6 DiscreteTwoBodyScattering component
    */
-  TabulatedAngularDistributions
+  inline TabulatedAngularDistributions
   createTabulatedAngularDistributions(
       const ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering& distribution,
       bool normalise ) {

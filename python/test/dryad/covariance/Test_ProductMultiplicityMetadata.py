@@ -10,7 +10,7 @@ from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import EnergyGroup
 
-class Test_codex_ProductMultiplicityMetadata( unittest.TestCase ) :
+class Test_ProductMultiplicityMetadata( unittest.TestCase ) :
     """Unit test for the ProductMultiplicityMetadata class."""
 
     def test_metadata( self ) :

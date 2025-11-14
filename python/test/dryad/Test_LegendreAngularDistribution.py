@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import LegendreAngularDistribution
 from njoy.dryad import InterpolationType
 
-class Test_dryad_LegendreAngularDistribution( unittest.TestCase ) :
+class Test_LegendreAngularDistribution( unittest.TestCase ) :
     """Unit test for the LegendreAngularDistribution class."""
 
     def test_component( self ) :

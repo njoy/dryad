@@ -16,7 +16,7 @@ namespace endf {
   /**
    *  @brief Create the target identifier
    */
-  id::ParticleID createTargetIdentifier( int za, int level ) {
+  inline id::ParticleID createTargetIdentifier( int za, int level ) {
 
     return id::ParticleID( za, level );
   }

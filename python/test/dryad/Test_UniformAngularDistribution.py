@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import UniformAngularDistribution
 from njoy.dryad import UniformDistributionType
 
-class Test_dryad_UniformAngularDistribution( unittest.TestCase ) :
+class Test_UniformAngularDistribution( unittest.TestCase ) :
     """Unit test for the UniformAngularDistribution class."""
 
     def test_component( self ) :

@@ -10,7 +10,7 @@ from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionType
 from njoy.dryad.id import ReactionID
 
-class Test_elementary_ReactionID( unittest.TestCase ) :
+class Test_ReactionID( unittest.TestCase ) :
     """Unit test for the ReactionID class."""
 
     def test_values( self ) :

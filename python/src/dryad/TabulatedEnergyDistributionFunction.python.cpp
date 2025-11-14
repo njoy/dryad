@@ -60,14 +60,6 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "energies",
@@ -114,6 +106,18 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "mean",
     [] ( const Component& self ) { return self.mean(); },
     "The mean (first order raw moment) of the distribution function over its domain"
+  )
+  .def_property_readonly(
+
+    "cumulative_integral",
+    [] ( const Component& self ) { return self.cumulativeIntegral(); },
+    "The cumulative integral of the distribution function over its domain"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution function"
   );
 
   // add standard equality comparison definitions
@@ -121,6 +125,9 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
 
   // add standard tabulated data definitions
   addStandardTabulatedDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // dryad namespace

@@ -25,7 +25,7 @@ def verify_chunk_with_transition_energy( self, chunk ) :
     self.assertAlmostEqual( 1e-3, chunk.probability )
     self.assertAlmostEqual( 550, chunk.energy )
 
-class Test_dryad_NonRadiativeTransitionData( unittest.TestCase ) :
+class Test_NonRadiativeTransitionData( unittest.TestCase ) :
     """Unit test for the NonRadiativeTransitionData class."""
 
     def test_component( self ) :

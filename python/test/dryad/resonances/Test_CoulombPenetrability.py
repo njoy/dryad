@@ -7,7 +7,7 @@ import sys
 # local imports
 from njoy.dryad.resonances import CoulombPenetrability
 
-class Test_dryad_resonances_CoulombPenetrability( unittest.TestCase ) :
+class Test_CoulombPenetrability( unittest.TestCase ) :
     """Unit test for the CoulombPenetrability class."""
 
     def test_component( self ) :

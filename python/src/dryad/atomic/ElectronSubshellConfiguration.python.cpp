@@ -101,14 +101,6 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "Initialise the subshell configuration\n\n"
 
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property(
 
     "identifier",
@@ -201,6 +193,9 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // atomic namespace

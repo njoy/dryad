@@ -98,7 +98,7 @@ def verify_tabulated_chunk( self, chunk, normalise ) :
     self.assertEqual( 1, chunk.angle.boundaries[0] )
     self.assertEqual( InterpolationType.LinearLinear, chunk.angle.interpolants[0] )
 
-class Test_dryad_TwoBodyDistributionData( unittest.TestCase ) :
+class Test_TwoBodyDistributionData( unittest.TestCase ) :
     """Unit test for the TwoBodyDistributionData class."""
 
     def test_component( self ) :

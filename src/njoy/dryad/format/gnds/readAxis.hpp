@@ -20,7 +20,7 @@ namespace gnds {
   /**
    *  @brief Read data from a GNDS axis node
    */
-  static Axis readAxis( const pugi::xml_node& axis ) {
+  inline Axis readAxis( const pugi::xml_node& axis ) {
 
     throwExceptionOnWrongNode( axis, "axis" );
 

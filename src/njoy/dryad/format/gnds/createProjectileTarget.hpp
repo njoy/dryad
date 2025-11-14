@@ -26,7 +26,7 @@ namespace gnds {
    *                          need to be normalised
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  static ProjectileTarget
+  inline ProjectileTarget
   createProjectileTarget( const pugi::xml_document& document,
                           bool normalise,
                           const std::string& style = "eval" ) {

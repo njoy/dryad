@@ -40,14 +40,6 @@ void wrapUniformEnergyDistribution( python::module& module ) {
     "    energies   the energy values\n"
     "    type       the uniform distribution type"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property_readonly(
 
     "type",
@@ -75,6 +67,9 @@ void wrapUniformEnergyDistribution( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // dryad namespace

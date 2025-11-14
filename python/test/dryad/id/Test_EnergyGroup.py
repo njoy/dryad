@@ -6,7 +6,7 @@ import unittest
 # local imports
 from njoy.dryad.id import EnergyGroup
 
-class Test_elementary_EnergyGroup( unittest.TestCase ) :
+class Test_EnergyGroup( unittest.TestCase ) :
     """Unit test for the Level class."""
 
     def test_values( self ) :

@@ -694,7 +694,7 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 53, resonances[1][0] )
     self.assertAlmostEqual( 54, resonances[2][0] )
 
-class Test_dryad_resonances_CompoundSystem( unittest.TestCase ) :
+class Test_CompoundSystem( unittest.TestCase ) :
     """Unit test for the CompoundSystem class."""
 
     def test_component( self ) :

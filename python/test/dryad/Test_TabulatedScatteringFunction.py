@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import TabulatedScatteringFunction
 from njoy.dryad import InterpolationType
 
-class Test_dryad_TabulatedScatteringFunction( unittest.TestCase ) :
+class Test_TabulatedScatteringFunction( unittest.TestCase ) :
     """Unit test for the TabulatedScatteringFunction class."""
 
     def test_component( self ) :

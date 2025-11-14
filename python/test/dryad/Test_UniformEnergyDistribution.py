@@ -8,7 +8,7 @@ import sys
 from njoy.dryad import UniformEnergyDistribution
 from njoy.dryad import UniformDistributionType
 
-class Test_dryad_UniformEnergyDistribution( unittest.TestCase ) :
+class Test_UniformEnergyDistribution( unittest.TestCase ) :
     """Unit test for the UniformEnergyDistribution class."""
 
     def test_component( self ) :

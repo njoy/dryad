@@ -76,6 +76,7 @@ add_python_test( dryad.LegendreAngularDistributions                    dryad/Tes
 add_python_test( dryad.TabulatedAngularDistributionFunction            dryad/Test_TabulatedAngularDistributionFunction.py )
 add_python_test( dryad.TabulatedAngularDistribution                    dryad/Test_TabulatedAngularDistribution.py )
 add_python_test( dryad.TabulatedAngularDistributions                   dryad/Test_TabulatedAngularDistributions.py )
+add_python_test( dryad.TabulatedComptonProfile                         dryad/Test_TabulatedComptonProfile.py )
 add_python_test( dryad.UniformAngularDistribution                      dryad/Test_UniformAngularDistribution.py )
 add_python_test( dryad.UniformAngularDistributions                     dryad/Test_UniformAngularDistributions.py )
 add_python_test( dryad.TabulatedEnergyDistributionFunction             dryad/Test_TabulatedEnergyDistributionFunction.py )
@@ -96,3 +97,9 @@ add_python_test( dryad.Reaction                                        dryad/Tes
 
 add_python_test( dryad.ProjectileTarget                                dryad/Test_ProjectileTarget.py )
 add_python_test( dryad.AtomicRelaxation                                dryad/Test_AtomicRelaxation.py )
+
+add_python_test( reconr.unionise_cross_sections                        reconr/Test_unionise_cross_sections.py )
+add_python_test( reconr.calculate_summation_cross_sections             reconr/Test_calculate_summation_cross_sections.py )
+
+add_python_test( medic.prune_cross_section                             medic/Test_prune_cross_section.py )
+add_python_test( medic.prune_cross_sections                            medic/Test_prune_cross_sections.py )

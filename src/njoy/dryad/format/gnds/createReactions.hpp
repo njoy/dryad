@@ -26,7 +26,7 @@ namespace gnds {
    *                          need to be normalised
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  static std::vector< Reaction >
+  inline std::vector< Reaction >
   createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
                    pugi::xml_node suite, bool normalise,
                    const std::string& style = "eval" ) {

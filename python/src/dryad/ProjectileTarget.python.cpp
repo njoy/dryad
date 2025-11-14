@@ -90,14 +90,6 @@ void wrapProjectileTarget( python::module& module ) {
     "    normalise    option to indicate whether or not to normalise\n"
     "                 all probability data (default: no normalisation)"
   )
-  .def(
-
-    python::init< const Component& >(),
-    python::arg( "instance" ),
-    "Initialise a copy\n\n"
-    "Arguments:\n"
-    "    instance    the instance to be copied\n"
-  )
   .def_property(
 
     "documentation",
@@ -166,6 +158,24 @@ void wrapProjectileTarget( python::module& module ) {
     "    self   the ProjectileTarget data\n"
     "    id     the reaction identifier",
     python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "unionise_cross_sections",
+    &Component::unioniseCrossSections,
+    python::arg( "exclude_summation" ) = false,
+    "Unionise cross section data\n\n"
+    "This function takes all cross section data and unionises the cross section\n"
+    "grids. It does not linearise the data but reevaluates the data using the\n"
+    "proper interpolation types of the cross section data.\n\n"
+    "By default, summation cross sections are included in the unionisation process.\n"
+    "unless explicitly excluded by the user. Switching on the exclusion of summation\n"
+    "cross sections may be useful when the user is going to recalculate the summation\n"
+    "cross sections after unionisation.\n\n"
+    "Arguments:\n"
+    "    self                the ProjectileTarget data\n"
+    "    exclude_summation   option to exclude summation reactions in the\n"
+    "                        unionisation (default: false)"
   )
   .def(
 
@@ -245,6 +255,9 @@ void wrapProjectileTarget( python::module& module ) {
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
+
+  // add standard copy definitions
+  addStandardCopyDefinitions< Component >( component );
 }
 
 } // dryad namespace

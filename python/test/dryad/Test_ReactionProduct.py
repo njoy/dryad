@@ -151,7 +151,7 @@ def verify_tabulated_chunk( self, chunk, normalise ) :
     self.assertEqual( False, chunk.has_average_energy )
     self.assertEqual( True, chunk.has_distribution_data )
 
-class Test_dryad_ReactionProduct( unittest.TestCase ) :
+class Test_ReactionProduct( unittest.TestCase ) :
     """Unit test for the ReactionProduct class."""
 
     def test_component( self ) :

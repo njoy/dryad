@@ -1,9 +1,16 @@
+#include "njoy/dryad/format/ace/atomic/createAceSubshellTransitionDataBlock.hpp"
+
 #include "njoy/dryad/format/ace/photoatomic/createPartialReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createReactionProducts.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createTabulatedCrossSections.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createReactions.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
+
+#include "njoy/dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAceCoherentFormFactorBlock.hpp"
 
 #include "njoy/dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
@@ -13,6 +20,14 @@
 #include "njoy/dryad/format/ace/electroatomic/createReactions.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
 
+#include "njoy/dryad/format/ace/electroatomic/createAcePrincipalCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceElasticCrossSectionBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceElasticAngularDistributionBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceBremsstrahlungDistributionBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceIonisationDistributionBlocks.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceExcitationBlock.hpp"
+#include "njoy/dryad/format/ace/electroatomic/createAceBremsstrahlungBlock.hpp"
+
 #include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
 #include "njoy/dryad/format/ace/createTabulatedAngularDistributions.hpp"
@@ -21,3 +36,4 @@
 #include "njoy/dryad/format/ace/createTabulatedEnergyDistributions.hpp"
 #include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
 #include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
+

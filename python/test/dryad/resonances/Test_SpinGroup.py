@@ -95,7 +95,7 @@ def verify_chunk( self, chunk ) :
 
     self.assertEqual( table, chunk.resonance_table )
 
-class Test_dryad_resonances_SpinGroup( unittest.TestCase ) :
+class Test_SpinGroup( unittest.TestCase ) :
     """Unit test for the SpinGroup class."""
 
     def test_component( self ) :

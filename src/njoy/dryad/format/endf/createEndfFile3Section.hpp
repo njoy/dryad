@@ -21,7 +21,7 @@ namespace endf {
    *
    *  @param[in] reaction   the reaction data
    */
-  ENDFtk::section::Type< 3 >
+  inline ENDFtk::section::Type< 3 >
   createEndfFile3Section( double awr,
                           const dryad::Reaction& reaction ) {
 
