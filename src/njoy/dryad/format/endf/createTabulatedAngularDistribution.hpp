@@ -10,6 +10,7 @@
 #include "njoy/dryad/format/endf/createBoundaries.hpp"
 #include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "ENDFtk/section/4.hpp"
 #include "ENDFtk/section/6.hpp"
 #include "ENDFtk/section/26.hpp"
 
@@ -26,6 +27,8 @@ namespace endf {
   auto createTabulatedAngularDistribution( const TabulatedDistribution& distribution,
                                            bool normalise )
   -> std::enable_if_t< ( std::is_same_v< TabulatedDistribution,
+                                         ENDFtk::section::Type< 4 >::TabulatedDistribution > ||
+                         std::is_same_v< TabulatedDistribution,
                                          ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering::TabulatedDistribution > ||
                          std::is_same_v< TabulatedDistribution,
                                          ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering::TabulatedDistribution > ),
@@ -44,7 +47,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating an average reaction product energy table" );
+      Log::info( "Error encountered while creating an angular distribution table" );
       throw;
     }
   }

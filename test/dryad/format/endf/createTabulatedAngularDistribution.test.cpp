@@ -19,9 +19,34 @@ using namespace njoy::dryad;
 
 void verifyNeutronChunk1( const TabulatedAngularDistribution& );
 void verifyNeutronChunk2( const TabulatedAngularDistribution&, bool );
+void verifyNeutronChunkMF4( const TabulatedAngularDistribution&, bool );
 void verifyElectronChunk( const TabulatedAngularDistribution&, bool );
 
 SCENARIO( "createTabulatedAngularDistribution" ) {
+
+  GIVEN( "ENDF MF4 TabulatedDistribution" ) {
+
+    using TabulatedDistributions = njoy::ENDFtk::section::Type< 4 >::TabulatedDistributions;
+    using TabulatedDistribution = njoy::ENDFtk::section::Type< 4 >::TabulatedDistribution;
+
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );
+    auto section = tape.materials().front().section( 4, 16 ).parse< 4 >();
+    auto distribution = std::get< TabulatedDistributions >( section.distributions() );
+
+    WHEN( "a single parsed MF6 LAW = 2 distribution is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto table = distribution.angularDistributions().back();
+        auto chunk1 = format::endf::createTabulatedAngularDistribution( table, false );
+        auto chunk2 = format::endf::createTabulatedAngularDistribution( table, true );
+
+        verifyNeutronChunkMF4( chunk1, false );
+        verifyNeutronChunkMF4( chunk2, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 
   GIVEN( "ENDF MF6 LAW = 2 TabulatedDistribution for an isotropic distribution" ) {
 
@@ -93,6 +118,41 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+void verifyNeutronChunkMF4( const TabulatedAngularDistribution& chunk, bool normalise ) {
+
+  double normalisation = normalise ? .999998 : 1.;
+
+  decltype(auto) pdf = chunk.pdf();
+  CHECK( true == pdf.isLinearised() );
+  CHECK( 11 == pdf.numberPoints() );
+  CHECK( 1 == pdf.numberRegions() );
+  CHECK( 11 == pdf.cosines().size() );
+  CHECK( 11 == pdf.values().size() );
+  CHECK( 1 == pdf.boundaries().size() );
+  CHECK( 1 == pdf.interpolants().size() );
+  CHECK( 10 == pdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+  CHECK_THAT( -1., WithinRel( pdf.cosines().front() ) );
+  CHECK_THAT(  1., WithinRel( pdf.cosines().back() ) );
+  CHECK_THAT( 2.533600e-1 / normalisation, WithinRel( pdf.values().front() ) );
+  CHECK_THAT( 8.672000e-1 / normalisation, WithinRel( pdf.values().back() ) );
+
+  decltype(auto) cdf = chunk.cdf();
+  CHECK( true == cdf.isLinearised() );
+  CHECK( 11 == cdf.numberPoints() );
+  CHECK( 1 == cdf.numberRegions() );
+  CHECK( 11 == cdf.cosines().size() );
+  CHECK( 11 == cdf.values().size() );
+  CHECK( 1 == cdf.boundaries().size() );
+  CHECK( 1 == cdf.interpolants().size() );
+  CHECK( 10 == cdf.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
+  CHECK_THAT( -1., WithinRel( cdf.cosines().front() ) );
+  CHECK_THAT(  1., WithinRel( cdf.cosines().back() ) );
+  CHECK_THAT( 0. / normalisation, WithinRel( cdf.values().front() ) );
+  CHECK_THAT( .999998 / normalisation, WithinRel( cdf.values().back() ) );
+}
 
 void verifyNeutronChunk1( const TabulatedAngularDistribution& chunk ) {
 
