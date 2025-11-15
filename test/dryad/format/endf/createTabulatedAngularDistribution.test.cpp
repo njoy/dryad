@@ -24,7 +24,7 @@ void verifyElectronChunk( const TabulatedAngularDistribution&, bool );
 
 SCENARIO( "createTabulatedAngularDistribution" ) {
 
-  GIVEN( "ENDF MF4 TabulatedDistribution" ) {
+  GIVEN( "ENDF MF4 LTT = 2 TabulatedDistribution" ) {
 
     using TabulatedDistributions = njoy::ENDFtk::section::Type< 4 >::TabulatedDistributions;
     using TabulatedDistribution = njoy::ENDFtk::section::Type< 4 >::TabulatedDistribution;
