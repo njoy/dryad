@@ -10,8 +10,10 @@ namespace python = pybind11;
 // declarations - matrix functions
 void wrapMatrix( python::module& );
 
-// declarations
+// declarations - components and modules
 void wrapDryad( python::module& );
+void wrapReconr( python::module& );
+void wrapMedic( python::module& );
 
 /**
  *  @brief njoy python bindings
@@ -26,4 +28,10 @@ PYBIND11_MODULE( njoy, module ) {
 
   // wrap dryad
   wrapDryad( module );
+
+  // wrap reconr
+  wrapReconr( module );
+
+  // wrap medic
+  wrapMedic( module );
 }

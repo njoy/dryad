@@ -87,6 +87,12 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Reaction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ProjectileTarget.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/AtomicRelaxation.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr/wrapUnioniseCrossSections.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr/wrapCalculateSummationCrossSections.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/medic.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/medic/pruneCrossSection.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/medic/pruneCrossSections.python.cpp
     )
 
     target_link_libraries(njoy.python PRIVATE njoy)

@@ -161,6 +161,24 @@ void wrapProjectileTarget( python::module& module ) {
   )
   .def(
 
+    "unionise_cross_sections",
+    &Component::unioniseCrossSections,
+    python::arg( "exclude_summation" ) = false,
+    "Unionise cross section data\n\n"
+    "This function takes all cross section data and unionises the cross section\n"
+    "grids. It does not linearise the data but reevaluates the data using the\n"
+    "proper interpolation types of the cross section data.\n\n"
+    "By default, summation cross sections are included in the unionisation process.\n"
+    "unless explicitly excluded by the user. Switching on the exclusion of summation\n"
+    "cross sections may be useful when the user is going to recalculate the summation\n"
+    "cross sections after unionisation.\n\n"
+    "Arguments:\n"
+    "    self                the ProjectileTarget data\n"
+    "    exclude_summation   option to exclude summation reactions in the\n"
+    "                        unionisation (default: false)"
+  )
+  .def(
+
     "calculate_summation_cross_sections",
     &Component::calculateSummationCrossSections,
     python::arg( "tolerance" ) = ToleranceConvergence(),
