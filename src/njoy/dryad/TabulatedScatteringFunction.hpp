@@ -5,6 +5,7 @@
 #include <vector>
 
 // other includes
+#include "njoy/constants.hpp"
 #include "njoy/dryad/type-aliases.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
@@ -70,13 +71,7 @@ namespace dryad {
      */
     double inverseLength( double energy, double cosine ) const {
 
-      //! @todo add physical constants to scion or dryad
-
-      const double h = 6.62607015e-34;       // Planck constant, unit: J s
-      const double c = 299792458;            // light speed, unit: m / s
-      const double e = 1.602176634e-19;      // elementary charge, unit: C
-      const double a = 1e-10;                // angstrom, unit: m
-      const double constant = a * e / h / c; // units: 1 / eV / angstrom
+      const double constant = 1e-10 * constants::e / constants::h / constants::c; // units: 1 / eV / angstrom
       return constant * energy * std::sqrt( 0.5 * ( 1 - cosine ) );
     }
 
