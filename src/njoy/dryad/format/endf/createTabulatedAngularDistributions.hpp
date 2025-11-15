@@ -21,12 +21,16 @@ namespace endf {
 
   /**
    *  @brief Create a TabulatedAngularDistributions instance from a parsed
-   *         ENDF MF6 DiscreteTwoBodyScattering component
+   *         ENDF MF4 TabulatedDistributions or MF6 DiscreteTwoBodyScattering component
    */
-  inline TabulatedAngularDistributions
-  createTabulatedAngularDistributions(
-      const ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering& distribution,
-      bool normalise ) {
+  template < typename TabulatedDistributions >
+  auto createTabulatedAngularDistributions( const TabulatedDistributions& distribution,
+                                            bool normalise )
+  -> std::enable_if_t< ( std::is_same_v< TabulatedDistributions,
+                                         ENDFtk::section::Type< 4 >::TabulatedDistributions > ||
+                         std::is_same_v< TabulatedDistributions,
+                                         ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering > ),
+                       TabulatedAngularDistributions >{
 
     try {
 
