@@ -46,6 +46,11 @@ namespace electroatomic {
     std::vector< njoy::ACEtk::electroatomic::TabulatedAngularDistribution > distributions;
     for ( unsigned int i = 0; i < data.numberPoints(); ++i ) {
 
+      // note: the large angle elastic scattering distributions do not integrate to 1
+      //       as they go up to .99999 (or something like that). everything beyond that
+      //       is assumed to not scatter and the outgoing mu should be set equal 1
+      //       (basically a discrete point at the end of the distribution).
+
       double incident = data.grid()[i];
       decltype(auto) distribution = data.distributions()[i];
 
@@ -54,7 +59,6 @@ namespace electroatomic {
       if ( ! distribution.cdf().isLinearised() ) {
 
         auto linearised = distribution.linearise();
-        linearised.normalise();
         cosines = linearised.cdf().cosines();
         values = linearised.cdf().values();
       }
