@@ -112,6 +112,7 @@ add_cpp_test( dryad.AtomicRelaxation                                            
 add_cpp_test( dryad.format.createIndex                                                  dryad/format/createIndex.test.cpp )
 add_cpp_test( dryad.format.createVector                                                 dryad/format/createVector.test.cpp )
 
+add_cpp_test( dryad.format.ace.createProjectileIdentifier                               dryad/format/ace/createProjectileIdentifier.test.cpp )
 add_cpp_test( dryad.format.ace.createTabulatedScatteringFunction                        dryad/format/ace/createTabulatedScatteringFunction.test.cpp )
 add_cpp_test( dryad.format.ace.createTabulatedAngularDistributionFunction               dryad/format/ace/createTabulatedAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.format.ace.createTabulatedEnergyDistributionFunction                dryad/format/ace/createTabulatedEnergyDistributionFunction.test.cpp )
