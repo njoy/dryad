@@ -21,7 +21,46 @@ namespace endf {
 
   /**
    *  @brief Create a TabulatedAngularDistributions instance from a parsed
-   *         ENDF MF6 DiscreteTwoBodyScattering component
+   *         ENDF MF4 TabulatedDistributions
+   *
+   *  @param[in] distribution   the parsed ENDF tabulated distributions
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
+   */
+  inline TabulatedAngularDistributions
+  createTabulatedAngularDistributions(
+      const ENDFtk::section::Type< 4 >::TabulatedDistributions& distribution,
+      bool normalise ) {
+
+    try {
+
+      auto energies = createVector( distribution.incidentEnergies() );
+      std::vector< TabulatedAngularDistribution > distributions;
+      distributions.reserve( energies.size() );
+      for ( auto&& table : distribution.angularDistributions() ) {
+
+        distributions.emplace_back( createTabulatedAngularDistribution( table, normalise ) );
+      }
+      auto boundaries = createBoundaries( distribution.boundaries() );
+      auto interpolants = createInterpolants( distribution.interpolants() );
+      return TabulatedAngularDistributions(
+               std::move( energies ), std::move( distributions ),
+               std::move( boundaries ), std::move( interpolants ) );
+    }
+    catch ( ... ) {
+
+      Log::info( "Error encountered while creating an average reaction product energy table" );
+      throw;
+    }
+  }
+
+  /**
+   *  @brief Create a TabulatedAngularDistributions instance from a parsed
+   *         MF6 DiscreteTwoBodyScattering component
+   *
+   *  @param[in] distribution   the parsed ENDF tabulated distributions
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline TabulatedAngularDistributions
   createTabulatedAngularDistributions(
