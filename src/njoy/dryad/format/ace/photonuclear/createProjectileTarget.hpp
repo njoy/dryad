@@ -20,17 +20,19 @@ namespace photonuclear {
   /**
    *  @brief Create a ProjectileTarget for photonuclear data
    *
-   *  @param[in] table   the ace table
+   *  @param[in] table       the ace table
+   *  @param[in] normalise   the flag to indicate whether or not distributions
+   *                         need to be normalised
    */
   inline ProjectileTarget
-  createProjectileTarget( const ACEtk::PhotonuclearTable& table ) {
+  createProjectileTarget( const ACEtk::PhotonuclearTable& table, bool normalise ) {
 
     auto projectile = id::ParticleID::photon();
     auto target = id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
     return ProjectileTarget( projectile,
                              target,
                              InteractionType::Nuclear,
-                             createReactions( projectile, target, table ) );
+                             createReactions( projectile, target, table, normalise ) );
   }
 
 } // electroatomic namespace

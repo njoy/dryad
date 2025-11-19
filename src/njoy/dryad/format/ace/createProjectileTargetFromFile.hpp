@@ -22,10 +22,12 @@ namespace ace {
    *  photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two
    *  ProjectileTarget for eprdata files.
    *
-   *  @param[in] filename   the ACE file name
+   *  @param[in] filename    the ACE file name
+   *  @param[in] normalise   the flag to indicate whether or not distributions
+   *                         need to be normalised
    */
   inline std::variant< ProjectileTarget, std::pair< ProjectileTarget, ProjectileTarget > >
-  createProjectileTargetFromFile( const std::string& filename ) {
+  createProjectileTargetFromFile( const std::string& filename, bool normalise ) {
 
     Log::info( "Reading ACE file \'{}\'", filename );
 
@@ -39,18 +41,18 @@ namespace ace {
         ACEtk::PhotoatomicTable table( std::move( ace ) );
         if ( table.electronPhotonRelaxationFormat() > 0 ) {
 
-          return std::make_pair( photoatomic::createProjectileTarget( table ),
-                                 electroatomic::createProjectileTarget( table ) );
+          return std::make_pair( photoatomic::createProjectileTarget( table, normalise ),
+                                 electroatomic::createProjectileTarget( table, normalise ) );
         }
         else {
 
-          return photoatomic::createProjectileTarget( table );
+          return photoatomic::createProjectileTarget( table, normalise );
         }
       }
       case 'u' : {
 
         ACEtk::PhotonuclearTable table( std::move( ace ) );
-        return photonuclear::createProjectileTarget( table );
+        return photonuclear::createProjectileTarget( table, normalise );
       }
       default : {
 

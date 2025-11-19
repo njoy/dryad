@@ -26,7 +26,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
+        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
@@ -87,7 +87,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
+        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
@@ -155,7 +155,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
+        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );

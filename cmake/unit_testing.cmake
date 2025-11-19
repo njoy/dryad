@@ -115,6 +115,7 @@ add_cpp_test( dryad.format.createVector                                         
 add_cpp_test( dryad.format.ace.createTabulatedScatteringFunction                        dryad/format/ace/createTabulatedScatteringFunction.test.cpp )
 add_cpp_test( dryad.format.ace.createTabulatedAngularDistributionFunction               dryad/format/ace/createTabulatedAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.format.ace.createTabulatedEnergyDistributionFunction                dryad/format/ace/createTabulatedEnergyDistributionFunction.test.cpp )
+add_cpp_test( dryad.format.ace.continuous.createTabulatedCrossSection                   dryad/format/ace/continuous/createTabulatedCrossSection.test.cpp )
 add_cpp_test( dryad.format.ace.electroatomic.createPdfFromCdf                           dryad/format/ace/electroatomic/createPdfFromCdf.test.cpp )
 add_cpp_test( dryad.format.ace.electroatomic.createReactionIdentifiers                  dryad/format/ace/electroatomic/createReactionIdentifiers.test.cpp )
 add_cpp_test( dryad.format.ace.electroatomic.createPartialReactionIdentifiers           dryad/format/ace/electroatomic/createPartialReactionIdentifiers.test.cpp )
