@@ -7,6 +7,8 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/Reaction.hpp"
+#include "njoy/dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/dryad/format/ace/photonuclear/createReaction.hpp"
 #include "ACEtk/PhotonuclearTable.hpp"
 
 namespace njoy {
@@ -21,13 +23,30 @@ namespace photonuclear {
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] table        the ace table
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
    */
   inline std::vector< Reaction >
   createReactions( const id::ParticleID& projectile,
                    const id::ParticleID& target,
-                   const ACEtk::PhotonuclearTable& table ) {
+                   const ACEtk::PhotonuclearTable& table,
+                   bool normalise ) {
 
     std::vector< Reaction > reactions;
+
+    for ( std::size_t index = 1; index <= table.reactionNumberBlock().numberReactions(); ++index ) {
+
+      auto mt = table.reactionNumberBlock().reactionNumber( index );
+      if ( ! endf::ReactionInformation::isDerived( mt ) ) {
+
+        Log::info( "Reading data for MT{}", mt );
+        reactions.emplace_back( createReaction( projectile, target, table, index, normalise ) );
+      }
+      else {
+
+        Log::warning( "Skipping data for derived MT{}", mt );
+      }
+    }
 
     return reactions;
   }
