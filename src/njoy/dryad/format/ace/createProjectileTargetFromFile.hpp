@@ -8,6 +8,7 @@
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/photonuclear/createProjectileTarget.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -45,6 +46,11 @@ namespace ace {
 
           return photoatomic::createProjectileTarget( table );
         }
+      }
+      case 'u' : {
+
+        ACEtk::PhotonuclearTable table( std::move( ace ) );
+        return photonuclear::createProjectileTarget( table );
       }
       default : {
 
