@@ -34,7 +34,7 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
     auto section = tape.materials().front().section( 4, 16 ).parse< 4 >();
     auto distribution = std::get< TabulatedDistributions >( section.distributions() );
 
-    WHEN( "a single parsed MF6 LAW = 2 distribution is given" ) {
+    WHEN( "a single parsed MF4 LTT = 2 distribution is given" ) {
 
       THEN( "it can be converted" ) {
 
