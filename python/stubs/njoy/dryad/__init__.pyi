@@ -904,7 +904,7 @@ class ProjectileTarget:
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
-    def from_ace_file(filename: str) -> ProjectileTarget | tuple[ProjectileTarget, ProjectileTarget]:
+    def from_ace_file(filename: str, normalise: bool = False) -> ProjectileTarget | tuple[ProjectileTarget, ProjectileTarget]:
         """
         Create ProjectileTarget data from an ACE file
         
@@ -913,7 +913,9 @@ class ProjectileTarget:
         ProjectileTarget for eprdata files.
         
         Arguments:
-            filename   the ENDF file name
+            filename    the ACE file name
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
         """
     @staticmethod
     def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
