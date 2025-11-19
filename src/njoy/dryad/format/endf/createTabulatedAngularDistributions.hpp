@@ -22,6 +22,10 @@ namespace endf {
   /**
    *  @brief Create a TabulatedAngularDistributions instance from a parsed
    *         ENDF MF4 TabulatedDistributions
+   *
+   *  @param[in] distribution   the parsed ENDF tabulated distributions
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline TabulatedAngularDistributions
   createTabulatedAngularDistributions(
@@ -53,6 +57,10 @@ namespace endf {
   /**
    *  @brief Create a TabulatedAngularDistributions instance from a parsed
    *         MF6 DiscreteTwoBodyScattering component
+   *
+   *  @param[in] distribution   the parsed ENDF tabulated distributions
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   inline TabulatedAngularDistributions
   createTabulatedAngularDistributions(
