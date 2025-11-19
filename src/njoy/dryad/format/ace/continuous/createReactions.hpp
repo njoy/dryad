@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTONUCLEAR_CREATEREACTIONS
-#define NJOY_DRYAD_FORMAT_ACE_PHOTONUCLEAR_CREATEREACTIONS
+#ifndef NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEREACTIONS
+#define NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEREACTIONS
 
 // system includes
 #include <vector>
@@ -8,14 +8,14 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
-#include "njoy/dryad/format/ace/photonuclear/createReaction.hpp"
-#include "ACEtk/PhotonuclearTable.hpp"
+#include "njoy/dryad/format/ace/continuous/createReaction.hpp"
+#include "ACEtk/ContinuousEnergyTable.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace format {
 namespace ace {
-namespace photonuclear {
+namespace continuous {
 
   /**
    *  @brief Create the reactions for photonuclear data
@@ -29,7 +29,7 @@ namespace photonuclear {
   inline std::vector< Reaction >
   createReactions( const id::ParticleID& projectile,
                    const id::ParticleID& target,
-                   const ACEtk::PhotonuclearTable& table,
+                   const ACEtk::ContinuousEnergyTable& table,
                    bool normalise ) {
 
     std::vector< Reaction > reactions;
@@ -56,7 +56,7 @@ namespace photonuclear {
     return reactions;
   }
 
-} // photonuclear namespace
+} // continuous namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace

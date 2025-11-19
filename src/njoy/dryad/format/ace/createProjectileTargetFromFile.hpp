@@ -6,6 +6,7 @@
 // other includes
 #include "ACEtk/fromFile.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/format/ace/continuous/createProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/photonuclear/createProjectileTarget.hpp"
@@ -53,6 +54,16 @@ namespace ace {
 
         ACEtk::PhotonuclearTable table( std::move( ace ) );
         return photonuclear::createProjectileTarget( table, normalise );
+      }
+      case 'c' :
+      case 'h' :
+      case 'o' :
+      case 'r' :
+      case 's' :
+      case 'a' : {
+
+        ACEtk::ContinuousEnergyTable table( std::move( ace ) );
+        return continuous::createProjectileTarget( table, normalise );
       }
       default : {
 
