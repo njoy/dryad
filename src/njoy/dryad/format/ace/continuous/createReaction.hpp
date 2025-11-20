@@ -18,7 +18,7 @@ namespace ace {
 namespace continuous {
 
   /**
-   *  @brief Create the reactions for photonuclear data
+   *  @brief Create the reactions for continuous energy data
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
@@ -34,10 +34,11 @@ namespace continuous {
                   std::size_t index,
                   bool normalise ) {
 
-    id::ReactionID id( projectile, target, table.reactionNumberBlock().reactionNumber( index ) );
-    auto xs = continuous::createTabulatedCrossSection( table, index );
+    auto mt = table.reactionNumberBlock().reactionNumber( index );
+    Log::info( "Reading data for MT{}", mt );
 
-    return Reaction( std::move( id ), std::move( xs ) );
+    return Reaction( id::ReactionID( projectile, target, mt ),
+                     continuous::createTabulatedCrossSection( table, index ) );
   }
 
 } // continuous namespace

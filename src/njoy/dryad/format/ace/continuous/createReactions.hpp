@@ -9,6 +9,7 @@
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "njoy/dryad/format/ace/continuous/createReaction.hpp"
+#include "njoy/dryad/format/ace/continuous/createElasticReaction.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
 
 namespace njoy {
@@ -18,7 +19,7 @@ namespace ace {
 namespace continuous {
 
   /**
-   *  @brief Create the reactions for photonuclear data
+   *  @brief Create the reactions for continuous energy data
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
@@ -34,23 +35,35 @@ namespace continuous {
 
     std::vector< Reaction > reactions;
 
-    for ( std::size_t index = 1; index <= table.reactionNumberBlock().numberReactions(); ++index ) {
+    // reactions are ordered in an ACE file:
+    // - first all primary reactions
+    // - some derived data
+    // - potential summations like MT3 and MT4 for production or ptables
 
-      // reactions are ordered in an ACE file:
-      // - first all primary reactions
-      // - some derived data
-      // - potentially partials like MT3 and MT4
+    // the max index (one-based) for what should be primary reactions
+    auto isDerivedOrAuxiliary = [] ( auto&& mt ) {
+
+      return endf::ReactionInformation::isDerived( mt ) || ( mt == 3 ) || ( mt == 4 );
+    };
+    auto max = std::distance( table.reactionNumberBlock().reactionNumbers().begin(),
+                              std::find_if( table.reactionNumberBlock().reactionNumbers().begin(),
+                                            table.reactionNumberBlock().reactionNumbers().end(),
+                                            isDerivedOrAuxiliary ) ) + 1;
+
+    // elastic scattering
+    reactions.emplace_back( createElasticReaction( projectile, target, table, normalise ) );
+
+    // all primary reactions
+    for ( std::size_t index = 1; index < max; ++index ) {
+
+      reactions.emplace_back( createReaction( projectile, target, table, index, normalise ) );
+    }
+
+    // all derived or auxiliary reactions
+    for ( std::size_t index = max; index < table.reactionNumberBlock().numberReactions(); ++index ) {
 
       auto mt = table.reactionNumberBlock().reactionNumber( index );
-      if ( ! endf::ReactionInformation::isDerived( mt ) ) {
-
-        Log::info( "Reading data for MT{}", mt );
-        reactions.emplace_back( createReaction( projectile, target, table, index, normalise ) );
-      }
-      else {
-
-        Log::warning( "Skipping data for derived MT{}", mt );
-      }
+      Log::warning( "Skipping data for derived or auxiliary MT{}", mt );
     }
 
     return reactions;

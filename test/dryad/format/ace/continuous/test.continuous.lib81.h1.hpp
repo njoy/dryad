@@ -28,8 +28,8 @@ namespace h1 {
     CHECK( 1 == reaction.crossSection().interpolants().size() );
     CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().energies().front() ) );
     CHECK_THAT( 2e+7, WithinRel( reaction.crossSection().energies().back() ) );
-    CHECK_THAT( 16.72987, WithinRel( reaction.crossSection().values().front() ) );
-    CHECK_THAT( 2.710792e-5, WithinRel( reaction.crossSection().values().back() ) );
+    CHECK_THAT( 1160.528, WithinRel( reaction.crossSection().values().front() ) );
+    CHECK_THAT( .4818408, WithinRel( reaction.crossSection().values().back() ) );
     CHECK( 630 == reaction.crossSection().boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
     CHECK( true == reaction.crossSection().isLinearised() );
