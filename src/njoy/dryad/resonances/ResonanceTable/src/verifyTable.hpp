@@ -6,11 +6,10 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
   std::size_t nc = channels.size();
   std::size_t ne = energies.size();
 
-  if ( nc  == 0 || ne == 0 ) {
+  if ( nc  == 0 ) {
 
-    Log::error( "At least one channel and one level energy should be defined" );
+    Log::error( "At least one channel should be defined" );
     Log::info( "Number channels: {}", nc );
-    Log::info( "Number energies: {}", ne );
     throw std::exception();
   }
 
