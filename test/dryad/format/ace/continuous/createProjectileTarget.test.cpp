@@ -40,17 +40,23 @@ SCENARIO( "createProjectileTarget" ) {
 
         CHECK( std::nullopt == H1.resonances() );
 
-        CHECK( false == H1.hasReaction( id::ReactionID( "n,H1->total" ) ) );
+        CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->total" ) ) );
         CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->n,H1" ) ) );
         CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->g,H2[all]" ) ) );
 
-        CHECK( 2 == H1.reactions().size() );
+        CHECK( 3 == H1.reactions().size() );
 
-        auto elastic = H1.reactions()[0];
+        auto total = H1.reactions()[0];
+        continuous::lib81::h1::verifyTotalReaction( total );
+
+        auto elastic = H1.reactions()[1];
         continuous::lib81::h1::verifyElasticReaction( elastic );
 
-        auto capture = H1.reactions()[1];
+        auto capture = H1.reactions()[2];
         continuous::lib81::h1::verifyCaptureReaction( capture );
+
+        total = H1.reaction( id::ReactionID( "n,H1->total" ) );
+        continuous::lib81::h1::verifyTotalReaction( total );
 
         elastic = H1.reaction( id::ReactionID( "n,H1->n,H1" ) );
         continuous::lib81::h1::verifyElasticReaction( elastic );
