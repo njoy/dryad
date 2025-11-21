@@ -7,6 +7,8 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
+#include "njoy/dryad/format/endf/resonances/createTabulatedRadius.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf3/createCompoundSystem.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf7/createCompoundSystem.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
@@ -35,11 +37,24 @@ namespace resonances {
       double lower = range.lowerEnergy();
       double upper = range.upperEnergy();
 
+      auto naps = range.scatteringRadiusCalculationOption();
+      std::optional< dryad::resonances::TabulatedRadius > nro = std::nullopt;
+      if ( range.scatteringRadius().has_value() ) {
+
+        nro = createTabulatedRadius( range.scatteringRadius().value() );
+      }
+
       if ( range.type() == 1 ) {
 
         Log::info( "Reading resolved resonance region between {} and {} eV", lower, upper );
         switch ( range.representation() ) {
 
+          case 3 : {
+
+            decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::ReichMoore >( range.parameters() );
+            resolved.emplace_back( lrf3::createCompoundSystem( projectile, target, lower, upper, naps, nro, parameters ) );
+            break;
+          }
           case 7 : {
 
             decltype(auto) parameters = std::get< njoy::ENDFtk::section::Type<2,151>::RMatrixLimited >( range.parameters() );
