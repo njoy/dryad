@@ -9,6 +9,8 @@
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "njoy/dryad/format/ace/photonuclear/createReaction.hpp"
+#include "njoy/dryad/format/ace/continuous/createElasticTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/ace/continuous/createTotalTabulatedCrossSection.hpp"
 #include "ACEtk/PhotonuclearTable.hpp"
 
 namespace njoy {
@@ -33,6 +35,7 @@ namespace photonuclear {
                    bool normalise ) {
 
     std::vector< Reaction > reactions;
+    std::vector< id::ReactionID > identifiers;
 
     // reactions are ordered in an ACE file:
     // - first all primary reactions
@@ -47,13 +50,33 @@ namespace photonuclear {
     auto max = std::distance( table.reactionNumberBlock().reactionNumbers().begin(),
                               std::find_if( table.reactionNumberBlock().reactionNumbers().begin(),
                                             table.reactionNumberBlock().reactionNumbers().end(),
-                                            isDerivedOrAuxiliary ) );
+                                            isDerivedOrAuxiliary ) ) + 1;
+
+    // elastic scattering
+    if ( table.principalCrossSectionBlock().elastic().size() != 0 ) {
+
+      Log::info( "Reading data for MT2" );
+      reactions.emplace_back( id::ReactionID( projectile, target, 2 ),
+                              continuous::createElasticTabulatedCrossSection( table ),
+                              std::vector< ReactionProduct >{},
+                              std::nullopt, std::make_optional( 0. ),
+                              normalise );
+      identifiers.emplace_back( reactions.back().identifier() );
+    }
 
     // all primary reactions
     for ( std::size_t index = 1; index < max; ++index ) {
 
       reactions.emplace_back( createReaction( projectile, target, table, index, normalise ) );
+      identifiers.emplace_back( reactions.back().identifier() );
     }
+
+    // add the total reaction
+    Log::info( "Reading data for MT1" );
+    reactions.emplace( reactions.begin(),
+                       id::ReactionID( projectile, target, 1 ),
+                       std::move( identifiers ),
+                       continuous::createTotalTabulatedCrossSection( table ) );
 
     // all derived or auxiliary reactions
     for ( std::size_t index = max; index < table.reactionNumberBlock().numberReactions(); ++index ) {

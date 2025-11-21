@@ -6,6 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "njoy/dryad/format/ace/continuous/createTabulatedCrossSection.hpp"
@@ -37,8 +38,15 @@ namespace continuous {
     auto mt = table.reactionNumberBlock().reactionNumber( index );
     Log::info( "Reading data for MT{}", mt );
 
+    std::optional< double > qValue = std::nullopt;
+    if ( index <= table.reactionQValueBlock().numberReactions() ) {
+
+      qValue = table.reactionQValueBlock().QValue( index ) * constants::mega;
+    }
+
     return Reaction( id::ReactionID( projectile, target, mt ),
-                     continuous::createTabulatedCrossSection( table, index ) );
+                     continuous::createTabulatedCrossSection( table, index ),
+                     {}, std::nullopt, std::move( qValue ) );
   }
 
 } // continuous namespace

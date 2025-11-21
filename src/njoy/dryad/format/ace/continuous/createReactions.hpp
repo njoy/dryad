@@ -9,7 +9,8 @@
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "njoy/dryad/format/ace/continuous/createReaction.hpp"
-#include "njoy/dryad/format/ace/continuous/createElasticReaction.hpp"
+#include "njoy/dryad/format/ace/continuous/createElasticTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/ace/continuous/createTotalTabulatedCrossSection.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
 
 namespace njoy {
@@ -34,6 +35,7 @@ namespace continuous {
                    bool normalise ) {
 
     std::vector< Reaction > reactions;
+    std::vector< id::ReactionID > identifiers;
 
     // reactions are ordered in an ACE file:
     // - first all primary reactions
@@ -51,13 +53,27 @@ namespace continuous {
                                             isDerivedOrAuxiliary ) ) + 1;
 
     // elastic scattering
-    reactions.emplace_back( createElasticReaction( projectile, target, table, normalise ) );
+    Log::info( "Reading data for MT2" );
+    reactions.emplace_back( id::ReactionID( projectile, target, 2 ),
+                            createElasticTabulatedCrossSection( table ),
+                            std::vector< ReactionProduct >{},
+                            std::nullopt, std::make_optional( 0. ),
+                            normalise );
+    identifiers.emplace_back( reactions.back().identifier() );
 
     // all primary reactions
     for ( std::size_t index = 1; index < max; ++index ) {
 
       reactions.emplace_back( createReaction( projectile, target, table, index, normalise ) );
+      identifiers.emplace_back( reactions.back().identifier() );
     }
+
+    // add the total reaction
+    Log::info( "Reading data for MT1" );
+    reactions.emplace( reactions.begin(),
+                       id::ReactionID( projectile, target, 1 ),
+                       std::move( identifiers ),
+                       createTotalTabulatedCrossSection( table ) );
 
     // all derived or auxiliary reactions
     for ( std::size_t index = max; index < table.reactionNumberBlock().numberReactions(); ++index ) {

@@ -34,10 +34,18 @@ namespace photonuclear {
                   std::size_t index,
                   bool normalise ) {
 
-    id::ReactionID id( projectile, target, table.reactionNumberBlock().reactionNumber( index ) );
-    auto xs = continuous::createTabulatedCrossSection( table, index );
+    auto mt = table.reactionNumberBlock().reactionNumber( index );
+    Log::info( "Reading data for MT{}", mt );
 
-    return Reaction( std::move( id ), std::move( xs ) );
+    std::optional< double > qValue = std::nullopt;
+    if ( index <= table.reactionQValueBlock().numberReactions() ) {
+
+      qValue = table.reactionQValueBlock().QValue( index ) * constants::mega;
+    }
+
+    return Reaction( id::ReactionID( projectile, target, mt ),
+                     continuous::createTabulatedCrossSection( table, index ),
+                     {}, std::nullopt, std::move( qValue ) );
   }
 
 } // photonuclear namespace

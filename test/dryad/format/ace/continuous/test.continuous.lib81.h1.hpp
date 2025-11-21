@@ -4,6 +4,45 @@ namespace continuous {
 namespace lib81 {
 namespace h1 {
 
+  void verifyTotalReaction( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,H1->total" ) == reaction.identifier() );
+    CHECK( 1 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Summation == reaction.category() );
+    CHECK( false == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.isSummationReaction() );
+    CHECK( false == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.partialReactionIdentifiers() );
+    auto partials = reaction.partialReactionIdentifiers().value();
+    CHECK( 2 == partials.size() );
+    CHECK( id::ReactionID( "n,H1->n,H1" ) == partials[0] );
+    CHECK( id::ReactionID( "n,H1->g,H2[all]" ) == partials[1] );
+    CHECK( 50 == partials[0].reactionType().mt() );
+    CHECK( 102 == partials[1].reactionType().mt() );
+
+    CHECK( std::nullopt == reaction.massDifferenceQValue() );
+    CHECK( std::nullopt == reaction.reactionQValue() );
+
+    CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().lowerEnergyLimit() ) );
+    CHECK_THAT( 2e+7, WithinRel( reaction.crossSection().upperEnergyLimit() ) );
+    CHECK( 631 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 631 == reaction.crossSection().energies().size() );
+    CHECK( 631 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().energies().front() ) );
+    CHECK_THAT( 2e+7, WithinRel( reaction.crossSection().energies().back() ) );
+    CHECK_THAT( 1177.25787, WithinRel( reaction.crossSection().values().front() ) );
+    CHECK_THAT( 4.81867908e-1, WithinRel( reaction.crossSection().values().back() ) );
+    CHECK( 630 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK( true == reaction.crossSection().isLinearised() );
+
+    CHECK( 0 == reaction.products().size() );
+  }
+
   void verifyElasticReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,H1->n,H1" ) == reaction.identifier() );
@@ -16,7 +55,7 @@ namespace h1 {
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
-    CHECK( std::nullopt == reaction.reactionQValue() );
+    CHECK( 0. == reaction.reactionQValue() );
 
     CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().lowerEnergyLimit() ) );
     CHECK_THAT( 2e+7, WithinRel( reaction.crossSection().upperEnergyLimit() ) );
@@ -49,7 +88,7 @@ namespace h1 {
     CHECK( std::nullopt == reaction.partialReactionIdentifiers() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
-    CHECK( std::nullopt == reaction.reactionQValue() );
+    CHECK( 2.224648e+6 == reaction.reactionQValue() );
 
     CHECK_THAT( 1e-5, WithinRel( reaction.crossSection().lowerEnergyLimit() ) );
     CHECK_THAT( 2e+7, WithinRel( reaction.crossSection().upperEnergyLimit() ) );
