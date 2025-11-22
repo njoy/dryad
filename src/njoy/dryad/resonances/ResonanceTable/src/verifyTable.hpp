@@ -16,9 +16,22 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
   auto energy = std::adjacent_find( energies.begin(), energies.end() );
   if ( energy != energies.end() ) {
 
-    Log::error( "The energies are not unique" );
-    Log::info( "The energy = {} appears more than once", *energy );
-    throw std::exception();
+    Log::warning( "The energies are not unique" );
+
+    std::vector< double > duplicates;
+    duplicates.insert( std::lower_bound( duplicates.begin(), duplicates.end(), *energy ), *energy );
+    energy = std::adjacent_find( energy + 1, energies.end() );
+    while ( energy != energies.end() ) {
+
+      duplicates.insert( std::lower_bound( duplicates.begin(), duplicates.end(), *energy ), *energy );
+      energy = std::adjacent_find( energy + 1, energies.end() );
+    }
+    duplicates.erase( std::unique( duplicates.begin(), duplicates.end() ), duplicates.end() );
+
+    for ( double value : duplicates ) {
+
+      Log::info( "The energy = {} appears more than once", value );
+    }
   }
 
   auto channel = std::adjacent_find( channels.begin(), channels.end() );
