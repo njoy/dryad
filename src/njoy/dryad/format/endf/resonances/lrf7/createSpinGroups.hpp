@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/resonances/moveCaptureToFront.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf7/createChannelData.hpp"
 #include "ENDFtk/section/2/151.hpp"
@@ -86,7 +87,14 @@ namespace lrf7 {
                                getJpi( *begin ),
                                [&] ( auto&& left, auto&& right )
                                    { return left < getJpi( right ); } );
-      groups.emplace_back( std::vector< dryad::resonances::SpinGroup::ChannelData >{ begin, iter },
+
+      std::vector< dryad::resonances::SpinGroup::ChannelData > data( begin, iter );
+      if ( formalism == dryad::resonances::Formalism::ReichMoore ) {
+
+        moveCaptureToFront( data );
+      }
+
+      groups.emplace_back( std::move( data ),
                            formalism, boundary );
     }
 

@@ -9,7 +9,6 @@
 #include "njoy/dryad/resonances/BoundaryCondition.hpp"
 #include "njoy/dryad/resonances/Channel.hpp"
 #include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
@@ -45,9 +44,6 @@ namespace lrf7 {
     short parity = spin == 0.0 ? endfChannels.parity() >= 0 ? +1 : -1
                                : endfChannels.spin() >= 0 ? +1 : -1;
 
-    // get the reaction identifiers for resonance reactions
-    auto reactions = lrf7::createReactionIdentifiers( projectile, target, endfPairs );
-
     // get the particle pairs for these reactions
     auto pairs = lrf7::createParticlePairs( projectile, target, endfPairs );
 
@@ -69,18 +65,46 @@ namespace lrf7 {
 
       std::size_t index = endfChannels.particlePairNumbers()[i] - 1;
 
-      dryad::resonances::ChannelQuantumNumbers numbers( endfChannels.orbitalMomentumValues()[i],
-                                                        endfChannels.channelSpinValues()[i],
-                                                        spin, parity );
-      dryad::resonances::ChannelRadii radii( endfChannels.trueChannelRadii()[i] * constants::deca,
-                                             endfChannels.effectiveChannelRadii()[i] * constants::deca );
+      std::optional< std::size_t > partial = std::nullopt;
+      if ( std::count( endfChannels.particlePairNumbers().begin(),
+                       endfChannels.particlePairNumbers().end(),
+                       endfChannels.particlePairNumbers()[i] ) > 1 ) {
+
+        std::size_t number = 0;
+        std::size_t current = 0;
+        for ( unsigned int j = 0; j < endfChannels.numberChannels(); ++j ) {
+
+          if ( i != j && endfChannels.particlePairNumbers()[j] == endfChannels.particlePairNumbers()[i]
+                      && endfChannels.orbitalMomentumValues()[j] == endfChannels.orbitalMomentumValues()[i]
+                      && endfChannels.channelSpinValues()[j] == endfChannels.channelSpinValues()[i] ) {
+
+            number += 1;
+            if ( j < i ) {
+
+              current += 1;
+            }
+          }
+        }
+        if ( number > 0 ) {
+
+          partial = current;
+        }
+      }
+
       std::optional< double > boundary = std::nullopt;
       if ( boundary_condition == dryad::resonances::BoundaryCondition::Constant ) {
 
         boundary = endfChannels.boundaryConditionValues()[i];
       }
 
-      channels.emplace_back( id::ChannelID( reactions[index], std::move( numbers ) ),
+      dryad::resonances::ChannelRadii radii( endfChannels.trueChannelRadii()[i] * constants::deca,
+                                             endfChannels.effectiveChannelRadii()[i] * constants::deca );
+
+      channels.emplace_back( id::ChannelID( id::ReactionID( projectile, target, endfPairs.MT()[index] ),
+                                            dryad::resonances::ChannelQuantumNumbers( endfChannels.orbitalMomentumValues()[i],
+                                                                                      endfChannels.channelSpinValues()[i],
+                                                                                      spin, parity ),
+                                            std::move( partial ) ),
                              incident,
                              pairs[index],
                              qvalues[index],

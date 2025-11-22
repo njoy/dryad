@@ -10,9 +10,11 @@
 #include "njoy/constants.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/dryad/format/createVector.hpp"
+#include "njoy/dryad/format/endf/resonances/moveCaptureToFront.hpp"
+#include "njoy/dryad/format/endf/resonances/createChannelRadii.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf3/createChannelData.hpp"
 #include "ENDFtk/section/2/151.hpp"
-#include <iostream>
+
 namespace njoy {
 namespace dryad {
 namespace format {
@@ -48,7 +50,7 @@ namespace lrf3 {
                                               dryad::resonances::Particle( target, awri * constants::neutron_mass, spin, +1) );
 
     // channel radius value
-    auto ap = endf.scatteringRadius();
+    auto ap = endf.scatteringRadius() * constants::deca;
 
     // go over each l value and collect all channel data - keep it sorted
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
@@ -76,6 +78,34 @@ namespace lrf3 {
       }
     }
 
+    // add the remaining required elastic channels with no resonances
+    dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, ap, awri );
+    for ( const auto& numbers : available ) {
+
+      // add an empty elastic channel
+      id::ChannelID elastic_id( id::ReactionID( projectile, target, 2 ), numbers );
+      dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
+      auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
+                                    elastic_id,
+                                    [] ( auto&& left, auto&& right )
+                                       { return left.first.identifier() < right; } );
+      channel_data.emplace( iter, std::move( elastic ), dryad::resonances::ResonanceTable{ { elastic_id }, {}, {} } );
+
+      // add an empty capture channel with the same Jpi - if it is not there yet
+      dryad::resonances::ChannelQuantumNumbers other( 0, 0, numbers.totalAngularMomentum(), numbers.parity() );
+      id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
+      iter = std::lower_bound( channel_data.begin(), channel_data.end(), capture_id,
+                               [] ( auto&& left, auto&& right )
+                                  { return left.first.identifier() < right; } );
+      if ( ! ( iter != channel_data.end() && iter->first.identifier() == capture_id ) ) {
+
+        dryad::resonances::ParticlePair capture_pair( { id::ParticleID::photon(), 0., 0., +1 },
+                                                      { capture_id.reaction().residual().value(), 0., 0., +1 } );
+        dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, radii );
+        channel_data.emplace( iter, std::move( capture ), dryad::resonances::ResonanceTable{ { capture_id }, {}, {} } );
+      }
+    }
+
     // create the spin groups
     const auto getJpi = [] ( const auto& data ) {
 
@@ -90,7 +120,11 @@ namespace lrf3 {
                                getJpi( *begin ),
                                [&] ( auto&& left, auto&& right )
                                    { return left < getJpi( right ); } );
-      groups.emplace_back( std::vector< dryad::resonances::SpinGroup::ChannelData >{ begin, iter },
+
+      std::vector< dryad::resonances::SpinGroup::ChannelData > data( begin, iter );
+      moveCaptureToFront( data );
+
+      groups.emplace_back( std::move( data ),
                            dryad::resonances::Formalism::ReichMoore,
                            dryad::resonances::BoundaryCondition::ShiftFactor );
     }

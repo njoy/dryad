@@ -79,7 +79,7 @@ namespace lrf3 {
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
 
     unsigned int l = endfReichMooreLValue.orbitalMomentum();
-    double apl = endfReichMooreLValue.lDependentScatteringRadius();
+    double apl = endfReichMooreLValue.lDependentScatteringRadius() * constants::deca;
     double awri = endfReichMooreLValue.atomicWeightRatio();
 
     // create the channel radii (check for l-dependent radius)
