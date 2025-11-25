@@ -16,10 +16,6 @@ namespace id {
   /**
    *  @class
    *  @brief The electron subshell identifier, with associated symbol and aliases
-   *
-   *  Comparison operators are provided using the logical order given by the
-   *  ENDF mt numbers. A hash function and override for std::hash is also
-   *  provided.
    */
   class ElectronSubshellID {
 
