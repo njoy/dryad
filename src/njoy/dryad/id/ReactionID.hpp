@@ -129,8 +129,7 @@ namespace id {
      */
     friend auto operator==( const ReactionID& left, const ReactionID& right ) {
 
-      return std::tie( left.projectile(), left.target(), left.reactionType() ) ==
-             std::tie( right.projectile(), right.target(), right.reactionType() );
+      return entries[ left.index_ ].reaction() == entries[ right.index_ ].reaction();
     }
 
     /**
@@ -152,8 +151,7 @@ namespace id {
      */
     friend auto operator<( const ReactionID& left, const ReactionID& right ) {
 
-      return std::tie( left.projectile(), left.target(), left.reactionType() ) <
-             std::tie( right.projectile(), right.target(), right.reactionType() );
+      return entries[ left.index_ ].reaction() < entries[ right.index_ ].reaction();
     }
 
     /**
