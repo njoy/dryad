@@ -236,7 +236,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "p" );
-      CHECK( 1001 == id.number() );
+      CHECK( 11 == id.number() );
       CHECK( "p" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 1 == id.a() );
@@ -245,7 +245,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "proton" );
-      CHECK( 1001 == id.number() );
+      CHECK( 11 == id.number() );
       CHECK( "p" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 1 == id.a() );
@@ -254,7 +254,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID::proton();
-      CHECK( 1001 == id.number() );
+      CHECK( 11 == id.number() );
       CHECK( "p" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 1 == id.a() );
@@ -263,7 +263,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "d" );
-      CHECK( 1002 == id.number() );
+      CHECK( 12 == id.number() );
       CHECK( "d" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 2 == id.a() );
@@ -272,7 +272,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "deuteron" );
-      CHECK( 1002 == id.number() );
+      CHECK( 12 == id.number() );
       CHECK( "d" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 2 == id.a() );
@@ -281,7 +281,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID::deuteron();
-      CHECK( 1002 == id.number() );
+      CHECK( 12 == id.number() );
       CHECK( "d" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 2 == id.a() );
@@ -290,7 +290,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "t" );
-      CHECK( 1003 == id.number() );
+      CHECK( 13 == id.number() );
       CHECK( "t" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 3 == id.a() );
@@ -299,7 +299,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "triton" );
-      CHECK( 1003 == id.number() );
+      CHECK( 13 == id.number() );
       CHECK( "t" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 3 == id.a() );
@@ -308,7 +308,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID::triton();
-      CHECK( 1003 == id.number() );
+      CHECK( 13 == id.number() );
       CHECK( "t" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 3 == id.a() );
@@ -317,7 +317,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "h" );
-      CHECK( 2003 == id.number() );
+      CHECK( 23 == id.number() );
       CHECK( "h" == id.symbol() );
       CHECK( 2 == id.z() );
       CHECK( 3 == id.a() );
@@ -326,7 +326,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "helion" );
-      CHECK( 2003 == id.number() );
+      CHECK( 23 == id.number() );
       CHECK( "h" == id.symbol() );
       CHECK( 2 == id.z() );
       CHECK( 3 == id.a() );
@@ -335,7 +335,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID::helion();
-      CHECK( 2003 == id.number() );
+      CHECK( 23 == id.number() );
       CHECK( "h" == id.symbol() );
       CHECK( 2 == id.z() );
       CHECK( 3 == id.a() );
@@ -344,7 +344,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "a" );
-      CHECK( 2004 == id.number() );
+      CHECK( 24 == id.number() );
       CHECK( "a" == id.symbol() );
       CHECK( 2 == id.z() );
       CHECK( 4 == id.a() );
@@ -353,7 +353,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID( "alpha" );
-      CHECK( 2004 == id.number() );
+      CHECK( 24 == id.number() );
       CHECK( "a" == id.symbol() );
       CHECK( 2 == id.z() );
       CHECK( 4 == id.a() );
@@ -362,7 +362,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::nullopt == id.subshell() );
 
       id = ParticleID::alpha();
-      CHECK( 2004 == id.number() );
+      CHECK( 24 == id.number() );
       CHECK( "a" == id.symbol() );
       CHECK( 2 == id.z() );
       CHECK( 4 == id.a() );
@@ -766,6 +766,22 @@ SCENARIO( "ParticleID" ) {
   } // GIVEN
 
   GIVEN( "valid ParticleID instances" ) {
+
+    ParticleID fundamental( "n" );
+    ParticleID element( "H" );
+    ParticleID ion( "H{1s1/2}" );
+    ParticleID nuclide( "H1" );
+    ParticleID excited( "H1_e1" );
+    ParticleID next( "He" );
+
+    THEN( "the ordering is respected" ) {
+
+      CHECK( fundamental <  element );
+      CHECK( element <  ion );
+      CHECK( ion <  nuclide );
+      CHECK( nuclide <  excited );
+      CHECK( excited <  next );
+    }
 
     ParticleID id1( "U235" );
     ParticleID id2( "U235_e10" );
