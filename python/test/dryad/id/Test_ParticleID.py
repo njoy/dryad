@@ -542,7 +542,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies.mt )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} is new
 
@@ -552,7 +552,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies.mt )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
 
@@ -562,7 +562,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies.mt )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
 
@@ -572,7 +572,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2000, id.za )
-        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies.mt )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} is new
 
@@ -582,7 +582,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2000, id.za )
-        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies.mt )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
 
@@ -592,7 +592,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2000, id.za )
-        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies.mt )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
 
