@@ -10,6 +10,7 @@
 #include <vector>
 
 // other includes
+#include "tools/split.hpp"
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/id/ElementID.hpp"
 #include "njoy/dryad/id/LevelID.hpp"
@@ -305,7 +306,7 @@ namespace id {
      */
     ParticleID groundState() const {
 
-      if ( entries[ this->index_ ].subshell().has_value() ) {
+      if ( entries[ this->index_ ].vacancies().has_value() ) {
 
         return ParticleID( this->index_ );
       }
@@ -326,9 +327,9 @@ namespace id {
     /**
      *  @brief Return the particle's subshell vacancies
      */
-    const std::optional< std::vector< ElectronSubshellID > >& subshell() const {
+    const std::optional< std::vector< ElectronSubshellID > >& vacancies() const {
 
-      return entries[ this->index_ ].subshell();
+      return entries[ this->index_ ].vacancies();
     }
 
     /**

@@ -87,7 +87,7 @@ public:
   short a() const { return this->a_; }
   short e() const { return this->e_; }
   int za() const { return this->za_; }
-  const std::optional< std::vector< ElectronSubshellID > >& subshell() const { return std::get< 2 >( this->tuple() ); }
+  const std::optional< std::vector< ElectronSubshellID > >& vacancies() const { return std::get< 2 >( this->tuple() ); }
   const std::string& symbol() const { return this->symbol_; }
   const std::vector< std::string >& alternatives() const { return this->alternatives_; }
 

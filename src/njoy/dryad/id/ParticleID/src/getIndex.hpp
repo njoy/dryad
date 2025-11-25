@@ -1,4 +1,83 @@
 /**
+ *  @brief Generate the symbol for an atom with subshell vacancies
+ *
+ *  @param element     the particle element
+ *  @param vacancies   the subshells with vacancies
+ */
+static std::string
+generateIonSymbol( const ElementID element, const std::vector< ElectronSubshellID >& vacancies ) {
+
+  std::string symbol = element.symbol() + '{';
+  for ( unsigned int i =0; i < vacancies.size(); ++i ) {
+
+    if ( vacancies[i].isNonRelativistic() ) {
+
+      throw std::invalid_argument( "Electron subshell identifiers used for particle identifiers must be relativistic" );
+    }
+
+    if ( i != 0 ) {
+
+      symbol += ',';
+    }
+    symbol += vacancies[i].symbol();
+  }
+  symbol += '}';
+  return symbol;
+}
+
+/**
+ *  @brief Generate the alternative symbols for an atom with subshell vacancies
+ *
+ *  @param element     the particle element
+ *  @param vacancies   the subshells with vacancies
+ */
+static std::vector< std::string >
+generateIonAlternatives( const std::string& symbol, const ElementID element, const std::vector< ElectronSubshellID >& vacancies ) {
+
+  //! @todo use a proper cartesian product in the future, for now: only do this for size() < 3
+
+  std::vector< std::string > alternatives;
+  std::string prefix = element.symbol() +'{';
+
+  if ( vacancies.size() > 2 ) {
+
+    throw std::runtime_error( "Atoms can currently only have 2 or less vacancies, contact a developer" );
+  }
+
+  alternatives.emplace_back( vacancies.front().symbol() );
+  alternatives.insert( alternatives.end(), vacancies.front().alternatives().begin(), vacancies.front().alternatives().end() );
+
+  std::vector< std::string > temp;
+  for ( unsigned int i = 1; i < vacancies.size(); ++i ) {
+
+    for ( unsigned int j = 0; j < alternatives.size(); ++j ) {
+
+      temp.emplace_back( alternatives[j] + ',' + vacancies[i].symbol() );
+      for ( unsigned int k = 0; k < vacancies[i].alternatives().size(); ++k ) {
+
+        temp.emplace_back( alternatives[j] + ',' + vacancies[i].alternatives()[k] );
+      }
+    }
+    std::swap( alternatives, temp );
+    temp.clear();
+  }
+
+  for ( unsigned int i = 0; i < alternatives.size(); ++i ) {
+
+    alternatives[i].insert( 0, prefix );
+    alternatives[i] += '}';
+  }
+
+  auto iter = std::find( alternatives.begin(), alternatives.end(), symbol );
+  if ( iter != alternatives.end() ) {
+
+    alternatives.erase( iter );
+  }
+
+  return alternatives;
+}
+
+/**
  *  @brief Update registry
  *
  *  @param element   the particle element
@@ -54,17 +133,8 @@ static std::size_t updateRegistry( ElementID element,
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  if ( vacancies.front().isNonRelativistic() ) {
-
-    throw std::invalid_argument( "Electron subshell identifiers used for particle identifiers must be relativistic" );
-  }
-
-  std::string symbol = element.symbol() + std::string( "{" ) + vacancies.front().symbol() + std::string( "}" );
-  std::vector< std::string > alternatives;
-  for ( const auto& alternative : vacancies.front().alternatives() ) {
-
-    alternatives.emplace_back( element.symbol() + std::string( "{" ) + alternative + std::string( "}" ) );
-  }
+  std::string symbol = generateIonSymbol( element, vacancies );
+  std::vector< std::string > alternatives = generateIonAlternatives( symbol, element, vacancies );
 
   // create the data entry and set conversion
   entries.emplace_back( element, std::move( vacancies ),
@@ -104,19 +174,19 @@ static std::size_t getIndex( ElementID element, int mass, LevelID level ) {
 /**
  *  @brief Retrieve the index to the particle information entry
  *
- *  @param element    the particle element
- *  @param subshell   the particle subshell
+ *  @param element     the particle element
+ *  @param vacancies   the subshells with vacancies
  */
-static std::size_t getIndex( ElementID element, ElectronSubshellID subshell ) {
+static std::size_t getIndex( ElementID element, std::vector< ElectronSubshellID > vacancies ) {
 
   try {
 
-    return string_conversion_dictionary.at( element.symbol() + "{" + subshell.symbol() + "}" );
+    return string_conversion_dictionary.at( generateIonSymbol( element, vacancies ) );
   }
   catch ( ... ) {
 
     // update registry and return the index
-    return updateRegistry( std::move( element ), { std::move( subshell ) } );
+    return updateRegistry( std::move( element ), std::move( vacancies ) );
   }
 }
 
@@ -152,10 +222,13 @@ static std::size_t getIndex( const std::string& string ) {
 
       // data entries
       ElementID element( match[1] );
-      ElectronSubshellID subshell( match[2] );
+      auto shells = tools::split( match[2], ',' );
+      std::vector< ElectronSubshellID > vacancies( shells.size() );
+      std::transform( shells.begin(), shells.end(), vacancies.begin(),
+                      [] ( auto&& vacancy ) { return ElectronSubshellID( vacancy ); } );
 
       // update registry and return the index
-      return updateRegistry( std::move( element ), { std::move( subshell ) } );
+      return updateRegistry( std::move( element ), std::move( vacancies ) );
     }
 
     throw std::invalid_argument( "Not a particle symbol or name: \'" + string + "\'" );
