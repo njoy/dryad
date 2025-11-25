@@ -8,6 +8,7 @@ class Entry {
 
   /* fields */
   unsigned char number_;
+
   std::string symbol_;
 
 public:
