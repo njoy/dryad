@@ -52,12 +52,22 @@ void wrapParticleID( python::module& module ) {
   .def(
 
     python::init< ElementID, ElectronSubshellID >(),
-    python::arg( "element" ), python::arg( "subshell" ),
+    python::arg( "element" ), python::arg( "vacancy" ),
     "Initialise the particle identifier\n\n"
     "Arguments:\n"
-    "    self       the identifier\n"
-    "    element    the particle element\n"
-    "    subshell   the particle subshell"
+    "    self      the identifier\n"
+    "    element   the particle element\n"
+    "    vacancy   the subshell with a vacancy"
+  )
+  .def(
+
+    python::init< ElementID, std::vector< ElectronSubshellID > >(),
+    python::arg( "element" ), python::arg( "vacancies" ),
+    "Initialise the particle identifier\n\n"
+    "Arguments:\n"
+    "    self        the identifier\n"
+    "    element     the particle element\n"
+    "    vacancies   the subshells with a vacancy"
   )
   .def(
 
@@ -125,9 +135,9 @@ void wrapParticleID( python::module& module ) {
   )
   .def_property_readonly(
 
-    "subshell",
-    &Component::subshell,
-    "The particle's subshell"
+    "vacancies",
+    &Component::vacancies,
+    "The particle's subshell vacancies"
   )
   .def(
 

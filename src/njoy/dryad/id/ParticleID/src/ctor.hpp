@@ -32,7 +32,7 @@ ParticleID( ElementID element, int mass, LevelID level ) :
  *  @brief Constructor
  *
  *  @param element     the particle element
- *  @param vacancies   the subshells with vacancies
+ *  @param vacancies   the subshells with a vacancy
  */
 ParticleID( ElementID element, std::vector< ElectronSubshellID > vacancies ) :
     index_( getIndex( std::move( element ), std::move( vacancies ) ) ) {}
