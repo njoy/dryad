@@ -28,11 +28,10 @@ static std::size_t updateRegistry( ElementID element, int mass, LevelID level ) 
   }
 
   // create the data entry and set conversion
-  entries.emplace_back( number, element.number(), static_cast< short >( mass ),
-                        level.number(), std::move( symbol ),
-                        std::move( alternatives ) );
+  entries.emplace_back( element, mass, level,
+                        std::move( symbol ), std::move( alternatives ) );
 
-  number_conversion_dictionary[ entries[ index ].number() ] = index;
+  number_conversion_dictionary[ number ] = index;
   string_conversion_dictionary[ entries[ index ].symbol() ] = index;
   for ( const auto& alternative : entries[ index ].alternatives() ) {
 
@@ -46,33 +45,32 @@ static std::size_t updateRegistry( ElementID element, int mass, LevelID level ) 
 /**
  *  @brief Update registry
  *
- *  @param element    the particle element
- *  @param subshell   the particle subshell
+ *  @param element     the particle element
+ *  @param vacancies   the subshells with vacancies
  */
-static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshell ) {
+static std::size_t updateRegistry( ElementID element,
+                                   std::vector< ElectronSubshellID > vacancies ) {
 
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  if ( subshell.isNonRelativistic() ) {
+  if ( vacancies.front().isNonRelativistic() ) {
 
     throw std::invalid_argument( "Electron subshell identifiers used for particle identifiers must be relativistic" );
   }
 
-  int number = element.number() * 1000000 + subshell.mt().value();
-  std::string symbol = element.symbol() + std::string( "{" ) + subshell.symbol() + std::string( "}" );
+  std::string symbol = element.symbol() + std::string( "{" ) + vacancies.front().symbol() + std::string( "}" );
   std::vector< std::string > alternatives;
-  for ( const auto& alternative : subshell.alternatives() ) {
+  for ( const auto& alternative : vacancies.front().alternatives() ) {
 
     alternatives.emplace_back( element.symbol() + std::string( "{" ) + alternative + std::string( "}" ) );
   }
 
   // create the data entry and set conversion
-  entries.emplace_back( number, element.number(),
-                        std::move( subshell ), std::move( symbol ),
+  entries.emplace_back( element, std::move( vacancies ),
+                        std::move( symbol ),
                         std::move( alternatives ) );
 
-  number_conversion_dictionary[ entries[ index ].number() ] = index;
   string_conversion_dictionary[ entries[ index ].symbol() ] = index;
   for ( const auto& alternative : entries[ index ].alternatives() ) {
 
@@ -118,7 +116,7 @@ static std::size_t getIndex( ElementID element, ElectronSubshellID subshell ) {
   catch ( ... ) {
 
     // update registry and return the index
-    return updateRegistry( std::move( element ), std::move( subshell ) );
+    return updateRegistry( std::move( element ), { std::move( subshell ) } );
   }
 }
 
@@ -157,7 +155,7 @@ static std::size_t getIndex( const std::string& string ) {
       ElectronSubshellID subshell( match[2] );
 
       // update registry and return the index
-      return updateRegistry( std::move( element ), std::move( subshell ) );
+      return updateRegistry( std::move( element ), { std::move( subshell ) } );
     }
 
     throw std::invalid_argument( "Not a particle symbol or name: \'" + string + "\'" );
