@@ -776,11 +776,11 @@ SCENARIO( "ParticleID" ) {
 
     THEN( "the ordering is respected" ) {
 
-      CHECK( fundamental <  element );
-      CHECK( element <  ion );
-      CHECK( ion <  nuclide );
-      CHECK( nuclide <  excited );
-      CHECK( excited <  next );
+      CHECK( fundamental < element );
+      CHECK( element < ion );
+      CHECK( ion < nuclide );
+      CHECK( nuclide < excited );
+      CHECK( excited < next );
     }
 
     ParticleID id1( "U235" );
