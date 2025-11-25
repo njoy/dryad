@@ -185,7 +185,17 @@ namespace id {
       return conversion;
     }( entries );
     static inline std::unordered_map< int, std::size_t >
-    number_conversion_dictionary;
+    number_conversion_dictionary = [] ( const auto& entries ) {
+
+      std::unordered_map< int, std::size_t > conversion;
+      // do not include the fundamental particles
+      for ( std::size_t index = 9; index < entries.size(); ++index ) {
+
+        auto number = ( entries[ index ].z() * 1000 + entries[ index ].a() ) * 1000 + entries[ index ].e();
+        conversion[ number ] = index;
+      }
+      return conversion;
+    }( entries );
 
     /* fields */
     std::size_t index_;
