@@ -114,7 +114,7 @@ void wrapReactionType( python::module& module ) {
 
     "mt",
     &Component::mt,
-    "The interaction type's mt number"
+    "The reaction type's mt number"
   )
   .def_property_readonly(
 

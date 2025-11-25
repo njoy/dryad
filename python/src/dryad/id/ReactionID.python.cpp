@@ -105,6 +105,18 @@ void wrapReactionID( python::module& module ) {
   )
   .def_property_readonly(
 
+    "mt",
+    &Component::mt,
+    "The reaction's mt number (if defined)"
+  )
+  .def_property_readonly(
+
+    "is_compatible_with_endf",
+    &Component::isCompatibleWithENDF,
+    "Flag to indicate whether or not the reaction is compatible with ENDF"
+  )
+  .def_property_readonly(
+
     "interaction_type",
     &Component::interactionType,
     "The interaction type (nuclear or atomic) associated to the reaction"

@@ -89,6 +89,17 @@ class Test_ElectronSubshellID( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
+        one = ElectronSubshellID( '1s1/2' )
+        two = ElectronSubshellID( '2s1/2' )
+        nonrelativistic = ElectronSubshellID( '2p' )
+        relativistic = ElectronSubshellID( '2p1/2' )
+        next = ElectronSubshellID( '2p3/2' )
+
+        self.assertEqual( one < two, True )
+        self.assertEqual( two < nonrelativistic, True )
+        self.assertEqual( nonrelativistic < relativistic, True )
+        self.assertEqual( relativistic < next, True )
+
         id1 = ElectronSubshellID( 'K' )
         id2 = ElectronSubshellID( 'L1' )
 

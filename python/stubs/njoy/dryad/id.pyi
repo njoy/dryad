@@ -598,6 +598,16 @@ class ReactionID:
         The interaction type (nuclear or atomic) associated to the reaction
         """
     @property
+    def is_compatible_with_endf(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction is compatible with ENDF
+        """
+    @property
+    def mt(self) -> int | None:
+        """
+        The reaction's mt number (if defined)
+        """
+    @property
     def particles(self) -> dict[ParticleID, int] | None:
         """
         The outgoing particles (excluding the residual)
@@ -759,7 +769,7 @@ class ReactionType:
     @property
     def mt(self) -> int | None:
         """
-        The interaction type's mt number
+        The reaction type's mt number
         """
     @property
     def particles(self) -> dict[ParticleID, int] | None:

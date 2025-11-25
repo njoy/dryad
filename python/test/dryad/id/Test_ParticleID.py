@@ -598,6 +598,23 @@ class Test_ParticleID( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
+        # not using hydrogen like in C++ for this test due to it causing a failure in
+        # test_values because this function gets called before test_values, so H1 is
+        # already registered when test_values actually runs
+
+        fundamental = ParticleID( 'n' )
+        element = ParticleID( 'Li' )
+        ion = ParticleID( 'Li{1s1/2}' )
+        nuclide = ParticleID( 'Li7' )
+        excited = ParticleID( 'Li7_e1' )
+        next = ParticleID( 'Be' )
+
+        self.assertEqual( fundamental < element, True )
+        self.assertEqual( element < ion, True )
+        self.assertEqual( ion < nuclide, True )
+        self.assertEqual( nuclide < excited, True )
+        self.assertEqual( excited < next, True )
+
         id1 = ParticleID( 'U235' )
         id2 = ParticleID( 'U235_e10' )
 
