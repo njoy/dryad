@@ -7,7 +7,7 @@ using Catch::Matchers::WithinRel;
 #include "njoy/medic/pruneCrossSections.hpp"
 
 // other includes
-#include <iostream>
+
 // convenience typedefs
 using namespace njoy::medic;
 using namespace njoy::dryad;
@@ -29,12 +29,10 @@ SCENARIO( "pruneCrossSections" ) {
 ProjectileTarget makeProjectiletarget() {
 
   id::ParticleID projectile( "n" );
-std::cout << "here" << std::endl;
   id::ParticleID target( "Fe56" );
 
   InteractionType type = InteractionType::Nuclear;
 
-std::cout << "here 2" << std::endl;
   std::vector< Reaction > reactions = {
 
     Reaction( id::ReactionID( "n,Fe56->total" ),
@@ -92,7 +90,6 @@ std::cout << "here 2" << std::endl;
               {},
               0, 0 )
   };
-std::cout << "here 3" << std::endl;
 
   return ProjectileTarget( std::move( projectile ), std::move( target ),
                            type, std::move( reactions ), std::nullopt );
