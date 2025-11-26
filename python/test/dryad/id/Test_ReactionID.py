@@ -25,11 +25,11 @@ class Test_ReactionID( unittest.TestCase ) :
         eminus = ParticleID.electron()
         eplus = ParticleID.positron()
 
-        u = ParticleID( 92000 )
-        u235 = ParticleID( 92235 )
-        u238 = ParticleID( 92238 )
-        am242 = ParticleID( 95242 )
-        am242_e2 = ParticleID( 95242, 2 )
+        u = ParticleID( "U" )
+        u235 = ParticleID( "U235" )
+        u238 = ParticleID( "U238" )
+        am242 = ParticleID( "Am242" )
+        am242_e2 = ParticleID( "Am242_e2" )
 
         nuclear = InteractionType.Nuclear
         atomic = InteractionType.Atomic
@@ -66,7 +66,7 @@ class Test_ReactionID( unittest.TestCase ) :
         self.assertEqual( n, id.projectile )
         self.assertEqual( u238, id.target )
         self.assertEqual( empty, id.particles )
-        self.assertEqual( ParticleID( 92239, LevelID.all ), id.residual )
+        self.assertEqual( ParticleID( 'U239[all]' ), id.residual )
         self.assertEqual( ReactionType( 102 ), id.reaction_type )
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U238->g,U239[all]', id.symbol )
@@ -83,7 +83,7 @@ class Test_ReactionID( unittest.TestCase ) :
         self.assertEqual( n, id.projectile )
         self.assertEqual( u238, id.target )
         self.assertEqual( { a : 1, p : 2, n : 3 }, id.particles )
-        self.assertEqual( ParticleID( 88230, LevelID.all ), id.residual )
+        self.assertEqual( ParticleID( 'Ra230[all]' ), id.residual )
         self.assertEqual( ReactionType( 199 ), id.reaction_type )
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U238->3n,2p,a,Ra230[all]', id.symbol )
@@ -130,7 +130,7 @@ class Test_ReactionID( unittest.TestCase ) :
         self.assertEqual( n, id.projectile )
         self.assertEqual( u235, id.target )
         self.assertEqual( empty, id.particles )
-        self.assertEqual( ParticleID( 92236, LevelID.all ), id.residual )
+        self.assertEqual( ParticleID( 'U236[all]' ), id.residual )
         self.assertEqual( ReactionType( 102 ), id.reaction_type )
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U235->g,U236[all]', id.symbol )
@@ -147,7 +147,7 @@ class Test_ReactionID( unittest.TestCase ) :
         self.assertEqual( n, id.projectile )
         self.assertEqual( u235, id.target )
         self.assertEqual( { a : 1, p : 2, n : 3 }, id.particles )
-        self.assertEqual( ParticleID( 88227, LevelID.all ), id.residual )
+        self.assertEqual( ParticleID( 'Ra227[all]' ), id.residual )
         self.assertEqual( ReactionType( 199 ), id.reaction_type )
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U235->3n,2p,a,Ra227[all]', id.symbol )
@@ -191,7 +191,7 @@ class Test_ReactionID( unittest.TestCase ) :
         self.assertEqual( n, id.projectile )
         self.assertEqual( u238, id.target )
         self.assertEqual( { n : 1 }, id.particles )
-        self.assertEqual( ParticleID( 92238, LevelID.continuum ), id.residual )
+        self.assertEqual( ParticleID( 'U238[continuum]' ), id.residual )
         self.assertEqual( ReactionType( 91 ), id.reaction_type )
         self.assertEqual( InteractionType.Nuclear, id.interaction_type )
         self.assertEqual( 'n,U238->n,U238[continuum]', id.symbol )
@@ -231,7 +231,7 @@ class Test_ReactionID( unittest.TestCase ) :
 
         n = ParticleID.neutron()
         p = ParticleID.proton()
-        u238 = ParticleID( 92238 )
+        u238 = ParticleID( "U238" )
 
         id1 = ReactionID( n, u238, ReactionType( n, 52 ) )
         id2 = ReactionID( p, u238, ReactionType( n, 52 ) )
@@ -258,8 +258,8 @@ class Test_ReactionID( unittest.TestCase ) :
     def test_key( self ) :
 
         n = ParticleID.neutron()
-        u238 = ParticleID( 92238 )
-        pu239 = ParticleID( 94239 )
+        u238 = ParticleID( "U238" )
+        pu239 = ParticleID( "Pu239" )
 
         id1 = ReactionID( n, u238, ReactionType( 1 ) )
         id2 = ReactionID( n, pu239, ReactionType( 18 ) )

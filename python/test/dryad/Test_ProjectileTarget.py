@@ -1130,8 +1130,8 @@ class Test_ProjectileTarget( unittest.TestCase ) :
         verify_chunk( self, chunk, False )
 
         # the target identifier can be changed
-        newtarget = ParticleID( 1001 )
-        original = ParticleID( 26056 )
+        newtarget = ParticleID( "H1" )
+        original = ParticleID( "Fe56" )
 
         chunk.target_identifier = newtarget
 

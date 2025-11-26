@@ -1,4 +1,5 @@
 #include "njoy/dryad/format/ace/atomic/createAceSubshellTransitionDataBlock.hpp"
+#include "njoy/dryad/format/ace/atomic/createAceElectronSubshellBlock.hpp"
 
 #include "njoy/dryad/format/ace/photoatomic/createPartialReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createReactionIdentifiers.hpp"

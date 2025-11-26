@@ -22,7 +22,7 @@ namespace medic {
       &njoy::medic::pruneCrossSections,
       python::arg( "lower_energy" ),
       python::arg( "upper_energy" ),
-      python::arg( "xs" ),
+      python::arg( "pt" ),
       "Prune cross section data\n\n"
       "Arguments:\n"
       "    lower_energy   the new lower energy limit\n"

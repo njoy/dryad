@@ -17,6 +17,9 @@ void wrapParticleID( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::id::ParticleID;
+  using ElementID = njoy::dryad::id::ElementID;
+  using LevelID = njoy::dryad::id::LevelID;
+  using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
 
   // wrap views created by this component
 
@@ -26,15 +29,6 @@ void wrapParticleID( python::module& module ) {
     module,
     "ParticleID",
     "The particle identifier\n\n"
-    "The ParticleID can be used to identify the following particle types (the\n"
-    "numbers between parentheses are the internal logic numbers assigned to them):\n"
-    "  - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),\n"
-    "    t (1003), h (2003), a (2004)\n"
-    "  - elements (z * 1000000)\n"
-    "  - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 150 with 150 being\n"
-    "    defined as the continuum )\n"
-    "  - ions (z * 1000000 + s, with s = K(534) .. Q11(580) - basically the ENDF\n"
-    "    mt numbers for the subshell ionisation)\n\n"
     "Comparison operators are provided using the logical order given by the\n"
     "element number. A hash function and override for std::hash is also\n"
     "provided.\n\n"
@@ -46,14 +40,25 @@ void wrapParticleID( python::module& module ) {
   component
   .def(
 
-    python::init< int, int >(),
-    python::arg( "za" ), python::arg( "number" ) = 0,
+    python::init< ElementID, int, LevelID >(),
+    python::arg( "element" ), python::arg( "mass" ), python::arg( "level" ),
     "Initialise the particle identifier\n\n"
     "Arguments:\n"
-    "    self     the identifier\n"
-    "    za       the particle za number\n"
-    "    number   the particle level number or subshell number (default is zero)"
-     )
+    "    self      the identifier\n"
+    "    element   the particle element\n"
+    "    mass      the particle mass number\n"
+    "    level     the particle level"
+  )
+  .def(
+
+    python::init< ElementID, ElectronSubshellID >(),
+    python::arg( "element" ), python::arg( "subshell" ),
+    "Initialise the particle identifier\n\n"
+    "Arguments:\n"
+    "    self       the identifier\n"
+    "    element    the particle element\n"
+    "    subshell   the particle subshell"
+  )
   .def(
 
     python::init< const std::string& >(),
@@ -78,6 +83,16 @@ void wrapParticleID( python::module& module ) {
   .def_static( "triton",   &Component::triton,   "The particle identifier for tritons" )
   .def_static( "helion",   &Component::helion,   "The particle identifier for helions" )
   .def_static( "alpha",    &Component::alpha,    "The particle identifier for alphas" )
+  .def_static(
+
+    "nuclide",
+    &Component::nuclide,
+    python::arg( "za" ), python::arg( "level" ) = 0,
+    "Create a particle identifier for a nuclide\n\n"
+    "Arguments:\n"
+    "    za      the za number of the nuclide\n"
+    "    level   the level number of the nuclide"
+  )
   .def_property_readonly(
 
     "symbol",
@@ -117,7 +132,7 @@ void wrapParticleID( python::module& module ) {
   .def(
 
     "__hash__",
-    [] ( const Component& self ) { return self.number(); },
+    [] ( const Component& self ) { return std::hash< Component >{}( self ); },
     "Hash function"
   );
 

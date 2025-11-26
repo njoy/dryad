@@ -97,8 +97,8 @@ SCENARIO( "ProjectileTarget" ) {
 
       THEN( "the target identifier can be changed" ) {
 
-        id::ParticleID newtarget = id::ParticleID( 1001 );
-        id::ParticleID original = id::ParticleID( 26056 );
+        id::ParticleID newtarget = id::ParticleID( "H1" );
+        id::ParticleID original = id::ParticleID( "Fe56" );
 
         chunk.targetIdentifier( newtarget );
 
@@ -207,7 +207,7 @@ SCENARIO( "ProjectileTarget" ) {
 
     WHEN( "two instances of ProjectileTarget are given" ) {
 
-      ProjectileTarget left( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+      ProjectileTarget left( id::ParticleID::neutron(), id::ParticleID( "Fe56" ),
                              InteractionType::Nuclear,
                              { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                          TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
@@ -219,7 +219,7 @@ SCENARIO( "ProjectileTarget" ) {
                                                                  InterpolationType::LinearLinear ),
                                         {},
                                         0, -1 ) } );
-      ProjectileTarget equal( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+      ProjectileTarget equal( id::ParticleID::neutron(), id::ParticleID( "Fe56" ),
                               InteractionType::Nuclear,
                               { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                           TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },
@@ -231,7 +231,7 @@ SCENARIO( "ProjectileTarget" ) {
                                                                   InterpolationType::LinearLinear ),
                                          {},
                                          0, -1 ) } );
-      ProjectileTarget different( id::ParticleID::neutron(), id::ParticleID( 26056 ),
+      ProjectileTarget different( id::ParticleID::neutron(), id::ParticleID( "Fe56" ),
                                   InteractionType::Nuclear,
                                   { Reaction( id::ReactionID( "n,Fe56->n,Fe56" ),
                                               TabulatedCrossSection( { 1e-5, 20. }, { 1000., 10. },

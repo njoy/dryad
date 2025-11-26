@@ -92,6 +92,14 @@ namespace id {
     }
 
     /**
+     *  @brief Return the hash
+     */
+    std::size_t hash() const {
+
+      return entries[ this->index_ ].hash();
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the id on the left
@@ -172,7 +180,7 @@ namespace std {
 
     std::size_t operator()( const njoy::dryad::id::ChannelID& key ) const {
 
-      return std::hash< std::string >{}( key.symbol() );
+      return key.hash();
     }
   };
 

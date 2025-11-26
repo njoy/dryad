@@ -30,4 +30,4 @@ namespace reconr {
       "    tolerance   the linearisation tolerance"
     );
   }
-} // medic namespace
+} // reconr namespace
