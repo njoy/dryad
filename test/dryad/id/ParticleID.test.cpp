@@ -65,9 +65,45 @@ SCENARIO( "ParticleID" ) {
       CHECK( false == ParticleID::isRegistered( "H2[all]" ) );
       CHECK( false == ParticleID::isRegistered( "U236_e10" ) );
       CHECK( false == ParticleID::isRegistered( "H{1s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "H{1s}" ) );
+      CHECK( false == ParticleID::isRegistered( "H{1s+}" ) );
       CHECK( false == ParticleID::isRegistered( "H{K}" ) );
       CHECK( false == ParticleID::isRegistered( "He{1s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "He{1s}" ) );
+      CHECK( false == ParticleID::isRegistered( "He{1s+}" ) );
       CHECK( false == ParticleID::isRegistered( "He{K}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s1/2,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s1/2,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s1/2,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s1/2,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s+,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s+,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s+,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{1s+,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{K,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{K,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{K,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "O{K,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s1/2,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s1/2,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s1/2,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s1/2,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s+,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s+,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s+,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{1s+,L1}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{K,2s1/2}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{K,2s}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{K,2s+}" ) );
+      CHECK( false == ParticleID::isRegistered( "Fe{K,L1}" ) );
       CHECK( false == ParticleID::isRegistered( "H1" ) );
       CHECK( false == ParticleID::isRegistered( 1001 ) );
       CHECK( false == ParticleID::isRegistered( 1001, 0 ) );
@@ -629,6 +665,26 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 8 == ParticleID::size() ); // H{1s1/2} already registered
 
+      id = ParticleID( "H{1s}" );
+      CHECK( "H{1s1/2}" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 1000 == id.za() );
+      CHECK( std::vector< ElectronSubshellID >{ ElectronSubshellID( "K" ) } == id.vacancies() );
+
+      CHECK( size + 8 == ParticleID::size() ); // H{1s1/2} already registered
+
+      id = ParticleID( "H{1s+}" );
+      CHECK( "H{1s1/2}" == id.symbol() );
+      CHECK( 1 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 1000 == id.za() );
+      CHECK( std::vector< ElectronSubshellID >{ ElectronSubshellID( "K" ) } == id.vacancies() );
+
+      CHECK( size + 8 == ParticleID::size() ); // H{1s1/2} already registered
+
       id = ParticleID( "H{K}" );
       CHECK( "H{1s1/2}" == id.symbol() );
       CHECK( 1 == id.z() );
@@ -648,6 +704,26 @@ SCENARIO( "ParticleID" ) {
       CHECK( std::vector< ElectronSubshellID >{ ElectronSubshellID( "K" ) } == id.vacancies() );
 
       CHECK( size + 9 == ParticleID::size() ); // registering He{1s1/2} using a string
+
+      id = ParticleID( "He{1s}" );
+      CHECK( "He{1s1/2}" == id.symbol() );
+      CHECK( 2 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 2000 == id.za() );
+      CHECK( std::vector< ElectronSubshellID >{ ElectronSubshellID( "K" ) } == id.vacancies() );
+
+      CHECK( size + 9 == ParticleID::size() ); // He{1s1/2} already registered
+
+      id = ParticleID( "He{1s+}" );
+      CHECK( "He{1s1/2}" == id.symbol() );
+      CHECK( 2 == id.z() );
+      CHECK( 0 == id.a() );
+      CHECK( 0 == id.e() );
+      CHECK( 2000 == id.za() );
+      CHECK( std::vector< ElectronSubshellID >{ ElectronSubshellID( "K" ) } == id.vacancies() );
+
+      CHECK( size + 9 == ParticleID::size() ); // He{1s1/2} already registered
 
       id = ParticleID( "He{K}" );
       CHECK( "He{1s1/2}" == id.symbol() );
@@ -867,6 +943,9 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 11 == ParticleID::size() ); // Fe{1s1/2,2s1/2} already registered
 
+      // we're not testing all combination for iron to check that they actually were
+      // properly registered (see below)
+
       // all other particles are now registered
       CHECK( true == ParticleID::isRegistered( "H1" ) );
       CHECK( true == ParticleID::isRegistered( "H1_e0" ) );
@@ -881,9 +960,45 @@ SCENARIO( "ParticleID" ) {
       CHECK( true == ParticleID::isRegistered( "H2[all]" ) );
       CHECK( true == ParticleID::isRegistered( "U236_e10" ) );
       CHECK( true == ParticleID::isRegistered( "H{1s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "H{1s}" ) );
+      CHECK( true == ParticleID::isRegistered( "H{1s+}" ) );
       CHECK( true == ParticleID::isRegistered( "H{K}" ) );
       CHECK( true == ParticleID::isRegistered( "He{1s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "He{1s}" ) );
+      CHECK( true == ParticleID::isRegistered( "He{1s+}" ) );
       CHECK( true == ParticleID::isRegistered( "He{K}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s1/2,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s1/2,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s1/2,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s1/2,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s+,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s+,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s+,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{1s+,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{K,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{K,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{K,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "O{K,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s1/2,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s1/2,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s1/2,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s1/2,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s+,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s+,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s+,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{1s+,L1}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{K,2s1/2}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{K,2s}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{K,2s+}" ) );
+      CHECK( true == ParticleID::isRegistered( "Fe{K,L1}" ) );
       CHECK( true == ParticleID::isRegistered( "H1" ) );
       CHECK( true == ParticleID::isRegistered( 1001 ) );
       CHECK( true == ParticleID::isRegistered( 1001, 0 ) );

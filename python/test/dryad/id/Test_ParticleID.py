@@ -556,6 +556,26 @@ class Test_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
 
+        id = ParticleID( 'H{1s}' )
+        self.assertEqual( 'H{1s1/2}', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 1000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
+
+        self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
+
+        id = ParticleID( 'H{1s+}' )
+        self.assertEqual( 'H{1s1/2}', id.symbol )
+        self.assertEqual( 1, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 1000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
+
+        self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
+
         id = ParticleID( 'H{K}' )
         self.assertEqual( 'H{1s1/2}', id.symbol )
         self.assertEqual( 1, id.z )
@@ -576,6 +596,26 @@ class Test_ParticleID( unittest.TestCase ) :
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} is new
 
+        id = ParticleID( 'He{1s}' )
+        self.assertEqual( 'He{1s1/2}', id.symbol )
+        self.assertEqual( 2, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 2000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
+
+        self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
+
+        id = ParticleID( 'He{1s+}' )
+        self.assertEqual( 'He{1s1/2}', id.symbol )
+        self.assertEqual( 2, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 2000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
+
+        self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
+
         id = ParticleID( 'He{K}' )
         self.assertEqual( 'He{1s1/2}', id.symbol )
         self.assertEqual( 2, id.z )
@@ -595,6 +635,206 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( [ ElectronSubshellID( 'K' ) ], id.vacancies )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
+
+        id = ParticleID( ElementID( 8 ), [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ] )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} is new
+
+        id = ParticleID( 'O{1s1/2,2s1/2}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s1/2,2s}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s1/2,2s+}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s1/2,L1}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s,2s1/2}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s,2s}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s,2s+}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s,L1}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s+,2s1/2}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s+,2s}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s+,2s+}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{1s+,L1}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{K,2s1/2}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{K,2s}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{K,2s+}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'O{K,L1}' )
+        self.assertEqual( 'O{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 8, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 8000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 10, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'Fe{K,L1}' )
+        self.assertEqual( 'Fe{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 26, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 26000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 11, ParticleID.size() ) # O{1s1/2,2s1/2} is new
+
+        id = ParticleID( ElementID( 26 ), [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ] )
+        self.assertEqual( 'Fe{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 26, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 26000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 11, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
+
+        id = ParticleID( 'Fe{1s1/2,2s1/2}' )
+        self.assertEqual( 'Fe{1s1/2,2s1/2}', id.symbol )
+        self.assertEqual( 26, id.z )
+        self.assertEqual( 0, id.a )
+        self.assertEqual( 0, id.e )
+        self.assertEqual( 26000, id.za )
+        self.assertEqual( [ ElectronSubshellID( 'K' ), ElectronSubshellID( 'L1' ) ], id.vacancies )
+
+        self.assertEqual( size + 11, ParticleID.size() ) # O{1s1/2,2s1/2} already registered
 
     def test_comparison( self ) :
 
