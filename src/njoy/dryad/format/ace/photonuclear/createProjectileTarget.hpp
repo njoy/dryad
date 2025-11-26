@@ -35,7 +35,7 @@ namespace photonuclear {
                              createReactions( projectile, target, table, normalise ) );
   }
 
-} // electroatomic namespace
+} // photonuclear namespace
 } // ace namespace
 } // format namespace
 } // dryad namespace
