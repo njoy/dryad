@@ -277,6 +277,33 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( true == ReactionInformation::isValid( 198 ) );
       CHECK( true == ReactionInformation::isValid( 199 ) );
       CHECK( true == ReactionInformation::isValid( 200 ) );
+      for ( int mt = 201; mt < 219; ++mt ) {
+
+        CHECK( true == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 219; mt < 251; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
+      CHECK( true == ReactionInformation::isValid( 251 ) );
+      CHECK( true == ReactionInformation::isValid( 252 ) );
+      CHECK( true == ReactionInformation::isValid( 253 ) );
+      for ( int mt = 254; mt < 301; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 301; mt < 451; ++mt ) {
+
+        CHECK( true == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 461; mt < 501; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 573; mt < 600; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
       CHECK( true == ReactionInformation::isValid( 600 ) );
       CHECK( true == ReactionInformation::isValid( 601 ) );
       CHECK( true == ReactionInformation::isValid( 602 ) );

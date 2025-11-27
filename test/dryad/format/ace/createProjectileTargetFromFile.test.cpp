@@ -23,7 +23,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        auto targets = format::ace::createProjectileTargetFromFile( "1000.84p" );
+        auto targets = format::ace::createProjectileTargetFromFile( "1000.84p", false );
 
         CHECK( true == std::holds_alternative< ProjectileTarget >( targets ) );
         auto H0_pa = std::get< ProjectileTarget >( targets );
@@ -83,11 +83,9 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
     WHEN( "an eprdata12 formatted table is given" ) {
 
-      njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
-
       THEN( "a ProjectileTarget can be derived" ) {
 
-        auto targets = format::ace::createProjectileTargetFromFile( "1000.12p" );
+        auto targets = format::ace::createProjectileTargetFromFile( "1000.12p", false );
 
         CHECK( true == std::holds_alternative< std::pair< ProjectileTarget, ProjectileTarget > >( targets ) );
         auto H0_pa = std::get< std::pair< ProjectileTarget, ProjectileTarget > >( targets ).first;
@@ -217,7 +215,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        auto targets = format::ace::createProjectileTargetFromFile( "1000.14p" );
+        auto targets = format::ace::createProjectileTargetFromFile( "1000.14p", false );
 
         CHECK( true == std::holds_alternative< std::pair< ProjectileTarget, ProjectileTarget > >( targets ) );
         auto H0_pa = std::get< std::pair< ProjectileTarget, ProjectileTarget > >( targets ).first;
