@@ -12,9 +12,32 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
+void verifyNeutronMF4LTT2Chunk( const TabulatedAngularDistributions&, bool );
 void verifyElectronChunk( const TabulatedAngularDistributions&, bool );
 
 SCENARIO( "createTabulatedAngularDistribution" ) {
+
+  GIVEN( "ENDF MF4 LTT = 2" ) {
+
+    using TabulatedDistributions = njoy::ENDFtk::section::Type< 4 >::TabulatedDistributions;
+
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );
+    auto section = tape.materials().front().section( 4, 16 ).parse< 4 >();
+    auto distribution = std::get< TabulatedDistributions >( section.distributions() );
+
+    WHEN( "a single parsed MF4 LTT = 2 is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        auto chunk1 = format::endf::createTabulatedAngularDistributions( distribution, false );
+        auto chunk2 = format::endf::createTabulatedAngularDistributions( distribution, true );
+
+        verifyNeutronMF4LTT2Chunk( chunk1, false );
+        verifyNeutronMF4LTT2Chunk( chunk2, true );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 
   GIVEN( "ENDF MF26 LAW = 2" ) {
 
@@ -25,7 +48,7 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
     auto section = tape.materials().front().section( 26, 525 ).parse< 26 >();
     auto distribution = std::get< DiscreteTwoBodyScattering >( section.reactionProduct( 11 ).distribution() );
 
-    WHEN( "a single parsed MF26 multiplicity is given" ) {
+    WHEN( "a single parsed MF26 LAW = 2 is given" ) {
 
       THEN( "it can be converted" ) {
 
@@ -38,6 +61,115 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
     } // WHEN
   } // GIVEN
 } // SCENARIO
+
+void verifyNeutronMF4LTT2Chunk( const TabulatedAngularDistributions& chunk, bool normalise ) {
+
+  CHECK( 10 == chunk.numberPoints() );
+  CHECK( 1 == chunk.numberRegions() );
+  CHECK( 10 == chunk.grid().size() );
+  CHECK( 10 == chunk.distributions().size() );
+  CHECK( 1 == chunk.boundaries().size() );
+  CHECK( 1 == chunk.interpolants().size() );
+  CHECK_THAT( 8.292880e+6, WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 8.500000e+6, WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 1.800000e+7, WithinRel( chunk.grid()[8] ) );
+  CHECK_THAT( 2.000000e+7, WithinRel( chunk.grid()[9] ) );
+  CHECK( 11 == chunk.distributions()[0].pdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[0].pdf().values().size() );
+  CHECK( 11 == chunk.distributions()[1].pdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[1].pdf().values().size() );
+  CHECK( 11 == chunk.distributions()[8].pdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[8].pdf().values().size() );
+  CHECK( 11 == chunk.distributions()[9].pdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[9].pdf().values().size() );
+
+  // the numbers in the tests given below are the values as found in the test
+  // file so they need to be normalised. the following values are the scaling
+  // factors that need to be applied (calculated by integrating the distributions
+  // in excel).
+  double normalisation00 = 1.;
+  double normalisation01 = normalise ? .9999958 : 1.;
+  double normalisation08 = normalise ? 1.000002 : 1.;
+  double normalisation09 = normalise ? .999998 : 1.;
+
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[0].pdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[0].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[0].pdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[0].pdf().cosines()[10] ) );
+  CHECK_THAT(  0. / normalisation00         , WithinRel( chunk.distributions()[0].pdf().values()[0] ) );
+  CHECK_THAT(  0. / normalisation00         , WithinRel( chunk.distributions()[0].pdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation00         , WithinRel( chunk.distributions()[0].pdf().values()[9] ) );
+  CHECK_THAT(  10. / normalisation00        , WithinRel( chunk.distributions()[0].pdf().values()[10] ) );
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[1].pdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[1].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[1].pdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[1].pdf().cosines()[10] ) );
+  CHECK_THAT(  0. / normalisation01         , WithinRel( chunk.distributions()[1].pdf().values()[0] ) );
+  CHECK_THAT(  0. / normalisation01         , WithinRel( chunk.distributions()[1].pdf().values()[1] ) );
+  CHECK_THAT(  2.16660 / normalisation01    , WithinRel( chunk.distributions()[1].pdf().values()[9] ) );
+  CHECK_THAT(  4.19050 / normalisation01    , WithinRel( chunk.distributions()[1].pdf().values()[10] ) );
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[8].pdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[8].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[8].pdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[8].pdf().cosines()[10] ) );
+  CHECK_THAT(  2.452200e-1 / normalisation08, WithinRel( chunk.distributions()[8].pdf().values()[0] ) );
+  CHECK_THAT(  2.707000e-1 / normalisation08, WithinRel( chunk.distributions()[8].pdf().values()[1] ) );
+  CHECK_THAT(  7.996600e-1 / normalisation08, WithinRel( chunk.distributions()[8].pdf().values()[9] ) );
+  CHECK_THAT(  8.857000e-1 / normalisation08, WithinRel( chunk.distributions()[8].pdf().values()[10] ) );
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[9].pdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[9].pdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[9].pdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[9].pdf().cosines()[10] ) );
+  CHECK_THAT(  2.533600e-1 / normalisation09, WithinRel( chunk.distributions()[9].pdf().values()[0] ) );
+  CHECK_THAT(  2.785700e-1 / normalisation09, WithinRel( chunk.distributions()[9].pdf().values()[1] ) );
+  CHECK_THAT(  7.863000e-1 / normalisation09, WithinRel( chunk.distributions()[9].pdf().values()[9] ) );
+  CHECK_THAT(  8.672000e-1 / normalisation09, WithinRel( chunk.distributions()[9].pdf().values()[10] ) );
+
+  CHECK( 11 == chunk.distributions()[0].cdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[0].cdf().values().size() );
+  CHECK( 11 == chunk.distributions()[1].cdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[1].cdf().values().size() );
+  CHECK( 11 == chunk.distributions()[8].cdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[8].cdf().values().size() );
+  CHECK( 11 == chunk.distributions()[9].cdf().cosines().size() );
+  CHECK( 11 == chunk.distributions()[9].cdf().values().size() );
+
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[0].cdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[0].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[0].cdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[0].cdf().cosines()[10] ) );
+  CHECK_THAT(  0. / normalisation00         , WithinRel( chunk.distributions()[0].cdf().values()[0] ) );
+  CHECK_THAT(  0. / normalisation00         , WithinRel( chunk.distributions()[0].cdf().values()[1] ) );
+  CHECK_THAT(  0. / normalisation00         , WithinRel( chunk.distributions()[0].cdf().values()[9] ) );
+  CHECK_THAT(  1. / normalisation00         , WithinRel( chunk.distributions()[0].cdf().values()[10] ) );
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[1].cdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[1].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[1].cdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[1].cdf().cosines()[10] ) );
+  CHECK_THAT(  0. / normalisation01         , WithinRel( chunk.distributions()[1].cdf().values()[0] ) );
+  CHECK_THAT(  0. / normalisation01         , WithinRel( chunk.distributions()[1].cdf().values()[1] ) );
+  CHECK_THAT(  0.3642858 / normalisation01  , WithinRel( chunk.distributions()[1].cdf().values()[9] ) );
+  CHECK_THAT(  0.9999958 / normalisation01  , WithinRel( chunk.distributions()[1].cdf().values()[10] ) );
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[8].cdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[8].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[8].cdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[8].cdf().cosines()[10] ) );
+  CHECK_THAT(  0.       / normalisation08   , WithinRel( chunk.distributions()[8].cdf().values()[0] ) );
+  CHECK_THAT(  0.051592 / normalisation08   , WithinRel( chunk.distributions()[8].cdf().values()[1] ) );
+  CHECK_THAT(  0.831466 / normalisation08   , WithinRel( chunk.distributions()[8].cdf().values()[9] ) );
+  CHECK_THAT(  1.000002 / normalisation08   , WithinRel( chunk.distributions()[8].cdf().values()[10] ) );
+  CHECK_THAT( -1.                           , WithinRel( chunk.distributions()[9].cdf().cosines()[0] ) );
+  CHECK_THAT( -0.8                          , WithinRel( chunk.distributions()[9].cdf().cosines()[1] ) );
+  CHECK_THAT(  0.8                          , WithinRel( chunk.distributions()[9].cdf().cosines()[9] ) );
+  CHECK_THAT(  1.                           , WithinRel( chunk.distributions()[9].cdf().cosines()[10] ) );
+  CHECK_THAT(  0.       / normalisation09   , WithinRel( chunk.distributions()[9].cdf().values()[0] ) );
+  CHECK_THAT(  0.053193 / normalisation09   , WithinRel( chunk.distributions()[9].cdf().values()[1] ) );
+  CHECK_THAT(  0.834648 / normalisation09   , WithinRel( chunk.distributions()[9].cdf().values()[9] ) );
+  CHECK_THAT(  0.999998 / normalisation09   , WithinRel( chunk.distributions()[9].cdf().values()[10] ) );
+
+  CHECK( 9 == chunk.boundaries()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+}
 
 void verifyElectronChunk( const TabulatedAngularDistributions& chunk, bool normalise ) {
 
