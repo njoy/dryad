@@ -1616,6 +1616,29 @@ class Test_ReactionType( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
+        gamma = ReactionType( 102 )
+        neutron = ReactionType( 50 )
+        proton = ReactionType( 600 )
+        deuteron = ReactionType( 650 )
+        triton = ReactionType( 700 )
+        helion = ReactionType( 750 )
+        alpha = ReactionType( 800 )
+        total = ReactionType( 1 )
+        fission = ReactionType( 18 )
+        pairproduction = ReactionType( 515 )
+        total_atomic = ReactionType( 501 )
+
+        self.assertEqual( gamma < neutron, True )
+        self.assertEqual( neutron < proton, True )
+        self.assertEqual( proton < deuteron, True )
+        self.assertEqual( deuteron < triton, True )
+        self.assertEqual( triton < helion, True )
+        self.assertEqual( helion < alpha, True )
+        self.assertEqual( alpha < total, True )
+        self.assertEqual( total < fission, True )
+        self.assertEqual( fission < pairproduction, True )
+        self.assertEqual( pairproduction < total_atomic, True )
+
         id1 = ReactionType( 102 )
         id2 = ReactionType( 1 )
 
