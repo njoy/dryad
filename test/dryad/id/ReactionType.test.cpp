@@ -5538,6 +5538,7 @@ SCENARIO( "ReactionType" ) {
     ReactionType helion( 750 );
     ReactionType alpha( 800 );
     ReactionType total( 1 );
+    ReactionType fission( 18 );
     ReactionType pairproduction( 515 );
     ReactionType total_atomic( 501 );
 
@@ -5550,7 +5551,8 @@ SCENARIO( "ReactionType" ) {
       CHECK( triton < helion );
       CHECK( helion < alpha );
       CHECK( alpha < total );
-      CHECK( total < pairproduction );
+      CHECK( total < fission );
+      CHECK( fission < pairproduction );
       CHECK( pairproduction < total_atomic );
     }
 
