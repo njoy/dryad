@@ -1228,6 +1228,14 @@ namespace id {
     }
 
     /**
+     *  @brief Return the hash
+     */
+    std::size_t hash() const {
+
+      return entries[ this->index_ ].hash();
+    }
+
+    /**
      *  @brief Return the partial designator for this reaction type
      *
      *  A partial designator is used for some atomic interactions when the
@@ -1329,7 +1337,7 @@ namespace id {
      */
     friend auto operator==( const ReactionType& left, const ReactionType& right ) {
 
-      return left.number() == right.number();
+      return entries[ left.index_ ].tuple() == entries[ right.index_ ].tuple();
     }
 
     /**
@@ -1351,7 +1359,7 @@ namespace id {
      */
     friend auto operator<( const ReactionType& left, const ReactionType& right ) {
 
-      return left.number() < right.number();
+      return entries[ left.index_ ].tuple() < entries[ right.index_ ].tuple();
     }
 
     /**

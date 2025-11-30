@@ -1616,8 +1616,8 @@ class Test_ReactionType( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        id1 = ReactionType( 1 )
-        id2 = ReactionType( 102 )
+        id1 = ReactionType( 102 )
+        id2 = ReactionType( 1 )
 
         self.assertEqual( id1 <  id1, False )
         self.assertEqual( id1 <= id1, True )

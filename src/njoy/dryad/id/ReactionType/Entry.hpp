@@ -5,14 +5,21 @@
 class Entry {
 
   /* fields */
-  std::int64_t number_;
+
+  // tuple for logical ordering:
+  // - flag for special reactions
+  // - interaction type (nuclear or atomic)
+  // - outgoing particle number with level, subshell or mt
+  std::tuple< InteractionType, bool, std::int64_t > tuple_;
+
   std::optional< short > mt_;
   std::optional< std::map< ParticleID, short > > ejectiles_;
   std::vector< std::string > symbols_;
-  InteractionType interaction_;
   std::optional< std::string > designator_;
   std::optional< short > level_;
   std::optional< int > dza_;
+
+  std::size_t hash_;
 
   static std::optional< std::string >
   getDesignator( const InteractionType& type,
@@ -46,38 +53,39 @@ class Entry {
   }
 
   /* constructor */
-  Entry( std::int64_t number, std::optional< short > mt,
+  Entry( bool special, std::int64_t number, std::optional< short > mt,
          std::optional< std::map< ParticleID, short > > ejectiles,
          std::vector< std::string > symbols,
          InteractionType interaction, std::optional< short > level ) :
-    number_( std::move( number ) ),
+    tuple_( std::move( interaction ), special, number ),
     mt_( std::move( mt ) ),
     ejectiles_( std::move( ejectiles ) ),
     symbols_( std::move( symbols ) ),
-    interaction_( std::move( interaction ) ),
     designator_( std::nullopt ),
     level_( std::move( level ) ),
     dza_( std::nullopt ) {
 
     this->dza_ = calculateDZA( this->type(), this->particles() );
     this->designator_ = getDesignator( this->type(), this->symbols() );
+
+    this->hash_ = std::hash< std::string >{}( this->symbol() );
   }
 
 public:
 
   /* constructor */
 
-  // special reaction without an mt number
-  Entry( std::int64_t number, InteractionType interaction,
-         std::vector< std::string > symbols ) :
-    Entry( std::move( number ), std::nullopt, std::nullopt,
-           std::move( symbols ),
-           std::move( interaction ), std::nullopt ) {}
+//  // special reaction without an mt number
+//  Entry( std::int64_t number, InteractionType interaction,
+//         std::vector< std::string > symbols ) :
+//    Entry( std::move( number ), std::nullopt, std::nullopt,
+//           std::move( symbols ),
+//           std::move( interaction ), std::nullopt ) {}
 
   // special reaction with an mt number
   Entry( std::int64_t number, short mt, InteractionType interaction,
          std::vector< std::string > symbols ) :
-    Entry( std::move( number ), std::move( mt ), std::nullopt,
+    Entry( true, std::move( number ), std::move( mt ), std::nullopt,
            std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
 
@@ -85,7 +93,7 @@ public:
   Entry( std::int64_t number, short mt, InteractionType interaction,
          std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles ) :
-    Entry( std::move( number ), std::move( mt ),
+    Entry( false, std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
@@ -95,7 +103,7 @@ public:
          std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles,
          short level ) :
-    Entry( std::move( number ), std::move( mt ),
+    Entry( false, std::move( number ), std::move( mt ),
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbols ),
            std::move( interaction ), std::move( level ) ) {}
@@ -104,7 +112,7 @@ public:
   Entry( std::int64_t number, InteractionType interaction,
          std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles ) :
-    Entry( std::move( number ), std::nullopt,
+    Entry( false, std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbols ),
            std::move( interaction ), std::nullopt ) {}
@@ -114,17 +122,19 @@ public:
          std::vector< std::string > symbols,
          std::map< ParticleID, short > ejectiles,
          short level ) :
-    Entry( std::move( number ), std::nullopt,
+    Entry( false, std::move( number ), std::nullopt,
            std::make_optional( std::move( ejectiles ) ),
            std::move( symbols ),
            std::move( interaction ), std::move( level ) ) {}
 
   /* methods */
-  std::int64_t number() const { return this->number_; }
+  const std::tuple< InteractionType, bool, std::int64_t >& tuple() const { return this->tuple_; }
+  const InteractionType& type() const { return std::get< 0 >( this->tuple() ); }
+  std::int64_t number() const { return std::get< 2 >( this->tuple() ); }
+
   const std::optional< short >& mt() const { return this->mt_; }
   const std::string& symbol() const { return this->symbols().front(); }
   const std::vector< std::string >& symbols() const { return this->symbols_; }
-  const InteractionType& type() const { return this->interaction_; }
   const std::optional< std::map< ParticleID, short > >& particles() const {
 
     return this->ejectiles_;
@@ -132,4 +142,6 @@ public:
   const std::optional< short >& level() const { return this->level_; }
   const std::optional< int >& dza() const { return this->dza_; }
   const std::optional< std::string >& partialDesignator() const { return this->designator_; }
+
+  std::size_t hash() const { return this->hash_; }
 };
