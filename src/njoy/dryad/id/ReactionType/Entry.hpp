@@ -75,13 +75,6 @@ public:
 
   /* constructor */
 
-//  // special reaction without an mt number
-//  Entry( std::int64_t number, InteractionType interaction,
-//         std::vector< std::string > symbols ) :
-//    Entry( std::move( number ), std::nullopt, std::nullopt,
-//           std::move( symbols ),
-//           std::move( interaction ), std::nullopt ) {}
-
   // special reaction with an mt number
   Entry( std::int64_t number, short mt, InteractionType interaction,
          std::vector< std::string > symbols ) :
