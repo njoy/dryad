@@ -328,6 +328,20 @@ namespace endf {
           }
         }
       }
+      else if ( mf == 3 && mt == 3 ) {
+
+        auto sections = material.file( mf ).sectionNumbers();
+        for ( auto number : sections ) {
+
+          if ( number != 2 ) {
+
+            if ( isPrimary( material, number ) ) {
+
+              partials.emplace_back( projectile, target, adjust_scatter_level( number ) );
+            }
+          }
+        }
+      }
       else if ( mf == 33 && isLumpedCovariance( mt ) ) {
 
         auto covariances = material.file( 33 ).parse< 33 >();
