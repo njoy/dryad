@@ -10,6 +10,7 @@
 #include "njoy/dryad/format/endf/createBoundaries.hpp"
 #include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "ENDFtk/section/4.hpp"
 #include "ENDFtk/section/6.hpp"
 #include "ENDFtk/section/26.hpp"
 
@@ -19,13 +20,19 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a TabulatedAngularDistribution from a parsed ENDF MF6 or MF26 LAW = 2
-   *         TabulatedDistribution
+   *  @brief Create a TabulatedAngularDistribution from a parsed ENDF MF4 LTT = 2 or 2,
+   *         MF6 or MF26 LAW = 2 TabulatedDistribution
+   *
+   *  @param[in] distribution   the parsed ENDF tabulated distribution
+   *  @param[in] normalise      the flag to indicate whether or not distributions
+   *                            need to be normalised
    */
   template < typename TabulatedDistribution >
   auto createTabulatedAngularDistribution( const TabulatedDistribution& distribution,
                                            bool normalise )
   -> std::enable_if_t< ( std::is_same_v< TabulatedDistribution,
+                                         ENDFtk::section::Type< 4 >::TabulatedDistribution > ||
+                         std::is_same_v< TabulatedDistribution,
                                          ENDFtk::section::Type< 6 >::DiscreteTwoBodyScattering::TabulatedDistribution > ||
                          std::is_same_v< TabulatedDistribution,
                                          ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering::TabulatedDistribution > ),
@@ -44,7 +51,7 @@ namespace endf {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating an average reaction product energy table" );
+      Log::info( "Error encountered while creating an angular distribution table" );
       throw;
     }
   }
