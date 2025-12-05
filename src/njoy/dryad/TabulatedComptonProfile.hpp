@@ -74,7 +74,7 @@ namespace dryad {
     using InterpolationTable::cumulativeIntegral;
 
     /**
-     *  @brief Return a linearised angular distribution table
+     *  @brief Return a linearised Compton profile table
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
