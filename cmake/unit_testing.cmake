@@ -274,3 +274,7 @@ add_cpp_test( reconr.calculateSummationCrossSections                            
 
 add_cpp_test( medic.pruneCrossSection                                                   medic/pruneCrossSection.test.cpp )
 add_cpp_test( medic.pruneCrossSections                                                  medic/pruneCrossSections.test.cpp )
+
+# acer tests
+
+add_cpp_test( acer.processElectronPhotonRelaxation                                      acer/processElectronPhotonRelaxation.test.cpp )
