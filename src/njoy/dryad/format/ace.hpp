@@ -1,4 +1,5 @@
 #include "njoy/dryad/format/ace/atomic/createAceSubshellTransitionDataBlock.hpp"
+#include "njoy/dryad/format/ace/atomic/createAceElectronShellBlock.hpp"
 #include "njoy/dryad/format/ace/atomic/createAceElectronSubshellBlock.hpp"
 
 #include "njoy/dryad/format/ace/continuous/createTabulatedCrossSection.hpp"

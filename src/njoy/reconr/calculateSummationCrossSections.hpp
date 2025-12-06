@@ -26,7 +26,7 @@ namespace reconr {
     pt.calculateSummationCrossSections( std::move( tolerance ) );
   }
 
-} // medic namespace
+} // reconr namespace
 } // njoy namespace
 
 #endif

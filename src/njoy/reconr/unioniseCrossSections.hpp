@@ -33,7 +33,7 @@ namespace reconr {
     pt.unioniseCrossSections( exclude_summation );
   }
 
-} // medic namespace
+} // reconr namespace
 } // njoy namespace
 
 #endif
