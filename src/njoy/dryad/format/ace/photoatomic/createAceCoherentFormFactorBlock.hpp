@@ -17,7 +17,7 @@ namespace ace {
 namespace photoatomic {
 
   /**
-   *  @brief Create the coherent form factorblock for photoatomic data
+   *  @brief Create the coherent form factor block for photoatomic data
    *
    *  It is assumed that the ProjectileTarget instance used is valid photoatomic
    *  data, and ACE compatible (i.e. unionised energy grid, etc.)
