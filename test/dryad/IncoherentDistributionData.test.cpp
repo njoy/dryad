@@ -65,6 +65,22 @@ SCENARIO( "IncoherentDistributionData" ) {
 
         verifyChunk( chunk );
       } // THEN
+
+      THEN( "the compton profiles can be changed" ) {
+
+        std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > >
+        newprofiles( { { id::ElectronSubshellID( "1s" ), { { 0, 100 }, { 1, 2 } } } } );
+        std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > >
+        original = std::nullopt;
+
+        chunk.comptonProfiles( newprofiles );
+
+        CHECK( newprofiles == chunk.comptonProfiles() );
+
+        chunk.comptonProfiles( original );
+
+        verifyChunk( chunk );
+      } // THEN
     } // WHEN
   } // GIVEN
 
@@ -111,4 +127,6 @@ void verifyChunk( const IncoherentDistributionData& chunk ) {
   CHECK( 1 == chunk.scatteringFunction().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk.scatteringFunction().interpolants()[0] );
   CHECK( true == chunk.scatteringFunction().isLinearised() );
+
+  CHECK( std::nullopt == chunk.comptonProfiles() );
 }

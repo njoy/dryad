@@ -13,7 +13,7 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief An tabulated Compton profile for photoatomic data
+   *  @brief A tabulated Compton profile for photoatomic data
    */
   class TabulatedComptonProfile :
       protected scion::math::InterpolationTable< double, double > {

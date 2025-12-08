@@ -2,11 +2,15 @@
 #define NJOY_DRYAD_INCOHERENTDISTRIBUTIONDATA
 
 // system includes
+#include <optional>
+#include <map>
 #include <variant>
 
 // other includes
+#include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/DistributionDataType.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
+#include "njoy/dryad/TabulatedComptonProfile.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 
 namespace njoy {
@@ -23,13 +27,15 @@ namespace dryad {
    *  differential cross section.
    *
    *  This corresponds with the incoherent scattering function data given in
-   *  MF27 MT504.
+   *  MF27 MT504, supplemented with Compton profile data.
    */
   class IncoherentDistributionData {
 
     /* fields */
     ReferenceFrame frame_;
     TabulatedScatteringFunction scattering_;
+
+    std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > > profiles_;
 
   public:
 
@@ -80,7 +86,26 @@ namespace dryad {
      */
     void scatteringFunction( TabulatedScatteringFunction scattering ) {
 
-      this->scattering_ = scattering;
+      this->scattering_ = std::move( scattering );
+    }
+
+    /**
+     *  @brief Return the Compton profiles
+     */
+    const std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > >&
+    comptonProfiles() const {
+
+      return this->profiles_;
+    }
+
+    /**
+     *  @brief Set the Compton profiles
+     *
+     *  @param profiles   the Compton profiles
+     */
+    void comptonProfiles( std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > > profiles ) {
+
+      this->profiles_ = std::move( profiles );
     }
 
     /**
@@ -90,8 +115,8 @@ namespace dryad {
      */
     bool operator==( const IncoherentDistributionData& right ) const {
 
-      return this->frame() == right.frame() &&
-             this->scatteringFunction() == right.scatteringFunction();
+      return std::tie( this->frame(), this->scatteringFunction(), this->comptonProfiles() ) ==
+             std::tie( right.frame(), right.scatteringFunction(), right.comptonProfiles() );
     }
 
     /**

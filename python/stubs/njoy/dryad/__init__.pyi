@@ -386,9 +386,9 @@ class InteractionType:
     
       Nuclear
     """
-    Atomic: typing.ClassVar[InteractionType]  # value = <InteractionType.Atomic: 1>
-    Nuclear: typing.ClassVar[InteractionType]  # value = <InteractionType.Nuclear: 2>
-    __members__: typing.ClassVar[dict[str, InteractionType]]  # value = {'Atomic': <InteractionType.Atomic: 1>, 'Nuclear': <InteractionType.Nuclear: 2>}
+    Atomic: typing.ClassVar[InteractionType]  # value = <InteractionType.Atomic: 2>
+    Nuclear: typing.ClassVar[InteractionType]  # value = <InteractionType.Nuclear: 1>
+    __members__: typing.ClassVar[dict[str, InteractionType]]  # value = {'Atomic': <InteractionType.Atomic: 2>, 'Nuclear': <InteractionType.Nuclear: 1>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:
