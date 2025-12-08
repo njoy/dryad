@@ -5,11 +5,11 @@ import sys
 # third party imports
 
 # local imports
-from njoy.dryad import TabulatedComptonProfile
+from njoy.dryad import TabulatedComptonProfileFunction
 from njoy.dryad import InterpolationType
 
-class Test_TabulatedComptonProfile( unittest.TestCase ) :
-    """Unit test for the TabulatedComptonProfile class."""
+class Test_TabulatedComptonProfileFunction( unittest.TestCase ) :
+    """Unit test for the TabulatedComptonProfileFunction class."""
 
     def test_component( self ) :
 
@@ -51,10 +51,10 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertAlmostEqual( 0.875, chunk( momentum = 0.75 ) )
 
             # verify arithmetic operators
-            same = TabulatedComptonProfile( [ -1., 1. ], [ 1., 0. ] )
-            threshold = TabulatedComptonProfile( [ 0., 1. ], [ 0., 2. ] )
-            nonzerothreshold = TabulatedComptonProfile( [ 0., 1. ], [ 1., 1. ] )
-            small = TabulatedComptonProfile( [ -1., 0. ], [ 0., 1. ] )
+            same = TabulatedComptonProfileFunction( [ -1., 1. ], [ 1., 0. ] )
+            threshold = TabulatedComptonProfileFunction( [ 0., 1. ], [ 0., 2. ] )
+            nonzerothreshold = TabulatedComptonProfileFunction( [ 0., 1. ], [ 1., 1. ] )
+            small = TabulatedComptonProfileFunction( [ -1., 0. ], [ 0., 1. ] )
 
             result = -chunk
             self.assertEqual( 4, result.number_points )
@@ -613,10 +613,10 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertAlmostEqual( 2.5, chunk( momentum = 0.75 ) )
 
             # verify arithmetic operators
-            same = TabulatedComptonProfile( [ -1., 1. ], [ 1., 0. ] )
-            threshold = TabulatedComptonProfile( [ 0., 1. ], [ 0., 2. ] )
-            nonzerothreshold = TabulatedComptonProfile( [ 0.5, 1. ], [ 1., 1. ] )
-            small = TabulatedComptonProfile( [ -1., 0.5 ], [ 1., 1. ] )
+            same = TabulatedComptonProfileFunction( [ -1., 1. ], [ 1., 0. ] )
+            threshold = TabulatedComptonProfileFunction( [ 0., 1. ], [ 0., 2. ] )
+            nonzerothreshold = TabulatedComptonProfileFunction( [ 0.5, 1. ], [ 1., 1. ] )
+            small = TabulatedComptonProfileFunction( [ -1., 0.5 ], [ 1., 1. ] )
 
             result = -chunk
             self.assertEqual( 5, len( result.momentum ) )
@@ -1232,7 +1232,7 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertAlmostEqual( 0.86602540378444, chunk( momentum = 0.75 ) )
 
             # verify arithmetic operators throw exceptions
-            temp = TabulatedComptonProfile( [ 1., 4. ], [ 4., 1. ] )
+            temp = TabulatedComptonProfileFunction( [ 1., 4. ], [ 4., 1. ] )
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
             with self.assertRaises( Exception ) : result = chunk + temp
@@ -1334,7 +1334,7 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertAlmostEqual( 1.36930639376292, chunk( momentum = 0.75 ) )
 
             # verify arithmetic operators throw exceptions
-            temp = TabulatedComptonProfile( [ 1., 4. ], [ 4., 1. ] )
+            temp = TabulatedComptonProfileFunction( [ 1., 4. ], [ 4., 1. ] )
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
             with self.assertRaises( Exception ) : result = chunk + temp
@@ -1442,21 +1442,21 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertEqual( False, chunk.is_linearised )
 
         # the data is given explicitly for data without boundaries
-        chunk = TabulatedComptonProfile( momentum = [ -1., 0., 0.5, 1. ],
+        chunk = TabulatedComptonProfileFunction( momentum = [ -1., 0., 0.5, 1. ],
                                                       values = [ 0., 0.5, 0.75, 1. ],
                                                       interpolant = InterpolationType.LinearLinear )
 
         verify_chunk1( self, chunk )
 
         # the data is given explicitly for data without boundaries and a jump
-        chunk = TabulatedComptonProfile( momentum = [ -1., 0., 0., 0.5, 1. ],
+        chunk = TabulatedComptonProfileFunction( momentum = [ -1., 0., 0., 0.5, 1. ],
                                                       values = [ 4., 3., 4., 3., 2. ],
                                                       interpolant = InterpolationType.LinearLinear )
 
         verify_chunk2( self, chunk )
 
         # the data is given explicitly for data without a jump
-        chunk = TabulatedComptonProfile( momentum = [ -1., 0., 0.5, 1. ],
+        chunk = TabulatedComptonProfileFunction( momentum = [ -1., 0., 0.5, 1. ],
                                                       values = [ 0., 0.5, 0.75, 1. ],
                                                       boundaries = [ 1, 3 ],
                                                       interpolants = [ InterpolationType.LinearLinear,
@@ -1465,7 +1465,7 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
         verify_chunk3( self, chunk )
 
         # the data is given explicitly for data with a jump
-        chunk = TabulatedComptonProfile( momentum = [ -1., 0., 0., 0.5, 1. ],
+        chunk = TabulatedComptonProfileFunction( momentum = [ -1., 0., 0., 0.5, 1. ],
                                                       values = [ 0., 0.5, 1., 1.25, 1.5 ],
                                                       boundaries = [ 1, 4 ],
                                                       interpolants = [ InterpolationType.LinearLinear,
@@ -1474,7 +1474,7 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
         verify_chunk4( self, chunk )
 
         # the data is given explicitly with boundaries that point to the second x value in the jump
-        chunk = TabulatedComptonProfile( momentum = [ -1., 0., 0., 0.5, 1. ],
+        chunk = TabulatedComptonProfileFunction( momentum = [ -1., 0., 0., 0.5, 1. ],
                                                       values = [ 0., 0.5, 1., 1.25, 1.5 ],
                                                       boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
                                                       interpolants = [ InterpolationType.LinearLinear,
@@ -1483,7 +1483,7 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
         verify_chunk5( self, chunk )
 
         # the data is given explicitly with a jump at the end that goes to zero
-        chunk = TabulatedComptonProfile( momentum = [ -1., 0., 0.5, 1., 1. ], # <-- jump at end
+        chunk = TabulatedComptonProfileFunction( momentum = [ -1., 0., 0.5, 1., 1. ], # <-- jump at end
                                                       values = [ 0., 0.5, 0.75, 1., 0. ], # <-- last value is zero
                                                       boundaries = [ 1, 4 ],      # <-- pointing to end
                                                       interpolants = [ InterpolationType.LinearLinear,
@@ -1493,9 +1493,9 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = TabulatedComptonProfile( [ -1., 1. ], [ 0.5, 0.5 ] )
-        equal = TabulatedComptonProfile( [ -1., 1. ], [ 0.5, 0.5 ] )
-        different = TabulatedComptonProfile( [ -1., 1. ], [ 0.25, 0.75 ] )
+        left = TabulatedComptonProfileFunction( [ -1., 1. ], [ 0.5, 0.5 ] )
+        equal = TabulatedComptonProfileFunction( [ -1., 1. ], [ 0.5, 0.5 ] )
+        different = TabulatedComptonProfileFunction( [ -1., 1. ], [ 0.25, 0.75 ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )
@@ -1512,22 +1512,22 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
         # there are not enough values in the x or y grid
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [], values = [] )
+            chunk = TabulatedComptonProfileFunction( energies = [], values = [] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1. ], values = [ 4. ] )
+            chunk = TabulatedComptonProfileFunction( energies = [ 1. ], values = [ 4. ] )
 
         # the x and y grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 2., 3., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 2., 3., 4. ],
                                                           values = [ 4., 3., 2. ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 2., 3., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 2., 3., 4. ],
                                                           values = [ 4., 3., 2., 1. ],
                                                           boundaries = [ 3 ],
                                                           interpolants = [] )
@@ -1535,31 +1535,31 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
         # the x grid is not sorted
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 3., 2., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 3., 2., 4. ],
                                                           values = [ 4., 3., 2., 1. ] )
 
         # the x grid contains a triple x value
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 2., 2., 2., 3., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 2., 2., 2., 3., 4. ],
                                                           values = [ 4., 3., 3., 3., 2., 1. ] )
 
         # the x grid has a jump at the beginning
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 1., 3., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 1., 3., 4. ],
                                                           values = [ 4., 3., 1., 4. ] )
 
         # the x grid has a jump at the end
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 2., 4., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 2., 4., 4. ],
                                                           values = [ 4., 3., 1., 4. ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedComptonProfile( energies = [ 1., 2., 3., 4. ],
+            chunk = TabulatedComptonProfileFunction( energies = [ 1., 2., 3., 4. ],
                                                           values = [ 4., 3., 2., 1. ],
                                                           boundaries = [ 2 ],
                                                           interpolants = [ InterpolationType.LinearLinear ] )

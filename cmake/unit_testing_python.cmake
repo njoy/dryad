@@ -76,7 +76,7 @@ add_python_test( dryad.LegendreAngularDistributions                    dryad/Tes
 add_python_test( dryad.TabulatedAngularDistributionFunction            dryad/Test_TabulatedAngularDistributionFunction.py )
 add_python_test( dryad.TabulatedAngularDistribution                    dryad/Test_TabulatedAngularDistribution.py )
 add_python_test( dryad.TabulatedAngularDistributions                   dryad/Test_TabulatedAngularDistributions.py )
-add_python_test( dryad.TabulatedComptonProfile                         dryad/Test_TabulatedComptonProfile.py )
+add_python_test( dryad.TabulatedComptonProfileFunction                 dryad/Test_TabulatedComptonProfileFunction.py )
 add_python_test( dryad.UniformAngularDistribution                      dryad/Test_UniformAngularDistribution.py )
 add_python_test( dryad.UniformAngularDistributions                     dryad/Test_UniformAngularDistributions.py )
 add_python_test( dryad.TabulatedEnergyDistributionFunction             dryad/Test_TabulatedEnergyDistributionFunction.py )

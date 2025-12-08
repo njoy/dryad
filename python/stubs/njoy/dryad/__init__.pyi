@@ -2051,7 +2051,7 @@ class TabulatedAverageEnergy:
         """
 class TabulatedComptonProfileFunction:
     """
-    A Compton profile using tabulated data
+    A Compton profile distribution using tabulated data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
