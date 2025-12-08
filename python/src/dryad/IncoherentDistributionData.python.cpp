@@ -17,6 +17,9 @@ void wrapIncoherentDistributionData( python::module& module ) {
   using Component = njoy::dryad::IncoherentDistributionData;
   using ReferenceFrame = njoy::dryad::ReferenceFrame;
   using TabulatedScatteringFunction = njoy::dryad::TabulatedScatteringFunction;
+  using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
+  using TabulatedComptonProfileFunction = njoy::dryad::TabulatedComptonProfileFunction;
+  using ComptonProfiles = std::optional< std::map< ElectronSubshellID, TabulatedComptonProfileFunction > >;
 
   // wrap views created by this component
 
@@ -37,13 +40,15 @@ void wrapIncoherentDistributionData( python::module& module ) {
   component
   .def(
 
-    python::init< ReferenceFrame, TabulatedScatteringFunction >(),
+    python::init< ReferenceFrame, TabulatedScatteringFunction, ComptonProfiles >(),
     python::arg( "frame" ), python::arg( "scattering" ),
+    python::arg( "profiles" ) = std::nullopt,
     "Initialise the incoherent distribution data\n\n"
     "Arguments:\n"
     "    self         the reaction product distribution data\n"
     "    frame        the reference frame of the distribution data\n"
-    "    scattering   the scattering function"
+    "    scattering   the scattering function\n"
+    "    profiles     the optional Compton profiles"
   )
   .def_property_readonly(
 
@@ -65,6 +70,13 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "scattering_function",
     python::overload_cast<>( &Component::scatteringFunction, python::const_ ),
     python::overload_cast< TabulatedScatteringFunction >( &Component::scatteringFunction ),
+    "The scattering function"
+  )
+  .def_property(
+
+    "compton_profiles",
+    python::overload_cast<>( &Component::comptonProfiles, python::const_ ),
+    python::overload_cast< ComptonProfiles >( &Component::comptonProfiles ),
     "The scattering function"
   );
 

@@ -7,7 +7,7 @@ from . import atomic
 from . import covariance
 from . import id
 from . import resonances
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -344,7 +344,7 @@ class IncoherentDistributionData:
         ...
     def __eq__(self, arg0: IncoherentDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction) -> None:
+    def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, profiles: dict[id.ElectronSubshellID, TabulatedComptonProfileFunction] | None = None) -> None:
         """
         Initialise the incoherent distribution data
         
@@ -352,8 +352,17 @@ class IncoherentDistributionData:
             self         the reaction product distribution data
             frame        the reference frame of the distribution data
             scattering   the scattering function
+            profiles     the optional Compton profiles
         """
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
+        ...
+    @property
+    def compton_profiles(self) -> dict[id.ElectronSubshellID, TabulatedComptonProfileFunction] | None:
+        """
+        The scattering function
+        """
+    @compton_profiles.setter
+    def compton_profiles(self, arg1: dict[id.ElectronSubshellID, TabulatedComptonProfileFunction] | None) -> None:
         ...
     @property
     def frame(self) -> ReferenceFrame:
@@ -2040,16 +2049,16 @@ class TabulatedAverageEnergy:
         """
         The average energy values
         """
-class TabulatedComptonProfile:
+class TabulatedComptonProfileFunction:
     """
     A Compton profile using tabulated data
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
-    def __add__(self, arg0: float) -> TabulatedComptonProfile:
+    def __add__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
     @typing.overload
-    def __add__(self, arg0: TabulatedComptonProfile) -> TabulatedComptonProfile:
+    def __add__(self, arg0: TabulatedComptonProfileFunction) -> TabulatedComptonProfileFunction:
         ...
     def __call__(self, momentum: float) -> float:
         """
@@ -2059,19 +2068,19 @@ class TabulatedComptonProfile:
             self        the table
             momentum    the momentum value
         """
-    def __copy__(self) -> TabulatedComptonProfile:
+    def __copy__(self) -> TabulatedComptonProfileFunction:
         ...
-    def __deepcopy__(self, arg0: dict) -> TabulatedComptonProfile:
+    def __deepcopy__(self, arg0: dict) -> TabulatedComptonProfileFunction:
         ...
-    def __eq__(self, arg0: TabulatedComptonProfile) -> bool:
-        ...
-    @typing.overload
-    def __iadd__(self, arg0: float) -> TabulatedComptonProfile:
+    def __eq__(self, arg0: TabulatedComptonProfileFunction) -> bool:
         ...
     @typing.overload
-    def __iadd__(self, arg0: TabulatedComptonProfile) -> TabulatedComptonProfile:
+    def __iadd__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def __imul__(self, arg0: float) -> TabulatedComptonProfile:
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedComptonProfileFunction) -> TabulatedComptonProfileFunction:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
     @typing.overload
     def __init__(self, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
@@ -2099,34 +2108,34 @@ class TabulatedComptonProfile:
                            see InterpolationType for all interpolation types
         """
     @typing.overload
-    def __isub__(self, arg0: float) -> TabulatedComptonProfile:
+    def __isub__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
     @typing.overload
-    def __isub__(self, arg0: TabulatedComptonProfile) -> TabulatedComptonProfile:
+    def __isub__(self, arg0: TabulatedComptonProfileFunction) -> TabulatedComptonProfileFunction:
         ...
-    def __itruediv__(self, arg0: float) -> TabulatedComptonProfile:
+    def __itruediv__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def __mul__(self, arg0: float) -> TabulatedComptonProfile:
+    def __mul__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def __ne__(self, arg0: TabulatedComptonProfile) -> bool:
+    def __ne__(self, arg0: TabulatedComptonProfileFunction) -> bool:
         ...
-    def __neg__(self) -> TabulatedComptonProfile:
+    def __neg__(self) -> TabulatedComptonProfileFunction:
         ...
-    def __radd__(self, arg0: float) -> TabulatedComptonProfile:
+    def __radd__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def __rmul__(self, arg0: float) -> TabulatedComptonProfile:
+    def __rmul__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def __rsub__(self, arg0: float) -> TabulatedComptonProfile:
-        ...
-    @typing.overload
-    def __sub__(self, arg0: float) -> TabulatedComptonProfile:
+    def __rsub__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
     @typing.overload
-    def __sub__(self, arg0: TabulatedComptonProfile) -> TabulatedComptonProfile:
+    def __sub__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def __truediv__(self, arg0: float) -> TabulatedComptonProfile:
+    @typing.overload
+    def __sub__(self, arg0: TabulatedComptonProfileFunction) -> TabulatedComptonProfileFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedComptonProfile:
+    def __truediv__(self, arg0: float) -> TabulatedComptonProfileFunction:
+        ...
+    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedComptonProfileFunction:
         """
         Linearise the table
         

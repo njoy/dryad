@@ -5,7 +5,7 @@ private:
  *
  *  @param table   the interpolation table
  */
-TabulatedComptonProfile( InterpolationTable< double, double > table ) :
+TabulatedComptonProfileFunction( InterpolationTable< double, double > table ) :
   InterpolationTable( std::move( table ) ) {}
 
 public:
@@ -13,13 +13,13 @@ public:
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-TabulatedComptonProfile() = default;
+TabulatedComptonProfileFunction() = default;
 
-TabulatedComptonProfile( const TabulatedComptonProfile& ) = default;
-TabulatedComptonProfile( TabulatedComptonProfile&& ) = default;
+TabulatedComptonProfileFunction( const TabulatedComptonProfileFunction& ) = default;
+TabulatedComptonProfileFunction( TabulatedComptonProfileFunction&& ) = default;
 
-TabulatedComptonProfile& operator=( const TabulatedComptonProfile& ) = default;
-TabulatedComptonProfile& operator=( TabulatedComptonProfile&& ) = default;
+TabulatedComptonProfileFunction& operator=( const TabulatedComptonProfileFunction& ) = default;
+TabulatedComptonProfileFunction& operator=( TabulatedComptonProfileFunction&& ) = default;
 
 /**
  *  @brief Constructor
@@ -29,7 +29,7 @@ TabulatedComptonProfile& operator=( TabulatedComptonProfile&& ) = default;
  *  @param boundaries     the boundaries of the interpolation regions
  *  @param interpolants   the interpolation types of the interpolation regions
  */
-TabulatedComptonProfile(
+TabulatedComptonProfileFunction(
     std::vector< double > momentum,
     std::vector< double > values,
     std::vector< std::size_t > boundaries,
@@ -44,7 +44,7 @@ TabulatedComptonProfile(
  *  @param values         the probability values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
-TabulatedComptonProfile(
+TabulatedComptonProfileFunction(
     std::vector< double > momentum,
     std::vector< double > values,
     InterpolationType interpolant = InterpolationType::LinearLinear ) :

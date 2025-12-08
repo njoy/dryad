@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_TABULATEDCOMPTONPROFILE
-#define NJOY_DRYAD_TABULATEDCOMPTONPROFILE
+#ifndef NJOY_DRYAD_TABULATEDCOMPTONPROFILEFUNCTION
+#define NJOY_DRYAD_TABULATEDCOMPTONPROFILEFUNCTION
 
 // system includes
 #include <vector>
@@ -13,9 +13,9 @@ namespace dryad {
 
   /**
    *  @class
-   *  @brief A tabulated Compton profile for photoatomic data
+   *  @brief A tabulated Compton profile distribution for photoatomic data
    */
-  class TabulatedComptonProfile :
+  class TabulatedComptonProfileFunction :
       protected scion::math::InterpolationTable< double, double > {
 
   public:
@@ -26,7 +26,7 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/TabulatedComptonProfile/src/ctor.hpp"
+    #include "njoy/dryad/TabulatedComptonProfileFunction/src/ctor.hpp"
 
     /* methods */
 
@@ -78,9 +78,9 @@ namespace dryad {
      *
      *  @param[in] tolerance   the linearisation tolerance
      */
-    TabulatedComptonProfile linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedComptonProfileFunction linearise( ToleranceConvergence tolerance = {} ) const {
 
-      return TabulatedComptonProfile( InterpolationTable::linearise( tolerance ) );
+      return TabulatedComptonProfileFunction( InterpolationTable::linearise( tolerance ) );
     }
 
     /**
@@ -88,7 +88,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile& operator+=( double right ) {
+    TabulatedComptonProfileFunction& operator+=( double right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
@@ -99,7 +99,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile& operator-=( double right ) {
+    TabulatedComptonProfileFunction& operator-=( double right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
@@ -110,7 +110,7 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile& operator*=( double right ) {
+    TabulatedComptonProfileFunction& operator*=( double right ) {
 
       InterpolationTable::operator*=( right );
       return *this;
@@ -121,48 +121,48 @@ namespace dryad {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile& operator/=( double right ) {
+    TabulatedComptonProfileFunction& operator/=( double right ) {
 
       InterpolationTable::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedComptonProfile and scalar addition
+     *  @brief TabulatedComptonProfileFunction and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile operator+( double right ) const {
+    TabulatedComptonProfileFunction operator+( double right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedComptonProfile and scalar subtraction
+     *  @brief TabulatedComptonProfileFunction and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile operator-( double right ) const {
+    TabulatedComptonProfileFunction operator-( double right ) const {
 
       return InterpolationTable::operator-( right );
     }
 
     /**
-     *  @brief TabulatedComptonProfile and scalar multiplication
+     *  @brief TabulatedComptonProfileFunction and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile operator*( double right ) const {
+    TabulatedComptonProfileFunction operator*( double right ) const {
 
       return InterpolationTable::operator*( right );
     }
 
     /**
-     *  @brief TabulatedComptonProfile and scalar division
+     *  @brief TabulatedComptonProfileFunction and scalar division
      *
      *  @param[in] right    the scalar
      */
-    TabulatedComptonProfile operator/( double right ) const {
+    TabulatedComptonProfileFunction operator/( double right ) const {
 
       return InterpolationTable::operator/( right );
     }
@@ -170,53 +170,53 @@ namespace dryad {
     /**
      *  @brief Unary minus
      */
-    TabulatedComptonProfile operator-() const {
+    TabulatedComptonProfileFunction operator-() const {
 
       return InterpolationTable::operator-();
     }
 
     /**
-     *  @brief Inplace TabulatedComptonProfile addition
+     *  @brief Inplace TabulatedComptonProfileFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedComptonProfile&
-    operator+=( const TabulatedComptonProfile& right ) {
+    TabulatedComptonProfileFunction&
+    operator+=( const TabulatedComptonProfileFunction& right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace TabulatedComptonProfile subtraction
+     *  @brief Inplace TabulatedComptonProfileFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedComptonProfile&
-    operator-=( const TabulatedComptonProfile& right ) {
+    TabulatedComptonProfileFunction&
+    operator-=( const TabulatedComptonProfileFunction& right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedComptonProfile addition
+     *  @brief TabulatedComptonProfileFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedComptonProfile
-    operator+( const TabulatedComptonProfile& right ) const {
+    TabulatedComptonProfileFunction
+    operator+( const TabulatedComptonProfileFunction& right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedComptonProfile subtraction
+     *  @brief TabulatedComptonProfileFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedComptonProfile
-    operator-( const TabulatedComptonProfile& right ) const {
+    TabulatedComptonProfileFunction
+    operator-( const TabulatedComptonProfileFunction& right ) const {
 
       return InterpolationTable::operator-( right );
     }
@@ -226,7 +226,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedComptonProfile& right ) const {
+    bool operator==( const TabulatedComptonProfileFunction& right ) const {
 
       return InterpolationTable::operator==( right );
     }
@@ -236,7 +236,7 @@ namespace dryad {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedComptonProfile& right ) const {
+    bool operator!=( const TabulatedComptonProfileFunction& right ) const {
 
       return ! this->operator==( right );
     }
@@ -248,8 +248,8 @@ namespace dryad {
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedComptonProfile
-  operator+( double left, const TabulatedComptonProfile& right ) {
+  inline TabulatedComptonProfileFunction
+  operator+( double left, const TabulatedComptonProfileFunction& right ) {
 
     return right + left;
   }
@@ -260,8 +260,8 @@ namespace dryad {
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedComptonProfile
-  operator-( double left, const TabulatedComptonProfile& right ) {
+  inline TabulatedComptonProfileFunction
+  operator-( double left, const TabulatedComptonProfileFunction& right ) {
 
     auto result = -right;
     result += left;
@@ -274,8 +274,8 @@ namespace dryad {
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedComptonProfile
-  operator*( double left, const TabulatedComptonProfile& right ) {
+  inline TabulatedComptonProfileFunction
+  operator*( double left, const TabulatedComptonProfileFunction& right ) {
 
     return right * left;
   }

@@ -14,7 +14,10 @@ IncoherentDistributionData& operator=( IncoherentDistributionData&& ) = default;
  *
  *  @param frame        the reference frame of the distribution data
  *  @param scattering   the scattering function
+ *  @param profiles     the optional Compton profiles
  */
 IncoherentDistributionData( ReferenceFrame frame,
-                            TabulatedScatteringFunction scattering ) :
-    frame_( std::move( frame ) ), scattering_( std::move( scattering ) ) {}
+                            TabulatedScatteringFunction scattering,
+                            std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > > profiles = std::nullopt ) :
+    frame_( std::move( frame ) ), scattering_( std::move( scattering ) ),
+    profiles_( std::move( profiles ) ) {}

@@ -4,17 +4,17 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/TabulatedComptonProfile.hpp"
+#include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
 
-void wrapTabulatedComptonProfile( python::module& module ) {
+void wrapTabulatedComptonProfileFunction( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::TabulatedComptonProfile;
+  using Component = njoy::dryad::TabulatedComptonProfileFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -24,8 +24,8 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedComptonProfile",
-    "A Compton profile using tabulated data"
+    "TabulatedComptonProfileFunction",
+    "A Compton profile distribution using tabulated data"
   );
 
   // wrap the component

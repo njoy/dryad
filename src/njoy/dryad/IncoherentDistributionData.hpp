@@ -10,7 +10,7 @@
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/DistributionDataType.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
-#include "njoy/dryad/TabulatedComptonProfile.hpp"
+#include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 
 namespace njoy {
@@ -35,7 +35,7 @@ namespace dryad {
     ReferenceFrame frame_;
     TabulatedScatteringFunction scattering_;
 
-    std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > > profiles_;
+    std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > > profiles_;
 
   public:
 
@@ -92,7 +92,7 @@ namespace dryad {
     /**
      *  @brief Return the Compton profiles
      */
-    const std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > >&
+    const std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > >&
     comptonProfiles() const {
 
       return this->profiles_;
@@ -103,7 +103,7 @@ namespace dryad {
      *
      *  @param profiles   the Compton profiles
      */
-    void comptonProfiles( std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfile > > profiles ) {
+    void comptonProfiles( std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > > profiles ) {
 
       this->profiles_ = std::move( profiles );
     }

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/TabulatedComptonProfile.hpp"
+#include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
 
 // other includes
 
@@ -16,7 +16,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "TabulatedComptonProfile" ) {
+SCENARIO( "TabulatedComptonProfileFunction" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
 
@@ -25,9 +25,9 @@ SCENARIO( "TabulatedComptonProfile" ) {
       const std::vector< double > momentum = { -1., 0., 0.5, 1. };
       const std::vector< double > values = { 0., 0.5, 0.75, 1. };
 
-      TabulatedComptonProfile chunk( std::move( momentum ), std::move( values ) );
+      TabulatedComptonProfileFunction chunk( std::move( momentum ), std::move( values ) );
 
-      THEN( "a TabulatedComptonProfile can be constructed and members can be tested" ) {
+      THEN( "a TabulatedComptonProfileFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerMomentumLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperMomentumLimit() ) );
@@ -50,7 +50,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be evaluated" ) {
+      THEN( "a TabulatedComptonProfileFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0. , WithinRel( chunk( -1. ) ) );
@@ -67,12 +67,12 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THAT( 0.875, WithinRel( chunk(  0.75 ) ) );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be integrated" ) {
+      THEN( "a TabulatedComptonProfileFunction can be integrated" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the cumulative integral of a TabulatedComptonProfile can be calculated" ) {
+      THEN( "the cumulative integral of a TabulatedComptonProfileFunction can be calculated" ) {
 
         auto cumulative = chunk.cumulativeIntegral();
         CHECK( 4 == cumulative.size() );
@@ -84,11 +84,11 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedComptonProfile result( { -1., 1. }, { 0., 0. } );
-        TabulatedComptonProfile same( { -1., 1. }, { 1., 0. } );
-        TabulatedComptonProfile threshold( { 0., 1. }, { 0., 2. } );
-        TabulatedComptonProfile nonzerothreshold( { 0., 1. }, { 1., 1. } );
-        TabulatedComptonProfile small( { -1., 0. }, { 0., 1. } );
+        TabulatedComptonProfileFunction result( { -1., 1. }, { 0., 0. } );
+        TabulatedComptonProfileFunction same( { -1., 1. }, { 1., 0. } );
+        TabulatedComptonProfileFunction threshold( { 0., 1. }, { 0., 2. } );
+        TabulatedComptonProfileFunction nonzerothreshold( { 0., 1. }, { 1., 1. } );
+        TabulatedComptonProfileFunction small( { -1., 0. }, { 0., 1. } );
 
         chunk += 2.;
 
@@ -605,9 +605,9 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be linearised" ) {
+      THEN( "a TabulatedComptonProfileFunction can be linearised" ) {
 
-        TabulatedComptonProfile linear = chunk.linearise();
+        TabulatedComptonProfileFunction linear = chunk.linearise();
 
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -643,10 +643,10 @@ SCENARIO( "TabulatedComptonProfile" ) {
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedComptonProfile chunk( std::move( momentum ), std::move( values ),
+      TabulatedComptonProfileFunction chunk( std::move( momentum ), std::move( values ),
                                                   interpolant );
 
-      THEN( "a TabulatedComptonProfile can be constructed and members can be tested" ) {
+      THEN( "a TabulatedComptonProfileFunction can be constructed and members can be tested" ) {
 
         // the constructor will detect the jump and add interpolation regions
         // as required
@@ -673,7 +673,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be evaluated" ) {
+      THEN( "a TabulatedComptonProfileFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( -1. ) ) );
@@ -691,13 +691,13 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THAT( 2.5, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "an TabulatedComptonProfile can be integrated" ) {
+      THEN( "an TabulatedComptonProfileFunction can be integrated" ) {
 
         // ( 4 + 3 ) / 2 + ( 4 + 2 ) / 2 = 6.5
         CHECK_THAT( 6.5, WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the cumulative integral of a TabulatedComptonProfile can be calculated" ) {
+      THEN( "the cumulative integral of a TabulatedComptonProfileFunction can be calculated" ) {
 
         auto cumulative = chunk.cumulativeIntegral();
         CHECK( 5 == cumulative.size() );
@@ -710,11 +710,11 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedComptonProfile result( { -1., 1. }, { 0., 0. } );
-        TabulatedComptonProfile same( { -1., 1. }, { 1., 0. } );
-        TabulatedComptonProfile threshold( { 0., 1. }, { 0., 2. } );
-        TabulatedComptonProfile nonzerothreshold( { 0.5, 1. }, { 1., 1. } );
-        TabulatedComptonProfile small( { -1., 0.5 }, { 1., 1. } );
+        TabulatedComptonProfileFunction result( { -1., 1. }, { 0., 0. } );
+        TabulatedComptonProfileFunction same( { -1., 1. }, { 1., 0. } );
+        TabulatedComptonProfileFunction threshold( { 0., 1. }, { 0., 2. } );
+        TabulatedComptonProfileFunction nonzerothreshold( { 0.5, 1. }, { 1., 1. } );
+        TabulatedComptonProfileFunction small( { -1., 0.5 }, { 1., 1. } );
 
         chunk += 2.;
 
@@ -1285,9 +1285,9 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be linearised" ) {
+      THEN( "a TabulatedComptonProfileFunction can be linearised" ) {
 
-        TabulatedComptonProfile linear = chunk.linearise();
+        TabulatedComptonProfileFunction linear = chunk.linearise();
 
         CHECK( 5 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1333,12 +1333,12 @@ SCENARIO( "TabulatedComptonProfile" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedComptonProfile chunk( std::move( momentum ),
+      TabulatedComptonProfileFunction chunk( std::move( momentum ),
                                                   std::move( values ),
                                                   std::move( boundaries ),
                                                   std::move( interpolants ) );
 
-      THEN( "a TabulatedComptonProfile can be constructed and members can be tested" ) {
+      THEN( "a TabulatedComptonProfileFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerMomentumLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperMomentumLimit() ) );
@@ -1363,7 +1363,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be evaluated" ) {
+      THEN( "a TabulatedComptonProfileFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0.  , WithinRel( chunk( -1. ) ) );
@@ -1381,7 +1381,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THAT( 0.86602540378444, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "an TabulatedComptonProfile can be integrated" ) {
+      THEN( "an TabulatedComptonProfileFunction can be integrated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1391,7 +1391,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THAT( 0.99279536989483, WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the cumulative integral of a TabulatedComptonProfile can be calculated" ) {
+      THEN( "the cumulative integral of a TabulatedComptonProfileFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1411,7 +1411,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "some arithmetic operations can be performed" ) {
 
-        TabulatedComptonProfile result( { -1., 1. }, { 0., 0. } );
+        TabulatedComptonProfileFunction result( { -1., 1. }, { 0., 0. } );
 
         chunk *= 2.;
 
@@ -1536,8 +1536,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "some arithmetic operations cannot be performed" ) {
 
-        TabulatedComptonProfile result( { 1., 4. }, { 0., 0. } );
-        TabulatedComptonProfile right( { 1., 4. }, { 0., 0. } );
+        TabulatedComptonProfileFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedComptonProfileFunction right( { 1., 4. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1554,9 +1554,9 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be linearised" ) {
+      THEN( "a TabulatedComptonProfileFunction can be linearised" ) {
 
-        TabulatedComptonProfile linear = chunk.linearise();
+        TabulatedComptonProfileFunction linear = chunk.linearise();
 
         CHECK( 14 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -1618,12 +1618,12 @@ SCENARIO( "TabulatedComptonProfile" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedComptonProfile chunk( std::move( momentum ),
+      TabulatedComptonProfileFunction chunk( std::move( momentum ),
                                                   std::move( values ),
                                                   std::move( boundaries ),
                                                   std::move( interpolants ) );
 
-      THEN( "a TabulatedComptonProfile can be constructed and members can be tested" ) {
+      THEN( "a TabulatedComptonProfileFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( -1., WithinRel( chunk.lowerMomentumLimit() ) );
         CHECK_THAT(  1., WithinRel( chunk.upperMomentumLimit() ) );
@@ -1648,7 +1648,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be evaluated" ) {
+      THEN( "a TabulatedComptonProfileFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 0.  , WithinRel( chunk( -1. ) ) );
@@ -1666,7 +1666,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THAT( 1.36930639376292, WithinRel( chunk( 0.75 ) ) );
       } // THEN
 
-      THEN( "an TabulatedComptonProfile can be integrated" ) {
+      THEN( "an TabulatedComptonProfileFunction can be integrated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1676,7 +1676,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THAT( 1.49577938318395, WithinRel( chunk.integral() ) );
       } // THEN
 
-      THEN( "the cumulative integral of a TabulatedComptonProfile can be calculated" ) {
+      THEN( "the cumulative integral of a TabulatedComptonProfileFunction can be calculated" ) {
 
         // generate test result using Gauss-Legendre quadrature
         // njoy::scion::integration::GaussLegendre< 64, double > integrator{};
@@ -1697,7 +1697,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "some arithmetic operations can be performed" ) {
 
-        TabulatedComptonProfile result( { -1., 1. }, { 0., 0. } );
+        TabulatedComptonProfileFunction result( { -1., 1. }, { 0., 0. } );
 
         chunk *= 2.;
 
@@ -1834,8 +1834,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "some arithmetic operations cannot be performed" ) {
 
-        TabulatedComptonProfile result( { -1., 1. }, { 0., 0. } );
-        TabulatedComptonProfile right( { -1., 1. }, { 0., 0. } );
+        TabulatedComptonProfileFunction result( { -1., 1. }, { 0., 0. } );
+        TabulatedComptonProfileFunction right( { -1., 1. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1852,9 +1852,9 @@ SCENARIO( "TabulatedComptonProfile" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedComptonProfile can be linearised" ) {
+      THEN( "a TabulatedComptonProfileFunction can be linearised" ) {
 
-        TabulatedComptonProfile linear = chunk.linearise();
+        TabulatedComptonProfileFunction linear = chunk.linearise();
 
         CHECK( 11 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1903,7 +1903,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this TabulatedComptonProfile is the
+    //       the jump. As a result, the final data contained in this TabulatedComptonProfileFunction is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1917,11 +1917,11 @@ SCENARIO( "TabulatedComptonProfile" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedComptonProfile chunk( std::move( x ), std::move( y ),
+      TabulatedComptonProfileFunction chunk( std::move( x ), std::move( y ),
                                                   std::move( boundaries ),
                                                   std::move( interpolants ) );
 
-      THEN( "a TabulatedComptonProfile can be constructed and members can be tested" ) {
+      THEN( "a TabulatedComptonProfileFunction can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.momentum().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1962,11 +1962,11 @@ SCENARIO( "TabulatedComptonProfile" ) {
         InterpolationType::LogLinear
       };
 
-      TabulatedComptonProfile chunk( std::move( x ), std::move( y ),
+      TabulatedComptonProfileFunction chunk( std::move( x ), std::move( y ),
                                                   std::move( boundaries ),
                                                   std::move( interpolants ) );
 
-      THEN( "an TabulatedComptonProfile can be constructed and members can be tested" ) {
+      THEN( "an TabulatedComptonProfileFunction can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -1993,11 +1993,11 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of TabulatedComptonProfile are given" ) {
+    WHEN( "two instances of TabulatedComptonProfileFunction are given" ) {
 
-      TabulatedComptonProfile left( { -1., 1. }, { 0.5, 0.5 } );
-      TabulatedComptonProfile equal( { -1., 1. }, { 0.5, 0.5 } );
-      TabulatedComptonProfile different( { -1., 1. }, { 0.25, 0.75 } );
+      TabulatedComptonProfileFunction left( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedComptonProfileFunction equal( { -1., 1. }, { 0.5, 0.5 } );
+      TabulatedComptonProfileFunction different( { -1., 1. }, { 0.25, 0.75 } );
 
       THEN( "they can be compared" ) {
 
@@ -2012,7 +2012,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an TabulatedComptonProfile object" ) {
+  GIVEN( "invalid data for an TabulatedComptonProfileFunction object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 
@@ -2021,8 +2021,8 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( empty, empty ) );
-        CHECK_THROWS( TabulatedComptonProfile( one, one ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( empty, empty ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( one, one ) );
       } // THEN
     } // WHEN
 
@@ -2033,7 +2033,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2046,7 +2046,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ),
                                                             std::move( boundaries ),
                                                             std::move( interpolants ) ) );
       } // THEN
@@ -2059,7 +2059,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2070,7 +2070,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2081,7 +2081,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2092,7 +2092,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2105,7 +2105,7 @@ SCENARIO( "TabulatedComptonProfile" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedComptonProfile( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedComptonProfileFunction( std::move( x ), std::move( y ),
                                                             std::move( boundaries ),
                                                             std::move( interpolants ) ) );
       } // THEN
