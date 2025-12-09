@@ -37,6 +37,10 @@ namespace dryad {
 
     std::optional< std::vector< TabulatedComptonProfile > > profiles_;
 
+    /* auxiliary functions */
+
+    #include "njoy/dryad/IncoherentDistributionData/src/sort.hpp"
+
   public:
 
     /* constructor */
@@ -112,9 +116,7 @@ namespace dryad {
       }
       else if ( this->profiles_.has_value() ) {
 
-        std::sort( this->profiles_->begin(), this->profiles_->end(),
-                   [] ( auto&& left, auto&& right )
-                      { return left.identifier() < right.identifier(); } );
+        this->sort();
       }
     }
 

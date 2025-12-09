@@ -15,11 +15,10 @@ namespace acer {
   /**
    *  @brief Process data into an epr ace file
    *
-   *
    *  @param[in] photoatomic     the photoatomic projectile-target data
    *  @param[in] electroatomic   the electroatomic projectile-target data
    *  @param[in] relaxation      the atomic relaxation data
-   *  @param[in] filename        the filename for the ace file     
+   *  @param[in] filename        the filename for the ace file
    */
   inline void processElectronPhotonRelaxation( const dryad::ProjectileTarget& photoatomic,
                                                const dryad::ProjectileTarget& electroatomic,
@@ -36,7 +35,7 @@ namespace acer {
 
       throw std::runtime_error( "The projectile-target is not electroatomic" );
     }
-    if ( photoatomic.targetIdentifier() != photoatomic.targetIdentifier() || 
+    if ( photoatomic.targetIdentifier() != photoatomic.targetIdentifier() ||
          photoatomic.targetIdentifier().z() != relaxation.elementIdentifier().number() ) {
 
       throw std::runtime_error( "The targets and relaxation element are not consistent" );
