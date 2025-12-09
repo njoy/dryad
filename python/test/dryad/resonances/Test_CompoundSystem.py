@@ -47,6 +47,11 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 1e-5, chunk.lower_energy_limit )
     self.assertAlmostEqual( 2e+3, chunk.upper_energy_limit )
 
+    self.assertEqual( 3, len( chunk.reactions ) )
+    self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )
+    self.assertEqual( ReactionID( 'n,Cl35->n,Cl35'      ), chunk.reactions[1] )
+    self.assertEqual( ReactionID( 'n,Cl35->p,S35'       ), chunk.reactions[2] )
+
     groups = chunk.spin_groups
 
     # spin groups

@@ -65,6 +65,12 @@ void wrapCompoundSystem( python::module& module ) {
     python::overload_cast< std::vector< SpinGroup > >( &Component::spinGroups ),
     "The spin groups that make up the compound system"
   )
+  .def_property_readonly(
+
+    "reactions",
+    python::overload_cast<>( &Component::reactions, python::const_ ),
+    "The reactions to which this spin group contributes"
+  )
   .def(
 
     "cross_sections",

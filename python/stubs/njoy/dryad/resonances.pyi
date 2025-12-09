@@ -496,6 +496,11 @@ class CompoundSystem:
     def lower_energy_limit(self, arg1: float) -> None:
         ...
     @property
+    def reactions(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reactions to which this spin group contributes
+        """
+    @property
     def spin_groups(self) -> list[SpinGroup]:
         """
         The spin groups that make up the compound system
