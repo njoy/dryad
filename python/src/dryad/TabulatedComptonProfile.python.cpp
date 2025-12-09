@@ -82,6 +82,12 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   )
   .def_property_readonly(
 
+    "identifier",
+    &Component::identifier,
+    "The electron subshell identifier"
+  )
+  .def_property_readonly(
+
     "momentum",
     &Component::momentum,
     "The momentum values"

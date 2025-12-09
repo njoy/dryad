@@ -2132,6 +2132,11 @@ class TabulatedComptonProfile:
         The cumulative distribution function (cdf) of the distribution
         """
     @property
+    def identifier(self) -> id.ElectronSubshellID:
+        """
+        The electron subshell identifier
+        """
+    @property
     def interpolants(self) -> list[InterpolationType]:
         """
         The interpolation types of the interpolation regions
