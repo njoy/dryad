@@ -2,16 +2,16 @@
 #define NJOY_DRYAD_INCOHERENTDISTRIBUTIONDATA
 
 // system includes
+#include <algorithm>
 #include <optional>
 #include <map>
 #include <variant>
 
 // other includes
-#include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/DistributionDataType.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
-#include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/TabulatedComptonProfile.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -27,7 +27,7 @@ namespace dryad {
    *  differential cross section.
    *
    *  This corresponds with the incoherent scattering function data given in
-   *  MF27 MT504, supplemented with Compton profile data.
+   *  MF27 MT504, supplemented with optional external Compton profile data.
    */
   class IncoherentDistributionData {
 
@@ -35,7 +35,7 @@ namespace dryad {
     ReferenceFrame frame_;
     TabulatedScatteringFunction scattering_;
 
-    std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > > profiles_;
+    std::optional< std::vector< TabulatedComptonProfile > > profiles_;
 
   public:
 
@@ -92,7 +92,7 @@ namespace dryad {
     /**
      *  @brief Return the Compton profiles
      */
-    const std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > >&
+    const std::optional< std::vector< TabulatedComptonProfile > >&
     comptonProfiles() const {
 
       return this->profiles_;
@@ -103,9 +103,19 @@ namespace dryad {
      *
      *  @param profiles   the Compton profiles
      */
-    void comptonProfiles( std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > > profiles ) {
+    void comptonProfiles( std::optional< std::vector< TabulatedComptonProfile > > profiles ) {
 
       this->profiles_ = std::move( profiles );
+      if ( this->profiles_.has_value() && this->profiles_.value().size() == 0 ) {
+
+        this->profiles_ = std::nullopt;
+      }
+      else if ( this->profiles_.has_value() ) {
+
+        std::sort( this->profiles_->begin(), this->profiles_->end(),
+                   [] ( auto&& left, auto&& right )
+                      { return left.identifier() < right.identifier(); } );
+      }
     }
 
     /**

@@ -17,9 +17,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
   using Component = njoy::dryad::IncoherentDistributionData;
   using ReferenceFrame = njoy::dryad::ReferenceFrame;
   using TabulatedScatteringFunction = njoy::dryad::TabulatedScatteringFunction;
-  using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
-  using TabulatedComptonProfileFunction = njoy::dryad::TabulatedComptonProfileFunction;
-  using ComptonProfiles = std::optional< std::map< ElectronSubshellID, TabulatedComptonProfileFunction > >;
+  using TabulatedComptonProfile = njoy::dryad::TabulatedComptonProfile;
 
   // wrap views created by this component
 
@@ -33,14 +31,16 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "In this representation, a scattering function S(x,Z) is defined that\n"
     "together with the Klein-Nishina cross section determines the double\n"
     "differential cross section.\n\n"
-    "This corresponds with the incoherent scattering function data given in MF27 MT504."
+    "This corresponds with the incoherent scattering function data given in MF27 MT504,\n"
+    "supplemented with optional external Compton profile data."
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< ReferenceFrame, TabulatedScatteringFunction, ComptonProfiles >(),
+    python::init< ReferenceFrame, TabulatedScatteringFunction,
+                  std::optional< std::vector< TabulatedComptonProfile > > >(),
     python::arg( "frame" ), python::arg( "scattering" ),
     python::arg( "profiles" ) = std::nullopt,
     "Initialise the incoherent distribution data\n\n"
@@ -76,7 +76,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
 
     "compton_profiles",
     python::overload_cast<>( &Component::comptonProfiles, python::const_ ),
-    python::overload_cast< ComptonProfiles >( &Component::comptonProfiles ),
+    python::overload_cast< std::optional< std::vector< TabulatedComptonProfile > > >( &Component::comptonProfiles ),
     "The scattering function"
   );
 

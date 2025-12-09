@@ -68,9 +68,9 @@ SCENARIO( "IncoherentDistributionData" ) {
 
       THEN( "the compton profiles can be changed" ) {
 
-        std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > >
+        std::optional< std::vector< TabulatedComptonProfile > >
         newprofiles( { { id::ElectronSubshellID( "1s" ), { { 0, 100 }, { 1, 2 } } } } );
-        std::optional< std::map< id::ElectronSubshellID, TabulatedComptonProfileFunction > >
+        std::optional< std::vector< TabulatedComptonProfile > >
         original = std::nullopt;
 
         chunk.comptonProfiles( newprofiles );

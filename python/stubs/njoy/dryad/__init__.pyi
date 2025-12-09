@@ -344,7 +344,7 @@ class IncoherentDistributionData:
         ...
     def __eq__(self, arg0: IncoherentDistributionData) -> bool:
         ...
-    def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, profiles: dict[id.ElectronSubshellID, TabulatedComptonProfileFunction] | None = None) -> None:
+    def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, profiles: list[TabulatedComptonProfile] | None = None) -> None:
         """
         Initialise the incoherent distribution data
         
@@ -357,12 +357,12 @@ class IncoherentDistributionData:
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
     @property
-    def compton_profiles(self) -> dict[id.ElectronSubshellID, TabulatedComptonProfileFunction] | None:
+    def compton_profiles(self) -> list[TabulatedComptonProfile] | None:
         """
         The scattering function
         """
     @compton_profiles.setter
-    def compton_profiles(self, arg1: dict[id.ElectronSubshellID, TabulatedComptonProfileFunction] | None) -> None:
+    def compton_profiles(self, arg1: list[TabulatedComptonProfile] | None) -> None:
         ...
     @property
     def frame(self) -> ReferenceFrame:
