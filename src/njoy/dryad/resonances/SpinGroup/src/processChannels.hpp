@@ -4,7 +4,6 @@ void processChannels() {
              [] ( auto&& left, auto&& right )
                 { return left.identifier() < right.identifier(); } );
 
-
   for ( const auto& channel : this->channels() ) {
 
     auto id = channel.identifier().reaction();

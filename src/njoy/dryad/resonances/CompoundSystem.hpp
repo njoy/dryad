@@ -23,6 +23,8 @@ namespace resonances {
     double upper_;
     std::vector< SpinGroup > spin_groups_;
 
+    std::vector< id::ReactionID > reactions_;
+
     /* auxiliary functions */
 
     #include "njoy/dryad/resonances/CompoundSystem/src/processSpinGroups.hpp"
@@ -94,6 +96,22 @@ namespace resonances {
 
       this->spin_groups_ = std::move( spinGroups );
       this->processSpinGroups();
+    }
+
+    /**
+     *  @brief Return the reactions to which this compound system contributes
+     */
+    const std::vector< id::ReactionID >& reactions() const {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the reactions to which this compound system contributes
+     */
+    std::vector< id::ReactionID >& reactions() {
+
+      return this->reactions_;
     }
 
     /**
