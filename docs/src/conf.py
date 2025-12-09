@@ -14,6 +14,11 @@ release = '0.0.0'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+# point to the folder containing the njoy. python bindings .so file
+import os
+import sys
+sys.path.insert( 0, '../' )
+
 extensions = [
     "sphinx.ext.autodoc",
     'sphinx.ext.napoleon'
