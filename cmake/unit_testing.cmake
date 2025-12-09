@@ -93,6 +93,7 @@ add_cpp_test( dryad.LegendreAngularDistributions                                
 add_cpp_test( dryad.TabulatedAngularDistributionFunction                                dryad/TabulatedAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.TabulatedAngularDistribution                                        dryad/TabulatedAngularDistribution.test.cpp )
 add_cpp_test( dryad.TabulatedAngularDistributions                                       dryad/TabulatedAngularDistributions.test.cpp )
+add_cpp_test( dryad.TabulatedComptonProfile                                             dryad/TabulatedComptonProfile.test.cpp )
 add_cpp_test( dryad.TabulatedComptonProfileFunction                                     dryad/TabulatedComptonProfileFunction.test.cpp )
 add_cpp_test( dryad.UniformAngularDistribution                                          dryad/UniformAngularDistribution.test.cpp )
 add_cpp_test( dryad.UniformAngularDistributions                                         dryad/UniformAngularDistributions.test.cpp )

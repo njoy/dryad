@@ -72,6 +72,15 @@ namespace dryad {
 
     using InterpolationTable::integral;
     using InterpolationTable::cumulativeIntegral;
+    using InterpolationTable::mean;
+
+    /**
+     *  @brief Normalise the distribution function
+     */
+    void normalise() {
+
+      this->operator/=( this->integral() );
+    }
 
     /**
      *  @brief Return a linearised Compton profile table
