@@ -7,7 +7,7 @@ from . import atomic
 from . import covariance
 from . import id
 from . import resonances
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'id', 'resonances']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -512,9 +512,6 @@ class LegendreAngularDistribution:
     """
     An angular distribution defined by a pdf and cdf using a Legendre series
     expansion
-    
-    The pdf is normalised to 1 upon construction and the associated cdf is
-    calculated upon construction (after the pdf has been normalised).
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, cosine: float) -> float:
@@ -2048,6 +2045,111 @@ class TabulatedAverageEnergy:
     def values(self) -> list[float]:
         """
         The average energy values
+        """
+class TabulatedComptonProfile:
+    """
+    A Compton profile for an electron subshell defined by a pdf and cdf using tabulated data
+    
+    Compton profiles are not available in standard evaluated nuclear data files. They are used for
+    photoatomic transport data in Monte Carlo codes like MCNP, which currently get this data form
+    external sources.
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, momentum: float) -> float:
+        """
+        Evaluate the pdf of the distribution for a given momentum value
+        
+        Arguments:
+            self        the distribution
+            momentum    the momentum value
+        """
+    def __copy__(self) -> TabulatedComptonProfile:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedComptonProfile:
+        ...
+    def __eq__(self, arg0: TabulatedComptonProfile) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, identifier: id.ElectronSubshellID, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
+        """
+        Initialise the compton profile
+        
+        Arguments:
+            self           the compton profile
+            identifier     the electron subshell identifier
+            momentum       the momentum values
+            values         the probability values
+            boundaries     the boundaries of the interpolation regions
+            interpolants   the interpolation types of the interpolation regions,
+                           see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
+        """
+    @typing.overload
+    def __init__(self, identifier: id.ElectronSubshellID, momentum: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
+        """
+        Initialise the compton profile
+        
+        Arguments:
+            self           the compton profile
+            identifier     the electron subshell identifier
+            momentum       the momentum values
+            values         the probability values
+            interpolant    the interpolation type (default lin-lin),
+                           see InterpolationType for all interpolation types
+            normalise      option to indicate whether or not to normalise
+                           all probability data (default: no normalisation)
+        """
+    def __ne__(self, arg0: TabulatedComptonProfile) -> bool:
+        ...
+    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedComptonProfile:
+        """
+        Linearise the distribution
+        
+        Arguments:
+            self        the compton profile
+            tolerance   the linearisation tolerance
+            normalise   option to indicate whether or not to normalise
+                        all probability data (default: no normalisation)
+        """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution
+        """
+    @property
+    def average_momentum(self) -> float:
+        """
+        The average momentum defined by the distribution
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def cdf(self) -> TabulatedComptonProfileFunction:
+        """
+        The cumulative distribution function (cdf) of the distribution
+        """
+    @property
+    def interpolants(self) -> list[InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def momentum(self) -> list[float]:
+        """
+        The momentum values
+        """
+    @property
+    def pdf(self) -> TabulatedComptonProfileFunction:
+        """
+        The probability distribution function (pdf) of the distribution
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The probability values
         """
 class TabulatedComptonProfileFunction:
     """
