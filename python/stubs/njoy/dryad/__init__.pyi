@@ -335,7 +335,8 @@ class IncoherentDistributionData:
     together with the Klein-Nishina cross section determines the double
     differential cross section.
     
-    This corresponds with the incoherent scattering function data given in MF27 MT504.
+    This corresponds with the incoherent scattering function data given in MF27 MT504,
+    supplemented with optional external Compton profile data.
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> IncoherentDistributionData:

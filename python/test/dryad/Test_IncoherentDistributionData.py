@@ -10,6 +10,8 @@ from njoy.dryad import DistributionDataType
 from njoy.dryad import ReferenceFrame
 from njoy.dryad import InterpolationType
 from njoy.dryad import TabulatedScatteringFunction
+from njoy.dryad import TabulatedComptonProfile
+from njoy.dryad.id import ElectronSubshellID
 
 def verify_chunk( self, chunk ) :
 
@@ -31,6 +33,8 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( 1, chunk.scattering_function.boundaries[0] )
     self.assertEqual( InterpolationType.LinearLinear, chunk.scattering_function.interpolants[0] )
     self.assertEqual( True, chunk.scattering_function.is_linearised )
+
+    self.assertIsNone( chunk.compton_profiles )
 
 class Test_IncoherentDistributionData( unittest.TestCase ) :
     """Unit test for the IncoherentDistributionData class."""
@@ -69,6 +73,18 @@ class Test_IncoherentDistributionData( unittest.TestCase ) :
         self.assertEqual( newfunction, chunk.scattering_function )
 
         chunk.scattering_function = original
+
+        verify_chunk( self, chunk )
+
+        # the compton profiles can be changed
+        newprofiles = [ TabulatedComptonProfile( ElectronSubshellID( "1s" ), [ 0, 100 ], [ 1, 2 ] ) ]
+        original = None
+
+        chunk.compton_profiles = newprofiles
+
+        self.assertEqual( newprofiles, chunk.compton_profiles )
+
+        chunk.compton_profiles = original
 
         verify_chunk( self, chunk )
 
