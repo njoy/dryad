@@ -44,46 +44,12 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "           the electron subshell binding energy\n"
     "    population : float  \n"
     "           the electron subshell population when the atom is neutral\n"
-    "    radiative : list of RadiativeTransitionData, default: [] \n"
+    "    radiative : list of RadiativeTransitionData, default [] \n"
     "           the radiative transitions that are available (default: an empty list)\n"
-    "    nonradiative : list of NonRadiativeTransitionData, default: [] \n"
+    "    nonradiative : list of NonRadiativeTransitionData, default [] \n"
     "           the non-radiative transitions that are available (default: an empty list)\n"
-    "    normalise : bool, default=False  \n"
+    "    normalise : bool, default False  \n"
     "           option to indicate whether or not to normalise all probability data (default: no normalisation)\n\n"
-    "Attributes\n"
-    "----------\n"
-    "    binding_energy : float\n"
-    "           The electron subshell binding energy\n"
-    "    has_non_radiative_transitions : bool\n"
-    "           Flag to indicate whether or not non-radiative transitions are available\n"
-    "    has_radiative_transitions: bool\n"
-    "           Flag to indicate whether or not radiative transitions are available\n"
-    "    has_transitions : bool\n"
-    "          Flag to indicate whether or not transitions are available\n"  
-    "    identifier : njoy.dryad.id.ElectronSubshellID\n"
-    "         The electron subshell identifier\n"
-    "    non_radiative_transitions : list of NonRadiativeTransitionData \n"
-    "           The available non-radiative transitions to this subshell\n"
-    "    radiative_transitions : list of RadiativeTransitionData\n"
-    "           The available radiative transitions to this subshell\n"
-    "    number_non_radiative_transitions : int\n"
-    "            The number of available non-radiative transitions\n"
-    "    number_radiative_transitions : int \n"
-    "            The number of available radiative transitions \n"
-    "    number_transitions : int \n"
-    "            The number of available transitions \n"
-    "    population : float \n"
-    "            The electron subshell population when the atom is neutral \n"
-    "    total_non_radiative_probability : float \n"
-    "            The total non-radiative probability \n"
-    "    total_radiative_probability : float \n"
-    "            The total radiative probability \n"
-    "\n"
-    "Methods\n"
-    "-------\n"
-    "    normalise()\n"
-    "             Normalise the transition probabilities\n"
-    "\n\n"
   );
 
   // wrap the component
@@ -98,8 +64,7 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     python::arg( "radiative" ) = std::vector< RadiativeTransitionData >{},
     python::arg( "non_radiative" ) = std::vector< NonRadiativeTransitionData >{},
     python::arg( "normalise" ) = false,
-    "Initialise the subshell configuration\n\n"
-
+    ""
   )
   .def_property(
 

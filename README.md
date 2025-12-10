@@ -9,6 +9,7 @@ Documentation is provided using [Sphinx](https://www.sphinx-doc.org/). The follo
 
 ```python
 pip install sphinx
+pip install numpydoc
 ```
 
 The documentation is not built by default. To build the documentation after building `dryad`, in the `dryad/build` directory run:
