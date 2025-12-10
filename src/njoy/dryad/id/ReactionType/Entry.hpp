@@ -10,8 +10,9 @@ class Entry {
   // - flag for special reactions
   // - interaction type (nuclear or atomic)
   // - outgoing particle number with level, subshell or mt
-  std::tuple< InteractionType, bool, std::int64_t > tuple_;
+  std::tuple< bool, std::int64_t > tuple_;
 
+  InteractionType interaction_;
   std::optional< short > mt_;
   std::optional< std::map< ParticleID, short > > ejectiles_;
   std::vector< std::string > symbols_;
@@ -57,7 +58,8 @@ class Entry {
          std::optional< std::map< ParticleID, short > > ejectiles,
          std::vector< std::string > symbols,
          InteractionType interaction, std::optional< short > level ) :
-    tuple_( std::move( interaction ), special, number ),
+    tuple_( special, number ),
+    interaction_( std::move( interaction ) ),
     mt_( std::move( mt ) ),
     ejectiles_( std::move( ejectiles ) ),
     symbols_( std::move( symbols ) ),
@@ -121,9 +123,9 @@ public:
            std::move( interaction ), std::move( level ) ) {}
 
   /* methods */
-  const std::tuple< InteractionType, bool, std::int64_t >& tuple() const { return this->tuple_; }
-  const InteractionType& type() const { return std::get< 0 >( this->tuple() ); }
-  std::int64_t number() const { return std::get< 2 >( this->tuple() ); }
+  const std::tuple< bool, std::int64_t >& tuple() const { return this->tuple_; }
+  const InteractionType& type() const { return this->interaction_; }
+  std::int64_t number() const { return std::get< 1 >( this->tuple() ); }
 
   const std::optional< short >& mt() const { return this->mt_; }
   const std::string& symbol() const { return this->symbols().front(); }
