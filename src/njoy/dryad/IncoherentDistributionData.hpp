@@ -103,6 +103,15 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the Compton profiles
+     */
+    std::optional< std::vector< TabulatedComptonProfile > >&
+    comptonProfiles() {
+
+      return this->profiles_;
+    }
+
+    /**
      *  @brief Set the Compton profiles
      *
      *  @param profiles   the Compton profiles
@@ -117,6 +126,23 @@ namespace dryad {
       else if ( this->profiles_.has_value() ) {
 
         this->sort();
+      }
+    }
+
+    /**
+     *  @brief Normalise the distribution data
+     *
+     *  For incoherent data, this only affects the Compton profiles if they are
+     *  defined.
+     */
+    void normalise() {
+
+      if ( this->comptonProfiles().has_value() ) {
+
+        for ( auto& profile : this->comptonProfiles().value() ) {
+
+          profile.normalise();
+        }
       }
     }
 

@@ -23,6 +23,7 @@
 #include "njoy/dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAceComptonProfileBlock.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createAceCoherentFormFactorBlock.hpp"
 
 #include "njoy/dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
