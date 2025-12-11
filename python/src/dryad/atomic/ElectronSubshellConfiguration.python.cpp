@@ -48,7 +48,7 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "           the radiative transitions that are available (default: an empty list)\n"
     "    nonradiative : list of NonRadiativeTransitionData, default [] \n"
     "           the non-radiative transitions that are available (default: an empty list)\n"
-    "    normalise : bool, default False  \n"
+    "    normalise : bool, default false  \n"
     "           option to indicate whether or not to normalise all probability data (default: no normalisation)\n\n"
   );
 

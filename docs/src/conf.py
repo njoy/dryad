@@ -27,39 +27,57 @@ extensions = [
 templates_path = ['../_templates']
 exclude_patterns = []
 
+####################
 # numpydoc settings
+#   see https://numpydoc.readthedocs.io/en/latest/install.html
+####################
+
+# this makes the types in the doc string parameters
+# section clickable
 numpydoc_xref_param_type = True
+
+# this is a hacky way to avoid the "python:float" type in
+# the parameter list
+numpydoc_xref_aliases = {
+    'float': 'float',
+    'list': 'list',
+    'bool': 'bool',
+}
+
+# this is how to get numpydoc to not parse everything in
+# the parameters types as a type (like default, of)
+numpydoc_xref_ignore = {
+    'type', 
+    'list',
+    'of', 
+    'default',
+    'true',
+    'false',
+    }
+
+# make a new toctree entry for each class
 numpydoc_class_members_toctree = False
+
+# keep these false - otherwise the attributes and methods
+# are repeated twice on the page because autosummary is
+# being used
 numpydoc_show_class_members = False
 numpydoc_show_inherited_class_members = False
 
-
-# Napoleon settings
-# napoleon_google_docstring = False
-# napoleon_numpy_docstring = True
-# napoleon_include_init_with_doc = True
-# napoleon_include_private_with_doc = False
-# napoleon_include_special_with_doc = True
-# napoleon_use_admonition_for_examples = True
-# napoleon_use_admonition_for_notes = True
-# napoleon_use_admonition_for_references = True
-# napoleon_use_ivar = False
-# napoleon_use_param = True
-# napoleon_usekeyword = True
-# napoleon_use_rtype = True
-# napoleon_preprocess_types = True
-# napoleon_type_aliases = None
-# napoleon_attr_annotations = True
-
-
+####################
 # autodoc settings
+####################
+
 autodoc_default_options = {
     'exclude_members': '__init__',
 }
-autodoc_typehints = 'both'
+
+# in order to have the init signature come after the class
+# name, these both need to be set this way:
 autodoc_docstring_signature = True
-autoclass_content = 'both' # this is for signature - needs be both or init to show sig.
+autoclass_content = 'both' #  needs be 'both' or 'init'
 # best bet is to use "both" and put nothing in the init doc string
+
 
 
 # -- Options for HTML output -------------------------------------------------
