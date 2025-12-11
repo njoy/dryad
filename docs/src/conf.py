@@ -45,7 +45,7 @@ numpydoc_xref_aliases = {
 }
 
 # this is how to get numpydoc to not parse everything in
-# the parameters types as a type (like default, of)
+# the parameter types as a type (like default, of)
 numpydoc_xref_ignore = {
     'type', 
     'list',

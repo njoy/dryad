@@ -1,6 +1,5 @@
 .. currentmodule:: njoy.dryad.atomic
 
-.. _atomic.ElectronSubshellConfiguration:
 
 ElectronSubshellConfiguration 
 =============================
@@ -18,6 +17,7 @@ Constructor
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
+    :template: attribute.rst
     :toctree: generated/
 
     ElectronSubshellConfiguration.identifier
@@ -29,6 +29,7 @@ Modifiable Attributes
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
+    :template: attribute.rst
     :toctree: generated/
 
     ElectronSubshellConfiguration.number_radiative_transitions
@@ -43,6 +44,7 @@ Read-only Attributes
 Methods
 ~~~~~~~
 .. autosummary::
+    :template: attribute.rst
     :toctree: generated/
 
     ElectronSubshellConfiguration.normalise

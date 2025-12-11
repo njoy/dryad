@@ -10,7 +10,7 @@
 
    .. autosummary::
    {% for item in attributes %}
-      {% if item in members and not item.startswith('_') %}
+      {% if not item.startswith('_') %}
         ~{{ name }}.{{ item }}
       {% endif %}
    {%- endfor %}
@@ -22,7 +22,7 @@
 
    .. autosummary::
    {% for item in methods %}
-      {% if item in members and (not item.startswith('_') or item in ['__call__']) %}
+      {% if not item.startswith('_') %}
         ~{{ name }}.{{ item }}
       {% endif %}
    {%- endfor %}
