@@ -39,7 +39,15 @@ void wrapParticleID( python::module& module ) {
     "element number. A hash function and override for std::hash is also\n"
     "provided.\n\n"
     "For more information on how to create instances of ParticleID, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples."
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    za : int \n "
+    "           the particle za number\n"
+    "    number : int, default 0 \n "
+    "           the particle level number or subshell number (default is zero) \n"
+    "    string : str \n "
+    "           the particle symbol, name or alternative \n\n"
   );
 
   // wrap the component
@@ -48,20 +56,13 @@ void wrapParticleID( python::module& module ) {
 
     python::init< int, int >(),
     python::arg( "za" ), python::arg( "number" ) = 0,
-    "Initialise the particle identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    za       the particle za number\n"
-    "    number   the particle level number or subshell number (default is zero)"
+    "Initialise the particle identifier with the za and level number/subshell number"
      )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
-    "Initialise the particle identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    string   the particle symbol, name or alternative"
+    "Initialise the particle identifier with the particle symbol, name or alternative"
   )
   .def_static(
 

@@ -9,3 +9,4 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
    :caption: Modules:
 
    atomic
+   id

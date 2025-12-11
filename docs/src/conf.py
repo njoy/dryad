@@ -42,6 +42,8 @@ numpydoc_xref_aliases = {
     'float': 'float',
     'list': 'list',
     'bool': 'bool',
+    'int': 'int',
+    'str': 'str'
 }
 
 # this is how to get numpydoc to not parse everything in
