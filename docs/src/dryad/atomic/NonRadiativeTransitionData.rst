@@ -18,10 +18,10 @@ Modifiable Attributes
 .. autosummary::
     :toctree: generated/
 
-    NonRadiativeTransitionData.originating_shell
-    NonRadiativeTransitionData.emitting_shell
-    NonRadiativeTransitionData.probability
-    NonRadiativeTransitionData.energy
+    ~NonRadiativeTransitionData.originating_shell
+    ~NonRadiativeTransitionData.emitting_shell
+    ~NonRadiativeTransitionData.probability
+    ~NonRadiativeTransitionData.energy
 
 
 Read-only Attributes
@@ -29,4 +29,4 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    NonRadiativeTransitionData.type
+    ~NonRadiativeTransitionData.type

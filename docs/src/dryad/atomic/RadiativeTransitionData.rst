@@ -18,9 +18,9 @@ Modifiable Attributes
 .. autosummary::
     :toctree: generated/
 
-    RadiativeTransitionData.originating_shell
-    RadiativeTransitionData.probability
-    RadiativeTransitionData.energy
+    ~RadiativeTransitionData.originating_shell
+    ~RadiativeTransitionData.probability
+    ~RadiativeTransitionData.energy
 
 
 Read-only Attributes
@@ -28,4 +28,4 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    RadiativeTransitionData.type
+    ~RadiativeTransitionData.type
