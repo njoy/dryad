@@ -43,7 +43,8 @@ numpydoc_xref_aliases = {
     'list': 'list',
     'bool': 'bool',
     'int': 'int',
-    'str': 'str'
+    'str': 'str',
+    'None': 'None'
 }
 
 # this is how to get numpydoc to not parse everything in
@@ -55,6 +56,7 @@ numpydoc_xref_ignore = {
     'default',
     'true',
     'false',
+    'none',
     }
 
 # make a new toctree entry for each class
@@ -92,5 +94,5 @@ html_static_path = ['_static']
 
 # for pydata theme
 html_theme_options = {
-
+    "secondary_sidebar_items": [] # remove right column
 }

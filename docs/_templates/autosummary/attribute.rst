@@ -3,4 +3,4 @@
 .. currentmodule:: {{ module }}
     
     
-.. auto{{ objtype }}:: {{ objname }}
+.. autoattribute:: {{ objname }}
