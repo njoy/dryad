@@ -17,7 +17,6 @@ Constructor
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
-    :template: attribute.rst
     :toctree: generated/
 
     ElectronSubshellConfiguration.identifier
@@ -29,7 +28,6 @@ Modifiable Attributes
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
-    :template: attribute.rst
     :toctree: generated/
 
     ElectronSubshellConfiguration.number_radiative_transitions

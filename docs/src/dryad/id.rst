@@ -9,3 +9,4 @@ id
    :caption: Classes:
 
    id/ParticleID
+   id/ElectronSubshellID

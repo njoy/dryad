@@ -31,26 +31,15 @@ void wrapRadiativeTransitionData( python::module& module ) {
     "the emitted photon is equal to the difference in binding energies\n"
     "between the subshell with the vacancy and the subshell from which the\n"
     "electron filling the vacancy originated from.\n\n"
-    "\n"
     "Parameters\n"
     "----------\n"
-    "    originating_shell: njoy.dryad.id.ElectronSubshellID \n"
-    "                       the identifier of the subshell from which the\n"
-    "                       vacancy filling electron originated\n"
-    "    probability: float\n"
-    "                  the probability of the transition\n"
-    "    energy: float,  default: None\n"
-    "              the energy of the emitted photon (default: undefined)\n\n"
-    "Attributes\n"
-    "----------\n"
-    "    type : njoy.dryad.atomic.TransitionType\n"
-    "          The transition type\n"
-    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "          The identifier of the subshell from which the electron filling the vacancy originated\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID \n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
     "    probability : float\n"
-    "           The transition probability\n"
-    "    energy : float or None\n"
-    "            The energy of the emitted photon\n"
+    "         the probability of the transition\n"
+    "    energy : float,  default None\n"
+    "         the energy of the emitted photon (default: undefined)\n\n"
   );
 
   // wrap the component
@@ -60,7 +49,7 @@ void wrapRadiativeTransitionData( python::module& module ) {
     python::init< ElectronSubshellID, double, std::optional< double > >(),
     python::arg( "originating_shell" ), python::arg( "probability" ),
     python::arg( "energy" ) = std::nullopt,
-    "Initialise the radiative transition data\n\n"
+    ""
   )
   .def_property_readonly(
 

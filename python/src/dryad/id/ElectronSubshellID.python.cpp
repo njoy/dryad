@@ -27,7 +27,13 @@ void wrapElectronSubshellID( python::module& module ) {
     "ElectronSubshellID",
     "The electron subshell identifier\n\n"
     "For more information on how to create instances of ElectronSubshellID, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n"
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    number : int \n"
+    "         the subshell number\n"
+    "    string : str \n"
+    "         the subshell symbol, name or alternative name\n\n"
   );
 
   // wrap the component
@@ -36,19 +42,13 @@ void wrapElectronSubshellID( python::module& module ) {
 
     python::init< int >(),
     python::arg( "number" ),
-    "Initialise the subshell identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    number   the subshell number"
+    "Initialise the subshell identifier using the subshell number"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
-    "Initialise the subshell identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    string   the subshell symbol, name or alternative name"
+    "Initialise the subshell identifier using the subshell symbol, name or alternative name"
   )
   .def_property_readonly_static( "K"  ,  [] ( python::object ) { return Component::K;   }, "The K shell" )
   .def_property_readonly_static( "L1" ,  [] ( python::object ) { return Component::L1;  }, "The L1 shell" )

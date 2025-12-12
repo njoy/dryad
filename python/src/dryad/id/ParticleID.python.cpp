@@ -39,7 +39,7 @@ void wrapParticleID( python::module& module ) {
     "element number. A hash function and override for std::hash is also\n"
     "provided.\n\n"
     "For more information on how to create instances of ParticleID, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\\nn"
     "Parameters\n"
     "----------\n"
     "    za : int \n "
