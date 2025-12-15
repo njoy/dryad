@@ -29,7 +29,18 @@ void wrapAtomicRelaxation( python::module& module ) {
 
     module,
     "AtomicRelaxation",
-    "Atomic relaxation data for a given element"
+    "Atomic relaxation data for a given element\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    documentation : njoy.dryad.Documentation \n"
+    "         the documentation \n"
+    "    element : njoy.dryad.id.ElementID \n"
+    "         the element identifier \n"
+    "    subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration \n"
+    "         the electron subshell configuration data \n"
+    "    normalise : bool, default false \n"
+    "        option to indicate whether or not to normalise \n"
+    "        all probability data (default: no normalisation) \n\n"
   );
 
   // wrap the component
@@ -39,27 +50,14 @@ void wrapAtomicRelaxation( python::module& module ) {
     python::init< Documentation, ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "documentation" ), python::arg( "element" ),
     python::arg( "subshells" ), python::arg( "normalise" ) = false,
-    "Initialise the atomic relaxation data\n\n"
-    "Arguments:\n"
-    "    self            the reaction\n"
-    "    documentation   the documentation\n"
-    "    element         the element identifier\n"
-    "    subshells       the electron subshell configuration data\n"
-    "    normalise       option to indicate whether or not to normalise\n"
-    "                    all probability data (default: no normalisation)"
+    "Initialise the atomic relaxation data with documentation\n"
   )
   .def(
 
     python::init< ElementID, std::vector< ElectronSubshellConfiguration >, bool >(),
     python::arg( "element" ), python::arg( "subshells" ),
     python::arg( "normalise" ) = false,
-    "Initialise the atomic relaxation data\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    element     the element identifier\n"
-    "    subshells   the electron subshell configuration data\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Initialise the atomic relaxation data without documentation\n"
   )
   .def_property(
 
@@ -92,19 +90,21 @@ void wrapAtomicRelaxation( python::module& module ) {
 
     "has_subshell",
     &Component::hasSubshell,
-    "Return whether or not a subshell is present\n\n"
-    "Arguments:\n"
-    "    self   the AtomicRelaxation data\n"
-    "    id     the electron subshell identifier"
+    "Return whether or not a subshell is present \n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ElectronSubshellID \n"
+    "         the electron subshell identifier \n"
   )
   .def(
 
     "subshell",
     &Component::subshell,
-    "Return the requested subshell\n\n"
-    "Arguments:\n"
-    "    self   the AtomicRelaxation data\n"
-    "    id     the electron subshell identifier",
+    "Return the requested subshell \n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ElectronSubshellID \n"
+    "         the electron subshell identifier \n",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -130,10 +130,13 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Create AtomicRelaxation data from an ENDF file\n\n"
     "If there are multiple materials in the ENDF file, only the first material\n"
     "will be transformed into a AtomicRelaxation.\n\n"
-    "Arguments:\n"
-    "    filename    the ENDF file name\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Parameters\n"
+    "----------\n"
+    "    filename : str \n"
+    "         the ENDF file name\n"
+    "    normalise : bool, default false\n"
+    "         option to indicate whether or not to normalise\n"
+    "         all probability data (default: no normalisation)\n\n"
   )
   .def_static(
 
@@ -144,10 +147,13 @@ void wrapAtomicRelaxation( python::module& module ) {
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from a GNDS file\n\n"
-    "Arguments:\n"
-    "    filename    the GNDS file name\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Parameters \n"
+    "---------- \n"
+    "    filename : str \n"
+    "         the GNDS file name\n"
+    "    normalise : bool, default false\n"
+    "         option to indicate whether or not to normalise\n"
+    "         all probability data (default: no normalisation)\n\n"
   )
   .def(
 
@@ -158,10 +164,12 @@ void wrapAtomicRelaxation( python::module& module ) {
     },
     python::arg( "mat" ), python::arg( "filename" ),
     "Write the AtomicRelaxation data to an ENDF file\n\n"
-    "Arguments:\n"
-    "    self        the atomic relaxation data\n"
-    "    mat         the ENDF mat number to be used\n"
-    "    filename    the ENDF file name"
+    "Parameters\n"
+    "----------\n"
+    "    mat : int \n" 
+    "         the ENDF mat number to be used \n"
+    "    filename : str \n"
+    "         the ENDF file name \n"
   );
 
   // add standard equality comparison definitions
