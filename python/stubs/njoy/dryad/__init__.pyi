@@ -11,6 +11,19 @@ __all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'Distribut
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
+    
+    Parameters
+    ----------
+        documentation : njoy.dryad.Documentation 
+             the documentation 
+        element : njoy.dryad.id.ElementID 
+             the element identifier 
+        subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration 
+             the electron subshell configuration data 
+        normalise : bool, default false 
+            option to indicate whether or not to normalise 
+            all probability data (default: no normalisation) 
+    
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -21,20 +34,26 @@ class AtomicRelaxation:
         If there are multiple materials in the ENDF file, only the first material
         will be transformed into a AtomicRelaxation.
         
-        Arguments:
-            filename    the ENDF file name
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters
+        ----------
+            filename : str 
+                 the ENDF file name
+            normalise : bool, default false 
+                 option to indicate whether or not to normalise
+                 all probability data (default: no normalisation)
         """
     @staticmethod
     def from_gnds_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
         Create AtomicRelaxation data from a GNDS file
         
-        Arguments:
-            filename    the GNDS file name
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Parameters 
+        ---------- 
+            filename : str 
+                 the GNDS file name
+            normalise : bool, default false 
+                 option to indicate whether or not to normalise
+                 all probability data (default: no normalisation)
         """
     def __copy__(self) -> AtomicRelaxation:
         ...
@@ -45,27 +64,12 @@ class AtomicRelaxation:
     @typing.overload
     def __init__(self, documentation: Documentation, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
-        Initialise the atomic relaxation data
-        
-        Arguments:
-            self            the reaction
-            documentation   the documentation
-            element         the element identifier
-            subshells       the electron subshell configuration data
-            normalise       option to indicate whether or not to normalise
-                            all probability data (default: no normalisation)
+        Initialise the atomic relaxation data with documentation
         """
     @typing.overload
     def __init__(self, element: id.ElementID, subshells: list[atomic.ElectronSubshellConfiguration], normalise: bool = False) -> None:
         """
-        Initialise the atomic relaxation data
-        
-        Arguments:
-            self        the reaction
-            element     the element identifier
-            subshells   the electron subshell configuration data
-            normalise   option to indicate whether or not to normalise
-                        all probability data (default: no normalisation)
+        Initialise the atomic relaxation data without documentation
         """
     def __ne__(self, arg0: AtomicRelaxation) -> bool:
         ...
@@ -75,11 +79,12 @@ class AtomicRelaxation:
         """
     def has_subshell(self, arg0: id.ElectronSubshellID) -> bool:
         """
-        Return whether or not a subshell is present
+        Return whether or not a subshell is present 
         
-        Arguments:
-            self   the AtomicRelaxation data
-            id     the electron subshell identifier
+        Parameters
+        ----------
+            id : njoy.dryad.id.ElectronSubshellID 
+                 the electron subshell identifier 
         """
     def normalise(self) -> None:
         """
@@ -87,20 +92,23 @@ class AtomicRelaxation:
         """
     def subshell(self, arg0: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
-        Return the requested subshell
+        Return the requested subshell 
         
-        Arguments:
-            self   the AtomicRelaxation data
-            id     the electron subshell identifier
+        Parameters
+        ----------
+            id : njoy.dryad.id.ElectronSubshellID 
+                 the electron subshell identifier 
         """
     def to_endf_file(self, mat: int, filename: str) -> None:
         """
         Write the AtomicRelaxation data to an ENDF file
         
-        Arguments:
-            self        the atomic relaxation data
-            mat         the ENDF mat number to be used
-            filename    the ENDF file name
+        Parameters
+        ----------
+            mat : int 
+                 the ENDF mat number to be used 
+            filename : str 
+                 the ENDF file name 
         """
     @property
     def documentation(self) -> Documentation:
@@ -141,6 +149,17 @@ class CoherentDistributionData:
     
     This corresponds with the coherent scattering function data given in MF27 MT502 and
     the form factors in MF27 MT505 and MT506.
+    
+    Parameters 
+    ---------- 
+        frame : njoy.dryad.ReferenceFrame 
+             the reference frame of the distribution data
+        scattering : njoy.dryad.TabulatedScatteringFunction 
+             the scatteirng function 
+        real : njoy.dryad.TabulatedFormFactor 
+              the real part of the anamolous form factor
+        imaginary : njoy.dryad.TabulatedFormFactor 
+             the imaginary part of the anamolous form factor
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CoherentDistributionData:
@@ -153,23 +172,11 @@ class CoherentDistributionData:
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction) -> None:
         """
         Initialise the coherent distribution data without anomolous form factors
-        
-        Arguments:
-            self         the reaction product distribution data
-            frame        the reference frame of the distribution data
-            scattering   the scattering function
         """
     @typing.overload
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, real: TabulatedFormFactor, imaginary: TabulatedFormFactor) -> None:
         """
         Initialise the coherent distribution data with anomolous form factors
-        
-        Arguments:
-            self         the reaction product distribution data
-            frame        the reference frame of the distribution data
-            scattering   the scattering function
-            real         the real part of the anamolous form factor
-            imaginary    the imaginary part of the anamolous form factor
         """
     def __ne__(self, arg0: CoherentDistributionData) -> bool:
         ...
@@ -336,7 +343,16 @@ class IncoherentDistributionData:
     differential cross section.
     
     This corresponds with the incoherent scattering function data given in MF27 MT504,
-    supplemented with optional external Compton profile data.
+    supplemented with optional external Compton profile data. 
+    
+    Parameters 
+    ---------- 
+        frame : njoy.dryad.ReferenceFrame 
+             the reference frame of the distribution data
+        scattering : njoy.dryad.TabulatedScatteringFunction 
+             the scatteirng function 
+        profiles : list of njoy.dryad.TabulatedCOmptonProfile 
+             the optional Compton profiles
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> IncoherentDistributionData:
@@ -346,15 +362,7 @@ class IncoherentDistributionData:
     def __eq__(self, arg0: IncoherentDistributionData) -> bool:
         ...
     def __init__(self, frame: ReferenceFrame, scattering: TabulatedScatteringFunction, profiles: list[TabulatedComptonProfile] | None = None) -> None:
-        """
-        Initialise the incoherent distribution data
-        
-        Arguments:
-            self         the reaction product distribution data
-            frame        the reference frame of the distribution data
-            scattering   the scattering function
-            profiles     the optional Compton profiles
-        """
+        ...
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
     @property

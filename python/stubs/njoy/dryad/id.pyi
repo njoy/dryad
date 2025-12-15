@@ -79,6 +79,14 @@ class ChannelID:
 class ElectronSubshellID:
     """
     The electron subshell identifier
+    
+    Parameters
+    ----------
+        number : int 
+             the subshell number
+        string : str 
+             the subshell symbol, name or alternative name
+    
     """
     K: typing.ClassVar[int] = 534
     L1: typing.ClassVar[int] = 535
@@ -146,20 +154,12 @@ class ElectronSubshellID:
     @typing.overload
     def __init__(self, number: int) -> None:
         """
-        Initialise the subshell identifier
-        
-        Arguments:
-            self     the identifier
-            number   the subshell number
+        Initialise the subshell identifier using the subshell number
         """
     @typing.overload
     def __init__(self, string: str) -> None:
         """
-        Initialise the subshell identifier
-        
-        Arguments:
-            self     the identifier
-            string   the subshell symbol, name or alternative name
+        Initialise the subshell identifier using the subshell symbol, name or alternative name
         """
     def __le__(self, arg0: ElectronSubshellID) -> bool:
         ...
@@ -378,6 +378,22 @@ class ParticleID:
     
     For more information on how to create instances of ParticleID, see the
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
+    
+    Parameters
+    ----------
+        element_identifier : njoy.dryad.id.ElementID 
+                the particle element 
+        mass : int 
+                the particle mass number 
+        level_identifier : njoy.dryad.id.LevelID 
+                he particle level 
+        vacancy : njoy.dryad.id.ElectronSubshellID 
+             the identifier of the subshell with an electron vacancy 
+        vacancies : list of njoy.dryad.id.ElectronSubshellID 
+             the identifiers of the subshells with electron vacancies 
+        string : str 
+             Initialise the particle identifier with the particle symbol, name or alternative 
+    
     """
     @staticmethod
     def alpha() -> ParticleID:
@@ -409,9 +425,12 @@ class ParticleID:
         """
         Create a particle identifier for a nuclide
         
-        Arguments:
-            za      the za number of the nuclide
-            level   the level number of the nuclide
+        Parameters
+        ----------
+            za : int 
+                 the za number of the nuclide 
+            level : int, default 0 
+                 the level number of the nuclide. the default value 0 indicates the ground state
         """
     @staticmethod
     def photon() -> ParticleID:
@@ -453,44 +472,24 @@ class ParticleID:
         Hash function
         """
     @typing.overload
-    def __init__(self, element: ElementID, mass: int, level: LevelID) -> None:
+    def __init__(self, element_identifier: ElementID, mass: int, level_identifier: LevelID) -> None:
         """
-        Initialise the particle identifier
-        
-        Arguments:
-            self      the identifier
-            element   the particle element
-            mass      the particle mass number
-            level     the particle level
+        Initialise a nuclear particle identifier with a level number
         """
     @typing.overload
-    def __init__(self, element: ElementID, vacancy: ElectronSubshellID) -> None:
+    def __init__(self, element_identifier: ElementID, vacancy: ElectronSubshellID) -> None:
         """
-        Initialise the particle identifier
-        
-        Arguments:
-            self      the identifier
-            element   the particle element
-            vacancy   the subshell with a vacancy
+        Initialise the particle identifier for an atom with a single electron vacancy
         """
     @typing.overload
-    def __init__(self, element: ElementID, vacancies: list[ElectronSubshellID]) -> None:
+    def __init__(self, element_identifier: ElementID, vacancies: list[ElectronSubshellID]) -> None:
         """
-        Initialise the particle identifier
-        
-        Arguments:
-            self        the identifier
-            element     the particle element
-            vacancies   the subshells with a vacancy
+        Initialise the particle identifier for an atom with multiple electron vacancies
         """
     @typing.overload
     def __init__(self, string: str) -> None:
         """
-        Initialise the particle identifier
-        
-        Arguments:
-            self     the identifier
-            string   the particle symbol, name or alternative
+        Initialise the particle identifier with the particle symbol, name or alternative
         """
     def __le__(self, arg0: ParticleID) -> bool:
         ...
@@ -501,6 +500,10 @@ class ParticleID:
     def __str__(self) -> str:
         """
         Convenience function for printing the identifier
+        """
+    def ground_state(self) -> ParticleID:
+        """
+        Return the identifier for the particle's ground state
         """
     @property
     def a(self) -> int:
@@ -520,7 +523,7 @@ class ParticleID:
     @property
     def vacancies(self) -> list[ElectronSubshellID] | None:
         """
-        The particle's subshell vacancies
+        The identifiers of the subshells that have vacancies
         """
     @property
     def z(self) -> int:
