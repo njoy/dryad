@@ -33,7 +33,21 @@ void wrapParticleID( python::module& module ) {
     "element number. A hash function and override for std::hash is also\n"
     "provided.\n\n"
     "For more information on how to create instances of ParticleID, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples."
+    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    element_identifier : njoy.dryad.id.ElementID \n "
+    "           the particle element \n"
+    "    mass : int \n "
+    "           the particle mass number \n"
+    "    level_identifier : njoy.dryad.id.LevelID \n "
+    "           he particle level \n"
+    "    vacancy : njoy.dryad.id.ElectronSubshellID \n"
+    "         the identifier of the subshell with an electron vacancy \n"
+    "    vacancies : list of njoy.dryad.id.ElectronSubshellID \n"
+    "         the identifiers of the subshells with electron vacancies \n"
+    "    string : str \n"
+    "         Initialise the particle identifier with the particle symbol, name or alternative \n\n"
   );
 
   // wrap the component
@@ -41,42 +55,26 @@ void wrapParticleID( python::module& module ) {
   .def(
 
     python::init< ElementID, int, LevelID >(),
-    python::arg( "element" ), python::arg( "mass" ), python::arg( "level" ),
-    "Initialise the particle identifier\n\n"
-    "Arguments:\n"
-    "    self      the identifier\n"
-    "    element   the particle element\n"
-    "    mass      the particle mass number\n"
-    "    level     the particle level"
+    python::arg( "element_identifier" ), python::arg( "mass" ), python::arg( "level_identifier" ),
+    "Initialise a nuclear particle identifier with a level number"
   )
   .def(
 
     python::init< ElementID, ElectronSubshellID >(),
-    python::arg( "element" ), python::arg( "vacancy" ),
-    "Initialise the particle identifier\n\n"
-    "Arguments:\n"
-    "    self      the identifier\n"
-    "    element   the particle element\n"
-    "    vacancy   the subshell with a vacancy"
+    python::arg( "element_identifier" ), python::arg( "vacancy" ),
+    "Initialise the particle identifier for an atom with a single electron vacancy"
   )
   .def(
 
     python::init< ElementID, std::vector< ElectronSubshellID > >(),
-    python::arg( "element" ), python::arg( "vacancies" ),
-    "Initialise the particle identifier\n\n"
-    "Arguments:\n"
-    "    self        the identifier\n"
-    "    element     the particle element\n"
-    "    vacancies   the subshells with a vacancy"
+    python::arg( "element_identifier" ), python::arg( "vacancies" ),
+    "Initialise the particle identifier for an atom with multiple electron vacancies"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "string" ),
-    "Initialise the particle identifier\n\n"
-    "Arguments:\n"
-    "    self     the identifier\n"
-    "    string   the particle symbol, name or alternative"
+    "Initialise the particle identifier with the particle symbol, name or alternative"
   )
   .def_static(
 
@@ -99,9 +97,18 @@ void wrapParticleID( python::module& module ) {
     &Component::nuclide,
     python::arg( "za" ), python::arg( "level" ) = 0,
     "Create a particle identifier for a nuclide\n\n"
-    "Arguments:\n"
-    "    za      the za number of the nuclide\n"
-    "    level   the level number of the nuclide"
+    "Parameters\n"
+    "----------\n"
+    "    za : int \n"
+    "         the za number of the nuclide \n"
+    "    level : int, default 0 \n"
+    "         the level number of the nuclide. the default value 0 indicates the ground state\n"
+  )
+  .def(
+
+    "ground_state",
+    &Component::groundState,
+    "Return the identifier for the particle's ground state\n\n"
   )
   .def_property_readonly(
 
@@ -137,12 +144,12 @@ void wrapParticleID( python::module& module ) {
 
     "vacancies",
     &Component::vacancies,
-    "The particle's subshell vacancies"
+    "The identifiers of the subshells that have vacancies"
   )
   .def(
 
     "__hash__",
-    [] ( const Component& self ) { return std::hash< Component >{}( self ); },
+    &Component::hash,
     "Hash function"
   );
 
