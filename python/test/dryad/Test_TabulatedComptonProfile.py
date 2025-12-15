@@ -19,7 +19,7 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             normalisation = 2.0 if normalise else 1.0
 
             # verify content
-            self.assertEqual( ElectronSubshellID( '1s1/2' ), chunk.identifier )
+            self.assertEqual( ElectronSubshellID( '1s1/2' ), chunk.subshell_identifier )
 
             self.assertEqual( 4, len( chunk.momentum ) )
             self.assertEqual( 4, len( chunk.values ) )
@@ -131,10 +131,10 @@ class Test_TabulatedComptonProfile( unittest.TestCase ) :
             self.assertAlmostEqual( InterpolationType.LinearLinear, cdf.interpolants[0] )
 
         # the data is given explicitly using a normalised table
-        chunk1 = TabulatedComptonProfile( identifier = ElectronSubshellID( '1s' ),
+        chunk1 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
                                           momentum = [ 0., 1., 1.5, 2. ], values = [ 0., 1., 1.5, 2. ],
                                           normalise = False )
-        chunk2 = TabulatedComptonProfile( identifier = ElectronSubshellID( '1s' ),
+        chunk2 = TabulatedComptonProfile( subshell_identifier = ElectronSubshellID( '1s' ),
                                           momentum = [ 0., 1., 1.5, 2. ], values = [ 0., 1., 1.5, 2. ],
                                           normalise = True )
 
