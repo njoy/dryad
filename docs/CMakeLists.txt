@@ -8,11 +8,10 @@ if ( SPHINX_EXECUTABLE )
         COMMAND
         ${SPHINX_EXECUTABLE} -b html
         ${SPHINX_SOURCE} ${SPHINX_BUILD}
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        WORKING_DIRECTORY ${SPHINX_BUILD}
         COMMENT "generating sphinx documentation in HTML"
     )
 else()
     # cannot make documentation
     message( STATUS "Cannot build sphinx documentation because sphinx was not found" )
 endif()
-
