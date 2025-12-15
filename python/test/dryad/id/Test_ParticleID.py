@@ -22,7 +22,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 0, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'photon' )
         self.assertEqual( 'g', id.symbol )
@@ -30,7 +30,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 0, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'gamma' )
         self.assertEqual( 'g', id.symbol )
@@ -38,7 +38,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 0, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.photon()
         self.assertEqual( 'g', id.symbol )
@@ -46,7 +46,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 0, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'x-ray' )
         self.assertEqual( 'g', id.symbol )
@@ -54,7 +54,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 0, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'e-' )
         self.assertEqual( 'e-', id.symbol )
@@ -62,7 +62,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( -1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'electron' )
         self.assertEqual( 'e-', id.symbol )
@@ -70,7 +70,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( -1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.electron()
         self.assertEqual( 'e-', id.symbol )
@@ -78,7 +78,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( -1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'e+' )
         self.assertEqual( 'e+', id.symbol )
@@ -86,7 +86,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'positron' )
         self.assertEqual( 'e+', id.symbol )
@@ -94,7 +94,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'beta+' )
         self.assertEqual( 'e+', id.symbol )
@@ -102,7 +102,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'e-_anti' )
         self.assertEqual( 'e+', id.symbol )
@@ -110,7 +110,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.positron()
         self.assertEqual( 'e+', id.symbol )
@@ -118,7 +118,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'n' )
         self.assertEqual( 'n', id.symbol )
@@ -126,7 +126,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'neutron' )
         self.assertEqual( 'n', id.symbol )
@@ -134,7 +134,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.neutron()
         self.assertEqual( 'n', id.symbol )
@@ -142,7 +142,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'p' )
         self.assertEqual( 'p', id.symbol )
@@ -150,7 +150,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'proton' )
         self.assertEqual( 'p', id.symbol )
@@ -158,7 +158,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.proton()
         self.assertEqual( 'p', id.symbol )
@@ -166,7 +166,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'd' )
         self.assertEqual( 'd', id.symbol )
@@ -174,7 +174,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'deuteron' )
         self.assertEqual( 'd', id.symbol )
@@ -182,7 +182,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.deuteron()
         self.assertEqual( 'd', id.symbol )
@@ -190,7 +190,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 't' )
         self.assertEqual( 't', id.symbol )
@@ -198,7 +198,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 3, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1003, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'triton' )
         self.assertEqual( 't', id.symbol )
@@ -206,7 +206,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 3, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1003, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.triton()
         self.assertEqual( 't', id.symbol )
@@ -214,7 +214,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 3, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1003, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'h' )
         self.assertEqual( 'h', id.symbol )
@@ -222,7 +222,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 3, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2003, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'helion' )
         self.assertEqual( 'h', id.symbol )
@@ -230,7 +230,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 3, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2003, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.helion()
         self.assertEqual( 'h', id.symbol )
@@ -238,7 +238,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 3, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2003, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'a' )
         self.assertEqual( 'a', id.symbol )
@@ -246,7 +246,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 4, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2004, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID( 'alpha' )
         self.assertEqual( 'a', id.symbol )
@@ -254,7 +254,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 4, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2004, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         id = ParticleID.alpha()
         self.assertEqual( 'a', id.symbol )
@@ -262,7 +262,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 4, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2004, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size, ParticleID.size() )     # no additional identifiers
 
@@ -272,7 +272,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 1, ParticleID.size() ) # H1 is new
 
@@ -282,7 +282,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 1, ParticleID.size() ) # H1 already registered
 
@@ -292,7 +292,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 1, ParticleID.size() ) # H1 already registered
 
@@ -302,7 +302,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 1, ParticleID.size() ) # H1 already registered
 
@@ -312,7 +312,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 1, ParticleID.size() ) # H1 already registered
 
@@ -322,7 +322,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 10, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 2, ParticleID.size() ) # H1_e10 is new
 
@@ -332,7 +332,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 10, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 2, ParticleID.size() ) # H1_e10 already registered
 
@@ -342,7 +342,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( 10, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 2, ParticleID.size() ) # H1_e10 already registered
 
@@ -352,7 +352,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] is new
 
@@ -362,7 +362,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] already registered
 
@@ -372,7 +372,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] already registered
 
@@ -382,7 +382,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 3, ParticleID.size() ) # H1[continuum] already registered
 
@@ -392,7 +392,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 4, ParticleID.size() ) # H2[continuum] is new
 
@@ -402,7 +402,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 4, ParticleID.size() ) # H2[continuum] already registered
 
@@ -412,7 +412,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 4, ParticleID.size() ) # H2[continuum] already registered
 
@@ -422,7 +422,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.continuum, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 4, ParticleID.size() ) # H2[continuum] already registered
 
@@ -432,7 +432,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 5, ParticleID.size() ) # H1[all] is new
 
@@ -442,7 +442,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 5, ParticleID.size() ) # H1[all] already registered
 
@@ -452,7 +452,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 5, ParticleID.size() ) # H1[all] already registered
 
@@ -462,7 +462,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 1, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1001, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 5, ParticleID.size() ) # H1[all] already registered
 
@@ -472,7 +472,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 6, ParticleID.size() ) # H2[all] is new
 
@@ -482,7 +482,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 6, ParticleID.size() ) # H2[all] already registered
 
@@ -492,7 +492,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 6, ParticleID.size() ) # H2[all] already registered
 
@@ -502,7 +502,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 2, id.a )
         self.assertEqual( LevelID.all, id.e )
         self.assertEqual( 1002, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 6, ParticleID.size() ) # H2[all] already registered
 
@@ -512,7 +512,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 236, id.a )
         self.assertEqual( 10, id.e )
         self.assertEqual( 92236, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 7, ParticleID.size() ) # U235_e10 is new
 
@@ -522,7 +522,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 236, id.a )
         self.assertEqual( 10, id.e )
         self.assertEqual( 92236, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 7, ParticleID.size() ) # U235_e10 already registered
 
@@ -532,7 +532,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 236, id.a )
         self.assertEqual( 10, id.e )
         self.assertEqual( 92236, id.za )
-        self.assertIsNone( id.subshell )
+        self.assertIsNone( id.subshell_identifier )
 
         self.assertEqual( size + 7, ParticleID.size() ) # U235_e10 already registered
 
@@ -542,7 +542,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertEqual( ElectronSubshellID.K, id.subshell.mt )
+        self.assertEqual( ElectronSubshellID.K, id.subshell_identifier.mt )
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} is new
 
@@ -552,7 +552,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertEqual( ElectronSubshellID.K, id.subshell.mt )
+        self.assertEqual( ElectronSubshellID.K, id.subshell_identifier.mt )
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
 
@@ -562,7 +562,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 1000, id.za )
-        self.assertEqual( ElectronSubshellID.K, id.subshell.mt )
+        self.assertEqual( ElectronSubshellID.K, id.subshell_identifier.mt )
 
         self.assertEqual( size + 8, ParticleID.size() ) # H{1s1/2} already registered
 
@@ -572,7 +572,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2000, id.za )
-        self.assertEqual( ElectronSubshellID.K, id.subshell.mt )
+        self.assertEqual( ElectronSubshellID.K, id.subshell_identifier.mt )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} is new
 
@@ -582,7 +582,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2000, id.za )
-        self.assertEqual( ElectronSubshellID.K, id.subshell.mt )
+        self.assertEqual( ElectronSubshellID.K, id.subshell_identifier.mt )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
 
@@ -592,7 +592,7 @@ class Test_ParticleID( unittest.TestCase ) :
         self.assertEqual( 0, id.a )
         self.assertEqual( 0, id.e )
         self.assertEqual( 2000, id.za )
-        self.assertEqual( ElectronSubshellID.K, id.subshell.mt )
+        self.assertEqual( ElectronSubshellID.K, id.subshell_identifier.mt )
 
         self.assertEqual( size + 9, ParticleID.size() ) # He{1s1/2} already registered
 

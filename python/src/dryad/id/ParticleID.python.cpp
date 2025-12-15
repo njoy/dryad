@@ -135,7 +135,7 @@ void wrapParticleID( python::module& module ) {
   .def_property_readonly(
 
     "subshell_identifier",
-    &Component::subshell,
+    &Component::subshellIdentifier,
     "The particle's subshell identifier"
   )
   .def(
