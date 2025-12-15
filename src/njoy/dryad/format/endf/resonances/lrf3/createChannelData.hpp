@@ -64,6 +64,7 @@ namespace lrf3 {
    *  @param[in] naps                   the channel radius option as given in the ENDF file
    *  @param[in] nro                    the energy dependent scattering radius (if defined, given in fm)
    *  @param[in] ap                     the l-dependent scattering radius (if defined, given in fm)
+   *  @param[in,out] available          the quantum number combinations that are still available
    *  @param[in] endfReichMooreLValue   the parsed ENDF Reich-Moore l-value data
    */
   inline auto createChannelData(
