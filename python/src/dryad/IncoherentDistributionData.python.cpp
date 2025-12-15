@@ -30,7 +30,13 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "In this representation, a scattering function S(x,Z) is defined that\n"
     "together with the Klein-Nishina cross section determines the double\n"
     "differential cross section.\n\n"
-    "This corresponds with the incoherent scattering function data given in MF27 MT504."
+    "This corresponds with the incoherent scattering function data given in MF27 MT504. \n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    frame : njoy.dryad.ReferenceFrame \n"
+    "         the reference frame of the distribution data\n"
+    "    scattering : njoy.dryad.TabulatedScatteringFunction \n"
+    "         the scatteirng function \n"
   );
 
   // wrap the component
@@ -39,11 +45,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
 
     python::init< ReferenceFrame, TabulatedScatteringFunction >(),
     python::arg( "frame" ), python::arg( "scattering" ),
-    "Initialise the incoherent distribution data\n\n"
-    "Arguments:\n"
-    "    self         the reaction product distribution data\n"
-    "    frame        the reference frame of the distribution data\n"
-    "    scattering   the scattering function"
+    ""
   )
   .def_property_readonly(
 
