@@ -368,7 +368,7 @@ class IncoherentDistributionData:
     @property
     def compton_profiles(self) -> list[TabulatedComptonProfile] | None:
         """
-        The scattering function
+        The compton profiles
         """
     @compton_profiles.setter
     def compton_profiles(self, arg1: list[TabulatedComptonProfile] | None) -> None:

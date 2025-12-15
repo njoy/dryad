@@ -80,7 +80,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "compton_profiles",
     python::overload_cast<>( &Component::comptonProfiles, python::const_ ),
     python::overload_cast< std::optional< std::vector< TabulatedComptonProfile > > >( &Component::comptonProfiles ),
-    "The scattering function"
+    "The compton profiles"
   );
 
   // add standard equality comparison definitions

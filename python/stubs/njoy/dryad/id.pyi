@@ -387,9 +387,9 @@ class ParticleID:
                 the particle mass number 
         level_identifier : njoy.dryad.id.LevelID 
                 he particle level 
-        vacancy : njoy.dryad.id.ElectronSubshellID 
+        vacancy_identifier : njoy.dryad.id.ElectronSubshellID 
              the identifier of the subshell with an electron vacancy 
-        vacancies : list of njoy.dryad.id.ElectronSubshellID 
+        vacancy_identifiers : list of njoy.dryad.id.ElectronSubshellID 
              the identifiers of the subshells with electron vacancies 
         string : str 
              Initialise the particle identifier with the particle symbol, name or alternative 
@@ -477,12 +477,12 @@ class ParticleID:
         Initialise a nuclear particle identifier with a level number
         """
     @typing.overload
-    def __init__(self, element_identifier: ElementID, vacancy: ElectronSubshellID) -> None:
+    def __init__(self, element_identifier: ElementID, vacancy_identifier: ElectronSubshellID) -> None:
         """
         Initialise the particle identifier for an atom with a single electron vacancy
         """
     @typing.overload
-    def __init__(self, element_identifier: ElementID, vacancies: list[ElectronSubshellID]) -> None:
+    def __init__(self, element_identifier: ElementID, vacancy_identifiers: list[ElectronSubshellID]) -> None:
         """
         Initialise the particle identifier for an atom with multiple electron vacancies
         """
