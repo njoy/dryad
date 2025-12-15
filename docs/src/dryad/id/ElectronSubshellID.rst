@@ -19,7 +19,11 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
-    ~ElectronSubshellID.number 
+    ~ElectronSubshellID.principal_quantum_number 
+    ~ElectronSubshellID.azimuthal_quantum_number
+    ~ElectronSubshellID.total_angular_momentum
+    ~ElectronSubshellID.is_relativistic
+    ~ElectronSubshellID.is_non_relativistic
     ~ElectronSubshellID.symbol 
-    ~ElectronSubshellID.name 
+    ~ElectronSubshellID.mt 
 
