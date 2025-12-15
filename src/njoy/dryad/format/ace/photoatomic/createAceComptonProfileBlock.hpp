@@ -38,6 +38,7 @@ namespace photoatomic {
     std::vector< njoy::ACEtk::photoatomic::ComptonProfile > compton_profiles;
     for ( const auto& profile : profiles ) {
 
+      int interpolation_type = 2; // lin-lin interpolation
       std::vector< double > momentum;
       std::vector< double > pdf;
       std::vector< double > cdf;
@@ -55,7 +56,7 @@ namespace photoatomic {
         pdf = profile.pdf().values();
         cdf = profile.cdf().values();
       }
-      compton_profiles.emplace_back( 2, std::move( momentum ), std::move( pdf ), std::move( cdf ) );
+      compton_profiles.emplace_back( interpolation_type, std::move( momentum ), std::move( pdf ), std::move( cdf ) );
     }
 
     return njoy::ACEtk::photoatomic::ComptonProfileBlock( std::move( compton_profiles ) );

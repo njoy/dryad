@@ -34,9 +34,10 @@ SCENARIO( "createAceComptonProfileBlock" ) {
             4.35E-01,  3.37E-01,  2.57E-01,  1.92E-01,  1.06E-01,  5.84E-02,  3.27E-02,
             1.88E-02,  1.11E-02,  6.79E-03,  2.75E-03,  8.49E-04,  1.73E-04,  4.83E-05,
             1.68E-05,  6.79E-06,  3.09E-06,  8.2E-07,   7.4E-08,   1.3E-08,   1.2E-09,
-            2.3E-10,   4.3E-11,   2.6E-11 } }
+            2.3E-10,   4.3E-11,   2.6E-11 },
+          InterpolationType::LinearLinear,
+          true }
       };
-      profiles.back().normalise();
 
       auto incoherent_id = id::ReactionID( "g,H->scattering[incoherent]" );
       decltype(auto) photon = photoatomic.reaction( incoherent_id ).product( id::ParticleID::photon() ).distributionData().value();
