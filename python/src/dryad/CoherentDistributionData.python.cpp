@@ -50,7 +50,7 @@ void wrapCoherentDistributionData( python::module& module ) {
 
     python::init< ReferenceFrame, TabulatedScatteringFunction >(),
     python::arg( "frame" ), python::arg( "scattering" ),
-    "Initialise the coherent distribution data without anomolous form factors\n\n"
+    "Initialise the coherent distribution data without anomolous form factors"
   )
   .def(
 
@@ -58,7 +58,7 @@ void wrapCoherentDistributionData( python::module& module ) {
                   TabulatedFormFactor, TabulatedFormFactor >(),
     python::arg( "frame" ), python::arg( "scattering" ),
     python::arg( "real" ), python::arg( "imaginary" ),
-    "Initialise the coherent distribution data with anomolous form factors\n\n"
+    "Initialise the coherent distribution data with anomolous form factors"
   )
   .def_property_readonly(
 
