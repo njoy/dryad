@@ -31,7 +31,17 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     "energy of the emitted electron is equal to the binding energy of the\n"
     "subshell with the vacancy minus the binding energy of the subshell from\n"
     "which the electron filling the vacancy originated from and the subshell\n"
-    "from which the emitted electron came from."
+    "from which the emitted electron came from.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell :  njoy.dryad.id.ElectronSubshellID\n"
+    "                  The identifier of the subshell from which the vacancy filling electron originated\n"
+    "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "                   The identifier of the subshell from which the emitted electron originated\n"
+    "    probability : float\n"
+    "                   The probability of the transition\n"
+    "    energy : float, default none\n"
+    "                   The energy of the emitted electron\n\n"
   );
 
   // wrap the component
@@ -42,15 +52,7 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
                   double, std::optional< double > >(),
     python::arg( "originating_shell" ), python::arg( "emitting_shell" ),
     python::arg( "probability" ), python::arg( "energy" ) = std::nullopt,
-    "Initialise the non-radiative transition data\n\n"
-    "Arguments:\n"
-    "    self                the radiative transition data\n"
-    "    originating_shell   the identifier of the subshell from which the\n"
-    "                        vacancy filling electron originated\n"
-    "    emitting_shell      the identifier of the subshell from which the\n"
-    "                        emitted electron originated\n"
-    "    probability         the probability of the transition\n"
-    "    energy              the energy of the emitted electron (default: undefined)"
+    ""
   )
   .def_property_readonly(
 

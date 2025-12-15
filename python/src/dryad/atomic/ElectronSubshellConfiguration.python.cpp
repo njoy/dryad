@@ -35,7 +35,21 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "    when the atom is neutral (given as a floating point number)\n"
     "  - the decay modes or transitions that can fill a hole in this shell\n\n"
     "If there are transitions defined, the transition probabilities\n"
-    "can be normalised to 1 upon construction."
+    "can be normalised to 1 upon construction.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ElectronSubshellID  \n"
+    "           the electron subshell identifier\n"
+    "    energy : float     \n"
+    "           the electron subshell binding energy\n"
+    "    population : float  \n"
+    "           the electron subshell population when the atom is neutral\n"
+    "    radiative : list of RadiativeTransitionData, default [] \n"
+    "           the radiative transitions that are available (default: an empty list)\n"
+    "    nonradiative : list of NonRadiativeTransitionData, default [] \n"
+    "           the non-radiative transitions that are available (default: an empty list)\n"
+    "    normalise : bool, default false  \n"
+    "           option to indicate whether or not to normalise all probability data (default: no normalisation)\n\n"
   );
 
   // wrap the component
@@ -50,16 +64,7 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     python::arg( "radiative" ) = std::vector< RadiativeTransitionData >{},
     python::arg( "non_radiative" ) = std::vector< NonRadiativeTransitionData >{},
     python::arg( "normalise" ) = false,
-    "Initialise the subshell configuration\n\n"
-    "Arguments:\n"
-    "    self           the subshell configuration data\n"
-    "    id             the electron subshell identifier\n"
-    "    energy         the electron subshell binding energy\n"
-    "    population     the electron subshell population when the atom is neutral\n"
-    "    radiative      the radiative transitions that are available (default: an empty list)\n"
-    "    nonradiative   the non-radiative transitions that are available (default: an empty list)\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    ""
   )
   .def_property(
 
