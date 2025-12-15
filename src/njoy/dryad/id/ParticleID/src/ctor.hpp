@@ -21,10 +21,21 @@ ParticleID& operator=( ParticleID&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param za       the particle za number
- *  @param number   the particle level or subshell number (default is zero)
+ *  @param element   the particle element
+ *  @param mass      the particle mass number
+ *  @param level     the particle level
  */
-ParticleID( int za, int number = 0 ) : index_( getIndex( za, number ) ) {}
+ParticleID( ElementID element, int mass, LevelID level ) :
+    index_( getIndex( std::move( element ), mass, std::move( level ) ) ) {}
+
+/**
+ *  @brief Constructor
+ *
+ *  @param element    the particle element
+ *  @param subshell   the particle subshell
+ */
+ParticleID( ElementID element, ElectronSubshellID subshell ) :
+    index_( getIndex( std::move( element ), std::move( subshell ) ) ) {}
 
 /**
  *  @brief Constructor

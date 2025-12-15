@@ -2,25 +2,25 @@
  *  @brief Update registry
  *
  *  @param element   the particle element
- *  @param a         the particle mass number
+ *  @param mass      the particle mass number
  *  @param level     the particle level
  */
-static std::size_t updateRegistry( ElementID element, int a, LevelID state ) {
+static std::size_t updateRegistry( ElementID element, int mass, LevelID level ) {
 
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  int number = element.number() * 1000000 + a * 1000 + state.number();
+  int number = element.number() * 1000000 + mass * 1000 + level.number();
   std::vector< std::string > alternatives = {};
-  std::string symbol = element.symbol() + std::to_string( a );
-  if ( state.number() != 0 ) {
+  std::string symbol = element.symbol() + std::to_string( mass );
+  if ( level.number() != 0 ) {
 
-    if ( ( state.number() == LevelID::continuum ) || ( state.number() == LevelID::all ) ) {
+    if ( ( level.number() == LevelID::continuum ) || ( level.number() == LevelID::all ) ) {
 
       alternatives.emplace_back( symbol + std::string( "_e" ) +
-                                 std::to_string( state.number() ) );
+                                 std::to_string( level.number() ) );
     }
-    symbol += state.symbol();
+    symbol += level.symbol();
   }
   else {
 
@@ -28,8 +28,8 @@ static std::size_t updateRegistry( ElementID element, int a, LevelID state ) {
   }
 
   // create the data entry and set conversion
-  entries.emplace_back( number, element.number(), static_cast< short >( a ),
-                        state.number(), std::move( symbol ),
+  entries.emplace_back( number, element.number(), static_cast< short >( mass ),
+                        level.number(), std::move( symbol ),
                         std::move( alternatives ) );
 
   number_conversion_dictionary[ entries[ index ].number() ] = index;
@@ -54,9 +54,18 @@ static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshel
   // the index for the new identifier
   std::size_t index = entries.size();
 
-  int number = element.number() * 1000000 + subshell.number();
+  if ( subshell.isNonRelativistic() ) {
+
+    throw std::invalid_argument( "Electron subshell identifiers used for particle identifiers must be relativistic" );
+  }
+
+  int number = element.number() * 1000000 + subshell.mt().value();
   std::string symbol = element.symbol() + std::string( "{" ) + subshell.symbol() + std::string( "}" );
-  std::vector< std::string > alternatives = { element.symbol() + std::string( "{" ) + subshell.name() + std::string( "}" ) };
+  std::vector< std::string > alternatives;
+  for ( const auto& alternative : subshell.alternatives() ) {
+
+    alternatives.emplace_back( element.symbol() + std::string( "{" ) + alternative + std::string( "}" ) );
+  }
 
   // create the data entry and set conversion
   entries.emplace_back( number, element.number(),
@@ -77,56 +86,39 @@ static std::size_t updateRegistry( ElementID element, ElectronSubshellID subshel
 /**
  *  @brief Retrieve the index to the particle information entry
  *
- *  @param za       the za of the particle
- *  @param number   the particle level number or subshell number
+ *  @param element   the particle element
+ *  @param mass      the particle mass number
+ *  @param level     the particle level
  */
-static std::size_t getIndex( int za, int number ) {
+static std::size_t getIndex( ElementID element, int mass, LevelID level ) {
 
   try {
 
-    return number_conversion_dictionary.at( za * 1000 + number );
+    return number_conversion_dictionary.at( ( element.number() * 1000 + mass ) * 1000 + level.number() );
   }
   catch ( ... ) {
 
-    try {
+    // update registry and return the index
+    return updateRegistry( std::move( element ), std::move( mass ), std::move( level ) );
+  }
+}
 
-      // data entries
-      int mass = za % 1000;
-      ElementID element( ( za - mass ) / 1000 );
+/**
+ *  @brief Retrieve the index to the particle information entry
+ *
+ *  @param element    the particle element
+ *  @param subshell   the particle subshell
+ */
+static std::size_t getIndex( ElementID element, ElectronSubshellID subshell ) {
 
-      // look for state or subshell number
-      if ( number < LevelID::size() ) {
+  try {
 
-        if ( ( mass == 0 ) && ( number != 0 ) ) {
+    return string_conversion_dictionary.at( element.symbol() + "{" + subshell.symbol() + "}" );
+  }
+  catch ( ... ) {
 
-          throw std::invalid_argument( "An element cannot have a non-zero level number" );
-        }
-
-        // determine the level
-        LevelID state( number );
-
-        // update registry and return the index
-        return updateRegistry( std::move( element ), std::move( mass ), std::move( state ) );
-      }
-      else if ( mass == 0 ) {
-
-        // determine the level
-        ElectronSubshellID subshell( number );
-
-        // update registry and return the index
-        return updateRegistry( std::move( element ), std::move( subshell ) );
-      }
-      else {
-
-        throw std::invalid_argument( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
-                                     + std::to_string( number ) + "\' does not define a standard particle or ion" );
-      }
-    }
-    catch ( ... ) {
-
-      throw std::invalid_argument( "The za \'" + std::to_string( za ) + "\' and level or subshell number \'"
-                                   + std::to_string( number ) + "\' does not define a standard particle or ion" );
-    }
+    // update registry and return the index
+    return updateRegistry( std::move( element ), std::move( subshell ) );
   }
 }
 
@@ -149,14 +141,14 @@ static std::size_t getIndex( const std::string& string ) {
       // data entries
       ElementID element( match[2] );
       int mass = std::stoi( match[3] );
-      LevelID state( match[4] != ""
+      LevelID level( match[4] != ""
                      ? match[5] != "" ? std::stoi( match[6] )
                                       : match[7] != "" ? LevelID::all
                                                        : LevelID::continuum
                      : 0 );
 
       // update registry and return the index
-      return updateRegistry( std::move( element ), std::move( mass ), std::move( state ) );
+      return updateRegistry( std::move( element ), std::move( mass ), std::move( level ) );
     }
     else if ( std::regex_match( string, match, ion_id_regex ) ) {
 

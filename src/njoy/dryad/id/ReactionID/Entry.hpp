@@ -12,6 +12,8 @@ class Entry {
   std::vector< std::string > symbols_;
   std::optional< ParticleID > residual_;
 
+  std::size_t hash_;
+
   static std::optional< ParticleID >
   generateResidual( const ParticleID& projectile,
                     const ParticleID& target,
@@ -98,19 +100,22 @@ public:
 
   /* constructor */
   Entry( ParticleID projectile, ParticleID target, ReactionType type ) :
-    projectile_( std::move( projectile ) ),
-    target_( std::move( target ) ),
-    type_( std::move( type ) ),
-    // short_symbol_( generateShortSymbol( projectile, target, type ) ),
-    symbols_( generateSymbols( projectile, target, type ) ),
-    residual_( generateResidual( projectile, target, type ) ) {}
+      projectile_( std::move( projectile ) ),
+      target_( std::move( target ) ),
+      type_( std::move( type ) ),
+      symbols_( generateSymbols( projectile, target, type ) ),
+      residual_( generateResidual( projectile, target, type ) ) {
+
+    this->hash_ = std::hash< std::string >{}( this->symbol() );
+  }
 
   /* methods */
   const ParticleID& projectile() const noexcept { return this->projectile_; }
   const ParticleID& target() const noexcept { return this->target_; }
   const ReactionType& reactionType() const noexcept { return this->type_; }
   const std::optional< ParticleID >& residual() const noexcept { return this->residual_; }
-  // const std::string& shortSymbol() const noexcept { return this->short_symbol_; }
-  const std::string& longSymbol() const noexcept { return this->symbols().front(); }
+  const std::string& symbol() const noexcept { return this->symbols().front(); }
   const std::vector< std::string >& symbols() const noexcept { return this->symbols_; }
+
+  std::size_t hash() const { return this->hash_; }
 };

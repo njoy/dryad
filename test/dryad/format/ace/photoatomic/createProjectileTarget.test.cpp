@@ -26,7 +26,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
+        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
@@ -34,7 +34,7 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -87,7 +87,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
+        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
@@ -95,7 +95,7 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 
@@ -155,7 +155,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table );
+        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().awr() );
         CHECK( std::nullopt == H0.documentation().library() );
@@ -163,7 +163,7 @@ SCENARIO( "createProjectileTarget" ) {
         CHECK( std::nullopt == H0.documentation().description() );
 
         CHECK( id::ParticleID( "g" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( 1000 ) == H0.targetIdentifier() );
+        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
 
         CHECK( InteractionType::Atomic == H0.interactionType() );
 

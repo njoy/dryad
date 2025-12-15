@@ -21,7 +21,7 @@ namespace atomic {
    */
   inline unsigned int createEndfSubshellDesignator( const id::ElectronSubshellID& id ) {
 
-    return id.number() - id::ElectronSubshellID::K + 1;
+    return id.mt().value() - id::ElectronSubshellID::K + 1;
   }
 
 } // atomic namespace

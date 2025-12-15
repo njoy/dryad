@@ -26,8 +26,6 @@ void wrapElectronSubshellID( python::module& module ) {
     module,
     "ElectronSubshellID",
     "The electron subshell identifier\n\n"
-    "For more information on how to create instances of ElectronSubshellID, see the\n"
-    "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
     "Parameters\n"
     "----------\n"
     "    number : int \n"
@@ -101,9 +99,33 @@ void wrapElectronSubshellID( python::module& module ) {
   .def_property_readonly_static( "Q13",  [] ( python::object ) { return Component::Q13; }, "The Q13 shell" )
   .def_property_readonly(
 
-    "number",
-    &Component::number,
-    "The subshell number"
+    "principal_quantum_number",
+    &Component::principalQuantumNumber,
+    "The subshell principal quantum number"
+  )
+  .def_property_readonly(
+
+    "azimuthal_quantum_number",
+    &Component::azimuthalQuantumNumber,
+    "The subshell azimuthal quantum number"
+  )
+  .def_property_readonly(
+
+    "total_angular_momentum",
+    &Component::totalAngularMomentum,
+    "The subshell total angular momentum"
+  )
+  .def_property_readonly(
+
+    "is_relativistic",
+    &Component::isRelativistic,
+    "Flag to indicate whether or not the subshell identifier is relativistic"
+  )
+  .def_property_readonly(
+
+    "is_non_relativistic",
+    &Component::isNonRelativistic,
+    "Flag to indicate whether or not the subshell identifier is non-relativistic"
   )
   .def_property_readonly(
 
@@ -113,14 +135,14 @@ void wrapElectronSubshellID( python::module& module ) {
   )
   .def_property_readonly(
 
-    "name",
-    &Component::name,
-    "The subshell name"
+    "mt",
+    &Component::mt,
+    "The subshell mt number (if defined)"
   )
   .def(
 
     "__hash__",
-    [] ( const Component& self ) { return self.number(); },
+    [] ( const Component& self ) { return std::hash< Component >{}( self ); },
     "Hash function"
   );
 

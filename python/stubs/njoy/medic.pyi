@@ -13,7 +13,7 @@ def prune_cross_section(lower_energy: float, upper_energy: float, xs: njoy.dryad
         upper_energy   the new upper energy limit
         xs             the cross section table to be modified
     """
-def prune_cross_sections(lower_energy: float, upper_energy: float, xs: njoy.dryad.ProjectileTarget) -> None:
+def prune_cross_sections(lower_energy: float, upper_energy: float, pt: njoy.dryad.ProjectileTarget) -> None:
     """
     Prune cross section data
     

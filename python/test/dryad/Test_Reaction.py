@@ -237,7 +237,7 @@ class Test_Reaction( unittest.TestCase ) :
     def test_setter_functions( self ) :
 
         n = ParticleID.neutron()
-        fe56 = ParticleID( 26056 )
+        fe56 = ParticleID( "Fe56" )
 
         chunk = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
                           mass_q = 0, reaction_q = -1,
@@ -339,7 +339,7 @@ class Test_Reaction( unittest.TestCase ) :
     def test_comparison( self ) :
 
         n = ParticleID.neutron()
-        fe56 = ParticleID( 26056 )
+        fe56 = ParticleID( "Fe56" )
 
         left = Reaction( id = ReactionID( n, fe56, ReactionType( n, 51 ) ),
                          mass_q = 0, reaction_q = -1,

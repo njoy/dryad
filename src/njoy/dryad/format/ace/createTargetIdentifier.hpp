@@ -19,8 +19,10 @@ namespace ace {
    */
   inline id::ParticleID createTargetIdentifier( const std::string& zaid ) {
 
-    std::string za( zaid.begin(), std::find( zaid.begin(), zaid.end(), '.' ) );
-    return id::ParticleID( std::stoi( za ) );
+    int number = std::stoi( std::string( zaid.begin(), std::find( zaid.begin(), zaid.end(), '.' ) ) );
+    id::ElementID element( std::round( number / 1000 ) );
+    int mass = number%1000;
+    return id::ParticleID( std::move( element ), mass, id::LevelID( 0 ) );
   }
 
 } // ace namespace

@@ -28,11 +28,11 @@ SCENARIO( "ReactionID" ) {
     ParticleID a = ParticleID::alpha();
     ParticleID eminus = ParticleID::electron();
     ParticleID eplus = ParticleID::positron();
-    ParticleID u235( 92235 );
-    ParticleID u238( 92238 );
-    ParticleID am242( 95242 );
-    ParticleID am242m( 95242, 2 );
-    ParticleID u( 92000 );
+    ParticleID u235( "U235" );
+    ParticleID u238( "U238" );
+    ParticleID am242( "Am242" );
+    ParticleID am242m( "Am242_e2" );
+    ParticleID u( "U" );
 
     std::map< ParticleID, short > empty;
 
@@ -74,7 +74,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( empty == id.particles() );
-      CHECK( ParticleID( 92239, LevelID::all ) == id.residual() );
+      CHECK( ParticleID( "U239[all]" ) == id.residual() );
       CHECK( ReactionType( 102 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->g,U239[all]" == id.symbol() );
@@ -93,7 +93,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
-      CHECK( ParticleID( 88230, LevelID::all ) == id.residual() );
+      CHECK( ParticleID( "Ra230[all]" ) == id.residual() );
       CHECK( ReactionType( 199 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->3n,2p,a,Ra230[all]" == id.symbol() );
@@ -147,7 +147,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( n == id.projectile() );
       CHECK( u235 == id.target() );
       CHECK( empty == id.particles() );
-      CHECK( ParticleID( 92236, LevelID::all ) == id.residual() );
+      CHECK( ParticleID( "U236[all]" ) == id.residual() );
       CHECK( ReactionType( 102 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->g,U236[all]" == id.symbol() );
@@ -166,7 +166,7 @@ SCENARIO( "ReactionID" ) {
       CHECK( n == id.projectile() );
       CHECK( u235 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
-      CHECK( ParticleID( 88227, LevelID::all ) == id.residual() );
+      CHECK( ParticleID( "Ra227[all]" ) == id.residual() );
       CHECK( ReactionType( 199 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->3n,2p,a,Ra227[all]" == id.symbol() );
@@ -262,7 +262,7 @@ SCENARIO( "ReactionID" ) {
   GIVEN( "valid ReactionID instances" ) {
 
     ParticleID n = ParticleID::neutron();
-    ParticleID u238( 92238 );
+    ParticleID u238( "U238" );
 
     ReactionID id1( n, u238, ReactionType( 102 ) );
     ReactionID id2( n, u238, ReactionType( 199 ) );

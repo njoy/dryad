@@ -308,7 +308,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
                 {}, 2.224648e+6, 2.224648e+6 )
     };
 
-    ProjectileTarget transport( id::ParticleID::neutron(), id::ParticleID( 1001 ),
+    ProjectileTarget transport( id::ParticleID::neutron(), id::ParticleID( "H1" ),
                                 InteractionType::Nuclear,
                                 std::move( reactions ) );
     transport.documentation().awr( .9991673 );
@@ -1027,7 +1027,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
                 {}, 6.637350e+6, 6.637350e+6 )
     };
 
-    ProjectileTarget transport( id::ParticleID::neutron(), id::ParticleID( 93236, 2 ),
+    ProjectileTarget transport( id::ParticleID::neutron(), id::ParticleID( "Np236_e2" ),
                                 InteractionType::Nuclear,
                                 std::move( reactions ) );
     transport.documentation().awr( 234.0190 );

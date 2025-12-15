@@ -94,7 +94,7 @@ namespace id {
      */
     const std::string& symbol() const {
 
-      return entries[ this->index_ ].longSymbol();
+      return entries[ this->index_ ].symbol();
     }
 
     /**
@@ -111,6 +111,14 @@ namespace id {
     const ReactionType& reactionType() const {
 
       return entries[ this->index_ ].reactionType();
+    }
+
+    /**
+     *  @brief Return the hash
+     */
+    std::size_t hash() const {
+
+      return entries[ this->index_ ].hash();
     }
 
     /**
@@ -194,7 +202,7 @@ namespace std {
 
     std::size_t operator()( const njoy::dryad::id::ReactionID& key ) const {
 
-      return std::hash< std::string >{}( key.symbol() );
+      return key.hash();
     }
   };
 

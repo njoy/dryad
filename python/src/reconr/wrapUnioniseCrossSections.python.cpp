@@ -36,4 +36,4 @@ namespace reconr {
       "                    unionisation (default: false)"
     );
   }
-} // medic namespace
+} // reconr namespace

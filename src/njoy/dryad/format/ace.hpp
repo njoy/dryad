@@ -1,4 +1,16 @@
 #include "njoy/dryad/format/ace/atomic/createAceSubshellTransitionDataBlock.hpp"
+#include "njoy/dryad/format/ace/atomic/createAceElectronSubshellBlock.hpp"
+
+#include "njoy/dryad/format/ace/continuous/createTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/ace/continuous/createElasticTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/ace/continuous/createTotalTabulatedCrossSection.hpp"
+#include "njoy/dryad/format/ace/continuous/createReaction.hpp"
+#include "njoy/dryad/format/ace/continuous/createReactions.hpp"
+#include "njoy/dryad/format/ace/continuous/createProjectileTarget.hpp"
+
+#include "njoy/dryad/format/ace/photonuclear/createReaction.hpp"
+#include "njoy/dryad/format/ace/photonuclear/createReactions.hpp"
+#include "njoy/dryad/format/ace/photonuclear/createProjectileTarget.hpp"
 
 #include "njoy/dryad/format/ace/photoatomic/createPartialReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createReactionIdentifiers.hpp"

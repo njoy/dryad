@@ -35,8 +35,8 @@ namespace electroatomic {
     dryad::id::ReactionID largeangle_id( projectile, target, dryad::id::ReactionType( projectile, 525 ) );
     if ( electroatomic.hasReaction( largeangle_id ) ) {
 
-      // we calculate the transport corrected elastic cross section: ( 1 - mubar ) * sigma
-      // however, it is better to calculate this as the ( 1 - mu )bar * sigma
+      // we need the transport corrected elastic cross section - defined as ( 1 - mubar ) * sigma
+      // however, it is better to calculate this as ( 1 - mu )bar * sigma which we do here
 
       dryad::id::ReactionID elastic_id( projectile, target, dryad::id::ReactionType( projectile, 526 ) );
 

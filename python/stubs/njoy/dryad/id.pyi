@@ -79,9 +79,6 @@ class ChannelID:
 class ElectronSubshellID:
     """
     The electron subshell identifier
-    
-    For more information on how to create instances of ElectronSubshellID, see the
-    Jupyter notebook dryad-identifiers.ipynb under python/examples.
     """
     K: typing.ClassVar[int] = 534
     L1: typing.ClassVar[int] = 535
@@ -175,19 +172,39 @@ class ElectronSubshellID:
         Convenience function for printing the identifier
         """
     @property
-    def name(self) -> str:
+    def azimuthal_quantum_number(self) -> int:
         """
-        The subshell name
+        The subshell azimuthal quantum number
         """
     @property
-    def number(self) -> int:
+    def is_non_relativistic(self) -> bool:
         """
-        The subshell number
+        Flag to indicate whether or not the subshell identifier is non-relativistic
+        """
+    @property
+    def is_relativistic(self) -> bool:
+        """
+        Flag to indicate whether or not the subshell identifier is relativistic
+        """
+    @property
+    def mt(self) -> int | None:
+        """
+        The subshell mt number (if defined)
+        """
+    @property
+    def principal_quantum_number(self) -> int:
+        """
+        The subshell principal quantum number
         """
     @property
     def symbol(self) -> str:
         """
         The subshell symbol
+        """
+    @property
+    def total_angular_momentum(self) -> float | None:
+        """
+        The subshell total angular momentum
         """
 class ElementID:
     """
@@ -355,16 +372,6 @@ class ParticleID:
     """
     The particle identifier
     
-    The ParticleID can be used to identify the following particle types (the
-    numbers between parentheses are the internal logic numbers assigned to them):
-      - fundamental particles: g (0), e- (1), e+ (2), n (10), p (1001), d (1002),
-        t (1003), h (2003), a (2004)
-      - elements (z * 1000000)
-      - nuclides (z * 1000000 + a * 1000 + l, with l = 0 .. 150 with 150 being
-        defined as the continuum )
-      - ions (z * 1000000 + s, with s = K(534) .. Q11(580) - basically the ENDF
-        mt numbers for the subshell ionisation)
-    
     Comparison operators are provided using the logical order given by the
     element number. A hash function and override for std::hash is also
     provided.
@@ -396,6 +403,15 @@ class ParticleID:
     def neutron() -> ParticleID:
         """
         The particle identifier for neutrons
+        """
+    @staticmethod
+    def nuclide(za: int, level: int = 0) -> ParticleID:
+        """
+        Create a particle identifier for a nuclide
+        
+        Arguments:
+            za      the za number of the nuclide
+            level   the level number of the nuclide
         """
     @staticmethod
     def photon() -> ParticleID:
@@ -437,14 +453,25 @@ class ParticleID:
         Hash function
         """
     @typing.overload
-    def __init__(self, za: int, number: int = 0) -> None:
+    def __init__(self, element: ElementID, mass: int, level: LevelID) -> None:
         """
         Initialise the particle identifier
         
         Arguments:
-            self     the identifier
-            za       the particle za number
-            number   the particle level number or subshell number (default is zero)
+            self      the identifier
+            element   the particle element
+            mass      the particle mass number
+            level     the particle level
+        """
+    @typing.overload
+    def __init__(self, element: ElementID, subshell: ElectronSubshellID) -> None:
+        """
+        Initialise the particle identifier
+        
+        Arguments:
+            self       the identifier
+            element    the particle element
+            subshell   the particle subshell
         """
     @typing.overload
     def __init__(self, string: str) -> None:

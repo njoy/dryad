@@ -277,6 +277,33 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( true == ReactionInformation::isValid( 198 ) );
       CHECK( true == ReactionInformation::isValid( 199 ) );
       CHECK( true == ReactionInformation::isValid( 200 ) );
+      for ( int mt = 201; mt < 219; ++mt ) {
+
+        CHECK( true == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 219; mt < 251; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
+      CHECK( true == ReactionInformation::isValid( 251 ) );
+      CHECK( true == ReactionInformation::isValid( 252 ) );
+      CHECK( true == ReactionInformation::isValid( 253 ) );
+      for ( int mt = 254; mt < 301; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 301; mt < 451; ++mt ) {
+
+        CHECK( true == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 461; mt < 501; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
+      for ( int mt = 573; mt < 600; ++mt ) {
+
+        CHECK( false == ReactionInformation::isValid( mt ) );
+      }
       CHECK( true == ReactionInformation::isValid( 600 ) );
       CHECK( true == ReactionInformation::isValid( 601 ) );
       CHECK( true == ReactionInformation::isValid( 602 ) );
@@ -582,7 +609,7 @@ SCENARIO( "ReactionInformation" ) {
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );
     auto material = tape.materials().front();
     auto n = njoy::dryad::id::ParticleID::neutron();
-    auto li7 = njoy::dryad::id::ParticleID( 3007 );
+    auto li7 = njoy::dryad::id::ParticleID( "Li7" );
 
     THEN( "partial mt numbers can be obtained for the total reaction" ) {
 
@@ -684,7 +711,7 @@ SCENARIO( "ReactionInformation" ) {
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-093_Np_236m1.endf" );
     auto material = tape.materials().front();
     auto n = njoy::dryad::id::ParticleID::neutron();
-    auto np236m1 = njoy::dryad::id::ParticleID( 93236, 2 );
+    auto np236m1 = njoy::dryad::id::ParticleID( "Np236_e2" );
 
     THEN( "partial mt numbers can be obtained for the total reaction" ) {
 
