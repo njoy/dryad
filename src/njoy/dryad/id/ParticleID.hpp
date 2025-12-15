@@ -343,9 +343,9 @@ namespace id {
     }
 
     /**
-     *  @brief Return the particle's subshell
+     *  @brief Return the particle's subshell identifier
      */
-    const std::optional< ElectronSubshellID >& subshell() const {
+    const std::optional< ElectronSubshellID >& subshellIdentifier() const {
 
       return entries[ this->index_ ].subshell();
     }
