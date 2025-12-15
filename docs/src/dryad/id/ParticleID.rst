@@ -1,7 +1,7 @@
 .. currentmodule:: njoy.dryad.id
 
 
-ParticleID 
+ParticleID
 ==========
 
 General information about the concept
@@ -13,15 +13,15 @@ Constructors
 
     ParticleID
     ~ParticleID.photon
-    ~ParticleID.electron 
-    ~ParticleID.positron 
-    ~ParticleID.neutron 
-    ~ParticleID.proton 
+    ~ParticleID.electron
+    ~ParticleID.positron
+    ~ParticleID.neutron
+    ~ParticleID.proton
     ~ParticleID.deuteron
-    ~ParticleID.triton 
+    ~ParticleID.triton
     ~ParticleID.helion
-    ~ParticleID.alpha 
-    ~ParticleID.nuclide 
+    ~ParticleID.alpha
+    ~ParticleID.nuclide
 
 Static Methods
 ~~~~~~~~~~~~~~
@@ -31,7 +31,6 @@ Static Methods
 
         ~ParticleID.size
 
-
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -39,17 +38,16 @@ Read-only Attributes
     :toctree: generated/
 
     ~ParticleID.symbol
-    ~ParticleID.z 
-    ~ParticleID.a 
-    ~ParticleID.e 
-    ~ParticleID.za 
-    ~ParticleID.subshell_identifier
+    ~ParticleID.z
+    ~ParticleID.a
+    ~ParticleID.e
+    ~ParticleID.za
+    ~ParticleID.vacancies
 
 Methods
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. autosummary::
     :toctree: generated/
-
 
     ~ParticleID.ground_state
