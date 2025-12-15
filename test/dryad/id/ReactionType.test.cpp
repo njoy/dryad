@@ -42,7 +42,7 @@ SCENARIO( "ReactionType" ) {
 
       // special numbers
       ReactionType id = ReactionType::total();
-      CHECK( 1 == id.number() );
+      CHECK( 10000000001 == id.number() );
       CHECK( 1 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "total" == id.symbol() );
@@ -59,7 +59,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 3 );
-      CHECK( 3 == id.number() );
+      CHECK( 10000000003 == id.number() );
       CHECK( 3 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "non-elastic" == id.symbol() );
@@ -73,7 +73,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 5 );
-      CHECK( 5 == id.number() );
+      CHECK( 10000000005 == id.number() );
       CHECK( 5 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "anything" == id.symbol() );
@@ -87,7 +87,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 18 );
-      CHECK( 18 == id.number() );
+      CHECK( 10000000018 == id.number() );
       CHECK( 18 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "fission(t)" == id.symbol() );
@@ -102,7 +102,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 19 );
-      CHECK( 19 == id.number() );
+      CHECK( 10000000019 == id.number() );
       CHECK( 19 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "fission[first]" == id.symbol() );
@@ -117,7 +117,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 20 );
-      CHECK( 20 == id.number() );
+      CHECK( 10000000020 == id.number() );
       CHECK( 20 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "fission[second]" == id.symbol() );
@@ -132,7 +132,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 21 );
-      CHECK( 21 == id.number() );
+      CHECK( 10000000021 == id.number() );
       CHECK( 21 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "fission[third]" == id.symbol() );
@@ -147,7 +147,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 38 );
-      CHECK( 38 == id.number() );
+      CHECK( 10000000038 == id.number() );
       CHECK( 38 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "fission[fourth]" == id.symbol() );
@@ -162,7 +162,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 27 );
-      CHECK( 27 == id.number() );
+      CHECK( 10000000027 == id.number() );
       CHECK( 27 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "absorption" == id.symbol() );
@@ -176,7 +176,7 @@ SCENARIO( "ReactionType" ) {
       CHECK_THROWS( id.resolve( n, u238 ) );
 
       id = ReactionType( 101 );
-      CHECK( 101 == id.number() );
+      CHECK( 10000000101 == id.number() );
       CHECK( 101 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "disappearance" == id.symbol() );
@@ -524,7 +524,7 @@ SCENARIO( "ReactionType" ) {
 
       // photoatomic and electroatomic reaction types
       id = ReactionType::total( InteractionType::Atomic );
-      CHECK( 501 == id.number() );
+      CHECK( 10000000501 == id.number() );
       CHECK( 501 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "total[atomic]" == id.symbol() );
@@ -628,7 +628,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( u == id.resolve( eminus, u ) );
 
       id = ReactionType( 516 );
-      CHECK( 1518 == id.number() );
+      CHECK( 10000001518 == id.number() );
       CHECK( 516 == id.mt() );
       CHECK( atomic == id.interactionType() );
       CHECK( "pair-production" == id.symbol() );
@@ -5539,7 +5539,6 @@ SCENARIO( "ReactionType" ) {
     ReactionType alpha( 800 );
     ReactionType total( 1 );
     ReactionType fission( 18 );
-    ReactionType pairproduction( 515 );
     ReactionType total_atomic( 501 );
 
     THEN( "the ordering is respected" ) {
@@ -5552,8 +5551,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( helion < alpha );
       CHECK( alpha < total );
       CHECK( total < fission );
-      CHECK( fission < pairproduction );
-      CHECK( pairproduction < total_atomic );
+      CHECK( fission < total_atomic );
     }
 
     ReactionType id1( 50 );

@@ -18,6 +18,22 @@ class ElectronSubshellConfiguration:
     
     If there are transitions defined, the transition probabilities
     can be normalised to 1 upon construction.
+    
+    Parameters
+    ----------
+        id : njoy.dryad.id.ElectronSubshellID  
+               the electron subshell identifier
+        energy : float     
+               the electron subshell binding energy
+        population : float  
+               the electron subshell population when the atom is neutral
+        radiative : list of RadiativeTransitionData, default [] 
+               the radiative transitions that are available (default: an empty list)
+        nonradiative : list of NonRadiativeTransitionData, default [] 
+               the non-radiative transitions that are available (default: an empty list)
+        normalise : bool, default false  
+               option to indicate whether or not to normalise all probability data (default: no normalisation)
+    
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ElectronSubshellConfiguration:
@@ -27,19 +43,7 @@ class ElectronSubshellConfiguration:
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     def __init__(self, id: njoy.dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
-        """
-        Initialise the subshell configuration
-        
-        Arguments:
-            self           the subshell configuration data
-            id             the electron subshell identifier
-            energy         the electron subshell binding energy
-            population     the electron subshell population when the atom is neutral
-            radiative      the radiative transitions that are available (default: an empty list)
-            nonradiative   the non-radiative transitions that are available (default: an empty list)
-            normalise      option to indicate whether or not to normalise
-                           all probability data (default: no normalisation)
-        """
+        ...
     def __ne__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     def normalise(self) -> None:
@@ -136,6 +140,18 @@ class NonRadiativeTransitionData:
     subshell with the vacancy minus the binding energy of the subshell from
     which the electron filling the vacancy originated from and the subshell
     from which the emitted electron came from.
+    
+    Parameters
+    ----------
+        originating_shell :  njoy.dryad.id.ElectronSubshellID
+                      The identifier of the subshell from which the vacancy filling electron originated
+        emitting_shell : njoy.dryad.id.ElectronSubshellID
+                       The identifier of the subshell from which the emitted electron originated
+        probability : float
+                       The probability of the transition
+        energy : float, default none
+                       The energy of the emitted electron
+    
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> NonRadiativeTransitionData:
@@ -145,18 +161,7 @@ class NonRadiativeTransitionData:
     def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
-        """
-        Initialise the non-radiative transition data
-        
-        Arguments:
-            self                the radiative transition data
-            originating_shell   the identifier of the subshell from which the
-                                vacancy filling electron originated
-            emitting_shell      the identifier of the subshell from which the
-                                emitted electron originated
-            probability         the probability of the transition
-            energy              the energy of the emitted electron (default: undefined)
-        """
+        ...
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     @property
@@ -205,6 +210,17 @@ class RadiativeTransitionData:
     the emitted photon is equal to the difference in binding energies
     between the subshell with the vacancy and the subshell from which the
     electron filling the vacancy originated from.
+    
+    Parameters
+    ----------
+        originating_shell : njoy.dryad.id.ElectronSubshellID 
+             the identifier of the subshell from which the
+             vacancy filling electron originated
+        probability : float
+             the probability of the transition
+        energy : float,  default None
+             the energy of the emitted photon (default: undefined)
+    
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> RadiativeTransitionData:
@@ -214,16 +230,7 @@ class RadiativeTransitionData:
     def __eq__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
-        """
-        Initialise the radiative transition data
-        
-        Arguments:
-            self                the radiative transition data
-            originating_shell   the identifier of the subshell from which the
-                                vacancy filling electron originated
-            probability         the probability of the transition
-            energy              the energy of the emitted photon (default: undefined)
-        """
+        ...
     def __ne__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     @property
