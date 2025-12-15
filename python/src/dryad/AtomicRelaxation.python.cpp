@@ -134,7 +134,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "----------\n"
     "    filename : str \n"
     "         the ENDF file name\n"
-    "    normalise : bool, default false\n"
+    "    normalise : bool, default false \n"
     "         option to indicate whether or not to normalise\n"
     "         all probability data (default: no normalisation)\n\n"
   )
@@ -151,7 +151,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "---------- \n"
     "    filename : str \n"
     "         the GNDS file name\n"
-    "    normalise : bool, default false\n"
+    "    normalise : bool, default false \n"
     "         option to indicate whether or not to normalise\n"
     "         all probability data (default: no normalisation)\n\n"
   )
