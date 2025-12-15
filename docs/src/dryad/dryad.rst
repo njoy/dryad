@@ -17,3 +17,9 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
    :caption: Base Modules:
 
    id
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Distribution Types
+
+   distributions
