@@ -25,6 +25,7 @@ Read-only Attributes
     ~TabulatedComptonProfile.boundaries
     ~TabulatedComptonProfile.pdf
     ~TabulatedComptonProfile.cdf
+    ~TabulatedComptonProfile.average_momentum
 
 Methods
 ~~~~~~~
@@ -32,5 +33,5 @@ Methods
     :toctree: generated/
 
     ~TabulatedComptonProfile.__call__
-    ~TabulatedComptonProfile.average_momentum
     ~TabulatedComptonProfile.linearise
+    ~TabulatedComptonProfile.normalise
