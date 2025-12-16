@@ -164,6 +164,7 @@ add_cpp_test( dryad.format.endf.createProductIdentifier                         
 add_cpp_test( dryad.format.endf.createTargetIdentifier                                  dryad/format/endf/createTargetIdentifier.test.cpp )
 add_cpp_test( dryad.format.endf.createInteractionType                                   dryad/format/endf/createInteractionType.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.createTabulatedRadius                        dryad/format/endf/resonances/createTabulatedRadius.test.cpp )
+add_cpp_test( dryad.format.endf.resonances.lrf3.createSpinGroups                        dryad/format/endf/resonances/lrf3/createSpinGroups.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createBoundaryCondition                 dryad/format/endf/resonances/lrf7/createBoundaryCondition.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createFormalism                         dryad/format/endf/resonances/lrf7/createFormalism.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createKinematics                        dryad/format/endf/resonances/lrf7/createKinematics.test.cpp )

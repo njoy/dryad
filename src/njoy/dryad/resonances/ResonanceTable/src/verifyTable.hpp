@@ -6,20 +6,32 @@ void verifyTable( const std::vector< id::ChannelID >& channels,
   std::size_t nc = channels.size();
   std::size_t ne = energies.size();
 
-  if ( nc  == 0 || ne == 0 ) {
+  if ( nc  == 0 ) {
 
-    Log::error( "At least one channel and one level energy should be defined" );
+    Log::error( "At least one channel should be defined" );
     Log::info( "Number channels: {}", nc );
-    Log::info( "Number energies: {}", ne );
     throw std::exception();
   }
 
   auto energy = std::adjacent_find( energies.begin(), energies.end() );
   if ( energy != energies.end() ) {
 
-    Log::error( "The energies are not unique" );
-    Log::info( "The energy = {} appears more than once", *energy );
-    throw std::exception();
+    Log::warning( "The energies are not unique" );
+
+    std::vector< double > duplicates;
+    duplicates.insert( std::lower_bound( duplicates.begin(), duplicates.end(), *energy ), *energy );
+    energy = std::adjacent_find( energy + 1, energies.end() );
+    while ( energy != energies.end() ) {
+
+      duplicates.insert( std::lower_bound( duplicates.begin(), duplicates.end(), *energy ), *energy );
+      energy = std::adjacent_find( energy + 1, energies.end() );
+    }
+    duplicates.erase( std::unique( duplicates.begin(), duplicates.end() ), duplicates.end() );
+
+    for ( double value : duplicates ) {
+
+      Log::info( "The energy = {} appears more than once", value );
+    }
   }
 
   auto channel = std::adjacent_find( channels.begin(), channels.end() );

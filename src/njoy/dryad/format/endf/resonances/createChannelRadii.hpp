@@ -20,7 +20,7 @@ namespace resonances {
    *  @brief Create the channel radii based on ENDF information
    *
    *  @param[in] naps   the channel radius option as given in the ENDF file
-   *  @param[in] nro    the energy dependent scattering radius (if defined)
+   *  @param[in] nro    the energy dependent scattering radius (if defined, given in fm)
    *  @param[in] ap     the l-dependent scattering radius (if defined, given in fm)
    *  @param[in] awr    the atomic weight ratio as given in the ENDF file
    */
@@ -47,7 +47,7 @@ namespace resonances {
         case 2 : return dryad::resonances::ChannelRadii( ap, nro.value() );
         default : {
 
-          Log::error( "Encountered unknown value for NAPS = {}", naps );
+          Log::error( "Encountered unknown value for NAPS = {} with NRO = {}", naps, nro.has_value() );
           throw std::exception();
         }
       }
@@ -62,7 +62,7 @@ namespace resonances {
         case 1 : return dryad::resonances::ChannelRadii( ap );
         default : {
 
-          Log::error( "Encountered unknown value for NAPS = {}", naps );
+          Log::error( "Encountered unknown value for NAPS = {} with NRO = {}", naps, nro.has_value() );
           throw std::exception();
         }
       }
