@@ -2168,6 +2168,22 @@ class TabulatedComptonProfile:
 class TabulatedComptonProfileFunction:
     """
     A Compton profile distribution using tabulated data
+    
+    Parameters 
+    ---------- 
+        momentum : list of float 
+             the momentum values 
+        values : list of float 
+             the probability values 
+        boundaries : list of int 
+             the boundaries of the interpolation regions 
+        interpolants : list of njoy.dryad.InterpolationType 
+             the interpolation types of the interpolation regions 
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear 
+             the interpolation type (default lin-lin) 
+        normalise : bool, default false 
+            option to indicate whether or not to normalise 
+            all probability data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2180,9 +2196,10 @@ class TabulatedComptonProfileFunction:
         """
         Evaluate the table for a given momentum value
         
-        Arguments:
-            self        the table
-            momentum    the momentum value
+        Parameters 
+        ---------- 
+            momentum : float 
+                the momentum value
         """
     def __copy__(self) -> TabulatedComptonProfileFunction:
         ...
@@ -2201,27 +2218,12 @@ class TabulatedComptonProfileFunction:
     @typing.overload
     def __init__(self, momentum: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the Compton profile
-        
-        Arguments:
-            self           the compton profile
-            momentum       the momentum values
-            values         the probability values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the compton profile function with multiple interpolation zones
         """
     @typing.overload
     def __init__(self, momentum: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the Compton profile
-        
-        Arguments:
-            self           the Compton profile
-            momentum       the momentum values
-            values         the probability values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the compton profile function with a single interpolation zone
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedComptonProfileFunction:
@@ -2259,6 +2261,10 @@ class TabulatedComptonProfileFunction:
             self        the table
             tolerance   the linearisation tolerance
         """
+    def normalise(self) -> None:
+        """
+        Normalise the distribution function
+        """
     @property
     def boundaries(self) -> list[int]:
         """
@@ -2267,12 +2273,12 @@ class TabulatedComptonProfileFunction:
     @property
     def cumulative_integral(self) -> list[float]:
         """
-        The cumulative integral of the Compton profile over its domain
+        The cumulative integral of the Compton profile function over its domain
         """
     @property
     def integral(self) -> float:
         """
-        The integral (zeroth order moment) of the Compton profile over its domain
+        The integral (zeroth order moment) of the Compton profile function over its domain
         """
     @property
     def interpolants(self) -> list[InterpolationType]:
