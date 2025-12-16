@@ -25,40 +25,44 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
 
     module,
     "TabulatedComptonProfileFunction",
-    "A Compton profile distribution using tabulated data"
+    "A Compton profile distribution using tabulated data\n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    momentum : list of float \n"
+    "         the momentum values \n"
+    "    values : list of float \n"
+    "         the probability values \n"
+    "    boundaries : list of int \n"
+    "         the boundaries of the interpolation regions \n"
+    "    interpolants : list of njoy.dryad.InterpolationType \n"
+    "         the interpolation types of the interpolation regions \n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear \n"
+    "         the interpolation type (default lin-lin) \n"
+    "    normalise : bool, default false \n"
+    "        option to indicate whether or not to normalise \n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
     python::arg( "momentum" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the Compton profile\n\n"
-    "Arguments:\n"
-    "    self           the compton profile\n"
-    "    momentum       the momentum values\n"
-    "    values         the probability values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the compton profile function with multiple interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< std::vector< double >,
+                  std::vector< double >,
                   InterpolationType >(),
     python::arg( "momentum" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the Compton profile\n\n"
-    "Arguments:\n"
-    "    self           the Compton profile\n"
-    "    momentum       the momentum values\n"
-    "    values         the probability values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the compton profile function with a single interpolation zone"
   )
   .def_property_readonly(
 
@@ -91,21 +95,28 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
        { return self( momentum ); },
     python::arg( "momentum" ),
     "Evaluate the table for a given momentum value\n\n"
-    "Arguments:\n"
-    "    self        the table\n"
-    "    momentum    the momentum value"
+    "Parameters \n"
+    "---------- \n"
+    "    momentum : float \n"
+    "        the momentum value"
   )
   .def_property_readonly(
 
     "integral",
     [] ( const Component& self ) { return self.integral(); },
-    "The integral (zeroth order moment) of the Compton profile over its domain"
+    "The integral (zeroth order moment) of the Compton profile function over its domain"
   )
   .def_property_readonly(
 
     "cumulative_integral",
     [] ( const Component& self ) { return self.cumulativeIntegral(); },
-    "The cumulative integral of the Compton profile over its domain"
+    "The cumulative integral of the Compton profile function over its domain"
+  )
+  .def(
+
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution function"
   );
 
   // add standard equality comparison definitions
