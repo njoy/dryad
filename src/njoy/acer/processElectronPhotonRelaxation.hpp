@@ -42,6 +42,7 @@ namespace acer {
     }
 
     //! @todo verify unionisation of the photoatomic and electroatomic data
+    //! @todo verify normalisation?
 
     bool relativistic = true;
 
@@ -56,7 +57,7 @@ namespace acer {
 //    auto lhnm = ;
 //    auto jflo = ;
     auto eps = dryad::format::ace::atomic::createAceElectronShellBlock( relativistic, relaxation );
-//    auto swd = dryad::format::ace::atomic::createAceComptonProfileBlock( photoatomic );
+    auto swd = dryad::format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
     auto subsh = dryad::format::ace::atomic::createAceElectronSubshellBlock( relaxation );
     auto sphel = dryad::format::ace::photoatomic::createAcePhotoelectricCrossSectionBlock( photoatomic );
     auto xprob = dryad::format::ace::atomic::createAceSubshellTransitionDataBlock( relaxation );

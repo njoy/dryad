@@ -47,7 +47,21 @@ SCENARIO( "createAceComptonProfileBlock" ) {
 
         auto block = format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
 
+        CHECK( 1 == block.numberElectronShells() );
 
+        CHECK( 31 == block.comptonProfile( 1 ).numberValues() );
+        CHECK( 31 == block.comptonProfile( 1 ).momentum().size() );
+        CHECK( 31 == block.comptonProfile( 1 ).pdf().size() );
+        CHECK( 31 == block.comptonProfile( 1 ).cdf().size() );
+
+        CHECK( 2 == block.comptonProfile( 1 ).interpolation() );
+
+        CHECK_THAT(  0.  , WithinRel( block.comptonProfile( 1 ).momentum().front() ) );
+        CHECK_THAT(  100., WithinRel( block.comptonProfile( 1 ).momentum().back() ) );
+        CHECK_THAT(  1.690581458876890   , WithinRel( block.comptonProfile( 1 ).pdf().front() ) );
+        CHECK_THAT(  5.17728126393395e-11, WithinRel( block.comptonProfile( 1 ).pdf().back() ) );
+        CHECK_THAT(  0.  , WithinRel( block.comptonProfile( 1 ).cdf().front() ) );
+        CHECK_THAT(  1.  , WithinRel( block.comptonProfile( 1 ).cdf().back() ) );
       } // THEN
     } // WHEN
   } // GIVEN

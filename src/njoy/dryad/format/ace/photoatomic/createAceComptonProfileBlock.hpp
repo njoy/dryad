@@ -20,7 +20,8 @@ namespace photoatomic {
    *
    *  It is assumed that the ProjectileTarget instance used is valid photoatomic
    *  data, and ACE compatible (i.e. unionised energy grid, etc.). In particular,
-   *  this function assumes that there are Compton profiles.
+   *  this function assumes that there are Compton profiles and that they have been
+   *  normalised.
    *
    *  @param[in] photoatomic   the photoatomic data
    */
