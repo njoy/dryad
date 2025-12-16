@@ -42,3 +42,8 @@ dependencies
 __pycache__
 *.pyc
 .ipynb_checkpoints
+
+# sphinx
+generated/
+
+.DS_Store

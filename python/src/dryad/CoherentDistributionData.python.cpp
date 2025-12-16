@@ -31,7 +31,17 @@ void wrapCoherentDistributionData( python::module& module ) {
     "functions are defined which together with the Thompson cross section determine the\n"
     "double differential cross section.\n\n"
     "This corresponds with the coherent scattering function data given in MF27 MT502 and\n"
-    "the form factors in MF27 MT505 and MT506."
+    "the form factors in MF27 MT505 and MT506.\n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    frame : njoy.dryad.ReferenceFrame \n"
+    "         the reference frame of the distribution data\n"
+    "    scattering : njoy.dryad.TabulatedScatteringFunction \n"
+    "         the scatteirng function \n"
+    "    real : njoy.dryad.TabulatedFormFactor \n "
+    "         the real part of the anamolous form factor\n"
+    "    imaginary : njoy.dryad.TabulatedFormFactor \n"
+    "         the imaginary part of the anamolous form factor\n"
   );
 
   // wrap the component
@@ -40,11 +50,7 @@ void wrapCoherentDistributionData( python::module& module ) {
 
     python::init< ReferenceFrame, TabulatedScatteringFunction >(),
     python::arg( "frame" ), python::arg( "scattering" ),
-    "Initialise the coherent distribution data without anomolous form factors\n\n"
-    "Arguments:\n"
-    "    self         the reaction product distribution data\n"
-    "    frame        the reference frame of the distribution data\n"
-    "    scattering   the scattering function"
+    "Initialise the coherent distribution data without anomolous form factors"
   )
   .def(
 
@@ -52,13 +58,7 @@ void wrapCoherentDistributionData( python::module& module ) {
                   TabulatedFormFactor, TabulatedFormFactor >(),
     python::arg( "frame" ), python::arg( "scattering" ),
     python::arg( "real" ), python::arg( "imaginary" ),
-    "Initialise the coherent distribution data with anomolous form factors\n\n"
-    "Arguments:\n"
-    "    self         the reaction product distribution data\n"
-    "    frame        the reference frame of the distribution data\n"
-    "    scattering   the scattering function\n"
-    "    real         the real part of the anamolous form factor\n"
-    "    imaginary    the imaginary part of the anamolous form factor"
+    "Initialise the coherent distribution data with anomolous form factors"
   )
   .def_property_readonly(
 
