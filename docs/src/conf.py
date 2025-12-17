@@ -20,8 +20,8 @@ import sys
 sys.path.insert( 0, '../' )
 
 extensions = [
-    "sphinx.ext.autodoc",
-    "numpydoc",
+    'sphinx.ext.autodoc',
+    'numpydoc'
     ]
 
 templates_path = ['../_templates']

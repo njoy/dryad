@@ -5,6 +5,12 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
 
 .. toctree::
    :maxdepth: 1
+   :caption: Enumerators:
+
+   InterpolationType
+
+.. toctree::
+   :maxdepth: 1
    :caption: Base Modules:
 
    id
@@ -15,9 +21,6 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
 
    atomic
    atomic_relaxation
-
-
-
 
 .. toctree::
    :maxdepth: 1
