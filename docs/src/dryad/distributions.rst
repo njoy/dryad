@@ -7,6 +7,10 @@ General information about distributions
     :maxdepth: 1
     :caption: General purpose distributions
 
+    distributions/LegendreAngularDistributions
+    distributions/LegendreAngularDistribution
+    distributions/LegendreAngularDistributionFunction
+    distributions/TabulatedAngularDistributions
     distributions/TabulatedAngularDistribution
     distributions/TabulatedAngularDistributionFunction
 
