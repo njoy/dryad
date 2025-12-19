@@ -26,22 +26,21 @@ void wrapTabulatedAngularDistributionFunction( python::module& module ) {
     module,
     "TabulatedAngularDistributionFunction",
     "An angular distribution function using tabulated data\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    cosines : list of float \n"
-    "         the cosine values \n"
-    "    values : list of float \n"
-    "         the probability values \n"
-    "    boundaries : list of int \n"
-    "         the boundaries of the interpolation regions \n"
-    "    interpolants : list of njoy.dryad.InterpolationType \n"
-    "         the interpolation types of the interpolation regions \n"
-    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear \n"
-    "         the interpolation type (default lin-lin) \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
+    "Parameters\n"
+    "----------\n"
+    "    cosines : list of float\n"
+    "         the cosine values\n"
+    "    values : list of float\n"
+    "         the probability values\n"
+    "    boundaries : list of int\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "         the interpolation type (default lin-lin)\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
-
   );
 
   // wrap the component
@@ -93,10 +92,10 @@ void wrapTabulatedAngularDistributionFunction( python::module& module ) {
     [] ( const Component& self, double cosine ) -> decltype(auto)
        { return self( cosine ); },
     python::arg( "cosine" ),
-    "Evaluate the table for a given cosine value\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    cosine : float \n"
+    "Evaluate the distribution for a given cosine value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    cosine : float\n"
     "        the cosine value"
   )
   .def_property_readonly(

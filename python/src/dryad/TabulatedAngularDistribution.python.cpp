@@ -26,20 +26,20 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     module,
     "TabulatedAngularDistribution",
     "An angular distribution defined by a pdf and cdf using tabulated data\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    cosines : list of float \n"
-    "         the cosine values \n"
-    "    values : list of float \n"
-    "         the probability values \n"
-    "    boundaries : list of int \n"
-    "         the boundaries of the interpolation regions \n"
-    "    interpolants : list of njoy.dryad.InterpolationType \n"
-    "         the interpolation types of the interpolation regions \n"
-    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear \n"
-    "         the interpolation type (default lin-lin) \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
+    "Parameters\n"
+    "----------\n"
+    "    cosines : list of float\n"
+    "         the cosine values\n"
+    "    values : list of float\n"
+    "         the probability values\n"
+    "    boundaries : list of int\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "         the interpolation type (default lin-lin)\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
 
@@ -108,9 +108,9 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
        { return self( cosine ); },
     python::arg( "cosine" ),
     "Evaluate the pdf of the distribution for a given cosine value\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    cosine : float \n"
+    "Parameters\n"
+    "----------\n"
+    "    cosine : float\n"
     "        the cosine value"
   )
   .def(
@@ -132,12 +132,12 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     python::arg( "tolerance" ) = ToleranceConvergence(),
     python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    tolerance : njoy.dryad.ToleranceConvergence \n"
-    "         the linearisation tolerance \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : njoy.dryad.ToleranceConvergence\n"
+    "         the linearisation tolerance\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
 

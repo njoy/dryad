@@ -26,20 +26,20 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
     module,
     "TabulatedComptonProfileFunction",
     "A Compton profile distribution using tabulated data\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    momentum : list of float \n"
-    "         the momentum values \n"
-    "    values : list of float \n"
-    "         the probability values \n"
-    "    boundaries : list of int \n"
-    "         the boundaries of the interpolation regions \n"
-    "    interpolants : list of njoy.dryad.InterpolationType \n"
-    "         the interpolation types of the interpolation regions \n"
-    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear \n"
-    "         the interpolation type (default lin-lin) \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
+    "Parameters\n"
+    "----------\n"
+    "    momentum : list of float\n"
+    "         the momentum values\n"
+    "    values : list of float\n"
+    "         the probability values\n"
+    "    boundaries : list of int\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "         the interpolation type (default lin-lin)\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
 
@@ -94,10 +94,10 @@ void wrapTabulatedComptonProfileFunction( python::module& module ) {
     [] ( const Component& self, double momentum ) -> decltype(auto)
        { return self( momentum ); },
     python::arg( "momentum" ),
-    "Evaluate the table for a given momentum value\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    momentum : float \n"
+    "Evaluate the Compton profile for a given momentum value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    momentum : float\n"
     "        the momentum value"
   )
   .def_property_readonly(
