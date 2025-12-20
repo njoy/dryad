@@ -7,6 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/format/endf/createProductIdentifier.hpp"
+#include "njoy/dryad/format/endf/createReferenceFrame.hpp"
 #include "njoy/dryad/format/endf/createMultiplicity.hpp"
 #include "njoy/dryad/format/endf/createTabulatedEnergyDistributions.hpp"
 #include "njoy/dryad/format/endf/createTabulatedAngularDistributions.hpp"
@@ -15,8 +16,10 @@
 #include "njoy/dryad/format/endf/createTabulatedFormFactor.hpp"
 #include "njoy/dryad/format/endf/createTabulatedScatteringFunction.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
+#include "tools/overload.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -26,35 +29,73 @@ namespace endf {
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF4 LegendreDistributions
    *
-   *  @param[in] projectile      the projectile identifier
-   *  @param[in] target          the target identifier
+   *  @param[in] reaction     the reaction identifier
    *  @param[in] distributions   the MF4 LegendreDistributions
-   *  @param[in] normalise       the flag to indicate whether or not distributions
+   *  @param[in] normalise       the flag to indicate whether or not the distributions
    *                             need to be normalised
    */
   inline ReactionProduct
-  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
-                         const ENDFtk::section::Type< 4 >::LegendreDistributions& distributions,
+  createReactionProduct( const id::ReactionID& reaction,
+                         const ENDFtk::section::Type< 4 >& section,
                          bool normalise ) {
+
+    using Isotropic = ENDFtk::section::Type< 4 >::Isotropic;
+    using LegendreDistributions = ENDFtk::section::Type< 4 >::LegendreDistributions;
+    using TabulatedDistributions = ENDFtk::section::Type< 4 >::TabulatedDistributions;
+    using MixedDistributions = ENDFtk::section::Type< 4 >::MixedDistributions;
+
+    auto createDistributions = tools::overload{
+
+      [&] ( const Isotropic& distributions ) -> TwoBodyDistributionData::AngularDistributions {
+
+        return IsotropicAngularDistributions();
+      },
+      [&] ( const LegendreDistributions& distributions ) -> TwoBodyDistributionData::AngularDistributions {
+
+        return createLegendreAngularDistributions( distributions, normalise );
+      },
+      [&] ( const TabulatedDistributions& distributions ) -> TwoBodyDistributionData::AngularDistributions {
+
+        return createTabulatedAngularDistributions( distributions, normalise );
+      },
+      [&] ( const MixedDistributions& distributions ) -> TwoBodyDistributionData::AngularDistributions {
+
+        throw std::runtime_error( "not supported yet, contact a developer" );
+      }
+    };
 
     id::ParticleID id = id::ParticleID::neutron();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
-    int multiplicity = 1;
-    auto distribution = TwoBodyDistributionData( ReferenceFrame::CentreOfMass,
-                                                 createLegendreAngularDistributions( distributions,
-                                                 normalise ) );
-    return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+
+    auto frame = createReferenceFrame( section.referenceFrame() );
+    int multiplicity = reaction.particles()->at( id );
+
+    if ( section.LTT() != 3 ) {
+
+      auto distribution = TwoBodyDistributionData(
+                            frame,
+                            std::visit( createDistributions, section.distributions() ) );
+      return ReactionProduct( std::move( id ), std::move( multiplicity ), std::move( distribution ) );
+    }
+    else {
+
+      // temporary code: remove when we implement mixed distributions
+
+      Log::info( "Any MF4 LTT = 3 is not implemented yet" );
+      return ReactionProduct( std::move( id ), std::move( multiplicity ), std::nullopt );
+    }
   }
 
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF6 reaction product
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
-   *  @param[in] product      the MF26 reaction product data
+   *  @param[in] reaction     the reaction identifier
+   *  @param[in] product      the MF6 reaction product data
+   *  @param[in] normalise    the flag to indicate whether or not the distributions
+   *                          need to be normalised
    */
-  ReactionProduct
-  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+  inline ReactionProduct
+  createReactionProduct( const id::ReactionID& reaction,
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
                          bool normalise ) {
 
@@ -69,13 +110,14 @@ namespace endf {
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF26 reaction product
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
+   *  @param[in] reaction     the reaction identifier
    *  @param[in] product      the MF26 reaction product data
    *  @param[in] mt           the ENDF MT number
+   *  @param[in] normalise    the flag to indicate whether or not the distributions
+   *                          need to be normalised
    */
   ReactionProduct
-  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+  createReactionProduct( const id::ReactionID& reaction,
                          const ENDFtk::section::Type< 26 >::ReactionProduct& product,
                          int mt,
                          bool normalise ) {
@@ -132,15 +174,16 @@ namespace endf {
    *  @brief Create a ReactionProduct from parsed ENDF MF27 MT502, MT505 and MT506
    *         section (coherent scattering)
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
+   *  @param[in] reaction     the reaction identifier
    *  @param[in] incoherent   the MF27 MT504 section
    *  @param[in] real         the optional MF27 MT505 section
    *  @param[in] imaginary    the optional MF27 MT506 section
    *  @param[in] mt           the ENDF MT number
+   *  @param[in] normalise    the flag to indicate whether or not the distributions
+   *                          need to be normalised
    */
   ReactionProduct
-  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+  createReactionProduct( const id::ReactionID& reaction,
                          const ENDFtk::section::Type< 27 >& coherent,
                          const std::optional< ENDFtk::section::Type< 27 > >& real,
                          const std::optional< ENDFtk::section::Type< 27 > >& imaginary,
@@ -173,13 +216,14 @@ namespace endf {
   /**
    *  @brief Create a ReactionProduct from a parsed ENDF MF27 MT504 section (incoherent scattering)
    *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
+   *  @param[in] reaction     the reaction identifier
    *  @param[in] incoherent   the MF27 MT504 section
    *  @param[in] mt           the ENDF MT number
+   *  @param[in] normalise    the flag to indicate whether or not the distributions
+   *                          need to be normalised
    */
   ReactionProduct
-  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
+  createReactionProduct( const id::ReactionID& reaction,
                          const ENDFtk::section::Type< 27 >& incoherent,
                          int mt,
                          bool normalise ) {

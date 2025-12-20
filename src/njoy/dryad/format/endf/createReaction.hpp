@@ -84,7 +84,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt, normalise );
+      std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
@@ -142,7 +142,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( projectile, target, material, mt, normalise );
+      std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
