@@ -33,24 +33,24 @@ SCENARIO( "createReactionProduct" ) {
         auto elastic = tape.materials().front().section( 26, 525 ).parse< 26 >();
         auto bremsstrahlung = tape.materials().front().section( 26, 527 ).parse< 26 >();
 
-        id::ParticleID projectile( "e-" );
-        id::ParticleID target( "H1" );
+        id::ReactionID elastic_id( "e-,H->large-angle-scattering" );
+        id::ReactionID bremsstrahlung_id( "e-,H->bremsstrahlung" );
 
         auto product = elastic.reactionProducts()[0];
-        ReactionProduct electron_elastic1 = format::endf::createReactionProduct( projectile, target, product, 525, false );
-        ReactionProduct electron_elastic2 = format::endf::createReactionProduct( projectile, target, product, 525, true );
+        ReactionProduct electron_elastic1 = format::endf::createReactionProduct( elastic_id, product, 525, false );
+        ReactionProduct electron_elastic2 = format::endf::createReactionProduct( elastic_id, product, 525, true );
         verifyElectronlargeAngleElasticElectronProduct( electron_elastic1, false );
         verifyElectronlargeAngleElasticElectronProduct( electron_elastic2, true );
 
         product = bremsstrahlung.reactionProducts()[0];
-        ReactionProduct photon_bremsstrahlung1 = format::endf::createReactionProduct( projectile, target, product, 527, false );
-        ReactionProduct photon_bremsstrahlung2 = format::endf::createReactionProduct( projectile, target, product, 527, true );
+        ReactionProduct photon_bremsstrahlung1 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, false );
+        ReactionProduct photon_bremsstrahlung2 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, true );
         verifyElectronBremsstrahlungPhotonProduct( photon_bremsstrahlung1, false );
         verifyElectronBremsstrahlungPhotonProduct( photon_bremsstrahlung2, true );
 
         product = bremsstrahlung.reactionProducts()[1];
-        ReactionProduct electron_bremsstrahlung1 = format::endf::createReactionProduct( projectile, target, product, 527, false );
-        ReactionProduct electron_bremsstrahlung2 = format::endf::createReactionProduct( projectile, target, product, 527, true );
+        ReactionProduct electron_bremsstrahlung1 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, false );
+        ReactionProduct electron_bremsstrahlung2 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, true );
         verifyElectronBremsstrahlungElectronProduct( electron_bremsstrahlung1 );
         verifyElectronBremsstrahlungElectronProduct( electron_bremsstrahlung2 );
       } // THEN
@@ -72,16 +72,15 @@ SCENARIO( "createReactionProduct" ) {
         auto imaginary = std::make_optional( tape.materials().front().section( 27, 505 ).parse< 27 >() );
         auto incoherent = tape.materials().front().section( 27, 504 ).parse< 27 >();
 
-        id::ParticleID projectile( "g" );
-        id::ParticleID target( "H1" );
+        id::ReactionID reaction( "g,H->coherent" );
 
-        ReactionProduct coherent_product1 = format::endf::createReactionProduct( projectile, target, coherent, real, imaginary, 502, false );
-        ReactionProduct coherent_product2 = format::endf::createReactionProduct( projectile, target, coherent, real, imaginary, 502, true );
+        ReactionProduct coherent_product1 = format::endf::createReactionProduct( reaction, coherent, real, imaginary, 502, false );
+        ReactionProduct coherent_product2 = format::endf::createReactionProduct( reaction, coherent, real, imaginary, 502, true );
         verifyPhotonCoherentProduct( coherent_product1 );
         verifyPhotonCoherentProduct( coherent_product2 );
 
-        ReactionProduct incoherent_product1 = format::endf::createReactionProduct( projectile, target, incoherent, 504, false );
-        ReactionProduct incoherent_product2 = format::endf::createReactionProduct( projectile, target, incoherent, 504, false );
+        ReactionProduct incoherent_product1 = format::endf::createReactionProduct( reaction, incoherent, 504, false );
+        ReactionProduct incoherent_product2 = format::endf::createReactionProduct( reaction, incoherent, 504, false );
         verifyPhotonIncoherentProduct( incoherent_product1 );
         verifyPhotonIncoherentProduct( incoherent_product2 );
       } // THEN
