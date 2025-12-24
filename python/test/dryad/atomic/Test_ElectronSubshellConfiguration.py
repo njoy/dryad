@@ -29,6 +29,8 @@ def verify_chunk_without_transitions( self, chunk ) :
 
     self.assertAlmostEqual( 0, chunk.total_radiative_probability )
     self.assertAlmostEqual( 0, chunk.total_non_radiative_probability )
+    self.assertAlmostEqual( 0, chunk.average_radiative_energy )
+    self.assertAlmostEqual( 0, chunk.average_non_radiative_energy )
 
 def verify_chunk( self, chunk, normalise ) :
 
@@ -90,6 +92,8 @@ def verify_chunk( self, chunk, normalise ) :
 
     self.assertAlmostEqual( 0.00570795 / normalisation, chunk.total_radiative_probability )
     self.assertAlmostEqual( 0.9942922  / normalisation, chunk.total_non_radiative_probability )
+    self.assertAlmostEqual( 523.116631417584, chunk.average_radiative_energy )
+    self.assertAlmostEqual( 498.286519214372, chunk.average_non_radiative_energy )
 
 class Test_ElectronSubshellConfiguration( unittest.TestCase ) :
     """Unit test for the ElectronSubshellConfiguration class."""

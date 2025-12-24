@@ -149,6 +149,18 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::totalNonRadiativeProbability,
     "The total non-radiative probability"
   )
+  .def_property_readonly(
+
+    "average_radiative_energy",
+    &Component::averageRadiativeEnergy,
+    "The average radiative energy"
+  )
+  .def_property_readonly(
+
+    "average_non_radiative_energy",
+    &Component::averageNonRadiativeEnergy,
+    "The average non-radiative energy"
+  )
   .def(
 
     "normalise",
