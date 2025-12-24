@@ -48,6 +48,26 @@ namespace atomic {
                                  { return value + transition.probability(); } );
     }
 
+    template < typename Range >
+    static double calculateAverageEnergy( const Range& transitions ) {
+
+      if ( transitions.size() > 0 ) {
+
+        double average = 0.;
+        double probability = 0.;
+        for ( const auto& transition : transitions ) {
+
+          average += transition.energy().value() * transition.probability();
+          probability += transition.probability();
+        }
+        return average / probability;
+      }
+      else {
+
+        return 0.;
+      }
+    }
+
   public:
 
     /* constructor */
@@ -224,6 +244,26 @@ namespace atomic {
     double totalNonRadiativeProbability() const {
 
       return calculateTotalProbability( this->nonRadiativeTransitions() );
+    }
+
+    /**
+     *  @brief Return the average radiative energy
+     *
+     *  This function assumes that the transition energies are present.
+     */
+    double averageRadiativeEnergy() const {
+
+      return calculateAverageEnergy( this->radiativeTransitions() );
+    }
+
+    /**
+     *  @brief Return the average non-radiative energy
+     *
+     *  This function assumes that the transition energies are present.
+     */
+    double averageNonRadiativeEnergy() const {
+
+      return calculateAverageEnergy( this->nonRadiativeTransitions() );
     }
 
     /**

@@ -233,6 +233,8 @@ void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& chunk )
 
   CHECK_THAT( 0., WithinRel( chunk.totalRadiativeProbability() ) );
   CHECK_THAT( 0., WithinRel( chunk.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 0., WithinRel( chunk.averageRadiativeEnergy() ) );
+  CHECK_THAT( 0., WithinRel( chunk.averageNonRadiativeEnergy() ) );
 }
 
 void verifyChunk( const ElectronSubshellConfiguration& chunk,
@@ -296,4 +298,6 @@ void verifyChunk( const ElectronSubshellConfiguration& chunk,
 
   CHECK_THAT( 0.00570795 / normalisation, WithinRel( chunk.totalRadiativeProbability() ) );
   CHECK_THAT( 0.9942922  / normalisation, WithinRel( chunk.totalNonRadiativeProbability() ) );
+  CHECK_THAT( 523.116631417584, WithinRel( chunk.averageRadiativeEnergy() ) );
+  CHECK_THAT( 498.286519214372, WithinRel( chunk.averageNonRadiativeEnergy() ) );
 }
