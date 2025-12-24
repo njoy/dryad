@@ -1,7 +1,7 @@
 .. currentmodule:: njoy.dryad.atomic
 
 
-ElectronSubshellConfiguration 
+ElectronSubshellConfiguration
 =============================
 
 General information about the concept
@@ -32,12 +32,14 @@ Read-only Attributes
 
     ~ElectronSubshellConfiguration.number_radiative_transitions
     ~ElectronSubshellConfiguration.number_non_radiative_transitions
-    ~ElectronSubshellConfiguration.number_transitions 
+    ~ElectronSubshellConfiguration.number_transitions
     ~ElectronSubshellConfiguration.has_radiative_transitions
     ~ElectronSubshellConfiguration.has_non_radiative_transitions
     ~ElectronSubshellConfiguration.has_transitions
     ~ElectronSubshellConfiguration.total_radiative_probability
     ~ElectronSubshellConfiguration.total_non_radiative_probability
+    ~ElectronSubshellConfiguration.average_radiative_energy
+    ~ElectronSubshellConfiguration.average_non_radiative_energy
 
 Methods
 ~~~~~~~
