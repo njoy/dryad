@@ -26,7 +26,7 @@ namespace acer {
                                                const std::string& filename ) {
 
     if ( photoatomic.interactionType() != dryad::InteractionType::Atomic ||
-         photoatomic.projectileIdentifier() != dryad::id::ParticleID::neutron() ) {
+         photoatomic.projectileIdentifier() != dryad::id::ParticleID::photon() ) {
 
       throw std::runtime_error( "The projectile-target is not photoatomic" );
     }
@@ -42,6 +42,7 @@ namespace acer {
     }
 
     //! @todo verify unionisation of the photoatomic and electroatomic data
+    //! @todo verify if binding energies of shells appear in total ionisation as jumps
     //! @todo verify normalisation?
 
     bool relativistic = true;
