@@ -46,4 +46,8 @@ Methods
 .. autosummary::
     :toctree: generated/
 
+    ~ElectronSubshellConfiguration.has_radiative_transition
+    ~ElectronSubshellConfiguration.has_non_radiative_transition
+    ~ElectronSubshellConfiguration.radiative_transition
+    ~ElectronSubshellConfiguration.non_radiative_transition
     ~ElectronSubshellConfiguration.normalise
