@@ -6,6 +6,7 @@
 #include <numeric>
 
 // other includes
+#include "tools/Log.hpp"
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/atomic/RadiativeTransitionData.hpp"
 #include "njoy/dryad/atomic/NonRadiativeTransitionData.hpp"
@@ -43,6 +44,7 @@ namespace atomic {
     /* auxiliary functions */
 
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/sort.hpp"
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/iterator.hpp"
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateTotalProbability.hpp"
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateAverageEnergy.hpp"
 
@@ -206,6 +208,86 @@ namespace atomic {
     void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) {
 
       this->nonradiative_ = std::move( nonradiative );
+    }
+
+    /**
+     *  @brief Return whether or not a given radiative transition is present
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     */
+    bool hasRadiativeTransition( const id::ElectronSubshellID& originating ) const {
+
+      auto iter = this->iterator( originating );
+      return iter != this->radiativeTransitions().end() &&
+             iter->originatingShell() == originating;
+    }
+
+    /**
+     *  @brief Return whether or not a given non-radiative transition is present
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     *  @param emitting      the identifier of the subshell from which the
+     *                       emitted electron originated
+     */
+    bool hasNonRadiativeTransition( const id::ElectronSubshellID& originating,
+                                    const id::ElectronSubshellID& emitting ) const {
+
+      auto iter = this->iterator( originating, emitting );
+      return iter != this->nonRadiativeTransitions().end() &&
+             iter->originatingShell() == originating &&
+             iter->emittingShell() == emitting;
+    }
+
+    /**
+     *  @brief Return the requested radiative transition
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     */
+    const RadiativeTransitionData&
+    radiativeTransition( const id::ElectronSubshellID& originating ) const {
+
+      auto iter = this->iterator( originating );
+      if ( iter != this->radiativeTransitions().end() &&
+           iter->originatingShell() == originating ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested radiative transition originating from subshell "
+                    "\'{}\' could not be found", originating.symbol() );
+        throw std::exception();
+      }
+    }
+
+    /**
+     *  @brief Return the requested non-radiative transition
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     *  @param emitting      the identifier of the subshell from which the
+     *                       emitted electron originated
+     */
+    const NonRadiativeTransitionData&
+    nonRadiativeTransition( const id::ElectronSubshellID& originating,
+                            const id::ElectronSubshellID& emitting ) const {
+
+      auto iter = this->iterator( originating, emitting );
+      if ( iter != this->nonRadiativeTransitions().end() &&
+           iter->originatingShell() == originating &&
+           iter->emittingShell() == emitting ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested non-radiative transition originating from subshell "
+                    "\'{}\' could not be found", originating.symbol() );
+        throw std::exception();
+      }
     }
 
     /**

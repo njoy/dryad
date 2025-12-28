@@ -225,6 +225,18 @@ void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& chunk )
   CHECK( false == chunk.hasNonRadiativeTransitions() );
   CHECK( false == chunk.hasTransitions() );
 
+  CHECK( false == chunk.hasRadiativeTransition( id::ElectronSubshellID( "L1" ) ) );
+  CHECK( false == chunk.hasRadiativeTransition( id::ElectronSubshellID( "L2" ) ) );
+  CHECK( false == chunk.hasRadiativeTransition( id::ElectronSubshellID( "L3" ) ) );
+
+  CHECK( false == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ) ) );
+  CHECK( false == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) ) );
+  CHECK( false == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ) ) );
+  CHECK( false == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "M1" ), id::ElectronSubshellID( "L1" ) ) );
+
+  CHECK_THROWS( chunk.radiativeTransition( id::ElectronSubshellID( "L1" ) ) );
+  CHECK_THROWS( chunk.nonRadiativeTransition( id::ElectronSubshellID( "M1" ), id::ElectronSubshellID( "L1" ) ) );
+
   CHECK( 0 == chunk.numberRadiativeTransitions() );
   CHECK( 0 == chunk.numberNonRadiativeTransitions() );
   CHECK( 0 == chunk.numberTransitions() );
@@ -248,6 +260,18 @@ void verifyChunk( const ElectronSubshellConfiguration& chunk,
   CHECK( true == chunk.hasNonRadiativeTransitions() );
   CHECK( true == chunk.hasTransitions() );
 
+  CHECK( false == chunk.hasRadiativeTransition( id::ElectronSubshellID( "L1" ) ) );
+  CHECK( true == chunk.hasRadiativeTransition( id::ElectronSubshellID( "L2" ) ) );
+  CHECK( true == chunk.hasRadiativeTransition( id::ElectronSubshellID( "L3" ) ) );
+
+  CHECK( true == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ) ) );
+  CHECK( true == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) ) );
+  CHECK( true == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ) ) );
+  CHECK( false == chunk.hasNonRadiativeTransition( id::ElectronSubshellID( "M1" ), id::ElectronSubshellID( "L1" ) ) );
+
+  CHECK_THROWS( chunk.radiativeTransition( id::ElectronSubshellID( "L1" ) ) );
+  CHECK_THROWS( chunk.nonRadiativeTransition( id::ElectronSubshellID( "M1" ), id::ElectronSubshellID( "L1" ) ) );
+
   CHECK( 2 == chunk.numberRadiativeTransitions() );
   CHECK( 6 == chunk.numberNonRadiativeTransitions() );
   CHECK( 8 == chunk.numberTransitions() );
@@ -255,6 +279,54 @@ void verifyChunk( const ElectronSubshellConfiguration& chunk,
   CHECK( 6 == chunk.nonRadiativeTransitions().size() );
 
   double normalisation = normalise ? 1.00000015 : 1.0;
+
+  auto radiative0 = chunk.radiativeTransition( id::ElectronSubshellID( "L2" ) );
+  auto radiative1 = chunk.radiativeTransition( id::ElectronSubshellID( "L3" ) );
+  CHECK( TransitionType::Radiative == radiative0.type() );
+  CHECK( TransitionType::Radiative == radiative1.type() );
+  CHECK( id::ElectronSubshellID( "L2" ) == radiative0.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L3" ) == radiative1.originatingShell() );
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( radiative0.probability() ) );
+  CHECK_THAT( 0.00380027 / normalisation, WithinRel( radiative1.probability() ) );
+  CHECK_THAT( 523.09, WithinRel( radiative0.energy().value() ) );
+  CHECK_THAT( 523.13, WithinRel( radiative1.energy().value() ) );
+
+  auto nonradiative0 = chunk.nonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ) );
+  auto nonradiative1 = chunk.nonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) );
+  auto nonradiative2 = chunk.nonRadiativeTransition( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ) );
+  auto nonradiative3 = chunk.nonRadiativeTransition( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ) );
+  auto nonradiative4 = chunk.nonRadiativeTransition( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ) );
+  auto nonradiative5 = chunk.nonRadiativeTransition( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ) );
+  CHECK( TransitionType::NonRadiative == nonradiative0.type() );
+  CHECK( TransitionType::NonRadiative == nonradiative1.type() );
+  CHECK( TransitionType::NonRadiative == nonradiative2.type() );
+  CHECK( TransitionType::NonRadiative == nonradiative3.type() );
+  CHECK( TransitionType::NonRadiative == nonradiative4.type() );
+  CHECK( TransitionType::NonRadiative == nonradiative5.type() );
+  CHECK( id::ElectronSubshellID( "L1" ) == nonradiative0.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L1" ) == nonradiative1.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L1" ) == nonradiative2.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L2" ) == nonradiative3.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L2" ) == nonradiative4.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L3" ) == nonradiative5.originatingShell() );
+  CHECK( id::ElectronSubshellID( "L1" ) == nonradiative0.emittingShell() );
+  CHECK( id::ElectronSubshellID( "L2" ) == nonradiative1.emittingShell() );
+  CHECK( id::ElectronSubshellID( "L3" ) == nonradiative2.emittingShell() );
+  CHECK( id::ElectronSubshellID( "L2" ) == nonradiative3.emittingShell() );
+  CHECK( id::ElectronSubshellID( "L3" ) == nonradiative4.emittingShell() );
+  CHECK( id::ElectronSubshellID( "L3" ) == nonradiative5.emittingShell() );
+  CHECK_THAT( 0.178644  / normalisation, WithinRel( nonradiative0.probability() ) );
+  CHECK_THAT( 0.116224  / normalisation, WithinRel( nonradiative1.probability() ) );
+  CHECK_THAT( 0.230418  / normalisation, WithinRel( nonradiative2.probability() ) );
+  CHECK_THAT( 0.0110822 / normalisation, WithinRel( nonradiative3.probability() ) );
+  CHECK_THAT( 0.291115  / normalisation, WithinRel( nonradiative4.probability() ) );
+  CHECK_THAT( 0.166809  / normalisation, WithinRel( nonradiative5.probability() ) );
+  CHECK_THAT( 478.82, WithinRel( nonradiative0.energy().value() ) );
+  CHECK_THAT( 493.86, WithinRel( nonradiative1.energy().value() ) );
+  CHECK_THAT( 493.9 , WithinRel( nonradiative2.energy().value() ) );
+  CHECK_THAT( 508.9 , WithinRel( nonradiative3.energy().value() ) );
+  CHECK_THAT( 508.94, WithinRel( nonradiative4.energy().value() ) );
+  CHECK_THAT( 508.98, WithinRel( nonradiative5.energy().value() ) );
 
   CHECK( TransitionType::Radiative == chunk.radiativeTransitions()[0].type() );
   CHECK( TransitionType::Radiative == chunk.radiativeTransitions()[1].type() );
