@@ -43,34 +43,8 @@ namespace atomic {
     /* auxiliary functions */
 
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/sort.hpp"
-
-    template < typename Range >
-    static double calculateTotalProbability( const Range& transitions ) {
-
-      return std::accumulate( transitions.begin(), transitions.end(), 0.,
-                              [] ( double value, auto&& transition )
-                                 { return value + transition.probability(); } );
-    }
-
-    template < typename Range >
-    static double calculateAverageEnergy( const Range& transitions ) {
-
-      if ( transitions.size() > 0 ) {
-
-        double average = 0.;
-        double probability = 0.;
-        for ( const auto& transition : transitions ) {
-
-          average += transition.energy().value() * transition.probability();
-          probability += transition.probability();
-        }
-        return average / probability;
-      }
-      else {
-
-        return 0.;
-      }
-    }
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateTotalProbability.hpp"
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateAverageEnergy.hpp"
 
   public:
 
