@@ -125,6 +125,60 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::hasTransitions,
     "Flag to indicate whether or not transitions are available"
   )
+  .def(
+
+    "has_radiative_transition",
+    &Component::hasRadiativeTransition,
+    python::arg( "originating_shell" ),
+    "Return whether or not a given radiative transition is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+  )
+  .def(
+
+    "has_non_radiative_transition",
+    &Component::hasNonRadiativeTransition,
+    python::arg( "originating_shell" ),
+    python::arg( "emitting_shell" ),
+    "Return whether or not a given non-radiative transition is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+    "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the emitted electron originated\n"
+  )
+  .def(
+
+    "radiative_transition",
+    &Component::radiativeTransition,
+    python::arg( "originating_shell" ),
+    "Return the requested radiative transition\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+  )
+  .def(
+
+    "non_radiative_transition",
+    &Component::nonRadiativeTransition,
+    python::arg( "originating_shell" ),
+    python::arg( "emitting_shell" ),
+    "Return the requested non-radiative transition\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+    "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the emitted electron originated\n"
+  )
   .def_property(
 
     "radiative_transitions",
