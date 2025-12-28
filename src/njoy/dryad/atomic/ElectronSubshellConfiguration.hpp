@@ -25,8 +25,10 @@ namespace atomic {
    *      when the atom is neutral (given as a floating point number)
    *    - the transitions that can fill a vacancy in this shell
    *
-   *  If there are transitions defined, the transition probabilities
-   *  can be normalised to 1 upon construction.
+   *  If there are transitions defined, the transition probabilities can be
+   *  normalised to 1 upon construction. Transitions are always sorted at
+   *  construction time (by originating shell for radiative transitions and
+   *  by originating and emitting shell for non-radiative transitions).
    */
   class ElectronSubshellConfiguration {
 
@@ -39,6 +41,8 @@ namespace atomic {
     std::vector< NonRadiativeTransitionData > nonradiative_;
 
     /* auxiliary functions */
+
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/sort.hpp"
 
     template < typename Range >
     static double calculateTotalProbability( const Range& transitions ) {

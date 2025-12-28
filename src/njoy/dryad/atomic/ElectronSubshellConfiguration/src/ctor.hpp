@@ -29,6 +29,7 @@ ElectronSubshellConfiguration( id::ElectronSubshellID id,
   id_( std::move( id ) ), binding_energy_( energy ), population_( population ),
   radiative_( std::move( radiative ) ), nonradiative_( std::move( nonradiative ) ) {
 
+  this->sort();
   if ( normalise ) {
 
     this->normalise();
