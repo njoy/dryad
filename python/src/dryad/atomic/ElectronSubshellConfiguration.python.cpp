@@ -208,13 +208,13 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
   .def_property_readonly(
 
     "average_radiative_energy",
-    &Component::averageRadiativeEnergy,
+    python::overload_cast<>( &Component::averageRadiativeEnergy, python::const_ ),
     "The average radiative energy"
   )
   .def_property_readonly(
 
     "average_non_radiative_energy",
-    &Component::averageNonRadiativeEnergy,
+    python::overload_cast<>( &Component::averageNonRadiativeEnergy, python::const_ ),
     "The average non-radiative energy"
   )
   .def(

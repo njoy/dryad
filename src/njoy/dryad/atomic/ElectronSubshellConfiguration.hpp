@@ -182,6 +182,7 @@ namespace atomic {
     void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) {
 
       this->radiative_ = std::move( radiative );
+      this->sort();
     }
 
     /**
@@ -208,6 +209,7 @@ namespace atomic {
     void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) {
 
       this->nonradiative_ = std::move( nonradiative );
+      this->sort();
     }
 
     /**
@@ -295,7 +297,22 @@ namespace atomic {
      */
     double totalRadiativeProbability() const {
 
-      return calculateTotalProbability( this->radiativeTransitions() );
+      return calculateProbability( this->radiativeTransitions().begin(),
+                                   this->radiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the radiative probability for transitions
+     *         originating from a range of subshells
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double radiativeProbability( const id::ElectronSubshellID& first,
+                                 const id::ElectronSubshellID& last ) const {
+
+      return calculateProbability( lower_iterator( first, this->radiativeTransitions() ),
+                                   upper_iterator( last, this->radiativeTransitions() ) );
     }
 
     /**
@@ -303,7 +320,22 @@ namespace atomic {
      */
     double totalNonRadiativeProbability() const {
 
-      return calculateTotalProbability( this->nonRadiativeTransitions() );
+      return calculateProbability( this->nonRadiativeTransitions().begin(),
+                                   this->nonRadiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the non-radiative probability for transitions
+     *         originating from a range of subshells
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double nonRadiativeProbability( const id::ElectronSubshellID& first,
+                                    const id::ElectronSubshellID& last ) const {
+
+      return calculateProbability( lower_iterator( first, this->nonRadiativeTransitions() ),
+                                   upper_iterator( last, this->nonRadiativeTransitions() ) );
     }
 
     /**
@@ -313,7 +345,24 @@ namespace atomic {
      */
     double averageRadiativeEnergy() const {
 
-      return calculateAverageEnergy( this->radiativeTransitions() );
+      return calculateAverageEnergy( this->radiativeTransitions().begin(),
+                                     this->radiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the average radiative energy for transitions
+     *         originating from a range of subshells
+     *
+     *  This function assumes that the transition energies are present.
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double averageRadiativeEnergy( const id::ElectronSubshellID& first,
+                                   const id::ElectronSubshellID& last ) const {
+
+      return calculateAverageEnergy( lower_iterator( first, this->radiativeTransitions() ),
+                                     upper_iterator( last, this->radiativeTransitions() ) );
     }
 
     /**
@@ -323,7 +372,24 @@ namespace atomic {
      */
     double averageNonRadiativeEnergy() const {
 
-      return calculateAverageEnergy( this->nonRadiativeTransitions() );
+      return calculateAverageEnergy( this->nonRadiativeTransitions().begin(),
+                                     this->nonRadiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the average non-radiative energy for transitions
+     *         originating from a range of subshells
+     *
+     *  This function assumes that the transition energies are present.
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double averageNonRadiativeEnergy( const id::ElectronSubshellID& first,
+                                      const id::ElectronSubshellID& last ) const {
+
+      return calculateAverageEnergy( lower_iterator( first, this->nonRadiativeTransitions() ),
+                                     upper_iterator( last, this->nonRadiativeTransitions() ) );
     }
 
     /**

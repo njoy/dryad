@@ -1,14 +1,15 @@
-template < typename Range >
-static double calculateAverageEnergy( const Range& transitions ) {
+template < typename Iterator >
+static double calculateAverageEnergy( Iterator begin, Iterator end ) {
 
-  if ( transitions.size() > 0 ) {
+  if ( std::distance( begin, end ) > 0 ) {
 
     double average = 0.;
     double probability = 0.;
-    for ( const auto& transition : transitions ) {
+    while ( begin != end ) {
 
-      average += transition.energy().value() * transition.probability();
-      probability += transition.probability();
+      average += begin->energy().value() * begin->probability();
+      probability += begin->probability();
+      ++begin;
     }
     return average / probability;
   }
