@@ -56,7 +56,7 @@ namespace acer {
     auto jinc = dryad::format::ace::photoatomic::createAceIncoherentScatteringFunctionBlock( photoatomic );
     auto jcoh = dryad::format::ace::photoatomic::createAceCoherentFormFactorBlock( photoatomic );
 //    auto lhnm = ;
-//    auto jflo = ;
+    auto jflo = dryad::format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, relaxation );
     auto eps = dryad::format::ace::atomic::createAceElectronShellBlock( relativistic, relaxation );
     auto swd = dryad::format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
     auto subsh = dryad::format::ace::atomic::createAceElectronSubshellBlock( relaxation );
