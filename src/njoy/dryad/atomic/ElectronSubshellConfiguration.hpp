@@ -45,7 +45,7 @@ namespace atomic {
 
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/sort.hpp"
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/iterator.hpp"
-    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateTotalProbability.hpp"
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateProbability.hpp"
     #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateAverageEnergy.hpp"
 
   public:
