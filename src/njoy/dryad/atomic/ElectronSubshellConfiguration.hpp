@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_ATOMIC_ElECTRONSUBSHELLCONFIGURATION
 
 // system includes
+#include <algorithm>
 #include <vector>
 #include <numeric>
 
