@@ -1,0 +1,4 @@
+Photoatomic data
+
+- verify that the last values of the scattering function for Compton/incoherent scattering are equal
+  to the z value of the element.

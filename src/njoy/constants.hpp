@@ -45,6 +45,16 @@ namespace constants {
   // CODATA 2022 - neutron mass in amu
   constexpr double neutron_mass = 1.00866491606;
 
+  // CODATA 2018 - electron mass in amu
+  // constexpr double electron_mass = 5.48579909065e-4;
+  // CODATA 2022 - electron mass in amu
+  constexpr double electron_mass = 5.485799090441e-4;
+
+  // CODATA 2018 - classical electron radius in m
+  // constexpr double electron_radius = 2.8179403262e-15;
+  // CODATA 2022 - classical electron radius in m
+  constexpr double electron_radius = 2.8179403205e-15;
+
   // SI prefixes
   constexpr double peta = 1e+15;
   constexpr double tera = 1e+12;
