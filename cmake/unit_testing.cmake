@@ -229,6 +229,8 @@ add_cpp_test( dryad.format.gnds.convertInverseLengths                           
 add_cpp_test( dryad.format.gnds.convertVarianceScalingFactors                           dryad/format/gnds/convertVarianceScalingFactors.test.cpp )
 add_cpp_test( dryad.format.gnds.convertRadius                                           dryad/format/gnds/convertRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.convertRadii                                            dryad/format/gnds/convertRadii.test.cpp )
+add_cpp_test( dryad.format.gnds.convertTemperature                                      dryad/format/gnds/convertTemperature.test.cpp )
+add_cpp_test( dryad.format.gnds.convertTemperatures                                     dryad/format/gnds/convertTemperatures.test.cpp )
 add_cpp_test( dryad.format.gnds.createInteractionType                                   dryad/format/gnds/createInteractionType.test.cpp )
 add_cpp_test( dryad.format.gnds.createInterpolationType                                 dryad/format/gnds/createInterpolationType.test.cpp )
 add_cpp_test( dryad.format.gnds.createReferenceFrame                                    dryad/format/gnds/createReferenceFrame.test.cpp )
