@@ -26,6 +26,9 @@ namespace dryad {
   // declarations - resonances
   void wrapResonances( python::module& );
 
+  // declarations - thermal
+  void wrapThermal( python::module& );
+
   // declarations - covariance data
   void wrapCovariance( python::module& );
 
@@ -99,6 +102,9 @@ void wrapDryad( python::module& module ) {
 
   // wrap components - resonances
   dryad::wrapResonances( submodule );
+
+  // wrap components - thermal
+  dryad::wrapThermal( submodule );
 
   // wrap components - covariance data
   dryad::wrapCovariance( submodule );
