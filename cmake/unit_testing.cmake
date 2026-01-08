@@ -224,6 +224,7 @@ add_cpp_test( dryad.format.endf.createProjectileTargetEndfFile                  
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
 add_cpp_test( dryad.format.gnds.convertCrossSections                                    dryad/format/gnds/convertCrossSections.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
+add_cpp_test( dryad.format.gnds.convertInverseEnergies                                  dryad/format/gnds/convertInverseEnergies.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseLengths                                   dryad/format/gnds/convertInverseLengths.test.cpp )
 add_cpp_test( dryad.format.gnds.convertVarianceScalingFactors                           dryad/format/gnds/convertVarianceScalingFactors.test.cpp )
 add_cpp_test( dryad.format.gnds.convertRadius                                           dryad/format/gnds/convertRadius.test.cpp )

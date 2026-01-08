@@ -24,6 +24,7 @@
 #include "njoy/dryad/format/gnds/convertCrossSections.hpp"
 #include "njoy/dryad/format/gnds/convertEnergies.hpp"
 #include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/format/gnds/convertInverseEnergies.hpp"
 #include "njoy/dryad/format/gnds/convertInverseLengths.hpp"
 #include "njoy/dryad/format/gnds/convertRadii.hpp"
 #include "njoy/dryad/format/gnds/convertRadius.hpp"
