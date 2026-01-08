@@ -26,7 +26,22 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
 
     module,
     "TabulatedDebyeWallerIntegral",
-    "A Debye-Waller integral table"
+    "A Debye-Waller integral table\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperatures : list of float\n"
+    "         the temperature values\n"
+    "    values : list of float\n"
+    "         the intergal values\n"
+    "    boundaries : list of int\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "         the interpolation type (default lin-lin)\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -38,14 +53,7 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "temperatures" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the form factor table\n\n"
-    "Arguments:\n"
-    "    self           the form factor table\n"
-    "    temperatures   the temperature values\n"
-    "    values         the form factor values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the Debye-Waller integral table with multiple interpolation zones"
   )
   .def(
 
@@ -53,13 +61,7 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
                   InterpolationType >(),
     python::arg( "temperatures" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the form factor table\n\n"
-    "Arguments:\n"
-    "    self           the form factor table\n"
-    "    temperatures   the temperature values\n"
-    "    values         the form factor values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the Debye-Waller integral table with a single interpolation zone"
   )
   .def_property_readonly(
 
@@ -91,10 +93,11 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
     [] ( const Component& self, double temperature ) -> decltype(auto)
        { return self( temperature ); },
     python::arg( "temperature" ),
-    "Evaluate the table for a given temperature value\n\n"
-    "Arguments:\n"
-    "    self          the table\n"
-    "    temperature   the temperature value"
+    "Evaluate the integral for a given temperature value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    temperature : float\n"
+    "        the temperature value"
   );
 
   // add standard equality comparison definitions
