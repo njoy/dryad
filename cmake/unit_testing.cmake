@@ -76,6 +76,8 @@ add_cpp_test( dryad.resonances.calculator.ReichMoore                            
 add_cpp_test( dryad.resonances.SpinGroup                                                dryad/resonances/SpinGroup.test.cpp )
 add_cpp_test( dryad.resonances.CompoundSystem                                           dryad/resonances/CompoundSystem.test.cpp )
 
+add_cpp_test( dryad.thermal.TabulatedDebyeWallerIntegral                                dryad/thermal/TabulatedDebyeWallerIntegral.test.cpp )
+
 add_cpp_test( dryad.Documentation                                                       dryad/Documentation.test.cpp )
 
 add_cpp_test( dryad.CoherentDistributionData                                            dryad/CoherentDistributionData.test.cpp )
