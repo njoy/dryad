@@ -43,6 +43,7 @@ namespace gnds {
 
       // convert units - if necessary
       convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+      convertEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
 
       // assign data
       energies = std::move( std::get< 2 >( data ) );
@@ -68,6 +69,7 @@ namespace gnds {
 
         // convert units - if necessary
         convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
+        convertEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
