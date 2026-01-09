@@ -23,14 +23,15 @@ namespace dryad {
   void wrapReferenceFrame( python::module& );
   void wrapUniformDistributionType( python::module& );
 
+  // declarations - covariance data
+  void wrapCovariance( python::module& );
+
   // declarations - resonances
   void wrapResonances( python::module& );
 
   // declarations - thermal
   void wrapThermal( python::module& );
-
-  // declarations - covariance data
-  void wrapCovariance( python::module& );
+  void wrapThermalScattering( python::module& );
 
   // declarations - atomic data
   void wrapAtomic( python::module& );
@@ -100,14 +101,14 @@ void wrapDryad( python::module& module ) {
   // wrap components - identifiers
   dryad::wrapID( submodule );
 
+  // wrap components - covariance data
+  dryad::wrapCovariance( submodule );
+
   // wrap components - resonances
   dryad::wrapResonances( submodule );
 
   // wrap components - thermal
   dryad::wrapThermal( submodule );
-
-  // wrap components - covariance data
-  dryad::wrapCovariance( submodule );
 
   // wrap components - atomic data
   dryad::wrapAtomic( submodule );
@@ -149,4 +150,5 @@ void wrapDryad( python::module& module ) {
   // wrap components - top level
   dryad::wrapProjectileTarget( submodule );
   dryad::wrapAtomicRelaxation( submodule );
+  dryad::wrapThermalScattering( submodule );
 }

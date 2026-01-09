@@ -92,6 +92,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Reaction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ProjectileTarget.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/AtomicRelaxation.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ThermalScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr/wrapUnioniseCrossSections.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/reconr/wrapCalculateSummationCrossSections.python.cpp

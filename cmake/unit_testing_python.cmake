@@ -101,6 +101,7 @@ add_python_test( dryad.Reaction                                        dryad/Tes
 
 add_python_test( dryad.ProjectileTarget                                dryad/Test_ProjectileTarget.py )
 add_python_test( dryad.AtomicRelaxation                                dryad/Test_AtomicRelaxation.py )
+add_python_test( dryad.ThermalScattering                               dryad/Test_ThermalScattering.py )
 
 add_python_test( reconr.unionise_cross_sections                        reconr/Test_unionise_cross_sections.py )
 add_python_test( reconr.calculate_summation_cross_sections             reconr/Test_calculate_summation_cross_sections.py )
