@@ -224,8 +224,9 @@ add_cpp_test( dryad.format.endf.createAtomicRelaxationEndfFile                  
 add_cpp_test( dryad.format.endf.createProjectileTargetEndfFile                          dryad/format/endf/createProjectileTargetEndfFile.test.cpp )
 
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
-add_cpp_test( dryad.format.gnds.convertCrossSections                                    dryad/format/gnds/convertCrossSections.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
+add_cpp_test( dryad.format.gnds.convertCrossSection                                     dryad/format/gnds/convertCrossSection.test.cpp )
+add_cpp_test( dryad.format.gnds.convertCrossSections                                    dryad/format/gnds/convertCrossSections.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseEnergies                                  dryad/format/gnds/convertInverseEnergies.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseLengths                                   dryad/format/gnds/convertInverseLengths.test.cpp )
 add_cpp_test( dryad.format.gnds.convertVarianceScalingFactors                           dryad/format/gnds/convertVarianceScalingFactors.test.cpp )
