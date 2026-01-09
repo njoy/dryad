@@ -283,6 +283,8 @@ add_cpp_test( dryad.format.gnds.createProjectileTarget                          
 add_cpp_test( dryad.format.gnds.createProjectileTargetFromFile                          dryad/format/gnds/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxation                                  dryad/format/gnds/createAtomicRelaxation.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxationFromFile                          dryad/format/gnds/createAtomicRelaxationFromFile.test.cpp )
+add_cpp_test( dryad.format.gnds.createThermalScattering                                 dryad/format/gnds/createThermalScattering.test.cpp )
+add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                         dryad/format/endf/createThermalScatteringFromFile.test.cpp )
 
 # reconr tests
 
