@@ -5,6 +5,7 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
+#include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -87,6 +88,22 @@ void wrapThermalScattering( python::module& module ) {
     "has_inelastic_scattering",
     &Component::hasInelasticScattering,
     "Return whether or not there is inelastic scattering"
+  )
+  .def_static(
+
+    "from_endf_file",
+    [] ( const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::endf::createThermalScatteringFromFile( filename );
+    },
+    python::arg( "filename" ),
+    "Create ThermalScattering data from an ENDF file\n\n"
+    "If there are multiple materials in the ENDF file, only the first material\n"
+    "will be transformed into a ThermalScattering instance.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    filename : string\n"
+    "         the ENDF file name"
   );
 
   // add standard equality comparison definitions

@@ -12,6 +12,13 @@ Constructor
 
     ThermalScattering
 
+Read from File
+~~~~~~~~~~~~~~
+.. autosummary::
+    :toctree:  generated/
+
+    ~ThermalScattering.from_endf_file
+
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
