@@ -62,7 +62,7 @@ namespace dryad {
     /**
      *  @brief Set the particle identifier for the reaction product
      *
-     *  @param id.  the reaction product identifier
+     *  @param id   the reaction product identifier
      */
     void identifier( id::ParticleID id ) {
 
