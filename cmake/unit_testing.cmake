@@ -110,8 +110,10 @@ add_cpp_test( dryad.UncorrelatedDistributionData                                
 add_cpp_test( dryad.ReactionProduct                                                     dryad/ReactionProduct.test.cpp )
 add_cpp_test( dryad.TabulatedCrossSection                                               dryad/TabulatedCrossSection.test.cpp )
 add_cpp_test( dryad.Reaction                                                            dryad/Reaction.test.cpp )
+
 add_cpp_test( dryad.ProjectileTarget                                                    dryad/ProjectileTarget.test.cpp )
 add_cpp_test( dryad.AtomicRelaxation                                                    dryad/AtomicRelaxation.test.cpp )
+add_cpp_test( dryad.ThermalScattering                                                   dryad/ThermalScattering.test.cpp )
 
 add_cpp_test( dryad.format.createIndex                                                  dryad/format/createIndex.test.cpp )
 add_cpp_test( dryad.format.createVector                                                 dryad/format/createVector.test.cpp )

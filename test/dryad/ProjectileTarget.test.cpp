@@ -23,7 +23,7 @@ SCENARIO( "ProjectileTarget" ) {
     WHEN( "the data is given explicitly" ) {
 
       ProjectileTarget chunk1 = makeProjectiletarget( false );
-      ProjectileTarget chunk2 = makeProjectiletarget( true );;
+      ProjectileTarget chunk2 = makeProjectiletarget( true );
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );
