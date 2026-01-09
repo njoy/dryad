@@ -18,7 +18,7 @@ namespace endf {
 namespace thermal {
 
   /**
-   *  @brief Create a IncoherentElasticScattering from a parsed incoherent
+   *  @brief Create an IncoherentElasticScattering from a parsed incoherent
    *         elastic thermal scattering component
    *
    *  @param[in] incoherent   the incoherent elastic thermal scattering component
