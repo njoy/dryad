@@ -28,7 +28,7 @@ void wrapThermalScattering( python::module& module ) {
     "Thermal scattering data\n\n"
     "Parameters\n"
     "----------\n"
-    "    cosines : njoy.dryad.Documentation\n"
+    "    documentation : njoy.dryad.Documentation\n"
     "         the documentation associated to the thermal sacttering data\n"
     "    incoherent : njoy.dryad.thermal.IncoherentElasticScattering\n"
     "         incoherent elastic scattering data (default: none)"

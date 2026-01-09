@@ -25,8 +25,8 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
    :maxdepth: 1
    :caption: Atomic Modules:
 
+   AtomicRelaxation
    atomic
-   atomic_relaxation
 
 .. toctree::
    :maxdepth: 1
@@ -38,4 +38,5 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
    :maxdepth: 1
    :caption: Thermal scattering data:
 
+   ThermalScattering
    thermal
