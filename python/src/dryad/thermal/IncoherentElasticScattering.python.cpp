@@ -30,7 +30,7 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     "----------\n"
     "    xs : float\n"
     "         the bound atom cross section\n"
-    "    debye_waller_integral : /njoy.dryad.thermal.TabulatedDebyeWallerIntegral\n"
+    "    debye_waller_integral : njoy.dryad.thermal.TabulatedDebyeWallerIntegral\n"
     "         the Debye-Waller integral data"
   );
 

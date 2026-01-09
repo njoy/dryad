@@ -8,3 +8,4 @@ thermal
    :caption: Classes:
 
    thermal/TabulatedDebyeWallerIntegral
+   thermal/IncoherentElasticScattering
