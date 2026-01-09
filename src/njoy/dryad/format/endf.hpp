@@ -58,6 +58,8 @@
 #include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/endf/createAtomicRelaxation.hpp"
 #include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+#include "njoy/dryad/format/endf/createThermalScattering.hpp"
+#include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
 
 #include "njoy/dryad/format/endf/createEndfInterpolant.hpp"
 #include "njoy/dryad/format/endf/createEndfBoundaries.hpp"

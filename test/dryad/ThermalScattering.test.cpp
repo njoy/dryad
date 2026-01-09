@@ -104,6 +104,12 @@ void verifyChunk( const ThermalScattering& chunk ) {
   CHECK( std::nullopt == chunk.documentation().version() );
   CHECK( std::nullopt == chunk.documentation().description() );
 
+  // content
+  CHECK( false == chunk.hasCoherentElasticScattering() );
+  CHECK( true == chunk.hasIncoherentElasticScattering() );
+  CHECK( true == chunk.hasElasticScattering() );
+  CHECK( false == chunk.hasInelasticScattering() );
+
   // incoherent elastic
   auto incoherent = chunk.incoherentElasticScattering().value();
   CHECK_THAT( 6.337872, WithinRel( incoherent.boundCrossSection() ) );

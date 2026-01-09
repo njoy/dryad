@@ -212,6 +212,8 @@ add_cpp_test( dryad.format.endf.createProjectileTarget                          
 add_cpp_test( dryad.format.endf.createProjectileTargetFromFile                          dryad/format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxation                                  dryad/format/endf/createAtomicRelaxation.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxationFromFile                          dryad/format/endf/createAtomicRelaxationFromFile.test.cpp )
+add_cpp_test( dryad.format.endf.createThermalScattering                                 dryad/format/endf/createThermalScattering.test.cpp )
+add_cpp_test( dryad.format.endf.createThermalScatteringFromFile                         dryad/format/endf/createThermalScatteringFromFile.test.cpp )
 
 add_cpp_test( dryad.format.endf.createEndfIndex                                         dryad/format/endf/createEndfIndex.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfBoundaries                                    dryad/format/endf/createEndfBoundaries.test.cpp )
