@@ -18,6 +18,7 @@ Read from File
     :toctree:  generated/
 
     ~ThermalScattering.from_endf_file
+    ~ThermalScattering.from_gnds_file
 
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~

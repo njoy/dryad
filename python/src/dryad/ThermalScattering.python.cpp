@@ -6,6 +6,7 @@
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
 #include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
+#include "njoy/dryad/format/gnds/createThermalScatteringFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -104,6 +105,22 @@ void wrapThermalScattering( python::module& module ) {
     "----------\n"
     "    filename : string\n"
     "         the ENDF file name"
+  )
+  .def_static(
+
+    "from_gnds_file",
+    [] ( const std::string& filename, const std::string& style ) -> decltype(auto) {
+
+      return njoy::dryad::format::gnds::createThermalScatteringFromFile( filename, style );
+    },
+    python::arg( "filename" ), python::arg( "style" ) = "eval",
+    "Create ThermalScattering data from a GNDS file\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    filename : string\n"
+    "         the GNDS file name\n"
+    "    style : string\n"
+    "         the GNDS style to process (default is eval)"
   );
 
   // add standard equality comparison definitions
