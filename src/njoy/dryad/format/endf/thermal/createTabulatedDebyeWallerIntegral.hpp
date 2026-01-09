@@ -41,7 +41,8 @@ namespace thermal {
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating a Debye-Waller integral table" );
+      Log::info( "Error encountered while creating a Debye-Waller integral table "
+                 "for incoherent elastic thermal scattering" );
       throw;
     }
   }
