@@ -89,11 +89,6 @@ SCENARIO( "IncoherentElasticScattering" ) {
 
     WHEN( "two instances of IncoherentElasticScattering are given" ) {
 
-      IncoherentElasticScattering chunk( 6.337872,
-                                         { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
-                                           { 2.013538, 2.677764, 3.323456, 3.972601,
-                                             4.623738, 5.276127, 6.583171, 7.891981 } } );
-
       IncoherentElasticScattering left( 6.337872,
                                         { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                           { 2.013538, 2.677764, 3.323456, 3.972601,

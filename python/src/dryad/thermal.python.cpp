@@ -12,6 +12,8 @@ namespace thermal {
 
   // declarations - components
   void wrapTabulatedDebyeWallerIntegral( python::module& );
+
+  void wrapIncoherentElasticScattering( python::module& );
 }
 
 void wrapThermal( python::module& module ) {
@@ -25,6 +27,8 @@ void wrapThermal( python::module& module ) {
 
   // components
   thermal::wrapTabulatedDebyeWallerIntegral( submodule );
+
+  thermal::wrapIncoherentElasticScattering( submodule );
 }
 
 } // dryad namespace

@@ -12,7 +12,7 @@ IncoherentElasticScattering& operator=( IncoherentElasticScattering&& ) = defaul
 /**
  *  @brief Constructor
  *
- *  @param xs                    the bound cross section
+ *  @param xs                    the bound atom cross section
  *  @param debyeWallerIntegral   the Debye-Waller integral data
  */
 IncoherentElasticScattering( double xs,

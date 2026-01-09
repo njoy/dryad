@@ -66,6 +66,7 @@ add_python_test( dryad.resonances.SpinGroup                            dryad/res
 add_python_test( dryad.resonances.CompoundSystem                       dryad/resonances/Test_CompoundSystem.py )
 
 add_python_test( dryad.thermal.TabulatedDebyeWallerIntegral            dryad/thermal/Test_TabulatedDebyeWallerIntegral.py )
+add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
 
