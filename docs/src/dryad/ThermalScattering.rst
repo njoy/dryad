@@ -20,6 +20,13 @@ Read from File
     ~ThermalScattering.from_endf_file
     ~ThermalScattering.from_gnds_file
 
+Write to File
+~~~~~~~~~~~~~
+.. autosummary::
+    :toctree:  generated/
+
+    ~ThermalScattering.to_endf_file
+
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
