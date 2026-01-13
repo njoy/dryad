@@ -39,7 +39,7 @@ TabulatedDebyeWallerIntegral( std::vector< double > temperatures,
 /**
  *  @brief Constructor for a Debye-Waller integral table using a single interpolation zone
  *
- *  @param energies       the temperature values
+ *  @param temperatures   the temperature values
  *  @param values         the integral values
  *  @param interpolant    the interpolation type of the data (default lin-lin)
  */
