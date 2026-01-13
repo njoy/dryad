@@ -27,12 +27,14 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a ReactionProduct from a parsed ENDF MF4 LegendreDistributions
+   *  @brief Create a ReactionProduct from a parsed ENDF MF4 section
    *
-   *  @param[in] reaction     the reaction identifier
-   *  @param[in] distributions   the MF4 LegendreDistributions
-   *  @param[in] normalise       the flag to indicate whether or not the distributions
-   *                             need to be normalised
+   *  There is no associated MF5 section, so we use TwoBodyDistributionData.
+   *
+   *  @param[in] reaction    the reaction identifier
+   *  @param[in] section     the MF4 section
+   *  @param[in] normalise   the flag to indicate whether or not the distributions
+   *                         need to be normalised
    */
   inline ReactionProduct
   createReactionProduct( const id::ReactionID& reaction,
