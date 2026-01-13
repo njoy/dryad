@@ -656,6 +656,50 @@ SCENARIO( "ReactionInformation" ) {
       CHECK( 104 == partials[37].reactionType().mt() );
     } // THEN
 
+    THEN( "partial mt numbers can be obtained for non-elastic reaction" ) {
+
+      auto partials = ReactionInformation::partials( n, li7, material, 3, 3 );
+
+      CHECK(  37 == partials.size() );
+      CHECK(  16 == partials[0].reactionType().mt() );
+      CHECK(  24 == partials[1].reactionType().mt() );
+      CHECK(  25 == partials[2].reactionType().mt() );
+      CHECK(  51 == partials[3].reactionType().mt() );
+      CHECK(  52 == partials[4].reactionType().mt() );
+      CHECK(  53 == partials[5].reactionType().mt() );
+      CHECK(  54 == partials[6].reactionType().mt() );
+      CHECK(  55 == partials[7].reactionType().mt() );
+      CHECK(  56 == partials[8].reactionType().mt() );
+      CHECK(  57 == partials[9].reactionType().mt() );
+      CHECK(  58 == partials[10].reactionType().mt() );
+      CHECK(  59 == partials[11].reactionType().mt() );
+      CHECK(  60 == partials[12].reactionType().mt() );
+      CHECK(  61 == partials[13].reactionType().mt() );
+      CHECK(  62 == partials[14].reactionType().mt() );
+      CHECK(  63 == partials[15].reactionType().mt() );
+      CHECK(  64 == partials[16].reactionType().mt() );
+      CHECK(  65 == partials[17].reactionType().mt() );
+      CHECK(  66 == partials[18].reactionType().mt() );
+      CHECK(  67 == partials[19].reactionType().mt() );
+      CHECK(  68 == partials[20].reactionType().mt() );
+      CHECK(  69 == partials[21].reactionType().mt() );
+      CHECK(  70 == partials[22].reactionType().mt() );
+      CHECK(  71 == partials[23].reactionType().mt() );
+      CHECK(  72 == partials[24].reactionType().mt() );
+      CHECK(  73 == partials[25].reactionType().mt() );
+      CHECK(  74 == partials[26].reactionType().mt() );
+      CHECK(  75 == partials[27].reactionType().mt() );
+      CHECK(  76 == partials[28].reactionType().mt() );
+      CHECK(  77 == partials[29].reactionType().mt() );
+      CHECK(  78 == partials[30].reactionType().mt() );
+      CHECK(  79 == partials[31].reactionType().mt() );
+      CHECK(  80 == partials[32].reactionType().mt() );
+      CHECK(  81 == partials[33].reactionType().mt() );
+      CHECK(  82 == partials[34].reactionType().mt() );
+      CHECK( 102 == partials[35].reactionType().mt() );
+      CHECK( 104 == partials[36].reactionType().mt() );
+    } // THEN
+
     THEN( "partial mt numbers can be obtained for inelastic scattering" ) {
 
       auto partials = ReactionInformation::partials( n, li7, material, 3, 4 );
