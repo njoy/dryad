@@ -89,13 +89,7 @@ namespace lrf7 {
                                    { return left < getJpi( right ); } );
 
       std::vector< dryad::resonances::SpinGroup::ChannelData > data( begin, iter );
-      if ( formalism == dryad::resonances::Formalism::ReichMoore ) {
-
-        moveCaptureToFront( data );
-      }
-
-      groups.emplace_back( std::move( data ),
-                           formalism, boundary );
+      groups.emplace_back( std::move( data ), formalism, boundary );
     }
 
     return groups;

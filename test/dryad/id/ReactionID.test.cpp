@@ -45,6 +45,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u238 == id.target() );
       CHECK( std::nullopt == id.particles() );
       CHECK( std::nullopt == id.residual() );
+      CHECK( 1 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 1 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->total" == id.symbol() );
@@ -60,6 +62,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
       CHECK( u238 == id.residual() );
+      CHECK( 50 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 50 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->n,U238" == id.symbol() );
@@ -75,6 +79,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u238 == id.target() );
       CHECK( empty == id.particles() );
       CHECK( ParticleID( "U239[all]" ) == id.residual() );
+      CHECK( 102 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 102 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->g,U239[all]" == id.symbol() );
@@ -94,6 +100,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
       CHECK( ParticleID( "Ra230[all]" ) == id.residual() );
+      CHECK( 199 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 199 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->3n,2p,a,Ra230[all]" == id.symbol() );
@@ -116,6 +124,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u235 == id.target() );
       CHECK( std::nullopt == id.particles() );
       CHECK( std::nullopt == id.residual() );
+      CHECK( 1 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 1 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->total" == id.symbol() );
@@ -132,6 +142,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u235 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
       CHECK( u235 == id.residual() );
+      CHECK( 50 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 50 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->n,U235" == id.symbol() );
@@ -148,6 +160,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u235 == id.target() );
       CHECK( empty == id.particles() );
       CHECK( ParticleID( "U236[all]" ) == id.residual() );
+      CHECK( 102 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 102 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->g,U236[all]" == id.symbol() );
@@ -167,6 +181,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u235 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 3 }, { p, 2 }, { a, 1 } } == id.particles() );
       CHECK( ParticleID( "Ra227[all]" ) == id.residual() );
+      CHECK( 199 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 199 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U235->3n,2p,a,Ra227[all]" == id.symbol() );
@@ -189,6 +205,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u == id.target() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
       CHECK( u == id.residual() );
+      CHECK( 525 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 525 ) == id.reactionType() );
       CHECK( InteractionType::Atomic == id.interactionType() );
       CHECK( "e-,U->e-,U[large-angle-scattering]" == id.symbol() );
@@ -203,6 +221,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( u == id.target() );
       CHECK( std::map< ParticleID, short >{ { eminus, 1 } } == id.particles() );
       CHECK( u == id.residual() );
+      CHECK( 526 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 526 ) == id.reactionType() );
       CHECK( InteractionType::Atomic == id.interactionType() );
       CHECK( "e-,U->e-,U[total-scattering]" == id.symbol() );
@@ -216,6 +236,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( n == id.projectile() );
       CHECK( u238 == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
+      CHECK( 91 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 91 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,U238->n,U238[continuum]" == id.symbol() );
@@ -231,6 +253,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( am242m == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
       CHECK( am242m == id.residual() );
+      CHECK( 52 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 52 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,Am242_e2->n,Am242_e2" == id.symbol() );
@@ -247,6 +271,8 @@ SCENARIO( "ReactionID" ) {
       CHECK( am242m == id.target() );
       CHECK( std::map< ParticleID, short >{ { n, 1 } } == id.particles() );
       CHECK( am242 == id.residual() );
+      CHECK( 50 == id.mt() );
+      CHECK( true == id.isCompatibleWithENDF() );
       CHECK( ReactionType( 50 ) == id.reactionType() );
       CHECK( InteractionType::Nuclear == id.interactionType() );
       CHECK( "n,Am242_e2->n,Am242" == id.symbol() );

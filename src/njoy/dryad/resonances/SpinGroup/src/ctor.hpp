@@ -12,6 +12,10 @@ SpinGroup& operator=( SpinGroup&& ) = default;
 /**
  *  @brief Constructor
  *
+ *  If the channels are not sorted, they will get sorted through the order
+ *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+ *  sorting order).
+ *
  *  @param[in] channels     the channels in the spingroup
  *  @param[in] resonances   the resonance table of the spingroup
  *  @param[in] formalism    the r matrix formalism option to be applied
@@ -48,6 +52,10 @@ public:
 
 /**
  *  @brief Constructor
+ *
+ *  If the channels are not sorted, they will get sorted through the order
+ *  of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical
+ *  sorting order).
  *
  *  @param[in] channels     the channel data in the spingroup
  *  @param[in] formalism    the r matrix formalism option to be applied

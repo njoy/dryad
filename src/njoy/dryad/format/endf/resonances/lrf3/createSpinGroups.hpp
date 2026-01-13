@@ -122,8 +122,6 @@ namespace lrf3 {
                                    { return left < getJpi( right ); } );
 
       std::vector< dryad::resonances::SpinGroup::ChannelData > data( begin, iter );
-      moveCaptureToFront( data );
-
       groups.emplace_back( std::move( data ),
                            dryad::resonances::Formalism::ReichMoore,
                            dryad::resonances::BoundaryCondition::ShiftFactor );

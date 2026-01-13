@@ -5,9 +5,12 @@
 class Entry {
 
   /* fields */
-  ParticleID projectile_;
-  ParticleID target_;
-  ReactionType type_;
+
+  // tuple for logical ordering:
+  // - projectile
+  // - target
+  // - reaction type
+  std::tuple< ParticleID, ParticleID, ReactionType > tuple_;
 
   std::vector< std::string > symbols_;
   std::optional< ParticleID > residual_;
@@ -100,9 +103,7 @@ public:
 
   /* constructor */
   Entry( ParticleID projectile, ParticleID target, ReactionType type ) :
-      projectile_( std::move( projectile ) ),
-      target_( std::move( target ) ),
-      type_( std::move( type ) ),
+      tuple_( std::move( projectile ), std::move( target ), std::move( type ) ),
       symbols_( generateSymbols( projectile, target, type ) ),
       residual_( generateResidual( projectile, target, type ) ) {
 
@@ -110,9 +111,10 @@ public:
   }
 
   /* methods */
-  const ParticleID& projectile() const noexcept { return this->projectile_; }
-  const ParticleID& target() const noexcept { return this->target_; }
-  const ReactionType& reactionType() const noexcept { return this->type_; }
+  const std::tuple< ParticleID, ParticleID, ReactionType >& reaction() const noexcept { return this->tuple_; }
+  const ParticleID& projectile() const noexcept { return std::get< 0 >( this->reaction() ); }
+  const ParticleID& target() const noexcept { return std::get< 1 >( this->reaction() ); }
+  const ReactionType& reactionType() const noexcept { return std::get< 2 >( this->reaction() ); }
   const std::optional< ParticleID >& residual() const noexcept { return this->residual_; }
   const std::string& symbol() const noexcept { return this->symbols().front(); }
   const std::vector< std::string >& symbols() const noexcept { return this->symbols_; }

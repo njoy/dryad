@@ -1,5 +1,10 @@
 void processChannels() {
 
+  std::sort( this->channels().begin(), this->channels().end(),
+             [] ( auto&& left, auto&& right )
+                { return left.identifier() < right.identifier(); } );
+
+
   for ( const auto& channel : this->channels() ) {
 
     auto id = channel.identifier().reaction();

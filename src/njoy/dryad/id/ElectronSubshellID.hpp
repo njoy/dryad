@@ -16,10 +16,6 @@ namespace id {
   /**
    *  @class
    *  @brief The electron subshell identifier, with associated symbol and aliases
-   *
-   *  Comparison operators are provided using the logical order given by the
-   *  ENDF mt numbers. A hash function and override for std::hash is also
-   *  provided.
    */
   class ElectronSubshellID {
 
@@ -276,12 +272,7 @@ namespace id {
      */
     friend auto operator==( const ElectronSubshellID& left, const ElectronSubshellID& right ) {
 
-      return std::tie( entries[ left.index_ ].principalQuantumNumber(),
-                       entries[ left.index_ ].azimuthalQuantumNumber(),
-                       entries[ left.index_ ].totalAngularMomentum() ) ==
-             std::tie( entries[ right.index_ ].principalQuantumNumber(),
-                       entries[ right.index_ ].azimuthalQuantumNumber(),
-                       entries[ right.index_ ].totalAngularMomentum() );
+      return entries[ left.index_ ].quantumNumbers() == entries[ right.index_ ].quantumNumbers();
     }
 
     /**
@@ -303,12 +294,7 @@ namespace id {
      */
     friend auto operator<( const ElectronSubshellID& left, const ElectronSubshellID& right ) {
 
-      return std::tie( entries[ left.index_ ].principalQuantumNumber(),
-                       entries[ left.index_ ].azimuthalQuantumNumber(),
-                       entries[ left.index_ ].totalAngularMomentum() ) <
-             std::tie( entries[ right.index_ ].principalQuantumNumber(),
-                       entries[ right.index_ ].azimuthalQuantumNumber(),
-                       entries[ right.index_ ].totalAngularMomentum() );
+      return entries[ left.index_ ].quantumNumbers() < entries[ right.index_ ].quantumNumbers();
     }
 
     /**

@@ -74,6 +74,14 @@ namespace id {
     }
 
     /**
+     *  @brief Return the reaction type
+     */
+    const ReactionType& reactionType() const {
+
+      return entries[ this->index_ ].reactionType();
+    }
+
+    /**
      *  @brief Return the outgoing particles (excluding the residual)
      */
     const std::optional< std::map< ParticleID, short > >& particles() const {
@@ -90,14 +98,6 @@ namespace id {
     }
 
     /**
-     *  @brief Return the symbol
-     */
-    const std::string& symbol() const {
-
-      return entries[ this->index_ ].symbol();
-    }
-
-    /**
      *  @brief Return the interaction type (nuclear or atomic)
      */
     const InteractionType& interactionType() const {
@@ -106,11 +106,27 @@ namespace id {
     }
 
     /**
-     *  @brief Return the reaction type
+     *  @brief Return the mt number for this reaction type
      */
-    const ReactionType& reactionType() const {
+    const std::optional< short >& mt() const {
 
-      return entries[ this->index_ ].reactionType();
+      return this->reactionType().mt();
+    }
+
+    /**
+     *  @brief Return whether or not the reaction type is ENDF compatible
+     */
+    bool isCompatibleWithENDF() const {
+
+      return this->reactionType().isCompatibleWithENDF();
+    }
+
+    /**
+     *  @brief Return the symbol
+     */
+    const std::string& symbol() const {
+
+      return entries[ this->index_ ].symbol();
     }
 
     /**
@@ -129,8 +145,7 @@ namespace id {
      */
     friend auto operator==( const ReactionID& left, const ReactionID& right ) {
 
-      return std::tie( left.projectile(), left.target(), left.reactionType() ) ==
-             std::tie( right.projectile(), right.target(), right.reactionType() );
+      return entries[ left.index_ ].reaction() == entries[ right.index_ ].reaction();
     }
 
     /**
@@ -152,8 +167,7 @@ namespace id {
      */
     friend auto operator<( const ReactionID& left, const ReactionID& right ) {
 
-      return std::tie( left.projectile(), left.target(), left.reactionType() ) <
-             std::tie( right.projectile(), right.target(), right.reactionType() );
+      return entries[ left.index_ ].reaction() < entries[ right.index_ ].reaction();
     }
 
     /**

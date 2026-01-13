@@ -17,8 +17,8 @@ namespace dryad {
  */
 enum class InteractionType : short {
 
-  Atomic = 1,  /**< The projectile-target interaction is atomic */
-  Nuclear = 2  /**< The projectile-target interaction is nuclear */
+  Nuclear = 1, /**< The projectile-target interaction is nuclear */
+  Atomic = 2   /**< The projectile-target interaction is atomic */
 };
 
 } // dryad namespace

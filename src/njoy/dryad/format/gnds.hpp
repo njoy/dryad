@@ -12,7 +12,6 @@
 #include "njoy/dryad/format/gnds/resolveLink.hpp"
 #include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 
-#include "njoy/dryad/format/gnds/atomic/createElectronSubshellID.hpp"
 #include "njoy/dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
 
 #include "njoy/dryad/format/gnds/resonances/createRadius.hpp"

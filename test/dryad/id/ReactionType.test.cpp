@@ -5530,6 +5530,32 @@ SCENARIO( "ReactionType" ) {
 
   GIVEN( "valid ReactionType instances" ) {
 
+    ReactionType gamma( 102 );
+    ReactionType neutron( 50 );
+    ReactionType proton( 600 );
+    ReactionType deuteron( 650 );
+    ReactionType triton( 700 );
+    ReactionType helion( 750 );
+    ReactionType alpha( 800 );
+    ReactionType total( 1 );
+    ReactionType fission( 18 );
+    ReactionType pairproduction( 515 );
+    ReactionType total_atomic( 501 );
+
+    THEN( "the ordering is respected" ) {
+
+      CHECK( gamma < neutron );
+      CHECK( neutron < proton );
+      CHECK( proton < deuteron );
+      CHECK( deuteron < triton );
+      CHECK( triton < helion );
+      CHECK( helion < alpha );
+      CHECK( alpha < total );
+      CHECK( total < fission );
+      CHECK( fission < pairproduction );
+      CHECK( pairproduction < total_atomic );
+    }
+
     ReactionType id1( 50 );
     ReactionType id2( 600 );
 

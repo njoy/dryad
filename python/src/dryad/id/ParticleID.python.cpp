@@ -42,8 +42,10 @@ void wrapParticleID( python::module& module ) {
     "           the particle mass number \n"
     "    level_identifier : njoy.dryad.id.LevelID \n "
     "           he particle level \n"
-    "    subshell_identifier : njoy.dryad.id.ElectronSubshellID \n"
-    "         the particle subshell \n"
+    "    vacancy : njoy.dryad.id.ElectronSubshellID \n"
+    "         the identifier of the subshell with an electron vacancy \n"
+    "    vacancies : list of njoy.dryad.id.ElectronSubshellID \n"
+    "         the identifiers of the subshells with electron vacancies \n"
     "    string : str \n"
     "         Initialise the particle identifier with the particle symbol, name or alternative \n\n"
   );
@@ -54,13 +56,19 @@ void wrapParticleID( python::module& module ) {
 
     python::init< ElementID, int, LevelID >(),
     python::arg( "element_identifier" ), python::arg( "mass" ), python::arg( "level_identifier" ),
-    "Initialise a nuclear particle identifier with a level number\n\n"
+    "Initialise a nuclear particle identifier with a level number"
   )
   .def(
 
     python::init< ElementID, ElectronSubshellID >(),
-    python::arg( "element_identifier" ), python::arg( "subshell_identifier" ),
-    "Initialise a electron subshell particle identifier\n\n"
+    python::arg( "element_identifier" ), python::arg( "vacancy" ),
+    "Initialise the particle identifier for an atom with a single electron vacancy"
+  )
+  .def(
+
+    python::init< ElementID, std::vector< ElectronSubshellID > >(),
+    python::arg( "element_identifier" ), python::arg( "vacancies" ),
+    "Initialise the particle identifier for an atom with multiple electron vacancies"
   )
   .def(
 
@@ -134,9 +142,9 @@ void wrapParticleID( python::module& module ) {
   )
   .def_property_readonly(
 
-    "subshell_identifier",
-    &Component::subshellIdentifier,
-    "The particle's subshell identifier"
+    "vacancies",
+    &Component::vacancies,
+    "The identifiers of the subshells that have vacancies"
   )
   .def(
 

@@ -18,7 +18,7 @@ namespace ace {
 namespace continuous {
 
   /**
-   *  @brief Create an TabulatedCrossSection instance for total
+   *  @brief Create an TabulatedCrossSection instance for elastic
    *
    *  @param[in] table   the ace table
    */

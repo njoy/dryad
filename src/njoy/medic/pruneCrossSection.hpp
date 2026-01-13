@@ -108,7 +108,6 @@ namespace medic {
       xs = dryad::TabulatedCrossSection( std::move( energies ), std::move( values ),
                                          std::move( boundaries ), std::move( interpolants ) );
     }
-
   }
 
 } // medic namespace

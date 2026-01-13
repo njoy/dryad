@@ -464,14 +464,24 @@ class ParticleID:
             level     the particle level
         """
     @typing.overload
-    def __init__(self, element: ElementID, subshell: ElectronSubshellID) -> None:
+    def __init__(self, element: ElementID, vacancy: ElectronSubshellID) -> None:
         """
         Initialise the particle identifier
         
         Arguments:
-            self       the identifier
-            element    the particle element
-            subshell   the particle subshell
+            self      the identifier
+            element   the particle element
+            vacancy   the subshell with a vacancy
+        """
+    @typing.overload
+    def __init__(self, element: ElementID, vacancies: list[ElectronSubshellID]) -> None:
+        """
+        Initialise the particle identifier
+        
+        Arguments:
+            self        the identifier
+            element     the particle element
+            vacancies   the subshells with a vacancy
         """
     @typing.overload
     def __init__(self, string: str) -> None:
@@ -503,14 +513,14 @@ class ParticleID:
         The particle's level number
         """
     @property
-    def subshell(self) -> ElectronSubshellID | None:
-        """
-        The particle's subshell
-        """
-    @property
     def symbol(self) -> str:
         """
         The particle's symbol
+        """
+    @property
+    def vacancies(self) -> list[ElectronSubshellID] | None:
+        """
+        The particle's subshell vacancies
         """
     @property
     def z(self) -> int:
@@ -596,6 +606,16 @@ class ReactionID:
     def interaction_type(self) -> njoy.dryad.InteractionType:
         """
         The interaction type (nuclear or atomic) associated to the reaction
+        """
+    @property
+    def is_compatible_with_endf(self) -> bool:
+        """
+        Flag to indicate whether or not the reaction is compatible with ENDF
+        """
+    @property
+    def mt(self) -> int | None:
+        """
+        The reaction's mt number (if defined)
         """
     @property
     def particles(self) -> dict[ParticleID, int] | None:
@@ -759,7 +779,7 @@ class ReactionType:
     @property
     def mt(self) -> int | None:
         """
-        The interaction type's mt number
+        The reaction type's mt number
         """
     @property
     def particles(self) -> dict[ParticleID, int] | None:

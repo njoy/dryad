@@ -56,6 +56,20 @@ SCENARIO( "ElectronSubshellID" ) {
 
   GIVEN( "valid ElectronSubshellID instances" ) {
 
+    ElectronSubshellID one( "1s1/2" );
+    ElectronSubshellID two( "2s1/2" );
+    ElectronSubshellID nonrelativistic( "2p" );
+    ElectronSubshellID relativistic( "2p1/2" );
+    ElectronSubshellID next( "2p3/2" );
+
+    THEN( "the ordering is respected" ) {
+
+      CHECK( one < two );
+      CHECK( two < nonrelativistic );
+      CHECK( nonrelativistic < relativistic );
+      CHECK( relativistic < next );
+    }
+
     ElectronSubshellID id1( ElectronSubshellID::K );
     ElectronSubshellID id2( ElectronSubshellID::L1 );
 
