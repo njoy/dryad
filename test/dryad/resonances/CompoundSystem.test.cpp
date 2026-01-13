@@ -258,6 +258,13 @@ void verifyChunk( const CompoundSystem& chunk ) {
   CHECK_THAT( 1e-5, WithinRel( chunk.lowerEnergyLimit() ) );
   CHECK_THAT( 2e+3, WithinRel( chunk.upperEnergyLimit() ) );
 
+  auto reactions = chunk.reactions();
+
+  CHECK( 3 == reactions.size() );
+  CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == reactions[0] );
+  CHECK( id::ReactionID( "n,Cl35->n,Cl35"      ) == reactions[1] );
+  CHECK( id::ReactionID( "n,Cl35->p,S35"       ) == reactions[2] );
+
   auto groups = chunk.spinGroups();
 
   // spin groups
