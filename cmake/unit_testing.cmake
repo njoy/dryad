@@ -94,6 +94,7 @@ add_cpp_test( dryad.TabulatedAngularDistributionFunction                        
 add_cpp_test( dryad.TabulatedAngularDistribution                                        dryad/TabulatedAngularDistribution.test.cpp )
 add_cpp_test( dryad.TabulatedAngularDistributions                                       dryad/TabulatedAngularDistributions.test.cpp )
 add_cpp_test( dryad.TabulatedComptonProfile                                             dryad/TabulatedComptonProfile.test.cpp )
+add_cpp_test( dryad.TabulatedComptonProfileFunction                                     dryad/TabulatedComptonProfileFunction.test.cpp )
 add_cpp_test( dryad.UniformAngularDistribution                                          dryad/UniformAngularDistribution.test.cpp )
 add_cpp_test( dryad.UniformAngularDistributions                                         dryad/UniformAngularDistributions.test.cpp )
 add_cpp_test( dryad.UniformEnergyDistribution                                           dryad/UniformEnergyDistribution.test.cpp )
@@ -140,6 +141,7 @@ add_cpp_test( dryad.format.ace.photoatomic.createProjectileTarget               
 add_cpp_test( dryad.format.ace.createProjectileTargetFromFile                           dryad/format/ace/createProjectileTargetFromFile.test.cpp )
 
 add_cpp_test( dryad.format.ace.atomic.createAceSubshellTransitionDataBlock              dryad/format/ace/atomic/createAceSubshellTransitionDataBlock.test.cpp )
+add_cpp_test( dryad.format.ace.atomic.createAceElectronShellBlock                       dryad/format/ace/atomic/createAceElectronShellBlock.test.cpp )
 add_cpp_test( dryad.format.ace.atomic.createAceElectronSubshellBlock                    dryad/format/ace/atomic/createAceElectronSubshellBlock.test.cpp )
 
 add_cpp_test( dryad.format.ace.electroatomic.createAcePrincipalCrossSectionBlock        dryad/format/ace/electroatomic/createAcePrincipalCrossSectionBlock.test.cpp )
@@ -273,3 +275,7 @@ add_cpp_test( reconr.calculateSummationCrossSections                            
 
 add_cpp_test( medic.pruneCrossSection                                                   medic/pruneCrossSection.test.cpp )
 add_cpp_test( medic.pruneCrossSections                                                  medic/pruneCrossSections.test.cpp )
+
+# acer tests
+
+add_cpp_test( acer.processElectronPhotonRelaxation                                      acer/processElectronPhotonRelaxation.test.cpp )

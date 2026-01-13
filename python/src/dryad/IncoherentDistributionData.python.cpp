@@ -17,6 +17,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
   using Component = njoy::dryad::IncoherentDistributionData;
   using ReferenceFrame = njoy::dryad::ReferenceFrame;
   using TabulatedScatteringFunction = njoy::dryad::TabulatedScatteringFunction;
+  using TabulatedComptonProfile = njoy::dryad::TabulatedComptonProfile;
 
   // wrap views created by this component
 
@@ -30,21 +31,26 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "In this representation, a scattering function S(x,Z) is defined that\n"
     "together with the Klein-Nishina cross section determines the double\n"
     "differential cross section.\n\n"
-    "This corresponds with the incoherent scattering function data given in MF27 MT504. \n\n"
+    "This corresponds with the incoherent scattering function data given in MF27 MT504,\n"
+    "supplemented with optional external Compton profile data. \n\n"
     "Parameters \n"
     "---------- \n"
     "    frame : njoy.dryad.ReferenceFrame \n"
     "         the reference frame of the distribution data\n"
     "    scattering : njoy.dryad.TabulatedScatteringFunction \n"
     "         the scatteirng function \n"
+    "    profiles : list of njoy.dryad.TabulatedCOmptonProfile \n"
+    "         the optional Compton profiles"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< ReferenceFrame, TabulatedScatteringFunction >(),
+    python::init< ReferenceFrame, TabulatedScatteringFunction,
+                  std::optional< std::vector< TabulatedComptonProfile > > >(),
     python::arg( "frame" ), python::arg( "scattering" ),
+    python::arg( "profiles" ) = std::nullopt,
     ""
   )
   .def_property_readonly(
@@ -67,6 +73,13 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "scattering_function",
     python::overload_cast<>( &Component::scatteringFunction, python::const_ ),
     python::overload_cast< TabulatedScatteringFunction >( &Component::scatteringFunction ),
+    "The scattering function"
+  )
+  .def_property(
+
+    "compton_profiles",
+    python::overload_cast<>( &Component::comptonProfiles, python::const_ ),
+    python::overload_cast< std::optional< std::vector< TabulatedComptonProfile > > >( &Component::comptonProfiles ),
     "The scattering function"
   );
 

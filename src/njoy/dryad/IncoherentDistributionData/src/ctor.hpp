@@ -14,7 +14,18 @@ IncoherentDistributionData& operator=( IncoherentDistributionData&& ) = default;
  *
  *  @param frame        the reference frame of the distribution data
  *  @param scattering   the scattering function
+ *  @param profiles     the optional Compton profiles
  */
 IncoherentDistributionData( ReferenceFrame frame,
-                            TabulatedScatteringFunction scattering ) :
-    frame_( std::move( frame ) ), scattering_( std::move( scattering ) ) {}
+                            TabulatedScatteringFunction scattering,
+                            std::optional< std::vector< TabulatedComptonProfile > > profiles = std::nullopt ) :
+    frame_( std::move( frame ) ), scattering_( std::move( scattering ) ),
+    profiles_( std::move( profiles ) ) {
+
+  if ( this->profiles_.has_value() ) {
+
+    std::sort( this->profiles_->begin(), this->profiles_->end(),
+               [] ( auto&& left, auto&& right )
+                  { return left.identifier() < right.identifier(); } );
+  }
+}

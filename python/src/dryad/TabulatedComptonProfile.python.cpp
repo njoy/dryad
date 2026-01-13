@@ -15,6 +15,8 @@ void wrapTabulatedComptonProfile( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::TabulatedComptonProfile;
+  using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
+  using TabulatedComptonProfileFunction = njoy::dryad::TabulatedComptonProfileFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -25,40 +27,64 @@ void wrapTabulatedComptonProfile( python::module& module ) {
 
     module,
     "TabulatedComptonProfile",
-    "A Compton profile using tabulated data"
+    "A Compton profile for an electron subshell defined by a pdf and cdf using tabulated data\n\n"
+    "Compton profiles are not available in standard evaluated nuclear data files. They are used for\n"
+    "photoatomic transport data in Monte Carlo codes like MCNP, which currently get this data form\n"
+    "external sources."
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
+    python::init< ElectronSubshellID,
+                  std::vector< double >,
+                  std::vector< double >,
                   std::vector< std::size_t >,
-                  std::vector< InterpolationType > >(),
-    python::arg( "momentum" ), python::arg( "values" ),
-    python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the Compton profile\n\n"
+                  std::vector< InterpolationType >,
+                  bool >(),
+    python::arg( "identifier" ), python::arg( "momentum" ),
+    python::arg( "values" ), python::arg( "boundaries" ),
+    python::arg( "interpolants" ),
+    python::arg( "normalise" ) = false,
+    "Initialise the compton profile\n\n"
     "Arguments:\n"
     "    self           the compton profile\n"
+    "    identifier     the electron subshell identifier\n"
     "    momentum       the momentum values\n"
     "    values         the probability values\n"
     "    boundaries     the boundaries of the interpolation regions\n"
     "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "                   see InterpolationType for all interpolation types\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
   )
   .def(
 
-    python::init< std::vector< double >, std::vector< double >,
-                  InterpolationType >(),
-    python::arg( "momentum" ), python::arg( "values" ),
+    python::init< ElectronSubshellID,
+                  std::vector< double >,
+                  std::vector< double >,
+                  InterpolationType, bool >(),
+    python::arg( "identifier" ), python::arg( "momentum" ),
+    python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the Compton profile\n\n"
+    python::arg( "normalise" ) = false,
+    "Initialise the compton profile\n\n"
     "Arguments:\n"
-    "    self           the Compton profile\n"
+    "    self           the compton profile\n"
+    "    identifier     the electron subshell identifier\n"
     "    momentum       the momentum values\n"
     "    values         the probability values\n"
     "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "                   see InterpolationType for all interpolation types\n"
+    "    normalise      option to indicate whether or not to normalise\n"
+    "                   all probability data (default: no normalisation)"
+  )
+  .def_property_readonly(
+
+    "identifier",
+    &Component::identifier,
+    "The electron subshell identifier"
   )
   .def_property_readonly(
 
@@ -74,15 +100,27 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   )
   .def_property_readonly(
 
-    "lower_momentum_limit",
-    &Component::lowerMomentumLimit,
-    "The lower momentum limit"
+    "boundaries",
+    &Component::boundaries,
+    "The boundaries of the interpolation regions"
   )
   .def_property_readonly(
 
-    "upper_momentum_limit",
-    &Component::upperMomentumLimit,
-    "The upper momentum limit"
+    "interpolants",
+    &Component::interpolants,
+    "The interpolation types of the interpolation regions"
+  )
+  .def_property_readonly(
+
+    "pdf",
+    &Component::pdf,
+    "The probability distribution function (pdf) of the distribution"
+  )
+  .def_property_readonly(
+
+    "cdf",
+    &Component::cdf,
+    "The cumulative distribution function (cdf) of the distribution"
   )
   .def(
 
@@ -90,29 +128,39 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     [] ( const Component& self, double momentum ) -> decltype(auto)
        { return self( momentum ); },
     python::arg( "momentum" ),
-    "Evaluate the table for a given momentum value\n\n"
+    "Evaluate the pdf of the distribution for a given momentum value\n\n"
     "Arguments:\n"
-    "    self        the table\n"
+    "    self        the distribution\n"
     "    momentum    the momentum value"
   )
-  .def_property_readonly(
+  .def(
 
-    "integral",
-    [] ( const Component& self ) { return self.integral(); },
-    "The integral (zeroth order moment) of the Compton profile over its domain"
+    "normalise",
+    &Component::normalise,
+    "Normalise the distribution"
   )
   .def_property_readonly(
 
-    "cumulative_integral",
-    [] ( const Component& self ) { return self.cumulativeIntegral(); },
-    "The cumulative integral of the Compton profile over its domain"
+    "average_momentum",
+    &Component::averageMomentum,
+    "The average momentum defined by the distribution"
+  )
+  .def(
+
+    "linearise",
+    &Component::linearise,
+    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "normalise" ) = false,
+    "Linearise the distribution\n\n"
+    "Arguments:\n"
+    "    self        the compton profile\n"
+    "    tolerance   the linearisation tolerance\n"
+    "    normalise   option to indicate whether or not to normalise\n"
+    "                all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions
   addStandardEqualityComparisonDefinitions< Component >( component );
-
-  // add standard tabulated data definitions
-  addStandardTabulatedDefinitions< Component >( component );
 
   // add standard copy definitions
   addStandardCopyDefinitions< Component >( component );

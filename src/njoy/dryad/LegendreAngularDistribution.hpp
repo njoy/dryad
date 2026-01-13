@@ -18,9 +18,6 @@ namespace dryad {
    *  @class
    *  @brief An angular distribution defined by a pdf and cdf using a Legendre
    *         series expansion
-   *
-   *  The pdf is normalised to 1 upon construction and the associated cdf is
-   *  calculated upon construction (after the pdf has been normalised).
    */
   class LegendreAngularDistribution {
 

@@ -70,6 +70,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAngularDistributionFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedAngularDistributions.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedComptonProfileFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/TabulatedComptonProfile.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/UniformAngularDistribution.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/UniformAngularDistributions.python.cpp

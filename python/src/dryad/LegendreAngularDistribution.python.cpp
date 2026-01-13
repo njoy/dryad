@@ -26,9 +26,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     module,
     "LegendreAngularDistribution",
     "An angular distribution defined by a pdf and cdf using a Legendre series\n"
-    "expansion\n\n"
-    "The pdf is normalised to 1 upon construction and the associated cdf is\n"
-    "calculated upon construction (after the pdf has been normalised)."
+    "expansion"
   );
 
   // wrap the component

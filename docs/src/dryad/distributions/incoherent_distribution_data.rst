@@ -1,9 +1,9 @@
-.. currentmodule:: njoy.dryad 
+.. currentmodule:: njoy.dryad
 
-IncoherentDistributionData 
+IncoherentDistributionData
 ==========================
 
-General information about this distribution 
+General information about this distribution
 
 
 Constructor
@@ -21,16 +21,14 @@ Modifiable Attributes
 
     ~IncoherentDistributionData.frame
     ~IncoherentDistributionData.scattering_function
-
-
-
+    ~IncoherentDistributionData.compton_profiles
 
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
     :toctree: generated/
 
-    ~IncoherentDistributionData.type 
+    ~IncoherentDistributionData.type
 
 
 
