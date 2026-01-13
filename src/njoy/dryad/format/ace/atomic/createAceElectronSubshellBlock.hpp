@@ -17,7 +17,7 @@ namespace ace {
 namespace atomic {
 
   /**
-   *  @brief Create the electron subshell data block for electroatomic data
+   *  @brief Create the electron subshell data block for atomic data
    *
    *  It is assumed that the AtomicRelaxation instance used is valid atomic
    *  relaxation data, and ACE compatible (i.e. transition energies are

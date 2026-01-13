@@ -17,7 +17,7 @@ namespace ace {
 namespace atomic {
 
   /**
-   *  @brief Create the atomic relaxation data block for electroatomic data
+   *  @brief Create the atomic relaxation data block for atomic data
    *
    *  It is assumed that the AtomicRelaxation instance used is valid atomic
    *  relaxation data, and ACE compatible (i.e. transition energies are

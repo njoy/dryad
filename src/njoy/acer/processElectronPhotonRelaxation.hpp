@@ -35,7 +35,7 @@ namespace acer {
 
       throw std::runtime_error( "The projectile-target is not electroatomic" );
     }
-    if ( photoatomic.targetIdentifier() != photoatomic.targetIdentifier() ||
+    if ( photoatomic.targetIdentifier() != electroatomic.targetIdentifier() ||
          photoatomic.targetIdentifier().z() != relaxation.elementIdentifier().number() ) {
 
       throw std::runtime_error( "The targets and relaxation element are not consistent" );

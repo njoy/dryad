@@ -18,7 +18,7 @@ namespace ace {
 namespace atomic {
 
   /**
-   *  @brief Create the electron shell data block for photoatomic data
+   *  @brief Create the electron shell data block for atomic data
    *
    *  It is assumed that the AtomicRelaxation instance used is valid atomic
    *  relaxation data, and ACE compatible (i.e. transition energies are
