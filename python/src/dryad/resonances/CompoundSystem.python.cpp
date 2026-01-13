@@ -69,7 +69,7 @@ void wrapCompoundSystem( python::module& module ) {
 
     "reactions",
     python::overload_cast<>( &Component::reactions, python::const_ ),
-    "The reactions to which this spin group contributes"
+    "The reactions to which this compound system contributes"
   )
   .def(
 
