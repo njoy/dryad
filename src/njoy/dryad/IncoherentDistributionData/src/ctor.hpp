@@ -24,8 +24,6 @@ IncoherentDistributionData( ReferenceFrame frame,
 
   if ( this->profiles_.has_value() ) {
 
-    std::sort( this->profiles_->begin(), this->profiles_->end(),
-               [] ( auto&& left, auto&& right )
-                  { return left.identifier() < right.identifier(); } );
+    this->sort();
   }
 }

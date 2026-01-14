@@ -9,3 +9,5 @@ General information about distributions
 
     distributions/coherent_distribution_data
     distributions/incoherent_distribution_data
+    distributions/TabulatedComptonProfile
+    distributions/TabulatedComptonProfileFunction

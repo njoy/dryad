@@ -37,6 +37,10 @@ namespace dryad {
 
     std::optional< std::vector< TabulatedComptonProfile > > profiles_;
 
+    /* auxiliary functions */
+
+    #include "njoy/dryad/IncoherentDistributionData/src/sort.hpp"
+
   public:
 
     /* constructor */
@@ -99,6 +103,15 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the Compton profiles
+     */
+    std::optional< std::vector< TabulatedComptonProfile > >&
+    comptonProfiles() {
+
+      return this->profiles_;
+    }
+
+    /**
      *  @brief Set the Compton profiles
      *
      *  @param profiles   the Compton profiles
@@ -112,9 +125,24 @@ namespace dryad {
       }
       else if ( this->profiles_.has_value() ) {
 
-        std::sort( this->profiles_->begin(), this->profiles_->end(),
-                   [] ( auto&& left, auto&& right )
-                      { return left.identifier() < right.identifier(); } );
+        this->sort();
+      }
+    }
+
+    /**
+     *  @brief Normalise the distribution data
+     *
+     *  For incoherent data, this only affects the Compton profiles if they are
+     *  defined.
+     */
+    void normalise() {
+
+      if ( this->comptonProfiles().has_value() ) {
+
+        for ( auto& profile : this->comptonProfiles().value() ) {
+
+          profile.normalise();
+        }
       }
     }
 

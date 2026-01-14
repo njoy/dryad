@@ -30,7 +30,24 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     "A Compton profile for an electron subshell defined by a pdf and cdf using tabulated data\n\n"
     "Compton profiles are not available in standard evaluated nuclear data files. They are used for\n"
     "photoatomic transport data in Monte Carlo codes like MCNP, which currently get this data form\n"
-    "external sources."
+    "external sources. \n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    subshell_identifier : njoy.dryad.id.ElectronSubshellID \n"
+    "         the electron subshell identifier\n"
+    "    momentum : list of float \n"
+    "         the momentum values \n"
+    "    values : list of float \n"
+    "         the probability values \n"
+    "    boundaries : list of int \n"
+    "         the boundaries of the interpolation regions \n"
+    "    interpolants : list of njoy.dryad.InterpolationType \n"
+    "         the interpolation types of the interpolation regions \n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear \n"
+    "         the interpolation type (default lin-lin) \n"
+    "    normalise : bool, default false \n"
+    "        option to indicate whether or not to normalise \n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -43,46 +60,31 @@ void wrapTabulatedComptonProfile( python::module& module ) {
                   std::vector< std::size_t >,
                   std::vector< InterpolationType >,
                   bool >(),
-    python::arg( "identifier" ), python::arg( "momentum" ),
-    python::arg( "values" ), python::arg( "boundaries" ),
+    python::arg( "subshell_identifier" ),
+    python::arg( "momentum" ),
+    python::arg( "values" ),
+    python::arg( "boundaries" ),
     python::arg( "interpolants" ),
     python::arg( "normalise" ) = false,
-    "Initialise the compton profile\n\n"
-    "Arguments:\n"
-    "    self           the compton profile\n"
-    "    identifier     the electron subshell identifier\n"
-    "    momentum       the momentum values\n"
-    "    values         the probability values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    "Initialise the compton profile with multiple interpolation zones"
   )
   .def(
 
     python::init< ElectronSubshellID,
                   std::vector< double >,
                   std::vector< double >,
-                  InterpolationType, bool >(),
-    python::arg( "identifier" ), python::arg( "momentum" ),
+                  InterpolationType,
+                  bool >(),
+    python::arg( "subshell_identifier" ),
+    python::arg( "momentum" ),
     python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
-    "Initialise the compton profile\n\n"
-    "Arguments:\n"
-    "    self           the compton profile\n"
-    "    identifier     the electron subshell identifier\n"
-    "    momentum       the momentum values\n"
-    "    values         the probability values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    "Initialise the compton profile with a single interpolation zone"
   )
   .def_property_readonly(
 
-    "identifier",
+    "subshell_identifier",
     &Component::identifier,
     "The electron subshell identifier"
   )
@@ -128,10 +130,11 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     [] ( const Component& self, double momentum ) -> decltype(auto)
        { return self( momentum ); },
     python::arg( "momentum" ),
-    "Evaluate the pdf of the distribution for a given momentum value\n\n"
-    "Arguments:\n"
-    "    self        the distribution\n"
-    "    momentum    the momentum value"
+    "Evaluate the pdf of the distribution for a given momentum value \n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    momentum : float \n"
+    "        the momentum value"
   )
   .def(
 
@@ -151,12 +154,14 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     &Component::linearise,
     python::arg( "tolerance" ) = ToleranceConvergence(),
     python::arg( "normalise" ) = false,
-    "Linearise the distribution\n\n"
-    "Arguments:\n"
-    "    self        the compton profile\n"
-    "    tolerance   the linearisation tolerance\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Linearise the distribution \n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    tolerance : njoy.dryad.ToleranceConvergence \n"
+    "         the linearisation tolerance \n"
+    "    normalise : bool, default false \n"
+    "        option to indicate whether or not to normalise \n"
+    "        all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions
