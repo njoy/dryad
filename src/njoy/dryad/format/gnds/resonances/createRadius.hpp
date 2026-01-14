@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEMULTIPLICITY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEMULTIPLICITY
+#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERADIUS
+#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERADIUS
 
 // system includes
 #include <variant>
@@ -56,4 +56,4 @@ namespace resonances {
 } // dryad namespace
 } // njoy namespace
 
-#endif
+#endif //NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERADIUS
