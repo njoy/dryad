@@ -20,6 +20,9 @@
 // components - atomic
 #include "njoy/dryad/atomic.hpp"
 
+// components - thermal
+#include "njoy/dryad/thermal.hpp"
+
 // components - resonances
 #include "njoy/dryad/resonances.hpp"
 
@@ -65,6 +68,7 @@
 // components - top level
 #include "njoy/dryad/AtomicRelaxation.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/dryad/ThermalScattering.hpp"
 
 // formats
 #include "njoy/dryad/format/endf.hpp"
