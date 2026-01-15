@@ -36,12 +36,14 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     python::init< std::vector< double >, bool >(),
     python::arg( "coefficients" ), python::arg( "normalise" ) = false,
     "Initialise the angular distribution\n\n"
-    "Arguments:\n"
-    "    self           the angular distribution\n"
-    "    coefficients   the coefficients of the Legendre series (from\n"
-    "                   lowest to highest order coefficient) for the pdf\n"
-    "    normalise      option to indicate whether or not to normalise\n"
-    "                   all probability data (default: no normalisation)"
+    "Parameters\n"
+    "----------\n"
+    "    coefficients : list of float\n"
+    "         the coefficients of the Legendre series (from\n"
+    "         lowest to highest order coefficient)\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -68,9 +70,10 @@ void wrapLegendreAngularDistribution( python::module& module ) {
        { return self( cosine ); },
     python::arg( "cosine" ),
     "Evaluate the pdf of the distribution for a given cosine value\n\n"
-    "Arguments:\n"
-    "    self      the angular distribution\n"
-    "    cosine    the cosine value"
+    "Parameters\n"
+    "----------\n"
+    "    cosine : float\n"
+    "        the cosine value"
   )
   .def(
 
@@ -91,11 +94,13 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     python::arg( "tolerance" ) = ToleranceConvergence(),
     python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
-    "Arguments:\n"
-    "    self        the angular distribution\n"
-    "    tolerance   the linearisation tolerance\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : njoy.dryad.ToleranceConvergence\n"
+    "         the linearisation tolerance\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

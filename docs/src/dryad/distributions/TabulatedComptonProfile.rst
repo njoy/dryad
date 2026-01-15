@@ -5,9 +5,9 @@ TabulatedComptonProfile
 
 General information about this distribution
 
-
 Constructor
 ~~~~~~~~~~~
+
 .. autosummary::
     :toctree:  generated/
 
@@ -15,6 +15,7 @@ Constructor
 
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
+
 .. autosummary::
     :toctree: generated/
 
@@ -29,6 +30,7 @@ Read-only Attributes
 
 Methods
 ~~~~~~~
+
 .. autosummary::
     :toctree: generated/
 

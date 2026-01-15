@@ -31,22 +31,22 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     "Compton profiles are not available in standard evaluated nuclear data files. They are used for\n"
     "photoatomic transport data in Monte Carlo codes like MCNP, which currently get this data form\n"
     "external sources. \n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    subshell_identifier : njoy.dryad.id.ElectronSubshellID \n"
+    "Parameters\n"
+    "----------\n"
+    "    subshell_identifier : njoy.dryad.id.ElectronSubshellID\n"
     "         the electron subshell identifier\n"
-    "    momentum : list of float \n"
-    "         the momentum values \n"
-    "    values : list of float \n"
-    "         the probability values \n"
-    "    boundaries : list of int \n"
-    "         the boundaries of the interpolation regions \n"
-    "    interpolants : list of njoy.dryad.InterpolationType \n"
-    "         the interpolation types of the interpolation regions \n"
-    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear \n"
-    "         the interpolation type (default lin-lin) \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
+    "    momentum : list of float\n"
+    "         the momentum values\n"
+    "    values : list of float\n"
+    "         the probability values\n"
+    "    boundaries : list of int\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "         the interpolation type (default lin-lin)\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
 
@@ -130,10 +130,10 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     [] ( const Component& self, double momentum ) -> decltype(auto)
        { return self( momentum ); },
     python::arg( "momentum" ),
-    "Evaluate the pdf of the distribution for a given momentum value \n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    momentum : float \n"
+    "Evaluate the pdf of the Compton profile for a given momentum value \n\n"
+    "Parameters\n"
+    "----------\n"
+    "    momentum : float\n"
     "        the momentum value"
   )
   .def(
@@ -155,12 +155,12 @@ void wrapTabulatedComptonProfile( python::module& module ) {
     python::arg( "tolerance" ) = ToleranceConvergence(),
     python::arg( "normalise" ) = false,
     "Linearise the distribution \n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    tolerance : njoy.dryad.ToleranceConvergence \n"
-    "         the linearisation tolerance \n"
-    "    normalise : bool, default false \n"
-    "        option to indicate whether or not to normalise \n"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : njoy.dryad.ToleranceConvergence\n"
+    "         the linearisation tolerance\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
   );
 

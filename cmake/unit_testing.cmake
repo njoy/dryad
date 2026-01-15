@@ -160,6 +160,7 @@ add_cpp_test( dryad.format.ace.photoatomic.createAceCoherentFormFactorBlock     
 
 add_cpp_test( dryad.format.endf.ReactionInformation                                     dryad/format/endf/ReactionInformation.test.cpp )
 add_cpp_test( dryad.format.endf.createBoundaries                                        dryad/format/endf/createBoundaries.test.cpp )
+add_cpp_test( dryad.format.endf.createReferenceFrame                                    dryad/format/endf/createReferenceFrame.test.cpp )
 add_cpp_test( dryad.format.endf.createInterpolant                                       dryad/format/endf/createInterpolant.test.cpp )
 add_cpp_test( dryad.format.endf.createInterpolants                                      dryad/format/endf/createInterpolants.test.cpp )
 add_cpp_test( dryad.format.endf.createProjectileIdentifier                              dryad/format/endf/createProjectileIdentifier.test.cpp )

@@ -44,10 +44,11 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
     python::init< std::vector< double > >(),
     python::arg( "coefficients" ),
     "Initialise the angular distribution\n\n"
-    "Arguments:\n"
-    "    self           the angular distribution\n"
-    "    coefficients   the coefficients of the Legendre series (from\n"
-    "                   lowest to highest order coefficient)"
+    "Parameters\n"
+    "----------\n"
+    "    coefficients : list of float\n"
+    "         the coefficients of the Legendre series (from\n"
+    "         lowest to highest order coefficient)\n"
   )
   .def_property_readonly(
 
@@ -69,10 +70,11 @@ void wrapLegendreAngularDistributionFunction( python::module& module ) {
     [] ( const Component& self, double cosine ) -> decltype(auto)
        { return self( cosine ); },
     python::arg( "cosine" ),
-    "Evaluate the table for a given cosine value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    cosine    the cosine value"
+    "Evaluate the distribution for a given cosine value\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    cosine : float\n"
+    "        the cosine value"
   )
   .def_property_readonly(
 
