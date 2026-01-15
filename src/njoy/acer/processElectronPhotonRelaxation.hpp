@@ -26,7 +26,7 @@ namespace acer {
                                                const std::string& filename ) {
 
     if ( photoatomic.interactionType() != dryad::InteractionType::Atomic ||
-         photoatomic.projectileIdentifier() != dryad::id::ParticleID::neutron() ) {
+         photoatomic.projectileIdentifier() != dryad::id::ParticleID::photon() ) {
 
       throw std::runtime_error( "The projectile-target is not photoatomic" );
     }
@@ -42,6 +42,7 @@ namespace acer {
     }
 
     //! @todo verify unionisation of the photoatomic and electroatomic data
+    //! @todo verify if binding energies of shells appear in total ionisation as jumps
     //! @todo verify normalisation?
 
     bool relativistic = true;
@@ -55,7 +56,7 @@ namespace acer {
     auto jinc = dryad::format::ace::photoatomic::createAceIncoherentScatteringFunctionBlock( photoatomic );
     auto jcoh = dryad::format::ace::photoatomic::createAceCoherentFormFactorBlock( photoatomic );
 //    auto lhnm = ;
-//    auto jflo = ;
+    auto jflo = dryad::format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, relaxation );
     auto eps = dryad::format::ace::atomic::createAceElectronShellBlock( relativistic, relaxation );
     auto swd = dryad::format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
     auto subsh = dryad::format::ace::atomic::createAceElectronSubshellBlock( relaxation );

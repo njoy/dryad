@@ -127,7 +127,7 @@ namespace dryad {
     bool hasSubshell( const id::ElectronSubshellID& id ) const {
 
       auto iter = this->iterator( id );
-      return iter != this->subshells().end();
+      return iter != this->subshells().end() && iter->identifier() == id;
     }
 
     /**
@@ -139,7 +139,7 @@ namespace dryad {
     subshell( const id::ElectronSubshellID& id ) const {
 
       auto iter = this->iterator( id );
-      if ( ( iter != this->subshells().end() ) && ( iter->identifier() == id ) ) {
+      if ( iter != this->subshells().end() && iter->identifier() == id ) {
 
         return *iter;
       }

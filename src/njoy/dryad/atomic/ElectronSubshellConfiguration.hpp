@@ -2,10 +2,12 @@
 #define NJOY_DRYAD_ATOMIC_ElECTRONSUBSHELLCONFIGURATION
 
 // system includes
+#include <algorithm>
 #include <vector>
 #include <numeric>
 
 // other includes
+#include "tools/Log.hpp"
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/atomic/RadiativeTransitionData.hpp"
 #include "njoy/dryad/atomic/NonRadiativeTransitionData.hpp"
@@ -25,8 +27,10 @@ namespace atomic {
    *      when the atom is neutral (given as a floating point number)
    *    - the transitions that can fill a vacancy in this shell
    *
-   *  If there are transitions defined, the transition probabilities
-   *  can be normalised to 1 upon construction.
+   *  If there are transitions defined, the transition probabilities can be
+   *  normalised to 1 upon construction. Transitions are always sorted at
+   *  construction time (by originating shell for radiative transitions and
+   *  by originating and emitting shell for non-radiative transitions).
    */
   class ElectronSubshellConfiguration {
 
@@ -40,13 +44,10 @@ namespace atomic {
 
     /* auxiliary functions */
 
-    template < typename Range >
-    static double calculateTotalProbability( const Range& transitions ) {
-
-      return std::accumulate( transitions.begin(), transitions.end(), 0.,
-                              [] ( double value, auto&& transition )
-                                 { return value + transition.probability(); } );
-    }
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/sort.hpp"
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/iterator.hpp"
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateProbability.hpp"
+    #include "njoy/dryad/atomic/ElectronSubshellConfiguration/src/calculateAverageEnergy.hpp"
 
   public:
 
@@ -182,6 +183,7 @@ namespace atomic {
     void radiativeTransitions( std::vector< RadiativeTransitionData > radiative ) {
 
       this->radiative_ = std::move( radiative );
+      this->sort();
     }
 
     /**
@@ -208,6 +210,87 @@ namespace atomic {
     void nonRadiativeTransitions( std::vector< NonRadiativeTransitionData > nonradiative ) {
 
       this->nonradiative_ = std::move( nonradiative );
+      this->sort();
+    }
+
+    /**
+     *  @brief Return whether or not a given radiative transition is present
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     */
+    bool hasRadiativeTransition( const id::ElectronSubshellID& originating ) const {
+
+      auto iter = this->iterator( originating );
+      return iter != this->radiativeTransitions().end() &&
+             iter->originatingShell() == originating;
+    }
+
+    /**
+     *  @brief Return whether or not a given non-radiative transition is present
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     *  @param emitting      the identifier of the subshell from which the
+     *                       emitted electron originated
+     */
+    bool hasNonRadiativeTransition( const id::ElectronSubshellID& originating,
+                                    const id::ElectronSubshellID& emitting ) const {
+
+      auto iter = this->iterator( originating, emitting );
+      return iter != this->nonRadiativeTransitions().end() &&
+             iter->originatingShell() == originating &&
+             iter->emittingShell() == emitting;
+    }
+
+    /**
+     *  @brief Return the requested radiative transition
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     */
+    const RadiativeTransitionData&
+    radiativeTransition( const id::ElectronSubshellID& originating ) const {
+
+      auto iter = this->iterator( originating );
+      if ( iter != this->radiativeTransitions().end() &&
+           iter->originatingShell() == originating ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested radiative transition originating from subshell "
+                    "\'{}\' could not be found", originating.symbol() );
+        throw std::exception();
+      }
+    }
+
+    /**
+     *  @brief Return the requested non-radiative transition
+     *
+     *  @param originating   the identifier of the subshell from which the
+     *                       vacancy filling electron originated
+     *  @param emitting      the identifier of the subshell from which the
+     *                       emitted electron originated
+     */
+    const NonRadiativeTransitionData&
+    nonRadiativeTransition( const id::ElectronSubshellID& originating,
+                            const id::ElectronSubshellID& emitting ) const {
+
+      auto iter = this->iterator( originating, emitting );
+      if ( iter != this->nonRadiativeTransitions().end() &&
+           iter->originatingShell() == originating &&
+           iter->emittingShell() == emitting ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "The requested non-radiative transition originating from subshell "
+                    "\'{}\' could not be found", originating.symbol() );
+        throw std::exception();
+      }
     }
 
     /**
@@ -215,7 +298,22 @@ namespace atomic {
      */
     double totalRadiativeProbability() const {
 
-      return calculateTotalProbability( this->radiativeTransitions() );
+      return calculateProbability( this->radiativeTransitions().begin(),
+                                   this->radiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the radiative probability for transitions
+     *         originating from a range of subshells
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double radiativeProbability( const id::ElectronSubshellID& first,
+                                 const id::ElectronSubshellID& last ) const {
+
+      return calculateProbability( lower_iterator( first, this->radiativeTransitions() ),
+                                   upper_iterator( last, this->radiativeTransitions() ) );
     }
 
     /**
@@ -223,7 +321,76 @@ namespace atomic {
      */
     double totalNonRadiativeProbability() const {
 
-      return calculateTotalProbability( this->nonRadiativeTransitions() );
+      return calculateProbability( this->nonRadiativeTransitions().begin(),
+                                   this->nonRadiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the non-radiative probability for transitions
+     *         originating from a range of subshells
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double nonRadiativeProbability( const id::ElectronSubshellID& first,
+                                    const id::ElectronSubshellID& last ) const {
+
+      return calculateProbability( lower_iterator( first, this->nonRadiativeTransitions() ),
+                                   upper_iterator( last, this->nonRadiativeTransitions() ) );
+    }
+
+    /**
+     *  @brief Return the average radiative energy
+     *
+     *  This function assumes that the transition energies are present.
+     */
+    double averageRadiativeEnergy() const {
+
+      return calculateAverageEnergy( this->radiativeTransitions().begin(),
+                                     this->radiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the average radiative energy for transitions
+     *         originating from a range of subshells
+     *
+     *  This function assumes that the transition energies are present.
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double averageRadiativeEnergy( const id::ElectronSubshellID& first,
+                                   const id::ElectronSubshellID& last ) const {
+
+      return calculateAverageEnergy( lower_iterator( first, this->radiativeTransitions() ),
+                                     upper_iterator( last, this->radiativeTransitions() ) );
+    }
+
+    /**
+     *  @brief Return the average non-radiative energy
+     *
+     *  This function assumes that the transition energies are present.
+     */
+    double averageNonRadiativeEnergy() const {
+
+      return calculateAverageEnergy( this->nonRadiativeTransitions().begin(),
+                                     this->nonRadiativeTransitions().end() );
+    }
+
+    /**
+     *  @brief Return the average non-radiative energy for transitions
+     *         originating from a range of subshells
+     *
+     *  This function assumes that the transition energies are present.
+     *
+     *  @param first   the identifier of the first subshell
+     *  @param last    the identifier of the last subshell (included)
+     */
+    double averageNonRadiativeEnergy( const id::ElectronSubshellID& first,
+                                      const id::ElectronSubshellID& last ) const {
+
+      return calculateAverageEnergy( lower_iterator( first, this->nonRadiativeTransitions() ),
+                                     upper_iterator( last, this->nonRadiativeTransitions() ) );
     }
 
     /**

@@ -26,7 +26,7 @@ namespace atomic {
    *  @param[in] relaxation   the atomic relaxation data
    */
   inline njoy::ACEtk::electroatomic::ElectronSubshellBlock
-  createAceElectronSubshellBlock( const dryad::AtomicRelaxation& relaxation ) {
+  createAceElectronSubshellBlock( const AtomicRelaxation& relaxation ) {
 
     constexpr unsigned int offset = 533;
 

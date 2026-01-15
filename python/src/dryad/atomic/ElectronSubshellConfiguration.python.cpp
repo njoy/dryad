@@ -34,8 +34,10 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "  - the electron population, i.e. the number of electrons in the subshell\n"
     "    when the atom is neutral (given as a floating point number)\n"
     "  - the decay modes or transitions that can fill a hole in this shell\n\n"
-    "If there are transitions defined, the transition probabilities\n"
-    "can be normalised to 1 upon construction.\n\n"
+    "If there are transitions defined, the transition probabilities can be\n"
+    "normalised to 1 upon construction. Transitions are always sorted at\n"
+    "construction time (by originating shell for radiative transitions and\n"
+    "by originating and emitting shell for non-radiative transitions).\n\n"
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ElectronSubshellID  \n"
@@ -123,6 +125,60 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::hasTransitions,
     "Flag to indicate whether or not transitions are available"
   )
+  .def(
+
+    "has_radiative_transition",
+    &Component::hasRadiativeTransition,
+    python::arg( "originating_shell" ),
+    "Return whether or not a given radiative transition is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+  )
+  .def(
+
+    "has_non_radiative_transition",
+    &Component::hasNonRadiativeTransition,
+    python::arg( "originating_shell" ),
+    python::arg( "emitting_shell" ),
+    "Return whether or not a given non-radiative transition is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+    "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the emitted electron originated\n"
+  )
+  .def(
+
+    "radiative_transition",
+    &Component::radiativeTransition,
+    python::arg( "originating_shell" ),
+    "Return the requested radiative transition\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+  )
+  .def(
+
+    "non_radiative_transition",
+    &Component::nonRadiativeTransition,
+    python::arg( "originating_shell" ),
+    python::arg( "emitting_shell" ),
+    "Return the requested non-radiative transition\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    originating_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the\n"
+    "         vacancy filling electron originated\n"
+    "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the subshell from which the emitted electron originated\n"
+  )
   .def_property(
 
     "radiative_transitions",
@@ -148,6 +204,18 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     "total_non_radiative_probability",
     &Component::totalNonRadiativeProbability,
     "The total non-radiative probability"
+  )
+  .def_property_readonly(
+
+    "average_radiative_energy",
+    python::overload_cast<>( &Component::averageRadiativeEnergy, python::const_ ),
+    "The average radiative energy"
+  )
+  .def_property_readonly(
+
+    "average_non_radiative_energy",
+    python::overload_cast<>( &Component::averageNonRadiativeEnergy, python::const_ ),
+    "The average non-radiative energy"
   )
   .def(
 

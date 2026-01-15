@@ -35,13 +35,13 @@ void wrapNonRadiativeTransitionData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    originating_shell :  njoy.dryad.id.ElectronSubshellID\n"
-    "                  The identifier of the subshell from which the vacancy filling electron originated\n"
+    "        the identifier of the subshell from which the vacancy filling electron originated\n"
     "    emitting_shell : njoy.dryad.id.ElectronSubshellID\n"
-    "                   The identifier of the subshell from which the emitted electron originated\n"
+    "        the identifier of the subshell from which the emitted electron originated\n"
     "    probability : float\n"
-    "                   The probability of the transition\n"
+    "        the probability of the transition\n"
     "    energy : float, default none\n"
-    "                   The energy of the emitted electron\n\n"
+    "        the energy of the emitted electron\n\n"
   );
 
   // wrap the component

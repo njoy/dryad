@@ -12,12 +12,12 @@ NonRadiativeTransitionData& operator=( NonRadiativeTransitionData&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param originatingShell   the identifier of the subshell from which the
- *                            vacancy filling electron originated
- *  @param emittingShell      the identifier of the subshell from which the
- *                            emitted electron originated
- *  @param probability        the probability of the transition
- *  @param energy             the energy of the emitted electron (default: undefined)
+ *  @param originating   the identifier of the subshell from which the
+ *                       vacancy filling electron originated
+ *  @param emitting      the identifier of the subshell from which the
+ *                       emitted electron originated
+ *  @param probability   the probability of the transition
+ *  @param energy        the energy of the emitted electron (default: undefined)
  */
 NonRadiativeTransitionData( id::ElectronSubshellID originating,
                             id::ElectronSubshellID emitting,

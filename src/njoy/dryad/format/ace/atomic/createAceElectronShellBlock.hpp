@@ -23,21 +23,21 @@ namespace atomic {
    *  It is assumed that the AtomicRelaxation instance used is valid atomic
    *  relaxation data, and ACE compatible (i.e. transition energies are
    *  calculated, etc.)
-   * 
-   *  The electron shell block links to the Compton profile data, which can be 
-   *  given for non-relativistic or relativistic electron shells. When 
-   *  non-relativistic shells are used, the electron population has to be 
-   *  summed over the relativistic shells and the binding energy has to be 
+   *
+   *  The electron shell block links to the Compton profile data, which can be
+   *  given for non-relativistic or relativistic electron shells. When
+   *  non-relativistic shells are used, the electron population has to be
+   *  summed over the relativistic shells and the binding energy has to be
    *  averaged (we currently use the electron population by shell to perform
    *  this averaging).
    *
-   *  @param[in] relativistic   flag to indicate whether or not the shell data 
+   *  @param[in] relativistic   flag to indicate whether or not the shell data
    *                            has to use relativistic shells
    *  @param[in] relaxation     the atomic relaxation data
    */
   inline njoy::ACEtk::electroatomic::ElectronShellBlock
   createAceElectronShellBlock( bool relativistic,
-                               const dryad::AtomicRelaxation& relaxation ) {
+                               const AtomicRelaxation& relaxation ) {
 
     std::vector< double > electrons;
     std::vector< double > binding_energies;
@@ -61,8 +61,8 @@ namespace atomic {
       while ( iter != relaxation.subshells().end() ) {
 
         auto id = iter->identifier();
-        auto compare = [&id] ( auto&& subshell ) { 
-          
+        auto compare = [&id] ( auto&& subshell ) {
+
           return id.principalQuantumNumber() == subshell.identifier().principalQuantumNumber() &&
                  id.azimuthalQuantumNumber() == subshell.identifier().azimuthalQuantumNumber();
         };
