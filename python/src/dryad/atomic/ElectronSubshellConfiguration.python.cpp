@@ -199,11 +199,39 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     &Component::totalRadiativeProbability,
     "The total radiative probability"
   )
+  .def(
+
+    "radiative_probability",
+    &Component::radiativeProbability,
+    python::arg( "first" ),
+    python::arg( "last" ),
+    "The radiative probability for transitions originating from a range of subshells\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    first : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the first subshell in the range\n"
+    "    last : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the last subshell in the range (included)"
+  )
   .def_property_readonly(
 
     "total_non_radiative_probability",
     &Component::totalNonRadiativeProbability,
     "The total non-radiative probability"
+  )
+  .def(
+
+    "non_radiative_probability",
+    &Component::nonRadiativeProbability,
+    python::arg( "first" ),
+    python::arg( "last" ),
+    "The non-radiative probability for transitions originating from a range of subshells\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    first : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the first subshell in the range\n"
+    "    last : njoy.dryad.id.ElectronSubshellID\n"
+    "         the identifier of the last subshell in the range (included)"
   )
   .def_property_readonly(
 
