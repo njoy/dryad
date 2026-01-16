@@ -27,6 +27,9 @@ void wrapTabulatedEffectiveTemperature( python::module& module ) {
     module,
     "TabulatedEffectiveTemperature",
     "An effective temperature table\n\n"
+    "This is a table of effective temperatures (given in K) for the short collision-time\n"
+    "approximation given as a function of moderator temperature (given in K) for a scattering\n"
+    "atom.\n\n"
     "Parameters\n"
     "----------\n"
     "    moderator_temperatures : list of float\n"
