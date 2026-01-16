@@ -160,6 +160,7 @@ add_cpp_test( dryad.format.ace.electroatomic.createAceBremsstrahlungBlock       
 
 add_cpp_test( dryad.format.ace.photoatomic.createAcePrincipalCrossSectionBlock          dryad/format/ace/photoatomic/createAcePrincipalCrossSectionBlock.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createAcePhotoelectricCrossSectionBlock      dryad/format/ace/photoatomic/createAcePhotoelectricCrossSectionBlock.test.cpp )
+add_cpp_test( dryad.format.ace.photoatomic.createAceHeatingNumbersBlock                 dryad/format/ace/photoatomic/createAceHeatingNumbersBlock.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createAceFluorescenceDataBlock               dryad/format/ace/photoatomic/createAceFluorescenceDataBlock.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createAceIncoherentScatteringFunctionBlock   dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createAceComptonProfileBlock                 dryad/format/ace/photoatomic/createAceComptonProfileBlock.test.cpp )
