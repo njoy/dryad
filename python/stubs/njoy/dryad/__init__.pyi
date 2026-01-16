@@ -3273,7 +3273,7 @@ class ThermalScattering:
     Parameters
     ----------
         documentation : njoy.dryad.Documentation
-             the documentation associated to the thermal sacttering data
+             the documentation associated to the thermal scattering data
         incoherent : njoy.dryad.thermal.IncoherentElasticScattering
              incoherent elastic scattering data (default: none)
     """

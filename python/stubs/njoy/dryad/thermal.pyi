@@ -49,6 +49,8 @@ class TabulatedDebyeWallerIntegral:
     """
     A Debye-Waller integral table
     
+    Temperature values are assumed to be in K and the integral values are assumed to be in 1/eV.
+    
     Parameters
     ----------
         temperatures : list of float
@@ -186,6 +188,10 @@ class TabulatedDebyeWallerIntegral:
 class TabulatedEffectiveTemperature:
     """
     An effective temperature table
+    
+    This is a table of effective temperatures (given in K) for the short collision-time
+    approximation given as a function of moderator temperature (given in K) for a scattering
+    atom.
     
     Parameters
     ----------
