@@ -498,7 +498,7 @@ class CompoundSystem:
     @property
     def reactions(self) -> list[njoy.dryad.id.ReactionID]:
         """
-        The reactions to which this spin group contributes
+        The reactions to which this compound system contributes
         """
     @property
     def spin_groups(self) -> list[SpinGroup]:
