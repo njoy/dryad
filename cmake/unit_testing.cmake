@@ -260,6 +260,7 @@ add_cpp_test( dryad.format.gnds.readArray                                       
 add_cpp_test( dryad.format.gnds.resonances.createTabulatedRadius                        dryad/format/gnds/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createRadius                                 dryad/format/gnds/resonances/createRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createTabulatedDebyeWallerIntegral              dryad/format/gnds/thermal/createTabulatedDebyeWallerIntegral.test.cpp )
+add_cpp_test( dryad.format.gnds.thermal.createTabulatedEffectiveTemperature             dryad/format/gnds/thermal/createTabulatedEffectiveTemperature.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createIncoherentElasticScattering               dryad/format/gnds/thermal/createIncoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.format.gnds.readCovarianceMatrix                                    dryad/format/gnds/readCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.format.gnds.createPolynomialMultiplicity                            dryad/format/gnds/createPolynomialMultiplicity.test.cpp )
