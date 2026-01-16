@@ -17,7 +17,7 @@ void verifyChunk( const IncoherentElasticScattering& );
 
 SCENARIO( "createIncoherentElasticScattering" ) {
 
-  GIVEN( "ENDF MF3 sections" ) {
+  GIVEN( "ENDF MF7 MT2 scattering law components" ) {
 
     using Tape = njoy::ENDFtk::tree::Tape;
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "tsl-ZrinZrH.endf" );

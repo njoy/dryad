@@ -17,7 +17,7 @@ namespace thermal {
    *  @brief An effective temperature table
    *
    *  This is a table of effective temperatures (given in K) for the
-   *  shortcollision-time approximation given as a function of moderator
+   *  short collision-time approximation given as a function of moderator
    *  temperature (given in K) for a scattering atom.
    */
   class TabulatedEffectiveTemperature  :

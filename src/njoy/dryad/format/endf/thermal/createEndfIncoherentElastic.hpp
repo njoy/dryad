@@ -39,7 +39,7 @@ namespace thermal {
              std::move( integrals ) );
   }
 
-} // atomic namespace
+} // thermal namespace
 } // endf namespace
 } // format namespace
 } // dryad namespace

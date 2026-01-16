@@ -14,7 +14,7 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a ThermalScattering isntance from an ENDF file
+   *  @brief Create a ThermalScattering instance from an ENDF file
    *
    *  If there are multiple materials in the ENDF file, only the first material
    *  will be transformed into a ThermalScattering instance.

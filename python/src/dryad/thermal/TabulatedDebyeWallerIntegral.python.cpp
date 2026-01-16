@@ -27,6 +27,7 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
     module,
     "TabulatedDebyeWallerIntegral",
     "A Debye-Waller integral table\n\n"
+    "Temperature values are assumed to be in K and the integral values are assumed to be in 1/eV.\n\n"
     "Parameters\n"
     "----------\n"
     "    temperatures : list of float\n"
