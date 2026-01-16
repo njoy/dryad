@@ -8,6 +8,7 @@
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
 #include "njoy/dryad/format/ace.hpp"
+#include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
 namespace acer {
@@ -20,10 +21,11 @@ namespace acer {
    *  @param[in] relaxation      the atomic relaxation data
    *  @param[in] filename        the filename for the ace file
    */
-  inline void processElectronPhotonRelaxation( const dryad::ProjectileTarget& photoatomic,
-                                               const dryad::ProjectileTarget& electroatomic,
-                                               const dryad::AtomicRelaxation& relaxation,
-                                               const std::string& filename ) {
+  inline void
+  processElectronPhotonRelaxation( const dryad::ProjectileTarget& photoatomic,
+                                   const dryad::ProjectileTarget& electroatomic,
+                                   const dryad::AtomicRelaxation& relaxation,
+                                   const std::string& filename ) {
 
     if ( photoatomic.interactionType() != dryad::InteractionType::Atomic ||
          photoatomic.projectileIdentifier() != dryad::id::ParticleID::photon() ) {
@@ -41,6 +43,7 @@ namespace acer {
       throw std::runtime_error( "The targets and relaxation element are not consistent" );
     }
 
+    //! @todo verify if Compton profiles are present
     //! @todo verify unionisation of the photoatomic and electroatomic data
     //! @todo verify if binding energies of shells appear in total ionisation as jumps
     //! @todo verify normalisation?
@@ -55,7 +58,7 @@ namespace acer {
     auto eszg = dryad::format::ace::photoatomic::createAcePrincipalCrossSectionBlock( photoatomic );
     auto jinc = dryad::format::ace::photoatomic::createAceIncoherentScatteringFunctionBlock( photoatomic );
     auto jcoh = dryad::format::ace::photoatomic::createAceCoherentFormFactorBlock( photoatomic );
-//    auto lhnm = ;
+    auto lhnm = dryad::format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, relaxation );
     auto jflo = dryad::format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, relaxation );
     auto eps = dryad::format::ace::atomic::createAceElectronShellBlock( relativistic, relaxation );
     auto swd = dryad::format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
@@ -69,6 +72,18 @@ namespace acer {
     auto breme = dryad::format::ace::electroatomic::createAceBremsstrahlungDistributionBlock( electroatomic );
     auto breml = dryad::format::ace::electroatomic::createAceBremsstrahlungBlock( electroatomic );
     auto selas = dryad::format::ace::electroatomic::createAceElasticCrossSectionBlock( electroatomic );
+
+    ACEtk::PhotoatomicTable table( z, std::move( header ), std::move( za ), std::move( awr ),
+                                   std::move( eszg ), std::move( jinc ), std::move( jcoh ), std::move( lhnm ),
+                                   std::move( jflo ), std::move( eps ), std::move( swd ), std::move( subsh ),
+                                   std::move( sphel ), std::move( xprob ), std::move( esze ), std::move( excit ),
+                                   std::move( elas ), std::move( eion ), std::move( breme ), std::move( breml ),
+                                   std::move( selas ) );
+
+    // open a file and print the ACE file to the file
+    std::ofstream out( filename );
+    table.print( out );
+    out.close();
   }
 
 } // acer namespace
