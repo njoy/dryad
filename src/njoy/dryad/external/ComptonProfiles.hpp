@@ -23,19 +23,15 @@ namespace external {
    *
    *  Currently we only have tabulated data based on Biggs, Mendelsohn and Mann
    *  calculated profiles from the following reference:
-   *    F. Biggs, L. B. Mendelsohn, J. B. Mann
+   *    F. Biggs, L. B. Mendelsohn, J. B. Mann,
+   *    Hartree-Fock Compton profiles for the elements,
+   *    Atomic data and nuclear data table, 16, 201-309 (1975)
    */
   class ComptonProfiles {
 
     /* static fields */
 
-    static inline const std::vector< double > biggs_mendelsohn_mann_momentum = {
-
-        0.00,  0.05,  0.10,  0.15,  0.20,  0.30,  0.40,  0.50,  0.60,  0.70,
-        0.80,  1.00,  1.20,  1.40,  1.60,  1.80,  2.00,  2.40,  3.00,  4.00,
-        5.00,  6.00,  7.00,  8.00, 10.00, 15.00, 20.00, 30.00, 40.00, 60.00,
-      100.00
-    };
+    #include "njoy/dryad/external/ComptonProfiles/src/biggs_mendelsohn_mann.hpp"
 
   public:
 
@@ -45,11 +41,34 @@ namespace external {
 
     /**
      *  @brief Return Biggs, Mendelsohn and Mann Compton profiles for a given z number
+     *
+     *  @param[in] z           the z number of the atom
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
      */
     static std::vector< TabulatedComptonProfile >
-    biggsMendelsohnMannProfiles(  ) {
+    biggsMendelsohnMannProfiles( unsigned int z, bool normalise = false ) {
 
-      return this->id_;
+      if ( z > 0 && z < 103 ) {
+
+        std::vector< TabulatedComptonProfile > profiles;
+
+        std::vector< id::ElectronSubshellID > shells = biggs_mendelsohn_mann_shells.at( z );
+        std::vector< double > momentum = biggs_mendelsohn_mann_momentum;
+        std::vector< std::vector< double > > data = biggs_mendelsohn_mann_data.at( z );
+        for ( unsigned int i = 0; i < shells.size(); ++i ) {
+
+          profiles.emplace_back( shells[i], momentum, std::move( data[i] ),
+                                 InterpolationType::LinearLinear, normalise );
+        }
+
+        return profiles;
+      }
+      else {
+
+        throw std::out_of_range( "The z number must be between 1 and 102 for Biggs, Mendelsohn "
+                                 "and Mann Compton profiles" );
+      }
     }
   };
 
