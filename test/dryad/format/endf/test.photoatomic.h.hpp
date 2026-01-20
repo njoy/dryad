@@ -618,5 +618,5 @@ namespace h0 {
     verifyIonisationReaction( ionisation );
   }
 
-} // namespace h1
-} // namespace neutron
+} // namespace h0
+} // namespace photoatomic

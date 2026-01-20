@@ -77,6 +77,7 @@ add_cpp_test( dryad.resonances.SpinGroup                                        
 add_cpp_test( dryad.resonances.CompoundSystem                                           dryad/resonances/CompoundSystem.test.cpp )
 
 add_cpp_test( dryad.thermal.TabulatedDebyeWallerIntegral                                dryad/thermal/TabulatedDebyeWallerIntegral.test.cpp )
+add_cpp_test( dryad.thermal.IncoherentElasticScattering                                 dryad/thermal/IncoherentElasticScattering.test.cpp )
 
 add_cpp_test( dryad.Documentation                                                       dryad/Documentation.test.cpp )
 
@@ -109,8 +110,10 @@ add_cpp_test( dryad.UncorrelatedDistributionData                                
 add_cpp_test( dryad.ReactionProduct                                                     dryad/ReactionProduct.test.cpp )
 add_cpp_test( dryad.TabulatedCrossSection                                               dryad/TabulatedCrossSection.test.cpp )
 add_cpp_test( dryad.Reaction                                                            dryad/Reaction.test.cpp )
+
 add_cpp_test( dryad.ProjectileTarget                                                    dryad/ProjectileTarget.test.cpp )
 add_cpp_test( dryad.AtomicRelaxation                                                    dryad/AtomicRelaxation.test.cpp )
+add_cpp_test( dryad.ThermalScattering                                                   dryad/ThermalScattering.test.cpp )
 
 add_cpp_test( dryad.format.createIndex                                                  dryad/format/createIndex.test.cpp )
 add_cpp_test( dryad.format.createVector                                                 dryad/format/createVector.test.cpp )
@@ -181,6 +184,7 @@ add_cpp_test( dryad.format.endf.resonances.lrf7.createChannels                  
 add_cpp_test( dryad.format.endf.resonances.lrf7.createSpinGroups                        dryad/format/endf/resonances/lrf7/createSpinGroups.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createCompoundSystem                    dryad/format/endf/resonances/lrf7/createCompoundSystem.test.cpp )
 add_cpp_test( dryad.format.endf.thermal.createTabulatedDebyeWallerIntegral              dryad/format/endf/thermal/createTabulatedDebyeWallerIntegral.test.cpp )
+add_cpp_test( dryad.format.endf.thermal.createIncoherentElasticScattering               dryad/format/endf/thermal/createIncoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.format.endf.atomic.createElectronSubshellID                         dryad/format/endf/atomic/createElectronSubshellID.test.cpp )
 add_cpp_test( dryad.format.endf.atomic.createElectronSubshellConfiguration              dryad/format/endf/atomic/createElectronSubshellConfiguration.test.cpp )
 add_cpp_test( dryad.format.endf.covariance.createMatrix                                 dryad/format/endf/covariance/createMatrix.test.cpp )
@@ -208,6 +212,8 @@ add_cpp_test( dryad.format.endf.createProjectileTarget                          
 add_cpp_test( dryad.format.endf.createProjectileTargetFromFile                          dryad/format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxation                                  dryad/format/endf/createAtomicRelaxation.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxationFromFile                          dryad/format/endf/createAtomicRelaxationFromFile.test.cpp )
+add_cpp_test( dryad.format.endf.createThermalScattering                                 dryad/format/endf/createThermalScattering.test.cpp )
+add_cpp_test( dryad.format.endf.createThermalScatteringFromFile                         dryad/format/endf/createThermalScatteringFromFile.test.cpp )
 
 add_cpp_test( dryad.format.endf.createEndfIndex                                         dryad/format/endf/createEndfIndex.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfBoundaries                                    dryad/format/endf/createEndfBoundaries.test.cpp )
@@ -222,8 +228,9 @@ add_cpp_test( dryad.format.endf.createAtomicRelaxationEndfFile                  
 add_cpp_test( dryad.format.endf.createProjectileTargetEndfFile                          dryad/format/endf/createProjectileTargetEndfFile.test.cpp )
 
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
-add_cpp_test( dryad.format.gnds.convertCrossSections                                    dryad/format/gnds/convertCrossSections.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
+add_cpp_test( dryad.format.gnds.convertCrossSection                                     dryad/format/gnds/convertCrossSection.test.cpp )
+add_cpp_test( dryad.format.gnds.convertCrossSections                                    dryad/format/gnds/convertCrossSections.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseEnergies                                  dryad/format/gnds/convertInverseEnergies.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseLengths                                   dryad/format/gnds/convertInverseLengths.test.cpp )
 add_cpp_test( dryad.format.gnds.convertVarianceScalingFactors                           dryad/format/gnds/convertVarianceScalingFactors.test.cpp )
@@ -249,6 +256,7 @@ add_cpp_test( dryad.format.gnds.readArray                                       
 add_cpp_test( dryad.format.gnds.resonances.createTabulatedRadius                        dryad/format/gnds/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createRadius                                 dryad/format/gnds/resonances/createRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createTabulatedDebyeWallerIntegral              dryad/format/gnds/thermal/createTabulatedDebyeWallerIntegral.test.cpp )
+add_cpp_test( dryad.format.gnds.thermal.createIncoherentElasticScattering               dryad/format/gnds/thermal/createIncoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.format.gnds.readCovarianceMatrix                                    dryad/format/gnds/readCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.format.gnds.createPolynomialMultiplicity                            dryad/format/gnds/createPolynomialMultiplicity.test.cpp )
 add_cpp_test( dryad.format.gnds.createTabulatedMultiplicity                             dryad/format/gnds/createTabulatedMultiplicity.test.cpp )
@@ -275,6 +283,8 @@ add_cpp_test( dryad.format.gnds.createProjectileTarget                          
 add_cpp_test( dryad.format.gnds.createProjectileTargetFromFile                          dryad/format/gnds/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxation                                  dryad/format/gnds/createAtomicRelaxation.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxationFromFile                          dryad/format/gnds/createAtomicRelaxationFromFile.test.cpp )
+add_cpp_test( dryad.format.gnds.createThermalScattering                                 dryad/format/gnds/createThermalScattering.test.cpp )
+add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                         dryad/format/endf/createThermalScatteringFromFile.test.cpp )
 
 # reconr tests
 

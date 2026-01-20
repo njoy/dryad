@@ -27,6 +27,7 @@
 #include "njoy/dryad/format/endf/resonances/createTabulatedRadius.hpp"
 
 #include "njoy/dryad/format/endf/thermal/createTabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/format/endf/thermal/createIncoherentElasticScattering.hpp"
 
 #include "njoy/dryad/format/endf/createProjectileIdentifier.hpp"
 #include "njoy/dryad/format/endf/createTargetIdentifier.hpp"
@@ -57,6 +58,8 @@
 #include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/endf/createAtomicRelaxation.hpp"
 #include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+#include "njoy/dryad/format/endf/createThermalScattering.hpp"
+#include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
 
 #include "njoy/dryad/format/endf/createEndfInterpolant.hpp"
 #include "njoy/dryad/format/endf/createEndfBoundaries.hpp"

@@ -2,7 +2,6 @@
 #define NJOY_DRYAD_FORMAT_ENDF_CREATEPROJECTILETARGETFROMFILE
 
 // system includes
-#include <vector>
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"

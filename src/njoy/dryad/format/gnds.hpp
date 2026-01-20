@@ -17,6 +17,9 @@
 #include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
 #include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
 
+#include "njoy/dryad/format/gnds/thermal/createTabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/format/gnds/thermal/createIncoherentElasticScattering.hpp"
+
 #include "njoy/dryad/format/gnds/covariance/createScalingType.hpp"
 #include "njoy/dryad/format/gnds/covariance/createVarianceScaling.hpp"
 #include "njoy/dryad/format/gnds/covariance/createCrossSectionCovarianceMatrix.hpp"

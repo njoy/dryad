@@ -1,7 +1,6 @@
 .. currentmodule:: njoy.dryad
 
-
-AtomicRelaxation 
+AtomicRelaxation
 ================
 
 General information about the concept
@@ -28,7 +27,6 @@ Write to File
 
     ~AtomicRelaxation.to_endf_file
 
-
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
@@ -38,8 +36,6 @@ Modifiable Attributes
     ~AtomicRelaxation.element_identifier
     ~AtomicRelaxation.subshells
 
-
-
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
@@ -47,14 +43,12 @@ Read-only Attributes
 
     ~AtomicRelaxation.number_subshells
 
-
 Methods
 ~~~~~~~
 .. autosummary::
     :toctree: generated/
 
     ~AtomicRelaxation.has_subshell
-    ~AtomicRelaxation.subshell 
+    ~AtomicRelaxation.subshell
     ~AtomicRelaxation.normalise
     ~AtomicRelaxation.calculate_transition_energies
-    
