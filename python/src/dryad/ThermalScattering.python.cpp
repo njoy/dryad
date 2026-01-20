@@ -6,6 +6,7 @@
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
 #include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
+#include "njoy/dryad/format/endf/createThermalScatteringEndfFile.hpp"
 #include "njoy/dryad/format/gnds/createThermalScatteringFromFile.hpp"
 
 // namespace aliases
@@ -121,6 +122,24 @@ void wrapThermalScattering( python::module& module ) {
     "         the GNDS file name\n"
     "    style : string\n"
     "         the GNDS style to process (default is eval)"
+  )
+  .def(
+
+    "to_endf_file",
+    [] ( const Component& self, int za, int mat, const std::string& filename ) {
+
+      njoy::dryad::format::endf::createThermalScatteringEndfFile( self, za, mat, filename );
+    },
+    python::arg( "za" ), python::arg( "mat" ), python::arg( "filename" ),
+    "Write the ThermalScattering data to an ENDF file\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    za : int\n"
+    "         the ENDF za number to be used\n"
+    "    mat : int\n"
+    "         the ENDF mat number to be used\n"
+    "    filename : string\n"
+    "         the ENDF file name\n"
   );
 
   // add standard equality comparison definitions

@@ -222,10 +222,12 @@ add_cpp_test( dryad.format.endf.createEndfInterpolants                          
 add_cpp_test( dryad.format.endf.createEndfSublibraryType                                dryad/format/endf/createEndfSublibraryType.test.cpp )
 add_cpp_test( dryad.format.endf.atomic.createEndfSubshellDesignator                     dryad/format/endf/atomic/createEndfSubshellDesignator.test.cpp )
 add_cpp_test( dryad.format.endf.atomic.createEndfSubshellData                           dryad/format/endf/atomic/createEndfSubshellData.test.cpp )
+add_cpp_test( dryad.format.endf.thermal.createEndfIncoherentElastic                     dryad/format/endf/thermal/createEndfIncoherentElastic.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfFile3Section                                  dryad/format/endf/createEndfFile3Section.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfFile23Section                                 dryad/format/endf/createEndfFile23Section.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxationEndfFile                          dryad/format/endf/createAtomicRelaxationEndfFile.test.cpp )
 add_cpp_test( dryad.format.endf.createProjectileTargetEndfFile                          dryad/format/endf/createProjectileTargetEndfFile.test.cpp )
+add_cpp_test( dryad.format.endf.createThermalScatteringEndfFile                         dryad/format/endf/createThermalScatteringEndfFile.test.cpp )
 
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
