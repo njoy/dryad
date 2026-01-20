@@ -24,9 +24,12 @@
 #include "njoy/dryad/format/gnds/convertCrossSections.hpp"
 #include "njoy/dryad/format/gnds/convertEnergies.hpp"
 #include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/dryad/format/gnds/convertInverseEnergies.hpp"
 #include "njoy/dryad/format/gnds/convertInverseLengths.hpp"
 #include "njoy/dryad/format/gnds/convertRadii.hpp"
 #include "njoy/dryad/format/gnds/convertRadius.hpp"
+#include "njoy/dryad/format/gnds/convertTemperature.hpp"
+#include "njoy/dryad/format/gnds/convertTemperatures.hpp"
 #include "njoy/dryad/format/gnds/convertVarianceScalingFactors.hpp"
 
 #include "njoy/dryad/format/gnds/createReferenceFrame.hpp"

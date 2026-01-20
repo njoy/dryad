@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDAVERAGEENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDAVERAGEENERGY
+#ifndef NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATETABULATEDDEBYEWALLERINTEGRAL
+#define NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATETABULATEDDEBYEWALLERINTEGRAL
 
 // system includes
 #include <vector>
@@ -9,46 +9,49 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/format/gnds/createInterpolationType.hpp"
 #include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/dryad/format/gnds/convertTemperatures.hpp"
+#include "njoy/dryad/format/gnds/convertInverseEnergies.hpp"
+#include "njoy/dryad/thermal/TabulatedDebyeWallerIntegral.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace format {
 namespace gnds {
+namespace thermal {
 
   /**
-   *  @brief Create a TabulatedAverageEnergy from a GNDS average node
+   *  @brief Create a TabulatedDebyeWallerIntegral from a GNDS DebyeWallerIntegral node
+   *
+   *  @param[in] debye_waller   the GNDS Debye-Waller node
    */
-  inline TabulatedAverageEnergy
-  createTabulatedAverageEnergy( const pugi::xml_node& average,
-                                const std::string& style = "eval" ) {
+  inline dryad::thermal::TabulatedDebyeWallerIntegral
+  createTabulatedDebyeWallerIntegral( const pugi::xml_node& debye_waller ) {
 
-    std::vector< double > energies;
+    std::vector< double > temperatures;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
     std::vector< InterpolationType > interpolants;
 
-    // check that this is a valid average energy node
-    throwExceptionOnWrongNode( average, "averageProductEnergy" );
+    // check that this is a valid Debye-Waller integral node
+    throwExceptionOnWrongNode( debye_waller, "DebyeWallerIntegral" );
 
-    auto node = average.find_child_by_attribute( "label", style.c_str() );
+    auto node = debye_waller.first_child();
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
-      // read the average energy data
+      // read the Debye-Waller integral data
       auto data = readXYs1D( node );
 
       // get the interpolation type
       auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
       // convert units - if necessary
-      convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
-      convertEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
+      convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ) );
+      convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
 
       // assign data
-      energies = std::move( std::get< 2 >( data ) );
+      temperatures = std::move( std::get< 2 >( data ) );
       values = std::move( std::get< 4 >( data ) );
-      boundaries.emplace_back( energies.size() - 1 );
+      boundaries.emplace_back( temperatures.size() - 1 );
       interpolants.emplace_back( interpolant );
     }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
@@ -68,14 +71,14 @@ namespace gnds {
         auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
         // convert units - if necessary
-        convertEnergies( std::get< 2 >( data ), std::get< 3 >( data ) );
-        convertEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
+        convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ) );
+        convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
 
         // check for duplicate points at interpolation region boundaries
         std::size_t offset = 0;
-        if ( energies.size() > 0 ) {
+        if ( temperatures.size() > 0 ) {
 
-          if ( energies.back() == std::get< 2 >( data ).front() &&
+          if ( temperatures.back() == std::get< 2 >( data ).front() &&
                values.back() == std::get< 4 >( data ).front() ) {
 
             offset = 1;
@@ -83,24 +86,25 @@ namespace gnds {
         }
 
         // grow the data accordingly
-        energies.insert( energies.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
+        temperatures.insert( temperatures.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
         values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
-        boundaries.emplace_back( energies.size() - 1 );
+        boundaries.emplace_back( temperatures.size() - 1 );
         interpolants.emplace_back( interpolant );
       }
     }
     else {
 
-      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes"
-                  "for average energy data" );
+      Log::error( "Expected either an XYs1d node or regions1d node with XYs1d nodes "
+                  "for Debye-Waller integral data" );
       throw std::exception();
     }
 
-    return TabulatedAverageEnergy(
-             std::move( energies ), std::move( values ),
+    return dryad::thermal::TabulatedDebyeWallerIntegral(
+             std::move( temperatures ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }
 
+} // thermal namespace
 } // gnds namespace
 } // format namespace
 } // dryad namespace

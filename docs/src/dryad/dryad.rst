@@ -33,3 +33,9 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
    :caption: Distribution Types
 
    distributions
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Thermal scattering data:
+
+   thermal
