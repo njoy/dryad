@@ -292,6 +292,8 @@ add_cpp_test( dryad.format.gnds.createAtomicRelaxationFromFile                  
 add_cpp_test( dryad.format.gnds.createThermalScattering                                 dryad/format/gnds/createThermalScattering.test.cpp )
 add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                         dryad/format/endf/createThermalScatteringFromFile.test.cpp )
 
+add_cpp_test( dryad.external.ComptonProfiles                                            dryad/external/ComptonProfiles.test.cpp )
+
 # reconr tests
 
 add_cpp_test( reconr.unioniseCrossSections                                              reconr/unioniseCrossSections.test.cpp )
