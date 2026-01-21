@@ -51,6 +51,13 @@ namespace external {
 
       if ( z > 0 && z < 103 ) {
 
+        // temporary code since we don't have all profiles yet
+        if ( biggs_mendelsohn_mann_data.at( z ).front().size() == 0 ) {
+
+          throw std::runtime_error( "Compton profiles for z = " + std::to_string( z ) +
+                                    " not available yet, contact a developer" );
+        }
+
         std::vector< TabulatedComptonProfile > profiles;
 
         std::vector< id::ElectronSubshellID > shells = biggs_mendelsohn_mann_shells.at( z );
