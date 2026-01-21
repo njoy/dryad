@@ -83,7 +83,7 @@ void verifyChunk( const TabulatedComptonProfile& chunk, bool normalise ) {
 
   double normalisation = normalise ? 2.0 : 1.0;
 
-  CHECK( id::ElectronSubshellID( "1s1/2" ) == chunk.identifier() );
+  CHECK( id::ElectronSubshellID( "1s1/2" ) == chunk.subshellIdentifier() );
 
   CHECK( 4 == chunk.momentum().size() );
   CHECK( 4 == chunk.values().size() );

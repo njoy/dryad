@@ -44,7 +44,7 @@ namespace dryad {
     /**
      *  @brief Return the electron subshell identifier
      */
-    const id::ElectronSubshellID& identifier() const {
+    const id::ElectronSubshellID& subshellIdentifier() const {
 
       return this->id_;
     }
@@ -132,7 +132,7 @@ namespace dryad {
                                        bool normalise = false ) const {
 
       TabulatedComptonProfileFunction pdf = this->pdf().linearise( tolerance );
-      return TabulatedComptonProfile( this->identifier(), std::move( pdf ), normalise );
+      return TabulatedComptonProfile( this->subshellIdentifier(), std::move( pdf ), normalise );
     }
 
     /**

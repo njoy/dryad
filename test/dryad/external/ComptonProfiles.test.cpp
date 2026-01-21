@@ -36,7 +36,7 @@ void verifyBiggsMendelsohnMann( const std::vector< TabulatedComptonProfile >& ch
 
   CHECK( 1 == chunk.size() );
 
-  CHECK( id::ElectronSubshellID( "1s" ) == chunk[0].identifier() );
+  CHECK( id::ElectronSubshellID( "1s" ) == chunk[0].subshellIdentifier() );
 
   CHECK( 31 == chunk[0].momentum().size() );
   CHECK( 31 == chunk[0].values().size() );

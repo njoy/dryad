@@ -85,7 +85,7 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   .def_property_readonly(
 
     "subshell_identifier",
-    &Component::identifier,
+    &Component::subshellIdentifier,
     "The electron subshell identifier"
   )
   .def_property_readonly(
