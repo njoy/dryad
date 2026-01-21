@@ -40,3 +40,9 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
 
    ThermalScattering
    thermal
+
+.. toctree::
+   :maxdepth: 1
+   :caption: External data and models
+
+   external
