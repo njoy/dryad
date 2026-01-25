@@ -82,6 +82,7 @@ namespace lrf7 {
     auto iter = channel_data.begin();
     while ( iter != channel_data.end() ) {
 
+      // get all channel data for a given Jpi
       auto begin = iter;
       iter = std::upper_bound( begin, channel_data.end(),
                                getJpi( *begin ),
