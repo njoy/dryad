@@ -31,7 +31,7 @@ shacl_FetchContent_Declare( ACEtk
 
 shacl_FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         027ff90eac7ddf4145b915c746250bed2e668f22  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         d38d4f96b9346bb80f238b083beb28a9d7ea9269  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

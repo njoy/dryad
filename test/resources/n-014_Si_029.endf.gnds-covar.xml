@@ -1,0 +1,1042 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<covarianceSuite projectile="n" target="Si29" evaluation="ENDF/B-8.1" interaction="nuclear" format="2.0">
+  <externalFiles>
+    <externalFile label="reactions" path="../n-014_Si_029.endf.gnds.xml"/></externalFiles>
+  <styles>
+    <evaluated label="eval" date="2018-12-01" library="ENDF/B" version="8.1.3">
+      <documentation>
+        <authors>
+          <author name="PIGNI,ARBANAS,CAPOTE,TRKOV,et al"></author></authors>
+        <dates>
+          <date value="2018-12-01" dateType="created"/></dates>
+        <title><![CDATA[ENDF-6 file from ENDF/B version 8.1.3 translated to GNDS by FUDGE.]]></title>
+        <body><![CDATA[See the endfCompatible section.]]></body></documentation>
+      <temperature value="0" unit="K"/>
+      <projectileEnergyDomain min="1e-5" max="1.5e8" unit="eV"/></evaluated></styles>
+  <covarianceSections>
+    <covarianceSection label="total">
+      <rowData ENDF_MFMT="33,1" href="$reactions#/reactionSuite/sums/crossSectionSums/crossSectionSum[@label='total']/crossSection/resonancesWithBackground[@label='eval']"/>
+      <mixed label="eval">
+        <sum label="0" domainMin="1e-05" domainMax="1317300.0" domainUnit="eV">
+          <!-- The matrix for this reaction equals the weighted sum of the following matrices: -->
+          <summand ENDF_MFMT="33,2" coefficient="1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='n + Si29']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,102" coefficient="1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='Si30 + photon [inclusive]']/mixed[@label='eval']"/></sum>
+        <covarianceMatrix label="1" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1e-3</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2.5e-3</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="3" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1.75e6 2e6 8e6 1.2e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="6,6" compression="diagonal">
+              <values>0 6.336e-3 9.9e-5 3.96e-4 8.91e-4 1.584e-3</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="4" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1.75e6 2e6 8e6 1.2e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="6,6" compression="diagonal">
+              <values>0 5.0575e-4 6.2778e-6 1.936e-5 3.969e-5 5.184e-5</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + Si29">
+      <rowData ENDF_MFMT="33,2" href="$reactions#/reactionSuite/reactions/reaction[@label='n + Si29']/crossSection/resonancesWithBackground[@label='eval']"/>
+      <mixed label="eval">
+        <sum label="0" domainMin="1317300.0" domainMax="20000000.0" domainUnit="eV">
+          <!-- The matrix for this reaction equals the weighted sum of the following matrices: -->
+          <summand ENDF_MFMT="33,1" coefficient="1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='total']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,3" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='nonelastic']/mixed[@label='eval']"/></sum>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 0.5 1e4 2.5e4 7e4 4.7e5 8.4e5 1317300</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="7,7" symmetry="lower">
+              <values>2.5e-3 3.5e-3 4.9e-3 0 0 0.01805461 0 0 8.140333e-3 0.01468102 0 0 5.519239e-3 4.97695e-3 6.748858e-3 0 0 4.010214e-3 3.616193e-3 2.45182e-3 3.562928e-3 0 0 5.663124e-3 5.106698e-3 3.4624e-3 2.515739e-3 7.105327e-3</values></array></gridded2d></covarianceMatrix></mixed></covarianceSection>
+    <covarianceSection label="nonelastic">
+      <rowData ENDF_MFMT="33,3" href="$reactions#/reactionSuite/sums/crossSectionSums/crossSectionSum[@label='nonelastic']/crossSection/resonancesWithBackground[@label='eval']"/>
+      <mixed label="eval">
+        <sum label="0" domainMin="1e-05" domainMax="1317300.0" domainUnit="eV">
+          <!-- The matrix for this reaction equals the weighted sum of the following matrices: -->
+          <summand ENDF_MFMT="33,102" coefficient="1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='Si30 + photon [inclusive]']/mixed[@label='eval']"/></sum>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 4e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 9e-4 2.5e-3</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1.5e6 2e6 4e6 6e6 8e6 1.4e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 4.851e-3 4.851e-3 4.851e-3 4.851e-3 4.851e-3 4.851e-3 4.851e-3</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1.5e6 2e6 4e6 6e6 8e6 1.4e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0 1.3354e-17 9.351e-6 3.9494e-5 5.423e-5 5.9699e-5 5.658e-5</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="(z,n)">
+      <rowData ENDF_MFMT="33,4" href="$reactions#/reactionSuite/sums/crossSectionSums/crossSectionSum[@label='(z,n)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <sum label="0" domainMin="1317300.0" domainMax="20000000.0" domainUnit="eV">
+          <!-- The matrix for this reaction equals the weighted sum of the following matrices: -->
+          <summand ENDF_MFMT="33,3" coefficient="1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='nonelastic']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,16" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='2n + Si28 + photon']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,22" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='n + He4 + Mg25 + photon']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,28" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='n + H1 + Al28 + photon']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,102" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='Si30 + photon [inclusive]']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,103" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='(z,p)']/mixed[@label='eval']"/>
+          <summand ENDF_MFMT="33,107" coefficient="-1.0" href="/covarianceSuite/covarianceSections/covarianceSection[@label='(z,alpha)']/mixed[@label='eval']"/></sum>
+        <covarianceMatrix label="1" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="1,1" compression="diagonal">
+              <values>0</values></array></gridded2d></covarianceMatrix></mixed></covarianceSection>
+    <covarianceSection label="2n + Si28 + photon">
+      <rowData ENDF_MFMT="33,16" href="$reactions#/reactionSuite/reactions/reaction[@label='2n + Si28 + photon']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 8768900 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2.5e-7</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 8768900 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 8768900 9.5e6 1.1e7 1.3e7 1.5e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="7,7" compression="diagonal">
+              <values>0 0.1125 0.072 0.018 0.010125 0.010125 0.010125</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 8768900 9.5e6 1.1e7 1.3e7 1.5e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="7,7" compression="diagonal">
+              <values>0 3.3069e-9 2.7444e-7 5.1319e-6 3.6535e-5 1.372e-4 2.6575e-4</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + He4 + Mg25 + photon">
+      <rowData ENDF_MFMT="33,22" href="$reactions#/reactionSuite/reactions/reaction[@label='n + He4 + Mg25 + photon']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.1515e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 7.5e-20</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.1515e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.045</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.1515e7 1.45e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="5,5" compression="diagonal">
+              <values>0 0.1125 0.1125 0.072 0.0405</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.1515e7 1.45e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="5,5" compression="diagonal">
+              <values>0 9.4628e-22 5.1384e-12 3.7529e-8 6.1579e-7</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + H1 + Al28 + photon">
+      <rowData ENDF_MFMT="33,28" href="$reactions#/reactionSuite/reactions/reaction[@label='n + H1 + Al28 + photon']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.2764e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1e-7</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.2764e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.2764e7 1.45e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="5,5" compression="diagonal">
+              <values>0 0.1125 0.1125 0.072 0.018</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1.2764e7 1.45e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="5,5" compression="diagonal">
+              <values>0 2.0086e-9 2.0086e-9 8.6162e-7 2.2721e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e1 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,51" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e1 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1353400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 6e-6 6e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1353400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 0.01125 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1353400 2e6 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="11,11" compression="diagonal">
+              <values>0 0.010125 0.010125 0.010125 0.010125 0.010125 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1353400 2e6 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="11,11" compression="diagonal">
+              <values>0 3.007378e-6 7.5478e-5 2.1459e-4 9.3922e-5 5.1877e-5 2.1383e-5 8.5857e-6 3.0607e-6 3.0596e-6 8.3314e-7</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e2 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,52" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e2 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2098600 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1e-5</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2098600 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2098600 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 0.010125 0.010125 0.010125 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2098600 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 1.7153e-5 6.7705e-5 4.4924e-5 2.2706e-5 1.0903e-5 4.2729e-6 4.485e-6 1.3276e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e3 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,53" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e3 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2510400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 6e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2510400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2510400 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 0.010125 0.010125 0.010125 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2510400 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 1.4487e-5 4.1084e-5 3.2402e-5 1.6237e-5 7.2106e-6 2.618e-6 2.6434e-6 7.8137e-7</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e4 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,54" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e4 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3173800 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1e-5</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3173800 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3173800 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 0.010125 0.010125 0.010125 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3173800 3.5e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 1.203e-5 1.203e-5 2.6719e-5 1.6428e-5 9.0091e-6 3.6851e-6 3.9132e-6 1.2438e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e5 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,55" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e5 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3749100 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1e-5</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3749100 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3749100 5e6 7e6 9e6 1.1e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.018 0.018 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 3749100 5e6 7e6 9e6 1.1e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 5.2196e-6 1.6481e-5 8.8791e-6 7.1313e-6 3.5723e-6 2.3681e-6 1.3585e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e6 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,56" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e6 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.222e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1e-5</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.222e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.222e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.018 0.018 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.222e6 5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 3.7121e-6 1.1994e-5 7.4718e-6 6.0689e-6 3.1148e-6 3.6698e-6 1.351e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e7 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,57" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e7 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.906e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 6e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.906e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.906e6 5.5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.072 0.018 0.018 0.018 0.0405 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 4.906e6 5.5e6 7e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 3.1981e-7 1.724e-6 2.0215e-6 2.6594e-6 4.1047e-6 2.4898e-6 1.1022e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e8 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,58" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e8 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5008500 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 1.4e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5008500 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5008500 6e6 7.5e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.018 0.018 0.0405 0.0405 0.0405 0.072 0.1125</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5008500 6e6 7.5e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 2.1254e-6 3.0876e-6 3.7788e-6 3.0596e-6 1.2763e-6 1.0337e-6 3.1183e-7</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e9 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,59" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e9 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5065400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 6e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5065400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5065400 6e6 7.5e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.018 0.018 0.018 0.018 0.018 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5065400 6e6 7.5e6 9e6 1.1e7 1.3e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 5.3295e-6 8.9077e-6 5.6479e-6 5.4113e-6 2.6787e-6 3.0065e-6 1.0619e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e10 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,60" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e10 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5105800 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 5e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5105800 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5105800 6e6 8e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.018 0.018 0.018 0.018 0.0405 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5105800 6e6 8e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 4.1837e-6 7.6868e-6 3.2086e-6 2.7057e-6 2.8157e-6 1.0916e-6 6.088e-7</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e11 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,61" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e11 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5437900 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2.5e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5437900 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5437900 6e6 7.5e6 8.5e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 0.072 0.0405 0.0405 0.018 0.018 0.0405 0.072 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5437900 6e6 7.5e6 8.5e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 1.32e-7 1.6029e-6 2.8103e-6 2.2503e-6 2.0899e-6 3.2504e-6 2.7954e-6 1.0228e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e12 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,62" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e12 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5.47e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5.47e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5.47e6 6e6 7.5e6 9e6 1.1e7 1.3e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 0.072 0.018 0.018 0.018 0.018 0.0405 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5.47e6 6e6 7.5e6 9e6 1.1e7 1.3e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 1.0173e-7 2.628e-6 3.2123e-6 3.9071e-6 2.4096e-6 3.035e-6 1.8661e-6 1.1958e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e13 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,63" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e13 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5848700 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 6e-6</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5848700 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.045</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5848700 6.5e6 8e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.072 0.0405 0.0405 0.0405 0.0405 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 5848700 6.5e6 8e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 3.2445e-7 1.6753e-6 2.1141e-6 3.6562e-6 2.6807e-6 1.393e-6 9.883501e-7</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + (Si29_e14 -> Si29 + photon)">
+      <rowData ENDF_MFMT="33,64" href="$reactions#/reactionSuite/reactions/reaction[@label='n + (Si29_e14 -> Si29 + photon)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6015300 6065300 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 1e-7 1e-5</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6015300 6065300 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 2e-2 2e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6015300 6065300 7e6 8.5e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 0.0405 0.0405 0.018 0.018 0.018 0.0405 0.0405 0.072</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6015300 6065300 7e6 8.5e6 1e7 1.2e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="9,9" compression="diagonal">
+              <values>0 3.33367e-12 3.2234e-6 2.3422e-6 3.2863e-6 2.5742e-6 3.671e-6 1.7227e-6 1.1241e-6</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="n + Si29 + photon [continuum]">
+      <rowData ENDF_MFMT="33,91" href="$reactions#/reactionSuite/reactions/reaction[@label='n + Si29 + photon [continuum]']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6208900 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 3e-5</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6208900 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6208900 7e6 8.5e6 1e7 1.1e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.0405 0.010125 0.018 0.018 0.010125 0.010125 0.010125</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 6208900 7e6 8.5e6 1e7 1.1e7 1.45e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 1.7833e-6 1.3178e-5 5.293e-6 1.7557e-5 1.838e-5 5.0858e-5 3.5681e-5</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="Si30 + photon [inclusive]">
+      <rowData ENDF_MFMT="33,102" href="$reactions#/reactionSuite/reactions/reaction[@label='Si30 + photon [inclusive]']/crossSection/resonancesWithBackground[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 0.5 1e4 2.5e4 7e4 4.7e5 8.4e5 1317300</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="7,7" symmetry="lower">
+              <values>9e-4 6e-3 4e-2 0 0 0.01281595 0 0 5.660377e-3 1e-2 0 0 0.01416319 0.01251082 0.06260826 0 0 0.01872395 0.01653949 0.04138452 0.1094219 0 0 0.01896766 0.01675477 0.04192318 0.05542307 0.1122889</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 2e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 2.5e-3 1e-2</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1.75e6 3e6 8e6 1.2e7 1.4e7 1.5e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 0.0891 0.0891 0.2475 0.2475 0.2475 0.2475 0.2475</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 1317300 1.75e6 3e6 8e6 1.2e7 1.4e7 1.5e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="8,8" compression="diagonal">
+              <values>0 2.3256e-12 9.1203e-13 6.4178e-12 1.1025e-10 4.6225e-10 4.84e-10 4e-10</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="(z,p)">
+      <rowData ENDF_MFMT="33,103" href="$reactions#/reactionSuite/sums/crossSectionSums/crossSectionSum[@label='(z,p)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2999400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 6.4e-11</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2999400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="2,2" compression="diagonal">
+              <values>0 0.01125</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2999400 4e6 5e6 6e6 7e6 8.5e6 1e7 1.2e7 1.4e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="12,12" compression="diagonal">
+              <values>0 0.1125 0.072 0.0405 0.018 0.0135 0.010125 0.010125 0.018 0.018 0.018 0.018</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 2999400 4e6 5e6 6e6 7e6 8.5e6 1e7 1.2e7 1.4e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="12,12" compression="diagonal">
+              <values>0 8.0002e-13 9.629e-9 2.3634e-6 4.7564e-6 7.5261e-6 2.0098e-5 4.1315e-5 6.3081e-5 3.762e-5 2.1506e-5 1.4063e-5</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection>
+    <covarianceSection label="(z,alpha)">
+      <rowData ENDF_MFMT="33,107" href="$reactions#/reactionSuite/sums/crossSectionSums/crossSectionSum[@label='(z,alpha)']/crossSection/XYs1d[@label='eval']"/>
+      <mixed label="eval">
+        <covarianceMatrix label="0" type="absolute">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 35908 1.3e6 1353400 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="4,4" compression="diagonal">
+              <values>0 0 3.5e-16 3.5e-13</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="1" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 35908 1.3e6 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="3,3" compression="diagonal">
+              <values>0 0 0.02205</values></array></gridded2d></covarianceMatrix>
+        <covarianceMatrix label="2" type="relative">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 35908 1.3e6 1.5e6 2e6 3e6 4e6 5e6 6e6 7e6 8.5e6 1e7 1.2e7 1.45e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit=""/></axes>
+            <array shape="16,16" compression="diagonal">
+              <values>0 0 0 0.1125 0.1125 0.072 0.0405 0.018 0.018 0.018 0.010125 0.010125 0.010125 0.010125 0.018 0.0405</values></array></gridded2d></covarianceMatrix>
+        <shortRangeSelfScalingVariance label="3" type="absolute" dependenceOnProcessedGroupWidth="inverse">
+          <gridded2d>
+            <axes>
+              <grid index="2" label="row_energy_bounds" unit="eV" style="boundaries">
+                <values>1e-5 35908 1.3e6 1.5e6 2e6 3e6 4e6 5e6 6e6 7e6 8.5e6 1e7 1.2e7 1.45e7 1.6e7 1.75e7 2e7</values></grid>
+              <grid index="1" label="column_energy_bounds" unit="eV" style="boundaries">
+                <link href="../../grid[@index='2']/values"/></grid>
+              <axis index="0" label="matrix_elements" unit="b**2"/></axes>
+            <array shape="16,16" compression="diagonal">
+              <values>0 0 0 4.4474e-15 1.9083e-11 7.1497e-8 1.2302e-6 2.4365e-6 5.8739e-6 1.2026e-5 2.2702e-5 5.3696e-5 6.8198e-5 2.4116e-5 1.5441e-5 1.3264e-5</values></array></gridded2d></shortRangeSelfScalingVariance></mixed></covarianceSection></covarianceSections>
+</covarianceSuite>
