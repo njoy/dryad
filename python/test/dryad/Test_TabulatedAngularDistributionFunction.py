@@ -1473,6 +1473,15 @@ class Test_TabulatedAngularDistributionFunction( unittest.TestCase ) :
 
         verify_chunk4( self, chunk )
 
+        # the data is given explicitly with a jump that uses more than 2 x values
+        chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0., 0., 0., 0.5, 1. ],
+                                                      values = [ 0., 0.5, 0.75, 1., 1.25, 1.5 ],
+                                                      boundaries = [ 2, 5 ],   # <-- pointing to middle of the jump
+                                                      interpolants = [ InterpolationType.LinearLinear,
+                                                                       InterpolationType.LogLinear ] )
+
+        verify_chunk5( self, chunk )
+
         # the data is given explicitly with boundaries that point to the second x value in the jump
         chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0., 0., 0.5, 1. ],
                                                       values = [ 0., 0.5, 1., 1.25, 1.5 ],
@@ -1482,9 +1491,18 @@ class Test_TabulatedAngularDistributionFunction( unittest.TestCase ) :
 
         verify_chunk5( self, chunk )
 
-        # the data is given explicitly with a jump at the end that goes to zero
+        # the data is given explicitly with a jump at the beginning
+        chunk = TabulatedAngularDistributionFunction( cosines = [ -1., -1., 0., 0.5, 1. ], # <-- jump at beginning
+                                                      values =  [ 1., 0., 0.5, 0.75, 1. ],
+                                                      boundaries = [ 2, 4 ],      # <-- pointing to end
+                                                      interpolants = [ InterpolationType.LinearLinear,
+                                                                       InterpolationType.LogLinear ] )
+
+        verify_chunk6( self, chunk )
+
+        # the data is given explicitly with a jump at the end
         chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0., 0.5, 1., 1. ], # <-- jump at end
-                                                      values = [ 0., 0.5, 0.75, 1., 0. ], # <-- last value is zero
+                                                      values =  [ 0., 0.5, 0.75, 1., 2. ],
                                                       boundaries = [ 1, 4 ],      # <-- pointing to end
                                                       interpolants = [ InterpolationType.LinearLinear,
                                                                        InterpolationType.LogLinear ] )
@@ -1512,22 +1530,22 @@ class Test_TabulatedAngularDistributionFunction( unittest.TestCase ) :
         # there are not enough values in the x or y grid
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedAngularDistributionFunction( energies = [], values = [] )
+            chunk = TabulatedAngularDistributionFunction( cosines = [], values = [] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1. ], values = [ 4. ] )
+            chunk = TabulatedAngularDistributionFunction( cosines = [ 1. ], values = [ 4. ] )
 
         # the x and y grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 2., 3., 4. ],
+            chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0., 0.5, 1. ],
                                                           values = [ 4., 3., 2. ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 2., 3., 4. ],
+            chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0., 0.5, 1. ],
                                                           values = [ 4., 3., 2., 1. ],
                                                           boundaries = [ 3 ],
                                                           interpolants = [] )
@@ -1535,31 +1553,13 @@ class Test_TabulatedAngularDistributionFunction( unittest.TestCase ) :
         # the x grid is not sorted
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 3., 2., 4. ],
+            chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0.5, 0., 1. ],
                                                           values = [ 4., 3., 2., 1. ] )
-
-        # the x grid contains a triple x value
-        with self.assertRaises( Exception ) :
-
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 2., 2., 2., 3., 4. ],
-                                                          values = [ 4., 3., 3., 3., 2., 1. ] )
-
-        # the x grid has a jump at the beginning
-        with self.assertRaises( Exception ) :
-
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 1., 3., 4. ],
-                                                          values = [ 4., 3., 1., 4. ] )
-
-        # the x grid has a jump at the end
-        with self.assertRaises( Exception ) :
-
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 2., 4., 4. ],
-                                                          values = [ 4., 3., 1., 4. ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedAngularDistributionFunction( energies = [ 1., 2., 3., 4. ],
+            chunk = TabulatedAngularDistributionFunction( cosines = [ -1., 0., 0.5, 1. ],
                                                           values = [ 4., 3., 2., 1. ],
                                                           boundaries = [ 2 ],
                                                           interpolants = [ InterpolationType.LinearLinear ] )
