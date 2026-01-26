@@ -43,8 +43,8 @@ ParticleID( ElementID element, std::vector< ElectronSubshellID > vacancies ) :
  *  @param element   the particle element
  *  @param vacancy   the subshell with a vacancy
  */
-ParticleID( ElementID element, ElectronSubshellID subshell ) :
-    ParticleID( std::move( element ), std::vector< ElectronSubshellID >{ std::move( subshell ) } ) {}
+ParticleID( ElementID element, ElectronSubshellID vacancy ) :
+    ParticleID( std::move( element ), std::vector< ElectronSubshellID >{ std::move( vacancy ) } ) {}
 
 /**
  *  @brief Constructor

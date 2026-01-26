@@ -30,5 +30,13 @@ Read-only Attributes
 
     ~IncoherentDistributionData.type
 
+Methods
+~~~~~~~
+
+.. autosummary::
+    :toctree: generated/
+
+    ~IncoherentDistributionData.normalise
+
 
 

@@ -12,7 +12,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "createAceBremsstrahlungBlock" ) {
+SCENARIO( "createAceElectronSubshellBlock" ) {
 
   GIVEN( "instances of ProjectileTarget" ) {
 

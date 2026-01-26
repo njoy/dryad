@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/thermal/TabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/thermal/TabulatedEffectiveTemperature.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,10 +12,10 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
+void wrapTabulatedEffectiveTemperature( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::thermal::TabulatedDebyeWallerIntegral;
+  using Component = njoy::dryad::thermal::TabulatedEffectiveTemperature;
   using InterpolationType = njoy::dryad::InterpolationType;
   using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
@@ -25,14 +25,14 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedDebyeWallerIntegral",
-    "A Debye-Waller integral table\n\n"
+    "TabulatedEffectiveTemperature",
+    "An effective temperature table\n\n"
     "Parameters\n"
     "----------\n"
-    "    temperatures : list of float\n"
-    "         the temperature values\n"
+    "    moderator_temperatures : list of float\n"
+    "         the moderator temperature values\n"
     "    values : list of float\n"
-    "         the intergal values\n"
+    "         the effective temperature values\n"
     "    boundaries : list of int\n"
     "         the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
@@ -48,53 +48,53 @@ void wrapTabulatedDebyeWallerIntegral( python::module& module ) {
     python::init< std::vector< double >, std::vector< double >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
-    python::arg( "temperatures" ), python::arg( "values" ),
+    python::arg( "moderator_temperatures" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the Debye-Waller integral table with multiple interpolation zones"
+    "Initialise the effective temperature table with multiple interpolation zones"
   )
   .def(
 
     python::init< std::vector< double >, std::vector< double >,
                   InterpolationType >(),
-    python::arg( "temperatures" ), python::arg( "values" ),
+    python::arg( "moderator_temperatures" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the Debye-Waller integral table with a single interpolation zone"
+    "Initialise the effective temperature table with a single interpolation zone"
   )
   .def_property_readonly(
 
-    "temperatures",
-    &Component::temperatures,
-    "The temperature values"
+    "moderator_temperatures",
+    &Component::moderatorTemperatures,
+    "The moderator temperature values"
   )
   .def_property_readonly(
 
     "values",
     &Component::values,
-    "The integral values"
+    "The effective temperatur values"
   )
   .def_property_readonly(
 
-    "lower_temperature_limit",
-    &Component::lowerTemperatureLimit,
-    "The lower temperature limit"
+    "lower_moderator_temperature_limit",
+    &Component::lowerModeratorTemperatureLimit,
+    "The lower moderator temperature limit"
   )
   .def_property_readonly(
 
-    "upper_temperature_limit",
-    &Component::upperTemperatureLimit,
-    "The upper temperature limit"
+    "upper_moderator_temperature_limit",
+    &Component::upperModeratorTemperatureLimit,
+    "The upper moderator temperature limit"
   )
   .def(
 
     "__call__",
     [] ( const Component& self, double temperature ) -> decltype(auto)
        { return self( temperature ); },
-    python::arg( "temperature" ),
-    "Evaluate the integral for a given temperature value\n\n"
+    python::arg( "moderator_temperature" ),
+    "Evaluate the effective temperature for a given moderator temperature value\n\n"
     "Parameters\n"
     "----------\n"
-    "    temperature : float\n"
-    "        the temperature value"
+    "    moderator_temperature : float\n"
+    "        the moderator temperature value"
   );
 
   // add standard equality comparison definitions
