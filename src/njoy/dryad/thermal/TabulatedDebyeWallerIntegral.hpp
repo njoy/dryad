@@ -16,7 +16,8 @@ namespace thermal {
    *  @class
    *  @brief A Debye-Waller integral table
    *
-   *  Temperature is assumed to be in K, values are 1/eV.
+   *  Temperature values are assumed to be in K and the integral values are
+   *  assumed to be in 1/eV.
    */
   class TabulatedDebyeWallerIntegral  :
       protected scion::math::InterpolationTable< double, double > {

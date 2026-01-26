@@ -288,7 +288,8 @@ namespace atomic {
       else {
 
         Log::error( "The requested non-radiative transition originating from subshell "
-                    "\'{}\' could not be found", originating.symbol() );
+                    "\'{}\' with electron emission from subshell \'{}\' could not be found",
+                    originating.symbol(), emitting.symbol() );
         throw std::exception();
       }
     }
@@ -306,8 +307,8 @@ namespace atomic {
      *  @brief Return the radiative probability for transitions
      *         originating from a range of subshells
      *
-     *  @param first   the identifier of the first subshell
-     *  @param last    the identifier of the last subshell (included)
+     *  @param first   the identifier of the first subshell in the range
+     *  @param last    the identifier of the last subshell in the range (included)
      */
     double radiativeProbability( const id::ElectronSubshellID& first,
                                  const id::ElectronSubshellID& last ) const {

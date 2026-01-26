@@ -247,6 +247,9 @@ void verifyChunkWithoutTransitions( const ElectronSubshellConfiguration& chunk )
   CHECK_THAT( 0., WithinRel( chunk.totalNonRadiativeProbability() ) );
   CHECK_THAT( 0., WithinRel( chunk.averageRadiativeEnergy() ) );
   CHECK_THAT( 0., WithinRel( chunk.averageNonRadiativeEnergy() ) );
+
+  CHECK_THAT( 0., WithinRel( chunk.radiativeProbability( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) ) ) );
+  CHECK_THAT( 0., WithinRel( chunk.nonRadiativeProbability( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) ) ) );
 }
 
 void verifyChunk( const ElectronSubshellConfiguration& chunk,
@@ -372,4 +375,7 @@ void verifyChunk( const ElectronSubshellConfiguration& chunk,
   CHECK_THAT( 0.9942922  / normalisation, WithinRel( chunk.totalNonRadiativeProbability() ) );
   CHECK_THAT( 523.116631417584, WithinRel( chunk.averageRadiativeEnergy() ) );
   CHECK_THAT( 498.286519214372, WithinRel( chunk.averageNonRadiativeEnergy() ) );
+
+  CHECK_THAT( 0.00190768 / normalisation, WithinRel( chunk.radiativeProbability( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) ) ) );
+  CHECK_THAT( ( 0.9942922 - 0.166809 )  / normalisation, WithinRel( chunk.nonRadiativeProbability( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ) ) ) );
 }

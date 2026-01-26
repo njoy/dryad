@@ -183,7 +183,7 @@ static std::size_t getIndex( ElementID element, std::vector< ElectronSubshellID 
 
     return string_conversion_dictionary.at( generateIonSymbol( element, vacancies ) );
   }
-  catch ( ... ) {
+  catch ( const std::out_of_range& ) {
 
     // update registry and return the index
     return updateRegistry( std::move( element ), std::move( vacancies ) );

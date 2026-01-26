@@ -62,7 +62,7 @@ namespace endf {
       },
       [&] ( const MixedDistributions& distributions ) -> TwoBodyDistributionData::AngularDistributions {
 
-        throw std::runtime_error( "not supported yet, contact a developer" );
+        throw std::runtime_error( "Any MF4 LTT = 3 is not implemented yet, contact a developer" );
       }
     };
 

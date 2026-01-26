@@ -1092,6 +1092,7 @@ SCENARIO( "ParticleID" ) {
       CHECK_THROWS( ParticleID( "H_e0" ) );
       CHECK_THROWS( ParticleID( "H_e1" ) );
       CHECK_THROWS( ParticleID( "H1_e152" ) );
+      CHECK_THROWS( ParticleID( "H{4p}" ) );   // non-relativistic vacancy is not allowed
     } // THEN
   } // GIVEN
 } // SCENARIO
