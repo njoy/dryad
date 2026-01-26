@@ -49,38 +49,51 @@ namespace lrf7 {
     for ( unsigned int i = 0; i < channels.size(); ++i ) {
 
       // get the energies and amplitudes
-      auto energies = format::createVector( endfSpinGroup.parameters().resonanceEnergies() );
-      auto amplitudes = format::createVector( endfSpinGroup.parameters().GAM(i) );
+      std::vector< double > energies;
+      std::vector< double > amplitudes;
+      if ( endfSpinGroup.parameters().numberResonances() != 0 ) {
 
-      // remove zero widths
-      auto is_zero= [] ( auto&& value ) { return value == 0.; };
-      auto amplitude = std::find_if( amplitudes.begin(), amplitudes.end(), is_zero );
-      while ( amplitude != amplitudes.end() ) {
+        // get the data
+        energies = format::createVector( endfSpinGroup.parameters().resonanceEnergies() );
+        amplitudes = format::createVector( endfSpinGroup.parameters().GAM(i) );
 
-        auto index = std::distance( amplitudes.begin(), amplitude );
-        amplitude = amplitudes.erase( amplitude );
-        energies.erase( energies.begin() + index );
-        amplitude = std::find_if( amplitude, amplitudes.end(), is_zero );
-      }
+        // remove zero widths
+        auto is_zero= [] ( auto&& value ) { return value == 0.; };
+        auto amplitude = std::find_if( amplitudes.begin(), amplitudes.end(), is_zero );
+        while ( amplitude != amplitudes.end() ) {
 
-      // if there are non-zero widths
-      if ( amplitudes.size() != 0 ) {
-
-        // transform into reduced width if required
-        if ( ! reduced_amplitudes ) {
-
-          auto to_reduced_width = [&] ( auto&& width, auto&& energy ) {
-
-            double penetrability = channels[i].penetrability( energy );
-            return ( width < 0. ? -1. : +1. ) *
-                   std::sqrt( 0.5 * std::abs( width ) / penetrability );
-          };
-
-          std::transform( amplitudes.begin(), amplitudes.end(),
-                          energies.begin(), amplitudes.begin(), to_reduced_width );
+          auto index = std::distance( amplitudes.begin(), amplitude );
+          amplitude = amplitudes.erase( amplitude );
+          energies.erase( energies.begin() + index );
+          amplitude = std::find_if( amplitude, amplitudes.end(), is_zero );
         }
 
-        auto id = channels[i].identifier();
+        // if there are non-zero widths left
+        if ( amplitudes.size() != 0 ) {
+
+          // transform into reduced width if required
+          if ( ! reduced_amplitudes ) {
+
+            auto to_reduced_width = [&] ( auto&& width, auto&& energy ) {
+
+              double penetrability = channels[i].penetrability( energy );
+              return ( width < 0. ? -1. : +1. ) *
+                     std::sqrt( 0.5 * std::abs( width ) / penetrability );
+            };
+
+            std::transform( amplitudes.begin(), amplitudes.end(),
+                            energies.begin(), amplitudes.begin(), to_reduced_width );
+          }
+        }
+      }
+
+      auto id = channels[i].identifier();
+      auto reaction_id = id.reaction();
+      auto is_elastic = id.reaction().target() == id.reaction().residual();
+      auto is_capture = id.reaction().reactionType() == id::ReactionType( "capture" );
+
+      if ( amplitudes.size() > 0 || is_elastic || is_capture ) {
+
         dryad::resonances::ResonanceTable table( id, std::move( energies ), std::move( amplitudes ) );
         channel_data.emplace_back( std::move( channels[i] ), std::move( table ) );
       }
