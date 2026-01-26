@@ -9,3 +9,4 @@ thermal
 
    thermal/TabulatedDebyeWallerIntegral
    thermal/IncoherentElasticScattering
+   thermal/TabulatedEffectiveTemperature
