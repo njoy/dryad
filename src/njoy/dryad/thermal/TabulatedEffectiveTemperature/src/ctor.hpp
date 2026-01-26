@@ -37,10 +37,10 @@ TabulatedEffectiveTemperature( std::vector< double > moderatorTemperatures,
                       std::move( boundaries ), std::move( interpolants ) ) {}
 
 /**
- *  @brief Constructor for a Debye-Waller integral table using a single interpolation zone
+ *  @brief Constructor for an effective temperature table using a single interpolation zone
  *
- *  @param moderatorTemperatures   the temperature values
- *  @param values                  the integral values
+ *  @param moderatorTemperatures   the moderator temperatures values
+ *  @param values                  the effective temperature values
  *  @param interpolant             the interpolation type of the data (default lin-lin)
  */
 TabulatedEffectiveTemperature( std::vector< double > moderatorTemperatures,
