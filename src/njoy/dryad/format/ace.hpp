@@ -26,6 +26,7 @@
 #include "njoy/dryad/format/ace/photoatomic/createAceComptonProfileBlock.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createAceCoherentFormFactorBlock.hpp"
 #include "njoy/dryad/format/ace/photoatomic/createAceFluorescenceDataBlock.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createAceHeatingNumbersBlock.hpp"
 
 #include "njoy/dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"

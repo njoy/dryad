@@ -73,6 +73,9 @@ namespace dryad {
   void wrapReaction( python::module& );
   void wrapProjectileTarget( python::module& );
 
+  // declarations - external
+  void wrapExternal( python::module& );
+
 } // dryad namespace
 
 void wrapDryad( python::module& module ) {
@@ -151,4 +154,7 @@ void wrapDryad( python::module& module ) {
   dryad::wrapProjectileTarget( submodule );
   dryad::wrapAtomicRelaxation( submodule );
   dryad::wrapThermalScattering( submodule );
+
+  // wrap components - external data and models
+  dryad::wrapExternal( submodule );
 }
