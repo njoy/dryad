@@ -85,6 +85,159 @@ SCENARIO( "UniformEnergyDistributions" ) {
     } // WHEN
   } // GIVEN
 
+  GIVEN( "data with a jump that consist of more than 2 points" ) {
+
+    // note: at construction time, the extraneous points in between the first and last
+    //       x value in the jump are removed. boundaries always point to the first point
+    //       in the jump
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      const std::vector< UniformEnergyDistribution > distributions = {
+
+        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+        { { 1., 2. }, UniformDistributionType::Discrete },
+        { { 2., 4., 6. }, UniformDistributionType::Discrete },
+        { { 4., 6., 8. }, UniformDistributionType::Discrete },
+        { { 3., 5., 7. }, UniformDistributionType::Discrete },
+        { { 5., 10. }, UniformDistributionType::Discrete }
+      };
+
+      UniformEnergyDistributions
+      chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a UniformEnergyDistributions can be constructed and members can be tested" ) {
+
+        CHECK( 5 == chunk.numberPoints() );
+        CHECK( 2 == chunk.numberRegions() );
+        CHECK( 5 == chunk.grid().size() );
+        CHECK( 5 == chunk.distributions().size() );
+        CHECK( 2 == chunk.boundaries().size() );
+        CHECK( 2 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+        CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
+        CHECK_THAT( 3., WithinRel( chunk.grid()[3] ) );
+        CHECK_THAT( 4., WithinRel( chunk.grid()[4] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
+        CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
+        CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
+        CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
+        CHECK_THAT(  4. , WithinRel( chunk.distributions()[2].energies()[0] ) );
+        CHECK_THAT(  6. , WithinRel( chunk.distributions()[2].energies()[1] ) );
+        CHECK_THAT(  8. , WithinRel( chunk.distributions()[2].energies()[2] ) );
+        CHECK_THAT(  3. , WithinRel( chunk.distributions()[3].energies()[0] ) );
+        CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[1] ) );
+        CHECK_THAT(  7. , WithinRel( chunk.distributions()[3].energies()[2] ) );
+        CHECK_THAT(  5. , WithinRel( chunk.distributions()[4].energies()[0] ) );
+        CHECK_THAT( 10. , WithinRel( chunk.distributions()[4].energies()[1] ) );
+        CHECK( 1 == chunk.boundaries()[0] );
+        CHECK( 4 == chunk.boundaries()[1] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "data with a jump at the beginning" ) {
+
+    // note: at construction time, the first point is removed
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      const std::vector< UniformEnergyDistribution > distributions = {
+
+        { { 2., 4., 6. }, UniformDistributionType::Discrete },
+        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+        { { 1., 2. }, UniformDistributionType::Discrete },
+        { { 3., 5., 7. }, UniformDistributionType::Discrete },
+        { { 5., 10. }, UniformDistributionType::Discrete }
+      };
+
+      UniformEnergyDistributions
+      chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a UniformEnergyDistributions can be constructed and members can be tested" ) {
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.grid().size() );
+        CHECK( 4 == chunk.distributions().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.grid()[3] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
+        CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
+        CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
+        CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
+        CHECK_THAT(  3. , WithinRel( chunk.distributions()[2].energies()[0] ) );
+        CHECK_THAT(  5. , WithinRel( chunk.distributions()[2].energies()[1] ) );
+        CHECK_THAT(  7. , WithinRel( chunk.distributions()[2].energies()[2] ) );
+        CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[0] ) );
+        CHECK_THAT( 10. , WithinRel( chunk.distributions()[3].energies()[1] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "data with a jump at the end" ) {
+
+    // note: at construction time, the last point is removed
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      const std::vector< UniformEnergyDistribution > distributions = {
+
+        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
+        { { 1., 2. }, UniformDistributionType::Discrete },
+        { { 3., 5., 7. }, UniformDistributionType::Discrete },
+        { { 5., 10. }, UniformDistributionType::Discrete },
+        { { 2., 4., 6. }, UniformDistributionType::Discrete }
+      };
+
+      UniformEnergyDistributions
+      chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a UniformEnergyDistributions can be constructed and members can be tested" ) {
+
+        CHECK( 4 == chunk.numberPoints() );
+        CHECK( 1 == chunk.numberRegions() );
+        CHECK( 4 == chunk.grid().size() );
+        CHECK( 4 == chunk.distributions().size() );
+        CHECK( 1 == chunk.boundaries().size() );
+        CHECK( 1 == chunk.interpolants().size() );
+        CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.grid()[2] ) );
+        CHECK_THAT( 4., WithinRel( chunk.grid()[3] ) );
+        CHECK_THAT(  0.5, WithinRel( chunk.distributions()[0].energies()[0] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.distributions()[0].energies()[1] ) );
+        CHECK_THAT(  4. , WithinRel( chunk.distributions()[0].energies()[2] ) );
+        CHECK_THAT(  6. , WithinRel( chunk.distributions()[0].energies()[3] ) );
+        CHECK_THAT(  1. , WithinRel( chunk.distributions()[1].energies()[0] ) );
+        CHECK_THAT(  2. , WithinRel( chunk.distributions()[1].energies()[1] ) );
+        CHECK_THAT(  3. , WithinRel( chunk.distributions()[2].energies()[0] ) );
+        CHECK_THAT(  5. , WithinRel( chunk.distributions()[2].energies()[1] ) );
+        CHECK_THAT(  7. , WithinRel( chunk.distributions()[2].energies()[2] ) );
+        CHECK_THAT(  5. , WithinRel( chunk.distributions()[3].energies()[0] ) );
+        CHECK_THAT( 10. , WithinRel( chunk.distributions()[3].energies()[1] ) );
+        CHECK( 3 == chunk.boundaries()[0] );
+        CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of UniformEnergyDistributions are given" ) {
@@ -176,61 +329,6 @@ SCENARIO( "UniformEnergyDistributions" ) {
     WHEN( "the x grid is not sorted" ) {
 
       const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< UniformEnergyDistribution > distributions = {
-
-        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
-        { { 1., 2. }, UniformDistributionType::Discrete },
-        { { 3., 5., 7. }, UniformDistributionType::Discrete },
-        { { 5., 10. }, UniformDistributionType::Discrete }
-      };
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UniformEnergyDistributions( std::move( grid ),
-                                                  std::move( distributions ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the x grid contains a triple x value" ) {
-
-      const std::vector< double > grid = { 1., 2., 2., 2., 4. };
-      const std::vector< UniformEnergyDistribution > distributions = {
-
-        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
-        { { 1., 2. }, UniformDistributionType::Discrete },
-        { { 3., 5., 7. }, UniformDistributionType::Discrete },
-        { { 3., 5., 7. }, UniformDistributionType::Discrete },
-        { { 5., 10. }, UniformDistributionType::Discrete }
-      };
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UniformEnergyDistributions( std::move( grid ),
-                                                  std::move( distributions ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the x grid has a jump at the beginning" ) {
-
-      const std::vector< double > grid = { 1., 1., 3., 4. };
-      const std::vector< UniformEnergyDistribution > distributions = {
-
-        { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },
-        { { 1., 2. }, UniformDistributionType::Discrete },
-        { { 3., 5., 7. }, UniformDistributionType::Discrete },
-        { { 5., 10. }, UniformDistributionType::Discrete }
-      };
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UniformEnergyDistributions( std::move( grid ),
-                                                  std::move( distributions ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the x grid has a jump at the end" ) {
-
-      const std::vector< double > grid = { 1., 2., 4., 4. };
       const std::vector< UniformEnergyDistribution > distributions = {
 
         { { 0.5, 1., 4., 6. }, UniformDistributionType::Discrete },

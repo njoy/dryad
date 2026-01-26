@@ -64,12 +64,79 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, cosines.interpolants[0] )
             self.assertEqual( True, cosines.is_linearised )
 
+        def verify_chunk_jump( self, chunk ) :
+
+            # verify content
+            self.assertEqual( 5, chunk.number_points )
+            self.assertEqual( 2, chunk.number_regions )
+            self.assertEqual( 5, len( chunk.grid ) )
+            self.assertEqual( 5, len( chunk.distributions ) )
+            self.assertEqual( 2, len( chunk.boundaries ) )
+            self.assertEqual( 2, len( chunk.interpolants ) )
+            self.assertAlmostEqual( 1., chunk.grid[0] )
+            self.assertAlmostEqual( 2., chunk.grid[1] )
+            self.assertAlmostEqual( 2., chunk.grid[2] )
+            self.assertAlmostEqual( 3., chunk.grid[3] )
+            self.assertAlmostEqual( 4., chunk.grid[4] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[0].cosines[0] )
+            self.assertAlmostEqual(  0.5 , chunk.distributions[0].cosines[1] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[1].cosines[0] )
+            self.assertAlmostEqual(  0.02, chunk.distributions[1].cosines[1] )
+            self.assertAlmostEqual(  0.5 , chunk.distributions[1].cosines[2] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[2].cosines[0] )
+            self.assertAlmostEqual(  1.0 , chunk.distributions[2].cosines[1] )
+            self.assertAlmostEqual(  0.5 , chunk.distributions[2].cosines[2] )
+            self.assertAlmostEqual( -0.5 , chunk.distributions[3].cosines[0] )
+            self.assertAlmostEqual(  0.2 , chunk.distributions[3].cosines[1] )
+            self.assertAlmostEqual(  0.5 , chunk.distributions[3].cosines[2] )
+            self.assertAlmostEqual( -1.  , chunk.distributions[4].cosines[0] )
+            self.assertAlmostEqual(  0.8 , chunk.distributions[4].cosines[1] )
+            self.assertAlmostEqual(  1.  , chunk.distributions[4].cosines[2] )
+            self.assertEqual( 1, chunk.boundaries[0] )
+            self.assertEqual( 4, chunk.boundaries[1] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[0] )
+            self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
+
         # the data is given explicitly
         chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4. ],
                                              distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
                                                                UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
+                                             interpolant = InterpolationType.LinearLinear )
+
+        verify_chunk( self, chunk )
+
+        # the data is given explicitly with a jump that uses more than 2 x values
+        chunk = UniformAngularDistributions( grid = [ 1., 2., 2., 2., 3., 4. ],
+                                             distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.9, 0.8, 0.9 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
+                                             interpolant = InterpolationType.LinearLinear )
+
+        verify_chunk_jump( self, chunk )
+
+        # the data is given explicitly with a jump at the beginning
+        chunk = UniformAngularDistributions( grid = [ 1., 1., 2., 3., 4. ],
+                                             distributions = [ UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ) ],
+                                             interpolant = InterpolationType.LinearLinear )
+
+        verify_chunk( self, chunk )
+
+        # the data is given explicitly with a jump at the end
+        chunk = UniformAngularDistributions( grid = [ 1., 2., 3., 4., 4. ],
+                                             distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.02, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 0.2, 0.5 ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -1., 0.8, 1. ], UniformDistributionType.Discrete ),
+                                                               UniformAngularDistribution( [ -0.5, 1., 0.5 ], UniformDistributionType.Discrete ) ],
                                              interpolant = InterpolationType.LinearLinear )
 
         verify_chunk( self, chunk )
@@ -144,34 +211,6 @@ class Test_UniformAngularDistributions( unittest.TestCase ) :
         with self.assertRaises( Exception ) :
 
             chunk = UniformAngularDistributions( grid = [ 1., 3., 2., 4. ],
-                                                 distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
-
-        # the x grid contains a triple x value
-        with self.assertRaises( Exception ) :
-
-            chunk = UniformAngularDistributions( grid = [ 1., 2., 2., 2., 4. ],
-                                                 distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
-
-        # the x grid has a jump at the beginning
-        with self.assertRaises( Exception ) :
-
-            chunk = UniformAngularDistributions( grid = [ 1., 1., 3., 4. ],
-                                                 distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
-                                                                   UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ) ] )
-
-        # the x grid has a jump at the end
-        with self.assertRaises( Exception ) :
-
-            chunk = UniformAngularDistributions( grid = [ 1., 2., 4., 4. ],
                                                  distributions = [ UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                    UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
                                                                    UniformAngularDistribution( [ -0.5, 0.5 ], UniformDistributionType.Discrete ),
