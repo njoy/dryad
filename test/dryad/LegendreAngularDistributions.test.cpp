@@ -13,6 +13,7 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 
 void verifyChunk( const LegendreAngularDistributions&, bool );
+void verifyChunkWithJump( const LegendreAngularDistributions&, bool );
 
 SCENARIO( "LegendreAngularDistributions" ) {
 
@@ -43,6 +44,87 @@ SCENARIO( "LegendreAngularDistributions" ) {
 
       verifyChunk( chunk1, true );
       verifyChunk( chunk2, true );
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "data with a jump that consist of more than 2 points" ) {
+
+    // note: at construction time, the extraneous points in between the first and last
+    //       x value in the jump are removed. boundaries always point to the first point
+    //       in the jump
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > grid = { 1., 2., 2., 2., 3., 4. };
+      const std::vector< LegendreAngularDistribution > distributions = {
+
+        { { 1.0 } },
+        { { 1.0, 0.02 } },
+        { { 1.0, 0.05 } },
+        { { 1.0, 0.01 } },
+        { { 1.0, 0.2 } },
+        { { 1.0, 0.8 } }
+      };
+
+      LegendreAngularDistributions
+      chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a LegendreAngularDistributions can be constructed and members can be tested" ) {
+
+        verifyChunkWithJump( chunk, false );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "data with a jump at the beginning" ) {
+
+    // note: at construction time, the first point is removed
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > grid = { 1., 1., 2., 3., 4. };
+      const std::vector< LegendreAngularDistribution > distributions = {
+
+        { { 1.0, 0.01 } },
+        { { 1.0 } },
+        { { 1.0, 0.02 } },
+        { { 1.0, 0.2 } },
+        { { 1.0, 0.8 } }
+      };
+
+      LegendreAngularDistributions
+      chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a LegendreAngularDistributions can be constructed and members can be tested" ) {
+
+        verifyChunk( chunk, false );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "data with a jump at the end" ) {
+
+    // note: at construction time, the last point is removed
+
+    WHEN( "the data is given explicitly" ) {
+
+      const std::vector< double > grid = { 1., 2., 3., 4., 4. };
+      const std::vector< LegendreAngularDistribution > distributions = {
+
+        { { 1.0 } },
+        { { 1.0, 0.02 } },
+        { { 1.0, 0.2 } },
+        { { 1.0, 0.8 } },
+        { { 1.0, 0.01 } }
+      };
+
+      LegendreAngularDistributions
+      chunk( std::move( grid ), std::move( distributions ) );
+
+      THEN( "a LegendreAngularDistributions can be constructed and members can be tested" ) {
+
+        verifyChunk( chunk, false );
+      } // THEN
     } // WHEN
   } // GIVEN
 
@@ -146,61 +228,6 @@ SCENARIO( "LegendreAngularDistributions" ) {
     WHEN( "the x grid is not sorted" ) {
 
       const std::vector< double > grid = { 1., 3., 2., 4. };
-      const std::vector< LegendreAngularDistribution > distributions = {
-
-        { { 0.5 } },
-        { { 0.5, 0.01 } },
-        { { 0.5, 0.1 } },
-        { { 0.5, 0.4 } }
-      };
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( LegendreAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the x grid contains a triple x value" ) {
-
-      const std::vector< double > grid = { 1., 2., 2., 2., 4. };
-      const std::vector< LegendreAngularDistribution > distributions = {
-
-        { { 0.5 } },
-        { { 0.5, 0.001 } },
-        { { 0.5, 0.01 } },
-        { { 0.5, 0.1 } },
-        { { 0.5, 0.4 } }
-      };
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( LegendreAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the x grid has a jump at the beginning" ) {
-
-      const std::vector< double > grid = { 1., 1., 3., 4. };
-      const std::vector< LegendreAngularDistribution > distributions = {
-
-        { { 0.5 } },
-        { { 0.5, 0.01 } },
-        { { 0.5, 0.1 } },
-        { { 0.5, 0.4 } }
-      };
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( LegendreAngularDistributions( std::move( grid ),
-                                                    std::move( distributions ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the x grid has a jump at the end" ) {
-
-      const std::vector< double > grid = { 1., 2., 4., 4. };
       const std::vector< LegendreAngularDistribution > distributions = {
 
         { { 0.5 } },
@@ -394,4 +421,39 @@ void verifyChunk( const LegendreAngularDistributions& chunk, bool normalise ) {
   CHECK_THAT( 2.0 / normalisation, WithinRel( linear.distributions()[3].cdf().values()[1] ) );
   CHECK( 3 == linear.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
+}
+
+void verifyChunkWithJump( const LegendreAngularDistributions& chunk, bool normalise ) {
+
+  double normalisation = normalise ? 2.0 : 1.0;
+
+  CHECK( 5 == chunk.numberPoints() );
+  CHECK( 2 == chunk.numberRegions() );
+  CHECK( 5 == chunk.grid().size() );
+  CHECK( 5 == chunk.distributions().size() );
+  CHECK( 2 == chunk.boundaries().size() );
+  CHECK( 2 == chunk.interpolants().size() );
+  CHECK_THAT( 1., WithinRel( chunk.grid()[0] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[1] ) );
+  CHECK_THAT( 2., WithinRel( chunk.grid()[2] ) );
+  CHECK_THAT( 3., WithinRel( chunk.grid()[3] ) );
+  CHECK_THAT( 4., WithinRel( chunk.grid()[4] ) );
+  CHECK( 1 == chunk.distributions()[0].pdf().coefficients().size() );
+  CHECK( 2 == chunk.distributions()[1].pdf().coefficients().size() );
+  CHECK( 2 == chunk.distributions()[2].pdf().coefficients().size() );
+  CHECK( 2 == chunk.distributions()[3].pdf().coefficients().size() );
+  CHECK( 2 == chunk.distributions()[4].pdf().coefficients().size() );
+  CHECK_THAT( 1.0  / normalisation, WithinRel( chunk.distributions()[0].pdf().coefficients()[0] ) );
+  CHECK_THAT( 1.0  / normalisation, WithinRel( chunk.distributions()[1].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.02 / normalisation, WithinRel( chunk.distributions()[1].pdf().coefficients()[1] ) );
+  CHECK_THAT( 1.0  / normalisation, WithinRel( chunk.distributions()[2].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.01 / normalisation, WithinRel( chunk.distributions()[2].pdf().coefficients()[1] ) );
+  CHECK_THAT( 1.0  / normalisation, WithinRel( chunk.distributions()[3].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.2  / normalisation, WithinRel( chunk.distributions()[3].pdf().coefficients()[1] ) );
+  CHECK_THAT( 1.0  / normalisation, WithinRel( chunk.distributions()[4].pdf().coefficients()[0] ) );
+  CHECK_THAT( 0.8  / normalisation, WithinRel( chunk.distributions()[4].pdf().coefficients()[1] ) );
+  CHECK( 1 == chunk.boundaries()[0] );
+  CHECK( 4 == chunk.boundaries()[1] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
+  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[1] );
 }
