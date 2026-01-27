@@ -3,6 +3,7 @@ find_package( sphinx )
 if ( SPHINX_EXECUTABLE )
     set( SPHINX_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/src )
     set( SPHINX_BUILD  ${PROJECT_BINARY_DIR}/python/sphinx )
+    file( MAKE_DIRECTORY ${SPHINX_BUILD})
 
     add_custom_target( sphinx
         COMMAND
