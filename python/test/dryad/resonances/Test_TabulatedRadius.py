@@ -1713,51 +1713,69 @@ class Test_dryad_TabulatedRadius( unittest.TestCase ) :
 
         # the data is given explicitly for data without boundaries
         chunk = TabulatedRadius( energies = [ 1., 2., 3., 4. ],
-                                       values = [ 4., 3., 2., 1. ],
-                                       interpolant = InterpolationType.LinearLinear )
+                                 values = [ 4., 3., 2., 1. ],
+                                 interpolant = InterpolationType.LinearLinear )
 
         verify_chunk1( self, chunk )
 
         # the data is given explicitly for data without boundaries and a jump
         chunk = TabulatedRadius( energies = [ 1., 2., 2., 3., 4. ],
-                                       values = [ 4., 3., 4., 3., 2. ],
-                                       interpolant = InterpolationType.LinearLinear )
+                                 values = [ 4., 3., 4., 3., 2. ],
+                                 interpolant = InterpolationType.LinearLinear )
 
         verify_chunk2( self, chunk )
 
         # the data is given explicitly for data without a jump
         chunk = TabulatedRadius( energies = [ 1., 2., 3., 4. ],
-                                       values = [ 4., 3., 2., 1. ],
-                                       boundaries = [ 1, 3 ],
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] )
+                                 values = [ 4., 3., 2., 1. ],
+                                 boundaries = [ 1, 3 ],
+                                 interpolants = [ InterpolationType.LinearLinear,
+                                                  InterpolationType.LinearLog ] )
 
         verify_chunk3( self, chunk )
 
         # the data is given explicitly for data with a jump
         chunk = TabulatedRadius( energies = [ 1., 2., 2., 3., 4. ],
-                                       values = [ 4., 3., 4., 3., 2. ],
-                                       boundaries = [ 1, 4 ],
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] )
+                                 values = [ 4., 3., 4., 3., 2. ],
+                                 boundaries = [ 1, 4 ],
+                                 interpolants = [ InterpolationType.LinearLinear,
+                                                  InterpolationType.LinearLog ] )
 
         verify_chunk4( self, chunk )
 
-        # the data is given explicitly with boundaries that point to the second x value in the jump
-        chunk = TabulatedRadius( energies = [ 1., 2., 2., 3., 4. ],
-                                       values = [ 4., 3., 4., 3., 2. ],
-                                       boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                     InterpolationType.LinearLog ] )
+        # the data is given explicitly with a jump that uses more than 2 x values
+        chunk = TabulatedRadius( energies = [ 1., 2., 2., 2., 3., 4. ],
+                                 values =  [ 4., 3., 2., 4., 3., 2. ],
+                                 boundaries = [ 2, 5 ],   # <-- pointing to middle of the jump
+                                 interpolants = [ InterpolationType.LinearLinear,
+                                                  InterpolationType.LinearLog ] )
 
         verify_chunk5( self, chunk )
 
-        # the data is given explicitly with a jump at the end that goes to zero
+        # the data is given explicitly with boundaries that point to the second x value in the jump
+        chunk = TabulatedRadius( energies = [ 1., 2., 2., 3., 4. ],
+                                 values =  [ 4., 3., 4., 3., 2. ],
+                                 boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
+                                 interpolants = [ InterpolationType.LinearLinear,
+                                                  InterpolationType.LinearLog ] )
+
+        verify_chunk5( self, chunk )
+
+        # the data is given explicitly with a jump at the beginning
+        chunk = TabulatedRadius( energies = [ 1., 1., 2., 3., 4. ], # <-- jump at beginning
+                                 values =  [ 1., 4., 3., 2., 1. ],
+                                 boundaries = [ 2, 4 ],      # <-- pointing to end
+                                 interpolants = [ InterpolationType.LinearLinear,
+                                                  InterpolationType.LinearLog ] )
+
+        verify_chunk6( self, chunk )
+
+        # the data is given explicitly with a jump at the end
         chunk = TabulatedRadius( energies = [ 1., 2., 3., 4., 4. ], # <-- jump at end
-                                       values = [ 4., 3., 2., 1., 0. ], # <-- last value is zero
-                                       boundaries = [ 1, 4 ],      # <-- pointing to end
-                                       interpolants = [ InterpolationType.LinearLinear,
-                                                        InterpolationType.LinearLog ] )
+                                 values =  [ 4., 3., 2., 1., 4. ],
+                                 boundaries = [ 1, 4 ],      # <-- pointing to end
+                                 interpolants = [ InterpolationType.LinearLinear,
+                                                  InterpolationType.LinearLog ] )
 
         verify_chunk6( self, chunk )
 
@@ -1807,24 +1825,6 @@ class Test_dryad_TabulatedRadius( unittest.TestCase ) :
 
             chunk = TabulatedRadius( energies = [ 1., 3., 2., 4. ],
                                            values = [ 4., 3., 2., 1. ] )
-
-        # the x grid contains a triple x value
-        with self.assertRaises( Exception ) :
-
-            chunk = TabulatedRadius( energies = [ 1., 2., 2., 2., 3., 4. ],
-                                           values = [ 4., 3., 3., 3., 2., 1. ] )
-
-        # the x grid has a jump at the beginning
-        with self.assertRaises( Exception ) :
-
-            chunk = TabulatedRadius( energies = [ 1., 1., 3., 4. ],
-                                           values = [ 4., 3., 1., 4. ] )
-
-        # the x grid has a jump at the end
-        with self.assertRaises( Exception ) :
-
-            chunk = TabulatedRadius( energies = [ 1., 2., 4., 4. ],
-                                           values = [ 4., 3., 1., 4. ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
