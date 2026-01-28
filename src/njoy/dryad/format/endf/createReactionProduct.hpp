@@ -69,7 +69,7 @@ namespace endf {
     // should only be used for neutrons
     if ( reaction.particles()->size() > 1 ) {
 
-      Log::error( "An MF4 section cannot be used for a reaction that emits more than one particle" );
+      Log::error( "An MF4 section cannot be used for a reaction that emits more than one particle type" );
       throw std::exception();
     }
 
