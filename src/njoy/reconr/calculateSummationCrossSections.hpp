@@ -5,6 +5,7 @@
 #include <vector>
 
 // other includes
+#include "njoy/constants.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 
 namespace njoy {
@@ -18,12 +19,12 @@ namespace reconr {
    *  the partials (if required) and summing them together.
    *
    *  @param[in,out] pt          the projectile-target data to be modified
-   *  @param[in]     tolerance   the linearisation tolerance
+   *  @param[in]     tolerance   the linearisation tolerance (default: 0.1%)
    */
   inline void calculateSummationCrossSections( dryad::ProjectileTarget& pt,
-                                               dryad::ToleranceConvergence tolerance = {} ) {
+                                               double tolerance = constants::linearisation::tolerance ) {
 
-    pt.calculateSummationCrossSections( std::move( tolerance ) );
+    pt.calculateSummationCrossSections( tolerance );
   }
 
 } // reconr namespace

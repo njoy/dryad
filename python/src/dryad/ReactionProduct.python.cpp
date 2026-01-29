@@ -19,7 +19,6 @@ void wrapReactionProduct( python::module& module ) {
   using Multiplicity = njoy::dryad::ReactionProduct::Multiplicity;
   using DistributionData = njoy::dryad::ReactionProduct::DistributionData;
   using TabulatedAverageEnergy = njoy::dryad::TabulatedAverageEnergy;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

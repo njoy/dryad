@@ -58,8 +58,7 @@ SCENARIO( "LegendreAngularDistributionFunction" ) {
 
       THEN( "a LegendreAngularDistributionFunction can be linearised" ) {
 
-        ToleranceConvergence convergence( 0.01 );
-        TabulatedAngularDistributionFunction linear = chunk.linearise( convergence );
+        TabulatedAngularDistributionFunction linear = chunk.linearise( 0.01 );
 
         CHECK( 21 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );

@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
@@ -24,7 +25,6 @@ void wrapProjectileTarget( python::module& module ) {
   using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
   using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
@@ -181,7 +181,7 @@ void wrapProjectileTarget( python::module& module ) {
 
     "calculate_summation_cross_sections",
     &Component::calculateSummationCrossSections,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     "Calculate summation cross sections\n\n"
     "Arguments:\n"
     "    self        the ProjectileTarget data\n"

@@ -6,7 +6,8 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/InteractionType.hpp"
 #include "njoy/dryad/Documentation.hpp"
 #include "njoy/dryad/Reaction.hpp"
@@ -287,9 +288,9 @@ namespace dryad {
      *  It does so by linearising the cross sections of the partials (if required)
      *  and summing them together.
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1%)
      */
-    void calculateSummationCrossSections( ToleranceConvergence tolerance = {} ) {
+    void calculateSummationCrossSections( double tolerance = constants::linearisation::tolerance ) {
 
       for ( auto& reaction : this->reactions() ) {
 

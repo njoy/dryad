@@ -1,6 +1,3 @@
-// type aliases
-#include "njoy/dryad/type-aliases.hpp"
-
 // identifiers
 #include "njoy/dryad/id/ChannelID.hpp"
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
@@ -14,6 +11,7 @@
 // enumerators
 #include "njoy/dryad/DistributionDataType.hpp"
 #include "njoy/dryad/InteractionType.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/ReactionCategory.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
 

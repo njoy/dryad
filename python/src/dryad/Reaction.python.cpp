@@ -20,7 +20,6 @@ void wrapReaction( python::module& module ) {
   using ReactionCategory = njoy::dryad::ReactionCategory;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

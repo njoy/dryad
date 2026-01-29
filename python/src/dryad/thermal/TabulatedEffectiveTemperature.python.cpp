@@ -17,7 +17,6 @@ void wrapTabulatedEffectiveTemperature( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::thermal::TabulatedEffectiveTemperature;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

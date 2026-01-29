@@ -15,7 +15,6 @@ void wrapPolynomialMultiplicity( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::PolynomialMultiplicity;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

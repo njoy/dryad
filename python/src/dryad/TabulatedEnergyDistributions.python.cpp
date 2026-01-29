@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributions.hpp"
 
 // namespace aliases
@@ -17,7 +18,6 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
   using Component = njoy::dryad::TabulatedEnergyDistributions;
   using TabulatedEnergyDistribution = njoy::dryad::TabulatedEnergyDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -108,7 +108,7 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
     "Linearise the distribution\n\n"
     "Arguments:\n"
