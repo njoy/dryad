@@ -4,7 +4,7 @@ Linearisation, unionisation and resonance reconstruction
 from __future__ import annotations
 import njoy.dryad
 __all__: list[str] = ['calculate_summation_cross_sections', 'unionise_cross_sections']
-def calculate_summation_cross_sections(pt: njoy.dryad.ProjectileTarget, tolerance: njoy.dryad.ToleranceConvergence = ...) -> None:
+def calculate_summation_cross_sections(pt: njoy.dryad.ProjectileTarget, tolerance: float = 0.001) -> None:
     """
     This function recalculates the cross section of all summation reactions of
     a ProjectileTarget instance. It does so by linearising the cross sections of
@@ -12,7 +12,7 @@ def calculate_summation_cross_sections(pt: njoy.dryad.ProjectileTarget, toleranc
     
     Arguments:
         pt          the projectile-target data to be modified
-        tolerance   the linearisation tolerance
+        tolerance   the linearisation tolerance (default: 0.1%)
     """
 def unionise_cross_sections(pt: njoy.dryad.ProjectileTarget, exclude_summation: bool = False) -> None:
     """

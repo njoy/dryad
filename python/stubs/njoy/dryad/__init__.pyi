@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'ToleranceConvergence', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -559,7 +559,7 @@ class LegendreAngularDistribution:
         """
     def __ne__(self, arg0: LegendreAngularDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
@@ -678,13 +678,13 @@ class LegendreAngularDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> LegendreAngularDistributionFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributionFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the distribution function
         
         Arguments:
             self        the distribution function
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     def normalise(self) -> None:
         """
@@ -770,7 +770,7 @@ class LegendreAngularDistributions:
         """
     def __ne__(self, arg0: LegendreAngularDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
         
@@ -899,13 +899,13 @@ class PolynomialMultiplicity:
         ...
     def __truediv__(self, arg0: float) -> PolynomialMultiplicity:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedMultiplicity:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedMultiplicity:
         """
         Linearise the distribution function
         
         Arguments:
             self        the distribution function
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def coefficients(self) -> list[float]:
@@ -1008,7 +1008,7 @@ class ProjectileTarget:
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
-    def calculate_summation_cross_sections(self, tolerance: ToleranceConvergence = ...) -> None:
+    def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
         """
         Calculate summation cross sections
         
@@ -1482,7 +1482,7 @@ class TabulatedAngularDistribution:
         """
     def __ne__(self, arg0: TabulatedAngularDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistribution:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
         
@@ -1621,13 +1621,13 @@ class TabulatedAngularDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAngularDistributionFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAngularDistributionFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     def normalise(self) -> None:
         """
@@ -1743,7 +1743,7 @@ class TabulatedAngularDistributions:
         """
     def __ne__(self, arg0: TabulatedAngularDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedAngularDistributions:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
         
@@ -1880,13 +1880,13 @@ class TabulatedAverageCosine:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAverageCosine:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAverageCosine:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedAverageCosine:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2019,13 +2019,13 @@ class TabulatedAverageEnergy:
         ...
     def __truediv__(self, arg0: float) -> TabulatedAverageEnergy:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedAverageEnergy:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedAverageEnergy:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2126,7 +2126,7 @@ class TabulatedComptonProfile:
         """
     def __ne__(self, arg0: TabulatedComptonProfile) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedComptonProfile:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedComptonProfile:
         """
         Linearise the distribution 
         
@@ -2270,13 +2270,13 @@ class TabulatedComptonProfileFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedComptonProfileFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedComptonProfileFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedComptonProfileFunction:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     def normalise(self) -> None:
         """
@@ -2423,13 +2423,13 @@ class TabulatedCrossSection:
         ...
     def __truediv__(self, arg0: float) -> TabulatedCrossSection:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedCrossSection:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedCrossSection:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2526,7 +2526,7 @@ class TabulatedEnergyDistribution:
         """
     def __ne__(self, arg0: TabulatedEnergyDistribution) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistribution:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistribution:
         """
         Linearise the distribution
         
@@ -2661,13 +2661,13 @@ class TabulatedEnergyDistributionFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedEnergyDistributionFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedEnergyDistributionFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedEnergyDistributionFunction:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     def normalise(self) -> None:
         """
@@ -2780,7 +2780,7 @@ class TabulatedEnergyDistributions:
         """
     def __ne__(self, arg0: TabulatedEnergyDistributions) -> bool:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ..., normalise: bool = False) -> TabulatedEnergyDistributions:
+    def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistributions:
         """
         Linearise the distribution
         
@@ -2915,13 +2915,13 @@ class TabulatedFormFactor:
         ...
     def __truediv__(self, arg0: float) -> TabulatedFormFactor:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedFormFactor:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedFormFactor:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3054,13 +3054,13 @@ class TabulatedMultiplicity:
         ...
     def __truediv__(self, arg0: float) -> TabulatedMultiplicity:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedMultiplicity:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedMultiplicity:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3204,13 +3204,13 @@ class TabulatedScatteringFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedScatteringFunction:
         ...
-    def linearise(self, tolerance: ToleranceConvergence = ...) -> TabulatedScatteringFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedScatteringFunction:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3371,57 +3371,6 @@ class ThermalScattering:
     @incoherent_elastic_scattering.setter
     def incoherent_elastic_scattering(self, arg1: thermal.IncoherentElasticScattering | None) -> None:
         ...
-class ToleranceConvergence:
-    """
-    A convergence functor using a single tolerance
-    
-    This functor class can be used to ensure convergence of the linearisation
-    process using a relative tolerance and absolute difference threshold.
-    With this functor, a trial value and reference value are considered
-    converged if:
-      abs( trial - reference ) < ( abs( trial ) + abs( reference ) ) * tolerance
-    
-    For very small values (when ( abs( trial ) + abs( reference ) ) * tolerance
-    is smaller than the threshold value), a trial value and reference value
-    are considered converged if:
-      abs( trial - reference ) < threshold
-    """
-    def __call__(self, trial: float, reference: float, xLeft: float, xRight: float, yLeft: float, yRight: float) -> float:
-        """
-        Test the convergence of the linearisation
-        
-        Arguments:
-            self         the convergence functor
-            trial        the trial value to be tested
-            reference    the reference value to be tested against
-            xLeft        the left value on the x interval
-            xRight       the right value on the x interval
-            yLeft        the left value on the y interval
-            yRight       the right value on the y interval
-        """
-    def __copy__(self) -> ToleranceConvergence:
-        ...
-    def __deepcopy__(self, arg0: dict) -> ToleranceConvergence:
-        ...
-    def __init__(self, tolerance: float = 0.001, threshold: float = 1e-10) -> None:
-        """
-        Initialise the convergence functor
-        
-        Arguments:
-            self        the functor
-            tolerance   the linearisation tolerance (default 0.1 %)
-            threshold   the lowest allowed absolute difference (default 1e-10)
-        """
-    @property
-    def threshold(self) -> float:
-        """
-        The linearisation threshold
-        """
-    @property
-    def tolerance(self) -> float:
-        """
-        The linearisation tolerance
-        """
 class TwoBodyDistributionData:
     """
     The energy-angle distribution data for a two-body output channel
