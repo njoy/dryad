@@ -5,7 +5,6 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/njoy.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/matrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ToleranceConvergence.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id/EnergyGroup.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id/ElectronSubshellID.python.cpp
