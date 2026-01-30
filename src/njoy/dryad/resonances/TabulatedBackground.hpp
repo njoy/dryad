@@ -16,10 +16,10 @@ namespace resonances {
 
   /**
    *  @class
-   *  @brief A tabulated background for a channel
+   *  @brief A channel background using tabulated data
    *
    *  The energy values are given in eV and the background values
-   *  are dimensionless.
+   *  are dimensionless complex values.
    *
    *  @todo c++20 : use defaulted comparison operators
    */

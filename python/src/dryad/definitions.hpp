@@ -255,10 +255,11 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
     "linearise",
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
-    "Linearise the distribution function\n\n"
-    "Arguments:\n"
-    "    self        the distribution function\n"
-    "    tolerance   the linearisation tolerance (default: 0.1%)"
+    "Linearise the series\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 0.001\n"
+    "         the linearisation tolerance"
   );
 
   // add math operators
