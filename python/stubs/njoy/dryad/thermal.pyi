@@ -136,9 +136,10 @@ class TabulatedDebyeWallerIntegral:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -278,9 +279,10 @@ class TabulatedEffectiveTemperature:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
