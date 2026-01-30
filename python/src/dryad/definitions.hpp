@@ -6,6 +6,7 @@
 
 // other includes
 #include <pybind11/pybind11.h>
+#include <pybind11/complex.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
 #include "njoy/constants.hpp"
@@ -203,9 +204,10 @@ void addStandardTabulatedDefinitions( PythonClass& component ) {
     &Component::linearise,
     python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     "Linearise the table\n\n"
-    "Arguments:\n"
-    "    self        the table\n"
-    "    tolerance   the linearisation tolerance (default: 0.1%)"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 0.001\n"
+    "         the linearisation tolerance"
   )
   .def_property_readonly(
 
