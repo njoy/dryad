@@ -6,8 +6,6 @@
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/resonances/HardSphereShiftFactor.hpp"
 
-#include "scion/math/horner.hpp"
-
 // namespace aliases
 namespace python = pybind11;
 
