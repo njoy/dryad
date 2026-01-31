@@ -4,8 +4,9 @@ Resonance data
 from __future__ import annotations
 import njoy.dryad
 import njoy.dryad.id
+import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -1084,6 +1085,70 @@ class ResonanceTable:
     def reduced_width_amplitudes(self) -> list[list[float]]:
         """
         The reduced width amplitudes
+        """
+class SammyBackground:
+    """
+    A channel background using the SAMMY parametrisation
+    
+    The SAMMY parametrisation of a channel background is a function
+    of energy consisting of a quadratic polynomial and a logarithmic
+    term. It is characterised by 7 parameters:
+      - 3 coefficients of the polymonial term (R0, R1 and R2)
+      - 2 constants for the logarithmic term (S0 and S1)
+      - 2 logarithmic singularity values (Ed and Eu, given in eV)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, energy: float) -> float:
+        """
+        Evaluate the background function for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> SammyBackground:
+        ...
+    def __deepcopy__(self, arg0: dict) -> SammyBackground:
+        ...
+    def __eq__(self, arg0: SammyBackground) -> bool:
+        ...
+    def __init__(self, polynomial_coefficients: typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(3)], logarithmic_coefficients: typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(2)], lower_singularity: float, upper_singularity: float) -> None:
+        """
+        Initialise the background function
+        
+        Parameters
+        ----------
+            polynomial_coefficients : list of float
+               the coefficients of the polymonial term (order 2)
+            logarithmic_coefficients : list of float
+               the coefficients of the logarithmic term (order 1)
+            lower_singularity : float
+               the lower logarithmic singularity values
+            upper_singularity : float
+               the upper logarithmic singularity values
+        """
+    def __ne__(self, arg0: SammyBackground) -> bool:
+        ...
+    @property
+    def logarithmic_coefficients(self) -> typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(2)]:
+        """
+        The coefficients of the logarithmic term
+        """
+    @property
+    def lower_singularity(self) -> float:
+        """
+        The logarithmic singularity below the energy range
+        """
+    @property
+    def polynomial_coefficients(self) -> typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(3)]:
+        """
+        The coefficients of the polynomial term
+        """
+    @property
+    def upper_singularity(self) -> float:
+        """
+        The logarithmic singularity above the energy range
         """
 class SpinGroup:
     """
