@@ -185,6 +185,7 @@ add_cpp_test( dryad.format.endf.resonances.lrf7.createFormalism                 
 add_cpp_test( dryad.format.endf.resonances.lrf7.createKinematics                        dryad/format/endf/resonances/lrf7/createKinematics.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createReactionIdentifiers               dryad/format/endf/resonances/lrf7/createReactionIdentifiers.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createParticlePairs                     dryad/format/endf/resonances/lrf7/createParticlePairs.test.cpp )
+add_cpp_test( dryad.format.endf.resonances.lrf7.createSammyBackground                   dryad/format/endf/resonances/lrf7/createSammyBackground.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createTabulatedBackground               dryad/format/endf/resonances/lrf7/createTabulatedBackground.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createChannels                          dryad/format/endf/resonances/lrf7/createChannels.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createSpinGroups                        dryad/format/endf/resonances/lrf7/createSpinGroups.test.cpp )
