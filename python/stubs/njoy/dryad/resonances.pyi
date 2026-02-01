@@ -6,7 +6,7 @@ import njoy.dryad
 import njoy.dryad.id
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -703,6 +703,70 @@ class Formalism:
     @property
     def value(self) -> int:
         ...
+class FrohnerBackground:
+    """
+    A channel background using the Frohner parametrisation
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, energy: float) -> complex:
+        """
+        Evaluate the background function for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> FrohnerBackground:
+        ...
+    def __deepcopy__(self, arg0: dict) -> FrohnerBackground:
+        ...
+    def __eq__(self, arg0: FrohnerBackground) -> bool:
+        ...
+    def __init__(self, distant_level_parameter: float, pole_strength: float, average_radiation_width: float, lower_singularity: float, upper_singularity: float) -> None:
+        """
+        Initialise the background function
+        
+        Parameters
+        ----------
+            distant_level_parameter : float
+               the distant level parameter
+            pole_strength : list of float
+               the pole strength
+            average_radiation_width : float
+               the average radiation width
+            lower_singularity : float
+               the lower logarithmic singularity values
+            upper_singularity : float
+               the upper logarithmic singularity values
+        """
+    def __ne__(self, arg0: FrohnerBackground) -> bool:
+        ...
+    @property
+    def average_radiation_width(self) -> float:
+        """
+        The average radiation width
+        """
+    @property
+    def distant_level_parameter(self) -> float:
+        """
+        The distant level parameter
+        """
+    @property
+    def lower_singularity(self) -> float:
+        """
+        The logarithmic singularity below the energy range
+        """
+    @property
+    def pole_strength(self) -> float:
+        """
+        The pole strength
+        """
+    @property
+    def upper_singularity(self) -> float:
+        """
+        The logarithmic singularity above the energy range
+        """
 class HardSpherePenetrability:
     """
     Hard sphere penetrability functions
