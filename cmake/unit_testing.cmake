@@ -255,6 +255,7 @@ add_cpp_test( dryad.format.gnds.createReferenceFrame                            
 add_cpp_test( dryad.format.gnds.createParticleIdentifier                                dryad/format/gnds/createParticleIdentifier.test.cpp )
 add_cpp_test( dryad.format.gnds.readShape                                               dryad/format/gnds/readShape.test.cpp )
 add_cpp_test( dryad.format.gnds.resolveLink                                             dryad/format/gnds/resolveLink.test.cpp )
+add_cpp_test( dryad.format.gnds.readDouble                                              dryad/format/gnds/readDouble.test.cpp )
 add_cpp_test( dryad.format.gnds.readAxis                                                dryad/format/gnds/readAxis.test.cpp )
 add_cpp_test( dryad.format.gnds.readGrid                                                dryad/format/gnds/readGrid.test.cpp )
 add_cpp_test( dryad.format.gnds.readAxes                                                dryad/format/gnds/readAxes.test.cpp )

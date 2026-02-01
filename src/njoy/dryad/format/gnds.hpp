@@ -1,3 +1,4 @@
+#include "njoy/dryad/format/gnds/readDouble.hpp"
 #include "njoy/dryad/format/gnds/readArray.hpp"
 #include "njoy/dryad/format/gnds/readAxes.hpp"
 #include "njoy/dryad/format/gnds/readAxis.hpp"
