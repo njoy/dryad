@@ -23,6 +23,9 @@
 #include "njoy/dryad/resonances/CoulombPhaseShift.hpp"
 #include "njoy/dryad/resonances/CoulombPhaseShiftDifference.hpp"
 #include "njoy/dryad/resonances/TabulatedWaveFunction.hpp"
+#include "njoy/dryad/resonances/FrohnerBackground.hpp"
+#include "njoy/dryad/resonances/SammyBackground.hpp"
+#include "njoy/dryad/resonances/TabulatedBackground.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -38,6 +41,9 @@ namespace resonances {
 
     /* type aliases */
 
+    using Background = std::variant< FrohnerBackground,
+                                     SammyBackground,
+                                     TabulatedBackground >;
     using WaveNumber = std::variant< NonRelativisticWaveNumber,
                                      RelativisticWaveNumber >;
     using Penetrability = std::variant< double,
@@ -64,6 +70,7 @@ namespace resonances {
     std::optional< ParticlePair > outgoing_pair_;
     double q_;
     std::optional< double > boundary_condition_;
+    std::optional< Background > background_;
 
     ChannelRadii radii_;
     WaveNumber wave_number_;
@@ -141,6 +148,14 @@ namespace resonances {
     const std::optional< double >& boundaryCondition() const {
 
       return this->boundary_condition_;
+    }
+
+    /**
+     *  @brief Return the background function (if defined)
+     */
+    const std::optional< Background >& background() const {
+
+      return this->background_;
     }
 
     /**

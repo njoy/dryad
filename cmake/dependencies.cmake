@@ -21,7 +21,7 @@ shacl_FetchContent_Declare( tools
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         278592f6d0a96271b997871b2ad61ba0b6ec6733  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         6cf4be58060dcb1b23243c60f01b35f6b45a6c29  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk
