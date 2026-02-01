@@ -25,4 +25,3 @@ SammyBackground( std::array< double, 3 > polynomialCoefficients,
   logarithmic_coefficients_( std::move( logarithmicCoefficients ) ),
   lower_singularity_( lowerSingularity ),
   upper_singularity_( upperSingularity ) {}
-
