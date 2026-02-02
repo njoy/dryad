@@ -397,10 +397,12 @@ namespace resonances {
 
       return std::tie( left.identifier(), left.incidentParticlePair(),
                        left.outgoingParticlePair(), left.q_,
-                       left.boundaryCondition(), left.channelRadii() ) ==
+                       left.boundaryCondition(), left.channelRadii(),
+                       left.background() ) ==
              std::tie( right.identifier(), right.incidentParticlePair(),
                        right.outgoingParticlePair(), right.q_,
-                       right.boundaryCondition(), right.channelRadii() );
+                       right.boundaryCondition(), right.channelRadii(),
+                       right.background() );
     }
 
     /**

@@ -272,6 +272,14 @@ namespace calculator {
                 this->r_matrix_( c, cprime ) += gg / std::complex< double >( delta, -Gamma );
               }
 
+              // add background if one is defined
+              if ( channels[c].background().has_value() ) {
+
+                this->r_matrix_( c, c ) += std::visit( [&] ( auto&& background ) -> std::complex< double >
+                                                           { return background( energy ); },
+                                                       channels[c].background().value() );
+              }
+
               // the r matrix is symmetrical
               if ( cprime > c ) {
 
