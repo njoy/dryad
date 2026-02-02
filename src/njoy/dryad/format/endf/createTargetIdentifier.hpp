@@ -18,7 +18,14 @@ namespace endf {
    */
   inline id::ParticleID createTargetIdentifier( int za, int level ) {
 
-    return id::ParticleID::nuclide( za, level );
+    if ( za == 1 ) {
+
+      return id::ParticleID::neutron();
+    }
+    else {
+
+      return id::ParticleID::nuclide( za, level );
+    }
   }
 
 } // endf namespace

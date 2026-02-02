@@ -66,8 +66,20 @@ namespace endf {
       }
     };
 
-    id::ParticleID id = id::ParticleID::neutron();
+    // should only be used for neutrons
+    if ( reaction.particles()->size() > 1 ) {
+
+      Log::error( "An MF4 section cannot be used for a reaction that emits more than one particle" );
+      throw std::exception();
+    }
+
+    // get the particle id and check for neutrons
+    id::ParticleID id = reaction.particles()->begin()->first;
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
+    if ( id != id::ParticleID::neutron() ) {
+
+      Log::warning( "An MF4 section should only be used for neutrons, but in this case we'll allow it." );
+    }
 
     auto frame = createReferenceFrame( section.referenceFrame() );
     int multiplicity = reaction.particles()->at( id );
