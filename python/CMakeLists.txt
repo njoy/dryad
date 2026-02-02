@@ -5,7 +5,6 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/njoy.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/matrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ToleranceConvergence.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id/EnergyGroup.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id/ElectronSubshellID.python.cpp
@@ -38,6 +37,9 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/CoulombPhaseShift.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/CoulombPhaseShiftDifference.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedWaveFunction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/FrohnerBackground.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/SammyBackground.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedBackground.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/Channel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/ResonanceTable.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/SpinGroup.python.cpp

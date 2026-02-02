@@ -8,6 +8,13 @@
 namespace njoy {
 namespace constants {
 
+  // default linearisation tolerance and threshold
+  namespace linearisation {
+
+    constexpr double tolerance = 0.001;
+    constexpr double threshold = 1e-10;
+  }
+
   constexpr double pi = 3.141592653589793;
 
   // CODATA 2018 - atomic mass unit in kg

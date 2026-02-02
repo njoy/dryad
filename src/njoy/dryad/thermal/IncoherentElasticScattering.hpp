@@ -6,7 +6,6 @@
 #include <variant>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
 #include "njoy/dryad/thermal/TabulatedDebyeWallerIntegral.hpp"
 
 namespace njoy {

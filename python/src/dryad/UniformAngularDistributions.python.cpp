@@ -17,7 +17,6 @@ void wrapUniformAngularDistributions( python::module& module ) {
   using Component = njoy::dryad::UniformAngularDistributions;
   using UniformAngularDistribution = njoy::dryad::UniformAngularDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

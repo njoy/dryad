@@ -6,7 +6,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 
 namespace njoy {
 namespace dryad {

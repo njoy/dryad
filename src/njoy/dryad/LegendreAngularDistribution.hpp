@@ -6,7 +6,7 @@
 #include <optional>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
@@ -96,14 +96,14 @@ namespace dryad {
     /**
      *  @brief Return a linearised angular distribution table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      *  @param[in] normalise   option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistribution linearise( ToleranceConvergence tolerance = {},
+    TabulatedAngularDistribution linearise( double tolerance = constants::linearisation::tolerance,
                                             bool normalise = false ) const {
 
-      TabulatedAngularDistributionFunction pdf = this->pdf().linearise( std::move( tolerance ) );
+      TabulatedAngularDistributionFunction pdf = this->pdf().linearise( tolerance );
       return TabulatedAngularDistribution( std::move( pdf ), normalise );
     }
 

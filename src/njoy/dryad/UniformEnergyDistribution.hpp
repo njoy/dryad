@@ -7,7 +7,7 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/base/UniformDistribution.hpp"
 #include "njoy/dryad/UniformDistributionType.hpp"
 

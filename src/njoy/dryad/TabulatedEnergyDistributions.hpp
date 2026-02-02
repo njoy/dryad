@@ -66,11 +66,11 @@ namespace dryad {
     /**
      *  @brief Return linearised energy distributions
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      *  @param[in] normalise   option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedEnergyDistributions linearise( ToleranceConvergence tolerance = {},
+    TabulatedEnergyDistributions linearise( double tolerance = constants::linearisation::tolerance,
                                             bool normalise = false ) const {
 
       std::vector< TabulatedEnergyDistribution > distributions;

@@ -8,7 +8,6 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/ReactionCategory.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"

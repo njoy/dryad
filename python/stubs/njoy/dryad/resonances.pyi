@@ -4,8 +4,9 @@ Resonance data
 from __future__ import annotations
 import njoy.dryad
 import njoy.dryad.id
+import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -65,7 +66,7 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, background: FrohnerBackground | SammyBackground | TabulatedBackground | None, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
@@ -86,7 +87,7 @@ class Channel:
             phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ...) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ..., background: FrohnerBackground | SammyBackground | TabulatedBackground | None = None) -> None:
         """
         Initialise the channel
         
@@ -173,6 +174,11 @@ class Channel:
         Arguments:
             self     the channel
             energy   the energy (given in eV)
+        """
+    @property
+    def background(self) -> FrohnerBackground | SammyBackground | TabulatedBackground | None:
+        """
+        The background function (if defined)
         """
     @property
     def boundary_condition(self) -> float | None:
@@ -702,6 +708,70 @@ class Formalism:
     @property
     def value(self) -> int:
         ...
+class FrohnerBackground:
+    """
+    A channel background using the Frohner parametrisation
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, energy: float) -> complex:
+        """
+        Evaluate the background function for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> FrohnerBackground:
+        ...
+    def __deepcopy__(self, arg0: dict) -> FrohnerBackground:
+        ...
+    def __eq__(self, arg0: FrohnerBackground) -> bool:
+        ...
+    def __init__(self, distant_level_parameter: float, pole_strength: float, average_radiation_width: float, lower_singularity: float, upper_singularity: float) -> None:
+        """
+        Initialise the background function
+        
+        Parameters
+        ----------
+            distant_level_parameter : float
+               the distant level parameter
+            pole_strength : list of float
+               the pole strength
+            average_radiation_width : float
+               the average radiation width
+            lower_singularity : float
+               the lower logarithmic singularity values
+            upper_singularity : float
+               the upper logarithmic singularity values
+        """
+    def __ne__(self, arg0: FrohnerBackground) -> bool:
+        ...
+    @property
+    def average_radiation_width(self) -> float:
+        """
+        The average radiation width
+        """
+    @property
+    def distant_level_parameter(self) -> float:
+        """
+        The distant level parameter
+        """
+    @property
+    def lower_singularity(self) -> float:
+        """
+        The logarithmic singularity below the energy range
+        """
+    @property
+    def pole_strength(self) -> float:
+        """
+        The pole strength
+        """
+    @property
+    def upper_singularity(self) -> float:
+        """
+        The logarithmic singularity above the energy range
+        """
 class HardSpherePenetrability:
     """
     Hard sphere penetrability functions
@@ -1085,6 +1155,70 @@ class ResonanceTable:
         """
         The reduced width amplitudes
         """
+class SammyBackground:
+    """
+    A channel background using the SAMMY parametrisation
+    
+    The SAMMY parametrisation of a channel background is a function
+    of energy consisting of a quadratic polynomial and a logarithmic
+    term. It is characterised by 7 parameters:
+      - 3 coefficients of the polymonial term (R0, R1 and R2)
+      - 2 constants for the logarithmic term (S0 and S1)
+      - 2 logarithmic singularity values (Ed and Eu, given in eV)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, energy: float) -> float:
+        """
+        Evaluate the background function for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> SammyBackground:
+        ...
+    def __deepcopy__(self, arg0: dict) -> SammyBackground:
+        ...
+    def __eq__(self, arg0: SammyBackground) -> bool:
+        ...
+    def __init__(self, polynomial_coefficients: typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(3)], logarithmic_coefficients: typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(2)], lower_singularity: float, upper_singularity: float) -> None:
+        """
+        Initialise the background function
+        
+        Parameters
+        ----------
+            polynomial_coefficients : list of float
+               the coefficients of the polymonial term (order 2)
+            logarithmic_coefficients : list of float
+               the coefficients of the logarithmic term (order 1)
+            lower_singularity : float
+               the lower logarithmic singularity values
+            upper_singularity : float
+               the upper logarithmic singularity values
+        """
+    def __ne__(self, arg0: SammyBackground) -> bool:
+        ...
+    @property
+    def logarithmic_coefficients(self) -> typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(2)]:
+        """
+        The coefficients of the logarithmic term
+        """
+    @property
+    def lower_singularity(self) -> float:
+        """
+        The logarithmic singularity below the energy range
+        """
+    @property
+    def polynomial_coefficients(self) -> typing.Annotated[list[float], pybind11_stubgen.typing_ext.FixedSize(3)]:
+        """
+        The coefficients of the polynomial term
+        """
+    @property
+    def upper_singularity(self) -> float:
+        """
+        The logarithmic singularity above the energy range
+        """
 class SpinGroup:
     """
     A spin group corresponding to a Jpi quantum number set
@@ -1178,6 +1312,146 @@ class SpinGroup:
         """
         The total angular momentum J of the channels
         """
+class TabulatedBackground:
+    """
+    The energy values are given in eV and the background values are
+    dimensionless complex values.
+    
+    Parameters
+    ----------
+        energies : list of float
+             the momentum values
+        values : list of complex
+             the background values
+        boundaries : list of int
+             the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+             the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+             the interpolation type (default lin-lin)
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __add__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __call__(self, energy: float) -> complex:
+        """
+        Evaluate the table for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> TabulatedBackground:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedBackground:
+        ...
+    def __eq__(self, arg0: TabulatedBackground) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[complex], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the background function with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[complex], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the background function with a single interpolation zone
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __itruediv__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __mul__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __ne__(self, arg0: TabulatedBackground) -> bool:
+        ...
+    def __neg__(self) -> TabulatedBackground:
+        ...
+    def __radd__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __rmul__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __rsub__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __truediv__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> TabulatedBackground:
+        """
+        Linearise the table
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy values
+        """
+    @property
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def is_linearised(self) -> bool:
+        """
+        Flag indicating whether or not the table is linearised
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[complex]:
+        """
+        The background values
+        """
 class TabulatedRadius:
     """
     A radius table
@@ -1264,13 +1538,14 @@ class TabulatedRadius:
         ...
     def __truediv__(self, arg0: float) -> TabulatedRadius:
         ...
-    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedRadius:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedRadius:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1403,13 +1678,14 @@ class TabulatedWaveFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedWaveFunction:
         ...
-    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedWaveFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedWaveFunction:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:

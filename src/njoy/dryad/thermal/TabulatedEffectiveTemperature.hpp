@@ -5,7 +5,8 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
 namespace njoy {
@@ -78,11 +79,13 @@ namespace thermal {
     /**
      *  @brief Return a linearised effective temperature table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedEffectiveTemperature linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedEffectiveTemperature linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      return TabulatedEffectiveTemperature( InterpolationTable::linearise( tolerance ) );
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedEffectiveTemperature( std::move( table ) );
     }
 
     /**

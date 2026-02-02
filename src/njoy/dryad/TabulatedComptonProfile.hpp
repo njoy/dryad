@@ -5,7 +5,8 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
 #include "njoy/dryad/TabulatedComptonProfileFunction.hpp"
 
@@ -122,13 +123,13 @@ namespace dryad {
     double averageMomentum() const { return this->pdf().mean(); }
 
     /**
-     *  @brief Return a linearised angular distribution table
+     *  @brief Return a linearised Compton profile table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      *  @param[in] normalise   option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedComptonProfile linearise( ToleranceConvergence tolerance = {},
+    TabulatedComptonProfile linearise( double tolerance = constants::linearisation::tolerance,
                                        bool normalise = false ) const {
 
       TabulatedComptonProfileFunction pdf = this->pdf().linearise( tolerance );

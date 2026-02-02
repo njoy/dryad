@@ -6,9 +6,11 @@
 
 // other includes
 #include <pybind11/pybind11.h>
+#include <pybind11/complex.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 
 namespace python = pybind11;
 
@@ -195,19 +197,17 @@ void addStandardInterpolationTableDefinitions( PythonClass& component ) {
 template < typename Component, typename PythonClass >
 void addStandardTabulatedDefinitions( PythonClass& component ) {
 
-  // type aliases
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
-
   component
   .def(
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     "Linearise the table\n\n"
-    "Arguments:\n"
-    "    self        the table\n"
-    "    tolerance   the linearisation tolerance"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 0.001\n"
+    "         the linearisation tolerance"
   )
   .def_property_readonly(
 
@@ -235,9 +235,6 @@ void addStandardTabulatedDefinitions( PythonClass& component ) {
 template < typename Component, typename PythonClass >
 void addStandardSeriesDefinitions( PythonClass& component ) {
 
-  // type aliases
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
-
   component
   .def_property_readonly(
 
@@ -257,11 +254,12 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
-    "Linearise the distribution function\n\n"
-    "Arguments:\n"
-    "    self        the distribution function\n"
-    "    tolerance   the linearisation tolerance"
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+    "Linearise the series\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 0.001\n"
+    "         the linearisation tolerance"
   );
 
   // add math operators

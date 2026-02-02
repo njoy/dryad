@@ -90,9 +90,6 @@ void wrapDryad( python::module& module ) {
   // wrap components - documentation
   dryad::wrapDocumentation( submodule );
 
-  // wrap components - scion objects
-  dryad::wrapToleranceConvergence( submodule );
-
   // wrap components - enumerators
   dryad::wrapInterpolationType( submodule );
   dryad::wrapDistributionDataType( submodule );

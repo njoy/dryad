@@ -132,13 +132,14 @@ class TabulatedDebyeWallerIntegral:
         ...
     def __truediv__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
         ...
-    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedDebyeWallerIntegral:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedDebyeWallerIntegral:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -274,13 +275,14 @@ class TabulatedEffectiveTemperature:
         ...
     def __truediv__(self, arg0: float) -> TabulatedEffectiveTemperature:
         ...
-    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedEffectiveTemperature:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedEffectiveTemperature:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:

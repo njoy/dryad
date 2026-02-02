@@ -17,7 +17,6 @@ void wrapTabulatedWaveFunction( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::resonances::TabulatedWaveFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

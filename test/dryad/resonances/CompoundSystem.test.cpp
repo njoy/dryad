@@ -300,6 +300,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -322,6 +325,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -371,6 +377,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -393,6 +402,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -417,6 +429,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
@@ -440,6 +455,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel3.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel3.background() );
+
   // Q value
   CHECK_THAT( 0, WithinRel( channel3.qValue() ) );
 
@@ -462,6 +480,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel4.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel4.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
@@ -514,6 +535,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -537,6 +561,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
@@ -559,6 +586,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
@@ -609,6 +639,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -631,6 +664,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -655,6 +691,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
@@ -678,6 +717,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel3.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel3.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
 
@@ -700,6 +742,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel4.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
@@ -752,6 +797,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -775,6 +823,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
@@ -797,6 +848,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
@@ -847,6 +901,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -870,6 +927,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0, WithinRel( channel1.qValue() ) );
 
@@ -892,6 +952,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );

@@ -43,7 +43,8 @@ namespace lrf7 {
 
     // get the channels
     auto channels = lrf7::createChannels( projectile, target, boundary_condition,
-                                          kinematics, endfPairs, endfSpinGroup.channels() );
+                                          kinematics, endfPairs, endfSpinGroup.channels(),
+                                          endfSpinGroup.background() );
 
     // go over all channels
     for ( unsigned int i = 0; i < channels.size(); ++i ) {

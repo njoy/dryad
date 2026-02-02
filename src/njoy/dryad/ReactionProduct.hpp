@@ -6,7 +6,6 @@
 #include <variant>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"

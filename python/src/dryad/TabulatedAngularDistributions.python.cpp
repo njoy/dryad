@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
 
 // namespace aliases
@@ -17,7 +18,6 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
   using Component = njoy::dryad::TabulatedAngularDistributions;
   using TabulatedAngularDistribution = njoy::dryad::TabulatedAngularDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -112,12 +112,12 @@ void wrapTabulatedAngularDistributions( python::module& module ) {
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
     "Linearise the distributions\n\n"
     "Parameters\n"
     "----------\n"
-    "    tolerance : njoy.dryad.ToleranceConvergence\n"
+    "    tolerance : float, default 0.001\n"
     "         the linearisation tolerance\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"

@@ -86,6 +86,7 @@ SCENARIO( "Channel" ) {
       CHECK( capturePair == capture.outgoingParticlePair() );
       CHECK_THAT( captureQ, WithinRel( capture.qValue() ) );
       CHECK( std::nullopt == capture.boundaryCondition() );
+      CHECK( std::nullopt == capture.background() );
       CHECK( captureRadii == capture.channelRadii() );
       CHECK( false == capture.isIncidentChannel() );
       CHECK_THAT( 1., WithinRel( capture.statisticalSpinFactor() ) );
@@ -106,6 +107,7 @@ SCENARIO( "Channel" ) {
       CHECK( elasticPair == elastic.outgoingParticlePair() );
       CHECK_THAT( elasticQ, WithinRel( elastic.qValue() ) );
       CHECK( std::nullopt == elastic.boundaryCondition() );
+      CHECK( std::nullopt == capture.background() );
       CHECK( elasticRadii == elastic.channelRadii() );
       CHECK( true == elastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( elastic.statisticalSpinFactor() ) );
@@ -126,6 +128,7 @@ SCENARIO( "Channel" ) {
       CHECK( inelasticPair == inelastic.outgoingParticlePair() );
       CHECK_THAT( inelasticQ, WithinRel( inelastic.qValue() ) );
       CHECK( std::nullopt == inelastic.boundaryCondition() );
+      CHECK( std::nullopt == capture.background() );
       CHECK( elasticRadii == inelastic.channelRadii() );
       CHECK( false == inelastic.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( inelastic.statisticalSpinFactor() ) );
@@ -146,6 +149,7 @@ SCENARIO( "Channel" ) {
       CHECK( protonPair == proton.outgoingParticlePair() );
       CHECK_THAT( protonQ, WithinRel( proton.qValue() ) );
       CHECK( std::nullopt == proton.boundaryCondition() );
+      CHECK( std::nullopt == capture.background() );
       CHECK( elasticRadii == proton.channelRadii() );
       CHECK( false == proton.isIncidentChannel() );
       CHECK_THAT( 0.375, WithinRel( proton.statisticalSpinFactor() ) );

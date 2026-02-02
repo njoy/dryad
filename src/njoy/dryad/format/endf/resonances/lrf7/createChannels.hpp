@@ -10,6 +10,9 @@
 #include "njoy/dryad/resonances/Channel.hpp"
 #include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createFrohnerBackground.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createSammyBackground.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createTabulatedBackground.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -35,7 +38,8 @@ namespace lrf7 {
                   const dryad::resonances::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
-                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels& endfChannels ) {
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels& endfChannels,
+                  const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels& endfBackground ) {
 
     std::vector< dryad::resonances::Channel > channels;
 
@@ -114,6 +118,41 @@ namespace lrf7 {
       dryad::resonances::ChannelRadii radii( endfChannels.trueChannelRadii()[i] * constants::deca,
                                              endfChannels.effectiveChannelRadii()[i] * constants::deca );
 
+      using Background = dryad::resonances::Channel::Background;
+      std::optional< Background > background = std::nullopt;
+      if ( endfBackground.KBK() > 0 ) {
+
+        if ( endfBackground.backgroundRMatrices()[i].has_value() ) {
+
+          using NoBackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::NoBackgroundRMatrix;
+          using TabulatedBackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::TabulatedBackgroundRMatrix;
+          using SammyBackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SammyBackgroundRMatrix;
+          using FrohnerBackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::FrohnerBackgroundRMatrix;
+
+          auto getBackground = tools::overload{
+
+            [&] ( const NoBackgroundRMatrix& ) -> std::optional< Background > {
+
+              return std::nullopt;
+            },
+            [&] ( const FrohnerBackgroundRMatrix& data ) -> std::optional< Background > {
+
+              return createFrohnerBackground( data );
+            },
+            [&] ( const SammyBackgroundRMatrix& data ) -> std::optional< Background > {
+
+              return createSammyBackground( data );
+            },
+            [&] ( const TabulatedBackgroundRMatrix& data ) -> std::optional< Background > {
+
+              return createTabulatedBackground( data );
+            }
+          };
+
+          background = std::visit( getBackground, endfBackground.backgroundRMatrices()[i].value() );
+        }
+      }
+
       channels.emplace_back( id::ChannelID( id::ReactionID( projectile, target, endfPairs.MT()[index] ),
                                             dryad::resonances::ChannelQuantumNumbers( endfChannels.orbitalMomentumValues()[i],
                                                                                       endfChannels.channelSpinValues()[i],
@@ -124,7 +163,8 @@ namespace lrf7 {
                              qvalues[index],
                              std::move( boundary ),
                              std::move( radii ),
-                             kinematics );
+                             kinematics,
+                             std::move( background ) );
     }
 
     return channels;

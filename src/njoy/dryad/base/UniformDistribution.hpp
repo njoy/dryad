@@ -8,7 +8,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/UniformDistributionType.hpp"
 
 namespace njoy {

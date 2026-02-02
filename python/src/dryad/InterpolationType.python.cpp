@@ -3,7 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 
 // namespace aliases
 namespace python = pybind11;

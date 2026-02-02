@@ -5,7 +5,8 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
 namespace njoy {
@@ -77,11 +78,13 @@ namespace thermal {
     /**
      *  @brief Return a linearised Debye-Waller integral table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedDebyeWallerIntegral linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedDebyeWallerIntegral linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      return TabulatedDebyeWallerIntegral( InterpolationTable::linearise( tolerance ) );
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedDebyeWallerIntegral( std::move( table ) );
     }
 
     /**

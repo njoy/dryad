@@ -3,6 +3,7 @@
 #include <pybind11/stl.h>
 
 // local includes
+#include "njoy/constants.hpp"
 #include "njoy/reconr/calculateSummationCrossSections.hpp"
 
 // namespace aliases
@@ -21,13 +22,13 @@ namespace reconr {
       "calculate_summation_cross_sections",
       &njoy::reconr::calculateSummationCrossSections,
       python::arg( "pt" ),
-      python::arg( "tolerance" ) = njoy::dryad::ToleranceConvergence(),
+      python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
       "This function recalculates the cross section of all summation reactions of\n"
       "a ProjectileTarget instance. It does so by linearising the cross sections of\n"
       "the partials (if required) and summing them together.\n\n"
       "Arguments:\n"
       "    pt          the projectile-target data to be modified\n"
-      "    tolerance   the linearisation tolerance"
+      "    tolerance   the linearisation tolerance (default: 0.1%)"
     );
   }
 } // reconr namespace

@@ -5,7 +5,8 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
 namespace njoy {
@@ -75,13 +76,15 @@ namespace dryad {
     using InterpolationTable::operator();
 
     /**
-     *  @brief Return a linearised cross section table
+     *  @brief Return a linearised multiplicity table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedMultiplicity linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedMultiplicity linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      return TabulatedMultiplicity( InterpolationTable::linearise( tolerance ) );
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedMultiplicity( std::move( table ) );
     }
 
     /**

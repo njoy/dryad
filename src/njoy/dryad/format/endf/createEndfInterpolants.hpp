@@ -8,7 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/std20/ranges.hpp"
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/format/endf/createEndfInterpolant.hpp"
 
 namespace njoy {
