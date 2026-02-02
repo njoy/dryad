@@ -14,13 +14,12 @@ using namespace njoy;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 
+void verifyChunkSr88( const CompoundSystem& );
 void verifyChunkSi29( const CompoundSystem& );
 void verifyChunkCu63( const CompoundSystem& );
 void verifyChunkCl35( const CompoundSystem& );
 
 SCENARIO( "createSpinGroups" ) {
-
-  //! @todo add a test using Sr88 since it has background elements in it.
 
   GIVEN( "ENDF MF2 MT151 RML data - Si29" ) {
 
@@ -95,6 +94,30 @@ SCENARIO( "createSpinGroups" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "ENDF MF2 MT151 RML data - Sr88" ) {
+
+    // Sr88 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - Sammy parametrisation for channel background
+
+    using Tape = njoy::ENDFtk::tree::Tape;
+    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-038_Sr_088.endf" );
+    auto section = tape.materials().front().section( 2, 151 ).parse< 2, 151 >();
+    auto parameters = std::get< njoy::ENDFtk::section::Type<2,151>::RMatrixLimited >(
+                        section.isotopes().front().resonanceRanges().front().parameters() );
+
+    WHEN( "a set of parsed LRF7 data from MF2 MT151 is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        id::ParticleID projectile = id::ParticleID::neutron();
+        id::ParticleID target = id::ParticleID( "Sr88" );
+        auto chunk = format::endf::resonances::lrf7::createCompoundSystem( projectile, target, 1e-5, 9.5e+5, parameters );
+
+        verifyChunkSr88( chunk );
+      } // THEN
+    } // WHEN
+  }
 } // SCENARIO
 
 void verifyChunkSi29( const CompoundSystem& chunk ) {
@@ -2265,4 +2288,12 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK_THAT( std::sqrt( 1.054090e+4 / 2. / channel1.penetrability( 1.485128e+6 ) ), WithinRel( resonances[1][56] ) );
   CHECK_THAT( std::sqrt( 0.164019 / 2. / channel2.penetrability( 1.635612e+4 ) ), WithinRel( resonances[2][0] ) );
   CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 1.485128e+6 ) ), WithinRel( resonances[2][56] ) );
+}
+
+void verifyChunkSr88( const CompoundSystem& chunk ) {
+
+  auto photon = id::ParticleID::photon();
+  auto neutron = id::ParticleID::neutron();
+  auto sr88 = id::ParticleID( "Sr88" );
+  auto sr89 = id::ParticleID( "Sr89[all]" );
 }
