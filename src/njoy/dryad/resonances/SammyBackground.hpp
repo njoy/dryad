@@ -3,6 +3,7 @@
 
 // system includes
 #include <array>
+#include <cmath>
 
 // other includes
 #include "scion/math/horner.hpp"
