@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_SAMMYBACKGROUND
 
 // system includes
+#include <array>
 
 // other includes
 #include "scion/math/horner.hpp"
