@@ -7,12 +7,15 @@ using Catch::Matchers::WithinRel;
 #include "njoy/dryad/external/ComptonProfiles.hpp"
 
 // other includes
+#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::external;
 
 void verifyBiggsMendelsohnMann( const std::vector< TabulatedComptonProfile >&, bool );
+void verifyProjectileTargetHasNoProfiles( const ProjectileTarget& );
+void verifyProjectileTarget( const ProjectileTarget&, bool );
 
 SCENARIO( "ComptonProfiles" ) {
 
@@ -25,6 +28,23 @@ SCENARIO( "ComptonProfiles" ) {
 
       verifyBiggsMendelsohnMann( chunk1, false );
       verifyBiggsMendelsohnMann( chunk2, true );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "a photoatomic ProjectileTarget" ) {
+
+    THEN( "Biggs, Mendelsohn and Mann profiles can be added" ) {
+
+      auto chunk1 = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      verifyProjectileTargetHasNoProfiles( chunk1 );
+      external::ComptonProfiles::apply( chunk1, false );
+
+      auto chunk2 = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      verifyProjectileTargetHasNoProfiles( chunk2 );
+      external::ComptonProfiles::apply( chunk2, true );
+
+      verifyProjectileTarget( chunk1, false );
+      verifyProjectileTarget( chunk2, true );
     } // THEN
   } // GIVEN
 } // SCENARIO
@@ -109,4 +129,25 @@ void verifyBiggsMendelsohnMann( const std::vector< TabulatedComptonProfile >& ch
 
   CHECK( 30 == chunk[0].boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk[0].interpolants()[0] );
+}
+
+void verifyProjectileTargetHasNoProfiles( const ProjectileTarget& chunk ) {
+
+  auto photon = njoy::dryad::id::ParticleID::photon();
+  njoy::dryad::id::ReactionID id( "g,H->incoherent" );
+
+  auto distribution = chunk.reaction( id ).product( photon ).distributionData().value();
+  auto profiles = std::get< njoy::dryad::IncoherentDistributionData >( distribution ).comptonProfiles();
+  CHECK( std::nullopt == profiles );
+}
+
+void verifyProjectileTarget( const ProjectileTarget& chunk,
+                             bool normalise ) {
+
+  auto photon = njoy::dryad::id::ParticleID::photon();
+  njoy::dryad::id::ReactionID id( "g,H->incoherent" );
+
+  auto distribution = chunk.reaction( id ).product( photon ).distributionData().value();
+  auto profiles = std::get< njoy::dryad::IncoherentDistributionData >( distribution ).comptonProfiles();
+  verifyBiggsMendelsohnMann( profiles.value(), normalise );
 }
