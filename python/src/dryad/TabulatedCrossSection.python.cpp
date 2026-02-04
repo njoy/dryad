@@ -16,7 +16,6 @@ void wrapTabulatedCrossSection( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::TabulatedCrossSection;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

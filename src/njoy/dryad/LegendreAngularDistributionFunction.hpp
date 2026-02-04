@@ -5,9 +5,10 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
-#include "scion/math/LegendreSeries.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
+#include "scion/math/LegendreSeries.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -112,11 +113,13 @@ namespace dryad {
     /**
      *  @brief Return a linearised angular distribution table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedAngularDistributionFunction linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedAngularDistributionFunction linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      return TabulatedAngularDistributionFunction( LegendreSeries::linearise( tolerance ) );
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = LegendreSeries::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedAngularDistributionFunction( std::move( table ) );
     }
 
     /**

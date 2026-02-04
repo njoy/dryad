@@ -5,7 +5,8 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
 #include "scion/math/PolynomialSeries.hpp"
 
@@ -54,11 +55,13 @@ namespace dryad {
     /**
      *  @brief Return a linearised multiplicity table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedMultiplicity linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedMultiplicity linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      return TabulatedMultiplicity( PolynomialSeries::linearise( tolerance ) );
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = PolynomialSeries::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedMultiplicity( std::move( table ) );
     }
 
     /**

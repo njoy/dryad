@@ -6,7 +6,7 @@
 
 // other includes
 #include "njoy/constants.hpp"
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
 namespace njoy {
@@ -97,11 +97,13 @@ namespace dryad {
     /**
      *  @brief Return a linearised scattering function table
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedScatteringFunction linearise( ToleranceConvergence tolerance = {} ) const {
+    TabulatedScatteringFunction linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      return TabulatedScatteringFunction( InterpolationTable::linearise( tolerance ) );
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedScatteringFunction( std::move( table ) );
     }
 
     /**

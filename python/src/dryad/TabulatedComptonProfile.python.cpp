@@ -4,6 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/TabulatedComptonProfile.hpp"
 
 // namespace aliases
@@ -18,7 +19,6 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
   using TabulatedComptonProfileFunction = njoy::dryad::TabulatedComptonProfileFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 
@@ -152,7 +152,7 @@ void wrapTabulatedComptonProfile( python::module& module ) {
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     python::arg( "normalise" ) = false,
     "Linearise the distribution \n\n"
     "Parameters\n"

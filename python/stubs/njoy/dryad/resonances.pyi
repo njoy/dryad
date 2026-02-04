@@ -1264,13 +1264,13 @@ class TabulatedRadius:
         ...
     def __truediv__(self, arg0: float) -> TabulatedRadius:
         ...
-    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedRadius:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedRadius:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1403,13 +1403,13 @@ class TabulatedWaveFunction:
         ...
     def __truediv__(self, arg0: float) -> TabulatedWaveFunction:
         ...
-    def linearise(self, tolerance: njoy.dryad.ToleranceConvergence = ...) -> TabulatedWaveFunction:
+    def linearise(self, tolerance: float = 0.001) -> TabulatedWaveFunction:
         """
         Linearise the table
         
         Arguments:
             self        the table
-            tolerance   the linearisation tolerance
+            tolerance   the linearisation tolerance (default: 0.1%)
         """
     @property
     def boundaries(self) -> list[int]:

@@ -8,7 +8,8 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/operators.h>
-#include "njoy/dryad/type-aliases.hpp"
+#include "njoy/constants.hpp"
+#include "njoy/dryad/InterpolationType.hpp"
 
 namespace python = pybind11;
 
@@ -195,19 +196,16 @@ void addStandardInterpolationTableDefinitions( PythonClass& component ) {
 template < typename Component, typename PythonClass >
 void addStandardTabulatedDefinitions( PythonClass& component ) {
 
-  // type aliases
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
-
   component
   .def(
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     "Linearise the table\n\n"
     "Arguments:\n"
     "    self        the table\n"
-    "    tolerance   the linearisation tolerance"
+    "    tolerance   the linearisation tolerance (default: 0.1%)"
   )
   .def_property_readonly(
 
@@ -235,9 +233,6 @@ void addStandardTabulatedDefinitions( PythonClass& component ) {
 template < typename Component, typename PythonClass >
 void addStandardSeriesDefinitions( PythonClass& component ) {
 
-  // type aliases
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
-
   component
   .def_property_readonly(
 
@@ -257,11 +252,11 @@ void addStandardSeriesDefinitions( PythonClass& component ) {
 
     "linearise",
     &Component::linearise,
-    python::arg( "tolerance" ) = ToleranceConvergence(),
+    python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
     "Linearise the distribution function\n\n"
     "Arguments:\n"
     "    self        the distribution function\n"
-    "    tolerance   the linearisation tolerance"
+    "    tolerance   the linearisation tolerance (default: 0.1%)"
   );
 
   // add math operators

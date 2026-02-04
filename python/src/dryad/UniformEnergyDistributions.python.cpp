@@ -17,7 +17,6 @@ void wrapUniformEnergyDistributions( python::module& module ) {
   using Component = njoy::dryad::UniformEnergyDistributions;
   using UniformEnergyDistribution = njoy::dryad::UniformEnergyDistribution;
   using InterpolationType = njoy::dryad::InterpolationType;
-  using ToleranceConvergence = njoy::dryad::ToleranceConvergence;
 
   // wrap views created by this component
 

@@ -4,6 +4,7 @@
 // system includes
 
 // other includes
+#include "njoy/constants.hpp"
 #include "njoy/dryad/base/GridDistributions.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAverageCosine.hpp"
@@ -67,11 +68,11 @@ namespace dryad {
     /**
      *  @brief Return linearised angular distributions
      *
-     *  @param[in] tolerance   the linearisation tolerance
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      *  @param[in] normalise   option to indicate whether or not to normalise
      *                         all probability data (default: no normalisation)
      */
-    TabulatedAngularDistributions linearise( ToleranceConvergence tolerance = {},
+    TabulatedAngularDistributions linearise( double tolerance = constants::linearisation::tolerance,
                                              bool normalise = false ) const {
 
       std::vector< TabulatedAngularDistribution > distributions;
@@ -80,7 +81,7 @@ namespace dryad {
                       std::back_inserter( distributions ),
                       [tolerance, normalise]
                         ( auto&& distribution )
-                        { return distribution.linearise( std::move( tolerance ), normalise ); } );
+                        { return distribution.linearise( tolerance, normalise ); } );
       return TabulatedAngularDistributions( this->grid(), std::move( distributions ),
                                             this->boundaries(), this->interpolants() );
     }

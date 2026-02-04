@@ -7,7 +7,6 @@ import sys
 # local imports
 from njoy.dryad import LegendreAngularDistributionFunction
 from njoy.dryad import InterpolationType
-from njoy.dryad import ToleranceConvergence
 
 class Test_LegendreAngularDistributionFunction( unittest.TestCase ) :
     """Unit test for the LegendreAngularDistributionFunction class."""
@@ -37,8 +36,7 @@ class Test_LegendreAngularDistributionFunction( unittest.TestCase ) :
             self.assertAlmostEqual( 146./15., chunk.mean )
 
             # verify linearisation
-            convergence = ToleranceConvergence( 0.01 )
-            linear = chunk.linearise( convergence )
+            linear = chunk.linearise( 0.01 )
 
             self.assertEqual( 21, linear.number_points )
             self.assertEqual( 1, linear.number_regions )
