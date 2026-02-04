@@ -22,12 +22,7 @@ SCENARIO( "createAceComptonProfileBlock" ) {
       auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
-
-      std::vector< TabulatedComptonProfile > profiles = external::ComptonProfiles::biggsMendelsohnMannProfiles( 1, true );
-
-      auto incoherent_id = id::ReactionID( "g,H->scattering[incoherent]" );
-      decltype(auto) photon = photoatomic.reaction( incoherent_id ).product( id::ParticleID::photon() ).distributionData().value();
-      std::get< njoy::dryad::IncoherentDistributionData >( photon ).comptonProfiles( std::move( profiles ) );
+      external::ComptonProfiles::apply( photoatomic, true );
 
       THEN( "the ace block can be generated" ) {
 

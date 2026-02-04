@@ -51,6 +51,20 @@ void wrapComptonProfiles( python::module& module ) {
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
+  )
+  .def_static(
+
+    "apply",
+    &Component::apply,
+    python::arg( "pt" ), python::arg( "normalise" ),
+    "Apply Compton profiles to a ProjectileTarget instance\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    pt : njoy.dryad.ProjectileTarget\n"
+    "         projectile-target data to be modified\n"
+    "    normalise : bool, default false\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 }
 
