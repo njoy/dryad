@@ -82,6 +82,7 @@ add_cpp_test( dryad.resonances.CompoundSystem                                   
 add_cpp_test( dryad.thermal.TabulatedDebyeWallerIntegral                                dryad/thermal/TabulatedDebyeWallerIntegral.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedEffectiveTemperature                               dryad/thermal/TabulatedEffectiveTemperature.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticScattering                                 dryad/thermal/IncoherentElasticScattering.test.cpp )
+add_cpp_test( dryad.thermal.TabulatedScatteringFunction                                 dryad/thermal/TabulatedScatteringFunction.test.cpp )
 
 add_cpp_test( dryad.Documentation                                                       dryad/Documentation.test.cpp )
 
