@@ -18,7 +18,7 @@ trigger_ci_downstream:
 
   trigger:
     project: NJOY/common_ci
-    branch: local_python
+    branch: main
     strategy: depend
 
   variables:
