@@ -18,7 +18,7 @@ SCENARIO( "ComptonProfiles" ) {
 
   GIVEN( "a z number" ) {
 
-    THEN( "an RadiativeTransitionData can be constructed and members can be tested" ) {
+    THEN( "Biggs, Mendelsohn and Mann profiles can be constructed and members can be tested" ) {
 
       auto chunk1 = ComptonProfiles::biggsMendelsohnMannProfiles( 1, false );
       auto chunk2 = ComptonProfiles::biggsMendelsohnMannProfiles( 1, true );
@@ -109,5 +109,4 @@ void verifyBiggsMendelsohnMann( const std::vector< TabulatedComptonProfile >& ch
 
   CHECK( 30 == chunk[0].boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == chunk[0].interpolants()[0] );
-
 }
