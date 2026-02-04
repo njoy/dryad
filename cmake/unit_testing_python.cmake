@@ -70,6 +70,7 @@ add_python_test( dryad.resonances.CompoundSystem                       dryad/res
 
 add_python_test( dryad.thermal.TabulatedDebyeWallerIntegral            dryad/thermal/Test_TabulatedDebyeWallerIntegral.py )
 add_python_test( dryad.thermal.TabulatedEffectiveTemperature           dryad/thermal/Test_TabulatedEffectiveTemperature.py )
+add_python_test( dryad.thermal.TabulatedScatteringFunction             dryad/thermal/Test_TabulatedScatteringFunction.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )

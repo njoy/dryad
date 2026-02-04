@@ -24,7 +24,7 @@ TabulatedScatteringFunction& operator=( TabulatedScatteringFunction&& ) = defaul
 /**
  *  @brief Constructor
  *
- *  @param momentumTransfers   the moderator temperatures values
+ *  @param momentumTransfers   the momentum transfer values
  *  @param values              the scattering function values
  *  @param boundaries          the boundaries of the interpolation regions
  *  @param interpolants        the interpolation types of the interpolation regions
@@ -39,7 +39,7 @@ TabulatedScatteringFunction( std::vector< double > momentumTransfers,
 /**
  *  @brief Constructor for a scattering function table using a single interpolation zone
  *
- *  @param momentumTransfers   the moderator temperatures values
+ *  @param momentumTransfers   the momentum transfer values
  *  @param values              the effective temperature values
  *  @param interpolant         the interpolation type of the data (default lin-lin)
  */
