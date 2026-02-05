@@ -127,6 +127,21 @@ void wrapSpinGroup( python::module& module ) {
     "Arguments:\n"
     "    self     the spin group\n"
     "    energy   the energy"
+  )
+  .def(
+
+    "cross_sections",
+    [] ( Component& self, std::vector<double> energies ) -> std::map< ReactionID, std::vector<double> > {
+
+      std::map< ReactionID, std::vector<double> > xs;
+      self.crossSections( energies, xs );
+      return xs;
+    },
+    python::arg( "energies" ),
+    "Calculate the cross section values for a list of energies\n\n"
+    "Arguments:\n"
+    "    self      the spin group\n"
+    "    energies  the list of energies"
   );
 
   // add standard comparison definitions
