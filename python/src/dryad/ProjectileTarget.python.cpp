@@ -25,6 +25,7 @@ void wrapProjectileTarget( python::module& module ) {
   using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
+  using CrossSectionCovarianceData = njoy::dryad::CrossSectionCovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
@@ -158,6 +159,13 @@ void wrapProjectileTarget( python::module& module ) {
     "    self   the ProjectileTarget data\n"
     "    id     the reaction identifier",
     python::return_value_policy::reference_internal
+  )
+  .def_property(
+
+    "cross_section_covariance_data",
+    python::overload_cast<>( &Component::crossSectionCovarianceData, python::const_ ),
+    python::overload_cast< std::optional< CrossSectionCovarianceData > >( &Component::crossSectionCovarianceData ),
+    "The cross section covariance data"
   )
   .def(
 

@@ -1338,6 +1338,8 @@ namespace np236m1 {
 
     capture = Np236m1.reaction( id::ReactionID( "n,Np236_e2->g,Np237[all]" ) );
     verifyCaptureReaction( capture );
+
+    CHECK( std::nullopt == Np236m1.crossSectionCovarianceData() );
   }
 
 } // namespace np236m1

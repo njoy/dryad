@@ -748,6 +748,8 @@ def verify_correct_unionisation( self, chunk, exclude ) :
         self.assertEqual( InterpolationType.LinearLinear, reaction.cross_section.interpolants[0] )
         self.assertEqual( True, reaction.cross_section.is_linearised )
 
+    self.assertIsNone( chunk.cross_section_covariance_data )
+
 def verify_correct_summation( self, chunk ) :
 
     # documentation

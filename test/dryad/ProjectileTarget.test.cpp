@@ -850,6 +850,9 @@ void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
+
+  // covariance data
+  CHECK( std::nullopt == chunk.crossSectionCovarianceData() );
 }
 
 void verifyCorrectUnionisation( const ProjectileTarget& chunk, bool exclude ) {
