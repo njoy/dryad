@@ -188,7 +188,7 @@ class CrossSectionMetadata:
     @typing.overload
     def __init__(self, reactions: list[njoy.dryad.id.ReactionID], energies: list[float]) -> None:
         """
-        Initialise the product multiplicity covariance metadata
+        Initialise the cross section covariance metadata
         
         Arguments:
             self          the covariance metadata
@@ -196,9 +196,19 @@ class CrossSectionMetadata:
             energies      the group structure
         """
     @typing.overload
+    def __init__(self, reaction: njoy.dryad.id.ReactionID, energies: list[float]) -> None:
+        """
+        Initialise the cross section covariance metadata
+        
+        Arguments:
+            self          the covariance metadata
+            reaction      the reaction identifier
+            energies      the group structure
+        """
+    @typing.overload
     def __init__(self, keys: list[tuple[njoy.dryad.id.ReactionID, njoy.dryad.id.EnergyGroup]]) -> None:
         """
-        Initialise the product multiplicity covariance metadata
+        Initialise the cross section covariance metadata
         
         Arguments:
             self   the covariance metadata
