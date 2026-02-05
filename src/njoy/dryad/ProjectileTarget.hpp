@@ -246,7 +246,7 @@ namespace dryad {
 
       // generate the union grid for the cross section data
       scion::unionisation::Unioniser< std::vector< double > > unioniser;
-      for ( const dryad::Reaction& reaction : this->reactions() ) {
+      for ( const Reaction& reaction : this->reactions() ) {
 
         // exclude summation when requested
         if ( ! ( exclude_summation && reaction.isSummationReaction() ) ) {
@@ -257,7 +257,7 @@ namespace dryad {
       std::vector< double > energies = unioniser.unionise();
 
       // reevaluate all cross section data on the new union grid
-      for ( dryad::Reaction& reaction : this->reactions() ) {
+      for ( Reaction& reaction : this->reactions() ) {
 
         // exclude summation when requested
         if ( ! ( exclude_summation && reaction.isSummationReaction() ) ) {
@@ -265,7 +265,7 @@ namespace dryad {
           decltype(auto) xs = reaction.crossSection();
           std::vector< double > values = unioniser.evaluate( xs.energies(), xs.values(), xs.boundaries(), xs.interpolants() );
           std::vector< std::size_t > boundaries = { values.size() - 1 };
-          std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
+          std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
 
           if ( ! xs.isLinearised() ) {
 
@@ -274,8 +274,8 @@ namespace dryad {
             interpolants = std::move( pair.second );
           }
 
-          dryad::TabulatedCrossSection newxs( energies, std::move( values ),
-                                              std::move( boundaries ), std::move( interpolants ) );
+          TabulatedCrossSection newxs( energies, std::move( values ),
+                                       std::move( boundaries ), std::move( interpolants ) );
 
           reaction.crossSection( std::move( newxs ) );
         }
