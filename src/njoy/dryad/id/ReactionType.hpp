@@ -1090,7 +1090,7 @@ namespace id {
       }
       else {
 
-        return ReactionType( static_cast< std::size_t >( 848 ) );
+        return ReactionType( static_cast< std::size_t >( 849 ) );
       }
     };
 
@@ -1123,15 +1123,15 @@ namespace id {
         }
         else if ( projectile == ParticleID::triton() ) {
 
-          return ReactionType( static_cast< std::size_t >( 484 + level ) );
+          return ReactionType( static_cast< std::size_t >( 485 + level ) );
         }
         else if ( projectile == ParticleID::helion() ) {
 
-          return ReactionType( static_cast< std::size_t >( 596 + level ) );
+          return ReactionType( static_cast< std::size_t >( 597 + level ) );
         }
         else if ( projectile == ParticleID::alpha() ) {
 
-          return ReactionType( static_cast< std::size_t >( 707 + level ) );
+          return ReactionType( static_cast< std::size_t >( 708 + level ) );
         }
       }
 
