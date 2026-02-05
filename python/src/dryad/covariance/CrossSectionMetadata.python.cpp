@@ -38,7 +38,7 @@ void wrapCrossSectionMetadata( python::module& module ) {
     python::init< std::vector< ReactionID >,
                   std::vector< double > >(),
     python::arg( "reactions" ), python::arg( "energies" ),
-    "Initialise the product multiplicity covariance metadata\n\n"
+    "Initialise the cross section covariance metadata\n\n"
     "Arguments:\n"
     "    self          the covariance metadata\n"
     "    reactions     the reaction identifiers\n"
@@ -46,9 +46,20 @@ void wrapCrossSectionMetadata( python::module& module ) {
   )
   .def(
 
+    python::init< ReactionID,
+                  std::vector< double > >(),
+    python::arg( "reaction" ), python::arg( "energies" ),
+    "Initialise the cross section covariance metadata\n\n"
+    "Arguments:\n"
+    "    self          the covariance metadata\n"
+    "    reaction      the reaction identifier\n"
+    "    energies      the group structure"
+  )
+  .def(
+
     python::init< std::vector< Key > >(),
     python::arg( "keys" ),
-    "Initialise the product multiplicity covariance metadata\n\n"
+    "Initialise the cross section covariance metadata\n\n"
     "Arguments:\n"
     "    self   the covariance metadata\n"
     "    keys   the metadata keys"
