@@ -115,6 +115,7 @@ add_cpp_test( dryad.UncorrelatedDistributionData                                
 add_cpp_test( dryad.ReactionProduct                                                     dryad/ReactionProduct.test.cpp )
 add_cpp_test( dryad.TabulatedCrossSection                                               dryad/TabulatedCrossSection.test.cpp )
 add_cpp_test( dryad.Reaction                                                            dryad/Reaction.test.cpp )
+add_cpp_test( dryad.CrossSectionCovarianceData                                          dryad/CrossSectionCovarianceData.test.cpp )
 
 add_cpp_test( dryad.ProjectileTarget                                                    dryad/ProjectileTarget.test.cpp )
 add_cpp_test( dryad.AtomicRelaxation                                                    dryad/AtomicRelaxation.test.cpp )
