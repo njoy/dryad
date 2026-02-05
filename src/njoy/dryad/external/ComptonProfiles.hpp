@@ -6,6 +6,8 @@
 #include <vector>
 
 // other includes
+#include "tools/overload.hpp"
+#include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/TabulatedComptonProfile.hpp"
 
 namespace njoy {
@@ -47,7 +49,8 @@ namespace external {
      *                         all probability data (default: no normalisation)
      */
     static std::vector< TabulatedComptonProfile >
-    biggsMendelsohnMannProfiles( unsigned int z, bool normalise = false ) {
+    biggsMendelsohnMannProfiles( unsigned int z,
+                                 bool normalise = false ) {
 
       if ( z > 0 && z < 103 ) {
 
@@ -75,6 +78,47 @@ namespace external {
 
         throw std::out_of_range( "The z number must be between 1 and 102 for Biggs, Mendelsohn "
                                  "and Mann Compton profiles" );
+      }
+    }
+
+    /**
+     *  @brief Apply Compton profiles to a ProjectileTarget instance
+     *
+     *  @param[in,out] pt      the projectile-target data to be modified
+     *  @param[in] normalise   option to indicate whether or not to normalise
+     *                         all probability data (default: no normalisation)
+     */
+    static void apply( ProjectileTarget& pt,
+                       bool normalise = false ) {
+
+      if ( pt.interactionType() == dryad::InteractionType::Atomic &&
+           pt.projectileIdentifier() == dryad::id::ParticleID::photon() ) {
+
+        decltype(auto) projectile = pt.projectileIdentifier();
+        decltype(auto) target = pt.targetIdentifier();
+        dryad::id::ReactionID incoherent_id( projectile, target, dryad::id::ReactionType( "incoherent" ) );
+
+        decltype(auto) incoherent = pt.reaction( incoherent_id );
+        decltype(auto) photon = incoherent.product( dryad::id::ParticleID::photon() ).distributionData().value();
+
+        auto updateComptonProfiles = tools::overload{
+
+          [&] ( dryad::IncoherentDistributionData& data ) {
+
+            data.comptonProfiles( ComptonProfiles::biggsMendelsohnMannProfiles( target.z(), normalise ) );
+          },
+          [] ( auto&& ) {
+
+            throw std::runtime_error( "This should be unreachable code, contact a developer" );
+          }
+        };
+
+        std::visit( updateComptonProfiles, photon );
+      }
+      else {
+
+        throw std::runtime_error( "The projectile-target is not photoatomic, cannot apply "
+                                  "Compton profiles" );
       }
     }
   };

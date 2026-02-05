@@ -90,6 +90,7 @@ void wrapAtomicRelaxation( python::module& module ) {
 
     "has_subshell",
     &Component::hasSubshell,
+    python::arg( "id" ),
     "Return whether or not a subshell is present \n\n"
     "Parameters\n"
     "----------\n"
@@ -100,6 +101,7 @@ void wrapAtomicRelaxation( python::module& module ) {
 
     "subshell",
     &Component::subshell,
+    python::arg( "id" ),
     "Return the requested subshell \n\n"
     "Parameters\n"
     "----------\n"
@@ -166,7 +168,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Write the AtomicRelaxation data to an ENDF file\n\n"
     "Parameters\n"
     "----------\n"
-    "    mat : int \n" 
+    "    mat : int \n"
     "         the ENDF mat number to be used \n"
     "    filename : str \n"
     "         the ENDF file name \n"

@@ -47,6 +47,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedDebyeWallerIntegral.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedEffectiveTemperature.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ScalingType.python.cpp
@@ -93,6 +94,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IncoherentDistributionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ReactionProduct.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Reaction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/CrossSectionCovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ProjectileTarget.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/AtomicRelaxation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ThermalScattering.python.cpp

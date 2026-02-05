@@ -71,6 +71,7 @@ namespace dryad {
   void wrapIncoherentDistributionData( python::module& );
   void wrapReactionProduct( python::module& );
   void wrapReaction( python::module& );
+  void wrapCrossSectionCovarianceData( python::module& );
   void wrapProjectileTarget( python::module& );
 
   // declarations - external
@@ -146,6 +147,9 @@ void wrapDryad( python::module& module ) {
   // wrap components - reactions
   dryad::wrapTabulatedCrossSection( submodule );
   dryad::wrapReaction( submodule );
+
+  // wrap components - covariance data
+  dryad::wrapCrossSectionCovarianceData( submodule );
 
   // wrap components - top level
   dryad::wrapProjectileTarget( submodule );

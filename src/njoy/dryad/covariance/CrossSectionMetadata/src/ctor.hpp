@@ -31,3 +31,14 @@ CrossSectionMetadata( std::vector< id::ReactionID > reactions,
     Parent( generateKeys( reactions, energies ) ),
     reactions_( std::move( reactions ) ),
     energies_( std::move( energies ) ) {}
+
+/**
+ *  @brief Constructor for a single reaction
+ *
+ *  @param[in] reaction   the reaction identifier
+ *  @param[in] energies   the energy boundary values
+ */
+CrossSectionMetadata( id::ReactionID reaction,
+                      std::vector< double > energies ) :
+    CrossSectionMetadata( std::vector< id::ReactionID >{ std::move( reaction ) },
+                          std::move( energies ) ) {}

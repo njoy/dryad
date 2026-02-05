@@ -176,6 +176,11 @@ class Channel:
             energy   the energy (given in eV)
         """
     @property
+    def background(self) -> FrohnerBackground | SammyBackground | TabulatedBackground | None:
+        """
+        The background function (if defined)
+        """
+    @property
     def boundary_condition(self) -> float | None:
         """
         The boundary condition value (if defined)

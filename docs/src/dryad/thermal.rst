@@ -10,3 +10,4 @@ thermal
    thermal/TabulatedDebyeWallerIntegral
    thermal/IncoherentElasticScattering
    thermal/TabulatedEffectiveTemperature
+   thermal/TabulatedScatteringFunction

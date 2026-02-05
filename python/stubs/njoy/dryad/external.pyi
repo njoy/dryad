@@ -20,6 +20,19 @@ class ComptonProfiles:
       Atomic data and nuclear data table, 16, 201-309 (1975)
     """
     @staticmethod
+    def apply(pt: njoy.dryad.ProjectileTarget, normalise: bool) -> None:
+        """
+        Apply Compton profiles to a ProjectileTarget instance
+        
+        Parameters
+        ----------
+            pt : njoy.dryad.ProjectileTarget
+                 projectile-target data to be modified
+            normalise : bool, default false
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
+        """
+    @staticmethod
     def biggs_mendelsohn_mann_profiles(z: int, normalise: bool) -> list[njoy.dryad.TabulatedComptonProfile]:
         """
         Return Biggs, Mendelsohn and Mann Compton profiles for a given z number
