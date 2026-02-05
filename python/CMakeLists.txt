@@ -94,6 +94,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IncoherentDistributionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ReactionProduct.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Reaction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/CrossSectionCovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ProjectileTarget.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/AtomicRelaxation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ThermalScattering.python.cpp
