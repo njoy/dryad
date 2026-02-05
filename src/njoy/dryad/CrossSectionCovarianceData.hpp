@@ -124,7 +124,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return covariance data for a for a reaction
+     *  @brief Return covariance data for a reaction
      *
      *  @param[in] id   the reaction identifier
      */
