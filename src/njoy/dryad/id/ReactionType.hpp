@@ -534,6 +534,7 @@ namespace id {
       Entry{     1050151, 170, InteractionType::Nuclear, { "5nd(t)", "5nd", "5n,d(t)", "5n,d" }          , { { ParticleID::neutron(), 5 }, { ParticleID::deuteron(), 1 } }, LevelID::all },
       Entry{     1060151, 171, InteractionType::Nuclear, { "6nd(t)", "6nd", "6n,d(t)", "6n,d" }          , { { ParticleID::neutron(), 6 }, { ParticleID::deuteron(), 1 } }, LevelID::all },
       Entry{     1100151, 115, InteractionType::Nuclear, { "pd(t)", "pd" , "p,d(t)" , "p,d" }            , { { ParticleID::proton(), 1 }, { ParticleID::deuteron(), 1 } }, LevelID::all },
+      Entry{     1110151, 183, InteractionType::Nuclear, { "npd(t)", "npd" , "n,p,d(t)" , "n,p,d" }      , { { ParticleID::neutron(), 1 }, { ParticleID::proton(), 1 }, { ParticleID::deuteron(), 1 } }, LevelID::all },
 
       Entry{    10000000, 700, InteractionType::Nuclear, { "t(0)" }                                      , { { ParticleID::triton(), 1 } }, 0 },
       Entry{    10000001, 701, InteractionType::Nuclear, { "t(1)" }                                      , { { ParticleID::triton(), 1 } }, 1 },
