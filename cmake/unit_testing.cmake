@@ -45,6 +45,7 @@ add_cpp_test( dryad.covariance.CrossSectionCovarianceMatrix                     
 add_cpp_test( dryad.covariance.ProductMultiplicityMetadata                              dryad/covariance/ProductMultiplicityMetadata.test.cpp )
 add_cpp_test( dryad.covariance.ProductMultiplicityCovarianceMatrix                      dryad/covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.covariance.LinearCombinationCovariance                              dryad/covariance/LinearCombinationCovariance.test.cpp )
+add_cpp_test( dryad.CrossSectionCovarianceData                                          dryad/covariance/CrossSectionCovarianceData.test.cpp )
 
 add_cpp_test( dryad.id.EnergyGroup                                                      dryad/id/EnergyGroup.test.cpp )
 add_cpp_test( dryad.id.ElectronSubshellID                                               dryad/id/ElectronSubshellID.test.cpp )
@@ -115,7 +116,6 @@ add_cpp_test( dryad.UncorrelatedDistributionData                                
 add_cpp_test( dryad.ReactionProduct                                                     dryad/ReactionProduct.test.cpp )
 add_cpp_test( dryad.TabulatedCrossSection                                               dryad/TabulatedCrossSection.test.cpp )
 add_cpp_test( dryad.Reaction                                                            dryad/Reaction.test.cpp )
-add_cpp_test( dryad.CrossSectionCovarianceData                                          dryad/CrossSectionCovarianceData.test.cpp )
 
 add_cpp_test( dryad.ProjectileTarget                                                    dryad/ProjectileTarget.test.cpp )
 add_cpp_test( dryad.AtomicRelaxation                                                    dryad/AtomicRelaxation.test.cpp )

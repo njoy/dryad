@@ -13,6 +13,7 @@
 
 namespace njoy {
 namespace dryad {
+namespace covariance {
 
   /**
    *  @class
@@ -34,15 +35,15 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/CrossSectionCovarianceData/src/generateCovariances.hpp"
-    #include "njoy/dryad/CrossSectionCovarianceData/src/iterator.hpp"
-    #include "njoy/dryad/CrossSectionCovarianceData/src/compare.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/generateCovariances.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/iterator.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/compare.hpp"
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/CrossSectionCovarianceData/src/ctor.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/ctor.hpp"
 
     /* methods */
 
@@ -163,6 +164,7 @@ namespace dryad {
     }
   };
 
+} // covariance namespace
 } // dryad namespace
 } // njoy namespace
 

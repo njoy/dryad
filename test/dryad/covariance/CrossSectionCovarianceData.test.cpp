@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
 
 // other includes
 

@@ -7,7 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
 #include "njoy/dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -16,20 +16,21 @@ namespace njoy {
 namespace dryad {
 namespace format {
 namespace endf {
+namespace covariance {
 
   /**
    *  @brief Create a CrossSectionCovarianceData from an unparsed ENDF material
    *
-   *  @param[in] reaction     the reaction identifier
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
    *  @param[in] material     the unparsed ENDF material
-   *  @param[in] mt           the MT number to process
-   *  @param[in] normalise    the flag to indicate whether or not distributions
-   *                          need to be normalised
    */
-  inline std::optional< CrossSectionCovarianceData >
-  createCrossSectionCovarianceData( const ENDFtk::tree::Material& material ) {
+  inline std::optional< dryad::covariance::CrossSectionCovarianceData >
+  createCrossSectionCovarianceData( const id::ParticleID& projectile,
+                                    const id::ParticleID& target,
+                                    const ENDFtk::tree::Material& material ) {
 
-    std::optional< CrossSectionCovarianceData > covariances = std::nullopt;
+    std::optional< dryad::covariance::CrossSectionCovarianceData > covariances = std::nullopt;
 
     if ( material.hasFile( 33 ) ) {
 
@@ -49,33 +50,53 @@ namespace endf {
         return mt;
       };
 
-      std::vector< covariance::CrossSectionCovarianceMatrix > matrices;
+      std::vector< dryad::covariance::CrossSectionCovarianceMatrix > matrices;
       matrices.reserve( material.file( 33 ).sectionNumbers().size() );
       for ( auto mt : material.file( 33 ).sectionNumbers() ) {
 
-        id::ReactionID row( projectile, target, adjust_scatter_level( mt ) );
+        if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-        auto section = material.section( 33, mt ).parse< 33 >();
-        for ( const auto& block : section.reactions() ) {
+          id::ReactionID row( projectile, target, adjust_scatter_level( mt ) );
 
-          id::ReactionID column( projectile, target, adjust_scatter_level( block.MT1() ) );
-          if ( row == column ) {
+          auto section = material.section( 33, mt ).parse< 33 >();
+          for ( const auto& block : section.reactions() ) {
 
-            matrices.emplace_back( covariance::createCrossSectionCovarianceMatrix( row, block ) );
+            if ( block.numberExplicit() != 0 ) {
+
+              auto mt1 = block.MT1();
+              id::ReactionID column( projectile, target, adjust_scatter_level( mt1 ) );
+              if ( row == column ) {
+
+                Log::info( "Reading data for MT{}", mt );
+                auto data = covariance::createCrossSectionCovarianceMatrix( row, block );
+                std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
+              }
+              else {
+
+                Log::info( "Reading cross term for MT{} and MT{}", mt, mt1 );
+                auto data = covariance::createCrossSectionCovarianceMatrix( row, column, block );
+                std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
+              }
+            }
+            else {
+
+              Log::warning( "No explicit covariance components are defined for MT{}, skipping for now", mt );
+            }
           }
-          else {
+        }
+        else {
 
-            matrices.emplace_back( covariance::createCrossSectionCovarianceMatrix( row, column, block ) );
-          }
+          Log::warning( "Skipping data for derived MT{}", mt );
         }
       }
 
-      covariances = CrossSectionCovarianceData( std::move( matrices ) );
+      covariances = dryad::covariance::CrossSectionCovarianceData( std::move( matrices ) );
     }
 
     return covariances;
   }
 
+} // covariance namespace
 } // endf namespace
 } // format namespace
 } // dryad namespace
