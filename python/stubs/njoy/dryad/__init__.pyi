@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'CrossSectionCovarianceData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -224,92 +224,6 @@ class CoherentDistributionData:
     def type(self) -> DistributionDataType:
         """
         The distribution data type
-        """
-class CrossSectionCovarianceData:
-    """
-    The cross section covariance data
-    
-    Parameters
-    ----------
-        matrices : list of njoy.dryad.covariance. 
-             the covariance matrices
-    """
-    __hash__: typing.ClassVar[None] = None
-    def __copy__(self) -> CrossSectionCovarianceData:
-        ...
-    def __deepcopy__(self, arg0: dict) -> CrossSectionCovarianceData:
-        ...
-    def __eq__(self, arg0: CrossSectionCovarianceData) -> bool:
-        ...
-    def __init__(self, matrices: list[covariance.CrossSectionCovarianceMatrix]) -> None:
-        """
-        Initialise the covariance data
-        """
-    def __ne__(self, arg0: CrossSectionCovarianceData) -> bool:
-        ...
-    @typing.overload
-    def covariance_matrix(self, row: id.ReactionID, column: id.ReactionID) -> covariance.CrossSectionCovarianceMatrix | list[covariance.CrossSectionCovarianceMatrix]:
-        """
-        Return the covariance data for a row and column reaction pair
-        
-        Parameters
-        ----------
-            row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
-            column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
-        """
-    @typing.overload
-    def covariance_matrix(self, id: id.ReactionID) -> covariance.CrossSectionCovarianceMatrix | list[covariance.CrossSectionCovarianceMatrix]:
-        """
-        Return the covariance data for a reaction
-        
-        Parameters
-        ----------
-            id : njoy.dryad.id.ReactionID
-                 the reaction identifier
-        """
-    @typing.overload
-    def has_covariance_matrix(self, row: id.ReactionID, column: id.ReactionID) -> bool:
-        """
-        Return whether or not a given reaction pair has covariance data
-        
-        Parameters
-        ----------
-            row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
-            column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
-        """
-    @typing.overload
-    def has_covariance_matrix(self, id: id.ReactionID) -> bool:
-        """
-        Return whether or not a given reaction has covariance data
-        
-        Parameters
-        ----------
-            id : njoy.dryad.id.ReactionID
-                 the reaction identifier
-        """
-    @property
-    def covariances(self) -> list[covariance.CrossSectionCovarianceMatrix | list[covariance.CrossSectionCovarianceMatrix]]:
-        """
-        The covariance data
-        """
-    @property
-    def number_covariance_matrices(self) -> int:
-        """
-        The number of covariance blocks
-        """
-    @property
-    def number_reactions(self) -> int:
-        """
-        The number of reactions for which covariance data is available
-        """
-    @property
-    def reaction_identifiers(self) -> list[id.ReactionID]:
-        """
-        The reaction identifiers for which covariance data is available
         """
 class DistributionDataType:
     """
@@ -1152,12 +1066,12 @@ class ProjectileTarget:
                                 unionisation (default: false)
         """
     @property
-    def cross_section_covariance_data(self) -> CrossSectionCovarianceData | None:
+    def cross_section_covariance_data(self) -> covariance.CrossSectionCovarianceData | None:
         """
         The cross section covariance data
         """
     @cross_section_covariance_data.setter
-    def cross_section_covariance_data(self, arg1: CrossSectionCovarianceData | None) -> None:
+    def cross_section_covariance_data(self, arg1: covariance.CrossSectionCovarianceData | None) -> None:
         ...
     @property
     def documentation(self) -> Documentation:
