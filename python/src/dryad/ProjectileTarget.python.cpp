@@ -48,11 +48,13 @@ void wrapProjectileTarget( python::module& module ) {
                   InteractionType,
                   std::vector< Reaction >,
                   std::optional< ResonanceParameters >,
+                  std::optional< CovarianceData >,
                   bool >(),
     python::arg( "documentation" ), python::arg( "projectile" ),
     python::arg( "target" ), python::arg( "type" ),
     python::arg( "reactions" ),
     python::arg( "resonances" ) = std::nullopt,
+    python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
@@ -63,6 +65,7 @@ void wrapProjectileTarget( python::module& module ) {
     "    type            the interaction type\n"
     "    reactions       the reaction data\n"
     "    resonances      the optional resonance parameters (default: none)\n"
+    "    covariances     the optional covariance data (default: none)\n"
     "    normalise       option to indicate whether or not to normalise\n"
     "                    all probability data (default: no normalisation)"
   )
@@ -73,23 +76,26 @@ void wrapProjectileTarget( python::module& module ) {
                   InteractionType,
                   std::vector< Reaction >,
                   std::optional< ResonanceParameters >,
+                  std::optional< CovarianceData >,
                   bool >(),
     python::arg( "projectile" ),
     python::arg( "target" ),
     python::arg( "type" ),
     python::arg( "reactions" ),
     python::arg( "resonances" ) = std::nullopt,
+    python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
-    "    self         the reaction\n"
-    "    projectile   the particle identifier\n"
-    "    target       the target identifier\n"
-    "    type         the interaction type\n"
-    "    reactions    the reaction data\n"
-    "    resonances   the optional resonance parameters (default: none)\n"
-    "    normalise    option to indicate whether or not to normalise\n"
-    "                 all probability data (default: no normalisation)"
+    "    self          the reaction\n"
+    "    projectile    the particle identifier\n"
+    "    target        the target identifier\n"
+    "    type          the interaction type\n"
+    "    reactions     the reaction data\n"
+    "    resonances    the optional resonance parameters (default: none)\n"
+    "    covariances   the optional covariance data (default: none)\n"
+    "    normalise     option to indicate whether or not to normalise\n"
+    "                  all probability data (default: no normalisation)"
   )
   .def_property(
 
