@@ -46,6 +46,7 @@ add_cpp_test( dryad.covariance.ProductMultiplicityMetadata                      
 add_cpp_test( dryad.covariance.ProductMultiplicityCovarianceMatrix                      dryad/covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.covariance.LinearCombinationCovariance                              dryad/covariance/LinearCombinationCovariance.test.cpp )
 add_cpp_test( dryad.CrossSectionCovarianceData                                          dryad/covariance/CrossSectionCovarianceData.test.cpp )
+add_cpp_test( dryad.CovarianceData                                                      dryad/covariance/CovarianceData.test.cpp )
 
 add_cpp_test( dryad.id.EnergyGroup                                                      dryad/id/EnergyGroup.test.cpp )
 add_cpp_test( dryad.id.ElectronSubshellID                                               dryad/id/ElectronSubshellID.test.cpp )
