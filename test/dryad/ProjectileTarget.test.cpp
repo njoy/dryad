@@ -852,7 +852,7 @@ void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
   CHECK( true == reaction.crossSection().isLinearised() );
 
   // covariance data
-  CHECK( std::nullopt == chunk.crossSectionCovarianceData() );
+  CHECK( std::nullopt == chunk.covarianceData() );
 }
 
 void verifyCorrectUnionisation( const ProjectileTarget& chunk, bool exclude ) {

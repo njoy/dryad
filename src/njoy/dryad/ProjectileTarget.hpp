@@ -12,7 +12,7 @@
 #include "njoy/dryad/InteractionType.hpp"
 #include "njoy/dryad/Documentation.hpp"
 #include "njoy/dryad/Reaction.hpp"
-#include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/covariance/CovarianceData.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 
@@ -36,7 +36,7 @@ namespace dryad {
     std::optional< resonances::ResonanceParameters > resonances_;
     std::vector< Reaction > reactions_;
 
-    std::optional< covariance::CrossSectionCovarianceData > xs_covariances_;
+    std::optional< covariance::CovarianceData > covariances_;
 
     /* auxiliary functions */
 
@@ -231,29 +231,29 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the cross section covariance data
+     *  @brief Return the covariance data
      */
-    const std::optional< covariance::CrossSectionCovarianceData >& crossSectionCovarianceData() const {
+    const std::optional< covariance::CovarianceData >& covarianceData() const {
 
-      return this->xs_covariances_;
+      return this->covariances_;
     }
 
     /**
-     *  @brief Return the cross section covariance data
+     *  @brief Return the covariance data
      */
-    std::optional< covariance::CrossSectionCovarianceData >& crossSectionCovarianceData() {
+    std::optional< covariance::CovarianceData >& covarianceData() {
 
-      return this->xs_covariances_;
+      return this->covariances_;
     }
 
     /**
-     *  @brief Set the cross section covariance data
+     *  @brief Set the covariance data
      *
-     *  @param[in] covariances   the cross section covariance data
+     *  @param[in] covariances   the covariance data
      */
-    void crossSectionCovarianceData( std::optional< covariance::CrossSectionCovarianceData > covariances ) {
+    void covarianceData( std::optional< covariance::CovarianceData > covariances ) {
 
-      this->xs_covariances_ = std::move( covariances );
+      this->covariances_ = std::move( covariances );
     }
 
     /**
