@@ -25,7 +25,7 @@ void wrapProjectileTarget( python::module& module ) {
   using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
-  using CrossSectionCovarianceData = njoy::dryad::CrossSectionCovarianceData;
+  using CrossSectionCovarianceData = njoy::dryad::covariance::CrossSectionCovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component

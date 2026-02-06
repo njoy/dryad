@@ -6,7 +6,7 @@ import sys
 import numpy
 
 # local imports
-from njoy.dryad import CrossSectionCovarianceData
+from njoy.dryad.covariance import CrossSectionCovarianceData
 from njoy.dryad.covariance import CrossSectionCovarianceMatrix
 from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.id import ReactionID
