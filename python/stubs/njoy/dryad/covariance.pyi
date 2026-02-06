@@ -5,7 +5,39 @@ from __future__ import annotations
 import njoy.dryad.id
 import numpy
 import typing
-__all__: list[str] = ['CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+__all__: list[str] = ['CovarianceData', 'CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+class CovarianceData:
+    """
+    The covariance data
+    
+    Parameters
+    ----------
+        xs : njoy.dryad.covariance.CrossSectionCovarianceData 
+             the cross section covariance data
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> CovarianceData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CovarianceData:
+        ...
+    def __eq__(self, arg0: CovarianceData) -> bool:
+        ...
+    def __init__(self, xs: CrossSectionCovarianceData | None) -> None:
+        """
+        Initialise the covariance data
+        """
+    def __ne__(self, arg0: CovarianceData) -> bool:
+        ...
+    @property
+    def cross_section_covariances(self) -> CrossSectionCovarianceData | None:
+        """
+        The cross section covariances
+        """
+    @property
+    def has_cross_section_covariances(self) -> bool:
+        """
+        Return whether or not there are cross section covariances
+        """
 class CrossSectionCovarianceData:
     """
     The cross section covariance data
