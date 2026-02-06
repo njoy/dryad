@@ -54,7 +54,7 @@ namespace endf {
 
     return ProjectileTarget( std::move( documentation ), std::move( projectile ),
                              std::move( target ), type, std::move( reactions ),
-                             std::move( resonances ) );
+                             std::move( resonances ), std::move( covariances ) );
   }
 
 } // endf namespace

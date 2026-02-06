@@ -39,10 +39,15 @@ namespace gnds {
       id::ParticleID target( suite.attribute( "target" ).as_string() );
       InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
 
+      std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
+
       std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
 
+      std::optional< dryad::covariance::CovarianceData > covariances = std::nullopt;
+
       return ProjectileTarget( std::move( projectile ), std::move( target ),
-                               type, std::move( reactions ) );
+                               type, std::move( reactions ), std::move( resonances ),
+                               std::move( covariances ) );
     }
     else {
 

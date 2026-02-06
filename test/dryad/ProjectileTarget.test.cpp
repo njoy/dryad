@@ -319,7 +319,8 @@ ProjectileTarget makeProjectiletarget( bool normalise ) {
   };
 
   return ProjectileTarget( std::move( projectile ), std::move( target ),
-                           type, std::move( reactions ), std::nullopt, normalise );
+                           type, std::move( reactions ), std::nullopt,
+                           std::nullopt, normalise );
 }
 
 void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
