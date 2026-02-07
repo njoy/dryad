@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
 #include "njoy/dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
