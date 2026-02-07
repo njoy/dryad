@@ -5,7 +5,125 @@ from __future__ import annotations
 import njoy.dryad.id
 import numpy
 import typing
-__all__: list[str] = ['CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+__all__: list[str] = ['CovarianceData', 'CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+class CovarianceData:
+    """
+    The covariance data
+    
+    Parameters
+    ----------
+        xs : njoy.dryad.covariance.CrossSectionCovarianceData 
+             the cross section covariance data
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> CovarianceData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CovarianceData:
+        ...
+    def __eq__(self, arg0: CovarianceData) -> bool:
+        ...
+    def __init__(self, xs: CrossSectionCovarianceData | None) -> None:
+        """
+        Initialise the covariance data
+        """
+    def __ne__(self, arg0: CovarianceData) -> bool:
+        ...
+    @property
+    def cross_section(self) -> CrossSectionCovarianceData | None:
+        """
+        The cross section covariances
+        """
+    @property
+    def has_cross_section_covariances(self) -> bool:
+        """
+        Return whether or not there are cross section covariances
+        """
+class CrossSectionCovarianceData:
+    """
+    The cross section covariance data
+    
+    Parameters
+    ----------
+        matrices : list of njoy.dryad.covariance. 
+             the covariance matrices
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> CrossSectionCovarianceData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CrossSectionCovarianceData:
+        ...
+    def __eq__(self, arg0: CrossSectionCovarianceData) -> bool:
+        ...
+    def __init__(self, matrices: list[CrossSectionCovarianceMatrix]) -> None:
+        """
+        Initialise the covariance data
+        """
+    def __ne__(self, arg0: CrossSectionCovarianceData) -> bool:
+        ...
+    @typing.overload
+    def covariance_matrix(self, row: njoy.dryad.id.ReactionID, column: njoy.dryad.id.ReactionID) -> CrossSectionCovarianceMatrix | list[CrossSectionCovarianceMatrix]:
+        """
+        Return the covariance data for a row and column reaction pair
+        
+        Parameters
+        ----------
+            row : njoy.dryad.id.ReactionID
+                 the row reaction identifier
+            column : njoy.dryad.id.ReactionID
+                 the column reaction identifier
+        """
+    @typing.overload
+    def covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> CrossSectionCovarianceMatrix | list[CrossSectionCovarianceMatrix]:
+        """
+        Return the covariance data for a reaction
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                 the reaction identifier
+        """
+    @typing.overload
+    def has_covariance_matrix(self, row: njoy.dryad.id.ReactionID, column: njoy.dryad.id.ReactionID) -> bool:
+        """
+        Return whether or not a given reaction pair has covariance data
+        
+        Parameters
+        ----------
+            row : njoy.dryad.id.ReactionID
+                 the row reaction identifier
+            column : njoy.dryad.id.ReactionID
+                 the column reaction identifier
+        """
+    @typing.overload
+    def has_covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> bool:
+        """
+        Return whether or not a given reaction has covariance data
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                 the reaction identifier
+        """
+    @property
+    def covariances(self) -> list[CrossSectionCovarianceMatrix | list[CrossSectionCovarianceMatrix]]:
+        """
+        The covariance data
+        """
+    @property
+    def number_covariance_matrices(self) -> int:
+        """
+        The number of covariance blocks
+        """
+    @property
+    def number_reactions(self) -> int:
+        """
+        The number of reactions for which covariance data is available
+        """
+    @property
+    def reaction_identifiers(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reaction identifiers for which covariance data is available
+        """
 class CrossSectionCovarianceMatrix:
     """
     A cross section covariance matrix
@@ -188,7 +306,7 @@ class CrossSectionMetadata:
     @typing.overload
     def __init__(self, reactions: list[njoy.dryad.id.ReactionID], energies: list[float]) -> None:
         """
-        Initialise the product multiplicity covariance metadata
+        Initialise the cross section covariance metadata
         
         Arguments:
             self          the covariance metadata
@@ -196,9 +314,19 @@ class CrossSectionMetadata:
             energies      the group structure
         """
     @typing.overload
+    def __init__(self, reaction: njoy.dryad.id.ReactionID, energies: list[float]) -> None:
+        """
+        Initialise the cross section covariance metadata
+        
+        Arguments:
+            self          the covariance metadata
+            reaction      the reaction identifier
+            energies      the group structure
+        """
+    @typing.overload
     def __init__(self, keys: list[tuple[njoy.dryad.id.ReactionID, njoy.dryad.id.EnergyGroup]]) -> None:
         """
-        Initialise the product multiplicity covariance metadata
+        Initialise the cross section covariance metadata
         
         Arguments:
             self   the covariance metadata

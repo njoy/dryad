@@ -101,9 +101,6 @@ void wrapDryad( python::module& module ) {
   // wrap components - identifiers
   dryad::wrapID( submodule );
 
-  // wrap components - covariance data
-  dryad::wrapCovariance( submodule );
-
   // wrap components - resonances
   dryad::wrapResonances( submodule );
 
@@ -142,6 +139,9 @@ void wrapDryad( python::module& module ) {
   dryad::wrapCoherentDistributionData( submodule );
   dryad::wrapIncoherentDistributionData( submodule );
   dryad::wrapReactionProduct( submodule );
+
+  // wrap components - covariance data
+  dryad::wrapCovariance( submodule );
 
   // wrap components - reactions
   dryad::wrapTabulatedCrossSection( submodule );

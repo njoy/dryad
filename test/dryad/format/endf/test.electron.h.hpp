@@ -1033,6 +1033,10 @@ namespace endf81 {
 
     deficit = H0.reaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) );
     verifyElasticDeficitReaction( deficit );
+
+    CHECK( std::nullopt == H0.resonances() );
+
+    CHECK( std::nullopt == H0.covarianceData() );
   }
 
 } // namespace ho

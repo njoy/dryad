@@ -79,7 +79,7 @@ class AtomicRelaxation:
         """
         Calculate the transition energies for all transitions
         """
-    def has_subshell(self, arg0: id.ElectronSubshellID) -> bool:
+    def has_subshell(self, id: id.ElectronSubshellID) -> bool:
         """
         Return whether or not a subshell is present 
         
@@ -92,7 +92,7 @@ class AtomicRelaxation:
         """
         Normalise the transition probabilities
         """
-    def subshell(self, arg0: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
+    def subshell(self, id: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
         Return the requested subshell 
         
@@ -978,7 +978,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -990,23 +990,25 @@ class ProjectileTarget:
             type            the interaction type
             reactions       the reaction data
             resonances      the optional resonance parameters (default: none)
+            covariances     the optional covariance data (default: none)
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
         Arguments:
-            self         the reaction
-            projectile   the particle identifier
-            target       the target identifier
-            type         the interaction type
-            reactions    the reaction data
-            resonances   the optional resonance parameters (default: none)
-            normalise    option to indicate whether or not to normalise
-                         all probability data (default: no normalisation)
+            self          the reaction
+            projectile    the particle identifier
+            target        the target identifier
+            type          the interaction type
+            reactions     the reaction data
+            resonances    the optional resonance parameters (default: none)
+            covariances   the optional covariance data (default: none)
+            normalise     option to indicate whether or not to normalise
+                          all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
@@ -1065,6 +1067,14 @@ class ProjectileTarget:
             exclude_summation   option to exclude summation reactions in the
                                 unionisation (default: false)
         """
+    @property
+    def covariance_data(self) -> covariance.CovarianceData | None:
+        """
+        The covariance data
+        """
+    @covariance_data.setter
+    def covariance_data(self, arg1: covariance.CovarianceData | None) -> None:
+        ...
     @property
     def documentation(self) -> Documentation:
         """

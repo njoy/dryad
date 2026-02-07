@@ -2349,6 +2349,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "Pa231[all]" ) == ReactionType( 170 ).resolve( g, u238 ) );
       CHECK( ParticleID( "Pa230[all]" ) == ReactionType( 171 ).resolve( g, u238 ) );
       CHECK( ParticleID( "Th235[all]" ) == ReactionType( 115 ).resolve( g, u238 ) );
+      CHECK( ParticleID( "Th234[all]" ) == ReactionType( 183 ).resolve( g, u238 ) );
       CHECK( ParticleID( "Pa235_e0" ) == ReactionType( 700 ).resolve( g, u238 ) );
       CHECK( ParticleID( "Pa235_e1" ) == ReactionType( 701 ).resolve( g, u238 ) );
       CHECK( ParticleID( "Pa235_e2" ) == ReactionType( 702 ).resolve( g, u238 ) );
@@ -2844,6 +2845,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "Pa232[all]" ) == ReactionType( 170 ).resolve( n, u238 ) );
       CHECK( ParticleID( "Pa231[all]" ) == ReactionType( 171 ).resolve( n, u238 ) );
       CHECK( ParticleID( "Th236[all]" ) == ReactionType( 115 ).resolve( n, u238 ) );
+      CHECK( ParticleID( "Th235[all]" ) == ReactionType( 183 ).resolve( n, u238 ) );
       CHECK( ParticleID( "Pa236_e0" ) == ReactionType( 700 ).resolve( n, u238 ) );
       CHECK( ParticleID( "Pa236_e1" ) == ReactionType( 701 ).resolve( n, u238 ) );
       CHECK( ParticleID( "Pa236_e2" ) == ReactionType( 702 ).resolve( n, u238 ) );
@@ -3339,6 +3341,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "U232[all]" ) == ReactionType( 170 ).resolve( p, u238 ) );
       CHECK( ParticleID( "U231[all]" ) == ReactionType( 171 ).resolve( p, u238 ) );
       CHECK( ParticleID( "Pa236[all]" ) == ReactionType( 115 ).resolve( p, u238 ) );
+      CHECK( ParticleID( "Pa235[all]" ) == ReactionType( 183 ).resolve( p, u238 ) );
       CHECK( ParticleID( "U236_e0" ) == ReactionType( 700 ).resolve( p, u238 ) );
       CHECK( ParticleID( "U236_e1" ) == ReactionType( 701 ).resolve( p, u238 ) );
       CHECK( ParticleID( "U236_e2" ) == ReactionType( 702 ).resolve( p, u238 ) );
@@ -3834,6 +3837,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "U233[all]" ) == ReactionType( 170 ).resolve( d, u238 ) );
       CHECK( ParticleID( "U232[all]" ) == ReactionType( 171 ).resolve( d, u238 ) );
       CHECK( ParticleID( "Pa237[all]" ) == ReactionType( 115 ).resolve( d, u238 ) );
+      CHECK( ParticleID( "Pa236[all]" ) == ReactionType( 183 ).resolve( d, u238 ) );
       CHECK( ParticleID( "U237_e0" ) == ReactionType( 700 ).resolve( d, u238 ) );
       CHECK( ParticleID( "U237_e1" ) == ReactionType( 701 ).resolve( d, u238 ) );
       CHECK( ParticleID( "U237_e2" ) == ReactionType( 702 ).resolve( d, u238 ) );
@@ -4329,6 +4333,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "U234[all]" ) == ReactionType( 170 ).resolve( t, u238 ) );
       CHECK( ParticleID( "U233[all]" ) == ReactionType( 171 ).resolve( t, u238 ) );
       CHECK( ParticleID( "Pa238[all]" ) == ReactionType( 115 ).resolve( t, u238 ) );
+      CHECK( ParticleID( "Pa237[all]" ) == ReactionType( 183 ).resolve( t, u238 ) );
       CHECK( ParticleID( "U238_e0" ) == ReactionType( 700 ).resolve( t, u238 ) );
       CHECK( ParticleID( "U238_e1" ) == ReactionType( 701 ).resolve( t, u238 ) );
       CHECK( ParticleID( "U238_e2" ) == ReactionType( 702 ).resolve( t, u238 ) );
@@ -4824,6 +4829,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "Np234[all]" ) == ReactionType( 170 ).resolve( h, u238 ) );
       CHECK( ParticleID( "Np233[all]" ) == ReactionType( 171 ).resolve( h, u238 ) );
       CHECK( ParticleID( "U238[all]" ) == ReactionType( 115 ).resolve( h, u238 ) );
+      CHECK( ParticleID( "U237[all]" ) == ReactionType( 183 ).resolve( h, u238 ) );
       CHECK( ParticleID( "Np238_e0" ) == ReactionType( 700 ).resolve( h, u238 ) );
       CHECK( ParticleID( "Np238_e1" ) == ReactionType( 701 ).resolve( h, u238 ) );
       CHECK( ParticleID( "Np238_e2" ) == ReactionType( 702 ).resolve( h, u238 ) );
@@ -5319,6 +5325,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "Np235[all]" ) == ReactionType( 170 ).resolve( a, u238 ) );
       CHECK( ParticleID( "Np234[all]" ) == ReactionType( 171 ).resolve( a, u238 ) );
       CHECK( ParticleID( "U239[all]" ) == ReactionType( 115 ).resolve( a, u238 ) );
+      CHECK( ParticleID( "U238[all]" ) == ReactionType( 183 ).resolve( a, u238 ) );
       CHECK( ParticleID( "Np239_e0" ) == ReactionType( 700 ).resolve( a, u238 ) );
       CHECK( ParticleID( "Np239_e1" ) == ReactionType( 701 ).resolve( a, u238 ) );
       CHECK( ParticleID( "Np239_e2" ) == ReactionType( 702 ).resolve( a, u238 ) );

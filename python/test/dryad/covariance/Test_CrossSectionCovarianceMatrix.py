@@ -9,9 +9,7 @@ from njoy.dryad.covariance import CrossSectionCovarianceMatrix
 from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.covariance import ScalingType
 from njoy.dryad.covariance import VarianceScaling
-from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
-from njoy.dryad.id import ReactionType
 
 class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
     """Unit test for the CrossSectionCovarianceMatrix class."""
