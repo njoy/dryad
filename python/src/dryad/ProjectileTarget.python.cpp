@@ -168,10 +168,10 @@ void wrapProjectileTarget( python::module& module ) {
   )
   .def_property(
 
-    "cross_section_covariance_data",
+    "covariance_data",
     python::overload_cast<>( &Component::covarianceData, python::const_ ),
     python::overload_cast< std::optional< CovarianceData > >( &Component::covarianceData ),
-    "The cross section covariance data"
+    "The covariance data"
   )
   .def(
 

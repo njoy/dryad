@@ -112,19 +112,13 @@ namespace covariance {
       }
     }
 
-    if ( structures.size() > 1 && scaling != std::nullopt ) {
-
-      Log::error( "Variance scaling for multiple submatrices is not implemented yet, contact a developer" );
-      throw std::exception();
-    }
-
     std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
     for ( std::size_t i = 0; i < structures.size(); i++ ) {
 
       using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
       covariances.emplace_back( CrossSectionMetadata( { reaction }, std::move( structures[i] ) ),
                                 std::move( matrices[i] ),
-                                relative, std::move( scaling ) );
+                                relative, scaling );
     }
 
     return covariances;
@@ -239,7 +233,7 @@ namespace covariance {
       using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
       covariances.emplace_back( CrossSectionMetadata( { rowReaction }, std::move( rowStructures[i] ) ),
                                 CrossSectionMetadata( { columnReaction }, std::move( columnStructures[i] ) ),
-                                std::move( matrices.front() ), relative );
+                                std::move( matrices[i] ), relative );
     }
 
     return covariances;

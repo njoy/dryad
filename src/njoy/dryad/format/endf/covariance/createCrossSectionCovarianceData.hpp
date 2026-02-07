@@ -32,6 +32,8 @@ namespace covariance {
 
     std::optional< dryad::covariance::CrossSectionCovarianceData > covariances = std::nullopt;
 
+    auto mat = material.materialNumber();
+
     if ( material.hasFile( 33 ) ) {
 
       Log::info( "Reading cross section covariance data" );
@@ -63,20 +65,31 @@ namespace covariance {
 
             if ( block.numberExplicit() != 0 ) {
 
+              auto mat1 = block.MAT1();
               auto mt1 = block.MT1();
-              id::ReactionID column( projectile, target, adjust_scatter_level( mt1 ) );
-              if ( row == column ) {
 
-                Log::info( "Reading data for MT{}", mt );
-                auto data = covariance::createCrossSectionCovarianceMatrix( row, block );
-                std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
+              if ( mat1 == 0 || mat1 == mat ) {
+
+                id::ReactionID column = id::ReactionID( projectile, target, adjust_scatter_level( mt1 ) );
+                if ( row == column ) {
+
+                  Log::info( "Reading data for MT{}", mt );
+                  auto data = covariance::createCrossSectionCovarianceMatrix( row, block );
+                  std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
+                }
+                else {
+
+                  Log::info( "Reading cross term for MT{} and MT{}", mt, mt1 );
+                  auto data = covariance::createCrossSectionCovarianceMatrix( row, column, block );
+                  std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
+                }
               }
               else {
 
-                Log::info( "Reading cross term for MT{} and MT{}", mt, mt1 );
-                auto data = covariance::createCrossSectionCovarianceMatrix( row, column, block );
-                std::move( data.begin(), data.end(), std::back_inserter( matrices ) );
+                Log::warning( "Skipping cross-material term MAT{} MT{} vs MAT{} MT{}, contact a developer",
+                              mat, mt, mat1, mt1 );
               }
+
             }
             else {
 

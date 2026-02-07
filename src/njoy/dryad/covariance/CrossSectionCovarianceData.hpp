@@ -9,6 +9,7 @@
 
 // other includes
 #include "tools/overload.hpp"
+#include "njoy/dryad/covariance/LinearCombinationCovariance.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 namespace njoy {
@@ -24,7 +25,7 @@ namespace covariance {
   public:
 
     using Covariance = std::variant< covariance::CrossSectionCovarianceMatrix,
-                                      std::vector< covariance::CrossSectionCovarianceMatrix > >;
+                                     std::vector< covariance::CrossSectionCovarianceMatrix > >;
 
   private:
 
