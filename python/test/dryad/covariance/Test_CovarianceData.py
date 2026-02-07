@@ -22,10 +22,10 @@ class Test_CrossSectionCovarianceData( unittest.TestCase ) :
             capture = ReactionID( 'n,H1->g,H2' )
             elastic = ReactionID( 'n,H1->n,H1' )
 
-            self.assertIsNotNone( chunk.cross_section_covariances )
+            self.assertIsNotNone( chunk.cross_section )
             self.assertEqual( True, chunk.has_cross_section_covariances )
 
-            xs = chunk.cross_section_covariances
+            xs = chunk.cross_section
 
             self.assertEqual( True, xs.has_covariance_matrix( capture ) )
             self.assertEqual( False, xs.has_covariance_matrix( elastic ) )

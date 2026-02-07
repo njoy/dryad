@@ -49,8 +49,8 @@ void wrapCovarianceData( python::module& module ) {
   )
   .def_property_readonly(
 
-    "cross_section_covariances",
-    python::overload_cast<>( &Component::crossSectionCovariances, python::const_ ),
+    "cross_section",
+    python::overload_cast<>( &Component::crossSection, python::const_ ),
     "The cross section covariances"
   );
 

@@ -68,9 +68,9 @@ void verifyChunk( const CovarianceData& chunk ) {
   id::ReactionID capture( "n,H1->g,H2" );
   id::ReactionID elastic( "n,H1->n,H1" );
 
-  CHECK( std::nullopt != chunk.crossSectionCovariances() );
+  CHECK( std::nullopt != chunk.crossSection() );
 
-  decltype(auto) xs = chunk.crossSectionCovariances().value();
+  decltype(auto) xs = chunk.crossSection().value();
   CHECK( true == xs.hasCovarianceMatrix( capture ) );
   CHECK( false == xs.hasCovarianceMatrix( elastic ) );
 

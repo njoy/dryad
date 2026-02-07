@@ -1068,12 +1068,12 @@ class ProjectileTarget:
                                 unionisation (default: false)
         """
     @property
-    def cross_section_covariance_data(self) -> covariance.CovarianceData | None:
+    def covariance_data(self) -> covariance.CovarianceData | None:
         """
-        The cross section covariance data
+        The covariance data
         """
-    @cross_section_covariance_data.setter
-    def cross_section_covariance_data(self, arg1: covariance.CovarianceData | None) -> None:
+    @covariance_data.setter
+    def covariance_data(self, arg1: covariance.CovarianceData | None) -> None:
         ...
     @property
     def documentation(self) -> Documentation:

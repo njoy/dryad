@@ -29,7 +29,7 @@ class CovarianceData:
     def __ne__(self, arg0: CovarianceData) -> bool:
         ...
     @property
-    def cross_section_covariances(self) -> CrossSectionCovarianceData | None:
+    def cross_section(self) -> CrossSectionCovarianceData | None:
         """
         The cross section covariances
         """

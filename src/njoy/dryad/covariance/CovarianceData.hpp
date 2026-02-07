@@ -34,7 +34,7 @@ namespace covariance {
     /**
      *  @brief Return the cross section covariances
      */
-    const std::optional< CrossSectionCovarianceData >& crossSectionCovariances() const {
+    const std::optional< CrossSectionCovarianceData >& crossSection() const {
 
       return this->xs_;
     }
@@ -42,7 +42,7 @@ namespace covariance {
     /**
      *  @brief Return the cross section covariances
      */
-    std::optional< CrossSectionCovarianceData >& crossSectionCovariances() {
+    std::optional< CrossSectionCovarianceData >& crossSection() {
 
       return this->xs_;
     }
@@ -52,7 +52,7 @@ namespace covariance {
      */
     bool hasCrossSectionCovariances() const {
 
-      return this->crossSectionCovariances().has_value();
+      return this->crossSection().has_value();
     }
 
     /**
@@ -62,7 +62,7 @@ namespace covariance {
      */
     bool operator==( const CovarianceData& right ) const {
 
-      return this->crossSectionCovariances() == right.crossSectionCovariances();
+      return this->crossSection() == right.crossSection();
     }
 
     /**
