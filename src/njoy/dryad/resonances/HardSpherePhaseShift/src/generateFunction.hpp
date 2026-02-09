@@ -11,9 +11,10 @@ generateFunction( unsigned int l ) {
     case 2 : return { { 0, 3 }, { 3, 0, -1 } };
     case 3 : return { { 0, 15, 0, -1 }, { 15, 0, -6 } };
     case 4 : return { { 0, 105, 0, -10 }, { 105, 0, -45, 0, 1 } };
+    case 5 : return { { 0, 945, 0, -105, 0, 1 }, { 945, 0, -420, 0, 15 } };
     default : {
 
-      Log::error( "Cannot handle wave functions with l above 4, got \'{}\', "
+      Log::error( "Cannot handle wave functions with l above 5, got \'{}\', "
                   "contact dryad developers", l );
       throw std::exception();
     }

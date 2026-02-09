@@ -1306,6 +1306,10 @@ namespace id {
       if ( this->interactionType() == InteractionType::Nuclear ) {
 
         int za = projectile.za() + target.za() - entries[ this->index_ ].dza().value();
+        if (za == 1)
+        {
+            return ParticleID::neutron();
+        }
         return ParticleID::nuclide( za, this->level().value() );
       }
       else {
