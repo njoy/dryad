@@ -5,6 +5,7 @@
 #include <vector>
 
 // other includes
+#include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/covariance/ScalingType.hpp"
 

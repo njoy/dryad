@@ -4,6 +4,7 @@
 // system includes
 
 // other includes
+#include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
@@ -20,7 +21,7 @@ namespace covariance {
   /**
    *  @brief Create a cross section covariance block from a GNDS covariance section
    */
-  inline dryad::covariance::CrossSectionCovarianceMatrix
+  inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
       const dryad::id::ParticleID& projectile,
       const dryad::id::ParticleID& target,
@@ -107,31 +108,25 @@ namespace covariance {
       }
     }
 
-    if ( rowStructures.size() == 1 ) {
+    std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
+    if ( cross ) {
 
-      if ( cross ) {
-
-        return dryad::covariance::CrossSectionCovarianceMatrix(
-                 dryad::covariance::CrossSectionMetadata( { rowReaction },
-                                                          std::move( rowStructures.front() ) ),
-                 dryad::covariance::CrossSectionMetadata( { columnReaction },
-                                                          std::move( columnStructures.front() ) ),
-                 std::move( matrices.front() ), relative );
-      }
-      else {
-
-        return dryad::covariance::CrossSectionCovarianceMatrix(
-                 dryad::covariance::CrossSectionMetadata( { rowReaction },
-                                                          std::move( rowStructures.front() ) ),
-                 std::move( matrices.front() ),
-                 relative, std::move( scaling ) );
-      }
+      using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+      covariances.emplace_back(
+               CrossSectionMetadata( { rowReaction }, std::move( rowStructures.front() ) ),
+               CrossSectionMetadata( { columnReaction }, std::move( columnStructures.front() ) ),
+               std::move( matrices.front() ), relative );
     }
     else {
 
-      Log::error( "Not implemented yet, contact a developer" );
-      throw std::exception();
+      using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+      covariances.emplace_back(
+               CrossSectionMetadata( { rowReaction }, std::move( rowStructures.front() ) ),
+               std::move( matrices.front() ),
+               relative, scaling );
     }
+
+    return covariances;
   }
 
 } // covariance namespace
