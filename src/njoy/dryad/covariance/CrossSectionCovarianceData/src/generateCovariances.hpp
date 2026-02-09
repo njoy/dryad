@@ -12,9 +12,13 @@ generateCovariances( std::vector< covariance::CrossSectionCovarianceMatrix > sub
   std::sort( submatrices.begin(), submatrices.end(),
              [] ( auto&& left, auto&& right )
                 { return std::tie( left.rowMetadata().reactionIdentifiers().front(),
-                                   left.columnMetadata().reactionIdentifiers().front() ) <
+                                   left.columnMetadata().reactionIdentifiers().front(),
+                                   left.rowMetadata().energies(),
+                                   left.columnMetadata().energies() ) <
                          std::tie( right.rowMetadata().reactionIdentifiers().front(),
-                                   right.columnMetadata().reactionIdentifiers().front() ); } );
+                                   right.columnMetadata().reactionIdentifiers().front(),
+                                   left.rowMetadata().energies(),
+                                   left.columnMetadata().energies() ); } );
 
   auto add_reaction = [] ( std::vector< id::ReactionID >& reactions, const id::ReactionID& id ) {
 
