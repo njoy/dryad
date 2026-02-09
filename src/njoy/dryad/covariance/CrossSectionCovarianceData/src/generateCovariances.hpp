@@ -17,8 +17,8 @@ generateCovariances( std::vector< covariance::CrossSectionCovarianceMatrix > sub
                                    left.columnMetadata().energies() ) <
                          std::tie( right.rowMetadata().reactionIdentifiers().front(),
                                    right.columnMetadata().reactionIdentifiers().front(),
-                                   left.rowMetadata().energies(),
-                                   left.columnMetadata().energies() ); } );
+                                   right.rowMetadata().energies(),
+                                   right.columnMetadata().energies() ); } );
 
   auto add_reaction = [] ( std::vector< id::ReactionID >& reactions, const id::ReactionID& id ) {
 

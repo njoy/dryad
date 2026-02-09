@@ -1090,7 +1090,6 @@ namespace li7 {
 
     variant = xs.covarianceMatrix( id::ReactionID( "n,Li7->capture" ) );
     std::vector< CrossSectionCovarianceMatrix > matrices = std::get< std::vector< CrossSectionCovarianceMatrix > >( variant );
-//! @todo check for ordering in gcc? test failures
     CHECK( 1 == matrices[0].rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Li7->capture" ) == matrices[0].rowMetadata().reactionIdentifiers()[0] );
     CHECK( 3 == matrices[0].rowMetadata().energies().size() );
