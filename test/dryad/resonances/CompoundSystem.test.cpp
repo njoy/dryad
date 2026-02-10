@@ -401,7 +401,7 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 1, channel 2: proton emission
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  auto channel2 = channels[2];
+  auto channel2 = channels[3];
   CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
   CHECK( false == channel2.isIncidentChannel() );
 
@@ -424,7 +424,7 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 1, channel 3: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  auto channel3 = channels[3];
+  auto channel3 = channels[2];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ) == channel3.identifier() );
   CHECK( true == channel3.isIncidentChannel() );
 
@@ -639,7 +639,7 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 3, channel 2: proton emission
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  channel2 = channels[2];
+  channel2 = channels[3];
   CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
   CHECK( false == channel2.isIncidentChannel() );
 
@@ -662,7 +662,7 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 3, channel 3: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  channel3 = channels[3];
+  channel3 = channels[2];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ) == channel3.identifier() );
   CHECK( true == channel3.isIncidentChannel() );
 
@@ -718,8 +718,8 @@ void verifyChunk( const CompoundSystem& chunk ) {
   resonances = table.reducedWidthAmplitudes();
   CHECK_THAT( 32, WithinRel( resonances[0][0] ) );
   CHECK_THAT( 33, WithinRel( resonances[1][0] ) );
-  CHECK_THAT( 34, WithinRel( resonances[2][0] ) );
-  CHECK_THAT( 35, WithinRel( resonances[3][0] ) );
+  CHECK_THAT( 34, WithinRel( resonances[3][0] ) );
+  CHECK_THAT( 35, WithinRel( resonances[2][0] ) );
   CHECK_THAT( 36, WithinRel( resonances[4][0] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
