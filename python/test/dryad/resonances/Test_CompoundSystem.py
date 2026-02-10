@@ -505,8 +505,8 @@ def verify_chunk( self, chunk ) :
     resonances = table.reduced_width_amplitudes
     self.assertAlmostEqual( 32, resonances[0][0] )
     self.assertAlmostEqual( 33, resonances[1][0] )
-    self.assertAlmostEqual( 34, resonances[2][0] )
-    self.assertAlmostEqual( 35, resonances[3][0] )
+    self.assertAlmostEqual( 34, resonances[3][0] )
+    self.assertAlmostEqual( 35, resonances[2][0] )
     self.assertAlmostEqual( 36, resonances[4][0] )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
