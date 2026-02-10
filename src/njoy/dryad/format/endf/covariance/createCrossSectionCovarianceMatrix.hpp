@@ -82,7 +82,7 @@ namespace covariance {
             throw std::exception();
           }
 
-          // read the scalong information
+          // read the scaling information
           scaling = createVarianceScaling( std::get< ENDFtk::section::CovariancePairs >( component ) );
           break;
         }

@@ -39,27 +39,13 @@ namespace covariance {
 
       Log::info( "Reading cross section covariance data" );
 
-      auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
-
-        if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
-
-          int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-          int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
-          if ( mt > ground && mt <= elastic ) {
-
-            return mt - 1;
-          }
-        }
-        return mt;
-      };
-
       std::vector< dryad::covariance::CrossSectionCovarianceMatrix > matrices;
       matrices.reserve( material.file( 33 ).sectionNumbers().size() );
       for ( auto mt : material.file( 33 ).sectionNumbers() ) {
 
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-          id::ReactionID row( projectile, target, adjust_scatter_level( mt ) );
+          id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
 
           auto section = material.section( 33, mt ).parse< 33 >();
           for ( const auto& block : section.reactions() ) {
@@ -71,7 +57,7 @@ namespace covariance {
 
               if ( mat1 == 0 || mat1 == mat ) {
 
-                id::ReactionID column = id::ReactionID( projectile, target, adjust_scatter_level( mt1 ) );
+                id::ReactionID column = id::ReactionID( projectile, target, adjustScatterLevel( projectile, target, mt1 ) );
                 if ( row == column ) {
 
                   Log::info( "Reading data for MT{}", mt );

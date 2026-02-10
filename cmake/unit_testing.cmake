@@ -126,6 +126,7 @@ add_cpp_test( dryad.ThermalScattering                                           
 
 add_cpp_test( dryad.format.createIndex                                                  dryad/format/createIndex.test.cpp )
 add_cpp_test( dryad.format.createVector                                                 dryad/format/createVector.test.cpp )
+add_cpp_test( dryad.format.adjustScatterLevel                                           dryad/format/adjustScatterLevel.test.cpp )
 
 add_cpp_test( dryad.format.ace.createProjectileIdentifier                               dryad/format/ace/createProjectileIdentifier.test.cpp )
 add_cpp_test( dryad.format.ace.createTabulatedScatteringFunction                        dryad/format/ace/createTabulatedScatteringFunction.test.cpp )

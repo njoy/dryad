@@ -9,6 +9,7 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/format/adjustScatterLevel.hpp"
 #include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
 #include "njoy/dryad/format/gnds/covariance/createVarianceScaling.hpp"
 
@@ -20,6 +21,10 @@ namespace covariance {
 
   /**
    *  @brief Create a cross section covariance block from a GNDS covariance section
+   *
+   *  @param[in] projectile    the projectile identifier
+   *  @param[in] target        the target identifier
+   *  @param[in] covariances   the unparsed ENDF material
    */
   inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
@@ -42,7 +47,8 @@ namespace covariance {
       std::string reaction = row.attribute( "ENDF_MFMT" ).as_string();
       reaction.erase( reaction.begin(),
                       std::find( reaction.begin(), reaction.end(), ',' ) + 1 );
-      rowReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, std::stoi( reaction ) ) );
+      auto mt = adjustScatterLevel( projectile, target, std::stoi( reaction ) );
+      rowReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, mt ) );
     }
     else {
 

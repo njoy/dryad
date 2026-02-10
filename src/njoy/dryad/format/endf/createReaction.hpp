@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/dryad/format/adjustScatterLevel.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "njoy/dryad/format/endf/createTabulatedCrossSection.hpp"
 #include "njoy/dryad/format/endf/createMultiplicity.hpp"
@@ -56,22 +57,8 @@ namespace endf {
                            int mt,
                            bool normalise ) {
 
-    auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
-
-      if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
-
-        int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-        int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
-        if ( mt > ground && mt <= elastic ) {
-
-          return mt - 1;
-        }
-      }
-      return mt;
-    };
-
     // metadata and miscellaneous information
-    id::ReactionID id( projectile, target, adjust_scatter_level( mt ) );
+    id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
 
     if ( material.hasSection( 3, mt ) ) {
 

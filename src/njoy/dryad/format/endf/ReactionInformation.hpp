@@ -7,6 +7,7 @@
 
 // other includes
 #include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/format/adjustScatterLevel.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
@@ -303,20 +304,6 @@ namespace endf {
 
       std::vector< id::ReactionID > partials;
 
-      auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
-
-        if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
-
-          int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-          int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
-          if ( mt > ground && mt <= elastic ) {
-
-            return mt - 1;
-          }
-        }
-        return mt;
-      };
-
       if ( mf == 3 && mt == 1 ) {
 
         auto sections = material.file( mf ).sectionNumbers();
@@ -324,7 +311,7 @@ namespace endf {
 
           if ( isPrimary( material, number ) ) {
 
-            partials.emplace_back( projectile, target, adjust_scatter_level( number ) );
+            partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, number ) );
           }
         }
       }
@@ -337,7 +324,7 @@ namespace endf {
 
             if ( isPrimary( material, number ) ) {
 
-              partials.emplace_back( projectile, target, adjust_scatter_level( number ) );
+              partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, number ) );
             }
           }
         }
@@ -349,7 +336,7 @@ namespace endf {
 
           if ( section.lumpedCovarianceIndex() == mt ) {
 
-            partials.emplace_back( projectile, target, adjust_scatter_level( section.MT() ) );
+            partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, section.MT() ) );
           }
         }
         std::sort( partials.begin(), partials.end() );
@@ -361,7 +348,7 @@ namespace endf {
 
           if ( material.hasSection( mf, number ) ) {
 
-            partials.emplace_back( projectile, target, adjust_scatter_level( number ) );
+            partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, number ) );
           }
         }
 
