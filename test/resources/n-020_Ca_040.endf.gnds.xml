@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <reactionSuite projectile="n" target="Ca40" evaluation="ENDF/B-8.1" format="2.0" projectileFrame="lab" interaction="nuclear">
   <externalFiles>
-    <externalFile label="covariances" path="Covariances/n-020_Ca_040.endf.gnds-covar.xml" checksum="a80d9d297f9fcaa1914bf2489fba156d83e0ad05" algorithm="sha1"/></externalFiles>
+    <externalFile label="covariances" path="n-020_Ca_040.endf.gnds-covar.xml" checksum="a80d9d297f9fcaa1914bf2489fba156d83e0ad05" algorithm="sha1"/></externalFiles>
   <styles>
     <evaluated label="eval" date="2016-08-01" library="ENDF/B" version="8.1.1">
       <documentation>
