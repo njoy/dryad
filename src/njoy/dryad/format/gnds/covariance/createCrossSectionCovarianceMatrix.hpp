@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECrossSectionCovarianceMatrix
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECrossSectionCovarianceMatrix
+#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
 
 // system includes
 
@@ -24,7 +24,8 @@ namespace covariance {
    *
    *  @param[in] projectile    the projectile identifier
    *  @param[in] target        the target identifier
-   *  @param[in] covariances   the unparsed ENDF material
+   *  @param[in] covariances   the GNDS covariance section node giving a
+   *                           cross section covariance matrix
    */
   inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
@@ -115,21 +116,24 @@ namespace covariance {
     }
 
     std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
-    if ( cross ) {
+    for ( std::size_t i = 0; i < rowStructures.size(); i++ ) {
 
-      using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
-      covariances.emplace_back(
-               CrossSectionMetadata( { rowReaction }, std::move( rowStructures.front() ) ),
-               CrossSectionMetadata( { columnReaction }, std::move( columnStructures.front() ) ),
-               std::move( matrices.front() ), relative );
-    }
-    else {
+      if ( cross ) {
 
-      using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
-      covariances.emplace_back(
-               CrossSectionMetadata( { rowReaction }, std::move( rowStructures.front() ) ),
-               std::move( matrices.front() ),
-               relative, scaling );
+        using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+        covariances.emplace_back(
+                 CrossSectionMetadata( { rowReaction }, std::move( rowStructures[i] ) ),
+                 CrossSectionMetadata( { columnReaction }, std::move( columnStructures[i] ) ),
+                 std::move( matrices[i] ), relative );
+      }
+      else {
+
+        using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+        covariances.emplace_back(
+                 CrossSectionMetadata( { rowReaction }, std::move( rowStructures[i] ) ),
+                 std::move( matrices[i] ),
+                 relative, scaling );
+      }
     }
 
     return covariances;

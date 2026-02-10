@@ -303,6 +303,7 @@ add_cpp_test( dryad.format.gnds.atomic.createElectronSubshellConfiguration      
 add_cpp_test( dryad.format.gnds.covariance.createScalingType                            dryad/format/gnds/covariance/createScalingType.test.cpp )
 add_cpp_test( dryad.format.gnds.covariance.createVarianceScaling                        dryad/format/gnds/covariance/createVarianceScaling.test.cpp )
 add_cpp_test( dryad.format.gnds.covariance.createCrossSectionCovarianceMatrix           dryad/format/gnds/covariance/createCrossSectionCovarianceMatrix.test.cpp )
+add_cpp_test( dryad.format.gnds.covariance.createCovarianceData                         dryad/format/gnds/covariance/createCovarianceData.test.cpp )
 add_cpp_test( dryad.format.gnds.createProjectileTarget                                  dryad/format/gnds/createProjectileTarget.test.cpp )
 add_cpp_test( dryad.format.gnds.createProjectileTargetFromFile                          dryad/format/gnds/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.gnds.createAtomicRelaxation                                  dryad/format/gnds/createAtomicRelaxation.test.cpp )
