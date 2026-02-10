@@ -7,10 +7,12 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "njoy/dryad/format/gnds/processExternalFiles.hpp"
 #include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
 #include "njoy/dryad/format/gnds/createInteractionType.hpp"
 #include "njoy/dryad/format/gnds/createReactions.hpp"
+#include "njoy/dryad/format/gnds/covariance/createCovarianceData.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 
 namespace njoy {
@@ -27,11 +29,14 @@ namespace gnds {
    *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ProjectileTarget
-  createProjectileTarget( const pugi::xml_document& document,
+  createProjectileTarget( pugi::xml_document& document,
                           bool normalise,
                           const std::string& style = "eval" ) {
 
+    processExternalFiles( document );
+
     auto suite = document.child( "reactionSuite" );
+    auto covsuite = document.child( "covarianceSuite" );
 
     if ( suite ) {
 
@@ -44,6 +49,10 @@ namespace gnds {
       std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
 
       std::optional< dryad::covariance::CovarianceData > covariances = std::nullopt;
+      if ( covsuite ) {
+
+        covariances = covariance::createCovarianceData( projectile, target, covsuite );
+      }
 
       return ProjectileTarget( std::move( projectile ), std::move( target ),
                                type, std::move( reactions ), std::move( resonances ),
