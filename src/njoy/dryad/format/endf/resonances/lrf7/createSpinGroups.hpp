@@ -57,8 +57,6 @@ namespace lrf7 {
 
       // add each to the final channel data, keep it sorted and consolidate duplicate channels
       for ( auto&& channel : data ) {
-        auto quantumNum = channel.first.identifier().quantumNumbers();
-        auto reatciont = channel.first.identifier().reaction();
         auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
                                       channel.first.identifier(),
                                       [] ( auto&& left, auto&& right )
