@@ -65,7 +65,7 @@ namespace resonances {
       // conversion constant to convert the final value to fm^-1
       const double conversion = std::sqrt( constants::amu / constants::e ) * constants::femto;
 
-      const auto mu = outgoing.reducedMass(); // amu
+      const auto mu = outgoing.reducedMass();  // amu
       const auto ratio = incident.massRatio(); // dimensionless
       const auto q = qValue;                   // eV
       return std::sqrt( 2. * mu * ( std::abs( energy * ratio + q ) ) )
