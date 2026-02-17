@@ -66,7 +66,7 @@ class Channel:
     def __eq__(self, arg0: Channel) -> bool:
         ...
     @typing.overload
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, q_value: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics, background: FrohnerBackground | SammyBackground | TabulatedBackground | None, penetrability: float | HardSpherePenetrability | CoulombPenetrability | TabulatedWaveFunction, shift_factor: float | HardSphereShiftFactor | CoulombShiftFactor | TabulatedWaveFunction, phase_shift: float | HardSpherePhaseShift | CoulombPhaseShift | TabulatedWaveFunction, phase_shift_difference: float | CoulombPhaseShiftDifference) -> None:
         """
         Initialise the channel
         
@@ -87,7 +87,7 @@ class Channel:
             phase_shift_difference   the phase shift difference of the channel
         """
     @typing.overload
-    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ...) -> None:
+    def __init__(self, identifier: njoy.dryad.id.ChannelID, incident: ParticlePair, outgoing: ParticlePair | None, qValue: float, boundary: float | None, radii: ChannelRadii, kinematics: Kinematics = ..., background: FrohnerBackground | SammyBackground | TabulatedBackground | None = None) -> None:
         """
         Initialise the channel
         
@@ -174,6 +174,11 @@ class Channel:
         Arguments:
             self     the channel
             energy   the energy (given in eV)
+        """
+    @property
+    def background(self) -> FrohnerBackground | SammyBackground | TabulatedBackground | None:
+        """
+        The background function (if defined)
         """
     @property
     def boundary_condition(self) -> float | None:

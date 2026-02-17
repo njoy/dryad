@@ -137,6 +137,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( 0 == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -162,6 +165,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -219,6 +225,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( 0 == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -244,6 +253,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -301,6 +313,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( 0 == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -327,6 +342,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
@@ -352,6 +370,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
@@ -411,6 +432,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( 0 == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -436,6 +460,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( 0 == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -493,6 +520,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( 0 == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -519,6 +549,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
@@ -544,6 +577,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( -1 == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
@@ -603,6 +639,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( 0 == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -628,6 +667,9 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( -1 == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -714,6 +756,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -739,6 +784,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -796,6 +844,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -821,6 +872,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -848,6 +902,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
@@ -874,6 +931,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel3.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel3.background() );
+
   // Q value
   CHECK_THAT( 0, WithinRel( channel3.qValue() ) );
 
@@ -899,6 +959,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel4.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel4.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
@@ -962,6 +1025,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -988,6 +1054,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
@@ -1013,6 +1082,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
@@ -1072,6 +1144,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -1097,6 +1172,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
@@ -1124,6 +1202,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
@@ -1150,6 +1231,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel3.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel3.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
 
@@ -1175,6 +1259,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel4.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel4.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
@@ -1238,6 +1325,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -1264,6 +1354,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
@@ -1289,6 +1382,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
@@ -1348,6 +1444,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel0.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
@@ -1374,6 +1473,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   // boundary conditions
   CHECK( std::nullopt == channel1.boundaryCondition() );
 
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
   // Q value
   CHECK_THAT( 0, WithinRel( channel1.qValue() ) );
 
@@ -1399,6 +1501,9 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
 
   // boundary conditions
   CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
 
   // Q value
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );

@@ -20,6 +20,7 @@ void wrapChannel( python::module& module ) {
   using ParticlePair = njoy::dryad::resonances::ParticlePair;
   using ChannelRadii = njoy::dryad::resonances::ChannelRadii;
   using Kinematics = njoy::dryad::resonances::Kinematics;
+  using Background = njoy::dryad::resonances::Channel::Background;
   using Penetrability = njoy::dryad::resonances::Channel::Penetrability;
   using ShiftFactor = njoy::dryad::resonances::Channel::ShiftFactor;
   using PhaseShift = njoy::dryad::resonances::Channel::PhaseShift;
@@ -46,6 +47,7 @@ void wrapChannel( python::module& module ) {
                   std::optional< double >,
                   ChannelRadii,
                   Kinematics,
+                  std::optional< Background >,
                   Penetrability,
                   ShiftFactor,
                   PhaseShift,
@@ -53,9 +55,9 @@ void wrapChannel( python::module& module ) {
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "q_value" ),
     python::arg( "boundary" ), python::arg( "radii" ),
-    python::arg( "kinematics" ), python::arg( "penetrability" ),
-    python::arg( "shift_factor" ), python::arg( "phase_shift" ),
-    python::arg( "phase_shift_difference" ),
+    python::arg( "kinematics" ), python::arg( "background" ),
+    python::arg( "penetrability" ), python::arg( "shift_factor" ),
+    python::arg( "phase_shift" ), python::arg( "phase_shift_difference" ),
     "Initialise the channel\n\n"
     "Arguments:\n"
     "    self                     the channel\n"
@@ -81,11 +83,13 @@ void wrapChannel( python::module& module ) {
                   double,
                   std::optional< double >,
                   ChannelRadii,
-                  Kinematics >(),
+                  Kinematics,
+                  std::optional< Background > >(),
     python::arg( "identifier" ), python::arg( "incident" ),
     python::arg( "outgoing" ), python::arg( "qValue" ),
     python::arg( "boundary" ), python::arg( "radii" ),
     python::arg( "kinematics" ) = Kinematics::NonRelativistic,
+    python::arg( "background" ) = std::nullopt,
     "Initialise the channel\n\n"
     "Arguments:\n"
     "    self         the channel\n"
@@ -147,6 +151,12 @@ void wrapChannel( python::module& module ) {
     "boundary_condition",
     &Component::boundaryCondition,
     "The boundary condition value (if defined)"
+  )
+  .def_property_readonly(
+
+    "background",
+    &Component::background,
+    "The background function (if defined)"
   )
   .def_property_readonly(
 
