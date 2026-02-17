@@ -60,6 +60,7 @@ add_python_test( dryad.resonances.CoulombShiftFactor                   dryad/res
 add_python_test( dryad.resonances.CoulombPhaseShift                    dryad/resonances/Test_CoulombPhaseShift.py )
 add_python_test( dryad.resonances.CoulombPhaseShiftDifference          dryad/resonances/Test_CoulombPhaseShiftDifference.py )
 add_python_test( dryad.resonances.TabulatedWaveFunction                dryad/resonances/Test_TabulatedWaveFunction.py )
+add_python_test( dryad.resonances.TabulatedBackground                  dryad/resonances/Test_TabulatedBackground.py )
 add_python_test( dryad.resonances.Channel                              dryad/resonances/Test_Channel.py )
 add_python_test( dryad.resonances.ResonanceTable                       dryad/resonances/Test_ResonanceTable.py )
 add_python_test( dryad.resonances.SpinGroup                            dryad/resonances/Test_SpinGroup.py )

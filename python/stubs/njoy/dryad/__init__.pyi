@@ -565,7 +565,7 @@ class LegendreAngularDistribution:
         
         Parameters
         ----------
-            tolerance : njoy.dryad.ToleranceConvergence
+            tolerance : float, default 0.001
                  the linearisation tolerance
             normalise : bool, default false
                 option to indicate whether or not to normalise
@@ -680,11 +680,12 @@ class LegendreAngularDistributionFunction:
         ...
     def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
-        Linearise the distribution function
+        Linearise the series
         
-        Arguments:
-            self        the distribution function
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -776,7 +777,7 @@ class LegendreAngularDistributions:
         
         Parameters
         ----------
-            tolerance : njoy.dryad.ToleranceConvergence
+            tolerance : float, default 0.001
                  the linearisation tolerance
             normalise : bool, default false
                 option to indicate whether or not to normalise
@@ -901,11 +902,12 @@ class PolynomialMultiplicity:
         ...
     def linearise(self, tolerance: float = 0.001) -> TabulatedMultiplicity:
         """
-        Linearise the distribution function
+        Linearise the series
         
-        Arguments:
-            self        the distribution function
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def coefficients(self) -> list[float]:
@@ -1488,7 +1490,7 @@ class TabulatedAngularDistribution:
         
         Parameters
         ----------
-            tolerance : njoy.dryad.ToleranceConvergence
+            tolerance : float, default 0.001
                  the linearisation tolerance
             normalise : bool, default false
                 option to indicate whether or not to normalise
@@ -1625,9 +1627,10 @@ class TabulatedAngularDistributionFunction:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -1749,7 +1752,7 @@ class TabulatedAngularDistributions:
         
         Parameters
         ----------
-            tolerance : njoy.dryad.ToleranceConvergence
+            tolerance : float, default 0.001
                  the linearisation tolerance
             normalise : bool, default false
                 option to indicate whether or not to normalise
@@ -1884,9 +1887,10 @@ class TabulatedAverageCosine:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2023,9 +2027,10 @@ class TabulatedAverageEnergy:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2132,7 +2137,7 @@ class TabulatedComptonProfile:
         
         Parameters
         ----------
-            tolerance : njoy.dryad.ToleranceConvergence
+            tolerance : float, default 0.001
                  the linearisation tolerance
             normalise : bool, default false
                 option to indicate whether or not to normalise
@@ -2274,9 +2279,10 @@ class TabulatedComptonProfileFunction:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -2427,9 +2433,10 @@ class TabulatedCrossSection:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -2665,9 +2672,10 @@ class TabulatedEnergyDistributionFunction:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     def normalise(self) -> None:
         """
@@ -2919,9 +2927,10 @@ class TabulatedFormFactor:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3058,9 +3067,10 @@ class TabulatedMultiplicity:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -3208,9 +3218,10 @@ class TabulatedScatteringFunction:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:

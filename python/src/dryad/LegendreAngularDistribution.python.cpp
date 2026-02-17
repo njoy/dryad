@@ -96,7 +96,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Linearise the distribution\n\n"
     "Parameters\n"
     "----------\n"
-    "    tolerance : njoy.dryad.ToleranceConvergence\n"
+    "    tolerance : float, default 0.001\n"
     "         the linearisation tolerance\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"

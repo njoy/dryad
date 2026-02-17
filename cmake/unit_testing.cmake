@@ -68,6 +68,7 @@ add_cpp_test( dryad.resonances.CoulombShiftFactor                               
 add_cpp_test( dryad.resonances.CoulombPhaseShift                                        dryad/resonances/CoulombPhaseShift.test.cpp )
 add_cpp_test( dryad.resonances.CoulombPhaseShiftDifference                              dryad/resonances/CoulombPhaseShiftDifference.test.cpp )
 add_cpp_test( dryad.resonances.TabulatedWaveFunction                                    dryad/resonances/TabulatedWaveFunction.test.cpp )
+add_cpp_test( dryad.resonances.TabulatedBackground                                      dryad/resonances/TabulatedBackground.test.cpp )
 add_cpp_test( dryad.resonances.Channel                                                  dryad/resonances/Channel.test.cpp )
 add_cpp_test( dryad.resonances.ResonanceTable                                           dryad/resonances/ResonanceTable.test.cpp )
 add_cpp_test( dryad.resonances.calculator.Constant                                      dryad/resonances/calculator/Constant.test.cpp )

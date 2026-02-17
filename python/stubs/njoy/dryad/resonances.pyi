@@ -5,7 +5,7 @@ from __future__ import annotations
 import njoy.dryad
 import njoy.dryad.id
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -1178,6 +1178,146 @@ class SpinGroup:
         """
         The total angular momentum J of the channels
         """
+class TabulatedBackground:
+    """
+    The energy values are given in eV and the background values are
+    dimensionless complex values.
+    
+    Parameters
+    ----------
+        energies : list of float
+             the momentum values
+        values : list of complex
+             the background values
+        boundaries : list of int
+             the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+             the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+             the interpolation type (default lin-lin)
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __add__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __call__(self, energy: float) -> complex:
+        """
+        Evaluate the table for a given energy value
+        
+        Parameters
+        ----------
+            energy : float
+                the energy value
+        """
+    def __copy__(self) -> TabulatedBackground:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedBackground:
+        ...
+    def __eq__(self, arg0: TabulatedBackground) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[complex], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the background function with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[complex], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the background function with a single interpolation zone
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __itruediv__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __mul__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __ne__(self, arg0: TabulatedBackground) -> bool:
+        ...
+    def __neg__(self) -> TabulatedBackground:
+        ...
+    def __radd__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __rmul__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def __rsub__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> TabulatedBackground:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: TabulatedBackground) -> TabulatedBackground:
+        ...
+    def __truediv__(self, arg0: float) -> TabulatedBackground:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> TabulatedBackground:
+        """
+        Linearise the table
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy values
+        """
+    @property
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def is_linearised(self) -> bool:
+        """
+        Flag indicating whether or not the table is linearised
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[complex]:
+        """
+        The background values
+        """
 class TabulatedRadius:
     """
     A radius table
@@ -1268,9 +1408,10 @@ class TabulatedRadius:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1407,9 +1548,10 @@ class TabulatedWaveFunction:
         """
         Linearise the table
         
-        Arguments:
-            self        the table
-            tolerance   the linearisation tolerance (default: 0.1%)
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
