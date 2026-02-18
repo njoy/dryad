@@ -91,7 +91,8 @@ namespace dryad {
      */
     double operator()( double energy, double cosine ) const {
 
-      return this->operator()( this->inverseLength( energy, cosine ) );
+      return this->operator()( std::min( this->inverseLength( energy, cosine ),
+                                         this->inverseLengths().back() ) );
     }
 
     /**
