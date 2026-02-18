@@ -140,7 +140,7 @@ namespace endf {
           // for pair production the photon needs
           // at minimum to be twice the electron rest mass energy
           // i.e. 2 * 511 keV
-          reaction_q = -1.022e+6;
+          reaction_q = - 2. * constants::electron_rest_mass;
         }
 
         // return the reaction data
