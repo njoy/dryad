@@ -12,6 +12,8 @@
 #include "njoy/dryad/ReferenceFrame.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "njoy/dryad/TabulatedComptonProfile.hpp"
+#include "njoy/dryad/external/KleinNishina.hpp"
+#include "scion/integration/GaussLegendre.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -94,6 +96,58 @@ namespace dryad {
     }
 
     /**
+     *  @brief Calculate the average outgoing energy for a given energy
+     *
+     *  @param energy   the incident energy
+     */
+    double averageEnergy( double energy ) const {
+
+      auto xs = [&] ( double outgoing_energy ) {
+
+        using namespace external;
+        double cosine = KleinNishina::cosine( energy, outgoing_energy );
+        double scatter = this->scatteringFunction()( energy, cosine );
+        return scatter * KleinNishina::differentialCrossSectionToOutgoingEnergy( energy, outgoing_energy, cosine );
+      };
+      auto mean = [&] ( double outgoing_energy ) {
+
+        return outgoing_energy * xs( outgoing_energy );
+      };
+
+      double min = external::KleinNishina::lowerOutgoingEnergyLimit( energy );
+      double max = external::KleinNishina::upperOutgoingEnergyLimit( energy );
+
+      //! @todo replace with adaptive quadrature calculation
+      // begin temporary code - - - - - - - - - - - - - - - - - - - - - -
+      scion::integration::GaussLegendre< 64, double, double > integrator;
+      double integral_xs = 0;
+      double integral_mean = 0;
+      double delta = ( max - min ) / 1000;
+      double current = min;
+      for ( std::size_t i = 0; i < 1000; ++i ) {
+
+        integral_xs += integrator( xs, current, current + delta );
+        integral_mean += integrator( mean, current, current + delta );
+        current += delta;
+      }
+      return integral_mean / integral_xs;
+      // end temporary code - - - - - - - - - - - - - - - - - - - - - - -
+    }
+
+    /**
+     *  @brief Calculate the average outgoing energy for a set of energies
+     *
+     *  @param energies   the incident energies
+     */
+    std::vector< double > averageEnergy( const std::vector< double >& energies ) const {
+
+      std::vector< double > values( energies.size() );
+      std::transform( energies.begin(), energies.end(), values.begin(),
+                      [&] ( auto&& energy ) { return this->averageEnergy( energy ); } );
+      return values;
+    }
+
+    /**
      *  @brief Return the Compton profiles
      */
     const std::optional< std::vector< TabulatedComptonProfile > >&
@@ -127,6 +181,14 @@ namespace dryad {
 
         this->sort();
       }
+    }
+
+    /**
+     *  @brief Return whether or not Compton profiles are defined
+     */
+    bool hasComptonProfiles() const {
+
+      return this->comptonProfiles().has_value();
     }
 
     /**
