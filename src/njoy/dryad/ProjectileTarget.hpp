@@ -257,6 +257,17 @@ namespace dryad {
     }
 
     /**
+     *  @brief Calculate average outgoing energies for all reaction products
+     */
+    void calculateAverageEnergy() {
+
+      for ( auto& reaction : this->reactions() ) {
+
+        reaction.calculateAverageEnergy();
+      }
+    }
+
+    /**
      *  @brief Unionise cross section data
      *
      *  This function takes all cross section data and unionises the cross section

@@ -325,6 +325,41 @@ namespace dryad {
     }
 
     /**
+     *  @brief Calculate average outgoing energies for all reaction products
+     */
+    void calculateAverageEnergy() {
+
+      auto calculateAverageEnergy = tools::overload{
+
+        [&] ( const IncoherentDistributionData& distribution ) -> std::optional< TabulatedAverageEnergy > {
+
+          std::vector< double > energies = this->crossSection().energies();
+          std::vector< double > values = distribution.averageEnergy( energies );
+          std::vector< std::size_t > boundaries = this->crossSection().boundaries();
+          std::vector< InterpolationType > interpolants = this->crossSection().interpolants();
+          return TabulatedAverageEnergy( std::move( energies ), std::move( values ),
+                                         std::move( boundaries ), std::move( interpolants ) );
+        },
+        [] ( const auto& ) -> std::optional< TabulatedAverageEnergy > {
+
+          return std::nullopt;
+        }
+      };
+
+      if ( this->isPrimaryReaction() ) {
+
+        for ( auto& product : this->products() ) {
+
+          if ( product.distributionData().has_value() ) {
+
+            product.averageEnergy( std::visit( calculateAverageEnergy,
+                                               product.distributionData().value() ) );
+          }
+        }
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
