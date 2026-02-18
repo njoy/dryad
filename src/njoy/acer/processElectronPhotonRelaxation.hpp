@@ -2,11 +2,14 @@
 #define NJOY_ACER_PROCESSELECTRONPHOTONRELAXATION
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
+#include "tools/overload.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
+#include "njoy/dryad/external/ComptonProfiles.hpp"
 #include "njoy/dryad/format/ace.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
@@ -46,12 +49,33 @@ namespace acer {
     //! @todo verify if Compton profiles are present
     //! @todo verify unionisation of the photoatomic and electroatomic data
     //! @todo verify if binding energies of shells appear in total ionisation as jumps
+    //! @todo verify that average energies have been calculated
     //! @todo verify normalisation?
 
-    bool relativistic = true;
+    // a useful lambda
+    auto hasRelativisticSubshells = tools::overload{
+
+      [] ( const dryad::IncoherentDistributionData& incoherent ) -> bool {
+
+        return std::all_of( incoherent.comptonProfiles()->begin(),
+                            incoherent.comptonProfiles()->end(),
+                            [] ( auto&& profile ) { return profile.subshellIdentifier().isRelativistic(); } );
+      },
+      [] ( auto&& ) -> bool {
+
+        throw std::runtime_error( "Expected incoherent scattering data, found something else" );
+      }
+    };
+
+    // determine the type of Compton profile
+    decltype(auto) projectile = photoatomic.projectileIdentifier();
+    decltype(auto) target = photoatomic.targetIdentifier();
+    dryad::id::ReactionID incoherent_id( projectile, target, dryad::id::ReactionType( projectile, 504 ) );
+    decltype(auto) photon = photoatomic.reaction( incoherent_id ).product( projectile ).distributionData().value();
+    bool relativistic = std::visit( hasRelativisticSubshells, photon );
 
     unsigned int z = photoatomic.targetIdentifier().z();
-    ACEtk::Table::Header header;
+    ACEtk::Table::Header header( std::to_string( z * 1000 ) + ".25p", 0., 0., "", "", std::to_string( z * 100 ) );
     std::vector< unsigned int > za = {};
     std::vector< double > awr = {};
 
