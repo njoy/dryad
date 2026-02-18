@@ -395,7 +395,7 @@ namespace h0 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -1.022e+6, WithinRel( reaction.reactionQValue().value() ) );
+    CHECK_THAT( -2 * njoy::constants::electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 217 == reaction.crossSection().numberPoints() );
@@ -425,7 +425,7 @@ namespace h0 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -1.022e+6, WithinRel( reaction.reactionQValue().value() ) );
+    CHECK_THAT( -2 * njoy::constants::electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 308 == reaction.crossSection().numberPoints() );
