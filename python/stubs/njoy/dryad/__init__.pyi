@@ -367,6 +367,22 @@ class IncoherentDistributionData:
         ...
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
+    @typing.overload
+    def average_energy(self, energy: float) -> float:
+        """
+        Parameters 
+        ---------- 
+            energy : float 
+                 the incident energy
+        """
+    @typing.overload
+    def average_energy(self, energies: list[float]) -> list[float]:
+        """
+        Parameters 
+        ---------- 
+            energies : list of float 
+                 the incident energies
+        """
     def normalise(self) -> None:
         """
         Normalise the Compton profiles
