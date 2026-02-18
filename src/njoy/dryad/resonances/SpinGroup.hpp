@@ -183,26 +183,29 @@ namespace resonances {
      */
     void crossSections( std::vector<double>& energies, std::map< id::ReactionID, std::vector<double> >& xs ) {
 
-      std::map< id::ReactionID, double > temp_xs;
+      std::map< id::ReactionID, double > single_xs; 
       const std::size_t n_energies = energies.size();
 
-      // for each energy, compute xs and 
+      // for each energy, compute xs and insert in main container
       for (std::size_t i = 0; i < n_energies; ++i) {
         std::visit( [&] ( auto&& calculator ) {
 
                       return calculator.crossSections( energies[i], this->channels(),
-                                                      this->resonanceTable(), temp_xs );
+                                                      this->resonanceTable(), single_xs );
                     },
                     this->calculator_ );
+        
+        for ( const auto& [reaction_id, cross_section] : single_xs) {
 
-        for ( const auto& [reaction_id, cross_section] : temp_xs) {
           auto& v = xs[reaction_id];
     
-          if (v.empty()) v.resize(n_energies, 0.0);
+          if (v.empty()) {
+            v.resize(n_energies, 0.0);
+          }
 
           v[i] += cross_section;
         }
-        temp_xs.clear();
+        single_xs.clear();
       }
     }
 
