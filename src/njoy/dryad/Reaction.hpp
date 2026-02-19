@@ -333,12 +333,25 @@ namespace dryad {
 
         [&] ( const IncoherentDistributionData& distribution ) -> std::optional< TabulatedAverageEnergy > {
 
+          // incoherent distribution data can calculate its own average energy for
+          // a given set of energy values, use the cross section energy grid
+
+          //! @todo interpolation type?
+
           std::vector< double > energies = this->crossSection().energies();
           std::vector< double > values = distribution.averageEnergy( energies );
-          std::vector< std::size_t > boundaries = this->crossSection().boundaries();
-          std::vector< InterpolationType > interpolants = this->crossSection().interpolants();
-          return TabulatedAverageEnergy( std::move( energies ), std::move( values ),
-                                         std::move( boundaries ), std::move( interpolants ) );
+          return TabulatedAverageEnergy( std::move( energies ), std::move( values ) );
+        },
+        [&] ( const CoherentDistributionData& distribution ) -> std::optional< TabulatedAverageEnergy > {
+
+          // coherent distribution data does not modify the outgoing energy grid,
+          // use the cross section energy grid
+
+          //! @todo interpolation type?
+
+          std::vector< double > energies = this->crossSection().energies();
+          std::vector< double > values = energies;
+          return TabulatedAverageEnergy( std::move( energies ), std::move( values ) );
         },
         [] ( const auto& ) -> std::optional< TabulatedAverageEnergy > {
 
