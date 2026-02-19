@@ -193,6 +193,12 @@ void wrapReaction( python::module& module ) {
     "normalise",
     &Component::normalise,
     "Normalise the distribution data"
+  )
+  .def(
+
+    "calculate_average_energy",
+    &Component::calculateAverageEnergy,
+    "Calculate average outgoing energies for all reaction products"
   );
 
   // add standard equality comparison definitions
