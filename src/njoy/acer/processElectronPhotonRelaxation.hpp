@@ -23,12 +23,17 @@ namespace acer {
    *  @param[in] electroatomic   the electroatomic projectile-target data
    *  @param[in] relaxation      the atomic relaxation data
    *  @param[in] filename        the filename for the ace file
+   *
+   *  number, date and title are temporary so we can produce the eprdata files
    */
   inline void
   processElectronPhotonRelaxation( const dryad::ProjectileTarget& photoatomic,
                                    const dryad::ProjectileTarget& electroatomic,
                                    const dryad::AtomicRelaxation& relaxation,
-                                   const std::string& filename ) {
+                                   const std::string& filename,
+                                   int number,
+                                   std::string date,
+                                   std::string title ) {
 
     if ( photoatomic.interactionType() != dryad::InteractionType::Atomic ||
          photoatomic.projectileIdentifier() != dryad::id::ParticleID::photon() ) {
@@ -75,7 +80,9 @@ namespace acer {
     bool relativistic = std::visit( hasRelativisticSubshells, photon );
 
     unsigned int z = photoatomic.targetIdentifier().z();
-    ACEtk::Table::Header header( std::to_string( z * 1000 ) + ".25p", 0., 0., "", "", std::to_string( z * 100 ) );
+    ACEtk::Table::Header header( std::to_string( z * 1000 ) + '.' + std::to_string( number ) + 'p',
+                                 photoatomic.documentation().awr().value(), 0.,
+                                 std::move( date ), std::move( title ), std::to_string( z * 100 ) );
     std::vector< unsigned int > za = {};
     std::vector< double > awr = {};
 
