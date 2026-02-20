@@ -149,6 +149,7 @@ add_cpp_test( dryad.format.ace.electroatomic.createReactions                    
 add_cpp_test( dryad.format.ace.electroatomic.createProjectileTarget                     dryad/format/ace/electroatomic/createProjectileTarget.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createReactionIdentifiers                    dryad/format/ace/photoatomic/createReactionIdentifiers.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createTabulatedComptonProfile                dryad/format/ace/photoatomic/createTabulatedComptonProfile.test.cpp )
+add_cpp_test( dryad.format.ace.photoatomic.createTabulatedComptonProfiles               dryad/format/ace/photoatomic/createTabulatedComptonProfiles.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createPartialReactionIdentifiers             dryad/format/ace/photoatomic/createPartialReactionIdentifiers.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createTabulatedCrossSections                 dryad/format/ace/photoatomic/createTabulatedCrossSections.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createReactionProducts                       dryad/format/ace/photoatomic/createReactionProducts.test.cpp )
