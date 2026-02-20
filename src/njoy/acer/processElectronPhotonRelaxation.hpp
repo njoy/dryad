@@ -23,8 +23,12 @@ namespace acer {
    *  @param[in] electroatomic   the electroatomic projectile-target data
    *  @param[in] relaxation      the atomic relaxation data
    *  @param[in] filename        the filename for the ace file
+   *  @param[in] number          the extension number (above 0, less than 100)
+   *  @param[in] date            the processing date
+   *  @param[in] title           the ace file title
    *
-   *  number, date and title are temporary so we can produce the eprdata files
+   *  number, date and title are for the header and are temporary so we can
+   *  produce the eprdata files
    */
   inline void
   processElectronPhotonRelaxation( const dryad::ProjectileTarget& photoatomic,
@@ -52,6 +56,8 @@ namespace acer {
     }
 
     //! @todo verify if Compton profiles are present
+    //! @todo verify if the number of Compton profiles is the same as the number of shells in
+    //!       the relaxation data (relativistic only)
     //! @todo verify unionisation of the photoatomic and electroatomic data
     //! @todo verify if binding energies of shells appear in total ionisation as jumps
     //! @todo verify that average energies have been calculated
