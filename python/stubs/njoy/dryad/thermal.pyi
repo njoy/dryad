@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['IncoherentElasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedEffectiveTemperature']
+__all__: list[str] = ['IncoherentElasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedEffectiveTemperature', 'TabulatedScatteringFunction']
 class IncoherentElasticScattering:
     """
     Incoherent elastic thermal scattering data
@@ -328,4 +328,143 @@ class TabulatedEffectiveTemperature:
     def values(self) -> list[float]:
         """
         The effective temperatur values
+        """
+class TabulatedScatteringFunction:
+    """
+    A tabulated scattering function S(alpha)
+    
+    Parameters
+    ----------
+        momentum_transfers : list of float
+             the momentum transfer values
+        values : list of float
+             the scattering function values
+        boundaries : list of int
+             the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+             the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+             the interpolation type (default lin-lin)
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    @typing.overload
+    def __add__(self, arg0: TabulatedScatteringFunction) -> TabulatedScatteringFunction:
+        ...
+    def __call__(self, momentum_transfer: float) -> float:
+        """
+        Evaluate the scattering function for a given momentum transfer value
+        
+        Parameters
+        ----------
+            momentum_transfer : float
+                the momentum transfer value
+        """
+    def __copy__(self) -> TabulatedScatteringFunction:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedScatteringFunction:
+        ...
+    def __eq__(self, arg0: TabulatedScatteringFunction) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedScatteringFunction) -> TabulatedScatteringFunction:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    @typing.overload
+    def __init__(self, momentum_transfers: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the scattering function table with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, momentum_transfers: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the scattering function table with a single interpolation zone
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: TabulatedScatteringFunction) -> TabulatedScatteringFunction:
+        ...
+    def __itruediv__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    def __mul__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    def __ne__(self, arg0: TabulatedScatteringFunction) -> bool:
+        ...
+    def __neg__(self) -> TabulatedScatteringFunction:
+        ...
+    def __radd__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    def __rmul__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    def __rsub__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: TabulatedScatteringFunction) -> TabulatedScatteringFunction:
+        ...
+    def __truediv__(self, arg0: float) -> TabulatedScatteringFunction:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> TabulatedScatteringFunction:
+        """
+        Linearise the table
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def is_linearised(self) -> bool:
+        """
+        Flag indicating whether or not the table is linearised
+        """
+    @property
+    def lower_momentum_transfer_limit(self) -> float:
+        """
+        The lower momentum transfer limit
+        """
+    @property
+    def momentum_transfers(self) -> list[float]:
+        """
+        The momentum transfer values
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
+    @property
+    def upper_momentum_transfer_limit(self) -> float:
+        """
+        The upper momentum transfer limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The scattering function values
         """
