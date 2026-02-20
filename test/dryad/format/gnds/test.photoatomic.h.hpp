@@ -390,6 +390,9 @@ namespace h0 {
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+
+    CHECK( false == data.hasComptonProfiles() );
+    CHECK( std::nullopt == data.comptonProfiles() );
   }
 
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {

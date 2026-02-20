@@ -166,6 +166,49 @@ namespace h {
     CHECK( 20 == data.scatteringFunction().boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
     CHECK( true == data.scatteringFunction().isLinearised() );
+
+
+    CHECK( true == data.hasComptonProfiles() );
+    CHECK( 1 == data.comptonProfiles().value().size() );
+
+    auto profile = data.comptonProfiles().value()[0];
+    CHECK( id::ElectronSubshellID( "1s1/2" ) == profile.subshellIdentifier() );
+    CHECK( 31 == profile.momentum().size() );
+    CHECK( 31 == profile.values().size() );
+    CHECK( 1 == profile.boundaries().size() );
+    CHECK( 1 == profile.interpolants().size() );
+    CHECK_THAT( 0.  , WithinRel( profile.momentum().front() ) );
+    CHECK_THAT( 100., WithinRel( profile.momentum().back() ) );
+    CHECK_THAT( 1.690581458877      , WithinRel( profile.values().front() ) );
+    CHECK_THAT( 5.17728126393395e-11, WithinRel( profile.values().back() ) );
+    CHECK( 30 == profile.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == profile.interpolants()[0] );
+    auto pdf = profile.pdf();
+    CHECK_THAT( 0.  , WithinRel( pdf.lowerMomentumLimit() ) );
+    CHECK_THAT( 100., WithinRel( pdf.upperMomentumLimit() ) );
+    CHECK( 31 == pdf.momentum().size() );
+    CHECK( 31 == pdf.values().size() );
+    CHECK( 1 == pdf.boundaries().size() );
+    CHECK( 1 == pdf.interpolants().size() );
+    CHECK_THAT( 0.  , WithinRel( pdf.momentum().front() ) );
+    CHECK_THAT( 100., WithinRel( pdf.momentum().back() ) );
+    CHECK_THAT( 1.690581458877      , WithinRel( pdf.values().front() ) );
+    CHECK_THAT( 5.17728126393395e-11, WithinRel( pdf.values().back() ) );
+    CHECK( 30 == pdf.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == pdf.interpolants()[0] );
+    auto cdf = profile.cdf();
+    CHECK_THAT( 0.  , WithinRel( cdf.lowerMomentumLimit() ) );
+    CHECK_THAT( 100., WithinRel( cdf.upperMomentumLimit() ) );
+    CHECK( 31 == cdf.momentum().size() );
+    CHECK( 31 == cdf.values().size() );
+    CHECK( 1 == cdf.boundaries().size() );
+    CHECK( 1 == cdf.interpolants().size() );
+    CHECK_THAT( 0.  , WithinRel( cdf.momentum().front() ) );
+    CHECK_THAT( 100., WithinRel( cdf.momentum().back() ) );
+    CHECK_THAT( 0., WithinRel( cdf.values().front() ) );
+    CHECK_THAT( 1., WithinRel( cdf.values().back() ) );
+    CHECK( 30 == cdf.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == cdf.interpolants()[0] );
   }
 
   void verifyPairProductionReaction( const Reaction& reaction ) {
