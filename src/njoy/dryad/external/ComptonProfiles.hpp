@@ -42,6 +42,18 @@ namespace external {
     /* methods */
 
     /**
+     *  @brief Return the electron subshell identifiers for a given z number
+     *         for which Biggs, Mendelsohn and Mann Compton profiles are available
+     *
+     *  @param[in] z   the z number of the atom
+     */
+    static std::vector< id::ElectronSubshellID >
+    biggsMendelsohnMannSubshellIdentifiers( unsigned int z ) {
+
+      return biggs_mendelsohn_mann_shells.at( z );
+    }
+
+    /**
      *  @brief Return Biggs, Mendelsohn and Mann Compton profiles for a given z number
      *
      *  @param[in] z           the z number of the atom

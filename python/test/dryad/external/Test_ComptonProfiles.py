@@ -93,7 +93,13 @@ class Test_ComptonProfiles( unittest.TestCase ) :
             self.assertAlmostEqual( 30, chunk[0].boundaries[0] )
             self.assertAlmostEqual( InterpolationType.LinearLinear, chunk[0].interpolants[0] )
 
-        # the data is given explicitly using a normalised table
+        # Biggs, Mendelsohn and Mann identifiers can be retrieved
+        chunk = ComptonProfiles.biggs_mendelsohn_mann_subshell_identifiers( z = 1 )
+
+        self.assertEqual( 1, len( chunk ) )
+        self.assertEqual( ElectronSubshellID( '1s' ), chunk[0] )
+
+        # Biggs, Mendelsohn and Mann profiles can be constructed
         chunk1 = ComptonProfiles.biggs_mendelsohn_mann_profiles( z = 1, normalise = False )
         chunk2 = ComptonProfiles.biggs_mendelsohn_mann_profiles( z = 1, normalise = True )
 
