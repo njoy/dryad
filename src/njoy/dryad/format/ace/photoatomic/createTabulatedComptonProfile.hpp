@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CREATETABULATEDECOMPTONPROFILE
-#define NJOY_DRYAD_FORMAT_ACE_CREATETABULATEDECOMPTONPROFILE
+#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATETABULATEDECOMPTONPROFILE
+#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATETABULATEDECOMPTONPROFILE
 
 // system includes
 #include <vector>
@@ -21,7 +21,8 @@ namespace photoatomic {
   /**
    *  @brief Create TabulatedComptonProfile instances from ACE data
    *
-   *  @param[in] profiles   the Compton profile block
+   *  @param[in] subshellIdentifier   the subshell identifier
+   *  @param[in] profile              a Compton profile instance
    */
   inline TabulatedComptonProfile
   createTabulatedComptonProfile(
