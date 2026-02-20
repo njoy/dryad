@@ -404,6 +404,11 @@ class IncoherentDistributionData:
     def frame(self, arg1: ReferenceFrame) -> None:
         ...
     @property
+    def has_compton_profiles(self) -> bool:
+        """
+        Flag indicating whether or not there are Compton profiles
+        """
+    @property
     def scattering_function(self) -> TabulatedScatteringFunction:
         """
         The scattering function
