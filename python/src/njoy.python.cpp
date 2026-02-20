@@ -7,10 +7,14 @@
 // namespace aliases
 namespace python = pybind11;
 
+// declarations - constants
+void wrapConstants( python::module& );
+
 // declarations - matrix functions
 void wrapMatrix( python::module& );
 
 // declarations - components and modules
+void wrapAcer( python::module& );
 void wrapDryad( python::module& );
 void wrapReconr( python::module& );
 void wrapMedic( python::module& );
@@ -23,6 +27,9 @@ void wrapMedic( python::module& );
  */
 PYBIND11_MODULE( njoy, module ) {
 
+  // wrap constants
+  wrapConstants( module );
+
   // wrap matrix functions
   wrapMatrix( module );
 
@@ -34,4 +41,7 @@ PYBIND11_MODULE( njoy, module ) {
 
   // wrap medic
   wrapMedic( module );
+
+  // wrap acer
+  wrapAcer( module );
 }
