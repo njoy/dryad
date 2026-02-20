@@ -19,3 +19,4 @@ Methods
     :toctree: generated/
 
     ~ComptonProfiles.biggs_mendelsohn_mann_profiles
+    ~ComptonProfiles.apply
