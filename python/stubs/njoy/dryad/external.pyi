@@ -3,6 +3,7 @@ External data and models
 """
 from __future__ import annotations
 import njoy.dryad
+import njoy.dryad.id
 __all__: list[str] = ['ComptonProfiles']
 class ComptonProfiles:
     """
@@ -40,8 +41,19 @@ class ComptonProfiles:
         Parameters
         ----------
             z : int
-                 the cosine values
+                 z number of the atom
             normalise : bool, default false
                 option to indicate whether or not to normalise
                 all probability data (default: no normalisation)
+        """
+    @staticmethod
+    def biggs_mendelsohn_mann_subshell_identifiers(z: int) -> list[njoy.dryad.id.ElectronSubshellID]:
+        """
+        Return the electron subshell identifiers for a given z number 
+        for which Biggs, Mendelsohn and Mann Compton profiles are available
+        
+        Parameters
+        ----------
+            z : int
+                 the z number of the atom
         """
