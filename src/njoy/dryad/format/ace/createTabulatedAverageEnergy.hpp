@@ -61,7 +61,7 @@ namespace ace {
    *
    *  @param[in] block   the electroatomic Bremsstrahlung energy block
    */
-  TabulatedAverageEnergy
+  inline TabulatedAverageEnergy
   createTabulatedAverageEnergy(
       const njoy::ACEtk::electroatomic::BremsstrahlungBlock& block ) {
 

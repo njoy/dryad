@@ -59,7 +59,7 @@ namespace electroatomic {
   /**
    *  @brief Create a pdf from a cdf
    */
-  TabulatedEnergyDistributionFunction
+  inline TabulatedEnergyDistributionFunction
   createPdfFromCdf( const TabulatedEnergyDistributionFunction& cdf ) {
 
     if ( ( cdf.numberRegions() != 1 ) ||
