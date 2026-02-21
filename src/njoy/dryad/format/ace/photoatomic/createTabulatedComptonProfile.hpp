@@ -42,8 +42,8 @@ namespace photoatomic {
                  momentum, std::move( pdf ),
                  boundaries, interpolants ),
                TabulatedComptonProfileFunction(
-                 std::move( momentum ), std::move( cdf ),
-                 std::move( boundaries ), std::move( interpolants ) ) );
+                 momentum, std::move( cdf ),
+                 boundaries, interpolants ) );
     }
     catch ( ... ) {
 
