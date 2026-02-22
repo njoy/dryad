@@ -37,7 +37,7 @@ namespace photoatomic {
       std::vector< std::size_t > boundaries = { momentum.size() - 1 };
       std::vector< InterpolationType > interpolants = { endf::createInterpolant( profile.interpolation() ) };
       return TabulatedComptonProfile(
-               subshellIdentifier,
+               std::move( subshellIdentifier ),
                TabulatedComptonProfileFunction(
                  momentum, std::move( pdf ),
                  boundaries, interpolants ),
