@@ -43,9 +43,9 @@ namespace photoatomic {
 
     // read the profiles
     std::vector< TabulatedComptonProfile > profiles;
-    for ( std::size_t i = 1; i <= block.numberElectronShells(); ++i ) {
+    for ( std::size_t i = 0; i < block.numberElectronShells(); ++i ) {
 
-      profiles.emplace_back( createTabulatedComptonProfile( identifiers[i], block.comptonProfile( i ) ) );
+      profiles.emplace_back( createTabulatedComptonProfile( identifiers[i], block.comptonProfile( i + 1 ) ) );
     }
 
     return profiles;
