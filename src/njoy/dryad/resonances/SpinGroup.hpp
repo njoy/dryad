@@ -176,6 +176,40 @@ namespace resonances {
     }
 
     /**
+     *  @brief Calculate the cross section values for a list of energies
+     *
+     *  @param[in] energies   the energies
+     *  @param[in] xs         the cross sections
+     */
+    void crossSections( std::vector<double>& energies, std::map< id::ReactionID, std::vector<double> >& xs ) {
+
+      std::map< id::ReactionID, double > single_xs; 
+      const std::size_t n_energies = energies.size();
+
+      // for each energy, compute xs and insert in main container
+      for (std::size_t i = 0; i < n_energies; ++i) {
+        std::visit( [&] ( auto&& calculator ) {
+
+                      return calculator.crossSections( energies[i], this->channels(),
+                                                      this->resonanceTable(), single_xs );
+                    },
+                    this->calculator_ );
+        
+        for ( const auto& [reaction_id, cross_section] : single_xs) {
+
+          auto& v = xs[reaction_id];
+    
+          if (v.empty()) {
+            v.resize(n_energies, 0.0);
+          }
+
+          v[i] += cross_section;
+        }
+        single_xs.clear();
+      }
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side
