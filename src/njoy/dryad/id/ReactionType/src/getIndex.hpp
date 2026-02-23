@@ -40,9 +40,9 @@ static std::size_t getIndex( const ParticleID& projectile, int mt, int level ) {
       else if ( projectile == ParticleID::photon() )   { return 30 + level; }
       else if ( projectile == ParticleID::proton() )   { return 258 + level; }
       else if ( projectile == ParticleID::deuteron() ) { return 375 + level; }
-      else if ( projectile == ParticleID::triton() )   { return 484 + level; }
-      else if ( projectile == ParticleID::helion() )   { return 596 + level; }
-      else if ( projectile == ParticleID::alpha() )    { return 707 + level; }
+      else if ( projectile == ParticleID::triton() )   { return 485 + level; }
+      else if ( projectile == ParticleID::helion() )   { return 597 + level; }
+      else if ( projectile == ParticleID::alpha() )    { return 708 + level; }
     }
 
     throw std::invalid_argument( "Elastic scattering using mt = 2 for \'" + projectile.symbol() + "\' "
@@ -56,8 +56,8 @@ static std::size_t getIndex( const ParticleID& projectile, int mt, int level ) {
   else {
 
     std::size_t offset = 0;
-    if      ( projectile == ParticleID::electron() ) { offset = 899; }
-    else if ( projectile == ParticleID::photon() )   { offset = 849; }
+    if      ( projectile == ParticleID::electron() ) { offset = 900; }
+    else if ( projectile == ParticleID::photon() )   { offset = 850; }
     else {
 
       throw std::invalid_argument( "Ionisation is not defined for \'" + projectile.symbol() + "\'" );
