@@ -192,7 +192,6 @@ namespace resonances {
         for ( const auto& [reaction_id, cross_section] : result ) {
 
           auto& v = xs[reaction_id];
-
           if ( v.empty() ) {
 
             v.resize( energies.size(), 0.0 );
@@ -205,7 +204,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Evaluate and return the R_L matrix
+     *  @brief Calculate the R_L matrix at a given energy
      *
      *  The R_L matrix is defined as ( 1 - RL )^-1 R in which R is the
      *  R matrix and L is a diagonal matrix defined as S - B + iP with
@@ -225,7 +224,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Evaluate and return the T or X matrix
+     *  @brief Calculate the T or X matrix at a given energy
      *
      *  The T or X matrix is defined as P^1/2 ( 1 - RL )^-1 R P^1/2 in which
      *  P is a diagonal matrix of the penetrabilities of each channel, R is the
@@ -246,7 +245,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Evaluate and return the W matrix
+     *  @brief Calculate the W matrix at a given energy
      *
      *  The W matrix is defined as I + 2 i P^1/2 ( 1 - RL )^-1 R P^1/2 in which
      *  I is the identity matrix, P is a diagonal matrix of the penetrabilities of
@@ -268,7 +267,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief Evaluate and return the U or S matrix
+     *  @brief Calculate the U or S matrix at a given energy
      *
      *  The U or S matrix is defined as omega W omega
      *  in which omega is a diagonal matrix equal to exp( i ( w - phi ) ) with w

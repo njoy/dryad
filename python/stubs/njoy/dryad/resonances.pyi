@@ -4,6 +4,7 @@ Resonance data
 from __future__ import annotations
 import njoy.dryad
 import njoy.dryad.id
+import numpy
 import pybind11_stubgen.typing_ext
 import typing
 __all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
@@ -485,6 +486,7 @@ class CompoundSystem:
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
+    @typing.overload
     def cross_sections(self, energy: float) -> dict[njoy.dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
@@ -492,6 +494,15 @@ class CompoundSystem:
         Arguments:
             self     the spin group
             energy   the energy
+        """
+    @typing.overload
+    def cross_sections(self, energies: list[float]) -> dict[njoy.dryad.id.ReactionID, list[float]]:
+        """
+        Calculate the cross section values for a list of energies
+        
+        Arguments:
+            self     the spin group
+            energy   the list of energies
         """
     @property
     def lower_energy_limit(self) -> float:
@@ -1263,9 +1274,70 @@ class SpinGroup:
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
+    @typing.overload
     def cross_sections(self, energy: float) -> dict[njoy.dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+        """
+    @typing.overload
+    def cross_sections(self, energies: list[float]) -> dict[njoy.dryad.id.ReactionID, list[float]]:
+        """
+        Calculate the cross section values for a list of energies
+        
+        Arguments:
+            self      the spin group
+            energies  the list of energies
+        """
+    def r_l_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
+        """
+        Calculate the R_L matrix at a given energy
+        
+        The R_L matrix is defined as ( 1 - RL )^-1 R in which R is the
+        R matrix and L is a diagonal matrix defined as S - B + iP with
+        S the shift factor and B the boundary condition of the channel.
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+        """
+    def t_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
+        """
+        Calculate the T or X matrix at a given energy
+        
+        The T or X matrix is defined as P^1/2 ( 1 - RL )^-1 R P^1/2 in which
+        P is a diagonal matrix of the penetrabilities of each channel, R is the
+        R matrix and L is a diagonal matrix defined as S - B + iP with S the shift
+        factor and B the boundary condition of the channel.
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+        """
+    def u_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
+        """
+        Calculate the U or S matrix at a given energy
+        
+        The U or S matrix is defined as omega W omega in which omega is a diagonal
+        matrix equal to exp( i ( w - phi ) ) with w the Coulomb phase shift difference
+        and phi the phase shift.
+        
+        Arguments:
+            self     the spin group
+            energy   the energy
+        """
+    def w_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
+        """
+        Calculate the W matrix at a given energy
+        
+        The W matrix is defined as I + 2 i P^1/2 ( 1 - RL )^-1 R P^1/2 in which
+        I is the identity matrix, P is a diagonal matrix of the penetrabilities of
+        each channel, R is the R matrix and L is a diagonal matrix defined as
+        S - B + iP with S the shift factor and B the boundary condition of the
+        channel.
         
         Arguments:
             self     the spin group
