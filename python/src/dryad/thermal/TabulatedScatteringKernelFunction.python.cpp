@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/thermal/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/thermal/TabulatedScatteringKernelFunction.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,10 +12,10 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapTabulatedScatteringFunction( python::module& module ) {
+void wrapTabulatedScatteringKernelFunction( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::thermal::TabulatedScatteringFunction;
+  using Component = njoy::dryad::thermal::TabulatedScatteringKernelFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
 
   // wrap views created by this component
@@ -24,7 +24,7 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedScatteringFunction",
+    "TabulatedScatteringKernelFunction",
     "A tabulated scattering function S(alpha)\n\n"
     "Parameters\n"
     "----------\n"

@@ -17,7 +17,7 @@ namespace thermal {
    *  @class
    *  @brief A tabulated scattering function S(alpha)
    */
-  class TabulatedScatteringFunction  :
+  class TabulatedScatteringKernelFunction  :
       protected scion::math::InterpolationTable< double, double > {
 
   public:
@@ -28,7 +28,7 @@ namespace thermal {
 
     /* constructor */
 
-    #include "njoy/dryad/thermal/TabulatedScatteringFunction/src/ctor.hpp"
+    #include "njoy/dryad/thermal/TabulatedScatteringKernelFunction/src/ctor.hpp"
 
     /* methods */
 
@@ -77,11 +77,11 @@ namespace thermal {
      *
      *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-    TabulatedScatteringFunction linearise( double tolerance = constants::linearisation::tolerance ) const {
+    TabulatedScatteringKernelFunction linearise( double tolerance = constants::linearisation::tolerance ) const {
 
       using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
       auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
-      return TabulatedScatteringFunction( std::move( table ) );
+      return TabulatedScatteringKernelFunction( std::move( table ) );
     }
 
     /**
@@ -89,7 +89,7 @@ namespace thermal {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction& operator+=( double right ) {
+    TabulatedScatteringKernelFunction& operator+=( double right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
@@ -100,7 +100,7 @@ namespace thermal {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction& operator-=( double right ) {
+    TabulatedScatteringKernelFunction& operator-=( double right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
@@ -111,7 +111,7 @@ namespace thermal {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction& operator*=( double right ) {
+    TabulatedScatteringKernelFunction& operator*=( double right ) {
 
       InterpolationTable::operator*=( right );
       return *this;
@@ -122,48 +122,48 @@ namespace thermal {
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction& operator/=( double right ) {
+    TabulatedScatteringKernelFunction& operator/=( double right ) {
 
       InterpolationTable::operator/=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedScatteringFunction and scalar addition
+     *  @brief TabulatedScatteringKernelFunction and scalar addition
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction operator+( double right ) const {
+    TabulatedScatteringKernelFunction operator+( double right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedScatteringFunction and scalar subtraction
+     *  @brief TabulatedScatteringKernelFunction and scalar subtraction
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction operator-( double right ) const {
+    TabulatedScatteringKernelFunction operator-( double right ) const {
 
       return InterpolationTable::operator-( right );
     }
 
     /**
-     *  @brief TabulatedScatteringFunction and scalar multiplication
+     *  @brief TabulatedScatteringKernelFunction and scalar multiplication
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction operator*( double right ) const {
+    TabulatedScatteringKernelFunction operator*( double right ) const {
 
       return InterpolationTable::operator*( right );
     }
 
     /**
-     *  @brief TabulatedScatteringFunction and scalar division
+     *  @brief TabulatedScatteringKernelFunction and scalar division
      *
      *  @param[in] right    the scalar
      */
-    TabulatedScatteringFunction operator/( double right ) const {
+    TabulatedScatteringKernelFunction operator/( double right ) const {
 
       return InterpolationTable::operator/( right );
     }
@@ -171,49 +171,49 @@ namespace thermal {
     /**
      *  @brief Unary minus
      */
-    TabulatedScatteringFunction operator-() const {
+    TabulatedScatteringKernelFunction operator-() const {
 
       return InterpolationTable::operator-();
     }
 
     /**
-     *  @brief Inplace TabulatedScatteringFunction addition
+     *  @brief Inplace TabulatedScatteringKernelFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedScatteringFunction& operator+=( const TabulatedScatteringFunction& right ) {
+    TabulatedScatteringKernelFunction& operator+=( const TabulatedScatteringKernelFunction& right ) {
 
       InterpolationTable::operator+=( right );
       return *this;
     }
 
     /**
-     *  @brief Inplace TabulatedScatteringFunction subtraction
+     *  @brief Inplace TabulatedScatteringKernelFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedScatteringFunction& operator-=( const TabulatedScatteringFunction& right ) {
+    TabulatedScatteringKernelFunction& operator-=( const TabulatedScatteringKernelFunction& right ) {
 
       InterpolationTable::operator-=( right );
       return *this;
     }
 
     /**
-     *  @brief TabulatedScatteringFunction and TabulatedScatteringFunction addition
+     *  @brief TabulatedScatteringKernelFunction and TabulatedScatteringKernelFunction addition
      *
      *  @param[in] right    the table
      */
-    TabulatedScatteringFunction operator+( const TabulatedScatteringFunction& right ) const {
+    TabulatedScatteringKernelFunction operator+( const TabulatedScatteringKernelFunction& right ) const {
 
       return InterpolationTable::operator+( right );
     }
 
     /**
-     *  @brief TabulatedScatteringFunction and TabulatedScatteringFunction subtraction
+     *  @brief TabulatedScatteringKernelFunction and TabulatedScatteringKernelFunction subtraction
      *
      *  @param[in] right    the table
      */
-    TabulatedScatteringFunction operator-( const TabulatedScatteringFunction& right ) const {
+    TabulatedScatteringKernelFunction operator-( const TabulatedScatteringKernelFunction& right ) const {
 
       return InterpolationTable::operator-( right );
     }
@@ -223,7 +223,7 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const TabulatedScatteringFunction& right ) const {
+    bool operator==( const TabulatedScatteringKernelFunction& right ) const {
 
       return InterpolationTable::operator==( right );
     }
@@ -233,30 +233,30 @@ namespace thermal {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const TabulatedScatteringFunction& right ) const {
+    bool operator!=( const TabulatedScatteringKernelFunction& right ) const {
 
       return ! this->operator==( right );
     }
   };
 
   /**
-   *  @brief Scalar and TabulatedScatteringFunction addition
+   *  @brief Scalar and TabulatedScatteringKernelFunction addition
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedScatteringFunction operator+( double left, const TabulatedScatteringFunction& right ) {
+  inline TabulatedScatteringKernelFunction operator+( double left, const TabulatedScatteringKernelFunction& right ) {
 
     return right + left;
   }
 
   /**
-   *  @brief Scalar and TabulatedScatteringFunction subtraction
+   *  @brief Scalar and TabulatedScatteringKernelFunction subtraction
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedScatteringFunction operator-( double left, const TabulatedScatteringFunction& right ) {
+  inline TabulatedScatteringKernelFunction operator-( double left, const TabulatedScatteringKernelFunction& right ) {
 
     auto result = -right;
     result += left;
@@ -264,12 +264,12 @@ namespace thermal {
   }
 
   /**
-   *  @brief Scalar and TabulatedScatteringFunction multiplication
+   *  @brief Scalar and TabulatedScatteringKernelFunction multiplication
    *
    *  @param[in] left    the scalar
    *  @param[in] right   the table
    */
-  inline TabulatedScatteringFunction operator*( double left, const TabulatedScatteringFunction& right ) {
+  inline TabulatedScatteringKernelFunction operator*( double left, const TabulatedScatteringKernelFunction& right ) {
 
     return right * left;
   }

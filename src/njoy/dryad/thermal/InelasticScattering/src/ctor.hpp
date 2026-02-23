@@ -16,6 +16,6 @@ InelasticScattering& operator=( InelasticScattering&& ) = default;
  *  @param selfScatter   the self-scattering S(a,b) function
  */
 InelasticScattering( double xs,
-                     TabulatedScatteringFunctions selfScatter ) :
+                     TabulatedScatteringKernel selfScatter ) :
   bound_xs_( xs ),
   self_scatter_( std::move( selfScatter ) ) {}

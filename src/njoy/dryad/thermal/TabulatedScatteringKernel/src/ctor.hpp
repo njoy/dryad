@@ -1,13 +1,13 @@
 /**
  *  @brief Default constructor (for pybind11 purposes only)
  */
-TabulatedScatteringFunctions() = default;
+TabulatedScatteringKernel() = default;
 
-TabulatedScatteringFunctions( const TabulatedScatteringFunctions& ) = default;
-TabulatedScatteringFunctions( TabulatedScatteringFunctions&& ) = default;
+TabulatedScatteringKernel( const TabulatedScatteringKernel& ) = default;
+TabulatedScatteringKernel( TabulatedScatteringKernel&& ) = default;
 
-TabulatedScatteringFunctions& operator=( const TabulatedScatteringFunctions& ) = default;
-TabulatedScatteringFunctions& operator=( TabulatedScatteringFunctions&& ) = default;
+TabulatedScatteringKernel& operator=( const TabulatedScatteringKernel& ) = default;
+TabulatedScatteringKernel& operator=( TabulatedScatteringKernel&& ) = default;
 
 /**
  *  @brief Constructor
@@ -17,10 +17,10 @@ TabulatedScatteringFunctions& operator=( TabulatedScatteringFunctions&& ) = defa
  *  @param boundaries        the boundaries of the interpolation regions
  *  @param interpolants      the interpolation types of the interpolation regions
  */
-TabulatedScatteringFunctions( std::vector< double > energyTransfers,
-                              std::vector< TabulatedScatteringFunction > functions,
-                              std::vector< std::size_t > boundaries,
-                              std::vector< InterpolationType > interpolants ) :
+TabulatedScatteringKernel( std::vector< double > energyTransfers,
+                           std::vector< TabulatedScatteringKernelFunction > functions,
+                           std::vector< std::size_t > boundaries,
+                           std::vector< InterpolationType > interpolants ) :
   Parent( std::move( energyTransfers ), std::move( functions ),
           std::move( boundaries ), std::move( interpolants ) ) {}
 
@@ -31,7 +31,7 @@ TabulatedScatteringFunctions( std::vector< double > energyTransfers,
  *  @param functions         the associated functions
  *  @param interpolant       the interpolation type of the data (default lin-lin)
  */
-TabulatedScatteringFunctions( std::vector< double > energyTransfers,
-                              std::vector< TabulatedScatteringFunction > functions,
-                              InterpolationType interpolant = InterpolationType::LinearLinear ) :
+TabulatedScatteringKernel( std::vector< double > energyTransfers,
+                           std::vector< TabulatedScatteringKernelFunction > functions,
+                           InterpolationType interpolant = InterpolationType::LinearLinear ) :
   Parent( std::move( energyTransfers ), std::move( functions ), interpolant ) {}

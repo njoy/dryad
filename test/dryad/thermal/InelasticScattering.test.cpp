@@ -21,7 +21,7 @@ SCENARIO( "InelasticScattering" ) {
     WHEN( "the data is given explicitly" ) {
 
       double xs = 6.337872;
-      TabulatedScatteringFunctions selfScatter(
+      TabulatedScatteringKernel selfScatter(
 
         { 1., 2., 3., 4. },
         { { { 0., 4. }, { 0.5, 0.5 } },
@@ -44,7 +44,7 @@ SCENARIO( "InelasticScattering" ) {
     WHEN( "an instance of InelasticScattering is given" ) {
 
       InelasticScattering chunk( 6.337872,
-                                 TabulatedScatteringFunctions(
+                                 TabulatedScatteringKernel(
 
                                    { 1., 2., 3., 4. },
                                    { { { 0., 4. }, { 0.5, 0.5 } },
@@ -69,13 +69,13 @@ SCENARIO( "InelasticScattering" ) {
 
       THEN( "the scattering functions can be changed" ) {
 
-        TabulatedScatteringFunctions newfunctions(
+        TabulatedScatteringKernel newfunctions(
 
           { 1., 4. },
           { { { 0., 4. }, { 0.5, 0.5 } },
             { { 0., 4. }, { 0.2, 0.8 } } }
         );
-        TabulatedScatteringFunctions original(
+        TabulatedScatteringKernel original(
 
           { 1., 2., 3., 4. },
           { { { 0., 4. }, { 0.5, 0.5 } },
@@ -100,7 +100,7 @@ SCENARIO( "InelasticScattering" ) {
     WHEN( "two instances of InelasticScattering are given" ) {
 
       InelasticScattering left( 6.337872,
-                                TabulatedScatteringFunctions(
+                                TabulatedScatteringKernel(
 
                                   { 1., 2., 3., 4. },
                                   { { { 0., 4. }, { 0.5, 0.5 } },
@@ -109,7 +109,7 @@ SCENARIO( "InelasticScattering" ) {
                                     { { 0., 4. }, { 0.2, 0.8 } } }
                                 ) );
       InelasticScattering equal( 6.337872,
-                                 TabulatedScatteringFunctions(
+                                 TabulatedScatteringKernel(
 
                                    { 1., 2., 3., 4. },
                                    { { { 0., 4. }, { 0.5, 0.5 } },
@@ -118,7 +118,7 @@ SCENARIO( "InelasticScattering" ) {
                                      { { 0., 4. }, { 0.2, 0.8 } } }
                                  ) );
       InelasticScattering different( 6.337872,
-                                     TabulatedScatteringFunctions(
+                                     TabulatedScatteringKernel(
 
                                        { 1., 4. },
                                        { { { 0., 4. }, { 0.5, 0.5 } },
