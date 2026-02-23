@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
 
 // other includes
 
@@ -19,7 +19,7 @@ SCENARIO( "CrossSectionCovarianceData" ) {
 
   GIVEN( "valid data" ) {
 
-    WHEN( "the data is given explicitly as a map" ) {
+    WHEN( "the data is given explicitly" ) {
 
       id::ReactionID capture( "n,H1->g,H2" );
       id::ReactionID elastic( "n,H1->n,H1" );

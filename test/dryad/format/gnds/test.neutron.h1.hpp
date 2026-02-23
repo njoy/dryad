@@ -348,6 +348,10 @@ namespace h1 {
 
     capture = H1.reaction( id::ReactionID( "n,H1->g,H2[all]" ) );
     verifyCaptureReaction( capture );
+
+    CHECK( std::nullopt == H1.resonances() );
+
+    CHECK( std::nullopt == H1.covarianceData() );
   }
 
 } // namespace h1

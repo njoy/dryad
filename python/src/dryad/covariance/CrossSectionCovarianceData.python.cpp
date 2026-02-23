@@ -4,17 +4,18 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
+namespace covariance {
 
 void wrapCrossSectionCovarianceData( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::CrossSectionCovarianceData;
+  using Component = njoy::dryad::covariance::CrossSectionCovarianceData;
   using ReactionID = njoy::dryad::id::ReactionID;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
 
@@ -122,4 +123,5 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
   addStandardCopyDefinitions< Component >( component );
 }
 
+} // covariance namespace
 } // dryad namespace

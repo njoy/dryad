@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_CROSSSECTIONCOVARIANCEDATA
-#define NJOY_DRYAD_CROSSSECTIONCOVARIANCEDATA
+#ifndef NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEDATA
+#define NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEDATA
 
 // system includes
 #include <algorithm>
@@ -9,10 +9,12 @@
 
 // other includes
 #include "tools/overload.hpp"
+#include "njoy/dryad/covariance/LinearCombinationCovariance.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 namespace njoy {
 namespace dryad {
+namespace covariance {
 
   /**
    *  @class
@@ -23,7 +25,7 @@ namespace dryad {
   public:
 
     using Covariance = std::variant< covariance::CrossSectionCovarianceMatrix,
-                                      std::vector< covariance::CrossSectionCovarianceMatrix > >;
+                                     std::vector< covariance::CrossSectionCovarianceMatrix > >;
 
   private:
 
@@ -34,15 +36,15 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/CrossSectionCovarianceData/src/generateCovariances.hpp"
-    #include "njoy/dryad/CrossSectionCovarianceData/src/iterator.hpp"
-    #include "njoy/dryad/CrossSectionCovarianceData/src/compare.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/generateCovariances.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/iterator.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/compare.hpp"
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/CrossSectionCovarianceData/src/ctor.hpp"
+    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/ctor.hpp"
 
     /* methods */
 
@@ -163,6 +165,7 @@ namespace dryad {
     }
   };
 
+} // covariance namespace
 } // dryad namespace
 } // njoy namespace
 

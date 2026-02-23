@@ -12,6 +12,7 @@
 #include "njoy/dryad/InteractionType.hpp"
 #include "njoy/dryad/Documentation.hpp"
 #include "njoy/dryad/Reaction.hpp"
+#include "njoy/dryad/covariance/CovarianceData.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 
@@ -34,6 +35,8 @@ namespace dryad {
 
     std::optional< resonances::ResonanceParameters > resonances_;
     std::vector< Reaction > reactions_;
+
+    std::optional< covariance::CovarianceData > covariances_;
 
     /* auxiliary functions */
 
@@ -225,6 +228,32 @@ namespace dryad {
     Reaction& reaction( const id::ReactionID& id ) {
 
       return const_cast< Reaction& >( const_cast< const ProjectileTarget& >( *this ).reaction( id ) );
+    }
+
+    /**
+     *  @brief Return the covariance data
+     */
+    const std::optional< covariance::CovarianceData >& covarianceData() const {
+
+      return this->covariances_;
+    }
+
+    /**
+     *  @brief Return the covariance data
+     */
+    std::optional< covariance::CovarianceData >& covarianceData() {
+
+      return this->covariances_;
+    }
+
+    /**
+     *  @brief Set the covariance data
+     *
+     *  @param[in] covariances   the covariance data
+     */
+    void covarianceData( std::optional< covariance::CovarianceData > covariances ) {
+
+      this->covariances_ = std::move( covariances );
     }
 
     /**

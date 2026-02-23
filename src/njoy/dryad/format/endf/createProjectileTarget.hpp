@@ -13,6 +13,7 @@
 #include "njoy/dryad/format/endf/createReactions.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/format/endf/resonances/createResonanceParameters.hpp"
+#include "njoy/dryad/format/endf/covariance/createCovarianceData.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
@@ -49,9 +50,11 @@ namespace endf {
 
     std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
 
+    std::optional< dryad::covariance::CovarianceData > covariances = covariance::createCovarianceData( projectile, target, material );
+
     return ProjectileTarget( std::move( documentation ), std::move( projectile ),
                              std::move( target ), type, std::move( reactions ),
-                             std::move( resonances ) );
+                             std::move( resonances ), std::move( covariances ) );
   }
 
 } // endf namespace
