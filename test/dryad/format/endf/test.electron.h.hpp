@@ -1035,6 +1035,7 @@ namespace endf81 {
     verifyElasticDeficitReaction( deficit );
 
     CHECK( std::nullopt == H0.resonances() );
+
     CHECK( std::nullopt == H0.covarianceData() );
   }
 
