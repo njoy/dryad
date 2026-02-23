@@ -79,26 +79,26 @@ class AtomicRelaxation:
         """
         Calculate the transition energies for all transitions
         """
-    def has_subshell(self, id: id.ElectronSubshellID) -> bool:
+    def has_subshell(self, identifier: id.ElectronSubshellID) -> bool:
         """
         Return whether or not a subshell is present 
         
         Parameters
         ----------
-            id : njoy.dryad.id.ElectronSubshellID 
+            identifier : njoy.dryad.id.ElectronSubshellID 
                  the electron subshell identifier 
         """
     def normalise(self) -> None:
         """
         Normalise the transition probabilities
         """
-    def subshell(self, id: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
+    def subshell(self, identifier: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
         Return the requested subshell 
         
         Parameters
         ----------
-            id : njoy.dryad.id.ElectronSubshellID 
+            identifier : njoy.dryad.id.ElectronSubshellID 
                  the electron subshell identifier 
         """
     def to_endf_file(self, mat: int, filename: str) -> None:

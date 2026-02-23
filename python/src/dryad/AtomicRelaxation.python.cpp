@@ -90,22 +90,22 @@ void wrapAtomicRelaxation( python::module& module ) {
 
     "has_subshell",
     &Component::hasSubshell,
-    python::arg( "id" ),
+    python::arg( "identifier" ),
     "Return whether or not a subshell is present \n\n"
     "Parameters\n"
     "----------\n"
-    "    id : njoy.dryad.id.ElectronSubshellID \n"
+    "    identifier : njoy.dryad.id.ElectronSubshellID \n"
     "         the electron subshell identifier \n"
   )
   .def(
 
     "subshell",
     &Component::subshell,
-    python::arg( "id" ),
+    python::arg( "identifier" ),
     "Return the requested subshell \n\n"
     "Parameters\n"
     "----------\n"
-    "    id : njoy.dryad.id.ElectronSubshellID \n"
+    "    identifier : njoy.dryad.id.ElectronSubshellID \n"
     "         the electron subshell identifier \n",
     python::return_value_policy::reference_internal
   )
