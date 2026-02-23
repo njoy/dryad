@@ -5,11 +5,11 @@ import sys
 # third party imports
 
 # local imports
-from njoy.dryad.thermal import TabulatedScatteringFunction
+from njoy.dryad.thermal import TabulatedScatteringKernelFunction
 from njoy.dryad import InterpolationType
 
-class Test_TabulatedScatteringFunction( unittest.TestCase ) :
-    """Unit test for the TabulatedScatteringFunction class."""
+class Test_TabulatedScatteringKernelFunction( unittest.TestCase ) :
+    """Unit test for the TabulatedScatteringKernelFunction class."""
 
     def test_component( self ) :
 
@@ -52,10 +52,10 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
             self.assertAlmostEqual( 1.5, chunk( momentum_transfer = 3.5 ) )
 
             # verify arithmetic operators
-            same = TabulatedScatteringFunction( [ 1., 4. ], [ 0., 3. ] )
-            threshold = TabulatedScatteringFunction( [ 2., 4. ], [ 0., 2. ] )
-            nonzerothreshold = TabulatedScatteringFunction( [ 2., 4. ], [ 1., 3. ] )
-            small = TabulatedScatteringFunction( [ 1., 3. ], [ 0., 2. ] )
+            same = TabulatedScatteringKernelFunction( [ 1., 4. ], [ 0., 3. ] )
+            threshold = TabulatedScatteringKernelFunction( [ 2., 4. ], [ 0., 2. ] )
+            nonzerothreshold = TabulatedScatteringKernelFunction( [ 2., 4. ], [ 1., 3. ] )
+            small = TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0., 2. ] )
 
             result = -chunk
             self.assertEqual( 4, result.number_points )
@@ -613,10 +613,10 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
             self.assertAlmostEqual( 2.5, chunk( momentum_transfer = 3.5 ) )
 
             # verify arithmetic operators
-            same = TabulatedScatteringFunction( [ 1., 4. ], [ 0., 3. ] )
-            threshold = TabulatedScatteringFunction( [ 2., 4. ], [ 0., 2. ] )
-            nonzerothreshold = TabulatedScatteringFunction( [ 3., 4. ], [ 1., 2. ] )
-            small = TabulatedScatteringFunction( [ 1., 3. ], [ 0., 2. ] )
+            same = TabulatedScatteringKernelFunction( [ 1., 4. ], [ 0., 3. ] )
+            threshold = TabulatedScatteringKernelFunction( [ 2., 4. ], [ 0., 2. ] )
+            nonzerothreshold = TabulatedScatteringKernelFunction( [ 3., 4. ], [ 1., 2. ] )
+            small = TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0., 2. ] )
 
             result = -chunk
             self.assertEqual( 5, len( result.momentum_transfers ) )
@@ -1361,7 +1361,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
             self.assertEqual( False, result.is_linearised )
 
             # verify arithmetic operators throw exceptions
-            temp = TabulatedScatteringFunction( [ 1., 4. ], [ 4., 1. ] )
+            temp = TabulatedScatteringKernelFunction( [ 1., 4. ], [ 4., 1. ] )
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
             with self.assertRaises( Exception ) : result = chunk + temp
@@ -1610,7 +1610,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
             self.assertEqual( False, result.is_linearised )
 
             # verify arithmetic operators throw exceptions
-            temp = TabulatedScatteringFunction( [ 1., 4. ], [ 4., 1. ] )
+            temp = TabulatedScatteringKernelFunction( [ 1., 4. ], [ 4., 1. ] )
             with self.assertRaises( Exception ) : result = chunk + 2.
             with self.assertRaises( Exception ) : result = chunk - 2.
             with self.assertRaises( Exception ) : result = chunk + temp
@@ -1712,21 +1712,21 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
             self.assertEqual( False, chunk.is_linearised )
 
         # the data is given explicitly for data without boundaries
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 3., 4. ],
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 3., 4. ],
                                                values = [ 4., 3., 2., 1. ],
                                                interpolant = InterpolationType.LinearLinear )
 
         verify_chunk1( self, chunk )
 
         # the data is given explicitly for data without boundaries and a jump
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 2., 3., 4. ],
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 2., 3., 4. ],
                                                values = [ 4., 3., 4., 3., 2. ],
                                                interpolant = InterpolationType.LinearLinear )
 
         verify_chunk2( self, chunk )
 
         # the data is given explicitly for data without a jump
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 3., 4. ],
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 3., 4. ],
                                                values = [ 4., 3., 2., 1. ],
                                                boundaries = [ 1, 3 ],
                                                interpolants = [ InterpolationType.LinearLinear,
@@ -1735,7 +1735,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         verify_chunk3( self, chunk )
 
         # the data is given explicitly for data with a jump
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 2., 3., 4. ],
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 2., 3., 4. ],
                                                values = [ 4., 3., 4., 3., 2. ],
                                                boundaries = [ 1, 4 ],
                                                interpolants = [ InterpolationType.LinearLinear,
@@ -1744,7 +1744,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         verify_chunk4( self, chunk )
 
         # the data is given explicitly with a jump that uses more than 2 x values
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 2., 2., 3., 4. ],
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 2., 2., 3., 4. ],
                                                values =  [ 4., 3., 2., 4., 3., 2. ],
                                                boundaries = [ 2, 5 ],   # <-- pointing to middle of the jump
                                                interpolants = [ InterpolationType.LinearLinear,
@@ -1753,7 +1753,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         verify_chunk5( self, chunk )
 
         # the data is given explicitly with boundaries that point to the second x value in the jump
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 2., 3., 4. ],
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 2., 3., 4. ],
                                                values =  [ 4., 3., 4., 3., 2. ],
                                                boundaries = [ 2, 4 ],   # <-- pointing to end of the jump
                                                interpolants = [ InterpolationType.LinearLinear,
@@ -1762,7 +1762,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         verify_chunk5( self, chunk )
 
         # the data is given explicitly with a jump at the beginning
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 1., 2., 3., 4. ], # <-- jump at beginning
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 1., 2., 3., 4. ], # <-- jump at beginning
                                                values =  [ 1., 4., 3., 2., 1. ],
                                                boundaries = [ 2, 4 ],      # <-- pointing to end
                                                interpolants = [ InterpolationType.LinearLinear,
@@ -1771,7 +1771,7 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         verify_chunk6( self, chunk )
 
         # the data is given explicitly with a jump at the end
-        chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 3., 4., 4. ], # <-- jump at end
+        chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 3., 4., 4. ], # <-- jump at end
                                                values =  [ 4., 3., 2., 1., 4. ],
                                                boundaries = [ 1, 4 ],      # <-- pointing to end
                                                interpolants = [ InterpolationType.LinearLinear,
@@ -1781,9 +1781,9 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
 
     def test_comparison( self ) :
 
-        left = TabulatedScatteringFunction( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
-        equal = TabulatedScatteringFunction( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
-        different = TabulatedScatteringFunction( [ 1., 4. ], [ 4., 1. ] )
+        left = TabulatedScatteringKernelFunction( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
+        equal = TabulatedScatteringKernelFunction( [ 1., 2., 3., 4. ], [ 4., 3., 2., 1. ] )
+        different = TabulatedScatteringKernelFunction( [ 1., 4. ], [ 4., 1. ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )
@@ -1800,22 +1800,22 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         # there are not enough values in the x or y grid
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunction( momentum_transfers = [], values = [] )
+            chunk = TabulatedScatteringKernelFunction( momentum_transfers = [], values = [] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunction( momentum_transfers = [ 1. ], values = [ 4. ] )
+            chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1. ], values = [ 4. ] )
 
         # the x and y grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 3., 4. ],
+            chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 3., 4. ],
                                          values = [ 4., 3., 2. ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 3., 4. ],
+            chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 3., 4. ],
                                          values = [ 4., 3., 2., 1. ],
                                          boundaries = [ 3 ],
                                          interpolants = [] )
@@ -1823,13 +1823,13 @@ class Test_TabulatedScatteringFunction( unittest.TestCase ) :
         # the x grid is not sorted
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 3., 2., 4. ],
+            chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 3., 2., 4. ],
                                          values = [ 4., 3., 2., 1. ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunction( momentum_transfers = [ 1., 2., 3., 4. ],
+            chunk = TabulatedScatteringKernelFunction( momentum_transfers = [ 1., 2., 3., 4. ],
                                          values = [ 4., 3., 2., 1. ],
                                          boundaries = [ 2 ],
                                          interpolants = [ InterpolationType.LinearLinear ] )

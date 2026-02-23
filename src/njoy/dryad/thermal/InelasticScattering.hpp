@@ -6,7 +6,7 @@
 #include <variant>
 
 // other includes
-#include "njoy/dryad/thermal/TabulatedScatteringFunctions.hpp"
+#include "njoy/dryad/thermal/TabulatedScatteringKernel.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -21,11 +21,11 @@ namespace thermal {
     /* fields */
 
     double bound_xs_;
-    TabulatedScatteringFunctions self_scatter_;
+    TabulatedScatteringKernel self_scatter_;
 
     std::optional< double > incoherent_xs_;
     std::optional< double > coherent_xs_;
-    std::optional< TabulatedScatteringFunctions > distinct_scatter_;
+    std::optional< TabulatedScatteringKernel > distinct_scatter_;
 
   public:
 
@@ -66,7 +66,7 @@ namespace thermal {
     /**
      *  @brief Return the self-scattering S(a,b) function
      */
-    const TabulatedScatteringFunctions& selfScatteringFunction() const {
+    const TabulatedScatteringKernel& selfScatteringFunction() const {
 
       return this->self_scatter_;
     }
@@ -76,7 +76,7 @@ namespace thermal {
      *
      *  @param selfScatter   the self-scattering S(a,b) function
      */
-    void selfScatteringFunction( TabulatedScatteringFunctions selfScatter ) {
+    void selfScatteringFunction( TabulatedScatteringKernel selfScatter ) {
 
       this->self_scatter_ = std::move( selfScatter );
     }

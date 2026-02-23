@@ -6,8 +6,8 @@ import sys
 
 # local imports
 from njoy.dryad.thermal import InelasticScattering
-from njoy.dryad.thermal import TabulatedScatteringFunction
-from njoy.dryad.thermal import TabulatedScatteringFunctions
+from njoy.dryad.thermal import TabulatedScatteringKernelFunction
+from njoy.dryad.thermal import TabulatedScatteringKernel
 from njoy.dryad import InterpolationType
 
 def verify_chunk( self, chunk ) :
@@ -22,12 +22,12 @@ class Test_Documentation( unittest.TestCase ) :
 
         chunk = InelasticScattering(
                   xs = 6.337872,
-                  self_scatter = TabulatedScatteringFunctions(
+                  self_scatter = TabulatedScatteringKernel(
                                    [ 1., 2., 3., 4. ],
-                                   [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
+                                   [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
 
         verify_chunk( self, chunk )
 
@@ -35,12 +35,12 @@ class Test_Documentation( unittest.TestCase ) :
 
         chunk = InelasticScattering(
                   xs = 6.337872,
-                  self_scatter = TabulatedScatteringFunctions(
+                  self_scatter = TabulatedScatteringKernel(
                                    [ 1., 2., 3., 4. ],
-                                   [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
+                                   [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
 
         # the awr can be changed
         newxs = 25.
@@ -55,16 +55,16 @@ class Test_Documentation( unittest.TestCase ) :
         verify_chunk( self, chunk )
 
         # the library can be changed
-        newfunctions = TabulatedScatteringFunctions(
+        newfunctions = TabulatedScatteringKernel(
                          [ 1., 4. ],
-                         [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                           TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] )
-        original = TabulatedScatteringFunctions(
+                         [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                           TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] )
+        original = TabulatedScatteringKernel(
                      [ 1., 2., 3., 4. ],
-                     [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                       TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                       TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                       TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] )
+                     [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                       TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                       TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                       TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] )
 
         chunk.self_scattering_function = newfunctions
 
@@ -78,26 +78,26 @@ class Test_Documentation( unittest.TestCase ) :
 
         left = InelasticScattering(
                  xs = 6.337872,
-                 self_scatter = TabulatedScatteringFunctions(
+                 self_scatter = TabulatedScatteringKernel(
                                   [ 1., 2., 3., 4. ],
-                                  [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                    TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                    TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                    TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
+                                  [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                    TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
         equal = InelasticScattering(
                   xs = 6.337872,
-                  self_scatter = TabulatedScatteringFunctions(
+                  self_scatter = TabulatedScatteringKernel(
                                    [ 1., 2., 3., 4. ],
-                                   [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                     TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
+                                   [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
         different = InelasticScattering(
                       xs = 6.337872,
-                      self_scatter = TabulatedScatteringFunctions(
+                      self_scatter = TabulatedScatteringKernel(
                                        [ 1., 4. ],
-                                       [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                         TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
+                                       [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                         TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )

@@ -13,8 +13,8 @@ namespace thermal {
   // declarations - components
   void wrapTabulatedDebyeWallerIntegral( python::module& );
   void wrapTabulatedEffectiveTemperature( python::module& );
-  void wrapTabulatedScatteringFunction( python::module& );
-  void wrapTabulatedScatteringFunctions( python::module& );
+  void wrapTabulatedScatteringKernelFunction( python::module& );
+  void wrapTabulatedScatteringKernel( python::module& );
 
   void wrapIncoherentElasticScattering( python::module& );
   void wrapInelasticScattering( python::module& );
@@ -32,8 +32,8 @@ void wrapThermal( python::module& module ) {
   // components
   thermal::wrapTabulatedDebyeWallerIntegral( submodule );
   thermal::wrapTabulatedEffectiveTemperature( submodule );
-  thermal::wrapTabulatedScatteringFunction( submodule );
-  thermal::wrapTabulatedScatteringFunctions( submodule );
+  thermal::wrapTabulatedScatteringKernelFunction( submodule );
+  thermal::wrapTabulatedScatteringKernel( submodule );
 
   thermal::wrapIncoherentElasticScattering( submodule );
   thermal::wrapInelasticScattering( submodule );
