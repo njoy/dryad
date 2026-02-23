@@ -104,6 +104,8 @@ add_python_test( dryad.ReactionProduct                                 dryad/Tes
 add_python_test( dryad.TabulatedCrossSection                           dryad/Test_TabulatedCrossSection.py )
 add_python_test( dryad.Reaction                                        dryad/Test_Reaction.py )
 
+add_python_test( dryad.CrossSectionCovarianceData                      dryad/Test_CrossSectionCovarianceData.py )
+
 add_python_test( dryad.ProjectileTarget                                dryad/Test_ProjectileTarget.py )
 add_python_test( dryad.AtomicRelaxation                                dryad/Test_AtomicRelaxation.py )
 add_python_test( dryad.ThermalScattering                               dryad/Test_ThermalScattering.py )
