@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['IncoherentElasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedEffectiveTemperature', 'TabulatedScatteringFunction']
+__all__: list[str] = ['IncoherentElasticScattering', 'InelasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedEffectiveTemperature', 'TabulatedScatteringFunction', 'TabulatedScatteringFunctions']
 class IncoherentElasticScattering:
     """
     Incoherent elastic thermal scattering data
@@ -44,6 +44,46 @@ class IncoherentElasticScattering:
         """
     @debye_waller_integral.setter
     def debye_waller_integral(self, arg1: TabulatedDebyeWallerIntegral) -> None:
+        ...
+class InelasticScattering:
+    """
+    Inelastic thermal scattering data
+    
+    Parameters
+    ----------
+        xs : float
+             the bound atom cross section
+        self_scatter : njoy.dryad.thermal.TabulatedScatteringFunctions
+             the self-scattering S(a,b) function
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> InelasticScattering:
+        ...
+    def __deepcopy__(self, arg0: dict) -> InelasticScattering:
+        ...
+    def __eq__(self, arg0: InelasticScattering) -> bool:
+        ...
+    def __init__(self, xs: float, self_scatter: TabulatedScatteringFunctions) -> None:
+        """
+        Initialise the inelastic scattering data
+        """
+    def __ne__(self, arg0: InelasticScattering) -> bool:
+        ...
+    @property
+    def bound_cross_section(self) -> float:
+        """
+        The bound atom cross section value
+        """
+    @bound_cross_section.setter
+    def bound_cross_section(self, arg1: float) -> None:
+        ...
+    @property
+    def self_scattering_function(self) -> TabulatedScatteringFunctions:
+        """
+        The self-scattering S(a,b) function
+        """
+    @self_scattering_function.setter
+    def self_scattering_function(self, arg1: TabulatedScatteringFunctions) -> None:
         ...
 class TabulatedDebyeWallerIntegral:
     """
@@ -467,4 +507,90 @@ class TabulatedScatteringFunction:
     def values(self) -> list[float]:
         """
         The scattering function values
+        """
+class TabulatedScatteringFunctions:
+    """
+    An S(a,b) scattering kernel using tabulated scattering functions
+    
+    Parameters
+    ----------
+        energy_transfers : list of float
+             the energy transfer values
+        functions : list of njoy.dryad.thermal.TabulatedScatteringFunction
+             the tabulated S(a) scattering functions
+        boundaries : list of int
+             the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+             the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+             the interpolation type (default lin-lin)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __call__(self, value: float, cosine: float) -> float:
+        """
+        Evaluate the S(a,b) scattering kernel for a given energy and momentum transfer value
+        
+        Parameters
+        ----------
+            b : float
+                the energy transfer value
+            a : float
+                the momentum transfer value
+        """
+    def __copy__(self) -> TabulatedScatteringFunctions:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedScatteringFunctions:
+        ...
+    def __eq__(self, arg0: TabulatedScatteringFunctions) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, energy_transfers: list[float], functions: list[TabulatedScatteringFunction], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the S(a,b) scattering kernel with multiple interpolation zones
+        """
+    @typing.overload
+    def __init__(self, energy_transfers: list[float], functions: list[TabulatedScatteringFunction], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the S(a,b) scattering kernel with a single interpolation zone
+        """
+    def __ne__(self, arg0: TabulatedScatteringFunctions) -> bool:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> TabulatedScatteringFunctions:
+        """
+        Linearise the S(a,b) scattering kernel
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def energy_transfers(self) -> list[float]:
+        """
+        The energy transfer values for which scattering functions are given
+        """
+    @property
+    def functions(self) -> list[TabulatedScatteringFunction]:
+        """
+        The associated scattering functions
+        """
+    @property
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
         """
