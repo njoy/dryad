@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <reactionSuite projectile="n" target="Li7" evaluation="ENDF/B-8.1" format="2.0" projectileFrame="lab" interaction="nuclear">
   <externalFiles>
-    <externalFile label="covariances" path="Covariances/n-003_Li_007.endf.gnds-covar.xml" checksum="b986b4b32941b7abb41b77debed3b1e67963e1c0" algorithm="sha1"/></externalFiles>
+    <externalFile label="covariances" path="n-003_Li_007.endf.gnds-covar.xml" checksum="b986b4b32941b7abb41b77debed3b1e67963e1c0" algorithm="sha1"/></externalFiles>
   <styles>
     <evaluated label="eval" date="1988-08-01" library="ENDF/B" version="8.1.0">
       <documentation>

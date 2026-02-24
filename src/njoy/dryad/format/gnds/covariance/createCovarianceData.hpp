@@ -19,11 +19,11 @@ namespace gnds {
 namespace covariance {
 
   /**
-   *  @brief Create covariance data from GNDS covariance sections
+   *  @brief Create covariance data from GNDS covariance suite
    *
    *  @param[in] projectile    the projectile identifier
    *  @param[in] target        the target identifier
-   *  @param[in] covariances   the GNDS covariance sections node
+   *  @param[in] covariances   the GNDS covariance suite node
    */
   inline dryad::covariance::CovarianceData
   createCovarianceData(
@@ -32,11 +32,14 @@ namespace covariance {
       const pugi::xml_node& covariances ) {
 
     // check that this is a valid covariance sections node
-    throwExceptionOnWrongNode( covariances, "covarianceSections" );
+    throwExceptionOnWrongNode( covariances, "covarianceSuite" );
+
+    //! @todo verify that the projectile and target are the ones defined in the covariance suite?
 
     std::vector< dryad::covariance::CrossSectionCovarianceMatrix > xs_covariances;
 
-    for ( pugi::xml_node matrix = covariances.child( "covarianceSection" ); matrix;
+    auto node = covariances.child( "covarianceSections" );
+    for ( pugi::xml_node matrix = node.child( "covarianceSection" ); matrix;
           matrix = matrix.next_sibling( "covarianceSection" ) ) {
 
       auto row = matrix.child( "rowData" );

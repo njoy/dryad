@@ -1801,7 +1801,10 @@ namespace li7 {
 
     CHECK( std::nullopt == Li7.resonances() );
 
-    CHECK( std::nullopt == Li7.covarianceData() );
+    CHECK( std::nullopt != Li7.covarianceData() );
+
+    decltype(auto) xs = Li7.covarianceData()->crossSection().value();
+    verifyCrossSectionCovariances( Li7.covarianceData()->crossSection().value() );
   }
 
 } // namespace h1

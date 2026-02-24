@@ -418,7 +418,10 @@ namespace h1 {
 
     CHECK( std::nullopt == H1.resonances() );
 
-    CHECK( std::nullopt == H1.covarianceData() );
+    CHECK( std::nullopt != H1.covarianceData() );
+
+    CHECK( std::nullopt != H1.covarianceData()->crossSection() );
+    verifyCrossSectionCovariances( H1.covarianceData()->crossSection().value() );
   }
 
 } // namespace h1
