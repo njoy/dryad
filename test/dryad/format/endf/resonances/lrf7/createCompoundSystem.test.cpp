@@ -1649,10 +1649,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 1, channel 2: proton emission
+  // spin group 1, channel 3: proton emission
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  auto channel2 = channels[2];
+  auto channel2 = channels[3];
   CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
   CHECK( false == channel2.isIncidentChannel() );
 
@@ -1678,10 +1678,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 1, channel 3: elastic
+  // spin group 1, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  auto channel3 = channels[3];
+  auto channel3 = channels[2];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ) == channel3.identifier() );
   CHECK( true == channel3.isIncidentChannel() );
 
@@ -1752,10 +1752,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK_THAT( std::sqrt( 0.860 / 2. ), WithinRel( resonances[0][55] ) );
   CHECK_THAT( std::sqrt( .628 / 2. / channel1.penetrability( 4.250762e+3 ) ), WithinRel( resonances[1][0] ) );
   CHECK_THAT( std::sqrt( 5.365630e+3 / 2. / channel1.penetrability( 1.435502e+6 ) ), WithinRel( resonances[1][55] ) );
-  CHECK_THAT( std::sqrt( .23 / 2. / channel2.penetrability( 4.250762e+3 ) ), WithinRel( resonances[2][0] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.435502e+6 ) ), WithinRel( resonances[2][55] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( 4.250762e+3 ) ), WithinRel( resonances[3][0] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( 1.435502e+6 ) ), WithinRel( resonances[3][55] ) );
+  CHECK_THAT( std::sqrt( .23 / 2. / channel2.penetrability( 4.250762e+3 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.435502e+6 ) ), WithinRel( resonances[3][55] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( 4.250762e+3 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( 1.435502e+6 ) ), WithinRel( resonances[2][55] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 4.250762e+3 ) ), WithinRel( resonances[4][0] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 1.435502e+6 ) ), WithinRel( resonances[4][55] ) );
 
@@ -1945,10 +1945,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 2: proton emission
+  // spin group 3, channel 3: proton emission
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  channel2 = channels[2];
+  channel2 = channels[3];
   CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
   CHECK( false == channel2.isIncidentChannel() );
 
@@ -1974,10 +1974,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 3: elastic
+  // spin group 3, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  channel3 = channels[3];
+  channel3 = channels[2];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ) == channel3.identifier() );
   CHECK( true == channel3.isIncidentChannel() );
 
@@ -2048,10 +2048,10 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK_THAT( std::sqrt( 0.860 / 2. ), WithinRel( resonances[0][94] ) );
   CHECK_THAT( std::sqrt( 3.820180e+4 / 2. / channel1.penetrability( -3.369334e+5 ) ), WithinRel( resonances[1][0] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel1.penetrability( 1.441365e+6 ) ), WithinRel( resonances[1][94] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( -3.369334e+5 ) ), WithinRel( resonances[2][0] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.441365e+6 ) ), WithinRel( resonances[2][94] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( -3.369334e+5 ) ), WithinRel( resonances[3][0] ) );
-  CHECK_THAT( std::sqrt( 1.608740e+3 / 2. / channel3.penetrability( 1.441365e+6 ) ), WithinRel( resonances[3][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( -3.369334e+5 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.441365e+6 ) ), WithinRel( resonances[3][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( -3.369334e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 1.608740e+3 / 2. / channel3.penetrability( 1.441365e+6 ) ), WithinRel( resonances[2][94] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( -3.369334e+5 ) ), WithinRel( resonances[4][0] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 1.441365e+6 ) ), WithinRel( resonances[4][94] ) );
 
