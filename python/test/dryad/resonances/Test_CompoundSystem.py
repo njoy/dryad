@@ -185,33 +185,10 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 0.0, channel1.q_value )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-    # spin group 1, channel 2: proton emission
+    # spin group 1, channel 2: elastic
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-    channel2 = channels[2]
-    self.assertEqual( ChannelID( "n,Cl35->p,S35{1,1,1-}" ), channel2.identifier )
-    self.assertEqual( False, channel2.is_incident_channel )
-
-    # incident particle pair
-    self.assertEqual( neutron_pair, channel2.incident_particle_pair )
-
-    # outgoing particle pair
-    self.assertEqual( proton_pair, channel2.outgoing_particle_pair )
-
-    # radii
-    self.assertEqual( radii1, channel2.channel_radii )
-
-    # boundary conditions
-    self.assertEqual( None, channel2.boundary_condition )
-
-    # Q value
-    self.assertAlmostEqual( 615220, channel2.q_value )
-
-    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-    # spin group 1, channel 3: elastic
-    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-
-    channel3 = channels[3]
+    channel3 = channels[2]
     self.assertEqual( ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ), channel3.identifier )
     self.assertEqual( True, channel3.is_incident_channel )
 
@@ -229,6 +206,29 @@ def verify_chunk( self, chunk ) :
 
     # Q value
     self.assertAlmostEqual( 0, channel3.q_value )
+
+    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+    # spin group 1, channel 3: proton emission
+    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+    channel2 = channels[3]
+    self.assertEqual( ChannelID( "n,Cl35->p,S35{1,1,1-}" ), channel2.identifier )
+    self.assertEqual( False, channel2.is_incident_channel )
+
+    # incident particle pair
+    self.assertEqual( neutron_pair, channel2.incident_particle_pair )
+
+    # outgoing particle pair
+    self.assertEqual( proton_pair, channel2.outgoing_particle_pair )
+
+    # radii
+    self.assertEqual( radii1, channel2.channel_radii )
+
+    # boundary conditions
+    self.assertEqual( None, channel2.boundary_condition )
+
+    # Q value
+    self.assertAlmostEqual( 615220, channel2.q_value )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 1, channel 4: proton emission
@@ -423,33 +423,10 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 0.0, channel1.q_value )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-    # spin group 3, channel 2: proton emission
+    # spin group 3, channel 2: elastic
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-    channel2 = channels[2]
-    self.assertEqual( ChannelID( "n,Cl35->p,S35{1,1,2-}" ), channel2.identifier )
-    self.assertEqual( False, channel2.is_incident_channel )
-
-    # incident particle pair
-    self.assertEqual( neutron_pair, channel2.incident_particle_pair )
-
-    # outgoing particle pair
-    self.assertEqual( proton_pair, channel2.outgoing_particle_pair )
-
-    # radii
-    self.assertEqual( radii1, channel2.channel_radii )
-
-    # boundary conditions
-    self.assertEqual( None, channel2.boundary_condition )
-
-    # Q value
-    self.assertAlmostEqual( 615220, channel2.q_value )
-
-    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-    # spin group 3, channel 3: elastic
-    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-
-    channel3 = channels[3]
+    channel3 = channels[2]
     self.assertEqual( ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ), channel3.identifier )
     self.assertEqual( True, channel3.is_incident_channel )
 
@@ -467,6 +444,29 @@ def verify_chunk( self, chunk ) :
 
     # Q value
     self.assertAlmostEqual( 0.0, channel3.q_value )
+
+    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+    # spin group 3, channel 3: proton emission
+    # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+    channel2 = channels[3]
+    self.assertEqual( ChannelID( "n,Cl35->p,S35{1,1,2-}" ), channel2.identifier )
+    self.assertEqual( False, channel2.is_incident_channel )
+
+    # incident particle pair
+    self.assertEqual( neutron_pair, channel2.incident_particle_pair )
+
+    # outgoing particle pair
+    self.assertEqual( proton_pair, channel2.outgoing_particle_pair )
+
+    # radii
+    self.assertEqual( radii1, channel2.channel_radii )
+
+    # boundary conditions
+    self.assertEqual( None, channel2.boundary_condition )
+
+    # Q value
+    self.assertAlmostEqual( 615220, channel2.q_value )
 
     # - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
     # spin group 3, channel 4: proton emission
@@ -505,8 +505,8 @@ def verify_chunk( self, chunk ) :
     resonances = table.reduced_width_amplitudes
     self.assertAlmostEqual( 32, resonances[0][0] )
     self.assertAlmostEqual( 33, resonances[1][0] )
-    self.assertAlmostEqual( 34, resonances[2][0] )
-    self.assertAlmostEqual( 35, resonances[3][0] )
+    self.assertAlmostEqual( 35, resonances[2][0] )
+    self.assertAlmostEqual( 34, resonances[3][0] )
     self.assertAlmostEqual( 36, resonances[4][0] )
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

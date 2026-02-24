@@ -129,6 +129,20 @@ namespace resonances {
     }
 
     /**
+     *  @brief Calculate the cross section values for a list of energies
+     *
+     *  @param[in] energies   the energy list
+     *  @param[in] xs         the cross sections
+     */
+    void crossSections( std::vector<double>& energies, std::map< id::ReactionID, std::vector<double> >& xs ) {
+
+      for ( auto& group : this->spinGroups() ) {
+
+        group.crossSections( energies, xs );
+      }
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side

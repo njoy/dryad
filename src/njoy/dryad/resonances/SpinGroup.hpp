@@ -176,6 +176,117 @@ namespace resonances {
     }
 
     /**
+     *  @brief Calculate the cross section values for a list of energies
+     *
+     *  @param[in] energies   the energies
+     *  @param[in] xs         the cross sections
+     */
+    void crossSections( std::vector<double>& energies, std::map< id::ReactionID, std::vector<double> >& xs ) {
+
+      std::map< id::ReactionID, double > result;
+
+      // for each energy, compute xs and insert in main container
+      for ( std::size_t i = 0; i < energies.size(); ++i ) {
+
+        this->crossSections( energies[i], result );
+        for ( const auto& [reaction_id, cross_section] : result ) {
+
+          auto& v = xs[reaction_id];
+          if ( v.empty() ) {
+
+            v.resize( energies.size(), 0.0 );
+          }
+
+          v[i] += cross_section;
+        }
+        result.clear();
+      }
+    }
+
+    /**
+     *  @brief Calculate the R_L matrix at a given energy
+     *
+     *  The R_L matrix is defined as ( 1 - RL )^-1 R in which R is the
+     *  R matrix and L is a diagonal matrix defined as S - B + iP with
+     *  S the shift factor and B the boundary condition of the channel.
+     *
+     *  @param[in] energy     the energy
+     */
+    const matrix::Matrix< std::complex< double > >&
+    r_l_matrix( double energy ) {
+
+      return std::visit( [&] ( auto&& calculator ) -> decltype(auto) {
+
+                                 return calculator.r_l_matrix( energy, this->channels(),
+                                                               this->resonanceTable() );
+                               },
+                               this->calculator_ );
+    }
+
+    /**
+     *  @brief Calculate the T or X matrix at a given energy
+     *
+     *  The T or X matrix is defined as P^1/2 ( 1 - RL )^-1 R P^1/2 in which
+     *  P is a diagonal matrix of the penetrabilities of each channel, R is the
+     *  R matrix and L is a diagonal matrix defined as S - B + iP with S the shift
+     *  factor and B the boundary condition of the channel.
+     *
+     *  @param[in] energy     the energy
+     */
+    const matrix::Matrix< std::complex< double > >&
+    t_matrix( double energy ) {
+
+      return std::visit( [&] ( auto&& calculator ) -> decltype(auto) {
+
+                                 return calculator.t_matrix( energy, this->channels(),
+                                                             this->resonanceTable() );
+                               },
+                               this->calculator_ );
+    }
+
+    /**
+     *  @brief Calculate the W matrix at a given energy
+     *
+     *  The W matrix is defined as I + 2 i P^1/2 ( 1 - RL )^-1 R P^1/2 in which
+     *  I is the identity matrix, P is a diagonal matrix of the penetrabilities of
+     *  each channel, R is the R matrix and L is a diagonal matrix defined as
+     *  S - B + iP with S the shift factor and B the boundary condition of the
+     *  channel.
+     *
+     *  @param[in] energy     the energy
+     */
+    const matrix::Matrix< std::complex< double > >&
+    w_matrix( double energy ) {
+
+      return std::visit( [&] ( auto&& calculator ) -> decltype(auto) {
+
+                                 return calculator.w_matrix( energy, this->channels(),
+                                                             this->resonanceTable() );
+                               },
+                               this->calculator_ );
+    }
+
+    /**
+     *  @brief Calculate the U or S matrix at a given energy
+     *
+     *  The U or S matrix is defined as omega W omega
+     *  in which omega is a diagonal matrix equal to exp( i ( w - phi ) ) with w
+     *  the Coulomb phase shift difference and phi the phase shift.
+     *
+     *  @param[in] energy     the energy
+     */
+    const matrix::Matrix< std::complex< double > >&
+    u_matrix( double energy) {
+
+      return std::visit( [&] ( auto&& calculator ) -> decltype(auto) {
+
+                                 return calculator.u_matrix( energy, this->channels(),
+                                                             this->resonanceTable() );
+                               },
+                               this->calculator_ );
+    }
+
+    /**
      *  @brief Equality comparison
      *
      *  @param[in] left    the object on the left hand side
