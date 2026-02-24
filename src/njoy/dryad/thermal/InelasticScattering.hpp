@@ -56,7 +56,7 @@ namespace thermal {
     /**
      *  @brief Set the bound atom cross section value
      *
-     *  @param xs   the reaction product identifier
+     *  @param xs   the bound atom cross section value
      */
     void boundCrossSection( double xs ) {
 

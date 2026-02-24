@@ -14,7 +14,7 @@ namespace thermal {
 
   /**
    *  @class
-   *  @brief An S(a,b) scattering kernel using tabulated scattering functions
+   *  @brief An S(a,b) scattering kernel using tabulated scattering kernel functions
    */
   class TabulatedScatteringKernel :
       protected scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction > {
