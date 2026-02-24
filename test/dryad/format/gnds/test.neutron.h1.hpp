@@ -313,6 +313,73 @@ namespace h1 {
     CHECK( id::ParticleID( "H2" ) == deuterium.identifier() );
   }
 
+
+  void verifyCrossSectionCovariances( const covariance::CrossSectionCovarianceData& xs ) {
+
+    CHECK( false == xs.hasCovarianceMatrix( id::ReactionID( "n,H1->total" ) ) );
+    CHECK( true == xs.hasCovarianceMatrix( id::ReactionID( "n,H1->capture" ) ) );
+    CHECK( true == xs.hasCovarianceMatrix( id::ReactionID( "n,H1->n,H1" ) ) );
+    CHECK( true == xs.hasCovarianceMatrix( id::ReactionID( "n,H1->n,H1" ), id::ReactionID( "n,H1->capture" ) ) );
+
+    CHECK( 2 == xs.numberReactions() );
+    CHECK( 2 == xs.reactionIdentifiers().size() );
+    CHECK( id::ReactionID( "n,H1->capture" ) == xs.reactionIdentifiers()[0] );
+    CHECK( id::ReactionID( "n,H1->n,H1" ) == xs.reactionIdentifiers()[1] );
+
+    CHECK( 3 == xs.numberCovarianceMatrices() );
+    CHECK( 3 == xs.covariances().size() );
+
+    using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
+    auto variant = xs.covarianceMatrix( id::ReactionID( "n,H1->capture" ) );
+    auto matrix = std::get< CrossSectionCovarianceMatrix >( variant );
+    CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
+    CHECK( id::ReactionID( "n,H1->capture" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
+    CHECK( 154 == matrix.rowMetadata().energies().size() );
+    CHECK_THAT(     5e-6, WithinRel( matrix.rowMetadata().energies().front() ) );
+    CHECK_THAT( 2.025e+7, WithinRel( matrix.rowMetadata().energies().back() ) );
+    CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
+    CHECK( 153 == matrix.covariances().rows() );
+    CHECK( 153 == matrix.covariances().cols() );
+    CHECK(  4.278572e-4 == matrix.covariances()(  0,  0) );
+    CHECK( -4.657843e-4 == matrix.covariances()(  0,152) );
+    CHECK( -4.657843e-4 == matrix.covariances()(152,  0) );
+    CHECK(  3.473440e-2 == matrix.covariances()(152,152) );
+
+    variant = xs.covarianceMatrix( id::ReactionID( "n,H1->n,H1" ) );
+    matrix = std::get< CrossSectionCovarianceMatrix >( variant );
+    CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
+    CHECK( id::ReactionID( "n,H1->n,H1" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
+    CHECK( 154 == matrix.rowMetadata().energies().size() );
+    CHECK_THAT(     5e-6, WithinRel( matrix.rowMetadata().energies().front() ) );
+    CHECK_THAT( 2.025e+7, WithinRel( matrix.rowMetadata().energies().back() ) );
+    CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
+    CHECK( 153 == matrix.covariances().rows() );
+    CHECK( 153 == matrix.covariances().cols() );
+    CHECK(  6.954882e-5 == matrix.covariances()(  0,  0) );
+    CHECK(  2.361196e-6 == matrix.covariances()(  0,152) );
+    CHECK(  2.361196e-6 == matrix.covariances()(152,  0) );
+    CHECK(  1.976707e-5 == matrix.covariances()(152,152) );
+
+    variant = xs.covarianceMatrix( id::ReactionID( "n,H1->n,H1" ), id::ReactionID( "n,H1->capture" ) );
+    matrix = std::get< CrossSectionCovarianceMatrix >( variant );
+    CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
+    CHECK( id::ReactionID( "n,H1->n,H1" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
+    CHECK( 154 == matrix.rowMetadata().energies().size() );
+    CHECK_THAT(     5e-6, WithinRel( matrix.rowMetadata().energies().front() ) );
+    CHECK_THAT( 2.025e+7, WithinRel( matrix.rowMetadata().energies().back() ) );
+    CHECK( 1 == matrix.columnMetadata().reactionIdentifiers().size() );
+    CHECK( id::ReactionID( "n,H1->capture" ) == matrix.columnMetadata().reactionIdentifiers()[0] );
+    CHECK( 154 == matrix.columnMetadata().energies().size() );
+    CHECK_THAT(     5e-6, WithinRel( matrix.columnMetadata().energies().front() ) );
+    CHECK_THAT( 2.025e+7, WithinRel( matrix.columnMetadata().energies().back() ) );
+    CHECK( 153 == matrix.covariances().rows() );
+    CHECK( 153 == matrix.covariances().cols() );
+    CHECK(  3.076179e-5 == matrix.covariances()(  0,  0) );
+    CHECK(  1.451485e-4 == matrix.covariances()(  0,152) );
+    CHECK(  9.693969e-6 == matrix.covariances()(152,  0) );
+    CHECK(  1.171132e-4 == matrix.covariances()(152,152) );
+  }
+
   void verifyH1( const ProjectileTarget& H1, bool normalise ) {
 
     verifyDocumentation( H1.documentation() );

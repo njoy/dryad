@@ -1,13 +1,15 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECrossSectionCovarianceMatrix
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECrossSectionCovarianceMatrix
+#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
 
 // system includes
 
 // other includes
+#include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/format/adjustScatterLevel.hpp"
 #include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
 #include "njoy/dryad/format/gnds/covariance/createVarianceScaling.hpp"
 
@@ -19,8 +21,13 @@ namespace covariance {
 
   /**
    *  @brief Create a cross section covariance block from a GNDS covariance section
+   *
+   *  @param[in] projectile    the projectile identifier
+   *  @param[in] target        the target identifier
+   *  @param[in] covariances   the GNDS covariance section node giving a
+   *                           cross section covariance matrix
    */
-  inline dryad::covariance::CrossSectionCovarianceMatrix
+  inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
       const dryad::id::ParticleID& projectile,
       const dryad::id::ParticleID& target,
@@ -41,7 +48,8 @@ namespace covariance {
       std::string reaction = row.attribute( "ENDF_MFMT" ).as_string();
       reaction.erase( reaction.begin(),
                       std::find( reaction.begin(), reaction.end(), ',' ) + 1 );
-      rowReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, std::stoi( reaction ) ) );
+      auto mt = adjustScatterLevel( projectile, target, std::stoi( reaction ) );
+      rowReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, mt ) );
     }
     else {
 
@@ -107,31 +115,28 @@ namespace covariance {
       }
     }
 
-    if ( rowStructures.size() == 1 ) {
+    std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
+    for ( std::size_t i = 0; i < rowStructures.size(); i++ ) {
 
       if ( cross ) {
 
-        return dryad::covariance::CrossSectionCovarianceMatrix(
-                 dryad::covariance::CrossSectionMetadata( { rowReaction },
-                                                          std::move( rowStructures.front() ) ),
-                 dryad::covariance::CrossSectionMetadata( { columnReaction },
-                                                          std::move( columnStructures.front() ) ),
-                 std::move( matrices.front() ), relative );
+        using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+        covariances.emplace_back(
+                 CrossSectionMetadata( { rowReaction }, std::move( rowStructures[i] ) ),
+                 CrossSectionMetadata( { columnReaction }, std::move( columnStructures[i] ) ),
+                 std::move( matrices[i] ), relative );
       }
       else {
 
-        return dryad::covariance::CrossSectionCovarianceMatrix(
-                 dryad::covariance::CrossSectionMetadata( { rowReaction },
-                                                          std::move( rowStructures.front() ) ),
-                 std::move( matrices.front() ),
-                 relative, std::move( scaling ) );
+        using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+        covariances.emplace_back(
+                 CrossSectionMetadata( { rowReaction }, std::move( rowStructures[i] ) ),
+                 std::move( matrices[i] ),
+                 relative, scaling );
       }
     }
-    else {
 
-      Log::error( "Not implemented yet, contact a developer" );
-      throw std::exception();
-    }
+    return covariances;
   }
 
 } // covariance namespace

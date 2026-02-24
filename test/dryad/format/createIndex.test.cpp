@@ -11,7 +11,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad;
 
-SCENARIO( "boundaries" ) {
+SCENARIO( "createIndex" ) {
 
   GIVEN( "ENDF boundary indices" ) {
 
