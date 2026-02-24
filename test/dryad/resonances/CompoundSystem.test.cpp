@@ -410,32 +410,6 @@ void verifyChunk( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 1, channel 2: proton emission
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-
-  auto channel2 = channels[3];
-  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
-  CHECK( false == channel2.isIncidentChannel() );
-
-  // incident particle pair
-  CHECK( neutron_pair == channel2.incidentParticlePair() );
-
-  // outgoing particle pair
-  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
-
-  // radii
-  CHECK( radii1 == channel2.channelRadii() );
-
-  // boundary conditions
-  CHECK( std::nullopt == channel2.boundaryCondition() );
-
-  // background
-  CHECK( std::nullopt == channel2.background() );
-
-  // Q value
-  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
-
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 3: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
@@ -460,6 +434,32 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // Q value
   CHECK_THAT( 0, WithinRel( channel3.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 3: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel2 = channels[3];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 4: proton emission
@@ -672,33 +672,7 @@ void verifyChunk( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 2: proton emission
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-
-  channel2 = channels[3];
-  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
-  CHECK( false == channel2.isIncidentChannel() );
-
-  // incident particle pair
-  CHECK( neutron_pair == channel2.incidentParticlePair() );
-
-  // outgoing particle pair
-  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
-
-  // radii
-  CHECK( radii1 == channel2.channelRadii() );
-
-  // boundary conditions
-  CHECK( std::nullopt == channel2.boundaryCondition() );
-
-  // background
-  CHECK( std::nullopt == channel2.background() );
-
-  // Q value
-  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
-
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 3: elastic
+  // spin group 3, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   channel3 = channels[2];
@@ -722,6 +696,32 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 3: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[3];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 4: proton emission
@@ -763,8 +763,8 @@ void verifyChunk( const CompoundSystem& chunk ) {
   resonances = table.reducedWidthAmplitudes();
   CHECK_THAT( 32, WithinRel( resonances[0][0] ) );
   CHECK_THAT( 33, WithinRel( resonances[1][0] ) );
-  CHECK_THAT( 34, WithinRel( resonances[3][0] ) );
   CHECK_THAT( 35, WithinRel( resonances[2][0] ) );
+  CHECK_THAT( 34, WithinRel( resonances[3][0] ) );
   CHECK_THAT( 36, WithinRel( resonances[4][0] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

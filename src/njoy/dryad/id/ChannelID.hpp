@@ -106,6 +106,7 @@ namespace id {
      *  @param[in] right   the id on the right
      */
     friend auto operator==( const ChannelID& left, const ChannelID& right ) {
+
       return std::tie( left.quantumNumbers(), left.reaction(), left.partial() ) ==
              std::tie( right.quantumNumbers(), right.reaction(), right.partial() );
     }
@@ -128,56 +129,54 @@ namespace id {
      *  @param[in] right   the id on the right
      */
     friend auto operator<( const ChannelID& left, const ChannelID& right ) {
-        auto leftQNum = left.quantumNumbers();
-        auto rightQNum = right.quantumNumbers();
-        
-        // Test order:
-        // J, parity, reationID, l, s, partial
-        if ( leftQNum.totalAngularMomentum() < rightQNum.totalAngularMomentum() )
-        {
-            return true;
-        }
-        else if ( leftQNum.totalAngularMomentum() > rightQNum.totalAngularMomentum() )
-        {
-            return false;
-        }
 
-        if ( leftQNum.parity() < rightQNum.parity() )
-        {
-            return true;
-        }
-        else if ( leftQNum.parity() > rightQNum.parity() )
-        {
-            return false;
-        }
+      auto leftQNum = left.quantumNumbers();
+      auto rightQNum = right.quantumNumbers();
 
-        if ( left.reaction() < right.reaction() )
-        {
-            return true;
-        }
-        else if ( left.reaction() > right.reaction() )
-        {
-            return false;
-        }
+      // Test order:
+      // J, parity, reationID, l, s, partial
+      if ( leftQNum.totalAngularMomentum() < rightQNum.totalAngularMomentum() ) {
 
-        if ( left.quantumNumbers() < right.quantumNumbers() )
-        {
-            return true;
-        }
-        else if ( left.quantumNumbers() > right.quantumNumbers() )
-        {
-            return false;
-        }
-
-        if ( left.partial() < right.partial() )
-        {
-            return true;
-        }
+        return true;
+      }
+      else if ( leftQNum.totalAngularMomentum() > rightQNum.totalAngularMomentum() ) {
 
         return false;
+      }
 
-      //return std::tie( left.quantumNumbers(), left.reaction(), left.partial() ) <
-      //       std::tie( right.quantumNumbers(), right.reaction(), right.partial() );
+      if ( leftQNum.parity() < rightQNum.parity() ) {
+
+        return true;
+      }
+      else if ( leftQNum.parity() > rightQNum.parity() ) {
+
+        return false;
+      }
+
+      if ( left.reaction() < right.reaction() ) {
+
+        return true;
+      }
+      else if ( left.reaction() > right.reaction() ) {
+
+        return false;
+      }
+
+      if ( left.quantumNumbers() < right.quantumNumbers() ) {
+
+        return true;
+      }
+      else if ( left.quantumNumbers() > right.quantumNumbers() ) {
+
+        return false;
+      }
+
+      if ( left.partial() < right.partial() ) {
+
+        return true;
+      }
+
+      return false;
     }
 
     /**
