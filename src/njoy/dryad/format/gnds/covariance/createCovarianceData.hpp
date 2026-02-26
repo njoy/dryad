@@ -43,6 +43,7 @@ namespace covariance {
           matrix = matrix.next_sibling( "covarianceSection" ) ) {
 
       auto row = matrix.child( "rowData" );
+      auto column = matrix.child( "columnData" );
       auto sum = matrix.child( "sum" );
 
       std::string string = row.attribute( "ENDF_MFMT" ).as_string();
@@ -52,18 +53,36 @@ namespace covariance {
       auto type = std::stoi( string.substr( 0, index ) );
       auto reaction = std::stoi( string.substr( index + 1 ) );
 
+      bool is_material_cross_term = false;
+      if ( column ) {
+
+        // href that do not start with $reactions# are material cross terms
+        if ( strncmp( column.attribute( "href" ).as_string(), "$reactions#",11 ) != 0 ) {
+
+          is_material_cross_term = true;
+        }
+      }
+
+
       if ( ! endf::ReactionInformation::isDerived( reaction ) ) {
 
         if ( type == 33 ) {
 
-          if ( ! sum ) {
+          if ( ! sum && ! is_material_cross_term ) {
 
             auto entries = createCrossSectionCovarianceMatrix( projectile, target, matrix );
             std::move( entries.begin(), entries.end(), std::back_inserter( xs_covariances ) );
           }
           else {
 
-            Log::warning( "No explicit covariance components are defined for MT{}, skipping for now", reaction );
+            if ( sum ) {
+
+              Log::warning( "No explicit covariance components are defined for MT{}, skipping for now", reaction );
+            }
+            else {
+
+              Log::warning( "Skipping cross-material term MT{}, contact a developer", reaction );
+            }
           }
         }
         else {
