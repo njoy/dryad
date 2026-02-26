@@ -107,11 +107,11 @@ namespace covariance {
 
       if ( ! is_cross_term ) {
 
-        Log::info( "Reading covariance data for MT{}", rowReaction.mt().value() );
+        Log::info( "Reading cross section covariance data for MT{}", rowReaction.mt().value() );
       }
       else {
 
-        Log::info( "Reading covariance cross term for MT{} and MT{}",
+        Log::info( "Reading cross section covariance cross term for MT{} and MT{}",
                    rowReaction.mt().value(), columnReaction.mt().value() );
       }
 
