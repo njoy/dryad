@@ -36,6 +36,7 @@ namespace covariance {
 
     //! @todo verify that the projectile and target are the ones defined in the covariance suite?
 
+    Log::info( "Reading covariance data" );
     std::vector< dryad::covariance::CrossSectionCovarianceMatrix > xs_covariances;
 
     auto node = covariances.child( "covarianceSections" );
@@ -63,7 +64,6 @@ namespace covariance {
         }
       }
 
-
       if ( ! endf::ReactionInformation::isDerived( reaction ) ) {
 
         if ( type == 33 ) {
@@ -77,11 +77,11 @@ namespace covariance {
 
             if ( sum ) {
 
-              Log::warning( "No explicit covariance components are defined for MT{}, skipping for now", reaction );
+              Log::warning( "No explicit cross section covariance components are defined for MT{}, skipping for now", reaction );
             }
             else {
 
-              Log::warning( "Skipping cross-material term MT{}, contact a developer", reaction );
+              Log::warning( "Skipping cross-material cross section covariance term for MT{}, contact a developer", reaction );
             }
           }
         }
