@@ -8,6 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
+#include "njoy/dryad/format/endf/createEndfFile2Section.hpp"
 #include "njoy/dryad/format/endf/createEndfFile3Section.hpp"
 #include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
@@ -39,6 +40,7 @@ namespace endf {
     double awr = transport.documentation().awr().has_value()
                  ? transport.documentation().awr().value()
                  : 0.;
+    //! @todo lrp=-1 is not allowed for (n,x), lrp = transport.resonances() ? 1 : 0; 
     int lrp = -1;
     int lfi = 0;
     int nlib = transport.documentation().library().has_value()
@@ -75,6 +77,12 @@ namespace endf {
 
     ENDFtk::tree::Material material( mat );
     material.insert( information );
+
+    //! @todo if lrp=0, should write a 'special case' MF2
+    if ( transport.resonances() ) {
+
+      material.insert( createEndfFile2Section( zaid, awr, transport.resonances().value() ) );
+    }
 
     for ( const auto& reaction : transport.reactions() ) {
 
