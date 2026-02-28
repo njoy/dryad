@@ -15,6 +15,12 @@ namespace constants {
     constexpr double threshold = 1e-10;
   }
 
+  // default integration tolerance
+  namespace integration {
+
+    constexpr double tolerance = 1e-8;
+  }
+
   constexpr double pi = 3.141592653589793;
 
   // CODATA 2018 - atomic mass unit in kg

@@ -326,8 +326,10 @@ namespace dryad {
 
     /**
      *  @brief Calculate average outgoing energies for all reaction products
+     *
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
      */
-    void calculateAverageEnergy() {
+    void calculateAverageEnergy( double tolerance = constants::integration::tolerance ) {
 
       auto calculateAverageEnergy = tools::overload{
 
@@ -339,7 +341,7 @@ namespace dryad {
           //! @todo interpolation type?
 
           std::vector< double > energies = this->crossSection().energies();
-          std::vector< double > values = distribution.averageEnergy( energies );
+          std::vector< double > values = distribution.averageEnergy( energies, tolerance );
           return TabulatedAverageEnergy( std::move( energies ), std::move( values ) );
         },
         [&] ( const CoherentDistributionData& distribution ) -> std::optional< TabulatedAverageEnergy > {
