@@ -177,7 +177,11 @@ void wrapProjectileTarget( python::module& module ) {
 
     "calculate_average_energy",
     &Component::calculateAverageEnergy,
-    "Calculate average outgoing energies for all reaction products"
+    python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
+    "Calculate average outgoing energies for all reaction products\n\n"
+    "Arguments:\n"
+    "    self        the ProjectileTarget data\n"
+    "    tolerance    the integration tolerance (default: 1e-8)"
   )
   .def(
 
