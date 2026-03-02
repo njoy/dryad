@@ -13,34 +13,34 @@ __all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'Distribut
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
-
+    
     Parameters
     ----------
-        documentation : njoy.dryad.Documentation
-             the documentation
-        element : njoy.dryad.id.ElementID
-             the element identifier
-        subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration
-             the electron subshell configuration data
-        normalise : bool, default false
-            option to indicate whether or not to normalise
-            all probability data (default: no normalisation)
-
+        documentation : njoy.dryad.Documentation 
+             the documentation 
+        element : njoy.dryad.id.ElementID 
+             the element identifier 
+        subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration 
+             the electron subshell configuration data 
+        normalise : bool, default false 
+            option to indicate whether or not to normalise 
+            all probability data (default: no normalisation) 
+    
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
     def from_endf_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
         Create AtomicRelaxation data from an ENDF file
-
+        
         If there are multiple materials in the ENDF file, only the first material
         will be transformed into a AtomicRelaxation.
-
+        
         Parameters
         ----------
-            filename : str
+            filename : str 
                  the ENDF file name
-            normalise : bool, default false
+            normalise : bool, default false 
                  option to indicate whether or not to normalise
                  all probability data (default: no normalisation)
         """
@@ -48,12 +48,12 @@ class AtomicRelaxation:
     def from_gnds_file(filename: str, normalise: bool = False) -> AtomicRelaxation:
         """
         Create AtomicRelaxation data from a GNDS file
-
-        Parameters
-        ----------
-            filename : str
+        
+        Parameters 
+        ---------- 
+            filename : str 
                  the GNDS file name
-            normalise : bool, default false
+            normalise : bool, default false 
                  option to indicate whether or not to normalise
                  all probability data (default: no normalisation)
         """
@@ -80,14 +80,13 @@ class AtomicRelaxation:
         Calculate the transition energies for all transitions
         """
     def has_subshell(self, identifier: id.ElectronSubshellID) -> bool:
-    def has_subshell(self, identifier: id.ElectronSubshellID) -> bool:
         """
-        Return whether or not a subshell is present
-
+        Return whether or not a subshell is present 
+        
         Parameters
         ----------
-            identifier : njoy.dryad.id.ElectronSubshellID
-                 the electron subshell identifier
+            identifier : njoy.dryad.id.ElectronSubshellID 
+                 the electron subshell identifier 
         """
     def normalise(self) -> None:
         """
@@ -95,23 +94,23 @@ class AtomicRelaxation:
         """
     def subshell(self, identifier: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
-        Return the requested subshell
-
+        Return the requested subshell 
+        
         Parameters
         ----------
-            identifier : njoy.dryad.id.ElectronSubshellID
-                 the electron subshell identifier
+            identifier : njoy.dryad.id.ElectronSubshellID 
+                 the electron subshell identifier 
         """
     def to_endf_file(self, mat: int, filename: str) -> None:
         """
         Write the AtomicRelaxation data to an ENDF file
-
+        
         Parameters
         ----------
-            mat : int
-                 the ENDF mat number to be used
-            filename : str
-                 the ENDF file name
+            mat : int 
+                 the ENDF mat number to be used 
+            filename : str 
+                 the ENDF file name 
         """
     @property
     def documentation(self) -> Documentation:
@@ -145,23 +144,23 @@ class AtomicRelaxation:
 class CoherentDistributionData:
     """
     The distribution data for coherent scattering in photoatomic interactions
-
+    
     In this representation, a scattering function S(x,Z) and two optional form factor
     functions are defined which together with the Thompson cross section determine the
     double differential cross section.
-
+    
     This corresponds with the coherent scattering function data given in MF27 MT502 and
     the form factors in MF27 MT505 and MT506.
-
-    Parameters
-    ----------
-        frame : njoy.dryad.ReferenceFrame
+    
+    Parameters 
+    ---------- 
+        frame : njoy.dryad.ReferenceFrame 
              the reference frame of the distribution data
-        scattering : njoy.dryad.TabulatedScatteringFunction
-             the scatteirng function
-        real : njoy.dryad.TabulatedFormFactor
+        scattering : njoy.dryad.TabulatedScatteringFunction 
+             the scatteirng function 
+        real : njoy.dryad.TabulatedFormFactor 
               the real part of the anamolous form factor
-        imaginary : njoy.dryad.TabulatedFormFactor
+        imaginary : njoy.dryad.TabulatedFormFactor 
              the imaginary part of the anamolous form factor
     """
     __hash__: typing.ClassVar[None] = None
@@ -229,15 +228,15 @@ class CoherentDistributionData:
 class DistributionDataType:
     """
     The distribution data type for a reaction product
-
+    
     Members:
-
+    
       TwoBody
-
+    
       Uncorrelated
-
+    
       Coherent
-
+    
       Incoherent
     """
     Coherent: typing.ClassVar[DistributionDataType]  # value = <DistributionDataType.Coherent: 2>
@@ -293,7 +292,7 @@ class Documentation:
     def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
         """
         Initialise the documentation
-
+        
         Arguments:
             self          the documentation
             awr           the atomic weight ratio
@@ -338,23 +337,23 @@ class Documentation:
 class IncoherentDistributionData:
     """
     The distribution data for incoherent scattering in photoatomic interactions
-
+    
     This representation is only available for a photoatomic ProjectileTarget.
-
+    
     In this representation, a scattering function S(x,Z) is defined that
     together with the Klein-Nishina cross section determines the double
     differential cross section.
-
+    
     This corresponds with the incoherent scattering function data given in MF27 MT504,
-    supplemented with optional external Compton profile data.
-
-    Parameters
-    ----------
-        frame : njoy.dryad.ReferenceFrame
+    supplemented with optional external Compton profile data. 
+    
+    Parameters 
+    ---------- 
+        frame : njoy.dryad.ReferenceFrame 
              the reference frame of the distribution data
-        scattering : njoy.dryad.TabulatedScatteringFunction
-             the scatteirng function
-        profiles : list of njoy.dryad.TabulatedCOmptonProfile
+        scattering : njoy.dryad.TabulatedScatteringFunction 
+             the scatteirng function 
+        profiles : list of njoy.dryad.TabulatedCOmptonProfile 
              the optional Compton profiles
     """
     __hash__: typing.ClassVar[None] = None
@@ -371,21 +370,21 @@ class IncoherentDistributionData:
     @typing.overload
     def average_energy(self, energy: float, tolerance: float = 1e-08) -> float:
         """
-        Parameters
-        ----------
-            energy : float
+        Parameters 
+        ---------- 
+            energy : float 
                  the incident energy
-            tolerance : float
+            tolerance : float 
                  the integration tolerance (default: 1e-8)
         """
     @typing.overload
     def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
         """
-        Parameters
-        ----------
-            energies : list of float
+        Parameters 
+        ---------- 
+            energies : list of float 
                  the incident energies
-            tolerance : float
+            tolerance : float 
                  the integration tolerance (default: 1e-8)
         """
     def normalise(self) -> None:
@@ -429,11 +428,11 @@ class IncoherentDistributionData:
 class InteractionType:
     """
     The projectile-target interaction type
-
+    
     Members:
-
+    
       Atomic
-
+    
       Nuclear
     """
     Atomic: typing.ClassVar[InteractionType]  # value = <InteractionType.Atomic: 2>
@@ -476,17 +475,17 @@ class InteractionType:
 class InterpolationType:
     """
     The interpolation types
-
+    
     Members:
-
+    
       Histogram
-
+    
       LinearLinear
-
+    
       LinearLog
-
+    
       LogLinear
-
+    
       LogLog
     """
     Histogram: typing.ClassVar[InterpolationType]  # value = <InterpolationType.Histogram: 1>
@@ -543,7 +542,7 @@ class IsotropicAngularDistributions:
     def __init__(self) -> None:
         """
         Initialise the component
-
+        
         Arguments:
             self   the component
         """
@@ -558,7 +557,7 @@ class LegendreAngularDistribution:
     def __call__(self, cosine: float) -> float:
         """
         Evaluate the pdf of the distribution for a given cosine value
-
+        
         Parameters
         ----------
             cosine : float
@@ -573,7 +572,7 @@ class LegendreAngularDistribution:
     def __init__(self, coefficients: list[float], normalise: bool = False) -> None:
         """
         Initialise the angular distribution
-
+        
         Parameters
         ----------
             coefficients : list of float
@@ -588,7 +587,7 @@ class LegendreAngularDistribution:
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -625,13 +624,13 @@ class LegendreAngularDistributionFunction:
     """
     An angular distribution function using a Legendre expansion defined by a
     set of coefficients
-
+    
     Note: ENDF and GNDS Legendre expansions use Legendre moments for the angular
     distributions in MF4 and MF6 LAW=1 & LAW=2 so an additional ( 2 * n + 1 ) / 2
     factor for the coefficient of order n needs to be applied to obtain the series
     coefficients. This distribution function assumes those factors are already
     integrated in the coefficients.
-
+    
     A distribution function does not have to normalised as this class can be used
     to represent both a pdf and cdf. Proper normalisation should be applied after
     construction using the normalise() function if required.
@@ -646,7 +645,7 @@ class LegendreAngularDistributionFunction:
     def __call__(self, cosine: float) -> float:
         """
         Evaluate the distribution for a given cosine value
-
+        
         Parameters
         ----------
             cosine : float
@@ -669,7 +668,7 @@ class LegendreAngularDistributionFunction:
     def __init__(self, coefficients: list[float]) -> None:
         """
         Initialise the angular distribution
-
+        
         Parameters
         ----------
             coefficients : list of float
@@ -707,7 +706,7 @@ class LegendreAngularDistributionFunction:
     def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the series
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -750,7 +749,7 @@ class LegendreAngularDistributionFunction:
 class LegendreAngularDistributions:
     """
     Angular distribution data given using Legendre expansions
-
+    
     Parameters
     ----------
         grid : list of float
@@ -771,7 +770,7 @@ class LegendreAngularDistributions:
     def __call__(self, value: float, cosine: float) -> float:
         """
         Evaluate the angular distribution for a given grid and cosine value
-
+        
         Parameters
         ----------
             value : float
@@ -800,7 +799,7 @@ class LegendreAngularDistributions:
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -868,7 +867,7 @@ class PolynomialMultiplicity:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the multiplicity for a given energy value
-
+        
         Arguments:
             self      the multiplicity
             energy    the energy value
@@ -890,7 +889,7 @@ class PolynomialMultiplicity:
     def __init__(self, lower: float, upper: float, coefficients: list[float]) -> None:
         """
         Initialise the multiplicity table
-
+        
         Arguments:
             self           the multiplicity
             lower          the lower limit of the domain
@@ -929,7 +928,7 @@ class PolynomialMultiplicity:
     def linearise(self, tolerance: float = 0.001) -> TabulatedMultiplicity:
         """
         Linearise the series
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -964,11 +963,11 @@ class ProjectileTarget:
     def from_ace_file(filename: str, normalise: bool = False) -> ProjectileTarget | tuple[ProjectileTarget, ProjectileTarget]:
         """
         Create ProjectileTarget data from an ACE file
-
+        
         Most files will produce a single ProjectileTarget. The exception here is the
         photoatomic ACE file which may yield one ProjectileTarget (pre-eprdata) or two
         ProjectileTarget for eprdata files.
-
+        
         Arguments:
             filename    the ACE file name
             normalise   option to indicate whether or not to normalise
@@ -978,10 +977,10 @@ class ProjectileTarget:
     def from_endf_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from an ENDF file
-
+        
         If there are multiple materials in the ENDF file, only the first material
         will be transformed into a ProjectileTarget.
-
+        
         Arguments:
             filename    the ENDF file name
             normalise   option to indicate whether or not to normalise
@@ -991,7 +990,7 @@ class ProjectileTarget:
     def from_gnds_file(filename: str, normalise: bool = False) -> ProjectileTarget:
         """
         Create ProjectileTarget data from a GNDS file
-
+        
         Arguments:
             filename    the GNDS file name
             normalise   option to indicate whether or not to normalise
@@ -1007,7 +1006,7 @@ class ProjectileTarget:
     def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
-
+        
         Arguments:
             self            the reaction
             documentation   the documentation
@@ -1024,7 +1023,7 @@ class ProjectileTarget:
     def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
-
+        
         Arguments:
             self          the reaction
             projectile    the particle identifier
@@ -1041,7 +1040,7 @@ class ProjectileTarget:
     def calculate_average_energy(self, tolerance: float = 1e-08) -> None:
         """
         Calculate average outgoing energies for all reaction products
-
+        
         Arguments:
             self        the ProjectileTarget data
             tolerance    the integration tolerance (default: 1e-8)
@@ -1049,7 +1048,7 @@ class ProjectileTarget:
     def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
         """
         Calculate summation cross sections
-
+        
         Arguments:
             self        the ProjectileTarget data
             tolerance   the linearisation tolerance
@@ -1057,7 +1056,7 @@ class ProjectileTarget:
     def has_reaction(self, id: id.ReactionID) -> bool:
         """
         Return whether or not a reaction is present
-
+        
         Arguments:
             self   the ProjectileTarget data
             id     the reaction identifier
@@ -1069,7 +1068,7 @@ class ProjectileTarget:
     def reaction(self, id: id.ReactionID) -> Reaction:
         """
         Return the requested reaction
-
+        
         Arguments:
             self   the ProjectileTarget data
             id     the reaction identifier
@@ -1077,7 +1076,7 @@ class ProjectileTarget:
     def to_endf_file(self, mat: int, filename: str) -> None:
         """
         Write the ProjectileTarget data to an ENDF file
-
+        
         Arguments:
             self        the ProjectileTarget data
             mat         the ENDF mat number to be used
@@ -1086,16 +1085,16 @@ class ProjectileTarget:
     def unionise_cross_sections(self, exclude_summation: bool = False) -> None:
         """
         Unionise cross section data
-
+        
         This function takes all cross section data and unionises the cross section
         grids. It does not linearise the data but reevaluates the data using the
         proper interpolation types of the cross section data.
-
+        
         By default, summation cross sections are included in the unionisation process.
         unless explicitly excluded by the user. Switching on the exclusion of summation
         cross sections may be useful when the user is going to recalculate the summation
         cross sections after unionisation.
-
+        
         Arguments:
             self                the ProjectileTarget data
             exclude_summation   option to exclude summation reactions in the
@@ -1177,7 +1176,7 @@ class Reaction:
     def __init__(self, id: id.ReactionID, xs: TabulatedCrossSection, products: list[ReactionProduct] = [], mass_q: float | None = None, reaction_q: float | None = None, normalise: bool = False) -> None:
         """
         Initialise a primary reaction
-
+        
         Arguments:
             self         the reaction
             id           the reaction identifier
@@ -1192,11 +1191,11 @@ class Reaction:
     def __init__(self, id: id.ReactionID, partials: list[id.ReactionID], xs: TabulatedCrossSection, products: list[ReactionProduct] = [], normalise: bool = False) -> None:
         """
         Initialise a summation reaction
-
+        
         Summation reactions do not have Q values associated to them. A cross section
         weighted Q value could be calculated using the partial reactions making
         up the summation reaction.
-
+        
         Arguments:
             self        the reaction
             id          the reaction identifier
@@ -1212,7 +1211,7 @@ class Reaction:
     def calculate_average_energy(self, tolerance: float = 1e-08) -> None:
         """
         Calculate average outgoing energies for all reaction products
-
+        
         Arguments:
             self         the reaction
             tolerance    the integration tolerance (default: 1e-8)
@@ -1220,7 +1219,7 @@ class Reaction:
     def has_product(self, type: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product type is present
-
+        
         Arguments:
             self   the reaction
             type   the reaction product type
@@ -1242,7 +1241,7 @@ class Reaction:
     def product(self, type: id.ParticleID, index: int = 0) -> ReactionProduct:
         """
         Return a reaction product with a given type and index
-
+        
         Arguments:
             self    the reaction
             type    the reaction product type
@@ -1325,11 +1324,11 @@ class Reaction:
 class ReactionCategory:
     """
     The reaction category
-
+    
     Members:
-
+    
       Primary
-
+    
       Summation
     """
     Primary: typing.ClassVar[ReactionCategory]  # value = <ReactionCategory.Primary: 1>
@@ -1383,7 +1382,7 @@ class ReactionProduct:
     def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
         """
         Initialise the reaction
-
+        
         Arguments:
             self             the reaction
             id               the reaction product identifier
@@ -1444,11 +1443,11 @@ class ReactionProduct:
 class ReferenceFrame:
     """
     The reference frame used to describe data
-
+    
     Members:
-
+    
       Laboratory
-
+    
       CentreOfMass
     """
     CentreOfMass: typing.ClassVar[ReferenceFrame]  # value = <ReferenceFrame.CentreOfMass: 1>
@@ -1491,7 +1490,7 @@ class ReferenceFrame:
 class TabulatedAngularDistribution:
     """
     An angular distribution defined by a pdf and cdf using tabulated data
-
+    
     Parameters
     ----------
         cosines : list of float
@@ -1512,7 +1511,7 @@ class TabulatedAngularDistribution:
     def __call__(self, cosine: float) -> float:
         """
         Evaluate the pdf of the distribution for a given cosine value
-
+        
         Parameters
         ----------
             cosine : float
@@ -1539,7 +1538,7 @@ class TabulatedAngularDistribution:
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistribution:
         """
         Linearise the distribution
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -1590,7 +1589,7 @@ class TabulatedAngularDistribution:
 class TabulatedAngularDistributionFunction:
     """
     An angular distribution function using tabulated data
-
+    
     Parameters
     ----------
         cosines : list of float
@@ -1617,7 +1616,7 @@ class TabulatedAngularDistributionFunction:
     def __call__(self, cosine: float) -> float:
         """
         Evaluate the distribution for a given cosine value
-
+        
         Parameters
         ----------
             cosine : float
@@ -1678,7 +1677,7 @@ class TabulatedAngularDistributionFunction:
     def linearise(self, tolerance: float = 0.001) -> TabulatedAngularDistributionFunction:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -1751,7 +1750,7 @@ class TabulatedAngularDistributionFunction:
 class TabulatedAngularDistributions:
     """
     Angular distribution data given as tabulated data
-
+    
     Parameters
     ----------
         grid : list of float
@@ -1772,7 +1771,7 @@ class TabulatedAngularDistributions:
     def __call__(self, value: float, cosine: float) -> float:
         """
         Evaluate the angular distribution for a given grid and cosine value
-
+        
         Parameters
         ----------
             value : float
@@ -1801,7 +1800,7 @@ class TabulatedAngularDistributions:
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedAngularDistributions:
         """
         Linearise the distributions
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -1863,7 +1862,7 @@ class TabulatedAverageCosine:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the table for a given energy value
-
+        
         Arguments:
             self      the table
             energy    the energy value
@@ -1886,7 +1885,7 @@ class TabulatedAverageCosine:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the average cosine table
-
+        
         Arguments:
             self           the average cosine table
             energies       the energy values
@@ -1899,7 +1898,7 @@ class TabulatedAverageCosine:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the average cosine table
-
+        
         Arguments:
             self           the average cosine table
             energies       the energy values
@@ -1938,7 +1937,7 @@ class TabulatedAverageCosine:
     def linearise(self, tolerance: float = 0.001) -> TabulatedAverageCosine:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -2003,7 +2002,7 @@ class TabulatedAverageEnergy:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the table for a given energy value
-
+        
         Arguments:
             self      the table
             energy    the energy value
@@ -2026,7 +2025,7 @@ class TabulatedAverageEnergy:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the average reaction product energy table
-
+        
         Arguments:
             self           the average reaction product energy table
             energies       the energy values
@@ -2039,7 +2038,7 @@ class TabulatedAverageEnergy:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the average reaction product energy table
-
+        
         Arguments:
             self           the average reaction product energy table
             energies       the energy values
@@ -2078,7 +2077,7 @@ class TabulatedAverageEnergy:
     def linearise(self, tolerance: float = 0.001) -> TabulatedAverageEnergy:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -2132,11 +2131,11 @@ class TabulatedAverageEnergy:
 class TabulatedComptonProfile:
     """
     A Compton profile for an electron subshell defined by a pdf and cdf using tabulated data
-
+    
     Compton profiles are not available in standard evaluated nuclear data files. They are used for
     photoatomic transport data in Monte Carlo codes like MCNP, which currently get this data form
-    external sources.
-
+    external sources. 
+    
     Parameters
     ----------
         subshell_identifier : njoy.dryad.id.ElectronSubshellID
@@ -2158,8 +2157,8 @@ class TabulatedComptonProfile:
     __hash__: typing.ClassVar[None] = None
     def __call__(self, momentum: float) -> float:
         """
-        Evaluate the pdf of the Compton profile for a given momentum value
-
+        Evaluate the pdf of the Compton profile for a given momentum value 
+        
         Parameters
         ----------
             momentum : float
@@ -2185,8 +2184,8 @@ class TabulatedComptonProfile:
         ...
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedComptonProfile:
         """
-        Linearise the distribution
-
+        Linearise the distribution 
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -2242,7 +2241,7 @@ class TabulatedComptonProfile:
 class TabulatedComptonProfileFunction:
     """
     A Compton profile distribution using tabulated data
-
+    
     Parameters
     ----------
         momentum : list of float
@@ -2269,7 +2268,7 @@ class TabulatedComptonProfileFunction:
     def __call__(self, momentum: float) -> float:
         """
         Evaluate the Compton profile for a given momentum value
-
+        
         Parameters
         ----------
             momentum : float
@@ -2330,7 +2329,7 @@ class TabulatedComptonProfileFunction:
     def linearise(self, tolerance: float = 0.001) -> TabulatedComptonProfileFunction:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -2409,7 +2408,7 @@ class TabulatedCrossSection:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the table for a given energy value
-
+        
         Arguments:
             self      the table
             energy    the energy value
@@ -2432,7 +2431,7 @@ class TabulatedCrossSection:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the cross section table
-
+        
         Arguments:
             self           the cross section table
             energies       the energy values
@@ -2445,7 +2444,7 @@ class TabulatedCrossSection:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the cross section table
-
+        
         Arguments:
             self           the cross section table
             energies       the energy values
@@ -2484,7 +2483,7 @@ class TabulatedCrossSection:
     def linearise(self, tolerance: float = 0.001) -> TabulatedCrossSection:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -2543,7 +2542,7 @@ class TabulatedEnergyDistribution:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the pdf of the distribution for a given energy value
-
+        
         Arguments:
             self      the distribution
             energy    the energy value
@@ -2558,7 +2557,7 @@ class TabulatedEnergyDistribution:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the energy distribution
-
+        
         Arguments:
             self           the energy distribution
             energies       the energy values
@@ -2573,7 +2572,7 @@ class TabulatedEnergyDistribution:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the energy distribution
-
+        
         Arguments:
             self           the energy distribution
             energies       the energy values
@@ -2588,7 +2587,7 @@ class TabulatedEnergyDistribution:
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistribution:
         """
         Linearise the distribution
-
+        
         Arguments:
             self        the angular distribution
             tolerance   the linearisation tolerance
@@ -2648,7 +2647,7 @@ class TabulatedEnergyDistributionFunction:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the table for a given energy value
-
+        
         Arguments:
             self      the table
             energy    the energy value
@@ -2671,7 +2670,7 @@ class TabulatedEnergyDistributionFunction:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the energy distribution function
-
+        
         Arguments:
             self           the energy distribution function
             energies       the energy values
@@ -2684,7 +2683,7 @@ class TabulatedEnergyDistributionFunction:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the energy distribution function
-
+        
         Arguments:
             self           the energy distribution function
             energies       the energy values
@@ -2723,7 +2722,7 @@ class TabulatedEnergyDistributionFunction:
     def linearise(self, tolerance: float = 0.001) -> TabulatedEnergyDistributionFunction:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -2801,7 +2800,7 @@ class TabulatedEnergyDistributions:
     def __call__(self, value: float, cosine: float) -> float:
         """
         Evaluate the energy distributions
-
+        
         Arguments:
             self      the table
             value     the grid value
@@ -2817,7 +2816,7 @@ class TabulatedEnergyDistributions:
     def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType], normalise: bool = False) -> None:
         """
         Initialise the energy distributions
-
+        
         Arguments:
             self            the energy distribution table
             grid            the grid values
@@ -2830,7 +2829,7 @@ class TabulatedEnergyDistributions:
     def __init__(self, grid: list[float], distributions: list[TabulatedEnergyDistribution], interpolant: InterpolationType = ..., normalise: bool = False) -> None:
         """
         Initialise the energy distributions
-
+        
         Arguments:
             self            the multiplicity table
             grid            the grid values
@@ -2843,7 +2842,7 @@ class TabulatedEnergyDistributions:
     def linearise(self, tolerance: float = 0.001, normalise: bool = False) -> TabulatedEnergyDistributions:
         """
         Linearise the distribution
-
+        
         Arguments:
             self        the angular distribution
             tolerance   the linearisation tolerance
@@ -2903,7 +2902,7 @@ class TabulatedFormFactor:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the table for a given energy value
-
+        
         Arguments:
             self      the table
             energy    the energy value
@@ -2926,7 +2925,7 @@ class TabulatedFormFactor:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the form factor table
-
+        
         Arguments:
             self           the form factor table
             energies       the energy values
@@ -2939,7 +2938,7 @@ class TabulatedFormFactor:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the form factor table
-
+        
         Arguments:
             self           the form factor table
             energies       the energy values
@@ -2978,7 +2977,7 @@ class TabulatedFormFactor:
     def linearise(self, tolerance: float = 0.001) -> TabulatedFormFactor:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -3043,7 +3042,7 @@ class TabulatedMultiplicity:
     def __call__(self, energy: float) -> float:
         """
         Evaluate the table for a given energy value
-
+        
         Arguments:
             self      the table
             energy    the energy value
@@ -3066,7 +3065,7 @@ class TabulatedMultiplicity:
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the multiplicity table
-
+        
         Arguments:
             self           the multiplicity table
             energies       the energy values
@@ -3079,7 +3078,7 @@ class TabulatedMultiplicity:
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the multiplicity table
-
+        
         Arguments:
             self           the multiplicity table
             energies       the energy values
@@ -3118,7 +3117,7 @@ class TabulatedMultiplicity:
     def linearise(self, tolerance: float = 0.001) -> TabulatedMultiplicity:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -3184,7 +3183,7 @@ class TabulatedScatteringFunction:
     def __call__(self, inverse_length: float) -> float:
         """
         Evaluate the table for a given inverse length value
-
+        
         Arguments:
             self              the table
             inverse_length    the inverse length value
@@ -3193,7 +3192,7 @@ class TabulatedScatteringFunction:
     def __call__(self, energy: float, cosine: float) -> float:
         """
         Evaluate the table for a given energy,cosine pair
-
+        
         Arguments:
             self     the table
             energy   the incident photon energy
@@ -3217,7 +3216,7 @@ class TabulatedScatteringFunction:
     def __init__(self, inverse_lengths: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the scattering function table
-
+        
         Arguments:
             self              the scattering function table
             inverse_lengths   the inverse length values
@@ -3230,7 +3229,7 @@ class TabulatedScatteringFunction:
     def __init__(self, inverse_lengths: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the scattering function table
-
+        
         Arguments:
             self              the scattering function table
             inverse_lengths   the inverse length values
@@ -3269,7 +3268,7 @@ class TabulatedScatteringFunction:
     def linearise(self, tolerance: float = 0.001) -> TabulatedScatteringFunction:
         """
         Linearise the table
-
+        
         Parameters
         ----------
             tolerance : float, default 0.001
@@ -3289,7 +3288,7 @@ class TabulatedScatteringFunction:
     def inverse_length(self, arg1: float, arg2: float) -> float:
         """
         The inverse length value associated to an energy,cosine pair
-
+        
         Arguments:
             self     the table
             energy   the incident photon energy
@@ -3333,7 +3332,7 @@ class TabulatedScatteringFunction:
 class ThermalScattering:
     """
     Thermal scattering data
-
+    
     Parameters
     ----------
         documentation : njoy.dryad.Documentation
@@ -3346,10 +3345,10 @@ class ThermalScattering:
     def from_endf_file(filename: str) -> ThermalScattering:
         """
         Create ThermalScattering data from an ENDF file
-
+        
         If there are multiple materials in the ENDF file, only the first material
         will be transformed into a ThermalScattering instance.
-
+        
         Parameters
         ----------
             filename : string
@@ -3359,7 +3358,7 @@ class ThermalScattering:
     def from_gnds_file(filename: str, style: str = 'eval') -> ThermalScattering:
         """
         Create ThermalScattering data from a GNDS file
-
+        
         Parameters
         ----------
             filename : string
@@ -3388,7 +3387,7 @@ class ThermalScattering:
     def to_endf_file(self, za: int, mat: int, filename: str) -> None:
         """
         Write the ThermalScattering data to an ENDF file
-
+        
         Parameters
         ----------
             za : int
@@ -3437,11 +3436,11 @@ class ThermalScattering:
 class TwoBodyDistributionData:
     """
     The energy-angle distribution data for a two-body output channel
-
+    
     In this representation, only the angular distributions as a function of
     incident energy is given and the outgoing particle's energy can be derived
     through kinematics.
-
+    
     For incident neutron data, this corresponds with elastic and inelastic
     scattering data given in MF4 (none of these will have corresponding MF5
     data). In the more general MF6 representation, this corresponds with
@@ -3458,7 +3457,7 @@ class TwoBodyDistributionData:
     def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, normalise: bool = False) -> None:
         """
         Initialise the two-body distribution data
-
+        
         Arguments:
             self        the reaction product distribution data
             frame       the reference frame of the distribution data
@@ -3496,12 +3495,12 @@ class TwoBodyDistributionData:
 class UncorrelatedDistributionData:
     """
     Uncorrelated energy and angle distribution data for a reaction product
-
+    
     In this representation, there is no correlation given between the outgoing
     angle and energy of the reaction product. As a result, the angular and energy
     distributions of the reaction product depend only on the incident energy of the
     projectile.
-
+    
     For incident neutron data, this is used for reactions that have both MF4 and MF5
     data. For reaction products given in MF6, this corresponds to LAW = 1 (continuum
     energy-angle distributions) in which the angular dependence is fully isotropic.
@@ -3518,7 +3517,7 @@ class UncorrelatedDistributionData:
     def __init__(self, frame: ReferenceFrame, angle: IsotropicAngularDistributions | LegendreAngularDistributions | TabulatedAngularDistributions, energy: MultiEnergyDistributions | TabulatedEnergyDistributions, normalise: bool = False) -> None:
         """
         Initialise the uncorrelated distribution data
-
+        
         Arguments:
             self        the reaction product distribution data
             frame       the reference frame of the distribution data
@@ -3576,7 +3575,7 @@ class UniformAngularDistribution:
     def __init__(self, cosines: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the angular distribution
-
+        
         Arguments:
             self       the angular distribution
             cosines    the cosine values
@@ -3619,7 +3618,7 @@ class UniformAngularDistributions:
     def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the angular distributions
-
+        
         Arguments:
             self            the angular distribution table
             grid            the grid values
@@ -3632,7 +3631,7 @@ class UniformAngularDistributions:
     def __init__(self, grid: list[float], distributions: list[UniformAngularDistribution], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the angular distributions
-
+        
         Arguments:
             self            the multiplicity table
             grid            the grid values
@@ -3680,11 +3679,11 @@ class UniformAngularDistributions:
 class UniformDistributionType:
     """
     The uniform distribution type
-
+    
     Members:
-
+    
       Discrete
-
+    
       Interval
     """
     Discrete: typing.ClassVar[UniformDistributionType]  # value = <UniformDistributionType.Discrete: 1>
@@ -3738,7 +3737,7 @@ class UniformEnergyDistribution:
     def __init__(self, energies: list[float], type: UniformDistributionType) -> None:
         """
         Initialise the energy distribution
-
+        
         Arguments:
             self       the energy distribution
             energies   the energy values
@@ -3781,7 +3780,7 @@ class UniformEnergyDistributions:
     def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
         Initialise the energy distributions
-
+        
         Arguments:
             self            the energy distribution table
             grid            the grid values
@@ -3794,7 +3793,7 @@ class UniformEnergyDistributions:
     def __init__(self, grid: list[float], distributions: list[UniformEnergyDistribution], interpolant: InterpolationType = ...) -> None:
         """
         Initialise the energy distributions
-
+        
         Arguments:
             self            the multiplicity table
             grid            the grid values
