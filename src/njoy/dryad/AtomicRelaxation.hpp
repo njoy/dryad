@@ -122,30 +122,30 @@ namespace dryad {
     /**
      *  @brief Return whether or not a given subshell is present
      *
-     *  @param[in] id   the subshell identifier
+     *  @param[in] identifier   the subshell identifier
      */
-    bool hasSubshell( const id::ElectronSubshellID& id ) const {
+    bool hasSubshell( const id::ElectronSubshellID& identifier ) const {
 
-      auto iter = this->iterator( id );
-      return iter != this->subshells().end() && iter->identifier() == id;
+      auto iter = this->iterator( identifier );
+      return iter != this->subshells().end() && iter->identifier() == identifier;
     }
 
     /**
      *  @brief Return the requested subshell
      *
-     *  @param[in] id   the reaction identifier
+     *  @param[in] identifier   the subshell identifier
      */
     const atomic::ElectronSubshellConfiguration&
-    subshell( const id::ElectronSubshellID& id ) const {
+    subshell( const id::ElectronSubshellID& identifier ) const {
 
-      auto iter = this->iterator( id );
-      if ( iter != this->subshells().end() && iter->identifier() == id ) {
+      auto iter = this->iterator( identifier );
+      if ( iter != this->subshells().end() && iter->identifier() == identifier ) {
 
         return *iter;
       }
       else {
 
-        Log::error( "The requested subshell \'{}\' could not be found", id.symbol() );
+        Log::error( "The requested subshell \'{}\' could not be found", identifier.symbol() );
         throw std::exception();
       }
     }
