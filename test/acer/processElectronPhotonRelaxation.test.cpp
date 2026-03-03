@@ -93,8 +93,6 @@ SCENARIO( "processElectronPhotonRelaxation" ) {
 
       THEN( "the ace file can be generated" ) {
 
-      THEN( "the ace file can be generated" ) {
-
         processElectronPhotonRelaxation( photoatomic, electroatomic, relaxation, filename,
                                          25, "02/19/26", "eprdata25 - ENDF/B-VIII.1 H" );
 
