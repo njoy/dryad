@@ -39,6 +39,14 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the energy transfer values
+     */
+    std::vector< double >& energyTransfers() {
+
+      return this->x();
+    }
+
+    /**
      *  @brief Return the associated scattering functions
      */
     const std::vector< TabulatedScatteringKernelFunction >& functions() const {
@@ -75,7 +83,7 @@ namespace thermal {
                         ( auto&& function )
                         { return function.linearise( std::move( tolerance ) ); } );
       return TabulatedScatteringKernel( this->energyTransfers(), std::move( functions ),
-                                           this->boundaries(), this->interpolants() );
+                                        this->boundaries(), this->interpolants() );
     }
 
     /**
