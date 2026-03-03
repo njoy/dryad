@@ -329,8 +329,3 @@ add_cpp_test( medic.pruneCrossSections                                          
 # acer tests
 
 add_cpp_test( acer.processElectronPhotonRelaxation                                      acer/processElectronPhotonRelaxation.test.cpp )
-
-# custom time outs
-
-set_tests_properties( njoy.acer.processElectronPhotonRelaxation.test                      PROPERTIES TIMEOUT 3000 )
-set_tests_properties( njoy.dryad.format.ace.photoatomic.createAceHeatingNumbersBlock.test PROPERTIES TIMEOUT 3000 )
