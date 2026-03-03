@@ -42,6 +42,10 @@ namespace gnds {
       auto output = reaction.child( "outputChannel" );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = createQValue( output.child( "Q" ), style );
+      if ( mt == 515 || mt == 517 ) {
+
+        reaction_q = -2. * constants::electron_rest_mass;
+      }
 
       // reaction products
       std::vector< ReactionProduct > products;

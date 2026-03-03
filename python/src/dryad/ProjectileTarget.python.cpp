@@ -175,6 +175,12 @@ void wrapProjectileTarget( python::module& module ) {
   )
   .def(
 
+    "calculate_average_energy",
+    &Component::calculateAverageEnergy,
+    "Calculate average outgoing energies for all reaction products"
+  )
+  .def(
+
     "unionise_cross_sections",
     &Component::unioniseCrossSections,
     python::arg( "exclude_summation" ) = false,

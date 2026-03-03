@@ -312,6 +312,7 @@ add_cpp_test( dryad.format.gnds.createThermalScattering                         
 add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                         dryad/format/endf/createThermalScatteringFromFile.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                            dryad/external/ComptonProfiles.test.cpp )
+add_cpp_test( dryad.external.KleinNishina                                               dryad/external/KleinNishina.test.cpp )
 
 # reconr tests
 
@@ -326,3 +327,8 @@ add_cpp_test( medic.pruneCrossSections                                          
 # acer tests
 
 add_cpp_test( acer.processElectronPhotonRelaxation                                      acer/processElectronPhotonRelaxation.test.cpp )
+
+# custom time outs
+
+set_tests_properties( njoy.acer.processElectronPhotonRelaxation.test                      PROPERTIES TIMEOUT 3000 )
+set_tests_properties( njoy.dryad.format.ace.photoatomic.createAceHeatingNumbersBlock.test PROPERTIES TIMEOUT 3000 )

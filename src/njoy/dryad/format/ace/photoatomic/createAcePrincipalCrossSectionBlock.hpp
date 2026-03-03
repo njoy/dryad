@@ -32,15 +32,15 @@ namespace photoatomic {
     // is exactly 0 (in which case it is zero). If the value is exactly 1,
     // the final value is shifted by 1e-13 to avoid having a zero value
     // (this practice in found in older eprdata files)
-    auto convertEnergy = [] ( auto&& energy ) {
-
-      return energy == 0. ? energy : std::log( energy * constants::micro );
-    };
     auto convertValue = [] ( auto&& value ) {
 
       return value == 0. ? value
                          : value == 1. ? std::log( value + 1e-13 )
                                        : std::log( value );
+    };
+    auto convertEnergy = [&] ( auto&& energy ) {
+
+      return convertValue( energy * constants::micro );
     };
 
     // identifiers

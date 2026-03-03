@@ -367,6 +367,22 @@ class IncoherentDistributionData:
         ...
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
+    @typing.overload
+    def average_energy(self, energy: float) -> float:
+        """
+        Parameters 
+        ---------- 
+            energy : float 
+                 the incident energy
+        """
+    @typing.overload
+    def average_energy(self, energies: list[float]) -> list[float]:
+        """
+        Parameters 
+        ---------- 
+            energies : list of float 
+                 the incident energies
+        """
     def normalise(self) -> None:
         """
         Normalise the Compton profiles
@@ -387,6 +403,11 @@ class IncoherentDistributionData:
     @frame.setter
     def frame(self, arg1: ReferenceFrame) -> None:
         ...
+    @property
+    def has_compton_profiles(self) -> bool:
+        """
+        Flag indicating whether or not there are Compton profiles
+        """
     @property
     def scattering_function(self) -> TabulatedScatteringFunction:
         """
@@ -1012,6 +1033,10 @@ class ProjectileTarget:
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
+    def calculate_average_energy(self) -> None:
+        """
+        Calculate average outgoing energies for all reaction products
+        """
     def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
         """
         Calculate summation cross sections
@@ -1175,6 +1200,10 @@ class Reaction:
         """
     def __ne__(self, arg0: Reaction) -> bool:
         ...
+    def calculate_average_energy(self) -> None:
+        """
+        Calculate average outgoing energies for all reaction products
+        """
     def has_product(self, type: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product type is present

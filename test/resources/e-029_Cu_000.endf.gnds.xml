@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reactionSuite projectile="e-" target="Cu" evaluation="ENDF/B-8.1" format="2.0" projectileFrame="lab" interaction="atomic">
+  <styles>
+    <evaluated label="eval" date="2023-08-01" library="ENDF/B" version="8.1.0">
+      <documentation>
+        <authors>
+          <author name="D.E.Cullen"></author></authors>
+        <dates>
+          <date value="2023-08-01" dateType="created"/></dates>
+        <title><![CDATA[ENDF-6 file from ENDF/B version 8.1.0 translated to GNDS by FUDGE.]]></title>
+        <body><![CDATA[See the endfCompatible section.]]></body>
+        <endfCompatible><![CDATA[ 29-Cu-  0 NDS,IAEA   Eval-Aug23 D.E.Cullen
+ NDS-IAEA-226         DIST-AUG24 REV1-NOV23            20240830
+---- ENDF/B-VIII.1    MATERIAL 2900         REVISION 1
+----- ELECTRO-ATOMIC INTERACTION DATA
+------ ENDF-6
+==================================================================
+The Livermore Evaluated Electron Data Library (EEDL) in the
+ENDF-6 Format. Translated from the Livermore ENDL format
+to the ENDF-6 Format.
+==================================================================
+  Contents
+==================================================================
+  MF/MT    Description
+==================================================================
+  23/501   Total Electron Cross Sections
+  23/522   Ionization (sum of subshells)
+  23/525   Large Angle Elastic Scattering Cross Section
+  23/526   Elastic Scatter (Total) Cross Sections
+  23/527   Bremsstrahlung Cross Sections
+  23/528   Excitation Cross Sections
+  23/534   K (1S1/2)    Electroionization Subshell Cross Sections
+  23/535   L1 (2s1/2)   Electroionization Subshell Cross Sections
+  23/536   L2 (2p1/2)   Electroionization Subshell Cross Sections
+  23/537   L3 (2p3/2)   Electroionization Subshell Cross Sections
+  23/538   M1 (3s1/2)   Electroionization Subshell Cross Sections
+  23/539   M2 (3p1/2)   Electroionization Subshell Cross Sections
+  23/540   M3 (3p3/2)   Electroionization Subshell Cross Sections
+  23/541   M4 (3d3/2)   Electroionization Subshell Cross Sections
+  23/542   M5 (3d5/2)   Electroionization Subshell Cross Sections
+  23/543   N1 (4s1/2)   Electroionization Subshell Cross Sections
+==================================================================
+  26/525   Large Angle Elastic Angular Distributions
+  26/527   Bremsstrahlung Photon Energy Spectra and
+                          Electron Average Energy Loss
+  26/528   Excitation Electron Average Energy Loss
+  26/534   K (1S1/2)    Electroionization Subshell Energy Spectra
+  26/535   L1 (2s1/2)   Electroionization Subshell Energy Spectra
+  26/536   L2 (2p1/2)   Electroionization Subshell Energy Spectra
+  26/537   L3 (2p3/2)   Electroionization Subshell Energy Spectra
+  26/538   M1 (3s1/2)   Electroionization Subshell Energy Spectra
+  26/539   M2 (3p1/2)   Electroionization Subshell Energy Spectra
+  26/540   M3 (3p3/2)   Electroionization Subshell Energy Spectra
+  26/541   M4 (3d3/2)   Electroionization Subshell Energy Spectra
+  26/542   M5 (3d5/2)   Electroionization Subshell Energy Spectra
+  26/543   N1 (4s1/2)   Electroionization Subshell Energy Spectra
+==================================================================
+  Warning
+==================================================================
+  MF/MT combinations used to define ALL electron interaction data
+  are newly defined MF/MT numbers for ENDF/B-VI that did not exist
+  in earlier versions of ENDF/B.
+==================================================================
+  Definition of Data
+==================================================================
+  Cross Sections (MF=23)
+==================================================================
+1) The total electron interaction cross section is given
+   explicitly as MF/MT=23/501. It is the sum of scatter,
+   bremsstrahlung, excitation and ionization cross sections,
+   i.e., MT = 526, 527, 528, and 534 through 572.
+2) The total electron ionization cross section is given
+   explicitly as MF/MT=23/522. It is the sum of the aubshell
+   cross sections, i.e., all MT = 534 through 572.
+==================================================================
+  Angular and Energy Distributions (MF=26)
+==================================================================
+3) For Large Angle Scatter (MT=525), angular distributions of
+   electrons are tabulated between cosine = -1.0 and 0.999999.
+   Between +0.99999 and +1.0 it is analytically defined as
+   Coulomb scattering,
+
+   d(sig)/d(cos) = A/[eta+(1.0 - cos)]^2
+
+   where the shielding parameter (eta) is defined by the
+   Steve Seltzer expression (see, ref. 1), and (A) is the
+   normalization factor for the integral +0.99999 to +1.0.
+   Electron elastic scatter means no energy loss, so only
+   angular distributions are giving.
+4) For bremsstrahlung, both the outgoing electron and photon are
+   described. The photon energy spectra are given, but angular
+   distributions are not; these can be analytically defined by a
+   number of different methods. For the electron, average energy
+   loss is given. The electron is assumed to continue along its
+   original direction of travel, so angular distributions are not
+   given. WARNING - bremsstrahlung is a three body process,
+   involving an electron, a photon, and an atom - so that you
+   cannot use energy or momentum correlation to simply relate
+   the secondary electron and the emitted photon.
+5) For excitation, the average energy loss of the electron is
+   given. The electron is assumed to continue along its original
+   direction of travel, so angular distributions are not given.
+6) For Ionization, the spectra of electrons is given. The electron
+   is assumed to continue along its original direction of travel,
+   so angular distributions are not given. In ionization two
+   identical electrons emerge; the incident electron, and an
+   electron ejected by the atom [thereby ionizing the atom]. Since
+   the two particles are indistinquishable, we define the electron
+   with the lower energy to be that ejected by the atom, and the
+   electron with the higher energy to be the incident electron.
+   The energy of the two electrons is exactly correlated by energy
+   conservation: initial incident electron energy = binding energy
+   of the ejected electron, plus the kinetic energy of the ejected
+   and the secondary incident electron. Therefore only the spectra
+   of the lower energy, ejected electron is given. The energy of
+   the secondary incident electron should be defined to conserve
+   energy, as described above. The energy lost by the incident
+   electron is the sum of the binding and kinetic energy of the
+   ejected electron.
+7) Relaxation of ionized atoms back to neutrality is not described
+   here; it is described in the companion Evaluated Atomic Data
+   Library (EADL).
+==================================================================
+  References
+==================================================================
+1) S.T. Perkins, D.E. Cullen, and S.M. Seltzer, "Tables and
+   Graphs of Electron-Interaction Cross Sections from 10 eV to
+   100 GeV Derived from the LLNL Evaluated Electron Data
+   Library (EEDL), Z = 1-100, UCRL-50400, Vol. 31, Lawrence
+   Livermore National Laboratory (1991).
+2) D.E. Cullen "PROGRAM EPICSHOW: A Computer Code to Allow
+   Interactive Viewing of the EPIC Data Libraries" (Version
+   2000-1), UCRL-ID-1264455, Rev. 3, Part 4, Lawrence Livermore
+   National Laboratory (2000).
+3) D.E. Cullen "A Survey of Atomic Binding Energies for use
+   in EPICS2017" ,IAEA-NDS-224, (2017), Nuclear Data Section,
+   IAEA, Vienna, Austria
+4) D.E. Cullen "A Survey of Photon Cross Section Data for use
+   in EPICS2017" ,IAEA-NDS-225, (2017), Nuclear Data Section,
+   IAEA, Vienna, Austria
+5) D.E. Cullen "A Survey of Electron Cross Section Data for
+   use in EPICS2017" ,IAEA-NDS-226, (2017), Nuclear Data
+   Section, IAEA, Vienna, Austria
+6) D.E. Cullen,"EPICS2017: April 2019 Status Report",
+   IAEA-NDS-228, April 2019, Nuclear Data Section,
+   IAEA, Vienna, Austria.
+7) D.E. Cullen,"EPICS2023: August 2023 Status Report",
+   IAEA-NDS-242, August 2023, Nuclear Data Section,
+   IAEA, Vienna, Austria.
+
+  These are the primary references to the contents of this library
+  and they contain a complete list of references to the sources
+  of data used in this library, methods of evaluation, accuracy
+  of the data, etc.
+==================================================================
+  History
+==================================================================
+ 1) Nov.  1991 - Initial Release in the ENDL format
+ 2) Nov.  2001 - Initial Release in the ENDF-6 format
+ 3) Sept. 2014 - Insure Standard C, C++, FORTRAN format
+ 4)            - Corrected MF/MT=26/527 Electron Energy Loss
+ 5)            - Updated based on recently published data
+ 6) Nov.  2017 - New Binding Energies (see, ref. 3)
+               - New Ionization Subshell Cross Sections
+               - New Total Scatter (MF/MT=23/526)
+               - New Large Angle Scatter (MF/MT=23/525.26/525)
+               - New Total (MT=501) and Ionization (MT=522)
+               - ALL Cross Sections Lin-Lin Interpolable
+ 7) Aug.  2023 - MF/MT=26/527 Set ZAP=0 (photon),not 11 (electron)
+==================================================================
+ ***************** Program FIXUP (Version 2023-2) ****************
+ **************** Program DICTIN (VERSION 2023-1) ****************]]></endfCompatible></documentation>
+      <temperature value="0" unit="K"/>
+      <projectileEnergyDomain min="7.73" max="1e11" unit="eV"/></evaluated></styles>
+  <PoPs name="protare_internal" version="1.0" format="2.0">
+    <gaugeBosons>
+      <gaugeBoson id="photon">
+        <mass>
+          <double label="eval" value="0." unit="amu"/></mass>
+        <spin>
+          <fraction label="eval" value="1" unit="hbar"/></spin>
+        <parity>
+          <integer label="eval" value="1"/></parity>
+        <charge>
+          <integer label="eval" value="0" unit="e"/></charge>
+        <halflife>
+          <string label="eval" value="stable" unit="s"/></halflife></gaugeBoson></gaugeBosons>
+    <leptons>
+      <lepton id="e-" generation="electronic">
+        <mass>
+          <double label="eval" value="5.48579909e-4" unit="amu"/></mass>
+        <spin>
+          <fraction label="eval" value="1/2" unit="hbar"/></spin>
+        <parity>
+          <integer label="eval" value="1"/></parity>
+        <charge>
+          <integer label="eval" value="-1" unit="e"/></charge>
+        <halflife>
+          <string label="eval" value="stable" unit="s"/></halflife></lepton></leptons>
+    <chemicalElements>
+      <chemicalElement symbol="Cu" Z="29" name="Copper"></chemicalElement></chemicalElements></PoPs>
+  <reactions>
+    <reaction label="e- + Cu [large angle Coulomb scattering]" ENDF_MT="526">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.00000000e+01 1.49211000e+09 1.25893000e+01 1.32113000e+09 1.58489000e+01 1.16975000e+09 1.99526000e+01 1.03571000e+09 2.51189000e+01 9.17028000e+08 3.16228000e+01 8.11947000e+08 3.98107000e+01 7.19195000e+08 5.01187000e+01 6.37039000e+08 6.30957000e+01 5.64268000e+08 7.94328000e+01 4.99809000e+08 1.00000000e+02 4.42714000e+08 1.25893000e+02 3.92455000e+08 1.58489000e+02 3.47901000e+08 1.99526000e+02 3.08405000e+08 2.51189000e+02 2.73393000e+08 3.16228000e+02 2.42356000e+08 3.98107000e+02 2.15100000e+08 5.01187000e+02 1.90910000e+08 6.30957000e+02 1.69440000e+08 7.94328000e+02 1.50384000e+08 1.00000000e+03 1.33472000e+08 1.25893000e+03 1.18463000e+08 1.58489000e+03 1.05094000e+08 1.99526000e+03 9.29263000e+07 2.51189000e+03 8.17312000e+07 3.16228000e+03 7.15796000e+07 3.98107000e+03 6.23667000e+07 5.01187000e+03 5.40155000e+07 6.30957000e+03 4.65661000e+07 7.94328000e+03 3.99181000e+07 1.00000000e+04 3.40073000e+07 1.25893000e+04 2.88412000e+07 1.58489000e+04 2.43405000e+07 1.99526000e+04 2.04383000e+07 2.51189000e+04 1.71246000e+07 3.16228000e+04 1.43144000e+07 3.98107000e+04 1.19474000e+07 5.01187000e+04 9.97094000e+06 6.30957000e+04 8.33754000e+06 7.94328000e+04 7.00477000e+06 1.00000000e+05 5.92571000e+06 1.25893000e+05 5.05566000e+06 1.58489000e+05 4.36524000e+06 1.99526000e+05 3.80757000e+06 2.51189000e+05 3.34543000e+06 3.16228000e+05 2.95882000e+06 3.98107000e+05 2.63143000e+06 5.01187000e+05 2.35381000e+06 6.30957000e+05 2.11947000e+06 7.94328000e+05 1.91954000e+06
+            1.00000000e+06 1.75036000e+06 1.25893000e+06 1.60613000e+06 1.58489000e+06 1.48355000e+06 1.99526000e+06 1.38058000e+06 2.51189000e+06 1.29349000e+06 3.16228000e+06 1.22105000e+06 3.98107000e+06 1.16187000e+06 5.01187000e+06 1.11356000e+06 6.30957000e+06 1.07520000e+06 7.94328000e+06 1.04675000e+06 1.00000000e+07 1.02689000e+06 1.25893000e+07 1.01689000e+06 1.58489000e+07 1.01272000e+06 1.99526000e+07 1.01146000e+06 2.51189000e+07 1.01134000e+06 3.16228000e+07 1.01122000e+06 3.98107000e+07 1.01111000e+06 5.01187000e+07 1.01099000e+06 6.30957000e+07 1.01088000e+06 7.94328000e+07 1.01077000e+06 1.00000000e+08 1.01066000e+06 1.25893000e+08 1.01054000e+06 1.58489000e+08 1.01042000e+06 1.99526000e+08 1.01031000e+06 2.51189000e+08 1.01020000e+06 3.16228000e+08 1.01008000e+06 3.98107000e+08 1.00997000e+06 5.01187000e+08 1.00985000e+06 6.30957000e+08 1.00974000e+06 7.94328000e+08 1.00962000e+06 1.00000000e+09 1.00951000e+06 1.25893000e+09 1.00939000e+06 1.58489000e+09 1.00928000e+06 1.99526000e+09 1.00917000e+06 2.51189000e+09 1.00905000e+06 3.16228000e+09 1.00893000e+06 3.98107000e+09 1.00882000e+06 5.01187000e+09 1.00870000e+06 6.30957000e+09 1.00859000e+06 7.94328000e+09 1.00848000e+06 1.00000000e+10 1.00837000e+06 1.25890000e+10 1.00825000e+06 1.58490000e+10 1.00813000e+06 1.99530000e+10 1.00802000e+06 2.51190000e+10 1.00791000e+06 3.16230000e+10 1.00779000e+06 3.98110000e+10 1.00767000e+06 5.01190000e+10 1.00756000e+06 6.30960000e+10 1.00745000e+06 7.94330000e+10 1.00733000e+06
+            1.00000000e+11 1.00722000e+06</values></XYs1d></crossSection>
+      <outputChannel genre="twoBody" process="large angle Coulomb scattering">
+        <Q>
+          <constant1d label="eval" value="0" domainMin="10" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu" label="Cu">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + Cu + photon [bremsstrahlung]" ENDF_MT="527">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.00000000e+01 3.38243000e+03 2.07360000e+01 3.89650000e+03 4.29982000e+01 4.37756000e+03 8.91610000e+01 4.78477000e+03 1.84884000e+02 5.03547000e+03 3.83376000e+02 4.98515000e+03 6.62474000e+02 4.62746000e+03 1.00000000e+03 4.16129000e+03 1.18921000e+03 3.92514000e+03 1.54221000e+03 3.58914000e+03 2.00000000e+03 3.26650000e+03 2.51487000e+03 2.99750000e+03 2.98627000e+03 2.79318000e+03 3.86411000e+03 2.49615000e+03 4.68802000e+03 2.28218000e+03 5.94604000e+03 2.03099000e+03 7.46454000e+03 1.80466000e+03 9.07126000e+03 1.62267000e+03 1.09051000e+04 1.46159000e+03 1.35426000e+04 1.28627000e+03 1.64576000e+04 1.14219000e+03 2.00000000e+04 1.01126000e+03 2.24271000e+04 9.40418000e+02 2.74045000e+04 8.27056000e+02 3.36970000e+04 7.23790000e+02 3.87970000e+04 6.60918000e+02 4.59458000e+04 5.95364000e+02 5.45254000e+04 5.36097000e+02 6.34525000e+04 4.88813000e+02 7.46454000e+04 4.43876000e+02 8.63976000e+04 4.07346000e+02 1.00000000e+05 3.74315000e+02 1.18921000e+05 3.39255000e+02 1.42189000e+05 3.07632000e+02 1.64576000e+05 2.85010000e+02 1.85901000e+05 2.68330000e+02 2.11788000e+05 2.52523000e+02 2.51487000e+05 2.34746000e+02 2.98627000e+05 2.20031000e+02 3.56512000e+05 2.07665000e+02 4.22204000e+05 1.98242000e+02 5.00000000e+05 1.90885000e+02 5.94604000e+05 1.85256000e+02 7.07107000e+05 1.81268000e+02 8.78126000e+05 1.78269000e+02 1.09051000e+06 1.77107000e+02 1.41421000e+06 1.77666000e+02 2.00000000e+06 1.80938000e+02 3.00000000e+06 1.86422000e+02 5.00000000e+06 1.92911000e+02
+            8.94427000e+06 2.01042000e+02 1.50000000e+07 2.08691000e+02 2.44949000e+07 2.14312000e+02 4.00000000e+07 2.20075000e+02 5.47723000e+07 2.23770000e+02 8.94427000e+07 2.29485000e+02 1.41421000e+08 2.34566000e+02 2.00000000e+08 2.38009000e+02 3.16228000e+08 2.41443000e+02 3.97635000e+08 2.42927000e+02 5.94604000e+08 2.45675000e+02 1.00000000e+09 2.49867000e+02 1.68179000e+09 2.54522000e+02 2.51487000e+09 2.58455000e+02 5.00000000e+09 2.65703000e+02 1.00000000e+10 2.72569000e+02 2.07360000e+10 2.80537000e+02 4.29980000e+10 2.88590000e+02 8.91610000e+10 2.96642000e+02 1.00000000e+11 2.97909000e+02</values></XYs1d></crossSection>
+      <outputChannel genre="NBody" process="bremsstrahlung">
+        <Q>
+          <constant1d label="eval" value="0" domainMin="10" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="photon" label="photon">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="10"><values>0.1 2.13149 0.133352 1.59845 0.165482 1.28814 0.228757 0.931873 0.316228 0.674141 0.421697 0.505606 0.523299 0.407482 0.723394 0.294817 1 0.213303 1.41421 0.150911 2 0.106769 2.82843 0.0755721 4 0.0534906 5.65685 0.0378822 8 0.0268283 9.9 0.0217078 10 0.0214935</values></XYs1d>
+                      <XYs1d outerDomainValue="20.736"><values>0.1 1.83562 0.14608 1.25666 0.194104 0.945795 0.240224 0.764241 0.330742 0.555111 0.455368 0.403209 0.665201 0.27611 0.883886 0.207848 1.0939 0.167975 1.50609 0.122037 2.0736 0.0886622 2.93251 0.0627648 4.1472 0.0444318 5.86503 0.0314824 8.2944 0.022307 11.7301 0.0158238 16.5888 0.0112249 20.5286 9.0951e-3 20.736 9.00656e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="42.9982"><values>0.1 1.61354 0.1265 1.27559 0.155389 1.03848 0.222713 0.724613 0.291737 0.553205 0.357211 0.451826 0.483977 0.333502 0.65573 0.246164 0.829499 0.194667 1.01893 0.158526 1.4604 0.110667 1.913 0.0845188 2.34234 0.0690488 3.17358 0.050987 4.29982 0.0376499 6.08086 0.0266843 8.59963 0.0189125 12.1617 0.0134292 17.1993 9.53569e-3 24.3234 6.78696e-3 34.3985 4.83058e-3 42.5682 3.92504e-3 42.9982 3.88792e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="794.968"><values>0.1 1.04207 0.123207 0.845809 0.177521 0.587061 0.233458 0.446417 0.2867 0.363525 0.390173 0.267131 0.530991 0.196297 0.654219 0.159349 0.942619 0.110627 1.23964 0.0841384 1.52235 0.0685242 2.07179 0.0503639 2.81952 0.0370164 3.47385 0.0300598 4.75078 0.0219975 6.49709 0.0160976 8.00488 0.0130813 10.9473 9.5827e-3 14.9714 7.01978e-3 18.4458 5.71353e-3 25.2262 4.19542e-3 34.499 3.08068e-3 42.5052 2.51692e-3 58.1294 1.85868e-3 79.4968 1.37258e-3 112.426 9.94042e-4 158.994 7.19898e-4 224.851 5.30438e-4 317.987 3.90839e-4 449.702 2.9496e-4 635.975 2.22602e-4 787.019 1.90551e-4 794.968 1.89591e-4</values></XYs1d>
+                      <XYs1d outerDomainValue="14142.1"><values>0.1 0.834734 0.134804 0.619228 0.178361 0.468014 0.231899 0.35997 0.2966 0.281448 0.373563 0.223465 0.463761 0.180005 0.568009 0.146969 0.830745 0.10049 1.15862 0.0720534 1.55009 0.0538574 1.99972 0.0417482 2.49894 0.0334084 3.69089 0.0226197 4.94496 0.0168835 6.15796 0.0135579 8.55752 9.75635e-3 11.8921 7.02074e-3 16.0311 5.21401e-3 21.2109 3.94491e-3 27.5776 3.03719e-3 35.2719 2.37687e-3 44.4244 1.88883e-3 55.1508 1.52272e-3 67.548 1.24421e-3 98.7927 8.51939e-4 137.784 6.11622e-4 184.337 4.57666e-4 237.808 3.55105e-4 297.175 2.84406e-4 438.922 1.92844e-4 588.056 1.44098e-4 732.306 1.1581e-4 1017.66 8.34405e-5 1414.21 6.01186e-5 2e3 4.22591e-5 2828.43 2.97051e-5 4e3 2.04078e-5 5656.85 1.40205e-5 7999.99 9.37984e-6 11313.7 6.27521e-6 14000.7 4.842e-6 14142.1 4.78347e-6</values></XYs1d>
+                      <XYs1d outerDomainValue="2e5"><values>0.1 0.734238 0.146439 0.501393 0.204459 0.35911 0.273803 0.268161 0.353521 0.207691 0.4421 0.166078 0.653815 0.112299 0.87681 0.0837386 1.09268 0.0671951 1.52011 0.0483008 2.11474 0.0347194 3.09681 0.023708 4.32379 0.0169796 5.79023 0.0126789 7.47607 9.81953e-3 9.34929 7.85188e-3 13.8265 5.30908e-3 18.5423 3.95871e-3 23.1074 3.17654e-3 32.1465 2.28326e-3 44.7214 1.64118e-3 65.4896 1.12034e-3 87.1797 8.4139e-4 108.043 6.78784e-4 149.063 4.91851e-4 205.657 3.56398e-4 301.162 2.42994e-4 400.907 1.82323e-4 496.851 1.46986e-4 685.487 1.06397e-4 945.742 7.70157e-5 1384.94 5.23514e-5 2028.09 3.55859e-5 2969.92 2.40628e-5 4349.12 1.62711e-5 6368.81 1.08796e-5 9326.43 7.27465e-6 11286.1 5.87869e-6 15024.1 4.27054e-6 2e4 3.10231e-6 25936.8 2.26303e-6 33635.9 1.6508e-6 40593.3 1.28825e-6 48989.8 1.00532e-6 62603.4 7.03678e-7 8e4 4.9254e-7 97979.6 3.54521e-7 1.2e5 2.55177e-7 142705 1.84468e-7 169706 1.33352e-7  1.98e5 9.75232e-8 2e5 9.56256e-8</values></XYs1d>
+                      <XYs1d outerDomainValue="1e6"><values>0.1 0.67303 0.124094 0.542356 0.151929 0.442989 0.222042 0.303108 0.309479 0.217471 0.413811 0.162641 0.533583 0.126134 0.666503 0.100979 0.983675 0.0684196 1.31716 0.0510967 1.63957 0.041049 2.27701 0.0295574 3.16228 0.0212829 3.92419 0.0171504 4.80442 0.014008 7.0216 9.58449e-3 9.78659 6.87642e-3 13.0859 5.14259e-3 16.8734 3.98817e-3 21.0767 3.19276e-3 31.1065 2.16324e-3 41.6523 1.6155e-3 51.8476 1.29781e-3 72.0053 9.34467e-4 1e2 6.72849e-4 124.094 5.42126e-4 181.056 3.71466e-4 240.358 2.79759e-4 297.265 2.26169e-4 408.858 1.64401e-4 562.341 1.19503e-4 697.83 9.62164e-5 1018.15 6.58451e-5 1351.63 4.95427e-5 1671.65 4.00241e-5 2299.18 2.90626e-5 3162.28 2.11032e-5 3924.19 1.69564e-5 5424.69 1.22128e-5 7498.94 8.79619e-6 9305.72 7.03967e-6 12864 5.04009e-6 17782.8 3.60848e-6 22067.4 2.86104e-6 30505.3 2.01987e-6 42169.7 1.42601e-6 58294.2 9.81382e-7 80584.2 6.75387e-7 106753 4.73727e-7 141421 3.32279e-7  168179 2.61923e-7 2e5 2.06464e-7 244949 1.52194e-7 3e5 1.12189e-7 346410 8.82021e-8 4e5 6.93436e-8 5e5 4.57112e-8 6e5 3.11675e-8 7e5 2.14789e-8 8e5 1.47588e-8 873885 1.09861e-8 959948 7.47829e-9 9.9e5 6.52698e-9 1e6 6.2458e-9</values></XYs1d>
+                      <XYs1d outerDomainValue="1e7"><values>0.1 0.570723 0.12864 0.44366 0.162897 0.350357 0.203256 0.280789 0.25013 0.22817 0.369101 0.154625 0.518803 0.110007 0.698839 0.081667 0.906943 0.062928 1.13929 0.0500946 1.69814 0.0336085 2.29077 0.0249139 2.86738 0.0199039 4.01553 0.0142128 5.62341 0.010149 7.23394 7.88943e-3 9.16039 6.23025e-3 11.4299 4.99314e-3 14.0659 4.05742e-3 20.7561 2.74959e-3 29.1744 1.95618e-3 39.2986 1.45222e-3 51.0012 1.11899e-3 64.0667 8.90787e-4 95.4937 5.97626e-4 128.819 4.43018e-4 161.245 3.53928e-4 225.81 2.52729e-4 316.228 1.80466e-4 406.795 1.40281e-4 507.082 1.12532e-4 745.69 7.65173e-5 995.792 5.72958e-5 1237.02 4.61207e-5 1712.73 3.33085e-5 2371.37 2.40554e-5 3050.52 1.86925e-5 3802.57 1.49904e-5 5591.89 1.01875e-5 7467.39 7.62537e-6 9276.34 6.13628e-6 12843.6 4.42967e-6 17782.8 3.1977e-6 22875.7 2.48183e-6 33376.3 1.69697e-6 48696.8 1.16032e-6 62643.4 8.98081e-7 91398.1 6.11537e-7 133352 4.16419e-7 171544 3.19924e-7  250286 2.15438e-7 365174 1.45076e-7 441094 1.17753e-7 585569 8.61066e-8 777365 6.29652e-8 1048500 4.43705e-8 1414210 3.12671e-8 1861210 2.21539e-8 2449490 1.56968e-8 2912950 1.23164e-8 3464100 9.66397e-9 4161790 7.27273e-9 5e6 5.47317e-9 5692420 4.35437e-9 6480740 3.46427e-9 7483310 2.57016e-9 8239070 2.00829e-9 8611130 1.72985e-9 9e6 1.40893e-9 9246620 1.18819e-9 9.5e6 9.43265e-10 9649610 7.85592e-10 9749620 6.62962e-10 9.9e6 4.81921e-10 1e7 3.53121e-10</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 0.364694 0.148551 0.245501 0.215282 0.169403 0.304838 0.119635 0.422367 0.0863451 0.573403 0.0636017 0.763714 0.0477526 0.999132 0.0365011 1.28535 0.0283731 1.62773 0.022405 2.03111 0.0179554 2.49963 0.0145899 3.68885 9.88639e-3 5.18537 7.03313e-3 6.98525 5.22091e-3 9.06586 4.02271e-3 11.3889 3.20218e-3 16.977 2.14816e-3 22.9032 1.59233e-3 28.6696 1.27206e-3 40.1524 9.08275e-4 56.2341 6.48528e-4 83.5362 4.3657e-4 121.062 3.01246e-4 171.423 2.12745e-4 237.515 1.53546e-4 322.448 1.13102e-4 429.468 8.49175e-5 561.853 6.49091e-5 722.805 5.04553e-5 915.34 3.98424e-5 1142.18 3.19297e-5 1405.64 2.59449e-5 2074.39 1.75807e-5 2915.95 1.25069e-5 3928.1 9.28423e-6 5098.11 7.1535e-6 6404.47 5.69436e-6 9546.9 3.82002e-6 12879.4 2.83159e-6 16122.1 2.26207e-6 22579.4 1.61516e-6 31622.8 1.15326e-6 46975.9 7.76341e-7 66414.9 5.49113e-7 89920.3 4.05573e-7 117220 3.11119e-7 147826 2.46704e-7 181095 2.01382e-7 258333 1.41171e-7  337198 1.08154e-7 411778 8.8565e-8 555689 6.56287e-8 749894 4.86324e-8 1113970 3.27371e-8 1574950 2.31548e-8 2132340 1.71018e-8 2779710 1.31188e-8 3505500 1.04025e-8 4294440 8.49133e-9 6126040 5.95242e-9 7996220 4.56018e-9 9764810 3.7342e-9 13177500 2.76708e-9 17782800 2.05044e-9 26416500 1.38004e-9 35545200 1.02548e-9 4.4408e7 8.20735e-10 62012700 5.87648e-10 86596400 4.20757e-10 1.2864e8 2.8299e-10 1.73094e8 2.10173e-10 2.16253e8 1.68144e-10 3.01982e8 1.2032e-10 4.21697e8 8.60981e-11 6.26434e8 5.78031e-11 9.30572e8 3.88069e-11 1.1342e9 3.17458e-11 1.52614e9 2.34883e-11 2.05353e9 1.73787e-11 2.50287e9 1.41665e-11 3.36778e9 1.04264e-11 4.53158e9 7.67371e-12 5.52316e9 6.20994e-12 7.43179e9 4.52074e-12 1e10 3.29103e-12 1.41421e10 2.22515e-12 2e10 1.50448e-12 2.37841e10 1.22003e-12 3.08442e10 8.90939e-13 4e10 6.50618e-13 4.89898e10 5.11054e-13 6e10 4.01427e-13 7.48331e10 3.2166e-13 9.24662e10 2.74913e-13 9.79949e10 2.62948e-13 9.9e10 2.58958e-13 9.91245e10 1.90176e-13 9.93426e10 1.10797e-13 9.95066e10 7.38849e-14  9.96297e10 5.45227e-14 9.98147e10 3.45628e-14 1e11 2.19099e-14</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution>
+            <averageProductEnergy>
+              <XYs1d label="eval">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="averageProductEnergy" unit="eV"/></axes>
+                <values>10 7.8446 14.4 11.50394 20.736 16.84476 29.8599 24.5794 42.9982 35.83243 61.9174 52.09225 89.161 75.6895 128.392 109.6913 184.884 158.9242 266.233 229.6396 503.961 436.8378 662.474 575.1285 794.968 691.292 1e3 872.779 1414.21 1245.293 2e3 1775.722 2820.05 2523.016 3976.35 3582.958 5302.55 4804.739 7071.07 6441.123 9999.99 9165.782 14142.1 13037.4 18858.8 17470.47 25148.7 23403.91 35460.3 33201.39 5e4 47075.48 70710.7 66977.55 1e5 95234.63 141421 135346.3 2e5 192249.5 251487 242369.9 375504 363329 514906 499431.2 677128 657823.5 878126 854015.3 1e6 972972.7 1163730 1132599 1354260 1318402 1645760 1602329 2e6 1947396 2449490 2384668 3e6 2920123 4053600 3943350 5477230 5325057 7400830 7190450 1e7 9709148 12247400 11886990 1.5e7 14553390 19168300 18588920 24494900 23743270
+                  31301700 30330120 4e7 38744090 52642900 50975930 6.9282e7 67069440 98984500 95802080 1.41421e8 136843600 1.68179e8 162734100 2e8 193523300 2.82005e8 272854900 3.97635e8 3.84708e8 5.30255e8 513061600 7.07107e8 684239200 9.99999e8 9.67884e8 1.41421e9 1.369108e9 2.11474e9 2.048124e9 3.16228e9 3.063886e9 4.72871e9 4.58364e9 7.07107e9 6.857182e9 1.00908e10 9.789862e9 1.44e10 1.39766e10 2.0736e10 2.0135e10 2.98598e10 2.90066e10 4.29982e10 4.17866e10 6.19174e10 6.01969e10 7.86876e10 7.65207e10 1e11 9.72707e10</values></XYs1d></averageProductEnergy></product>
+          <product pid="Cu" label="Cu">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + Cu [excitation]" ENDF_MT="528">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.00000000e+01 3.46694000e+04 1.00900000e+01 5.42572000e+04 1.02430000e+01 9.67848000e+04 1.03120000e+01 1.18757000e+05 1.05410000e+01 2.02811000e+05 1.08980000e+01 3.69091000e+05 1.10980000e+01 4.78105000e+05 1.12500000e+01 5.68146000e+05 1.19240000e+01 1.03946000e+06 1.20740000e+01 1.15836000e+06 1.26930000e+01 1.69412000e+06 1.31250000e+01 2.11596000e+06 1.35370000e+01 2.60065000e+06 1.38460000e+01 3.02562000e+06 1.50000000e+01 4.94974000e+06 1.75000000e+01 1.14801000e+07 2.00000000e+01 2.09168000e+07 2.25000000e+01 3.27050000e+07 2.50000000e+01 4.56479000e+07 2.62500000e+01 5.23175000e+07 3.00000000e+01 7.07727000e+07 3.50000000e+01 9.13252000e+07 4.00000000e+01 1.04887000e+08 5.00000000e+01 1.19069000e+08 6.00000000e+01 1.25132000e+08 7.78600000e+01 1.23655000e+08 7.89300000e+01 1.23053000e+08 8.00000000e+01 1.22460000e+08 8.05000000e+01 1.22221000e+08 8.17190000e+01 1.21662000e+08 8.25000000e+01 1.21302000e+08 8.40040000e+01 1.20613000e+08 8.68750000e+01 1.19328000e+08 8.80030000e+01 1.18835000e+08 9.34380000e+01 1.16497000e+08 9.40020000e+01 1.16265000e+08 1.00000000e+02 1.13740000e+08 1.06250000e+02 1.10443000e+08 1.12500000e+02 1.07361000e+08 1.17190000e+02 1.05164000e+08 1.21260000e+02 1.03338000e+08 1.23060000e+02 1.02468000e+08 1.25000000e+02 1.01422000e+08 1.26420000e+02 1.00664000e+08 1.31250000e+02 9.81888000e+07 1.32320000e+02 9.76529000e+07 1.33590000e+02 9.70288000e+07 1.41160000e+02 9.34506000e+07 1.50000000e+02 8.95502000e+07 1.62500000e+02 8.51097000e+07
+            1.75000000e+02 8.10923000e+07 1.81250000e+02 7.92172000e+07 2.00000000e+02 7.40353000e+07 2.25000000e+02 6.85491000e+07 2.50000000e+02 6.38480000e+07 2.62500000e+02 6.18293000e+07 3.00000000e+02 5.62178000e+07 3.50000000e+02 4.97086000e+07 4.00000000e+02 4.36967000e+07 4.50000000e+02 3.91706000e+07 5.00000000e+02 3.53805000e+07 5.50000000e+02 3.23690000e+07 6.00000000e+02 2.97614000e+07 7.00000000e+02 2.52841000e+07 8.00000000e+02 2.18002000e+07 9.00000000e+02 1.92304000e+07 9.37490000e+02 1.83916000e+07 9.53120000e+02 1.80588000e+07 9.58530000e+02 1.79461000e+07 9.76560000e+02 1.75768000e+07 1.00000000e+03 1.71147000e+07 1.06250000e+03 1.60524000e+07 1.08610000e+03 1.56800000e+07 1.11720000e+03 1.52102000e+07 1.12500000e+03 1.50960000e+07 1.13780000e+03 1.48995000e+07 1.21290000e+03 1.38135000e+07 1.22840000e+03 1.36037000e+07 1.25000000e+03 1.33202000e+07 1.31250000e+03 1.25981000e+07 1.35640000e+03 1.21278000e+07 1.36420000e+03 1.20468000e+07 1.50000000e+03 1.07665000e+07 1.62500000e+03 9.81733000e+06 1.75000000e+03 8.99338000e+06 1.81250000e+03 8.63860000e+06 2.00000000e+03 7.69747000e+06 2.25000000e+03 6.72650000e+06 2.50000000e+03 5.93181000e+06 2.62500000e+03 5.60756000e+06 3.00000000e+03 4.72721000e+06 3.50000000e+03 3.88726000e+06 4.00000000e+03 3.24146000e+06 4.50000000e+03 2.74274000e+06 5.00000000e+03 2.35057000e+06 5.50000000e+03 2.05310000e+06 6.00000000e+03 1.80380000e+06 7.00000000e+03 1.41342000e+06 8.00000000e+03 1.14414000e+06 8.94320000e+03 9.59793000e+05
+            9.00000000e+03 9.49784000e+05 9.07530000e+03 9.36696000e+05 9.30650000e+03 8.98140000e+05 9.65320000e+03 8.44468000e+05 1.00000000e+04 7.95145000e+05 1.06250000e+04 7.20381000e+05 1.11720000e+04 6.60934000e+05 1.12500000e+04 6.53025000e+05 1.21290000e+04 5.72685000e+05 1.25000000e+04 5.42914000e+05 1.31250000e+04 4.99674000e+05 1.35650000e+04 4.72206000e+05 1.50000000e+04 3.96300000e+05 1.75000000e+04 3.03821000e+05 2.00000000e+04 2.41493000e+05 2.25000000e+04 1.97705000e+05 2.50000000e+04 1.64563000e+05 2.62500000e+04 1.51529000e+05 3.00000000e+04 1.20370000e+05 3.50000000e+04 9.30834000e+04 4.00000000e+04 7.50661000e+04 4.50000000e+04 6.22398000e+04 5.00000000e+04 5.24238000e+04 5.50000000e+04 4.52679000e+04 6.00000000e+04 3.98195000e+04 7.00000000e+04 3.18140000e+04 8.00000000e+04 2.65868000e+04 9.00000000e+04 2.28763000e+04 1.00000000e+05 1.99304000e+04 1.25000000e+05 1.55583000e+04 1.50000000e+05 1.29904000e+04 1.75000000e+05 1.12688000e+04 2.00000000e+05 1.00369000e+04 2.50000000e+05 8.48727000e+03 3.00000000e+05 7.55381000e+03 3.50000000e+05 6.88827000e+03 4.00000000e+05 6.41728000e+03 4.50000000e+05 6.07166000e+03 5.00000000e+05 5.76703000e+03 5.50000000e+05 5.54881000e+03 6.00000000e+05 5.37542000e+03 7.00000000e+05 5.09598000e+03 8.00000000e+05 4.85260000e+03 9.00000000e+05 4.69864000e+03 1.00000000e+06 4.55998000e+03 1.25000000e+06 4.36880000e+03 1.50000000e+06 4.20059000e+03 1.75000000e+06 4.09439000e+03 2.00000000e+06 4.03886000e+03 2.50000000e+06 3.94287000e+03
+            3.00000000e+06 3.85113000e+03 3.50000000e+06 3.81286000e+03 4.00000000e+06 3.77602000e+03 4.50000000e+06 3.74870000e+03 5.00000000e+06 3.72750000e+03 5.50000000e+06 3.70553000e+03 6.00000000e+06 3.68324000e+03 7.00000000e+06 3.67352000e+03 8.00000000e+06 3.66205000e+03 9.00000000e+06 3.64949000e+03 1.00000000e+07 3.63606000e+03 1.25000000e+07 3.62061000e+03 1.50000000e+07 3.60548000e+03 1.75000000e+07 3.59068000e+03 2.00000000e+07 3.57599000e+03 2.50000000e+07 3.54734000e+03 3.00000000e+07 3.51934000e+03 3.50000000e+07 3.51569000e+03 4.00000000e+07 3.51776000e+03 4.50000000e+07 3.51983000e+03 5.00000000e+07 3.52111000e+03 5.50000000e+07 3.52218000e+03 6.00000000e+07 3.52287000e+03 7.00000000e+07 3.52345000e+03 8.00000000e+07 3.52325000e+03 9.00000000e+07 3.52227000e+03 1.00000000e+08 3.52090000e+03 1.25000000e+08 3.52976000e+03 1.50000000e+08 3.55868000e+03 1.75000000e+08 3.58214000e+03 2.00000000e+08 3.60267000e+03 2.50000000e+08 3.63555000e+03 3.00000000e+08 3.66277000e+03 3.50000000e+08 3.68492000e+03 4.00000000e+08 3.70433000e+03 4.50000000e+08 3.72121000e+03 5.00000000e+08 3.73614000e+03 5.50000000e+08 3.74951000e+03 6.00000000e+08 3.76151000e+03 7.00000000e+08 3.78258000e+03 8.00000000e+08 3.80073000e+03 9.00000000e+08 3.81653000e+03 1.00000000e+09 3.83037000e+03 1.25000000e+09 3.86261000e+03 1.50000000e+09 3.88901000e+03 1.75000000e+09 3.91114000e+03 2.00000000e+09 3.93036000e+03 2.50000000e+09 3.96239000e+03 3.00000000e+09 3.98859000e+03 3.50000000e+09 4.01071000e+03
+            4.00000000e+09 4.02992000e+03 4.50000000e+09 4.04699000e+03 5.00000000e+09 4.06231000e+03 5.50000000e+09 4.07589000e+03 6.00000000e+09 4.08830000e+03 7.00000000e+09 4.11040000e+03 8.00000000e+09 4.12939000e+03 9.00000000e+09 4.14624000e+03 1.00000000e+10 4.16135000e+03 1.25000000e+10 4.19339000e+03 1.50000000e+10 4.21961000e+03 1.75000000e+10 4.24175000e+03 2.00000000e+10 4.26098000e+03 2.50000000e+10 4.29283000e+03 3.00000000e+10 4.31905000e+03 3.50000000e+10 4.34119000e+03 4.00000000e+10 4.36042000e+03 4.50000000e+10 4.37751000e+03 5.00000000e+10 4.39285000e+03 5.50000000e+10 4.40644000e+03 6.00000000e+10 4.41887000e+03 7.00000000e+10 4.44082000e+03 8.00000000e+10 4.46004000e+03 9.00000000e+10 4.47694000e+03 1.00000000e+11 4.49209000e+03</values></XYs1d></crossSection>
+      <outputChannel genre="NBody" process="excitation">
+        <Q>
+          <constant1d label="eval" value="0" domainMin="10" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution>
+            <averageProductEnergy>
+              <XYs1d label="eval">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="averageProductEnergy" unit="eV"/></axes>
+                <values>10 2.21647 10.09 2.26928 10.243 2.36532 10.312 2.41089 10.541 2.57054 10.898 2.83982 11.098 2.99894 11.25 3.12304 11.924 3.69801 12.074 3.83021 12.693 4.36712 13.125 4.72313 13.537 5.07181 13.846 5.34063 15 6.38278 17.5 8.78663 20 11.24677 22.5 13.72368 25 16.20134 26.25 17.44032 30 21.15747 35 26.05592 40 30.92015 50 40.63902 60 50.39816 77.86 67.90652 78.93 68.95378 80 70.00082 80.5 70.4935 81.719 71.6945 82.5 72.4639 84.004 73.9454 86.875 76.7726 88.003 77.8831 93.438 83.2318 94.002 83.7866 1e2 89.6844 106.25 95.8691 112.5 102.0512 117.19 106.6883 121.26 110.7112 123.06 112.4899 125 114.4067 126.42 115.8095 131.25 120.5797 132.32 121.6362 133.59 122.8901 141.16 130.3607 150 139.0776 162.5 151.4719
+                  175 163.8589 181.25 170.0494 2e2 188.6079 225 213.4201 250 238.2092 262.5 250.6305 3e2 287.8702 350 337.6066 4e2 387.2961 450 437.0722 5e2 486.8165 550 536.6224 6e2 586.4052 7e2 686.0929 8e2 785.7176 9e2 885.4564 937.49 922.8382 953.12 938.4213 958.53 943.8148 976.56 961.7888 1e3 985.1537 1062.5 1047.5222 1086.1 1071.07 1117.2 1102.099 1125 1109.8808 1137.8 1122.6505 1212.9 1197.5628 1228.4 1213.0218 1250 1234.5632 1312.5 1296.9492 1356.4 1340.7648 1364.2 1348.5494 1500 1484.0608 1625 1608.8541 1750 1733.6235 1812.5 1796.0344 2e3 1983.24 2250 2232.9347 2500 2482.5753 2625 2607.4476 3e3 2982.009 3500 3481.5173 4e3 3981.082 4500 4480.739 5e3 4980.3311 5500 5480.0409 6e3 5979.7062 7e3 6979.1683 8e3 7978.6888 8943.2 8921.5391
+                  9e3 8978.3161 9075.3 9053.5854 9306.5 9284.6883 9653.2 9631.2347 1e4 9977.8707 10625 10602.6882 11172 11149.5152 11250 11227.4894 12129 12106.1777 12500 12477.0332 13125 13101.8769 13565 13541.7601 1.5e4 14976.3341 17500 17475.7367 2e4 19975.2221 22500 22474.8206 2.5e4 24974.3406 26250 26224.1779 3e4 29973.6139 3.5e4 34972.9963 4e4 39972.4656 4.5e4 44972.0548 5e4 49971.5683 5.5e4 54971.2291 6e4 59970.8409 7e4 69970.2207 8e4 79969.6842 9e4 89969.2712 1e5 99968.7919 1.25e5 124967.8976 1.5e5 149967.1641 1.75e5 174966.544 2e5 199966.0024 2.5e5 249965.1007 3e5 299964.3478 3.5e5 349963.7703 4e5 399963.1323 4.5e5 449962.6642 5e5 499962.166 5.5e5 549961.772 6e5 599961.3612 7e5 699960.7357 8e5 799960.0771 9e5 899959.5777 1e6 999959.0634 1.25e6 1249958.1647 1.5e6 1499957.2346 1.75e6 1749956.7628 2e6 1999956.2872 2.5e6 2499955.3244
+                  3e6 2999954.3459 3.5e6 3499953.961 4e6 3999953.5754 4.5e6 4499953.1891 5e6 4999952.8021 5.5e6 5499952.4144 6e6 5999952.0259 7e6 6999951.7193 8e6 7999951.4125 9e6 8999951.1055 1e7 9999950.7984 1.25e7 12499950.605 1.5e7 14999950.4117 1.75e7 17499950.2183 2e7 19999950.025 2.5e7 24999949.6384 3e7 29999949.2518 3.5e7 34999949.2106 4e7 39999949.1694 4.5e7 44999949.1282 5e7 49999949.087 5.5e7 54999949.0458 6e7 59999949.0046 7e7 69999948.9222 8e7 79999948.8399 9e7 89999948.7575 1e8 99999948.6751 1.25e8 124999948.6707 1.5e8 149999948.6663 1.75e8 174999948.6619 2e8 199999948.6575 2.5e8 249999948.6487 3e8 299999948.6399 3.5e8 349999948.6311 4e8 399999948.6223 4.5e8 449999948.6135 5e8 499999948.6047 5.5e8 549999948.5959 6e8 599999948.5871 7e8 699999948.5695 8e8 799999948.5519 9e8 899999948.5343 1e9 999999948.5168 1.25e9 1249999948.5166 1.5e9 1499999948.5165 1.75e9 1749999948.5163 2e9 1999999948.5162 2.5e9 2499999948.5159 3e9 2999999948.5157 3.5e9 3499999948.5154
+                  4e9 3999999948.5151 4.5e9 4499999948.5148 5e9 4999999948.5146 5.5e9 5499999948.5143 6e9 5999999948.514 7e9 6999999948.5135 8e9 7999999948.5129 9e9 8999999948.5124 1e10 9999999948.5118 1.25e10 12499999948.5118 1.5e10 14999999948.5118 1.75e10 17499999948.5118 2e10 19999999948.5118 2.5e10 24999999948.5118 3e10 29999999948.5118 3.5e10 34999999948.5118 4e10 39999999948.5118 4.5e10 44999999948.5118 5e10 49999999948.5118 5.5e10 54999999948.5118 6e10 59999999948.5118 7e10 69999999948.5117 8e10 79999999948.5117 9e10 89999999948.5117 1e11 99999999948.5117</values></XYs1d></averageProductEnergy></product>
+          <product pid="Cu" label="Cu">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{1s1/2}" ENDF_MT="534">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            8.98600000e+03 0.00000000e+00 9.25005951e+03 1.87743000e+01 9.64614878e+03 4.50683000e+01 1.00422380e+04 6.93211000e+01 1.06891938e+04 1.05053000e+02 1.16596775e+04 1.50833000e+02 1.26301612e+04 1.88715000e+02 1.42590945e+04 2.38480000e+02 1.58880279e+04 2.75267000e+02 1.99895457e+04 3.31595000e+02 3.98370862e+04 3.69566000e+02 1.00000000e+05 2.93308000e+02 2.51189000e+05 2.22670000e+02 6.30957000e+05 1.94613000e+02 1.58489000e+07 2.87078000e+02 3.98107000e+07 3.27991000e+02 1.00000000e+08 3.65870000e+02 1.00000000e+11 3.98355000e+02</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-8986" domainMin="8986" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="8986" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="8986"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="9435.3"><values>0.1 7.71813e-3 132.1 7.43338e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="63095.7"><values>0.1 2.48092e-4 199.526 2.30305e-4 446.683 2.00928e-4 1e3 1.75298e-4 1584.89 1.38621e-4 2511.89 1.09618e-4 3548.14 8.04459e-5 5011.87 5.90372e-5 6309.58 4.33888e-5 7498.95 3.44403e-5 9716.3 2.43557e-5 12589.3 1.7224e-5 15849 1.2419e-5 19952.6 8.95449e-6 27076.3 7.23706e-6</values></XYs1d>
+                      <XYs1d outerDomainValue="3162280"><values>0.1 2.46633e-4 199.526 2.29412e-4 446.683 2.00348e-4 1e3 1.74966e-4 1584.89 1.3732e-4 2511.89 1.07774e-4 3548.14 7.75596e-5 5011.87 5.58157e-5 5956.62 4.35976e-5 7717.91 3.00969e-5 1e4 2.07769e-5 12589.3 1.34779e-5 14962.4 9.74213e-6 17031.4 7.63707e-6 20683.6 5.30074e-6 25118.9 3.67914e-6 30725.6 2.46395e-6 37113.5 1.69199e-6 44303.3 1.18951e-6 52303.9 8.54874e-7 61111.8 6.27195e-7 70711.9 4.69148e-7 81077.3 3.57353e-7 92170.7 2.76868e-7 103946 2.17959e-7 130228 1.39177e-7 158623 9.39961e-8 188504 6.66745e-8 219233 4.93689e-8 250203 3.79543e-8 315297 2.39565e-8 375007 1.69647e-8 427100 1.30959e-8 519116 8.88226e-9 630957 6.02435e-9 794328 4.05998e-9 1e6 2.73613e-9 1258930 2.04886e-9 1576670 1.81376e-9</values></XYs1d>
+                      <XYs1d outerDomainValue="15848900"><values>0.1 2.57298e-4 199.526 2.39313e-4 446.683 2.08833e-4 1e3 1.82236e-4 1584.89 1.42522e-4 2511.89 1.11463e-4 3548.14 7.96239e-5 5011.87 5.68795e-5 5956.62 4.40469e-5 7717.91 3.00162e-5 1e4 2.04548e-5 12589.3 1.29573e-5 14962.4 9.2003e-6 17031.4 7.11653e-6 20683.6 4.84137e-6 25118.9 3.29358e-6 28183.9 2.5904e-6 34974.4 1.65122e-6 42245.6 1.11349e-6 49837.8 7.88789e-7 57592.2 5.83377e-7 65360.9 4.48037e-7 81562.1 2.82295e-7 96297.7 1.99638e-7 109072 1.53957e-7 131479 1.04264e-7 158489 7.06104e-8 191095 4.88366e-8 227730 3.45644e-8 268431 2.49974e-8 313170 1.84484e-8 361863 1.38761e-8 414367 1.06244e-8 470488 8.27165e-9 529986 6.54144e-9 662569 4.21285e-9 805522 2.86659e-9 955692 2.04671e-9 1109890 1.52418e-9 1265080 1.17765e-9 1590700 7.4987e-10 1888830 5.34518e-10 2148540 4.14663e-10 2606590 2.83331e-10 3162280 1.93594e-10 3981070 1.32722e-10 5011870 9.09897e-11 6309570 6.9384e-11 7919990 6.1881e-11</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 2.54725e-4 199.526 2.37588e-4 446.683 2.08337e-4 1e3 1.82688e-4 1584.89 1.4376e-4 2511.89 1.13128e-4 3548.14 8.12737e-5 5011.87 5.83889e-5 5956.62 4.52282e-5 7717.91 3.08339e-5 1e4 2.10207e-5 11885 1.49008e-5 13528.5 1.15115e-5 16429.5 7.8166e-6 19952.6 5.30765e-6 24406.2 3.36741e-6 29111.3 2.26147e-6 33966.8 1.59624e-6 38875.2 1.17684e-6 43748.5 9.01333e-7 53792.6 5.65168e-7 62811.9 3.98242e-7 70555.6 3.06284e-7 83997.4 2.0658e-7 1e5 1.39333e-7 112202 1.10408e-7 140241 7.0341e-8 172860 4.6095e-8 210300 3.10149e-8 252733 2.13916e-8 300259 1.51007e-8 352900 1.08945e-8 410605 8.02189e-9 473244 6.02081e-9 540620 4.60068e-9 612472 3.57513e-9 688483 2.82232e-9 857347 1.81164e-9 1038750 1.22915e-9 1228710 8.75376e-10 1423200 6.50446e-10 1618480 5.01592e-10 2026900 3.18306e-10 2399520 2.26317e-10 2723280 1.75234e-10 3292650 1.19392e-10 3981070 8.13447e-11 4531580 6.28382e-11 5147790 4.87383e-11 5836150 3.79526e-11  6603600 2.96694e-11 7457560 2.32835e-11 8405970 1.83414e-11 9457270 1.45022e-11 10620500 1.15088e-11 13345300 7.30064e-12 16649900 4.69752e-12 20629700 3.0645e-12 25390100 2.02604e-12 31046900 1.35692e-12 37726200 9.20235e-13 45564100 6.31705e-13 54706700 4.38769e-13 65309600 3.0825e-13 77536900 2.18959e-13 91561200 1.57204e-13 1.07562e8 1.14041e-13 1.25724e8 8.35635e-14 1.46239e8 6.18288e-14 1.69299e8 4.618e-14 1.951e8 3.48078e-14 2.2384e8 2.6469e-14 2.55713e8 2.03008e-14 2.90911e8 1.56997e-14 3.29623e8 1.22393e-14 3.72031e8 9.61619e-15 4.1831e8 7.6124e-15 5.24995e8 4.84062e-15 6.49599e8 3.16643e-15 7.93149e8 2.12696e-15 9.56412e8 1.4647e-15 1.13987e9 1.03244e-15 1.3437e9 7.4383e-16 1.56777e9 5.46993e-16 1.81166e9 4.10046e-16 2.07466e9 3.12972e-16 2.3558e9 2.42947e-16 2.65387e9 1.91599e-16 3.31814e9 1.22756e-16 4.03443e9 8.31501e-17 4.78696e9 5.9133e-17 5.55971e9 4.38835e-17 6.33753e9 3.38037e-17 7.96966e9 2.14103e-17 9.46411e9 1.52008e-17 1.07661e10 1.17571e-17 1.30626e10 7.99743e-18 1.58489e10 5.44002e-18 1.88365e10 4.06304e-18 2.44062e10 2.62257e-18  3.16228e10 1.69279e-18 3.98107e10 1.29739e-18 5e10 1.15954e-18</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="8986" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{1s1/2}" label="Cu{1s1/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="8986" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{2s1/2}" ENDF_MT="535">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.10300000e+03 0.00000000e+00 1.18926060e+03 1.16778000e+03 1.27553119e+03 2.25513000e+03 1.43822941e+03 4.10335000e+03 1.60092763e+03 5.70877000e+03 1.80576288e+03 7.42015000e+03 2.01058814e+03 8.83327000e+03 3.17559046e+03 1.31126000e+04 3.99296483e+03 1.40764000e+04 5.02198267e+03 1.43106000e+04 1.58489000e+04 9.85948000e+03 2.51189000e+04 7.60932000e+03 3.98107000e+04 5.74338000e+03 6.30957000e+04 4.32044000e+03 8.15479000e+04 3.70540000e+03 1.25893000e+05 2.90921000e+03 1.99526000e+05 2.33692000e+03 2.51189000e+05 2.13392000e+03 6.30957000e+05 1.71569000e+03 1.25893000e+06 1.67770000e+03 6.30957000e+06 1.99554000e+03 1.58489000e+07 2.23105000e+03 1.00000000e+11 2.42889000e+03</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-1103" domainMin="1103" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1103" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="1103"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="1158.15"><values>0.1 0.0232977 43.2064 0.0230991</values></XYs1d>
+                      <XYs1d outerDomainValue="1e4"><values>0.1 1.38696e-3 1.99526 1.32482e-3 39.8107 1.26546e-3 79.4327 1.12208e-3 158.489 9.94945e-4 251.188 8.12472e-4 398.107 6.63465e-4 630.957 4.71417e-4 891.252 3.25828e-4 1258.93 2.25201e-4 1584.9 1.62467e-4 1883.65 1.27177e-4 2440.62 8.80796e-5 3162.28 6.10017e-5 3981.07 4.8834e-5 4456.95 4.75527e-5</values></XYs1d>
+                      <XYs1d outerDomainValue="251189"><values>0.1 1.35318e-3 1.99526 1.29412e-3 39.8107 1.23763e-3 79.4327 1.09709e-3 158.489 9.72506e-4 251.188 7.90341e-4 398.107 6.42299e-4 630.957 4.48966e-4 891.252 3.03053e-4 1258.93 2.04562e-4 1496.24 1.5534e-4 1938.66 1.02795e-4 2511.89 6.80243e-5 3072.56 4.54341e-5 3664.91 3.19162e-5 4276.18 2.34321e-5 4894.11 1.78808e-5 5507.63 1.41137e-5 6772.11 9.32895e-6 7907.58 6.83877e-6 8882.45 5.41797e-6 10574.7 3.82054e-6 12589.3 2.69409e-6 15399.3 1.76291e-6 18368.1 1.21639e-6 21431.7 8.7914e-7 24528.7 6.61715e-7 27603.5 5.16068e-7 33940.9 3.34018e-7 39631.7 2.41028e-7 44517.6 1.88708e-7 52998.8 1.3073e-7 63095.7 9.0565e-8 79432.8 5.88048e-8 1e5 3.81825e-8 125051 3.19969e-8</values></XYs1d>
+                      <XYs1d outerDomainValue="6309570"><values>0.1 1.42522e-3 1.99526 1.36364e-3 39.8107 1.30473e-3 79.4327 1.15578e-3 158.489 1.02384e-3 251.188 8.29112e-4 398.107 6.71419e-4 630.957 4.64131e-4 891.252 3.0837e-4 1258.93 2.04882e-4 1496.24 1.53179e-4 1938.66 9.90252e-5 2511.89 6.40164e-5 2818.39 5.01096e-5 3447.47 3.26417e-5 4009.82 2.3668e-5 4491.01 1.85974e-5 5323.19 1.29536e-5 6309.57 9.02252e-6 7717.91 5.81446e-6 9205.82 3.95861e-6 10741.2 2.82779e-6 12293.4 2.10675e-6 13834.5 1.62839e-6 17010.7 1.03756e-6 19862.9 7.39954e-7 22311.7 5.74246e-7 26562.3 3.92589e-7 31622.8 2.68397e-7 39241.9 1.74162e-7 48044.2 1.1611e-7 58081.6 7.9394e-8 69388.3 5.55936e-8 81979.6 3.98048e-8 95851.5 2.91013e-8 110981 2.16966e-8 127327 1.64756e-8 144832 1.27281e-8 163422 9.99286e-9 204949 6.34858e-9 249856 4.26865e-9 297152 3.01614e-9 345825 2.22571e-9 394911 1.70602e-9 443544 1.35186e-9 543504 8.99696e-10 632998 6.62931e-10 795611 4.19301e-10 1e6 2.65207e-10 1188500 1.96372e-10  1352850 1.56748e-10 1642950 1.11785e-10 1995260 7.97198e-11 2511890 6.02952e-11 3154240 5.35447e-11</values></XYs1d>
+                      <XYs1d outerDomainValue="50118700"><values>0.1 1.36511e-3 39.8107 1.25534e-3 79.4327 1.11872e-3 158.489 9.9697e-4 251.188 8.15428e-4 398.107 6.66944e-4 630.957 4.678e-4 891.252 3.14678e-4 1258.93 2.11677e-4 1496.24 1.58826e-4 1938.66 1.03226e-4 2511.89 6.70906e-5 2818.39 5.22388e-5 3447.47 3.37151e-5 4009.82 2.42771e-5 4491.01 1.8977e-5 5323.19 1.31151e-5 6309.57 9.06391e-6 7498.94 6.09436e-6 8722.18 4.30615e-6 9955.13 3.17765e-6 11176.1 2.43568e-6 13684.2 1.52939e-6 15928.1 1.07881e-6 17849.4 8.30352e-7 21174.4 5.60712e-7 25118.9 3.78632e-7 29853.9 2.66273e-7 35100.5 1.91423e-7 40853.7 1.40481e-7 47100.9 1.05109e-7 53822.6 8.00823e-8 60992.9 6.20603e-8 68580.3 4.88666e-8 85442.6 3.12164e-8 103566 2.10903e-8 122550 1.49647e-8 141995 1.10837e-8 161525 8.52305e-9 202386 5.38196e-9 239682 3.81242e-9 272098 2.94371e-9 329127 1.99727e-9 398107 1.35512e-9 473151 9.61211e-10 556304 6.96596e-10 647486 5.1509e-10 746498 3.88132e-10 853030 2.97685e-10 966671 2.32132e-10  1086920 1.83851e-10 1354170 1.18737e-10 1641400 8.09913e-11 1942280 5.7951e-11 2250470 4.3237e-11 2.56e6 3.34619e-11 3207600 2.13682e-11 3798700 1.52644e-11 4312470 1.18608e-11 5216300 8.12392e-12 6309570 5.56439e-12 7498950 4.06136e-12 8535920 3.20709e-12 10366400 2.25046e-12 12589300 1.57918e-12 1.5849e7 1.15888e-12 19952600 8.5045e-13 25058800 7.59458e-13</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 1.34493e-3 39.8107 1.23723e-3 79.4327 1.10319e-3 158.489 9.83667e-4 251.188 8.0552e-4 398.107 6.59637e-4 630.957 4.6385e-4 891.252 3.13208e-4 1258.93 2.11489e-4 1496.24 1.59324e-4 1938.66 1.04178e-4 2511.89 6.81187e-5 2985.39 4.74999e-5 3398.21 3.62462e-5 4126.91 2.41611e-5 5011.87 1.61054e-5 5623.41 1.23661e-5 6264.33 9.653e-6 7669.47 6.06696e-6 9155.24 4.04102e-6 10689.6 2.83186e-6 12241.7 2.07469e-6 13783.5 1.58025e-6 15291.2 1.24531e-6 18337.1 8.20806e-7 21013.5 6.00431e-7 25778 3.75662e-7 31622.8 2.35035e-7 37583.8 1.65249e-7 44188.9 1.1877e-7 51431.7 8.7145e-8 59296.5 6.51899e-8 67758.6 4.96589e-8 76785.5 3.84769e-8 86337.4 3.0292e-8 107566 1.9345e-8 130381 1.30663e-8 154281 9.26916e-9 178761 6.86383e-9 203348 5.27718e-9 254788 3.3313e-9 301741 2.35924e-9 342552 1.82134e-9 414346 1.23543e-9 501187 8.38009e-10 589267 6.06748e-10 691077 4.41529e-10 808460 3.229e-10 943466 2.37301e-10 1098360 1.75235e-10  1275660 1.30017e-10 1478110 9.6918e-11 1708760 7.25776e-11 1970930 5.45963e-11 2268250 4.1253e-11 2604700 3.13076e-11 2984610 2.38625e-11 3412650 1.82652e-11 3893920 1.40394e-11 4433920 1.08357e-11 5038560 8.39696e-12 5714230 6.53308e-12 6467780 5.10291e-12 7306550 4.00123e-12 8238380 3.14934e-12 9271640 2.48812e-12 10415300 1.97297e-12 13095400 1.2496e-12 16347700 8.02818e-13 20266900 5.22961e-13 24957400 3.45254e-13 30534300 2.3091e-13 37122600 1.56389e-13 44857700 1.07216e-13 53884900 7.43763e-14 64358900 5.21884e-14 76443300 3.70272e-14 90309800 2.65538e-14 1.06137e8 1.92417e-14 1.24111e8 1.40842e-14 1.4442e8 1.04101e-14 1.67259e8 7.7675e-15 1.92823e8 5.849e-15 2.21308e8 4.44356e-15 2.5291e8 3.40495e-15 2.87822e8 2.6309e-15 3.26232e8 2.04926e-15 3.68323e8 1.60872e-15 4.1427e8 1.27248e-15 5.2024e8 8.07889e-16 6.44081e8 5.27697e-16 7.86832e8 3.5398e-16 9.49269e8 2.4345e-16 1.13188e9 1.71397e-16 1.33487e9 1.23344e-16 1.55811e9 9.06082e-17 1.8012e9 6.78558e-17 2.06343e9 5.17435e-17 2.34384e9 4.01312e-17 2.64123e9 3.16233e-17  3.30431e9 2.02298e-17 4.01972e9 1.36845e-17 4.77168e9 9.72042e-18 5.54418e9 7.20625e-18 6.32204e9 5.54602e-18 7.95505e9 3.50717e-18 9.45109e9 2.48707e-18 1.0755e10 1.92193e-18 1.30559e10 1.3056e-18 1.58489e10 8.86916e-19 1.88365e10 6.62422e-19 2.44062e10 4.27575e-19 3.16228e10 2.75988e-19 3.98107e10 2.11524e-19 5e10 1.8905e-19</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1103" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{2s1/2}" label="Cu{2s1/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="1103" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{2p1/2}" ENDF_MT="536">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            9.58000000e+02 0.00000000e+00 1.06420652e+03 4.07680000e+03 1.16131249e+03 7.44774000e+03 1.25841846e+03 1.03712000e+04 1.42140847e+03 1.44252000e+04 1.58439848e+03 1.76045000e+04 1.99479369e+03 2.28891000e+04 2.51145543e+03 2.62399000e+04 3.16188539e+03 2.78865000e+04 5.01158902e+03 2.74117000e+04 1.25893000e+04 1.95301000e+04 1.99526000e+04 1.51932000e+04 3.16228000e+04 1.15333000e+04 5.01187000e+04 8.68689000e+03 6.30957000e+04 7.55520000e+03 8.15479000e+04 6.49811000e+03 1.25893000e+05 5.13054000e+03 1.99526000e+05 4.14804000e+03 5.01187000e+05 3.18749000e+03 1.00000000e+06 3.03512000e+03 1.58489000e+07 4.10363000e+03 1.00000000e+11 4.37135000e+03</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-958" domainMin="958" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="958" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="958"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="1005.9"><values>0.1 0.019394 53.1007 0.0183414</values></XYs1d>
+                      <XYs1d outerDomainValue="12589.3"><values>0.1 2.13742e-3 50.1187 2.00943e-3 89.125 1.66071e-3 158.489 1.37251e-3 223.872 1.09441e-3 316.228 8.72665e-4 446.684 6.09397e-4 630.957 4.25552e-4 794.328 3.023e-4 944.06 2.33912e-4 1223.21 1.59211e-4 1584.89 1.08367e-4 1995.26 7.33344e-5 2371.37 5.47164e-5 3072.55 3.5264e-5 3981.07 2.27272e-5 5011.87 1.71207e-5 5815.36 1.61183e-5</values></XYs1d>
+                      <XYs1d outerDomainValue="316228"><values>0.1 2.15863e-3 50.1187 2.06648e-3 89.125 1.70961e-3 158.489 1.41437e-3 223.872 1.12639e-3 316.228 8.97044e-4 446.684 6.18502e-4 630.957 4.2645e-4 749.895 3.25033e-4 971.63 2.1628e-4 1258.93 1.43915e-4 1433.02 1.11339e-4 1618.03 8.75295e-5 2031.71 5.57483e-5 2479.59 3.75664e-5 2951.77 2.65948e-5 3438.13 1.96582e-5 3929 1.50903e-5 4415.67 1.19731e-5 5416.86 7.98633e-6 6314.09 5.89459e-6 7946.12 3.73777e-6 1e4 2.37013e-6 11547.8 1.75753e-6 13215.8 1.32785e-6 14997.7 1.02095e-6 16885.9 7.97984e-7 21090.3 5.02748e-7 25619.6 3.35573e-7 30374 2.35597e-7 35252.4 1.72884e-7 40159.7 1.31868e-7 45010.8 1.04047e-7 54952.5 6.87277e-8 63824.9 5.0357e-8 71407.3 3.98801e-8 84502.9 2.81061e-8 1e5 1.98082e-8 125893 1.34514e-8 157635 1.13058e-8</values></XYs1d>
+                      <XYs1d outerDomainValue="15848900"><values>0.1 2.21545e-3 50.1187 2.15135e-3 89.125 1.78646e-3 158.489 1.48345e-3 223.872 1.18448e-3 316.228 9.45763e-4 446.684 6.49408e-4 630.957 4.45916e-4 749.895 3.3453e-4 971.63 2.17374e-4 1258.93 1.41248e-4 1412.54 1.09686e-4 1727.83 7.04605e-5 2009.68 5.05583e-5 2250.84 3.94165e-5 2667.92 2.71335e-5 3162.28 1.86781e-5 3651.74 1.34954e-5 4141.79 1.01551e-5 4624.23 7.9181e-6 5607.63 5.12281e-6 6480.14 3.6955e-6 7222.51 2.89266e-6 8498.54 2.00324e-6 1e4 1.3873e-6 11382.8 1.06735e-6 12904.5 8.27949e-7 14572.4 6.47361e-7 16393.5 5.10069e-7 18374.4 4.04898e-7 22919.2 2.5885e-7 28196 1.70174e-7 34241.3 1.14848e-7 41081 7.94377e-8 48729.1 5.62259e-8 57187.5 4.06655e-8 66446.2 3.00131e-8 76483.1 2.25756e-8 87265.5 1.72862e-8 98750.7 1.34587e-8 110887 1.06439e-8 137807 6.85545e-9 166672 4.66502e-9 196847 3.33096e-9 227700 2.48068e-9 258638 1.91677e-9 323236 1.2206e-9 382067 8.70109e-10 433116 6.75032e-10 522760 4.61265e-10  630957 3.15193e-10 771791 2.12745e-10 920582 1.50828e-10 1074120 1.11629e-10 1229340 8.57843e-11 1383450 6.81296e-11 1701070 4.55209e-11 1986290 3.36408e-11 2506230 2.13723e-11 3162280 1.3578e-11 3981070 9.30571e-12 5011870 6.3777e-12 6309570 4.86151e-12 7923990 4.33362e-12</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 2.15309e-3 50.1187 2.0979e-3 89.125 1.74781e-3 158.489 1.45614e-3 223.872 1.16823e-3 316.228 9.3724e-4 446.684 6.49292e-4 630.957 4.4981e-4 749.895 3.39691e-4 971.63 2.22929e-4 1258.93 1.46302e-4 1496.24 1.01296e-4 1703.14 7.6887e-5 2068.36 5.08442e-5 2511.89 3.36224e-5 2985.39 2.25137e-5 3472.37 1.58502e-5 3963.21 1.16594e-5 4449.3 8.91226e-6 5447.77 5.56906e-6 6341.09 3.91406e-6 7105.96 3.00443e-6 8429.69 2.02052e-6 1e4 1.35883e-6 11547.8 1.01026e-6 13215.8 7.65154e-7 14997.7 5.89667e-7 16885.9 4.61888e-7 21090.3 2.92182e-7 25619.6 1.95718e-7 30374 1.37836e-7 35252.4 1.01421e-7 40159.7 7.75435e-8 45010.8 6.13108e-8 54952.5 4.06464e-8 63824.9 2.98631e-8 79890.5 1.88064e-8 1e5 1.18434e-8 120140 8.20878e-9 143923 5.72227e-9 171928 4.0115e-9 204813 2.82784e-9 243321 2.00436e-9 288292 1.42835e-9 340671 1.02327e-9 401518 7.369e-10 472020 5.33403e-10 553499 3.88057e-10 647431 2.83723e-10 755450 2.08458e-10  879370 1.53898e-10 1021190 1.14159e-10 1183110 8.50766e-11 1367570 6.36953e-11 1577200 4.79036e-11 1814920 3.61879e-11 2083890 2.74575e-11 2387560 2.09234e-11 2729680 1.60121e-11 3114300 1.23049e-11 3545800 9.49502e-12 4028910 7.35652e-12 4568710 5.72244e-12 5170670 4.46883e-12 5840640 3.50336e-12 6584860 2.75694e-12 7410020 2.17769e-12 8323220 1.7265e-12 1.0463e7 1.09309e-12 13059200 7.02016e-13 16187200 4.5714e-13 19930100 3.01699e-13 24379500 2.01715e-13 2.9635e7 1.36573e-13 35804400 9.3602e-14 43003200 6.49132e-14 51354500 4.55353e-14 60988500 3.2298e-14 72041700 2.3156e-14 84656400 1.67752e-14 98979500 1.22758e-14 1.15162e8 9.07123e-15 1.33358e8 6.7669e-15 1.53722e8 5.09437e-15 1.76411e8 3.86941e-15 2.0158e8 2.96436e-15 2.29382e8 2.28999e-15 2.59966e8 1.78336e-15 2.93478e8 1.39971e-15 3.30057e8 1.10694e-15 4.14407e8 7.02537e-16 5.12965e8 4.58726e-16 6.26552e8 3.07615e-16 7.55784e8 2.11499e-16 9.01048e8 1.4886e-16 1.06249e9 1.07098e-16 1.24003e9 7.86538e-17 1.43331e9 5.88895e-17 1.6418e9 4.48964e-17 1.86472e9 3.48137e-17  2.10111e9 2.74278e-17 2.62811e9 1.75396e-17 3.1966e9 1.18609e-17 3.79405e9 8.4228e-18 4.40773e9 6.24276e-18 5.0256e9 4.80349e-18 6.32254e9 3.03649e-18 7.5105e9 2.1527e-18 8.54579e9 1.66319e-18 1.03723e10 1.12948e-18 1.25893e10 7.67038e-19 1.49624e10 5.60379e-19 1.70314e10 4.42823e-19 2.06836e10 3.11066e-19 2.51189e10 2.18512e-19 3.16228e10 1.6064e-19 3.98107e10 1.18095e-19 5e10 1.05548e-19</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="958" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{2p1/2}" label="Cu{2p1/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="958" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{2p3/2}" ENDF_MT="537">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            9.38000000e+02 0.00000000e+00 9.69253111e+02 2.46582000e+03 1.06523231e+03 1.02146000e+04 1.16232644e+03 1.71338000e+04 1.25942057e+03 2.31322000e+04 1.42239072e+03 3.14121000e+04 1.58536087e+03 3.78698000e+04 1.99570606e+03 4.85179000e+04 2.51230484e+03 5.51761000e+04 3.16265552e+03 5.83162000e+04 5.01213372e+03 5.69245000e+04 1.58489000e+04 3.56062000e+04 2.51189000e+04 2.72512000e+04 3.98107000e+04 2.05392000e+04 6.30957000e+04 1.54911000e+04 8.15479000e+04 1.33187000e+04 1.25893000e+05 1.05107000e+04 1.99526000e+05 8.49458000e+03 5.01187000e+05 6.52400000e+03 1.00000000e+06 6.21032000e+03 1.58489000e+07 8.37809000e+03 1.00000000e+11 8.90726000e+03</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-938" domainMin="938" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="938" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="938"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="984.9"><values>0.1 0.0627781 15.6275 0.0660256</values></XYs1d>
+                      <XYs1d outerDomainValue="1e4"><values>0.1 2.02278e-3 39.8107 2.17133e-3 70.7947 1.84763e-3 125.893 1.57218e-3 199.527 1.17965e-3 316.228 8.85124e-4 446.684 6.14889e-4 630.957 4.27159e-4 794.328 3.03565e-4 944.06 2.34962e-4 1223.21 1.59999e-4 1584.89 1.08952e-4 1883.65 8.26047e-5 2440.62 5.45326e-5 3162.28 3.60005e-5 3981.07 2.8051e-5 4531.25 2.69744e-5</values></XYs1d>
+                      <XYs1d outerDomainValue="316228"><values>0.1 1.99466e-3 15.8489 2.18387e-3 50.1187 2.11913e-3 89.125 1.74718e-3 158.489 1.44051e-3 223.872 1.14052e-3 316.228 9.02997e-4 446.684 6.18646e-4 630.957 4.23836e-4 749.895 3.21926e-4 971.63 2.13104e-4 1258.93 1.41068e-4 1474.86 1.02873e-4 1710.82 7.65153e-5 1966.21 5.79733e-5 2240.15 4.46932e-5 2531.54 3.50199e-5 3183.92 2.21669e-5 3891.27 1.48566e-5 4637.99 1.04679e-5 5408.02 7.70559e-6 6185.98 5.89365e-6 6957.97 4.66139e-6 8547.94 3.09203e-6 9974.61 2.27269e-6 11198.8 1.80411e-6 13322.5 1.27599e-6 15848.9 9.02467e-7 17782.8 7.09809e-7 22067.3 4.52478e-7 26655.1 3.05138e-7 31445.5 2.16164e-7 36338.2 1.59876e-7 41239.9 1.22789e-7 51462.2 7.73689e-8 60759.8 5.4717e-8 68819.6 4.21977e-8 82957.6 2.85784e-8 1e5 1.93548e-8 125893 1.31438e-8 157645 1.10465e-8</values></XYs1d>
+                      <XYs1d outerDomainValue="15848900"><values>0.1 2.04949e-3 25.1189 2.22385e-3 66.8343 2.02419e-3 118.85 1.67546e-3 188.365 1.35807e-3 266.073 1.07798e-3 375.838 7.93177e-4 530.884 5.41003e-4 630.957 4.46801e-4 749.895 3.33773e-4 971.63 2.15505e-4 1258.93 1.39144e-4 1412.54 1.07882e-4 1727.83 6.91118e-5 2009.68 4.94884e-5 2250.84 3.85227e-5 2667.92 2.64568e-5 3162.28 1.81701e-5 3651.74 1.31423e-5 4141.79 9.8985e-6 4624.23 7.72424e-6 5607.63 5.00445e-6 6480.14 3.61395e-6 7222.51 2.83108e-6 8498.54 1.96293e-6 1e4 1.361e-6 11547.8 1.01775e-6 13275.4 7.68015e-7 15195 5.8468e-7 17319 4.48919e-7 19659.4 3.47539e-7 22227.8 2.71215e-7 25035.4 2.13299e-7 28093.1 1.69015e-7 35120.7 1.07674e-7 43297.7 7.05564e-8 52684.9 4.74717e-8 63325.8 3.27409e-8 75245.7 2.31116e-8 88450.8 1.66733e-8 102928 1.22766e-8 118645 9.21389e-9 135553 7.0404e-9 153586 5.47085e-9 172665 4.31876e-9 215057 2.77206e-9 260606 1.88069e-9 308310 1.33934e-9 357161 9.95165e-10 406215 7.67402e-10  508823 4.86963e-10 602456 3.46219e-10 683823 2.68066e-10 826936 1.82633e-10 1e6 1.24427e-10 1154780 9.41985e-11 1309750 7.38382e-11 1632640 4.82165e-11 1926050 3.50253e-11 2180220 2.75595e-11 2625730 1.92356e-11 3162280 1.34258e-11 3981070 9.20146e-12 5011870 6.30628e-12 6309570 4.80708e-12 7.924e6 4.2851e-12</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 1.9753e-3 12.5893 2.1446e-3 50.1187 2.15217e-3 89.125 1.78724e-3 158.489 1.48419e-3 223.872 1.18369e-3 316.228 9.44032e-4 446.684 6.4962e-4 630.957 4.47025e-4 749.895 3.36134e-4 971.63 2.19172e-4 1258.93 1.42908e-4 1496.24 9.86345e-5 1703.14 7.46891e-5 2068.36 4.92152e-5 2511.89 3.24296e-5 2985.39 2.17334e-5 3472.37 1.53124e-5 3963.21 1.12711e-5 4449.3 8.62035e-6 5447.77 5.39203e-6 6341.09 3.79248e-6 7105.96 2.91274e-6 8429.69 1.96051e-6 1e4 1.31958e-6 11547.8 9.81731e-7 13215.8 7.44008e-7 14997.7 5.73705e-7 16885.9 4.4963e-7 21090.3 2.8472e-7 25619.6 1.90891e-7 30374 1.34541e-7 35252.4 9.90644e-8 40159.7 7.57874e-8 45010.8 5.99538e-8 54952.5 3.97833e-8 63824.9 2.92492e-8 79890.5 1.84388e-8 1e5 1.16239e-8 120140 8.05675e-9 143923 5.61635e-9 171928 3.93728e-9 204813 2.77555e-9 243321 1.96732e-9 288292 1.40196e-9 340671 1.00438e-9 401518 7.23303e-10 472020 5.23566e-10 553499 3.80904e-10 647431 2.78495e-10  755450 2.04619e-10 879370 1.51066e-10 1021190 1.12058e-10 1183110 8.35121e-11 1367570 6.25245e-11 1577200 4.70235e-11 1814920 3.55233e-11 2083890 2.69534e-11 2387560 2.05394e-11 2729680 1.57184e-11 3114300 1.20793e-11 3545800 9.321e-12 4028910 7.22176e-12 4568710 5.61765e-12 5170670 4.38703e-12 5840640 3.43926e-12 6584860 2.70652e-12 7410020 2.13787e-12 8323220 1.69494e-12 1.0463e7 1.07312e-12 13059200 6.89203e-13 16187200 4.48802e-13 19930100 2.96199e-13 24379500 1.9804e-13 2.9635e7 1.34087e-13 35804400 9.1899e-14 43003200 6.37328e-14 51354500 4.47078e-14 60988500 3.17113e-14 72041700 2.27357e-14 84656400 1.64709e-14 98979500 1.20531e-14 1.15162e8 8.9068e-15 1.33358e8 6.64429e-15 1.53722e8 5.00211e-15 1.76411e8 3.79936e-15 2.0158e8 2.91072e-15 2.29382e8 2.24857e-15 2.59966e8 1.75112e-15 2.93478e8 1.37441e-15 3.30057e8 1.08695e-15 4.14407e8 6.89853e-16 5.12965e8 4.5045e-16 6.26552e8 3.02068e-16 7.55784e8 2.07688e-16 9.01048e8 1.46179e-16 1.06249e9 1.0517e-16 1.24003e9 7.72387e-17 1.43331e9 5.78305e-17 1.6418e9 4.40894e-17  1.86472e9 3.41881e-17 2.10111e9 2.69352e-17 2.62811e9 1.72248e-17 3.1966e9 1.16482e-17 3.79405e9 8.27181e-18 4.40773e9 6.1309e-18 5.0256e9 4.71745e-18 6.32254e9 2.98214e-18 7.5105e9 2.11419e-18 8.54579e9 1.63345e-18 1.03723e10 1.1093e-18 1.25893e10 7.53341e-19 1.49624e10 5.50372e-19 1.70314e10 4.34915e-19 2.06836e10 3.05511e-19 2.51189e10 2.1461e-19 3.16228e10 1.57772e-19 3.98107e10 1.15987e-19 5e10 1.03664e-19</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="938" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{2p3/2}" label="Cu{2p3/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="938" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{3s1/2}" ENDF_MT="538">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.27000000e+02 0.00000000e+00 1.31608632e+02 2.80148000e+04 1.39714772e+02 7.35631000e+04 1.51874479e+02 1.35220000e+05 1.64033191e+02 1.90648000e+05 1.84444269e+02 2.72289000e+05 2.04854353e+02 3.42453000e+05 3.20942548e+02 5.96015000e+05 5.04928740e+02 7.35476000e+05 6.34016203e+02 7.54360000e+05 1.25893000e+03 6.58109000e+05 1.99526000e+03 5.29506000e+05 3.16228000e+03 3.99150000e+05 5.01187000e+03 2.87965000e+05 6.30957000e+03 2.41930000e+05 8.15479000e+03 1.98048000e+05 1.00000000e+04 1.68347000e+05 1.58489000e+04 1.15916000e+05 2.51189000e+04 7.96825000e+04 3.98107000e+04 5.51550000e+04 6.30957000e+04 3.88520000e+04 8.15479000e+04 3.22937000e+04 1.25893000e+05 2.42126000e+04 1.99526000e+05 1.86480000e+04 3.16228000e+05 1.51907000e+04 5.01187000e+05 1.31592000e+04 6.30957000e+05 1.25262000e+04 1.25893000e+06 1.16307000e+04 1.00000000e+11 1.19969000e+04</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-127" domainMin="127" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="127" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="127"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="133.35"><values>0.0231627 0.435659 2.31627 0.43652</values></XYs1d>
+                      <XYs1d outerDomainValue="1e3"><values>0.1 9.12971e-3 6.30957 8.34983e-3 14.1254 7.20408e-3 31.6228 6.21555e-3 44.6684 5.28751e-3 63.0957 4.49803e-3 89.1252 3.41403e-3 125.893 2.59127e-3 158.49 1.98849e-3 223.873 1.33672e-3 316.228 8.98577e-4 439.37 7.64635e-4</values></XYs1d>
+                      <XYs1d outerDomainValue="25118.9"><values>0.1 7.43174e-3 6.30957 6.88223e-3 14.1254 6.04721e-3 31.6228 5.31349e-3 63.0957 3.9326e-3 89.1252 3.01028e-3 125.893 2.30427e-3 149.624 1.86695e-3 193.866 1.36155e-3 251.189 9.9296e-4 298.539 7.43432e-4 386.812 4.81621e-4 501.187 3.12011e-4 595.662 2.18835e-4 692.827 1.60443e-4 790.763 1.22285e-4 887.75 9.64209e-5 1086.97 6.36158e-5 1265.21 4.65705e-5 1417.82 3.6857e-5 1681.94 2.59498e-5 1995.26 1.82704e-5 2304.09 1.33176e-5 2613.29 1.00987e-5 2917.69 7.92735e-6 3538.17 5.18963e-6 4088.69 3.77696e-6 4557.09 2.9761e-6 5362.21 2.08163e-6 6309.57 1.456e-6 7079.45 1.15561e-6 8413.95 8.17128e-7 1e4 5.77786e-7 12498.8 4.75844e-7</values></XYs1d>
+                      <XYs1d outerDomainValue="630957"><values>0.1 7.17311e-3 1 6.80773e-3 10 6.46096e-3 19.9526 5.63134e-3 39.8107 4.90825e-3 63.0957 3.98493e-3 89.1252 3.06206e-3 125.893 2.35291e-3 149.624 1.90608e-3 193.866 1.38977e-3 251.189 1.01332e-3 298.539 7.54136e-4 386.812 4.8418e-4 501.187 3.10859e-4 595.662 2.15063e-4 692.827 1.558e-4 790.763 1.17508e-4 887.75 9.1808e-5 1086.97 5.96079e-5 1265.21 4.31143e-5 1417.82 3.3815e-5 1681.94 2.34878e-5 1995.26 1.63145e-5 2238.72 1.27847e-5 2778.11 8.09391e-6 3355.69 5.42553e-6 3958.76 3.82333e-6 4574.72 2.81475e-6 5191.81 2.1531e-6 5799.68 1.70308e-6 7039.69 1.12989e-6 8140.77 8.30586e-7 10123.6 5.23491e-7 12589.3 3.29939e-7 14962.4 2.32193e-7 17591.9 1.67032e-7 20475.4 1.22657e-7 23606.4 9.18262e-8 26975.2 7.00001e-8 30568.9 5.42747e-8 34371.6 4.27565e-8 42822.8 2.73377e-8 51905.7 1.84842e-8 61420.5 1.31246e-8 71166.3 9.72658e-9 80954.3 7.48342e-9 101433 4.72982e-9 120125 3.35276e-9 136372 2.59013e-9 164954 1.75873e-9  199526 1.1942e-9 251189 8.37565e-10 315418 7.1483e-10</values></XYs1d>
+                      <XYs1d outerDomainValue="63095700"><values>0.1 6.50898e-3 10 5.92335e-3 19.9526 5.23223e-3 39.8107 4.62174e-3 63.0957 3.81732e-3 89.1252 2.98563e-3 125.893 2.33514e-3 177.828 1.56911e-3 251.189 1.05437e-3 298.539 7.9345e-4 386.812 5.17977e-4 501.187 3.38144e-4 562.341 2.66235e-4 687.861 1.75206e-4 800.066 1.28016e-4 896.076 1.01169e-4 1062.12 7.10766e-5 1258.93 4.9935e-5 1433.02 3.73193e-5 1618.03 2.84032e-5 1813.11 2.19893e-5 2017.31 1.72983e-5 2464.2 1.10309e-5 2935.73 7.44122e-6 3421.78 5.27288e-6 3912.65 3.90077e-6 4399.58 2.99651e-6 5402.05 1.88877e-6 6301.14 1.33614e-6 7072.36 1.03064e-6 8409.73 6.98216e-7 1e4 4.73012e-7 12409.4 3.05253e-7 15192.9 2.02458e-7 18367 1.3777e-7 21942.5 9.6034e-8 25924.2 6.84684e-8 30310.9 4.98584e-8 35095.3 3.70337e-8 40264.4 2.80237e-8 45799.8 2.15786e-8 51678.4 1.68893e-8 64810.6 1.06683e-8 79011.5 7.13701e-9 93967.8 5.02065e-9 109360 3.69061e-9 124882 2.81932e-9 140261 2.22746e-9 171871 1.47477e-9 200172 1.08245e-9  224415 8.58369e-10 266395 6.06137e-10 316228 4.28023e-10 392419 2.78897e-10 480442 1.86658e-10 580816 1.281e-10 693883 9.00055e-11 819796 6.46502e-11 958515 4.7408e-11 1109810 3.54449e-11 1273270 2.69867e-11 1448320 2.09e-11 1634220 1.64467e-11 2049490 1.04943e-11 2498560 7.08305e-12 2971520 5.02144e-12 3458250 3.7163e-12 3949110 2.85583e-12 4435440 2.26804e-12 5435040 1.51534e-12 6329980 1.11983e-12 7956110 7.11407e-13 1e7 4.51943e-13 1.1885e7 3.37238e-13 15399300 2.17379e-13 19952600 1.40119e-13 25118900 1.07242e-13 31547800 9.57834e-14</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 6.50497e-3 10 5.91974e-3 19.9526 5.22909e-3 39.8107 4.61902e-3 63.0957 3.81516e-3 89.1252 2.98402e-3 125.893 2.33395e-3 177.828 1.56845e-3 251.189 1.05402e-3 298.539 7.93281e-4 386.812 5.17959e-4 501.187 3.38192e-4 562.341 2.66345e-4 687.861 1.75363e-4 800.066 1.28176e-4 896.076 1.01323e-4 1062.12 7.12132e-5 1258.93 5.0051e-5 1433.02 3.74327e-5 1618.03 2.85085e-5 1813.11 2.20847e-5 2017.31 1.73835e-5 2464.2 1.10974e-5 2935.73 7.49331e-6 3421.78 5.31426e-6 3912.65 3.93429e-6 4399.58 3.02421e-6 5402.05 1.90838e-6 6301.14 1.35116e-6 7072.36 1.04289e-6 8409.73 7.07184e-7 1e4 4.79544e-7 12057.3 3.27534e-7 14368.8 2.29104e-7 16936.9 1.63874e-7 19759.7 1.19697e-7 22832 8.91625e-8 26144.8 6.76512e-8 29685.8 5.22232e-8 33439.9 4.0971e-8 41805.3 2.59942e-8 50825 1.74573e-8 60300 1.23222e-8 70029 9.08473e-9 79821.2 6.95797e-9 89506.2 5.50975e-9 109368 3.66242e-9 127106 2.69616e-9 159251 1.70298e-9 199526 1.07566e-9  237992 7.56718e-10 283092 5.35277e-10 335828 3.80691e-10 397325 2.72194e-10 468851 1.95642e-10 551823 1.41347e-10 647827 1.0264e-10 758630 7.49059e-11 886195 5.49357e-11 1032700 4.04853e-11 1200550 2.99786e-11 1392410 2.2303e-11 1611180 1.66695e-11 1860080 1.25158e-11 2142620 9.43928e-12 2462640 7.15045e-12 2824290 5.44017e-12 3232130 4.15668e-12 3691080 3.18938e-12 4206460 2.45733e-12 4784020 1.90104e-12 5429950 1.47659e-12 6150910 1.15144e-12 6954050 9.01392e-13 7846980 7.08347e-13 8837870 5.58745e-13 9935420 4.42376e-13 12510500 2.79329e-13 15639900 1.78929e-13 19416200 1.16222e-13 23941900 7.65166e-14 29329900 5.1038e-14 35703200 3.44769e-14 43195100 2.35769e-14 5.1949e7 1.63155e-14 62117700 1.14212e-14 73863100 8.08474e-15 87355300 5.78505e-15 1.02772e8 4.18303e-15 1.20296e8 3.05545e-15 1.40118e8 2.25383e-15 1.6243e8 1.67841e-15 1.87428e8 1.26147e-15 2.15307e8 9.56599e-16 2.46263e8 7.31708e-16 2.8049e8 5.64395e-16 3.18178e8 4.38886e-16 3.59511e8 3.43981e-16 4.04665e8 2.71658e-16 5.08924e8 1.71952e-16  6.30938e8 1.11997e-16 7.71769e8 7.49278e-17 9.32222e8 5.14031e-17 1.11282e9 3.61047e-17 1.31378e9 2.59255e-17 1.53502e9 1.90056e-17 1.77616e9 1.42057e-17 2.03653e9 1.0813e-17 2.31518e9 8.37212e-18 2.61095e9 6.58673e-18 3.27113e9 4.20106e-18 3.98438e9 2.83441e-18 4.73495e9 2.00876e-18 5.50682e9 1.48622e-18 6.28475e9 1.14182e-18 7.05508e9 9.0661e-19 8.63727e9 6.05496e-19 1.00527e10 4.47332e-19 1.26224e10 2.84058e-19 1.58489e10 1.80378e-19 1.88365e10 1.34721e-19 2.44062e10 8.69589e-20 3.16228e10 5.61296e-20 3.98107e10 4.3019e-20 5e10 3.84483e-20</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="127" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{3s1/2}" label="Cu{3s1/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="127" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{3p1/2}" ENDF_MT="539">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            8.20000000e+01 0.00000000e+00 8.44324534e+01 4.79906000e+04 8.86892219e+01 1.26032000e+05 9.50744745e+01 2.30976000e+05 1.01459627e+02 3.23948000e+05 1.14378824e+02 4.84712000e+05 1.27299019e+02 6.16399000e+05 2.00779569e+02 1.09378000e+06 3.17239950e+02 1.41151000e+06 3.98949429e+02 1.48453000e+06 6.31317337e+02 1.45970000e+06 1.58489000e+03 1.01334000e+06 2.51189000e+03 7.58551000e+05 3.98107000e+03 5.44210000e+05 6.30957000e+03 3.79849000e+05 8.15479000e+03 3.08553000e+05 1.00000000e+04 2.60898000e+05 1.58489000e+04 1.77906000e+05 2.51189000e+04 1.21379000e+05 3.98107000e+04 8.35072000e+04 6.30957000e+04 5.84472000e+04 8.15479000e+04 4.84537000e+04 1.25893000e+05 3.61779000e+04 1.99526000e+05 2.77471000e+04 3.16228000e+05 2.25087000e+04 5.01187000e+05 1.94116000e+04 6.30957000e+05 1.84324000e+04 1.00000000e+11 1.71503000e+04</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-82" domainMin="82" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="82" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="82"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="86.1"><values>0.0121875 0.835388 1.21875 0.822214</values></XYs1d>
+                      <XYs1d outerDomainValue="630.957"><values>0.1 0.0161781 0.562342 0.0152375 3.16228 0.0143515 6.30959 0.0123158 12.5893 0.0105688 25.1189 7.75198e-3 50.1187 5.68591e-3 79.4329 3.89931e-3 125.893 2.67409e-3 158.49 2.064e-3 199.526 1.5931e-3 275.229 1.37254e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="15848.9"><values>0.1 0.012902 0.562342 0.0121126 3.16228 0.0113716 6.30959 9.64515e-3 12.5893 8.18082e-3 18.8365 6.84964e-3 34.4747 5.24777e-3 63.0957 4.02051e-3 89.1252 3.09358e-3 125.893 2.38035e-3 149.624 1.87686e-3 193.866 1.31406e-3 251.189 9.20028e-4 298.539 6.62345e-4 339.821 5.17662e-4 412.691 3.57676e-4 501.187 2.47135e-4 578.762 1.80236e-4 662.359 1.34065e-4 751.666 1.01584e-4 846.299 7.83183e-5 945.809 6.13708e-5 1165.01 3.88506e-5 1398.1 2.60408e-5 1640 1.83496e-5 1885.77 1.35084e-5 2130.85 1.03326e-5 2371.29 8.17268e-6 2859.16 5.4217e-6 3289.87 3.98532e-6 4060.59 2.51162e-6 5011.87 1.58287e-6 6309.57 1.03057e-6 7884.22 8.48342e-7</values></XYs1d>
+                      <XYs1d outerDomainValue="501187"><values>0.1 0.0126315 2.51189 0.0113051 5.01188 9.69948e-3 10 8.32189e-3 17.7828 6.42008e-3 27.3842 5.28481e-3 52.3299 3.94697e-3 1e2 2.94779e-3 125.892 2.36974e-3 158.489 1.90505e-3 199.526 1.38605e-3 251.189 1.00844e-3 298.539 7.22976e-4 339.821 5.63287e-4 412.691 3.87381e-4 501.187 2.66408e-4 562.341 2.04895e-4 626.433 1.60193e-4 766.947 1.00978e-4 915.524 6.74309e-5 1068.96 4.73603e-5 1224.17 3.47656e-5 1378.35 2.65258e-5 1529.12 2.0935e-5 1833.71 1.3835e-5 2101.35 1.01405e-5 2577.8 6.36327e-6 3162.28 3.99302e-6 3573.76 3.10293e-6 4023.37 2.43034e-6 4512.81 1.91813e-6 5636.94 1.21261e-6 6943.9 7.88886e-7 8443.12 5.272e-7 10141.4 3.61307e-7 12042.5 2.53533e-7 14147.2 1.81889e-7 16453.3 1.33227e-7 18955.6 9.95018e-8 21646.1 7.56818e-8 24514.2 5.8557e-8 27547.3 4.60394e-8 34282.2 2.93284e-8 41513.1 1.97664e-8 49080.9 1.39954e-8 56826.1 1.03463e-8 64599.5 7.94305e-9 80848.5 5.00137e-9 95665.1 3.53521e-9 108534 2.72528e-9  131154 1.8446e-9 158489 1.24852e-9 199526 8.65199e-10 250553 7.33422e-10</values></XYs1d>
+                      <XYs1d outerDomainValue="39810700"><values>0.1 0.0114625 2.51189 0.0102507 5.01188 8.77735e-3 10 7.51577e-3 14.9624 6.31904e-3 27.3842 4.87155e-3 50.1187 3.75564e-3 79.4329 3.05491e-3 125.893 2.48493e-3 177.828 1.65503e-3 251.189 1.1023e-3 316.228 7.39589e-4 398.107 4.96229e-4 446.683 3.89149e-4 530.884 2.7025e-4 630.957 1.87679e-4 707.945 1.42355e-4 788.633 1.09858e-4 872.61 8.61632e-5 1054.92 5.46379e-5 1245.42 3.66771e-5 1440.13 2.58781e-5 1635.31 1.90723e-5 1827.68 1.4603e-5 2220.37 9.15179e-6 2569.32 6.44621e-6 2866.58 4.95625e-6 3378.17 3.34139e-6 3981.07 2.25269e-6 4869.67 1.47509e-6 5808.48 1.01841e-6 6777.26 7.36445e-7 7756.62 5.54568e-7 8728.98 4.3268e-7 10733 2.80246e-7 12532.6 2.02333e-7 14077.7 1.58476e-7 16759.7 1.09852e-7 19952.6 7.61472e-8 23885 5.31899e-8 28432 3.75728e-8 33661 2.68309e-8 39641.8 1.93628e-8 46447.4 1.41165e-8 54152.6 1.03938e-8 62833.8 7.7264e-9 72568.8 5.79702e-9 83435.6 4.38866e-9 95512.3 3.35147e-9 108876 2.58106e-9  123603 2.00404e-9 139766 1.56837e-9 157438 1.23685e-9 198285 7.80732e-10 246155 5.07194e-10 301480 3.38497e-10 364590 2.31692e-10 435704 1.62389e-10 514923 1.16373e-10 602224 8.51509e-11 697466 6.3534e-11 800393 4.82805e-11 910640 3.73241e-11 1027750 2.9322e-11 1289440 1.8651e-11 1572540 1.25537e-11 1870790 8.87835e-12 2177820 6.55689e-12 2487540 5.02942e-12 2794460 3.98782e-12 3425500 2.65684e-12 3990640 1.95925e-12 5017890 1.24072e-12 6309570 7.85702e-13 7498950 5.85978e-13 9716300 3.77413e-13 12589300 2.43082e-13 15848900 1.85895e-13 19905300 1.65967e-13</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 0.0114528 2.51189 0.010242 5.01188 8.76992e-3 10 7.50941e-3 14.9624 6.31375e-3 27.3842 4.86754e-3 50.1187 3.75259e-3 79.4329 3.05271e-3 125.893 2.48335e-3 177.828 1.65434e-3 251.189 1.10208e-3 316.228 7.39699e-4 398.107 4.96475e-4 446.683 3.89473e-4 530.884 2.70612e-4 630.957 1.88026e-4 707.945 1.42697e-4 788.633 1.10179e-4 872.61 8.64572e-5 1054.92 5.48745e-5 1245.42 3.68654e-5 1440.13 2.60292e-5 1635.31 1.91955e-5 1827.68 1.47051e-5 2220.37 9.22445e-6 2569.32 6.50197e-6 2866.58 5.00176e-6 3378.17 3.37474e-6 3981.07 2.27697e-6 4869.67 1.48913e-6 5808.48 1.02697e-6 6777.26 7.41921e-7 7756.62 5.58221e-7 8728.98 4.3521e-7 10733 2.81522e-7 12532.6 2.03059e-7 14077.7 1.58929e-7 16759.7 1.10047e-7 19952.6 7.6199e-8 24582.4 5.02088e-8 30187.9 3.32998e-8 36952.9 2.22274e-8 45091.2 1.49307e-8 54850.9 1.00919e-8 66519.2 6.8631e-9 80426.8 4.69554e-9 96954.2 3.23167e-9 116537 2.23719e-9 139673 1.55767e-9 166929 1.0907e-9  198950 7.67982e-10 236463 5.43724e-10 280292 3.87034e-10 331363 2.76966e-10 390717 1.99239e-10 459517 1.44065e-10 539064 1.04699e-10 630807 7.647e-11 736352 5.61271e-11 857482 4.13955e-11 996164 3.0676e-11 1154570 2.28391e-11 1335080 1.70829e-11 1540310 1.28355e-11 1773120 9.68736e-12 2036640 7.34357e-12 2334270 5.59098e-12 2669690 4.27484e-12 3046910 3.28226e-12 3470260 2.53057e-12 3944410 1.95898e-12 4474370 1.52257e-12 5065550 1.18805e-12 5723740 9.30632e-13 6455110 7.31774e-13 7266260 5.77573e-13 8164240 4.57555e-13 10269400 2.89252e-13 1.2825e7 1.85496e-13 15905800 1.2062e-13 19594400 7.94965e-14 23981600 5.30804e-14 29166400 3.58924e-14 35255700 2.45686e-14 42364700 1.70178e-14 50615700 1.19237e-14 60138300 8.44782e-15 71068600 6.05001e-15 83548300 4.37823e-15 97724200 3.20059e-15 1.13747e8 2.36273e-15 1.3177e8 1.76083e-15 1.51949e8 1.32437e-15 1.74439e8 1.00501e-15 1.99397e8 7.69261e-16 2.26974e8 5.93754e-16 2.57322e8 4.62012e-16 2.90586e8 3.62331e-16 3.26906e8 2.86322e-16 4.10697e8 1.81445e-16  5.08659e8 1.18309e-16 6.2162e8 7.92318e-17 7.50205e8 5.4408e-17 8.94811e8 3.82497e-17 1.0556e9 2.7489e-17 1.23248e9 2.01676e-17 1.42513e9 1.50855e-17 1.63301e9 1.14906e-17 1.85536e9 8.90258e-18 2.09123e9 7.00835e-18 2.61729e9 4.4751e-18 3.18508e9 3.02232e-18 3.78208e9 2.14381e-18 4.39556e9 1.58737e-18 5.01346e9 1.22034e-18 6.31108e9 7.70262e-19 7.50029e9 5.45452e-19 8.53707e9 4.21061e-19 1.03671e10 2.8558e-19 1.25893e10 1.93691e-19 1.49624e10 1.41506e-19 1.70314e10 1.11821e-19 2.06836e10 7.85499e-20 2.51189e10 5.51783e-20 3.16228e10 4.05646e-20 3.98107e10 2.98212e-20 5e10 2.66528e-20</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="82" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{3p1/2}" label="Cu{3p1/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="82" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{3p3/2}" ENDF_MT="540">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            8.00000000e+01 0.00000000e+00 8.27590483e+01 1.20526000e+05 8.75873579e+01 3.15043000e+05 9.48298721e+01 5.72312000e+05 1.02072386e+02 7.96251000e+05 1.14978850e+02 1.13380000e+06 1.27886311e+02 1.41175000e+06 2.01294442e+02 2.42133000e+06 3.17640045e+02 3.07954000e+06 3.99268993e+02 3.20994000e+06 6.31407889e+02 3.12276000e+06 1.99526000e+03 1.85944000e+06 3.16228000e+03 1.35612000e+06 5.01187000e+03 9.56351000e+05 6.30957000e+03 7.96478000e+05 8.15479000e+03 6.46734000e+05 1.00000000e+04 5.46745000e+05 1.58489000e+04 3.72767000e+05 2.51189000e+04 2.54353000e+05 3.98107000e+04 1.75035000e+05 6.30957000e+04 1.22549000e+05 8.15479000e+04 1.01616000e+05 1.25893000e+05 7.58982000e+04 1.99526000e+05 5.82330000e+04 3.16228000e+05 4.73163000e+04 5.01187000e+05 4.08180000e+04 6.30957000e+05 3.87630000e+04 1.00000000e+11 3.59438000e+04</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-80" domainMin="80" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="80" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="80"><values>1e-2 11.1111 0.1 11.1111</values></XYs1d>
+                      <XYs1d outerDomainValue="84"><values>0.0138375 0.735514 1.38375 0.724433</values></XYs1d>
+                      <XYs1d outerDomainValue="630.957"><values>0.1 0.0165704 0.562342 0.0156716 3.16228 0.0148215 6.30959 0.0126119 12.5893 0.0107316 25.1189 7.86683e-3 50.1187 5.76679e-3 63.0958 4.74561e-3 89.1253 3.54266e-3 125.893 2.64464e-3 158.49 2.02289e-3 199.526 1.5473e-3 276.549 1.31816e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="15848.9"><values>0.1 0.0132398 0.562342 0.0125018 3.16228 0.011805 6.30959 9.90781e-3 12.5893 8.31551e-3 18.8365 6.9681e-3 34.4747 5.34506e-3 63.0957 4.10007e-3 89.1252 3.12651e-3 125.893 2.38412e-3 149.624 1.86737e-3 193.866 1.29445e-3 251.189 8.97305e-4 316.228 5.69219e-4 375.838 4.04608e-4 427.809 3.1322e-4 519.547 2.13341e-4 630.957 1.45311e-4 718.207 1.09223e-4 810.931 8.35749e-5 908.704 6.50286e-5 1011.05 5.13977e-5 1235.02 3.30668e-5 1471.35 2.24794e-5 1714.95 1.60372e-5 1960.96 1.19345e-5 2205.01 9.21551e-6 2707.44 5.86168e-6 3158.05 4.17493e-6 3544.57 3.23683e-6 4214.85 2.20966e-6 5011.87 1.50845e-6 6309.57 9.82029e-7 7885.54 8.08138e-7</values></XYs1d>
+                      <XYs1d outerDomainValue="501187"><values>0.1 0.0128183 0.562342 0.0120504 3.16228 0.0113285 5.62342 9.74871e-3 10 8.38926e-3 15.8489 6.91414e-3 31.6228 5.1732e-3 63.0957 3.87062e-3 89.1252 3.09524e-3 125.893 2.47518e-3 149.624 1.96273e-3 193.866 1.38594e-3 251.189 9.78644e-4 298.539 6.97814e-4 339.821 5.41472e-4 412.691 3.7011e-4 501.187 2.52979e-4 562.341 1.94488e-4 626.433 1.51999e-4 766.947 9.57442e-5 915.524 6.38964e-5 1068.96 4.48533e-5 1224.17 3.29096e-5 1378.35 2.50992e-5 1529.12 1.98019e-5 1833.71 1.30778e-5 2101.35 9.58092e-6 2577.8 6.00779e-6 3162.28 3.76724e-6 3573.76 2.92789e-6 4023.37 2.29355e-6 4512.81 1.81041e-6 5636.94 1.14481e-6 6943.9 7.4495e-7 8443.12 4.9795e-7 10141.4 3.41333e-7 12042.5 2.39564e-7 14147.2 1.71899e-7 16453.3 1.25932e-7 18955.6 9.40684e-8 21646.1 7.15599e-8 24514.2 5.53757e-8 27547.3 4.3544e-8 34282.2 2.77457e-8 41513.1 1.87038e-8 49080.9 1.32456e-8 56826.1 9.79365e-9 64599.5 7.51986e-9 80848.5 4.73612e-9 95665.1 3.34837e-9  108534 2.58161e-9 131154 1.74774e-9 158489 1.18321e-9 199526 8.19957e-10 250555 6.95072e-10</values></XYs1d>
+                      <XYs1d outerDomainValue="63095700"><values>0.1 0.0117771 0.562342 0.0110723 3.16228 0.0104097 5.62342 8.93799e-3 10 7.67438e-3 14.9624 6.48928e-3 27.3842 5.04575e-3 50.1187 3.92333e-3 79.4329 3.15212e-3 125.893 2.5325e-3 149.624 2.04997e-3 193.866 1.49294e-3 251.189 1.08727e-3 298.539 7.87831e-4 339.821 6.18735e-4 412.691 4.30638e-4 501.187 2.99723e-4 595.662 1.98078e-4 692.827 1.37859e-4 790.763 1.00395e-4 887.75 7.60683e-5 982.323 5.96704e-5 1172.71 3.90148e-5 1339.35 2.83683e-5 1479.69 2.23376e-5 1718.24 1.56077e-5 1995.26 1.09054e-5 2304.09 7.85379e-6 2613.29 5.89298e-6 2917.69 4.58336e-6 3538.17 2.95237e-6 4088.69 2.1228e-6 4557.09 1.65754e-6 5362.21 1.14366e-6 6309.57 7.89093e-7 7182.07 6.07194e-7 8142.2 4.71068e-7 9194.57 3.6837e-7 10343.6 2.90284e-7 11593.4 2.30459e-7 14461 1.47367e-7 17790.4 9.69049e-8 21604.8 6.54137e-8 25920.3 4.52542e-8 30746 3.20368e-8 36082.9 2.31748e-8 41924.7 1.71069e-8 48257.6 1.28697e-8 55060.8 9.85574e-9 62307.5 7.67455e-9  69965.1 6.07025e-9 86950.3 3.91061e-9 105163 2.66166e-9 124202 1.90085e-9 143669 1.41585e-9 163190 1.09416e-9 203948 6.96927e-10 241068 4.96899e-10 273278 3.85548e-10 329839 2.63508e-10 398107 1.80099e-10 486967 1.2078e-10 588208 8.30465e-11 702159 5.84543e-11 828959 4.20575e-11 968556 3.08891e-11 1120710 2.31284e-11 1284990 1.76335e-11 1460810 1.3674e-11 1647420 1.07734e-11 2063980 6.88994e-12 2514010 4.65955e-12 2987590 3.30907e-12 3474610 2.45272e-12 3965450 1.88733e-12 4997120 1.19315e-12 5943460 8.45926e-13 6769080 6.53596e-13 8227440 4.4389e-13 1e7 3.01468e-13 1.1885e7 2.24955e-13 15399300 1.45003e-13 19952600 9.34668e-14 25118900 7.15361e-14 31547800 6.38923e-14</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 0.0117727 0.562342 0.0110681 3.16228 0.0104057 5.62342 8.9346e-3 10 7.67148e-3 14.9624 6.48685e-3 27.3842 5.04388e-3 50.1187 3.9219e-3 79.4329 3.15108e-3 125.893 2.53176e-3 149.624 2.04945e-3 193.866 1.49266e-3 251.189 1.08714e-3 298.539 7.87835e-4 339.821 6.18797e-4 412.691 4.30743e-4 501.187 2.99839e-4 595.662 1.98239e-4 692.827 1.38023e-4 790.763 1.00547e-4 887.75 7.62054e-5 982.323 5.97929e-5 1172.71 3.91121e-5 1339.35 2.84484e-5 1479.69 2.24062e-5 1718.24 1.56615e-5 1995.26 1.0947e-5 2304.09 7.8843e-6 2613.29 5.91624e-6 2917.69 4.6017e-6 3538.17 2.96446e-6 4088.69 2.13165e-6 4557.09 1.66453e-6 5362.21 1.14857e-6 6309.57 7.92548e-7 7079.45 6.2758e-7 8848.61 3.99292e-7 10906.7 2.61327e-7 13269 1.75625e-7 15946.4 1.20997e-7 18945 8.53252e-8 22266.5 6.1498e-8 25907.4 4.5241e-8 29859.7 3.39264e-8 34110.8 2.59032e-8 38644.4 2.01138e-8 43440.4 1.58673e-8 54095 1.01716e-8 65540.9 6.89315e-9 77526.2 4.90418e-9  89798.2 3.6408e-9 102120 2.80542e-9 127889 1.77787e-9 151399 1.26278e-9 171828 9.77008e-10 207753 6.64896e-10 251189 4.5249e-10 298539 3.20625e-10 353858 2.28414e-10 418315 1.63587e-10 493222 1.17772e-10 580047 8.52244e-11 680431 6.19842e-11 796200 4.53063e-11 929380 3.32785e-11 1082220 2.45619e-11 1257200 1.82147e-11 1457060 1.35709e-11 1684790 1.01577e-11 1943710 7.63739e-12 2237420 5.76808e-12 2569850 4.37544e-12 2945290 3.33341e-12 3368390 2.55035e-12 3844200 1.95943e-12 4378180 1.51163e-12 4976210 1.17091e-12 5644620 9.10618e-13 6390210 7.10974e-13 7220280 5.57251e-13 8142620 4.3843e-13 9165550 3.46241e-13 10297900 2.74446e-13 12952400 1.73688e-13 16174800 1.11504e-13 20059200 7.25817e-14 24709600 4.7884e-14 30240500 3.20036e-14 36776500 2.16608e-14 44452600 1.48405e-14 53413400 1.02886e-14 63813300 7.21496e-15 75815400 5.11598e-15 89591100 3.66681e-15 1.05319e8 2.65564e-15 1.23184e8 1.9428e-15 1.43375e8 1.43525e-15 1.66086e8 1.07038e-15 1.91513e8 8.05619e-16 2.19852e8 6.11755e-16  2.51297e8 4.68555e-16 2.86043e8 3.61879e-16 3.24279e8 2.81756e-16 3.66186e8 2.21095e-16 4.11942e8 1.74813e-16 5.17499e8 1.10903e-16 6.40899e8 7.23871e-17 7.83187e8 4.85245e-17 9.45146e8 3.33516e-17 1.12728e9 2.34666e-17 1.32977e9 1.68782e-17 1.55254e9 1.23921e-17 1.79515e9 9.27583e-18 2.05693e9 7.07003e-18 2.33692e9 5.48101e-18 2.63393e9 4.31728e-18 3.29631e9 2.75972e-18 4.0112e9 1.86558e-18 4.76283e9 1.3244e-18 5.53518e9 9.81349e-19 6.31306e9 7.54922e-19 7.94657e9 4.77024e-19 9.44354e9 3.38079e-19 1.07486e10 2.61142e-19 1.30519e10 1.77282e-19 1.58489e10 1.20352e-19 1.88365e10 8.98887e-20 2.44062e10 5.80208e-20 3.16228e10 3.74509e-20 3.98107e10 2.87032e-20 5e10 2.56535e-20</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="80" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{3p3/2}" label="Cu{3p3/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="80" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{3d3/2}" ENDF_MT="541">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.10000000e+01 0.00000000e+00 1.13092695e+01 3.08777000e+06 1.18504910e+01 8.15703000e+06 1.26623729e+01 1.50663000e+07 1.34742547e+01 2.12676000e+07 1.50877226e+01 3.19136000e+07 1.67011905e+01 4.08085000e+07 2.58782966e+01 7.24587000e+07 4.04228712e+01 9.45009000e+07 6.34745340e+01 1.06092000e+08 1.00009019e+02 1.07154000e+08 3.16228000e+02 7.69233000e+07 5.01187000e+02 6.03846000e+07 6.30957000e+02 5.25235000e+07 8.15479000e+02 4.44046000e+07 1.00000000e+03 3.85280000e+07 1.58489000e+03 2.73356000e+07 2.51189000e+03 1.89319000e+07 3.98107000e+03 1.28977000e+07 6.30957000e+03 8.69669000e+06 8.15479000e+03 6.96444000e+06 1.00000000e+04 5.83317000e+06 1.58489000e+04 3.90976000e+06 2.51189000e+04 2.63165000e+06 3.98107000e+04 1.78961000e+06 6.30957000e+04 1.23921000e+06 8.15479000e+04 1.02142000e+06 1.25893000e+05 7.55316000e+05 1.99526000e+05 5.73250000e+05 3.16228000e+05 4.59660000e+05 5.01187000e+05 3.90964000e+05 6.30957000e+05 3.68276000e+05 1.99526000e+06 3.18966000e+05 1.00000000e+11 3.10197000e+05</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-11" domainMin="11" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="11" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="11"><values>1.56203e-3 71.1325 0.0156203 71.1325</values></XYs1d>
+                      <XYs1d outerDomainValue="11.55"><values>1.56203e-3 6.50161 0.156203 6.43157</values></XYs1d>
+                      <XYs1d outerDomainValue="1e2"><values>0.1 0.0853856 0.354814 0.0787891 1.25893 0.0727022 2.23872 0.0621405 3.98107 0.0531131 6.30957 0.0411361 10 0.0318598 14.1254 0.0232786 19.9526 0.0170087 24.4452 0.0135971 33.1502 9.71874e-3 44.955 6.94663e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="2511.89"><values>0.1 0.0614884 0.354814 0.0566736 1.25893 0.0522359 2.51189 0.0425892 5.01187 0.034724 7.94329 0.0264465 12.5893 0.0201423 15.849 0.0163114 22.3873 0.0118868 31.6228 8.6624e-3 39.8107 6.40468e-3 50.1187 4.7354e-3 63.0957 3.22265e-3 74.9895 2.23911e-3 85.3592 1.70401e-3 103.664 1.13127e-3 125.893 7.51037e-4 149.624 4.91845e-4 174.031 3.39605e-4 198.631 2.45599e-4 222.993 1.84958e-4 246.749 1.44316e-4 294.572 9.34835e-5 336.429 6.74995e-5 371.681 5.28719e-5 431.603 3.66532e-5 501.187 2.54096e-5 595.662 1.75304e-5 678.032 1.32705e-5 823.427 8.74037e-6 1e3 5.75668e-6 1250.9 4.74846e-6</values></XYs1d>
+                      <XYs1d outerDomainValue="63095.7"><values>0.1 0.0505178 0.354814 0.0467722 1.25893 0.0433043 2.51189 0.0358748 5.01187 0.02972 8.9125 0.0216866 15.8489 0.0158247 19.9526 0.0130131 28.1838 9.70392e-3 39.8107 7.23627e-3 50.1187 5.29887e-3 63.0957 3.88018e-3 79.4328 2.52905e-3 1e2 1.64841e-3 118.85 1.08649e-3 135.285 7.94774e-4 164.295 4.97248e-4 199.526 3.11101e-4 223.872 2.28661e-4 247.599 1.74661e-4 295.333 1.09007e-4 337.081 7.65417e-5 372.221 5.87125e-5 431.917 3.94439e-5 501.187 2.64989e-5 578.762 1.90081e-5 656.428 1.4213e-5 732.89 1.10208e-5 888.748 7.06136e-6 1027.03 5.05702e-6 1144.69 3.93685e-6 1346.92 2.70415e-6 1584.89 1.85743e-6 1856.73 1.31883e-6 2153.78 9.56671e-7 2475.3 7.08026e-7 2820.17 5.33956e-7 3187.01 4.09846e-7 3574.14 3.19828e-7 4431.24 2.00896e-7 5348.22 1.33742e-7 6304.97 9.36814e-8 7281.53 6.86065e-8 8259.33 5.22382e-8 9222.03 4.11537e-8 11184.6 2.71109e-8 12926 1.98242e-8 14407.8 1.5676e-8 16955 1.10228e-8 19952.6 7.75087e-9  25118.9 5.05793e-9 31542.8 4.13864e-9</values></XYs1d>
+                      <XYs1d outerDomainValue="1995260"><values>0.1 0.0439366 0.354814 0.0407632 1.25893 0.0378191 2.51189 0.0315495 5.01187 0.0263192 7.07945 0.0219389 11.885 0.0166965 19.9526 0.0127069 28.1838 9.75141e-3 39.8107 7.48335e-3 50.1187 5.70425e-3 63.0957 4.34811e-3 79.4328 2.9531e-3 1e2 2.00566e-3 112.202 1.55884e-3 133.352 1.06811e-3 158.489 7.31868e-4 177.828 5.31593e-4 196.675 4.01867e-4 214.798 3.14611e-4 250.624 2.04989e-4 281.363 1.48662e-4 334.683 9.18128e-5 398.107 5.6703e-5 446.683 4.09814e-5 486.967 3.21234e-5 554.306 2.22933e-5 630.957 1.54713e-5 749.895 1.00701e-5 853.592 7.29727e-6 940.672 5.73135e-6 1088.23 3.98934e-6 1258.93 2.77681e-6 1539.93 1.80583e-6 1836.81 1.23927e-6 2143.17 8.91446e-7 2452.87 6.68202e-7 2760.35 5.1924e-7 3394.09 3.33945e-7 3963.17 2.39831e-7 4451.76 1.87102e-7 5299.88 1.28925e-7 6309.57 8.88372e-8 7182.07 6.84452e-8 8142.2 5.31656e-8 9194.57 4.16243e-8 10343.6 3.28385e-8 12994.3 2.07441e-8 16093.3 1.34856e-8 19666.6 9.00614e-9  23734 6.16828e-9 28308.1 4.32576e-9 33393.8 3.10165e-9 38988.5 2.27066e-9 45082 1.69503e-9 51656.9 1.28865e-9 58689.1 9.96637e-10 66148.9 7.83271e-10 82786.1 4.98587e-10 100742 3.35808e-10 119622 2.37628e-10 139022 1.75581e-10 158562 1.34737e-10 177899 1.06873e-10 217586 7.12503e-11 253060 5.25685e-11 317403 3.33145e-11 398107 2.11126e-11 501187 1.40466e-11 630957 9.34542e-12 814292 6.72734e-12 997626 6.0463e-12</values></XYs1d>
+                      <XYs1d outerDomainValue="25118900"><values>0.1 0.043508 0.354814 0.0403691 1.25893 0.0374567 2.51189 0.0312554 5.01187 0.0260808 7.07945 0.0217527 11.885 0.0165691 19.9526 0.0126208 25.1188 0.0104241 35.4813 7.82464e-3 50.1187 5.87343e-3 63.0957 4.36422e-3 79.4328 2.98354e-3 1e2 2.03965e-3 112.202 1.59495e-3 133.352 1.1029e-3 158.489 7.62644e-4 188.365 4.81659e-4 214.412 3.41234e-4 236.286 2.63504e-4 273.35 1.78809e-4 316.228 1.21337e-4 344.747 9.48545e-5 400.982 6.16486e-5 449.101 4.46244e-5 532.319 2.74819e-5 630.957 1.69247e-5 749.895 1.08612e-5 853.592 7.78749e-6 940.672 6.06788e-6 1088.23 4.17346e-6 1258.93 2.87048e-6 1453.79 2.09178e-6 1648.88 1.58583e-6 1840.94 1.24461e-6 2232.44 8.1449e-7 2579.79 5.92619e-7 2875.34 4.66868e-7 3383.33 3.26453e-7 3981.07 2.28269e-7 4800.09 1.56624e-7 5753.88 1.08738e-7 6858.23 7.63579e-8 8129.81 5.42159e-8 9586.06 3.89087e-8 11245.1 2.82143e-8 13125.7 2.06659e-8 15246.8 1.52849e-8 17628.1 1.14121e-8 20289 8.59875e-9  23249.3 6.53651e-9 26528.3 5.01162e-9 30145.2 3.8745e-9 34118.7 3.01957e-9 38466.9 2.37169e-9 43206.9 1.87693e-9 54116.6 1.19284e-9 66834 7.79863e-10 81458.2 5.23589e-10 98062.2 3.60393e-10 116690 2.53922e-10 137355 1.82865e-10 160040 1.34422e-10 184699 1.00731e-10 211256 7.6858e-11 239612 5.96426e-11 269643 4.70227e-11 336466 3.01103e-11 408388 2.03855e-11 483826 1.44912e-11 561180 1.07501e-11 638947 8.2781e-12 801859 5.24011e-12 950766 3.71876e-12 1080330 2.87535e-12 1308510 1.95492e-12 1584890 1.32914e-12 1830200 1.00683e-12 2075810 7.89625e-13 2587560 5.16099e-13 3052580 3.75161e-13 3455420 2.95346e-13 4161500 2.06301e-13 5011870 1.44102e-13 6309570 9.67033e-14 7943280 7.08422e-14 1e7 5.18971e-14 12559400 4.63048e-14</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 0.0434998 0.354814 0.0403615 1.25893 0.0374496 2.51189 0.0312496 5.01187 0.026076 7.07945 0.0217488 11.885 0.0165663 19.9526 0.0126187 25.1188 0.0104225 35.4813 7.82367e-3 50.1187 5.87284e-3 63.0957 4.36394e-3 79.4328 2.98356e-3 1e2 2.03981e-3 112.202 1.5952e-3 133.352 1.1032e-3 158.489 7.62942e-4 188.365 4.8198e-4 214.412 3.41532e-4 236.286 2.63775e-4 273.35 1.79035e-4 316.228 1.21518e-4 344.747 9.50172e-5 400.982 6.17782e-5 449.101 4.47311e-5 532.319 2.75595e-5 630.957 1.69798e-5 749.895 1.08978e-5 853.592 7.81436e-6 940.672 6.08919e-6 1088.23 4.18849e-6 1258.93 2.88109e-6 1453.79 2.09878e-6 1648.88 1.59066e-6 1840.94 1.24806e-6 2232.44 8.16373e-7 2579.79 5.93784e-7 2875.34 4.67663e-7 3383.33 3.26881e-7 3981.07 2.28479e-7 4869.67 1.52287e-7 5919.23 1.02798e-7 7151.25 7.02492e-8 8588.81 4.85808e-8 10256.5 3.39854e-8 12180.2 2.4042e-8 14387.2 1.71928e-8 16906 1.24243e-8 19765.8 9.06998e-9 22996.8 6.68669e-9  26629.6 4.97685e-9 30695.3 3.73856e-9 35225 2.8336e-9 40249.6 2.16637e-9 45799.8 1.67021e-9 51905.2 1.2982e-9 58595.1 1.01702e-9 65897 8.02844e-10 82734.4 5.07753e-10 102407 3.30454e-10 125079 2.20916e-10 150873 1.51452e-10 179866 1.06308e-10 212087 7.62901e-11 247518 5.58953e-11 286092 4.17566e-11 327699 3.17681e-11 372184 2.45854e-11 419358 1.9334e-11 524520 1.23212e-11 637958 8.30699e-12 757169 5.88349e-12 879618 4.35064e-12 1002900 3.34084e-12 1124860 2.65153e-12 1375070 1.76956e-12 1598620 1.3066e-12 2003880 8.29011e-13 2511890 5.25989e-13 2879890 4.00521e-13 3294750 3.06283e-13 3761460 2.35202e-13 4285410 1.81364e-13 4872390 1.40418e-13 5528670 1.09152e-13 6260980 8.5183e-14 7076520 6.67351e-14 7983010 5.24823e-14 8988660 4.14287e-14 10102300 3.28242e-14 1.2714e7 2.07558e-14 15886300 1.33139e-14 19712400 8.65962e-15 24295700 5.70859e-15 29749600 3.81254e-15 3.6198e7 2.57857e-15 4.3775e7 1.76543e-15 52624500 1.2231e-15 6.29e7 8.57149e-16 7.4764e7 6.07401e-16  88387300 4.3508e-16 1.03948e8 3.14913e-16 1.2163e8 2.3025e-16 1.41622e8 1.70003e-16 1.64119e8 1.26716e-16 1.89315e8 9.53226e-17 2.17407e8 7.23474e-17 2.4859e8 5.53851e-17 2.83057e8 4.27552e-17 3.20999e8 3.32734e-17 3.62598e8 2.60981e-17 4.08031e8 2.06261e-17 5.12891e8 1.30743e-17 6.35548e8 8.52703e-18 7.77054e8 5.71185e-18 9.38206e8 3.92313e-18 1.11951e9 2.75857e-18 1.32119e9 1.98288e-18 1.54314e9 1.45502e-18 1.78496e9 1.08854e-18 2.04599e9 8.29267e-19 2.32526e9 6.42584e-19 2.6216e9 5.05928e-19 3.28281e9 3.23136e-19 3.99682e9 2.18283e-19 4.74789e9 1.54864e-19 5.51998e9 1.14687e-19 6.29789e9 8.81827e-20 7.93225e9 5.56741e-20 9.43077e9 3.94326e-20 1.07377e10 3.04444e-20 1.30453e10 2.06531e-20 1.58489e10 1.40108e-20 1.88365e10 1.04644e-20 2.44062e10 6.7545e-21 3.16228e10 4.35984e-21 3.98107e10 3.34148e-21 5e10 2.98645e-21</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="11" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{3d3/2}" label="Cu{3d3/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="11" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{3d5/2}" ENDF_MT="542">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.04000000e+01 0.00000000e+00 1.05986395e+01 3.23852000e+06 1.12415361e+01 1.30068000e+07 1.22059306e+01 2.60148000e+07 1.31703252e+01 3.74565000e+07 1.47890381e+01 5.39074000e+07 1.64077510e+01 6.76775000e+07 2.56146898e+01 1.16722000e+08 4.02065456e+01 1.50376000e+08 6.33331442e+01 1.67360000e+08 1.25893000e+02 1.62795000e+08 3.16228000e+02 1.19460000e+08 5.01187000e+02 9.35025000e+07 6.30957000e+02 8.13005000e+07 8.15479000e+02 6.86656000e+07 1.00000000e+03 5.95361000e+07 1.58489000e+03 4.21831000e+07 2.51189000e+03 2.91826000e+07 3.98107000e+03 1.98631000e+07 6.30957000e+03 1.33829000e+07 8.15479000e+03 1.07130000e+07 1.00000000e+04 8.97017000e+06 1.58489000e+04 6.00860000e+06 2.51189000e+04 4.04199000e+06 3.98107000e+04 2.74718000e+06 6.30957000e+04 1.90131000e+06 8.15479000e+04 1.56672000e+06 1.25893000e+05 1.15804000e+06 1.99526000e+05 8.78509000e+05 3.16228000e+05 7.04129000e+05 3.98107000e+05 6.44518000e+05 1.00000000e+06 5.18500000e+05 1.99526000e+06 4.87929000e+05 1.00000000e+11 4.74333000e+05</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-10.4" domainMin="10.4" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10.4" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="10.4"><values>1e-3 111.111 1e-2 111.111</values></XYs1d>
+                      <XYs1d outerDomainValue="10.92"><values>1e-3 10.1542 0.1 10.0478</values></XYs1d>
+                      <XYs1d outerDomainValue="1e2"><values>0.1 0.0872183 0.354814 0.0802121 1.25893 0.0737687 2.23872 0.0629787 3.98107 0.0537669 6.30957 0.0414306 10 0.0319248 14.1254 0.0231524 19.9526 0.0167905 24.4649 0.0133566 33.217 9.47644e-3 45.1 6.72348e-3</values></XYs1d>
+                      <XYs1d outerDomainValue="2511.89"><values>0.1 0.0633109 0.354814 0.0581787 1.25893 0.0534625 2.51189 0.0434855 5.01187 0.0353704 7.94329 0.0267836 12.5893 0.0202814 15.849 0.0163543 22.3873 0.0118423 31.6228 8.57511e-3 39.8107 6.31248e-3 50.1187 4.64686e-3 63.0957 3.14972e-3 74.9895 2.18449e-3 85.3592 1.66019e-3 103.664 1.09994e-3 125.893 7.28752e-4 149.624 4.77349e-4 174.031 3.29655e-4 198.631 2.38441e-4 222.993 1.79592e-4 246.749 1.40146e-4 294.572 9.08012e-5 336.429 6.55731e-5 371.681 5.1369e-5 431.603 3.56176e-5 501.187 2.46961e-5 595.662 1.70352e-5 678.032 1.2894e-5 823.427 8.49073e-6 1e3 5.59118e-6 1251.04 4.60975e-6</values></XYs1d>
+                      <XYs1d outerDomainValue="63095.7"><values>0.1 0.0522908 0.354814 0.0482656 1.25893 0.0445503 2.51189 0.0368356 5.01187 0.0304568 8.9125 0.0220595 15.8489 0.0159775 19.9526 0.0130788 28.1838 9.68621e-3 39.8107 7.17367e-3 50.1187 5.233e-3 63.0957 3.81734e-3 74.9895 2.7101e-3 85.3592 2.09606e-3 103.664 1.42571e-3 125.893 9.69746e-4 139.236 7.46224e-4 153.027 5.83704e-4 182.672 3.68276e-4 213.286 2.46125e-4 244.254 1.72988e-4 275.018 1.27063e-4 305.099 9.70001e-5 365.874 6.04768e-5 419.274 4.24328e-5 464.38 3.25301e-5 541.298 2.18355e-5 630.957 1.46568e-5 749.894 9.97126e-6 872.218 7.11823e-6 995.513 5.30019e-6 1117.61 4.09469e-6 1368.42 2.60673e-6 1592.81 1.85782e-6 1784.94 1.44107e-6 2117.44 9.84475e-7 2511.89 6.72551e-7 2859.24 5.08209e-7 3228.38 3.90808e-7 3617.62 3.05503e-7 4478.37 1.92525e-7 5397.97 1.28536e-7 6356.26 9.02603e-8 7333.33 6.62459e-8 8310.72 5.05374e-8 9272.22 3.98805e-8 11230.2 2.63493e-8 12965.5 1.93097e-8 16084 1.21139e-8 19952.6 7.59963e-9  25118.9 4.95936e-9 31543 4.05799e-9</values></XYs1d>
+                      <XYs1d outerDomainValue="1995260"><values>0.1 0.0454523 0.354814 0.0420383 1.25893 0.0388807 2.51189 0.0323796 5.01187 0.0269656 7.07945 0.0223683 11.885 0.0168993 19.9526 0.0127675 28.1838 9.72783e-3 39.8107 7.41186e-3 50.1187 5.62809e-3 63.0957 4.27362e-3 79.4328 2.89268e-3 1e2 1.95797e-3 112.202 1.52001e-3 133.352 1.03971e-3 158.489 7.1117e-4 177.828 5.1644e-4 196.675 3.90333e-4 214.798 3.05527e-4 250.624 1.99009e-4 281.363 1.44292e-4 334.683 8.90826e-5 398.107 5.49978e-5 446.683 3.9778e-5 486.967 3.11972e-5 554.306 2.16683e-5 630.957 1.50499e-5 749.895 9.80657e-6 853.592 7.1122e-6 940.672 5.58945e-6 1088.23 3.89419e-6 1258.93 2.71309e-6 1539.93 1.76507e-6 1836.81 1.21171e-6 2143.17 8.71875e-7 2452.87 6.537e-7 2760.35 5.08086e-7 3394.09 3.269e-7 3963.17 2.34841e-7 4451.76 1.83249e-7 5299.88 1.26312e-7 6309.57 8.7066e-8 7182.07 6.70819e-8 8142.2 5.21076e-8 9194.57 4.07968e-8 10343.6 3.21863e-8 12994.3 2.03328e-8 16093.3 1.32187e-8 19666.6 8.82814e-9  23734 6.04654e-9 28308.1 4.24051e-9 33393.8 3.0406e-9 38988.5 2.22602e-9 45082 1.66174e-9 51656.9 1.26338e-9 58689.1 9.77106e-10 66148.9 7.67936e-10 82786.1 4.88842e-10 100742 3.29255e-10 119622 2.32997e-10 139022 1.72163e-10 158562 1.32117e-10 177899 1.04797e-10 217586 6.98682e-11 253060 5.155e-11 317403 3.26703e-11 398107 2.0705e-11 501187 1.37754e-11 630957 9.16505e-12 814292 6.59751e-12 997626 5.92962e-12</values></XYs1d>
+                      <XYs1d outerDomainValue="19952600"><values>0.1 0.044891 0.354814 0.0415226 1.25893 0.038407 2.51189 0.0319939 5.01187 0.0266517 7.07945 0.0221205 11.885 0.0167263 19.9526 0.0126475 28.1838 9.65588e-3 39.8107 7.37186e-3 50.1187 5.61548e-3 63.0957 4.27757e-3 79.4328 2.9142e-3 1e2 1.98537e-3 112.202 1.55059e-3 133.352 1.07025e-3 158.489 7.38701e-4 177.828 5.40273e-4 196.675 4.10903e-4 234.591 2.54514e-4 267.753 1.77701e-4 295.665 1.35729e-4 343.084 9.06043e-5 398.107 6.04818e-5 446.683 4.36201e-5 486.967 3.41377e-5 554.306 2.36349e-5 630.957 1.63634e-5 749.895 1.0514e-5 853.592 7.54548e-6 940.672 5.88337e-6 1088.23 4.05075e-6 1258.93 2.78898e-6 1453.79 2.03374e-6 1648.88 1.54272e-6 1840.94 1.21139e-6 2232.44 7.93456e-7 2579.79 5.77701e-7 2875.34 4.55342e-7 3383.33 3.18633e-7 3981.07 2.22968e-7 4800.09 1.5301e-7 5753.88 1.06244e-7 6858.23 7.46177e-8 8129.81 5.29876e-8 9586.06 3.80323e-8 11245.1 2.75824e-8 13125.7 2.02056e-8 15246.8 1.49463e-8 17628.1 1.11606e-8  20289 8.41021e-9 23249.3 6.39389e-9 26528.3 4.90279e-9 30145.2 3.79076e-9 34118.7 2.95461e-9 38466.9 2.32089e-9 43206.9 1.83691e-9 54116.6 1.16761e-9 66834 7.63503e-10 81458.2 5.12687e-10 98062.2 3.52943e-10 116690 2.48708e-10 137355 1.79134e-10 160040 1.31696e-10 184699 9.86996e-11 211256 7.53161e-11 239612 5.84521e-11 269643 4.60885e-11 336466 2.95174e-11 408388 1.99873e-11 483826 1.421e-11 561180 1.05428e-11 638947 8.11934e-12 801859 5.14056e-12 950766 3.64861e-12 1080330 2.82141e-12 1308510 1.91855e-12 1584890 1.30461e-12 1830200 9.95046e-13 2075810 7.85074e-13 2587560 5.18537e-13 3052580 3.7991e-13 3455420 3.00855e-13 4161500 2.12017e-13 5011870 1.49412e-13 6388380 1.08182e-13 8142940 7.8329e-14 9976310 7.13846e-14</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 0.044878 0.354814 0.0415107 1.25893 0.038396 2.51189 0.031985 5.01187 0.0266444 7.07945 0.0221146 11.885 0.016722 19.9526 0.0126444 28.1838 9.65378e-3 39.8107 7.37049e-3 50.1187 5.61471e-3 63.0957 4.27719e-3 79.4328 2.91427e-3 1e2 1.98564e-3 112.202 1.55099e-3 133.352 1.07071e-3 158.489 7.39158e-4 177.828 5.40782e-4 196.675 4.11406e-4 234.591 2.54951e-4 267.753 1.78072e-4 295.665 1.3605e-4 343.084 9.08565e-5 398.107 6.06754e-5 446.683 4.37789e-5 486.967 3.42731e-5 554.306 2.37403e-5 630.957 1.64445e-5 749.895 1.05669e-5 853.592 7.58393e-6 940.672 5.91363e-6 1088.23 4.07186e-6 1258.93 2.80371e-6 1453.79 2.04339e-6 1648.88 1.54933e-6 1840.94 1.21608e-6 2232.44 7.95966e-7 2579.79 5.7922e-7 2875.34 4.56358e-7 3383.33 3.19152e-7 3981.07 2.23198e-7 4904.84 1.46647e-7 6003.68 9.76238e-8 7302.43 6.58205e-8 8827.93 4.49279e-8 10609 3.10352e-8 12676.5 2.16877e-8 15062.8 1.53262e-8 17802.1 1.09489e-8 20929.9 7.90439e-9  24483.3 5.76486e-9 28499.8 4.24613e-9 33018.2 3.15753e-9 38077.4 2.36986e-9 43716.6 1.7947e-9 49974.8 1.37098e-9 56890.6 1.05616e-9 64501.5 8.20289e-10 72844.4 6.42147e-10 81954.2 5.06553e-10 102973 3.19922e-10 127549 2.07939e-10 155892 1.38843e-10 188158 9.50766e-11 224447 6.66657e-11 264801 4.77932e-11 309198 3.49836e-11 357559 2.61114e-11 409744 1.98489e-11 465566 1.53492e-11 524786 1.20618e-11 656878 7.67632e-12 799464 5.16922e-12 949400 3.65732e-12 1103490 2.70199e-12 1258700 2.07319e-12 1412320 1.64428e-12 1727620 1.09601e-12 2009490 8.08523e-13 2520830 5.12283e-13 3162280 3.24585e-13 3612540 2.48944e-13 4118340 1.91724e-13 4685350 1.48259e-13 5319690 1.1511e-13 6027950 8.97264e-14 6817170 7.02132e-14 7694920 5.51546e-14 8669270 4.34893e-14 9748800 3.44188e-14 10942700 2.73398e-14 13737300 1.73749e-14 17123500 1.11995e-14 21197900 7.31877e-15 26067300 4.84675e-15 31848800 3.25129e-15 38669700 2.20841e-15 46667600 1.51829e-15 55989800 1.05612e-15 66792900 7.43013e-16  79242400 5.28511e-16 93511500 3.79957e-16 1.09781e8 2.7599e-16 1.28236e8 2.02484e-16 1.49068e8 1.5e-16 1.72471e8 1.12167e-16 1.98641e8 8.46414e-17 2.27774e8 6.4435e-17 2.60065e8 4.94723e-17 2.95706e8 3.82992e-17 3.34885e8 2.98876e-17 3.77783e8 2.35048e-17 4.24574e8 1.86245e-17 5.32361e8 1.18647e-17 6.5814e8 7.77439e-18 8.02923e8 5.2306e-18 9.67457e8 3.60739e-18 1.1522e9 2.54636e-18 1.35732e9 1.83697e-18 1.58267e9 1.35253e-18 1.8278e9 1.01508e-18 2.09198e9 7.75617e-19 2.37423e9 6.02693e-19 2.67333e9 4.75764e-19 3.33942e9 3.05366e-19 4.05707e9 2.07167e-19 4.81045e9 1.47531e-19 5.58358e9 1.09617e-19 6.36133e9 8.45271e-20 7.9921e9 5.36356e-20 9.48409e9 3.81326e-20 1.07832e10 2.95242e-20 1.30729e10 2.01142e-20 1.58489e10 1.37033e-20 1.88365e10 1.02348e-20 2.44062e10 6.60627e-21 3.16228e10 4.26417e-21 3.98107e10 3.26816e-21 5e10 2.92092e-21</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10.4" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{3d5/2}" label="Cu{3d5/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10.4" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction>
+    <reaction label="e- + e- + Cu{4s1/2}" ENDF_MT="543">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            7.73000000e+00 0.00000000e+00 7.90886997e+00 2.53941000e+06 8.24426850e+00 6.96699000e+06 8.83119611e+00 1.38745000e+07 9.71160238e+00 2.27707000e+07 1.05919987e+01 3.03359000e+07 1.63842287e+01 6.25754000e+07 2.55644115e+01 8.35743000e+07 3.20052951e+01 8.88294000e+07 5.03219881e+01 8.80577000e+07 1.25893000e+02 6.00459000e+07 1.99526000e+02 4.40304000e+07 3.16228000e+02 3.07714000e+07 5.01187000e+02 2.08040000e+07 6.30957000e+02 1.69576000e+07 8.15479000e+02 1.34337000e+07 1.00000000e+03 1.11272000e+07 1.58489000e+03 7.21682000e+06 2.51189000e+03 4.64713000e+06 3.98107000e+03 2.98088000e+06 6.30957000e+03 1.90986000e+06 8.15479000e+03 1.49107000e+06 1.00000000e+04 1.22545000e+06 1.58489000e+04 7.89788000e+05 2.51189000e+04 5.13221000e+05 3.98107000e+04 3.38016000e+05 6.30957000e+04 2.27244000e+05 8.15479000e+04 1.84394000e+05 1.25893000e+05 1.32909000e+05 1.99526000e+05 9.82676000e+04 3.16228000e+05 7.68532000e+04 3.98107000e+05 6.95378000e+04 1.00000000e+06 5.38592000e+04 1.99526000e+06 4.98295000e+04 1.00000000e+11 4.78092000e+04</values></XYs1d></crossSection>
+      <outputChannel genre="NBody">
+        <Q>
+          <constant1d label="eval" value="-7.73" domainMin="7.73" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="7.73" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <uncorrelated label="eval" productFrame="lab">
+                <angular>
+                  <isotropic2d/></angular>
+                <energy>
+                  <XYs2d>
+                    <axes>
+                      <axis index="2" label="energy_in" unit="eV"/>
+                      <axis index="1" label="energy_out" unit="eV"/>
+                      <axis index="0" label="P(energy_out|energy_in)" unit="1/eV"/></axes>
+                    <function1ds>
+                      <XYs1d outerDomainValue="7.73"><values>9.03125e-4 123.03 9.03125e-3 123.03</values></XYs1d>
+                      <XYs1d outerDomainValue="8.1165"><values>9.03125e-4 11.1718 0.0903125 11.1972</values></XYs1d>
+                      <XYs1d outerDomainValue="63.0957"><values>0.1 0.137942 0.316228 0.12534 1 0.11389 1.77828 0.0949266 3.16228 0.0791209 4.46684 0.0635561 6.30957 0.0510532 7.94328 0.0404213 11.2202 0.0284768 15.8489 0.0200619 19.9526 0.0163321 25.1189 0.0132957 27.9929 0.0133098</values></XYs1d>
+                      <XYs1d outerDomainValue="1584.89"><values>0.1 0.11159 0.316228 0.101867 1 0.0929907 1.77828 0.0779117 3.16228 0.0652778 4.46684 0.0523162 6.30957 0.0419282 8.91252 0.0301955 12.5893 0.0217459 14.9624 0.0171453 19.3866 0.0120032 25.1189 8.40331e-3 31.6228 5.52867e-3 37.5838 4.03876e-3 42.7809 3.19131e-3 51.9547 2.24156e-3 63.0957 1.57446e-3 77.1791 1.0233e-3 92.0582 7.01878e-4 107.412 5.04649e-4 122.934 3.78117e-4 138.345 2.9372e-4 170.107 1.88787e-4 198.629 1.35519e-4 223.117 1.05687e-4 265.623 7.2787e-5 316.228 5.01286e-5 354.814 3.89224e-5 421.696 2.66299e-5 501.187 1.82197e-5 630.957 1.18781e-5 788.892 9.77148e-6</values></XYs1d>
+                      <XYs1d outerDomainValue="39810.7"><values>0.1 0.109552 0.316228 0.100131 1 0.0915206 1.77828 0.0767547 3.16228 0.0643711 4.46684 0.051261 6.30957 0.040821 8.91252 0.0294899 12.5893 0.0213041 14.9624 0.0168738 19.3866 0.0118942 25.1189 8.38412e-3 31.6228 5.55626e-3 37.5838 4.0811e-3 42.7809 3.23797e-3 51.9547 2.28832e-3 63.0957 1.61718e-3 72.8618 1.20039e-3 83.7619 8.99353e-4 95.8741 6.79918e-4 109.276 5.18536e-4 124.042 3.98822e-4 140.248 3.09272e-4 157.963 2.41743e-4 177.256 1.90419e-4 221.596 1.19923e-4 273.19 7.774e-5 332.419 5.17788e-5 399.559 3.53746e-5 474.768 2.47498e-5 558.086 1.7707e-5 649.43 1.29363e-5 748.599 9.63818e-6 855.281 7.31423e-6 969.063 5.64718e-6 1089.44 4.43114e-6 1356.92 2.81221e-6 1644.31 1.88913e-6 1945.3 1.33376e-6 2253.53 9.83532e-7 2563.04 7.53418e-7 2868.54 5.96696e-7 3493.38 3.96742e-7 4049.81 2.92128e-7 5054.95 1.84575e-7 6309.57 1.1662e-7 7498.95 8.01417e-8 8535.92 6.04886e-8 10366.4 3.9664e-8 12589.3 2.60087e-8  15848.9 1.69746e-8 19901.8 1.38837e-8</values></XYs1d>
+                      <XYs1d outerDomainValue="1e6"><values>0.1 0.108921 0.316228 0.0995934 1 0.0910643 1.77828 0.0763621 3.16228 0.0640335 4.46684 0.050794 6.30957 0.0402918 8.91252 0.0291437 12.5893 0.0210801 14.9624 0.0167382 19.3866 0.0118431 25.1189 8.3795e-3 31.6228 5.58217e-3 37.5838 4.11616e-3 42.7809 3.27536e-3 51.9547 2.32493e-3 63.0957 1.65029e-3 72.8618 1.22979e-3 83.7619 9.24906e-4 95.8741 7.01826e-4 109.276 5.37164e-4 124.042 4.14585e-4 140.248 3.22578e-4 157.963 2.52966e-4 177.256 1.99889e-4 221.596 1.26658e-4 273.19 8.2578e-5 332.419 5.52974e-5 399.559 3.79691e-5 474.768 2.66907e-5 558.086 1.91804e-5 649.43 1.40709e-5 748.599 1.05244e-5 855.281 8.01595e-6 969.063 6.21015e-6 1089.44 4.88852e-6 1356.92 3.12119e-6 1644.31 2.10775e-6 1945.3 1.49496e-6 2253.53 1.10685e-6 2563.04 8.5088e-7 3210.45 5.37006e-7 3801.24 3.80244e-7 4314.63 2.93511e-7 5217.61 1.99053e-7 6309.57 1.34993e-7 7079.45 1.07061e-7 8848.61 6.83231e-8 10906.7 4.48428e-8 13269 3.02168e-8  15946.4 2.08698e-8 18945 1.47515e-8 22266.5 1.06554e-8 25907.4 7.85475e-9 29859.7 5.90164e-9 34110.8 4.51412e-9 38644.4 3.51114e-9 43440.4 2.77424e-9 54095 1.78371e-9 65540.9 1.21194e-9 77526.2 8.64207e-10 89798.2 6.42855e-10 102120 4.96217e-10 127889 3.15426e-10 151399 2.24553e-10 171828 1.74034e-10 207753 1.18743e-10 251189 8.10175e-11 316228 5.58302e-11 398107 3.84733e-11 499996 3.32496e-11</values></XYs1d>
+                      <XYs1d outerDomainValue="63095700"><values>0.1 0.108806 0.316228 0.0994916 1 0.090975 1.77828 0.0762836 3.16228 0.0639647 4.46684 0.0507135 6.30957 0.0402075 8.91252 0.0290865 12.5893 0.0210414 14.9624 0.0167116 19.3866 0.0118286 25.1189 8.37239e-3 31.6228 5.58246e-3 37.5838 4.11915e-3 42.7809 3.27939e-3 51.9547 2.32956e-3 63.0957 1.65483e-3 74.9894 1.16408e-3 88.6454 8.27924e-4 104.242 5.95142e-4 121.963 4.32247e-4 141.998 3.1709e-4 164.541 2.34876e-4 189.787 1.75618e-4 217.931 1.32508e-4 249.171 1.00865e-4 283.698 7.74358e-5 321.703 5.99418e-5 363.368 4.67728e-5 408.871 3.67811e-5 458.378 2.91418e-5 572.002 1.85618e-5 703.98 1.21609e-5 855.239 8.18073e-6 1026.44 5.64129e-6 1217.93 3.98155e-6 1429.79 2.872e-6 1661.76 2.11438e-6 1913.3 1.5867e-6 2183.59 1.21227e-6 2471.57 9.41913e-7 2775.95 7.43483e-7 3451.32 4.77126e-7 4175.77 3.2365e-7 4933.38 2.30456e-7 5708.23 1.71212e-7 6485.43 1.32012e-7 8108.75 8.37536e-8 9587.71 5.95381e-8 10871.4 4.60934e-8  13126.3 3.13982e-8 15848.9 2.1388e-8 19386.5 1.43183e-8 23564.9 9.70643e-9 28469.6 6.66045e-9 34192.6 4.62443e-9 40831.6 3.24762e-9 48490.1 2.30604e-9 57276.5 1.65507e-9 67303.8 1.20024e-9 78688.9 8.79187e-10 91551.6 6.50306e-10 106014 4.85565e-10 122200 3.65882e-10 140233 2.78148e-10 160236 2.13271e-10 182332 1.64889e-10 206638 1.28512e-10 233271 1.00944e-10 262340 7.98898e-11 329371 5.07767e-11 407690 3.32001e-11 497949 2.22919e-11 600635 1.5345e-11 716057 1.08124e-11 844332 7.7872e-12 985385 5.72464e-12 1138950 4.29011e-12 1304590 3.27354e-12 1481690 2.54043e-12 1669490 2.00299e-12 2088150 1.28271e-12 2539750 8.68499e-13 3014340 6.1742e-13 3501820 4.58053e-13 3992610 3.52743e-13 5022760 2.23311e-13 5966330 1.58488e-13 6788600 1.2255e-13 8239300 8.33272e-14 1e7 5.66579e-14 1.1885e7 4.22782e-14 15399300 2.72521e-14 19952600 1.75665e-14 25118900 1.34448e-14 31547900 1.20081e-14</values></XYs1d>
+                      <XYs1d outerDomainValue="1e11"><values>0.1 0.108804 0.316228 0.0994907 1 0.0909742 1.77828 0.076283 3.16228 0.0639642 4.46684 0.0507131 6.30957 0.0402071 8.91252 0.0290862 12.5893 0.0210412 14.9624 0.0167115 19.3866 0.0118285 25.1189 8.37232e-3 31.6228 5.58241e-3 37.5838 4.11911e-3 42.7809 3.27937e-3 51.9547 2.32954e-3 63.0957 1.65482e-3 74.9894 1.1641e-3 88.6454 8.27946e-4 104.242 5.95168e-4 121.963 4.32272e-4 141.998 3.17114e-4 164.541 2.34897e-4 189.787 1.75636e-4 217.931 1.32524e-4 249.171 1.00878e-4 283.698 7.74468e-5 321.703 5.99512e-5 363.368 4.67807e-5 408.871 3.67877e-5 458.378 2.91474e-5 572.002 1.85657e-5 703.98 1.21638e-5 855.239 8.18279e-6 1026.44 5.64281e-6 1217.93 3.9827e-6 1429.79 2.87288e-6 1661.76 2.11506e-6 1913.3 1.58723e-6 2183.59 1.21269e-6 2471.57 9.42251e-7 2775.95 7.43758e-7 3451.32 4.77313e-7 4175.77 3.23783e-7 4933.38 2.30554e-7 5708.23 1.71288e-7 6485.43 1.32072e-7 8108.75 8.37935e-8 9587.71 5.95675e-8 10871.4 4.61167e-8  13126.3 3.14147e-8 15848.9 2.13996e-8 19596.9 1.40041e-8 24150.9 9.22531e-9 29666.3 6.11701e-9 36324.2 4.08212e-9 44335.9 2.74143e-9 53946.4 1.85255e-9 65439.3 1.25957e-9 79141.3 8.61573e-10 95428.6 5.92842e-10 114732 4.10321e-10 137543 2.8563e-10 164423 1.9996e-10 196009 1.40768e-10 233022 9.96422e-11 276276 7.09135e-11 326689 5.07367e-11 385291 3.64912e-11 453235 2.63809e-11 531810 1.91687e-11 622449 1.39979e-11 726748 1.02723e-11 846471 7.57481e-12 983571 5.61232e-12 1140200 4.17781e-12 1318720 3.12433e-12 1521730 2.34713e-12 1752070 1.77117e-12 2012840 1.34243e-12 2307410 1.02189e-12 2639450 7.81212e-13 3012930 5.9973e-13 3432160 4.62313e-13 3901770 3.57835e-13 4426760 2.78079e-13 5012490 2.16952e-13 5664710 1.6992e-13 6389570 1.33593e-13 7193640 1.05427e-13 8083900 8.35086e-14 10171500 5.27776e-14 12706500 3.38372e-14 15763500 2.19975e-14 19424500 1.44943e-14 23780100 9.67569e-15 28928900 6.54111e-15 34977700 4.47646e-15 42040900 3.10003e-15 50240900 2.17161e-15  59706900 1.53826e-15 70574700 1.10143e-15 82985800 7.96929e-16 97086800 5.82468e-16 1.13028e8 4.29912e-16 1.30963e8 3.20339e-16 1.51047e8 2.40897e-16 1.73437e8 1.82777e-16 1.98286e8 1.39881e-16 2.2575e8 1.07951e-16 2.55978e8 8.39866e-17 2.89115e8 6.58568e-17 3.25302e8 5.20346e-17 4.08808e8 3.29662e-17 5.06465e8 2.14899e-17 6.19106e8 1.43884e-17 7.4736e8 9.87831e-18 8.9163e8 6.9432e-18 1.05208e9 4.98892e-18 1.22863e9 3.65954e-18 1.42096e9 2.73689e-18 1.62853e9 2.08436e-18 1.85058e9 1.61466e-18 2.08618e9 1.27093e-18 2.61176e9 8.11326e-19 3.17919e9 5.47817e-19 3.77596e9 3.88504e-19 4.38934e9 2.87614e-19 5.00725e9 2.21079e-19 6.30521e9 1.39505e-19 7.49506e9 9.87691e-20 8.53261e9 7.62333e-20 1.03643e10 5.16928e-20 1.25893e10 3.50522e-20 1.49624e10 2.56082e-20 1.70314e10 2.02362e-20 2.06836e10 1.42151e-20 2.51189e10 9.98558e-21 3.16228e10 7.34095e-21 3.98107e10 5.39674e-21 5e10 4.82335e-21</values></XYs1d></function1ds></XYs2d></energy></uncorrelated></distribution></product>
+          <product pid="e-" label="e-__a">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="7.73" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product>
+          <product pid="Cu{4s1/2}" label="Cu{4s1/2}">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="7.73" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction></reactions>
+  <sums>
+    <crossSectionSums>
+      <crossSectionSum label="total" ENDF_MT="501">
+        <summands>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + Cu [large angle Coulomb scattering]']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + Cu + photon [bremsstrahlung]']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + Cu [excitation]']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{1s1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2s1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p3/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3s1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p3/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d3/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d5/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{4s1/2}']/crossSection"/></summands>
+        <Q>
+          <constant1d label="eval" value="0" domainMin="7.73" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <crossSection>
+          <XYs1d label="eval">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="crossSection" unit="b"/></axes>
+            <values>
+              7.73000000e+00 0.00000000e+00 7.90886997e+00 2.53941000e+06 8.24426850e+00 6.96699000e+06 8.83119611e+00 1.38745000e+07 9.71160238e+00 2.27707000e+07 1.00000000e+01 1.51740000e+09 1.00900000e+01 1.51225000e+09 1.02430000e+01 1.50350000e+09 1.03120000e+01 1.49956000e+09 1.04000000e+01 1.49454000e+09 1.05410000e+01 1.48879000e+09 1.05919987e+01 1.48671000e+09 1.05986395e+01 1.48642000e+09 1.08980000e+01 1.47301000e+09 1.10000000e+01 1.46845000e+09 1.10980000e+01 1.46504000e+09 1.12415361e+01 1.46006000e+09 1.12500000e+01 1.45976000e+09 1.13092695e+01 1.45760000e+09 1.18504910e+01 1.43763000e+09 1.19240000e+01 1.43485000e+09 1.20740000e+01 1.42920000e+09 1.22059306e+01 1.42424000e+09 1.25893000e+01 1.40920000e+09 1.26623729e+01 1.40776000e+09 1.26930000e+01 1.40714000e+09 1.31250000e+01 1.39832000e+09 1.31703252e+01 1.39741000e+09 1.34742547e+01 1.39075000e+09 1.35370000e+01 1.38931000e+09 1.38460000e+01 1.38229000e+09 1.47890381e+01 1.36112000e+09 1.50000000e+01 1.35603000e+09 1.50877226e+01 1.35400000e+09 1.58489000e+01 1.33555000e+09 1.63842287e+01 1.32995000e+09 1.64077510e+01 1.32962000e+09 1.67011905e+01 1.32466000e+09 1.75000000e+01 1.30949000e+09 1.99526000e+01 1.26577000e+09 2.00000000e+01 1.26539000e+09 2.07360000e+01 1.26009000e+09 2.25000000e+01 1.24740000e+09 2.50000000e+01 1.23057000e+09 2.51189000e+01 1.22979000e+09 2.55644115e+01 1.22990000e+09 2.56146898e+01 1.22984000e+09 2.58782966e+01 1.22872000e+09 2.62500000e+01 1.22642000e+09 3.00000000e+01 1.20168000e+09
+              3.16228000e+01 1.18965000e+09 3.20052951e+01 1.18867000e+09 3.50000000e+01 1.17837000e+09 3.98107000e+01 1.15511000e+09 4.00000000e+01 1.15483000e+09 4.02065456e+01 1.15426000e+09 4.04228712e+01 1.15332000e+09 4.29982000e+01 1.13952000e+09 5.00000000e+01 1.10201000e+09 5.01187000e+01 1.10128000e+09 5.03219881e+01 1.10051000e+09 6.00000000e+01 1.06049000e+09 6.30957000e+01 1.04556000e+09 6.33331442e+01 1.04481000e+09 6.34745340e+01 1.04425000e+09 7.78600000e+01 9.80334622e+08 7.89300000e+01 9.75067292e+08 7.94328000e+01 9.72596369e+08 8.00000000e+01 9.70472324e+08 8.05000000e+01 9.68659875e+08 8.17190000e+01 9.64264804e+08 8.20000000e+01 9.63250999e+08 8.25000000e+01 9.61456940e+08 8.27590483e+01 9.60528179e+08 8.40040000e+01 9.56060447e+08 8.44324534e+01 9.54527378e+08 8.68750000e+01 9.45784179e+08 8.75873579e+01 9.43241759e+08 8.80030000e+01 9.41756344e+08 8.86892219e+01 9.39308657e+08 8.91610000e+01 9.37624975e+08 9.34380000e+01 9.22361187e+08 9.40020000e+01 9.20358998e+08 9.48298721e+01 9.17412100e+08 9.50744745e+01 9.16540286e+08 1.00000000e+02 8.98975455e+08 1.00009019e+02 8.98949863e+08 1.01459627e+02 8.94588585e+08 1.02072386e+02 8.92745018e+08 1.06250000e+02 8.80156193e+08 1.12500000e+02 8.61537440e+08 1.14378824e+02 8.55986785e+08 1.14978850e+02 8.54212763e+08 1.17190000e+02 8.47665117e+08 1.21260000e+02 8.35693619e+08 1.23060000e+02 8.30336666e+08 1.25000000e+02 8.24454728e+08 1.25893000e+02 8.21752015e+08 1.26420000e+02 8.20458797e+08 1.27000000e+02 8.19047896e+08
+              1.27299019e+02 8.18322324e+08 1.27886311e+02 8.16895085e+08 1.31250000e+02 8.08694463e+08 1.31608632e+02 8.07824292e+08 1.32320000e+02 8.06097929e+08 1.33590000e+02 8.03027833e+08 1.39714772e+02 7.88336574e+08 1.41160000e+02 7.84869167e+08 1.50000000e+02 7.63938250e+08 1.51874479e+02 7.59661122e+08 1.58489000e+02 7.44564927e+08 1.62500000e+02 7.37032772e+08 1.64033191e+02 7.34205527e+08 1.75000000e+02 7.13976310e+08 1.81250000e+02 7.02581251e+08 1.84444269e+02 6.96832968e+08 1.84884000e+02 6.96041397e+08 1.99526000e+02 6.69683945e+08 2.00000000e+02 6.69014900e+08 2.00779569e+02 6.67958921e+08 2.01294442e+02 6.67259551e+08 2.04854353e+02 6.62395176e+08 2.25000000e+02 6.34842277e+08 2.50000000e+02 6.01435251e+08 2.51189000e+02 5.99877978e+08 2.62500000e+02 5.87331373e+08 3.00000000e+02 5.46179499e+08 3.16228000e+02 5.28686894e+08 3.17239950e+02 5.27941952e+08 3.17640045e+02 5.27646689e+08 3.20942548e+02 5.25196099e+08 3.50000000e+02 5.03592858e+08 3.83376000e+02 4.79110879e+08 3.98107000e+02 4.68305374e+08 3.98949429e+02 4.67770168e+08 3.99268993e+02 4.67566826e+08 4.00000000e+02 4.67100235e+08 4.50000000e+02 4.36671750e+08 5.00000000e+02 4.06979266e+08 5.01187000e+02 4.06292851e+08 5.04928740e+02 4.04760057e+08 5.50000000e+02 3.86269159e+08 6.00000000e+02 3.66160101e+08 6.30957000e+02 3.53938210e+08 6.31317337e+02 3.53832515e+08 6.31407889e+02 3.53805921e+08 6.34016203e+02 3.53038462e+08 6.62474000e+02 3.44656619e+08 7.00000000e+02 3.33603859e+08 7.94328000e+02 3.06757919e+08
+              8.00000000e+02 3.05338855e+08 8.15479000e+02 3.01607695e+08 9.00000000e+02 2.84424546e+08 9.37490000e+02 2.76927434e+08 9.38000000e+02 2.76825998e+08 9.53120000e+02 2.73819902e+08 9.58000000e+02 2.72851929e+08 9.58530000e+02 2.72746821e+08 9.69253111e+02 2.70623992e+08 9.76560000e+02 2.69177479e+08 1.00000000e+03 2.64555172e+08 1.06250000e+03 2.56312471e+08 1.06420652e+03 2.56089487e+08 1.06523231e+03 2.55955447e+08 1.08610000e+03 2.53228474e+08 1.10300000e+03 2.51031379e+08 1.11720000e+03 2.49185491e+08 1.12500000e+03 2.48175180e+08 1.13780000e+03 2.46508139e+08 1.16131249e+03 2.43466875e+08 1.16232644e+03 2.43335719e+08 1.18921000e+03 2.39858040e+08 1.18926060e+03 2.39851494e+08 1.21290000e+03 2.36793467e+08 1.22840000e+03 2.34802706e+08 1.25000000e+03 2.32037350e+08 1.25841846e+03 2.30972799e+08 1.25893000e+03 2.30908110e+08 1.25942057e+03 2.30854378e+08 1.27553119e+03 2.29089622e+08 1.31250000e+03 2.25040015e+08 1.35640000e+03 2.20268060e+08 1.36420000e+03 2.19422757e+08 1.42140847e+03 2.13277685e+08 1.42239072e+03 2.13172171e+08 1.43822941e+03 2.11470589e+08 1.50000000e+03 2.04834361e+08 1.54221000e+03 2.00377028e+08 1.58439848e+03 1.95921978e+08 1.58489000e+03 1.95870071e+08 1.58536087e+03 1.95839737e+08 1.60092763e+03 1.94836716e+08 1.62500000e+03 1.93285612e+08 1.75000000e+03 1.85356452e+08 1.80576288e+03 1.81870259e+08 1.81250000e+03 1.81449057e+08 1.99479369e+03 1.70171915e+08 1.99526000e+03 1.70143065e+08 1.99570606e+03 1.70119276e+08 2.00000000e+03 1.69890225e+08
+              2.01058814e+03 1.69337447e+08 2.25000000e+03 1.56837642e+08 2.50000000e+03 1.43961304e+08 2.51145543e+03 1.43377987e+08 2.51189000e+03 1.43355857e+08 2.51230484e+03 1.43343222e+08 2.51487000e+03 1.43265073e+08 2.62500000e+03 1.39909916e+08 2.98627000e+03 1.28992691e+08 3.00000000e+03 1.28577786e+08 3.16188539e+03 1.23793874e+08 3.16228000e+03 1.23782212e+08 3.16265552e+03 1.23772850e+08 3.17559046e+03 1.23450301e+08 3.50000000e+03 1.15359943e+08 3.86411000e+03 1.06420890e+08 3.98107000e+03 1.03549482e+08 3.99296483e+03 1.03373589e+08 4.00000000e+03 1.03269551e+08 4.50000000e+03 9.60224942e+07 4.68802000e+03 9.33373780e+07 5.00000000e+03 8.88820060e+07 5.01158902e+03 8.87186987e+07 5.01187000e+03 8.87147391e+07 5.01213372e+03 8.87116763e+07 5.02198267e+03 8.85972831e+07 5.50000000e+03 8.30449183e+07 5.94604000e+03 7.79069545e+07 6.00000000e+03 7.72853885e+07 6.30957000e+03 7.37529489e+07 7.00000000e+03 6.87684246e+07 7.46454000e+03 6.54709574e+07 7.94328000e+03 6.20727108e+07 8.00000000e+03 6.17378958e+07 8.15479000e+03 6.08356075e+07 8.94320000e+03 5.69956258e+07 8.98600000e+03 5.67879899e+07 9.00000000e+03 5.67200726e+07 9.07126000e+03 5.63745449e+07 9.07530000e+03 5.63549558e+07 9.25005951e+03 5.55088124e+07 9.30650000e+03 5.52355409e+07 9.64614878e+03 5.35951028e+07 9.65320000e+03 5.35610468e+07 1.00000000e+04 5.18904324e+07 1.00422380e+04 5.17603047e+07 1.06250000e+04 4.99649155e+07 1.06891938e+04 4.97678481e+07 1.09051000e+04 4.91050395e+07 1.11720000e+04 4.82856912e+07
+              1.12500000e+04 4.80468093e+07 1.16596775e+04 4.67962314e+07 1.21290000e+04 4.53635779e+07 1.25000000e+04 4.42352018e+07 1.25893000e+04 4.39645885e+07 1.26301612e+04 4.38658878e+07 1.31250000e+04 4.26705943e+07 1.35426000e+04 4.16646943e+07 1.35650000e+04 4.16107384e+07 1.42590945e+04 3.99454557e+07 1.50000000e+04 3.81678573e+07 1.58489000e+04 3.61446574e+07 1.58880279e+04 3.60901801e+07 1.64576000e+04 3.52971665e+07 1.75000000e+04 3.38458491e+07 1.99526000e+04 3.04607112e+07 1.99895457e+04 3.04211624e+07 2.00000000e+04 3.04099714e+07 2.24271000e+04 2.78298531e+07 2.25000000e+04 2.77523576e+07 2.50000000e+04 2.51054053e+07 2.51189000e+04 2.49798527e+07 2.62500000e+04 2.42893827e+07 2.74045000e+04 2.35870737e+07 3.00000000e+04 2.20081877e+07 3.16228000e+04 2.10256392e+07 3.36970000e+04 2.00667134e+07 3.50000000e+04 1.94643274e+07 3.87970000e+04 1.77159866e+07 3.98107000e+04 1.72492284e+07 3.98370862e+04 1.72422483e+07 4.00000000e+04 1.71991514e+07 4.50000000e+04 1.58816518e+07 4.59458000e+04 1.56330030e+07 5.00000000e+04 1.45671716e+07 5.01187000e+04 1.45360291e+07 5.45254000e+04 1.36704415e+07 5.50000000e+04 1.35772188e+07 6.00000000e+04 1.25968077e+07 6.30957000e+04 1.19906910e+07 6.34525000e+04 1.19489867e+07 7.00000000e+04 1.11836957e+07 7.46454000e+04 1.06420184e+07 7.94328000e+04 1.00837875e+07 8.00000000e+04 1.00341632e+07 8.15479000e+04 9.89897227e+06 8.63976000e+04 9.55770230e+06 9.00000000e+04 9.30420640e+06 1.00000000e+05 8.60128485e+06 1.18921000e+05 7.63049131e+06
+              1.25000000e+05 7.31859463e+06 1.25893000e+05 7.27284171e+06 1.42189000e+05 6.80834882e+06 1.50000000e+05 6.58571078e+06 1.58489000e+05 6.34403497e+06 1.64576000e+05 6.21695297e+06 1.75000000e+05 5.99932717e+06 1.85901000e+05 5.77195638e+06 1.99526000e+05 5.48777131e+06 2.00000000e+05 5.48216465e+06 2.11788000e+05 5.34294702e+06 2.50000000e+05 4.89166512e+06 2.51189000e+05 4.87763774e+06 2.51487000e+05 4.87501730e+06 2.98627000e+05 4.46050248e+06 3.00000000e+05 4.44842946e+06 3.16228000e+05 4.30582080e+06 3.50000000e+05 4.12768927e+06 3.56512000e+05 4.09336684e+06 3.98107000e+05 3.87413740e+06 4.00000000e+05 3.86773263e+06 4.22204000e+05 3.79266340e+06 4.50000000e+05 3.69868960e+06 5.00000000e+05 3.52968863e+06 5.01187000e+05 3.52567864e+06 5.50000000e+05 3.41580773e+06 5.94604000e+05 3.31545065e+06 6.00000000e+05 3.30331001e+06 6.30957000e+05 3.23367969e+06 7.00000000e+05 3.13007480e+06 7.07107000e+05 3.11941271e+06 7.94328000e+05 2.98856321e+06 8.00000000e+05 2.98232968e+06 8.78126000e+05 2.89653913e+06 9.00000000e+05 2.87251944e+06 1.00000000e+06 2.76272544e+06 1.09051000e+06 2.70570737e+06 1.25000000e+06 2.60523551e+06 1.25893000e+06 2.59961081e+06 1.41421000e+06 2.53014613e+06 1.50000000e+06 2.49176821e+06 1.58489000e+06 2.45381396e+06 1.75000000e+06 2.40065503e+06 1.99526000e+06 2.32174067e+06 2.00000000e+06 2.32094196e+06 2.50000000e+06 2.23670542e+06 2.51189000e+06 2.23470238e+06 3.00000000e+06 2.18039006e+06 3.16228000e+06 2.16235005e+06 3.50000000e+06 2.13801260e+06
+              3.98107000e+06 2.10334614e+06 4.00000000e+06 2.10246305e+06 4.50000000e+06 2.07914743e+06 5.00000000e+06 2.05583794e+06 5.01187000e+06 2.05528454e+06 5.50000000e+06 2.04097491e+06 6.00000000e+06 2.02631699e+06 6.30957000e+06 2.01725248e+06 7.00000000e+06 2.00539532e+06 7.94328000e+06 1.98919418e+06 8.00000000e+06 1.98866004e+06 8.94427000e+06 1.97976670e+06 9.00000000e+06 1.97924178e+06 1.00000000e+07 1.96982189e+06 1.25000000e+07 1.96077555e+06 1.25893000e+07 1.96045243e+06 1.50000000e+07 1.95795577e+06 1.58489000e+07 1.95707615e+06 1.75000000e+07 1.95656277e+06 1.99526000e+07 1.95580028e+06 2.00000000e+07 1.95579900e+06 2.44949000e+07 1.95567796e+06 2.50000000e+07 1.95566424e+06 2.51189000e+07 1.95566103e+06 3.00000000e+07 1.95555246e+06 3.16228000e+07 1.95552427e+06 3.50000000e+07 1.95548254e+06 3.98107000e+07 1.95542860e+06 4.00000000e+07 1.95542661e+06 4.50000000e+07 1.95537351e+06 5.00000000e+07 1.95531963e+06 5.01187000e+07 1.95531834e+06 5.47723000e+07 1.95528272e+06 5.50000000e+07 1.95528096e+06 6.00000000e+07 1.95524188e+06 6.30957000e+07 1.95521744e+06 7.00000000e+07 1.95517496e+06 7.94328000e+07 1.95511620e+06 8.00000000e+07 1.95511345e+06 8.94427000e+07 1.95506696e+06 9.00000000e+07 1.95506418e+06 1.00000000e+08 1.95501388e+06 1.25000000e+08 1.95490255e+06 1.25893000e+08 1.95489929e+06 1.41421000e+08 1.95485740e+06 1.50000000e+08 1.95483392e+06 1.58489000e+08 1.95480883e+06 1.75000000e+08 1.95477657e+06 1.99526000e+08 1.95472576e+06 2.00000000e+08 1.95472504e+06
+              2.50000000e+08 1.95463939e+06 2.51189000e+08 1.95463722e+06 3.00000000e+08 1.95456195e+06 3.16228000e+08 1.95453528e+06 3.50000000e+08 1.95449634e+06 3.97635000e+08 1.95443880e+06 3.98107000e+08 1.95443823e+06 4.00000000e+08 1.95443627e+06 4.50000000e+08 1.95438209e+06 5.00000000e+08 1.95432597e+06 5.01187000e+08 1.95432460e+06 5.50000000e+08 1.95428373e+06 5.94604000e+08 1.95424516e+06 6.00000000e+08 1.95424048e+06 6.30957000e+08 1.95421269e+06 7.00000000e+08 1.95415853e+06 7.94328000e+08 1.95408179e+06 8.00000000e+08 1.95407830e+06 9.00000000e+08 1.95401456e+06 1.00000000e+09 1.95394886e+06 1.25000000e+09 1.95379921e+06 1.25893000e+09 1.95379366e+06 1.50000000e+09 1.95367409e+06 1.58489000e+09 1.95363054e+06 1.68179000e+09 1.95358755e+06 1.75000000e+09 1.95355715e+06 1.99526000e+09 1.95344497e+06 2.00000000e+09 1.95344297e+06 2.50000000e+09 1.95322576e+06 2.51189000e+09 1.95322045e+06 2.51487000e+09 1.95321927e+06 3.00000000e+09 1.95302515e+06 3.16228000e+09 1.95295890e+06 3.50000000e+09 1.95283795e+06 3.98107000e+09 1.95266287e+06 4.00000000e+09 1.95265632e+06 4.50000000e+09 1.95248117e+06 5.00000000e+09 1.95230428e+06 5.01187000e+09 1.95230002e+06 5.50000000e+09 1.95214032e+06 6.00000000e+09 1.95197556e+06 6.30957000e+09 1.95187272e+06 7.00000000e+09 1.95165537e+06 7.94328000e+09 1.95135550e+06 8.00000000e+09 1.95133826e+06 9.00000000e+09 1.95103206e+06 1.00000000e+10 1.95072413e+06 1.25000000e+10 1.94996481e+06 1.25890000e+10 1.94993757e+06 1.50000000e+10 1.94922267e+06
+              1.58490000e+10 1.94896955e+06 1.75000000e+10 1.94849383e+06 1.99530000e+10 1.94778417e+06 2.00000000e+10 1.94777083e+06 2.07360000e+10 1.94756098e+06 2.50000000e+10 1.94634363e+06 2.51190000e+10 1.94630952e+06 3.00000000e+10 1.94492439e+06 3.16230000e+10 1.94446249e+06 3.50000000e+10 1.94351423e+06 3.98110000e+10 1.94216049e+06 4.00000000e+10 1.94210807e+06 4.29980000e+10 1.94127514e+06 4.50000000e+10 1.94071856e+06 5.00000000e+10 1.93932674e+06 5.01190000e+10 1.93929357e+06 5.50000000e+10 1.93794388e+06 6.00000000e+10 1.93656012e+06 6.30960000e+10 1.93570240e+06 7.00000000e+10 1.93379751e+06 7.94330000e+10 1.93119227e+06 8.00000000e+10 1.93103681e+06 8.91610000e+10 1.92852285e+06 9.00000000e+10 1.92829257e+06 1.00000000e+11 1.92554605e+06</values></XYs1d></crossSection></crossSectionSum>
+      <crossSectionSum label="photoelectric absorption" ENDF_MT="522">
+        <summands>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{1s1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2s1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p3/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3s1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p1/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p3/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d3/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d5/2}']/crossSection"/>
+          <add href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{4s1/2}']/crossSection"/></summands>
+        <Q>
+          <constant1d label="eval" value="0" domainMin="7.73" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <crossSection>
+          <XYs1d label="eval">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="crossSection" unit="b"/></axes>
+            <values>
+              7.73000000e+00 0.00000000e+00 7.90886997e+00 2.53941000e+06 8.24426850e+00 6.96699000e+06 8.83119611e+00 1.38745000e+07 9.71160238e+00 2.27707000e+07 1.04000000e+01 2.86860651e+07 1.05919987e+01 3.34661517e+07 1.05986395e+01 3.36113826e+07 1.10000000e+01 4.19436911e+07 1.12415361e+01 4.93695339e+07 1.13092695e+01 5.13363983e+07 1.18504910e+01 6.67182265e+07 1.22059306e+01 7.65157193e+07 1.26623729e+01 8.83559736e+07 1.31703252e+01 1.01089474e+08 1.34742547e+01 1.08191432e+08 1.47890381e+01 1.37546800e+08 1.50877226e+01 1.43720914e+08 1.63842287e+01 1.69113919e+08 1.64077510e+01 1.69497500e+08 1.67011905e+01 1.73349548e+08 2.55644115e+01 2.71404639e+08 2.56146898e+01 2.71886889e+08 2.58782966e+01 2.73619069e+08 3.20052951e+01 3.02034528e+08 4.02065456e+01 3.33032933e+08 4.04228712e+01 3.33510527e+08 5.03219881e+01 3.45340892e+08 6.33331442e+01 3.56615778e+08 6.34745340e+01 3.56624147e+08 8.00000000e+01 3.49773180e+08 8.20000000e+01 3.49031407e+08 8.27590483e+01 3.48764862e+08 8.44324534e+01 3.48171549e+08 8.75873579e+01 3.47048561e+08 8.86892219e+01 3.46651103e+08 9.48298721e+01 3.44424424e+08 9.50744745e+01 3.44334602e+08 1.00009019e+02 3.42513313e+08 1.01459627e+02 3.41732925e+08 1.02072386e+02 3.41401980e+08 1.14378824e+02 3.34696736e+08 1.14978850e+02 3.34368457e+08 1.25893000e+02 3.28346820e+08 1.27000000e+02 3.27734350e+08 1.27299019e+02 3.27570729e+08 1.27886311e+02 3.27247197e+08 1.31608632e+02 3.25167653e+08 1.39714772e+02 3.20635280e+08 1.51874479e+02 3.13829773e+08
+              1.64033191e+02 3.07018600e+08 1.84444269e+02 2.95573137e+08 1.99526000e+02 2.87107615e+08 2.00779569e+02 2.86534208e+08 2.01294442e+02 2.86296755e+08 2.04854353e+02 2.84626147e+08 3.16228000e+02 2.32220718e+08 3.17239950e+02 2.31944375e+08 3.17640045e+02 2.31834383e+08 3.20942548e+02 2.30913068e+08 3.98949429e+02 2.09039879e+08 3.99268993e+02 2.08949954e+08 5.01187000e+02 1.80069010e+08 5.04928740e+02 1.79380643e+08 6.30957000e+02 1.56118180e+08 6.31317337e+02 1.56070649e+08 6.31407889e+02 1.56058672e+08 6.34016203e+02 1.55712239e+08 8.15479000e+02 1.31556063e+08 9.38000000e+02 1.19870873e+08 9.58000000e+02 1.17964992e+08 9.69253111e+02 1.16893070e+08 1.00000000e+03 1.13964310e+08 1.06420652e+03 1.10309696e+08 1.06523231e+03 1.10251304e+08 1.10300000e+03 1.08101083e+08 1.16131249e+03 1.04781977e+08 1.16232644e+03 1.04724259e+08 1.18926060e+03 1.03190807e+08 1.25841846e+03 9.92533514e+07 1.25893000e+03 9.92242245e+07 1.25942057e+03 9.91962816e+07 1.27553119e+03 9.82784410e+07 1.42140847e+03 8.99674629e+07 1.42239072e+03 8.99114965e+07 1.43822941e+03 8.90088663e+07 1.58439848e+03 8.06786273e+07 1.58489000e+03 8.06506121e+07 1.58536087e+03 8.06378161e+07 1.60092763e+03 8.02145730e+07 1.80576288e+03 7.46450173e+07 1.99479369e+03 6.95049158e+07 1.99526000e+03 6.94922329e+07 1.99570606e+03 6.94803498e+07 2.01058814e+03 6.90836922e+07 2.51145543e+03 5.57322762e+07 2.51189000e+03 5.57206904e+07 2.51230484e+03 5.57156067e+07 3.16188539e+03 4.77501224e+07 3.16228000e+03 4.77452824e+07
+              3.16265552e+03 4.77407767e+07 3.17559046e+03 4.75855039e+07 3.98107000e+03 3.79144061e+07 3.99296483e+03 3.78502478e+07 5.01158902e+03 3.23550295e+07 5.01187000e+03 3.23535135e+07 5.01213372e+03 3.23521216e+07 5.02198267e+03 3.23001274e+07 6.30957000e+03 2.55019221e+07 8.15479000e+03 2.04097523e+07 8.98600000e+03 1.89126757e+07 9.25005951e+03 1.84371019e+07 9.64614878e+03 1.77237394e+07 1.00000000e+04 1.70864463e+07 1.00422380e+04 1.70456470e+07 1.06891938e+04 1.64207234e+07 1.16596775e+04 1.54832820e+07 1.25893000e+04 1.45853030e+07 1.26301612e+04 1.45458511e+07 1.42590945e+04 1.29730862e+07 1.58489000e+04 1.14380873e+07 1.58880279e+04 1.14222660e+07 1.99526000e+04 9.77872345e+06 1.99895457e+04 9.76379433e+06 2.51189000e+04 7.69105042e+06 3.16228000e+04 6.59896751e+06 3.98107000e+04 5.22542853e+06 3.98370862e+04 5.22360308e+06 5.01187000e+04 4.51226863e+06 6.30957000e+04 3.61531903e+06 8.15479000e+04 2.97873631e+06 1.00000000e+05 2.65527013e+06 1.25893000e+05 2.20138536e+06 1.99526000e+05 1.66988105e+06 2.51189000e+05 1.52350779e+06 3.16228000e+05 1.33944673e+06 3.98107000e+05 1.23607059e+06 5.01187000e+05 1.16591598e+06 6.30957000e+05 1.10873681e+06 1.00000000e+06 1.00762786e+06 1.25893000e+06 9.88940621e+05 1.99526000e+06 9.36939841e+05 6.30957000e+06 9.38176637e+05 1.58489000e+07 9.40546499e+05 3.98107000e+07 9.40580912e+05 1.00000000e+08 9.40602464e+05 1.00000000e+11 9.13536055e+05</values></XYs1d></crossSection></crossSectionSum></crossSectionSums></sums>
+  <incompleteReactions>
+    <reaction label="e- + Cu [large angle electro-atomic scattering]" ENDF_MT="525">
+      <crossSection>
+        <XYs1d label="eval">
+          <axes>
+            <axis index="1" label="energy_in" unit="eV"/>
+            <axis index="0" label="crossSection" unit="b"/></axes>
+          <values>
+            1.00000000e+01 1.49211000e+09 1.25893000e+01 1.32113000e+09 1.58489000e+01 1.16975000e+09 1.99526000e+01 1.03571000e+09 2.51189000e+01 9.17028000e+08 3.16228000e+01 8.11947000e+08 3.98107000e+01 7.19195000e+08 5.01187000e+01 6.37039000e+08 6.30957000e+01 5.64268000e+08 7.94328000e+01 4.99809000e+08 1.00000000e+02 4.42714000e+08 1.25893000e+02 3.92455000e+08 1.58489000e+02 3.47901000e+08 1.99526000e+02 3.08405000e+08 2.51189000e+02 2.73393000e+08 3.16228000e+02 2.42356000e+08 3.98107000e+02 2.15100000e+08 5.01187000e+02 1.90910000e+08 6.30957000e+02 1.69440000e+08 7.94328000e+02 1.50384000e+08 1.00000000e+03 1.33472000e+08 1.25893000e+03 1.18463000e+08 1.58489000e+03 1.05094000e+08 1.99526000e+03 9.29263000e+07 2.51189000e+03 8.17312000e+07 3.16228000e+03 7.15796000e+07 3.98107000e+03 6.23667000e+07 5.01187000e+03 5.40155000e+07 6.30957000e+03 4.65661000e+07 7.94328000e+03 3.99181000e+07 1.00000000e+04 3.40073000e+07 1.25893000e+04 2.88412000e+07 1.58489000e+04 2.43405000e+07 1.99526000e+04 2.04383000e+07 2.51189000e+04 1.71246000e+07 3.16228000e+04 1.43144000e+07 3.98107000e+04 1.19474000e+07 5.01187000e+04 9.97094000e+06 6.30957000e+04 8.33754000e+06 7.94328000e+04 7.00477000e+06 1.00000000e+05 5.92571000e+06 1.25893000e+05 5.05566000e+06 1.58489000e+05 4.36524000e+06 1.99526000e+05 3.80757000e+06 2.51189000e+05 3.34543000e+06 3.16228000e+05 2.95882000e+06 3.98107000e+05 2.63143000e+06 5.01187000e+05 2.35381000e+06 6.30957000e+05 2.11947000e+06 7.94328000e+05 1.91954000e+06
+            1.00000000e+06 1.75036000e+06 1.25893000e+06 1.60613000e+06 1.58489000e+06 1.48355000e+06 1.99526000e+06 1.38058000e+06 2.51189000e+06 1.29349000e+06 3.16228000e+06 1.21793000e+06 3.98107000e+06 1.07012000e+06 5.01187000e+06 9.21330000e+05 6.30957000e+06 7.75751000e+05 7.94328000e+06 6.37476000e+05 1.00000000e+07 5.08798000e+05 1.25893000e+07 3.93627000e+05 1.58489000e+07 2.93148000e+05 1.99526000e+07 2.09061000e+05 2.51189000e+07 1.44139000e+05 3.16228000e+07 9.66384000e+04 3.98107000e+07 6.36337000e+04 5.01187000e+07 4.13110000e+04 6.30957000e+07 2.65693000e+04 7.94328000e+07 1.69821000e+04 1.00000000e+08 1.08112000e+04 1.25893000e+08 6.86278000e+03 1.58489000e+08 4.34817000e+03 1.99526000e+08 2.75159000e+03 2.51189000e+08 1.73966000e+03 3.16228000e+08 1.09924000e+03 3.98107000e+08 6.94325000e+02 5.01187000e+08 4.38437000e+02 6.30957000e+08 2.76800000e+02 7.94328000e+08 1.74724000e+02 1.00000000e+09 1.10280000e+02 1.25893000e+09 6.95994000e+01 1.58489000e+09 4.39227000e+01 1.99526000e+09 2.77175000e+01 2.51189000e+09 1.74906000e+01 3.16228000e+09 1.10368000e+01 3.98107000e+09 6.96423000e+00 5.01187000e+09 4.39437000e+00 6.30957000e+09 2.77279000e+00 7.94328000e+09 1.74957000e+00 1.00000000e+10 1.10394000e+00 1.25890000e+10 6.96551000e-01 1.58490000e+10 4.39501000e-01 1.99530000e+10 2.77311000e-01 2.51190000e+10 1.74973000e-01 3.16230000e+10 1.10402000e-01 3.98110000e+10 6.96591000e-02 5.01190000e+10 4.39521000e-02 6.30960000e+10 2.77320000e-02 7.94330000e+10 1.74978000e-02
+            1.00000000e+11 1.10404000e-02</values></XYs1d></crossSection>
+      <outputChannel genre="twoBody" process="large angle electro-atomic scattering">
+        <Q>
+          <constant1d label="eval" value="0" domainMin="10" domainMax="1e11">
+            <axes>
+              <axis index="1" label="energy_in" unit="eV"/>
+              <axis index="0" label="Q" unit="eV"/></axes></constant1d></Q>
+        <products>
+          <product pid="e-" label="e-">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <angularTwoBody label="eval" productFrame="centerOfMass">
+                <XYs2d>
+                  <axes>
+                    <axis index="2" label="energy_in" unit="eV"/>
+                    <axis index="1" label="mu" unit=""/>
+                    <axis index="0" label="P(mu|energy_in)" unit=""/></axes>
+                  <function1ds>
+                    <XYs1d outerDomainValue="10"><values>-1 0.5 0.999999 0.5</values></XYs1d>
+                    <XYs1d outerDomainValue="1e3"><values>-1 0.210857 -0.95 0.189075 -0.745 0.122646 -0.54 0.0792873 -0.375 0.0587507 -0.23 0.0518902 -8e-2 0.0553258 0.105 0.0716872 0.325 0.10575 0.495 0.15012 0.6225 0.208882 0.72 0.288759 0.7875 0.39022 0.835 0.526661 0.8675 0.703367 0.8925 0.950243 0.913 1.31044 0.93 1.83394 0.944 2.57314 0.956 3.64275 0.966 5.13029 0.975 7.38993 0.982 10.3987 0.987 14.0237 0.9906001 18.3486 0.9939001 25.256 0.9964001 34.866 0.9984001 48.8101 0.999999 68.4901</values></XYs1d>
+                    <XYs1d outerDomainValue="2e3"><values>-1 0.0527501 -0.95 0.0505463 -0.435 0.0405465 -0.165 0.0417977 0.095 0.0512884 0.29 0.0669739 0.43 0.0896643 0.545 0.124662 0.64 0.175488 0.7225 0.250968 0.7875 0.354107 0.835 0.487545 0.87 0.664003 0.8975 0.917032 0.917 1.23778 0.934 1.73217 0.947 2.39857 0.958 3.37548 0.967 4.75544 0.974 6.55715 0.98 9.10901 0.985 12.6489 0.989 17.386 0.9923001 24.1128 0.9948001 33.2772 0.9966001 45.2814 0.9980001 62.1725 0.9990601 84.77 0.999999 119.747</values></XYs1d>
+                    <XYs1d outerDomainValue="4e3"><values>-1 0.013531 -0.98 0.0134477 -0.485 0.017088 -0.215 0.0208717 9e-2 0.0298647 0.305 0.0406292 0.435 0.0536752 0.535 0.0727703 0.6225 0.102691 0.6975 0.147077 0.76 0.209967 0.81 0.295625 0.85 0.414509 0.88 0.570796 0.903 0.778848 0.922 1.07896 0.937 1.49446 0.949 2.07022 0.959 2.89824 0.967 4.03206 0.974 5.73643 0.979 7.76623 0.984 11.17 0.988 15.904 0.9912001 22.4224 0.9938001 31.6551 0.9957001 43.662 0.9971001 59.7351 0.9981001 80.7661 0.9989001 111.619 0.9994801 151.392 0.999999 213.108</values></XYs1d>
+                    <XYs1d outerDomainValue="8e3"><values>-1 4.09516e-3 -0.93 4.17939e-3 -0.39 6.97787e-3 -0.17 9.46256e-3 0.1 0.0146318 0.295 0.0206227 0.425 0.0280823 0.525 0.0387417 0.6075 0.0541846 0.68 0.0772845 0.7425 0.111114 0.7925 0.157073 0.8325 0.219532 0.865 0.306937 0.89 0.42306 0.911 0.592762 0.928 0.835727 0.941 1.15927 0.952 1.63166 0.961 2.30203 0.968 3.18785 0.974 4.46282 0.979 6.25429 0.983 8.63475 0.986 11.4722 0.989 16.0209 0.9912001 21.3741 0.9935001 30.5678 0.9953001 43.0101 0.9967001 59.9255 0.9977001 81.5128 0.9984001 108.62 0.9989001 142.555 0.9993401 195.267 0.9997001 272.817 0.999999 386.562</values></XYs1d>
+                    <XYs1d outerDomainValue="1.6e4"><values>-1 1.45484e-3 -0.96 1.46676e-3 -0.615 2.13597e-3 -0.37 2.80168e-3 -0.16 3.93668e-3 0.075 6.0201e-3 0.255 8.61271e-3 0.38 0.0118429 0.48 0.0164529 0.565 0.0232051 0.64 0.0332251 0.705 0.0477052 0.76 0.0681777 0.805 0.0963933 0.8425 0.136755 0.8725 0.193254 0.895 0.266444 0.913 0.365392 0.929 0.516903 0.942 0.73369 0.952 1.02156 0.96 1.40748 0.967 1.97378 0.973 2.80341 0.978 3.99447 0.982 5.6174 0.985 7.60511 0.988 10.8972 0.9900001 14.4628 0.9920001 20.1388 0.9938001 28.7155 0.9953001 40.9389 0.9965001 57.5834 0.9975001 81.4825 0.9982001 110.504 0.9987001 146.14 0.9990901 194.983 0.9994001 265.602 0.9996401 365.164 0.9998401 513.931 0.999999 719.406</values></XYs1d>
+                    <XYs1d outerDomainValue="3.2e4"><values>-1 5.34041e-4 -0.98 5.41756e-4 -0.47 9.9414e-4 -0.275 1.34136e-3 -6e-2 2.00489e-3 0.15 3.01647e-3 0.295 4.21195e-3 0.405 5.83609e-3 0.5 8.31111e-3 0.58 0.0118726 0.65 0.0170418 0.7125 0.0247001 0.765 0.0354893 0.8075 0.050196 0.8425 0.0707631 0.87 0.0982581 0.8925 0.136414 0.91 0.186153 0.926 0.263518 0.939 0.373148 0.949 0.516902 0.958 0.737956 0.965 1.03233 0.971 1.45966 0.976 2.06624 0.98 2.88173 0.983 3.86609 0.986 5.46764 0.988 7.16872 0.9900001 9.81723 0.9918001 13.7036 0.9934001 19.4959 0.9947001 27.423 0.9958001 38.641 0.9967001 53.9025 0.9975001 76.7116 0.9981001 105.336 0.9986001 145.013 0.9990001 199.928 0.9992801 267.93 0.9995001 364.132 0.9996701 501.056 0.9998001 690.311 0.9999051 956.991 0.999999 1369.2</values></XYs1d>
+                    <XYs1d outerDomainValue="6.4e4"><values>-1 1.99344e-4 -0.855 2.34907e-4 -0.64 3.12102e-4 -0.35 4.89861e-4 -0.135 7.0205e-4 0.035 9.982e-4 0.185 1.44283e-3 0.325 2.12766e-3 0.44 3.05803e-3 0.535 4.35886e-3 0.61 6.12454e-3 0.6725 8.64706e-3 0.725 0.0122644 0.77 0.0175339 0.8075 0.0249361 0.84 0.0357256 0.8675 0.0511754 0.89 0.07248 0.909 0.102773 0.925 0.146151 0.938 0.2062 0.949 0.293209 0.958 0.416025 0.965 0.578127 0.971 0.812427 0.976 1.14519 0.98 1.59523 0.983 2.1442 0.986 3.05255 0.988 4.03845 0.9900001 5.6161 0.9918001 8.02153 0.9933001 11.4871 0.9945001 16.2319 0.9955001 22.9183 0.9963001 31.8317 0.9970001 44.7846 0.9976001 63.4847 0.9981001 89.8005 0.9985001 124.772 0.9988001 166.429 0.9990601 222.197 0.9993301 317.162 0.9995401 446.601 0.9996901 613.751 0.9997901 819.954 0.9998601 1083.77 0.9999131 1438.43 0.9999601 1997.73 0.999999 2822.27</values></XYs1d>
+                    <XYs1d outerDomainValue="1.28e5"><values>-1 7.63855e-5 -0.755 1.07272e-4 -0.52 1.57815e-4 -0.255 2.43893e-4 -0.075 3.43364e-4 8e-2 4.92233e-4 0.225 7.24314e-4 0.355 1.062e-3 0.465 1.53194e-3 0.555 2.18762e-3 0.6275 3.10599e-3 0.6875 4.4256e-3 0.7375 6.31592e-3 0.78 9.05031e-3 0.815 0.0128273 0.845 0.0182037 0.87 0.0256138 0.8925 0.0368022 0.911 0.0524749 0.926 0.073951 0.939 0.105653 0.949 0.146914 0.958 0.210044 0.965 0.294013 0.971 0.416357 0.976 0.591645 0.98 0.830955 0.983 1.12571 0.986 1.61902 0.988 2.16111 0.9900001 3.04076 0.9916001 4.21273 0.9930001 5.91722 0.9942001 8.38452 0.9952001 11.8741 0.9960001 16.546 0.9967001 23.3723 0.9973001 33.2989 0.9978001 47.4002 0.9982001 66.3569 0.9985001 89.2176 0.9988001 126.338 0.9990001 165.652 0.9991901 222.839 0.9993801 315.76 0.9995401 448.588 0.9996701 633.864 0.9997701 883.715 0.9998401 1198.34 0.9998901 1610.67  0.9999251 2133.12 0.9999551 2940.43 0.9999791 4106.32 0.999999 5799.93</values></XYs1d>
+                    <XYs1d outerDomainValue="2.56e5"><values>-1 2.3277e-5 -0.92 2.67278e-5 -0.63 4.61095e-5 -0.42 6.78455e-5 -0.225 1.01207e-4 -0.035 1.53116e-4 0.125 2.24462e-4 0.255 3.22643e-4 0.365 4.63938e-4 0.46 6.68047e-4 0.545 9.69507e-4 0.62 1.40776e-3 0.685 2.0369e-3 0.74 2.92879e-3 0.785 4.16179e-3 0.8225 5.9153e-3 0.8525 8.31743e-3 0.8775 0.0117471 0.8975 0.0164292 0.913 0.0224485 0.927 0.0314613 0.939 0.0445849 0.949 0.0632739 0.957 0.0884802 0.964 0.125605 0.97 0.180083 0.975 0.258273 0.979 0.364604 0.982 0.494426 0.985 0.708454 0.987 0.938993 0.989 1.30355 0.9908001 1.84921 0.9923001 2.61564 0.9936001 3.7428 0.9947001 5.38081 0.9956001 7.67667 0.9963001 10.6548 0.9969001 14.8386 0.9974001 20.5404 0.9978001 27.8494 0.9982001 39.8815 0.9985001 54.8708 0.9988001 80.2116 0.9990201 111.882 0.9992201 160.317 0.9993801 226.042 0.9995201 323.931 0.9996301 455.268 0.9997201 638.286  0.9997901 884.104 0.9998401 1186.56 0.9998801 1608.05 0.9999121 2217.06 0.9999371 3085.11 0.9999571 4331.42 0.9999731 6064.08 0.9999871 8641.93 0.999999 12309.5</values></XYs1d>
+                    <XYs1d outerDomainValue="1e7"><values>-1 2.29193e-9 -0.9999 1.3121e-9 -0.99 5.09995e-9 -0.94 2.53536e-8 -0.855 6.45543e-8 -0.73 1.35535e-7 -0.58 2.4877e-7 -0.42 4.18736e-7 -0.255 6.77276e-7 -0.1 1.04727e-6 0.045 1.58551e-6 0.18 2.3848e-6 0.3 3.54039e-6 0.405 5.20131e-6 0.495 7.54926e-6 0.575 1.10317e-5 0.6425 1.59842e-5 0.7 2.31087e-5 0.7475 3.3018e-5 0.7875 4.69897e-5 0.8225 6.7677e-5 0.85 9.49713e-5 0.875 1.36807e-4 0.895 1.93667e-4 0.912 2.75114e-4 0.926 3.87928e-4 0.938 5.50679e-4 0.948 7.79851e-4 0.956 1.08502e-3 0.963 1.52814e-3 0.969 2.1679e-3 0.974 3.06914e-3 0.978 4.27031e-3 0.981 5.70699e-3 0.984 8.01839e-3 0.986 0.0104504 0.988 0.0141761 0.9900001 0.0203384 0.9912001 0.0262001 0.9926001 0.0369384 0.9938001 0.0524699 0.9948001 0.0743947 0.9956001 0.103666 0.9963001 0.146275 0.9969001 0.207938 0.9974001 0.295028 0.9978001 0.411351 0.9981001 0.550717 0.9984001 0.775362 0.9986001 1.01153  0.9988001 1.375 0.9990001 1.97705 0.9991201 2.55042 0.9992601 3.60183 0.9993801 5.12396 0.9994801 7.27416 0.9995601 10.1461 0.9996301 14.3276 0.9996901 20.3784 0.9997401 28.9211 0.9997801 40.3235 0.9998101 53.9716 0.9998401 75.942 0.9998601 99.0017 0.9998801 134.424 0.9999001 192.932 0.9999131 254.162 0.9999271 359.496 0.9999391 512.283 0.9999491 728.591 0.9999571 1018.21 0.9999641 1441.04 0.9999701 2054.91 0.9999751 2924.92 0.9999791 4091.19 0.9999821 5493.58 0.9999851 7763.51 0.9999871 10160.2 0.9999891 13866.1 0.9999904 17480.1 0.9999921 24807 0.9999935 34952.4 0.9999947 49570.9 0.9999957 70102.2 0.9999965 97339.2 0.9999972 136672 0.9999978 193018 0.9999983 271609 0.9999987 375044 0.999999 497006</values></XYs1d>
+                    <XYs1d outerDomainValue="2.125e7"><values>-1 8.16002e-10 -0.9999 2.08441e-10 -0.99 2.55182e-9 -0.94 1.50823e-8 -0.85 4.08915e-8 -0.725 8.52554e-8 -0.575 1.56079e-7 -0.415 2.62482e-7 -0.255 4.18555e-7 -0.1 6.47589e-7 0.045 9.80806e-7 0.18 1.47566e-6 0.3 2.19114e-6 0.405 3.21954e-6 0.495 4.67339e-6 0.575 6.82979e-6 0.6425 9.89649e-6 0.7 1.43082e-5 0.7475 2.04446e-5 0.7875 2.90966e-5 0.8225 4.19075e-5 0.85 5.88099e-5 0.875 8.47172e-5 0.895 1.19929e-4 0.912 1.70367e-4 0.926 2.40231e-4 0.938 3.4102e-4 0.948 4.82943e-4 0.956 6.71933e-4 0.963 9.46349e-4 0.969 1.34256e-3 0.974 1.9007e-3 0.978 2.6446e-3 0.981 3.53436e-3 0.984 4.9659e-3 0.986 6.47227e-3 0.988 8.77978e-3 0.9900001 0.0125966 0.9913001 0.0165991 0.9927001 0.0235047 0.9939001 0.033566 0.9949001 0.0478941 0.9957001 0.0672187 0.9964001 0.0956904 0.9970001 0.13751 0.9975001 0.197639 0.9979001 0.279635 0.9982001 0.380096 0.9985001 0.546523 0.9987001 0.726831  0.9989001 1.01396 0.9990101 1.25093 0.9991701 1.77774 0.9993001 2.49687 0.9994101 3.51143 0.9995001 4.88518 0.9995801 6.91761 0.9996501 9.95304 0.9997001 13.538 0.9997501 19.4797 0.9997901 27.5873 0.9998201 37.5255 0.9998501 53.9959 0.9998701 71.8447 0.9998901 100.272 0.9999001 121.277 0.9999131 160.124 0.9999271 227.229 0.9999391 325.102 0.9999491 464.582 0.9999571 652.762 0.9999641 929.999 0.9999701 1337 0.9999751 1921.61 0.9999791 2717.57 0.9999821 3690.86 0.9999851 5298.9 0.9999871 7035.45 0.9999891 9790.08 0.9999908 13636.8 0.9999923 19282.1 0.9999936 27583 0.9999947 39645.2 0.9999956 56553.4 0.9999963 78491.3 0.9999969 109322 0.9999974 151364 0.9999978 205298 0.9999982 294181 0.9999985 405071 0.9999988 592898 0.999999 801445</values></XYs1d>
+                    <XYs1d outerDomainValue="3.25e7"><values>-1 6.37253e-10 -0.9999 9.35061e-11 -0.99 2.18993e-9 -0.94 1.33999e-8 -0.85 3.64896e-8 -0.725 7.61796e-8 -0.575 1.39542e-7 -0.415 2.34739e-7 -0.255 3.74377e-7 -0.1 5.79295e-7 0.045 8.7743e-7 0.18 1.32019e-6 0.3 1.96036e-6 0.405 2.88051e-6 0.495 4.18134e-6 0.575 6.11079e-6 0.6425 8.85475e-6 0.7 1.28022e-5 0.7475 1.82928e-5 0.7875 2.60343e-5 0.8225 3.7497e-5 0.85 5.26207e-5 0.875 7.58017e-5 0.895 1.07308e-4 0.912 1.52439e-4 0.926 2.1495e-4 0.938 3.05133e-4 0.948 4.32122e-4 0.956 6.01225e-4 0.963 8.46765e-4 0.969 1.20128e-3 0.974 1.70069e-3 0.978 2.36632e-3 0.981 3.16246e-3 0.984 4.44337e-3 0.986 5.79127e-3 0.988 7.85601e-3 0.9900001 0.0112713 0.9913001 0.0148527 0.9927001 0.0210319 0.9939001 0.0300348 0.9949001 0.042856 0.9957001 0.0601483 0.9964001 0.0856263 0.9970001 0.123049 0.9975001 0.176858 0.9979001 0.250237 0.9982001 0.340144 0.9985001 0.489092 0.9987001 0.650469  0.9989001 0.907467 0.9990101 1.11957 0.9991701 1.59114 0.9993001 2.23493 0.9994101 3.14327 0.9995001 4.37333 0.9995801 6.19342 0.9996501 8.91218 0.9997001 12.1238 0.9997501 17.4477 0.9997901 24.7144 0.9998201 33.6247 0.9998501 48.3969 0.9998701 64.412 0.9998901 89.9311 0.9999011 111.002 0.9999171 157.87 0.9999301 221.887 0.9999411 312.252 0.9999501 434.673 0.9999581 615.889 0.9999651 886.681 0.9999701 1206.66 0.9999751 1737.27 0.9999791 2461.71 0.9999821 3350.21 0.9999851 4823.62 0.9999871 6421.32 0.9999891 8967.64 0.9999902 11070.5 0.9999918 15748.4 0.9999931 22139.2 0.9999942 31161.7 0.9999951 43386.8 0.9999959 61485.7 0.9999966 88535.1 0.9999971 120502 0.9999976 173518 0.999998 245912 0.9999983 334712 0.9999986 481988 0.9999988 641711 0.999999 896302</values></XYs1d>
+                    <XYs1d outerDomainValue="4.75e7"><values>-1 5.70822e-10 -0.9999 5.3143e-11 -0.99 2.04875e-9 -0.94 1.27197e-8 -0.85 3.46991e-8 -0.725 7.24808e-8 -0.575 1.32798e-7 -0.415 2.23419e-7 -0.255 3.56346e-7 -0.1 5.51418e-7 0.045 8.35228e-7 0.18 1.25672e-6 0.3 1.86613e-6 0.405 2.74209e-6 0.495 3.98043e-6 0.575 5.81721e-6 0.6425 8.42937e-6 0.7 1.21872e-5 0.7475 1.74141e-5 0.7875 2.47838e-5 0.8225 3.5696e-5 0.85 5.00934e-5 0.875 7.21611e-5 0.895 1.02155e-4 0.912 1.45117e-4 0.926 2.04627e-4 0.938 2.90479e-4 0.948 4.11369e-4 0.956 5.72351e-4 0.963 8.061e-4 0.969 1.14359e-3 0.974 1.61902e-3 0.978 2.25268e-3 0.981 3.0106e-3 0.984 4.23e-3 0.986 5.51317e-3 0.988 7.47877e-3 0.9900001 0.0107301 0.9913001 0.0141395 0.9927001 0.0200221 0.9939001 0.0285928 0.9949001 0.0407986 0.9957001 0.0572609 0.9964001 0.0815161 0.9970001 0.117143 0.9975001 0.168371 0.9979001 0.238231 0.9982001 0.323826 0.9985001 0.465634 0.9987001 0.619278  0.9989001 0.863965 0.9990101 1.06591 0.9991701 1.51491 0.9993001 2.12791 0.9994101 2.99283 0.9995001 4.16415 0.9995801 5.89743 0.9996501 8.48668 0.9997001 11.5455 0.9997501 16.6167 0.9997901 23.5392 0.9998201 32.0284 0.9998501 46.1048 0.9998701 61.368 0.9998901 85.6936 0.9999011 105.783 0.9999171 150.478 0.9999301 211.547 0.9999411 297.785 0.9999501 414.668 0.9999581 587.779 0.9999651 846.636 0.9999701 1152.74 0.9999751 1660.8 0.9999791 2355.25 0.9999821 3208.02 0.9999851 4624.3 0.9999871 6162.66 0.9999891 8619.13 0.9999906 11572.4 0.9999921 16351.5 0.9999934 23370.4 0.9999945 33555.1 0.9999954 47806.7 0.9999961 66262.1 0.9999967 92141.1 0.9999972 127338 0.9999976 172359 0.999998 246282 0.9999983 338104 0.9999986 492789 0.9999988 663489 0.999999 941098</values></XYs1d>
+                    <XYs1d outerDomainValue="7.375e7"><values>-1 5.3809e-10 -0.9999 3.35476e-11 -0.99 1.97835e-9 -0.94 1.23776e-8 -0.85 3.37976e-8 -0.725 7.06177e-8 -0.575 1.294e-7 -0.415 2.17715e-7 -0.255 3.4726e-7 -0.1 5.3737e-7 0.045 8.13963e-7 0.18 1.22473e-6 0.3 1.81865e-6 0.405 2.67233e-6 0.495 3.87919e-6 0.575 5.66926e-6 0.6425 8.215e-6 0.7 1.18773e-5 0.7475 1.69713e-5 0.7875 2.41536e-5 0.8225 3.47884e-5 0.85 4.88198e-5 0.875 7.03265e-5 0.895 9.95575e-5 0.912 1.41428e-4 0.926 1.99425e-4 0.938 2.83094e-4 0.948 4.00911e-4 0.956 5.57801e-4 0.963 7.85607e-4 0.969 1.11452e-3 0.974 1.57786e-3 0.978 2.19542e-3 0.981 2.93406e-3 0.984 4.12247e-3 0.986 5.37303e-3 0.988 7.28867e-3 0.9900001 0.0104573 0.9913001 0.0137801 0.9927001 0.0195132 0.9939001 0.0278661 0.9949001 0.0397617 0.9957001 0.0558058 0.9964001 0.0794449 0.9970001 0.114167 0.9975001 0.164094 0.9979001 0.23218 0.9982001 0.315603 0.9985001 0.453812 0.9987001 0.603558  0.9989001 0.842041 0.9990101 1.03887 0.9991701 1.4765 0.9993001 2.07397 0.9994101 2.91701 0.9995001 4.05873 0.9995801 5.74824 0.9996501 8.2722 0.9997001 11.254 0.9997501 16.1978 0.9997901 22.9467 0.9998201 31.2236 0.9998501 44.949 0.9998701 59.8329 0.9998901 83.5565 0.9999011 103.151 0.9999171 146.749 0.9999301 206.33 0.9999411 290.484 0.9999501 404.569 0.9999581 573.585 0.9999651 826.408 0.9999701 1125.5 0.9999751 1622.15 0.9999791 2301.4 0.9999821 3136.04 0.9999851 4523.33 0.9999871 6031.52 0.9999891 8442.27 0.9999901 10229.5 0.9999912 12939.4 0.9999926 18281.3 0.9999938 26013.5 0.9999948 36932.6 0.9999956 51509 0.9999963 72714.6 0.9999969 103367 0.9999974 146581 0.9999978 204159 0.9999981 272943 0.9999984 383397 0.9999986 499009 0.9999988 676050 0.999999 967210</values></XYs1d>
+                    <XYs1d outerDomainValue="1e11"><values>-1 5.15003e-10 -0.9999 2.00556e-11 -0.99 1.92776e-9 -0.94 1.21287e-8 -0.85 3.31401e-8 -0.725 6.92581e-8 -0.575 1.26919e-7 -0.415 2.13551e-7 -0.255 3.40627e-7 -0.1 5.27114e-7 0.045 7.98435e-7 0.18 1.20138e-6 0.3 1.78398e-6 0.405 2.62139e-6 0.495 3.80525e-6 0.575 5.56122e-6 0.6425 8.05847e-6 0.7 1.1651e-5 0.7475 1.66479e-5 0.7875 2.36935e-5 0.8225 3.41257e-5 0.85 4.78898e-5 0.875 6.89867e-5 0.895 9.7661e-5 0.912 1.38734e-4 0.926 1.95626e-4 0.938 2.77701e-4 0.948 3.93274e-4 0.956 5.47175e-4 0.963 7.70642e-4 0.969 1.09329e-3 0.974 1.54781e-3 0.978 2.1536e-3 0.981 2.87818e-3 0.984 4.04395e-3 0.986 5.27069e-3 0.988 7.14985e-3 0.9900001 0.0102582 0.9913001 0.0135177 0.9927001 0.0191416 0.9939001 0.0273355 0.9949001 0.0390046 0.9957001 0.0547432 0.9964001 0.0779323 0.9970001 0.111994 0.9975001 0.16097 0.9979001 0.227761 0.9982001 0.309597 0.9985001 0.445178 0.9987001 0.592078  0.9989001 0.826029 0.9990101 1.01912 0.9991701 1.44844 0.9993001 2.03457 0.9994101 2.86163 0.9995001 3.98172 0.9995801 5.63926 0.9996501 8.11553 0.9997001 11.0411 0.9997501 15.8917 0.9997901 22.5138 0.9998201 30.6355 0.9998501 44.1043 0.9998701 58.7109 0.9998901 81.9941 0.9999011 101.226 0.9999171 144.022 0.9999301 202.514 0.9999411 285.141 0.9999501 397.176 0.9999581 563.187 0.9999651 811.58 0.9999701 1105.51 0.9999751 1593.76 0.9999791 2261.82 0.9999821 3083.08 0.9999851 4448.91 0.9999871 5934.71 0.9999891 8311.43 0.9999901 10074.7 0.9999917 14331.7 0.999993 20147.4 0.9999941 28357.8 0.999995 39482.3 0.9999958 55951.5 0.9999965 80564.4 0.999997 109651 0.9999975 157888 0.9999979 223752 0.9999982 304538 0.9999985 438514 0.9999987 583801 0.9999989 815362 0.999999 986568</values></XYs1d></function1ds></XYs2d></angularTwoBody></distribution></product>
+          <product pid="Cu" label="Cu">
+            <multiplicity>
+              <constant1d label="eval" value="1" domainMin="10" domainMax="1e11">
+                <axes>
+                  <axis index="1" label="energy_in" unit="eV"/>
+                  <axis index="0" label="multiplicity" unit=""/></axes></constant1d></multiplicity>
+            <distribution>
+              <unspecified label="eval" productFrame="lab"></unspecified></distribution></product></products></outputChannel></reaction></incompleteReactions>
+  <applicationData>
+    <institution label="LLNL">
+      <ENDFconversionFlags>
+        <conversion flags="MF6" href="/reactionSuite/reactions/reaction[@label='e- + Cu + photon [bremsstrahlung]']/outputChannel/products/product[@label='photon']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/incompleteReactions/reaction[@label='e- + Cu [large angle electro-atomic scattering]']/outputChannel/products/product[@label='Cu']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + Cu [large angle Coulomb scattering]']/outputChannel/products/product[@label='Cu']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + Cu + photon [bremsstrahlung]']/outputChannel/products/product[@label='Cu']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + Cu [excitation]']/outputChannel/products/product[@label='Cu']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{1s1/2}']/outputChannel/products/product[@label='Cu{1s1/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2s1/2}']/outputChannel/products/product[@label='Cu{2s1/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p1/2}']/outputChannel/products/product[@label='Cu{2p1/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p3/2}']/outputChannel/products/product[@label='Cu{2p3/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3s1/2}']/outputChannel/products/product[@label='Cu{3s1/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p1/2}']/outputChannel/products/product[@label='Cu{3p1/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p3/2}']/outputChannel/products/product[@label='Cu{3p3/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d3/2}']/outputChannel/products/product[@label='Cu{3d3/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d5/2}']/outputChannel/products/product[@label='Cu{3d5/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{4s1/2}']/outputChannel/products/product[@label='Cu{4s1/2}']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + Cu [large angle Coulomb scattering]']/outputChannel/products/product[@label='e-']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + Cu + photon [bremsstrahlung]']/outputChannel/products/product[@label='e-']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + Cu [excitation]']/outputChannel/products/product[@label='e-']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{1s1/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2s1/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p1/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{2p3/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3s1/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p1/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3p3/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d3/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{3d5/2}']/outputChannel/products/product[@label='e-__a']" />
+        <conversion flags="implicitProduct" href="/reactionSuite/reactions/reaction[@label='e- + e- + Cu{4s1/2}']/outputChannel/products/product[@label='e-__a']" /></ENDFconversionFlags></institution></applicationData>
+</reactionSuite>

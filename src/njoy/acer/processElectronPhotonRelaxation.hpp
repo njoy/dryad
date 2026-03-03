@@ -2,11 +2,14 @@
 #define NJOY_ACER_PROCESSELECTRONPHOTONRELAXATION
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
+#include "tools/overload.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
+#include "njoy/dryad/external/ComptonProfiles.hpp"
 #include "njoy/dryad/format/ace.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
@@ -20,12 +23,21 @@ namespace acer {
    *  @param[in] electroatomic   the electroatomic projectile-target data
    *  @param[in] relaxation      the atomic relaxation data
    *  @param[in] filename        the filename for the ace file
+   *  @param[in] number          the extension number (above 0, less than 100)
+   *  @param[in] date            the processing date
+   *  @param[in] title           the ace file title
+   *
+   *  number, date and title are for the header and are temporary so we can
+   *  produce the eprdata files
    */
   inline void
   processElectronPhotonRelaxation( const dryad::ProjectileTarget& photoatomic,
                                    const dryad::ProjectileTarget& electroatomic,
                                    const dryad::AtomicRelaxation& relaxation,
-                                   const std::string& filename ) {
+                                   const std::string& filename,
+                                   int number,
+                                   std::string date,
+                                   std::string title ) {
 
     if ( photoatomic.interactionType() != dryad::InteractionType::Atomic ||
          photoatomic.projectileIdentifier() != dryad::id::ParticleID::photon() ) {
@@ -44,14 +56,39 @@ namespace acer {
     }
 
     //! @todo verify if Compton profiles are present
+    //! @todo verify if the number of Compton profiles is the same as the number of shells in
+    //!       the relaxation data (relativistic only)
     //! @todo verify unionisation of the photoatomic and electroatomic data
     //! @todo verify if binding energies of shells appear in total ionisation as jumps
+    //! @todo verify that average energies have been calculated
     //! @todo verify normalisation?
 
-    bool relativistic = true;
+    // a useful lambda
+    auto hasRelativisticSubshells = tools::overload{
+
+      [] ( const dryad::IncoherentDistributionData& incoherent ) -> bool {
+
+        return std::all_of( incoherent.comptonProfiles()->begin(),
+                            incoherent.comptonProfiles()->end(),
+                            [] ( auto&& profile ) { return profile.subshellIdentifier().isRelativistic(); } );
+      },
+      [] ( auto&& ) -> bool {
+
+        throw std::runtime_error( "Expected incoherent scattering data, found something else" );
+      }
+    };
+
+    // determine the type of Compton profile
+    decltype(auto) projectile = photoatomic.projectileIdentifier();
+    decltype(auto) target = photoatomic.targetIdentifier();
+    dryad::id::ReactionID incoherent_id( projectile, target, dryad::id::ReactionType( projectile, 504 ) );
+    decltype(auto) photon = photoatomic.reaction( incoherent_id ).product( projectile ).distributionData().value();
+    bool relativistic = std::visit( hasRelativisticSubshells, photon );
 
     unsigned int z = photoatomic.targetIdentifier().z();
-    ACEtk::Table::Header header;
+    ACEtk::Table::Header header( std::to_string( z * 1000 ) + '.' + std::to_string( number ) + 'p',
+                                 photoatomic.documentation().awr().value(), 0.,
+                                 std::move( date ), std::move( title ), std::to_string( z * 100 ) );
     std::vector< unsigned int > za = {};
     std::vector< double > awr = {};
 
