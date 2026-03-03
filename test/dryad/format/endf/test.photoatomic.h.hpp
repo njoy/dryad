@@ -382,6 +382,9 @@ namespace h0 {
     CHECK( 397 == data.scatteringFunction().boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
     CHECK( true == data.scatteringFunction().isLinearised() );
+
+    CHECK( false == data.hasComptonProfiles() );
+    CHECK( std::nullopt == data.comptonProfiles() );
   }
 
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {

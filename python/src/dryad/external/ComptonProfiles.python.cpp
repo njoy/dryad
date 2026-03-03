@@ -40,6 +40,18 @@ void wrapComptonProfiles( python::module& module ) {
   component
   .def_static(
 
+    "biggs_mendelsohn_mann_subshell_identifiers",
+    &Component::biggsMendelsohnMannSubshellIdentifiers,
+    python::arg( "z" ),
+    "Return the electron subshell identifiers for a given z number \n"
+    "for which Biggs, Mendelsohn and Mann Compton profiles are available\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    z : int\n"
+    "         the z number of the atom"
+  )
+  .def_static(
+
     "biggs_mendelsohn_mann_profiles",
     &Component::biggsMendelsohnMannProfiles,
     python::arg( "z" ), python::arg( "normalise" ),
@@ -47,7 +59,7 @@ void wrapComptonProfiles( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    z : int\n"
-    "         the cosine values\n"
+    "         z number of the atom\n"
     "    normalise : bool, default false\n"
     "        option to indicate whether or not to normalise\n"
     "        all probability data (default: no normalisation)"
