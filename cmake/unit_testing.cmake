@@ -85,6 +85,7 @@ add_cpp_test( dryad.thermal.TabulatedDebyeWallerIntegral                        
 add_cpp_test( dryad.thermal.TabulatedEffectiveTemperature                               dryad/thermal/TabulatedEffectiveTemperature.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernelFunction                           dryad/thermal/TabulatedScatteringKernelFunction.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernel                                   dryad/thermal/TabulatedScatteringKernel.test.cpp )
+add_cpp_test( dryad.thermal.BraggEdgeData                                               dryad/thermal/BraggEdgeData.test.cpp )
 add_cpp_test( dryad.thermal.IncoherentElasticScattering                                 dryad/thermal/IncoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.thermal.InelasticScattering                                         dryad/thermal/InelasticScattering.test.cpp )
 
