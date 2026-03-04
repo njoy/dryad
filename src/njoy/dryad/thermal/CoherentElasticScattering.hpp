@@ -64,7 +64,7 @@ namespace thermal {
     /**
      *  @brief Return the Bragg edge data
      */
-    const std::vector< BraggEdgeData >& braggEdgeData() const {
+    const std::vector< BraggEdgeData >& braggEdges() const {
 
       return this->edges_;
     }
@@ -72,7 +72,7 @@ namespace thermal {
     /**
      *  @brief Return the Bragg edge data
      */
-    std::vector< BraggEdgeData >& braggEdgeData() {
+    std::vector< BraggEdgeData >& braggEdges() {
 
       return this->edges_;
     }
@@ -82,7 +82,7 @@ namespace thermal {
      *
      *  @param braggEdges   the Bragg edge data
      */
-    void braggEdgeData( std::vector< BraggEdgeData > braggEdges ) {
+    void braggEdges( std::vector< BraggEdgeData > braggEdges ) {
 
       this->edges_ = std::move( braggEdges );
       this->sortAndExtractTemperatures();
@@ -96,7 +96,7 @@ namespace thermal {
     bool hasBraggEdgeData( double temperature ) const {
 
       auto iter = this->iterator( temperature );
-      return iter != this->braggEdgeData().end() && iter->temperature() == temperature;
+      return iter != this->braggEdges().end() && iter->temperature() == temperature;
     }
 
     /**
@@ -108,7 +108,7 @@ namespace thermal {
     braggEdgeData( double temperature ) const {
 
       auto iter = this->iterator( temperature );
-      if ( iter != this->braggEdgeData().end() && iter->temperature() == temperature ) {
+      if ( iter != this->braggEdges().end() && iter->temperature() == temperature ) {
 
         return *iter;
       }
@@ -127,7 +127,7 @@ namespace thermal {
      */
     bool operator==( const CoherentElasticScattering& right ) const {
 
-      return std::tie( this->braggEdgeData() ) == std::tie( right.braggEdgeData() );
+      return std::tie( this->braggEdges() ) == std::tie( right.braggEdges() );
     }
 
     /**
