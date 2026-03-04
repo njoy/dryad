@@ -44,7 +44,7 @@ namespace gnds {
         }
       }
 
-      return ThermalScattering( std::move( incoherent ) );
+      return ThermalScattering( std::nullopt, std::move( incoherent ) );
     }
     else {
 

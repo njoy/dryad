@@ -26,7 +26,7 @@ SCENARIO( "ThermalScattering" ) {
                     { 2.013538, 2.677764, 3.323456, 3.972601,
                       4.623738, 5.276127, 6.583171, 7.891981 } } );
 
-      ThermalScattering chunk( std::move( incoherent ) );
+      ThermalScattering chunk( std::nullopt, std::move( incoherent ) );
 
       verifyChunk( chunk );
     } // WHEN
@@ -36,7 +36,8 @@ SCENARIO( "ThermalScattering" ) {
 
     WHEN( "an instance of ThermalScattering is given" ) {
 
-      ThermalScattering chunk( IncoherentElasticScattering(
+      ThermalScattering chunk( std::nullopt,
+                               IncoherentElasticScattering(
                                  6.337872,
                                  { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                    { 2.013538, 2.677764, 3.323456, 3.972601,
@@ -67,17 +68,20 @@ SCENARIO( "ThermalScattering" ) {
 
     WHEN( "two instances of ThermalScattering are given" ) {
 
-      ThermalScattering left( IncoherentElasticScattering(
+      ThermalScattering left( std::nullopt,
+                              IncoherentElasticScattering(
                                 6.337872,
                                 { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                   { 2.013538, 2.677764, 3.323456, 3.972601,
                                     4.623738, 5.276127, 6.583171, 7.891981 } } ) );
-      ThermalScattering equal( IncoherentElasticScattering(
+      ThermalScattering equal( std::nullopt,
+                               IncoherentElasticScattering(
                                  6.337872,
                                  { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                                    { 2.013538, 2.677764, 3.323456, 3.972601,
                                      4.623738, 5.276127, 6.583171, 7.891981 } } ) );
-      ThermalScattering different( IncoherentElasticScattering(
+      ThermalScattering different( std::nullopt,
+                                   IncoherentElasticScattering(
                                      25.,
                                      { { 296, 1200 },
                                        { 2.013538, 7.891981 } } ) );
@@ -110,7 +114,11 @@ void verifyChunk( const ThermalScattering& chunk ) {
   CHECK( true == chunk.hasElasticScattering() );
   CHECK( false == chunk.hasInelasticScattering() );
 
+  // coherent elastic
+  CHECK( std::nullopt == chunk.coherentElasticScattering() );
+
   // incoherent elastic
+  CHECK( std::nullopt != chunk.incoherentElasticScattering() );
   auto incoherent = chunk.incoherentElasticScattering().value();
   CHECK_THAT( 6.337872, WithinRel( incoherent.boundCrossSection() ) );
   CHECK( true == incoherent.debyeWallerIntegral().isLinearised() );

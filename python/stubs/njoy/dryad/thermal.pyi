@@ -4,7 +4,106 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['IncoherentElasticScattering', 'InelasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedEffectiveTemperature', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'IncoherentElasticScattering', 'InelasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedEffectiveTemperature', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+class BraggEdgeData:
+    """
+    Bragg edge data for a single temperature
+    
+    Parameters
+    ----------
+        temperature : float
+             the temperature
+        energies : list of float
+             the temperature
+        values : list of floatfloat
+             the structure factor values
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> BraggEdgeData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> BraggEdgeData:
+        ...
+    def __eq__(self, arg0: BraggEdgeData) -> bool:
+        ...
+    def __init__(self, temperature: float, energies: list[float], values: list[float]) -> None:
+        """
+        Initialise the Bragg edge data
+        """
+    def __ne__(self, arg0: BraggEdgeData) -> bool:
+        ...
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energies of the Bragg edges
+        """
+    @property
+    def temperature(self) -> float:
+        """
+        The temperature of the Bradd edge data
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The structure factor values
+        """
+class CoherentElasticScattering:
+    """
+    Coherent elastic thermal scattering data
+    
+    Parameters
+    ----------
+        bragg_edges : list of njoy.dryad.thermal.BraggEdgeData
+             the Bragg edge data
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> CoherentElasticScattering:
+        ...
+    def __deepcopy__(self, arg0: dict) -> CoherentElasticScattering:
+        ...
+    def __eq__(self, arg0: CoherentElasticScattering) -> bool:
+        ...
+    def __init__(self, bragg_edges: list[BraggEdgeData]) -> None:
+        """
+        Initialise the coherent elastic scattering data
+        """
+    def __ne__(self, arg0: CoherentElasticScattering) -> bool:
+        ...
+    def bragg_edge_data(self, temperature: float) -> BraggEdgeData:
+        """
+        Return the Bragg edge data for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                 the temperature
+        """
+    def has_bragg_edge_data(self, temperature: float) -> bool:
+        """
+        Return whether or not there is Bragg edge data for a given temperature
+        
+        Parameters
+        ----------
+            temperature : float
+                 the temperature
+        """
+    @property
+    def bragg_edges(self) -> list[BraggEdgeData]:
+        """
+        The Bragg edge data
+        """
+    @bragg_edges.setter
+    def bragg_edges(self, arg1: list[BraggEdgeData]) -> None:
+        ...
+    @property
+    def number_temperatures(self) -> int:
+        """
+        The temperature values
+        """
+    @property
+    def temperatures(self) -> list[float]:
+        """
+        The temperature values
+        """
 class IncoherentElasticScattering:
     """
     Incoherent elastic thermal scattering data

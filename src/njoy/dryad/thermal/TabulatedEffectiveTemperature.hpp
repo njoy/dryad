@@ -13,6 +13,8 @@ namespace njoy {
 namespace dryad {
 namespace thermal {
 
+  //! @todo you should NOT interpolate on these values so we will change this
+
   /**
    *  @class
    *  @brief An effective temperature table
