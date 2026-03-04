@@ -33,8 +33,8 @@ def verify_chunk( self, chunk ) :
     self.assertEqual( InterpolationType.LinearLinear, chunk.debye_waller_integral.interpolants[0] )
     self.assertEqual( True, chunk.debye_waller_integral.is_linearised )
 
-class Test_Documentation( unittest.TestCase ) :
-    """Unit test for the Documentation class."""
+class Test_IncoherentElasticScattering( unittest.TestCase ) :
+    """Unit test for the IncoherentElasticScattering class."""
 
     def test_component( self ) :
 

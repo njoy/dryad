@@ -15,8 +15,8 @@ def verify_chunk( self, chunk ) :
     self.assertAlmostEqual( 6.337872, chunk.bound_cross_section )
 
 
-class Test_Documentation( unittest.TestCase ) :
-    """Unit test for the Documentation class."""
+class Test_InelasticScattering( unittest.TestCase ) :
+    """Unit test for the InelasticScattering class."""
 
     def test_component( self ) :
 
