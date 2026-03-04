@@ -100,7 +100,7 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the Bragg edge data
+     *  @brief Return the Bragg edge data for a given temperature
      *
      *  @param[in] temperature   the temperature
      */
