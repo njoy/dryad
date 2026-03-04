@@ -13,6 +13,8 @@ namespace njoy {
 namespace dryad {
 namespace thermal {
 
+  //! @todo you should NOT interpolate on these values
+
   /**
    *  @class
    *  @brief A Debye-Waller integral table
