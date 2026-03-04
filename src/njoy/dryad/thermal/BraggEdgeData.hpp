@@ -42,16 +42,6 @@ namespace thermal {
     }
 
     /**
-     *  @brief Set the temperature of the Bradd edge data
-     *
-     *  @param temperature   the temperature
-     */
-    void temperature( double temperature ) {
-
-      this->temperature_ = temperature;
-    }
-
-    /**
      *  @brief Return the energies of the Bragg edges
      */
     const std::vector< double >& energies() const {
