@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'InelasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -190,46 +190,6 @@ class IncoherentElasticScattering:
         """
         The moderator temperature values
         """
-class InelasticScattering:
-    """
-    Inelastic thermal scattering data
-    
-    Parameters
-    ----------
-        xs : float
-             the bound atom cross section
-        self_scatter : njoy.dryad.thermal.TabulatedScatteringKernel
-             the self-scattering S(a,b) function
-    """
-    __hash__: typing.ClassVar[None] = None
-    def __copy__(self) -> InelasticScattering:
-        ...
-    def __deepcopy__(self, arg0: dict) -> InelasticScattering:
-        ...
-    def __eq__(self, arg0: InelasticScattering) -> bool:
-        ...
-    def __init__(self, xs: float, self_scatter: TabulatedScatteringKernel) -> None:
-        """
-        Initialise the inelastic scattering data
-        """
-    def __ne__(self, arg0: InelasticScattering) -> bool:
-        ...
-    @property
-    def bound_cross_section(self) -> float:
-        """
-        The bound atom cross section value
-        """
-    @bound_cross_section.setter
-    def bound_cross_section(self, arg1: float) -> None:
-        ...
-    @property
-    def self_scattering_function(self) -> TabulatedScatteringKernel:
-        """
-        The self-scattering S(a,b) function
-        """
-    @self_scattering_function.setter
-    def self_scattering_function(self, arg1: TabulatedScatteringKernel) -> None:
-        ...
 class TabulatedScatteringKernel:
     """
     An S(a,b) scattering kernel using tabulated scattering kernel functions

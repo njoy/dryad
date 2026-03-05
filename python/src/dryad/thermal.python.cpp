@@ -18,7 +18,6 @@ namespace thermal {
 
   void wrapCoherentElasticScattering( python::module& );
   void wrapIncoherentElasticScattering( python::module& );
-  void wrapInelasticScattering( python::module& );
 }
 
 void wrapThermal( python::module& module ) {
@@ -38,7 +37,6 @@ void wrapThermal( python::module& module ) {
 
   thermal::wrapCoherentElasticScattering( submodule );
   thermal::wrapIncoherentElasticScattering( submodule );
-  thermal::wrapInelasticScattering( submodule );
 }
 
 } // dryad namespace
