@@ -95,13 +95,13 @@ SCENARIO( "CoherentElasticScattering" ) {
 
 void verifyChunk( const CoherentElasticScattering& chunk ) {
 
-  CHECK( 2 == chunk.numberTemperatures() );
-  CHECK( 2 == chunk.temperatures().size() );
+  CHECK( 2 == chunk.numberModeratorTemperatures() );
+  CHECK( 2 == chunk.moderatorTemperatures().size() );
   CHECK( 2 == chunk.braggEdges().size() );
 
   // temperatures are sorted upon construction
-  CHECK_THAT(  293.6, WithinRel( chunk.temperatures()[0] ) );
-  CHECK_THAT(  600. , WithinRel( chunk.temperatures()[1] ) );
+  CHECK_THAT(  293.6, WithinRel( chunk.moderatorTemperatures()[0] ) );
+  CHECK_THAT(  600. , WithinRel( chunk.moderatorTemperatures()[1] ) );
 
   auto edge0 = chunk.braggEdges()[0];
   CHECK( 2 == edge0.energies().size() );

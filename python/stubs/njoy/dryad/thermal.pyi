@@ -95,14 +95,14 @@ class CoherentElasticScattering:
     def bragg_edges(self, arg1: list[BraggEdgeData]) -> None:
         ...
     @property
-    def number_temperatures(self) -> int:
+    def moderator_temperatures(self) -> list[float]:
         """
-        The temperature values
+        The moderator temperature values
         """
     @property
-    def temperatures(self) -> list[float]:
+    def number_moderator_temperatures(self) -> int:
         """
-        The temperature values
+        The moderator temperature values
         """
 class DebyeWallerIntegralData:
     """

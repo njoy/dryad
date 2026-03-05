@@ -10,12 +10,12 @@ from njoy.dryad.thermal import BraggEdgeData
 
 def verify_chunk( self, chunk ) :
 
-    self.assertEqual( 2, chunk.number_temperatures )
-    self.assertEqual( 2, len( chunk.temperatures ) )
+    self.assertEqual( 2, chunk.number_moderator_temperatures )
+    self.assertEqual( 2, len( chunk.moderator_temperatures ) )
     self.assertEqual( 2, len( chunk.bragg_edges ) )
 
-    self.assertAlmostEqual(  293.6, chunk.temperatures[0] )
-    self.assertAlmostEqual(  600. , chunk.temperatures[1] )
+    self.assertAlmostEqual(  293.6, chunk.moderator_temperatures[0] )
+    self.assertAlmostEqual(  600. , chunk.moderator_temperatures[1] )
 
     edge0 = chunk.bragg_edges[0]
     self.assertEqual( 2, len( edge0.energies ) )

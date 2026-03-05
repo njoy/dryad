@@ -4,9 +4,9 @@ void sortAndExtractTemperatures() {
              [] ( auto&& left, auto&& right )
                 { return left.temperature() < right.temperature(); } );
 
-  this->temperatures().resize( this->braggEdges().size() );
+  this->moderatorTemperatures().resize( this->braggEdges().size() );
   std::transform( this->braggEdges().begin(), this->braggEdges().end(),
-                  this->temperatures().begin(),
+                  this->moderatorTemperatures().begin(),
                   [] ( auto&& data )
                      { return data.temperature(); } );
 }

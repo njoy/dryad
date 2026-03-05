@@ -16,6 +16,8 @@ namespace thermal {
   /**
    *  @class
    *  @brief Coherent elastic thermal scattering data
+   *
+   *  @todo add an operator()?
    */
   class CoherentElasticScattering {
 
@@ -38,25 +40,25 @@ namespace thermal {
     /* methods */
 
     /**
-     *  @brief Return the number of temperatures for which data is available
+     *  @brief Return the number of moderator temperatures for which data is available
      */
-    std::size_t numberTemperatures() const {
+    std::size_t numberModeratorTemperatures() const {
 
-      return this->temperatures().size();
+      return this->moderatorTemperatures().size();
     }
 
     /**
-     *  @brief Return the temperature values
+     *  @brief Return the moderator temperature values
      */
-    const std::vector< double >& temperatures() const {
+    const std::vector< double >& moderatorTemperatures() const {
 
       return this->temperatures_;
     }
 
     /**
-     *  @brief Return the temperature values
+     *  @brief Return the moderator temperature values
      */
-    std::vector< double >& temperatures() {
+    std::vector< double >& moderatorTemperatures() {
 
       return this->temperatures_;
     }

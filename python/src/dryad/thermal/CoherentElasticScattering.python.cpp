@@ -42,15 +42,15 @@ void wrapCoherentElasticScattering( python::module& module ) {
   )
   .def_property_readonly(
 
-    "number_temperatures",
-    &Component::numberTemperatures,
-    "The temperature values"
+    "number_moderator_temperatures",
+    &Component::numberModeratorTemperatures,
+    "The moderator temperature values"
   )
   .def_property_readonly(
 
-    "temperatures",
-    python::overload_cast<>( &Component::temperatures, python::const_ ),
-    "The temperature values"
+    "moderator_temperatures",
+    python::overload_cast<>( &Component::moderatorTemperatures, python::const_ ),
+    "The moderator temperature values"
   )
   .def_property(
 

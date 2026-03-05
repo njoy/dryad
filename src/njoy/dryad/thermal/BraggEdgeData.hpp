@@ -17,6 +17,8 @@ namespace thermal {
    *
    *  The Bragg edge data consists of edge energies and structure
    *  factor values.
+   *
+   *  @todo add a function to retrieve the cross section (interpolation type is 1/E)
    */
   class BraggEdgeData {
 
@@ -58,7 +60,7 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the structure factor values
+     *  @brief Return the cumulative structure factor values
      */
     const std::vector< double >& values() const {
 
@@ -66,7 +68,7 @@ namespace thermal {
     }
 
     /**
-     *  @brief Return the structure factor values
+     *  @brief Return the cumulative structure factor values
      */
     std::vector< double >& values() {
 
