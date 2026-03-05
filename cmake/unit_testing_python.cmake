@@ -74,6 +74,7 @@ add_python_test( dryad.thermal.BraggEdgeData                           dryad/the
 add_python_test( dryad.thermal.DebyeWallerIntegralData                 dryad/thermal/Test_DebyeWallerIntegralData.py )
 add_python_test( dryad.thermal.TabulatedScatteringKernelFunction       dryad/thermal/Test_TabulatedScatteringKernelFunction.py )
 add_python_test( dryad.thermal.TabulatedScatteringFunctions            dryad/thermal/Test_TabulatedScatteringKernel.py )
+add_python_test( dryad.thermal.CoherentElasticScattering               dryad/thermal/Test_CoherentElasticScattering.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
 add_python_test( dryad.thermal.InelasticScattering                     dryad/thermal/Test_InelasticScattering.py )
 
