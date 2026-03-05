@@ -47,7 +47,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/CompoundSystem.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/BraggEdgeData.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedDebyeWallerIntegral.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/DebyeWallerIntegralData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernelFunction.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernel.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/CoherentElasticScattering.python.cpp

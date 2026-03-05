@@ -71,7 +71,7 @@ add_python_test( dryad.resonances.SpinGroup                            dryad/res
 add_python_test( dryad.resonances.CompoundSystem                       dryad/resonances/Test_CompoundSystem.py )
 
 add_python_test( dryad.thermal.BraggEdgeData                           dryad/thermal/Test_BraggEdgeData.py )
-add_python_test( dryad.thermal.TabulatedDebyeWallerIntegral            dryad/thermal/Test_TabulatedDebyeWallerIntegral.py )
+add_python_test( dryad.thermal.DebyeWallerIntegralData                 dryad/thermal/Test_DebyeWallerIntegralData.py )
 add_python_test( dryad.thermal.TabulatedScatteringKernelFunction       dryad/thermal/Test_TabulatedScatteringKernelFunction.py )
 add_python_test( dryad.thermal.TabulatedScatteringFunctions            dryad/thermal/Test_TabulatedScatteringKernel.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
