@@ -23,6 +23,7 @@ class Test_InelasticScattering( unittest.TestCase ) :
         chunk = InelasticScattering(
                   xs = 6.337872,
                   self_scatter = TabulatedScatteringKernel(
+                                   293.6, 300.,
                                    [ 1., 2., 3., 4. ],
                                    [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                                      TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
@@ -36,6 +37,7 @@ class Test_InelasticScattering( unittest.TestCase ) :
         chunk = InelasticScattering(
                   xs = 6.337872,
                   self_scatter = TabulatedScatteringKernel(
+                                   293.6, 300.,
                                    [ 1., 2., 3., 4. ],
                                    [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                                      TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
@@ -56,10 +58,12 @@ class Test_InelasticScattering( unittest.TestCase ) :
 
         # the library can be changed
         newfunctions = TabulatedScatteringKernel(
+                         293.6, 300.,
                          [ 1., 4. ],
                          [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] )
         original = TabulatedScatteringKernel(
+                     293.6, 300.,
                      [ 1., 2., 3., 4. ],
                      [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                        TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
@@ -79,6 +83,7 @@ class Test_InelasticScattering( unittest.TestCase ) :
         left = InelasticScattering(
                  xs = 6.337872,
                  self_scatter = TabulatedScatteringKernel(
+                                  293.6, 300.,
                                   [ 1., 2., 3., 4. ],
                                   [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                                     TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
@@ -87,6 +92,7 @@ class Test_InelasticScattering( unittest.TestCase ) :
         equal = InelasticScattering(
                   xs = 6.337872,
                   self_scatter = TabulatedScatteringKernel(
+                                   293.6, 300.,
                                    [ 1., 2., 3., 4. ],
                                    [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                                      TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
@@ -95,6 +101,7 @@ class Test_InelasticScattering( unittest.TestCase ) :
         different = InelasticScattering(
                       xs = 6.337872,
                       self_scatter = TabulatedScatteringKernel(
+                                       293.6, 300.,
                                        [ 1., 4. ],
                                        [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
                                          TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ] ) )

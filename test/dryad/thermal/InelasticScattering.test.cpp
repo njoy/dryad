@@ -23,6 +23,7 @@ SCENARIO( "InelasticScattering" ) {
       double xs = 6.337872;
       TabulatedScatteringKernel selfScatter(
 
+        293.6, 300.,
         { 1., 2., 3., 4. },
         { { { 0., 4. }, { 0.5, 0.5 } },
           { { 0., 4. }, { 0.52, 0.48 } },
@@ -46,6 +47,7 @@ SCENARIO( "InelasticScattering" ) {
       InelasticScattering chunk( 6.337872,
                                  TabulatedScatteringKernel(
 
+                                   293.6, 300.,
                                    { 1., 2., 3., 4. },
                                    { { { 0., 4. }, { 0.5, 0.5 } },
                                      { { 0., 4. }, { 0.52, 0.48 } },
@@ -71,12 +73,14 @@ SCENARIO( "InelasticScattering" ) {
 
         TabulatedScatteringKernel newfunctions(
 
+          293.6, 300.,
           { 1., 4. },
           { { { 0., 4. }, { 0.5, 0.5 } },
             { { 0., 4. }, { 0.2, 0.8 } } }
         );
         TabulatedScatteringKernel original(
 
+          293.6, 300.,
           { 1., 2., 3., 4. },
           { { { 0., 4. }, { 0.5, 0.5 } },
             { { 0., 4. }, { 0.52, 0.48 } },
@@ -102,6 +106,7 @@ SCENARIO( "InelasticScattering" ) {
       InelasticScattering left( 6.337872,
                                 TabulatedScatteringKernel(
 
+                                  293.6, 300.,
                                   { 1., 2., 3., 4. },
                                   { { { 0., 4. }, { 0.5, 0.5 } },
                                     { { 0., 4. }, { 0.52, 0.48 } },
@@ -111,6 +116,7 @@ SCENARIO( "InelasticScattering" ) {
       InelasticScattering equal( 6.337872,
                                  TabulatedScatteringKernel(
 
+                                   293.6, 300.,
                                    { 1., 2., 3., 4. },
                                    { { { 0., 4. }, { 0.5, 0.5 } },
                                      { { 0., 4. }, { 0.52, 0.48 } },
@@ -120,6 +126,7 @@ SCENARIO( "InelasticScattering" ) {
       InelasticScattering different( 6.337872,
                                      TabulatedScatteringKernel(
 
+                                       300., 400.,
                                        { 1., 4. },
                                        { { { 0., 4. }, { 0.5, 0.5 } },
                                          { { 0., 4. }, { 0.2, 0.8 } } }
@@ -144,6 +151,9 @@ void verifyChunk( const InelasticScattering& chunk ) {
   CHECK( true == chunk.isIncoherentApproximation() );
 
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
+
+  CHECK_THAT( 293.6, WithinRel( chunk.selfScatteringFunction().moderatorTemperature() ) );
+  CHECK_THAT( 300. , WithinRel( chunk.selfScatteringFunction().effectiveTemperature() ) );
 
   CHECK( 4 == chunk.selfScatteringFunction().numberPoints() );
   CHECK( 1 == chunk.selfScatteringFunction().numberRegions() );
