@@ -13,7 +13,6 @@ namespace thermal {
   // declarations - components
   void wrapBraggEdgeData( python::module& );
   void wrapTabulatedDebyeWallerIntegral( python::module& );
-  void wrapTabulatedEffectiveTemperature( python::module& );
   void wrapTabulatedScatteringKernelFunction( python::module& );
   void wrapTabulatedScatteringKernel( python::module& );
 
@@ -34,7 +33,6 @@ void wrapThermal( python::module& module ) {
   // components
   thermal::wrapBraggEdgeData( submodule );
   thermal::wrapTabulatedDebyeWallerIntegral( submodule );
-  thermal::wrapTabulatedEffectiveTemperature( submodule );
   thermal::wrapTabulatedScatteringKernelFunction( submodule );
   thermal::wrapTabulatedScatteringKernel( submodule );
 
