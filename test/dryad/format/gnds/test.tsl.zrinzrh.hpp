@@ -75,15 +75,8 @@ namespace zrinzrh {
     CHECK( std::nullopt != incoherent );
 
     CHECK_THAT( 6.337872, WithinRel( incoherent->boundCrossSection() ) );
-    CHECK( true == incoherent->debyeWallerIntegral().isLinearised() );
-    CHECK( 8 == incoherent->debyeWallerIntegral().numberPoints() );
-    CHECK( 1 == incoherent->debyeWallerIntegral().numberRegions() );
     CHECK( 8 == incoherent->debyeWallerIntegral().temperatures().size() );
     CHECK( 8 == incoherent->debyeWallerIntegral().values().size() );
-    CHECK( 1 == incoherent->debyeWallerIntegral().boundaries().size() );
-    CHECK( 1 == incoherent->debyeWallerIntegral().interpolants().size() );
-    CHECK( 7 == incoherent->debyeWallerIntegral().boundaries()[0] );
-    CHECK( InterpolationType::LinearLinear == incoherent->debyeWallerIntegral().interpolants()[0] );
     CHECK_THAT(  296, WithinRel( incoherent->debyeWallerIntegral().temperatures()[0] ) );
     CHECK_THAT(  400, WithinRel( incoherent->debyeWallerIntegral().temperatures()[1] ) );
     CHECK_THAT( 1000, WithinRel( incoherent->debyeWallerIntegral().temperatures()[6] ) );

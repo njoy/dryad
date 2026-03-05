@@ -21,7 +21,7 @@ SCENARIO( "IncoherentElasticScattering" ) {
     WHEN( "the data is given explicitly" ) {
 
       double xs = 6.337872;
-      TabulatedDebyeWallerIntegral debyeWaller(
+      DebyeWallerIntegralData debyeWaller(
 
         { 296, 400, 500, 600, 700, 800, 1000, 1200 },
         { 2.013538, 2.677764, 3.323456, 3.972601,
@@ -62,12 +62,12 @@ SCENARIO( "IncoherentElasticScattering" ) {
 
       THEN( "the Debye-Waller data can be changed" ) {
 
-        TabulatedDebyeWallerIntegral newintegral(
+        DebyeWallerIntegralData newintegral(
 
           { 296, 1200 },
           { 2.013538, 7.891981 }
         );
-        TabulatedDebyeWallerIntegral original(
+        DebyeWallerIntegralData original(
 
           { 296, 400, 500, 600, 700, 800, 1000, 1200 },
           { 2.013538, 2.677764, 3.323456, 3.972601,
@@ -120,15 +120,8 @@ void verifyChunk( const IncoherentElasticScattering& chunk ) {
 
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
 
-  CHECK( true == chunk.debyeWallerIntegral().isLinearised() );
-  CHECK( 8 == chunk.debyeWallerIntegral().numberPoints() );
-  CHECK( 1 == chunk.debyeWallerIntegral().numberRegions() );
   CHECK( 8 == chunk.debyeWallerIntegral().temperatures().size() );
   CHECK( 8 == chunk.debyeWallerIntegral().values().size() );
-  CHECK( 1 == chunk.debyeWallerIntegral().boundaries().size() );
-  CHECK( 1 == chunk.debyeWallerIntegral().interpolants().size() );
-  CHECK( 7 == chunk.debyeWallerIntegral().boundaries()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.debyeWallerIntegral().interpolants()[0] );
   CHECK_THAT(  296, WithinRel( chunk.debyeWallerIntegral().temperatures()[0] ) );
   CHECK_THAT(  400, WithinRel( chunk.debyeWallerIntegral().temperatures()[1] ) );
   CHECK_THAT( 1000, WithinRel( chunk.debyeWallerIntegral().temperatures()[6] ) );

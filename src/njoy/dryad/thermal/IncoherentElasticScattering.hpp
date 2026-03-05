@@ -6,7 +6,7 @@
 #include <variant>
 
 // other includes
-#include "njoy/dryad/thermal/TabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -21,7 +21,7 @@ namespace thermal {
     /* fields */
 
     double bound_xs_;
-    TabulatedDebyeWallerIntegral debye_waller_;
+    DebyeWallerIntegralData debye_waller_;
 
   public:
 
@@ -51,7 +51,7 @@ namespace thermal {
     /**
      *  @brief Return the Debye-Waller integral data
      */
-    const TabulatedDebyeWallerIntegral& debyeWallerIntegral() const {
+    const DebyeWallerIntegralData& debyeWallerIntegral() const {
 
       return this->debye_waller_;
     }
@@ -61,7 +61,7 @@ namespace thermal {
      *
      *  @param debyeWaller   the Debye-Waller integral data
      */
-    void debyeWallerIntegral( TabulatedDebyeWallerIntegral debyeWaller ) {
+    void debyeWallerIntegral( DebyeWallerIntegralData debyeWaller ) {
 
       this->debye_waller_ = std::move( debyeWaller );
     }

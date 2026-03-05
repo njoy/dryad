@@ -4,7 +4,7 @@ Thermal scattering data
 from __future__ import annotations
 import njoy.dryad
 import typing
-__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'IncoherentElasticScattering', 'InelasticScattering', 'TabulatedDebyeWallerIntegral', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
+__all__: list[str] = ['BraggEdgeData', 'CoherentElasticScattering', 'DebyeWallerIntegralData', 'IncoherentElasticScattering', 'InelasticScattering', 'TabulatedScatteringKernel', 'TabulatedScatteringKernelFunction']
 class BraggEdgeData:
     """
     Bragg edge data for a single temperature
@@ -104,6 +104,42 @@ class CoherentElasticScattering:
         """
         The temperature values
         """
+class DebyeWallerIntegralData:
+    """
+    A Debye-Waller integral table
+    
+    Temperature values are assumed to be in K and the integral values are assumed to be in 1/eV.
+    
+    Parameters
+    ----------
+        temperatures : list of float
+             the temperature values
+        values : list of float
+             the intergal values
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> DebyeWallerIntegralData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> DebyeWallerIntegralData:
+        ...
+    def __eq__(self, arg0: DebyeWallerIntegralData) -> bool:
+        ...
+    def __init__(self, temperatures: list[float], values: list[float]) -> None:
+        """
+        Initialise the Debye-Waller integral data
+        """
+    def __ne__(self, arg0: DebyeWallerIntegralData) -> bool:
+        ...
+    @property
+    def temperatures(self) -> list[float]:
+        """
+        The temperature values
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The integral values
+        """
 class IncoherentElasticScattering:
     """
     Incoherent elastic thermal scattering data
@@ -112,7 +148,7 @@ class IncoherentElasticScattering:
     ----------
         xs : float
              the bound atom cross section
-        debye_waller_integral : njoy.dryad.thermal.TabulatedDebyeWallerIntegral
+        debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData
              the Debye-Waller integral data
     """
     __hash__: typing.ClassVar[None] = None
@@ -122,7 +158,7 @@ class IncoherentElasticScattering:
         ...
     def __eq__(self, arg0: IncoherentElasticScattering) -> bool:
         ...
-    def __init__(self, xs: float, debye_waller_integral: TabulatedDebyeWallerIntegral) -> None:
+    def __init__(self, xs: float, debye_waller_integral: DebyeWallerIntegralData) -> None:
         """
         Initialise the incoherent elastic scattering data
         """
@@ -137,12 +173,12 @@ class IncoherentElasticScattering:
     def bound_cross_section(self, arg1: float) -> None:
         ...
     @property
-    def debye_waller_integral(self) -> TabulatedDebyeWallerIntegral:
+    def debye_waller_integral(self) -> DebyeWallerIntegralData:
         """
         The Debye-Waller integral data
         """
     @debye_waller_integral.setter
-    def debye_waller_integral(self, arg1: TabulatedDebyeWallerIntegral) -> None:
+    def debye_waller_integral(self, arg1: DebyeWallerIntegralData) -> None:
         ...
 class InelasticScattering:
     """
@@ -184,147 +220,6 @@ class InelasticScattering:
     @self_scattering_function.setter
     def self_scattering_function(self, arg1: TabulatedScatteringKernel) -> None:
         ...
-class TabulatedDebyeWallerIntegral:
-    """
-    A Debye-Waller integral table
-    
-    Temperature values are assumed to be in K and the integral values are assumed to be in 1/eV.
-    
-    Parameters
-    ----------
-        temperatures : list of float
-             the temperature values
-        values : list of float
-             the intergal values
-        boundaries : list of int
-             the boundaries of the interpolation regions
-        interpolants : list of njoy.dryad.InterpolationType
-             the interpolation types of the interpolation regions
-        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
-             the interpolation type (default lin-lin)
-    """
-    __hash__: typing.ClassVar[None] = None
-    @typing.overload
-    def __add__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    @typing.overload
-    def __add__(self, arg0: TabulatedDebyeWallerIntegral) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __call__(self, temperature: float) -> float:
-        """
-        Evaluate the integral for a given temperature value
-        
-        Parameters
-        ----------
-            temperature : float
-                the temperature value
-        """
-    def __copy__(self) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __deepcopy__(self, arg0: dict) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __eq__(self, arg0: TabulatedDebyeWallerIntegral) -> bool:
-        ...
-    @typing.overload
-    def __iadd__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    @typing.overload
-    def __iadd__(self, arg0: TabulatedDebyeWallerIntegral) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __imul__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    @typing.overload
-    def __init__(self, temperatures: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
-        """
-        Initialise the Debye-Waller integral table with multiple interpolation zones
-        """
-    @typing.overload
-    def __init__(self, temperatures: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
-        """
-        Initialise the Debye-Waller integral table with a single interpolation zone
-        """
-    @typing.overload
-    def __isub__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    @typing.overload
-    def __isub__(self, arg0: TabulatedDebyeWallerIntegral) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __itruediv__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __mul__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __ne__(self, arg0: TabulatedDebyeWallerIntegral) -> bool:
-        ...
-    def __neg__(self) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __radd__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __rmul__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __rsub__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    @typing.overload
-    def __sub__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    @typing.overload
-    def __sub__(self, arg0: TabulatedDebyeWallerIntegral) -> TabulatedDebyeWallerIntegral:
-        ...
-    def __truediv__(self, arg0: float) -> TabulatedDebyeWallerIntegral:
-        ...
-    def linearise(self, tolerance: float = 0.001) -> TabulatedDebyeWallerIntegral:
-        """
-        Linearise the table
-        
-        Parameters
-        ----------
-            tolerance : float, default 0.001
-                 the linearisation tolerance
-        """
-    @property
-    def boundaries(self) -> list[int]:
-        """
-        The boundaries of the interpolation regions
-        """
-    @property
-    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
-        """
-        The interpolation types of the interpolation regions
-        """
-    @property
-    def is_linearised(self) -> bool:
-        """
-        Flag indicating whether or not the table is linearised
-        """
-    @property
-    def lower_temperature_limit(self) -> float:
-        """
-        The lower temperature limit
-        """
-    @property
-    def number_points(self) -> int:
-        """
-        The number of points in the table
-        """
-    @property
-    def number_regions(self) -> int:
-        """
-        The number of interpolation regions in the table
-        """
-    @property
-    def temperatures(self) -> list[float]:
-        """
-        The temperature values
-        """
-    @property
-    def upper_temperature_limit(self) -> float:
-        """
-        The upper temperature limit
-        """
-    @property
-    def values(self) -> list[float]:
-        """
-        The integral values
-        """
 class TabulatedScatteringKernel:
     """
     An S(a,b) scattering kernel using tabulated scattering kernel functions
