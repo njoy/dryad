@@ -180,6 +180,16 @@ class IncoherentElasticScattering:
     @debye_waller_integral.setter
     def debye_waller_integral(self, arg1: DebyeWallerIntegralData) -> None:
         ...
+    @property
+    def moderator_temperatures(self) -> list[float]:
+        """
+        The moderator temperature values
+        """
+    @property
+    def number_moderator_temperatures(self) -> int:
+        """
+        The moderator temperature values
+        """
 class InelasticScattering:
     """
     Inelastic thermal scattering data

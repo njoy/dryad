@@ -43,6 +43,18 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     python::arg( "xs" ), python::arg( "debye_waller_integral" ),
     "Initialise the incoherent elastic scattering data"
   )
+  .def_property_readonly(
+
+    "number_moderator_temperatures",
+    &Component::numberModeratorTemperatures,
+    "The moderator temperature values"
+  )
+  .def_property_readonly(
+
+    "moderator_temperatures",
+    python::overload_cast<>( &Component::moderatorTemperatures, python::const_ ),
+    "The moderator temperature values"
+  )
   .def_property(
 
     "bound_cross_section",

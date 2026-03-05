@@ -120,6 +120,13 @@ void verifyChunk( const IncoherentElasticScattering& chunk ) {
 
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
 
+  CHECK( 8 == chunk.numberModeratorTemperatures() );
+  CHECK( 8 == chunk.moderatorTemperatures().size() );
+  CHECK_THAT(  296, WithinRel( chunk.moderatorTemperatures()[0] ) );
+  CHECK_THAT(  400, WithinRel( chunk.moderatorTemperatures()[1] ) );
+  CHECK_THAT( 1000, WithinRel( chunk.moderatorTemperatures()[6] ) );
+  CHECK_THAT( 1200, WithinRel( chunk.moderatorTemperatures()[7] ) );
+
   CHECK( 8 == chunk.debyeWallerIntegral().temperatures().size() );
   CHECK( 8 == chunk.debyeWallerIntegral().values().size() );
   CHECK_THAT(  296, WithinRel( chunk.debyeWallerIntegral().temperatures()[0] ) );

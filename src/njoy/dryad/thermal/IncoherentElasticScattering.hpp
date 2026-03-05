@@ -15,6 +15,9 @@ namespace thermal {
   /**
    *  @class
    *  @brief Incoherent elastic thermal scattering data
+   *
+   *  @todo add a function to retrieve the cross section (interpolation type is 1/E)
+   *        and the angular distribution or the discrete cosines
    */
   class IncoherentElasticScattering {
 
@@ -29,6 +32,22 @@ namespace thermal {
     #include "njoy/dryad/thermal/IncoherentElasticScattering/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the number of moderator temperatures for which data is available
+     */
+    std::size_t numberModeratorTemperatures() const {
+
+      return this->moderatorTemperatures().size();
+    }
+
+    /**
+     *  @brief Return the moderator temperature values
+     */
+    const std::vector< double >& moderatorTemperatures() const {
+
+      return this->debyeWallerIntegral().temperatures();
+    }
 
     /**
      *  @brief Return the bound atom cross section value
