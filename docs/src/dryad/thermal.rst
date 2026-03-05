@@ -7,7 +7,7 @@ thermal
    :maxdepth: 1
    :caption: Classes:
 
-   thermal/TabulatedDebyeWallerIntegral
+   thermal/DebyeWallerIntegralData
+   thermal/CoherentElasticScattering
    thermal/IncoherentElasticScattering
-   thermal/TabulatedEffectiveTemperature
    thermal/TabulatedScatteringFunction
