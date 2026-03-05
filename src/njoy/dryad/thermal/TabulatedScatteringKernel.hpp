@@ -22,6 +22,11 @@ namespace thermal {
     /* type aliases */
     using Parent = scion::math::InterpolationTableFunction< double, TabulatedScatteringKernelFunction >;
 
+    /* fields */
+
+    double moderator_temperature_;
+    double effective_temperature_;
+
   public:
 
     /* constructor */
@@ -29,6 +34,22 @@ namespace thermal {
     #include "njoy/dryad/thermal/TabulatedScatteringKernel/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the moderator temperature
+     */
+    double moderatorTemperature() const {
+
+      return this->moderator_temperature_;
+    }
+
+    /**
+     *  @brief Return the effective temperature used for the short collision time approximation
+     */
+    double effectiveTemperature() const {
+
+      return this->effective_temperature_;
+    }
 
     /**
      *  @brief Return the energy transfer values
@@ -82,7 +103,9 @@ namespace thermal {
                       [tolerance]
                         ( auto&& function )
                         { return function.linearise( std::move( tolerance ) ); } );
-      return TabulatedScatteringKernel( this->energyTransfers(), std::move( functions ),
+      return TabulatedScatteringKernel( this->moderatorTemperature(),
+                                        this->effectiveTemperature(),
+                                        this->energyTransfers(), std::move( functions ),
                                         this->boundaries(), this->interpolants() );
     }
 
@@ -93,7 +116,9 @@ namespace thermal {
      */
     bool operator==( const TabulatedScatteringKernel& right ) const {
 
-      return Parent::operator==( right );
+      return std::tie( this->moderator_temperature_, this->effective_temperature_ ) ==
+             std::tie( right.moderator_temperature_, right.effective_temperature_ ) &&
+             Parent::operator==( right );
     }
 
     /**
