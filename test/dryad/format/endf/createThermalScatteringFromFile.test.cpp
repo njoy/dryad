@@ -17,6 +17,19 @@ using namespace njoy::dryad;
 
 SCENARIO( "createThermalScattering" ) {
 
+  GIVEN( "ENDF materials - coherent elastic and inelastic" ) {
+
+    WHEN( "a single ENDF material is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        ThermalScattering chunk = format::endf::createThermalScatteringFromFile( "tsl-Be-metal.endf" );
+
+        tsl::bemetal::verifyBeMetal( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "ENDF materials - incoherent elastic and inelastic" ) {
 
     WHEN( "a single ENDF material is given" ) {

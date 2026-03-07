@@ -17,6 +17,19 @@ using namespace njoy::dryad;
 
 SCENARIO( "createThermalScatteringFromFile" ) {
 
+  GIVEN( "GNDS data - coherent elastic and inelastic" ) {
+
+    WHEN( "a GNDS XML document is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        ThermalScattering chunk = format::gnds::createThermalScatteringFromFile( "tsl-Be-metal.endf.gnds.xml" );
+
+        tsl::bemetal::verifyBeMetal( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
   GIVEN( "GNDS data - incoherent elastic and inelastic" ) {
 
     WHEN( "a GNDS XML document is given" ) {
