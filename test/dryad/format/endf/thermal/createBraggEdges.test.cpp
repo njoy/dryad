@@ -22,13 +22,13 @@ SCENARIO( "createBraggEdges" ) {
     using Tape = njoy::ENDFtk::tree::Tape;
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "tsl-Be-metal.endf" );
     auto section = tape.materials().front().section( 7, 2 ).parse< 7, 2 >();
-    auto incoherent = std::get< njoy::ENDFtk::section::Type< 7, 2 >::CoherentElastic >( section.scatteringLaw() );
+    auto coherent = std::get< njoy::ENDFtk::section::Type< 7, 2 >::CoherentElastic >( section.scatteringLaw() );
 
     WHEN( "a single parsed coherent thermal scattering component is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::thermal::createBraggEdges( incoherent );
+        auto chunk = format::endf::thermal::createBraggEdges( coherent );
 
         verifyChunk( chunk );
       } // THEN
