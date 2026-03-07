@@ -37,6 +37,11 @@ class BraggEdgeData:
         The energies of the Bragg edges
         """
     @property
+    def number_bragg_edges(self) -> int:
+        """
+        The number of Bragg edges
+        """
+    @property
     def temperature(self) -> float:
         """
         The temperature of the Bradd edge data
