@@ -7,4 +7,5 @@
 #include "test.neutron.np236m1.hpp"
 #include "test.electron.h.hpp"
 #include "test.photoatomic.h.hpp"
+#include "test.tsl.bemetal.hpp"
 #include "test.tsl.zrinzrh.hpp"
