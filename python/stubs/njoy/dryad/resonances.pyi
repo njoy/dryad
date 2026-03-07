@@ -485,6 +485,7 @@ class CompoundSystem:
         """
     def __ne__(self, arg0: CompoundSystem) -> bool:
         ...
+    @typing.overload
     def cross_sections(self, energy: float) -> dict[njoy.dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
@@ -492,6 +493,15 @@ class CompoundSystem:
         Arguments:
             self     the spin group
             energy   the energy
+        """
+    @typing.overload
+    def cross_sections(self, energies: list[float]) -> dict[njoy.dryad.id.ReactionID, list[float]]:
+        """
+        Calculate the cross section values for a list of energies
+        
+        Arguments:
+            self     the spin group
+            energy   the list of energies
         """
     @property
     def lower_energy_limit(self) -> float:
@@ -1263,6 +1273,7 @@ class SpinGroup:
         """
     def __ne__(self, arg0: SpinGroup) -> bool:
         ...
+    @typing.overload
     def cross_sections(self, energy: float) -> dict[njoy.dryad.id.ReactionID, float]:
         """
         Calculate the cross section values at a given energy
@@ -1270,6 +1281,15 @@ class SpinGroup:
         Arguments:
             self     the spin group
             energy   the energy
+        """
+    @typing.overload
+    def cross_sections(self, energies: list[float]) -> dict[njoy.dryad.id.ReactionID, list[float]]:
+        """
+        Calculate the cross section values for a list of energies
+        
+        Arguments:
+            self      the spin group
+            energies  the list of energies
         """
     @property
     def boundary_condition(self) -> BoundaryCondition:
