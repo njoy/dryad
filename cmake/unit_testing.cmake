@@ -199,6 +199,7 @@ add_cpp_test( dryad.format.endf.resonances.lrf7.createTabulatedBackground       
 add_cpp_test( dryad.format.endf.resonances.lrf7.createChannels                          dryad/format/endf/resonances/lrf7/createChannels.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createSpinGroups                        dryad/format/endf/resonances/lrf7/createSpinGroups.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createCompoundSystem                    dryad/format/endf/resonances/lrf7/createCompoundSystem.test.cpp )
+add_cpp_test( dryad.format.endf.thermal.createBraggEdges                                dryad/format/endf/thermal/createBraggEdges.test.cpp )
 add_cpp_test( dryad.format.endf.thermal.createDebyeWallerIntegralData                   dryad/format/endf/thermal/createDebyeWallerIntegralData.test.cpp )
 add_cpp_test( dryad.format.endf.thermal.createIncoherentElasticScattering               dryad/format/endf/thermal/createIncoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.format.endf.atomic.createElectronSubshellID                         dryad/format/endf/atomic/createElectronSubshellID.test.cpp )
