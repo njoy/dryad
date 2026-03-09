@@ -48,4 +48,20 @@ SCENARIO( "createThermalScattering" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "GNDS data - mixed elastic and inelastic" ) {
+
+    WHEN( "a GNDS XML document is given" ) {
+
+      pugi::xml_document document;
+      pugi::xml_parse_result result = document.load_file( "tsl-7Liin7LiD-mixed.endf.gnds.xml" );
+
+      THEN( "it can be converted" ) {
+
+        ThermalScattering chunk = format::gnds::createThermalScattering( document );
+
+        tsl::li7inli7d::verifyLi7InLi7D( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO

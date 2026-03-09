@@ -42,4 +42,17 @@ SCENARIO( "createThermalScatteringFromFile" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "GNDS data - incoherent elastic and inelastic" ) {
+
+    WHEN( "a GNDS XML document is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        ThermalScattering chunk = format::gnds::createThermalScatteringFromFile( "tsl-7Liin7LiD-mixed.endf.gnds.xml" );
+
+        tsl::li7inli7d::verifyLi7InLi7D( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO

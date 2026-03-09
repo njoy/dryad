@@ -42,4 +42,17 @@ SCENARIO( "createThermalScattering" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "ENDF materials - mixed elastic and inelastic" ) {
+
+    WHEN( "a single ENDF material is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        ThermalScattering chunk = format::endf::createThermalScatteringFromFile( "tsl-7Liin7LiD-mixed.endf" );
+
+        tsl::li7inli7d::verifyLi7InLi7D( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO

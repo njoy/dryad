@@ -63,7 +63,7 @@ SCENARIO( "createThermalScattering" ) {
 
         ThermalScattering chunk = format::endf::createThermalScattering( material );
 
-//        tsl::7liin7lid::verify7LiD( chunk );
+        tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN
     } // WHEN
   } // GIVEN
