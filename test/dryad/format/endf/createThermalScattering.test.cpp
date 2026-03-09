@@ -50,4 +50,21 @@ SCENARIO( "createThermalScattering" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "ENDF materials - mixed elastic and inelastic" ) {
+
+    WHEN( "a single ENDF material is given" ) {
+
+      using Tape = njoy::ENDFtk::tree::Tape;
+      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "tsl-7Liin7LiD-mixed.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "it can be converted" ) {
+
+        ThermalScattering chunk = format::endf::createThermalScattering( material );
+
+//        tsl::7liin7lid::verify7LiD( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
