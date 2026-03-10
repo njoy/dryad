@@ -5,7 +5,7 @@
  */
 static std::size_t getIndex( int number ) {
 
-  if ( ( number < 1 ) || ( number > entries.size() ) ) {
+  if ( ( number < 1 ) || ( number > static_cast< int >( entries.size() ) ) ) {
 
     throw std::invalid_argument( "Not an element number: \'" + std::to_string( number ) + "\'" );
   }

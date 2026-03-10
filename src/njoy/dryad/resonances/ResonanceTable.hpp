@@ -127,8 +127,6 @@ namespace resonances {
      */
     ResonanceTable& operator+=( const ResonanceTable& right ) {
 
-      auto nc = this->numberChannels();
-
       // check if both tables can be merged
       verifyCompatibility( *this, right );
 

@@ -61,7 +61,6 @@ namespace calculator {
     const matrix::DiagonalMatrix< std::complex< double > >&
     l_matrix() {
 
-      using Matrix = matrix::DiagonalMatrix< std::complex< double > >;
       tools::overload visitor{
 
         [&] ( ShiftFactor& function ) -> decltype(auto) {
@@ -81,7 +80,6 @@ namespace calculator {
     l_matrix( double energy,
               const std::vector< Channel >& channels ) {
 
-      using Matrix = matrix::DiagonalMatrix< std::complex< double > >;
       tools::overload visitor{
 
         [&] ( ShiftFactor& function ) -> decltype(auto) {
