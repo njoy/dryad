@@ -243,6 +243,7 @@ add_cpp_test( dryad.format.endf.createEndfSublibraryType                        
 add_cpp_test( dryad.format.endf.atomic.createEndfSubshellDesignator                     dryad/format/endf/atomic/createEndfSubshellDesignator.test.cpp )
 add_cpp_test( dryad.format.endf.atomic.createEndfSubshellData                           dryad/format/endf/atomic/createEndfSubshellData.test.cpp )
 add_cpp_test( dryad.format.endf.thermal.createEndfIncoherentElastic                     dryad/format/endf/thermal/createEndfIncoherentElastic.test.cpp )
+add_cpp_test( dryad.format.endf.thermal.createEndfCoherentElastic                       dryad/format/endf/thermal/createEndfCoherentElastic.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfFile3Section                                  dryad/format/endf/createEndfFile3Section.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfFile23Section                                 dryad/format/endf/createEndfFile23Section.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxationEndfFile                          dryad/format/endf/createAtomicRelaxationEndfFile.test.cpp )
