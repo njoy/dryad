@@ -11,8 +11,6 @@ shacl_FetchContent_Declare( eigen
     GIT_REPOSITORY  ../../njoy/eigen
     GIT_TAG         bc3b39870ecb690a623a3f49149a358b95c5781d  # tag: 5.0.1
     )
-# the next line prevents eigen from populating the .cmake/packages folder
-set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
@@ -21,7 +19,7 @@ shacl_FetchContent_Declare( tools
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         559b2a70f121a42d4819d12d8e9ec00a0d68aa30  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         12d84f57053f4b32f8d59859e5d036dce1e4f72a  # NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk

@@ -37,7 +37,7 @@ cmake_dependent_option(
   "NOT ${subproject} OR DEFINED require.njoy.python " OFF
 )
 
-option( njoy.installation "Install njoy" ON )
+option( njoy.installation "Install njoy" OFF )
 
 ########################################################################
 # Dependencies
