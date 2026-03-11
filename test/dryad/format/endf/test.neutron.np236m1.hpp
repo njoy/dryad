@@ -1218,7 +1218,7 @@ namespace np236m1 {
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
   }
 
-  void verifyNp236m1( const ProjectileTarget& Np236m1, bool normalise ) {
+  void verifyNp236m1( const ProjectileTarget& Np236m1, bool /* normalise */ ) {
 
     verifyDocumentation( Np236m1.documentation() );
 

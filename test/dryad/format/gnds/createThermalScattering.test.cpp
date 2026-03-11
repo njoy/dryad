@@ -22,7 +22,7 @@ SCENARIO( "createThermalScattering" ) {
     WHEN( "a GNDS XML document is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "tsl-Be-metal.endf.gnds.xml" );
+      document.load_file( "tsl-Be-metal.endf.gnds.xml" );
 
       THEN( "it can be converted" ) {
 
@@ -38,7 +38,7 @@ SCENARIO( "createThermalScattering" ) {
     WHEN( "a GNDS XML document is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "tsl-ZrinZrH.endf.gnds.xml" );
+      document.load_file( "tsl-ZrinZrH.endf.gnds.xml" );
 
       THEN( "it can be converted" ) {
 
@@ -54,7 +54,7 @@ SCENARIO( "createThermalScattering" ) {
     WHEN( "a GNDS XML document is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "tsl-7Liin7LiD-mixed.endf.gnds.xml" );
+      document.load_file( "tsl-7Liin7LiD-mixed.endf.gnds.xml" );
 
       THEN( "it can be converted" ) {
 

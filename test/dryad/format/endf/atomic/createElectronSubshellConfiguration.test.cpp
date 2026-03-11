@@ -19,8 +19,6 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
 
   GIVEN( "ENDF MF28 SubshellData for oxygen" ) {
 
-    using SubshellData = njoy::ENDFtk::section::Type< 28 >::SubshellData;
-
     using Tape = njoy::ENDFtk::tree::Tape;
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "atom-008_O_000.endf" );
     auto section = tape.materials().front().section( 28, 533 ).parse< 28 >();
@@ -40,8 +38,6 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
   } // GIVEN
 
   GIVEN( "ENDF MF28 SubshellData for copper" ) {
-
-    using SubshellData = njoy::ENDFtk::section::Type< 28 >::SubshellData;
 
     using Tape = njoy::ENDFtk::tree::Tape;
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "atom-029_Cu_000.endf" );

@@ -20,7 +20,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
   GIVEN( "GNDS cross section node from incident neutron data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+    document.load_file( "n-001_H_001.endf.gnds.xml" );
     pugi::xml_node xs = document.child( "reactionSuite" ).child( "reactions" ).
                                  find_child_by_attribute( "reaction", "ENDF_MT", "102" ).
                                  child( "crossSection" );
@@ -39,7 +39,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
   GIVEN( "GNDS cross section node from electroatomic data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node xs = document.child( "reactionSuite" ).child( "reactions" ).
                                  find_child_by_attribute( "reaction", "ENDF_MT", "527" ).
                                  child( "crossSection" );

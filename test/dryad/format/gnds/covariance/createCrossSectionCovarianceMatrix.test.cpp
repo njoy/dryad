@@ -18,7 +18,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
          "SquareMatrix and variance scaling information" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node covariance = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                          find_child_by_attribute( "covarianceSection", "label", "n + n + F18 + photon" );
 
@@ -126,7 +126,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
          "SquareMatrix and without variance scaling information" ) {
 
           pugi::xml_document document;
-          pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+          document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
           pugi::xml_node covariance = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                                find_child_by_attribute( "covarianceSection", "label", "H2 + O18 [inclusive]" );
 
@@ -218,7 +218,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
          "SquareMatrix" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node covariance = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                          find_child_by_attribute( "covarianceSection", "label", "(z,n) vs. n + n + F18 + photon" );
 
@@ -320,7 +320,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
   GIVEN( "an instance of an off-diagonal block with a single rectangular matrix" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-010_Ne_022.endf.gnds-covar.xml" );
+    document.load_file( "n-010_Ne_022.endf.gnds-covar.xml" );
     pugi::xml_node covariance = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                          find_child_by_attribute( "covarianceSection", "label", "2n + Ne21 + photon vs. n + (Ne22_e1 -> Ne22 + photon)" );
 

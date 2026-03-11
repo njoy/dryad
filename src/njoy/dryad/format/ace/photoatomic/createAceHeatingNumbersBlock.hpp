@@ -66,7 +66,6 @@ namespace photoatomic {
                                 " as a jump in the total ionisation cross section" );
     };
     decltype(auto) xs = photoatomic.reaction( totalionisation_id ).crossSection();
-    double k_ratio = has_k ? calculate_edge_ratio( k_edge, xs ) : 0.;
     double l1_ratio = has_l1 ? calculate_edge_ratio( l1_edge, xs ) : 0.;
     double l2_ratio = has_l2 ? calculate_edge_ratio( l2_edge, xs ) : 0.;
     double l3_ratio = has_l3 ? calculate_edge_ratio( l3_edge, xs ) : 0.;

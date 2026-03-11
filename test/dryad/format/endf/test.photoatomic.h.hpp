@@ -549,7 +549,7 @@ namespace h0 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
-  void verifyH0( const ProjectileTarget& H0, bool normalise ) {
+  void verifyH0( const ProjectileTarget& H0, bool /* normalise */ ) {
 
     verifyDocumentation( H0.documentation() );
 

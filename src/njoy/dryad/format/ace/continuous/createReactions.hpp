@@ -47,10 +47,10 @@ namespace continuous {
 
       return endf::ReactionInformation::isDerived( mt ) || ( mt == 3 ) || ( mt == 4 );
     };
-    auto max = std::distance( table.reactionNumberBlock().reactionNumbers().begin(),
-                              std::find_if( table.reactionNumberBlock().reactionNumbers().begin(),
-                                            table.reactionNumberBlock().reactionNumbers().end(),
-                                            isDerivedOrAuxiliary ) ) + 1;
+    std::size_t max = std::distance( table.reactionNumberBlock().reactionNumbers().begin(),
+                                     std::find_if( table.reactionNumberBlock().reactionNumbers().begin(),
+                                                   table.reactionNumberBlock().reactionNumbers().end(),
+                                                   isDerivedOrAuxiliary ) ) + 1;
 
     // elastic scattering
     Log::info( "Reading data for MT2" );

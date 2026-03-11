@@ -86,7 +86,6 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
 
   auto photon = id::ParticleID::photon();
   auto neutron = id::ParticleID::neutron();
-  auto proton = id::ParticleID::proton();
   auto cu63 = id::ParticleID( "Cu63" );
   auto cu64 = id::ParticleID( "Cu64[all]" );
 
@@ -702,7 +701,6 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   auto neutron = id::ParticleID::neutron();
   auto proton = id::ParticleID::proton();
   auto cl35 = id::ParticleID( "Cl35" );
-  auto cl35_e1 = id::ParticleID( "Cl35_e1" );
   auto cl36 = id::ParticleID( "Cl36[all]" );
   auto s35 = id::ParticleID( "S35" );
 

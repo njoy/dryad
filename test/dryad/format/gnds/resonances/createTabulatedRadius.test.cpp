@@ -20,7 +20,7 @@ SCENARIO( "createTabulatedRadius" ) {
   GIVEN( "GNDS scattering radius node from incident neutron data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-069_Tm_168.endf.gnds.xml" );
+    document.load_file( "n-069_Tm_168.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                      child( "resolved" ).child( "BreitWigner" ).
                                      child( "scatteringRadius" ).child( "XYs1d" );

@@ -48,7 +48,7 @@ namespace endf {
 
     auto createDistributions = tools::overload{
 
-      [&] ( const Isotropic& distributions ) -> TwoBodyDistributionData::AngularDistributions {
+      [&] ( const Isotropic& ) -> TwoBodyDistributionData::AngularDistributions {
 
         return IsotropicAngularDistributions();
       },
@@ -60,7 +60,7 @@ namespace endf {
 
         return createTabulatedAngularDistributions( distributions, normalise );
       },
-      [&] ( const MixedDistributions& distributions ) -> TwoBodyDistributionData::AngularDistributions {
+      [&] ( const MixedDistributions& ) -> TwoBodyDistributionData::AngularDistributions {
 
         throw std::runtime_error( "Any MF4 LTT = 3 is not implemented yet, contact a developer" );
       }
@@ -109,9 +109,9 @@ namespace endf {
    *                          need to be normalised
    */
   inline ReactionProduct
-  createReactionProduct( const id::ReactionID& reaction,
+  createReactionProduct( const id::ReactionID& /* reaction */,
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
-                         bool normalise ) {
+                         bool /* normalise */ ) {
 
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
                                                  product.productModifierFlag() );
@@ -131,7 +131,7 @@ namespace endf {
    *                          need to be normalised
    */
   ReactionProduct
-  createReactionProduct( const id::ReactionID& reaction,
+  createReactionProduct( const id::ReactionID& /* reaction */,
                          const ENDFtk::section::Type< 26 >::ReactionProduct& product,
                          int mt,
                          bool normalise ) {
@@ -197,12 +197,12 @@ namespace endf {
    *                          need to be normalised
    */
   ReactionProduct
-  createReactionProduct( const id::ReactionID& reaction,
+  createReactionProduct( const id::ReactionID& /* reaction */,
                          const ENDFtk::section::Type< 27 >& coherent,
                          const std::optional< ENDFtk::section::Type< 27 > >& real,
                          const std::optional< ENDFtk::section::Type< 27 > >& imaginary,
-                         int mt,
-                         bool normalise ) {
+                         int /* mt */,
+                         bool /* normalise */ ) {
 
     id::ParticleID id = id::ParticleID::photon();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
@@ -237,10 +237,10 @@ namespace endf {
    *                          need to be normalised
    */
   ReactionProduct
-  createReactionProduct( const id::ReactionID& reaction,
+  createReactionProduct( const id::ReactionID& /* reaction */,
                          const ENDFtk::section::Type< 27 >& incoherent,
-                         int mt,
-                         bool normalise ) {
+                         int /* mt */,
+                         bool /* normalise */ ) {
 
     id::ParticleID id = id::ParticleID::photon();
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );

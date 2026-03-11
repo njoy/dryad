@@ -19,7 +19,7 @@ SCENARIO( "readAxes" ) {
   GIVEN( "a GNDS axes xml node with axis" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+    document.load_file( "n-001_H_001.endf.gnds.xml" );
     pugi::xml_node reactions = document.child( "reactionSuite" ).child( "reactions" );
 
     WHEN( "a single GNDS axes node without an axis with index 2" ) {
@@ -63,7 +63,7 @@ SCENARIO( "readAxes" ) {
   GIVEN( "a GNDS axes xml node with grid" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node node = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                    find_child_by_attribute( "covarianceSection", "label", "(z,n)" ).
                                    child( "mixed" ).child( "shortRangeSelfScalingVariance" ).

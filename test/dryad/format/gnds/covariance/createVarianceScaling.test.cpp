@@ -19,7 +19,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
   GIVEN( "GNDS variance scaling node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node scaling = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                       find_child_by_attribute( "covarianceSection", "label", "(z,n)" ).
                                       child( "mixed" ).child( "shortRangeSelfScalingVariance" );

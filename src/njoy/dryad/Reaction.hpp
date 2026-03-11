@@ -344,7 +344,7 @@ namespace dryad {
           std::vector< double > values = distribution.averageEnergy( energies, tolerance );
           return TabulatedAverageEnergy( std::move( energies ), std::move( values ) );
         },
-        [&] ( const CoherentDistributionData& distribution ) -> std::optional< TabulatedAverageEnergy > {
+        [&] ( const CoherentDistributionData& ) -> std::optional< TabulatedAverageEnergy > {
 
           // coherent distribution data does not modify the outgoing energy grid,
           // use the cross section energy grid

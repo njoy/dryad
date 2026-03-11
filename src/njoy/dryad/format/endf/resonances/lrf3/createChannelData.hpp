@@ -114,7 +114,8 @@ namespace lrf3 {
       std::vector< double > fission2_widths;
 
       // go over all resonances
-      for ( unsigned int i = 0; i < endfReichMooreLValue.numberResonances(); ++i ) {
+      unsigned int number_resonances = endfReichMooreLValue.numberResonances();
+      for ( unsigned int i = 0; i < number_resonances; ++i ) {
 
         if ( endfReichMooreLValue.spinValues()[i] == j ) {
 

@@ -25,7 +25,7 @@ namespace photoatomic {
    *                         need to be normalised
    */
   inline ProjectileTarget
-  createProjectileTarget( const ACEtk::PhotoatomicTable& table, bool normalise ) {
+  createProjectileTarget( const ACEtk::PhotoatomicTable& table, bool /* normalise */ ) {
 
     auto projectile = id::ParticleID::photon();
     auto target = createTargetIdentifier( table.ZAID() );

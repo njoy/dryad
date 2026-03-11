@@ -19,7 +19,7 @@ SCENARIO( "createUncorrelatedDistributionData" ) {
   GIVEN( "GNDS uncorrelated distribution data node with isotropic angular and tabulated energy" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node node = document.child( "reactionSuite" ).child( "reactions" ).
                                    find_child_by_attribute( "reaction", "ENDF_MT", "527" ).
                                    child( "outputChannel" ).

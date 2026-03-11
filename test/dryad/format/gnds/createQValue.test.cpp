@@ -19,7 +19,7 @@ SCENARIO( "createQValue" ) {
   GIVEN( "GNDS Q value node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node q = document.child( "reactionSuite" ).child( "reactions" ).
                                 find_child_by_attribute( "reaction", "ENDF_MT", "534" ).
                                 child( "outputChannel" ).child( "Q" );

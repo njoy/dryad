@@ -23,7 +23,6 @@ SCENARIO( "CompoundSystem" ) {
   auto neutron = id::ParticleID::neutron();
   auto proton = id::ParticleID::proton();
   auto cl35 = id::ParticleID( "Cl35" );
-  auto cl35_e1 = id::ParticleID( "Cl35_e1" );
   auto cl36 = id::ParticleID( "Cl36[all]" );
   auto s35 = id::ParticleID( "S35" );
 
@@ -161,7 +160,6 @@ SCENARIO( "CompoundSystem" ) {
       auto neutron = id::ParticleID::neutron();
       auto proton = id::ParticleID::proton();
       auto cl35 = id::ParticleID( "Cl35" );
-      auto cl35_e1 = id::ParticleID( "Cl35_e1" );
       auto cl36 = id::ParticleID( "Cl36[all]" );
       auto s35 = id::ParticleID( "S35" );
 
@@ -236,7 +234,6 @@ void verifyChunk( const CompoundSystem& chunk ) {
   auto neutron = id::ParticleID::neutron();
   auto proton = id::ParticleID::proton();
   auto cl35 = id::ParticleID( "Cl35" );
-  auto cl35_e1 = id::ParticleID( "Cl35_e1" );
   auto cl36 = id::ParticleID( "Cl36[all]" );
   auto s35 = id::ParticleID( "S35" );
 

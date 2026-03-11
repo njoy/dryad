@@ -27,7 +27,7 @@ namespace gnds {
     Log::info( "Reading GNDS file \'{}\'", filename );
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( filename.c_str() );
+    document.load_file( filename.c_str() );
     if ( document ) {
 
       return createAtomicRelaxation( document, normalise );

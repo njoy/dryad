@@ -21,7 +21,7 @@ SCENARIO( "createCovarianceData" ) {
          "linear combinations" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds-covar.xml" );
+    document.load_file( "n-001_H_001.endf.gnds-covar.xml" );
     pugi::xml_node node = document.child( "covarianceSuite" );
 
     WHEN( "a single covarianceSections node is given" ) {
@@ -42,7 +42,7 @@ SCENARIO( "createCovarianceData" ) {
          "lumped covariances" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-003_Li_007.endf.gnds-covar.xml" );
+    document.load_file( "n-003_Li_007.endf.gnds-covar.xml" );
     pugi::xml_node node = document.child( "covarianceSuite" );
 
     WHEN( "a single covarianceSections node is given" ) {

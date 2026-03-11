@@ -68,7 +68,7 @@ namespace gnds {
       label = "$" + label + "#";
 
       pugi::xml_document external;
-      pugi::xml_parse_result result = external.load_file( filename.c_str() );
+      external.load_file( filename.c_str() );
       if ( external ) {
 
         // go over all top level nodes in the external file and copy to the current
@@ -119,7 +119,7 @@ namespace gnds {
       }
 
       pugi::xml_document external;
-      pugi::xml_parse_result result = external.load_file( filename.c_str() );
+      external.load_file( filename.c_str() );
       if ( ! external ) {
 
         Log::error( "The external GNDS file \'{}\' does not exist or is not an XML file",
