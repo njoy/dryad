@@ -11,9 +11,6 @@
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
 #include "njoy/dryad/format/endf/createEndfBoundaries.hpp"
-#include "njoy/dryad/resonances/FrohnerBackground.hpp"
-#include "njoy/dryad/resonances/SammyBackground.hpp"
-#include "njoy/dryad/resonances/TabulatedBackground.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -24,13 +21,15 @@ namespace resonances {
 namespace lrf7 {
 
   /**
-   *  @brief Reads all channels in a spin group, and return an ENDFtk BackgroundRMatrix
+   *  @brief Reads all channels in a spin group, and return an ENDFtk BackgroundChannels object
+   *         for the spin group
    *
    *  @param[in] spingroup   dryad spin group
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels
   createEndfBackgroundChannels( const dryad::resonances::SpinGroup& spingroup ) {
 
+    using BackgroundChannels = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels;
     using BackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundRMatrix;
     using TabulatedBackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::TabulatedBackgroundRMatrix;
     using SammyBackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SammyBackgroundRMatrix;
@@ -80,9 +79,8 @@ namespace lrf7 {
       }
     }
 
-    return ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels( spingroup.channels().size(), std::move(backgrounds) ) ;
+    return BackgroundChannels( spingroup.channels().size(), std::move(backgrounds) ) ;
   }
-
 
 } // lrf7 namespace
 } // resonances namespace
