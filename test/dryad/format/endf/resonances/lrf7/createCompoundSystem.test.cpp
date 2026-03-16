@@ -153,6 +153,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   auto spingroup = groups[0];
   CHECK( 0 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   auto channels = spingroup.channels();
@@ -241,6 +243,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   spingroup = groups[1];
   CHECK( 0 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -329,6 +333,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   spingroup = groups[2];
   CHECK( 1 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -448,6 +454,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   spingroup = groups[3];
   CHECK( 1 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -567,6 +575,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   spingroup = groups[4];
   CHECK( 2 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -655,6 +665,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   spingroup = groups[5];
   CHECK( 2 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -762,6 +774,8 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   spingroup = groups[6];
   CHECK( 3 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -876,6 +890,8 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   auto spingroup = groups[0];
   CHECK( 0 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   auto channels = spingroup.channels();
@@ -964,6 +980,8 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   spingroup = groups[1];
   CHECK( 1 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1052,6 +1070,8 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   spingroup = groups[2];
   CHECK( 1 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1171,6 +1191,8 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   spingroup = groups[3];
   CHECK( 2 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1259,6 +1281,8 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   spingroup = groups[4];
   CHECK( 2 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1378,6 +1402,8 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   spingroup = groups[5];
   CHECK( 3 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1498,6 +1524,8 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // spin group 0
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   auto spingroup = groups[0];
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   auto channels = spingroup.channels();
@@ -1584,6 +1612,8 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // spin group 1
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[1];
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1763,6 +1793,8 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // spin group 2
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[2];
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -1880,6 +1912,8 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // spin group 3
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[3];
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2059,6 +2093,8 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // spin group 4
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[4];
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2176,6 +2212,8 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // spin group 5
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[5];
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2323,6 +2361,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   auto spingroup = groups[0];
   CHECK( 0.5 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   auto channels = spingroup.channels();
@@ -2412,6 +2452,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   spingroup = groups[1];
   CHECK( 0.5 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2504,6 +2546,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   spingroup = groups[2];
   CHECK( 1.5 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2593,6 +2637,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   spingroup = groups[3];
   CHECK( 1.5 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2682,6 +2728,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   spingroup = groups[4];
   CHECK( 2.5 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2771,6 +2819,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   spingroup = groups[5];
   CHECK( 2.5 == spingroup.totalAngularMomentum() );
   CHECK( +1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -2860,6 +2910,8 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   spingroup = groups[6];
   CHECK( 3.5 == spingroup.totalAngularMomentum() );
   CHECK( -1 == spingroup.parity() );
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( true == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();

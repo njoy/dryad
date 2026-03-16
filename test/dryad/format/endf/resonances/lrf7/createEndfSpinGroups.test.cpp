@@ -5,46 +5,121 @@ using Catch::Matchers::WithinRel;
 
 // what we are testing
 #include "njoy/dryad/format/endf/resonances/lrf7/createEndfSpinGroups.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfParticlePairs.hpp"
 
 // other includes
-#include "ENDFtk/tree/fromFile.hpp"
-#include <iostream>
-#include "../../test.dryadcoumpound.hpp"
+#include "njoy/constants.hpp"
 
 // convenience typedefs
-using namespace njoy;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 
-using ENDFtkSpinGroup = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup;
-
 std::string chunk();
 
-//! @todo add a fourth PP to check PPI numbering (right now always CAPT + ELAST + FISSION)
+SCENARIO( "createEndfSpinGroups" ) {
 
-SCENARIO( "createEndfParticlePairs" ) {
-
-  GIVEN( "valid data for a reaction" ) {
+  GIVEN( "valid data for a compound system" ) {
 
     std::string string = chunk();
-    auto compound = create_dryad_compound();
 
-    WHEN( "the data is given explicitly" ) {       
+    WHEN( "the data is given explicitly" ) {
+
+      auto photon = id::ParticleID::photon();
+      auto neutron = id::ParticleID::neutron();
+      auto proton = id::ParticleID::proton();
+      auto cu63 = id::ParticleID( "Cu63" );
+      auto cu64 = id::ParticleID( "Cu64[all]" );
+
+      ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                Particle( cu64, 63.389 * njoy::constants::neutron_mass, 0, +1 ) );
+      ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                                 Particle( cu63, 62.389 * njoy::constants::neutron_mass, 1.5, -1 ) );
+
+      ChannelRadii zero_radii( 0., 0. );
+      ChannelRadii radii( 6.7, 6.7 );
+
+      CompoundSystem compound( 1e-5, 1e+5,
+                               { { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,0+}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,1,0+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,0+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,1,0+}" ) },
+                                     { 2.216315e+3, 2.981944e+5 },
+                                     { { 1., 2. },
+                                       { 1.1, 2.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::Constant }, // 0+ spin group
+                                 { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1-}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{0,1,1-}" ),
+                                       neutron_pair, neutron_pair, 0., 0, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1-}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{0,1,1-}" ) },
+                                     { -3.709301e+4, 3.282861e+5 },
+                                     { { 3., 4. },
+                                       { 3.1, 4.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::Constant }, // 1- spin group
+                                 { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ) },
+                                     { 3.811148e+3, 2.993903e+5 },
+                                     { { 5., 6. },
+                                       { 5.1, 6.1 },
+                                       { 5.2, 6.2 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::Constant }, // 1+ spin group
+                                 { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2-}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{0,2,2-}" ),
+                                       neutron_pair, neutron_pair, 0., 0, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2-}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{0,2,2-}" ) },
+                                     { -5.334625e+4, 3.316735e+5 },
+                                     { { 7., 8. },
+                                       { 7.1, 8.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::Constant }, // 2- spin group
+                                 { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2+}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,1,2+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,2,2+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,2+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,1,2+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,2,2+}" ) },
+                                     { 1.054117e+4, 2.989878e+5 },
+                                     { { 9., 10. },
+                                       { 9.1, 10.1 },
+                                       { 9.2, 10.2 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::Constant }, // 2+ spin group
+                                 { { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,3+}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,2,3+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,3+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,2,3+}" ) },
+                                     { 4.018230e+2, 3.006336e+5 },
+                                     { { 11., 12. },
+                                       { 11.1, 12.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::Constant } } ); // 3+ spin group
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto ppairs = format::endf::resonances::lrf7::createEndfParticlePairs( compound );
-
-        std::vector< ENDFtkSpinGroup > data = format::endf::resonances::lrf7::createEndfSpinGroups( compound.spinGroups(), ppairs );
+        auto data = format::endf::resonances::lrf7::createEndfRMatrixLimited( compound );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
-
-        for ( const auto& it : data ) {
-          
-          it.print( output, 2925, 2, 151 );
-        }
+        data.print( output, 2925, 2, 151 );
 
         CHECK( buffer == string );
       } // THEN
@@ -53,19 +128,50 @@ SCENARIO( "createEndfParticlePairs" ) {
 } // SCENARIO
 
 std::string chunk() {
-  return
-      "-1.000000+0-1.000000+0          0          0         12          22925 2151     \n"
-      " 1.000000+0 1.000000+0 2.000000+0 1.100000+1 6.100000-1 6.200000-12925 2151     \n"
-      " 2.000000+0 3.000000+0 4.000000+0 1.200000+1 6.300000-1 6.400000-12925 2151     \n"
-      " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
-      " 1.000000+1 2.000000+0 4.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
-      " 2.000000+1 3.000000+0 5.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
-      "-2.000000+0-1.000000+0          0          0         18          32925 2151     \n"
-      " 1.000000+0 1.000000+0 2.000000+0 1.100000+1 6.100000-1 6.200000-12925 2151     \n"
-      " 2.000000+0 3.000000+0 4.000000+0 1.200000+1 6.300000-1 6.400000-12925 2151     \n"
-      " 3.000000+0 3.000000+0 4.000000+0 1.200000+1 6.300000-1 6.400000-12925 2151     \n"
-      " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
-      " 1.000000+1 2.000000+0 4.000000+0 6.000000+0 0.000000+0 0.000000+02925 2151     \n"
-      " 2.000000+1 3.000000+0 5.000000+0 7.000000+0 0.000000+0 0.000000+02925 2151     \n";
-}
 
+  return
+    " 0.000000+0 0.000000+0          1          3          6          02925 2151     \n"
+    " 0.000000+0 0.000000+0          2          0         24          42925 2151     \n"
+    " 0.000000+0 6.338900+1 0.000000+0 2.900000+1 1.000000+0 0.000000+02925 2151     \n"
+    " 0.000000+0-1.000000+0 1.000000+0 1.020000+2 1.000000+0 1.000000+02925 2151     \n"
+    " 1.000000+0 6.238900+1 0.000000+0 2.900000+1 5.000000-1-1.500000+02925 2151     \n"
+    " 0.000000+0 1.000000+0 1.000000+0 2.000000+0 1.000000+0-1.000000+02925 2151     \n"
+    " 0.000000+0 1.000000+0          0          0         12          22925 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 1.000000+0 1.000000+0-1.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
+    " 2.216315+3 1.000000+0 1.100000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.981944+5 2.000000+0 2.100000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    "-1.000000+0-1.000000+0          0          0         12          22925 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 0.000000+0 1.000000+0 0.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
+    "-3.709301+4 3.000000+0 3.100000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 3.282861+5 4.000000+0 4.100000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 1.000000+0 1.000000+0          0          0         18          32925 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 1.000000+0 1.000000+0-1.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 2.000000+0 1.000000+0 2.000000+0-1.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
+    " 3.811148+3 5.000000+0 5.100000+0 5.200000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.993903+5 6.000000+0 6.100000+0 6.200000+0 0.000000+0 0.000000+02925 2151     \n"
+    "-2.000000+0-1.000000+0          0          0         12          22925 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 0.000000+0 2.000000+0 0.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
+    "-5.334625+4 7.000000+0 7.100000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 3.316735+5 8.000000+0 8.100000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 1.000000+0          0          0         18          32925 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 1.000000+0 1.000000+0-1.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 2.000000+0 1.000000+0 2.000000+0-1.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
+    " 1.054117+4 9.000000+0 9.100000+0 9.200000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.989878+5 1.000000+1 1.010000+1 1.020000+1 0.000000+0 0.000000+02925 2151     \n"
+    " 3.000000+0 1.000000+0          0          0         12          22925 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 2.000000+0 1.000000+0 2.000000+0-1.000000+0 6.700000-1 6.700000-12925 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          22925 2151     \n"
+    " 4.018230+2 1.100000+1 1.110000+1 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
+    " 3.006336+5 1.200000+1 1.210000+1 0.000000+0 0.000000+0 0.000000+02925 2151     \n";
+}
