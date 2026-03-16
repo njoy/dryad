@@ -21,10 +21,9 @@ namespace resonances {
 namespace lrf7 {
 
   /**
-   *  @brief Reads all channels in a spin group, and return an ENDFtk BackgroundChannels object
-   *         for the spin group
+   *  @brief Create the background channel data for LRF7 resonance parameters
    *
-   *  @param[in] spingroup   dryad spin group
+   *  @param[in] spingroup   the spin group
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels
   createEndfBackgroundChannels( const dryad::resonances::SpinGroup& spingroup ) {

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfSpinGroups.hpp"
+#include "njoy/dryad/format/endf/resonances/lrf7/createEndfRMatrixLimited.hpp"
 
 // other includes
 #include "njoy/constants.hpp"
@@ -15,7 +15,7 @@ using namespace njoy::dryad::resonances;
 
 std::string chunk();
 
-SCENARIO( "createEndfSpinGroups" ) {
+SCENARIO( "createEndfRMatrixLimited" ) {
 
   GIVEN( "valid data for a compound system" ) {
 
