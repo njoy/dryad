@@ -17,7 +17,7 @@ std::string chunk();
 
 SCENARIO( "createEndfResonanceChannels" ) {
 
-  GIVEN( "valid data for s spin group and particle pairs" ) {
+  GIVEN( "valid data for a spin group and particle pairs" ) {
 
     std::string string = chunk();
 

@@ -28,8 +28,6 @@ namespace lrf7 {
   inline auto createEndfResonanceChannels( const dryad::resonances::SpinGroup& group,
                                            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
-    using ResonanceChannels = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels;
-
     double parity = group.parity();
     double aj = group.totalAngularMomentum() * parity;
 
@@ -81,6 +79,7 @@ namespace lrf7 {
     std::transform( apt.begin(), apt.end(), apt.begin(), convert_radius );
     std::transform( ape.begin(), ape.end(), ape.begin(), convert_radius );
 
+    using ResonanceChannels = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceChannels;
     return ResonanceChannels( aj, parity,
                               std::move( ppi ), std::move( l ), std::move( s ), std::move( b ),
                               std::move( apt ), std::move( ape ), kbk, kps );

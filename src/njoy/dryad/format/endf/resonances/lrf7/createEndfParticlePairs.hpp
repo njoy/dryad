@@ -7,14 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "tools/overload.hpp"
-#include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/dryad/resonances/CompoundSystem.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/moveCaptureToFront.hpp"
-// #include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
-// #include "njoy/dryad/format/endf/resonances/lrf7/createChannelData.hpp"
-#include "njoy/dryad/resonances/BoundaryCondition.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -25,64 +18,75 @@ namespace resonances {
 namespace lrf7 {
 
   /**
-   *  @brief Format a dryad ResonanceChannels object to ENDFtk object
-   *  The function takes a spin group (and not only ResonanceChannels) because AJ and PJ are needed. 
+   *  @brief Create the particle pair informatin for LRF7 resonance parameters
    *
-   *  @param[in] group   the dryad spin group to format
+   *  @param[in] compound   the compound system
    */
-  inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs 
+  inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs
   createEndfParticlePairs( const dryad::resonances::CompoundSystem& compound ) {
-    
-    std::vector<double> ma, mb, za, zb, ia, ib, q, pa, pb;
-    std::vector<int> pnt, shf, mt;
 
-    // How many non-duplicate channels are there across all spin groups of this compound
-    for(const auto& sgroup : compound.spinGroups()) {
-      for (const auto& channel : sgroup.channels()) {
+    std::vector< double > ma, mb, za, zb, ia, ib, q, pa, pb;
+    std::vector< int > pnt, shf, mt;
 
-        if( !channel.reaction().mt().has_value() ) {
-          Log::error( "Channel without MT value is not ENDF compatible" );
-          throw std::exception(); 
+    auto incident = compound.spinGroups().front().channels().front().incidentParticlePair().lightParticle().identifier();
+
+    for( const auto& group : compound.spinGroups() ) {
+
+      for ( const auto& channel : group.channels() ) {
+
+        if ( ! channel.reaction().mt().has_value() ) {
+
+          Log::error( "Found a channel without an MT number, this is not ENDF compatible" );
+          throw std::exception();
         }
-                
-        // one mt only is associated to a pp
-        if (std::find(mt.begin(), mt.end(), channel.reaction().mt().value()) == mt.end()) {
-          
-          const auto& outgoing_pp = channel.outgoingParticlePair();
 
-          ma.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().lightParticle().mass() / constants::neutron_mass );
-          mb.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().heavyParticle().mass() / constants::neutron_mass );
-          za.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().lightParticle().charge() );
-          zb.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().heavyParticle().charge() );
-          ia.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().lightParticle().spin() );
-          ib.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().heavyParticle().spin() );
+        int mt_number = channel.reaction().reactionType() == id::ReactionType::elastic( incident )
+                          ? 2
+                          : channel.reaction().mt().value();
+
+        // add the particle pair only if we do not have the mt number yet
+        if ( std::find( mt.begin(), mt.end(), mt_number ) == mt.end() ) {
+
+          decltype(auto) outgoing = channel.outgoingParticlePair();
+
+          mt.push_back( mt_number );
+
+          ma.push_back( outgoing.has_value() ? outgoing.value().lightParticle().mass() : 0. );
+          mb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().mass() : 0. );
+          za.push_back( outgoing.has_value() ? outgoing.value().lightParticle().charge() : 0. );
+          zb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().charge() : 0. );
+          ia.push_back( outgoing.has_value() ? outgoing.value().lightParticle().spin() *
+                                               outgoing.value().lightParticle().parity()
+                                             : 0. );
+          ib.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().spin() *
+                                               outgoing.value().heavyParticle().parity()
+                                             : 0. );
           q.push_back( channel.qValue() );
-          
-          // if fission (no outgoing) or capture (photon in outgoing pp), then PNT=-1
-          int compute_penetrability = !outgoing_pp.has_value()
-                                      ? -1
-                                      : outgoing_pp.value().lightParticle().identifier() == id::ParticleID::photon()
-                                        ? -1
-                                        : 1;
-          
-          pnt.push_back(compute_penetrability);
+          pa.push_back( outgoing.has_value() ? outgoing.value().lightParticle().parity() : 0. );
+          pb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().parity() : 0. );
 
-          // Shift factor can always be computed (SHF=1), except when the boundary condition cancels it out (SHF=0)
-          shf.push_back( sgroup.boundaryCondition() != njoy::dryad::resonances::BoundaryCondition::ShiftFactor );
-          
-          mt.push_back( channel.reaction().mt().value() );
-          pa.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().lightParticle().parity());
-          pb.push_back( !outgoing_pp.has_value() ? 0 : outgoing_pp.value().heavyParticle().parity());
+          // if fission (no outgoing) or capture (photon in outgoing pp), then PNT=-1
+          pnt.push_back( outgoing.has_value()
+                           ? outgoing.value().lightParticle().identifier() == id::ParticleID::photon()
+                               ? -1
+                               : +1
+                           : -1 );
+
+          // when the boundary condition elminates shift, set the SHF flag to 0
+          shf.push_back( group.boundaryCondition() != dryad::resonances::BoundaryCondition::ShiftFactor );
         }
       }
     }
 
-  return ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs( std::move( ma ), std::move( mb ),
-                                                                          std::move( za ), std::move( zb ),
-                                                                          std::move( ia ), std::move( ib ),
-                                                                          std::move( pa ), std::move( pb ),
-                                                                          std::move( q ), std::move( pnt ),
-                                                                          std::move( shf ), std::move( mt ) );
+    // transform mass values from amu to neutron mass units
+    auto convert_mass = [&] ( auto&& value ) { return value / constants::neutron_mass; };
+    std::transform( ma.begin(), ma.end(), ma.begin(), convert_mass );
+    std::transform( mb.begin(), mb.end(), mb.begin(), convert_mass );
+
+    using ParticlePairs = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs;
+    return ParticlePairs( std::move( ma ), std::move( mb ), std::move( za ), std::move( zb ),
+                          std::move( ia ), std::move( ib ), std::move( pa ), std::move( pb ),
+                          std::move( q ), std::move( pnt ), std::move( shf ), std::move( mt ) );
   }
 
 
