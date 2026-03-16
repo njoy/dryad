@@ -238,7 +238,7 @@ add_cpp_test( dryad.format.endf.resonances.lrf7.createEndfResonanceChannels     
 add_cpp_test( dryad.format.endf.resonances.lrf7.createEndfResonanceParameters           dryad/format/endf/resonances/lrf7/createEndfResonanceParameters.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf7.createEndfRMatrixLimited                dryad/format/endf/resonances/lrf7/createEndfRMatrixLimited.test.cpp )
 add_cpp_test( dryad.format.endf.thermal.createEndfIncoherentElastic                     dryad/format/endf/thermal/createEndfIncoherentElastic.test.cpp )
-add_cpp_test( dryad.format.endf.createEndfFile2Section                                  dryad/format/endf/createEndfFile2Section.test.cpp )
+add_cpp_test( dryad.format.endf.createEndfFile2Section151                               dryad/format/endf/createEndfFile2Section151.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfFile3Section                                  dryad/format/endf/createEndfFile3Section.test.cpp )
 add_cpp_test( dryad.format.endf.createEndfFile23Section                                 dryad/format/endf/createEndfFile23Section.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxationEndfFile                          dryad/format/endf/createAtomicRelaxationEndfFile.test.cpp )

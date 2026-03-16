@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createEndfFile2Section.hpp"
+#include "njoy/dryad/format/endf/createEndfFile2Section151.hpp"
 
 // other includes
 #include "njoy/constants.hpp"
@@ -119,7 +119,7 @@ SCENARIO( "createEndfFile2Section" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::createEndfFile2Section( awr, parameters );
+        auto data = format::endf::createEndfFile2Section151( awr, parameters );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

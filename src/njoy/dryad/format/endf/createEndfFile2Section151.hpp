@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEENDFFILE2SECTION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEENDFFILE2SECTION
+#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEENDFFILE2SECTION151
+#define NJOY_DRYAD_FORMAT_ENDF_CREATEENDFFILE2SECTION151
 
 // system includes
 #include <vector>
@@ -16,12 +16,12 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create an ENDF MF2 section object from a ResonanceParameters object
+   *  @brief Create an ENDF MF2 MT151 section object from a ResonanceParameters object
    *
    *  @param[in] parameters   the resonance parameter data
    */
   inline ENDFtk::section::Type< 2, 151 >
-  createEndfFile2Section( double awr, const dryad::resonances::ResonanceParameters& parameters ) {
+  createEndfFile2Section151( double awr, const dryad::resonances::ResonanceParameters& parameters ) {
 
     std::vector< ENDFtk::section::Type< 2, 151 >::ResonanceRange > ranges;
     int za = parameters.resolved().front().reactions().front().target().za();

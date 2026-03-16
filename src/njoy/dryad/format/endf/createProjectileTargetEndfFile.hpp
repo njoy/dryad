@@ -8,7 +8,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
-#include "njoy/dryad/format/endf/createEndfFile2Section.hpp"
+#include "njoy/dryad/format/endf/createEndfFile2Section151.hpp"
 #include "njoy/dryad/format/endf/createEndfFile3Section.hpp"
 #include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
@@ -81,7 +81,7 @@ namespace endf {
     //! @todo if lrp=0, should write a 'special case' MF2
     if ( transport.resonances() ) {
 
-      material.insert( createEndfFile2Section( awr, transport.resonances().value() ) );
+      material.insert( createEndfFile2Section151( awr, transport.resonances().value() ) );
     }
 
     for ( const auto& reaction : transport.reactions() ) {
