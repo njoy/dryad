@@ -160,6 +160,26 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the kinematics type applied to the spin group
+     */
+    Kinematics kinematicsType() const {
+
+      return this->channels().front().kinematicsType();
+    }
+
+    /**
+     *  @brief Return whether or not the channels in the spin group have backgrounds
+     */
+    bool hasChannelsWithBackground() const {
+
+      return std::any_of( this->channels().begin(), this->channels().end(),
+                          [] ( auto&& channel ) {
+
+                            return channel.background().has_value();
+                          } );
+    }
+
+    /**
      *  @brief Calculate the cross section values at a given energy
      *
      *  @param[in] energy   the energy
@@ -183,7 +203,7 @@ namespace resonances {
      */
     void crossSections( std::vector<double>& energies, std::map< id::ReactionID, std::vector<double> >& xs ) {
 
-      std::map< id::ReactionID, double > single_xs; 
+      std::map< id::ReactionID, double > single_xs;
       const std::size_t n_energies = energies.size();
 
       // for each energy, compute xs and insert in main container
@@ -194,11 +214,11 @@ namespace resonances {
                                                       this->resonanceTable(), single_xs );
                     },
                     this->calculator_ );
-        
+
         for ( const auto& [reaction_id, cross_section] : single_xs) {
 
           auto& v = xs[reaction_id];
-    
+
           if (v.empty()) {
             v.resize(n_energies, 0.0);
           }

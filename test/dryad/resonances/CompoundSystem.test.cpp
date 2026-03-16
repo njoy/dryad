@@ -275,6 +275,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   auto spingroup = groups[0];
 
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
+
   // channels
   auto channels = spingroup.channels();
 
@@ -351,6 +354,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 1
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[1];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -510,6 +516,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[2];
 
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
+
   // channels
   channels = spingroup.channels();
 
@@ -613,6 +622,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 3
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[3];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -772,6 +784,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[4];
 
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
+
   // channels
   channels = spingroup.channels();
 
@@ -875,6 +890,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 5
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[5];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();

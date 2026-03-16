@@ -13,6 +13,7 @@ from njoy.dryad.resonances import ResonanceTable
 from njoy.dryad.resonances import Formalism
 from njoy.dryad.resonances import BoundaryCondition
 from njoy.dryad.resonances import SpinGroup
+from njoy.dryad.resonances import Kinematics
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
@@ -81,6 +82,9 @@ def verify_chunk( self, chunk ) :
 
     self.assertEqual( 1, chunk.total_angular_momentum )
     self.assertEqual( +1, chunk.parity )
+
+    self.assertEqual( Kinematics.NonRelativistic, chunk.kinematics_type )
+    self.assertEqual( False, chunk.has_channels_with_background )
 
     self.assertEqual( 4, len( chunk.reactions ) )
     self.assertEqual( ReactionID( 'n,Cl35->g,Cl36[all]' ), chunk.reactions[0] )

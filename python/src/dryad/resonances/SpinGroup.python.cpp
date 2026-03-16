@@ -113,6 +113,18 @@ void wrapSpinGroup( python::module& module ) {
     python::overload_cast<>( &Component::reactions, python::const_ ),
     "The reactions to which this spin group contributes"
   )
+  .def_property_readonly(
+
+    "kinematics_type",
+    &Component::kinematicsType,
+    "The kinematics type applied to the spin group"
+  )
+  .def_property_readonly(
+
+    "has_channels_with_background",
+    &Component::hasChannelsWithBackground,
+    "Flag to indicate whether or not the channels in the spin group have backgrounds"
+  )
   .def(
 
     "cross_sections",

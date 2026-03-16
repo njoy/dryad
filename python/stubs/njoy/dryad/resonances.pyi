@@ -1310,6 +1310,16 @@ class SpinGroup:
         The formalism
         """
     @property
+    def has_channels_with_background(self) -> bool:
+        """
+        Flag to indicate whether or not the channels in the spin group have backgrounds
+        """
+    @property
+    def kinematics_type(self) -> Kinematics:
+        """
+        The kinematics type applied to the spin group
+        """
+    @property
     def parity(self) -> int:
         """
         The parity
