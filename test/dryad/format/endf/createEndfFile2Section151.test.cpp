@@ -13,13 +13,144 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 
-std::string chunk();
+std::string chunkSi29();
+std::string chunkCu63();
+std::string chunkCl35();
 
 SCENARIO( "createEndfFile2Section" ) {
 
-  GIVEN( "valid data for a compound system" ) {
+  GIVEN( "valid data for a compound system - Si29" ) {
 
-    std::string string = chunk();
+    // Si29 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - empty spin group that contribute only potential scattering
+
+    std::string string = chunkSi29();
+
+    WHEN( "the data is given explicitly" ) {
+
+    auto photon = id::ParticleID::photon();
+    auto neutron = id::ParticleID::neutron();
+    auto si29 = id::ParticleID( "Si29" );
+    auto si30 = id::ParticleID( "Si30[all]" );
+
+    ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                              Particle( si30, 29.728 * njoy::constants::neutron_mass, 0, +1 ) );
+    ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                               Particle( si29, 28.728 * njoy::constants::neutron_mass, 0.5, +1 ) );
+
+    ChannelRadii zero_radii( 0., 0. );
+    ChannelRadii radii( 4.221, 4.221 );
+
+      CompoundSystem compound( 1e-5, 1.3e+6,
+                               { { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{1,1,0-}" ) },
+                                     { 3.740320e+5, 6.007182e+5 },
+                                     { { 1., 2. },
+                                       { 1.1, 2.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 0- spin group
+                                 { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,0-}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{0,0,0+}" ) },
+                                     { -2.041700e+6, 2.248487e+6 },
+                                     { { 3., 4. },
+                                       { 3.1, 4.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 0+ spin group
+                                 { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1-}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{1,0,1-}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{1,1,1-}" ) },
+                                     { 1.529411e+4, 1.240000e+6 },
+                                     { { 5., 6. },
+                                       { 5.1, 6.1 },
+                                       { 5.2, 6.2 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 1- spin group
+                                 { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,1+}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{0,1,1+}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{2,1,1+}" ) },
+                                     { 3.842219e+5, 1.388859e+6 },
+                                     { { 7., 8. },
+                                       { 7.1, 8.1 },
+                                       { 7.2, 8.2 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 1+ spin group
+                                 { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2-}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{1,1,2-}" ) },
+                                     { 3.883377e+4, 1.207629e+6 },
+                                     { { 9., 10. },
+                                       { 9.1, 10.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 2- spin group
+                                 { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,2+}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{2,0,2+}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{2,1,2+}" ) } }, // empty table
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 2+ spin group
+                                 { { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, radii } },
+                                   { { id::ChannelID( "n,Si29->g,Si30[all]{0,0,3+}" ),
+                                       id::ChannelID( "n,Si29->n,Si29{2,1,3+}" ) },
+                                     { 6.203529e+5 },
+                                     { { 11. },
+                                       { 11.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor } } ); // 3+ spin group
+
+      ResonanceParameters parameters( { compound } );
+
+      double awr = 28.728;
+
+      THEN( "it can be converted to ENDF" ) {
+
+        auto data = format::endf::createEndfFile2Section151( awr, parameters );
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        data.print( output, 1428, 2 );
+
+        CHECK( buffer == string );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "valid data for a compound system - Cu63" ) {
+
+    // Cu63 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - 2 channels, neutron only, constant boundary condition
+
+    std::string string = chunkCu63();
 
     WHEN( "the data is given explicitly" ) {
 
@@ -131,12 +262,70 @@ SCENARIO( "createEndfFile2Section" ) {
   } // GIVEN
 } // SCENARIO
 
-std::string chunk() {
+std::string chunkSi29() {
+
+  return
+    " 1.402900+4 2.872800+1          0          0          1          01428 2151     \n"
+    " 1.402900+4 1.000000+0          0          0          1          01428 2151     \n"
+    " 1.000000-5 1.300000+6          1          7          0          11428 2151     \n"
+    " 0.000000+0 0.000000+0          1          3          7          01428 2151     \n"
+    " 0.000000+0 0.000000+0          2          0         24          41428 2151     \n"
+    " 0.000000+0 2.972800+1 0.000000+0 1.400000+1 1.000000+0 0.000000+01428 2151     \n"
+    " 0.000000+0-1.000000+0 0.000000+0 1.020000+2 1.000000+0 1.000000+01428 2151     \n"
+    " 1.000000+0 2.872800+1 0.000000+0 1.400000+1 5.000000-1 5.000000-11428 2151     \n"
+    " 0.000000+0 1.000000+0 0.000000+0 2.000000+0 1.000000+0 1.000000+01428 2151     \n"
+    "-0.000000+0-1.000000+0          0          0         12          21428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 1.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          21428 2151     \n"
+    " 3.740320+5 1.000000+0 1.100000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 6.007182+5 2.000000+0 2.100000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 0.000000+0 1.000000+0          0          0         12          21428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 0.000000+0 0.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          21428 2151     \n"
+    "-2.041700+6 3.000000+0 3.100000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.248487+6 4.000000+0 4.100000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    "-1.000000+0-1.000000+0          0          0         18          31428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 1.000000+0 0.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 2.000000+0 1.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          21428 2151     \n"
+    " 1.529411+4 5.000000+0 5.100000+0 5.200000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 1.240000+6 6.000000+0 6.100000+0 6.200000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 1.000000+0 1.000000+0          0          0         18          31428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 0.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 2.000000+0 2.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          21428 2151     \n"
+    " 3.842219+5 7.000000+0 7.100000+0 7.200000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 1.388859+6 8.000000+0 8.100000+0 8.200000+0 0.000000+0 0.000000+01428 2151     \n"
+    "-2.000000+0-1.000000+0          0          0         12          21428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 1.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          21428 2151     \n"
+    " 3.883377+4 9.000000+0 9.100000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 1.207629+6 1.000000+1 1.010000+1 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 1.000000+0          0          0         18          31428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 2.000000+0 0.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 2.000000+0 2.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          0          6          11428 2151     \n"
+    " 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 3.000000+0 1.000000+0          0          0         12          21428 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    " 2.000000+0 2.000000+0 1.000000+0 0.000000+0 4.221000-1 4.221000-11428 2151     \n"
+    " 0.000000+0 0.000000+0          0          1          6          11428 2151     \n"
+    " 6.203529+5 1.100000+1 1.110000+1 0.000000+0 0.000000+0 0.000000+01428 2151     \n"
+    "                                                                  1428 2  0     \n";
+}
+
+std::string chunkCu63() {
 
   return
     " 2.906300+4 6.238900+1          0          0          1          02925 2151     \n"
     " 2.906300+4 1.000000+0          0          0          1          02925 2151     \n"
-    " 1.000000-5 1.000000+5          1          7          0          02925 2151     \n"
+    " 1.000000-5 1.000000+5          1          7          0          12925 2151     \n"
     " 0.000000+0 0.000000+0          1          3          6          02925 2151     \n"
     " 0.000000+0 0.000000+0          2          0         24          42925 2151     \n"
     " 0.000000+0 6.338900+1 0.000000+0 2.900000+1 1.000000+0 0.000000+02925 2151     \n"
@@ -182,4 +371,9 @@ std::string chunk() {
     " 4.018230+2 1.100000+1 1.110000+1 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
     " 3.006336+5 1.200000+1 1.210000+1 0.000000+0 0.000000+0 0.000000+02925 2151     \n"
     "                                                                  2925 2  0     \n";
+}
+
+std::string chunkCl35() {
+
+  return "";
 }

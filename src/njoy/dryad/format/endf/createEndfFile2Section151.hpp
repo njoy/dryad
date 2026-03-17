@@ -29,11 +29,14 @@ namespace endf {
     // go over the resolved resonance ranges
     for( const auto& region : parameters.resolved() ) {
 
-      ranges.emplace_back( region.lowerEnergyLimit(), region.upperEnergyLimit(), 0,
-                           resonances::lrf7::createEndfRMatrixLimited( region ) );
+      // LRF=7 : no energy dependent scattering radius possible (NRO=0),
+      //         naps does not matter so we set it to 1
+      ranges.emplace_back( region.lowerEnergyLimit(), region.upperEnergyLimit(), 1,
+                           resonances::lrf7::createEndfRMatrixLimited( region ),
+                           std::nullopt );
     };
 
-    //! @todo go over the resolved resonance ranges
+    //! @todo go over the unresolved resonance ranges
 
     ENDFtk::section::Type< 2, 151 >::Isotope isotope( za, 1.0, false, std::move( ranges ) );
     return ENDFtk::section::Type< 2, 151 >( za, awr, { isotope } );
