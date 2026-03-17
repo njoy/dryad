@@ -63,19 +63,15 @@ ResonanceTable( id::ChannelID channel,
 /**
  *  @brief Constructor for an empty table
  *
- *  @param[in] channels     the channel identifiers (nc values)
+ *  @param[in] channels   the channel identifiers (nc values)
  */
 ResonanceTable( std::vector< id::ChannelID > channels ) :
     ResonanceTable( processTable( std::move( channels ) ) ) {}
 
 /**
- *  @brief Constructor
+ *  @brief Constructor for an empty table
  *
- *  The energies do not have to be sorted (they will be sorted upon construction).
- *
- *  @param[in] channel      the channel identifier
- *  @param[in] energies     the level energies
- *  @param[in] amplitudes   the reduced width amplitudes
+ *  @param[in] channel   the channel identifier
  */
 ResonanceTable( id::ChannelID channel ) :
     ResonanceTable( std::vector< id::ChannelID >{ std::move( channel ) } ) {}

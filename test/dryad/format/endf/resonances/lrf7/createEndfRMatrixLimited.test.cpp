@@ -15,6 +15,7 @@ using namespace njoy::dryad::resonances;
 
 std::string chunkSi29();
 std::string chunkCu63();
+std::string chunkCl35();
 
 SCENARIO( "createEndfRMatrixLimited" ) {
 
@@ -251,6 +252,125 @@ SCENARIO( "createEndfRMatrixLimited" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+//  GIVEN( "valid data for a compound system - Cl35" ) {
+//
+//    // Cl35 ENDF/B-VIII.1 LRF=7 resonance evaluation
+//    // particular features: - Z for n,gamma is set to 0.0 (should be 17.0)
+//    //                      - spin groups are not unique (1- and 2- occur
+//    //                        multiple times)
+//    // these only apply when reading the data
+//
+//    std::string string = chunkCl35();
+//
+//    WHEN( "the data is given explicitly" ) {
+//
+//      auto photon = id::ParticleID::photon();
+//      auto neutron = id::ParticleID::neutron();
+//      auto proton = id::ParticleID::proton();
+//      auto cl35 = id::ParticleID( "Cl35" );
+//      auto cl35_e1 = id::ParticleID( "Cl35_e1" );
+//      auto cl36 = id::ParticleID( "Cl36[all]" );
+//      auto s35 = id::ParticleID( "S35" );
+//
+//      ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+//                                Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
+//      ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
+//                                 Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
+//      ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
+//                                Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
+//
+//      ChannelRadii zero_radii( 0., 0. );
+//      ChannelRadii radii1( 4.822220, 4.888750 );
+//      ChannelRadii radii2( 4.822220, 3.667980 );
+//
+//      CompoundSystem compound( 1e-5, 1.2e+6,
+//                               { { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+//                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+//                                     { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+//                                       neutron_pair, neutron_pair, 0., std::nullopt, radii1 } },
+//                                   { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+//                                       id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
+//                                     { 2.239640e+4, 5.478545e+5 },
+//                                     { { 1., 2. },
+//                                       { 1.1, 2.1 } } },
+//                                   Formalism::ReichMoore,
+//                                   BoundaryCondition::ShiftFactor }, // 0- spin group
+//                                 { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
+//                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+//                                     { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
+//                                       neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
+//                                       neutron_pair, neutron_pair, 615220., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+//                                       neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ),
+//                                       neutron_pair, neutron_pair, 615220., std::nullopt, radii1 } },
+//                                   { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
+//                                       id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
+//                                       id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
+//                                       id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+//                                       id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
+//                                     { 4.250762e+3, 1.435502e+6 },
+//                                     { { 3., 4. },
+//                                       { 3.1, 4.1 },
+//                                       { 3.2, 4.2 },
+//                                       { 3.3, 4.3 },
+//                                       { 3.4, 4.4 } } },
+//                                   Formalism::ReichMoore,
+//                                   BoundaryCondition::ShiftFactor }, // 1- spingroup
+//                                 { { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+//                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+//                                     { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+//                                       neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ),
+//                                       neutron_pair, neutron_pair, 615220., std::nullopt, radii1 } },
+//                                   { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+//                                       id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+//                                       id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
+//                                     { 5.493200e+4, 1.205687e+6 },
+//                                     { { 5., 6. },
+//                                       { 5.1, 6.1 },
+//                                       { 5.2, 6.2 } } },
+//                                   Formalism::ReichMoore,
+//                                   BoundaryCondition::ShiftFactor }, // 1+ spingroup
+//                                 { { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
+//                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+//                                     { id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
+//                                       neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
+//                                       neutron_pair, neutron_pair, 615220., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
+//                                       neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+//                                     { id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ),
+//                                       neutron_pair, neutron_pair, 615220., std::nullopt, radii1 } },
+//                                   { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
+//                                       id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
+//                                       id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
+//                                       id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
+//                                       id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ) },
+//                                     { -3.369334e+5, 1.441365e+6 },
+//                                     { { 7., 7. },
+//                                       { 7.1, 7.1 },
+//                                       { 7.2, 7.2 },
+//                                       { 7.3, 7.3 },
+//                                       { 7.4, 7.4 } } },
+//                                   Formalism::ReichMoore,
+//                                   BoundaryCondition::ShiftFactor }, // 2- spingroup
+//                                 {  } } ); // 2+ spin group
+//
+//      THEN( "it can be converted to ENDF" ) {
+//
+//        auto data = format::endf::resonances::lrf7::createEndfRMatrixLimited( compound );
+//
+//        std::string buffer;
+//        auto output = std::back_inserter( buffer );
+//        data.print( output, 2925, 2, 151 );
+//
+//        CHECK( buffer == string );
+//      } // THEN
+//    } // WHEN
+//  } // GIVEN
 } // SCENARIO
 
 std::string chunkSi29() {
