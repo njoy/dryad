@@ -370,22 +370,21 @@ class IncoherentDistributionData:
     @typing.overload
     def average_energy(self, energy: float, tolerance: float = 1e-08) -> float:
         """
+        Calculate the average outgoing energy
+        
         Parameters 
         ---------- 
             energy : float 
                  the incident energy
+            energies : list of float 
+                 the incident energies
             tolerance : float 
                  the integration tolerance (default: 1e-8)
         """
     @typing.overload
     def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
         """
-        Parameters 
-        ---------- 
-            energies : list of float 
-                 the incident energies
-            tolerance : float 
-                 the integration tolerance (default: 1e-8)
+        Calculate the average outgoing energy
         """
     def normalise(self) -> None:
         """

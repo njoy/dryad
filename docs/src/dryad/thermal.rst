@@ -11,4 +11,5 @@ thermal
    thermal/DebyeWallerIntegralData
    thermal/CoherentElasticScattering
    thermal/IncoherentElasticScattering
-   thermal/TabulatedScatteringFunction
+   thermal/TabulatedScatteringKernel
+   thermal/TabulatedScatteringKernelFunction

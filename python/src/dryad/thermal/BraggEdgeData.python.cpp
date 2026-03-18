@@ -31,7 +31,7 @@ void wrapBraggEdgeData( python::module& module ) {
     "         the temperature\n"
     "    energies : list of float\n"
     "         the temperature\n"
-    "    values : list of floatfloat\n"
+    "    values : list of float\n"
     "         the structure factor values"
   );
 
@@ -51,7 +51,7 @@ void wrapBraggEdgeData( python::module& module ) {
 
     "temperature",
     &Component::temperature,
-    "The temperature of the Bradd edge data"
+    "The temperature of the Bragg edge data"
   )
   .def_property_readonly(
 
