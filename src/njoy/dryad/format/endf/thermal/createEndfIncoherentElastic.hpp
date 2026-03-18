@@ -26,10 +26,10 @@ namespace thermal {
   createEndfIncoherentElastic( const dryad::thermal::IncoherentElasticScattering& incoherent ) {
 
     double sb = incoherent.boundCrossSection();
-    std::vector< long > boundaries = createEndfBoundaries( incoherent.debyeWallerIntegral().boundaries() );
-    std::vector< long > interpolants = createEndfInterpolants( incoherent.debyeWallerIntegral().interpolants() );
     std::vector< double > temperatures = incoherent.debyeWallerIntegral().temperatures();
     std::vector< double > integrals = incoherent.debyeWallerIntegral().values();
+    std::vector< long > boundaries = { static_cast< long >( temperatures.size() ) };
+    std::vector< long > interpolants = { 2 };
 
     return ENDFtk::section::Type< 7, 2 >::IncoherentElastic(
              sb,

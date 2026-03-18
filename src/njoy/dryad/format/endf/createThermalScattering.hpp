@@ -59,6 +59,7 @@ namespace endf {
       }
 
       return ThermalScattering( std::move( documentation ),
+                                std::nullopt,
                                 std::move( incoherent ) );
     }
     else {

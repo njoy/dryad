@@ -85,7 +85,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
                   { 2.013538, 2.677764, 3.323456, 3.972601,
                     4.623738, 5.276127, 6.583171, 7.891981 } } );
 
-    ThermalScattering tsl( std::move( incoherent ) );
+    ThermalScattering tsl( std::nullopt, std::move( incoherent ) );
     tsl.documentation().awr( 90.436 );
     tsl.documentation().library( 0 );
     tsl.documentation().version( std::make_pair( 8, 1 ) );

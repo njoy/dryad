@@ -30,6 +30,10 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
     "An S(a,b) scattering kernel using tabulated scattering kernel functions\n\n"
     "Parameters\n"
     "----------\n"
+    "    moderator_temperature : float\n"
+    "         the moderator temperature\n"
+    "    effective_temperature : float\n"
+    "         the effective temperature used in the SCT approximation\n"
     "    energy_transfers : list of float\n"
     "         the energy transfer values\n"
     "    functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction\n"
@@ -46,22 +50,38 @@ void wrapTabulatedScatteringKernel( python::module& module ) {
   component
   .def(
 
-    python::init< std::vector< double >,
+    python::init< double, double,
+                  std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
+    python::arg( "moderator_temperature" ), python::arg( "effective_temperature" ),
     python::arg( "energy_transfers" ), python::arg( "functions" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
     "Initialise the S(a,b) scattering kernel with multiple interpolation zones"
   )
   .def(
 
-    python::init< std::vector< double >,
+    python::init< double, double,
+                  std::vector< double >,
                   std::vector< TabulatedScatteringKernelFunction >,
                   InterpolationType >(),
+    python::arg( "moderator_temperature" ), python::arg( "effective_temperature" ),
     python::arg( "energy_transfers" ), python::arg( "functions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     "Initialise the S(a,b) scattering kernel with a single interpolation zone"
+  )
+  .def_property_readonly(
+
+    "moderator_temperature",
+    &Component::moderatorTemperature,
+    "The moderator temperature"
+  )
+  .def_property_readonly(
+
+    "effective_temperature",
+    &Component::effectiveTemperature,
+    "The effective temperature used for the short collision time approximation"
   )
   .def_property_readonly(
 

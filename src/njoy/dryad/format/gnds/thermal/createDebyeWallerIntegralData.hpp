@@ -11,7 +11,7 @@
 #include "njoy/dryad/format/gnds/readXYs1d.hpp"
 #include "njoy/dryad/format/gnds/convertTemperatures.hpp"
 #include "njoy/dryad/format/gnds/convertInverseEnergies.hpp"
-#include "njoy/dryad/thermal/TabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -20,17 +20,15 @@ namespace gnds {
 namespace thermal {
 
   /**
-   *  @brief Create a TabulatedDebyeWallerIntegral from a GNDS DebyeWallerIntegral node
+   *  @brief Create a DebyeWallerIntegralData from a GNDS DebyeWallerIntegral node
    *
    *  @param[in] debye_waller   the GNDS Debye-Waller node
    */
-  inline dryad::thermal::TabulatedDebyeWallerIntegral
-  createTabulatedDebyeWallerIntegral( const pugi::xml_node& debye_waller ) {
+  inline dryad::thermal::DebyeWallerIntegralData
+  createDebyeWallerIntegralData( const pugi::xml_node& debye_waller ) {
 
     std::vector< double > temperatures;
     std::vector< double > values;
-    std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
 
     // check that this is a valid Debye-Waller integral node
     throwExceptionOnWrongNode( debye_waller, "DebyeWallerIntegral" );
@@ -41,9 +39,6 @@ namespace thermal {
       // read the Debye-Waller integral data
       auto data = readXYs1D( node );
 
-      // get the interpolation type
-      auto interpolant = createInterpolationType( std::get< 6 >( data ) );
-
       // convert units - if necessary
       convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ) );
       convertInverseEnergies( std::get< 4 >( data ), std::get< 5 >( data ) );
@@ -51,8 +46,6 @@ namespace thermal {
       // assign data
       temperatures = std::move( std::get< 2 >( data ) );
       values = std::move( std::get< 4 >( data ) );
-      boundaries.emplace_back( temperatures.size() - 1 );
-      interpolants.emplace_back( interpolant );
     }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
 
@@ -66,9 +59,6 @@ namespace thermal {
 
         // read the current interpolation region
         auto data = readXYs1D( xys1d, units );
-
-        // get the interpolation type
-        auto interpolant = createInterpolationType( std::get< 6 >( data ) );
 
         // convert units - if necessary
         convertTemperatures( std::get< 2 >( data ), std::get< 3 >( data ) );
@@ -88,8 +78,6 @@ namespace thermal {
         // grow the data accordingly
         temperatures.insert( temperatures.end(), std::get< 2 >( data ).begin() + offset, std::get< 2 >( data ).end() );
         values.insert( values.end(), std::get< 4 >( data ).begin() + offset, std::get< 4 >( data ).end() );
-        boundaries.emplace_back( temperatures.size() - 1 );
-        interpolants.emplace_back( interpolant );
       }
     }
     else {
@@ -99,9 +87,7 @@ namespace thermal {
       throw std::exception();
     }
 
-    return dryad::thermal::TabulatedDebyeWallerIntegral(
-             std::move( temperatures ), std::move( values ),
-             std::move( boundaries ), std::move( interpolants ) );
+    return dryad::thermal::DebyeWallerIntegralData( std::move( temperatures ), std::move( values ) );
   }
 
 } // thermal namespace

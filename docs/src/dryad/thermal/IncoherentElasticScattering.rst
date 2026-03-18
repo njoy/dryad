@@ -17,5 +17,7 @@ Read-only Attributes
 .. autosummary::
     :toctree: generated/
 
+    ~IncoherentElasticScattering.number_moderator_temperatures
+    ~IncoherentElasticScattering.moderator_temperatures
     ~IncoherentElasticScattering.bound_cross_section
     ~IncoherentElasticScattering.debye_waller_integral

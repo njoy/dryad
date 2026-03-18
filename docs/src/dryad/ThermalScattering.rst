@@ -33,6 +33,7 @@ Modifiable Attributes
     :toctree: generated/
 
     ~ThermalScattering.documentation
+    ~ThermalScattering.coherent_elastic_scattering
     ~ThermalScattering.incoherent_elastic_scattering
 
 Read-only Attributes

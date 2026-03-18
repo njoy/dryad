@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/thermal/createTabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/format/endf/thermal/createDebyeWallerIntegralData.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
@@ -13,9 +13,9 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::dryad::thermal;
 
-void verifyChunk( const TabulatedDebyeWallerIntegral& );
+void verifyChunk( const DebyeWallerIntegralData& );
 
-SCENARIO( "createTabulatedDebyeWallerIntegral" ) {
+SCENARIO( "createDebyeWallerIntegralData" ) {
 
   GIVEN( "ENDF MF7 MT2 scattering law components" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "createTabulatedDebyeWallerIntegral" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::thermal::createTabulatedDebyeWallerIntegral( incoherent );
+        auto chunk = format::endf::thermal::createDebyeWallerIntegralData( incoherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,17 +36,10 @@ SCENARIO( "createTabulatedDebyeWallerIntegral" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const TabulatedDebyeWallerIntegral& chunk ) {
+void verifyChunk( const DebyeWallerIntegralData& chunk ) {
 
-  CHECK( true == chunk.isLinearised() );
-  CHECK( 8 == chunk.numberPoints() );
-  CHECK( 1 == chunk.numberRegions() );
   CHECK( 8 == chunk.temperatures().size() );
   CHECK( 8 == chunk.values().size() );
-  CHECK( 1 == chunk.boundaries().size() );
-  CHECK( 1 == chunk.interpolants().size() );
-  CHECK( 7 == chunk.boundaries()[0] );
-  CHECK( InterpolationType::LinearLinear == chunk.interpolants()[0] );
   CHECK_THAT(  296, WithinRel( chunk.temperatures()[0] ) );
   CHECK_THAT(  400, WithinRel( chunk.temperatures()[1] ) );
   CHECK_THAT( 1000, WithinRel( chunk.temperatures()[6] ) );

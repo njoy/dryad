@@ -18,8 +18,6 @@
 #include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
 #include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
 
-#include "njoy/dryad/format/gnds/thermal/createTabulatedDebyeWallerIntegral.hpp"
-#include "njoy/dryad/format/gnds/thermal/createTabulatedEffectiveTemperature.hpp"
 #include "njoy/dryad/format/gnds/thermal/createIncoherentElasticScattering.hpp"
 
 #include "njoy/dryad/format/gnds/covariance/createScalingType.hpp"

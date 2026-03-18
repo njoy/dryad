@@ -3336,7 +3336,8 @@ class ThermalScattering:
     ----------
         documentation : njoy.dryad.Documentation
              the documentation associated to the thermal scattering data
-        incoherent : njoy.dryad.thermal.IncoherentElasticScattering
+        coherent : njoy.dryad.thermal.CoherentElasticScattering
+             coherent elastic scattering data (default: none)    incoherent : njoy.dryad.thermal.IncoherentElasticScattering
              incoherent elastic scattering data (default: none)
     """
     __hash__: typing.ClassVar[None] = None
@@ -3372,12 +3373,12 @@ class ThermalScattering:
     def __eq__(self, arg0: ThermalScattering) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, documentation: Documentation, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data with documentation
         """
     @typing.overload
-    def __init__(self, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data without documentation
         """
@@ -3396,6 +3397,14 @@ class ThermalScattering:
             filename : string
                  the ENDF file name
         """
+    @property
+    def coherent_elastic_scattering(self) -> thermal.CoherentElasticScattering | None:
+        """
+        The coherent elastic data
+        """
+    @coherent_elastic_scattering.setter
+    def coherent_elastic_scattering(self, arg1: thermal.CoherentElasticScattering | None) -> None:
+        ...
     @property
     def documentation(self) -> Documentation:
         """
