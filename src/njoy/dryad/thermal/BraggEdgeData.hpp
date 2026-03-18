@@ -36,7 +36,7 @@ namespace thermal {
     /* methods */
 
     /**
-     *  @brief Return the temperature of the Bradd edge data
+     *  @brief Return the temperature of the Bragg edge data
      */
     double temperature() const {
 
