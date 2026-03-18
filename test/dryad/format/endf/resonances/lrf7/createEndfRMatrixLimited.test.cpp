@@ -16,6 +16,7 @@ using namespace njoy::dryad::resonances;
 std::string chunkSi29();
 std::string chunkCu63();
 std::string chunkCl35();
+std::string chunkSr88();
 
 SCENARIO( "createEndfRMatrixLimited" ) {
 
@@ -400,6 +401,135 @@ SCENARIO( "createEndfRMatrixLimited" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "valid data for a compound system - Sr88" ) {
+
+    // Sr88 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - Sammy parametrisation for channel background
+
+    std::string string = chunkSr88();
+
+    WHEN( "the data is given explicitly" ) {
+
+      auto photon = id::ParticleID::photon();
+      auto neutron = id::ParticleID::neutron();
+      auto sr88 = id::ParticleID( "Sr88" );
+      auto sr89 = id::ParticleID( "Sr89[all]" );
+
+      ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                Particle( sr89, 88.15046 * njoy::constants::neutron_mass, 0, +1 ) );
+      ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                                 Particle( sr88, 87.15046 * njoy::constants::neutron_mass, 0, +1 ) );
+
+      ChannelRadii zero_radii( 0., 0. );
+      ChannelRadii equal_radii( 7.1, 7.1 );
+      ChannelRadii different_radii( 7.1, 6.8 );
+
+      CompoundSystem compound( 1e-5, 9.5e+5,
+                               { { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { 0.45, 3.2e-7, 0. }, { 0.075, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ) },
+                                     { 1.241000e+4, 8.331700e+5 },
+                                     { { 1., 2. },
+                                       { 1.1, 2.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 1/2- spin group
+                                 { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{0,1/2,1/2+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, different_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { -0.043, 2.8e-8, 0. }, { 0.01, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2+}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{0,1/2,1/2+}" ) },
+                                     { 1.3840e+4, 9.4334e+5 },
+                                     { { 3., 4. },
+                                       { 3.1, 4.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 1/2+ spin group
+                                 { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,3/2-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { 0.43, -1.8e-7, 0. }, { 0.22, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2-}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{1,1/2,3/2-}" ) },
+                                     { 1.8210e+4, 9.4823e+5 },
+                                     { { 5., 6. },
+                                       { 5.1, 6.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 3/2- spin group
+                                 { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{2,1/2,3/2+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { -0.7, 2.3e-6, 0. }, { 0.041, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,3/2+}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{2,1/2,3/2+}" ) },
+                                     { 2.6653e+5, 8.7494e+5 },
+                                     { { 7., 8. },
+                                       { 7.1, 8.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 3/2+ spin group
+                                 { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{3,1/2,5/2-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { 0.001, 4.6e-7, 0. }, { 0.24, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2-}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{3,1/2,5/2-}" ) },
+                                     { 4.0846e+5, 8.9944e+5 },
+                                     { { 9., 10. },
+                                       { 9.1, 10.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 5/2- spin group
+                                 { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2+}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{2,1/2,5/2+}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { -2.5, 3.3e-6, 0. }, { 0.0026, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,5/2+}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{2,1/2,5/2+}" ) },
+                                     { 4.0982e+5, 8.4961e+5 },
+                                     { { 11., 12. },
+                                       { 11.1, 12.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor }, // 5/2+ spin group
+                                 { { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,7/2-}" ),
+                                       neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{3,1/2,7/2-}" ),
+                                       neutron_pair, neutron_pair, 0., std::nullopt, equal_radii,
+                                       Kinematics::NonRelativistic,
+                                       SammyBackground( { 0.001, 9e-8, 0. }, { 0.19, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,7/2-}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{3,1/2,7/2-}" ) },
+                                     { 5.2884e+5, 9.4756e+5 },
+                                     { { 13., 14. },
+                                       { 13.1, 14.1 } } },
+                                   Formalism::ReichMoore,
+                                   BoundaryCondition::ShiftFactor } } ); // 7/2- spin group
+
+      THEN( "it can be converted to ENDF" ) {
+
+        auto data = format::endf::resonances::lrf7::createEndfRMatrixLimited( compound );
+
+        std::string buffer;
+        auto output = std::back_inserter( buffer );
+        data.print( output, 3837, 2, 151 );
+
+        CHECK( buffer == string );
+      } // THEN
+    } // WHEN
+  } // GIVEN
 } // SCENARIO
 
 std::string chunkSi29() {
@@ -561,4 +691,78 @@ std::string chunkCl35() {
     " 0.000000+0 0.000000+0          0          2         12          21725 2151     \n"
     " 1.635612+4 1.100000+1 1.110000+1 1.120000+1 0.000000+0 0.000000+01725 2151     \n"
     " 1.485128+6 1.200000+1 1.210000+1 1.220000+1 0.000000+0 0.000000+01725 2151     \n";
+}
+
+std::string chunkSr88() {
+
+  return
+    " 0.000000+0 0.000000+0          1          3          7          03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          0         24          43837 2151     \n"
+    " 0.000000+0 8.815046+1 0.000000+0 3.800000+1 1.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0-1.000000+0 0.000000+0 1.020000+2 1.000000+0 1.000000+03837 2151     \n"
+    " 1.000000+0 8.715046+1 0.000000+0 3.800000+1 5.000000-1 0.000000+03837 2151     \n"
+    " 0.000000+0 1.000000+0 0.000000+0 2.000000+0 1.000000+0 1.000000+03837 2151     \n"
+    "-5.000000-1-1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 1.000000+0 5.000000-1 0.000000+0 7.100000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 1.241000+4 1.000000+0 1.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 8.331700+5 2.000000+0 2.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    " 4.500000-1 3.200000-7 0.000000+0 7.500000-2 0.000000+0           3837 2151     \n"
+    " 5.000000-1 1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 0.000000+0 5.000000-1 0.000000+0 6.800000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 1.384000+4 3.000000+0 3.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 9.433400+5 4.000000+0 4.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    "-4.300000-2 2.800000-8 0.000000+0 1.000000-2 0.000000+0           3837 2151     \n"
+    "-1.500000+0-1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 1.000000+0 5.000000-1 0.000000+0 7.100000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 1.821000+4 5.000000+0 5.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 9.482300+5 6.000000+0 6.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    " 4.300000-1-1.800000-7 0.000000+0 2.200000-1 0.000000+0           3837 2151     \n"
+    " 1.500000+0 1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 2.000000+0 5.000000-1 0.000000+0 7.100000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 2.665300+5 7.000000+0 7.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 8.749400+5 8.000000+0 8.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    "-7.000000-1 2.300000-6 0.000000+0 4.100000-2 0.000000+0           3837 2151     \n"
+    "-2.500000+0-1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 3.000000+0 5.000000-1 0.000000+0 7.100000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 4.084600+5 9.000000+0 9.100000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 8.994400+5 1.000000+1 1.010000+1 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    " 1.000000-3 4.600000-7 0.000000+0 2.400000-1 0.000000+0           3837 2151     \n"
+    " 2.500000+0 1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 2.000000+0 5.000000-1 0.000000+0 7.100000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 4.098200+5 1.100000+1 1.110000+1 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 8.496100+5 1.200000+1 1.210000+1 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    "-2.500000+0 3.300000-6 0.000000+0 2.600000-3 0.000000+0           3837 2151     \n"
+    "-3.500000+0-1.000000+0          1          0         12          23837 2151     \n"
+    " 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 2.000000+0 3.000000+0 5.000000-1 0.000000+0 7.100000-1 7.100000-13837 2151     \n"
+    " 0.000000+0 0.000000+0          0          2         12          23837 2151     \n"
+    " 5.288400+5 1.300000+1 1.310000+1 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 9.475600+5 1.400000+1 1.410000+1 0.000000+0 0.000000+0 0.000000+03837 2151     \n"
+    " 0.000000+0 0.000000+0          2          2          0          03837 2151     \n"
+    " 0.000000+0 9.550000+5          0          0          5          03837 2151     \n"
+    " 1.000000-3 9.000000-8 0.000000+0 1.900000-1 0.000000+0           3837 2151     \n";
 }
