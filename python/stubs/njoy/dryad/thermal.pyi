@@ -15,7 +15,7 @@ class BraggEdgeData:
              the temperature
         energies : list of float
              the temperature
-        values : list of floatfloat
+        values : list of float
              the structure factor values
     """
     __hash__: typing.ClassVar[None] = None
@@ -39,7 +39,7 @@ class BraggEdgeData:
     @property
     def temperature(self) -> float:
         """
-        The temperature of the Bradd edge data
+        The temperature of the Bragg edge data
         """
     @property
     def values(self) -> list[float]:
