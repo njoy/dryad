@@ -1,7 +1,7 @@
 .. currentmodule:: njoy.dryad.thermal
 
-TabulatedScatteringFunction
-===========================
+TabulatedScatteringKernelFunction
+=================================
 
 General information about this concept
 
@@ -10,22 +10,22 @@ Constructor
 .. autosummary::
     :toctree:  generated/
 
-    TabulatedScatteringFunction
+    TabulatedScatteringKernelFunction
 
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
     :toctree: generated/
 
-    ~TabulatedScatteringFunction.momentum_transfers
-    ~TabulatedScatteringFunction.values
-    ~TabulatedScatteringFunction.interpolants
-    ~TabulatedScatteringFunction.boundaries
-    ~TabulatedScatteringFunction.number_points
-    ~TabulatedScatteringFunction.number_regions
-    ~TabulatedScatteringFunction.lower_momentum_transfer_limit
-    ~TabulatedScatteringFunction.upper_momentum_transfer_limit
-    ~TabulatedScatteringFunction.is_linearised
+    ~TabulatedScatteringKernelFunction.momentum_transfers
+    ~TabulatedScatteringKernelFunction.values
+    ~TabulatedScatteringKernelFunction.interpolants
+    ~TabulatedScatteringKernelFunction.boundaries
+    ~TabulatedScatteringKernelFunction.number_points
+    ~TabulatedScatteringKernelFunction.number_regions
+    ~TabulatedScatteringKernelFunction.lower_momentum_transfer_limit
+    ~TabulatedScatteringKernelFunction.upper_momentum_transfer_limit
+    ~TabulatedScatteringKernelFunction.is_linearised
 
 Methods
 ~~~~~~~
@@ -33,5 +33,5 @@ Methods
 .. autosummary::
     :toctree: generated/
 
-    ~TabulatedScatteringFunction.__call__
-    ~TabulatedScatteringFunction.linearise
+    ~TabulatedScatteringKernelFunction.__call__
+    ~TabulatedScatteringKernelFunction.linearise
