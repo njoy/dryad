@@ -309,16 +309,16 @@ SCENARIO( "createEndfFile2Section" ) {
                                        neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
                                      { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
-                                     { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
-                                       neutron_pair, proton_pair, 615220., std::nullopt, radii1 },
                                      { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+                                     { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
+                                       neutron_pair, proton_pair, 615220., std::nullopt, radii1 },
                                      { id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ),
                                        neutron_pair, proton_pair, 615220., std::nullopt, radii1 } },
                                    { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
                                        id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
-                                       id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
                                        id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+                                       id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
                                        id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
                                      { 4.250762e+3, 1.435502e+6 },
                                      { { 3., 4. },
@@ -347,16 +347,16 @@ SCENARIO( "createEndfFile2Section" ) {
                                        neutron_pair, photon_pair, 0., std::nullopt, zero_radii },
                                      { id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
-                                     { id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
-                                       neutron_pair, proton_pair, 615220., std::nullopt, radii1 },
                                      { id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
                                        neutron_pair, neutron_pair, 0., std::nullopt, radii1 },
+                                     { id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
+                                       neutron_pair, proton_pair, 615220., std::nullopt, radii1 },
                                      { id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ),
                                        neutron_pair, proton_pair, 615220., std::nullopt, radii1 } },
                                    { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
                                        id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
-                                       id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
                                        id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
+                                       id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
                                        id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ) },
                                      { -3.369334e+5, 1.441365e+6 },
                                      { { 7., 8. },
@@ -683,8 +683,8 @@ std::string chunkCl35() {
     "-1.000000+0-1.000000+0          0          0         30          51725 2151     \n"
     " 1.000000+0 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01725 2151     \n"
     " 2.000000+0 1.000000+0 1.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
-    " 3.000000+0 1.000000+0 1.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
     " 2.000000+0 1.000000+0 2.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
+    " 3.000000+0 1.000000+0 1.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
     " 3.000000+0 1.000000+0 2.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
     " 0.000000+0 0.000000+0          0          2         12          21725 2151     \n"
     " 4.250762+3 3.000000+0 3.100000+0 3.200000+0 3.300000+0 3.400000+01725 2151     \n"
@@ -699,8 +699,8 @@ std::string chunkCl35() {
     "-2.000000+0-1.000000+0          0          0         30          51725 2151     \n"
     " 1.000000+0 1.000000+0 0.000000+0 0.000000+0 0.000000+0 0.000000+01725 2151     \n"
     " 2.000000+0 1.000000+0 1.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
-    " 3.000000+0 1.000000+0 1.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
     " 2.000000+0 1.000000+0 2.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
+    " 3.000000+0 1.000000+0 1.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
     " 3.000000+0 1.000000+0 2.000000+0 0.000000+0 4.888750-1 4.822220-11725 2151     \n"
     " 0.000000+0 0.000000+0          0          2         12          21725 2151     \n"
     "-3.369334+5 7.000000+0 7.100000+0 7.200000+0 7.300000+0 7.400000+01725 2151     \n"
