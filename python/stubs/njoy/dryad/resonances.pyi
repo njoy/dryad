@@ -1106,8 +1106,8 @@ class ResonanceTable:
         
         Arguments:
             self         the table
-            channels     the channel identifiers (nc values, at least 1)
-            energies     the level energies (ne values, at least 1)
+            channels     the channel identifiers (nc values)
+            energies     the level energies (ne values)
             amplitudes   the reduced width amplitudes (nc arrays of ne values)
         """
     @typing.overload
@@ -1122,6 +1122,24 @@ class ResonanceTable:
             channel      the channel identifier
             energies     the level energies
             amplitudes   the reduced width amplitudes
+        """
+    @typing.overload
+    def __init__(self, channels: list[njoy.dryad.id.ChannelID]) -> None:
+        """
+        Initialise an empty table
+        
+        Arguments:
+            self         the table
+            channels     the channel identifiers (nc values)
+        """
+    @typing.overload
+    def __init__(self, channel: njoy.dryad.id.ChannelID) -> None:
+        """
+        Initialise an empty table
+        
+        Arguments:
+            self         the table
+            channel      the channel identifier
         """
     def __ne__(self, arg0: ResonanceTable) -> bool:
         ...
@@ -1360,6 +1378,16 @@ class SpinGroup:
     def formalism(self) -> Formalism:
         """
         The formalism
+        """
+    @property
+    def has_channels_with_background(self) -> bool:
+        """
+        Flag to indicate whether or not the channels in the spin group have backgrounds
+        """
+    @property
+    def kinematics_type(self) -> Kinematics:
+        """
+        The kinematics type applied to the spin group
         """
     @property
     def parity(self) -> int:

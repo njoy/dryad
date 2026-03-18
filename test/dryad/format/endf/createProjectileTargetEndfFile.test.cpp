@@ -17,6 +17,8 @@ std::string chunkForGroundState();
 std::string chunkForMetastableState();
 std::string readContentFromFile( const std::string& );
 
+//! @todo test Resonance File writing
+
 SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
   GIVEN( "projectile-target data - incident neutrons for a ground state target" ) {

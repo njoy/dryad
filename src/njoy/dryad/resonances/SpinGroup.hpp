@@ -160,6 +160,26 @@ namespace resonances {
     }
 
     /**
+     *  @brief Return the kinematics type applied to the spin group
+     */
+    Kinematics kinematicsType() const {
+
+      return this->channels().front().kinematicsType();
+    }
+
+    /**
+     *  @brief Return whether or not the channels in the spin group have backgrounds
+     */
+    bool hasChannelsWithBackground() const {
+
+      return std::any_of( this->channels().begin(), this->channels().end(),
+                          [] ( auto&& channel ) {
+
+                            return channel.background().has_value();
+                          } );
+    }
+
+    /**
      *  @brief Calculate the cross section values at a given energy
      *
      *  @param[in] energy   the energy
