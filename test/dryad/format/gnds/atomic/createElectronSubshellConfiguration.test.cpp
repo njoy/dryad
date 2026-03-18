@@ -20,7 +20,7 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
   GIVEN( "a GNDS configuration xml node for a one character identifier" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "atom-008_O_000.endf.gnds.xml" );
+    document.load_file( "atom-008_O_000.endf.gnds.xml" );
     pugi::xml_node configuration = document.child( "PoPs" ).child( "chemicalElements" ).
                                      child( "chemicalElement" ).child( "atomic" ).
                                      child( "configurations" ).child( "configuration" );
@@ -41,7 +41,7 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
   GIVEN( "a GNDS configuration xml node for a two character identifier" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "atom-029_Cu_000.endf.gnds.xml" );
+    document.load_file( "atom-029_Cu_000.endf.gnds.xml" );
     pugi::xml_node configuration = document.child( "PoPs" ).child( "chemicalElements" ).
                                      child( "chemicalElement" ).child( "atomic" ).
                                      child( "configurations" ).child( "configuration" );

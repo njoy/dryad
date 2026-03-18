@@ -21,7 +21,7 @@ SCENARIO( "readArray" ) {
   GIVEN( "a GNDS grid array node for a diagonal compressed array" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node gridded = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                       find_child_by_attribute( "covarianceSection", "label", "(z,n)" ).
                                       child( "mixed" ).child( "shortRangeSelfScalingVariance" ).
@@ -52,7 +52,7 @@ SCENARIO( "readArray" ) {
   GIVEN( "a GNDS grid array node for a lower diagonal symmetric array" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node gridded = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                       find_child_by_attribute( "covarianceSection", "label", "(z,n)" ).
                                       child( "mixed" ).find_child_by_attribute( "covarianceMatrix", "label", "1" ).

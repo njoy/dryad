@@ -20,7 +20,7 @@ SCENARIO( "createTwoBodyDistributionData" ) {
   GIVEN( "GNDS two body distribution data node with legendre angular data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+    document.load_file( "n-001_H_001.endf.gnds.xml" );
     pugi::xml_node node = document.child( "reactionSuite" ).child( "reactions" ).
                                    find_child_by_attribute( "reaction", "ENDF_MT", "2" ).
                                    child( "outputChannel" ).
@@ -46,7 +46,7 @@ SCENARIO( "createTwoBodyDistributionData" ) {
   GIVEN( "GNDS two body distribution data node with tabulated angular data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node node = document.child( "reactionSuite" ).
                                    child( "incompleteReactions" ).
                                    find_child_by_attribute( "reaction", "ENDF_MT", "525" ).

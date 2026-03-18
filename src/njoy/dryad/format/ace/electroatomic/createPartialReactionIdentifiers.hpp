@@ -28,7 +28,6 @@ namespace electroatomic {
                                     const ACEtk::PhotoatomicTable& table ) {
 
     std::vector< std::vector< id::ReactionID > > partials;
-    auto e = id::ParticleID::electron();
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {
 

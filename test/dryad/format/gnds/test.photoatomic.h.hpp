@@ -390,6 +390,9 @@ namespace h0 {
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
     CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+
+    CHECK( false == data.hasComptonProfiles() );
+    CHECK( std::nullopt == data.comptonProfiles() );
   }
 
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {
@@ -403,7 +406,7 @@ namespace h0 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -1.022e+6, WithinRel( reaction.reactionQValue().value() ) );
+    CHECK_THAT( -2 * njoy::constants::electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 217 == reaction.crossSection().numberPoints() );
@@ -448,7 +451,7 @@ namespace h0 {
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
-    CHECK_THAT( -1.022e+6, WithinRel( reaction.reactionQValue().value() ) );
+    CHECK_THAT( -2 * njoy::constants::electron_rest_mass, WithinRel( reaction.reactionQValue().value() ) );
 
     CHECK( true == reaction.crossSection().isLinearised() );
     CHECK( 308 == reaction.crossSection().numberPoints() );
@@ -589,7 +592,7 @@ namespace h0 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
-  void verifyH0( const ProjectileTarget& H0, bool normalise ) {
+  void verifyH0( const ProjectileTarget& H0, bool /* normalise */ ) {
 
     verifyDocumentation( H0.documentation() );
 
@@ -659,6 +662,10 @@ namespace h0 {
 
     ionisation = H0.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
     verifyIonisationReaction( ionisation );
+
+    CHECK( std::nullopt == H0.resonances() );
+
+    CHECK( std::nullopt == H0.covarianceData() );
   }
 
 } // namespace h1

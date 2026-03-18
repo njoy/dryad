@@ -19,7 +19,7 @@ SCENARIO( "createTabulatedScatteringFunctionFromNodes" ) {
   GIVEN( "GNDS scattering function node from photoatomic data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
+    document.load_file( "photoat-001_H_000.endf.gnds.xml" );
     pugi::xml_node node = document.child( "reactionSuite" ).child( "reactions" ).
                                    find_child_by_attribute( "reaction", "ENDF_MT", "504" ).
                                    child( "doubleDifferentialCrossSection" ).

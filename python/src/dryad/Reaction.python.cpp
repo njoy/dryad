@@ -17,7 +17,6 @@ void wrapReaction( python::module& module ) {
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::id::ReactionID;
   using ParticleID = njoy::dryad::id::ParticleID;
-  using ReactionCategory = njoy::dryad::ReactionCategory;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
 
@@ -193,6 +192,16 @@ void wrapReaction( python::module& module ) {
     "normalise",
     &Component::normalise,
     "Normalise the distribution data"
+  )
+  .def(
+
+    "calculate_average_energy",
+    &Component::calculateAverageEnergy,
+    python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
+    "Calculate average outgoing energies for all reaction products\n\n"
+    "Arguments:\n"
+    "    self         the reaction\n"
+    "    tolerance    the integration tolerance (default: 1e-8)"
   );
 
   // add standard equality comparison definitions

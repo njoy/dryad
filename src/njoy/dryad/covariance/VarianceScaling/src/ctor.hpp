@@ -8,9 +8,9 @@
 VarianceScaling( ScalingType type,
                  std::vector< double > energies,
                  std::vector< double > factors ) :
-    type_( std::move( type ) ),
     energies_( std::move( energies ) ),
-    factors_( std::move( factors ) ) {
+    factors_( std::move( factors ) ),
+    type_( std::move( type ) ) {
 
   verifySize( this->energies(), this->factors() );
 }

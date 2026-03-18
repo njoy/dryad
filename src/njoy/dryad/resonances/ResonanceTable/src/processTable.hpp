@@ -43,3 +43,13 @@ static auto processTable( std::vector< id::ChannelID > channels,
 
   return std::make_tuple( std::move( channels ), std::move( energies ), std::move( amplitudes ) );
 }
+
+static auto processTable( std::vector< id::ChannelID > channels ) {
+
+  std::vector< double > energies;
+  std::vector< std::vector< double > > amplitudes( channels.size() );
+
+  return processTable( std::move( channels ),
+                       std::move( energies ),
+                       std::move( amplitudes ) );
+}

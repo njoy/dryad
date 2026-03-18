@@ -24,7 +24,7 @@ namespace covariance {
    *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
    *         that defines an on-diagonal covariance matrix
    */
-  inline dryad::covariance::CrossSectionCovarianceMatrix
+  inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
       const dryad::id::ReactionID& reaction,
       const ENDFtk::section::ReactionBlock& block ) {
@@ -82,7 +82,7 @@ namespace covariance {
             throw std::exception();
           }
 
-          // read the scalong information
+          // read the scaling information
           scaling = createVarianceScaling( std::get< ENDFtk::section::CovariancePairs >( component ) );
           break;
         }
@@ -112,26 +112,23 @@ namespace covariance {
       }
     }
 
-    if ( structures.size() == 1 ) {
+    std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
+    for ( std::size_t i = 0; i < structures.size(); i++ ) {
 
-      return dryad::covariance::CrossSectionCovarianceMatrix(
-                 dryad::covariance::CrossSectionMetadata( { reaction },
-                                                          std::move( structures.front() ) ),
-                 std::move( matrices.front() ),
-                 relative, std::move( scaling ) );
+      using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+      covariances.emplace_back( CrossSectionMetadata( { reaction }, std::move( structures[i] ) ),
+                                std::move( matrices[i] ),
+                                relative, scaling );
     }
-    else {
 
-      Log::error( "Not implemented yet, contact a developer" );
-      throw std::exception();
-    }
+    return covariances;
   }
 
   /**
    *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
    *         that defines an off-diagonal covariance matrix (a cross term)
    */
-  inline dryad::covariance::CrossSectionCovarianceMatrix
+  inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
       const dryad::id::ReactionID& rowReaction,
       const dryad::id::ReactionID& columnReaction,
@@ -230,20 +227,16 @@ namespace covariance {
       }
     }
 
-    if ( rowStructures.size() == 1 ) {
+    std::vector< dryad::covariance::CrossSectionCovarianceMatrix > covariances;
+    for ( std::size_t i = 0; i < rowStructures.size(); i++ ) {
 
-      return dryad::covariance::CrossSectionCovarianceMatrix(
-                 dryad::covariance::CrossSectionMetadata( { rowReaction },
-                                                          std::move( rowStructures.front() ) ),
-                 dryad::covariance::CrossSectionMetadata( { columnReaction },
-                                                          std::move( columnStructures.front() ) ),
-                 std::move( matrices.front() ), relative );
+      using CrossSectionMetadata = dryad::covariance::CrossSectionMetadata;
+      covariances.emplace_back( CrossSectionMetadata( { rowReaction }, std::move( rowStructures[i] ) ),
+                                CrossSectionMetadata( { columnReaction }, std::move( columnStructures[i] ) ),
+                                std::move( matrices[i] ), relative );
     }
-    else {
 
-      Log::error( "Not implemented yet, contact a developer" );
-      throw std::exception();
-    }
+    return covariances;
   }
 
 } // covariance namespace

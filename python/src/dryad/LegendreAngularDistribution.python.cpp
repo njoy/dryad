@@ -16,7 +16,6 @@ void wrapLegendreAngularDistribution( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::LegendreAngularDistribution;
-  using InterpolationType = njoy::dryad::InterpolationType;
 
   // wrap views created by this component
 

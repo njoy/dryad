@@ -32,7 +32,7 @@ namespace photonuclear {
                   const id::ParticleID& target,
                   const ACEtk::PhotonuclearTable& table,
                   std::size_t index,
-                  bool normalise ) {
+                  bool /* normalise */ ) {
 
     auto mt = table.reactionNumberBlock().reactionNumber( index );
     Log::info( "Reading data for MT{}", mt );

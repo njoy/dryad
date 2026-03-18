@@ -23,7 +23,7 @@ SCENARIO( "createRadius" ) {
   GIVEN( "GNDS scattering radius node - energy dependent" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-069_Tm_168.endf.gnds.xml" );
+    document.load_file( "n-069_Tm_168.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                            child( "resolved" ).child( "BreitWigner" ).
                                            child( "scatteringRadius" );
@@ -42,7 +42,7 @@ SCENARIO( "createRadius" ) {
   GIVEN( "GNDS scattering radius node (top level) - constant" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-082_Pb_208.endf.gnds.xml" );
+    document.load_file( "n-082_Pb_208.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                      child( "scatteringRadius" );
 
@@ -60,7 +60,7 @@ SCENARIO( "createRadius" ) {
   GIVEN( "GNDS scattering radius node (in channel) - constant" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-082_Pb_208.endf.gnds.xml" );
+    document.load_file( "n-082_Pb_208.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                      child( "resolved" ).child( "RMatrix" ).
                                      child( "spinGroups" ).
@@ -84,7 +84,7 @@ SCENARIO( "createRadius" ) {
   GIVEN( "GNDS hard sphere radius node - constant" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-082_Pb_208.endf.gnds.xml" );
+    document.load_file( "n-082_Pb_208.endf.gnds.xml" );
     pugi::xml_node radius = document.child( "reactionSuite" ).child( "resonances" ).
                                      child( "resolved" ).child( "RMatrix" ).
                                      child( "spinGroups" ).

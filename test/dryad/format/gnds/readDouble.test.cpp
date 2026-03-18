@@ -20,7 +20,7 @@ SCENARIO( "readLegendre" ) {
   GIVEN( "a GNDS Legendre xml node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-038_Sr_088.endf.gnds.xml" );
+    document.load_file( "n-038_Sr_088.endf.gnds.xml" );
     pugi::xml_node external = document.child( "reactionSuite" ).
                                        child( "resonances" ).child( "resolved" ).
                                        child( "RMatrix" ).child( "spinGroups" ).

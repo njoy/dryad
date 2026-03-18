@@ -24,12 +24,15 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
       auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
+      photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated and is empty" ) {
 
         auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 2021 == block.NES() );
+
+//! @todo finish test
       } // THEN
     } // WHEN
   } // GIVEN
@@ -43,12 +46,15 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
       auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
+      photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated" ) {
 
         auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 7314 == block.NES() );
+
+//! @todo finish test
       } // THEN
     } // WHEN
   } // GIVEN
@@ -62,12 +68,15 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
       auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
+      photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated" ) {
 
         auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 8513 == block.NES() );
+
+//! @todo finish test
       } // THEN
     } // WHEN
   } // GIVEN
@@ -81,12 +90,15 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
       auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
+      photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated" ) {
 
         auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 12396 == block.NES() );
+
+//! @todo finish test
       } // THEN
     } // WHEN
   } // GIVEN

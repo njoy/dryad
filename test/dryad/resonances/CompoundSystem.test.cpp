@@ -19,124 +19,123 @@ SCENARIO( "CompoundSystem" ) {
 
   GIVEN( "valid data for a SpinGroup" ) {
 
-  auto photon = id::ParticleID::photon();
-  auto neutron = id::ParticleID::neutron();
-  auto proton = id::ParticleID::proton();
-  auto cl35 = id::ParticleID( "Cl35" );
-  auto cl35_e1 = id::ParticleID( "Cl35_e1" );
-  auto cl36 = id::ParticleID( "Cl36[all]" );
-  auto s35 = id::ParticleID( "S35" );
+    auto photon = id::ParticleID::photon();
+    auto neutron = id::ParticleID::neutron();
+    auto proton = id::ParticleID::proton();
+    auto cl35 = id::ParticleID( "Cl35" );
+    auto cl36 = id::ParticleID( "Cl36[all]" );
+    auto s35 = id::ParticleID( "S35" );
 
-  ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
-  ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
-                            Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
+    ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                              Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
+    ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
+                               Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
+    ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
+                              Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
 
-  ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 4.822220, 4.888750 );
-  ChannelRadii radii2( 4.822220, 3.667980 );
+    ChannelRadii zero_radii( 0., 0. );
+    ChannelRadii radii1( 4.822220, 4.888750 );
+    ChannelRadii radii2( 4.822220, 3.667980 );
 
-  Formalism formalism = Formalism::ReichMoore;
-  BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
+    Formalism formalism = Formalism::ReichMoore;
+    BoundaryCondition boundary = BoundaryCondition::ShiftFactor;
 
-  SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
-                          { 1. }, { { 2. }, { 3. } } },
-                        formalism, boundary );
-  SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
-                            id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
-                          { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } },
-                        formalism, boundary );
-  SpinGroup spingroup2( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii2 },
-                          { id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii2 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
-                            id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
-                          { 21. }, { { 22. }, { 23. }, { 24. } } },
-                        formalism, boundary );
-  SpinGroup spingroup3( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
-                            id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
-                            id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ) },
-                          { 31. }, { { 32. }, { 33. }, { 34. }, { 35. }, { 36. } } },
-                        formalism, boundary );
-  SpinGroup spingroup4( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii2 },
-                          { id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii2 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
-                            id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ) },
-                          { 41. }, { { 42. }, { 43. }, { 44. } } },
-                        formalism, boundary );
-  SpinGroup spingroup5( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
-                            neutron_pair, photon_pair, 0., std::nullopt,
-                            zero_radii },
-                          { id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
-                            neutron_pair, neutron_pair, 0., std::nullopt,
-                            radii1 },
-                          { id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ),
-                            neutron_pair, proton_pair, 615220, std::nullopt,
-                            radii1 } },
-                        { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
-                            id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
-                            id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ) },
-                          { 51. }, { { 52. }, { 53. }, { 54. } } },
-                        formalism, boundary );
+    SpinGroup spingroup0( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                              neutron_pair, photon_pair, 0., std::nullopt,
+                              zero_radii },
+                            { id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii1 } },
+                          { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ) },
+                            { 1. }, { { 2. }, { 3. } } },
+                          formalism, boundary );
+    SpinGroup spingroup1( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ),
+                              neutron_pair, photon_pair, 0., std::nullopt,
+                              zero_radii },
+                            { id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii1 } },
+                          { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,1,0-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,1,1-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ),
+                              id::ChannelID( "n,Cl35->p,S35{1,2,1-}" ) },
+                            { 11. }, { { 12. }, { 13. }, { 14. }, { 15. }, { 16. } } },
+                          formalism, boundary );
+    SpinGroup spingroup2( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                              neutron_pair, photon_pair, 0., std::nullopt,
+                              zero_radii },
+                            { id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii2 },
+                            { id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii2 } },
+                          { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1+}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ),
+                              id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) },
+                            { 21. }, { { 22. }, { 23. }, { 24. } } },
+                          formalism, boundary );
+    SpinGroup spingroup3( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
+                              neutron_pair, photon_pair, 0., std::nullopt,
+                              zero_radii },
+                            { id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii1 } },
+                          { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,1,2-}" ),
+                              id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ),
+                              id::ChannelID( "n,Cl35->p,S35{1,2,2-}" ) },
+                            { 31. }, { { 32. }, { 33. }, { 34. }, { 35. }, { 36. } } },
+                          formalism, boundary );
+    SpinGroup spingroup4( { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
+                              neutron_pair, photon_pair, 0., std::nullopt,
+                              zero_radii },
+                            { id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii2 },
+                            { id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii2 } },
+                          { { id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2+}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{0,2,2+}" ),
+                              id::ChannelID( "n,Cl35->p,S35{0,2,2+}" ) },
+                            { 41. }, { { 42. }, { 43. }, { 44. } } },
+                          formalism, boundary );
+    SpinGroup spingroup5( { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
+                              neutron_pair, photon_pair, 0., std::nullopt,
+                              zero_radii },
+                            { id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
+                              neutron_pair, neutron_pair, 0., std::nullopt,
+                              radii1 },
+                            { id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ),
+                              neutron_pair, proton_pair, 615220, std::nullopt,
+                              radii1 } },
+                          { { id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ),
+                              id::ChannelID( "n,Cl35->n,Cl35{1,2,3-}" ),
+                              id::ChannelID( "n,Cl35->p,S35{1,2,3-}" ) },
+                            { 51. }, { { 52. }, { 53. }, { 54. } } },
+                          formalism, boundary );
 
     THEN( "a CompoundSystem can be constructed - with ordered spin groups" ) {
 
@@ -161,7 +160,6 @@ SCENARIO( "CompoundSystem" ) {
       auto neutron = id::ParticleID::neutron();
       auto proton = id::ParticleID::proton();
       auto cl35 = id::ParticleID( "Cl35" );
-      auto cl35_e1 = id::ParticleID( "Cl35_e1" );
       auto cl36 = id::ParticleID( "Cl36[all]" );
       auto s35 = id::ParticleID( "S35" );
 
@@ -236,7 +234,6 @@ void verifyChunk( const CompoundSystem& chunk ) {
   auto neutron = id::ParticleID::neutron();
   auto proton = id::ParticleID::proton();
   auto cl35 = id::ParticleID( "Cl35" );
-  auto cl35_e1 = id::ParticleID( "Cl35_e1" );
   auto cl36 = id::ParticleID( "Cl36[all]" );
   auto s35 = id::ParticleID( "S35" );
 
@@ -274,6 +271,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 0
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   auto spingroup = groups[0];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   auto channels = spingroup.channels();
@@ -352,6 +352,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[1];
 
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
+
   // channels
   channels = spingroup.channels();
 
@@ -410,36 +413,10 @@ void verifyChunk( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 1, channel 2: proton emission
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-
-  auto channel2 = channels[2];
-  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
-  CHECK( false == channel2.isIncidentChannel() );
-
-  // incident particle pair
-  CHECK( neutron_pair == channel2.incidentParticlePair() );
-
-  // outgoing particle pair
-  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
-
-  // radii
-  CHECK( radii1 == channel2.channelRadii() );
-
-  // boundary conditions
-  CHECK( std::nullopt == channel2.boundaryCondition() );
-
-  // background
-  CHECK( std::nullopt == channel2.background() );
-
-  // Q value
-  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
-
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 3: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  auto channel3 = channels[3];
+  auto channel3 = channels[2];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,1-}" ) == channel3.identifier() );
   CHECK( true == channel3.isIncidentChannel() );
 
@@ -460,6 +437,32 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // Q value
   CHECK_THAT( 0, WithinRel( channel3.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 3: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel2 = channels[3];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,1-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 4: proton emission
@@ -509,6 +512,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 2
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[2];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -614,6 +620,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[3];
 
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
+
   // channels
   channels = spingroup.channels();
 
@@ -672,36 +681,10 @@ void verifyChunk( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 2: proton emission
+  // spin group 3, channel 2: elastic
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
-  channel2 = channels[2];
-  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
-  CHECK( false == channel2.isIncidentChannel() );
-
-  // incident particle pair
-  CHECK( neutron_pair == channel2.incidentParticlePair() );
-
-  // outgoing particle pair
-  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
-
-  // radii
-  CHECK( radii1 == channel2.channelRadii() );
-
-  // boundary conditions
-  CHECK( std::nullopt == channel2.boundaryCondition() );
-
-  // background
-  CHECK( std::nullopt == channel2.background() );
-
-  // Q value
-  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
-
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-  // spin group 3, channel 3: elastic
-  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
-
-  channel3 = channels[3];
+  channel3 = channels[2];
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{1,2,2-}" ) == channel3.identifier() );
   CHECK( true == channel3.isIncidentChannel() );
 
@@ -722,6 +705,32 @@ void verifyChunk( const CompoundSystem& chunk ) {
 
   // Q value
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 3: proton emission
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[3];
+  CHECK( id::ChannelID( "n,Cl35->p,S35{1,1,2-}" ) == channel2.identifier() );
+  CHECK( false == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( proton_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii1 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 4: proton emission
@@ -763,14 +772,17 @@ void verifyChunk( const CompoundSystem& chunk ) {
   resonances = table.reducedWidthAmplitudes();
   CHECK_THAT( 32, WithinRel( resonances[0][0] ) );
   CHECK_THAT( 33, WithinRel( resonances[1][0] ) );
-  CHECK_THAT( 34, WithinRel( resonances[2][0] ) );
-  CHECK_THAT( 35, WithinRel( resonances[3][0] ) );
+  CHECK_THAT( 35, WithinRel( resonances[2][0] ) );
+  CHECK_THAT( 34, WithinRel( resonances[3][0] ) );
   CHECK_THAT( 36, WithinRel( resonances[4][0] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[4];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();
@@ -875,6 +887,9 @@ void verifyChunk( const CompoundSystem& chunk ) {
   // spin group 5
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   spingroup = groups[5];
+
+  CHECK( Kinematics::NonRelativistic == spingroup.kinematicsType() );
+  CHECK( false == spingroup.hasChannelsWithBackground() );
 
   // channels
   channels = spingroup.channels();

@@ -5,7 +5,7 @@
  */
 static std::size_t getIndex( int number ) {
 
-  if ( ( number < 0 ) || ( number >= entries.size() ) ) {
+  if ( ( number < 0 ) || ( number >= static_cast< int >( entries.size() ) ) ) {
 
     throw std::invalid_argument( "Not a level number: \'" + std::to_string( number ) + "\'" );
   }

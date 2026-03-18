@@ -22,7 +22,7 @@ SCENARIO( "createReactions" ) {
     WHEN( "a GNDS reaction suite is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+      document.load_file( "n-001_H_001.endf.gnds.xml" );
       pugi::xml_node suite = document.child( "reactionSuite" );
 
       THEN( "all reactions can be created" ) {
@@ -53,7 +53,7 @@ SCENARIO( "createReactions" ) {
     WHEN( "a GNDS reaction suite is given with lumped covariance reactions" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "n-003_Li_007.endf.gnds.xml" );
+      document.load_file( "n-003_Li_007.endf.gnds.xml" );
       pugi::xml_node suite = document.child( "reactionSuite" );
 
       THEN( "all reactions can be created" ) {
@@ -123,7 +123,7 @@ SCENARIO( "createReactions" ) {
     WHEN( "a GNDS reaction suite is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
+      document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
       pugi::xml_node suite = document.child( "reactionSuite" );
 
       THEN( "all reactions can be created" ) {
@@ -203,7 +203,7 @@ SCENARIO( "createReactions" ) {
   GIVEN( "GNDS data - electro-atomic" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
 
     WHEN( "a GNDS reaction suite is given" ) {
@@ -257,7 +257,7 @@ SCENARIO( "createReactions" ) {
   GIVEN( "GNDS data - photo-atomic" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
+    document.load_file( "photoat-001_H_000.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
 
     WHEN( "a GNDS reaction suite is given" ) {

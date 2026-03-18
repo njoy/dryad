@@ -16,7 +16,7 @@ void wrapIncoherentElasticScattering( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::thermal::IncoherentElasticScattering;
-  using TabulatedDebyeWallerIntegral = njoy::dryad::thermal::TabulatedDebyeWallerIntegral;
+  using DebyeWallerIntegralData = njoy::dryad::thermal::DebyeWallerIntegralData;
 
   // wrap views created by this component
 
@@ -30,7 +30,7 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     "----------\n"
     "    xs : float\n"
     "         the bound atom cross section\n"
-    "    debye_waller_integral : njoy.dryad.thermal.TabulatedDebyeWallerIntegral\n"
+    "    debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData\n"
     "         the Debye-Waller integral data"
   );
 
@@ -39,9 +39,21 @@ void wrapIncoherentElasticScattering( python::module& module ) {
   .def(
 
     python::init< double,
-                  TabulatedDebyeWallerIntegral >(),
+                  DebyeWallerIntegralData >(),
     python::arg( "xs" ), python::arg( "debye_waller_integral" ),
     "Initialise the incoherent elastic scattering data"
+  )
+  .def_property_readonly(
+
+    "number_moderator_temperatures",
+    &Component::numberModeratorTemperatures,
+    "The moderator temperature values"
+  )
+  .def_property_readonly(
+
+    "moderator_temperatures",
+    python::overload_cast<>( &Component::moderatorTemperatures, python::const_ ),
+    "The moderator temperature values"
   )
   .def_property(
 
@@ -54,7 +66,7 @@ void wrapIncoherentElasticScattering( python::module& module ) {
 
     "debye_waller_integral",
     python::overload_cast<>( &Component::debyeWallerIntegral, python::const_ ),
-    python::overload_cast< TabulatedDebyeWallerIntegral >( &Component::debyeWallerIntegral ),
+    python::overload_cast< DebyeWallerIntegralData >( &Component::debyeWallerIntegral ),
     "The Debye-Waller integral data"
   );
 

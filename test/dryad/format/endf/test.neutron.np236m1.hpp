@@ -1218,7 +1218,7 @@ namespace np236m1 {
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
   }
 
-  void verifyNp236m1( const ProjectileTarget& Np236m1, bool normalise ) {
+  void verifyNp236m1( const ProjectileTarget& Np236m1, bool /* normalise */ ) {
 
     verifyDocumentation( Np236m1.documentation() );
 
@@ -1338,6 +1338,10 @@ namespace np236m1 {
 
     capture = Np236m1.reaction( id::ReactionID( "n,Np236_e2->g,Np237[all]" ) );
     verifyCaptureReaction( capture );
+
+    CHECK( std::nullopt == Np236m1.resonances() );
+
+    CHECK( std::nullopt == Np236m1.covarianceData() );
   }
 
 } // namespace np236m1

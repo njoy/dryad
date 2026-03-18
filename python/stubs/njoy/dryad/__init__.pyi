@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'CrossSectionCovarianceData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -79,26 +79,26 @@ class AtomicRelaxation:
         """
         Calculate the transition energies for all transitions
         """
-    def has_subshell(self, id: id.ElectronSubshellID) -> bool:
+    def has_subshell(self, identifier: id.ElectronSubshellID) -> bool:
         """
         Return whether or not a subshell is present 
         
         Parameters
         ----------
-            id : njoy.dryad.id.ElectronSubshellID 
+            identifier : njoy.dryad.id.ElectronSubshellID 
                  the electron subshell identifier 
         """
     def normalise(self) -> None:
         """
         Normalise the transition probabilities
         """
-    def subshell(self, id: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
+    def subshell(self, identifier: id.ElectronSubshellID) -> atomic.ElectronSubshellConfiguration:
         """
         Return the requested subshell 
         
         Parameters
         ----------
-            id : njoy.dryad.id.ElectronSubshellID 
+            identifier : njoy.dryad.id.ElectronSubshellID 
                  the electron subshell identifier 
         """
     def to_endf_file(self, mat: int, filename: str) -> None:
@@ -224,92 +224,6 @@ class CoherentDistributionData:
     def type(self) -> DistributionDataType:
         """
         The distribution data type
-        """
-class CrossSectionCovarianceData:
-    """
-    The cross section covariance data
-    
-    Parameters
-    ----------
-        matrices : list of njoy.dryad.covariance. 
-             the covariance matrices
-    """
-    __hash__: typing.ClassVar[None] = None
-    def __copy__(self) -> CrossSectionCovarianceData:
-        ...
-    def __deepcopy__(self, arg0: dict) -> CrossSectionCovarianceData:
-        ...
-    def __eq__(self, arg0: CrossSectionCovarianceData) -> bool:
-        ...
-    def __init__(self, matrices: list[covariance.CrossSectionCovarianceMatrix]) -> None:
-        """
-        Initialise the covariance data
-        """
-    def __ne__(self, arg0: CrossSectionCovarianceData) -> bool:
-        ...
-    @typing.overload
-    def covariance_matrix(self, row: id.ReactionID, column: id.ReactionID) -> covariance.CrossSectionCovarianceMatrix | list[covariance.CrossSectionCovarianceMatrix]:
-        """
-        Return the covariance data for a row and column reaction pair
-        
-        Parameters
-        ----------
-            row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
-            column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
-        """
-    @typing.overload
-    def covariance_matrix(self, id: id.ReactionID) -> covariance.CrossSectionCovarianceMatrix | list[covariance.CrossSectionCovarianceMatrix]:
-        """
-        Return the covariance data for a reaction
-        
-        Parameters
-        ----------
-            id : njoy.dryad.id.ReactionID
-                 the reaction identifier
-        """
-    @typing.overload
-    def has_covariance_matrix(self, row: id.ReactionID, column: id.ReactionID) -> bool:
-        """
-        Return whether or not a given reaction pair has covariance data
-        
-        Parameters
-        ----------
-            row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
-            column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
-        """
-    @typing.overload
-    def has_covariance_matrix(self, id: id.ReactionID) -> bool:
-        """
-        Return whether or not a given reaction has covariance data
-        
-        Parameters
-        ----------
-            id : njoy.dryad.id.ReactionID
-                 the reaction identifier
-        """
-    @property
-    def covariances(self) -> list[covariance.CrossSectionCovarianceMatrix | list[covariance.CrossSectionCovarianceMatrix]]:
-        """
-        The covariance data
-        """
-    @property
-    def number_covariance_matrices(self) -> int:
-        """
-        The number of covariance blocks
-        """
-    @property
-    def number_reactions(self) -> int:
-        """
-        The number of reactions for which covariance data is available
-        """
-    @property
-    def reaction_identifiers(self) -> list[id.ReactionID]:
-        """
-        The reaction identifiers for which covariance data is available
         """
 class DistributionDataType:
     """
@@ -453,6 +367,25 @@ class IncoherentDistributionData:
         ...
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
+    @typing.overload
+    def average_energy(self, energy: float, tolerance: float = 1e-08) -> float:
+        """
+        Calculate the average outgoing energy
+        
+        Parameters 
+        ---------- 
+            energy : float 
+                 the incident energy
+            energies : list of float 
+                 the incident energies
+            tolerance : float 
+                 the integration tolerance (default: 1e-8)
+        """
+    @typing.overload
+    def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
+        """
+        Calculate the average outgoing energy
+        """
     def normalise(self) -> None:
         """
         Normalise the Compton profiles
@@ -473,6 +406,11 @@ class IncoherentDistributionData:
     @frame.setter
     def frame(self, arg1: ReferenceFrame) -> None:
         ...
+    @property
+    def has_compton_profiles(self) -> bool:
+        """
+        Flag indicating whether or not there are Compton profiles
+        """
     @property
     def scattering_function(self) -> TabulatedScatteringFunction:
         """
@@ -1064,7 +1002,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1076,26 +1014,36 @@ class ProjectileTarget:
             type            the interaction type
             reactions       the reaction data
             resonances      the optional resonance parameters (default: none)
+            covariances     the optional covariance data (default: none)
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
         Arguments:
-            self         the reaction
-            projectile   the particle identifier
-            target       the target identifier
-            type         the interaction type
-            reactions    the reaction data
-            resonances   the optional resonance parameters (default: none)
-            normalise    option to indicate whether or not to normalise
-                         all probability data (default: no normalisation)
+            self          the reaction
+            projectile    the particle identifier
+            target        the target identifier
+            type          the interaction type
+            reactions     the reaction data
+            resonances    the optional resonance parameters (default: none)
+            covariances   the optional covariance data (default: none)
+            normalise     option to indicate whether or not to normalise
+                          all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
+    def calculate_average_energy(self, tolerance: float = 1e-08) -> None:
+        """
+        Calculate average outgoing energies for all reaction products
+        
+        Arguments:
+            self        the ProjectileTarget data
+            tolerance    the integration tolerance (default: 1e-8)
+        """
     def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
         """
         Calculate summation cross sections
@@ -1151,6 +1099,14 @@ class ProjectileTarget:
             exclude_summation   option to exclude summation reactions in the
                                 unionisation (default: false)
         """
+    @property
+    def covariance_data(self) -> covariance.CovarianceData | None:
+        """
+        The covariance data
+        """
+    @covariance_data.setter
+    def covariance_data(self, arg1: covariance.CovarianceData | None) -> None:
+        ...
     @property
     def documentation(self) -> Documentation:
         """
@@ -1251,6 +1207,14 @@ class Reaction:
         """
     def __ne__(self, arg0: Reaction) -> bool:
         ...
+    def calculate_average_energy(self, tolerance: float = 1e-08) -> None:
+        """
+        Calculate average outgoing energies for all reaction products
+        
+        Arguments:
+            self         the reaction
+            tolerance    the integration tolerance (default: 1e-8)
+        """
     def has_product(self, type: id.ParticleID) -> bool:
         """
         Return whether or not a reaction product type is present
@@ -3372,7 +3336,8 @@ class ThermalScattering:
     ----------
         documentation : njoy.dryad.Documentation
              the documentation associated to the thermal scattering data
-        incoherent : njoy.dryad.thermal.IncoherentElasticScattering
+        coherent : njoy.dryad.thermal.CoherentElasticScattering
+             coherent elastic scattering data (default: none)    incoherent : njoy.dryad.thermal.IncoherentElasticScattering
              incoherent elastic scattering data (default: none)
     """
     __hash__: typing.ClassVar[None] = None
@@ -3408,12 +3373,12 @@ class ThermalScattering:
     def __eq__(self, arg0: ThermalScattering) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, documentation: Documentation, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data with documentation
         """
     @typing.overload
-    def __init__(self, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
+    def __init__(self, coherent: thermal.CoherentElasticScattering | None = None, incoherent: thermal.IncoherentElasticScattering | None = None) -> None:
         """
         Initialise the thermal scattering data without documentation
         """
@@ -3432,6 +3397,14 @@ class ThermalScattering:
             filename : string
                  the ENDF file name
         """
+    @property
+    def coherent_elastic_scattering(self) -> thermal.CoherentElasticScattering | None:
+        """
+        The coherent elastic data
+        """
+    @coherent_elastic_scattering.setter
+    def coherent_elastic_scattering(self, arg1: thermal.CoherentElasticScattering | None) -> None:
+        ...
     @property
     def documentation(self) -> Documentation:
         """

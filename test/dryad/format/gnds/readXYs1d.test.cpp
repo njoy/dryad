@@ -20,7 +20,7 @@ SCENARIO( "readXYs1D" ) {
   GIVEN( "a GNDS xys1d xml node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node reactions = document.child( "reactionSuite" ).child( "reactions" );
 
     WHEN( "a single GNDS xys1d node without an outer domain value is given" ) {

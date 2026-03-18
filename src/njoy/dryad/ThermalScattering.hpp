@@ -3,10 +3,12 @@
 
 // system includes
 #include <optional>
+#include <tuple>
 
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/Documentation.hpp"
+#include "njoy/dryad/thermal/CoherentElasticScattering.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
 
 namespace njoy {
@@ -21,6 +23,7 @@ namespace dryad {
     /* fields */
     Documentation documentation_;
 
+    std::optional< thermal::CoherentElasticScattering > coherent_elastic_;
     std::optional< thermal::IncoherentElasticScattering > incoherent_elastic_;
 
     /* auxiliary functions */
@@ -60,6 +63,35 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the coherent elastic data
+     */
+    const std::optional< thermal::CoherentElasticScattering >&
+    coherentElasticScattering() const {
+
+      return this->coherent_elastic_;
+    }
+
+    /**
+     *  @brief Return the coherent elastic data
+     */
+    std::optional< thermal::CoherentElasticScattering >&
+    coherentElasticScattering() {
+
+      return this->coherent_elastic_;
+    }
+
+    /**
+     *  @brief Set the coherent elastic data
+     *
+     *  @param[in] coherent   the coherent elastic data
+     */
+    void coherentElasticScattering(
+           std::optional< thermal::CoherentElasticScattering > coherent ) {
+
+      this->coherent_elastic_ = std::move( coherent );
+    }
+
+    /**
      *  @brief Return the incoherent elastic data
      */
     const std::optional< thermal::IncoherentElasticScattering >&
@@ -93,7 +125,7 @@ namespace dryad {
      */
     bool hasCoherentElasticScattering() const {
 
-      return false;
+      return this->coherentElasticScattering().has_value();
     }
 
     /**
@@ -127,7 +159,8 @@ namespace dryad {
      */
     bool operator==( const ThermalScattering& right ) const {
 
-      return this->incoherentElasticScattering() == right.incoherentElasticScattering();
+      return std::tie( this->coherentElasticScattering(), this->incoherentElasticScattering() ) ==
+             std::tie( right.coherentElasticScattering(), right.incoherentElasticScattering() );
     }
 
     /**

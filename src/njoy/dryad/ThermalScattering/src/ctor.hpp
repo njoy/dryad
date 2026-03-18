@@ -16,8 +16,10 @@ ThermalScattering& operator=( ThermalScattering&& ) = default;
  *  @param[in] incoherent      the incoherent elastic scattering data (default: none)
  */
 ThermalScattering( Documentation documentation,
+                   std::optional< thermal::CoherentElasticScattering > coherent = std::nullopt,
                    std::optional< thermal::IncoherentElasticScattering > incoherent = std::nullopt ) :
     documentation_( std::move( documentation ) ),
+    coherent_elastic_( std::move( coherent ) ),
     incoherent_elastic_( std::move( incoherent ) ) {}
 
 /**
@@ -25,6 +27,8 @@ ThermalScattering( Documentation documentation,
  *
  *  @param[in] incoherent      the incoherent elastic scattering data (default: none)
  */
-ThermalScattering( std::optional< thermal::IncoherentElasticScattering > incoherent = std::nullopt ) :
+ThermalScattering( std::optional< thermal::CoherentElasticScattering > coherent = std::nullopt,
+                   std::optional< thermal::IncoherentElasticScattering > incoherent = std::nullopt ) :
     documentation_(),
+    coherent_elastic_( std::move( coherent ) ),
     incoherent_elastic_( std::move( incoherent ) ) {}

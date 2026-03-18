@@ -12,6 +12,8 @@
 #include "njoy/dryad/ReferenceFrame.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "njoy/dryad/TabulatedComptonProfile.hpp"
+#include "njoy/dryad/external/KleinNishina.hpp"
+#include "scion/integration/AdaptiveGaussLobatto.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -68,7 +70,7 @@ namespace dryad {
     /**
      *  @brief Set the reference frame
      *
-     *  @param frame   the reference frame of the distribution data
+     *  @param[in] frame   the reference frame of the distribution data
      */
     void frame( ReferenceFrame frame ) {
 
@@ -86,11 +88,54 @@ namespace dryad {
     /**
      *  @brief Set the scattering function
      *
-     *  @param scattering   the scattering function
+     *  @param[in] scattering   the scattering function
      */
     void scatteringFunction( TabulatedScatteringFunction scattering ) {
 
       this->scattering_ = std::move( scattering );
+    }
+
+    /**
+     *  @brief Calculate the average outgoing energy for a given energy
+     *
+     *  @param[in] energy      the incident energy
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
+     */
+    double averageEnergy( double energy,
+                          double tolerance = constants::integration::tolerance ) const {
+
+      auto xs = [&] ( double outgoing_energy ) {
+
+        using namespace external;
+        double cosine = KleinNishina::cosine( energy, outgoing_energy );
+        double scatter = this->scatteringFunction()( energy, cosine );
+        return scatter * KleinNishina::differentialCrossSectionToOutgoingEnergy( energy, outgoing_energy, cosine );
+      };
+      auto mean = [&] ( double outgoing_energy ) {
+
+        return outgoing_energy * xs( outgoing_energy );
+      };
+
+      double min = external::KleinNishina::lowerOutgoingEnergyLimit( energy );
+      double max = external::KleinNishina::upperOutgoingEnergyLimit( energy );
+
+      scion::integration::AdaptiveGaussLobatto< double, double > integrator;
+      return integrator( mean, min, max, tolerance ) / integrator( xs, min, max, tolerance );
+    }
+
+    /**
+     *  @brief Calculate the average outgoing energy for a set of energies
+     *
+     *  @param[in] energies    the incident energies
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
+     */
+    std::vector< double > averageEnergy( const std::vector< double >& energies,
+                                         double tolerance = constants::integration::tolerance ) const {
+
+      std::vector< double > values( energies.size() );
+      std::transform( energies.begin(), energies.end(), values.begin(),
+                      [&] ( auto&& energy ) { return this->averageEnergy( energy, tolerance ); } );
+      return values;
     }
 
     /**
@@ -114,7 +159,7 @@ namespace dryad {
     /**
      *  @brief Set the Compton profiles
      *
-     *  @param profiles   the Compton profiles
+     *  @param[in] profiles   the Compton profiles
      */
     void comptonProfiles( std::optional< std::vector< TabulatedComptonProfile > > profiles ) {
 
@@ -127,6 +172,14 @@ namespace dryad {
 
         this->sort();
       }
+    }
+
+    /**
+     *  @brief Return whether or not Compton profiles are defined
+     */
+    bool hasComptonProfiles() const {
+
+      return this->comptonProfiles().has_value();
     }
 
     /**

@@ -9,29 +9,27 @@ shacl_FetchContent_Declare( pugixml
 
 shacl_FetchContent_Declare( eigen
     GIT_REPOSITORY  ../../njoy/eigen
-    GIT_TAG         d0bfdc1658ca0b4c659fd3702c351d2c2cdc876c  # 3.4.1 branch on July 26, 2023
+    GIT_TAG         bc3b39870ecb690a623a3f49149a358b95c5781d  # tag: 5.0.1
     )
-# the next line prevents eigen from populating the .cmake/packages folder
-set( CMAKE_EXPORT_NO_PACKAGE_REGISTRY ON )
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         5e0313457cfffa058ff27e2b711fdfb268b74f63  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         3febd4d75a85fe9c793fb6693ddab2efb76e2df7  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         6cf4be58060dcb1b23243c60f01b35f6b45a6c29  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         32ca66436b6c16fd80272031ea2100e2cae4718c  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         d9189cd4ffd49340ebd1d880ee363d0970ece4c7  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         657bebe6a20a865115d143acefc69e990a467eb5  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         d38d4f96b9346bb80f238b083beb28a9d7ea9269  # NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         ad2adf44db184d00ab3e58766e5424ac40185084  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################

@@ -27,8 +27,10 @@ namespace gnds {
    *  @brief Create a ReactionProduct from an GNDS product node
    */
   inline ReactionProduct
-  createReactionProduct( const id::ParticleID& projectile, const id::ParticleID& target,
-                         pugi::xml_node suite, pugi::xml_node product,
+  createReactionProduct( const id::ParticleID& /* projectile */,
+                         const id::ParticleID& /* target */,
+                         pugi::xml_node /* suite */,
+                         pugi::xml_node product,
                          bool normalise,
                          const std::string& style = "eval" ) {
 

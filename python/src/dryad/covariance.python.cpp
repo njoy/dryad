@@ -22,6 +22,8 @@ namespace covariance {
   void wrapProductMultiplicityMetadata( python::module& );
   void wrapProductMultiplicityCovarianceMatrix( python::module& );
   void wrapLinearCombinationCovariance( python::module& );
+  void wrapCrossSectionCovarianceData( python::module& );
+  void wrapCovarianceData( python::module& );
 }
 
 void wrapCovariance( python::module& module ) {
@@ -45,6 +47,8 @@ void wrapCovariance( python::module& module ) {
   covariance::wrapProductMultiplicityMetadata( submodule );
   covariance::wrapProductMultiplicityCovarianceMatrix( submodule );
   covariance::wrapLinearCombinationCovariance( submodule );
+  covariance::wrapCrossSectionCovarianceData( submodule );
+  covariance::wrapCovarianceData( submodule );
 }
 
 } // dryad namespace

@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "njoy/dryad/format/adjustScatterLevel.hpp"
 #include "njoy/dryad/format/gnds/convertEnergy.hpp"
 #include "njoy/dryad/format/gnds/createQValue.hpp"
 #include "njoy/dryad/format/gnds/createReactionProducts.hpp"
@@ -27,24 +28,10 @@ namespace gnds {
                   bool normalise,
                   const std::string& style = "eval" ) {
 
-    auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
-
-      if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
-
-        int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-        int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
-        if ( mt > ground && mt <= elastic ) {
-
-          return mt - 1;
-        }
-      }
-      return mt;
-    };
-
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 
       // metadata and miscellaneous information
-      int mt = adjust_scatter_level( reaction.attribute( "ENDF_MT" ).as_int() );
+      int mt = adjustScatterLevel( projectile, target, reaction.attribute( "ENDF_MT" ).as_int() );
       id::ReactionID id( projectile, target, mt );
 
       // cross section
@@ -55,6 +42,10 @@ namespace gnds {
       auto output = reaction.child( "outputChannel" );
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = createQValue( output.child( "Q" ), style );
+      if ( mt == 515 || mt == 517 ) {
+
+        reaction_q = -2. * constants::electron_rest_mass;
+      }
 
       // reaction products
       std::vector< ReactionProduct > products;
@@ -87,7 +78,7 @@ namespace gnds {
     else if ( strcmp( reaction.name(), "crossSectionSum" ) == 0 ) {
 
       // metadata and miscellaneous information
-      int mt = adjust_scatter_level( reaction.attribute( "ENDF_MT" ).as_int() );
+      int mt = adjustScatterLevel( projectile, target, reaction.attribute( "ENDF_MT" ).as_int() );
       id::ReactionID id( projectile, target, mt );
 
       // Q values
@@ -104,7 +95,7 @@ namespace gnds {
             partial; partial = partial.next_sibling( "add" ) ) {
 
         auto reaction = resolveLink( partial ).parent();
-        int mt = adjust_scatter_level( reaction.attribute( "ENDF_MT" ).as_int() );
+        int mt = adjustScatterLevel( projectile, target, reaction.attribute( "ENDF_MT" ).as_int() );
         partials.emplace_back( projectile, target, mt );
       }
 

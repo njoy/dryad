@@ -20,7 +20,7 @@ SCENARIO( "createReaction" ) {
   GIVEN( "GNDS data - incident neutrons - stable target" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+    document.load_file( "n-001_H_001.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
     pugi::xml_node reactions = suite.child( "reactions" );
     pugi::xml_node sums = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" );
@@ -56,7 +56,7 @@ SCENARIO( "createReaction" ) {
   GIVEN( "GNDS data - incident neutrons - metastable target" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
+    document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
     pugi::xml_node reactions = suite.child( "reactions" );
     pugi::xml_node sums = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" );
@@ -104,7 +104,7 @@ SCENARIO( "createReaction" ) {
   GIVEN( "GNDS data - electro-atomic" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
     pugi::xml_node reactions = suite.child( "reactions" );
     pugi::xml_node sums = suite.child( "sums" ).child( "crossSectionSums" );
@@ -165,7 +165,7 @@ SCENARIO( "createReaction" ) {
   GIVEN( "GNDS data - photo-atomic" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
+    document.load_file( "photoat-001_H_000.endf.gnds.xml" );
     pugi::xml_node suite = document.child( "reactionSuite" );
     pugi::xml_node reactions = suite.child( "reactions" );
     pugi::xml_node sums = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" );

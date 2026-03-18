@@ -8,6 +8,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
 #include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
+#include "njoy/dryad/format/ace/photoatomic/createTabulatedComptonProfiles.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
@@ -41,7 +42,12 @@ namespace photoatomic {
     products.back().emplace_back(
       id::ParticleID( "g" ), 1,
       IncoherentDistributionData( ReferenceFrame::CentreOfMass,
-                                  createTabulatedScatteringFunction( table.incoherentScatteringFunctionBlock() ) ) );
+                                  createTabulatedScatteringFunction( table.incoherentScatteringFunctionBlock() ),
+                                  table.comptonProfileBlock().has_value()
+                                    ? std::make_optional( createTabulatedComptonProfiles(
+                                                              table.comptonProfileBlock().value(),
+                                                              table.Z() ) )
+                                    : std::nullopt ) );
 
     // pair production - MT516 (sum of MT515 and MT517)
     products.push_back( {} );

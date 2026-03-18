@@ -3,6 +3,7 @@ if(njoy.python)
     find_package( Python3 REQUIRED )
     pybind11_add_module( njoy.python
         ${CMAKE_CURRENT_SOURCE_DIR}/src/njoy.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/constants.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/matrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/id.python.cpp
@@ -45,9 +46,11 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/SpinGroup.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/CompoundSystem.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedDebyeWallerIntegral.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedEffectiveTemperature.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringFunction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/BraggEdgeData.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/DebyeWallerIntegralData.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernelFunction.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/TabulatedScatteringKernel.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/CoherentElasticScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/thermal/IncoherentElasticScattering.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ScalingType.python.cpp
@@ -57,6 +60,8 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ProductMultiplicityMetadata.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ProductMultiplicityCovarianceMatrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/LinearCombinationCovariance.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CrossSectionCovarianceData.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Documentation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/DistributionDataType.python.cpp
@@ -94,7 +99,6 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/IncoherentDistributionData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ReactionProduct.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Reaction.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/CrossSectionCovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ProjectileTarget.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/AtomicRelaxation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ThermalScattering.python.cpp
@@ -106,6 +110,8 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/medic.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/medic/pruneCrossSection.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/medic/pruneCrossSections.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/acer.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/acer/processElectronPhotonRelaxation.python.cpp
     )
 
     target_link_libraries(njoy.python PRIVATE njoy)

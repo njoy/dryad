@@ -7,7 +7,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
-#include "njoy/dryad/format/endf/thermal/createTabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/format/endf/thermal/createDebyeWallerIntegralData.hpp"
 #include "ENDFtk/section/7/2.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
@@ -30,7 +30,7 @@ namespace thermal {
     Log::info( "Reading incoherent elastic scattering data" );
     return dryad::thermal::IncoherentElasticScattering(
              incoherent.boundCrossSection(),
-             createTabulatedDebyeWallerIntegral( incoherent ) );
+             createDebyeWallerIntegralData( incoherent ) );
   }
 
 } // thermal namespace

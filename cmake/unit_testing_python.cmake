@@ -46,6 +46,8 @@ add_python_test( dryad.covariance.CrossSectionCovarianceMatrix         dryad/cov
 add_python_test( dryad.covariance.ProductMultiplicityMetadata          dryad/covariance/Test_ProductMultiplicityMetadata.py )
 add_python_test( dryad.covariance.ProductMultiplicityCovarianceMatrix  dryad/covariance/Test_ProductMultiplicityCovarianceMatrix.py )
 add_python_test( dryad.covariance.LinearCombinationCovariance          dryad/covariance/Test_LinearCombinationCovariance.py )
+add_python_test( dryad.covariance.CrossSectionCovarianceData           dryad/covariance/Test_CrossSectionCovarianceData.py )
+add_python_test( dryad.covariance.CovarianceData                       dryad/covariance/Test_CovarianceData.py )
 
 add_python_test( dryad.resonances.Particle                             dryad/resonances/Test_Particle.py )
 add_python_test( dryad.resonances.ParticlePair                         dryad/resonances/Test_ParticlePair.py )
@@ -68,9 +70,11 @@ add_python_test( dryad.resonances.ResonanceTable                       dryad/res
 add_python_test( dryad.resonances.SpinGroup                            dryad/resonances/Test_SpinGroup.py )
 add_python_test( dryad.resonances.CompoundSystem                       dryad/resonances/Test_CompoundSystem.py )
 
-add_python_test( dryad.thermal.TabulatedDebyeWallerIntegral            dryad/thermal/Test_TabulatedDebyeWallerIntegral.py )
-add_python_test( dryad.thermal.TabulatedEffectiveTemperature           dryad/thermal/Test_TabulatedEffectiveTemperature.py )
-add_python_test( dryad.thermal.TabulatedScatteringFunction             dryad/thermal/Test_TabulatedScatteringFunction.py )
+add_python_test( dryad.thermal.BraggEdgeData                           dryad/thermal/Test_BraggEdgeData.py )
+add_python_test( dryad.thermal.DebyeWallerIntegralData                 dryad/thermal/Test_DebyeWallerIntegralData.py )
+add_python_test( dryad.thermal.TabulatedScatteringKernelFunction       dryad/thermal/Test_TabulatedScatteringKernelFunction.py )
+add_python_test( dryad.thermal.TabulatedScatteringFunctions            dryad/thermal/Test_TabulatedScatteringKernel.py )
+add_python_test( dryad.thermal.CoherentElasticScattering               dryad/thermal/Test_CoherentElasticScattering.py )
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
@@ -103,8 +107,6 @@ add_python_test( dryad.ReactionProduct                                 dryad/Tes
 
 add_python_test( dryad.TabulatedCrossSection                           dryad/Test_TabulatedCrossSection.py )
 add_python_test( dryad.Reaction                                        dryad/Test_Reaction.py )
-
-add_python_test( dryad.CrossSectionCovarianceData                      dryad/Test_CrossSectionCovarianceData.py )
 
 add_python_test( dryad.ProjectileTarget                                dryad/Test_ProjectileTarget.py )
 add_python_test( dryad.AtomicRelaxation                                dryad/Test_AtomicRelaxation.py )

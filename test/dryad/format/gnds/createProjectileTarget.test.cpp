@@ -22,12 +22,12 @@ SCENARIO( "createProjectileTarget" ) {
     WHEN( "a GNDS XML document is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+      document.load_file( "n-001_H_001.endf.gnds.xml" );
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
@@ -37,12 +37,12 @@ SCENARIO( "createProjectileTarget" ) {
     WHEN( "a GNDS XML document is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "n-003_Li_007.endf.gnds.xml" );
+      document.load_file( "n-003_Li_007.endf.gnds.xml" );
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
@@ -55,12 +55,12 @@ SCENARIO( "createProjectileTarget" ) {
     WHEN( "a GNDS XML document is given" ) {
 
       pugi::xml_document document;
-      pugi::xml_parse_result result = document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
+      document.load_file( "n-093_Np_236m1.endf.gnds.xml" );
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         neutron::np236m1::verifyNp236m1( first, false );
         neutron::np236m1::verifyNp236m1( second, true );
@@ -71,14 +71,14 @@ SCENARIO( "createProjectileTarget" ) {
   GIVEN( "GNDS data - electro-atomic" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
 
     WHEN( "a GNDS XML document is given" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         electron::h0::endf81::verifyDocumentation( first.documentation() );
         electron::h0::endf81::verifyDocumentation( second.documentation() );
@@ -92,14 +92,14 @@ SCENARIO( "createProjectileTarget" ) {
   GIVEN( "GNDS data - photo-atomic" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
+    document.load_file( "photoat-001_H_000.endf.gnds.xml" );
 
     WHEN( "a GNDS XML document is given" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         photoatomic::h0::verifyH0( first, false );
         photoatomic::h0::verifyH0( second, true );

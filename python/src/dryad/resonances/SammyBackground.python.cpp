@@ -27,10 +27,10 @@ void wrapSammyBackground( python::module& module ) {
     "A channel background using the SAMMY parametrisation\n\n"
     "The SAMMY parametrisation of a channel background is a function\n"
     "of energy consisting of a quadratic polynomial and a logarithmic\n"
-    "term. It is characterised by 7 parameters:\n"
-    "  - 3 coefficients of the polymonial term (R0, R1 and R2)\n"
-    "  - 2 constants for the logarithmic term (S0 and S1)\n"
-    "  - 2 logarithmic singularity values (Ed and Eu, given in eV)\n"
+    "term. It is characterised by 7 parameters: 3 coefficients of the\n"
+    "polymonial term (R0, R1 and R2), 2 constants for the logarithmic\n"
+    "term (S0 and S1) and 2 logarithmic singularity values (Ed and Eu,\n"
+    "given in eV)\n"
    );
 
   // wrap the component

@@ -82,11 +82,41 @@ void wrapIncoherentDistributionData( python::module& module ) {
     python::overload_cast< std::optional< std::vector< TabulatedComptonProfile > > >( &Component::comptonProfiles ),
     "The compton profiles"
   )
+  .def_property_readonly(
+
+    "has_compton_profiles",
+    &Component::hasComptonProfiles,
+    "Flag indicating whether or not there are Compton profiles"
+  )
   .def(
 
     "normalise",
     &Component::normalise,
     "Normalise the Compton profiles"
+  )
+  .def(
+
+    "average_energy",
+    python::overload_cast< double, double >( &Component::averageEnergy, python::const_ ),
+    python::arg( "energy" ),
+    python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
+    "Calculate the average outgoing energy\n\n"
+    "Parameters \n"
+    "---------- \n"
+    "    energy : float \n"
+    "         the incident energy\n"
+    "    energies : list of float \n"
+    "         the incident energies\n"
+    "    tolerance : float \n"
+    "         the integration tolerance (default: 1e-8)"
+  )
+  .def(
+
+    "average_energy",
+    python::overload_cast< const std::vector< double >&, double >( &Component::averageEnergy, python::const_ ),
+    python::arg( "energies" ),
+    python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
+    "Calculate the average outgoing energy"
   );
 
   // add standard equality comparison definitions

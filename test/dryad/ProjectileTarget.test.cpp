@@ -319,7 +319,8 @@ ProjectileTarget makeProjectiletarget( bool normalise ) {
   };
 
   return ProjectileTarget( std::move( projectile ), std::move( target ),
-                           type, std::move( reactions ), std::nullopt, normalise );
+                           type, std::move( reactions ), std::nullopt,
+                           std::nullopt, normalise );
 }
 
 void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
@@ -850,6 +851,9 @@ void verifyChunk( const ProjectileTarget& chunk, bool normalise ) {
   CHECK( 1 == reaction.crossSection().boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
   CHECK( true == reaction.crossSection().isLinearised() );
+
+  // covariance data
+  CHECK( std::nullopt == chunk.covarianceData() );
 }
 
 void verifyCorrectUnionisation( const ProjectileTarget& chunk, bool exclude ) {

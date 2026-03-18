@@ -26,11 +26,24 @@ namespace gnds {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
+    // determine file path
+    std::string path = filename;
+    auto pos = path.find_last_of( '/' );
+    if ( pos != std::string::npos ) {
+
+      path.erase( pos + 1, path.size() );
+    }
+    else {
+
+      path = "";
+    }
+
+    // open the file
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( filename.c_str() );
+    document.load_file( filename.c_str() );
     if ( document ) {
 
-      return createProjectileTarget( document, normalise );
+      return createProjectileTarget( document, path, normalise );
     }
     else {
 

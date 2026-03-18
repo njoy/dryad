@@ -325,6 +325,56 @@ namespace dryad {
     }
 
     /**
+     *  @brief Calculate average outgoing energies for all reaction products
+     *
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
+     */
+    void calculateAverageEnergy( double tolerance = constants::integration::tolerance ) {
+
+      auto calculateAverageEnergy = tools::overload{
+
+        [&] ( const IncoherentDistributionData& distribution ) -> std::optional< TabulatedAverageEnergy > {
+
+          // incoherent distribution data can calculate its own average energy for
+          // a given set of energy values, use the cross section energy grid
+
+          //! @todo interpolation type?
+
+          std::vector< double > energies = this->crossSection().energies();
+          std::vector< double > values = distribution.averageEnergy( energies, tolerance );
+          return TabulatedAverageEnergy( std::move( energies ), std::move( values ) );
+        },
+        [&] ( const CoherentDistributionData& ) -> std::optional< TabulatedAverageEnergy > {
+
+          // coherent distribution data does not modify the outgoing energy grid,
+          // use the cross section energy grid
+
+          //! @todo interpolation type?
+
+          std::vector< double > energies = this->crossSection().energies();
+          std::vector< double > values = energies;
+          return TabulatedAverageEnergy( std::move( energies ), std::move( values ) );
+        },
+        [] ( const auto& ) -> std::optional< TabulatedAverageEnergy > {
+
+          return std::nullopt;
+        }
+      };
+
+      if ( this->isPrimaryReaction() ) {
+
+        for ( auto& product : this->products() ) {
+
+          if ( product.distributionData().has_value() ) {
+
+            product.averageEnergy( std::visit( calculateAverageEnergy,
+                                               product.distributionData().value() ) );
+          }
+        }
+      }
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side

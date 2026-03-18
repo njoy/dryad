@@ -8,7 +8,7 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
-#include "njoy/dryad/format/gnds/thermal/createTabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/format/gnds/thermal/createDebyeWallerIntegralData.hpp"
 #include "njoy/dryad/format/gnds/convertCrossSection.hpp"
 
 namespace njoy {
@@ -37,7 +37,7 @@ namespace thermal {
 
     // get the Debye-Waller integral
     node = tsl.child( "DebyeWallerIntegral" );
-    dryad::thermal::TabulatedDebyeWallerIntegral integral = createTabulatedDebyeWallerIntegral( node );
+    dryad::thermal::DebyeWallerIntegralData integral = createDebyeWallerIntegralData( node );
 
     return dryad::thermal::IncoherentElasticScattering( xs, std::move( integral ) );
   }

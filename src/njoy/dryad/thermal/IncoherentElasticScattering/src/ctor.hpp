@@ -16,6 +16,6 @@ IncoherentElasticScattering& operator=( IncoherentElasticScattering&& ) = defaul
  *  @param debyeWallerIntegral   the Debye-Waller integral data
  */
 IncoherentElasticScattering( double xs,
-                             TabulatedDebyeWallerIntegral debyeWallerIntegral ) :
+                             DebyeWallerIntegralData debyeWallerIntegral ) :
   bound_xs_( xs ),
   debye_waller_( std::move( debyeWallerIntegral ) ) {}

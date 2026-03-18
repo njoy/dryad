@@ -6,7 +6,7 @@
 #include <variant>
 
 // other includes
-#include "njoy/dryad/thermal/TabulatedDebyeWallerIntegral.hpp"
+#include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -15,13 +15,16 @@ namespace thermal {
   /**
    *  @class
    *  @brief Incoherent elastic thermal scattering data
+   *
+   *  @todo add a function to retrieve the cross section (interpolation type is 1/E)
+   *        and the angular distribution or the discrete cosines
    */
   class IncoherentElasticScattering {
 
     /* fields */
 
     double bound_xs_;
-    TabulatedDebyeWallerIntegral debye_waller_;
+    DebyeWallerIntegralData debye_waller_;
 
   public:
 
@@ -29,6 +32,22 @@ namespace thermal {
     #include "njoy/dryad/thermal/IncoherentElasticScattering/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the number of moderator temperatures for which data is available
+     */
+    std::size_t numberModeratorTemperatures() const {
+
+      return this->moderatorTemperatures().size();
+    }
+
+    /**
+     *  @brief Return the moderator temperature values
+     */
+    const std::vector< double >& moderatorTemperatures() const {
+
+      return this->debyeWallerIntegral().temperatures();
+    }
 
     /**
      *  @brief Return the bound atom cross section value
@@ -51,7 +70,7 @@ namespace thermal {
     /**
      *  @brief Return the Debye-Waller integral data
      */
-    const TabulatedDebyeWallerIntegral& debyeWallerIntegral() const {
+    const DebyeWallerIntegralData& debyeWallerIntegral() const {
 
       return this->debye_waller_;
     }
@@ -61,7 +80,7 @@ namespace thermal {
      *
      *  @param debyeWaller   the Debye-Waller integral data
      */
-    void debyeWallerIntegral( TabulatedDebyeWallerIntegral debyeWaller ) {
+    void debyeWallerIntegral( DebyeWallerIntegralData debyeWaller ) {
 
       this->debye_waller_ = std::move( debyeWaller );
     }

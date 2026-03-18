@@ -26,8 +26,6 @@
 #include "njoy/dryad/format/endf/resonances/createResonanceParameters.hpp"
 #include "njoy/dryad/format/endf/resonances/createTabulatedRadius.hpp"
 
-#include "njoy/dryad/format/endf/thermal/createTabulatedDebyeWallerIntegral.hpp"
-#include "njoy/dryad/format/endf/thermal/createTabulatedEffectiveTemperature.hpp"
 #include "njoy/dryad/format/endf/thermal/createIncoherentElasticScattering.hpp"
 
 #include "njoy/dryad/format/endf/createProjectileIdentifier.hpp"

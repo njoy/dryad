@@ -25,6 +25,7 @@ void wrapProjectileTarget( python::module& module ) {
   using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
+  using CovarianceData = njoy::dryad::covariance::CovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
 
   // wrap views created by this component
@@ -47,11 +48,13 @@ void wrapProjectileTarget( python::module& module ) {
                   InteractionType,
                   std::vector< Reaction >,
                   std::optional< ResonanceParameters >,
+                  std::optional< CovarianceData >,
                   bool >(),
     python::arg( "documentation" ), python::arg( "projectile" ),
     python::arg( "target" ), python::arg( "type" ),
     python::arg( "reactions" ),
     python::arg( "resonances" ) = std::nullopt,
+    python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
@@ -62,6 +65,7 @@ void wrapProjectileTarget( python::module& module ) {
     "    type            the interaction type\n"
     "    reactions       the reaction data\n"
     "    resonances      the optional resonance parameters (default: none)\n"
+    "    covariances     the optional covariance data (default: none)\n"
     "    normalise       option to indicate whether or not to normalise\n"
     "                    all probability data (default: no normalisation)"
   )
@@ -72,23 +76,26 @@ void wrapProjectileTarget( python::module& module ) {
                   InteractionType,
                   std::vector< Reaction >,
                   std::optional< ResonanceParameters >,
+                  std::optional< CovarianceData >,
                   bool >(),
     python::arg( "projectile" ),
     python::arg( "target" ),
     python::arg( "type" ),
     python::arg( "reactions" ),
     python::arg( "resonances" ) = std::nullopt,
+    python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the ProjectileTarget\n\n"
     "Arguments:\n"
-    "    self         the reaction\n"
-    "    projectile   the particle identifier\n"
-    "    target       the target identifier\n"
-    "    type         the interaction type\n"
-    "    reactions    the reaction data\n"
-    "    resonances   the optional resonance parameters (default: none)\n"
-    "    normalise    option to indicate whether or not to normalise\n"
-    "                 all probability data (default: no normalisation)"
+    "    self          the reaction\n"
+    "    projectile    the particle identifier\n"
+    "    target        the target identifier\n"
+    "    type          the interaction type\n"
+    "    reactions     the reaction data\n"
+    "    resonances    the optional resonance parameters (default: none)\n"
+    "    covariances   the optional covariance data (default: none)\n"
+    "    normalise     option to indicate whether or not to normalise\n"
+    "                  all probability data (default: no normalisation)"
   )
   .def_property(
 
@@ -158,6 +165,23 @@ void wrapProjectileTarget( python::module& module ) {
     "    self   the ProjectileTarget data\n"
     "    id     the reaction identifier",
     python::return_value_policy::reference_internal
+  )
+  .def_property(
+
+    "covariance_data",
+    python::overload_cast<>( &Component::covarianceData, python::const_ ),
+    python::overload_cast< std::optional< CovarianceData > >( &Component::covarianceData ),
+    "The covariance data"
+  )
+  .def(
+
+    "calculate_average_energy",
+    &Component::calculateAverageEnergy,
+    python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
+    "Calculate average outgoing energies for all reaction products\n\n"
+    "Arguments:\n"
+    "    self        the ProjectileTarget data\n"
+    "    tolerance    the integration tolerance (default: 1e-8)"
   )
   .def(
 

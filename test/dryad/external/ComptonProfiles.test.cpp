@@ -21,6 +21,14 @@ SCENARIO( "ComptonProfiles" ) {
 
   GIVEN( "a z number" ) {
 
+    THEN( "Biggs, Mendelsohn and Mann subshell identifiers can be retrieved" ) {
+
+      auto chunk = ComptonProfiles::biggsMendelsohnMannSubshellIdentifiers( 1 );
+
+      CHECK( 1 == chunk.size() );
+      CHECK( id::ElectronSubshellID( "1s" ) == chunk[0] );
+    }
+
     THEN( "Biggs, Mendelsohn and Mann profiles can be constructed and members can be tested" ) {
 
       auto chunk1 = ComptonProfiles::biggsMendelsohnMannProfiles( 1, false );

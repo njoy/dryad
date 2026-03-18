@@ -19,6 +19,7 @@ void wrapThermalScattering( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::ThermalScattering;
   using Documentation = njoy::dryad::Documentation;
+  using CoherentElasticScattering = njoy::dryad::thermal::CoherentElasticScattering;
   using IncoherentElasticScattering = njoy::dryad::thermal::IncoherentElasticScattering;
 
   // wrap views created by this component
@@ -33,6 +34,8 @@ void wrapThermalScattering( python::module& module ) {
     "----------\n"
     "    documentation : njoy.dryad.Documentation\n"
     "         the documentation associated to the thermal scattering data\n"
+    "    coherent : njoy.dryad.thermal.CoherentElasticScattering\n"
+    "         coherent elastic scattering data (default: none)"
     "    incoherent : njoy.dryad.thermal.IncoherentElasticScattering\n"
     "         incoherent elastic scattering data (default: none)"
   );
@@ -42,14 +45,18 @@ void wrapThermalScattering( python::module& module ) {
   .def(
 
     python::init< Documentation,
+                  std::optional< CoherentElasticScattering >,
                   std::optional< IncoherentElasticScattering > >(),
     python::arg( "documentation" ),
+    python::arg( "coherent" ) = std::nullopt,
     python::arg( "incoherent" ) = std::nullopt,
     "Initialise the thermal scattering data with documentation"
   )
   .def(
 
-    python::init< std::optional< IncoherentElasticScattering > >(),
+    python::init< std::optional< CoherentElasticScattering >,
+                  std::optional< IncoherentElasticScattering > >(),
+    python::arg( "coherent" ) = std::nullopt,
     python::arg( "incoherent" ) = std::nullopt,
     "Initialise the thermal scattering data without documentation"
   )
@@ -59,6 +66,13 @@ void wrapThermalScattering( python::module& module ) {
     python::overload_cast<>( &Component::documentation, python::const_ ),
     python::overload_cast< Documentation >( &Component::documentation ),
     "The documentation"
+  )
+  .def_property(
+
+    "coherent_elastic_scattering",
+    python::overload_cast<>( &Component::coherentElasticScattering, python::const_ ),
+    python::overload_cast< std::optional< CoherentElasticScattering > >( &Component::coherentElasticScattering ),
+    "The coherent elastic data"
   )
   .def_property(
 
