@@ -99,20 +99,20 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "average_energy",
     python::overload_cast< double >( &Component::averageEnergy, python::const_ ),
     python::arg( "energy" ),
+    "Calculate the average outgoing energy\n\n"
     "Parameters \n"
     "---------- \n"
     "    energy : float \n"
     "         the incident energy\n"
+    "    energies : list of float \n"
+    "         the incident energies"
   )
   .def(
 
     "average_energy",
     python::overload_cast< const std::vector< double >& >( &Component::averageEnergy, python::const_ ),
     python::arg( "energies" ),
-    "Parameters \n"
-    "---------- \n"
-    "    energies : list of float \n"
-    "         the incident energies\n"
+    "Calculate the average outgoing energy"
   );
 
   // add standard equality comparison definitions

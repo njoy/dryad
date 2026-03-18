@@ -5,12 +5,12 @@ import sys
 # third party imports
 
 # local imports
-from njoy.dryad.thermal import TabulatedScatteringFunction
-from njoy.dryad.thermal import TabulatedScatteringFunctions
+from njoy.dryad.thermal import TabulatedScatteringKernelFunction
+from njoy.dryad.thermal import TabulatedScatteringKernel
 from njoy.dryad import InterpolationType
 
-class Test_TabulatedScatteringFunctions( unittest.TestCase ) :
-    """Unit test for the TabulatedScatteringFunction class."""
+class Test_TabulatedScatteringKernel( unittest.TestCase ) :
+    """Unit test for the TabulatedScatteringKernel class."""
 
     def test_component( self ) :
 
@@ -154,64 +154,64 @@ class Test_TabulatedScatteringFunctions( unittest.TestCase ) :
             self.assertEqual( InterpolationType.LinearLinear, chunk.interpolants[1] )
 
         # the data is given explicitly
-        chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 2., 3., 4. ],
-                                              functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
+        chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 2., 3., 4. ],
+                                              functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
                                               interpolant = InterpolationType.LinearLinear )
 
         verify_chunk( self, chunk )
 
         # the data is given explicitly with a jump that uses more than 2 x values
-        chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 2., 2., 2., 3., 4. ],
-                                              functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.51, 0.49 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
+        chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 2., 2., 2., 3., 4. ],
+                                              functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.51, 0.49 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
                                               interpolant = InterpolationType.LinearLinear )
 
         verify_chunk_jump( self, chunk )
 
         # the data is given explicitly with a jump at the beginning
-        chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 1., 2., 3., 4. ],
-                                              functions = [ TabulatedScatteringFunction( [ 0., 1. ], [ 0.1, 0.1 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
+        chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 1., 2., 3., 4. ],
+                                              functions = [ TabulatedScatteringKernelFunction( [ 0., 1. ], [ 0.1, 0.1 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ) ],
                                               interpolant = InterpolationType.LinearLinear )
 
         verify_chunk( self, chunk )
 
         # the data is given explicitly with a jump at the end
-        chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 2., 3., 4., 4. ],
-                                              functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 4. ], [ 0.2, 0.8 ] ),
-                                                            TabulatedScatteringFunction( [ 0., 1. ], [ 0.1, 0.1 ] ) ],
+        chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 2., 3., 4., 4. ],
+                                              functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.52, 0.48 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.48, 0.52 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.2, 0.8 ] ),
+                                                            TabulatedScatteringKernelFunction( [ 0., 1. ], [ 0.1, 0.1 ] ) ],
                                               interpolant = InterpolationType.LinearLinear )
 
         verify_chunk( self, chunk )
 
     def test_comparison( self ) :
 
-        left = TabulatedScatteringFunctions( [ 1., 2., 3., 4. ],
-                                             [ TabulatedScatteringFunction( [ 1., 3. ], [ 0.5, 0.5 ] ),
-                                               TabulatedScatteringFunction( [ 1., 3. ], [ 0.49, 0.51 ] ),
-                                               TabulatedScatteringFunction( [ 1., 3. ], [ 0.4, 0.6 ] ),
-                                               TabulatedScatteringFunction( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
-        equal = TabulatedScatteringFunctions( [ 1., 2., 3., 4. ],
-                                              [ TabulatedScatteringFunction( [ 1., 3. ], [ 0.5, 0.5 ] ),
-                                                TabulatedScatteringFunction( [ 1., 3. ], [ 0.49, 0.51 ] ),
-                                                TabulatedScatteringFunction( [ 1., 3. ], [ 0.4, 0.6 ] ),
-                                                TabulatedScatteringFunction( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
-        different = TabulatedScatteringFunctions( [ 1., 4. ],
-                                                  [ TabulatedScatteringFunction( [ 1., 3. ], [ 1.0, 1.0 ] ),
-                                                    TabulatedScatteringFunction( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        left = TabulatedScatteringKernel( [ 1., 2., 3., 4. ],
+                                             [ TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.5, 0.5 ] ),
+                                               TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                               TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                               TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        equal = TabulatedScatteringKernel( [ 1., 2., 3., 4. ],
+                                              [ TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.5, 0.5 ] ),
+                                                TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.49, 0.51 ] ),
+                                                TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.4, 0.6 ] ),
+                                                TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
+        different = TabulatedScatteringKernel( [ 1., 4. ],
+                                                  [ TabulatedScatteringKernelFunction( [ 1., 3. ], [ 1.0, 1.0 ] ),
+                                                    TabulatedScatteringKernelFunction( [ 1., 3. ], [ 0.1, 0.9 ] ) ] )
 
         self.assertEqual( True, ( left == left ) )
         self.assertEqual( True, ( left == equal ) )
@@ -228,58 +228,58 @@ class Test_TabulatedScatteringFunctions( unittest.TestCase ) :
         # there are not enough values in the x or f(y) grid
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [], functions = [] )
+            chunk = TabulatedScatteringKernel( energy_transfers = [], functions = [] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [ 1. ],
-                                                  functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ) ] )
+            chunk = TabulatedScatteringKernel( energy_transfers = [ 1. ],
+                                               functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ) ] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [],
-                                                   functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ) ] )
+            chunk = TabulatedScatteringKernel( energy_transfers = [],
+                                               functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ) ] )
 
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [ 1. ], functions = [] )
+            chunk = TabulatedScatteringKernel( energy_transfers = [ 1. ], functions = [] )
 
         # the x and y grid do not have the same number of points
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 2., 3., 4. ],
-                                                  functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ) ] )
+            chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 2., 3., 4. ],
+                                               functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                             TabulatedScatteringKernelFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
+                                                             TabulatedScatteringKernelFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ) ] )
 
         # the boundaries and interpolants do not have the same size
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 2., 3., 4. ],
-                                                  functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ],
+            chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 2., 3., 4. ],
+                                                  functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ],
                                                   boundaries = [ 3 ],
                                                   interpolants = [] )
 
         # the x grid is not sorted
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 3., 2., 4. ],
-                                                  functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ] )
+            chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 3., 2., 4. ],
+                                                  functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ] )
 
         # the last boundary does not point to the last point
         with self.assertRaises( Exception ) :
 
-            chunk = TabulatedScatteringFunctions( energy_transfers = [ 1., 2., 3., 4. ],
-                                                  functions = [ TabulatedScatteringFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ),
-                                                                    TabulatedScatteringFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ],
+            chunk = TabulatedScatteringKernel( energy_transfers = [ 1., 2., 3., 4. ],
+                                                  functions = [ TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.5, 0.5 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 1., 4. ], [ 0.49, 0.5, 0.51 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 2., 4. ], [ 0.4, 0.5, 0.6 ] ),
+                                                                TabulatedScatteringKernelFunction( [ 0., 4. ], [ 0.1, 0.9 ] ) ],
                                                   boundaries = [ 2 ],
                                                   interpolants = [ InterpolationType.LinearLinear ] )
 

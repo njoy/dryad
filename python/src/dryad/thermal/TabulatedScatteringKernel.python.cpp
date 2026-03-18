@@ -5,7 +5,7 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/thermal/TabulatedScatteringFunctions.hpp"
+#include "njoy/dryad/thermal/TabulatedScatteringKernel.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -13,11 +13,11 @@ namespace python = pybind11;
 namespace dryad {
 namespace thermal {
 
-void wrapTabulatedScatteringFunctions( python::module& module ) {
+void wrapTabulatedScatteringKernel( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::thermal::TabulatedScatteringFunctions;
-  using TabulatedScatteringFunction = njoy::dryad::thermal::TabulatedScatteringFunction;
+  using Component = njoy::dryad::thermal::TabulatedScatteringKernel;
+  using TabulatedScatteringKernelFunction = njoy::dryad::thermal::TabulatedScatteringKernelFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
 
   // wrap views created by this component
@@ -26,13 +26,13 @@ void wrapTabulatedScatteringFunctions( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TabulatedScatteringFunctions",
-    "An S(a,b) scattering kernel using tabulated scattering functions\n\n"
+    "TabulatedScatteringKernel",
+    "An S(a,b) scattering kernel using tabulated scattering kernel functions\n\n"
     "Parameters\n"
     "----------\n"
     "    energy_transfers : list of float\n"
     "         the energy transfer values\n"
-    "    functions : list of njoy.dryad.thermal.TabulatedScatteringFunction\n"
+    "    functions : list of njoy.dryad.thermal.TabulatedScatteringKernelFunction\n"
     "         the tabulated S(a) scattering functions\n"
     "    boundaries : list of int\n"
     "         the boundaries of the interpolation regions\n"
@@ -47,7 +47,7 @@ void wrapTabulatedScatteringFunctions( python::module& module ) {
   .def(
 
     python::init< std::vector< double >,
-                  std::vector< TabulatedScatteringFunction >,
+                  std::vector< TabulatedScatteringKernelFunction >,
                   std::vector< std::size_t >,
                   std::vector< InterpolationType > >(),
     python::arg( "energy_transfers" ), python::arg( "functions" ),
@@ -57,7 +57,7 @@ void wrapTabulatedScatteringFunctions( python::module& module ) {
   .def(
 
     python::init< std::vector< double >,
-                  std::vector< TabulatedScatteringFunction >,
+                  std::vector< TabulatedScatteringKernelFunction >,
                   InterpolationType >(),
     python::arg( "energy_transfers" ), python::arg( "functions" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,

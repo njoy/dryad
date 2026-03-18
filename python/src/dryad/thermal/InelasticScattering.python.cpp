@@ -16,7 +16,7 @@ void wrapInelasticScattering( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::thermal::InelasticScattering;
-  using TabulatedScatteringFunctions = njoy::dryad::thermal::TabulatedScatteringFunctions;
+  using TabulatedScatteringKernel = njoy::dryad::thermal::TabulatedScatteringKernel;
 
   // wrap views created by this component
 
@@ -30,7 +30,7 @@ void wrapInelasticScattering( python::module& module ) {
     "----------\n"
     "    xs : float\n"
     "         the bound atom cross section\n"
-    "    self_scatter : njoy.dryad.thermal.TabulatedScatteringFunctions\n"
+    "    self_scatter : njoy.dryad.thermal.TabulatedScatteringKernel\n"
     "         the self-scattering S(a,b) function"
   );
 
@@ -39,7 +39,7 @@ void wrapInelasticScattering( python::module& module ) {
   .def(
 
     python::init< double,
-                  TabulatedScatteringFunctions >(),
+                  TabulatedScatteringKernel >(),
     python::arg( "xs" ), python::arg( "self_scatter" ),
     "Initialise the inelastic scattering data"
   )
@@ -54,7 +54,7 @@ void wrapInelasticScattering( python::module& module ) {
 
     "self_scattering_function",
     python::overload_cast<>( &Component::selfScatteringFunction, python::const_ ),
-    python::overload_cast< TabulatedScatteringFunctions >( &Component::selfScatteringFunction ),
+    python::overload_cast< TabulatedScatteringKernel >( &Component::selfScatteringFunction ),
     "The self-scattering S(a,b) function"
   );
 

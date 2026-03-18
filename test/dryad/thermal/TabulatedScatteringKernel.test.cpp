@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/thermal/TabulatedScatteringFunctions.hpp"
+#include "njoy/dryad/thermal/TabulatedScatteringKernel.hpp"
 
 // other includes
 
@@ -13,17 +13,17 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 using namespace njoy::dryad::thermal;
 
-void verifyChunk( const TabulatedScatteringFunctions& );
-void verifyChunkWithJump( const TabulatedScatteringFunctions& );
+void verifyChunk( const TabulatedScatteringKernel& );
+void verifyChunkWithJump( const TabulatedScatteringKernel& );
 
-SCENARIO( "TabulatedScatteringFunctions" ) {
+SCENARIO( "TabulatedScatteringKernel" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
 
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > energyTransfers = { 1., 2., 3., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 4. }, { 0.52, 0.48 } },
@@ -32,7 +32,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
       };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedScatteringFunctions
+      TabulatedScatteringKernel
       chunk( std::move( energyTransfers ), std::move( functions ), interpolant );
 
       verifyChunk( chunk );
@@ -48,7 +48,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > energyTransfers = { 1., 2., 2., 2., 3., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 4. }, { 0.52, 0.48 } },
@@ -58,10 +58,10 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
         { { 0., 4. }, { 0.2, 0.8 } }
       };
 
-      TabulatedScatteringFunctions
+      TabulatedScatteringKernel
       chunk( std::move( energyTransfers ), std::move( functions ) );
 
-      THEN( "a TabulatedScatteringFunctions can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
 
         verifyChunkWithJump( chunk );
       } // THEN
@@ -75,7 +75,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > energyTransfers = { 1., 1., 2., 3., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 1. }, { 0.1, 0.1 } },
         { { 0., 4. }, { 0.5, 0.5 } },
@@ -84,10 +84,10 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
         { { 0., 4. }, { 0.2, 0.8 } }
       };
 
-      TabulatedScatteringFunctions
+      TabulatedScatteringKernel
       chunk( std::move( energyTransfers ), std::move( functions ) );
 
-      THEN( "a TabulatedScatteringFunctions can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
 
         verifyChunk( chunk );
       } // THEN
@@ -101,7 +101,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
     WHEN( "the data is given explicitly" ) {
 
       const std::vector< double > energyTransfers = { 1., 2., 3., 4., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 4. }, { 0.52, 0.48 } },
@@ -110,10 +110,10 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
         { { 0., 1. }, { 0.1, 0.1 } }
       };
 
-      TabulatedScatteringFunctions
+      TabulatedScatteringKernel
       chunk( std::move( energyTransfers ), std::move( functions ) );
 
-      THEN( "a TabulatedScatteringFunctions can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernel can be constructed and members can be tested" ) {
 
         verifyChunk( chunk );
       } // THEN
@@ -122,19 +122,19 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of TabulatedScatteringFunctions are given" ) {
+    WHEN( "two instances of TabulatedScatteringKernel are given" ) {
 
-      TabulatedScatteringFunctions left( { 1., 2., 3., 4. },
+      TabulatedScatteringKernel left( { 1., 2., 3., 4. },
                                          { { { 1., 3. }, { 0.5, 0.5 } },
                                            { { 1., 3. }, { 0.49, 0.51 } },
                                            { { 1., 3. }, { 0.4, 0.6 } },
                                            { { 1., 3. }, { 0.1, 0.9 } } } );
-      TabulatedScatteringFunctions equal( { 1., 2., 3., 4. },
+      TabulatedScatteringKernel equal( { 1., 2., 3., 4. },
                                           { { { 1., 3. }, { 0.5, 0.5 } },
                                             { { 1., 3. }, { 0.49, 0.51 } },
                                             { { 1., 3. }, { 0.4, 0.6 } },
                                             { { 1., 3. }, { 0.1, 0.9 } } } );
-      TabulatedScatteringFunctions different( { 1., 4. },
+      TabulatedScatteringKernel different( { 1., 4. },
                                               { { { 1., 3. }, { 0.5, 0.5 } },
                                                 { { 1., 3. }, { 0.1, 0.9 } } } );
 
@@ -157,22 +157,22 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
 
       std::vector< double > gempty = {};
       std::vector< double > gone = { 1. };
-      std::vector< TabulatedScatteringFunction > dempty = {};
-      std::vector< TabulatedScatteringFunction > done = { { { 0., 4. }, { 0.5, 0.5 } } };
+      std::vector< TabulatedScatteringKernelFunction > dempty = {};
+      std::vector< TabulatedScatteringKernelFunction > done = { { { 0., 4. }, { 0.5, 0.5 } } };
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunctions( gempty, dempty ) );
-        CHECK_THROWS( TabulatedScatteringFunctions( gone, done ) );
-        CHECK_THROWS( TabulatedScatteringFunctions( gempty, done ) );
-        CHECK_THROWS( TabulatedScatteringFunctions( gone, dempty ) );
+        CHECK_THROWS( TabulatedScatteringKernel( gempty, dempty ) );
+        CHECK_THROWS( TabulatedScatteringKernel( gone, done ) );
+        CHECK_THROWS( TabulatedScatteringKernel( gempty, done ) );
+        CHECK_THROWS( TabulatedScatteringKernel( gone, dempty ) );
       } // THEN
     } // WHEN
 
     WHEN( "the x and f(y) energyTransfers do not have the same number of points" ) {
 
       std::vector< double > energyTransfers = { 1., 2., 3., 4. };
-      std::vector< TabulatedScatteringFunction > functions = {
+      std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },
@@ -181,7 +181,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunctions( std::move( energyTransfers ),
+        CHECK_THROWS( TabulatedScatteringKernel( std::move( energyTransfers ),
                                                     std::move( functions ) ) );
       } // THEN
     } // WHEN
@@ -189,7 +189,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
     WHEN( "the boundaries and interpolants do not have the same size" ) {
 
       const std::vector< double > energyTransfers = { 1., 2., 3., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },
@@ -201,7 +201,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunctions( std::move( energyTransfers ),
+        CHECK_THROWS( TabulatedScatteringKernel( std::move( energyTransfers ),
                                                     std::move( functions ),
                                                     std::move( boundaries ),
                                                     std::move( interpolants ) ) );
@@ -211,7 +211,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
     WHEN( "the x energyTransfers is not sorted" ) {
 
       const std::vector< double > energyTransfers = { 1., 3., 2., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },
@@ -221,7 +221,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunctions( std::move( energyTransfers ),
+        CHECK_THROWS( TabulatedScatteringKernel( std::move( energyTransfers ),
                                                     std::move( functions ) ) );
       } // THEN
     } // WHEN
@@ -229,7 +229,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
     WHEN( "the last boundary does not point to the last point" ) {
 
       const std::vector< double > energyTransfers = { 1., 2., 3., 4. };
-      const std::vector< TabulatedScatteringFunction > functions = {
+      const std::vector< TabulatedScatteringKernelFunction > functions = {
 
         { { 0., 4. }, { 0.5, 0.5 } },
         { { 0., 1., 4. }, { 0.49, 0.5, 0.51 } },
@@ -241,7 +241,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunctions( std::move( energyTransfers ),
+        CHECK_THROWS( TabulatedScatteringKernel( std::move( energyTransfers ),
                                                     std::move( functions ),
                                                     std::move( boundaries ),
                                                     std::move( interpolants ) ) );
@@ -250,7 +250,7 @@ SCENARIO( "TabulatedScatteringFunctions" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const TabulatedScatteringFunctions& chunk ) {
+void verifyChunk( const TabulatedScatteringKernel& chunk ) {
 
   CHECK( 4 == chunk.numberPoints() );
   CHECK( 1 == chunk.numberRegions() );
@@ -351,7 +351,7 @@ void verifyChunk( const TabulatedScatteringFunctions& chunk ) {
   CHECK( InterpolationType::LinearLinear == linear.interpolants()[0] );
 }
 
-void verifyChunkWithJump( const TabulatedScatteringFunctions& chunk ) {
+void verifyChunkWithJump( const TabulatedScatteringKernel& chunk ) {
 
   CHECK( 5 == chunk.numberPoints() );
   CHECK( 2 == chunk.numberRegions() );

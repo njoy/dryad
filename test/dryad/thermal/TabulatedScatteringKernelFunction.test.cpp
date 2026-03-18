@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/thermal/TabulatedScatteringFunction.hpp"
+#include "njoy/dryad/thermal/TabulatedScatteringKernelFunction.hpp"
 
 // other includes
 
@@ -12,7 +12,7 @@ using Catch::Matchers::WithinRel;
 using namespace njoy::dryad;
 using namespace njoy::dryad::thermal;
 
-SCENARIO( "TabulatedScatteringFunction" ) {
+SCENARIO( "TabulatedScatteringKernelFunction" ) {
 
   GIVEN( "linearised data without boundaries and no jumps" ) {
 
@@ -21,9 +21,9 @@ SCENARIO( "TabulatedScatteringFunction" ) {
       const std::vector< double > temperatures = { 1., 2., 3., 4. };
       const std::vector< double > values = { 4., 3., 2., 1. };
 
-      TabulatedScatteringFunction chunk( std::move( temperatures ), std::move( values ) );
+      TabulatedScatteringKernelFunction chunk( std::move( temperatures ), std::move( values ) );
 
-      THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerMomentumTransferLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
@@ -46,7 +46,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be evaluated" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -66,11 +66,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedScatteringFunction same( { 1., 4. }, { 0., 3. } );
-        TabulatedScatteringFunction threshold( { 2., 4. }, { 0., 2. } );
-        TabulatedScatteringFunction nonzerothreshold( { 2., 4. }, { 1., 3. } );
-        TabulatedScatteringFunction small( { 1., 3. }, { 0., 2. } );
+        TabulatedScatteringKernelFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction same( { 1., 4. }, { 0., 3. } );
+        TabulatedScatteringKernelFunction threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedScatteringKernelFunction nonzerothreshold( { 2., 4. }, { 1., 3. } );
+        TabulatedScatteringKernelFunction small( { 1., 3. }, { 0., 2. } );
 
         chunk += 2.;
 
@@ -587,9 +587,9 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[0] );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be linearised" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be linearised" ) {
 
-        TabulatedScatteringFunction linear = chunk.linearise();
+        TabulatedScatteringKernelFunction linear = chunk.linearise();
 
         CHECK( 4 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -626,10 +626,10 @@ SCENARIO( "TabulatedScatteringFunction" ) {
       const std::vector< double > values = { 4., 3., 4., 3., 2. };
       InterpolationType interpolant = InterpolationType::LinearLinear;
 
-      TabulatedScatteringFunction chunk( std::move( temperatures ), std::move( values ),
+      TabulatedScatteringKernelFunction chunk( std::move( temperatures ), std::move( values ),
                                    interpolant );
 
-      THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         // the constructor will detect the jump and add interpolation regions
         // as required
@@ -656,7 +656,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK( true == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be evaluated" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -676,11 +676,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "arithmetic operations can be performed" ) {
 
-        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedScatteringFunction same( { 1., 4. }, { 0., 3. } );
-        TabulatedScatteringFunction threshold( { 2., 4. }, { 0., 2. } );
-        TabulatedScatteringFunction nonzerothreshold( { 3., 4. }, { 1., 2. } );
-        TabulatedScatteringFunction small( { 1., 3. }, { 0., 2. } );
+        TabulatedScatteringKernelFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction same( { 1., 4. }, { 0., 3. } );
+        TabulatedScatteringKernelFunction threshold( { 2., 4. }, { 0., 2. } );
+        TabulatedScatteringKernelFunction nonzerothreshold( { 3., 4. }, { 1., 2. } );
+        TabulatedScatteringKernelFunction small( { 1., 3. }, { 0., 2. } );
 
         chunk += 2.;
 
@@ -1251,9 +1251,9 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK( InterpolationType::LinearLinear == result.interpolants()[2] );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be linearised" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be linearised" ) {
 
-        TabulatedScatteringFunction linear = chunk.linearise();
+        TabulatedScatteringKernelFunction linear = chunk.linearise();
 
         CHECK( 5 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1299,12 +1299,12 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( temperatures ),
+      TabulatedScatteringKernelFunction chunk( std::move( temperatures ),
                                    std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerMomentumTransferLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
@@ -1329,7 +1329,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be evaluated" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -1351,7 +1351,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "some arithmetic operations can be performed" ) {
 
-        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction result( { 1., 4. }, { 0., 0. } );
 
         chunk *= 2.;
 
@@ -1488,8 +1488,8 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "some arithmetic operations cannot be performed" ) {
 
-        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedScatteringFunction right( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction right( { 1., 4. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1506,9 +1506,9 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be linearised" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be linearised" ) {
 
-        TabulatedScatteringFunction linear = chunk.linearise();
+        TabulatedScatteringKernelFunction linear = chunk.linearise();
 
         CHECK( 18 == linear.numberPoints() );
         CHECK( 1 == linear.numberRegions() );
@@ -1578,12 +1578,12 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( temperatures ),
+      TabulatedScatteringKernelFunction chunk( std::move( temperatures ),
                                    std::move( values ),
                                    std::move( boundaries ),
                                    std::move( interpolants ) );
 
-      THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK_THAT( 1., WithinRel( chunk.lowerMomentumTransferLimit() ) );
         CHECK_THAT( 4., WithinRel( chunk.upperMomentumTransferLimit() ) );
@@ -1608,7 +1608,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK( false == chunk.isLinearised() );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be evaluated" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be evaluated" ) {
 
         // values of x in the x grid
         CHECK_THAT( 4., WithinRel( chunk( 1. ) ) );
@@ -1630,7 +1630,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "some arithmetic operations can be performed" ) {
 
-        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction result( { 1., 4. }, { 0., 0. } );
 
         chunk *= 2.;
 
@@ -1779,8 +1779,8 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "arithmetic operations cannot be performed" ) {
 
-        TabulatedScatteringFunction result( { 1., 4. }, { 0., 0. } );
-        TabulatedScatteringFunction right( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction result( { 1., 4. }, { 0., 0. } );
+        TabulatedScatteringKernelFunction right( { 1., 4. }, { 0., 0. } );
 
         // scalar operations
         CHECK_THROWS( chunk += 2. );
@@ -1797,9 +1797,9 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         CHECK_THROWS( result = chunk - right );
       } // THEN
 
-      THEN( "a TabulatedScatteringFunction can be linearised" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be linearised" ) {
 
-        TabulatedScatteringFunction linear = chunk.linearise();
+        TabulatedScatteringKernelFunction linear = chunk.linearise();
 
         CHECK( 12 == linear.numberPoints() );
         CHECK( 2 == linear.numberRegions() );
@@ -1864,11 +1864,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( x ), std::move( y ),
+      TabulatedScatteringKernelFunction chunk( std::move( x ), std::move( y ),
                                            std::move( boundaries ),
                                            std::move( interpolants ) );
 
-      THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.momentumTransfers().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1897,7 +1897,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
          "that point to the second x value in the jump" ) {
 
     // note: at construction time, the boundary value will be set to the first point in
-    //       the jump. As a result, the final data contained in this TabulatedScatteringFunction is the
+    //       the jump. As a result, the final data contained in this TabulatedScatteringKernelFunction is the
     //       same as the previous test.
 
     WHEN( "the data is given explicitly" ) {
@@ -1911,11 +1911,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( x ), std::move( y ),
+      TabulatedScatteringKernelFunction chunk( std::move( x ), std::move( y ),
                                            std::move( boundaries ),
                                            std::move( interpolants ) );
 
-      THEN( "a TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "a TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK( 5 == chunk.momentumTransfers().size() );
         CHECK( 5 == chunk.values().size() );
@@ -1956,11 +1956,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( x ), std::move( y ),
+      TabulatedScatteringKernelFunction chunk( std::move( x ), std::move( y ),
                                            std::move( boundaries ),
                                            std::move( interpolants ) );
 
-      THEN( "an TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "an TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -2001,11 +2001,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
         InterpolationType::LinearLog
       };
 
-      TabulatedScatteringFunction chunk( std::move( x ), std::move( y ),
+      TabulatedScatteringKernelFunction chunk( std::move( x ), std::move( y ),
                                            std::move( boundaries ),
                                            std::move( interpolants ) );
 
-      THEN( "an TabulatedScatteringFunction can be constructed and members can be tested" ) {
+      THEN( "an TabulatedScatteringKernelFunction can be constructed and members can be tested" ) {
 
         CHECK( 4 == chunk.numberPoints() );
         CHECK( 2 == chunk.numberRegions() );
@@ -2032,11 +2032,11 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of TabulatedScatteringFunction are given" ) {
+    WHEN( "two instances of TabulatedScatteringKernelFunction are given" ) {
 
-      TabulatedScatteringFunction left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
-      TabulatedScatteringFunction equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
-      TabulatedScatteringFunction different( { 1., 4. }, { 4., 1. } );
+      TabulatedScatteringKernelFunction left( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedScatteringKernelFunction equal( { 1., 2., 3., 4. }, { 4., 3., 2., 1. } );
+      TabulatedScatteringKernelFunction different( { 1., 4. }, { 4., 1. } );
 
       THEN( "they can be compared" ) {
 
@@ -2051,7 +2051,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "invalid data for an TabulatedScatteringFunction object" ) {
+  GIVEN( "invalid data for an TabulatedScatteringKernelFunction object" ) {
 
     WHEN( "there are not enough values in the x or y grid" ) {
 
@@ -2060,8 +2060,8 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunction( empty, empty ) );
-        CHECK_THROWS( TabulatedScatteringFunction( one, one ) );
+        CHECK_THROWS( TabulatedScatteringKernelFunction( empty, empty ) );
+        CHECK_THROWS( TabulatedScatteringKernelFunction( one, one ) );
       } // THEN
     } // WHEN
 
@@ -2072,7 +2072,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunction( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedScatteringKernelFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2085,7 +2085,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunction( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedScatteringKernelFunction( std::move( x ), std::move( y ),
                                              std::move( boundaries ),
                                              std::move( interpolants ) ) );
       } // THEN
@@ -2098,7 +2098,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunction( std::move( x ), std::move( y ) ) );
+        CHECK_THROWS( TabulatedScatteringKernelFunction( std::move( x ), std::move( y ) ) );
       } // THEN
     } // WHEN
 
@@ -2111,7 +2111,7 @@ SCENARIO( "TabulatedScatteringFunction" ) {
 
       THEN( "an exception is thrown" ) {
 
-        CHECK_THROWS( TabulatedScatteringFunction( std::move( x ), std::move( y ),
+        CHECK_THROWS( TabulatedScatteringKernelFunction( std::move( x ), std::move( y ),
                                              std::move( boundaries ),
                                              std::move( interpolants ) ) );
       } // THEN
