@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
+#include "njoy/dryad/format/gnds/thermal/createCoherentElasticScattering.hpp"
 #include "njoy/dryad/format/gnds/thermal/createIncoherentElasticScattering.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
 
@@ -29,6 +30,7 @@ namespace gnds {
 
     if ( suite ) {
 
+      std::optional< dryad::thermal::CoherentElasticScattering > coherent = std::nullopt;
       std::optional< dryad::thermal::IncoherentElasticScattering > incoherent = std::nullopt;
 
       // loop over reaction nodes
@@ -38,13 +40,17 @@ namespace gnds {
 
         auto tsl = reaction.child( "doubleDifferentialCrossSection" )
                            .find_child_by_attribute( "label", style.c_str() );
-        if ( strcmp( tsl.name(), "thermalNeutronScatteringLaw_incoherentElastic" ) == 0 ) {
+        if ( strcmp( tsl.name(), "thermalNeutronScatteringLaw_coherentElastic" ) == 0 ) {
+
+          coherent = thermal::createCoherentElasticScattering( tsl );
+        }
+        else if ( strcmp( tsl.name(), "thermalNeutronScatteringLaw_incoherentElastic" ) == 0 ) {
 
           incoherent = thermal::createIncoherentElasticScattering( tsl );
         }
       }
 
-      return ThermalScattering( std::nullopt, std::move( incoherent ) );
+      return ThermalScattering( std::move( coherent ), std::move( incoherent ) );
     }
     else {
 

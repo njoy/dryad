@@ -55,6 +55,12 @@ void wrapBraggEdgeData( python::module& module ) {
   )
   .def_property_readonly(
 
+    "number_bragg_edges",
+    &Component::numberBraggEdges,
+    "The number of Bragg edges"
+  )
+  .def_property_readonly(
+
     "energies",
     python::overload_cast<>( &Component::energies, python::const_ ),
     "The energies of the Bragg edges"

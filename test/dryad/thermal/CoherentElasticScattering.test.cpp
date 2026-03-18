@@ -104,6 +104,7 @@ void verifyChunk( const CoherentElasticScattering& chunk ) {
   CHECK_THAT(  600. , WithinRel( chunk.moderatorTemperatures()[1] ) );
 
   auto edge0 = chunk.braggEdges()[0];
+  CHECK( 2 == edge0.numberBraggEdges() );
   CHECK( 2 == edge0.energies().size() );
   CHECK( 2 == edge0.values().size() );
   CHECK_THAT(  293.6, WithinRel( edge0.temperature() ) );
@@ -113,6 +114,7 @@ void verifyChunk( const CoherentElasticScattering& chunk ) {
   CHECK_THAT( 9.484639e-1, WithinRel( edge0.values()[1] ) );
 
   auto edge1 = chunk.braggEdges()[1];
+  CHECK( 2 == edge1.numberBraggEdges() );
   CHECK( 2 == edge1.energies().size() );
   CHECK( 2 == edge1.values().size() );
   CHECK_THAT(  600, WithinRel( edge1.temperature() ) );
@@ -122,6 +124,7 @@ void verifyChunk( const CoherentElasticScattering& chunk ) {
   CHECK_THAT( 1.         , WithinRel( edge1.values()[1] ) );
 
   edge0 = chunk.braggEdgeData( 293.6 );
+  CHECK( 2 == edge0.numberBraggEdges() );
   CHECK( 2 == edge0.energies().size() );
   CHECK( 2 == edge0.values().size() );
   CHECK_THAT(  293.6, WithinRel( edge0.temperature() ) );
@@ -131,6 +134,7 @@ void verifyChunk( const CoherentElasticScattering& chunk ) {
   CHECK_THAT( 9.484639e-1, WithinRel( edge0.values()[1] ) );
 
   edge1 = chunk.braggEdgeData( 600 );
+  CHECK( 2 == edge1.numberBraggEdges() );
   CHECK( 2 == edge1.energies().size() );
   CHECK( 2 == edge1.values().size() );
   CHECK_THAT(  600, WithinRel( edge1.temperature() ) );

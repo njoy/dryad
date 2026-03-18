@@ -44,6 +44,14 @@ namespace thermal {
     }
 
     /**
+     *  @brief Return the number of Bragg edges
+     */
+    std::size_t numberBraggEdges() const {
+
+      return this->energies().size();
+    }
+
+    /**
      *  @brief Return the energies of the Bragg edges
      */
     const std::vector< double >& energies() const {

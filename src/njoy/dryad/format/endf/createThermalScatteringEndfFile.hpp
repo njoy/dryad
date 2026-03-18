@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/dryad/format/endf/thermal/createEndfCoherentElastic.hpp"
 #include "njoy/dryad/format/endf/thermal/createEndfIncoherentElastic.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
@@ -80,11 +81,19 @@ namespace endf {
       if ( tsl.hasCoherentElasticScattering() &&
            tsl.hasIncoherentElasticScattering() ) {
 
-        // unreachable for now
+        ENDFtk::section::Type< 7, 2 >
+        elastic( zaid, awr,
+                 ENDFtk::section::Type< 7, 2 >::MixedElastic(
+                   thermal::createEndfCoherentElastic( tsl.coherentElasticScattering().value() ),
+                   thermal::createEndfIncoherentElastic( tsl.incoherentElasticScattering().value() ) ) );
+        material.insert( elastic );
       }
       else if ( tsl.hasCoherentElasticScattering() ) {
 
-        // unreachable for now
+        ENDFtk::section::Type< 7, 2 >
+        elastic( zaid, awr,
+                 thermal::createEndfCoherentElastic( tsl.coherentElasticScattering().value() ) );
+        material.insert( elastic );
       }
       else {
 

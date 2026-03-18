@@ -65,6 +65,7 @@ void verifyChunk( const BraggEdgeData& chunk ) {
 
   CHECK_THAT( 293.6, WithinRel( chunk.temperature() ) );
 
+  CHECK( 2 == chunk.numberBraggEdges() );
   CHECK( 2 == chunk.energies().size() );
   CHECK( 2 == chunk.values().size() );
   CHECK_THAT( 5.219736e-3, WithinRel( chunk.energies()[0] ) );

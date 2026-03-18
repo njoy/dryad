@@ -11,6 +11,7 @@ def verify_chunk( self, chunk ) :
 
     self.assertAlmostEqual( 293.6, chunk.temperature )
 
+    self.assertEqual( 2, chunk.number_bragg_edges )
     self.assertEqual( 2, len( chunk.energies ) )
     self.assertEqual( 2, len( chunk.values ) )
 

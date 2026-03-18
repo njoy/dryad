@@ -6,6 +6,7 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/overload.hpp"
+#include "njoy/dryad/format/endf/thermal/createCoherentElasticScattering.hpp"
 #include "njoy/dryad/format/endf/thermal/createIncoherentElasticScattering.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
@@ -30,13 +31,31 @@ namespace endf {
       auto information = material.section( 1, 451 ).parse< 1, 451 >();
       Documentation documentation = createDocumentation( information );
 
+      std::optional< dryad::thermal::CoherentElasticScattering > coherent = std::nullopt;
       std::optional< dryad::thermal::IncoherentElasticScattering > incoherent = std::nullopt;
       if ( material.hasSection( 7, 2 ) ) {
 
+        using CoherentElasticScatteringType = std::optional< dryad::thermal::CoherentElasticScattering >;
         using IncoherentElasticScatteringType = std::optional< dryad::thermal::IncoherentElasticScattering >;
         using CoherentElastic = ENDFtk::section::Type< 7, 2 >::CoherentElastic;
         using IncoherentElastic = ENDFtk::section::Type< 7, 2 >::IncoherentElastic;
         using MixedElastic = ENDFtk::section::Type< 7, 2 >::MixedElastic;
+
+        auto createCoherentElastic = tools::overload{
+
+          [&] ( const CoherentElastic& law ) -> CoherentElasticScatteringType {
+
+            return thermal::createCoherentElasticScattering( law );
+          },
+          [&] ( const IncoherentElastic& law ) -> CoherentElasticScatteringType {
+
+            return std::nullopt;
+          },
+          [&] ( const MixedElastic& law ) -> CoherentElasticScatteringType {
+
+            return thermal::createCoherentElasticScattering( law.coherent() );
+          }
+        };
 
         auto createIncoherentElastic = tools::overload{
 
@@ -55,11 +74,12 @@ namespace endf {
         };
 
         auto section = material.section( 7, 2 ).parse< 7, 2 >();
+        coherent = std::visit( createCoherentElastic, section.scatteringLaw() );
         incoherent = std::visit( createIncoherentElastic, section.scatteringLaw() );
       }
 
       return ThermalScattering( std::move( documentation ),
-                                std::nullopt,
+                                std::move( coherent ),
                                 std::move( incoherent ) );
     }
     else {
