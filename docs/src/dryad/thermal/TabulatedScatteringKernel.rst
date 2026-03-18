@@ -1,4 +1,4 @@
-.. currentmodule:: njoy.dryad
+.. currentmodule:: njoy.dryad.thermal
 
 TabulatedScatteringKernel
 =========================
