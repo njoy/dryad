@@ -258,12 +258,13 @@ namespace dryad {
 
     /**
      *  @brief Calculate average outgoing energies for all reaction products
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
      */
-    void calculateAverageEnergy() {
+    void calculateAverageEnergy( double tolerance = constants::integration::tolerance ) {
 
       for ( auto& reaction : this->reactions() ) {
 
-        reaction.calculateAverageEnergy();
+        reaction.calculateAverageEnergy( tolerance );
       }
     }
 

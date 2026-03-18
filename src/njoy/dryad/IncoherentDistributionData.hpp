@@ -13,7 +13,7 @@
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
 #include "njoy/dryad/TabulatedComptonProfile.hpp"
 #include "njoy/dryad/external/KleinNishina.hpp"
-#include "scion/integration/GaussLegendre.hpp"
+#include "scion/integration/AdaptiveGaussLobatto.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -70,7 +70,7 @@ namespace dryad {
     /**
      *  @brief Set the reference frame
      *
-     *  @param frame   the reference frame of the distribution data
+     *  @param[in] frame   the reference frame of the distribution data
      */
     void frame( ReferenceFrame frame ) {
 
@@ -88,7 +88,7 @@ namespace dryad {
     /**
      *  @brief Set the scattering function
      *
-     *  @param scattering   the scattering function
+     *  @param[in] scattering   the scattering function
      */
     void scatteringFunction( TabulatedScatteringFunction scattering ) {
 
@@ -98,9 +98,11 @@ namespace dryad {
     /**
      *  @brief Calculate the average outgoing energy for a given energy
      *
-     *  @param energy   the incident energy
+     *  @param[in] energy      the incident energy
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
      */
-    double averageEnergy( double energy ) const {
+    double averageEnergy( double energy,
+                          double tolerance = constants::integration::tolerance ) const {
 
       auto xs = [&] ( double outgoing_energy ) {
 
@@ -117,33 +119,22 @@ namespace dryad {
       double min = external::KleinNishina::lowerOutgoingEnergyLimit( energy );
       double max = external::KleinNishina::upperOutgoingEnergyLimit( energy );
 
-      //! @todo replace with adaptive quadrature calculation
-      // begin temporary code - - - - - - - - - - - - - - - - - - - - - -
-      scion::integration::GaussLegendre< 64, double, double > integrator;
-      double integral_xs = 0;
-      double integral_mean = 0;
-      double delta = ( max - min ) / 1000;
-      double current = min;
-      for ( std::size_t i = 0; i < 1000; ++i ) {
-
-        integral_xs += integrator( xs, current, current + delta );
-        integral_mean += integrator( mean, current, current + delta );
-        current += delta;
-      }
-      return integral_mean / integral_xs;
-      // end temporary code - - - - - - - - - - - - - - - - - - - - - - -
+      scion::integration::AdaptiveGaussLobatto< double, double > integrator;
+      return integrator( mean, min, max, tolerance ) / integrator( xs, min, max, tolerance );
     }
 
     /**
      *  @brief Calculate the average outgoing energy for a set of energies
      *
-     *  @param energies   the incident energies
+     *  @param[in] energies    the incident energies
+     *  @param[in] tolerance   the integration tolerance (default: 1e-8)
      */
-    std::vector< double > averageEnergy( const std::vector< double >& energies ) const {
+    std::vector< double > averageEnergy( const std::vector< double >& energies,
+                                         double tolerance = constants::integration::tolerance ) const {
 
       std::vector< double > values( energies.size() );
       std::transform( energies.begin(), energies.end(), values.begin(),
-                      [&] ( auto&& energy ) { return this->averageEnergy( energy ); } );
+                      [&] ( auto&& energy ) { return this->averageEnergy( energy, tolerance ); } );
       return values;
     }
 
@@ -168,7 +159,7 @@ namespace dryad {
     /**
      *  @brief Set the Compton profiles
      *
-     *  @param profiles   the Compton profiles
+     *  @param[in] profiles   the Compton profiles
      */
     void comptonProfiles( std::optional< std::vector< TabulatedComptonProfile > > profiles ) {
 

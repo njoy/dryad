@@ -368,7 +368,7 @@ class IncoherentDistributionData:
     def __ne__(self, arg0: IncoherentDistributionData) -> bool:
         ...
     @typing.overload
-    def average_energy(self, energy: float) -> float:
+    def average_energy(self, energy: float, tolerance: float = 1e-08) -> float:
         """
         Calculate the average outgoing energy
         
@@ -378,9 +378,11 @@ class IncoherentDistributionData:
                  the incident energy
             energies : list of float 
                  the incident energies
+            tolerance : float 
+                 the integration tolerance (default: 1e-8)
         """
     @typing.overload
-    def average_energy(self, energies: list[float]) -> list[float]:
+    def average_energy(self, energies: list[float], tolerance: float = 1e-08) -> list[float]:
         """
         Calculate the average outgoing energy
         """
@@ -1034,9 +1036,13 @@ class ProjectileTarget:
         """
     def __ne__(self, arg0: ProjectileTarget) -> bool:
         ...
-    def calculate_average_energy(self) -> None:
+    def calculate_average_energy(self, tolerance: float = 1e-08) -> None:
         """
         Calculate average outgoing energies for all reaction products
+        
+        Arguments:
+            self        the ProjectileTarget data
+            tolerance    the integration tolerance (default: 1e-8)
         """
     def calculate_summation_cross_sections(self, tolerance: float = 0.001) -> None:
         """
@@ -1201,9 +1207,13 @@ class Reaction:
         """
     def __ne__(self, arg0: Reaction) -> bool:
         ...
-    def calculate_average_energy(self) -> None:
+    def calculate_average_energy(self, tolerance: float = 1e-08) -> None:
         """
         Calculate average outgoing energies for all reaction products
+        
+        Arguments:
+            self         the reaction
+            tolerance    the integration tolerance (default: 1e-8)
         """
     def has_product(self, type: id.ParticleID) -> bool:
         """

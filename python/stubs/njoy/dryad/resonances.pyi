@@ -1172,10 +1172,10 @@ class SammyBackground:
     
     The SAMMY parametrisation of a channel background is a function
     of energy consisting of a quadratic polynomial and a logarithmic
-    term. It is characterised by 7 parameters:
-      - 3 coefficients of the polymonial term (R0, R1 and R2)
-      - 2 constants for the logarithmic term (S0 and S1)
-      - 2 logarithmic singularity values (Ed and Eu, given in eV)
+    term. It is characterised by 7 parameters: 3 coefficients of the
+    polymonial term (R0, R1 and R2), 2 constants for the logarithmic
+    term (S0 and S1) and 2 logarithmic singularity values (Ed and Eu,
+    given in eV)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, energy: float) -> float:
