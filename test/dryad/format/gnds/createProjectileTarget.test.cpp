@@ -26,8 +26,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
@@ -41,8 +41,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
@@ -59,8 +59,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         neutron::np236m1::verifyNp236m1( first, false );
         neutron::np236m1::verifyNp236m1( second, true );
@@ -77,8 +77,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         electron::h0::endf81::verifyDocumentation( first.documentation() );
         electron::h0::endf81::verifyDocumentation( second.documentation() );
@@ -98,8 +98,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, true );
+        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
+        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
 
         photoatomic::h0::verifyH0( first, false );
         photoatomic::h0::verifyH0( second, true );

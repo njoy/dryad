@@ -35,10 +35,13 @@ namespace photoatomic {
     // the shells for this z number
     std::vector< id::ElectronSubshellID > identifiers =
     external::ComptonProfiles::biggsMendelsohnMannSubshellIdentifiers( z );
-    if ( identifiers.size() != block.numberElectronShells() ) {
+    if ( identifiers.size() < block.numberElectronShells() ) {
 
-      Log::info( "Error encountered while creating a tabulated Compton profiles" );
-      throw;
+      // ENDF/B-VIII.1 Iridium is missing 6s1/2 so we should only error out when the
+      // number of Biggs identifiers is smaller than the number of profiles in the
+      // ACE files
+      Log::error( "Error encountered while creating a tabulated Compton profiles" );
+      throw std::exception();
     }
 
     // read the profiles
