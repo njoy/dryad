@@ -37,7 +37,7 @@ cmake_dependent_option(
   "NOT ${subproject} OR DEFINED require.njoy.python " OFF
 )
 
-option( njoy.installation "Install njoy" ON )
+option( njoy.installation "Install njoy" OFF )
 
 ########################################################################
 # Dependencies
@@ -49,9 +49,12 @@ include( cmake/dependencies.cmake )
 ########################################################################
 # Sphinx documentation
 ########################################################################
-# when using find_program, cmake will look specifically for ${CMAKE_MODULE_PATH}/Find{program}.cmake
-list( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
-add_subdirectory( docs )
+
+if( NOT subproject )
+  # when using find_program, cmake will look specifically for ${CMAKE_MODULE_PATH}/Find{program}.cmake
+  list( APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
+  add_subdirectory( docs )
+endif()
 
 ########################################################################
 # Project targets
