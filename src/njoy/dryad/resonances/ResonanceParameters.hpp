@@ -59,23 +59,25 @@ namespace resonances {
     }
 
     /**
-     *  @brief Comparison operator: equal
+     *  @brief Equality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const ResonanceParameters& right ) const {
+    friend bool operator==( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return true;
+      return left.resolved() == right.resolved();
     }
 
     /**
-     *  @brief Comparison operator: not equal
+     *  @brief Inequality comparison
      *
+     *  @param[in] left    the object on the left hand side
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const ResonanceParameters& right ) const {
+    friend bool operator!=( const ResonanceParameters& left, const ResonanceParameters& right ) {
 
-      return false;
+      return ! ( left == right );
     }
   };
 

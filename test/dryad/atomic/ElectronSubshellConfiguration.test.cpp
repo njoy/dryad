@@ -93,8 +93,6 @@ SCENARIO( "ElectronSubshellConfiguration" ) {
     WHEN( "an instance of ElectronSubshellConfiguration is given" ) {
 
       id::ElectronSubshellID( "K" );
-      double energy = 538;
-      double population = 2.;
 
       ElectronSubshellConfiguration chunk( id::ElectronSubshellID( "K" ), 538, 2 );
 

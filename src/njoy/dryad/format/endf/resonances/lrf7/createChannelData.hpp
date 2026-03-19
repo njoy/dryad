@@ -89,7 +89,6 @@ namespace lrf7 {
       }
 
       auto id = channels[i].identifier();
-      auto reaction_id = id.reaction();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
       auto is_capture = id.reaction().reactionType() == id::ReactionType( "capture" );
 

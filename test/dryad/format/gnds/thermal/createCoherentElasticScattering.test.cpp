@@ -20,7 +20,7 @@ SCENARIO( "createCoherentElasticScattering" ) {
   GIVEN( "GNDS coherent elastic node from tsl data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "tsl-Be-metal.endf.gnds.xml" );
+    document.load_file( "tsl-Be-metal.endf.gnds.xml" );
     pugi::xml_node coherent = document.child( "reactionSuite" ).child( "reactions" ).
                                          find_child_by_attribute( "reaction", "ENDF_MT", "2" ).
                                          child( "doubleDifferentialCrossSection" ).

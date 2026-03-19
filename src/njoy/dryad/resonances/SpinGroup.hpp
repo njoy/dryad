@@ -122,7 +122,7 @@ namespace resonances {
     /**
      *  @brief Return the boundary condition option
      */
-    const BoundaryCondition boundaryCondition() const {
+    const BoundaryCondition& boundaryCondition() const {
 
       return this->boundary_condition_;
     }

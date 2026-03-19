@@ -27,7 +27,6 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
   GIVEN( "ENDF MF4 LTT = 2 TabulatedDistribution" ) {
 
     using TabulatedDistributions = njoy::ENDFtk::section::Type< 4 >::TabulatedDistributions;
-    using TabulatedDistribution = njoy::ENDFtk::section::Type< 4 >::TabulatedDistribution;
 
     using Tape = njoy::ENDFtk::tree::Tape;
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );

@@ -19,7 +19,7 @@ SCENARIO( "readPolynomial1d" ) {
   GIVEN( "a GNDS polynomial1d xml node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-094_Pu_237.jeff33.gnds.xml" );
+    document.load_file( "n-094_Pu_237.jeff33.gnds.xml" );
     pugi::xml_node polynomial1d = document.child( "reactionSuite" ).child( "reactions" ).
                                            find_child_by_attribute( "reaction", "ENDF_MT", "18" ).
                                            child( "outputChannel" ).child( "products" ).

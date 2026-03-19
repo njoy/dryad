@@ -32,7 +32,8 @@ namespace thermal {
       std::vector< dryad::thermal::BraggEdgeData > edges;
 
       auto energies = createVector( coherent.energies() );
-      for ( std::size_t i = 0; i < coherent.numberTemperatures(); ++i ) {
+      std::size_t number_temperatures = coherent.numberTemperatures();
+      for ( std::size_t i = 0; i < number_temperatures; ++i ) {
 
         edges.emplace_back( coherent.temperatures()[i], energies,
                             createVector( coherent.thermalScatteringValues()[i] ) );

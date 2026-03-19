@@ -47,7 +47,7 @@ namespace endf {
 
             return thermal::createCoherentElasticScattering( law );
           },
-          [&] ( const IncoherentElastic& law ) -> CoherentElasticScatteringType {
+          [&] ( const IncoherentElastic& ) -> CoherentElasticScatteringType {
 
             return std::nullopt;
           },
@@ -59,7 +59,7 @@ namespace endf {
 
         auto createIncoherentElastic = tools::overload{
 
-          [&] ( const CoherentElastic& law ) -> IncoherentElasticScatteringType {
+          [&] ( const CoherentElastic& ) -> IncoherentElasticScatteringType {
 
             return std::nullopt;
           },

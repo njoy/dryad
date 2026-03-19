@@ -33,7 +33,7 @@ namespace continuous {
                   const id::ParticleID& target,
                   const ACEtk::ContinuousEnergyTable& table,
                   std::size_t index,
-                  bool normalise ) {
+                  bool /* normalise */ ) {
 
     auto mt = table.reactionNumberBlock().reactionNumber( index );
     Log::info( "Reading data for MT{}", mt );

@@ -19,7 +19,7 @@ SCENARIO( "readCovarianceMatrix" ) {
   GIVEN( "GNDS covariance matrix node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node sections = document.child( "covarianceSuite" ).child( "covarianceSections" );
 
     WHEN( "a single covarianceMatrix node is given for a diagonal matrix" ) {

@@ -20,7 +20,7 @@ SCENARIO( "createIncoherentElasticScattering" ) {
   GIVEN( "GNDS incoherent elastic node from tsl data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "tsl-ZrinZrH.endf.gnds.xml" );
+    document.load_file( "tsl-ZrinZrH.endf.gnds.xml" );
     pugi::xml_node incoherent = document.child( "reactionSuite" ).child( "reactions" ).
                                          find_child_by_attribute( "reaction", "ENDF_MT", "2" ).
                                          child( "doubleDifferentialCrossSection" ).

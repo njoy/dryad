@@ -16,7 +16,6 @@ void wrapCovarianceData( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::covariance::CovarianceData;
-  using ReactionID = njoy::dryad::id::ReactionID;
   using CrossSectionCovarianceData = njoy::dryad::covariance::CrossSectionCovarianceData;
 
   // wrap views created by this component

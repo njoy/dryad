@@ -19,7 +19,6 @@ SCENARIO( "ReichMoore" ) {
 
     auto photon = id::ParticleID::photon();
     auto neutron = id::ParticleID::neutron();
-    auto proton = id::ParticleID::proton();
     auto cu63 = id::ParticleID( "Cu63" );
     auto cu64 = id::ParticleID( "Cu64[all]" );
 

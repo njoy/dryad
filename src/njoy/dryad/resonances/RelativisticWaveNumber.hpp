@@ -6,7 +6,7 @@
 // other includes
 #include "njoy/constants.hpp"
 #include "njoy/dryad/resonances/ParticlePair.hpp"
-
+#include <iostream>
 namespace njoy {
 namespace dryad {
 namespace resonances {
@@ -72,6 +72,8 @@ namespace resonances {
       const auto pair = ( particle + residual ) * conversion;  // eV
       const auto delta = ( particle - residual ) * conversion; // eV
       const auto mandelstam = pair * pair + 2. * residual * conversion * std::abs( energy ); // ev^2
+std::cout << conversion << std::endl;
+std::cout << mandelstam << std::endl;
       return 0.5 * sqrt( ( mandelstam - pair * pair ) * ( mandelstam - delta * delta ) / mandelstam ) / final;
     }
   };

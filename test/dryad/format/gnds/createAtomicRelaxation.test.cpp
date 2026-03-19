@@ -19,7 +19,7 @@ SCENARIO( "createAtomicRelaxation" ) {
   GIVEN( "a GNDS file with atomic relaxation data" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "atom-008_O_000.endf.gnds.xml" );
+    document.load_file( "atom-008_O_000.endf.gnds.xml" );
 
     WHEN( "a single GNDS xml document is given" ) {
 

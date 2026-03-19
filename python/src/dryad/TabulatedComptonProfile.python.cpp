@@ -17,7 +17,6 @@ void wrapTabulatedComptonProfile( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::TabulatedComptonProfile;
   using ElectronSubshellID = njoy::dryad::id::ElectronSubshellID;
-  using TabulatedComptonProfileFunction = njoy::dryad::TabulatedComptonProfileFunction;
   using InterpolationType = njoy::dryad::InterpolationType;
 
   // wrap views created by this component

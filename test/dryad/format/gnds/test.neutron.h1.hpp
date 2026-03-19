@@ -380,7 +380,7 @@ namespace h1 {
     CHECK(  1.171132e-4 == matrix.covariances()(152,152) );
   }
 
-  void verifyH1( const ProjectileTarget& H1, bool normalise ) {
+  void verifyH1( const ProjectileTarget& H1, bool /* normalise */ ) {
 
     verifyDocumentation( H1.documentation() );
 

@@ -17,7 +17,6 @@ void wrapReaction( python::module& module ) {
   using Component = njoy::dryad::Reaction;
   using ReactionID = njoy::dryad::id::ReactionID;
   using ParticleID = njoy::dryad::id::ParticleID;
-  using ReactionCategory = njoy::dryad::ReactionCategory;
   using ReactionProduct = njoy::dryad::ReactionProduct;
   using TabulatedCrossSection = njoy::dryad::TabulatedCrossSection;
 

@@ -19,15 +19,10 @@ SCENARIO( "ReactionID" ) {
 
   GIVEN( "valid data for a ReactionID" ) {
 
-    ParticleID g = ParticleID::photon();
     ParticleID n = ParticleID::neutron();
     ParticleID p = ParticleID::proton();
-    ParticleID d = ParticleID::deuteron();
-    ParticleID t = ParticleID::triton();
-    ParticleID h = ParticleID::helion();
     ParticleID a = ParticleID::alpha();
     ParticleID eminus = ParticleID::electron();
-    ParticleID eplus = ParticleID::positron();
     ParticleID u235( "U235" );
     ParticleID u238( "U238" );
     ParticleID am242( "Am242" );

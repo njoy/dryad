@@ -17,7 +17,7 @@ SCENARIO( "readAxis" ) {
   GIVEN( "a GNDS axis xml node" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-001_H_001.endf.gnds.xml" );
+    document.load_file( "n-001_H_001.endf.gnds.xml" );
     pugi::xml_node axes = document.child( "reactionSuite" ).child( "reactions" ).
                                    child( "reaction" ).child( "crossSection" ).
                                    child( "XYs1d" ).child( "axes" );

@@ -15,8 +15,6 @@ using namespace njoy::dryad;
 
 SCENARIO( "createReactionIdentifiers" ) {
 
-  auto e = id::ParticleID::electron();
-
   GIVEN( "instances of PhotoatomicTable" ) {
 
     WHEN( "an mcplib84 formatted table is given" ) {

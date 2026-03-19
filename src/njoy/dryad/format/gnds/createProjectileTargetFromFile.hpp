@@ -40,7 +40,7 @@ namespace gnds {
 
     // open the file
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( filename.c_str() );
+    document.load_file( filename.c_str() );
     if ( document ) {
 
       return createProjectileTarget( document, path, normalise );

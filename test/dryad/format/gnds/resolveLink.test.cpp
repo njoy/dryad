@@ -17,7 +17,7 @@ SCENARIO( "resolveLink" ) {
   GIVEN( "a GNDS xml node with a relative link path" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
+    document.load_file( "n-009_F_019.endf.gnds-covar.xml" );
     pugi::xml_node axes = document.child( "covarianceSuite" ).child( "covarianceSections" ).
                                    find_child_by_attribute( "covarianceSection", "label", "(z,n)" ).
                                    child( "mixed" ).child( "shortRangeSelfScalingVariance" ).
@@ -42,7 +42,7 @@ SCENARIO( "resolveLink" ) {
   GIVEN( "a GNDS xml node with an absolute link path" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "photoat-001_H_000.endf.gnds.xml" );
+    document.load_file( "photoat-001_H_000.endf.gnds.xml" );
     pugi::xml_node reaction = document.child( "reactionSuite" ).child( "reactions" ).child( "reaction" );
     pugi::xml_node target = reaction.child( "doubleDifferentialCrossSection" ).child( "coherentPhotonScattering" );
 
@@ -65,7 +65,7 @@ SCENARIO( "resolveLink" ) {
   GIVEN( "a GNDS xml node with an attribute in the link path" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node summation = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" )
                                        .find_child_by_attribute( "crossSectionSum", "ENDF_MT", "501" )
                                        .child( "summands" );
@@ -93,7 +93,7 @@ SCENARIO( "resolveLink" ) {
   GIVEN( "a GNDS xml node with an attribute in the link path - with a '/' in the attribute the value" ) {
 
     pugi::xml_document document;
-    pugi::xml_parse_result result = document.load_file( "e-001_H_000.endf.gnds.xml" );
+    document.load_file( "e-001_H_000.endf.gnds.xml" );
     pugi::xml_node summation = document.child( "reactionSuite" ).child( "sums" ).child( "crossSectionSums" )
                                        .find_child_by_attribute( "crossSectionSum", "ENDF_MT", "501" )
                                        .child( "summands" );
