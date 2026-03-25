@@ -132,7 +132,7 @@ namespace lrf3 {
       channel_data.emplace_back( std::move( elastic ), dryad::resonances::ResonanceTable{ { elastic_id }, energies, std::move( elastic_widths ) } );
 
       // treat capture
-      dryad::resonances::ChannelQuantumNumbers other( l, 0, std::abs( j ), l%2 == 0 ? +1 : -1 );
+      dryad::resonances::ChannelQuantumNumbers other( 0, 0, std::abs( j ), l%2 == 0 ? +1 : -1 );
       id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
       dryad::resonances::ParticlePair capture_pair( { id::ParticleID::photon(), 0., 0., +1 },
                                                     { capture_id.reaction().residual().value(), 0., 0., +1 } );

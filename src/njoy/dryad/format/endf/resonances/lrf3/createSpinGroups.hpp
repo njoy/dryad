@@ -52,6 +52,17 @@ namespace lrf3 {
     // channel radius value
     auto ap = endf.scatteringRadius() * constants::deca;
 
+    // lambdas for comparison
+    auto compare = [] ( auto&& left, auto&& right ) { 
+      
+      return left.first.identifier() < right; 
+    };
+    const auto getJpi = [] ( const auto& data ) {
+
+      return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
+                              data.first.quantumNumbers().parity() );
+    };
+
     // go over each l value and collect all channel data - keep it sorted
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
     for ( const auto& lvalue : endf.lValues() ) {
@@ -64,9 +75,7 @@ namespace lrf3 {
       for ( auto&& channel : data ) {
 
         auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
-                                      channel.first.identifier(),
-                                      [] ( auto&& left, auto&& right )
-                                         { return left.first.identifier() < right; } );
+                                      channel.first.identifier(), compare );
         if ( iter != channel_data.end() && iter->first.identifier() == channel.first.identifier() ) {
 
           iter->second += channel.second;
@@ -86,19 +95,19 @@ namespace lrf3 {
       id::ChannelID elastic_id( id::ReactionID( projectile, target, 2 ), numbers );
       dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
       auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
-                                    elastic_id,
-                                    [] ( auto&& left, auto&& right )
-                                       { return left.first.identifier() < right; } );
-      channel_data.emplace( iter, std::move( elastic ), dryad::resonances::ResonanceTable{ { elastic_id }, {}, {} } );
+                                    elastic_id, compare  );
+      iter = channel_data.emplace( iter, std::move( elastic ), 
+                                   dryad::resonances::ResonanceTable{ { elastic_id }, {}, {} } );
 
       // add an empty capture channel with the same Jpi - if it is not there yet
-      dryad::resonances::ChannelQuantumNumbers other( 0, 0, numbers.totalAngularMomentum(), numbers.parity() );
-      id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
-      iter = std::lower_bound( channel_data.begin(), channel_data.end(), capture_id,
-                               [] ( auto&& left, auto&& right )
-                                  { return left.first.identifier() < right; } );
-      if ( ! ( iter != channel_data.end() && iter->first.identifier() == capture_id ) ) {
+      iter = std::lower_bound( channel_data.begin(), channel_data.end(),
+                               getJpi( *iter ),
+                               [&] ( auto&& left, auto&& right )
+                                   { return getJpi( left ) < right; } );
+      if ( iter->first.outgoingParticlePair()->lightParticle().identifier() != id::ParticleID::photon() ) {
 
+        dryad::resonances::ChannelQuantumNumbers other( 0, 0, numbers.totalAngularMomentum(), numbers.parity() );
+        id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
         dryad::resonances::ParticlePair capture_pair( { id::ParticleID::photon(), 0., 0., +1 },
                                                       { capture_id.reaction().residual().value(), 0., 0., +1 } );
         dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, radii );
@@ -107,11 +116,6 @@ namespace lrf3 {
     }
 
     // create the spin groups
-    const auto getJpi = [] ( const auto& data ) {
-
-      return std::make_tuple( data.first.quantumNumbers().totalAngularMomentum(),
-                              data.first.quantumNumbers().parity() );
-    };
     auto iter = channel_data.begin();
     while ( iter != channel_data.end() ) {
 
