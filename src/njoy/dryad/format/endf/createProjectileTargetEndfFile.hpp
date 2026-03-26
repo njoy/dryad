@@ -25,13 +25,15 @@ namespace endf {
   /**
    *  @brief Create an ENDF incident particle file
    *
-   *  @param[in] transport   the projectile-target data
-   *  @param[in] mat         the ENDF mat number
-   *  @param[in] filename    the file name for the ENDF file
+   *  @param[in] transport                the projectile-target data
+   *  @param[in] mat                      the ENDF mat number
+   *  @param[in] filename                 the file name for the ENDF file
+   *  @param[in] reducedWidthAmplitudes   if there are resonances, use reduced width amplitudes
    */
   inline void createProjectileTargetEndfFile( const ProjectileTarget& transport,
                                               int mat,
-                                              const std::string& filename ) {
+                                              const std::string& filename,
+                                              bool reducedWidthAmplitudes = true ) {
 
     auto projectile = transport.projectileIdentifier();
     auto target = transport.targetIdentifier();
@@ -80,7 +82,8 @@ namespace endf {
     //! @todo if lrp=0, should write a 'special case' MF2
     if ( transport.resonances().has_value() ) {
 
-      material.insert( createEndfFile2Section151( awr, transport.resonances().value() ) );
+      material.insert( createEndfFile2Section151( awr, transport.resonances().value(),
+                                                  reducedWidthAmplitudes ) );
     }
 
     for ( const auto& reaction : transport.reactions() ) {

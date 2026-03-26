@@ -267,16 +267,21 @@ void wrapProjectileTarget( python::module& module ) {
   .def(
 
     "to_endf_file",
-    [] ( const Component& self, int mat, const std::string& filename ) {
+    [] ( const Component& self, int mat, const std::string& filename,
+         bool use_reduced_width_amplitudes ) {
 
-      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename );
+      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename, 
+                                                                 use_reduced_width_amplitudes );
     },
     python::arg( "mat" ), python::arg( "filename" ),
+    python::arg( "use_reduced_width_amplitudes" ) = true,
     "Write the ProjectileTarget data to an ENDF file\n\n"
     "Arguments:\n"
-    "    self        the ProjectileTarget data\n"
-    "    mat         the ENDF mat number to be used\n"
-    "    filename    the ENDF file name"
+    "    self                           the ProjectileTarget data\n"
+    "    mat                            the ENDF mat number to be used\n"
+    "    filename                       the ENDF file name\n"
+    "    use_reduced_width_amplitudes   if there are resonances, use reduced width amplitudes\n"
+    "                                   (default is true)"
   );
 
   // add standard equality comparison definitions
