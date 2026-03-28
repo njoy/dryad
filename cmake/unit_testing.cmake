@@ -272,6 +272,7 @@ add_cpp_test( dryad.format.gnds.convertTemperatures                             
 add_cpp_test( dryad.format.gnds.createInteractionType                                   dryad/format/gnds/createInteractionType.test.cpp )
 add_cpp_test( dryad.format.gnds.createInterpolationType                                 dryad/format/gnds/createInterpolationType.test.cpp )
 add_cpp_test( dryad.format.gnds.createReferenceFrame                                    dryad/format/gnds/createReferenceFrame.test.cpp )
+add_cpp_test( dryad.format.gnds.createStorageOrder                                      dryad/format/gnds/createStorageOrder.test.cpp )
 add_cpp_test( dryad.format.gnds.createParticleIdentifier                                dryad/format/gnds/createParticleIdentifier.test.cpp )
 add_cpp_test( dryad.format.gnds.readShape                                               dryad/format/gnds/readShape.test.cpp )
 add_cpp_test( dryad.format.gnds.resolveLink                                             dryad/format/gnds/resolveLink.test.cpp )
