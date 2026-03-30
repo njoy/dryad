@@ -23,7 +23,7 @@ SCENARIO( "readColumnHeaders" ) {
                                     child( "spinGroups" ).child( "spinGroup" ).
                                     child( "resonanceParameters" ).child( "table" );
 
-    WHEN( "a single GNDS axes node without an axis with index 2" ) {
+    WHEN( "a single GNDS heaaders node" ) {
 
       pugi::xml_node headers = table.child( "columnHeaders" );
 

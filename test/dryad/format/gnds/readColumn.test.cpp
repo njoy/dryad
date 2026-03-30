@@ -24,7 +24,7 @@ SCENARIO( "readAxis" ) {
                                       child( "resonanceParameters" ).child( "table" ).
                                       child( "columnHeaders" );
 
-    WHEN( "a single GNDS axes node without an axis with index 1" ) {
+    WHEN( "a single GNDS column node" ) {
 
       pugi::xml_node column = headers.child( "column" );
 
