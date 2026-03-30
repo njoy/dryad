@@ -6,7 +6,7 @@
 
 // other includes
 #include "pugixml.hpp"
-#include <iostream>
+
 // convenience typedefs
 using namespace njoy::dryad;
 
@@ -22,7 +22,7 @@ SCENARIO( "readAxis" ) {
                                    child( "reaction" ).child( "crossSection" ).
                                    child( "XYs1d" ).child( "axes" );
 
-    WHEN( "a single GNDS axes node without an axis with index 2" ) {
+    WHEN( "a single GNDS axes node without an axis with index 1" ) {
 
       pugi::xml_node axis = axes.child( "axis" );
 
