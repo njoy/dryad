@@ -5,6 +5,7 @@
 #include "njoy/dryad/format/gnds/readColumn.hpp"
 #include "njoy/dryad/format/gnds/readColumnHeaders.hpp"
 #include "njoy/dryad/format/gnds/readData.hpp"
+#include "njoy/dryad/format/gnds/readTable.hpp"
 #include "njoy/dryad/format/gnds/readConstant1d.hpp"
 #include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
 #include "njoy/dryad/format/gnds/readGrid.hpp"
