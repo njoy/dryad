@@ -278,6 +278,7 @@ add_cpp_test( dryad.format.gnds.readShape                                       
 add_cpp_test( dryad.format.gnds.resolveLink                                             dryad/format/gnds/resolveLink.test.cpp )
 add_cpp_test( dryad.format.gnds.readDouble                                              dryad/format/gnds/readDouble.test.cpp )
 add_cpp_test( dryad.format.gnds.readInteger                                             dryad/format/gnds/readInteger.test.cpp )
+add_cpp_test( dryad.format.gnds.readFraction                                            dryad/format/gnds/readFraction.test.cpp )
 add_cpp_test( dryad.format.gnds.readAxis                                                dryad/format/gnds/readAxis.test.cpp )
 add_cpp_test( dryad.format.gnds.readGrid                                                dryad/format/gnds/readGrid.test.cpp )
 add_cpp_test( dryad.format.gnds.readAxes                                                dryad/format/gnds/readAxes.test.cpp )
