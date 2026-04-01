@@ -21,8 +21,8 @@ namespace dryad {
 namespace format {
 namespace gnds {
 
-  using Table = std::vector< std::tuple< std::string, 
-                                         std::vector< double >, 
+  using Table = std::vector< std::tuple< std::string,
+                                         std::vector< double >,
                                          std::optional< std::string > > >;
 
   /**
@@ -55,7 +55,7 @@ namespace gnds {
     if ( columns != headers.size() ) {
 
       Log::error( "The number of columns in the table is incorrected, "
-                  "found {} as the number of columns but found {} headers", 
+                  "found {} as the number of columns but found {} headers",
                   columns, headers.size() );
       throw std::exception();
     }
@@ -74,7 +74,7 @@ namespace gnds {
       for ( int i = 0; i < columns; ++i ) {
 
         auto x = content | std20::views::drop( i ) | std23::views::stride( columns );
-        data.emplace_back( std::get< 1 >( headers[i] ), 
+        data.emplace_back( std::get< 1 >( headers[i] ),
                            createVector( x ),
                            std::get< 2 >( headers[i] ) );
       }
@@ -86,7 +86,7 @@ namespace gnds {
       for ( int i = 0; i < columns; ++i ) {
 
         auto end = std::next( iter, rows );
-        data.emplace_back( std::get< 1 >( headers[i] ), 
+        data.emplace_back( std::get< 1 >( headers[i] ),
                            std::vector( iter, end ),
                            std::get< 2 >( headers[i] ) );
         iter = end;
