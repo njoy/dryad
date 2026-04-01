@@ -27,7 +27,7 @@ set( CMAKE_CXX_STANDARD_REQUIRED YES )
 
 cmake_dependent_option(
   njoy.tests
-  "Build the njoy unit tests and integrate with ctest" OFF
+  "Build the njoy unit tests and integrate with ctest" ON
   "BUILD_TESTING AND NOT ${subproject}" OFF
 )
 
