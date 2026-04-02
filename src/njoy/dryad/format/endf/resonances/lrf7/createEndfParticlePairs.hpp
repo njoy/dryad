@@ -62,8 +62,8 @@ namespace lrf7 {
                                                outgoing.value().heavyParticle().parity()
                                              : 0. );
           q.push_back( channel.qValue() );
-          pa.push_back( outgoing.has_value() ? outgoing.value().lightParticle().parity() : 0. );
-          pb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().parity() : 0. );
+          pa.push_back( outgoing.has_value() ? ia.back() == 0. ? outgoing.value().lightParticle().parity() : 0. : 0. );
+          pb.push_back( outgoing.has_value() ? ib.back() == 0. ? outgoing.value().heavyParticle().parity() : 0. : 0. );
 
           // if fission (no outgoing) or capture (photon in outgoing pp), then PNT=-1
           pnt.push_back( outgoing.has_value()
