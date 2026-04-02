@@ -22,7 +22,7 @@ namespace endf {
    *  @param[in] reducedWidthAmplitudes   use reduced width amplitudes
    */
   inline ENDFtk::section::Type< 2, 151 >
-  createEndfFile2Section151( double awr, 
+  createEndfFile2Section151( double awr,
                              const dryad::resonances::ResonanceParameters& parameters,
                              bool reducedWidthAmplitudes = true ) {
 
@@ -33,8 +33,8 @@ namespace endf {
     for( const auto& region : parameters.resolved() ) {
 
       // LRF=7 : no energy dependent scattering radius possible (NRO=0),
-      //         naps does not matter so we set it to 1
-      ranges.emplace_back( region.lowerEnergyLimit(), region.upperEnergyLimit(), 1,
+      //         naps does not matter so we set it to 0
+      ranges.emplace_back( region.lowerEnergyLimit(), region.upperEnergyLimit(), 0,
                            resonances::lrf7::createEndfRMatrixLimited( region, reducedWidthAmplitudes ),
                            std::nullopt );
     };
