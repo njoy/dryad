@@ -15,11 +15,14 @@ namespace dryad {
    *  @brief Particle information
    *
    *  The Particle class contains specific information for a particle:
-   *    - atomic mass
-   *    - electrical charge
-   *    - excited state number and energy value
-   *    - spin and parity (which is either + or -)
-   *    - optional half-life
+   *    - the atomic mass value (always for the ground state) and an optional
+   *      uncertainty
+   *    - the excited state energy value and an optional uncertainty
+   *    - the spin and parity (which is either + or -)
+   *
+   *  The data is stored in the following units:
+   *    - atomic mass values are in atomic mass units
+   *    - energy values are in eV
    */
   class Particle {
 
@@ -27,6 +30,10 @@ namespace dryad {
 
     id::ParticleID identifier_;
     double mass_;
+    double energy_;
+    std::optional< double > mass_uncertainty_;
+    std::optional< double > energy_uncertainty_;
+
     double spin_;
     short parity_;
 
@@ -35,21 +42,28 @@ namespace dryad {
   public:
 
     /* constructor */
-    #include "njoy/dryad/resonances/Particle/src/ctor.hpp"
+    #include "njoy/dryad/Particle/src/ctor.hpp"
 
     /**
      *  @brief Return the particle identifier
      */
-    const id::ParticleID& identifier() const { return this->identifier_; }
+    const id::ParticleID& identifier() const {
+
+      return this->identifier_;
+    }
 
     /**
-     *  @brief Return the atomic mass of the particle (in atomic mass units)
+     *  @brief Set the particle identifier
+     *
+     *  @param id  the particle identifier
      */
-    double mass() const { return this->mass_; }
+    void identifier( id::ParticleID id ) {
+
+      this->identifier_ = std::move( id );
+    }
 
     /**
-     *  @brief Return the electrical charge of the particle (in units of the
-     *         elementary charge)
+     *  @brief Return the electrical charge of the particle
      */
     int charge() const { return this->identifier().z(); }
 
@@ -59,14 +73,109 @@ namespace dryad {
     int excitedState() const { return this->identifier().e(); }
 
     /**
-     *  @brief Return the spin of the particle
+     *  @brief Return the atomic mass of the particle in the ground state
      */
-    double spin() const { return this->spin_; }
+    double mass() const {
+
+      return this->mass_;
+    }
 
     /**
-     *  @brief Return the particle parity
+     *  @brief Set the atomic mass of the particle in the ground state
+     *
+     *  @param mass  the atomic mass
+     */
+    void mass( double mass ) {
+
+      this->mass_ = std::move( mass );
+    }
+
+    /**
+     *  @brief Return the excited state energy value of the particle
+     */
+    double energy() const {
+
+      return this->energy_;
+    }
+
+    /**
+     *  @brief Set the excited state energy value of the particle
+     *
+     *  @param energy  the excited state energy
+     */
+    void energy( double energy ) {
+
+      this->energy_ = std::move( energy );
+    }
+
+    /**
+     *  @brief Return the atomic mass uncertainty
+     */
+    const std::optional< double >& massUncertainty() const {
+
+      return this->mass_uncertainty_;
+    }
+
+    /**
+     *  @brief Set the atomic mass uncertainty
+     *
+     *  @param massUncertainty  the atomic mass uncertainty
+     */
+    void massUncertainty( std::optional< double > massUncertainty ) {
+
+      this->mass_uncertainty_ = std::move( massUncertainty );
+    }
+
+    /**
+     *  @brief Return the excited state energy uncertainty
+     */
+    const std::optional< double >& energyUncertainty() const {
+
+      return this->energy_uncertainty_;
+    }
+
+    /**
+     *  @brief Set the excited state energy uncertainty
+     *
+     *  @param energyUncertainty  the excited state energy uncertainty
+     */
+    void energyUncertainty( std::optional< double > energyUncertainty ) {
+
+      this->energy_uncertainty_ = std::move( energyUncertainty );
+    }
+
+    /**
+     *  @brief Return the spin of the particle
+     */
+    double spin() const {
+
+      return this->spin_;
+    }
+
+    /**
+     *  @brief Set the spin of the particle
+     *
+     *  @param spin  the particle spin
+     */
+    void spin( double spin ) {
+
+      this->spin_ = std::move( spin );
+    }
+
+    /**
+     *  @brief Return the particle spin parity
      */
     short parity() const { return this->parity_; }
+
+    /**
+     *  @brief Set the particle spin parity
+     *
+     *  @param parity  the particle spin
+     */
+    void parity( short parity ) {
+
+      this->parity_ = std::move( parity );
+    }
 
     /**
      *  @brief Equality comparison
@@ -76,9 +185,11 @@ namespace dryad {
      */
     friend bool operator==( const Particle& left, const Particle& right ) {
 
-      return std::tie( left.identifier(), left.mass_,
+      return std::tie( left.identifier(), left.mass_, left.energy_,
+                       left.mass_uncertainty_, left.energy_uncertainty_,
                        left.spin_, left.parity_ ) ==
-             std::tie( right.identifier(), right.mass_,
+             std::tie( right.identifier(), right.mass_, right.energy_,
+                       right.mass_uncertainty_, right.energy_uncertainty_,
                        right.spin_, right.parity_ );
     }
 

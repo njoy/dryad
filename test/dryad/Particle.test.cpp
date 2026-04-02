@@ -35,6 +35,8 @@ SCENARIO( "Particle" ) {
 
     // U235
     id::ParticleID u235e1ID( "U235_e1" );
+    double u235e1Energy = 1e+6;
+    double u235e1EnergyUncertainty = 1e+3;
 
     THEN( "a Particle can be constructed" ) {
 
@@ -47,6 +49,9 @@ SCENARIO( "Particle" ) {
       CHECK( 0.0 == neutron.charge() );
       CHECK( 0 == neutron.excitedState() );
       CHECK( +1 == neutron.parity() );
+      CHECK( 0.0 == neutron.energy() );
+      CHECK( std::nullopt == neutron.massUncertainty() );
+      CHECK( std::nullopt == neutron.energyUncertainty() );
 
       Particle proton( protonID, protonMass,
                        protonSpin, protonParity );
@@ -57,6 +62,9 @@ SCENARIO( "Particle" ) {
       CHECK( 1 == proton.charge() );
       CHECK( 0 == proton.excitedState() );
       CHECK( +1 == proton.parity() );
+      CHECK( 0.0 == proton.energy() );
+      CHECK( std::nullopt == proton.massUncertainty() );
+      CHECK( std::nullopt == proton.energyUncertainty() );
 
       Particle u235( u235ID, u235Mass, u235Spin, u235Parity );
 
@@ -66,8 +74,12 @@ SCENARIO( "Particle" ) {
       CHECK( 92 == u235.charge() );
       CHECK( 0 == u235.excitedState() );
       CHECK( +1 == u235.parity() );
+      CHECK( 0.0 == u235.energy() );
+      CHECK( std::nullopt == u235.massUncertainty() );
+      CHECK( std::nullopt == u235.energyUncertainty() );
 
-      Particle u235_e1( u235e1ID, u235Mass, u235Spin, u235Parity );
+      Particle u235_e1( u235e1ID, u235Mass, u235Spin, u235Parity,
+                        u235e1Energy, std::nullopt, u235e1EnergyUncertainty );
 
       CHECK( id::ParticleID( "U235_e1" ) == u235_e1.identifier() );
       CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass() ) );
@@ -75,16 +87,128 @@ SCENARIO( "Particle" ) {
       CHECK( 92 == u235_e1.charge() );
       CHECK( 1 == u235_e1.excitedState() );
       CHECK( +1 == u235_e1.parity() );
+      CHECK( 1e+6 == u235_e1.energy() );
+      CHECK( std::nullopt == u235_e1.massUncertainty() );
+      CHECK( std::nullopt != u235_e1.energyUncertainty() );
+      CHECK_THAT( 1e+3, WithinRel( u235_e1.energyUncertainty().value() ) );
     } // THEN
+  } // GIVEN
+
+  GIVEN( "setter functions" ) {
+
+    WHEN( "an instance of Particle is given" ) {
+
+      Particle chunk( id::ParticleID( "U235_e1" ), 235.0439299, 0., +1,
+                      1e+6, std::nullopt, 1e+3 );
+
+      THEN( "the identifier can be changed" ) {
+
+        id::ParticleID newid( "U235" );
+        id::ParticleID original( "U235_e1" );
+
+        chunk.identifier( newid );
+
+        CHECK( newid == chunk.identifier() );
+
+        chunk.identifier( original );
+
+        CHECK( original == chunk.identifier() );
+      } // THEN
+
+      THEN( "the mass can be changed" ) {
+
+        double newmass = 235;
+        double original = 235.0439299;
+
+        chunk.mass( newmass );
+
+        CHECK( newmass == chunk.mass() );
+
+        chunk.mass( original );
+
+        CHECK( original == chunk.mass() );
+      } // THEN
+
+      THEN( "the mass uncertainty can be changed" ) {
+
+        std::optional< double > newuncertainty = 1.;
+        std::optional< double > original = std::nullopt;
+
+        chunk.massUncertainty( newuncertainty );
+
+        CHECK( newuncertainty == chunk.massUncertainty() );
+
+        chunk.massUncertainty( original );
+
+        CHECK( original == chunk.massUncertainty() );
+      } // THEN
+
+      THEN( "the level energy can be changed" ) {
+
+        double newenergy = 1e+5;
+        double original = 1e+6;
+
+        chunk.energy( newenergy );
+
+        CHECK( newenergy == chunk.energy() );
+
+        chunk.energy( original );
+
+        CHECK( original == chunk.energy() );
+      } // THEN
+
+      THEN( "the level energy uncertainty can be changed" ) {
+
+        std::optional< double > newuncertainty = std::nullopt;
+        std::optional< double > original = 1e+3;
+
+        chunk.energyUncertainty( newuncertainty );
+
+        CHECK( newuncertainty == chunk.energyUncertainty() );
+
+        chunk.energyUncertainty( original );
+
+        CHECK( original == chunk.energyUncertainty() );
+      } // THEN
+
+      THEN( "the spin can be changed" ) {
+
+        double newspin = .5;
+        double original = 0;
+
+        chunk.spin( newspin );
+
+        CHECK( newspin == chunk.spin() );
+
+        chunk.spin( original );
+
+        CHECK( original == chunk.spin() );
+      } // THEN
+
+      THEN( "the parity can be changed" ) {
+
+        double newparity = -1;
+        double original = +1;
+
+        chunk.parity( newparity );
+
+        CHECK( newparity == chunk.parity() );
+
+        chunk.parity( original );
+
+        CHECK( original == chunk.parity() );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "comparison operators" ) {
 
-    WHEN( "two instances of Documentation are given" ) {
+    WHEN( "two instances of Particle are given" ) {
 
       Particle left( id::ParticleID::neutron(), 1.008664, 0.5, +1 );
       Particle equal( id::ParticleID::neutron(), 1.008664, 0.5, +1 );
-      Particle different( id::ParticleID::proton(), 1.007276, 0.5, +1 );
+      Particle different( id::ParticleID( "U235_e1" ), 235.0439299, 0., +1,
+                          1e+6, std::nullopt, 1e+3 );
 
       THEN( "they can be compared" ) {
 
