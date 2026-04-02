@@ -54,7 +54,7 @@ namespace gnds {
     auto headers = readColumnHeaders( table.child( "columnHeaders" ) );
     if ( columns != headers.size() ) {
 
-      Log::error( "The number of columns in the table is incorrected, "
+      Log::error( "The number of columns in the table is incorrect, "
                   "found {} as the number of columns but found {} headers",
                   columns, headers.size() );
       throw std::exception();
@@ -62,7 +62,7 @@ namespace gnds {
     auto content = readData( table.child( "data" ) );
     if ( content.size() != rows * columns ) {
 
-      Log::error( "The number of values in the table data is incorrected, "
+      Log::error( "The number of values in the table data is incorrect, "
                   "found {} values but expected {} values", content.size(), rows * columns );
       throw std::exception();
     }
