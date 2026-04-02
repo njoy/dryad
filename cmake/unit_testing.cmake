@@ -57,7 +57,6 @@ add_cpp_test( dryad.id.ReactionType                                             
 add_cpp_test( dryad.id.ReactionID                                                       dryad/id/ReactionID.test.cpp )
 add_cpp_test( dryad.id.ChannelID                                                        dryad/id/ChannelID.test.cpp )
 
-add_cpp_test( dryad.resonances.Particle                                                 dryad/resonances/Particle.test.cpp )
 add_cpp_test( dryad.resonances.ParticlePair                                             dryad/resonances/ParticlePair.test.cpp )
 add_cpp_test( dryad.resonances.TabulatedRadius                                          dryad/resonances/TabulatedRadius.test.cpp )
 add_cpp_test( dryad.resonances.ChannelRadii                                             dryad/resonances/ChannelRadii.test.cpp )
@@ -89,6 +88,8 @@ add_cpp_test( dryad.thermal.CoherentElasticScattering                           
 add_cpp_test( dryad.thermal.IncoherentElasticScattering                                 dryad/thermal/IncoherentElasticScattering.test.cpp )
 
 add_cpp_test( dryad.Documentation                                                       dryad/Documentation.test.cpp )
+
+add_cpp_test( dryad.Particle                                                            dryad/Particle.test.cpp )
 
 add_cpp_test( dryad.CoherentDistributionData                                            dryad/CoherentDistributionData.test.cpp )
 add_cpp_test( dryad.IncoherentDistributionData                                          dryad/IncoherentDistributionData.test.cpp )

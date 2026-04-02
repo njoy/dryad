@@ -16,7 +16,6 @@ namespace resonances {
   void wrapKinematics( python::module& );
 
   // declarations - components
-  void wrapParticle( python::module& );
   void wrapParticlePair( python::module& );
   void wrapChannelQuantumNumbers( python::module& );
   void wrapTabulatedRadius( python::module& );
@@ -55,7 +54,6 @@ void wrapResonances( python::module& module ) {
   resonances::wrapKinematics( submodule );
 
   // components
-  resonances::wrapParticle( submodule );
   resonances::wrapParticlePair( submodule );
   resonances::wrapChannelQuantumNumbers( submodule );
   resonances::wrapTabulatedRadius( submodule );

@@ -25,7 +25,6 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/BoundaryCondition.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/Formalism.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/Kinematics.python.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/Particle.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/ParticlePair.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/ChannelQuantumNumbers.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/resonances/TabulatedRadius.python.cpp
@@ -63,6 +62,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CrossSectionCovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Documentation.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Particle.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/DistributionDataType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InteractionType.python.cpp

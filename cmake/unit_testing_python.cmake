@@ -49,7 +49,6 @@ add_python_test( dryad.covariance.LinearCombinationCovariance          dryad/cov
 add_python_test( dryad.covariance.CrossSectionCovarianceData           dryad/covariance/Test_CrossSectionCovarianceData.py )
 add_python_test( dryad.covariance.CovarianceData                       dryad/covariance/Test_CovarianceData.py )
 
-add_python_test( dryad.resonances.Particle                             dryad/resonances/Test_Particle.py )
 add_python_test( dryad.resonances.ParticlePair                         dryad/resonances/Test_ParticlePair.py )
 add_python_test( dryad.resonances.ChannelQuantumNumbers                dryad/resonances/Test_ChannelQuantumNumbers.py )
 add_python_test( dryad.resonances.TabulatedRadius                      dryad/resonances/Test_TabulatedRadius.py )
@@ -78,6 +77,8 @@ add_python_test( dryad.thermal.CoherentElasticScattering               dryad/the
 add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/thermal/Test_IncoherentElasticScattering.py )
 
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
+
+add_python_test( dryad.Particle                                        dryad/Test_Particle.py )
 
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
 add_python_test( dryad.TabulatedAverageEnergy                          dryad/Test_TabulatedAverageEnergy.py )

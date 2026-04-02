@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -852,6 +852,67 @@ class MultiEnergyDistributions:
         ...
     def __ne__(self, arg0: MultiEnergyDistributions) -> bool:
         ...
+class Particle:
+    """
+    Particle information
+    
+    The Particle class contains specific information for a particle:
+      - atomic mass
+      - electrical charge
+      - excited state number and energy value
+      - spin and parity (which is either + or -)
+      - optional half-life
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> Particle:
+        ...
+    def __deepcopy__(self, arg0: dict) -> Particle:
+        ...
+    def __eq__(self, arg0: Particle) -> bool:
+        ...
+    def __init__(self, id: ..., mass: float, spin: float, parity: int) -> None:
+        """
+        Initialise the particle information
+        
+        Arguments:
+            self     the particle information
+            id       the particle identifier
+            mass     the atomic mass
+            spin     the channel spin
+            parity   the parity
+        """
+    def __ne__(self, arg0: Particle) -> bool:
+        ...
+    @property
+    def charge(self) -> int:
+        """
+        The electrical charge of the particle (in units of the elementary charge)
+        """
+    @property
+    def excited_state(self) -> int:
+        """
+        The excited state number of the particle
+        """
+    @property
+    def identifier(self) -> ...:
+        """
+        The particle identifier
+        """
+    @property
+    def mass(self) -> float:
+        """
+        The atomic mass of the particle (in atomic mass units)
+        """
+    @property
+    def parity(self) -> int:
+        """
+        The parity
+        """
+    @property
+    def spin(self) -> float:
+        """
+        The particle spin
+        """
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series

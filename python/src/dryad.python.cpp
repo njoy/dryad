@@ -40,6 +40,9 @@ namespace dryad {
   // declarations - documentation
   void wrapDocumentation( python::module& );
 
+  // declarations - particle database
+  void wrapParticle( python::module& );
+
   // declarations - components
   void wrapIsotropicAngularDistributions( python::module& );
   void wrapLegendreAngularDistributionFunction( python::module& );
@@ -86,6 +89,9 @@ void wrapDryad( python::module& module ) {
     "dryad",
     "Format agnostic nuclear data interface"
   );
+
+  // wrap components - particle database
+  dryad::wrapParticle( submodule );
 
   // wrap components - documentation
   dryad::wrapDocumentation( submodule );

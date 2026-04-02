@@ -4,18 +4,17 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/dryad/resonances/Particle.hpp"
+#include "njoy/dryad/Particle.hpp"
 
 // namespace aliases
 namespace python = pybind11;
 
 namespace dryad {
-namespace resonances {
 
 void wrapParticle( python::module& module ) {
 
   // type aliases
-  using Component = njoy::dryad::resonances::Particle;
+  using Component = njoy::dryad::Particle;
   using ParticleID = njoy::dryad::id::ParticleID;
 
   // wrap views created by this component
@@ -25,11 +24,13 @@ void wrapParticle( python::module& module ) {
 
     module,
     "Particle",
-    "Particle information for resonance reconstruction\n\n"
-    "The Particle class contains specific information for a particle as used\n"
-    "during resonance reconstruction. The Particle has an atomic mass, an\n"
-    "electrical charge, an excited state number, a spin and a parity (which is\n"
-    "either + or -)."
+    "Particle information\n\n"
+    "The Particle class contains specific information for a particle:\n"
+    "  - atomic mass\n"
+    "  - electrical charge\n"
+    "  - excited state number and energy value\n"
+    "  - spin and parity (which is either + or -)\n"
+    "  - optional half-life"
    );
 
   // wrap the component
@@ -92,5 +93,4 @@ void wrapParticle( python::module& module ) {
   addStandardCopyDefinitions< Component >( component );
 }
 
-} // resonances namespace
 } // dryad namespace
