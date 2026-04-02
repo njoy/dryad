@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATEREACTIONIDENTIFIERS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATEREACTIONIDENTIFIERS
+#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATERESONANCEREACTION
+#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATERESONANCEREACTION
 
 // system includes
 #include <tuple>
@@ -38,7 +38,7 @@ namespace rmatrix {
                            const dryad::resonances::ChannelRadii& radii,
                            const std::string& style = "eval" ) {
 
-    // check that this is a valid externalRMatrix node
+    // check that this is a valid resonanceReaction node
     throwExceptionOnWrongNode( reaction, "resonanceReaction" );
 
     // the data for the resonance reaction
