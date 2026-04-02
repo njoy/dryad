@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_GNDS_READCOLUMNHEADERS
 
 // system includes
+#include <algorithm>
 #include <vector>
 
 // other includes
@@ -15,8 +16,8 @@ namespace dryad {
 namespace format {
 namespace gnds {
 
-  using Headers = std::vector< std::tuple< int, 
-                                           std::string, 
+  using Headers = std::vector< std::tuple< int,
+                                           std::string,
                                            std::optional< std::string > > >;
 
   /**
