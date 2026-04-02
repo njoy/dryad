@@ -14,7 +14,7 @@ using namespace njoy::dryad;
 
 void verifyChunk( const std::vector< double >& );
 
-SCENARIO( "readXYs1D" ) {
+SCENARIO( "readValues" ) {
 
   GIVEN( "a GNDS values xml node" ) {
 
@@ -40,7 +40,7 @@ SCENARIO( "readXYs1D" ) {
       THEN( "exceptions are thrown" ) {
 
         CHECK_THROWS( format::gnds::readValues( reactions ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readValues( reactions.child( "undefined" ) ) ); // undefiend node
+        CHECK_THROWS( format::gnds::readValues( reactions.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN

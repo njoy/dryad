@@ -1072,14 +1072,16 @@ class ProjectileTarget:
             self   the ProjectileTarget data
             id     the reaction identifier
         """
-    def to_endf_file(self, mat: int, filename: str) -> None:
+    def to_endf_file(self, mat: int, filename: str, use_reduced_width_amplitudes: bool = True) -> None:
         """
         Write the ProjectileTarget data to an ENDF file
         
         Arguments:
-            self        the ProjectileTarget data
-            mat         the ENDF mat number to be used
-            filename    the ENDF file name
+            self                           the ProjectileTarget data
+            mat                            the ENDF mat number to be used
+            filename                       the ENDF file name
+            use_reduced_width_amplitudes   if there are resonances, use reduced width amplitudes
+                                           (default is true)
         """
     def unionise_cross_sections(self, exclude_summation: bool = False) -> None:
         """

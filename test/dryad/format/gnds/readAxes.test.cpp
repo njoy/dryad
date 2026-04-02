@@ -6,7 +6,7 @@
 
 // other includes
 #include "pugixml.hpp"
-#include <iostream>
+
 // convenience typedefs
 using namespace njoy::dryad;
 

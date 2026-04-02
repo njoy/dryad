@@ -9,6 +9,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/createStorageOrder.hpp"
 #include "njoy/dryad/format/gnds/readShape.hpp"
 #include "njoy/dryad/format/gnds/readValues.hpp"
 #include "njoy/matrix.hpp"
@@ -50,23 +51,19 @@ namespace gnds {
       }
     }
 
-    std::optional< std::string > order = std::nullopt;
+    StorageOrder order = StorageOrder::RowMajor;
     attribute = array.attribute( "storageOrder" );
     if ( attribute ) {
 
-      order = attribute.as_string();
-      if ( order == "row-major" ) {
-
-        order = std::nullopt;
-      }
+      order = createStorageOrder( attribute.as_string() );
     }
 
-    if ( order.has_value() ) {
+    if ( order != StorageOrder::RowMajor ) {
 
       Log::error( "Array conversion currently only supports row-major, contact a developer" );
       Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
       Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
-      Log::info( "storageOrder: {}", order.has_value() ? order.value() : "row-major" );
+      Log::info( "storageOrder: {}", attribute ? attribute.as_string() : "row-major" );
       throw std::exception();
     }
 
@@ -149,7 +146,7 @@ namespace gnds {
         Log::error( "Array conversion currently unsupported, contact a developer" );
         Log::info( "Compression: {}", compression.has_value() ? compression.value() : "none" );
         Log::info( "Symmetry: {}", symmetry.has_value() ? symmetry.value() : "none" );
-        Log::info( "storageOrder: {}", order.has_value() ? order.value() : "row-major" );
+        Log::info( "storageOrder: {}", attribute ? attribute.as_string() : "row-major" );
         throw std::exception();
       }
 

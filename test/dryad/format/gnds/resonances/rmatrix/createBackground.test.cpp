@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/createBackground.hpp"
+#include "njoy/dryad/format/gnds/resonances/rmatrix/createBackground.hpp"
 
 // other includes
 #include "pugixml.hpp"

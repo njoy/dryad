@@ -40,7 +40,7 @@ SCENARIO( "readConstant1d" ) {
       THEN( "exceptions are thrown" ) {
 
         CHECK_THROWS( format::gnds::readConstant1dAsDouble( constant1d.child( "axes" ) ) );      // wrong node
-        CHECK_THROWS( format::gnds::readConstant1dAsDouble( constant1d.child( "undefined" ) ) ); // undefiend node
+        CHECK_THROWS( format::gnds::readConstant1dAsDouble( constant1d.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
