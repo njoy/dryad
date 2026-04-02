@@ -26,46 +26,50 @@ void wrapParticle( python::module& module ) {
     "Particle",
     "Particle information\n\n"
     "The Particle class contains specific information for a particle:\n"
-    "  - atomic mass\n"
-    "  - electrical charge\n"
-    "  - excited state number and energy value\n"
-    "  - spin and parity (which is either + or -)\n"
-    "  - optional half-life"
-   );
+    "  - the atomic mass value (always for the ground state) and an optional\n"
+    "    uncertainty\n"
+    "  - the excited state energy value and an optional uncertainty\n"
+    "  - the spin and parity (which is either + or -)\n\n"
+    "The data is stored in the following units:\n"
+    "  - atomic mass values are in atomic mass units\n"
+    "  - energy values are in eV"
+  );
 
   // wrap the component
   component
   .def(
 
-    python::init< ParticleID, double, double, short >(),
+    python::init< ParticleID, double, double, short,
+                  double, std::optional< double >,
+                  std::optional< double > >(),
     python::arg( "id" ), python::arg( "mass" ),
     python::arg( "spin" ), python::arg( "parity" ),
+    python::arg( "energy" ) = 0.,
+    python::arg( "mass_uncertainty" ) = std::nullopt,
+    python::arg( "energy_uncertainty" ) = std::nullopt,
     "Initialise the particle information\n\n"
     "Arguments:\n"
-    "    self     the particle information\n"
-    "    id       the particle identifier\n"
-    "    mass     the atomic mass\n"
-    "    spin     the channel spin\n"
-    "    parity   the parity"
+    "    self                the particle information\n"
+    "    id                  the particle identifier\n"
+    "    mass                the atomic mass\n"
+    "    spin                the particle spin\n"
+    "    parity              the parity\n"
+    "    energy              the excited state energy (default is 0)\n"
+    "    massUncertainty     the uncertainty on the atomic mass value (default is none)\n"
+    "    energyUncertainty   the uncertainty on the level energy value (default is none)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "identifier",
-    &Component::identifier,
+    python::overload_cast<>( &Component::identifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::identifier ),
     "The particle identifier"
-  )
-  .def_property_readonly(
-
-    "mass",
-    &Component::mass,
-    "The atomic mass of the particle (in atomic mass units)"
   )
   .def_property_readonly(
 
     "charge",
     &Component::charge,
-    "The electrical charge of the particle (in units of the "
-    "elementary charge)"
+    "The electrical charge of the particle"
   )
   .def_property_readonly(
 
@@ -73,17 +77,47 @@ void wrapParticle( python::module& module ) {
     &Component::excitedState,
     "The excited state number of the particle"
   )
-  .def_property_readonly(
+  .def_property(
+
+    "mass",
+    python::overload_cast<>( &Component::mass, python::const_ ),
+    python::overload_cast< double >( &Component::mass ),
+    "The atomic mass of the particle in the ground state"
+  )
+  .def_property(
+
+    "energy",
+    python::overload_cast<>( &Component::energy, python::const_ ),
+    python::overload_cast< double >( &Component::energy ),
+    "The excited state energy value of the particle"
+  )
+  .def_property(
 
     "spin",
-    &Component::spin,
-    "The particle spin"
+    python::overload_cast<>( &Component::spin, python::const_ ),
+    python::overload_cast< double >( &Component::spin ),
+    "The spin of the particle"
   )
-  .def_property_readonly(
+  .def_property(
 
     "parity",
-    &Component::parity,
-    "The parity"
+    python::overload_cast<>( &Component::parity, python::const_ ),
+    python::overload_cast< short >( &Component::parity ),
+    "The particle spin parity"
+  )
+  .def_property(
+
+    "mass_uncertainty",
+    python::overload_cast<>( &Component::massUncertainty, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::massUncertainty ),
+    "The atomic mass uncertainty"
+  )
+  .def_property(
+
+    "energy_uncertainty",
+    python::overload_cast<>( &Component::energyUncertainty, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::energyUncertainty ),
+    "The excited state energy uncertainty"
   );
 
   // add standard comparison definitions

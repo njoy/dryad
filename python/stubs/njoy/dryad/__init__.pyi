@@ -857,11 +857,14 @@ class Particle:
     Particle information
     
     The Particle class contains specific information for a particle:
-      - atomic mass
-      - electrical charge
-      - excited state number and energy value
-      - spin and parity (which is either + or -)
-      - optional half-life
+      - the atomic mass value (always for the ground state) and an optional
+        uncertainty
+      - the excited state energy value and an optional uncertainty
+      - the spin and parity (which is either + or -)
+    
+    The data is stored in the following units:
+      - atomic mass values are in atomic mass units
+      - energy values are in eV
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Particle:
@@ -870,24 +873,43 @@ class Particle:
         ...
     def __eq__(self, arg0: Particle) -> bool:
         ...
-    def __init__(self, id: ..., mass: float, spin: float, parity: int) -> None:
+    def __init__(self, id: ..., mass: float, spin: float, parity: int, energy: float = 0.0, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
         """
         Initialise the particle information
         
         Arguments:
-            self     the particle information
-            id       the particle identifier
-            mass     the atomic mass
-            spin     the channel spin
-            parity   the parity
+            self                the particle information
+            id                  the particle identifier
+            mass                the atomic mass
+            spin                the particle spin
+            parity              the parity
+            energy              the excited state energy (default is 0)
+            massUncertainty     the uncertainty on the atomic mass value (default is none)
+            energyUncertainty   the uncertainty on the level energy value (default is none)
         """
     def __ne__(self, arg0: Particle) -> bool:
         ...
     @property
     def charge(self) -> int:
         """
-        The electrical charge of the particle (in units of the elementary charge)
+        The electrical charge of the particle
         """
+    @property
+    def energy(self) -> float:
+        """
+        The excited state energy value of the particle
+        """
+    @energy.setter
+    def energy(self, arg1: float) -> None:
+        ...
+    @property
+    def energy_uncertainty(self) -> float | None:
+        """
+        The excited state energy uncertainty
+        """
+    @energy_uncertainty.setter
+    def energy_uncertainty(self, arg1: float | None) -> None:
+        ...
     @property
     def excited_state(self) -> int:
         """
@@ -898,21 +920,41 @@ class Particle:
         """
         The particle identifier
         """
+    @identifier.setter
+    def identifier(self, arg1: ...) -> None:
+        ...
     @property
     def mass(self) -> float:
         """
-        The atomic mass of the particle (in atomic mass units)
+        The atomic mass of the particle in the ground state
         """
+    @mass.setter
+    def mass(self, arg1: float) -> None:
+        ...
+    @property
+    def mass_uncertainty(self) -> float | None:
+        """
+        The atomic mass uncertainty
+        """
+    @mass_uncertainty.setter
+    def mass_uncertainty(self, arg1: float | None) -> None:
+        ...
     @property
     def parity(self) -> int:
         """
-        The parity
+        The particle spin parity
         """
+    @parity.setter
+    def parity(self, arg1: int) -> None:
+        ...
     @property
     def spin(self) -> float:
         """
-        The particle spin
+        The spin of the particle
         """
+    @spin.setter
+    def spin(self, arg1: float) -> None:
+        ...
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series
