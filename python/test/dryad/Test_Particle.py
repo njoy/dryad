@@ -5,7 +5,7 @@ import sys
 # third party imports
 
 # local imports
-from njoy.dryad.resonances import Particle
+from njoy.dryad import Particle
 from njoy.dryad.id import ParticleID
 
 class Test_Particle( unittest.TestCase ) :
