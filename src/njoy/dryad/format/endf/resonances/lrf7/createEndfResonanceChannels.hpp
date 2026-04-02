@@ -28,8 +28,8 @@ namespace lrf7 {
   inline auto createEndfResonanceChannels( const dryad::resonances::SpinGroup& group,
                                            const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
-    double parity = group.parity();
-    double aj = group.totalAngularMomentum() * parity;
+    double aj = group.totalAngularMomentum() * group.parity();
+    double parity = aj == 0. ? group.parity() : 0.;
 
     std::vector< unsigned int > ppi, l;
     std::vector< double > s, b, ape, apt;
