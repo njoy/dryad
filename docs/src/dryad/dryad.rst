@@ -23,6 +23,12 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
 
 .. toctree::
    :maxdepth: 1
+   :caption: Particle Database:
+
+   Particle
+
+.. toctree::
+   :maxdepth: 1
    :caption: Atomic Modules:
 
    AtomicRelaxation

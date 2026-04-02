@@ -32,7 +32,23 @@ void wrapParticle( python::module& module ) {
     "  - the spin and parity (which is either + or -)\n\n"
     "The data is stored in the following units:\n"
     "  - atomic mass values are in atomic mass units\n"
-    "  - energy values are in eV"
+    "  - energy values are in eV\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ParticleID\n"
+    "         the particle identifier\n"
+    "    mass : float\n"
+    "        the atomic mass\n"
+    "    spin : float\n"
+    "        the particle spin\n"
+    "    parity : int\n"
+    "        the particle spin parity\n"
+    "    energy : float, default 0\n"
+    "        the excited state energy (default: 0)\n"
+    "    mass_uncertainty : float, default None\n"
+    "        the uncertainty on the atomic mass value (default: None)\n"
+    "    energy_uncertainty : float, default None\n"
+    "        the uncertainty on the ecited level energy value (default: None)"
   );
 
   // wrap the component
@@ -47,16 +63,7 @@ void wrapParticle( python::module& module ) {
     python::arg( "energy" ) = 0.,
     python::arg( "mass_uncertainty" ) = std::nullopt,
     python::arg( "energy_uncertainty" ) = std::nullopt,
-    "Initialise the particle information\n\n"
-    "Arguments:\n"
-    "    self                the particle information\n"
-    "    id                  the particle identifier\n"
-    "    mass                the atomic mass\n"
-    "    spin                the particle spin\n"
-    "    parity              the parity\n"
-    "    energy              the excited state energy (default is 0)\n"
-    "    massUncertainty     the uncertainty on the atomic mass value (default is none)\n"
-    "    energyUncertainty   the uncertainty on the level energy value (default is none)"
+    "Initialise the particle information"
   )
   .def_property(
 

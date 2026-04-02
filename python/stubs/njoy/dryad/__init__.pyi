@@ -865,6 +865,23 @@ class Particle:
     The data is stored in the following units:
       - atomic mass values are in atomic mass units
       - energy values are in eV
+    
+    Parameters
+    ----------
+        id : njoy.dryad.id.ParticleID
+             the particle identifier
+        mass : float
+            the atomic mass
+        spin : float
+            the particle spin
+        parity : int
+            the particle spin parity
+        energy : float, default 0
+            the excited state energy (default: 0)
+        mass_uncertainty : float, default None
+            the uncertainty on the atomic mass value (default: None)
+        energy_uncertainty : float, default None
+            the uncertainty on the ecited level energy value (default: None)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Particle:
@@ -876,16 +893,6 @@ class Particle:
     def __init__(self, id: ..., mass: float, spin: float, parity: int, energy: float = 0.0, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
         """
         Initialise the particle information
-        
-        Arguments:
-            self                the particle information
-            id                  the particle identifier
-            mass                the atomic mass
-            spin                the particle spin
-            parity              the parity
-            energy              the excited state energy (default is 0)
-            massUncertainty     the uncertainty on the atomic mass value (default is none)
-            energyUncertainty   the uncertainty on the level energy value (default is none)
         """
     def __ne__(self, arg0: Particle) -> bool:
         ...
