@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_PARTICLE
-#define NJOY_DRYAD_RESONANCES_PARTICLE
+#ifndef NJOY_DRYAD_PARTICLE
+#define NJOY_DRYAD_PARTICLE
 
 // system includes
 #include <tuple>
@@ -9,16 +9,17 @@
 
 namespace njoy {
 namespace dryad {
-namespace resonances {
 
   /**
    *  @class
-   *  @brief Particle information for resonance reconstruction
+   *  @brief Particle information
    *
-   *  The Particle class contains specific information for a particle as used
-   *  during resonance reconstruction. The Particle has an atomic mass, an
-   *  electrical charge, an excited state number, a spin and a parity (which is
-   *  either + or -).
+   *  The Particle class contains specific information for a particle:
+   *    - atomic mass
+   *    - electrical charge
+   *    - excited state number and energy value
+   *    - spin and parity (which is either + or -)
+   *    - optional half-life
    */
   class Particle {
 
@@ -93,7 +94,6 @@ namespace resonances {
     }
   };
 
-} // resonances namespace
 } // dryad namespace
 } // njoy namespace
 

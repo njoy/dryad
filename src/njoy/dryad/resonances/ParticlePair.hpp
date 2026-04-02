@@ -5,7 +5,7 @@
 #include <tuple>
 
 // other includes
-#include "njoy/dryad/resonances/Particle.hpp"
+#include "njoy/dryad/Particle.hpp"
 
 namespace njoy {
 namespace dryad {

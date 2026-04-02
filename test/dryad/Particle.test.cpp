@@ -4,13 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/resonances/Particle.hpp"
+#include "njoy/dryad/Particle.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
 
 SCENARIO( "Particle" ) {
 

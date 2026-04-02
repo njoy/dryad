@@ -46,16 +46,16 @@ namespace lrf3 {
 
     // the incident particle pair
     auto awri = endf.lValues().front().atomicWeightRatio();
-    dryad::resonances::ParticlePair incident( dryad::resonances::Particle( projectile, constants::neutron_mass, 0.5, +1),
-                                              dryad::resonances::Particle( target, awri * constants::neutron_mass, spin, +1) );
+    dryad::resonances::ParticlePair incident( dryad::Particle( projectile, constants::neutron_mass, 0.5, +1),
+                                              dryad::Particle( target, awri * constants::neutron_mass, spin, +1) );
 
     // channel radius value
     auto ap = endf.scatteringRadius() * constants::deca;
 
     // lambdas for comparison
-    auto compare = [] ( auto&& left, auto&& right ) { 
-      
-      return left.first.identifier() < right; 
+    auto compare = [] ( auto&& left, auto&& right ) {
+
+      return left.first.identifier() < right;
     };
     const auto getJpi = [] ( const auto& data ) {
 
@@ -96,7 +96,7 @@ namespace lrf3 {
       dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
       auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
                                     elastic_id, compare  );
-      iter = channel_data.emplace( iter, std::move( elastic ), 
+      iter = channel_data.emplace( iter, std::move( elastic ),
                                    dryad::resonances::ResonanceTable{ { elastic_id }, {}, {} } );
 
       // add an empty capture channel with the same Jpi - if it is not there yet

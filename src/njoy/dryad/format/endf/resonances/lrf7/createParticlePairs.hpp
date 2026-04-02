@@ -41,18 +41,18 @@ namespace lrf7 {
         // an empty particles map means there's only photons
         auto id = reactions[i].particles()->size() > 0 ? reactions[i].particles()->begin()->first
                                                        : dryad::id::ParticleID::photon();
-        dryad::resonances::Particle a( id,
-                                       endfPairs.massParticleA()[i] * constants::neutron_mass,
-                                       std::abs( endfPairs.spinParticleA()[i] ),
-                                       endfPairs.spinParticleA()[i] == 0.
-                                         ? endfPairs.parityParticleA()[i] >= 0 ? +1 : -1
-                                         : endfPairs.spinParticleA()[i] >= 0 ? +1 : -1 );
-        dryad::resonances::Particle b( reactions[i].residual().value(),
-                                       endfPairs.massParticleB()[i] * constants::neutron_mass,
-                                       std::abs( endfPairs.spinParticleB()[i] ),
-                                       endfPairs.spinParticleB()[i] == 0.
-                                         ? endfPairs.parityParticleB()[i] >= 0 ? +1 : -1
-                                         : endfPairs.spinParticleB()[i] >= 0 ? +1 : -1 );
+        dryad::Particle a( id,
+                           endfPairs.massParticleA()[i] * constants::neutron_mass,
+                           std::abs( endfPairs.spinParticleA()[i] ),
+                           endfPairs.spinParticleA()[i] == 0.
+                             ? endfPairs.parityParticleA()[i] >= 0 ? +1 : -1
+                             : endfPairs.spinParticleA()[i] >= 0 ? +1 : -1 );
+        dryad::Particle b( reactions[i].residual().value(),
+                           endfPairs.massParticleB()[i] * constants::neutron_mass,
+                           std::abs( endfPairs.spinParticleB()[i] ),
+                           endfPairs.spinParticleB()[i] == 0.
+                             ? endfPairs.parityParticleB()[i] >= 0 ? +1 : -1
+                             : endfPairs.spinParticleB()[i] >= 0 ? +1 : -1 );
         pairs.emplace_back( dryad::resonances::ParticlePair( std::move( a ), std::move( b ) ) );
 
         //! @todo compare spins and parity to particle database to detect errors
