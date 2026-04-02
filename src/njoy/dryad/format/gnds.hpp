@@ -21,7 +21,7 @@
 
 #include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
 #include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
-#include "njoy/dryad/format/gnds/resonances/createBackground.hpp"
+#include "njoy/dryad/format/gnds/resonances/rmatrix/createBackground.hpp"
 #include "njoy/dryad/format/gnds/resonances/rmatrix/createResonanceReaction.hpp"
 
 #include "njoy/dryad/format/gnds/thermal/createIncoherentElasticScattering.hpp"
