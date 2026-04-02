@@ -5,7 +5,7 @@
 #include <vector>
 
 // other includes
-#include "njoy/dryad/resonances/ResonanceTable.hpp"
+#include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
@@ -18,12 +18,16 @@ namespace lrf7 {
   /**
    *  @brief Create the background channel data for LRF7 resonance parameters
    *
-   *  @param[in] spingroup   the spin group
+   *  @param[in] spingroup                the spin group
+   *  @param[in] reducedWidthAmplitudes   use reduced width amplitudes
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceParameters
-  createEndfResonanceParameters( const dryad::resonances::ResonanceTable& table ) {
+  createEndfResonanceParameters( const dryad::resonances::SpinGroup& spingroup,
+                                 bool reducedWidthAmplitudes = true ) {
 
     using ResonanceParameters = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ResonanceParameters;
+
+    decltype(auto) table = spingroup.resonanceTable();
 
     std::size_t nrs = table.numberEnergies();
     std::size_t nch = table.numberChannels();
@@ -37,7 +41,16 @@ namespace lrf7 {
 
       for ( std::size_t j = 0; j < nrs; ++j ) {
 
-        parameters[j][i] = widths[i][j];
+        if ( reducedWidthAmplitudes ) {
+
+          parameters[j][i] = widths[i][j];
+        }
+        else {
+
+          double penetrability = spingroup.channels()[i].penetrability( energies[j] );
+          double sign = widths[i][j] < 0. ? -1. : +1.;
+          parameters[j][i] = sign * 2. * penetrability * widths[i][j] * widths[i][j];
+        }
       }
     }
 

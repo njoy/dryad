@@ -18,10 +18,13 @@ namespace endf {
   /**
    *  @brief Create an ENDF MF2 MT151 section object from a ResonanceParameters object
    *
-   *  @param[in] parameters   the resonance parameter data
+   *  @param[in] parameters               the resonance parameter data
+   *  @param[in] reducedWidthAmplitudes   use reduced width amplitudes
    */
   inline ENDFtk::section::Type< 2, 151 >
-  createEndfFile2Section151( double awr, const dryad::resonances::ResonanceParameters& parameters ) {
+  createEndfFile2Section151( double awr,
+                             const dryad::resonances::ResonanceParameters& parameters,
+                             bool reducedWidthAmplitudes = true ) {
 
     std::vector< ENDFtk::section::Type< 2, 151 >::ResonanceRange > ranges;
     int za = parameters.resolved().front().reactions().front().target().za();
@@ -32,7 +35,7 @@ namespace endf {
       // LRF=7 : no energy dependent scattering radius possible (NRO=0),
       //         naps does not matter so we set it to 0
       ranges.emplace_back( region.lowerEnergyLimit(), region.upperEnergyLimit(), 0,
-                           resonances::lrf7::createEndfRMatrixLimited( region ),
+                           resonances::lrf7::createEndfRMatrixLimited( region, reducedWidthAmplitudes ),
                            std::nullopt );
     };
 

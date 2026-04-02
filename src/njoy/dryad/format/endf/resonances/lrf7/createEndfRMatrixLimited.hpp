@@ -23,16 +23,18 @@ namespace lrf7 {
   /**
    *  @brief Create an LRF7 resolved resonance range
    *
-   *  @param[in] compound   the compound system
+   *  @param[in] compound                 the compound system
+   *  @param[in] reducedWidthAmplitudes   use reduced width amplitudes
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited
-  createEndfRMatrixLimited( const dryad::resonances::CompoundSystem& compound ) {
+  createEndfRMatrixLimited( const dryad::resonances::CompoundSystem& compound,
+                            bool reducedWidthAmplitudes = true ) {
 
     using SpinGroup     = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup;
     using RMatrixLimited = ENDFtk::section::Type< 2, 151 >::RMatrixLimited;
 
-    // flag for reduced widths - dryad converts to reduced widths at read time
-    bool ifg = true;
+    // flag for reduced widths
+    bool ifg = reducedWidthAmplitudes;
 
     // kinematics flag
     bool krl = false;
@@ -55,12 +57,12 @@ namespace lrf7 {
       if ( group.hasChannelsWithBackground() ) {
 
         groups.emplace_back( createEndfResonanceChannels( group, pairs ),
-                             createEndfResonanceParameters( group.resonanceTable() ),
+                             createEndfResonanceParameters( group, reducedWidthAmplitudes ),
                              createEndfBackgroundChannels( group ) );
       } else {
 
         groups.emplace_back( createEndfResonanceChannels( group, pairs ),
-                             createEndfResonanceParameters( group.resonanceTable() ) );
+                             createEndfResonanceParameters( group, reducedWidthAmplitudes ) );
       }
     }
 
