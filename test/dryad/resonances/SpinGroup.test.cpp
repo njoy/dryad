@@ -268,6 +268,9 @@ void verifyChunk( const SpinGroup& chunk ) {
   CHECK( 1 == chunk.totalAngularMomentum() );
   CHECK( +1 == chunk.parity() );
 
+  CHECK( Kinematics::NonRelativistic == chunk.kinematicsType() );
+  CHECK( false == chunk.hasChannelsWithBackground() );
+
   CHECK( 4 == chunk.reactions().size() );
   CHECK( id::ReactionID( "n,Cl35->g,Cl36[all]" ) == chunk.reactions()[0] );
   CHECK( id::ReactionID( "n,Cl35->n,Cl35" ) == chunk.reactions()[1] );

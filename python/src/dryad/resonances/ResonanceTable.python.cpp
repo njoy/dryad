@@ -44,8 +44,8 @@ void wrapResonanceTable( python::module& module ) {
     "upon construction).\n\n"
     "Arguments:\n"
     "    self         the table\n"
-    "    channels     the channel identifiers (nc values, at least 1)\n"
-    "    energies     the level energies (ne values, at least 1)\n"
+    "    channels     the channel identifiers (nc values)\n"
+    "    energies     the level energies (ne values)\n"
     "    amplitudes   the reduced width amplitudes (nc arrays of ne values)"
   )
   .def(
@@ -62,6 +62,24 @@ void wrapResonanceTable( python::module& module ) {
     "    channel      the channel identifier\n"
     "    energies     the level energies\n"
     "    amplitudes   the reduced width amplitudes"
+  )
+  .def(
+
+    python::init< std::vector< ChannelID > >(),
+    python::arg( "channels" ),
+    "Initialise an empty table\n\n"
+    "Arguments:\n"
+    "    self         the table\n"
+    "    channels     the channel identifiers (nc values)"
+  )
+  .def(
+
+    python::init< ChannelID >(),
+    python::arg( "channel" ),
+    "Initialise an empty table\n\n"
+    "Arguments:\n"
+    "    self         the table\n"
+    "    channel      the channel identifier"
   )
   .def_property_readonly(
 

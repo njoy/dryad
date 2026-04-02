@@ -14,6 +14,7 @@ from njoy.dryad.resonances import Formalism
 from njoy.dryad.resonances import BoundaryCondition
 from njoy.dryad.resonances import SpinGroup
 from njoy.dryad.resonances import CompoundSystem
+from njoy.dryad.resonances import Kinematics
 from njoy.dryad.id import ChannelID
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID
@@ -61,6 +62,9 @@ def verify_chunk( self, chunk ) :
     # spin group 0
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spingroup = groups[0]
+
+    self.assertEqual( Kinematics.NonRelativistic, spingroup.kinematics_type )
+    self.assertEqual( False, spingroup.has_channels_with_background )
 
     # channels
     channels = spingroup.channels
@@ -132,6 +136,9 @@ def verify_chunk( self, chunk ) :
     # spin group 1
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spingroup = groups[1]
+
+    self.assertEqual( Kinematics.NonRelativistic, spingroup.kinematics_type )
+    self.assertEqual( False, spingroup.has_channels_with_background )
 
     # channels
     channels = spingroup.channels
@@ -276,6 +283,9 @@ def verify_chunk( self, chunk ) :
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spingroup = groups[2]
 
+    self.assertEqual( Kinematics.NonRelativistic, spingroup.kinematics_type )
+    self.assertEqual( False, spingroup.has_channels_with_background )
+
     # channels
     channels = spingroup.channels
 
@@ -370,6 +380,9 @@ def verify_chunk( self, chunk ) :
     # spin group 3
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spingroup = groups[3]
+
+    self.assertEqual( Kinematics.NonRelativistic, spingroup.kinematics_type )
+    self.assertEqual( False, spingroup.has_channels_with_background )
 
     # channels
     channels = spingroup.channels
@@ -514,6 +527,9 @@ def verify_chunk( self, chunk ) :
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spingroup = groups[4]
 
+    self.assertEqual( Kinematics.NonRelativistic, spingroup.kinematics_type )
+    self.assertEqual( False, spingroup.has_channels_with_background )
+
     # channels
     channels = spingroup.channels
 
@@ -608,6 +624,9 @@ def verify_chunk( self, chunk ) :
     # spin group 5
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     spingroup = groups[5]
+
+    self.assertEqual( Kinematics.NonRelativistic, spingroup.kinematics_type )
+    self.assertEqual( False, spingroup.has_channels_with_background )
 
     # channels
     channels = spingroup.channels

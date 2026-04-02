@@ -167,7 +167,7 @@ namespace resonances {
     }
 
     /**
-     *  @brief The kinematics type applied to the channel
+     *  @brief Return the kinematics type applied to the channel
      */
     Kinematics kinematicsType() const {
 
