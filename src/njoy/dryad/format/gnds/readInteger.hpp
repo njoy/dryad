@@ -30,7 +30,7 @@ namespace gnds {
     auto value = node.attribute( "value" );
     if ( value ) {
 
-      data.first = value.as_double();
+      data.first = value.as_int();
     }
     else {
 
