@@ -42,7 +42,7 @@ namespace lrf3 {
     // create all possible channel quantum numbers
     auto spin = endf.spin();
     auto nls = endf.numberLValues();
-    auto available = dryad::resonances::ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, spin, nls );
+    auto available = dryad::resonances::ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, spin, nls - 1 );
 
     // the incident particle pair
     auto awri = endf.lValues().front().atomicWeightRatio();
