@@ -42,7 +42,8 @@ namespace lrf3 {
     // create all possible channel quantum numbers
     auto spin = endf.spin();
     auto nls = endf.numberLValues();
-    auto available = dryad::resonances::ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, spin, nls );
+    auto lmax = endf.lValues().back().orbitalMomentum();
+    auto available = dryad::resonances::ChannelQuantumNumbers::allowedChannelQuantumNumbers( 0.5, spin, lmax );
 
     // the incident particle pair
     auto awri = endf.lValues().front().atomicWeightRatio();
@@ -88,8 +89,25 @@ namespace lrf3 {
     }
 
     // add the remaining required elastic channels with no resonances
-    dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, ap, awri );
     for ( const auto& numbers : available ) {
+
+      // create the radii
+      dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, ap, awri );
+      if ( numbers.orbitalAngularMomentum() <= endf.lValues().back().orbitalMomentum() ) {
+
+        // find the right l value
+        auto iter = std::lower_bound( endf.lValues().begin(), endf.lValues().end(),
+                                      numbers.orbitalAngularMomentum(),
+                                      [] ( auto&& left, auto&& right ) {
+
+                                        return left.orbitalMomentum() < right;
+                                      } );
+        if ( numbers.orbitalAngularMomentum() == iter->orbitalMomentum() ) {
+
+          double apl = iter->lDependentScatteringRadius() * constants::deca;
+          radii = createChannelRadii( naps, nro, apl != 0. ? apl : ap, awri );
+        }
+      }
 
       // add an empty elastic channel
       id::ChannelID elastic_id( id::ReactionID( projectile, target, 2 ), numbers );
