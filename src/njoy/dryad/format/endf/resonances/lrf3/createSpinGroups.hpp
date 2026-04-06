@@ -53,9 +53,9 @@ namespace lrf3 {
     auto ap = endf.scatteringRadius() * constants::deca;
 
     // lambdas for comparison
-    auto compare = [] ( auto&& left, auto&& right ) { 
-      
-      return left.first.identifier() < right; 
+    auto compare = [] ( auto&& left, auto&& right ) {
+
+      return left.first.identifier() < right;
     };
     const auto getJpi = [] ( const auto& data ) {
 
@@ -88,15 +88,32 @@ namespace lrf3 {
     }
 
     // add the remaining required elastic channels with no resonances
-    dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, ap, awri );
     for ( const auto& numbers : available ) {
+
+      // create the radii
+      dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, ap, awri );
+      if ( numbers.orbitalAngularMomentum() <= endf.lValues().back().orbitalMomentum() ) {
+
+        // find the right l value
+        auto iter = std::lower_bound( endf.lValues().begin(), endf.lValues().end(),
+                                      numbers.orbitalAngularMomentum(),
+                                      [] ( auto&& left, auto&& right ) {
+
+                                        return left.orbitalMomentum() < right;
+                                      } );
+        if ( numbers.orbitalAngularMomentum() == iter->orbitalMomentum() ) {
+
+          double apl = iter->lDependentScatteringRadius() * constants::deca;
+          radii = createChannelRadii( naps, nro, apl != 0. ? apl : ap, awri );
+        }
+      }
 
       // add an empty elastic channel
       id::ChannelID elastic_id( id::ReactionID( projectile, target, 2 ), numbers );
       dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
       auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
                                     elastic_id, compare  );
-      iter = channel_data.emplace( iter, std::move( elastic ), 
+      iter = channel_data.emplace( iter, std::move( elastic ),
                                    dryad::resonances::ResonanceTable{ { elastic_id }, {}, {} } );
 
       // add an empty capture channel with the same Jpi - if it is not there yet
