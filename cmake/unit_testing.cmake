@@ -90,6 +90,7 @@ add_cpp_test( dryad.thermal.IncoherentElasticScattering                         
 add_cpp_test( dryad.Documentation                                                       dryad/Documentation.test.cpp )
 
 add_cpp_test( dryad.Particle                                                            dryad/Particle.test.cpp )
+add_cpp_test( dryad.ParticleDatabase                                                    dryad/ParticleDatabase.test.cpp )
 
 add_cpp_test( dryad.CoherentDistributionData                                            dryad/CoherentDistributionData.test.cpp )
 add_cpp_test( dryad.IncoherentDistributionData                                          dryad/IncoherentDistributionData.test.cpp )
