@@ -87,7 +87,7 @@ namespace gnds {
 
         auto end = std::next( iter, rows );
         data.emplace_back( std::get< 1 >( headers[i] ),
-                           std::vector( iter, end ),
+                           std::vector< double >( iter, end ),
                            std::get< 2 >( headers[i] ) );
         iter = end;
       }
