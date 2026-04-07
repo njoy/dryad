@@ -34,7 +34,7 @@ namespace lrf3 {
     auto first = std::find_if( available.begin(), available.end(), find );
     if ( first != available.end() ) {
 
-      auto second = std::find_if( first, available.end(), find );
+      auto second = std::find_if( std::next( first ), available.end(), find );
       if ( second != available.end() ) {
 
         if ( j > 0 ) {
@@ -84,6 +84,7 @@ namespace lrf3 {
     double awri = endfReichMooreLValue.atomicWeightRatio();
 
     // create the channel radii (check for l-dependent radius)
+    dryad::resonances::ChannelRadii zero_radii( 0., 0. );
     dryad::resonances::ChannelRadii radii = createChannelRadii( naps, nro, apl != 0. ? apl : ap, awri );
 
     // get all possible total angular momentum values
@@ -136,7 +137,7 @@ namespace lrf3 {
       id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
       dryad::resonances::ParticlePair capture_pair( { id::ParticleID::photon(), 0., 0., +1 },
                                                     { capture_id.reaction().residual().value(), 0., 0., +1 } );
-      dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, radii );
+      dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, zero_radii );
       channel_data.emplace_back( std::move( capture ), dryad::resonances::ResonanceTable{ { capture_id }, energies, std::move( capture_widths ) } );
 
       // check for fission
@@ -147,8 +148,8 @@ namespace lrf3 {
 
         id::ChannelID fission1_id( id::ReactionID( projectile, target, 18 ), other, 0 );
         id::ChannelID fission2_id( id::ReactionID( projectile, target, 18 ), other, 1 );
-        dryad::resonances::Channel fission1( fission1_id, incident, std::nullopt, 0., std::nullopt, radii );
-        dryad::resonances::Channel fission2( fission2_id, incident, std::nullopt, 0., std::nullopt, radii );
+        dryad::resonances::Channel fission1( fission1_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
+        dryad::resonances::Channel fission2( fission2_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
         channel_data.emplace_back( std::move( fission1 ), dryad::resonances::ResonanceTable{ { fission1_id }, energies, std::move( fission1_widths ) } );
         channel_data.emplace_back( std::move( fission2 ), dryad::resonances::ResonanceTable{ { fission2_id }, energies, std::move( fission2_widths ) } );
 
@@ -156,7 +157,7 @@ namespace lrf3 {
       else if ( has_fission1 || has_fission2 ) {
 
         id::ChannelID fission_id( id::ReactionID( projectile, target, 18 ), other );
-        dryad::resonances::Channel fission( fission_id, incident, std::nullopt, 0., std::nullopt, radii );
+        dryad::resonances::Channel fission( fission_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
         if ( has_fission1 ) {
 
           channel_data.emplace_back( std::move( fission ), dryad::resonances::ResonanceTable{ { fission_id }, energies, std::move( fission1_widths ) } );
