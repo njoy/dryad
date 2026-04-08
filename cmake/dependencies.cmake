@@ -14,22 +14,22 @@ shacl_FetchContent_Declare( eigen
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         3febd4d75a85fe9c793fb6693ddab2efb76e2df7  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         eec23bc922d778e3de3f14c7fd40482d9c3bd636  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         32ca66436b6c16fd80272031ea2100e2cae4718c  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         d1bbbd07f6efebca07fd9f3c18324dcab34019ca  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         657bebe6a20a865115d143acefc69e990a467eb5  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         9be62b58c327f0e080fecf6be88ea2c108da9caf  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         ad2adf44db184d00ab3e58766e5424ac40185084  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         40ef97a8e2685eb2fc85b2fbe442f0c9169081df  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################
