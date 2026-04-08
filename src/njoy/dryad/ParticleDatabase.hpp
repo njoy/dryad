@@ -24,11 +24,13 @@ namespace dryad {
 
     /* auxiliary functions */
 
+    #include "njoy/dryad/ParticleDatabase/src/generateMap.hpp"
+
   public:
 
     /* constructor */
 
-//    #include "njoy/dryad/ParticleDatabase/src/ctor.hpp"
+    #include "njoy/dryad/ParticleDatabase/src/ctor.hpp"
 
     /* methods */
 
