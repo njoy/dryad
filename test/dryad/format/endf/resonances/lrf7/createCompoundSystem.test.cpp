@@ -43,7 +43,7 @@ SCENARIO( "createSpinGroups" ) {
         verifyChunkSi29( chunk );
       } // THEN
     } // WHEN
-  }
+  } // GIVEN
 
   GIVEN( "ENDF MF2 MT151 RML data - Cu63" ) {
 
@@ -67,7 +67,7 @@ SCENARIO( "createSpinGroups" ) {
         verifyChunkCu63( chunk );
       } // THEN
     } // WHEN
-  }
+  } // GIVEN
 
   GIVEN( "ENDF MF2 MT151 RML data - Cl35" ) {
 
@@ -117,7 +117,7 @@ SCENARIO( "createSpinGroups" ) {
         verifyChunkSr88( chunk );
       } // THEN
     } // WHEN
-  }
+  } // GIVEN
 } // SCENARIO
 
 void verifyChunkSi29( const CompoundSystem& chunk ) {
