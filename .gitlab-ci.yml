@@ -15,6 +15,9 @@ trigger_ci_downstream:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
       variables:
         REF_BRANCH: $CI_COMMIT_REF_NAME
+    - if: '$DEPLOY_CODE == "1"'
+      variables:
+        DEPLOY_CODE_PASS: $DEPLOY_CODE
 
   trigger:
     project: NJOY/common_ci
@@ -24,6 +27,8 @@ trigger_ci_downstream:
   variables:
     MERGE_TYPE: $CI_PIPELINE_SOURCE
     PROJECT_ROOT_NAME: "Dryad"
+    PROJECT_LIB_NAME: "njoy"
+    PROJECT_TEST_OPTION: "njoy.tests"
 
 check:
   stage: check_ok
