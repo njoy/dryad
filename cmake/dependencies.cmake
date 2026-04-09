@@ -14,22 +14,22 @@ shacl_FetchContent_Declare( eigen
 
 shacl_FetchContent_Declare( tools
     GIT_REPOSITORY  ../../njoy/tools
-    GIT_TAG         eec23bc922d778e3de3f14c7fd40482d9c3bd636  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         9428024113dd96ffb3e2fe87e3bdfec9aa225a32  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( scion
     GIT_REPOSITORY  ../../njoy/scion
-    GIT_TAG         d1bbbd07f6efebca07fd9f3c18324dcab34019ca  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         d1de2a3c4cfab95d33e46afe16eb48fdcf5a24c6  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ACEtk
     GIT_REPOSITORY  ../../njoy/ACEtk
-    GIT_TAG         9be62b58c327f0e080fecf6be88ea2c108da9caf  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         2ffe9dc4d0f564777e83b60a2e5fbd81e8bb0720  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 shacl_FetchContent_Declare( ENDFtk
     GIT_REPOSITORY  ../../njoy/ENDFtk
-    GIT_TAG         40ef97a8e2685eb2fc85b2fbe442f0c9169081df  # develop - NOT A RELEASED VERSION - CHANGE ME!
+    GIT_TAG         a86e614e528151f34669764e33abd355f2a553c4  # develop - NOT A RELEASED VERSION - CHANGE ME!
     )
 
 #######################################################################
@@ -39,7 +39,7 @@ shacl_FetchContent_Declare( ENDFtk
 if(njoy.python)
   shacl_FetchContent_Declare( pybind11
       GIT_REPOSITORY  ../../pybind/pybind11
-      GIT_TAG         a2e59f0e7065404b44dfe92a28aca47ba1378dc4 # tag: v2.13.6
+      GIT_TAG         a2e59f0e7065404b44dfe92a28aca47ba1378dc4  # tag: v2.13.6
       )
   shacl_FetchContent_MakeAvailable(
     pybind11
@@ -49,7 +49,7 @@ endif()
 if(njoy.tests)
   shacl_FetchContent_Declare( Catch2
       GIT_REPOSITORY  ../../catchorg/Catch2
-      GIT_TAG         3f0283de7a9c43200033da996ff9093be3ac84dc # tag: v3.3.2
+      GIT_TAG         b670de4fe12ac7c5e858b7de3a14fb4bd18c760e  # tag: v3.14.0
       )
   shacl_FetchContent_MakeAvailable(
     Catch2
