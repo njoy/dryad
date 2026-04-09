@@ -102,14 +102,14 @@ void wrapParticle( python::module& module ) {
 
     "spin",
     python::overload_cast<>( &Component::spin, python::const_ ),
-    python::overload_cast< double >( &Component::spin ),
+    python::overload_cast< std::optional< double > >( &Component::spin ),
     "The spin of the particle"
   )
   .def_property(
 
     "parity",
     python::overload_cast<>( &Component::parity, python::const_ ),
-    python::overload_cast< short >( &Component::parity ),
+    python::overload_cast< std::optional< short > >( &Component::parity ),
     "The particle spin parity"
   )
   .def_property(

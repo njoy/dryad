@@ -34,8 +34,8 @@ namespace dryad {
     std::optional< double > mass_uncertainty_;
     std::optional< double > energy_uncertainty_;
 
-    double spin_;
-    short parity_;
+    std::optional< double > spin_;
+    std::optional< short > parity_;
 
     /* auxiliary functions */
 
@@ -147,7 +147,7 @@ namespace dryad {
     /**
      *  @brief Return the spin of the particle
      */
-    double spin() const {
+    const std::optional< double >& spin() const {
 
       return this->spin_;
     }
@@ -157,7 +157,7 @@ namespace dryad {
      *
      *  @param spin  the particle spin
      */
-    void spin( double spin ) {
+    void spin( std::optional< double > spin ) {
 
       this->spin_ = std::move( spin );
     }
@@ -165,14 +165,17 @@ namespace dryad {
     /**
      *  @brief Return the particle spin parity
      */
-    short parity() const { return this->parity_; }
+    const std::optional< short >& parity() const {
+
+      return this->parity_;
+    }
 
     /**
      *  @brief Set the particle spin parity
      *
      *  @param parity  the particle spin
      */
-    void parity( short parity ) {
+    void parity( std::optional< short > parity ) {
 
       this->parity_ = std::move( parity );
     }
@@ -186,11 +189,11 @@ namespace dryad {
     friend bool operator==( const Particle& left, const Particle& right ) {
 
       return std::tie( left.identifier(), left.mass_, left.energy_,
-                       left.mass_uncertainty_, left.energy_uncertainty_,
-                       left.spin_, left.parity_ ) ==
+                       left.massUncertainty(), left.energyUncertainty(),
+                       left.spin(), left.parity() ) ==
              std::tie( right.identifier(), right.mass_, right.energy_,
-                       right.mass_uncertainty_, right.energy_uncertainty_,
-                       right.spin_, right.parity_ );
+                       right.massUncertainty(), right.energyUncertainty(),
+                       right.spin(), right.parity() );
     }
 
     /**

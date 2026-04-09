@@ -947,20 +947,20 @@ class Particle:
     def mass_uncertainty(self, arg1: float | None) -> None:
         ...
     @property
-    def parity(self) -> int:
+    def parity(self) -> int | None:
         """
         The particle spin parity
         """
     @parity.setter
-    def parity(self, arg1: int) -> None:
+    def parity(self, arg1: int | None) -> None:
         ...
     @property
-    def spin(self) -> float:
+    def spin(self) -> float | None:
         """
         The spin of the particle
         """
     @spin.setter
-    def spin(self, arg1: float) -> None:
+    def spin(self, arg1: float | None) -> None:
         ...
 class PolynomialMultiplicity:
     """
