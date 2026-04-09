@@ -95,7 +95,7 @@ void wrapParticle( python::module& module ) {
 
     "energy",
     python::overload_cast<>( &Component::energy, python::const_ ),
-    python::overload_cast< double >( &Component::energy ),
+    python::overload_cast< std::optional< double > >( &Component::energy ),
     "The excited state energy value of the particle"
   )
   .def_property(

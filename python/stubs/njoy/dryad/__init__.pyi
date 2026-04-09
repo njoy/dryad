@@ -902,12 +902,12 @@ class Particle:
         The electrical charge of the particle
         """
     @property
-    def energy(self) -> float:
+    def energy(self) -> float | None:
         """
         The excited state energy value of the particle
         """
     @energy.setter
-    def energy(self, arg1: float) -> None:
+    def energy(self, arg1: float | None) -> None:
         ...
     @property
     def energy_uncertainty(self) -> float | None:
