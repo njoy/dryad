@@ -17,8 +17,8 @@ namespace dryad {
    *  The Particle class contains specific information for a particle:
    *    - the atomic mass value (always for the ground state) and an optional
    *      uncertainty
-   *    - the excited state energy value and an optional uncertainty
-   *    - the spin and parity (which is either + or -)
+   *    - an optional excited state energy value and an optional uncertainty
+   *    - an optional spin and parity (which is either + or -)
    *
    *  The data is stored in the following units:
    *    - atomic mass values are in atomic mass units
@@ -30,7 +30,7 @@ namespace dryad {
 
     id::ParticleID identifier_;
     double mass_;
-    double energy_;
+    std::optional< double > energy_;
     std::optional< double > mass_uncertainty_;
     std::optional< double > energy_uncertainty_;
 
@@ -93,7 +93,7 @@ namespace dryad {
     /**
      *  @brief Return the excited state energy value of the particle
      */
-    double energy() const {
+    const std::optional< double >& energy() const {
 
       return this->energy_;
     }
@@ -103,7 +103,7 @@ namespace dryad {
      *
      *  @param energy  the excited state energy
      */
-    void energy( double energy ) {
+    void energy( std::optional< double > energy ) {
 
       this->energy_ = std::move( energy );
     }
