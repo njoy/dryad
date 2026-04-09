@@ -63,6 +63,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CovarianceData.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Documentation.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/Particle.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/ParticleDatabase.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InterpolationType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/DistributionDataType.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/InteractionType.python.cpp

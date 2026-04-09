@@ -15,6 +15,10 @@ namespace dryad {
   // declarations - identifiers
   void wrapID( python::module& );
 
+  // declarations - particle database
+  void wrapParticle( python::module& );
+  void wrapParticleDatabase( python::module& );
+
   // declarations - enumerators
   void wrapInterpolationType( python::module& );
   void wrapDistributionDataType( python::module& );
@@ -39,9 +43,6 @@ namespace dryad {
 
   // declarations - documentation
   void wrapDocumentation( python::module& );
-
-  // declarations - particle database
-  void wrapParticle( python::module& );
 
   // declarations - components
   void wrapIsotropicAngularDistributions( python::module& );
@@ -90,8 +91,12 @@ void wrapDryad( python::module& module ) {
     "Format agnostic nuclear data interface"
   );
 
+  // wrap components - identifiers
+  dryad::wrapID( submodule );
+
   // wrap components - particle database
   dryad::wrapParticle( submodule );
+  dryad::wrapParticleDatabase( submodule );
 
   // wrap components - documentation
   dryad::wrapDocumentation( submodule );
@@ -103,9 +108,6 @@ void wrapDryad( python::module& module ) {
   dryad::wrapReactionCategory( submodule );
   dryad::wrapReferenceFrame( submodule );
   dryad::wrapUniformDistributionType( submodule );
-
-  // wrap components - identifiers
-  dryad::wrapID( submodule );
 
   // wrap components - resonances
   dryad::wrapResonances( submodule );

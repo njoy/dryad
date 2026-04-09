@@ -32,6 +32,7 @@ SCENARIO( "Particle" ) {
     double u235Mass = 235.0439299;
     double u235Spin = 0.0;
     short u235Parity = +1;
+    double u235Energy = 0.;
 
     // U235
     id::ParticleID u235e1ID( "U235_e1" );
@@ -66,7 +67,7 @@ SCENARIO( "Particle" ) {
       CHECK( std::nullopt == proton.massUncertainty() );
       CHECK( std::nullopt == proton.energyUncertainty() );
 
-      Particle u235( u235ID, u235Mass, u235Spin, u235Parity, 0. );
+      Particle u235( u235ID, u235Mass, u235Spin, u235Parity, u235Energy );
 
       CHECK( id::ParticleID( "U235" ) == u235.identifier() );
       CHECK_THAT( 235.0439299, WithinRel( u235.mass() ) );

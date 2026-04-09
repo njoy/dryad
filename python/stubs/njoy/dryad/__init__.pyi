@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -962,6 +962,51 @@ class Particle:
     @spin.setter
     def spin(self, arg1: float | None) -> None:
         ...
+class ParticleDatabase:
+    """
+    The particle database
+    
+    Parameters
+    ----------
+        particles : list of njoy.dryad.Particle
+             the particle information
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ParticleDatabase:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ParticleDatabase:
+        ...
+    def __eq__(self, arg0: ParticleDatabase) -> bool:
+        ...
+    def __init__(self, particles: list[Particle]) -> None:
+        """
+        Initialise the particle database
+        """
+    def __ne__(self, arg0: ParticleDatabase) -> bool:
+        ...
+    def has_particle(self, id: ...) -> bool:
+        """
+        Return whether or not a particle is present
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    def particle(self, id: ...) -> Particle:
+        """
+        Return the requested particle
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @property
+    def number_particles(self) -> int:
+        """
+        The number of particles
+        """
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series
