@@ -22,7 +22,7 @@ class Test_Particle( unittest.TestCase ) :
         self.assertEqual( 0, neutron.charge )
         self.assertEqual( 0, neutron.excited_state )
         self.assertEqual( +1, neutron.parity )
-        self.assertEqual( 0., neutron.energy )
+        self.assertIsNone( neutron.energy )
         self.assertIsNone( neutron.mass_uncertainty )
         self.assertIsNone( neutron.energy_uncertainty )
 
@@ -35,12 +35,12 @@ class Test_Particle( unittest.TestCase ) :
         self.assertEqual( 1, proton.charge )
         self.assertEqual( 0, proton.excited_state )
         self.assertEqual( +1, proton.parity )
-        self.assertEqual( 0., proton.energy )
+        self.assertIsNone( proton.energy )
         self.assertIsNone( proton.mass_uncertainty )
         self.assertIsNone( proton.energy_uncertainty )
 
         u235 = Particle( id = ParticleID( 'U235' ), mass = 235.0439299,
-                         spin = 0., parity = +1 )
+                         spin = 0., parity = +1, energy = 0 )
 
         self.assertEqual( ParticleID( 'U235' ), u235.identifier )
         self.assertAlmostEqual( 235.0439299, u235.mass )
@@ -54,7 +54,7 @@ class Test_Particle( unittest.TestCase ) :
 
         u235_e1 = Particle( id = ParticleID( 'U235_e1' ), mass = 235.0439299,
                             spin = 0., parity = +1, energy = 1e+6,
-                            mass_uncertainty = None, energy_uncertainty = 1e+3 )
+                            energy_uncertainty = 1e+3 )
 
         self.assertEqual( ParticleID( 'U235_e1' ), u235_e1.identifier )
         self.assertAlmostEqual( 235.0439299, u235_e1.mass )

@@ -49,7 +49,7 @@ SCENARIO( "Particle" ) {
       CHECK( 0.0 == neutron.charge() );
       CHECK( 0 == neutron.excitedState() );
       CHECK( +1 == neutron.parity().value() );
-      CHECK( 0.0 == neutron.energy() );
+      CHECK( std::nullopt == neutron.energy() );
       CHECK( std::nullopt == neutron.massUncertainty() );
       CHECK( std::nullopt == neutron.energyUncertainty() );
 
@@ -62,11 +62,11 @@ SCENARIO( "Particle" ) {
       CHECK( 1 == proton.charge() );
       CHECK( 0 == proton.excitedState() );
       CHECK( +1 == proton.parity().value() );
-      CHECK( 0.0 == proton.energy() );
+      CHECK( std::nullopt == proton.energy() );
       CHECK( std::nullopt == proton.massUncertainty() );
       CHECK( std::nullopt == proton.energyUncertainty() );
 
-      Particle u235( u235ID, u235Mass, u235Spin, u235Parity );
+      Particle u235( u235ID, u235Mass, u235Spin, u235Parity, 0. );
 
       CHECK( id::ParticleID( "U235" ) == u235.identifier() );
       CHECK_THAT( 235.0439299, WithinRel( u235.mass() ) );

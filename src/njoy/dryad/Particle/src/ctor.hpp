@@ -14,17 +14,17 @@ Particle& operator=( Particle&& ) = default;
  *
  *  @param[in] id                  the particle identifier
  *  @param[in] mass                the atomic mass
- *  @param[in] spin                the particle spin
- *  @param[in] parity              the parity
- *  @param[in] energy              the excited state energy (default is 0)
+ *  @param[in] spin                the particle spin (default is none)
+ *  @param[in] parity              the parity (default is none)
+ *  @param[in] energy              the excited state energy (default is none)
  *  @param[in] massUncertainty     the uncertainty on the atomic mass value (default is none)
  *  @param[in] energyUncertainty   the uncertainty on the level energy value (default is none)
  */
 Particle( id::ParticleID id,
           double mass,
-          double spin,
-          short parity,
-          double energy = 0.,
+          std::optional< double > spin = std::nullopt,
+          std::optional< short > parity = std::nullopt,
+          std::optional< double > energy = std::nullopt,
           std::optional< double > massUncertainty = std::nullopt,
           std::optional< double > energyUncertainty = std::nullopt ) :
   identifier_( std::move( id ) ),

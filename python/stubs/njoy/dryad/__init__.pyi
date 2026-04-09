@@ -859,8 +859,8 @@ class Particle:
     The Particle class contains specific information for a particle:
       - the atomic mass value (always for the ground state) and an optional
         uncertainty
-      - the excited state energy value and an optional uncertainty
-      - the spin and parity (which is either + or -)
+      - an optional excited state energy value and an optional uncertainty
+      - an optional spin and parity (which is either + or -)
     
     The data is stored in the following units:
       - atomic mass values are in atomic mass units
@@ -872,12 +872,12 @@ class Particle:
              the particle identifier
         mass : float
             the atomic mass
-        spin : float
-            the particle spin
-        parity : int
-            the particle spin parity
-        energy : float, default 0
-            the excited state energy (default: 0)
+        spin : float, default None
+            the particle spin (default: None)
+        parity : int, default None
+            the particle spin parity (default: None)
+        energy : float, default None
+            the excited state energy (default: None)
         mass_uncertainty : float, default None
             the uncertainty on the atomic mass value (default: None)
         energy_uncertainty : float, default None
@@ -890,7 +890,7 @@ class Particle:
         ...
     def __eq__(self, arg0: Particle) -> bool:
         ...
-    def __init__(self, id: ..., mass: float, spin: float, parity: int, energy: float = 0.0, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
+    def __init__(self, id: ..., mass: float, spin: float | None = None, parity: int | None = None, energy: float | None = None, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
         """
         Initialise the particle information
         """

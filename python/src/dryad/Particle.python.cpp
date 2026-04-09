@@ -28,8 +28,8 @@ void wrapParticle( python::module& module ) {
     "The Particle class contains specific information for a particle:\n"
     "  - the atomic mass value (always for the ground state) and an optional\n"
     "    uncertainty\n"
-    "  - the excited state energy value and an optional uncertainty\n"
-    "  - the spin and parity (which is either + or -)\n\n"
+    "  - an optional excited state energy value and an optional uncertainty\n"
+    "  - an optional spin and parity (which is either + or -)\n\n"
     "The data is stored in the following units:\n"
     "  - atomic mass values are in atomic mass units\n"
     "  - energy values are in eV\n\n"
@@ -39,12 +39,12 @@ void wrapParticle( python::module& module ) {
     "         the particle identifier\n"
     "    mass : float\n"
     "        the atomic mass\n"
-    "    spin : float\n"
-    "        the particle spin\n"
-    "    parity : int\n"
-    "        the particle spin parity\n"
-    "    energy : float, default 0\n"
-    "        the excited state energy (default: 0)\n"
+    "    spin : float, default None\n"
+    "        the particle spin (default: None)\n"
+    "    parity : int, default None\n"
+    "        the particle spin parity (default: None)\n"
+    "    energy : float, default None\n"
+    "        the excited state energy (default: None)\n"
     "    mass_uncertainty : float, default None\n"
     "        the uncertainty on the atomic mass value (default: None)\n"
     "    energy_uncertainty : float, default None\n"
@@ -55,12 +55,16 @@ void wrapParticle( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, double, double, short,
-                  double, std::optional< double >,
+    python::init< ParticleID, double,
+                  std::optional< double >,
+                  std::optional< short >,
+                  std::optional< double >,
+                  std::optional< double >,
                   std::optional< double > >(),
     python::arg( "id" ), python::arg( "mass" ),
-    python::arg( "spin" ), python::arg( "parity" ),
-    python::arg( "energy" ) = 0.,
+    python::arg( "spin" ) = std::nullopt,
+    python::arg( "parity" ) = std::nullopt,
+    python::arg( "energy" ) = std::nullopt,
     python::arg( "mass_uncertainty" ) = std::nullopt,
     python::arg( "energy_uncertainty" ) = std::nullopt,
     "Initialise the particle information"
