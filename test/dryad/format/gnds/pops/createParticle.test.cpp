@@ -25,6 +25,10 @@ SCENARIO( "createParticle" ) {
     pugi::xml_node nuclide = pops.child( "chemicalElements" ).child( "chemicalElement" ).
                                   child( "isotopes" ).child( "isotope" ).
                                   child( "nuclides" ).child( "nuclide" );
+    pugi::xml_node nuclid_no_mass = pops.child( "chemicalElements" ).
+                                         find_child_by_attribute( "chemicalElement", "symbol", "Kr" ).
+                                         child( "isotopes" ).child( "isotope" ).
+                                         child( "nuclides" ).child( "nuclide" );
 
     WHEN( "a single node is given" ) {
 
@@ -61,6 +65,18 @@ SCENARIO( "createParticle" ) {
         CHECK( 0.5 == chunk.spin() );
         CHECK( 1 == chunk.parity() );
         CHECK_THAT( 1.00727646662, WithinRel( chunk.nuclearMass().value() ) );
+        CHECK( 0. == chunk.energy() );
+        CHECK( std::nullopt == chunk.massUncertainty() );
+        CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
+        CHECK( std::nullopt == chunk.energyUncertainty() );
+
+        chunk = format::gnds::pops::createParticle( nuclid_no_mass, "eval" );
+
+        CHECK( id::ParticleID( "Kr84" ) == chunk.identifier() );
+        CHECK( std::nullopt == chunk.mass() );
+        CHECK( std::nullopt == chunk.spin() );
+        CHECK( std::nullopt == chunk.parity() );
+        CHECK( std::nullopt == chunk.nuclearMass() );
         CHECK( 0. == chunk.energy() );
         CHECK( std::nullopt == chunk.massUncertainty() );
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );

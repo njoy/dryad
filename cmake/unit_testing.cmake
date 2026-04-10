@@ -302,6 +302,7 @@ add_cpp_test( dryad.format.gnds.pops.createEnergy                               
 add_cpp_test( dryad.format.gnds.pops.createSpin                                         dryad/format/gnds/pops/createSpin.test.cpp )
 add_cpp_test( dryad.format.gnds.pops.createParity                                       dryad/format/gnds/pops/createParity.test.cpp )
 add_cpp_test( dryad.format.gnds.pops.createParticle                                     dryad/format/gnds/pops/createParticle.test.cpp )
+add_cpp_test( dryad.format.gnds.pops.createParticleDatabase                             dryad/format/gnds/pops/createParticleDatabase.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createTabulatedRadius                        dryad/format/gnds/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createRadius                                 dryad/format/gnds/resonances/createRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createBackground                     dryad/format/gnds/resonances/rmatrix/createBackground.test.cpp )
