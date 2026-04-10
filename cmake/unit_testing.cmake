@@ -267,6 +267,7 @@ add_cpp_test( dryad.format.gnds.convertInverseEnergy                            
 add_cpp_test( dryad.format.gnds.convertInverseEnergySquared                             dryad/format/gnds/convertInverseEnergySquared.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseEnergies                                  dryad/format/gnds/convertInverseEnergies.test.cpp )
 add_cpp_test( dryad.format.gnds.convertInverseLengths                                   dryad/format/gnds/convertInverseLengths.test.cpp )
+add_cpp_test( dryad.format.gnds.convertMass                                             dryad/format/gnds/convertMass.test.cpp )
 add_cpp_test( dryad.format.gnds.convertVarianceScalingFactors                           dryad/format/gnds/convertVarianceScalingFactors.test.cpp )
 add_cpp_test( dryad.format.gnds.convertRadius                                           dryad/format/gnds/convertRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.convertRadii                                            dryad/format/gnds/convertRadii.test.cpp )
