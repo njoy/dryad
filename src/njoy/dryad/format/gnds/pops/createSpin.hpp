@@ -22,13 +22,13 @@ namespace pops {
    *  @param[in] style   the gnds style to process (default is eval)
    */
   inline std::optional< double >
-  createSpin( const pugi::xml_node& mass, const std::string& style = "eval" ) {
+  createSpin( const pugi::xml_node& spin, const std::string& style = "eval" ) {
 
-    // check that this is a valid mass node
-    throwExceptionOnWrongNode( mass, "spin" );
+    // check that this is a valid spin node
+    throwExceptionOnWrongNode( spin, "spin" );
 
     // get a double node if it exists, else return nullopt
-    auto child = mass.find_child_by_attribute( "fraction", "label", style.c_str() );
+    auto child = spin.find_child_by_attribute( "fraction", "label", style.c_str() );
     if ( child ) {
 
       auto content = readFraction( child );
