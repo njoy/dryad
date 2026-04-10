@@ -79,6 +79,7 @@ add_python_test( dryad.thermal.IncoherentElasticScattering             dryad/the
 add_python_test( dryad.Documentation                                   dryad/Test_Documentation.py )
 
 add_python_test( dryad.Particle                                        dryad/Test_Particle.py )
+add_python_test( dryad.ParticleDatabase                                dryad/Test_ParticleDatabase.py )
 
 add_python_test( dryad.TabulatedMultiplicity                           dryad/Test_TabulatedMultiplicity.py )
 add_python_test( dryad.TabulatedAverageEnergy                          dryad/Test_TabulatedAverageEnergy.py )

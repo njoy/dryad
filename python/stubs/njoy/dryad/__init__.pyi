@@ -890,7 +890,7 @@ class Particle:
         ...
     def __eq__(self, arg0: Particle) -> bool:
         ...
-    def __init__(self, id: ..., mass: float, spin: float | None = None, parity: int | None = None, energy: float | None = None, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
+    def __init__(self, id: id.ParticleID, mass: float, spin: float | None = None, parity: int | None = None, energy: float | None = None, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
         """
         Initialise the particle information
         """
@@ -923,12 +923,12 @@ class Particle:
         The excited state number of the particle
         """
     @property
-    def identifier(self) -> ...:
+    def identifier(self) -> id.ParticleID:
         """
         The particle identifier
         """
     @identifier.setter
-    def identifier(self, arg1: ...) -> None:
+    def identifier(self, arg1: id.ParticleID) -> None:
         ...
     @property
     def mass(self) -> float:
@@ -984,7 +984,7 @@ class ParticleDatabase:
         """
     def __ne__(self, arg0: ParticleDatabase) -> bool:
         ...
-    def has_particle(self, id: ...) -> bool:
+    def has_particle(self, id: id.ParticleID) -> bool:
         """
         Return whether or not a particle is present
         
@@ -993,7 +993,7 @@ class ParticleDatabase:
             id : njoy.dryad.id.ParticleID
                  the particle identifier
         """
-    def particle(self, id: ...) -> Particle:
+    def particle(self, id: id.ParticleID) -> Particle:
         """
         Return the requested particle
         
