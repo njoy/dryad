@@ -297,6 +297,8 @@ add_cpp_test( dryad.format.gnds.readColumn                                      
 add_cpp_test( dryad.format.gnds.readColumnHeaders                                       dryad/format/gnds/readColumnHeaders.test.cpp )
 add_cpp_test( dryad.format.gnds.readData                                                dryad/format/gnds/readData.test.cpp )
 add_cpp_test( dryad.format.gnds.readTable                                               dryad/format/gnds/readTable.test.cpp )
+add_cpp_test( dryad.format.gnds.pops.createMass                                         dryad/format/gnds/pops/createMass.test.cpp )
+add_cpp_test( dryad.format.gnds.pops.createSpin                                         dryad/format/gnds/pops/createSpin.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createTabulatedRadius                        dryad/format/gnds/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createRadius                                 dryad/format/gnds/resonances/createRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createBackground                     dryad/format/gnds/resonances/rmatrix/createBackground.test.cpp )
