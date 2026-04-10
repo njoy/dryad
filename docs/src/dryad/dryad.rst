@@ -26,6 +26,7 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
    :caption: Particle Database:
 
    Particle
+   ParticleDatabase
 
 .. toctree::
    :maxdepth: 1
