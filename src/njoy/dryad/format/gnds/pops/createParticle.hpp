@@ -30,7 +30,7 @@ namespace pops {
                                   const std::string& style = "eval" ) {
 
     id::ParticleID id;
-    double mass;
+    std::optional< double > mass;
     std::optional< double > nuclear_mass;
     std::optional< double > energy;
     std::optional< double > mass_uncertainty;
@@ -42,10 +42,11 @@ namespace pops {
     if ( strcmp( node.name(), "nuclide" ) == 0 ) {
 
       id = id::ParticleID( node.attribute( "id" ).as_string() );
-      mass = createMass( node.child( "mass" ) ).value();
+      auto child = node.child( "mass" );
+      mass = child ? createMass( child, style ) : std::nullopt;
 
       auto nucleus = node.child( "nucleus" );
-      auto child = nucleus.child( "spin" );
+      child = nucleus.child( "spin" );
       spin = child ? createSpin( child, style ) : std::nullopt;
       child = nucleus.child( "parity" );
       parity = child ? createParity( child, style ) : std::nullopt;
@@ -59,9 +60,10 @@ namespace pops {
               strcmp( node.name(), "lepton" ) == 0 ) {
 
       id = id::ParticleID( node.attribute( "id" ).as_string() );
-      mass = createMass( node.child( "mass" ) ).value();
 
-      auto child = node.child( "spin" );
+      auto child = node.child( "mass" );
+      mass = child ? createMass( child, style ) : std::nullopt;
+      child = node.child( "spin" );
       spin = child ? createSpin( child, style ) : std::nullopt;
       child = node.child( "parity" );
       parity = child ? createParity( child, style ) : std::nullopt;

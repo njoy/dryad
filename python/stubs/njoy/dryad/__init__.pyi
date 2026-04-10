@@ -871,8 +871,8 @@ class Particle:
     Parameters
     ----------
         id : njoy.dryad.id.ParticleID
-             the particle identifier
-        mass : float
+             the particle identifier (default: None)
+        mass : float, default None
             the atomic mass
         nuclear_mass : float
             the nuclear mass
@@ -896,7 +896,7 @@ class Particle:
         ...
     def __eq__(self, arg0: Particle) -> bool:
         ...
-    def __init__(self, id: id.ParticleID, mass: float, spin: float | None = None, parity: int | None = None, energy: float | None = None, nuclear_mass: float | None = None, mass_uncertainty: float | None = None, nuclear_mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
+    def __init__(self, id: id.ParticleID, mass: float | None = None, spin: float | None = None, parity: int | None = None, energy: float | None = None, nuclear_mass: float | None = None, mass_uncertainty: float | None = None, nuclear_mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
         """
         Initialise the particle information
         """
@@ -937,12 +937,12 @@ class Particle:
     def identifier(self, arg1: id.ParticleID) -> None:
         ...
     @property
-    def mass(self) -> float:
+    def mass(self) -> float | None:
         """
         The atomic mass of the particle in the ground state
         """
     @mass.setter
-    def mass(self, arg1: float) -> None:
+    def mass(self, arg1: float | None) -> None:
         ...
     @property
     def mass_uncertainty(self) -> float | None:

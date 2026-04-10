@@ -30,7 +30,7 @@ namespace dryad {
     /* fields */
 
     id::ParticleID identifier_;
-    double mass_;
+    std::optional< double > mass_;
     std::optional< double > nuclear_mass_;
     std::optional< double > energy_;
 
@@ -79,7 +79,7 @@ namespace dryad {
     /**
      *  @brief Return the atomic mass of the particle in the ground state
      */
-    double mass() const {
+    const std::optional< double >& mass() const {
 
       return this->mass_;
     }
@@ -89,7 +89,7 @@ namespace dryad {
      *
      *  @param mass  the atomic mass
      */
-    void mass( double mass ) {
+    void mass( std::optional< double > mass ) {
 
       this->mass_ = std::move( mass );
     }

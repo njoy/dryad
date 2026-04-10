@@ -33,7 +33,7 @@ SCENARIO( "createParticle" ) {
         auto chunk = format::gnds::pops::createParticle( boson, "eval" );
 
         CHECK( id::ParticleID::photon() == chunk.identifier() );
-        CHECK_THAT( 0., WithinRel( chunk.mass() ) );
+        CHECK_THAT( 0., WithinRel( chunk.mass().value() ) );
         CHECK( 1 == chunk.spin() );
         CHECK( 1 == chunk.parity() );
         CHECK( std::nullopt == chunk.nuclearMass() );
@@ -45,7 +45,7 @@ SCENARIO( "createParticle" ) {
         chunk = format::gnds::pops::createParticle( baryon, "eval" );
 
         CHECK( id::ParticleID::neutron() == chunk.identifier() );
-        CHECK_THAT( 1.00866491574, WithinRel( chunk.mass() ) );
+        CHECK_THAT( 1.00866491574, WithinRel( chunk.mass().value() ) );
         CHECK( 0.5 == chunk.spin() );
         CHECK( 1 == chunk.parity() );
         CHECK( std::nullopt == chunk.nuclearMass() );
@@ -57,7 +57,7 @@ SCENARIO( "createParticle" ) {
         chunk = format::gnds::pops::createParticle( nuclide, "eval" );
 
         CHECK( id::ParticleID( "H1" ) == chunk.identifier() );
-        CHECK_THAT( 1.00782503223, WithinRel( chunk.mass() ) );
+        CHECK_THAT( 1.00782503223, WithinRel( chunk.mass().value() ) );
         CHECK( 0.5 == chunk.spin() );
         CHECK( 1 == chunk.parity() );
         CHECK_THAT( 1.00727646662, WithinRel( chunk.nuclearMass().value() ) );

@@ -23,7 +23,7 @@ Particle& operator=( Particle&& ) = default;
  *  @param[in] energyUncertainty        the uncertainty on the level energy value (default is none)
  */
 Particle( id::ParticleID id,
-          double mass,
+          std::optional< double > mass = std::nullopt,
           std::optional< double > spin = std::nullopt,
           std::optional< short > parity = std::nullopt,
           std::optional< double > energy = std::nullopt,

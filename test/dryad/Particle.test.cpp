@@ -45,7 +45,7 @@ SCENARIO( "Particle" ) {
                         neutronSpin, neutronParity );
 
       CHECK( id::ParticleID::neutron() == neutron.identifier() );
-      CHECK_THAT( 1.008664, WithinRel( neutron.mass() ) );
+      CHECK_THAT( 1.008664, WithinRel( neutron.mass().value() ) );
       CHECK_THAT( 0.5, WithinRel( neutron.spin().value() ) );
       CHECK( 0.0 == neutron.charge() );
       CHECK( 0 == neutron.excitedState() );
@@ -60,7 +60,7 @@ SCENARIO( "Particle" ) {
                        protonSpin, protonParity );
 
       CHECK( id::ParticleID::proton() == proton.identifier() );
-      CHECK_THAT( 1.007276, WithinRel( proton.mass() ) );
+      CHECK_THAT( 1.007276, WithinRel( proton.mass().value() ) );
       CHECK_THAT( 0.5, WithinRel( proton.spin().value() ) );
       CHECK( 1 == proton.charge() );
       CHECK( 0 == proton.excitedState() );
@@ -74,7 +74,7 @@ SCENARIO( "Particle" ) {
       Particle u235( u235ID, u235Mass, u235Spin, u235Parity, u235Energy );
 
       CHECK( id::ParticleID( "U235" ) == u235.identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( u235.mass() ) );
+      CHECK_THAT( 235.0439299, WithinRel( u235.mass().value() ) );
       CHECK_THAT( 0., WithinRel( u235.spin().value() ) );
       CHECK( 92 == u235.charge() );
       CHECK( 0 == u235.excitedState() );
@@ -90,7 +90,7 @@ SCENARIO( "Particle" ) {
                         std::nullopt, u235e1EnergyUncertainty );
 
       CHECK( id::ParticleID( "U235_e1" ) == u235_e1.identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass() ) );
+      CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass().value() ) );
       CHECK_THAT( 0., WithinRel( u235_e1.spin().value() ) );
       CHECK( 92 == u235_e1.charge() );
       CHECK( 1 == u235_e1.excitedState() );
@@ -132,11 +132,11 @@ SCENARIO( "Particle" ) {
 
         chunk.mass( newmass );
 
-        CHECK( newmass == chunk.mass() );
+        CHECK( newmass == chunk.mass().value() );
 
         chunk.mass( original );
 
-        CHECK( original == chunk.mass() );
+        CHECK( original == chunk.mass().value() );
       } // THEN
 
       THEN( "the mass uncertainty can be changed" ) {

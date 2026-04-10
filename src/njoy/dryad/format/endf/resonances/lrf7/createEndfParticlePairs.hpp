@@ -51,8 +51,8 @@ namespace lrf7 {
 
           mt.push_back( mt_number );
 
-          ma.push_back( outgoing.has_value() ? outgoing.value().lightParticle().mass() : 0. );
-          mb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().mass() : 0. );
+          ma.push_back( outgoing.has_value() ? outgoing.value().lightParticle().mass().value() : 0. );
+          mb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().mass().value() : 0. );
           za.push_back( outgoing.has_value() ? outgoing.value().lightParticle().charge() : 0. );
           zb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().charge() : 0. );
           ia.push_back( outgoing.has_value() ? outgoing.value().lightParticle().spin().value() *

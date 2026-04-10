@@ -38,8 +38,8 @@ void wrapParticle( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier\n"
-    "    mass : float\n"
+    "         the particle identifier (default: None)\n"
+    "    mass : float, default None\n"
     "        the atomic mass\n"
     "    nuclear_mass : float\n"
     "        the nuclear mass\n"
@@ -61,7 +61,8 @@ void wrapParticle( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, double,
+    python::init< ParticleID,
+                  std::optional< double >,
                   std::optional< double >,
                   std::optional< short >,
                   std::optional< double >,
@@ -69,7 +70,8 @@ void wrapParticle( python::module& module ) {
                   std::optional< double >,
                   std::optional< double >,
                   std::optional< double > >(),
-    python::arg( "id" ), python::arg( "mass" ),
+    python::arg( "id" ),
+    python::arg( "mass" ) = std::nullopt,
     python::arg( "spin" ) = std::nullopt,
     python::arg( "parity" ) = std::nullopt,
     python::arg( "energy" ) = std::nullopt,
@@ -102,7 +104,7 @@ void wrapParticle( python::module& module ) {
 
     "mass",
     python::overload_cast<>( &Component::mass, python::const_ ),
-    python::overload_cast< double >( &Component::mass ),
+    python::overload_cast< std::optional< double > >( &Component::mass ),
     "The atomic mass of the particle in the ground state"
   )
   .def_property(
