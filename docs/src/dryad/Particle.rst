@@ -21,6 +21,8 @@ Modifiable Attributes
     ~Particle.identifier
     ~Particle.mass
     ~Particle.mass_uncertainty
+    ~Particle.nuclear_mass
+    ~Particle.nuclear_mass_uncertainty
     ~Particle.energy
     ~Particle.energy_uncertainty
     ~Particle.spin
