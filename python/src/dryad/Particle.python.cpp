@@ -39,6 +39,8 @@ void wrapParticle( python::module& module ) {
     "         the particle identifier\n"
     "    mass : float\n"
     "        the atomic mass\n"
+    "    nuclear_mass : float\n"
+    "        the nuclear mass\n"
     "    spin : float, default None\n"
     "        the particle spin (default: None)\n"
     "    parity : int, default None\n"
@@ -47,6 +49,8 @@ void wrapParticle( python::module& module ) {
     "        the excited state energy (default: None)\n"
     "    mass_uncertainty : float, default None\n"
     "        the uncertainty on the atomic mass value (default: None)\n"
+    "    nuclear_mass_uncertainty : float, default None\n"
+    "        the uncertainty on the nuclear mass value (default: None)\n"
     "    energy_uncertainty : float, default None\n"
     "        the uncertainty on the ecited level energy value (default: None)"
   );
@@ -60,12 +64,16 @@ void wrapParticle( python::module& module ) {
                   std::optional< short >,
                   std::optional< double >,
                   std::optional< double >,
+                  std::optional< double >,
+                  std::optional< double >,
                   std::optional< double > >(),
     python::arg( "id" ), python::arg( "mass" ),
     python::arg( "spin" ) = std::nullopt,
     python::arg( "parity" ) = std::nullopt,
     python::arg( "energy" ) = std::nullopt,
+    python::arg( "nuclear_mass" ) = std::nullopt,
     python::arg( "mass_uncertainty" ) = std::nullopt,
+    python::arg( "nuclear_mass_uncertainty" ) = std::nullopt,
     python::arg( "energy_uncertainty" ) = std::nullopt,
     "Initialise the particle information"
   )
@@ -97,6 +105,13 @@ void wrapParticle( python::module& module ) {
   )
   .def_property(
 
+    "nuclear_mass",
+    python::overload_cast<>( &Component::nuclearMass, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::nuclearMass ),
+    "The nuclear mass of the particle in the ground state"
+  )
+  .def_property(
+
     "energy",
     python::overload_cast<>( &Component::energy, python::const_ ),
     python::overload_cast< std::optional< double > >( &Component::energy ),
@@ -122,6 +137,13 @@ void wrapParticle( python::module& module ) {
     python::overload_cast<>( &Component::massUncertainty, python::const_ ),
     python::overload_cast< std::optional< double > >( &Component::massUncertainty ),
     "The atomic mass uncertainty"
+  )
+  .def_property(
+
+    "nuclear_mass_uncertainty",
+    python::overload_cast<>( &Component::nuclearMassUncertainty, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::nuclearMassUncertainty ),
+    "The nuclear mass uncertainty"
   )
   .def_property(
 

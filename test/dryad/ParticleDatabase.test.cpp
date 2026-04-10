@@ -24,7 +24,7 @@ SCENARIO( "ParticleDatabase" ) {
       Particle( id::ParticleID( "p" ), 1.007276, 0.5, +1 ),
       Particle( id::ParticleID( "U235" ), 235.0439299, 0., +1, 0. ),
       Particle( id::ParticleID( "U235_e1" ), 235.0439299, 0., +1, 1e+6,
-                std::nullopt, 1e+3 )
+                std::nullopt, std::nullopt, std::nullopt, 1e+3 )
     };
 
     THEN( "a Particle can be constructed" ) {
@@ -54,7 +54,9 @@ void verifyChunk( const ParticleDatabase& chunk ) {
   CHECK( 0 == neutron.excitedState() );
   CHECK( +1 == neutron.parity().value() );
   CHECK( std::nullopt == neutron.energy() );
+  CHECK( std::nullopt == neutron.nuclearMass() );
   CHECK( std::nullopt == neutron.massUncertainty() );
+  CHECK( std::nullopt == neutron.nuclearMassUncertainty() );
   CHECK( std::nullopt == neutron.energyUncertainty() );
 
   auto proton = chunk.particle( id::ParticleID( "p" ) );
@@ -65,7 +67,9 @@ void verifyChunk( const ParticleDatabase& chunk ) {
   CHECK( 0 == proton.excitedState() );
   CHECK( +1 == proton.parity().value() );
   CHECK( std::nullopt == proton.energy() );
+  CHECK( std::nullopt == proton.nuclearMass() );
   CHECK( std::nullopt == proton.massUncertainty() );
+  CHECK( std::nullopt == proton.nuclearMassUncertainty() );
   CHECK( std::nullopt == proton.energyUncertainty() );
 
   auto u235 = chunk.particle( id::ParticleID( "U235" ) );
@@ -76,7 +80,9 @@ void verifyChunk( const ParticleDatabase& chunk ) {
   CHECK( 0 == u235.excitedState() );
   CHECK( +1 == u235.parity().value() );
   CHECK( 0.0 == u235.energy() );
+  CHECK( std::nullopt == u235.nuclearMass() );
   CHECK( std::nullopt == u235.massUncertainty() );
+  CHECK( std::nullopt == u235.nuclearMassUncertainty() );
   CHECK( std::nullopt == u235.energyUncertainty() );
 
   auto u235_e1 = chunk.particle( id::ParticleID( "U235_e1" ) );
@@ -87,7 +93,9 @@ void verifyChunk( const ParticleDatabase& chunk ) {
   CHECK( 1 == u235_e1.excitedState() );
   CHECK( +1 == u235_e1.parity().value() );
   CHECK( 1e+6 == u235_e1.energy() );
+  CHECK( std::nullopt == u235_e1.nuclearMass() );
   CHECK( std::nullopt == u235_e1.massUncertainty() );
+  CHECK( std::nullopt == u235_e1.nuclearMassUncertainty() );
   CHECK( std::nullopt != u235_e1.energyUncertainty() );
   CHECK_THAT( 1e+3, WithinRel( u235_e1.energyUncertainty().value() ) );
 }

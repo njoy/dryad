@@ -17,6 +17,7 @@ namespace dryad {
    *  The Particle class contains specific information for a particle:
    *    - the atomic mass value (always for the ground state) and an optional
    *      uncertainty
+   *    - an optional nuclear mass value and an optional uncertainty
    *    - an optional excited state energy value and an optional uncertainty
    *    - an optional spin and parity (which is either + or -)
    *
@@ -30,8 +31,11 @@ namespace dryad {
 
     id::ParticleID identifier_;
     double mass_;
+    std::optional< double > nuclear_mass_;
     std::optional< double > energy_;
+
     std::optional< double > mass_uncertainty_;
+    std::optional< double > nuclear_mass_uncertainty_;
     std::optional< double > energy_uncertainty_;
 
     std::optional< double > spin_;
@@ -91,6 +95,24 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the nuclear mass of the particle in the ground state
+     */
+    const std::optional< double >& nuclearMass() const {
+
+      return this->nuclear_mass_;
+    }
+
+    /**
+     *  @brief Set the nuclear mass of the particle in the ground state
+     *
+     *  @param mass  the nuclear mass
+     */
+    void nuclearMass( std::optional< double > mass ) {
+
+      this->nuclear_mass_ = std::move( mass );
+    }
+
+    /**
      *  @brief Return the excited state energy value of the particle
      */
     const std::optional< double >& energy() const {
@@ -124,6 +146,24 @@ namespace dryad {
     void massUncertainty( std::optional< double > massUncertainty ) {
 
       this->mass_uncertainty_ = std::move( massUncertainty );
+    }
+
+    /**
+     *  @brief Return the nuclear mass uncertainty
+     */
+    const std::optional< double >& nuclearMassUncertainty() const {
+
+      return this->nuclear_mass_uncertainty_;
+    }
+
+    /**
+     *  @brief Set the nuclear mass uncertainty
+     *
+     *  @param massUncertainty  the nuclear mass uncertainty
+     */
+    void nuclearMassUncertainty( std::optional< double > massUncertainty ) {
+
+      this->nuclear_mass_uncertainty_ = std::move( massUncertainty );
     }
 
     /**
@@ -188,12 +228,12 @@ namespace dryad {
      */
     friend bool operator==( const Particle& left, const Particle& right ) {
 
-      return std::tie( left.identifier(), left.mass_, left.energy_,
-                       left.massUncertainty(), left.energyUncertainty(),
-                       left.spin(), left.parity() ) ==
-             std::tie( right.identifier(), right.mass_, right.energy_,
-                       right.massUncertainty(), right.energyUncertainty(),
-                       right.spin(), right.parity() );
+      return std::tie( left.identifier(), left.mass_, left.nuclear_mass_, left.energy_,
+                       left.massUncertainty(), left.nuclearMassUncertainty(),
+                       left.energyUncertainty(), left.spin(), left.parity() ) ==
+             std::tie( right.identifier(), right.mass_, right.nuclear_mass_, right.energy_,
+                       right.massUncertainty(), right.nuclearMassUncertainty(),
+                       right.energyUncertainty(), right.spin(), right.parity() );
     }
 
     /**

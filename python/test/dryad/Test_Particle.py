@@ -109,6 +109,30 @@ class Test_Particle( unittest.TestCase ) :
 
         self.assertEqual( original, chunk.mass_uncertainty )
 
+        # the nuclear mass can be changed
+        newmass = 235.
+        original = None
+
+        chunk.nuclear_mass = newmass
+
+        self.assertEqual( newmass, chunk.nuclear_mass )
+
+        chunk.nuclear_mass = original
+
+        self.assertEqual( original, chunk.nuclear_mass )
+
+        # the nuclear mass uncertainty can be changed
+        newuncertainty = 1
+        original = None
+
+        chunk.nuclear_mass_uncertainty = newuncertainty
+
+        self.assertEqual( newuncertainty, chunk.nuclear_mass_uncertainty )
+
+        chunk.nuclear_mass_uncertainty = original
+
+        self.assertEqual( original, chunk.nuclear_mass_uncertainty )
+
         # the energy can be changed
         newenergy = 1e+6
         original = 1e+6
