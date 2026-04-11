@@ -12,6 +12,13 @@ Constructor
 
     ParticleDatabase
 
+Modifiable Attributes
+~~~~~~~~~~~~~~~~~~~~~
+.. autosummary::
+    :toctree: generated/
+
+    ~ParticleDatabase.particles
+
 Methods
 ~~~~~~~
 .. autosummary::

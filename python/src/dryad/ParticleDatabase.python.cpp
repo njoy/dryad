@@ -46,6 +46,13 @@ void wrapParticleDatabase( python::module& module ) {
     &Component::numberParticles,
     "The number of particles"
   )
+  .def_property(
+
+    "particles",
+    python::overload_cast<>( &Component::particles, python::const_ ),
+    python::overload_cast< std::vector< Particle > >( &Component::particles ),
+    "The available particles"
+  )
   .def(
 
     "has_particle",

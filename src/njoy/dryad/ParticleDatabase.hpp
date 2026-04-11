@@ -2,7 +2,7 @@
 #define NJOY_DRYAD_PARTICLEDATABASE
 
 // system includes
-#include <unordered_map>
+#include <algorithm>
 #include <vector>
 
 // other includes
@@ -20,11 +20,12 @@ namespace dryad {
   class ParticleDatabase {
 
     /* fields */
-    std::unordered_map< id::ParticleID, Particle > particles_;
+    std::vector< Particle > particles_;
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/ParticleDatabase/src/generateMap.hpp"
+    #include "njoy/dryad/ParticleDatabase/src/iterator.hpp"
+    #include "njoy/dryad/ParticleDatabase/src/sort.hpp"
 
   public:
 
@@ -39,7 +40,34 @@ namespace dryad {
      */
     std::size_t numberParticles() const {
 
-      return this->particles_.size();
+      return this->particles().size();
+    }
+
+    /**
+     *  @brief Return the available particles
+     */
+    const std::vector< Particle >& particles() const {
+
+      return this->particles_;
+    }
+
+    /**
+     *  @brief Return the available particles
+     */
+    std::vector< Particle >& particles() {
+
+      return this->particles_;
+    }
+
+    /**
+     *  @brief Set the available particles
+     *
+     *  @param[in] particles   the available particles
+     */
+    void particles( std::vector< Particle > particles ) {
+
+      this->particles_ = std::move( particles );
+      this->sort();
     }
 
     /**
@@ -49,8 +77,8 @@ namespace dryad {
      */
     bool hasParticle( const id::ParticleID& id ) const {
 
-      auto iter = this->particles_.find( id );
-      return iter != this->particles_.end();
+      auto iter = this->iterator( id );
+      return iter != this->particles().end() && iter->identifier() == id;
     }
 
     /**
@@ -60,10 +88,10 @@ namespace dryad {
      */
     const Particle& particle( const id::ParticleID& id ) const {
 
-      auto iter = this->particles_.find( id );
-      if ( iter != this->particles_.end() ) {
+      auto iter = this->iterator( id );
+      if ( iter != this->particles().end() && iter->identifier() == id ) {
 
-        return iter->second;
+        return *iter;
       }
       else {
 
@@ -89,7 +117,7 @@ namespace dryad {
      */
     bool operator==( const ParticleDatabase& right ) const {
 
-      return this->particles_ == right.particles_;
+      return this->particles() == right.particles();
     }
 
     /**
