@@ -15,9 +15,11 @@ namespace dryad {
    *  @brief Particle information
    *
    *  The Particle class contains specific information for a particle:
-   *    - the atomic mass value (always for the ground state) and an optional
+   *    - a particle identifier
+   *    - an optional atomic mass value (always for the ground state) and an optional
    *      uncertainty
-   *    - an optional nuclear mass value and an optional uncertainty
+   *    - an optional nuclear mass value (always for the ground state) and an optional
+   *      uncertainty
    *    - an optional excited state energy value and an optional uncertainty
    *    - an optional spin and parity (which is either + or -)
    *

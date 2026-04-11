@@ -26,9 +26,10 @@ void wrapParticle( python::module& module ) {
     "Particle",
     "Particle information\n\n"
     "The Particle class contains specific information for a particle:\n"
-    "  - the atomic mass value (always for the ground state) and an optional\n"
-    "    uncertainty\n"
-    "  - an optional nuclear mass value (always for the ground state)and an\n"
+    "  - a particle identifier\n"
+    "  - an optional atomic mass value (always for the ground state) and an\n"
+    "    optional uncertainty\n"
+    "  - an optional nuclear mass value (always for the ground state) and an\n"
     "    optional uncertainty\n"
     "  - an optional excited state energy value and an optional uncertainty\n"
     "  - an optional spin and parity (which is either + or -)\n\n"
