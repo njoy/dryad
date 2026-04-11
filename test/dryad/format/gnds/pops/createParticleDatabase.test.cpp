@@ -69,6 +69,27 @@ SCENARIO( "createParticleDatabase" ) {
         CHECK( true == chunk.hasParticle( id::ParticleID( "Sr88_e21" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "Sr88_e22" ) ) );
         CHECK( true == chunk.hasParticle( id::ParticleID( "Sr89" ) ) );
+
+        // Sr88 has a mass node in the GNDS file, excited states do not
+        decltype(auto) sr88 = chunk.particle( id::ParticleID( "Sr88" ) );
+        CHECK_THAT( 87.9051474067, WithinRel( sr88.mass().value() ) );
+        CHECK_THAT( 0., WithinRel( sr88.energy().value() ) );
+        CHECK(  0 == sr88.spin() );
+        CHECK( +1 == sr88.parity() );
+        CHECK( std::nullopt == sr88.nuclearMass() );
+        CHECK( std::nullopt == sr88.massUncertainty() );
+        CHECK( std::nullopt == sr88.nuclearMassUncertainty() );
+        CHECK( std::nullopt == sr88.energyUncertainty() );
+
+        decltype(auto) sr88_e1 = chunk.particle( id::ParticleID( "Sr88_e1" ) );
+        CHECK_THAT( 87.9051474067, WithinRel( sr88_e1.mass().value() ) );
+        CHECK_THAT( 1.8361e6, WithinRel( sr88_e1.energy().value() ) );
+        CHECK( std::nullopt == sr88_e1.spin() );
+        CHECK( std::nullopt == sr88_e1.parity() );
+        CHECK( std::nullopt == sr88_e1.nuclearMass() );
+        CHECK( std::nullopt == sr88_e1.massUncertainty() );
+        CHECK( std::nullopt == sr88_e1.nuclearMassUncertainty() );
+        CHECK( std::nullopt == sr88_e1.energyUncertainty() );
       } // THEN
     } // WHEN
   } // GIVEN

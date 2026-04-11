@@ -22,6 +22,7 @@ SCENARIO( "createParticle" ) {
                                    child( "PoPs" );
     pugi::xml_node boson = pops.child( "gaugeBosons" ).child( "gaugeBoson" );
     pugi::xml_node baryon = pops.child( "baryons" ).child( "baryon" );
+    pugi::xml_node element = pops.child( "chemicalElements" ).child( "chemicalElement" );
     pugi::xml_node nuclide = pops.child( "chemicalElements" ).child( "chemicalElement" ).
                                   child( "isotopes" ).child( "isotope" ).
                                   child( "nuclides" ).child( "nuclide" );
@@ -78,6 +79,18 @@ SCENARIO( "createParticle" ) {
         CHECK( std::nullopt == chunk.parity() );
         CHECK( std::nullopt == chunk.nuclearMass() );
         CHECK( 0. == chunk.energy() );
+        CHECK( std::nullopt == chunk.massUncertainty() );
+        CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
+        CHECK( std::nullopt == chunk.energyUncertainty() );
+
+        chunk = format::gnds::pops::createParticle( element, "eval" );
+
+        CHECK( id::ParticleID( "H" ) == chunk.identifier() );
+        CHECK( std::nullopt == chunk.mass() );
+        CHECK( std::nullopt == chunk.spin() );
+        CHECK( std::nullopt == chunk.parity() );
+        CHECK( std::nullopt == chunk.nuclearMass() );
+        CHECK( std::nullopt == chunk.energy() );
         CHECK( std::nullopt == chunk.massUncertainty() );
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
         CHECK( std::nullopt == chunk.energyUncertainty() );
