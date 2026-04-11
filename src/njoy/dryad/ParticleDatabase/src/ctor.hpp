@@ -15,4 +15,7 @@ ParticleDatabase& operator=( ParticleDatabase&& ) = default;
  *  @param[in] particles   the particle information
  */
 ParticleDatabase( std::vector< Particle > particles ) :
-  particles_( generateMap( std::move( particles ) ) ) {}
+  particles_( std::move( particles ) ) {
+
+  this->sort();
+}

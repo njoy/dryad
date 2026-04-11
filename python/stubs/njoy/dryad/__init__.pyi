@@ -1029,6 +1029,14 @@ class ParticleDatabase:
         """
         The number of particles
         """
+    @property
+    def particles(self) -> list[Particle]:
+        """
+        The available particles
+        """
+    @particles.setter
+    def particles(self, arg1: list[Particle]) -> None:
+        ...
 class PolynomialMultiplicity:
     """
     A multiplicity given as a polynomial series
