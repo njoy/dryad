@@ -68,6 +68,13 @@ namespace pops {
       child = node.child( "parity" );
       parity = child ? createParity( child, style ) : std::nullopt;
     }
+    else if ( strcmp( node.name(), "chemicalElement" ) == 0 ) {
+
+      id = id::ParticleID( node.attribute( "symbol" ).as_string() );
+
+      auto child = node.child( "mass" );
+      mass = child ? createMass( child, style ) : std::nullopt;
+    }
     else {
 
       Log::error( "Expected either a nuclide, gaugeBoson or baryon node or regions1d node particle data" );
