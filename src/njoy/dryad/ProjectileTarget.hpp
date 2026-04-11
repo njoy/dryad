@@ -11,6 +11,7 @@
 #include "njoy/constants.hpp"
 #include "njoy/dryad/InteractionType.hpp"
 #include "njoy/dryad/Documentation.hpp"
+#include "njoy/dryad/ParticleDatabase.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/covariance/CovarianceData.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
