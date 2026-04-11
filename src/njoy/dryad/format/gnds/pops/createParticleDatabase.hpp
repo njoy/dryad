@@ -50,8 +50,8 @@ namespace pops {
 
     // loop over leptons
     auto leptons = pops.child( "leptons" );
-    for ( pugi::xml_node lepton = leptons.child( "baryon" );
-          lepton; lepton = lepton.next_sibling( "baryon" ) ) {
+    for ( pugi::xml_node lepton = leptons.child( "lepton" );
+          lepton; lepton = lepton.next_sibling( "lepton" ) ) {
 
       particles.emplace_back( createParticle( lepton, style ) );
     }

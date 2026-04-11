@@ -24,6 +24,7 @@ void wrapProjectileTarget( python::module& module ) {
   using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
   using Reaction = njoy::dryad::Reaction;
+  using ParticleDatabase = njoy::dryad::ParticleDatabase;
   using ResonanceParameters = njoy::dryad::resonances::ResonanceParameters;
   using CovarianceData = njoy::dryad::covariance::CovarianceData;
   using InteractionType = njoy::dryad::InteractionType;
@@ -47,12 +48,14 @@ void wrapProjectileTarget( python::module& module ) {
                   ParticleID,
                   InteractionType,
                   std::vector< Reaction >,
+                  std::optional< ParticleDatabase >,
                   std::optional< ResonanceParameters >,
                   std::optional< CovarianceData >,
                   bool >(),
     python::arg( "documentation" ), python::arg( "projectile" ),
     python::arg( "target" ), python::arg( "type" ),
     python::arg( "reactions" ),
+    python::arg( "particles" ) = std::nullopt,
     python::arg( "resonances" ) = std::nullopt,
     python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
@@ -64,6 +67,7 @@ void wrapProjectileTarget( python::module& module ) {
     "    target          the target identifier\n"
     "    type            the interaction type\n"
     "    reactions       the reaction data\n"
+    "    particles       the optional particle data (default: none)\n"
     "    resonances      the optional resonance parameters (default: none)\n"
     "    covariances     the optional covariance data (default: none)\n"
     "    normalise       option to indicate whether or not to normalise\n"
@@ -75,6 +79,7 @@ void wrapProjectileTarget( python::module& module ) {
                   ParticleID,
                   InteractionType,
                   std::vector< Reaction >,
+                  std::optional< ParticleDatabase >,
                   std::optional< ResonanceParameters >,
                   std::optional< CovarianceData >,
                   bool >(),
@@ -82,6 +87,7 @@ void wrapProjectileTarget( python::module& module ) {
     python::arg( "target" ),
     python::arg( "type" ),
     python::arg( "reactions" ),
+    python::arg( "particles" ) = std::nullopt,
     python::arg( "resonances" ) = std::nullopt,
     python::arg( "covariances" ) = std::nullopt,
     python::arg( "normalise" ) = false,
@@ -92,6 +98,7 @@ void wrapProjectileTarget( python::module& module ) {
     "    target        the target identifier\n"
     "    type          the interaction type\n"
     "    reactions     the reaction data\n"
+    "    particles       the optional particle data (default: none)\n"
     "    resonances    the optional resonance parameters (default: none)\n"
     "    covariances   the optional covariance data (default: none)\n"
     "    normalise     option to indicate whether or not to normalise\n"
@@ -124,6 +131,13 @@ void wrapProjectileTarget( python::module& module ) {
     python::overload_cast<>( &Component::interactionType, python::const_ ),
     python::overload_cast< InteractionType >( &Component::interactionType ),
     "The interaction type (atomic or nuclear)"
+  )
+  .def_property(
+
+    "particle_data",
+    python::overload_cast<>( &Component::particleData, python::const_ ),
+    python::overload_cast< std::optional< ParticleDatabase > >( &Component::particleData ),
+    "The particle data"
   )
   .def_property(
 
@@ -270,7 +284,7 @@ void wrapProjectileTarget( python::module& module ) {
     [] ( const Component& self, int mat, const std::string& filename,
          bool use_reduced_width_amplitudes ) {
 
-      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename, 
+      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename,
                                                                  use_reduced_width_amplitudes );
     },
     python::arg( "mat" ), python::arg( "filename" ),

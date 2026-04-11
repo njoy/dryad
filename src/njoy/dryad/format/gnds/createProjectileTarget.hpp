@@ -46,7 +46,7 @@ namespace gnds {
       id::ParticleID target( suite.attribute( "target" ).as_string() );
       InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
 
-      ParticleDatabase particles = pops::createParticleDatabase( suite.child( "PoPs" ), style );
+      std::optional< ParticleDatabase > particles = pops::createParticleDatabase( suite.child( "PoPs" ), style );
       std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
 
       std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
@@ -58,8 +58,8 @@ namespace gnds {
       }
 
       return ProjectileTarget( std::move( projectile ), std::move( target ),
-                               type, std::move( reactions ), std::move( resonances ),
-                               std::move( covariances ) );
+                               type, std::move( reactions ), std::move( particles ),
+                               std::move( resonances ), std::move( covariances ) );
     }
     else {
 

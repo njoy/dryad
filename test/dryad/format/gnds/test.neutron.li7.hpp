@@ -1663,6 +1663,55 @@ namespace li7 {
     CHECK(  7.395227e-1 == matrix.covariances()(  2,  2) );
   }
 
+  void verifyParticleData( const ParticleDatabase& particles ) {
+
+    CHECK( 43 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "p" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H2" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H3" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "He4" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "He6" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li6" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e1" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e2" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e3" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e4" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e5" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e6" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e7" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e8" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e9" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e10" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e11" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e12" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e13" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e14" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e15" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e16" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e17" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e18" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e19" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e20" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e21" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e22" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e23" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e24" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e25" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e26" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e27" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e28" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e29" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e30" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e31" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e32" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li8" ) ) );
+  }
+
   void verifyLi7( const ProjectileTarget& Li7, bool /* normalise */ ) {
 
     neutron::li7::verifyDocumentation( Li7.documentation() );
@@ -1798,6 +1847,9 @@ namespace li7 {
 
     lumped = Li7.reaction( id::ReactionID( "n,Li7->lumped9" ) );
     neutron::li7::verifyLumpedReaction859( lumped );
+
+    CHECK( std::nullopt != Li7.particleData() );
+    verifyParticleData( Li7.particleData().value() );
 
     CHECK( std::nullopt == Li7.resonances() );
 

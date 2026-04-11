@@ -97,6 +97,9 @@ def verify_chunk( self, chunk, normalise ) :
     # interaction type
     self.assertEqual( InteractionType.Nuclear, chunk.interaction_type )
 
+    # particle data is not present
+    self.assertIsNone( chunk.particle_data )
+
     # resonance parameters are not present
     self.assertIsNone( chunk.resonances )
 

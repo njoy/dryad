@@ -5,6 +5,7 @@ ProjectileTarget( Documentation&& documentation,
                   id::ParticleID&& projectile,
                   id::ParticleID&& target,
                   InteractionType type,
+                  std::optional< ParticleDatabase >&& particles,
                   std::optional< resonances::ResonanceParameters > resonances,
                   std::vector< Reaction >&& reactions,
                   std::optional< covariance::CovarianceData > covariances,
@@ -13,6 +14,7 @@ ProjectileTarget( Documentation&& documentation,
     projectile_id_( std::move( projectile ) ),
     target_id_( std::move( target ) ),
     interaction_( type ),
+    particles_( std::move( particles ) ),
     resonances_( std::move( resonances ) ),
     reactions_( std::move( reactions ) ),
     covariances_( std::move( covariances ) ) {
@@ -45,6 +47,7 @@ ProjectileTarget& operator=( ProjectileTarget&& ) = default;
  *  @param target          the target identifier
  *  @param type            the interaction type
  *  @param reactions       the reaction data
+ *  @param particles     the optional particle data (default: none)
  *  @param resonances      the optional resonance parameters (default: none)
  *  @param covariances     the optional covariance data (default: none)
  *  @param normalise       option to indicate whether or not to normalise
@@ -55,6 +58,7 @@ ProjectileTarget( Documentation documentation,
                   id::ParticleID target,
                   InteractionType type,
                   std::vector< Reaction > reactions,
+                  std::optional< ParticleDatabase > particles = std::nullopt,
                   std::optional< resonances::ResonanceParameters > resonances = std::nullopt,
                   std::optional< covariance::CovarianceData > covariances = std::nullopt,
                   bool normalise = false ) :
@@ -62,6 +66,7 @@ ProjectileTarget( Documentation documentation,
                       std::move( projectile ),
                       std::move( target ),
                       type,
+                      std::move( particles ),
                       std::move( resonances ),
                       std::move( reactions ),
                       std::move( covariances ),
@@ -74,6 +79,7 @@ ProjectileTarget( Documentation documentation,
  *  @param target        the target identifier
  *  @param type.         the interaction type
  *  @param reactions     the reaction data
+ *  @param particles     the optional particle data (default: none)
  *  @param resonances    the optional resonance parameters (default: none)
  *  @param covariances   the optional covariance data (default: none)
  *  @param normalise     option to indicate whether or not to normalise
@@ -83,6 +89,7 @@ ProjectileTarget( id::ParticleID projectile,
                   id::ParticleID target,
                   InteractionType type,
                   std::vector< Reaction > reactions,
+                  std::optional< ParticleDatabase > particles = std::nullopt,
                   std::optional< resonances::ResonanceParameters > resonances = std::nullopt,
                   std::optional< covariance::CovarianceData > covariances = std::nullopt,
                   bool normalise = false ) :
@@ -90,6 +97,7 @@ ProjectileTarget( id::ParticleID projectile,
                       std::move( projectile ),
                       std::move( target ),
                       type,
+                      std::move( particles ),
                       std::move( resonances ),
                       std::move( reactions ),
                       std::move( covariances ),

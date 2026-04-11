@@ -993,6 +993,14 @@ namespace endf81 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
+  void verifyParticleData( const ParticleDatabase& particles ) {
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "e-" ) ) );
+  }
+
   void verifyH0( const ProjectileTarget& H0, bool normalise ) {
 
     CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
@@ -1062,7 +1070,11 @@ namespace endf81 {
     deficit = H0.reaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) );
     verifyElasticDeficitReaction( deficit );
 
+    CHECK( std::nullopt != H0.particleData() );
+    verifyParticleData( H0.particleData().value() );
+
     CHECK( std::nullopt == H0.resonances() );
+
     CHECK( std::nullopt == H0.covarianceData() );
   }
 

@@ -1187,7 +1187,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1198,13 +1198,14 @@ class ProjectileTarget:
             target          the target identifier
             type            the interaction type
             reactions       the reaction data
+            particles       the optional particle data (default: none)
             resonances      the optional resonance parameters (default: none)
             covariances     the optional covariance data (default: none)
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1214,6 +1215,7 @@ class ProjectileTarget:
             target        the target identifier
             type          the interaction type
             reactions     the reaction data
+            particles       the optional particle data (default: none)
             resonances    the optional resonance parameters (default: none)
             covariances   the optional covariance data (default: none)
             normalise     option to indicate whether or not to normalise
@@ -1315,6 +1317,14 @@ class ProjectileTarget:
         """
         The number of reactions
         """
+    @property
+    def particle_data(self) -> ParticleDatabase | None:
+        """
+        The particle data
+        """
+    @particle_data.setter
+    def particle_data(self, arg1: ParticleDatabase | None) -> None:
+        ...
     @property
     def projectile_identifier(self) -> id.ParticleID:
         """
