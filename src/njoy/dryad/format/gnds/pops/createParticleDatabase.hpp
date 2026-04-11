@@ -56,20 +56,56 @@ namespace pops {
       particles.emplace_back( createParticle( lepton, style ) );
     }
 
+    // lambda that fills missing data from left to right
+    auto fill_missing_data = [] ( auto&& left, auto&& right ) {
+
+      if ( left.mass().has_value() && ! right.mass().has_value() ) {
+
+        right.mass( left.mass() );
+        if ( left.massUncertainty().has_value() ) {
+
+          right.massUncertainty( left.massUncertainty() );
+        }
+      }
+      if ( left.nuclearMass().has_value() && ! right.nuclearMass().has_value() ) {
+
+        right.nuclearMass( left.nuclearMass() );
+        if ( left.nuclearMassUncertainty().has_value() ) {
+
+          right.nuclearMassUncertainty( left.nuclearMassUncertainty() );
+        }
+      }
+
+      // energy, spin and parity are supposed to be unique by nuclide
+    };
+
     // loop over chemical elements
     auto elements = pops.child( "chemicalElements" );
     for ( pugi::xml_node element = elements.child( "chemicalElement" );
           element; element = element.next_sibling( "chemicalElement" ) ) {
 
+      // if the element has a mass node: make it into a Particle
+      if ( element.child( "mass" ) ) {
+
+        particles.emplace_back( createParticle( element, style ) );
+      }
+
+      // loop over the isotopes
       auto isotopes = element.child( "isotopes" );
       for ( pugi::xml_node isotope = isotopes.child( "isotope" );
             isotope; isotope = isotope.next_sibling( "isotope" ) ) {
 
+        // note: we assume that mass and nuclear mass are inherited from the
+        //       the first nuclide read from the element
+
+        // loop over the nuclides
+        std::size_t index = particles.size();
         auto nuclides = isotope.child( "nuclides" );
         for ( pugi::xml_node nuclide = nuclides.child( "nuclide" );
               nuclide; nuclide = nuclide.next_sibling( "nuclide" ) ) {
 
           particles.emplace_back( createParticle( nuclide, style ) );
+          fill_missing_data( particles[index], particles.back() );
         }
       }
     }
