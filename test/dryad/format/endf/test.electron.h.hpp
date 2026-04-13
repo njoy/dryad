@@ -414,11 +414,13 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( false == electron.hasAverageCosine() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
     auto multiplicity = std::get< int >( electron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
     CHECK( std::nullopt == electron.averageEnergy() );
     CHECK( std::nullopt != electron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( electron.distributionData().value() ) );
@@ -595,11 +597,13 @@ namespace endf81 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( false == gamma.hasAverageCosine() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
     auto multiplicity = std::get< int >( gamma.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == gamma.averageCosine() );
     CHECK( std::nullopt == gamma.averageEnergy() );
     CHECK( std::nullopt != gamma.distributionData() );
     CHECK( true == std::holds_alternative< UncorrelatedDistributionData >( gamma.distributionData().value() ) );
@@ -713,11 +717,13 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( false == electron.hasAverageCosine() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
     multiplicity = std::get< int >( electron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
     CHECK( std::nullopt != electron.averageEnergy() );
     auto average = electron.averageEnergy().value();
     CHECK( true == average.isLinearised() );
@@ -772,11 +778,13 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( false == electron.hasAverageCosine() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
     auto multiplicity = std::get< int >( electron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
     CHECK( std::nullopt != electron.averageEnergy() );
     auto average = electron.averageEnergy().value();
     CHECK( true == average.isLinearised() );
@@ -831,11 +839,13 @@ namespace endf81 {
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
     CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( false == electron.hasAverageCosine() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
     auto multiplicity = std::get< int >( electron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
     CHECK( std::nullopt == electron.averageEnergy() );
     CHECK( std::nullopt != electron.distributionData() );
     CHECK( true == std::holds_alternative< UncorrelatedDistributionData >( electron.distributionData().value() ) );

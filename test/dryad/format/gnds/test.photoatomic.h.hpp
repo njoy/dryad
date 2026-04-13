@@ -243,6 +243,7 @@ namespace h0 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( false == gamma.hasAverageCosine() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 
@@ -250,6 +251,7 @@ namespace h0 {
     auto multiplicity = std::get< int >( gamma.multiplicity() );
     CHECK( 1 == multiplicity );
 
+    CHECK( std::nullopt == gamma.averageCosine() );
     CHECK( std::nullopt == gamma.averageEnergy() );
 
     CHECK( std::nullopt != gamma.distributionData() );
@@ -354,6 +356,7 @@ namespace h0 {
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( false == gamma.hasAverageCosine() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 
@@ -361,6 +364,7 @@ namespace h0 {
     auto multiplicity = std::get< int >( gamma.multiplicity() );
     CHECK( 1 == multiplicity );
 
+    CHECK( std::nullopt == gamma.averageCosine() );
     CHECK( std::nullopt == gamma.averageEnergy() );
 
     CHECK( std::nullopt != gamma.distributionData() );

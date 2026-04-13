@@ -18,6 +18,7 @@ void wrapReactionProduct( python::module& module ) {
   using ParticleID = njoy::dryad::id::ParticleID;
   using Multiplicity = njoy::dryad::ReactionProduct::Multiplicity;
   using DistributionData = njoy::dryad::ReactionProduct::DistributionData;
+  using TabulatedAverageCosine = njoy::dryad::TabulatedAverageCosine;
   using TabulatedAverageEnergy = njoy::dryad::TabulatedAverageEnergy;
 
   // wrap views created by this component
@@ -34,20 +35,24 @@ void wrapReactionProduct( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, Multiplicity,
+    python::init< ParticleID,
+                  Multiplicity,
                   std::optional< DistributionData >,
+                  std::optional< TabulatedAverageCosine >,
                   std::optional< TabulatedAverageEnergy >,
                   bool >(),
-    python::arg( "id" ), python::arg( "multiplicity" ),
+    python::arg( "product" ), python::arg( "multiplicity" ),
     python::arg( "distribution" ) = std::nullopt,
+    python::arg( "average_cosine" ) = std::nullopt,
     python::arg( "average_energy" ) = std::nullopt,
     python::arg( "normalise" ) = false,
     "Initialise the reaction\n\n"
     "Arguments:\n"
     "    self             the reaction\n"
-    "    id               the reaction product identifier\n"
+    "    product          the reaction product identifier\n"
     "    multiplicity     the reaction product multiplicity\n"
     "    distribution     the optional reaction product distribution data\n"
+    "    average_cosine   the optional average reaction product cosine\n"
     "    average_energy   the optional average reaction product energy\n"
     "    normalise        option to indicate whether or not to normalise\n"
     "                     all probability data (default: no normalisation)"
@@ -68,6 +73,13 @@ void wrapReactionProduct( python::module& module ) {
   )
   .def_property(
 
+    "average_cosine",
+    python::overload_cast<>( &Component::averageCosine, python::const_ ),
+    python::overload_cast< std::optional< TabulatedAverageCosine > >( &Component::averageCosine ),
+    "The average reaction product cosine"
+  )
+  .def_property(
+
     "average_energy",
     python::overload_cast<>( &Component::averageEnergy, python::const_ ),
     python::overload_cast< std::optional< TabulatedAverageEnergy > >( &Component::averageEnergy ),
@@ -79,6 +91,13 @@ void wrapReactionProduct( python::module& module ) {
     python::overload_cast<>( &Component::distributionData, python::const_ ),
     python::overload_cast< std::optional< DistributionData > >( &Component::distributionData ),
     "The distribution data"
+  )
+  .def_property_readonly(
+
+    "has_average_cosine",
+    &Component::hasAverageCosine,
+    "Flag indicating whether or not the reaction product has average reaction "
+    "product cosine data"
   )
   .def_property_readonly(
 

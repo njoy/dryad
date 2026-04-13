@@ -9,6 +9,7 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
+#include "njoy/dryad/TabulatedAverageCosine.hpp"
 #include "njoy/dryad/TabulatedAverageEnergy.hpp"
 #include "njoy/dryad/TwoBodyDistributionData.hpp"
 #include "njoy/dryad/UncorrelatedDistributionData.hpp"
@@ -41,6 +42,8 @@ namespace dryad {
 
     Multiplicity multiplicity_;
     std::optional< DistributionData > distribution_;
+
+    std::optional< TabulatedAverageCosine > average_cosine_;
     std::optional< TabulatedAverageEnergy > average_energy_;
 
   public:
@@ -84,6 +87,24 @@ namespace dryad {
     void multiplicity( Multiplicity multiplicity ) {
 
       this->multiplicity_ = std::move( multiplicity );
+    }
+
+    /**
+     *  @brief Return the average reaction product cosine
+     */
+    const std::optional< TabulatedAverageCosine >& averageCosine() const {
+
+      return this->average_cosine_;
+    }
+
+    /**
+     *  @brief Set the average reaction product cosine
+     *
+     *  @param averageCosine   the average reaction product cosine
+     */
+    void averageCosine( std::optional< TabulatedAverageCosine > averageCosine ) {
+
+      this->average_cosine_ = std::move( averageCosine );
     }
 
     /**
@@ -145,6 +166,15 @@ namespace dryad {
                     },
                     this->distributionData().value() );
       }
+    }
+
+    /**
+     *  @brief Return whether or not the reaction product has average reaction
+     *         product cosine data
+     */
+    bool hasAverageCosine() const {
+
+      return this->average_cosine_.has_value();
     }
 
     /**

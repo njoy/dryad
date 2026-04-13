@@ -221,11 +221,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -311,11 +313,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 2 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
@@ -357,11 +361,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 3 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
@@ -441,11 +447,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 4 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
@@ -539,11 +547,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -590,11 +600,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -639,11 +651,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -688,11 +702,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -737,11 +753,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -786,11 +804,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -837,11 +857,13 @@ namespace np236m1 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 

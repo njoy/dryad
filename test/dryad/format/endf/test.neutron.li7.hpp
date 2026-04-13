@@ -463,11 +463,13 @@ namespace li7 {
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );

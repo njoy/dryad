@@ -27,10 +27,11 @@ SCENARIO( "ReactionProduct" ) {
                                               { 1e-5, 20. },
                                               { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk1( id, multiplicity,
-                              distribution, std::nullopt, false );
+      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt,
+                              std::nullopt, false );
       ReactionProduct chunk2( std::move( id ), std::move( multiplicity ),
-                              std::move( distribution ), std::nullopt, true );
+                              std::move( distribution ), std::nullopt,
+                              std::nullopt, true );
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );
@@ -58,9 +59,9 @@ SCENARIO( "ReactionProduct" ) {
                                               { 1e-5, 20. },
                                               { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt, false );
+      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt, std::nullopt, false );
       ReactionProduct chunk2( std::move( id ), std::move( multiplicity ), std::move( distribution ),
-                              std::nullopt, true );
+                              std::nullopt, std::nullopt, true );
 
       verifyTabulatedChunk( chunk1, false );
       verifyTabulatedChunk( chunk2, true );
@@ -134,6 +135,25 @@ SCENARIO( "ReactionProduct" ) {
         verifyChunk( chunk, false );
       } // THEN
 
+      THEN( "the average cosine data can be changed" ) {
+
+        std::optional< TabulatedAverageCosine > newaverage =
+            TabulatedAverageCosine( { 1., 2., 2., 3., 4. },
+                                    { -1., 0., -1., 0., 1. },
+                                    { 1, 4 },
+                                    { InterpolationType::LinearLinear,
+                                      InterpolationType::LinearLinear } );
+        std::optional< TabulatedAverageCosine > original = std::nullopt;
+
+        chunk.averageCosine( newaverage );
+
+        CHECK( newaverage == chunk.averageCosine() );
+
+        chunk.averageCosine( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
       THEN( "the average energy data can be changed" ) {
 
         std::optional< TabulatedAverageEnergy > newaverage =
@@ -189,8 +209,9 @@ void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( true == std::holds_alternative< int >( multiplicity ) );
   CHECK( 1 == std::get< int >( multiplicity ) );
 
-  // average energy data
+  // average cosine and energy data
   CHECK( std::nullopt == chunk.averageEnergy() );
+  CHECK( std::nullopt == chunk.averageCosine() );
 
   // distribution data
   auto distribution = chunk.distributionData();
@@ -227,6 +248,7 @@ void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   // metadata
+  CHECK( false == chunk.hasAverageCosine() );
   CHECK( false == chunk.hasAverageEnergy() );
   CHECK( true == chunk.hasDistributionData() );
 }
@@ -261,8 +283,9 @@ void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLog == multiplicity.interpolants()[1] );
   CHECK( false == multiplicity.isLinearised() );
 
-  // average energy data
+  // average cosine and energy data
   CHECK( std::nullopt == chunk.averageEnergy() );
+  CHECK( std::nullopt == chunk.averageCosine() );
 
   // distribution data
   // distribution data
@@ -300,6 +323,7 @@ void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   // metadata
+  CHECK( false == chunk.hasAverageCosine() );
   CHECK( false == chunk.hasAverageEnergy() );
   CHECK( true == chunk.hasDistributionData() );
 }

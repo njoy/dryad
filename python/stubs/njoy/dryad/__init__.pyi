@@ -1576,15 +1576,16 @@ class ReactionProduct:
         ...
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
-    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
+    def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
         """
         Initialise the reaction
         
         Arguments:
             self             the reaction
-            id               the reaction product identifier
+            product          the reaction product identifier
             multiplicity     the reaction product multiplicity
             distribution     the optional reaction product distribution data
+            average_cosine   the optional average reaction product cosine
             average_energy   the optional average reaction product energy
             normalise        option to indicate whether or not to normalise
                              all probability data (default: no normalisation)
@@ -1595,6 +1596,14 @@ class ReactionProduct:
         """
         Normalise the distribution data
         """
+    @property
+    def average_cosine(self) -> TabulatedAverageCosine | None:
+        """
+        The average reaction product cosine
+        """
+    @average_cosine.setter
+    def average_cosine(self, arg1: TabulatedAverageCosine | None) -> None:
+        ...
     @property
     def average_energy(self) -> TabulatedAverageEnergy | None:
         """
@@ -1611,6 +1620,11 @@ class ReactionProduct:
     @distribution_data.setter
     def distribution_data(self, arg1: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None) -> None:
         ...
+    @property
+    def has_average_cosine(self) -> bool:
+        """
+        Flag indicating whether or not the reaction product has average reaction product cosine data
+        """
     @property
     def has_average_energy(self) -> bool:
         """
