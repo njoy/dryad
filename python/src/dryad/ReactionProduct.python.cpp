@@ -40,11 +40,15 @@ void wrapReactionProduct( python::module& module ) {
                   std::optional< DistributionData >,
                   std::optional< TabulatedAverageCosine >,
                   std::optional< TabulatedAverageEnergy >,
+                  std::optional< ParticleID >,
+                  std::size_t,
                   bool >(),
     python::arg( "product" ), python::arg( "multiplicity" ),
     python::arg( "distribution" ) = std::nullopt,
     python::arg( "average_cosine" ) = std::nullopt,
     python::arg( "average_energy" ) = std::nullopt,
+    python::arg( "parent" ) = std::nullopt,
+    python::arg( "index" ) = 0,
     python::arg( "normalise" ) = false,
     "Initialise the reaction\n\n"
     "Arguments:\n"
@@ -54,15 +58,31 @@ void wrapReactionProduct( python::module& module ) {
     "    distribution     the optional reaction product distribution data\n"
     "    average_cosine   the optional average reaction product cosine\n"
     "    average_energy   the optional average reaction product energy\n"
+    "    parent           the optional parent reaction product\n"
+    "    index            the chain index of the reaction product\n"
     "    normalise        option to indicate whether or not to normalise\n"
     "                     all probability data (default: no normalisation)"
   )
   .def_property(
 
-    "identifier",
-    python::overload_cast<>( &Component::identifier, python::const_ ),
-    python::overload_cast< ParticleID >( &Component::identifier ),
+    "product_identifier",
+    python::overload_cast<>( &Component::productIdentifier, python::const_ ),
+    python::overload_cast< ParticleID >( &Component::productIdentifier ),
     "The reaction product identifier"
+  )
+  .def_property(
+
+    "parent_identifier",
+    python::overload_cast<>( &Component::parentIdentifier, python::const_ ),
+    python::overload_cast< std::optional< ParticleID > >( &Component::parentIdentifier ),
+    "The parent product identifier"
+  )
+  .def_property(
+
+    "chain_index",
+    python::overload_cast<>( &Component::chainIndex, python::const_ ),
+    python::overload_cast< std::size_t >( &Component::chainIndex ),
+    "The chain index of the reaction product"
   )
   .def_property(
 

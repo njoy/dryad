@@ -242,7 +242,9 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
     CHECK( false == gamma.hasAverageCosine() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
@@ -320,7 +322,9 @@ namespace h0 {
     CHECK( true == factor.isLinearised() );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == hydrogen.parentIdentifier() );
+    CHECK( 0 == hydrogen.chainIndex() );
   }
 
   void verifyIncoherentReaction( const Reaction& reaction ) {
@@ -355,7 +359,9 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
     CHECK( false == gamma.hasAverageCosine() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
@@ -393,7 +399,9 @@ namespace h0 {
     CHECK( true == data.scatteringFunction().isLinearised() );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
 
     CHECK( false == data.hasComptonProfiles() );
     CHECK( std::nullopt == data.comptonProfiles() );
@@ -432,16 +440,24 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
 
     electron = reaction.product( id::ParticleID( "e-" ), 1 );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
 
     auto positron = reaction.product( id::ParticleID( "e+" ) );
-    CHECK( id::ParticleID( "e+" ) == positron.identifier() );
+    CHECK( id::ParticleID( "e+" ) == positron.productIdentifier() );
+    CHECK( std::nullopt == positron.parentIdentifier() );
+    CHECK( 0 == positron.chainIndex() );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );;
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == hydrogen.parentIdentifier() );
+    CHECK( 0 == hydrogen.chainIndex() );
   }
 
   void verifyNuclearFieldPairProductionReaction( const Reaction& reaction ) {
@@ -477,13 +493,19 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
 
     auto positron = reaction.product( id::ParticleID( "e+" ) );
-    CHECK( id::ParticleID( "e+" ) == positron.identifier() );
+    CHECK( id::ParticleID( "e+" ) == positron.productIdentifier() );
+    CHECK( std::nullopt == positron.parentIdentifier() );
+    CHECK( 0 == positron.chainIndex() );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == hydrogen.parentIdentifier() );
+    CHECK( 0 == hydrogen.chainIndex() );
   }
 
   void verifyTotalPairProductionReaction( const Reaction& reaction ) {
@@ -555,10 +577,14 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
 
     auto ion = reaction.product( id::ParticleID( "H{1s1/2}" ) );
-    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
+    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.productIdentifier() );
+    CHECK( std::nullopt == ion.parentIdentifier() );
+    CHECK( 0 == ion.chainIndex() );
   }
 
   void verifyTotalIonisationReaction( const Reaction& reaction ) {

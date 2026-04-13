@@ -1,7 +1,7 @@
 auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const {
 
   auto functor = [&type] ( auto&& product )
-                         { return product.identifier() == type; };
+                         { return product.productIdentifier() == type; };
 
   auto iter = std::find_if( this->products().begin(), this->products().end(), functor );
   std::size_t current = index;

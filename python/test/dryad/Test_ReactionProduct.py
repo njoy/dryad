@@ -21,7 +21,9 @@ from njoy.dryad.id import ParticleID
 def verify_chunk( self, chunk, normalise ) :
 
     # reaction product identifier
-    self.assertEqual( ParticleID.neutron(), chunk.identifier )
+    self.assertEqual( ParticleID.neutron(), chunk.product_identifier )
+    self.assertIsNone( chunk.parent_identifier )
+    self.assertEqual( 0, chunk.chain_index )
 
     # multiplicity
     self.assertEqual( True, isinstance( chunk.multiplicity, int ) )
@@ -80,7 +82,9 @@ def verify_chunk( self, chunk, normalise ) :
 def verify_tabulated_chunk( self, chunk, normalise ) :
 
     # reaction product identifier
-    self.assertEqual( ParticleID.neutron(), chunk.identifier )
+    self.assertEqual( ParticleID.neutron(), chunk.product_identifier )
+    self.assertIsNone( chunk.parent_identifier )
+    self.assertEqual( 0, chunk.chain_index )
 
     # multiplicity
     self.assertEqual( True, isinstance( chunk.multiplicity, TabulatedMultiplicity ) )
@@ -234,11 +238,35 @@ class Test_ReactionProduct( unittest.TestCase ) :
         newid = ParticleID.proton()
         original = ParticleID.neutron()
 
-        chunk.identifier = newid
+        chunk.product_identifier = newid
 
-        self.assertEqual( newid, chunk.identifier )
+        self.assertEqual( newid, chunk.product_identifier )
 
-        chunk.identifier = original
+        chunk.product_identifier = original
+
+        verify_chunk( self, chunk, False )
+
+        # the parent identifier can be changed
+        newid = ParticleID.proton()
+        original = None
+
+        chunk.parent_identifier = newid
+
+        self.assertEqual( newid, chunk.parent_identifier )
+
+        chunk.parent_identifier = original
+
+        verify_chunk( self, chunk, False )
+
+        # the chain index can be changed
+        newindex = 1
+        original = 0
+
+        chunk.chain_index = newindex
+
+        self.assertEqual( newindex, chunk.chain_index )
+
+        chunk.chain_index = original
 
         verify_chunk( self, chunk, False )
 

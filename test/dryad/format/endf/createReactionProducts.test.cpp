@@ -72,7 +72,9 @@ SCENARIO( "createReactionProducts" ) {
 void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct& chunk,
                                                 bool normalise ) {
 
-  CHECK( id::ParticleID( "g" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "g" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
   CHECK( false == chunk.hasAverageEnergy() );
   CHECK( true == chunk.hasDistributionData() );
 
@@ -195,7 +197,9 @@ void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct& chunk,
 
 void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& chunk ) {
 
-  CHECK( id::ParticleID( "e-" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "e-" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
   CHECK( true == chunk.hasAverageEnergy() );
   CHECK( false == chunk.hasDistributionData() );
 
@@ -228,7 +232,9 @@ void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& chunk )
 
 void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
 
-  CHECK( id::ParticleID( "g" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "g" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
   CHECK( false == chunk.hasAverageEnergy() );
   CHECK( true == chunk.hasDistributionData() );
 

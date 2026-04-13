@@ -30,7 +30,9 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( 0 == products[0].size() );
 
         CHECK( 1 == products[1].size() );
-        CHECK( id::ParticleID( "g" ) == products[1][0].identifier() );
+        CHECK( id::ParticleID( "g" ) == products[1][0].productIdentifier() );
+        CHECK( std::nullopt == products[1][0].parentIdentifier() );
+        CHECK( 0 == products[1][0].chainIndex() );
         CHECK( false == products[1][0].hasAverageEnergy() );
         CHECK( true == products[1][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[1][0].multiplicity() ) );
@@ -60,7 +62,9 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( std::nullopt == coherent.imaginaryAnomolousFormFactor() );
 
         CHECK( 1 == products[2].size() );
-        CHECK( id::ParticleID( "g" ) == products[2][0].identifier() );
+        CHECK( id::ParticleID( "g" ) == products[2][0].productIdentifier() );
+        CHECK( std::nullopt == products[2][0].parentIdentifier() );
+        CHECK( 0 == products[2][0].chainIndex() );
         CHECK( false == products[2][0].hasAverageEnergy() );
         CHECK( true == products[2][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[2][0].multiplicity() ) );
@@ -105,7 +109,9 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( 0 == products[0].size() );
 
         CHECK( 1 == products[1].size() );
-        CHECK( id::ParticleID( "g" ) == products[1][0].identifier() );
+        CHECK( id::ParticleID( "g" ) == products[1][0].productIdentifier() );
+        CHECK( std::nullopt == products[1][0].parentIdentifier() );
+        CHECK( 0 == products[1][0].chainIndex() );
         CHECK( false == products[1][0].hasAverageEnergy() );
         CHECK( true == products[1][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[1][0].multiplicity() ) );
@@ -135,7 +141,9 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( std::nullopt == coherent.imaginaryAnomolousFormFactor() );
 
         CHECK( 1 == products[2].size() );
-        CHECK( id::ParticleID( "g" ) == products[2][0].identifier() );
+        CHECK( id::ParticleID( "g" ) == products[2][0].productIdentifier() );
+        CHECK( std::nullopt == products[2][0].parentIdentifier() );
+        CHECK( 0 == products[2][0].chainIndex() );
         CHECK( false == products[2][0].hasAverageEnergy() );
         CHECK( true == products[2][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[2][0].multiplicity() ) );
@@ -182,7 +190,9 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( 0 == products[0].size() );
 
         CHECK( 1 == products[1].size() );
-        CHECK( id::ParticleID( "g" ) == products[1][0].identifier() );
+        CHECK( id::ParticleID( "g" ) == products[1][0].productIdentifier() );
+        CHECK( std::nullopt == products[1][0].parentIdentifier() );
+        CHECK( 0 == products[1][0].chainIndex() );
         CHECK( false == products[1][0].hasAverageEnergy() );
         CHECK( true == products[1][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[1][0].multiplicity() ) );
@@ -212,7 +222,9 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( std::nullopt == coherent.imaginaryAnomolousFormFactor() );
 
         CHECK( 1 == products[2].size() );
-        CHECK( id::ParticleID( "g" ) == products[2][0].identifier() );
+        CHECK( id::ParticleID( "g" ) == products[2][0].productIdentifier() );
+        CHECK( std::nullopt == products[2][0].parentIdentifier() );
+        CHECK( 0 == products[2][0].chainIndex() );
         CHECK( false == products[2][0].hasAverageEnergy() );
         CHECK( true == products[2][0].hasDistributionData() );
         CHECK( true == std::holds_alternative< int >( products[2][0].multiplicity() ) );

@@ -28,10 +28,10 @@ SCENARIO( "ReactionProduct" ) {
                                               { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
       ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt,
-                              std::nullopt, false );
+                              std::nullopt, std::nullopt, 0, false );
       ReactionProduct chunk2( std::move( id ), std::move( multiplicity ),
                               std::move( distribution ), std::nullopt,
-                              std::nullopt, true );
+                              std::nullopt, std::nullopt, 0, true );
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );
@@ -59,9 +59,10 @@ SCENARIO( "ReactionProduct" ) {
                                               { 1e-5, 20. },
                                               { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt, std::nullopt, false );
+      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt,
+                              std::nullopt, std::nullopt, 0, false );
       ReactionProduct chunk2( std::move( id ), std::move( multiplicity ), std::move( distribution ),
-                              std::nullopt, std::nullopt, true );
+                              std::nullopt, std::nullopt, std::nullopt, 0, true );
 
       verifyTabulatedChunk( chunk1, false );
       verifyTabulatedChunk( chunk2, true );
@@ -89,11 +90,39 @@ SCENARIO( "ReactionProduct" ) {
         id::ParticleID newid = id::ParticleID::proton();
         id::ParticleID original = id::ParticleID::neutron();
 
-        chunk.identifier( newid );
+        chunk.productIdentifier( newid );
 
-        CHECK( newid == chunk.identifier() );
+        CHECK( newid == chunk.productIdentifier() );
 
-        chunk.identifier( original );
+        chunk.productIdentifier( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
+      THEN( "the parent identifier can be changed" ) {
+
+        std::optional< id::ParticleID > newid = id::ParticleID::proton();
+        std::optional< id::ParticleID > original = std::nullopt;
+
+        chunk.parentIdentifier( newid );
+
+        CHECK( newid == chunk.parentIdentifier() );
+
+        chunk.parentIdentifier( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
+      THEN( "the chain index can be changed" ) {
+
+        std::size_t newindex = 1;
+        std::size_t original = 0;
+
+        chunk.chainIndex( newindex );
+
+        CHECK( newindex == chunk.chainIndex() );
+
+        chunk.chainIndex( original );
 
         verifyChunk( chunk, false );
       } // THEN
@@ -202,7 +231,9 @@ SCENARIO( "ReactionProduct" ) {
 void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
 
   // ReactionProduct identifier
-  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
 
   // multiplicity
   auto multiplicity = chunk.multiplicity();
@@ -256,7 +287,9 @@ void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
 void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
 
   // ReactionProduct identifier
-  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
 
   // multiplicity
   CHECK( true == std::holds_alternative< TabulatedMultiplicity >( chunk.multiplicity() ) );

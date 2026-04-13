@@ -220,7 +220,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e2" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -312,7 +314,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np235" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
@@ -324,7 +328,8 @@ namespace np236m1 {
     CHECK( std::nullopt == neutron.distributionData() );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
   }
 
   void verifyN3NReaction( const Reaction& reaction ) {
@@ -360,7 +365,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np234" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
@@ -372,7 +379,9 @@ namespace np236m1 {
     CHECK( std::nullopt == neutron.distributionData() );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
   }
 
   void verifyFissionReaction( const Reaction& reaction ) {
@@ -446,7 +455,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np233" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
@@ -458,7 +469,9 @@ namespace np236m1 {
     CHECK( std::nullopt == neutron.distributionData() );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
   }
 
   void verifyInelasticReaction( const Reaction& reaction ) {
@@ -546,7 +559,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -599,7 +614,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e1" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -650,7 +667,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e3" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -701,7 +720,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e4" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -752,7 +773,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e5" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -803,7 +826,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e6" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -856,7 +881,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
@@ -870,7 +897,8 @@ namespace np236m1 {
     //! @todo add tests for angular data
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -911,7 +939,9 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np237" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
   }
 
   void verifyParticleData( const ParticleDatabase& particles ) {

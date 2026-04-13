@@ -272,7 +272,7 @@ namespace dryad {
     std::size_t numberProducts( const id::ParticleID& type ) const {
 
       auto functor = [&type] ( auto&& product )
-                             { return product.identifier() == type; };
+                             { return product.productIdentifier() == type; };
 
       return std::count_if( this->products().begin(),
                             this->products().end(),

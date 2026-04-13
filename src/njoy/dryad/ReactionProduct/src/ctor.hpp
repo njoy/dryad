@@ -20,13 +20,17 @@ ReactionProduct& operator=( ReactionProduct&& ) = default;
  *  @param normalise       option to indicate whether or not to normalise
  *                         all probability data (default: no normalisation)
  */
-ReactionProduct( id::ParticleID id,
+ReactionProduct( id::ParticleID product,
                  Multiplicity multiplicity,
                  std::optional< DistributionData > distribution = std::nullopt,
                  std::optional< TabulatedAverageCosine > averageCosine = std::nullopt,
                  std::optional< TabulatedAverageEnergy > averageEnergy = std::nullopt,
+                 std::optional< id::ParticleID > parent = std::nullopt,
+                 std::size_t index = 0,
                  bool normalise = false ) :
-    id_( std::move( id ) ),
+    product_( std::move( product ) ),
+    parent_( std::move( parent ) ),
+    chain_index_( index ),
     multiplicity_( std::move( multiplicity ) ),
     distribution_( std::move( distribution ) ),
     average_cosine_( std::move( averageCosine ) ),
@@ -41,16 +45,18 @@ ReactionProduct( id::ParticleID id,
 /**
  *  @brief Convenience constructor
  *
- *  @param id              the reaction product identifier
+ *  @param product         the reaction product identifier
  *  @param multiplicity    the reaction product multiplicity
  *  @param averageEnergy   the average reaction product energy
  */
-ReactionProduct( id::ParticleID id,
+ReactionProduct( id::ParticleID product,
                  Multiplicity multiplicity,
                  TabulatedAverageEnergy averageEnergy ) :
-    ReactionProduct( std::move( id ),
+    ReactionProduct( std::move( product ),
                      std::move( multiplicity ),
                      std::nullopt,
                      std::nullopt,
                      std::move( averageEnergy ),
+                     std::nullopt,
+                     0,
                      false ) {}

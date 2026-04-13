@@ -1576,7 +1576,7 @@ class ReactionProduct:
         ...
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
-    def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
+    def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, parent: id.ParticleID | None = None, index: int = 0, normalise: bool = False) -> None:
         """
         Initialise the reaction
         
@@ -1587,6 +1587,8 @@ class ReactionProduct:
             distribution     the optional reaction product distribution data
             average_cosine   the optional average reaction product cosine
             average_energy   the optional average reaction product energy
+            parent           the optional parent reaction product
+            index            the chain index of the reaction product
             normalise        option to indicate whether or not to normalise
                              all probability data (default: no normalisation)
         """
@@ -1613,6 +1615,14 @@ class ReactionProduct:
     def average_energy(self, arg1: TabulatedAverageEnergy | None) -> None:
         ...
     @property
+    def chain_index(self) -> int:
+        """
+        The chain index of the reaction product
+        """
+    @chain_index.setter
+    def chain_index(self, arg1: int) -> None:
+        ...
+    @property
     def distribution_data(self) -> TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None:
         """
         The distribution data
@@ -1636,20 +1646,28 @@ class ReactionProduct:
         Flag indicating whether or not the reaction product has distribution data
         """
     @property
-    def identifier(self) -> id.ParticleID:
-        """
-        The reaction product identifier
-        """
-    @identifier.setter
-    def identifier(self, arg1: id.ParticleID) -> None:
-        ...
-    @property
     def multiplicity(self) -> int | TabulatedMultiplicity | PolynomialMultiplicity:
         """
         The multiplicity
         """
     @multiplicity.setter
     def multiplicity(self, arg1: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
+        ...
+    @property
+    def parent_identifier(self) -> id.ParticleID | None:
+        """
+        The parent product identifier
+        """
+    @parent_identifier.setter
+    def parent_identifier(self, arg1: id.ParticleID | None) -> None:
+        ...
+    @property
+    def product_identifier(self) -> id.ParticleID:
+        """
+        The reaction product identifier
+        """
+    @product_identifier.setter
+    def product_identifier(self, arg1: id.ParticleID) -> None:
         ...
 class ReferenceFrame:
     """

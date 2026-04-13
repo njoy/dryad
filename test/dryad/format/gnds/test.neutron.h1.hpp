@@ -173,7 +173,9 @@ namespace h1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H1" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
     CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
@@ -270,7 +272,9 @@ namespace h1 {
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
     auto h1 = reaction.product( id::ParticleID( "H1" ) );
-    CHECK( id::ParticleID( "H1" ) == h1.identifier() );
+    CHECK( id::ParticleID( "H1" ) == h1.productIdentifier() );
+    CHECK( std::nullopt == h1.parentIdentifier() );
+    CHECK( 0 == h1.chainIndex() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -309,10 +313,14 @@ namespace h1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H2" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
 
     auto deuterium = reaction.product( id::ParticleID( "H2" ) );
-    CHECK( id::ParticleID( "H2" ) == deuterium.identifier() );
+    CHECK( id::ParticleID( "H2" ) == deuterium.productIdentifier() );
+    CHECK( std::nullopt == deuterium.parentIdentifier() );
+    CHECK( 0 == deuterium.chainIndex() );
   }
 
 

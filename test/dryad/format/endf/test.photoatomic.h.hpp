@@ -241,7 +241,9 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
 
     auto gamma = reaction.products()[0];
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 
@@ -348,7 +350,9 @@ namespace h0 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
 
     auto gamma = reaction.products()[0];
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
 

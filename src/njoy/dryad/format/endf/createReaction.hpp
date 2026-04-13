@@ -33,7 +33,7 @@ namespace endf {
 
     auto iter = std::find_if( products.begin(), products.end(),
                               [&particle] ( auto&& product )
-                                          { return product.identifier() == particle; } );
+                                          { return product.productIdentifier() == particle; } );
     if ( iter == products.end() ) {
 
       Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );

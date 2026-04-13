@@ -414,7 +414,9 @@ namespace endf81 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
     CHECK( false == electron.hasAverageCosine() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
@@ -528,7 +530,9 @@ namespace endf81 {
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == hydrogen.parentIdentifier() );
+    CHECK( 0 == hydrogen.chainIndex() );
   }
 
   void verifyTotalElasticReaction( const Reaction& reaction ) {
@@ -602,7 +606,9 @@ namespace endf81 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
     CHECK( false == gamma.hasAverageCosine() );
     CHECK( false == gamma.hasAverageEnergy() );
     CHECK( true == gamma.hasDistributionData() );
@@ -722,7 +728,9 @@ namespace endf81 {
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
     CHECK( false == electron.hasAverageCosine() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
@@ -752,7 +760,9 @@ namespace endf81 {
     CHECK( std::nullopt == electron.distributionData() );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == hydrogen.parentIdentifier() );
+    CHECK( 0 == hydrogen.chainIndex() );
   }
 
   void verifyExcitationReaction( const Reaction& reaction ) {
@@ -787,7 +797,9 @@ namespace endf81 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto electron = reaction.product( id::ParticleID( "e-" ) );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
     CHECK( false == electron.hasAverageCosine() );
     CHECK( true == electron.hasAverageEnergy() );
     CHECK( false == electron.hasDistributionData() );
@@ -817,7 +829,9 @@ namespace endf81 {
     CHECK( std::nullopt == electron.distributionData() );
 
     auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.identifier() );
+    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
+    CHECK( std::nullopt == hydrogen.parentIdentifier() );
+    CHECK( 0 == hydrogen.chainIndex() );
   }
 
   void verifySubshellIonisationReaction( const Reaction& reaction, bool normalise ) {
@@ -852,7 +866,9 @@ namespace endf81 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
 
     auto electron = reaction.product( id::ParticleID( "e-" ), 0 );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
     CHECK( false == electron.hasAverageCosine() );
     CHECK( false == electron.hasAverageEnergy() );
     CHECK( true == electron.hasDistributionData() );
@@ -966,10 +982,14 @@ namespace endf81 {
     CHECK( InterpolationType::LinearLinear == energy.interpolants()[0] );
 
     electron = reaction.product( id::ParticleID( "e-" ), 1 );
-    CHECK( id::ParticleID( "e-" ) == electron.identifier() );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
 
     auto ion = reaction.product( id::ParticleID( "H{1s1/2}" ), 0 );
-    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.identifier() );
+    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.productIdentifier() );
+    CHECK( std::nullopt == ion.parentIdentifier() );
+    CHECK( 0 == ion.chainIndex() );
   }
 
   void verifyElasticDeficitReaction( const Reaction& reaction ) {

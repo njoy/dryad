@@ -79,7 +79,9 @@ namespace h {
 
     CHECK( 1 == reaction.products().size() );
 
-    CHECK( id::ParticleID( "g" ) == reaction.products()[0].identifier() );
+    CHECK( id::ParticleID( "g" ) == reaction.products()[0].productIdentifier() );
+    CHECK( std::nullopt == reaction.products()[0].parentIdentifier() );
+    CHECK( 0 == reaction.products()[0].chainIndex() );
     CHECK( false == reaction.products()[0].hasAverageEnergy() );
     CHECK( true == reaction.products()[0].hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( reaction.products()[0].multiplicity() ) );
@@ -141,7 +143,9 @@ namespace h {
 
     CHECK( 1 == reaction.products().size() );
 
-    CHECK( id::ParticleID( "g" ) == reaction.products()[0].identifier() );
+    CHECK( id::ParticleID( "g" ) == reaction.products()[0].productIdentifier() );
+    CHECK( std::nullopt == reaction.products()[0].parentIdentifier() );
+    CHECK( 0 == reaction.products()[0].chainIndex() );
     CHECK( false == reaction.products()[0].hasAverageEnergy() );
     CHECK( true == reaction.products()[0].hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( reaction.products()[0].multiplicity() ) );

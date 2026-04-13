@@ -3,6 +3,7 @@
 
 // system includes
 #include <optional>
+#include <tuple>
 #include <variant>
 
 // other includes
@@ -38,7 +39,10 @@ namespace dryad {
   private:
 
     /* fields */
-    id::ParticleID id_;
+    id::ParticleID product_;
+
+    std::optional< id::ParticleID > parent_;
+    std::size_t chain_index_;
 
     Multiplicity multiplicity_;
     std::optional< DistributionData > distribution_;
@@ -56,19 +60,55 @@ namespace dryad {
     /**
      *  @brief Return the particle identifier for the reaction product
      */
-    const id::ParticleID& identifier() const {
+    const id::ParticleID& productIdentifier() const {
 
-      return this->id_;
+      return this->product_;
     }
 
     /**
      *  @brief Set the particle identifier for the reaction product
      *
-     *  @param id   the reaction product identifier
+     *  @param product   the reaction product identifier
      */
-    void identifier( id::ParticleID id ) {
+    void productIdentifier( id::ParticleID product ) {
 
-      this->id_ = std::move( id );
+      this->product_ = std::move( product );
+    }
+
+    /**
+     *  @brief Return the particle identifier for the parent product
+     */
+    const std::optional< id::ParticleID >& parentIdentifier() const {
+
+      return this->parent_;
+    }
+
+    /**
+     *  @brief Set the particle identifier for the parent product
+     *
+     *  @param parent   the parent product identifier
+     */
+    void parentIdentifier( std::optional< id::ParticleID > parent ) {
+
+      this->parent_ = std::move( parent );
+    }
+
+    /**
+     *  @brief Return the chain index of the reaction product
+     */
+    std::size_t chainIndex() const {
+
+      return this->chain_index_;
+    }
+
+    /**
+     *  @brief Set the chain index of the reaction product
+     *
+     *  @param index   the chain index
+     */
+    void chainIndex( std::size_t index ) {
+
+      this->chain_index_ = index;
     }
 
     /**
@@ -201,10 +241,14 @@ namespace dryad {
      */
     bool operator==( const ReactionProduct& right ) const {
 
-      return this->identifier() == right.identifier() &&
-             this->multiplicity() == right.multiplicity() &&
-             this->averageEnergy() == right.averageEnergy() &&
-             this->distributionData() == right.distributionData();
+      return std::tie( this->productIdentifier(), this->parentIdentifier(),
+                       this->chain_index_, this->multiplicity(),
+                       this->distributionData(), this->averageCosine(),
+                       this->averageEnergy() ) ==
+             std::tie( right.productIdentifier(), right.parentIdentifier(),
+                       right.chain_index_, right.multiplicity(),
+                       right.distributionData(), right.averageCosine(),
+                       right.averageEnergy() );
     }
 
     /**
