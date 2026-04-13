@@ -19,6 +19,13 @@ Modifiable Attributes
 
     ~ParticleDatabase.particles
 
+Read-only Attributes
+~~~~~~~~~~~~~~~~~~~~
+.. autosummary::
+    :toctree: generated/
+
+    ~ParticleDatabase.number_particles
+
 Methods
 ~~~~~~~
 .. autosummary::
