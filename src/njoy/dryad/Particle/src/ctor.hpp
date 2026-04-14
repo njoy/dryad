@@ -13,13 +13,13 @@ Particle& operator=( Particle&& ) = default;
  *  @brief Constructor
  *
  *  @param[in] id                       the particle identifier
- *  @param[in] mass                     the atomic mass
+ *  @param[in] mass                     the atomic mass (default is none)
  *  @param[in] spin                     the particle spin (default is none)
  *  @param[in] parity                   the parity (default is none)
  *  @param[in] energy                   the excited state energy (default is none)
- *  @param[in] nuclearMass              the excited state energy (default is none)
+ *  @param[in] nuclearMass              the nuclear mass (default is none)
  *  @param[in] massUncertainty          the uncertainty on the atomic mass value (default is none)
- *  @param[in] nuclearMassUncertainty   the uncertainty on the atomic mass value (default is none)
+ *  @param[in] nuclearMassUncertainty   the uncertainty on the nuclear mass value (default is none)
  *  @param[in] energyUncertainty        the uncertainty on the level energy value (default is none)
  */
 Particle( id::ParticleID id,
