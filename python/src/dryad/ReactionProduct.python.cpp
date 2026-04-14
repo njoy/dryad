@@ -28,7 +28,11 @@ void wrapReactionProduct( python::module& module ) {
 
     module,
     "ReactionProduct",
-    "The data associated to a single reaction product"
+    "The data associated to a single reaction product\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ParticleID\n"
+    "         the particle identifier (default: None)\n"
   );
 
   // wrap the component
@@ -50,7 +54,7 @@ void wrapReactionProduct( python::module& module ) {
     python::arg( "parent" ) = std::nullopt,
     python::arg( "chain" ) = 0,
     python::arg( "normalise" ) = false,
-    "Initialise the reaction\n\n"
+    "Initialise the reaction"
     "Arguments:\n"
     "    self             the reaction\n"
     "    product          the reaction product identifier\n"
