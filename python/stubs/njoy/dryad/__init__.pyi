@@ -872,11 +872,11 @@ class Particle:
     Parameters
     ----------
         id : njoy.dryad.id.ParticleID
-             the particle identifier (default: None)
+             the particle identifier
         mass : float, default None
-            the atomic mass
-        nuclear_mass : float
-            the nuclear mass
+            the atomic mass (default: None)
+        nuclear_mass : float, default None
+            the nuclear mass (default: None)
         spin : float, default None
             the particle spin (default: None)
         parity : int, default None
