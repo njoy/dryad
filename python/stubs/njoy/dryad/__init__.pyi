@@ -1413,13 +1413,24 @@ class Reaction:
             self         the reaction
             tolerance    the integration tolerance (default: 1e-8)
         """
+    @typing.overload
     def has_product(self, type: id.ParticleID) -> bool:
         """
-        Return whether or not a reaction product type is present
+        Return whether or not a reaction product type is present regardless of chain index
         
         Arguments:
             self   the reaction
             type   the reaction product type
+        """
+    @typing.overload
+    def has_product(self, type: id.ParticleID, chain: int) -> bool:
+        """
+        Return whether or not a reaction product type is present for a given chain index
+        
+        Arguments:
+            self    the reaction
+            type    the reaction product type
+            chain   the reaction product chain index
         """
     def normalise(self) -> None:
         """
@@ -1433,16 +1444,33 @@ class Reaction:
     @typing.overload
     def number_products(self, type: id.ParticleID) -> int:
         """
-        The number of reaction products of a given type
+        The number of reaction products of a given type regardless of the chain index
         """
+    @typing.overload
+    def number_products(self, type: id.ParticleID, chain: int) -> int:
+        """
+        The number of reaction products of a given type for a given chain index
+        """
+    @typing.overload
     def product(self, type: id.ParticleID, index: int = 0) -> ReactionProduct:
         """
-        Return a reaction product with a given type and index
+        Return a reaction product with a given type and index regardless of the chain index
         
         Arguments:
             self    the reaction
             type    the reaction product type
             index   the reaction product index (default is zero)
+        """
+    @typing.overload
+    def product(self, type: id.ParticleID, chain: int, index: int) -> ReactionProduct:
+        """
+        Return a reaction product with a given type, chain index and index
+        
+        Arguments:
+            self    the reaction
+            type    the reaction product type
+            chain   the reaction product chain index
+            index   the reaction product index
         """
     @property
     def category(self) -> ReactionCategory:
@@ -1576,7 +1604,7 @@ class ReactionProduct:
         ...
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
-    def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, parent: id.ParticleID | None = None, index: int = 0, normalise: bool = False) -> None:
+    def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, parent: id.ParticleID | None = None, chain: int = 0, normalise: bool = False) -> None:
         """
         Initialise the reaction
         
@@ -1588,7 +1616,7 @@ class ReactionProduct:
             average_cosine   the optional average reaction product cosine
             average_energy   the optional average reaction product energy
             parent           the optional parent reaction product
-            index            the chain index of the reaction product
+            chain            the chain index of the reaction product
             normalise        option to indicate whether or not to normalise
                              all probability data (default: no normalisation)
         """

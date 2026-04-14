@@ -48,7 +48,7 @@ void wrapReactionProduct( python::module& module ) {
     python::arg( "average_cosine" ) = std::nullopt,
     python::arg( "average_energy" ) = std::nullopt,
     python::arg( "parent" ) = std::nullopt,
-    python::arg( "index" ) = 0,
+    python::arg( "chain" ) = 0,
     python::arg( "normalise" ) = false,
     "Initialise the reaction\n\n"
     "Arguments:\n"
@@ -59,7 +59,7 @@ void wrapReactionProduct( python::module& module ) {
     "    average_cosine   the optional average reaction product cosine\n"
     "    average_energy   the optional average reaction product energy\n"
     "    parent           the optional parent reaction product\n"
-    "    index            the chain index of the reaction product\n"
+    "    chain            the chain index of the reaction product\n"
     "    normalise        option to indicate whether or not to normalise\n"
     "                     all probability data (default: no normalisation)"
   )

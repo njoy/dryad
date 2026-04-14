@@ -1,7 +1,5 @@
-auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const {
-
-  auto functor = [&type] ( auto&& product )
-                         { return product.productIdentifier() == type; };
+template < typename Functor >
+auto iterator( Functor&& functor, std::size_t index ) const {
 
   auto iter = std::find_if( this->products().begin(), this->products().end(), functor );
   std::size_t current = index;
@@ -12,4 +10,21 @@ auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const {
   }
 
   return iter;
+}
+
+auto iterator( const id::ParticleID& type, std::size_t index = 0 ) const {
+
+  auto functor = [&] ( auto&& product )
+                     { return product.productIdentifier() == type; };
+
+  return this->iterator( functor, index );
+}
+
+auto iterator( const id::ParticleID& type, std::size_t chain, std::size_t index ) const {
+
+  auto functor = [&] ( auto&& product )
+                     { return product.productIdentifier() == type &&
+                              product.chainIndex() == chain; };
+
+  return this->iterator( functor, index );
 }
