@@ -37,6 +37,12 @@ The ``dryad`` module contains the data structures used throughout ``njoy``.
 
 .. toctree::
    :maxdepth: 1
+   :caption: Incident particle data
+
+   ReactionProduct
+
+.. toctree::
+   :maxdepth: 1
    :caption: Resonance data
 
    resonances

@@ -31,8 +31,23 @@ void wrapReactionProduct( python::module& module ) {
     "The data associated to a single reaction product\n\n"
     "Parameters\n"
     "----------\n"
-    "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier (default: None)\n"
+    "    product : njoy.dryad.id.ParticleID\n"
+    "         the reaction product identifier\n"
+    "    multiplicity : int, njoy.dryad.TabulatedMultiplicity or njoy.dryad.PolynomialMultiplicity\n"
+    "         the reaction product multiplicity\n"
+    "    distribution : default None\n"
+    "         the reaction product distribution data (default: None)\n"
+    "    average_cosine : njoy.dryad.TabulatedAverageCosine, default None\n"
+    "         the average reaction product cosine (default: None)\n"
+    "    average_energy : njoy.dryad.TabulatedAverageEnergy, default None\n"
+    "         the average reaction product energy (default: None)\n"
+    "    parent : njoy.dryad.id.ParticleID, default None\n"
+    "         the parent reaction product (default: None)\n"
+    "    chain : int, default 0\n"
+    "         the chain index of the reaction product (default: 0)\n"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise all probability\n"
+    "         data (default: no normalisation)"
   );
 
   // wrap the component
@@ -55,17 +70,6 @@ void wrapReactionProduct( python::module& module ) {
     python::arg( "chain" ) = 0,
     python::arg( "normalise" ) = false,
     "Initialise the reaction"
-    "Arguments:\n"
-    "    self             the reaction\n"
-    "    product          the reaction product identifier\n"
-    "    multiplicity     the reaction product multiplicity\n"
-    "    distribution     the optional reaction product distribution data\n"
-    "    average_cosine   the optional average reaction product cosine\n"
-    "    average_energy   the optional average reaction product energy\n"
-    "    parent           the optional parent reaction product\n"
-    "    chain            the chain index of the reaction product\n"
-    "    normalise        option to indicate whether or not to normalise\n"
-    "                     all probability data (default: no normalisation)"
   )
   .def_property(
 

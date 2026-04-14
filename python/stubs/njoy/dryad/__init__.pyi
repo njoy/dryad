@@ -1596,6 +1596,26 @@ class ReactionCategory:
 class ReactionProduct:
     """
     The data associated to a single reaction product
+    
+    Parameters
+    ----------
+        product : njoy.dryad.id.ParticleID
+             the reaction product identifier
+        multiplicity : int, njoy.dryad.TabulatedMultiplicity or njoy.dryad.PolynomialMultiplicity
+             the reaction product multiplicity
+        distribution : default None
+             the reaction product distribution data (default: None)
+        average_cosine : njoy.dryad.TabulatedAverageCosine, default None
+             the average reaction product cosine (default: None)
+        average_energy : njoy.dryad.TabulatedAverageEnergy, default None
+             the average reaction product energy (default: None)
+        parent : njoy.dryad.id.ParticleID, default None
+             the parent reaction product (default: None)
+        chain : int, default 0
+             the chain index of the reaction product (default: 0)
+        normalise : bool, default False
+             option to indicate whether or not to normalise all probability
+             data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ReactionProduct:
@@ -1607,18 +1627,6 @@ class ReactionProduct:
     def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, parent: id.ParticleID | None = None, chain: int = 0, normalise: bool = False) -> None:
         """
         Initialise the reaction
-        
-        Arguments:
-            self             the reaction
-            product          the reaction product identifier
-            multiplicity     the reaction product multiplicity
-            distribution     the optional reaction product distribution data
-            average_cosine   the optional average reaction product cosine
-            average_energy   the optional average reaction product energy
-            parent           the optional parent reaction product
-            chain            the chain index of the reaction product
-            normalise        option to indicate whether or not to normalise
-                             all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
