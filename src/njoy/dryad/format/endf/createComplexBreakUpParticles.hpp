@@ -116,6 +116,7 @@ namespace endf {
 
         Log::error( "Complex breakup flag \'{}\' is not compatible with residual \'{}\'",
                     complex_breakup, residual.symbol() );
+        throw std::exception();
       }
       else {
 
