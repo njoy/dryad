@@ -237,10 +237,11 @@ namespace h0 {
     CHECK_THAT( 4.52522E-6, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 4.6282E-16, WithinRel( reaction.crossSection().values()[360] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
-    auto gamma = reaction.products()[0];
+    auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
     CHECK( std::nullopt == gamma.parentIdentifier() );
     CHECK( 0 == gamma.chainIndex() );
@@ -317,6 +318,19 @@ namespace h0 {
     CHECK( 296 == factor.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
     CHECK( true == factor.isLinearised() );
+
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyIncoherentReaction( const Reaction& reaction ) {
@@ -346,8 +360,9 @@ namespace h0 {
     CHECK_THAT( 9.56230E-8, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 1.70420E-5, WithinRel( reaction.crossSection().values()[395] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
 
     auto gamma = reaction.products()[0];
     CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
@@ -389,6 +404,19 @@ namespace h0 {
 
     CHECK( false == data.hasComptonProfiles() );
     CHECK( std::nullopt == data.comptonProfiles() );
+
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyElectronFieldPairProductionReaction( const Reaction& reaction ) {
@@ -398,7 +426,7 @@ namespace h0 {
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
-    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.hasProducts() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -418,7 +446,51 @@ namespace h0 {
     CHECK_THAT( 0.      , WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .0111   , WithinRel( reaction.crossSection().values()[216] ) );
 
-    CHECK( 0 == reaction.numberProducts() );
+    CHECK( 3 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e+" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
+
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
+    CHECK( false == electron.hasAverageCosine() );
+    CHECK( false == electron.hasAverageEnergy() );
+    CHECK( false == electron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
+    auto multiplicity = std::get< int >( electron.multiplicity() );
+    CHECK( 2 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
+    CHECK( std::nullopt == electron.averageEnergy() );
+    CHECK( std::nullopt == electron.distributionData() );
+
+    auto positron = reaction.product( id::ParticleID( "e+" ) );
+    CHECK( id::ParticleID( "e+" ) == positron.productIdentifier() );
+    CHECK( std::nullopt == positron.parentIdentifier() );
+    CHECK( 0 == positron.chainIndex() );
+    CHECK( false == positron.hasAverageCosine() );
+    CHECK( false == positron.hasAverageEnergy() );
+    CHECK( false == positron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( positron.multiplicity() ) );
+    multiplicity = std::get< int >( positron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == positron.averageCosine() );
+    CHECK( std::nullopt == positron.averageEnergy() );
+    CHECK( std::nullopt == positron.distributionData() );
+
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyNuclearFieldPairProductionReaction( const Reaction& reaction ) {
@@ -428,7 +500,7 @@ namespace h0 {
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
-    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.hasProducts() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -448,7 +520,51 @@ namespace h0 {
     CHECK_THAT( 0.      , WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( .009601 , WithinRel( reaction.crossSection().values()[307] ) );
 
-    CHECK( 0 == reaction.numberProducts() );
+    CHECK( 3 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e+" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H" ) ) );
+
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
+    CHECK( false == electron.hasAverageCosine() );
+    CHECK( false == electron.hasAverageEnergy() );
+    CHECK( false == electron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
+    auto multiplicity = std::get< int >( electron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
+    CHECK( std::nullopt == electron.averageEnergy() );
+    CHECK( std::nullopt == electron.distributionData() );
+
+    auto positron = reaction.product( id::ParticleID( "e+" ) );
+    CHECK( id::ParticleID( "e+" ) == positron.productIdentifier() );
+    CHECK( std::nullopt == positron.parentIdentifier() );
+    CHECK( 0 == positron.chainIndex() );
+    CHECK( false == positron.hasAverageCosine() );
+    CHECK( false == positron.hasAverageEnergy() );
+    CHECK( false == positron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( positron.multiplicity() ) );
+    multiplicity = std::get< int >( positron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == positron.averageCosine() );
+    CHECK( std::nullopt == positron.averageEnergy() );
+    CHECK( std::nullopt == positron.distributionData() );
+
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyTotalPairProductionReaction( const Reaction& reaction ) {
@@ -495,7 +611,7 @@ namespace h0 {
     CHECK( ReactionCategory::Primary == reaction.category() );
     CHECK( false == reaction.isSummationReaction() );
     CHECK( true == reaction.isPrimaryReaction() );
-    CHECK( false == reaction.hasProducts() );
+    CHECK( true == reaction.hasProducts() );
 
     CHECK( std::nullopt == reaction.massDifferenceQValue() );
     CHECK( std::nullopt != reaction.reactionQValue() );
@@ -515,7 +631,36 @@ namespace h0 {
     CHECK_THAT( 6318358.25, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 7.7360E-15, WithinRel( reaction.crossSection().values()[903] ) );
 
-    CHECK( 0 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "e-" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H{1s1/2}" ) ) );
+
+    auto electron = reaction.product( id::ParticleID( "e-" ) );
+    CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
+    CHECK( std::nullopt == electron.parentIdentifier() );
+    CHECK( 0 == electron.chainIndex() );
+    CHECK( false == electron.hasAverageCosine() );
+    CHECK( false == electron.hasAverageEnergy() );
+    CHECK( false == electron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
+    auto multiplicity = std::get< int >( electron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
+    CHECK( std::nullopt == electron.averageEnergy() );
+    CHECK( std::nullopt == electron.distributionData() );
+
+    auto h = reaction.product( id::ParticleID( "H{1s1/2}" ) );
+    CHECK( id::ParticleID( "H{1s1/2}" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyTotalIonisationReaction( const Reaction& reaction ) {
