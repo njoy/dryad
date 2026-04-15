@@ -620,7 +620,10 @@ namespace h0 {
     ionisation = H0.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
     verifyIonisationReaction( ionisation );
 
+    CHECK( std::nullopt == H0.particleData() );
+
     CHECK( std::nullopt == H0.resonances() );
+
     CHECK( std::nullopt == H0.covarianceData() );
   }
 

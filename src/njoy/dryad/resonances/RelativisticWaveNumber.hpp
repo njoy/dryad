@@ -67,8 +67,8 @@ namespace resonances {
       // conversion constant to convert the result to fm^-1
       constexpr double final = constants::c * constants::hbar * constants::peta;
 
-      const auto particle = incident.lightParticle().mass();
-      const auto residual = incident.heavyParticle().mass();
+      const auto particle = incident.lightParticle().mass().value();
+      const auto residual = incident.heavyParticle().mass().value();
       const auto pair = ( particle + residual ) * conversion;  // eV
       const auto delta = ( particle - residual ) * conversion; // eV
       const auto mandelstam = pair * pair + 2. * residual * conversion * std::abs( energy ); // ev^2

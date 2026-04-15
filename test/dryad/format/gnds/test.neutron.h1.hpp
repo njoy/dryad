@@ -380,6 +380,17 @@ namespace h1 {
     CHECK(  1.171132e-4 == matrix.covariances()(152,152) );
   }
 
+  void verifyParticleData( const ParticleDatabase& particles ) {
+
+    CHECK( 5 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "p" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H2" ) ) );
+  }
+
   void verifyH1( const ProjectileTarget& H1, bool /* normalise */ ) {
 
     verifyDocumentation( H1.documentation() );
@@ -415,6 +426,9 @@ namespace h1 {
 
     capture = H1.reaction( id::ReactionID( "n,H1->g,H2[all]" ) );
     verifyCaptureReaction( capture );
+
+    CHECK( std::nullopt != H1.particleData() );
+    verifyParticleData( H1.particleData().value() );
 
     CHECK( std::nullopt == H1.resonances() );
 

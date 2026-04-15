@@ -17,7 +17,8 @@ class Test_Particle( unittest.TestCase ) :
         chunk = ParticleDatabase( particles = [ Particle( ParticleID( 'n' ), 1.008664, 0.5, +1 ),
                                                 Particle( ParticleID( 'p' ), 1.007276, 0.5, +1 ),
                                                 Particle( ParticleID( 'U235' ), 235.0439299, 0., +1, 0. ),
-                                                Particle( ParticleID( 'U235_e1' ), 235.0439299, 0., +1, 1e+6, None, 1e+3 ) ] )
+                                                Particle( ParticleID( 'U235_e1' ), 235.0439299, 0., +1, 1e+6,
+                                                          None, None, None, 1e+3 ) ] )
 
         self.assertEqual( 4, chunk.number_particles )
 

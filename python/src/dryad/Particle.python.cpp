@@ -26,8 +26,11 @@ void wrapParticle( python::module& module ) {
     "Particle",
     "Particle information\n\n"
     "The Particle class contains specific information for a particle:\n"
-    "  - the atomic mass value (always for the ground state) and an optional\n"
-    "    uncertainty\n"
+    "  - a particle identifier\n"
+    "  - an optional atomic mass value (always for the ground state) and an\n"
+    "    optional uncertainty\n"
+    "  - an optional nuclear mass value (always for the ground state) and an\n"
+    "    optional uncertainty\n"
     "  - an optional excited state energy value and an optional uncertainty\n"
     "  - an optional spin and parity (which is either + or -)\n\n"
     "The data is stored in the following units:\n"
@@ -37,8 +40,10 @@ void wrapParticle( python::module& module ) {
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
     "         the particle identifier\n"
-    "    mass : float\n"
-    "        the atomic mass\n"
+    "    mass : float, default None\n"
+    "        the atomic mass (default: None)\n"
+    "    nuclear_mass : float, default None\n"
+    "        the nuclear mass (default: None)\n"
     "    spin : float, default None\n"
     "        the particle spin (default: None)\n"
     "    parity : int, default None\n"
@@ -47,6 +52,8 @@ void wrapParticle( python::module& module ) {
     "        the excited state energy (default: None)\n"
     "    mass_uncertainty : float, default None\n"
     "        the uncertainty on the atomic mass value (default: None)\n"
+    "    nuclear_mass_uncertainty : float, default None\n"
+    "        the uncertainty on the nuclear mass value (default: None)\n"
     "    energy_uncertainty : float, default None\n"
     "        the uncertainty on the ecited level energy value (default: None)"
   );
@@ -55,17 +62,23 @@ void wrapParticle( python::module& module ) {
   component
   .def(
 
-    python::init< ParticleID, double,
+    python::init< ParticleID,
+                  std::optional< double >,
                   std::optional< double >,
                   std::optional< short >,
                   std::optional< double >,
                   std::optional< double >,
+                  std::optional< double >,
+                  std::optional< double >,
                   std::optional< double > >(),
-    python::arg( "id" ), python::arg( "mass" ),
+    python::arg( "id" ),
+    python::arg( "mass" ) = std::nullopt,
     python::arg( "spin" ) = std::nullopt,
     python::arg( "parity" ) = std::nullopt,
     python::arg( "energy" ) = std::nullopt,
+    python::arg( "nuclear_mass" ) = std::nullopt,
     python::arg( "mass_uncertainty" ) = std::nullopt,
+    python::arg( "nuclear_mass_uncertainty" ) = std::nullopt,
     python::arg( "energy_uncertainty" ) = std::nullopt,
     "Initialise the particle information"
   )
@@ -92,8 +105,15 @@ void wrapParticle( python::module& module ) {
 
     "mass",
     python::overload_cast<>( &Component::mass, python::const_ ),
-    python::overload_cast< double >( &Component::mass ),
+    python::overload_cast< std::optional< double > >( &Component::mass ),
     "The atomic mass of the particle in the ground state"
+  )
+  .def_property(
+
+    "nuclear_mass",
+    python::overload_cast<>( &Component::nuclearMass, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::nuclearMass ),
+    "The nuclear mass of the particle in the ground state"
   )
   .def_property(
 
@@ -122,6 +142,13 @@ void wrapParticle( python::module& module ) {
     python::overload_cast<>( &Component::massUncertainty, python::const_ ),
     python::overload_cast< std::optional< double > >( &Component::massUncertainty ),
     "The atomic mass uncertainty"
+  )
+  .def_property(
+
+    "nuclear_mass_uncertainty",
+    python::overload_cast<>( &Component::nuclearMassUncertainty, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::nuclearMassUncertainty ),
+    "The nuclear mass uncertainty"
   )
   .def_property(
 

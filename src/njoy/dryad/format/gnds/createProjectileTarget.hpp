@@ -11,6 +11,7 @@
 #include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
 #include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
 #include "njoy/dryad/format/gnds/createInteractionType.hpp"
+#include "njoy/dryad/format/gnds/pops/createParticleDatabase.hpp"
 #include "njoy/dryad/format/gnds/createReactions.hpp"
 #include "njoy/dryad/format/gnds/covariance/createCovarianceData.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
@@ -45,9 +46,10 @@ namespace gnds {
       id::ParticleID target( suite.attribute( "target" ).as_string() );
       InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
 
-      std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
-
+      std::optional< ParticleDatabase > particles = pops::createParticleDatabase( suite.child( "PoPs" ), style );
       std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
+
+      std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
 
       std::optional< dryad::covariance::CovarianceData > covariances = std::nullopt;
       if ( covsuite ) {
@@ -56,8 +58,8 @@ namespace gnds {
       }
 
       return ProjectileTarget( std::move( projectile ), std::move( target ),
-                               type, std::move( reactions ), std::move( resonances ),
-                               std::move( covariances ) );
+                               type, std::move( reactions ), std::move( particles ),
+                               std::move( resonances ), std::move( covariances ) );
     }
     else {
 

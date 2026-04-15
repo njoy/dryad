@@ -45,51 +45,60 @@ SCENARIO( "Particle" ) {
                         neutronSpin, neutronParity );
 
       CHECK( id::ParticleID::neutron() == neutron.identifier() );
-      CHECK_THAT( 1.008664, WithinRel( neutron.mass() ) );
+      CHECK_THAT( 1.008664, WithinRel( neutron.mass().value() ) );
       CHECK_THAT( 0.5, WithinRel( neutron.spin().value() ) );
       CHECK( 0.0 == neutron.charge() );
       CHECK( 0 == neutron.excitedState() );
       CHECK( +1 == neutron.parity().value() );
       CHECK( std::nullopt == neutron.energy() );
+      CHECK( std::nullopt == neutron.nuclearMass() );
       CHECK( std::nullopt == neutron.massUncertainty() );
+      CHECK( std::nullopt == neutron.nuclearMassUncertainty() );
       CHECK( std::nullopt == neutron.energyUncertainty() );
 
       Particle proton( protonID, protonMass,
                        protonSpin, protonParity );
 
       CHECK( id::ParticleID::proton() == proton.identifier() );
-      CHECK_THAT( 1.007276, WithinRel( proton.mass() ) );
+      CHECK_THAT( 1.007276, WithinRel( proton.mass().value() ) );
       CHECK_THAT( 0.5, WithinRel( proton.spin().value() ) );
       CHECK( 1 == proton.charge() );
       CHECK( 0 == proton.excitedState() );
       CHECK( +1 == proton.parity().value() );
       CHECK( std::nullopt == proton.energy() );
+      CHECK( std::nullopt == proton.nuclearMass() );
       CHECK( std::nullopt == proton.massUncertainty() );
+      CHECK( std::nullopt == proton.nuclearMassUncertainty() );
       CHECK( std::nullopt == proton.energyUncertainty() );
 
       Particle u235( u235ID, u235Mass, u235Spin, u235Parity, u235Energy );
 
       CHECK( id::ParticleID( "U235" ) == u235.identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( u235.mass() ) );
+      CHECK_THAT( 235.0439299, WithinRel( u235.mass().value() ) );
       CHECK_THAT( 0., WithinRel( u235.spin().value() ) );
       CHECK( 92 == u235.charge() );
       CHECK( 0 == u235.excitedState() );
       CHECK( +1 == u235.parity().value() );
       CHECK( 0.0 == u235.energy() );
+      CHECK( std::nullopt == u235.nuclearMass() );
       CHECK( std::nullopt == u235.massUncertainty() );
+      CHECK( std::nullopt == u235.nuclearMassUncertainty() );
       CHECK( std::nullopt == u235.energyUncertainty() );
 
       Particle u235_e1( u235e1ID, u235Mass, u235Spin, u235Parity,
-                        u235e1Energy, std::nullopt, u235e1EnergyUncertainty );
+                        u235e1Energy, std::nullopt, std::nullopt,
+                        std::nullopt, u235e1EnergyUncertainty );
 
       CHECK( id::ParticleID( "U235_e1" ) == u235_e1.identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass() ) );
+      CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass().value() ) );
       CHECK_THAT( 0., WithinRel( u235_e1.spin().value() ) );
       CHECK( 92 == u235_e1.charge() );
       CHECK( 1 == u235_e1.excitedState() );
       CHECK( +1 == u235_e1.parity().value() );
       CHECK( 1e+6 == u235_e1.energy() );
+      CHECK( std::nullopt == u235_e1.nuclearMass() );
       CHECK( std::nullopt == u235_e1.massUncertainty() );
+      CHECK( std::nullopt == u235_e1.nuclearMassUncertainty() );
       CHECK( std::nullopt != u235_e1.energyUncertainty() );
       CHECK_THAT( 1e+3, WithinRel( u235_e1.energyUncertainty().value() ) );
     } // THEN
@@ -123,11 +132,11 @@ SCENARIO( "Particle" ) {
 
         chunk.mass( newmass );
 
-        CHECK( newmass == chunk.mass() );
+        CHECK( newmass == chunk.mass().value() );
 
         chunk.mass( original );
 
-        CHECK( original == chunk.mass() );
+        CHECK( original == chunk.mass().value() );
       } // THEN
 
       THEN( "the mass uncertainty can be changed" ) {
@@ -142,6 +151,34 @@ SCENARIO( "Particle" ) {
         chunk.massUncertainty( original );
 
         CHECK( original == chunk.massUncertainty() );
+      } // THEN
+
+      THEN( "the nuclear mass can be changed" ) {
+
+        std::optional< double > newmass = 235;
+        std::optional< double > original = std::nullopt;
+
+        chunk.nuclearMass( newmass );
+
+        CHECK( newmass == chunk.nuclearMass() );
+
+        chunk.nuclearMass( original );
+
+        CHECK( original == chunk.nuclearMass() );
+      } // THEN
+
+      THEN( "the nuclear mass uncertainty can be changed" ) {
+
+        std::optional< double > newuncertainty = 1.;
+        std::optional< double > original = std::nullopt;
+
+        chunk.nuclearMassUncertainty( newuncertainty );
+
+        CHECK( newuncertainty == chunk.nuclearMassUncertainty() );
+
+        chunk.nuclearMassUncertainty( original );
+
+        CHECK( original == chunk.nuclearMassUncertainty() );
       } // THEN
 
       THEN( "the level energy can be changed" ) {

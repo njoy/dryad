@@ -592,6 +592,15 @@ namespace h0 {
     CHECK( 0 == reaction.numberProducts() );
   }
 
+  void verifyParticleData( const ParticleDatabase& particles ) {
+
+    CHECK( 3 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "e-" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "e+" ) ) );
+  }
+
   void verifyH0( const ProjectileTarget& H0, bool /* normalise */ ) {
 
     verifyDocumentation( H0.documentation() );
@@ -662,6 +671,9 @@ namespace h0 {
 
     ionisation = H0.reaction( id::ReactionID( "g,H->e-,H{1s1/2}" ) );
     verifyIonisationReaction( ionisation );
+
+    CHECK( std::nullopt != H0.particleData() );
+    verifyParticleData( H0.particleData().value() );
 
     CHECK( std::nullopt == H0.resonances() );
 

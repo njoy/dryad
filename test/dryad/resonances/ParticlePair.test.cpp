@@ -24,13 +24,13 @@ SCENARIO( "ParticlePair" ) {
       ParticlePair pair( std::move( neutron ), std::move( u235 ) );
 
       CHECK( id::ParticleID::neutron() == pair.lightParticle().identifier() );
-      CHECK_THAT( 1.008664, WithinRel( pair.lightParticle().mass() ) );
+      CHECK_THAT( 1.008664, WithinRel( pair.lightParticle().mass().value() ) );
       CHECK_THAT( 0.5, WithinRel( pair.lightParticle().spin().value() ) );
       CHECK( 0.0 == pair.lightParticle().charge() );
       CHECK( +1 == pair.lightParticle().parity().value() );
 
       CHECK( id::ParticleID( "U235" ) == pair.heavyParticle().identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( pair.heavyParticle().mass() ) );
+      CHECK_THAT( 235.0439299, WithinRel( pair.heavyParticle().mass().value() ) );
       CHECK_THAT( 0., WithinRel( pair.heavyParticle().spin().value() ) );
       CHECK( 92 == pair.heavyParticle().charge() );
       CHECK( +1 == pair.heavyParticle().parity().value() );

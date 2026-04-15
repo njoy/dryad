@@ -1787,6 +1787,8 @@ namespace li7 {
     lumped = Li7.reaction( id::ReactionID( "n,Li7->lumped9" ) );
     neutron::li7::verifyLumpedReaction859( lumped );
 
+    CHECK( std::nullopt == Li7.particleData() );
+
     CHECK( std::nullopt == Li7.resonances() );
 
     CHECK( std::nullopt != Li7.covarianceData() );

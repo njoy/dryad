@@ -857,8 +857,11 @@ class Particle:
     Particle information
     
     The Particle class contains specific information for a particle:
-      - the atomic mass value (always for the ground state) and an optional
-        uncertainty
+      - a particle identifier
+      - an optional atomic mass value (always for the ground state) and an
+        optional uncertainty
+      - an optional nuclear mass value (always for the ground state) and an
+        optional uncertainty
       - an optional excited state energy value and an optional uncertainty
       - an optional spin and parity (which is either + or -)
     
@@ -870,8 +873,10 @@ class Particle:
     ----------
         id : njoy.dryad.id.ParticleID
              the particle identifier
-        mass : float
-            the atomic mass
+        mass : float, default None
+            the atomic mass (default: None)
+        nuclear_mass : float, default None
+            the nuclear mass (default: None)
         spin : float, default None
             the particle spin (default: None)
         parity : int, default None
@@ -880,6 +885,8 @@ class Particle:
             the excited state energy (default: None)
         mass_uncertainty : float, default None
             the uncertainty on the atomic mass value (default: None)
+        nuclear_mass_uncertainty : float, default None
+            the uncertainty on the nuclear mass value (default: None)
         energy_uncertainty : float, default None
             the uncertainty on the ecited level energy value (default: None)
     """
@@ -890,7 +897,7 @@ class Particle:
         ...
     def __eq__(self, arg0: Particle) -> bool:
         ...
-    def __init__(self, id: id.ParticleID, mass: float, spin: float | None = None, parity: int | None = None, energy: float | None = None, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
+    def __init__(self, id: id.ParticleID, mass: float | None = None, spin: float | None = None, parity: int | None = None, energy: float | None = None, nuclear_mass: float | None = None, mass_uncertainty: float | None = None, nuclear_mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
         """
         Initialise the particle information
         """
@@ -931,12 +938,12 @@ class Particle:
     def identifier(self, arg1: id.ParticleID) -> None:
         ...
     @property
-    def mass(self) -> float:
+    def mass(self) -> float | None:
         """
         The atomic mass of the particle in the ground state
         """
     @mass.setter
-    def mass(self, arg1: float) -> None:
+    def mass(self, arg1: float | None) -> None:
         ...
     @property
     def mass_uncertainty(self) -> float | None:
@@ -945,6 +952,22 @@ class Particle:
         """
     @mass_uncertainty.setter
     def mass_uncertainty(self, arg1: float | None) -> None:
+        ...
+    @property
+    def nuclear_mass(self) -> float | None:
+        """
+        The nuclear mass of the particle in the ground state
+        """
+    @nuclear_mass.setter
+    def nuclear_mass(self, arg1: float | None) -> None:
+        ...
+    @property
+    def nuclear_mass_uncertainty(self) -> float | None:
+        """
+        The nuclear mass uncertainty
+        """
+    @nuclear_mass_uncertainty.setter
+    def nuclear_mass_uncertainty(self, arg1: float | None) -> None:
         ...
     @property
     def parity(self) -> int | None:
@@ -1165,7 +1188,7 @@ class ProjectileTarget:
     def __eq__(self, arg0: ProjectileTarget) -> bool:
         ...
     @typing.overload
-    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, documentation: Documentation, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1176,13 +1199,14 @@ class ProjectileTarget:
             target          the target identifier
             type            the interaction type
             reactions       the reaction data
+            particles       the optional particle data (default: none)
             resonances      the optional resonance parameters (default: none)
             covariances     the optional covariance data (default: none)
             normalise       option to indicate whether or not to normalise
                             all probability data (default: no normalisation)
         """
     @typing.overload
-    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
+    def __init__(self, projectile: id.ParticleID, target: id.ParticleID, type: InteractionType, reactions: list[Reaction], particles: ParticleDatabase | None = None, resonances: resonances.ResonanceParameters | None = None, covariances: covariance.CovarianceData | None = None, normalise: bool = False) -> None:
         """
         Initialise the ProjectileTarget
         
@@ -1192,6 +1216,7 @@ class ProjectileTarget:
             target        the target identifier
             type          the interaction type
             reactions     the reaction data
+            particles       the optional particle data (default: none)
             resonances    the optional resonance parameters (default: none)
             covariances   the optional covariance data (default: none)
             normalise     option to indicate whether or not to normalise
@@ -1293,6 +1318,14 @@ class ProjectileTarget:
         """
         The number of reactions
         """
+    @property
+    def particle_data(self) -> ParticleDatabase | None:
+        """
+        The particle data
+        """
+    @particle_data.setter
+    def particle_data(self, arg1: ParticleDatabase | None) -> None:
+        ...
     @property
     def projectile_identifier(self) -> id.ParticleID:
         """

@@ -11,6 +11,7 @@
 #include "njoy/constants.hpp"
 #include "njoy/dryad/InteractionType.hpp"
 #include "njoy/dryad/Documentation.hpp"
+#include "njoy/dryad/ParticleDatabase.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "njoy/dryad/covariance/CovarianceData.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
@@ -33,6 +34,7 @@ namespace dryad {
 
     InteractionType interaction_;
 
+    std::optional< ParticleDatabase > particles_;
     std::optional< resonances::ResonanceParameters > resonances_;
     std::vector< Reaction > reactions_;
 
@@ -127,6 +129,32 @@ namespace dryad {
     void interactionType( InteractionType type ) {
 
       this->interaction_ = std::move( type );
+    }
+
+    /**
+     *  @brief Return the particle data
+     */
+    const std::optional< ParticleDatabase >& particleData() const {
+
+      return this->particles_;
+    }
+
+    /**
+     *  @brief Return the particle data
+     */
+    std::optional< ParticleDatabase >& particleData() {
+
+      return this->particles_;
+    }
+
+    /**
+     *  @brief Set the particle data
+     *
+     *  @param[in] particles   the particle data
+     */
+    void particleData( std::optional< ParticleDatabase > particles ) {
+
+      this->particles_ = std::move( particles );
     }
 
     /**

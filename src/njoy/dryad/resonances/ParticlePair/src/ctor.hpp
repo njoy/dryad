@@ -19,8 +19,8 @@ ParticlePair( Particle lightParticle, Particle heavyParticle ) :
     light_particle_( std::move( lightParticle ) ),
     heavy_particle_( std::move( heavyParticle ) ) {
 
-  const auto ma = this->lightParticle().mass();
-  const auto mb = this->heavyParticle().mass();
+  const auto ma = this->lightParticle().mass().value();
+  const auto mb = this->heavyParticle().mass().value();
   this->reduced_mass_ = ma * mb / ( ma + mb );
   this->mass_ratio_ = mb / ( ma + mb );
 }
