@@ -9,12 +9,6 @@ namespace python = pybind11;
 
 namespace dryad {
 
-  // declarations - scion objects
-  void wrapToleranceConvergence( python::module& );
-
-  // declarations - identifiers
-  void wrapID( python::module& );
-
   // declarations - enumerators
   void wrapInterpolationType( python::module& );
   void wrapDistributionDataType( python::module& );
@@ -22,6 +16,13 @@ namespace dryad {
   void wrapReactionCategory( python::module& );
   void wrapReferenceFrame( python::module& );
   void wrapUniformDistributionType( python::module& );
+
+  // declarations - identifiers
+  void wrapID( python::module& );
+
+  // declarations - particle database
+  void wrapParticle( python::module& );
+  void wrapParticleDatabase( python::module& );
 
   // declarations - covariance data
   void wrapCovariance( python::module& );
@@ -87,9 +88,6 @@ void wrapDryad( python::module& module ) {
     "Format agnostic nuclear data interface"
   );
 
-  // wrap components - documentation
-  dryad::wrapDocumentation( submodule );
-
   // wrap components - enumerators
   dryad::wrapInterpolationType( submodule );
   dryad::wrapDistributionDataType( submodule );
@@ -100,6 +98,13 @@ void wrapDryad( python::module& module ) {
 
   // wrap components - identifiers
   dryad::wrapID( submodule );
+
+  // wrap components - particle database
+  dryad::wrapParticle( submodule );
+  dryad::wrapParticleDatabase( submodule );
+
+  // wrap components - documentation
+  dryad::wrapDocumentation( submodule );
 
   // wrap components - resonances
   dryad::wrapResonances( submodule );

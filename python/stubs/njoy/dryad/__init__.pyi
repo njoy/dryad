@@ -9,7 +9,7 @@ from . import external
 from . import id
 from . import resonances
 from . import thermal
-__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
+__all__: list[str] = ['AtomicRelaxation', 'CoherentDistributionData', 'DistributionDataType', 'Documentation', 'IncoherentDistributionData', 'InteractionType', 'InterpolationType', 'IsotropicAngularDistributions', 'LegendreAngularDistribution', 'LegendreAngularDistributionFunction', 'LegendreAngularDistributions', 'MultiEnergyDistributions', 'Particle', 'ParticleDatabase', 'PolynomialMultiplicity', 'ProjectileTarget', 'Reaction', 'ReactionCategory', 'ReactionProduct', 'ReferenceFrame', 'TabulatedAngularDistribution', 'TabulatedAngularDistributionFunction', 'TabulatedAngularDistributions', 'TabulatedAverageCosine', 'TabulatedAverageEnergy', 'TabulatedComptonProfile', 'TabulatedComptonProfileFunction', 'TabulatedCrossSection', 'TabulatedEnergyDistribution', 'TabulatedEnergyDistributionFunction', 'TabulatedEnergyDistributions', 'TabulatedFormFactor', 'TabulatedMultiplicity', 'TabulatedScatteringFunction', 'ThermalScattering', 'TwoBodyDistributionData', 'UncorrelatedDistributionData', 'UniformAngularDistribution', 'UniformAngularDistributions', 'UniformDistributionType', 'UniformEnergyDistribution', 'UniformEnergyDistributions', 'atomic', 'covariance', 'external', 'id', 'resonances', 'thermal']
 class AtomicRelaxation:
     """
     Atomic relaxation data for a given element
@@ -851,6 +851,169 @@ class MultiEnergyDistributions:
     def __eq__(self, arg0: MultiEnergyDistributions) -> bool:
         ...
     def __ne__(self, arg0: MultiEnergyDistributions) -> bool:
+        ...
+class Particle:
+    """
+    Particle information
+    
+    The Particle class contains specific information for a particle:
+      - the atomic mass value (always for the ground state) and an optional
+        uncertainty
+      - an optional excited state energy value and an optional uncertainty
+      - an optional spin and parity (which is either + or -)
+    
+    The data is stored in the following units:
+      - atomic mass values are in atomic mass units
+      - energy values are in eV
+    
+    Parameters
+    ----------
+        id : njoy.dryad.id.ParticleID
+             the particle identifier
+        mass : float
+            the atomic mass
+        spin : float, default None
+            the particle spin (default: None)
+        parity : int, default None
+            the particle spin parity (default: None)
+        energy : float, default None
+            the excited state energy (default: None)
+        mass_uncertainty : float, default None
+            the uncertainty on the atomic mass value (default: None)
+        energy_uncertainty : float, default None
+            the uncertainty on the ecited level energy value (default: None)
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> Particle:
+        ...
+    def __deepcopy__(self, arg0: dict) -> Particle:
+        ...
+    def __eq__(self, arg0: Particle) -> bool:
+        ...
+    def __init__(self, id: id.ParticleID, mass: float, spin: float | None = None, parity: int | None = None, energy: float | None = None, mass_uncertainty: float | None = None, energy_uncertainty: float | None = None) -> None:
+        """
+        Initialise the particle information
+        """
+    def __ne__(self, arg0: Particle) -> bool:
+        ...
+    @property
+    def charge(self) -> int:
+        """
+        The electrical charge of the particle
+        """
+    @property
+    def energy(self) -> float | None:
+        """
+        The excited state energy value of the particle
+        """
+    @energy.setter
+    def energy(self, arg1: float | None) -> None:
+        ...
+    @property
+    def energy_uncertainty(self) -> float | None:
+        """
+        The excited state energy uncertainty
+        """
+    @energy_uncertainty.setter
+    def energy_uncertainty(self, arg1: float | None) -> None:
+        ...
+    @property
+    def excited_state(self) -> int:
+        """
+        The excited state number of the particle
+        """
+    @property
+    def identifier(self) -> id.ParticleID:
+        """
+        The particle identifier
+        """
+    @identifier.setter
+    def identifier(self, arg1: id.ParticleID) -> None:
+        ...
+    @property
+    def mass(self) -> float:
+        """
+        The atomic mass of the particle in the ground state
+        """
+    @mass.setter
+    def mass(self, arg1: float) -> None:
+        ...
+    @property
+    def mass_uncertainty(self) -> float | None:
+        """
+        The atomic mass uncertainty
+        """
+    @mass_uncertainty.setter
+    def mass_uncertainty(self, arg1: float | None) -> None:
+        ...
+    @property
+    def parity(self) -> int | None:
+        """
+        The particle spin parity
+        """
+    @parity.setter
+    def parity(self, arg1: int | None) -> None:
+        ...
+    @property
+    def spin(self) -> float | None:
+        """
+        The spin of the particle
+        """
+    @spin.setter
+    def spin(self, arg1: float | None) -> None:
+        ...
+class ParticleDatabase:
+    """
+    The particle database
+    
+    Parameters
+    ----------
+        particles : list of njoy.dryad.Particle
+             the particle information
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> ParticleDatabase:
+        ...
+    def __deepcopy__(self, arg0: dict) -> ParticleDatabase:
+        ...
+    def __eq__(self, arg0: ParticleDatabase) -> bool:
+        ...
+    def __init__(self, particles: list[Particle]) -> None:
+        """
+        Initialise the particle database
+        """
+    def __ne__(self, arg0: ParticleDatabase) -> bool:
+        ...
+    def has_particle(self, id: id.ParticleID) -> bool:
+        """
+        Return whether or not a particle is present
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    def particle(self, id: id.ParticleID) -> Particle:
+        """
+        Return the requested particle
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @property
+    def number_particles(self) -> int:
+        """
+        The number of particles
+        """
+    @property
+    def particles(self) -> list[Particle]:
+        """
+        The available particles
+        """
+    @particles.setter
+    def particles(self, arg1: list[Particle]) -> None:
         ...
 class PolynomialMultiplicity:
     """

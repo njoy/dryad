@@ -55,15 +55,15 @@ namespace lrf7 {
           mb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().mass() : 0. );
           za.push_back( outgoing.has_value() ? outgoing.value().lightParticle().charge() : 0. );
           zb.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().charge() : 0. );
-          ia.push_back( outgoing.has_value() ? outgoing.value().lightParticle().spin() *
-                                               outgoing.value().lightParticle().parity()
+          ia.push_back( outgoing.has_value() ? outgoing.value().lightParticle().spin().value() *
+                                               outgoing.value().lightParticle().parity().value()
                                              : 0. );
-          ib.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().spin() *
-                                               outgoing.value().heavyParticle().parity()
+          ib.push_back( outgoing.has_value() ? outgoing.value().heavyParticle().spin().value() *
+                                               outgoing.value().heavyParticle().parity().value()
                                              : 0. );
           q.push_back( channel.qValue() );
-          pa.push_back( outgoing.has_value() ? ia.back() == 0. ? outgoing.value().lightParticle().parity() : 0. : 0. );
-          pb.push_back( outgoing.has_value() ? ib.back() == 0. ? outgoing.value().heavyParticle().parity() : 0. : 0. );
+          pa.push_back( outgoing.has_value() ? ia.back() == 0. ? outgoing.value().lightParticle().parity().value() : 0. : 0. );
+          pb.push_back( outgoing.has_value() ? ib.back() == 0. ? outgoing.value().heavyParticle().parity().value() : 0. : 0. );
 
           // if fission (no outgoing) or capture (photon in outgoing pp), then PNT=-1
           pnt.push_back( outgoing.has_value()

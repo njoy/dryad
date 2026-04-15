@@ -15,6 +15,10 @@
 #include "njoy/dryad/ReactionCategory.hpp"
 #include "njoy/dryad/ReferenceFrame.hpp"
 
+// components - particle database
+#include "njoy/dryad/Particle.hpp"
+#include "njoy/dryad/ParticleDatabase.hpp"
+
 // components - atomic
 #include "njoy/dryad/atomic.hpp"
 

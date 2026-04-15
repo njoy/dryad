@@ -6,7 +6,6 @@
 #include "njoy/dryad/resonances/TabulatedRadius.hpp"
 #include "njoy/dryad/resonances/ChannelRadii.hpp"
 #include "njoy/dryad/resonances/ChannelQuantumNumbers.hpp"
-#include "njoy/dryad/resonances/Particle.hpp"
 #include "njoy/dryad/resonances/ParticlePair.hpp"
 #include "njoy/dryad/resonances/NonRelativisticWaveNumber.hpp"
 #include "njoy/dryad/resonances/RelativisticWaveNumber.hpp"

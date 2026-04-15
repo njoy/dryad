@@ -16,7 +16,7 @@ void wrapParticlePair( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::resonances::ParticlePair;
-  using Particle = njoy::dryad::resonances::Particle;
+  using Particle = njoy::dryad::Particle;
 
   // wrap views created by this component
 

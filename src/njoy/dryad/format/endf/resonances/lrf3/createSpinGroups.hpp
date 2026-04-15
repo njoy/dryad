@@ -47,8 +47,8 @@ namespace lrf3 {
 
     // the incident particle pair
     auto awri = endf.lValues().front().atomicWeightRatio();
-    dryad::resonances::ParticlePair incident( dryad::resonances::Particle( projectile, constants::neutron_mass, 0.5, +1),
-                                              dryad::resonances::Particle( target, awri * constants::neutron_mass, spin, +1) );
+    dryad::resonances::ParticlePair incident( dryad::Particle( projectile, constants::neutron_mass, 0.5, +1),
+                                              dryad::Particle( target, awri * constants::neutron_mass, spin, +1) );
 
     // channel radius value
     auto ap = endf.scatteringRadius() * constants::deca;

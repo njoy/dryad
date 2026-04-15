@@ -5,10 +5,10 @@ import sys
 # third party imports
 
 # local imports
+from njoy.dryad import Particle
 from njoy.dryad.resonances import Channel
 from njoy.dryad.resonances import ChannelQuantumNumbers
 from njoy.dryad.resonances import ChannelRadii
-from njoy.dryad.resonances import Particle
 from njoy.dryad.resonances import ParticlePair
 from njoy.dryad.resonances import Kinematics
 from njoy.dryad.id import ChannelID

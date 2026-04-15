@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'Particle', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -932,65 +932,6 @@ class Kinematics:
     @property
     def value(self) -> int:
         ...
-class Particle:
-    """
-    Particle information for resonance reconstruction
-    
-    The Particle class contains specific information for a particle as used
-    during resonance reconstruction. The Particle has an atomic mass, an
-    electrical charge, an excited state number, a spin and a parity (which is
-    either + or -).
-    """
-    __hash__: typing.ClassVar[None] = None
-    def __copy__(self) -> Particle:
-        ...
-    def __deepcopy__(self, arg0: dict) -> Particle:
-        ...
-    def __eq__(self, arg0: Particle) -> bool:
-        ...
-    def __init__(self, id: njoy.dryad.id.ParticleID, mass: float, spin: float, parity: int) -> None:
-        """
-        Initialise the particle information
-        
-        Arguments:
-            self     the particle information
-            id       the particle identifier
-            mass     the atomic mass
-            spin     the channel spin
-            parity   the parity
-        """
-    def __ne__(self, arg0: Particle) -> bool:
-        ...
-    @property
-    def charge(self) -> int:
-        """
-        The electrical charge of the particle (in units of the elementary charge)
-        """
-    @property
-    def excited_state(self) -> int:
-        """
-        The excited state number of the particle
-        """
-    @property
-    def identifier(self) -> njoy.dryad.id.ParticleID:
-        """
-        The particle identifier
-        """
-    @property
-    def mass(self) -> float:
-        """
-        The atomic mass of the particle (in atomic mass units)
-        """
-    @property
-    def parity(self) -> int:
-        """
-        The parity
-        """
-    @property
-    def spin(self) -> float:
-        """
-        The particle spin
-        """
 class ParticlePair:
     """
     Particle information for resonance reconstruction
@@ -1011,7 +952,7 @@ class ParticlePair:
         ...
     def __eq__(self, arg0: ParticlePair) -> bool:
         ...
-    def __init__(self, light_particle: Particle, heavy_particle: Particle) -> None:
+    def __init__(self, light_particle: njoy.dryad.Particle, heavy_particle: njoy.dryad.Particle) -> None:
         """
         Initialise the particle pair information
         
@@ -1023,12 +964,12 @@ class ParticlePair:
     def __ne__(self, arg0: ParticlePair) -> bool:
         ...
     @property
-    def heavy_particle(self) -> Particle:
+    def heavy_particle(self) -> njoy.dryad.Particle:
         """
         The heavy particle in the particle pair
         """
     @property
-    def light_particle(self) -> Particle:
+    def light_particle(self) -> njoy.dryad.Particle:
         """
         The light particle in the particle pair
         """
