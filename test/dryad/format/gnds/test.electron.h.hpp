@@ -529,10 +529,18 @@ namespace endf81 {
     CHECK( 15 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
-    CHECK( std::nullopt == hydrogen.parentIdentifier() );
-    CHECK( 0 == hydrogen.chainIndex() );
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyTotalElasticReaction( const Reaction& reaction ) {
@@ -759,10 +767,18 @@ namespace endf81 {
     CHECK_THAT(  1e+11       - 2.66810E+9, WithinRel( average.values()[81] ) );
     CHECK( std::nullopt == electron.distributionData() );
 
-    auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
-    CHECK( std::nullopt == hydrogen.parentIdentifier() );
-    CHECK( 0 == hydrogen.chainIndex() );
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyExcitationReaction( const Reaction& reaction ) {
@@ -828,10 +844,18 @@ namespace endf81 {
     CHECK_THAT(  1e+11       - 21.0777000, WithinRel( average.values()[169] ) );
     CHECK( std::nullopt == electron.distributionData() );
 
-    auto hydrogen = reaction.product( id::ParticleID( "H" ) );
-    CHECK( id::ParticleID( "H" ) == hydrogen.productIdentifier() );
-    CHECK( std::nullopt == hydrogen.parentIdentifier() );
-    CHECK( 0 == hydrogen.chainIndex() );
+    auto h = reaction.product( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifySubshellIonisationReaction( const Reaction& reaction, bool normalise ) {
@@ -985,11 +1009,28 @@ namespace endf81 {
     CHECK( id::ParticleID( "e-" ) == electron.productIdentifier() );
     CHECK( std::nullopt == electron.parentIdentifier() );
     CHECK( 0 == electron.chainIndex() );
+    CHECK( false == electron.hasAverageCosine() );
+    CHECK( false == electron.hasAverageEnergy() );
+    CHECK( false == electron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( electron.multiplicity() ) );
+    multiplicity = std::get< int >( electron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == electron.averageCosine() );
+    CHECK( std::nullopt == electron.averageEnergy() );
+    CHECK( std::nullopt == electron.distributionData() );
 
-    auto ion = reaction.product( id::ParticleID( "H{1s1/2}" ), 0 );
-    CHECK( id::ParticleID( "H{1s1/2}" ) == ion.productIdentifier() );
-    CHECK( std::nullopt == ion.parentIdentifier() );
-    CHECK( 0 == ion.chainIndex() );
+    auto h = reaction.product( id::ParticleID( "H{1s1/2}" ) );
+    CHECK( id::ParticleID( "H{1s1/2}" ) == h.productIdentifier() );
+    CHECK( std::nullopt == h.parentIdentifier() );
+    CHECK( false == h.hasAverageCosine() );
+    CHECK( false == h.hasAverageEnergy() );
+    CHECK( false == h.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h.multiplicity() ) );
+    multiplicity = std::get< int >( h.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h.averageCosine() );
+    CHECK( std::nullopt == h.averageEnergy() );
+    CHECK( std::nullopt == h.distributionData() );
   }
 
   void verifyElasticDeficitReaction( const Reaction& reaction ) {
