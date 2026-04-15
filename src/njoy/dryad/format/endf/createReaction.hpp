@@ -10,7 +10,6 @@
 #include "njoy/dryad/format/adjustScatterLevel.hpp"
 #include "njoy/dryad/format/endf/ReactionInformation.hpp"
 #include "njoy/dryad/format/endf/createTabulatedCrossSection.hpp"
-#include "njoy/dryad/format/endf/createMultiplicity.hpp"
 #include "njoy/dryad/format/endf/createReactionProducts.hpp"
 #include "njoy/dryad/Reaction.hpp"
 #include "ENDFtk/Material.hpp"
@@ -20,26 +19,6 @@ namespace njoy {
 namespace dryad {
 namespace format {
 namespace endf {
-
-  /**
-   *  @brief Add a reaction product if it is not in the list
-   *
-   *  @param[in] particle        the particle identifier
-   *  @param[in] multiplicity    the multiplicity of the target
-   *  @param[in, out] products   the current set of reaction products
-   */
-  inline void addProduct( const id::ParticleID& particle, int multiplicity,
-                          std::vector< ReactionProduct >& products ) {
-
-    auto iter = std::find_if( products.begin(), products.end(),
-                              [&particle] ( auto&& product )
-                                          { return product.productIdentifier() == particle; } );
-    if ( iter == products.end() ) {
-
-      Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );
-      products.emplace_back( particle, createMultiplicity( multiplicity ) );
-    }
-  }
 
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
@@ -84,15 +63,6 @@ namespace endf {
 
           mass_q = section.massDifferenceQValue();
           reaction_q = section.reactionQValue();
-        }
-
-        // add missing reaction products - only for primary reactions
-        if ( id.particles().has_value() ) {
-
-          for ( const auto& entry : id.particles().value() ) {
-
-            addProduct( entry.first, entry.second, products );
-          }
         }
 
         // return the reaction data
