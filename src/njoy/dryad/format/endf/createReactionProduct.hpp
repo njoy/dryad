@@ -109,12 +109,20 @@ namespace endf {
    *                          need to be normalised
    */
   inline ReactionProduct
-  createReactionProduct( const id::ReactionID& /* reaction */,
+  createReactionProduct( const id::ReactionID& reaction,
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
                          bool /* normalise */ ) {
 
+    // get the reaction product and look for the residual - if it is defined
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
                                                  product.productModifierFlag() );
+    if ( reaction.residual().has_value() &&
+         product.productIdentifier() == reaction.residual()->za() ) {
+
+      id = reaction.residual().value();
+    }
+
+    // read data and add the product
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
     auto multiplicity = createMultiplicity( product.multiplicity() );
 

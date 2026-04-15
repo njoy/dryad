@@ -14,7 +14,9 @@ using namespace njoy::dryad;
 
 void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct&, bool );
 void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& );
+void verifyElectronBremsstrahlungResidual( const ReactionProduct& );
 void verifyPhotonCoherentProduct( const ReactionProduct& );
+void verifyPhotonCoherentResidual( const ReactionProduct& );
 
 SCENARIO( "createReactionProducts" ) {
 
@@ -33,13 +35,15 @@ SCENARIO( "createReactionProducts" ) {
         std::vector< ReactionProduct > products1 = format::endf::createReactionProducts( reaction, material, 527, false );
         std::vector< ReactionProduct > products2 = format::endf::createReactionProducts( reaction, material, 527, true );
 
-        CHECK( 2 == products1.size() );
+        CHECK( 3 == products1.size() );
         verifyElectronBremsstrahlungPhotonProduct( products1[0], false );
         verifyElectronBremsstrahlungElectronProduct( products1[1] );
+        verifyElectronBremsstrahlungResidual( products1[2] );
 
-        CHECK( 2 == products2.size() );
+        CHECK( 3 == products2.size() );
         verifyElectronBremsstrahlungPhotonProduct( products2[0], true );
         verifyElectronBremsstrahlungElectronProduct( products2[1] );
+        verifyElectronBremsstrahlungResidual( products2[2] );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -59,11 +63,13 @@ SCENARIO( "createReactionProducts" ) {
         std::vector< ReactionProduct > products1 = format::endf::createReactionProducts( reaction, material, 502, false );
         std::vector< ReactionProduct > products2 = format::endf::createReactionProducts( reaction, material, 502, true );
 
-        CHECK( 1 == products1.size() );
+        CHECK( 2 == products1.size() );
         verifyPhotonCoherentProduct( products1[0] );
+        verifyPhotonCoherentResidual( products1[1] );
 
-        CHECK( 1 == products2.size() );
+        CHECK( 2 == products2.size() );
         verifyPhotonCoherentProduct( products2[0] );
+        verifyPhotonCoherentResidual( products2[1] );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -230,6 +236,22 @@ void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& chunk )
   CHECK( std::nullopt == chunk.distributionData() );
 }
 
+void verifyElectronBremsstrahlungResidual( const ReactionProduct& chunk ) {
+
+  CHECK( id::ParticleID( "H" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
+  CHECK( false == chunk.hasAverageCosine() );
+  CHECK( false == chunk.hasAverageEnergy() );
+  CHECK( false == chunk.hasDistributionData() );
+  CHECK( true == std::holds_alternative< int >( chunk.multiplicity() ) );
+  auto multiplicity = std::get< int >( chunk.multiplicity() );
+  CHECK( 1 == multiplicity );
+  CHECK( std::nullopt == chunk.averageCosine() );
+  CHECK( std::nullopt == chunk.averageEnergy() );
+  CHECK( std::nullopt == chunk.distributionData() );
+}
+
 void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
 
   CHECK( id::ParticleID( "g" ) == chunk.productIdentifier() );
@@ -308,4 +330,20 @@ void verifyPhotonCoherentProduct( const ReactionProduct& chunk ) {
   CHECK( 296 == factor.boundaries()[0] );
   CHECK( InterpolationType::LinearLinear == factor.interpolants()[0] );
   CHECK( true == factor.isLinearised() );
+}
+
+void verifyPhotonCoherentResidual( const ReactionProduct& chunk ) {
+
+  CHECK( id::ParticleID( "H" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
+  CHECK( false == chunk.hasAverageCosine() );
+  CHECK( false == chunk.hasAverageEnergy() );
+  CHECK( false == chunk.hasDistributionData() );
+  CHECK( true == std::holds_alternative< int >( chunk.multiplicity() ) );
+  auto multiplicity = std::get< int >( chunk.multiplicity() );
+  CHECK( 1 == multiplicity );
+  CHECK( std::nullopt == chunk.averageCosine() );
+  CHECK( std::nullopt == chunk.averageEnergy() );
+  CHECK( std::nullopt == chunk.distributionData() );
 }
