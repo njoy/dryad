@@ -31,7 +31,8 @@ namespace endf {
 
     auto iter = std::find_if( products.begin(), products.end(),
                               [&particle] ( auto&& product )
-                                          { return product.productIdentifier() == particle; } );
+                                          { return product.productIdentifier() == particle &&
+                                                   product.chainIndex() == 0; } );
     if ( iter == products.end() ) {
 
       Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );
@@ -110,7 +111,7 @@ namespace endf {
 
                 Log::info( "Adding '{}' as a complex breakup reaction product", id.symbol() );
                 products.emplace_back( id, createMultiplicity( multiplicity ), std::nullopt,
-                                       std::nullopt, std::nullopt, id, 1 );
+                                       std::nullopt, std::nullopt, residual, 1 );
               }
             }
           }
@@ -120,7 +121,7 @@ namespace endf {
 
               Log::error( "Complex breakup flag \'{}\' cannot be used with a reaction that has no defined residual",
                           complex_breakup );
-                throw std::exception();
+              throw std::exception();
             }
           }
         }
@@ -171,7 +172,7 @@ namespace endf {
 
               Log::error( "Complex breakup flag \'{}\' cannot be used with a reaction that has no defined residual",
                           complex_breakup );
-                throw std::exception();
+              throw std::exception();
             }
           }
         }
