@@ -68,6 +68,10 @@ SCENARIO( "createReactions" ) {
         neutron::li7::verifyTotalReaction( total );
         auto elastic = reactions1[5];
         neutron::li7::verifyElasticReaction( elastic );
+        auto inelastic1 = reactions1[6];
+        neutron::li7::verifyInelasticReactionLevel1( inelastic1 );
+        auto inelastic2 = reactions1[7];
+        neutron::li7::verifyInelasticReactionLevel2( inelastic2 );
         auto capture = reactions1[38];
         neutron::li7::verifyCaptureReaction( capture );
         auto lumped = reactions1[40];
@@ -94,6 +98,10 @@ SCENARIO( "createReactions" ) {
         neutron::li7::verifyTotalReaction( total );
         elastic = reactions2[5];
         neutron::li7::verifyElasticReaction( elastic );
+        inelastic1 = reactions1[6];
+        neutron::li7::verifyInelasticReactionLevel1( inelastic1 );
+        inelastic2 = reactions1[7];
+        neutron::li7::verifyInelasticReactionLevel2( inelastic2 );
         capture = reactions2[38];
         neutron::li7::verifyCaptureReaction( capture );
         lumped = reactions2[40];
