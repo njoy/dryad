@@ -536,6 +536,160 @@ namespace li7 {
     CHECK( std::nullopt == li7.distributionData() );
   }
 
+  void verifyInelasticReactionLevel1( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,Li7->n,Li7_e1" ) == reaction.identifier() );
+    CHECK( 51 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.massDifferenceQValue() );
+    CHECK_THAT( 0, WithinRel( reaction.massDifferenceQValue().value() ) );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( -477610, WithinRel( reaction.reactionQValue().value() ) );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 134 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 134 == reaction.crossSection().energies().size() );
+    CHECK( 134 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 133 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 5.46277e+5, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 2e+7      , WithinRel( reaction.crossSection().energies()[133] ) );
+    CHECK_THAT( 0      , WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( .039359, WithinRel( reaction.crossSection().values()[133] ) );
+
+    CHECK( 2 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li7_e1" ) ) );
+
+    auto neutron = reaction.product( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
+    CHECK( false == neutron.hasAverageEnergy() );
+    CHECK( true == neutron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
+    auto multiplicity = std::get< int >( neutron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
+    CHECK( std::nullopt == neutron.averageEnergy() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+
+    auto li7_e1 = reaction.product( id::ParticleID( "Li7_e1" ) );
+    CHECK( id::ParticleID( "Li7_e1" ) == li7_e1.productIdentifier() );
+    CHECK( std::nullopt == li7_e1.parentIdentifier() );
+    CHECK( 0 == li7_e1.chainIndex() );
+    CHECK( false == li7_e1.hasAverageCosine() );
+    CHECK( false == li7_e1.hasAverageEnergy() );
+    CHECK( false == li7_e1.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( li7_e1.multiplicity() ) );
+    multiplicity = std::get< int >( li7_e1.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == li7_e1.averageCosine() );
+    CHECK( std::nullopt == li7_e1.averageEnergy() );
+    CHECK( std::nullopt == li7_e1.distributionData() );
+  }
+
+  void verifyInelasticReactionLevel2( const Reaction& reaction ) {
+
+    CHECK( id::ReactionID( "n,Li7->n,Li7_e2" ) == reaction.identifier() );
+    CHECK( 52 == reaction.identifier().reactionType().mt() );
+    CHECK( ReactionCategory::Primary == reaction.category() );
+    CHECK( false == reaction.isSummationReaction() );
+    CHECK( true == reaction.isPrimaryReaction() );
+    CHECK( true == reaction.hasProducts() );
+
+    CHECK( std::nullopt != reaction.massDifferenceQValue() );
+    CHECK_THAT( -2466700, WithinRel( reaction.massDifferenceQValue().value() ) );
+    CHECK( std::nullopt != reaction.reactionQValue() );
+    CHECK_THAT( -2750000, WithinRel( reaction.reactionQValue().value() ) );
+
+    CHECK( true == reaction.crossSection().isLinearised() );
+    CHECK( 95 == reaction.crossSection().numberPoints() );
+    CHECK( 1 == reaction.crossSection().numberRegions() );
+    CHECK( 95 == reaction.crossSection().energies().size() );
+    CHECK( 95 == reaction.crossSection().values().size() );
+    CHECK( 1 == reaction.crossSection().boundaries().size() );
+    CHECK( 1 == reaction.crossSection().interpolants().size() );
+    CHECK( 94 == reaction.crossSection().boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == reaction.crossSection().interpolants()[0] );
+    CHECK_THAT( 3145400, WithinRel( reaction.crossSection().energies()[0] ) );
+    CHECK_THAT( 2e+7   , WithinRel( reaction.crossSection().energies()[94] ) );
+    CHECK_THAT( 0          , WithinRel( reaction.crossSection().values()[0] ) );
+    CHECK_THAT( 1.100454E-4, WithinRel( reaction.crossSection().values()[94] ) );
+
+    CHECK( 4 == reaction.numberProducts() );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li7_e2" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "t" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "a" ) ) );
+
+    auto neutron = reaction.product( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
+    CHECK( false == neutron.hasAverageEnergy() );
+    CHECK( true == neutron.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
+    auto multiplicity = std::get< int >( neutron.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
+    CHECK( std::nullopt == neutron.averageEnergy() );
+    CHECK( std::nullopt != neutron.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
+
+    auto li7_e2 = reaction.product( id::ParticleID( "Li7_e2" ) );
+    CHECK( id::ParticleID( "Li7_e2" ) == li7_e2.productIdentifier() );
+    CHECK( std::nullopt == li7_e2.parentIdentifier() );
+    CHECK( 0 == li7_e2.chainIndex() );
+    CHECK( false == li7_e2.hasAverageCosine() );
+    CHECK( false == li7_e2.hasAverageEnergy() );
+    CHECK( false == li7_e2.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( li7_e2.multiplicity() ) );
+    multiplicity = std::get< int >( li7_e2.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == li7_e2.averageCosine() );
+    CHECK( std::nullopt == li7_e2.averageEnergy() );
+    CHECK( std::nullopt == li7_e2.distributionData() );
+
+    auto triton = reaction.product( id::ParticleID( "t" ) );
+    CHECK( id::ParticleID( "t" ) == triton.productIdentifier() );
+    CHECK( id::ParticleID( "Li7_e2" ) == triton.parentIdentifier() );
+    CHECK( 1 == triton.chainIndex() );
+    CHECK( false == triton.hasAverageCosine() );
+    CHECK( false == triton.hasAverageEnergy() );
+    CHECK( false == triton.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( triton.multiplicity() ) );
+    multiplicity = std::get< int >( triton.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == triton.averageCosine() );
+    CHECK( std::nullopt == triton.averageEnergy() );
+    CHECK( std::nullopt == triton.distributionData() );
+
+    auto He4 = reaction.product( id::ParticleID( "a" ) );
+    CHECK( id::ParticleID( "a" ) == He4.productIdentifier() );
+    CHECK( id::ParticleID( "Li7_e2" ) == He4.parentIdentifier() );
+    CHECK( 1 == He4.chainIndex() );
+    CHECK( false == He4.hasAverageCosine() );
+    CHECK( false == He4.hasAverageEnergy() );
+    CHECK( false == He4.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( He4.multiplicity() ) );
+    multiplicity = std::get< int >( He4.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == He4.averageCosine() );
+    CHECK( std::nullopt == He4.averageEnergy() );
+    CHECK( std::nullopt == He4.distributionData() );
+  }
+
   void verifyCaptureReaction( const Reaction& reaction ) {
 
     CHECK( id::ReactionID( "n,Li7->g,Li8[all]" ) == reaction.identifier() );
@@ -1770,6 +1924,12 @@ namespace li7 {
     auto elastic = Li7.reactions()[5];
     neutron::li7::verifyElasticReaction( elastic );
 
+    auto inelastic1 = Li7.reactions()[6];
+    neutron::li7::verifyInelasticReactionLevel1( inelastic1 );
+
+    auto inelastic2 = Li7.reactions()[7];
+    neutron::li7::verifyInelasticReactionLevel2( inelastic2 );
+
     auto capture = Li7.reactions()[38];
     neutron::li7::verifyCaptureReaction( capture );
 
@@ -1805,6 +1965,12 @@ namespace li7 {
 
     elastic = Li7.reaction( id::ReactionID( "n,Li7->n,Li7" ) );
     neutron::li7::verifyElasticReaction( elastic );
+
+    inelastic1 = Li7.reaction( id::ReactionID( "n,Li7->n,Li7_e1" ) );
+    neutron::li7::verifyInelasticReactionLevel1( inelastic1 );
+
+    inelastic2 = Li7.reaction( id::ReactionID( "n,Li7->n,Li7_e2" ) );
+    neutron::li7::verifyInelasticReactionLevel2( inelastic2 );
 
     capture = Li7.reaction( id::ReactionID( "n,Li7->g,Li8[all]" ) );
     neutron::li7::verifyCaptureReaction( capture );
