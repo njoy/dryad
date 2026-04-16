@@ -52,7 +52,7 @@ namespace gnds {
       auto node = output.child( "products" );
       if ( node ) {
 
-        products = createReactionProducts( projectile, target, suite, node, normalise );
+        products = createReactionProducts( id, suite, node, std::nullopt, 0, normalise );
       }
 
       // special treatment for some incident electron data reactions

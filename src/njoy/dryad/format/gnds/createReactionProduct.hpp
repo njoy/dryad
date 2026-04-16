@@ -25,12 +25,22 @@ namespace gnds {
 
   /**
    *  @brief Create a ReactionProduct from an GNDS product node
+   *
+   *  @param[in] reaction     the reaction identifier
+   *  @param[in] suite        the gnds xml reaction suite
+   *  @param[in] product      the gnds xml product suite
+   *  @param[in] parent       the parent reaction product
+   *  @param[in] chain        the current chain index
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ReactionProduct
-  createReactionProduct( const id::ParticleID& /* projectile */,
-                         const id::ParticleID& /* target */,
+  createReactionProduct( const id::ReactionID& reaction,
                          pugi::xml_node /* suite */,
                          pugi::xml_node product,
+                         std::optional< id::ParticleID > parent,
+                         std::size_t chain,
                          bool normalise,
                          const std::string& style = "eval" ) {
 
@@ -96,6 +106,11 @@ namespace gnds {
         }
         distribution = createIncoherentDistributionData( node );
       }
+      else if ( strcmp( node.name(), "unspecified" ) == 0 ) {
+
+        // nothing to do here
+        // placeholder if we want to assign unknown distribution type
+      }
     }
 
     // get average data
@@ -110,7 +125,9 @@ namespace gnds {
     return ReactionProduct( id, multiplicity,
                             std::move( distribution ),
                             std::move( average_cosine ),
-                            std::move( average_energy ) );
+                            std::move( average_energy ),
+                            std::move( parent ),
+                            chain );
   }
 
 } // gnds namespace

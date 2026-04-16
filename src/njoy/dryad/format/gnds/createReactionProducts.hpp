@@ -17,10 +17,22 @@ namespace gnds {
 
   /**
    *  @brief Create a Reaction from a GNDS products node
+   *
+   *  @param[in] reaction     the reaction identifier
+   *  @param[in] suite        the gnds xml reaction suite
+   *  @param[in] products     the gnds xml products suite
+   *  @param[in] parent       the parent reaction product
+   *  @param[in] chain        the current chain index
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline std::vector< ReactionProduct >
-  createReactionProducts( const id::ParticleID& projectile, const id::ParticleID& target,
-                          pugi::xml_node suite, pugi::xml_node products,
+  createReactionProducts( const id::ReactionID& reaction,
+                          pugi::xml_node suite,
+                          pugi::xml_node products,
+                          std::optional< id::ParticleID > parent,
+                          std::size_t chain,
                           bool normalise,
                           const std::string& style = "eval" ) {
 
@@ -32,7 +44,15 @@ namespace gnds {
     for ( pugi::xml_node product = products.child( "product" ); product;
           product = product.next_sibling( "product" ) ) {
 
-      data.emplace_back( createReactionProduct( projectile, target, suite, product, normalise, style ) );
+      data.emplace_back( createReactionProduct( reaction, suite, product, parent, chain, normalise, style ) );
+
+      auto node = product.child( "outputChannel" ).child( "products" );
+      if ( node ) {
+
+        auto daughters = createReactionProducts( reaction, suite, node, data.back().productIdentifier(),
+                                                 chain + 1, normalise );
+        data.insert( data.end(), daughters.begin(), daughters.end() );
+      }
     }
 
     return data;
