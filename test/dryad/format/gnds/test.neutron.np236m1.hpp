@@ -325,7 +325,7 @@ namespace np236m1 {
     CHECK( 10 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
     CHECK( 8 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np235" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np235[all]" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
@@ -348,8 +348,8 @@ namespace np236m1 {
 
     //! @todo add test for gammas
 
-    auto np235 = reaction.product( id::ParticleID( "Np235" ) );
-    CHECK( id::ParticleID( "Np235" ) == np235.productIdentifier() );
+    auto np235 = reaction.product( id::ParticleID( "Np235[all]" ) );
+    CHECK( id::ParticleID( "Np235[all]" ) == np235.productIdentifier() );
     CHECK( std::nullopt == np235.parentIdentifier() );
     CHECK( 0 == np235.chainIndex() );
     CHECK( false == np235.hasAverageCosine() );
@@ -393,7 +393,7 @@ namespace np236m1 {
     CHECK( 6 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
     CHECK( 4 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np234" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np234[all]" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
@@ -416,8 +416,8 @@ namespace np236m1 {
 
     //! @todo add test for gammas
 
-    auto np234 = reaction.product( id::ParticleID( "Np234" ) );
-    CHECK( id::ParticleID( "Np234" ) == np234.productIdentifier() );
+    auto np234 = reaction.product( id::ParticleID( "Np234[all]" ) );
+    CHECK( id::ParticleID( "Np234[all]" ) == np234.productIdentifier() );
     CHECK( std::nullopt == np234.parentIdentifier() );
     CHECK( 0 == np234.chainIndex() );
     CHECK( false == np234.hasAverageCosine() );
@@ -499,7 +499,7 @@ namespace np236m1 {
     CHECK( 5 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
     CHECK( 3 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np233" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np233[all]" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
@@ -522,8 +522,8 @@ namespace np236m1 {
 
     //! @todo add test for gammas
 
-    auto np233 = reaction.product( id::ParticleID( "Np233" ) );
-    CHECK( id::ParticleID( "Np233" ) == np233.productIdentifier() );
+    auto np233 = reaction.product( id::ParticleID( "Np233[all]" ) );
+    CHECK( id::ParticleID( "Np233[all]" ) == np233.productIdentifier() );
     CHECK( std::nullopt == np233.parentIdentifier() );
     CHECK( 0 == np233.chainIndex() );
     CHECK( false == np233.hasAverageCosine() );
@@ -1356,7 +1356,7 @@ namespace np236m1 {
     CHECK( 9 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
     CHECK( 7 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236[continuum]" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
@@ -1376,8 +1376,8 @@ namespace np236m1 {
     CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
     CHECK( std::nullopt == gamma.parentIdentifier() );
 
-    auto np236_c = reaction.product( id::ParticleID( "Np236" ) );
-    CHECK( id::ParticleID( "Np236" ) == np236_c.productIdentifier() );
+    auto np236_c = reaction.product( id::ParticleID( "Np236[continuum]" ) );
+    CHECK( id::ParticleID( "Np236[continuum]" ) == np236_c.productIdentifier() );
     CHECK( std::nullopt == np236_c.parentIdentifier() );
     CHECK( 0 == np236_c.chainIndex() );
     CHECK( false == np236_c.hasAverageCosine() );
@@ -1426,15 +1426,15 @@ namespace np236m1 {
 
     CHECK( 47 == reaction.numberProducts() );
     CHECK( 46 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np237" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np237[all]" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
     CHECK( std::nullopt == gamma.parentIdentifier() );
     CHECK( 0 == gamma.chainIndex() );
 
-    auto np237 = reaction.product( id::ParticleID( "Np237" ) );
-    CHECK( id::ParticleID( "Np237" ) == np237.productIdentifier() );
+    auto np237 = reaction.product( id::ParticleID( "Np237[all]" ) );
+    CHECK( id::ParticleID( "Np237[all]" ) == np237.productIdentifier() );
     CHECK( std::nullopt == np237.parentIdentifier() );
     CHECK( 0 == np237.chainIndex() );
     CHECK( false == np237.hasAverageCosine() );

@@ -656,8 +656,8 @@ namespace li7 {
     CHECK( 4 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li7_e2" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H3" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "He4" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "t" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "a" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
     CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
@@ -688,8 +688,8 @@ namespace li7 {
     CHECK( std::nullopt == li7_e2.averageEnergy() );
     CHECK( std::nullopt == li7_e2.distributionData() );
 
-    auto triton = reaction.product( id::ParticleID( "H3" ) );
-    CHECK( id::ParticleID( "H3" ) == triton.productIdentifier() );
+    auto triton = reaction.product( id::ParticleID( "t" ) );
+    CHECK( id::ParticleID( "t" ) == triton.productIdentifier() );
     CHECK( id::ParticleID( "Li7_e2" ) == triton.parentIdentifier() );
     CHECK( 1 == triton.chainIndex() );
     CHECK( false == triton.hasAverageCosine() );
@@ -702,8 +702,8 @@ namespace li7 {
     CHECK( std::nullopt == triton.averageEnergy() );
     CHECK( std::nullopt == triton.distributionData() );
 
-    auto He4 = reaction.product( id::ParticleID( "He4" ) );
-    CHECK( id::ParticleID( "He4" ) == He4.productIdentifier() );
+    auto He4 = reaction.product( id::ParticleID( "a" ) );
+    CHECK( id::ParticleID( "a" ) == He4.productIdentifier() );
     CHECK( id::ParticleID( "Li7_e2" ) == He4.parentIdentifier() );
     CHECK( 1 == He4.chainIndex() );
     CHECK( false == He4.hasAverageCosine() );
@@ -750,10 +750,10 @@ namespace li7 {
 
     CHECK( 4 == reaction.numberProducts() );
     CHECK( 3 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li8" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li8[all]" ) ) );
 
-    auto li8 = reaction.product( id::ParticleID( "Li8" ) );
-    CHECK( id::ParticleID( "Li8" ) == li8.productIdentifier() );
+    auto li8 = reaction.product( id::ParticleID( "Li8[all]" ) );
+    CHECK( id::ParticleID( "Li8[all]" ) == li8.productIdentifier() );
     CHECK( std::nullopt == li8.parentIdentifier() );
     CHECK( 0 == li8.chainIndex() );
     CHECK( false == li8.hasAverageCosine() );

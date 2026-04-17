@@ -22,11 +22,11 @@ SCENARIO( "createProductIdentifier" ) {
         CHECK( id::ParticleID( "g" ) == format::endf::createProductIdentifier( 0, 0 ) );
         CHECK( id::ParticleID( "n" ) == format::endf::createProductIdentifier( 1, 0 ) );
         CHECK( id::ParticleID( "e-" ) == format::endf::createProductIdentifier( 11, 0 ) );
-        CHECK( id::ParticleID( "p" ) == format::endf::createProductIdentifier( 1001, 0 ) );
-        CHECK( id::ParticleID( "d" ) == format::endf::createProductIdentifier( 1002, 0 ) );
-        CHECK( id::ParticleID( "t" ) == format::endf::createProductIdentifier( 1003, 0 ) );
-        CHECK( id::ParticleID( "h" ) == format::endf::createProductIdentifier( 2003, 0 ) );
-        CHECK( id::ParticleID( "a" ) == format::endf::createProductIdentifier( 2004, 0 ) );
+        CHECK( id::ParticleID( "H1" ) == format::endf::createProductIdentifier( 1001, 0 ) );
+        CHECK( id::ParticleID( "H2" ) == format::endf::createProductIdentifier( 1002, 0 ) );
+        CHECK( id::ParticleID( "H3" ) == format::endf::createProductIdentifier( 1003, 0 ) );
+        CHECK( id::ParticleID( "He3" ) == format::endf::createProductIdentifier( 2003, 0 ) );
+        CHECK( id::ParticleID( "He4" ) == format::endf::createProductIdentifier( 2004, 0 ) );
         CHECK( id::ParticleID( "Al27_e1" ) == format::endf::createProductIdentifier( 13027, 1 ) );
       } // THEN
     } // WHEN
