@@ -38,6 +38,7 @@ namespace endf {
 
     // metadata and miscellaneous information
     id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+    Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -49,10 +50,10 @@ namespace endf {
       std::optional< double > mass_q = std::nullopt;
       std::optional< double > reaction_q = std::nullopt;
 
-      // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise );
-
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
+
+        // reaction products
+        std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise );
 
         // Q values
         if ( mt == 18 ) {
@@ -71,6 +72,8 @@ namespace endf {
                          std::move( reaction_q ) );
       }
       else if ( endf::ReactionInformation::isSummation( material, mt ) ) {
+
+        //! @todo summation reactions sometimes have products - e.g. MT3
 
         if ( mt == 18 ) {
 
