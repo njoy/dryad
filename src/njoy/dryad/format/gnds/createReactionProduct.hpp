@@ -47,11 +47,53 @@ namespace gnds {
     // check that this is a valid product node
     throwExceptionOnWrongNode( product, "product" );
 
-    // get the secondary particle identifier and adjust as required
+    // get the reaction product id and look for the residual - if it is defined
     id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
+    if ( chain == 0 ) {
+
+      if ( reaction.residual().has_value() ) {
+
+        auto residual = reaction.residual().value();
+        if ( id.groundState() == residual.groundState() ) {
+
+          if ( id.e() == residual.e() ||
+               ( residual.e() == id::LevelID::all || residual.e() == id::LevelID::continuum && id.e() == 0 ) ) {
+
+            id = residual;
+          }
+        }
+      }
+    }
+
+    // change the product identifier to a fundamental particle if need be
+    if ( reaction.residual() != id ) {
+
+      if ( id == id::ParticleID( "H1" ) ) {
+
+        id = id::ParticleID::proton();
+      }
+      else if ( id == id::ParticleID( "H2" ) ) {
+
+        id = id::ParticleID::deuteron();
+      }
+      else if ( id == id::ParticleID( "H3" ) ) {
+
+        id = id::ParticleID::triton();
+      }
+      else if ( id == id::ParticleID( "He3" ) ) {
+
+        id = id::ParticleID::helion();
+      }
+      else if ( id == id::ParticleID( "He4" ) ) {
+
+        id = id::ParticleID::alpha();
+      }
+    }
+
+    // start reading the data
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
 
-    // create the multiplicity
+    // get the multiplicity
     auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );
 
     // get distribution data
