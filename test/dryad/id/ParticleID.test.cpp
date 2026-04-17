@@ -124,6 +124,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 0 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "photon" );
       CHECK( "g" == id.symbol() );
@@ -132,6 +133,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 0 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "gamma" );
       CHECK( "g" == id.symbol() );
@@ -140,6 +142,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 0 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "x-ray" );
       CHECK( "g" == id.symbol() );
@@ -148,6 +151,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 0 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::photon();
       CHECK( "g" == id.symbol() );
@@ -156,6 +160,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 0 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "e-" );
       CHECK( "e-" == id.symbol() );
@@ -164,6 +169,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( -1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "electron" );
       CHECK( "e-" == id.symbol() );
@@ -172,6 +178,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( -1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "beta-" );
       CHECK( "e-" == id.symbol() );
@@ -180,6 +187,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( -1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::electron();
       CHECK( "e-" == id.symbol() );
@@ -188,6 +196,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( -1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "e+" );
       CHECK( "e+" == id.symbol() );
@@ -196,6 +205,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "positron" );
       CHECK( "e+" == id.symbol() );
@@ -204,6 +214,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "beta+" );
       CHECK( "e+" == id.symbol() );
@@ -212,6 +223,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "e-_anti" );
       CHECK( "e+" == id.symbol() );
@@ -220,6 +232,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::positron();
       CHECK( "e+" == id.symbol() );
@@ -228,6 +241,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1000 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "n" );
       CHECK( "n" == id.symbol() );
@@ -236,6 +250,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "neutron" );
       CHECK( "n" == id.symbol() );
@@ -244,6 +259,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::neutron();
       CHECK( "n" == id.symbol() );
@@ -252,6 +268,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "p" );
       CHECK( "p" == id.symbol() );
@@ -260,6 +277,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1001 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "proton" );
       CHECK( "p" == id.symbol() );
@@ -268,6 +286,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1001 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::proton();
       CHECK( "p" == id.symbol() );
@@ -276,6 +295,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1001 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "d" );
       CHECK( "d" == id.symbol() );
@@ -284,6 +304,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1002 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "deuteron" );
       CHECK( "d" == id.symbol() );
@@ -292,6 +313,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1002 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::deuteron();
       CHECK( "d" == id.symbol() );
@@ -300,6 +322,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1002 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "t" );
       CHECK( "t" == id.symbol() );
@@ -308,6 +331,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1003 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "triton" );
       CHECK( "t" == id.symbol() );
@@ -316,6 +340,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1003 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::triton();
       CHECK( "t" == id.symbol() );
@@ -324,6 +349,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 1003 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "h" );
       CHECK( "h" == id.symbol() );
@@ -332,6 +358,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 2003 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "helion" );
       CHECK( "h" == id.symbol() );
@@ -340,6 +367,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 2003 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::helion();
       CHECK( "h" == id.symbol() );
@@ -348,6 +376,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 2003 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "a" );
       CHECK( "a" == id.symbol() );
@@ -356,6 +385,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 2004 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID( "alpha" );
       CHECK( "a" == id.symbol() );
@@ -364,6 +394,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 2004 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       id = ParticleID::alpha();
       CHECK( "a" == id.symbol() );
@@ -372,6 +403,7 @@ SCENARIO( "ParticleID" ) {
       CHECK( 0 == id.e() );
       CHECK( 2004 == id.za() );
       CHECK( std::nullopt == id.vacancies() );
+      CHECK( id == id.groundState() );
 
       CHECK( size == ParticleID::size() );     // only preregistered identifiers
 
