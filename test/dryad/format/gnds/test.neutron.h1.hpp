@@ -451,13 +451,12 @@ namespace h1 {
 
   void verifyParticleData( const ParticleDatabase& particles ) {
 
-    CHECK( 5 == particles.numberParticles() );
+    CHECK( 4 == particles.numberParticles() );
 
-    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "p" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "H2" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H2[all]" ) ) );
   }
 
   void verifyH1( const ProjectileTarget& H1, bool /* normalise */ ) {
