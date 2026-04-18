@@ -76,7 +76,6 @@ namespace gnds {
         int mt = reaction.attribute( "ENDF_MT" ).as_int();
         if ( ( mt < 203 ) || ( mt > 207 ) ) {
 
-          Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
           reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise ) );
         }
         else {
