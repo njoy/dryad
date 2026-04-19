@@ -307,6 +307,7 @@ add_cpp_test( dryad.format.gnds.pops.createParticle                             
 add_cpp_test( dryad.format.gnds.pops.createParticleDatabase                             dryad/format/gnds/pops/createParticleDatabase.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createTabulatedRadius                        dryad/format/gnds/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.createRadius                                 dryad/format/gnds/resonances/createRadius.test.cpp )
+add_cpp_test( dryad.format.gnds.resonances.createParticles                              dryad/format/gnds/resonances/createParticles.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createBackground                     dryad/format/gnds/resonances/rmatrix/createBackground.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createResonanceReaction              dryad/format/gnds/resonances/rmatrix/createResonanceReaction.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createDebyeWallerIntegralData                   dryad/format/gnds/thermal/createDebyeWallerIntegralData.test.cpp )
