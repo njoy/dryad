@@ -180,9 +180,7 @@ namespace pops {
       }
       else {
 
-        Log::error( "Could not find particle or derive a particle from the pops node: {}",
-                    id.symbol() );
-        throw std::exception();
+        Log::warning( "Did not find data in the PoPs GNDS node or could not derive data for particle \'{}\'" );
       }
     }
 

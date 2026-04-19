@@ -77,7 +77,8 @@ namespace pops {
     }
     else {
 
-      Log::error( "Expected either a nuclide, gaugeBoson or baryon node or regions1d node particle data" );
+      Log::error( "Expected either a nuclide, gaugeBoson, baryon, lepton or chemicalElement "
+                  "node with particle data" );
       throw std::exception();
     }
 
