@@ -20,7 +20,10 @@ SCENARIO( "createParticles" ) {
 
     pugi::xml_document document;
     document.load_file( "n-013_Al_027.endf.gnds.xml" );
-    pugi::xml_node pops = document.child( "reactionSuite" ).child( "PoPs" );
+    pugi::xml_node global_pops = document.child( "reactionSuite" ).child( "PoPs" );
+    pugi::xml_node local_pops = document.child( "reactionSuite" ).child( "resonances" ).
+                                         child( "resolved" ).child( "RMatrix" ).
+                                         child( "PoPs" );
 
     WHEN( "a global and local particle database node is given" ) {
 
@@ -33,8 +36,8 @@ SCENARIO( "createParticles" ) {
           id::ParticleID( "Al27" ),
           id::ParticleID( "Al28[all]" )
         };
-        ParticleDatabase global = format::gnds::pops::createParticleDatabase( pops, identifiers, "eval" );
-        ParticleDatabase local; // no local PoPs
+        ParticleDatabase global = format::gnds::pops::createParticleDatabase( global_pops, identifiers, "eval" );
+        ParticleDatabase local = format::gnds::pops::createParticleDatabase( local_pops, identifiers, "eval" );
 
         auto chunk = format::gnds::resonances::createParticles( global, local, identifiers );
 
