@@ -255,6 +255,7 @@ namespace dryad {
 
     /**
      *  @brief Return whether or not a given reaction product type is present
+     *         regardless of chain index
      *
      *  @param[in] type   the reaction product type
      */
@@ -265,14 +266,48 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the number of reaction products of a given type
+     *  @brief Return whether or not a given reaction product type is present
+     *         for a given chain index
+     *
+     *  @param[in] type    the reaction product type
+     *  @param[in] chain   the reaction product chain index
+     */
+    bool hasProduct( const id::ParticleID& type,
+                     std::size_t chain ) const {
+
+      auto iter = this->iterator( type, chain, 0 );
+      return iter != this->products().end();
+    }
+
+    /**
+     *  @brief Return the total number of reaction products of a given type
+     *         regardless of their chain index
      *
      *  @param[in] type   the reaction product type
      */
     std::size_t numberProducts( const id::ParticleID& type ) const {
 
-      auto functor = [&type] ( auto&& product )
-                             { return product.identifier() == type; };
+      auto functor = [&] ( auto&& product )
+                         { return product.productIdentifier() == type; };
+
+      return std::count_if( this->products().begin(),
+                            this->products().end(),
+                            functor );
+    }
+
+    /**
+     *  @brief Return the number of reaction products of a given type
+     *         for a given chain index
+     *
+     *  @param[in] type    the reaction product type
+     *  @param[in] chain   the reaction product chain index
+     */
+    std::size_t numberProducts( const id::ParticleID& type,
+                                std::size_t chain ) const {
+
+      auto functor = [&] ( auto&& product )
+                         { return product.productIdentifier() == type &&
+                                  product.chainIndex() == chain; };
 
       return std::count_if( this->products().begin(),
                             this->products().end(),
@@ -281,6 +316,7 @@ namespace dryad {
 
     /**
      *  @brief Return a reaction product with a given type and index
+     *         regardless of chain index
      *
      *  @param[in] type    the reaction product type
      *  @param[in] index   the reaction product index (default is zero)
@@ -303,6 +339,7 @@ namespace dryad {
 
     /**
      *  @brief Return a reaction product with a given type and index
+     *         regardless of chain index
      *
      *  @param[in] type    the reaction product type
      *  @param[in] index   the reaction product index (default is zero)
@@ -311,6 +348,47 @@ namespace dryad {
                               std::size_t index = 0 ) {
 
       return const_cast< ReactionProduct& >( const_cast< const Reaction& >( *this ).product( type, index ) );
+    }
+
+    /**
+     *  @brief Return a reaction product with a given type, chain index
+     *         and index
+     *
+     *  @param[in] type    the reaction product type
+     *  @param[in] chain   the reaction product chain index
+     *  @param[in] index   the reaction product index in the given chain index
+     */
+    const ReactionProduct& product( const id::ParticleID& type,
+                                    std::size_t chain,
+                                    std::size_t index ) const {
+
+      auto iter = this->iterator( type, chain, index );
+      if ( iter != this->products().end() ) {
+
+        return *iter;
+      }
+      else {
+
+        Log::error( "There is no reaction product of type \'{}\' with chain index \'{}\' "
+                    "and index \'{}\' present",
+                    type.symbol(), chain, index );
+        throw std::exception();
+      }
+    }
+
+    /**
+     *  @brief Return a reaction product with a given type, chain index
+     *         and index
+     *
+     *  @param[in] type    the reaction product type
+     *  @param[in] chain   the reaction product chain index
+     *  @param[in] index   the reaction product index in the given chain index
+     */
+    ReactionProduct& product( const id::ParticleID& type,
+                              std::size_t chain,
+                              std::size_t index ) {
+
+      return const_cast< ReactionProduct& >( const_cast< const Reaction& >( *this ).product( type, chain, index ) );
     }
 
     /**

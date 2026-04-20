@@ -30,6 +30,8 @@ namespace pops {
     // check that this is a valid coherentPhotonScattering node
     throwExceptionOnWrongNode( pops, "PoPs" );
 
+    //! @todo how about [all]
+
     std::vector< Particle > particles;
 
     // loop over bosons

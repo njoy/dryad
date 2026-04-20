@@ -173,12 +173,16 @@ namespace h1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H1" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -268,7 +272,18 @@ namespace h1 {
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
     auto h1 = reaction.product( id::ParticleID( "H1" ) );
-    CHECK( id::ParticleID( "H1" ) == h1.identifier() );
+    CHECK( id::ParticleID( "H1" ) == h1.productIdentifier() );
+    CHECK( std::nullopt == h1.parentIdentifier() );
+    CHECK( 0 == h1.chainIndex() );
+    CHECK( false == h1.hasAverageCosine() );
+    CHECK( false == h1.hasAverageEnergy() );
+    CHECK( false == h1.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h1.multiplicity() ) );
+    multiplicity = std::get< int >( h1.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h1.averageCosine() );
+    CHECK( std::nullopt == h1.averageEnergy() );
+    CHECK( std::nullopt == h1.distributionData() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -307,12 +322,66 @@ namespace h1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "H2" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
+    CHECK( false == gamma.hasAverageCosine() );
+    CHECK( false == gamma.hasAverageEnergy() );
+    CHECK( true == gamma.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
+    auto multiplicity = std::get< int >( gamma.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == gamma.averageCosine() );
+    CHECK( std::nullopt == gamma.averageEnergy() );
+    CHECK( std::nullopt != gamma.distributionData() );
+    CHECK( true == std::holds_alternative< TwoBodyDistributionData >( gamma.distributionData().value() ) );
+    auto data = std::get< TwoBodyDistributionData >( gamma.distributionData().value() );
+    CHECK( DistributionDataType::TwoBody == data.type() );
+    CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
+    auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 153 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 153 == angle.grid().size() );
+    CHECK( 153 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 1e-5   , WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 2e-5   , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[151] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[152] ) );
+    CHECK( 3 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK( 3 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 3 == angle.distributions()[151].pdf().coefficients().size() );
+    CHECK( 3 == angle.distributions()[152].pdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( -5.6557125E-08  , WithinRel( angle.distributions()[0].pdf().coefficients()[1] ) );
+    CHECK_THAT( -2.1856500E-12  , WithinRel( angle.distributions()[0].pdf().coefficients()[2] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( -7.9983795E-08  , WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+    CHECK_THAT( -4.3710250E-12  , WithinRel( angle.distributions()[1].pdf().coefficients()[2] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[151].pdf().coefficients()[0] ) );
+    CHECK_THAT( -5.4333795E-03  , WithinRel( angle.distributions()[151].pdf().coefficients()[1] ) );
+    CHECK_THAT( -4.6847050E-01  , WithinRel( angle.distributions()[151].pdf().coefficients()[2] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[152].pdf().coefficients()[0] ) );
+    CHECK_THAT( -6.3367845E-03 , WithinRel( angle.distributions()[152].pdf().coefficients()[1] ) );
+    CHECK_THAT( -4.6842900E-01 , WithinRel( angle.distributions()[152].pdf().coefficients()[2] ) );
+    CHECK( 152 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    auto deuterium = reaction.product( id::ParticleID( "H2" ) );
-    CHECK( id::ParticleID( "H2" ) == deuterium.identifier() );
+    auto h2 = reaction.product( id::ParticleID( "H2" ) );
+    CHECK( id::ParticleID( "H2" ) == h2.productIdentifier() );
+    CHECK( std::nullopt == h2.parentIdentifier() );
+    CHECK( 0 == h2.chainIndex() );
+    CHECK( false == h2.hasAverageCosine() );
+    CHECK( false == h2.hasAverageEnergy() );
+    CHECK( false == h2.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h2.multiplicity() ) );
+    multiplicity = std::get< int >( h2.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h2.averageCosine() );
+    CHECK( std::nullopt == h2.averageEnergy() );
+    CHECK( std::nullopt == h2.distributionData() );
   }
-
 
   void verifyCrossSectionCovariances( const covariance::CrossSectionCovarianceData& xs ) {
 

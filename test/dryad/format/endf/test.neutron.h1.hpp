@@ -169,16 +169,21 @@ namespace h1 {
     CHECK_THAT( 2.043608e+1, WithinRel( reaction.crossSection().values()[0] ) );
     CHECK_THAT( 4.818408e-1, WithinRel( reaction.crossSection().values()[152] ) );
 
-    CHECK( 1 == reaction.numberProducts() );
+    CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "n" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H1" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -266,6 +271,20 @@ namespace h1 {
     CHECK_THAT(  3.44900050e-06 , WithinRel( angle.distributions()[152].cdf().coefficients()[7] ) );
     CHECK( 152 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+
+    auto h1 = reaction.product( id::ParticleID( "H1" ) );
+    CHECK( id::ParticleID( "H1" ) == h1.productIdentifier() );
+    CHECK( std::nullopt == h1.parentIdentifier() );
+    CHECK( 0 == h1.chainIndex() );
+    CHECK( false == h1.hasAverageCosine() );
+    CHECK( false == h1.hasAverageEnergy() );
+    CHECK( false == h1.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h1.multiplicity() ) );
+    multiplicity = std::get< int >( h1.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h1.averageCosine() );
+    CHECK( std::nullopt == h1.averageEnergy() );
+    CHECK( std::nullopt == h1.distributionData() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -302,13 +321,35 @@ namespace h1 {
 
     CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "d" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H2[all]" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
+    CHECK( false == gamma.hasAverageCosine() );
+    CHECK( false == gamma.hasAverageEnergy() );
+    CHECK( false == gamma.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( gamma.multiplicity() ) );
+    auto multiplicity = std::get< int >( gamma.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == gamma.averageCosine() );
+    CHECK( std::nullopt == gamma.averageEnergy() );
+    CHECK( std::nullopt == gamma.distributionData() );
 
-    auto deuterium = reaction.product( id::ParticleID( "d" ) );
-    CHECK( id::ParticleID( "d" ) == deuterium.identifier() );
+    auto h2 = reaction.product( id::ParticleID( "H2[all]" ) );
+    CHECK( id::ParticleID( "H2[all]" ) == h2.productIdentifier() );
+    CHECK( std::nullopt == h2.parentIdentifier() );
+    CHECK( 0 == h2.chainIndex() );
+    CHECK( false == h2.hasAverageCosine() );
+    CHECK( false == h2.hasAverageEnergy() );
+    CHECK( false == h2.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( h2.multiplicity() ) );
+    multiplicity = std::get< int >( h2.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == h2.averageCosine() );
+    CHECK( std::nullopt == h2.averageEnergy() );
+    CHECK( std::nullopt == h2.distributionData() );
   }
 
   void verifyCrossSectionCovariances( const covariance::CrossSectionCovarianceData& xs ) {

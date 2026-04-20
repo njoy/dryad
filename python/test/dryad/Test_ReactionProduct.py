@@ -9,6 +9,7 @@ from njoy.dryad import ReactionProduct
 from njoy.dryad import TabulatedMultiplicity
 from njoy.dryad import InterpolationType
 from njoy.dryad import ReferenceFrame
+from njoy.dryad import TabulatedAverageCosine
 from njoy.dryad import TabulatedAverageEnergy
 from njoy.dryad import TwoBodyDistributionData
 from njoy.dryad import IsotropicAngularDistributions
@@ -20,13 +21,16 @@ from njoy.dryad.id import ParticleID
 def verify_chunk( self, chunk, normalise ) :
 
     # reaction product identifier
-    self.assertEqual( ParticleID.neutron(), chunk.identifier )
+    self.assertEqual( ParticleID.neutron(), chunk.product_identifier )
+    self.assertIsNone( chunk.parent_identifier )
+    self.assertEqual( 0, chunk.chain_index )
 
     # multiplicity
     self.assertEqual( True, isinstance( chunk.multiplicity, int ) )
     self.assertEqual( 1, chunk.multiplicity )
 
-    # average reaction product energy
+    # average reaction product data
+    self.assertIsNone( chunk.average_cosine )
     self.assertIsNone( chunk.average_energy )
 
     # distribution data
@@ -71,13 +75,16 @@ def verify_chunk( self, chunk, normalise ) :
     self.assertEqual( InterpolationType.LinearLinear, data.angle.interpolants[0] )
 
     # metadata
+    self.assertEqual( False, chunk.has_average_cosine )
     self.assertEqual( False, chunk.has_average_energy )
     self.assertEqual( True, chunk.has_distribution_data )
 
 def verify_tabulated_chunk( self, chunk, normalise ) :
 
     # reaction product identifier
-    self.assertEqual( ParticleID.neutron(), chunk.identifier )
+    self.assertEqual( ParticleID.neutron(), chunk.product_identifier )
+    self.assertIsNone( chunk.parent_identifier )
+    self.assertEqual( 0, chunk.chain_index )
 
     # multiplicity
     self.assertEqual( True, isinstance( chunk.multiplicity, TabulatedMultiplicity ) )
@@ -103,7 +110,8 @@ def verify_tabulated_chunk( self, chunk, normalise ) :
     self.assertEqual( InterpolationType.LinearLog, chunk.multiplicity.interpolants[1] )
     self.assertEqual( False, chunk.multiplicity.is_linearised )
 
-    # average reaction product energy
+    # average reaction product data
+    self.assertIsNone( chunk.average_cosine )
     self.assertIsNone( chunk.average_energy )
 
     # distribution data
@@ -148,6 +156,7 @@ def verify_tabulated_chunk( self, chunk, normalise ) :
     self.assertEqual( InterpolationType.LinearLinear, data.angle.interpolants[0] )
 
     # metadata
+    self.assertEqual( False, chunk.has_average_cosine )
     self.assertEqual( False, chunk.has_average_energy )
     self.assertEqual( True, chunk.has_distribution_data )
 
@@ -157,14 +166,14 @@ class Test_ReactionProduct( unittest.TestCase ) :
     def test_component( self ) :
 
         # the data is given explicitly using an integer multiplicity
-        chunk1 = ReactionProduct( id = ParticleID.neutron(), multiplicity = 1,
+        chunk1 = ReactionProduct( product = ParticleID.neutron(), multiplicity = 1,
                                   distribution = TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
                                                                           TabulatedAngularDistributions(
                                                                             [ 1e-5, 20. ],
                                                                             [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
                                                                               TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ),
                                   normalise = False )
-        chunk2 = ReactionProduct( id = ParticleID.neutron(), multiplicity = 1,
+        chunk2 = ReactionProduct( product = ParticleID.neutron(), multiplicity = 1,
                                   distribution = TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
                                                                           TabulatedAngularDistributions(
                                                                             [ 1e-5, 20. ],
@@ -182,7 +191,7 @@ class Test_ReactionProduct( unittest.TestCase ) :
         verify_chunk( self, chunk2, True )
 
         # the data is given explicitly using a tabulated multiplicity
-        chunk1 = ReactionProduct( id = ParticleID.neutron(),
+        chunk1 = ReactionProduct( product = ParticleID.neutron(),
                                   multiplicity = TabulatedMultiplicity ( [ 1., 2., 2., 3., 4. ],
                                                                          [ 4., 3., 4., 3., 2. ],
                                                                          [ 1, 4 ],
@@ -194,7 +203,7 @@ class Test_ReactionProduct( unittest.TestCase ) :
                                                                             [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
                                                                               TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ),
                                   normalise = False )
-        chunk2 = ReactionProduct( id = ParticleID.neutron(),
+        chunk2 = ReactionProduct( product = ParticleID.neutron(),
                                   multiplicity = TabulatedMultiplicity ( [ 1., 2., 2., 3., 4. ],
                                                                          [ 4., 3., 4., 3., 2. ],
                                                                          [ 1, 4 ],
@@ -218,7 +227,7 @@ class Test_ReactionProduct( unittest.TestCase ) :
 
     def test_setter_functions( self ) :
 
-        chunk = ReactionProduct( id = ParticleID.neutron(), multiplicity = 1,
+        chunk = ReactionProduct( product = ParticleID.neutron(), multiplicity = 1,
                                  distribution = TwoBodyDistributionData( ReferenceFrame.CentreOfMass,
                                                                          TabulatedAngularDistributions(
                                                                            [ 1e-5, 20. ],
@@ -229,11 +238,35 @@ class Test_ReactionProduct( unittest.TestCase ) :
         newid = ParticleID.proton()
         original = ParticleID.neutron()
 
-        chunk.identifier = newid
+        chunk.product_identifier = newid
 
-        self.assertEqual( newid, chunk.identifier )
+        self.assertEqual( newid, chunk.product_identifier )
 
-        chunk.identifier = original
+        chunk.product_identifier = original
+
+        verify_chunk( self, chunk, False )
+
+        # the parent identifier can be changed
+        newid = ParticleID.proton()
+        original = None
+
+        chunk.parent_identifier = newid
+
+        self.assertEqual( newid, chunk.parent_identifier )
+
+        chunk.parent_identifier = original
+
+        verify_chunk( self, chunk, False )
+
+        # the chain index can be changed
+        newindex = 1
+        original = 0
+
+        chunk.chain_index = newindex
+
+        self.assertEqual( newindex, chunk.chain_index )
+
+        chunk.chain_index = original
 
         verify_chunk( self, chunk, False )
 
@@ -266,6 +299,22 @@ class Test_ReactionProduct( unittest.TestCase ) :
         self.assertEqual( newdistribution, chunk.distribution_data )
 
         chunk.distribution_data = original
+
+        verify_chunk( self, chunk, False )
+
+        # the average cosine can be changed
+        newaverage = TabulatedAverageCosine( [ 1., 2., 2., 3., 4. ],
+                                             [ -1., 0., -1., 0., 1. ],
+                                             [ 1, 4 ],
+                                             [ InterpolationType.LinearLinear,
+                                               InterpolationType.LinearLinear ] )
+        original = None
+
+        chunk.average_cosine = newaverage
+
+        self.assertEqual( newaverage, chunk.average_cosine )
+
+        chunk.average_cosine = original
 
         verify_chunk( self, chunk, False )
 

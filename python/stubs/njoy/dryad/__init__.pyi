@@ -1413,13 +1413,24 @@ class Reaction:
             self         the reaction
             tolerance    the integration tolerance (default: 1e-8)
         """
+    @typing.overload
     def has_product(self, type: id.ParticleID) -> bool:
         """
-        Return whether or not a reaction product type is present
+        Return whether or not a reaction product type is present regardless of chain index
         
         Arguments:
             self   the reaction
             type   the reaction product type
+        """
+    @typing.overload
+    def has_product(self, type: id.ParticleID, chain: int) -> bool:
+        """
+        Return whether or not a reaction product type is present for a given chain index
+        
+        Arguments:
+            self    the reaction
+            type    the reaction product type
+            chain   the reaction product chain index
         """
     def normalise(self) -> None:
         """
@@ -1433,16 +1444,33 @@ class Reaction:
     @typing.overload
     def number_products(self, type: id.ParticleID) -> int:
         """
-        The number of reaction products of a given type
+        The number of reaction products of a given type regardless of the chain index
         """
+    @typing.overload
+    def number_products(self, type: id.ParticleID, chain: int) -> int:
+        """
+        The number of reaction products of a given type for a given chain index
+        """
+    @typing.overload
     def product(self, type: id.ParticleID, index: int = 0) -> ReactionProduct:
         """
-        Return a reaction product with a given type and index
+        Return a reaction product with a given type and index regardless of the chain index
         
         Arguments:
             self    the reaction
             type    the reaction product type
             index   the reaction product index (default is zero)
+        """
+    @typing.overload
+    def product(self, type: id.ParticleID, chain: int, index: int) -> ReactionProduct:
+        """
+        Return a reaction product with a given type, chain index and index
+        
+        Arguments:
+            self    the reaction
+            type    the reaction product type
+            chain   the reaction product chain index
+            index   the reaction product index
         """
     @property
     def category(self) -> ReactionCategory:
@@ -1568,6 +1596,26 @@ class ReactionCategory:
 class ReactionProduct:
     """
     The data associated to a single reaction product
+    
+    Parameters
+    ----------
+        product : njoy.dryad.id.ParticleID
+             the reaction product identifier
+        multiplicity : int, njoy.dryad.TabulatedMultiplicity or njoy.dryad.PolynomialMultiplicity
+             the reaction product multiplicity
+        distribution : default None
+             the reaction product distribution data (default: None)
+        average_cosine : njoy.dryad.TabulatedAverageCosine, default None
+             the average reaction product cosine (default: None)
+        average_energy : njoy.dryad.TabulatedAverageEnergy, default None
+             the average reaction product energy (default: None)
+        parent : njoy.dryad.id.ParticleID, default None
+             the parent reaction product (default: None)
+        chain : int, default 0
+             the chain index of the reaction product (default: 0)
+        normalise : bool, default False
+             option to indicate whether or not to normalise all probability
+             data (default: no normalisation)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ReactionProduct:
@@ -1576,18 +1624,9 @@ class ReactionProduct:
         ...
     def __eq__(self, arg0: ReactionProduct) -> bool:
         ...
-    def __init__(self, id: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_energy: TabulatedAverageEnergy | None = None, normalise: bool = False) -> None:
+    def __init__(self, product: id.ParticleID, multiplicity: int | TabulatedMultiplicity | PolynomialMultiplicity, distribution: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None = None, average_cosine: TabulatedAverageCosine | None = None, average_energy: TabulatedAverageEnergy | None = None, parent: id.ParticleID | None = None, chain: int = 0, normalise: bool = False) -> None:
         """
         Initialise the reaction
-        
-        Arguments:
-            self             the reaction
-            id               the reaction product identifier
-            multiplicity     the reaction product multiplicity
-            distribution     the optional reaction product distribution data
-            average_energy   the optional average reaction product energy
-            normalise        option to indicate whether or not to normalise
-                             all probability data (default: no normalisation)
         """
     def __ne__(self, arg0: ReactionProduct) -> bool:
         ...
@@ -1595,6 +1634,14 @@ class ReactionProduct:
         """
         Normalise the distribution data
         """
+    @property
+    def average_cosine(self) -> TabulatedAverageCosine | None:
+        """
+        The average reaction product cosine
+        """
+    @average_cosine.setter
+    def average_cosine(self, arg1: TabulatedAverageCosine | None) -> None:
+        ...
     @property
     def average_energy(self) -> TabulatedAverageEnergy | None:
         """
@@ -1604,6 +1651,14 @@ class ReactionProduct:
     def average_energy(self, arg1: TabulatedAverageEnergy | None) -> None:
         ...
     @property
+    def chain_index(self) -> int:
+        """
+        The chain index of the reaction product
+        """
+    @chain_index.setter
+    def chain_index(self, arg1: int) -> None:
+        ...
+    @property
     def distribution_data(self) -> TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None:
         """
         The distribution data
@@ -1611,6 +1666,11 @@ class ReactionProduct:
     @distribution_data.setter
     def distribution_data(self, arg1: TwoBodyDistributionData | UncorrelatedDistributionData | CoherentDistributionData | IncoherentDistributionData | None) -> None:
         ...
+    @property
+    def has_average_cosine(self) -> bool:
+        """
+        Flag indicating whether or not the reaction product has average reaction product cosine data
+        """
     @property
     def has_average_energy(self) -> bool:
         """
@@ -1622,20 +1682,28 @@ class ReactionProduct:
         Flag indicating whether or not the reaction product has distribution data
         """
     @property
-    def identifier(self) -> id.ParticleID:
-        """
-        The reaction product identifier
-        """
-    @identifier.setter
-    def identifier(self, arg1: id.ParticleID) -> None:
-        ...
-    @property
     def multiplicity(self) -> int | TabulatedMultiplicity | PolynomialMultiplicity:
         """
         The multiplicity
         """
     @multiplicity.setter
     def multiplicity(self, arg1: int | TabulatedMultiplicity | PolynomialMultiplicity) -> None:
+        ...
+    @property
+    def parent_identifier(self) -> id.ParticleID | None:
+        """
+        The parent product identifier
+        """
+    @parent_identifier.setter
+    def parent_identifier(self, arg1: id.ParticleID | None) -> None:
+        ...
+    @property
+    def product_identifier(self) -> id.ParticleID:
+        """
+        The reaction product identifier
+        """
+    @product_identifier.setter
+    def product_identifier(self, arg1: id.ParticleID) -> None:
         ...
 class ReferenceFrame:
     """

@@ -162,17 +162,37 @@ void wrapReaction( python::module& module ) {
     "number_products",
     python::overload_cast< const ParticleID& >( &Component::numberProducts, python::const_ ),
     python::arg( "type" ),
-    "The number of reaction products of a given type"
+    "The number of reaction products of a given type regardless of the chain index"
+  )
+  .def(
+
+    "number_products",
+    python::overload_cast< const ParticleID&, std::size_t >( &Component::numberProducts, python::const_ ),
+    python::arg( "type" ),
+    python::arg( "chain" ),
+    "The number of reaction products of a given type for a given chain index"
   )
   .def(
 
     "has_product",
-    &Component::hasProduct,
+    python::overload_cast< const ParticleID& >( &Component::hasProduct, python::const_ ),
     python::arg( "type" ),
-    "Return whether or not a reaction product type is present\n\n"
+    "Return whether or not a reaction product type is present regardless of chain index\n\n"
     "Arguments:\n"
     "    self   the reaction\n"
     "    type   the reaction product type"
+  )
+  .def(
+
+    "has_product",
+    python::overload_cast< const ParticleID&, std::size_t >( &Component::hasProduct, python::const_ ),
+    python::arg( "type" ),
+    python::arg( "chain" ),
+    "Return whether or not a reaction product type is present for a given chain index\n\n"
+    "Arguments:\n"
+    "    self    the reaction\n"
+    "    type    the reaction product type\n"
+    "    chain   the reaction product chain index"
   )
   .def(
 
@@ -180,11 +200,26 @@ void wrapReaction( python::module& module ) {
     python::overload_cast< const ParticleID&, std::size_t >( &Component::product, python::const_ ),
     python::arg( "type" ),
     python::arg( "index" ) = 0,
-    "Return a reaction product with a given type and index\n\n"
+    "Return a reaction product with a given type and index regardless of the chain index\n\n"
     "Arguments:\n"
     "    self    the reaction\n"
     "    type    the reaction product type\n"
     "    index   the reaction product index (default is zero)",
+    python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "product",
+    python::overload_cast< const ParticleID&, std::size_t, std::size_t >( &Component::product, python::const_ ),
+    python::arg( "type" ),
+    python::arg( "chain" ),
+    python::arg( "index" ),
+    "Return a reaction product with a given type, chain index and index\n\n"
+    "Arguments:\n"
+    "    self    the reaction\n"
+    "    type    the reaction product type\n"
+    "    chain   the reaction product chain index\n"
+    "    index   the reaction product index",
     python::return_value_policy::reference_internal
   )
   .def(

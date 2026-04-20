@@ -188,6 +188,7 @@ add_cpp_test( dryad.format.endf.createProjectileIdentifier                      
 add_cpp_test( dryad.format.endf.createProductIdentifier                                 dryad/format/endf/createProductIdentifier.test.cpp )
 add_cpp_test( dryad.format.endf.createTargetIdentifier                                  dryad/format/endf/createTargetIdentifier.test.cpp )
 add_cpp_test( dryad.format.endf.createInteractionType                                   dryad/format/endf/createInteractionType.test.cpp )
+add_cpp_test( dryad.format.endf.createComplexBreakUpParticles                           dryad/format/endf/createComplexBreakUpParticles.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.createTabulatedRadius                        dryad/format/endf/resonances/createTabulatedRadius.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf3.createSpinGroups                        dryad/format/endf/resonances/lrf3/createSpinGroups.test.cpp )
 add_cpp_test( dryad.format.endf.resonances.lrf3.createCompoundSystem                    dryad/format/endf/resonances/lrf3/createCompoundSystem.test.cpp )

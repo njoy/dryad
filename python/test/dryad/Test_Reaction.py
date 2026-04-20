@@ -66,18 +66,58 @@ def verify_chunk( self, chunk, normalise ) :
     # reaction products
     self.assertEqual( True, chunk.has_product( ParticleID( 'n' ) ) )
     self.assertEqual( True, chunk.has_product( ParticleID( 'g' ) ) )
+    self.assertEqual( True, chunk.has_product( ParticleID( 'Be8' ) ) )
+    self.assertEqual( True, chunk.has_product( ParticleID( 'a' ) ) )
     self.assertEqual( False, chunk.has_product( ParticleID( 'h' ) ) )
-    self.assertEqual( 3, len( chunk.products ) )
-    self.assertEqual( 3, chunk.number_products() )
+    self.assertEqual( 5, len( chunk.products ) )
+    self.assertEqual( 5, chunk.number_products() )
+    # total number of products
     self.assertEqual( 1, chunk.number_products( ParticleID( 'n' ) ) )
     self.assertEqual( 2, chunk.number_products( ParticleID( 'g' ) ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'Be8' ) ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'a' ) ) )
     self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ) ) )
+    # number of products by chain index, chain = 0
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'n' ), 0 ) )
+    self.assertEqual( 2, chunk.number_products( ParticleID( 'g' ), 0 ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'Be8' ), 0 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'a' ), 0 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ), 0 ) )
+    # number of products by chain index, chain = 1
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'n' ), 1 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'g' ), 1 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'Be8' ), 1 ) )
+    self.assertEqual( 1, chunk.number_products( ParticleID( 'a' ), 1 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ), 1 ) )
+    # number of products by chain index, chain = 2
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'n' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'g' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'Be8' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'a' ), 2 ) )
+    self.assertEqual( 0, chunk.number_products( ParticleID( 'h' ), 2 ) )
 
     self.assertEqual( 1, chunk.product( ParticleID( 'n' ) ).multiplicity )
     self.assertEqual( 1, chunk.product( ParticleID( 'n' ), 0 ).multiplicity )
     self.assertEqual( 2, chunk.product( ParticleID( 'g' ) ).multiplicity )
     self.assertEqual( 2, chunk.product( ParticleID( 'g' ), 0 ).multiplicity )
     self.assertEqual( 3, chunk.product( ParticleID( 'g' ), 1 ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'Be8' ) ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'Be8' ), 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'a' ) ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'a' ), 0 ).multiplicity )
+
+    self.assertEqual( 1, chunk.product( ParticleID( 'n' ), 0, 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'g' ), 0, 0 ).multiplicity )
+    self.assertEqual( 3, chunk.product( ParticleID( 'g' ), 0, 1 ).multiplicity )
+    self.assertEqual( 1, chunk.product( ParticleID( 'Be8' ), 0, 0 ).multiplicity )
+    self.assertEqual( 2, chunk.product( ParticleID( 'a' ), 1, 0 ).multiplicity )
+
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'n' ), 1, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'g' ), 1, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'g' ), 1, 1 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'Be8' ), 1, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'a' ), 0, 0 )
+    with self.assertRaises( Exception ) : chunk.product( ParticleID( 'a' ), 1, 1 )
 
     normalisation = 2.0 if normalise else 1.0
     data = chunk.product( ParticleID( 'n' ) ).distribution_data
@@ -194,7 +234,9 @@ class Test_Reaction( unittest.TestCase ) :
                                                                                     [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
                                                                                       TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                                         ReactionProduct( ParticleID( 'g' ), 2 ),
-                                        ReactionProduct( ParticleID( 'g' ), 3 ) ],
+                                        ReactionProduct( ParticleID( 'g' ), 3 ),
+                                        ReactionProduct( ParticleID( 'Be8' ), 1 ),
+                                        ReactionProduct( ParticleID( 'a' ), 2, parent = ParticleID( 'Be8' ), chain = 1 ) ],
                            normalise = False )
         chunk2 = Reaction( id = ReactionID( 'n,Fe56->n,Fe56_e1' ),
                            mass_q = 0, reaction_q = -1,
@@ -210,7 +252,9 @@ class Test_Reaction( unittest.TestCase ) :
                                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
                                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                                         ReactionProduct( ParticleID( 'g' ), 2 ),
-                                        ReactionProduct( ParticleID( 'g' ), 3 ) ],
+                                        ReactionProduct( ParticleID( 'g' ), 3 ),
+                                        ReactionProduct( ParticleID( 'Be8' ), 1 ),
+                                        ReactionProduct( ParticleID( 'a' ), 2, parent = ParticleID( 'Be8' ), chain = 1 ) ],
                            normalise = True )
 
         verify_chunk( self, chunk1, False )
@@ -253,7 +297,9 @@ class Test_Reaction( unittest.TestCase ) :
                                                                                    [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
                                                                                      TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                                        ReactionProduct( ParticleID( 'g' ), 2 ),
-                                       ReactionProduct( ParticleID( 'g' ), 3 ) ] )
+                                       ReactionProduct( ParticleID( 'g' ), 3 ),
+                                       ReactionProduct( ParticleID( 'Be8' ), 1 ),
+                                       ReactionProduct( ParticleID( 'a' ), 2, parent = ParticleID( 'Be8' ), chain = 1 ) ] )
 
         # the reaction identifier can be changed
         newid = ReactionID( n, fe56, ReactionType( n, 90 ) )
@@ -325,7 +371,9 @@ class Test_Reaction( unittest.TestCase ) :
                                                                  [ TabulatedAngularDistribution( [ -1., +1. ], [ 1., 1. ] ),
                                                                    TabulatedAngularDistribution( [ -1., +1. ], [ 0.8, 1.2 ] ) ] ) ) ),
                      ReactionProduct( ParticleID( 'g' ), 2 ),
-                     ReactionProduct( ParticleID( 'g' ), 3 ) ]
+                     ReactionProduct( ParticleID( 'g' ), 3 ),
+                     ReactionProduct( ParticleID( 'Be8' ), 1 ),
+                     ReactionProduct( ParticleID( 'a' ), 2, parent = ParticleID( 'Be8' ), chain = 1 ) ]
 
         chunk.products = newproducts
 

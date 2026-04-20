@@ -462,12 +462,16 @@ namespace li7 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li7" ) ) );
 
     auto neutron = reaction.products()[0];
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -517,7 +521,18 @@ namespace li7 {
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
     auto li7 = reaction.products()[1];
-    CHECK( id::ParticleID( "Li7" ) == li7.identifier() );
+    CHECK( id::ParticleID( "Li7" ) == li7.productIdentifier() );
+    CHECK( std::nullopt == li7.parentIdentifier() );
+    CHECK( 0 == li7.chainIndex() );
+    CHECK( false == li7.hasAverageCosine() );
+    CHECK( false == li7.hasAverageEnergy() );
+    CHECK( false == li7.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( li7.multiplicity() ) );
+    multiplicity = std::get< int >( li7.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == li7.averageCosine() );
+    CHECK( std::nullopt == li7.averageEnergy() );
+    CHECK( std::nullopt == li7.distributionData() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -556,16 +571,33 @@ namespace li7 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Li8" ) ) );
 
     auto li8 = reaction.product( id::ParticleID( "Li8" ) );
-    CHECK( id::ParticleID( "Li8" ) == li8.identifier() );
+    CHECK( id::ParticleID( "Li8" ) == li8.productIdentifier() );
+    CHECK( std::nullopt == li8.parentIdentifier() );
+    CHECK( 0 == li8.chainIndex() );
+    CHECK( false == li8.hasAverageCosine() );
+    CHECK( false == li8.hasAverageEnergy() );
+    CHECK( false == li8.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( li8.multiplicity() ) );
+    auto multiplicity = std::get< int >( li8.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == li8.averageCosine() );
+    CHECK( std::nullopt == li8.averageEnergy() );
+    CHECK( std::nullopt == li8.distributionData() );
 
     auto gamma1 = reaction.product( id::ParticleID( "g" ), 0 );
-    CHECK( id::ParticleID( "g" ) == gamma1.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma1.productIdentifier() );
+    CHECK( std::nullopt == gamma1.parentIdentifier() );
+    CHECK( 0 == gamma1.chainIndex() );
 
     auto gamma2 = reaction.product( id::ParticleID( "g" ), 1 );
-    CHECK( id::ParticleID( "g" ) == gamma2.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma2.productIdentifier() );
+    CHECK( std::nullopt == gamma2.parentIdentifier() );
+    CHECK( 0 == gamma2.chainIndex() );
 
     auto gamma3 = reaction.product( id::ParticleID( "g" ), 2 );
-    CHECK( id::ParticleID( "g" ) == gamma3.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma3.productIdentifier() );
+    CHECK( std::nullopt == gamma3.parentIdentifier() );
+    CHECK( 0 == gamma3.chainIndex() );
   }
 
   void verifyLumpedReaction851( const Reaction& reaction ) {

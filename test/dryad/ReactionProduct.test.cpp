@@ -27,10 +27,11 @@ SCENARIO( "ReactionProduct" ) {
                                               { 1e-5, 20. },
                                               { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk1( id, multiplicity,
-                              distribution, std::nullopt, false );
+      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt,
+                              std::nullopt, std::nullopt, 0, false );
       ReactionProduct chunk2( std::move( id ), std::move( multiplicity ),
-                              std::move( distribution ), std::nullopt, true );
+                              std::move( distribution ), std::nullopt,
+                              std::nullopt, std::nullopt, 0, true );
 
       verifyChunk( chunk1, false );
       verifyChunk( chunk2, true );
@@ -58,9 +59,10 @@ SCENARIO( "ReactionProduct" ) {
                                               { 1e-5, 20. },
                                               { { { 1.0 } }, { { 1.0, 0.2 } } } ) );
 
-      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt, false );
+      ReactionProduct chunk1( id, multiplicity, distribution, std::nullopt,
+                              std::nullopt, std::nullopt, 0, false );
       ReactionProduct chunk2( std::move( id ), std::move( multiplicity ), std::move( distribution ),
-                              std::nullopt, true );
+                              std::nullopt, std::nullopt, std::nullopt, 0, true );
 
       verifyTabulatedChunk( chunk1, false );
       verifyTabulatedChunk( chunk2, true );
@@ -88,11 +90,39 @@ SCENARIO( "ReactionProduct" ) {
         id::ParticleID newid = id::ParticleID::proton();
         id::ParticleID original = id::ParticleID::neutron();
 
-        chunk.identifier( newid );
+        chunk.productIdentifier( newid );
 
-        CHECK( newid == chunk.identifier() );
+        CHECK( newid == chunk.productIdentifier() );
 
-        chunk.identifier( original );
+        chunk.productIdentifier( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
+      THEN( "the parent identifier can be changed" ) {
+
+        std::optional< id::ParticleID > newid = id::ParticleID::proton();
+        std::optional< id::ParticleID > original = std::nullopt;
+
+        chunk.parentIdentifier( newid );
+
+        CHECK( newid == chunk.parentIdentifier() );
+
+        chunk.parentIdentifier( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
+      THEN( "the chain index can be changed" ) {
+
+        std::size_t newindex = 1;
+        std::size_t original = 0;
+
+        chunk.chainIndex( newindex );
+
+        CHECK( newindex == chunk.chainIndex() );
+
+        chunk.chainIndex( original );
 
         verifyChunk( chunk, false );
       } // THEN
@@ -130,6 +160,25 @@ SCENARIO( "ReactionProduct" ) {
         CHECK( newdistribution == chunk.distributionData() );
 
         chunk.distributionData( original );
+
+        verifyChunk( chunk, false );
+      } // THEN
+
+      THEN( "the average cosine data can be changed" ) {
+
+        std::optional< TabulatedAverageCosine > newaverage =
+            TabulatedAverageCosine( { 1., 2., 2., 3., 4. },
+                                    { -1., 0., -1., 0., 1. },
+                                    { 1, 4 },
+                                    { InterpolationType::LinearLinear,
+                                      InterpolationType::LinearLinear } );
+        std::optional< TabulatedAverageCosine > original = std::nullopt;
+
+        chunk.averageCosine( newaverage );
+
+        CHECK( newaverage == chunk.averageCosine() );
+
+        chunk.averageCosine( original );
 
         verifyChunk( chunk, false );
       } // THEN
@@ -182,15 +231,18 @@ SCENARIO( "ReactionProduct" ) {
 void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
 
   // ReactionProduct identifier
-  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
 
   // multiplicity
   auto multiplicity = chunk.multiplicity();
   CHECK( true == std::holds_alternative< int >( multiplicity ) );
   CHECK( 1 == std::get< int >( multiplicity ) );
 
-  // average energy data
+  // average cosine and energy data
   CHECK( std::nullopt == chunk.averageEnergy() );
+  CHECK( std::nullopt == chunk.averageCosine() );
 
   // distribution data
   auto distribution = chunk.distributionData();
@@ -227,6 +279,7 @@ void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   // metadata
+  CHECK( false == chunk.hasAverageCosine() );
   CHECK( false == chunk.hasAverageEnergy() );
   CHECK( true == chunk.hasDistributionData() );
 }
@@ -234,7 +287,9 @@ void verifyChunk( const ReactionProduct& chunk, bool normalise ) {
 void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
 
   // ReactionProduct identifier
-  CHECK( id::ParticleID( "n" ) == chunk.identifier() );
+  CHECK( id::ParticleID( "n" ) == chunk.productIdentifier() );
+  CHECK( std::nullopt == chunk.parentIdentifier() );
+  CHECK( 0 == chunk.chainIndex() );
 
   // multiplicity
   CHECK( true == std::holds_alternative< TabulatedMultiplicity >( chunk.multiplicity() ) );
@@ -261,8 +316,9 @@ void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLog == multiplicity.interpolants()[1] );
   CHECK( false == multiplicity.isLinearised() );
 
-  // average energy data
+  // average cosine and energy data
   CHECK( std::nullopt == chunk.averageEnergy() );
+  CHECK( std::nullopt == chunk.averageCosine() );
 
   // distribution data
   // distribution data
@@ -300,6 +356,7 @@ void verifyTabulatedChunk( const ReactionProduct& chunk, bool normalise ) {
   CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
   // metadata
+  CHECK( false == chunk.hasAverageCosine() );
   CHECK( false == chunk.hasAverageEnergy() );
   CHECK( true == chunk.hasDistributionData() );
 }

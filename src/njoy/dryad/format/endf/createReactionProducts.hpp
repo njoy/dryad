@@ -6,9 +6,9 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/createProductIdentifier.hpp"
+#include "njoy/dryad/format/endf/createComplexBreakUpParticles.hpp"
+#include "njoy/dryad/format/endf/createMultiplicity.hpp"
 #include "njoy/dryad/format/endf/createReactionProduct.hpp"
-#include "njoy/dryad/format/endf/createTabulatedMultiplicity.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "ENDFtk/Material.hpp"
@@ -18,6 +18,26 @@ namespace njoy {
 namespace dryad {
 namespace format {
 namespace endf {
+
+  /**
+   *  @brief Add a placeholder reaction product if it is not present yet
+   *
+   *  @param[in] particle        the particle identifier
+   *  @param[in] multiplicity    the multiplicity of the target
+   *  @param[in, out] products   the current set of reaction products
+   */
+  inline void addProduct( const id::ParticleID& particle, int multiplicity,
+                          std::vector< ReactionProduct >& products ) {
+
+    auto iter = std::find_if( products.begin(), products.end(),
+                              [&particle] ( auto&& product )
+                                          { return product.productIdentifier() == particle; } );
+    if ( iter == products.end() ) {
+
+      Log::info( "Adding '{}' as an expected reaction product", particle.symbol() );
+      products.emplace_back( particle, createMultiplicity( multiplicity ) );
+    }
+  }
 
   /**
    *  @brief Create a Reaction from an unparsed ENDF material
@@ -48,8 +68,12 @@ namespace endf {
       auto has_photon_prod = has_mf12 || has_mf13 || has_mf14 || has_mf15;
       auto has_products = has_mf4 || has_mf5 || has_mf6 || has_photon_prod;
 
+      auto xs = material.section( 3, mt ).parse< 3 >();
+      int complex_breakup = xs.complexBreakUp();
+
       if ( has_products ) {
 
+        // add the secondary particle distribution accordingly
         if ( has_mf4 || has_mf5 ) {
 
           if ( has_mf4 && has_mf5 ) {
@@ -64,6 +88,40 @@ namespace endf {
           else {
 
             Log::info( "Reading reaction product data from MF5 is not implemented yet" );
+          }
+
+          if ( reaction.residual().has_value() ) {
+
+            auto residual = reaction.residual().value();
+            if ( complex_breakup != 0  ) {
+
+              if ( complex_breakup == 1 ) {
+
+                Log::error( "Complex breakup flag \'{}\' for residual \'{}\' cannot be used with MF4/MF5 data",
+                            complex_breakup, residual.symbol() );
+                throw std::exception();
+              }
+
+              Log::info( "Applying complex breakup flag \'{}\' for residual \'{}\'",
+                         complex_breakup, residual.symbol() );
+
+              auto breakup = createComplexBreakUpParticles( residual, complex_breakup );
+              for ( const auto& [id, multiplicity] : breakup ) {
+
+                Log::info( "Adding '{}' as a complex breakup reaction product", id.symbol() );
+                products.emplace_back( id, createMultiplicity( multiplicity ), std::nullopt,
+                                       std::nullopt, std::nullopt, id, 1 );
+              }
+            }
+          }
+          else {
+
+            if ( complex_breakup != 0  ) {
+
+              Log::error( "Complex breakup flag \'{}\' cannot be used with a reaction that has no defined residual",
+                          complex_breakup );
+                throw std::exception();
+            }
           }
         }
 
@@ -88,6 +146,32 @@ namespace endf {
             else {
 
               products.emplace_back( createReactionProduct( reaction, product, normalise ) );
+            }
+          }
+
+          if ( reaction.residual().has_value() ) {
+
+            auto residual = reaction.residual().value();
+            if ( complex_breakup != 0 ) {
+
+              if ( complex_breakup != 1 ) {
+
+                Log::error( "Complex breakup flag \'{}\' for residual \'{}\' cannot be used with MF6 data",
+                            complex_breakup, residual.symbol() );
+                throw std::exception();
+              }
+
+              Log::error( "Complex breakup flag for MF6 data is not handled yet, contact a developer" );
+              throw std::exception();
+            }
+          }
+          else {
+
+            if ( complex_breakup != 0  ) {
+
+              Log::error( "Complex breakup flag \'{}\' cannot be used with a reaction that has no defined residual",
+                          complex_breakup );
+                throw std::exception();
             }
           }
         }
@@ -147,6 +231,30 @@ namespace endf {
     else {
 
       Log::info( "The material does not have reaction products for MT{}", mt );
+    }
+
+    // add missing expected reaction products
+    if ( reaction.particles().has_value() ) {
+
+      if ( reaction.particles()->size() == 0 ) {
+
+        // add photons as an expected reaction product if it is not there yet
+        addProduct( id::ParticleID::photon(), 1, products );
+      }
+      else {
+
+        // add all expected reaction product if they are not there yet
+        for ( const auto& pair : reaction.particles().value() ) {
+
+          addProduct( pair.first, pair.second, products );
+        }
+      }
+    }
+
+    // add the residual if it is not there yet
+    if ( reaction.residual().has_value() ) {
+
+      addProduct( reaction.residual().value(), 1, products );
     }
 
     // std::sort( products.begin(), products.end(),

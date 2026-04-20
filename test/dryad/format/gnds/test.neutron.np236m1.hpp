@@ -220,12 +220,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e2" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -275,6 +279,20 @@ namespace np236m1 {
     CHECK_THAT( 1.7631735e-6    , WithinRel( angle.distributions()[73].cdf().coefficients()[27] ) );
     CHECK( 73 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
+
+    auto np236_e2 = reaction.product( id::ParticleID( "Np236_e2" ) );
+    CHECK( id::ParticleID( "Np236_e2" ) == np236_e2.productIdentifier() );
+    CHECK( std::nullopt == np236_e2.parentIdentifier() );
+    CHECK( 0 == np236_e2.chainIndex() );
+    CHECK( false == np236_e2.hasAverageCosine() );
+    CHECK( false == np236_e2.hasAverageEnergy() );
+    CHECK( false == np236_e2.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_e2.multiplicity() ) );
+    multiplicity = std::get< int >( np236_e2.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_e2.averageCosine() );
+    CHECK( std::nullopt == np236_e2.averageEnergy() );
+    CHECK( std::nullopt == np236_e2.distributionData() );
   }
 
   void verifyN2NReaction( const Reaction& reaction ) {
@@ -310,17 +328,39 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np235" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 2 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
+
+    //! @todo add test for gammas
+
+    auto np235 = reaction.product( id::ParticleID( "Np235" ) );
+    CHECK( id::ParticleID( "Np235" ) == np235.productIdentifier() );
+    CHECK( std::nullopt == np235.parentIdentifier() );
+    CHECK( 0 == np235.chainIndex() );
+    CHECK( false == np235.hasAverageCosine() );
+    CHECK( false == np235.hasAverageEnergy() );
+    CHECK( false == np235.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np235.multiplicity() ) );
+    multiplicity = std::get< int >( np235.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np235.averageCosine() );
+    CHECK( std::nullopt == np235.averageEnergy() );
+    CHECK( std::nullopt == np235.distributionData() );
   }
 
   void verifyN3NReaction( const Reaction& reaction ) {
@@ -356,17 +396,39 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np234" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 3 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
+
+    //! @todo add test for gammas
+
+    auto np234 = reaction.product( id::ParticleID( "Np234" ) );
+    CHECK( id::ParticleID( "Np234" ) == np234.productIdentifier() );
+    CHECK( std::nullopt == np234.parentIdentifier() );
+    CHECK( 0 == np234.chainIndex() );
+    CHECK( false == np234.hasAverageCosine() );
+    CHECK( false == np234.hasAverageEnergy() );
+    CHECK( false == np234.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np234.multiplicity() ) );
+    multiplicity = std::get< int >( np234.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np234.averageCosine() );
+    CHECK( std::nullopt == np234.averageEnergy() );
+    CHECK( std::nullopt == np234.distributionData() );
   }
 
   void verifyFissionReaction( const Reaction& reaction ) {
@@ -440,17 +502,39 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np233" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 4 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
+
+    //! @todo add test for gammas
+
+    auto np233 = reaction.product( id::ParticleID( "Np233" ) );
+    CHECK( id::ParticleID( "Np233" ) == np233.productIdentifier() );
+    CHECK( std::nullopt == np233.parentIdentifier() );
+    CHECK( 0 == np233.chainIndex() );
+    CHECK( false == np233.hasAverageCosine() );
+    CHECK( false == np233.hasAverageEnergy() );
+    CHECK( false == np233.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np233.multiplicity() ) );
+    multiplicity = std::get< int >( np233.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np233.averageCosine() );
+    CHECK( std::nullopt == np233.averageEnergy() );
+    CHECK( std::nullopt == np233.distributionData() );
   }
 
   void verifyInelasticReaction( const Reaction& reaction ) {
@@ -538,12 +622,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -551,8 +639,62 @@ namespace np236m1 {
     CHECK( DistributionDataType::TwoBody == data.type() );
     CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
     auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 69 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 69 == angle.grid().size() );
+    CHECK( 69 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 1e-5   , WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 7000.  , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[67] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[68] ) );
+    CHECK(  1 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK(  1 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 29 == angle.distributions()[67].pdf().coefficients().size() );
+    CHECK( 29 == angle.distributions()[68].pdf().coefficients().size() );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[67].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0         *  3. / 2., WithinRel( angle.distributions()[67].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0         * 55. / 2., WithinRel( angle.distributions()[67].pdf().coefficients()[27] ) );
+    CHECK_THAT( 4.78628e-12 * 57. / 2., WithinRel( angle.distributions()[67].pdf().coefficients()[28] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[68].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0         *  3. / 2., WithinRel( angle.distributions()[68].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0         * 55. / 2., WithinRel( angle.distributions()[68].pdf().coefficients()[27] ) );
+    CHECK_THAT( 7.22899e-12 * 57. / 2., WithinRel( angle.distributions()[68].pdf().coefficients()[28] ) );
+    CHECK(  2 == angle.distributions()[0].cdf().coefficients().size() );
+    CHECK(  2 == angle.distributions()[1].cdf().coefficients().size() );
+    CHECK( 30 == angle.distributions()[67].cdf().coefficients().size() );
+    CHECK( 30 == angle.distributions()[68].cdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[67].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.48854794      , WithinRel( angle.distributions()[67].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[67].cdf().coefficients()[28] ) );
+    CHECK_THAT( 2.39314e-12     , WithinRel( angle.distributions()[67].cdf().coefficients()[29] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[68].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.487295275     , WithinRel( angle.distributions()[68].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[68].cdf().coefficients()[28] ) );
+    CHECK_THAT( 3.614495e-12    , WithinRel( angle.distributions()[68].cdf().coefficients()[29] ) );
+    CHECK( 68 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    //! @todo add tests for angular data
+    auto np236 = reaction.product( id::ParticleID( "Np236" ) );
+    CHECK( id::ParticleID( "Np236" ) == np236.productIdentifier() );
+    CHECK( std::nullopt == np236.parentIdentifier() );
+    CHECK( 0 == np236.chainIndex() );
+    CHECK( false == np236.hasAverageCosine() );
+    CHECK( false == np236.hasAverageEnergy() );
+    CHECK( false == np236.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236.multiplicity() ) );
+    multiplicity = std::get< int >( np236.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236.averageCosine() );
+    CHECK( std::nullopt == np236.averageEnergy() );
+    CHECK( std::nullopt == np236.distributionData() );
   }
 
   void verifyInelasticReactionLevel1( const Reaction& reaction ) {
@@ -589,12 +731,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e1" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -602,8 +748,62 @@ namespace np236m1 {
     CHECK( DistributionDataType::TwoBody == data.type() );
     CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
     auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 69 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 69 == angle.grid().size() );
+    CHECK( 69 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 1e-5   , WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 7000.  , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[67] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[68] ) );
+    CHECK(  1 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK(  1 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 29 == angle.distributions()[67].pdf().coefficients().size() );
+    CHECK( 29 == angle.distributions()[68].pdf().coefficients().size() );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[67].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[67].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[67].pdf().coefficients()[27] ) );
+    CHECK_THAT( -2.46986e-12 * 57. / 2., WithinRel( angle.distributions()[67].pdf().coefficients()[28] ) );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[68].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[68].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[68].pdf().coefficients()[27] ) );
+    CHECK_THAT( -3.71048e-12 * 57. / 2., WithinRel( angle.distributions()[68].pdf().coefficients()[28] ) );
+    CHECK(  2 == angle.distributions()[0].cdf().coefficients().size() );
+    CHECK(  2 == angle.distributions()[1].cdf().coefficients().size() );
+    CHECK( 30 == angle.distributions()[67].cdf().coefficients().size() );
+    CHECK( 30 == angle.distributions()[68].cdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[67].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.504330923     , WithinRel( angle.distributions()[67].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[67].cdf().coefficients()[28] ) );
+    CHECK_THAT( -1.23493e-12    , WithinRel( angle.distributions()[67].cdf().coefficients()[29] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[68].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5031571775    , WithinRel( angle.distributions()[68].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[68].cdf().coefficients()[28] ) );
+    CHECK_THAT( -1.85524e-12    , WithinRel( angle.distributions()[68].cdf().coefficients()[29] ) );
+    CHECK( 68 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    //! @todo add tests for angular data
+    auto np236_e1 = reaction.product( id::ParticleID( "Np236_e1" ) );
+    CHECK( id::ParticleID( "Np236_e1" ) == np236_e1.productIdentifier() );
+    CHECK( std::nullopt == np236_e1.parentIdentifier() );
+    CHECK( 0 == np236_e1.chainIndex() );
+    CHECK( false == np236_e1.hasAverageCosine() );
+    CHECK( false == np236_e1.hasAverageEnergy() );
+    CHECK( false == np236_e1.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_e1.multiplicity() ) );
+    multiplicity = std::get< int >( np236_e1.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_e1.averageCosine() );
+    CHECK( std::nullopt == np236_e1.averageEnergy() );
+    CHECK( std::nullopt == np236_e1.distributionData() );
   }
 
   void verifyInelasticReactionLevel3( const Reaction& reaction ) {
@@ -638,12 +838,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e3" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -651,8 +855,66 @@ namespace np236m1 {
     CHECK( DistributionDataType::TwoBody == data.type() );
     CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
     auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 67 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 67 == angle.grid().size() );
+    CHECK( 67 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 1.606836e+4, WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 20000.     , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[65] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[66] ) );
+    CHECK(  1 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK(  3 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 27 == angle.distributions()[65].pdf().coefficients().size() );
+    CHECK( 27 == angle.distributions()[66].pdf().coefficients().size() );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( 2.844538e-3 *  3. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+    CHECK_THAT( 2.164914e-4 *  5. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[2] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[65].pdf().coefficients()[0] ) );
+    CHECK_THAT( 5.609702e-1 *  3. / 2., WithinRel( angle.distributions()[65].pdf().coefficients()[1] ) );
+    CHECK_THAT( 7.824731e-5 * 51. / 2., WithinRel( angle.distributions()[65].pdf().coefficients()[25] ) );
+    CHECK_THAT( 2.430013e-5 * 53. / 2., WithinRel( angle.distributions()[65].pdf().coefficients()[26] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[66].pdf().coefficients()[0] ) );
+    CHECK_THAT( 5.651719e-1 *  3. / 2., WithinRel( angle.distributions()[66].pdf().coefficients()[1] ) );
+    CHECK_THAT( 1.086519e-4 * 51. / 2., WithinRel( angle.distributions()[66].pdf().coefficients()[25] ) );
+    CHECK_THAT( 3.452969e-5 * 53. / 2., WithinRel( angle.distributions()[66].pdf().coefficients()[26] ) );
+    CHECK(  2 == angle.distributions()[0].cdf().coefficients().size() );
+    CHECK(  4 == angle.distributions()[1].cdf().coefficients().size() );
+    CHECK( 28 == angle.distributions()[65].cdf().coefficients().size() );
+    CHECK( 28 == angle.distributions()[66].cdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.498577731     , WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.4998917543    , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.001422269     , WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+    CHECK_THAT( 0.0001082457    , WithinRel( angle.distributions()[1].cdf().coefficients()[3] ) );
+    CHECK_THAT( 0.2195149       , WithinRel( angle.distributions()[65].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.34430595      , WithinRel( angle.distributions()[65].cdf().coefficients()[1] ) );
+    CHECK_THAT( 3.9123655e-5    , WithinRel( angle.distributions()[65].cdf().coefficients()[26] ) );
+    CHECK_THAT( 1.2150065e-5    , WithinRel( angle.distributions()[65].cdf().coefficients()[27] ) );
+    CHECK_THAT( 0.21741405      , WithinRel( angle.distributions()[66].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.34233495      , WithinRel( angle.distributions()[66].cdf().coefficients()[1] ) );
+    CHECK_THAT( 5.432595e-5     , WithinRel( angle.distributions()[66].cdf().coefficients()[26] ) );
+    CHECK_THAT( 1.7264845e-5    , WithinRel( angle.distributions()[66].cdf().coefficients()[27] ) );
+    CHECK( 66 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    //! @todo add tests for angular data
+    auto np236_e3 = reaction.product( id::ParticleID( "Np236_e3" ) );
+    CHECK( id::ParticleID( "Np236_e3" ) == np236_e3.productIdentifier() );
+    CHECK( std::nullopt == np236_e3.parentIdentifier() );
+    CHECK( 0 == np236_e3.chainIndex() );
+    CHECK( false == np236_e3.hasAverageCosine() );
+    CHECK( false == np236_e3.hasAverageEnergy() );
+    CHECK( false == np236_e3.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_e3.multiplicity() ) );
+    multiplicity = std::get< int >( np236_e3.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_e3.averageCosine() );
+    CHECK( std::nullopt == np236_e3.averageEnergy() );
+    CHECK( std::nullopt == np236_e3.distributionData() );
   }
 
   void verifyInelasticReactionLevel4( const Reaction& reaction ) {
@@ -687,12 +949,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e4" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -700,8 +966,66 @@ namespace np236m1 {
     CHECK( DistributionDataType::TwoBody == data.type() );
     CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
     auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 65 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 65 == angle.grid().size() );
+    CHECK( 65 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 4.017089e+4, WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 50000.     , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[63] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[64] ) );
+    CHECK(  1 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK(  3 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 27 == angle.distributions()[63].pdf().coefficients().size() );
+    CHECK( 27 == angle.distributions()[64].pdf().coefficients().size() );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( 6.534161e-2 *  3. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+    CHECK_THAT( -3.105985e-3 * 5. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[2] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[63].pdf().coefficients()[0] ) );
+    CHECK_THAT( 5.496246e-1 *  3. / 2., WithinRel( angle.distributions()[63].pdf().coefficients()[1] ) );
+    CHECK_THAT( 7.081143e-5 * 51. / 2., WithinRel( angle.distributions()[63].pdf().coefficients()[25] ) );
+    CHECK_THAT( 2.184259e-5 * 53. / 2., WithinRel( angle.distributions()[63].pdf().coefficients()[26] ) );
+    CHECK_THAT( 0.5                   , WithinRel( angle.distributions()[64].pdf().coefficients()[0] ) );
+    CHECK_THAT( 5.534418e-1 *  3. / 2., WithinRel( angle.distributions()[64].pdf().coefficients()[1] ) );
+    CHECK_THAT( 9.853161e-5 * 51. / 2., WithinRel( angle.distributions()[64].pdf().coefficients()[25] ) );
+    CHECK_THAT( 3.112418e-5 * 53. / 2., WithinRel( angle.distributions()[64].pdf().coefficients()[26] ) );
+    CHECK(  2 == angle.distributions()[0].cdf().coefficients().size() );
+    CHECK(  4 == angle.distributions()[1].cdf().coefficients().size() );
+    CHECK( 28 == angle.distributions()[63].cdf().coefficients().size() );
+    CHECK( 28 == angle.distributions()[64].cdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.467329195     , WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5015529925    , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.032670805     , WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+    CHECK_THAT( -0.0015529925   , WithinRel( angle.distributions()[1].cdf().coefficients()[3] ) );
+    CHECK_THAT( 0.2251877       , WithinRel( angle.distributions()[63].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.34074135      , WithinRel( angle.distributions()[63].cdf().coefficients()[1] ) );
+    CHECK_THAT( 3.5405715e-5    , WithinRel( angle.distributions()[63].cdf().coefficients()[26] ) );
+    CHECK_THAT( 1.0921295e-5    , WithinRel( angle.distributions()[63].cdf().coefficients()[27] ) );
+    CHECK_THAT( 0.2232791       , WithinRel( angle.distributions()[64].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.33885475      , WithinRel( angle.distributions()[64].cdf().coefficients()[1] ) );
+    CHECK_THAT( 4.9265805e-5    , WithinRel( angle.distributions()[64].cdf().coefficients()[26] ) );
+    CHECK_THAT( 1.556209e-5     , WithinRel( angle.distributions()[64].cdf().coefficients()[27] ) );
+    CHECK( 64 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    //! @todo add tests for angular data
+    auto np236_e4 = reaction.product( id::ParticleID( "Np236_e4" ) );
+    CHECK( id::ParticleID( "Np236_e4" ) == np236_e4.productIdentifier() );
+    CHECK( std::nullopt == np236_e4.parentIdentifier() );
+    CHECK( 0 == np236_e4.chainIndex() );
+    CHECK( false == np236_e4.hasAverageCosine() );
+    CHECK( false == np236_e4.hasAverageEnergy() );
+    CHECK( false == np236_e4.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_e4.multiplicity() ) );
+    multiplicity = std::get< int >( np236_e4.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_e4.averageCosine() );
+    CHECK( std::nullopt == np236_e4.averageEnergy() );
+    CHECK( std::nullopt == np236_e4.distributionData() );
   }
 
   void verifyInelasticReactionLevel5( const Reaction& reaction ) {
@@ -736,12 +1060,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e5" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -749,8 +1077,67 @@ namespace np236m1 {
     CHECK( DistributionDataType::TwoBody == data.type() );
     CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
     auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 64 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 64 == angle.grid().size() );
+    CHECK( 64 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 6.025634e+4, WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 70000.     , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[62] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[63] ) );
+    CHECK(  1 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK(  7 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 27 == angle.distributions()[62].pdf().coefficients().size() );
+    CHECK( 27 == angle.distributions()[63].pdf().coefficients().size() );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[1].pdf().coefficients()[5] ) );
+    CHECK_THAT( -2.215687e-4 * 13. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[6] ) );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[62].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[62].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[62].pdf().coefficients()[25] ) );
+    CHECK_THAT( -2.69955e-12 * 53. / 2., WithinRel( angle.distributions()[62].pdf().coefficients()[26] ) );
+    CHECK_THAT( 0.5                    , WithinRel( angle.distributions()[63].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[63].pdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0                    , WithinRel( angle.distributions()[63].pdf().coefficients()[25] ) );
+    CHECK_THAT( -4.04863e-12 * 53. / 2., WithinRel( angle.distributions()[63].pdf().coefficients()[26] ) );
+    CHECK(  2 == angle.distributions()[0].cdf().coefficients().size() );
+    CHECK(  8 == angle.distributions()[1].cdf().coefficients().size() );
+    CHECK( 28 == angle.distributions()[62].cdf().coefficients().size() );
+    CHECK( 28 == angle.distributions()[63].cdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.479086465     , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[1].cdf().coefficients()[6] ) );
+    CHECK_THAT( -1.1078435e-4   , WithinRel( angle.distributions()[1].cdf().coefficients()[7] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[62].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.516842965     , WithinRel( angle.distributions()[62].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[62].cdf().coefficients()[26] ) );
+    CHECK_THAT( -1.349775e-12   , WithinRel( angle.distributions()[62].cdf().coefficients()[27] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[63].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.515930765     , WithinRel( angle.distributions()[63].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.0             , WithinRel( angle.distributions()[63].cdf().coefficients()[26] ) );
+    CHECK_THAT( -2.024315e-12   , WithinRel( angle.distributions()[63].cdf().coefficients()[27] ) );
+    CHECK( 63 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    //! @todo add tests for angular data
+    auto np236_e5 = reaction.product( id::ParticleID( "Np236_e5" ) );
+    CHECK( id::ParticleID( "Np236_e5" ) == np236_e5.productIdentifier() );
+    CHECK( std::nullopt == np236_e5.parentIdentifier() );
+    CHECK( 0 == np236_e5.chainIndex() );
+    CHECK( false == np236_e5.hasAverageCosine() );
+    CHECK( false == np236_e5.hasAverageEnergy() );
+    CHECK( false == np236_e5.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_e5.multiplicity() ) );
+    multiplicity = std::get< int >( np236_e5.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_e5.averageCosine() );
+    CHECK( std::nullopt == np236_e5.averageEnergy() );
+    CHECK( std::nullopt == np236_e5.distributionData() );
   }
 
   void verifyInelasticReactionLevel6( const Reaction& reaction ) {
@@ -785,12 +1172,16 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236_e6" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( true == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt != neutron.distributionData() );
     CHECK( true == std::holds_alternative< TwoBodyDistributionData >( neutron.distributionData().value() ) );
@@ -798,8 +1189,65 @@ namespace np236m1 {
     CHECK( DistributionDataType::TwoBody == data.type() );
     CHECK( true == std::holds_alternative< LegendreAngularDistributions >( data.angle() ) );
     auto angle = std::get< LegendreAngularDistributions >( data.angle() );
+    CHECK( 63 == angle.numberPoints() );
+    CHECK( 1 == angle.numberRegions() );
+    CHECK( 63 == angle.grid().size() );
+    CHECK( 63 == angle.distributions().size() );
+    CHECK( 1 == angle.boundaries().size() );
+    CHECK( 1 == angle.interpolants().size() );
+    CHECK_THAT( 7.230761e+4, WithinRel( angle.grid()[0] ) );
+    CHECK_THAT( 100000.    , WithinRel( angle.grid()[1] ) );
+    CHECK_THAT( 1.95e+7, WithinRel( angle.grid()[61] ) );
+    CHECK_THAT( 2e+7   , WithinRel( angle.grid()[62] ) );
+    CHECK(  1 == angle.distributions()[0].pdf().coefficients().size() );
+    CHECK(  3 == angle.distributions()[1].pdf().coefficients().size() );
+    CHECK( 25 == angle.distributions()[61].pdf().coefficients().size() );
+    CHECK( 25 == angle.distributions()[62].pdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].pdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[1].pdf().coefficients()[0] ) );
+    CHECK_THAT( 3.815480e-4 *  3. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[1] ) );
+    CHECK_THAT( 3.767076e-2 *  5. / 2., WithinRel( angle.distributions()[1].pdf().coefficients()[2] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[61].pdf().coefficients()[0] ) );
+    CHECK_THAT( 4.607233e-1 *  3. / 2., WithinRel( angle.distributions()[61].pdf().coefficients()[1] ) );
+    CHECK_THAT( 3.497068e-4 * 47. / 2., WithinRel( angle.distributions()[61].pdf().coefficients()[23] ) );
+    CHECK_THAT( 1.424199e-4 * 49. / 2., WithinRel( angle.distributions()[61].pdf().coefficients()[24] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[62].pdf().coefficients()[0] ) );
+    CHECK_THAT( 4.633619e-1 *  3. / 2., WithinRel( angle.distributions()[62].pdf().coefficients()[1] ) );
+    CHECK_THAT( 4.521011e-4 * 47. / 2., WithinRel( angle.distributions()[62].pdf().coefficients()[23] ) );
+    CHECK_THAT( 1.912350e-4 * 49. / 2., WithinRel( angle.distributions()[62].pdf().coefficients()[24] ) );
+    CHECK(  2 == angle.distributions()[0].cdf().coefficients().size() );
+    CHECK(  4 == angle.distributions()[1].cdf().coefficients().size() );
+    CHECK( 26 == angle.distributions()[61].cdf().coefficients().size() );
+    CHECK( 26 == angle.distributions()[62].cdf().coefficients().size() );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.5             , WithinRel( angle.distributions()[0].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.499809226     , WithinRel( angle.distributions()[1].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.48116462      , WithinRel( angle.distributions()[1].cdf().coefficients()[1] ) );
+    CHECK_THAT( 0.000190774     , WithinRel( angle.distributions()[1].cdf().coefficients()[2] ) );
+    CHECK_THAT( 0.26963835      , WithinRel( angle.distributions()[61].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.3591785       , WithinRel( angle.distributions()[61].cdf().coefficients()[1] ) );
+    CHECK_THAT( 1.748534e-4     , WithinRel( angle.distributions()[61].cdf().coefficients()[24] ) );
+    CHECK_THAT( 7.120995e-5     , WithinRel( angle.distributions()[61].cdf().coefficients()[25] ) );
+    CHECK_THAT( 0.26831905      , WithinRel( angle.distributions()[62].cdf().coefficients()[0] ) );
+    CHECK_THAT( 0.3569941       , WithinRel( angle.distributions()[62].cdf().coefficients()[1] ) );
+    CHECK_THAT( 2.2605055e-4    , WithinRel( angle.distributions()[62].cdf().coefficients()[24] ) );
+    CHECK_THAT( 9.56175e-5      , WithinRel( angle.distributions()[62].cdf().coefficients()[25] ) );
+    CHECK( 62 == angle.boundaries()[0] );
+    CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    //! @todo add tests for angular data
+    auto np236_e6 = reaction.product( id::ParticleID( "Np236_e6" ) );
+    CHECK( id::ParticleID( "Np236_e6" ) == np236_e6.productIdentifier() );
+    CHECK( std::nullopt == np236_e6.parentIdentifier() );
+    CHECK( 0 == np236_e6.chainIndex() );
+    CHECK( false == np236_e6.hasAverageCosine() );
+    CHECK( false == np236_e6.hasAverageEnergy() );
+    CHECK( false == np236_e6.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_e6.multiplicity() ) );
+    multiplicity = std::get< int >( np236_e6.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_e6.averageCosine() );
+    CHECK( std::nullopt == np236_e6.averageEnergy() );
+    CHECK( std::nullopt == np236_e6.distributionData() );
   }
 
   void verifyInelasticReactionContinuum( const Reaction& reaction ) {
@@ -836,19 +1284,36 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np236" ) ) );
 
     auto neutron = reaction.product( id::ParticleID( "n" ) );
-    CHECK( id::ParticleID( "n" ) == neutron.identifier() );
+    CHECK( id::ParticleID( "n" ) == neutron.productIdentifier() );
+    CHECK( std::nullopt == neutron.parentIdentifier() );
+    CHECK( 0 == neutron.chainIndex() );
+    CHECK( false == neutron.hasAverageCosine() );
     CHECK( false == neutron.hasAverageEnergy() );
     CHECK( false == neutron.hasDistributionData() );
     CHECK( true == std::holds_alternative< int >( neutron.multiplicity() ) );
     auto multiplicity = std::get< int >( neutron.multiplicity() );
     CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == neutron.averageCosine() );
     CHECK( std::nullopt == neutron.averageEnergy() );
     CHECK( std::nullopt == neutron.distributionData() );
 
-    //! @todo add tests for angular data
-
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+
+    auto np236_c = reaction.product( id::ParticleID( "Np236" ) );
+    CHECK( id::ParticleID( "Np236" ) == np236_c.productIdentifier() );
+    CHECK( std::nullopt == np236_c.parentIdentifier() );
+    CHECK( 0 == np236_c.chainIndex() );
+    CHECK( false == np236_c.hasAverageCosine() );
+    CHECK( false == np236_c.hasAverageEnergy() );
+    CHECK( false == np236_c.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np236_c.multiplicity() ) );
+    multiplicity = std::get< int >( np236_c.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np236_c.averageCosine() );
+    CHECK( std::nullopt == np236_c.averageEnergy() );
+    CHECK( std::nullopt == np236_c.distributionData() );
   }
 
   void verifyCaptureReaction( const Reaction& reaction ) {
@@ -889,7 +1354,23 @@ namespace np236m1 {
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "Np237" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
-    CHECK( id::ParticleID( "g" ) == gamma.identifier() );
+    CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
+    CHECK( std::nullopt == gamma.parentIdentifier() );
+    CHECK( 0 == gamma.chainIndex() );
+
+    auto np237 = reaction.product( id::ParticleID( "Np237" ) );
+    CHECK( id::ParticleID( "Np237" ) == np237.productIdentifier() );
+    CHECK( std::nullopt == np237.parentIdentifier() );
+    CHECK( 0 == np237.chainIndex() );
+    CHECK( false == np237.hasAverageCosine() );
+    CHECK( false == np237.hasAverageEnergy() );
+    CHECK( false == np237.hasDistributionData() );
+    CHECK( true == std::holds_alternative< int >( np237.multiplicity() ) );
+    auto multiplicity = std::get< int >( np237.multiplicity() );
+    CHECK( 1 == multiplicity );
+    CHECK( std::nullopt == np237.averageCosine() );
+    CHECK( std::nullopt == np237.averageEnergy() );
+    CHECK( std::nullopt == np237.distributionData() );
   }
 
   void verifyParticleData( const ParticleDatabase& particles ) {

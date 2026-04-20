@@ -98,17 +98,19 @@ namespace gnds {
       }
     }
 
-    // get distribution data
-    std::optional< TabulatedAverageEnergy > average = std::nullopt;
+    // get average data
+    std::optional< TabulatedAverageCosine > average_cosine = std::nullopt;
+    std::optional< TabulatedAverageEnergy > average_energy = std::nullopt;
     node = product.child( "averageProductEnergy" );
     if ( node ) {
 
-      average = createTabulatedAverageEnergy( node );
+      average_energy = createTabulatedAverageEnergy( node );
     }
 
     return ReactionProduct( id, multiplicity,
                             std::move( distribution ),
-                            std::move( average ) );
+                            std::move( average_cosine ),
+                            std::move( average_energy ) );
   }
 
 } // gnds namespace

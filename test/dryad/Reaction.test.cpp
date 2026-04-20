@@ -19,6 +19,8 @@ SCENARIO( "Reaction" ) {
 
   id::ParticleID g = id::ParticleID::photon();
   id::ParticleID n = id::ParticleID::neutron();
+  id::ParticleID a = id::ParticleID::alpha();
+  id::ParticleID be8( "Be8" );
   id::ParticleID fe56( "Fe56" );
 
   GIVEN( "valid data for a primary reaction" ) {
@@ -41,7 +43,9 @@ SCENARIO( "Reaction" ) {
                                                      { 1e-5, 20. },
                                                      { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ),
         ReactionProduct( g, 2 ),
-        ReactionProduct( g, 3 )
+        ReactionProduct( g, 3 ),
+        ReactionProduct( be8, 1 ),
+        ReactionProduct( a, 2, std::nullopt, std::nullopt, std::nullopt, be8, 1 )
       };
 
       Reaction chunk1( id, xs ,
@@ -98,7 +102,9 @@ SCENARIO( "Reaction" ) {
                                                                     { 1e-5, 20. },
                                                                     { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ),
                         ReactionProduct( g, 2 ),
-                        ReactionProduct( g, 3 ) },
+                        ReactionProduct( g, 3 ),
+                        ReactionProduct( be8, 1 ),
+                        ReactionProduct( a, 2, std::nullopt, std::nullopt, std::nullopt, be8, 1 ) },
                       0, -1 );
 
       THEN( "the reaction identifier can be changed" ) {
@@ -179,7 +185,9 @@ SCENARIO( "Reaction" ) {
                                                                                                 { 1e-5, 20. },
                                                                                                 { { { 1.0 } }, { { 1.0, 0.2 } } } ) ) ),
                                                     ReactionProduct( g, 2 ),
-                                                    ReactionProduct( g, 3 ) };
+                                                    ReactionProduct( g, 3 ),
+                                                    ReactionProduct( be8, 1 ),
+                                                    ReactionProduct( a, 2, std::nullopt, std::nullopt, std::nullopt, be8, 1 ) };
 
         chunk.products( newproducts );
 
@@ -245,6 +253,8 @@ void verifyChunk( const Reaction& chunk, bool normalise ) {
   id::ParticleID g = id::ParticleID::photon();
   id::ParticleID n = id::ParticleID::neutron();
   id::ParticleID h = id::ParticleID::helion();
+  id::ParticleID a = id::ParticleID::alpha();
+  id::ParticleID be8( "Be8" );
   id::ParticleID fe56( "Fe56" );
 
   // reaction identifier
@@ -290,18 +300,58 @@ void verifyChunk( const Reaction& chunk, bool normalise ) {
   CHECK( true == chunk.hasProducts() );
   CHECK( true == chunk.hasProduct( n ) );
   CHECK( true == chunk.hasProduct( g ) );
+  CHECK( true == chunk.hasProduct( a ) );
+  CHECK( true == chunk.hasProduct( be8 ) );
   CHECK( false == chunk.hasProduct( h ) );
-  CHECK( 3 == chunk.numberProducts() );
-  CHECK( 3 == chunk.products().size() );
+  CHECK( 5 == chunk.numberProducts() );
+  CHECK( 5 == chunk.products().size() );
+  // total number of products
   CHECK( 1 == chunk.numberProducts( n ) );
   CHECK( 2 == chunk.numberProducts( g ) );
+  CHECK( 1 == chunk.numberProducts( be8 ) );
+  CHECK( 1 == chunk.numberProducts( a ) );
   CHECK( 0 == chunk.numberProducts( h ) );
+  // number of products by chain index, chain = 0
+  CHECK( 1 == chunk.numberProducts( n, 0 ) );
+  CHECK( 2 == chunk.numberProducts( g, 0 ) );
+  CHECK( 1 == chunk.numberProducts( be8, 0 ) );
+  CHECK( 0 == chunk.numberProducts( a, 0 ) );
+  CHECK( 0 == chunk.numberProducts( h, 0 ) );
+  // number of products by chain index, chain = 1
+  CHECK( 0 == chunk.numberProducts( n, 1 ) );
+  CHECK( 0 == chunk.numberProducts( g, 1 ) );
+  CHECK( 0 == chunk.numberProducts( be8, 1 ) );
+  CHECK( 1 == chunk.numberProducts( a, 1 ) );
+  CHECK( 0 == chunk.numberProducts( h, 1 ) );
+  // number of products by chain index, chain = 2
+  CHECK( 0 == chunk.numberProducts( n, 2 ) );
+  CHECK( 0 == chunk.numberProducts( g, 2 ) );
+  CHECK( 0 == chunk.numberProducts( be8, 2 ) );
+  CHECK( 0 == chunk.numberProducts( a, 2 ) );
+  CHECK( 0 == chunk.numberProducts( h, 2 ) );
 
   CHECK( 1 == std::get< int >( chunk.product( n ).multiplicity() ) );
   CHECK( 1 == std::get< int >( chunk.product( n, 0 ).multiplicity() ) );
   CHECK( 2 == std::get< int >( chunk.product( g ).multiplicity() ) );
   CHECK( 2 == std::get< int >( chunk.product( g, 0 ).multiplicity() ) );
   CHECK( 3 == std::get< int >( chunk.product( g, 1 ).multiplicity() ) );
+  CHECK( 1 == std::get< int >( chunk.product( be8 ).multiplicity() ) );
+  CHECK( 1 == std::get< int >( chunk.product( be8, 0 ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( a ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( a, 0 ).multiplicity() ) );
+
+  CHECK( 1 == std::get< int >( chunk.product( n, 0, 0 ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( g, 0, 0 ).multiplicity() ) );
+  CHECK( 3 == std::get< int >( chunk.product( g, 0, 1 ).multiplicity() ) );
+  CHECK( 1 == std::get< int >( chunk.product( be8, 0, 0 ).multiplicity() ) );
+  CHECK( 2 == std::get< int >( chunk.product( a, 1, 0 ).multiplicity() ) );
+
+  CHECK_THROWS( chunk.product( n, 1, 0 ) ); // no neutrons in chain 1
+  CHECK_THROWS( chunk.product( g, 1, 0 ) ); // no gammas in chain 1
+  CHECK_THROWS( chunk.product( g, 1, 1 ) ); // no gammas in chain 1
+  CHECK_THROWS( chunk.product( be8, 1, 0 ) ); // no be8 in chain 1
+  CHECK_THROWS( chunk.product( a, 0, 0 ) ); // no alpha in chain 0
+  CHECK_THROWS( chunk.product( a, 1, 1 ) ); // only one alpha in chain 1
 
   auto distribution = chunk.product( id::ParticleID( "n" ) ).distributionData();
   CHECK( true == std::holds_alternative< TwoBodyDistributionData >( distribution.value() ) );
