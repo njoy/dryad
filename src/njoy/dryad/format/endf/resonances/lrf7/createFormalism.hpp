@@ -2,7 +2,6 @@
 #define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEFORMALISM
 
 // system includes
-#include <vector>
 
 // other includes
 #include "tools/Log.hpp"
