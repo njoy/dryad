@@ -69,46 +69,6 @@ namespace lrf7 {
 
       std::size_t index = endfChannels.particlePairNumbers()[i] - 1;
 
-      // this part of the code will verify if we need a partial for the current channel
-      // this is only executed if the current channel's particle pair number is present
-      // more than once in the ENDF channel data for the current spin group
-      std::optional< std::size_t > partial = std::nullopt;
-      if ( std::count( endfChannels.particlePairNumbers().begin(),
-                       endfChannels.particlePairNumbers().end(),
-                       endfChannels.particlePairNumbers()[i] ) > 1 ) {
-
-        std::size_t number = 0;
-        std::size_t current = 0;
-
-        // loop over the channels again
-        for ( unsigned int j = 0; j < endfChannels.numberChannels(); ++j ) {
-
-          // only if this channel is different from the current one (index i), and if
-          // the quantum numbers are the same, do we need to increment the current
-          // value of the partial index
-          if ( i != j && endfChannels.particlePairNumbers()[j] == endfChannels.particlePairNumbers()[i]
-                      && endfChannels.orbitalMomentumValues()[j] == endfChannels.orbitalMomentumValues()[i]
-                      && endfChannels.channelSpinValues()[j] == endfChannels.channelSpinValues()[i] ) {
-
-            number += 1;
-
-            // only increment the index when the loop index is lwower than the current
-            // channel (index i)
-            if ( j < i ) {
-
-              current += 1;
-            }
-          }
-        }
-
-        // if there are multiple channels with the same particle pair number and
-        // the same quantum numbers: set the partial index to the one found
-        if ( number > 0 ) {
-
-          partial = current;
-        }
-      }
-
       std::optional< double > boundary = std::nullopt;
       if ( boundary_condition == dryad::resonances::BoundaryCondition::Constant ) {
 
@@ -157,7 +117,7 @@ namespace lrf7 {
                                             dryad::resonances::ChannelQuantumNumbers( endfChannels.orbitalMomentumValues()[i],
                                                                                       endfChannels.channelSpinValues()[i],
                                                                                       spin, parity ),
-                                            std::move( partial ) ),
+                                            std::nullopt ),
                              incident,
                              pairs[index],
                              qvalues[index],
@@ -165,6 +125,23 @@ namespace lrf7 {
                              std::move( radii ),
                              kinematics,
                              std::move( background ) );
+    }
+
+    // loop over the channel instances and look for partials
+    for ( std::size_t i = 0; i < channels.size(); ++i ) {
+
+      auto counter = [&] ( auto&& channel ) {
+
+        return channel.identifier() == channels[i].identifier();
+      };
+
+      std::size_t total = std::count_if( channels.begin(), channels.end(), counter );
+      if ( total > 1 ) {
+
+        std::size_t current = std::count_if( channels.begin(), std::next( channels.begin(), i ) , counter );
+        id::ChannelID id( channels[i].identifier().reaction(), channels[i].identifier().quantumNumbers(), current );
+        channels[i].identifier( id );
+      }
     }
 
     return channels;
