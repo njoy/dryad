@@ -57,7 +57,7 @@ namespace gnds {
         if ( id.groundState() == residual.groundState() ) {
 
           if ( id.e() == residual.e() ||
-               ( residual.e() == id::LevelID::all || residual.e() == id::LevelID::continuum && id.e() == 0 ) ) {
+               ( ( residual.e() == id::LevelID::all || residual.e() == id::LevelID::continuum ) && id.e() == 0 ) ) {
 
             id = residual;
           }
