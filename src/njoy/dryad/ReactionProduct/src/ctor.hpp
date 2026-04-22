@@ -12,12 +12,14 @@ ReactionProduct& operator=( ReactionProduct&& ) = default;
 /**
  *  @brief Constructor
  *
- *  @param product         the reaction product identifier
- *  @param multiplicity    the multiplicity of the reaction product
- *  @param distribution    the optional reaction product distribution data
- *  @param averageCosine   the optional average reaction product cosine
- *  @param averageEnergy   the optional average reaction product energy
- *  @param normalise       option to indicate whether or not to normalise
+ *  @param[in] product         the reaction product identifier
+ *  @param[in] multiplicity    the multiplicity of the reaction product
+ *  @param[in] distribution    the optional reaction product distribution data
+ *  @param[in] averageCosine   the optional average reaction product cosine
+ *  @param[in] averageEnergy   the optional average reaction product energy
+ *  @param[in] parent          the parent reaction product (default: none)
+ *  @param[in] chain           the chain index of the reaction product (default: 0)
+ *  @param[in] normalise       option to indicate whether or not to normalise
  *                         all probability data (default: no normalisation)
  */
 ReactionProduct( id::ParticleID product,
@@ -45,9 +47,9 @@ ReactionProduct( id::ParticleID product,
 /**
  *  @brief Convenience constructor
  *
- *  @param product         the reaction product identifier
- *  @param multiplicity    the reaction product multiplicity
- *  @param averageEnergy   the average reaction product energy
+ *  @param[in] product         the reaction product identifier
+ *  @param[in] multiplicity    the reaction product multiplicity
+ *  @param[in] averageEnergy   the average reaction product energy
  */
 ReactionProduct( id::ParticleID product,
                  Multiplicity multiplicity,
