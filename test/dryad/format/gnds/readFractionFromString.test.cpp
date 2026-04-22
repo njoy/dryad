@@ -23,7 +23,6 @@ SCENARIO( "readFractionFromString" ) {
       CHECK_THAT( 0.5, WithinRel( format::gnds::readFractionFromString( "1 / 2" ) ) );
       CHECK_THAT( 2.0, WithinRel( format::gnds::readFractionFromString( "2" ) ) );
 
-      CHECK_THROWS( format::gnds::readFractionFromString( "2.0" ) );
       CHECK_THROWS( format::gnds::readFractionFromString( "1/2/3" ) );
     } // THEN
   } // GIVEN

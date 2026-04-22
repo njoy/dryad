@@ -285,6 +285,7 @@ add_cpp_test( dryad.format.gnds.resolveLink                                     
 add_cpp_test( dryad.format.gnds.readDouble                                              dryad/format/gnds/readDouble.test.cpp )
 add_cpp_test( dryad.format.gnds.readInteger                                             dryad/format/gnds/readInteger.test.cpp )
 add_cpp_test( dryad.format.gnds.readFraction                                            dryad/format/gnds/readFraction.test.cpp )
+add_cpp_test( dryad.format.gnds.readFractionFromString                                  dryad/format/gnds/readFractionFromString.test.cpp )
 add_cpp_test( dryad.format.gnds.readString                                              dryad/format/gnds/readString.test.cpp )
 add_cpp_test( dryad.format.gnds.readAxis                                                dryad/format/gnds/readAxis.test.cpp )
 add_cpp_test( dryad.format.gnds.readGrid                                                dryad/format/gnds/readGrid.test.cpp )
