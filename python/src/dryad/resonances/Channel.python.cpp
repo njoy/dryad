@@ -104,10 +104,11 @@ void wrapChannel( python::module& module ) {
     "    kinematics   the kinematics type applied to the channel (default is\n"
     "                 non-relativistic)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "identifier",
-    &Component::identifier,
+    python::overload_cast<>( &Component::identifier, python::const_ ),
+    python::overload_cast< ChannelID >( &Component::identifier ),
     "The channel identifier"
   )
   .def_property_readonly(
@@ -122,16 +123,18 @@ void wrapChannel( python::module& module ) {
     &Component::quantumNumbers,
     "The quantum numbers of the channel"
   )
-  .def_property_readonly(
+  .def_property(
 
     "incident_particle_pair",
-    &Component::incidentParticlePair,
+    python::overload_cast<>( &Component::incidentParticlePair, python::const_ ),
+    python::overload_cast< ParticlePair >( &Component::incidentParticlePair ),
     "The incident particle pair"
   )
-  .def_property_readonly(
+  .def_property(
 
     "outgoing_particle_pair",
-    &Component::outgoingParticlePair,
+    python::overload_cast<>( &Component::outgoingParticlePair, python::const_ ),
+    python::overload_cast< std::optional< ParticlePair > >( &Component::outgoingParticlePair ),
     "The outgoing particle pair (if defined)"
   )
   .def_property_readonly(
@@ -140,34 +143,39 @@ void wrapChannel( python::module& module ) {
     &Component::isIncidentChannel,
     "Flag to indicate whether or not the channel is an incident channel"
   )
-  .def_property_readonly(
+  .def_property(
 
     "q_value",
-    &Component::qValue,
+    python::overload_cast<>( &Component::qValue, python::const_ ),
+    python::overload_cast< double >( &Component::qValue ),
     "The q value of the transition"
   )
-  .def_property_readonly(
+  .def_property(
 
     "boundary_condition",
-    &Component::boundaryCondition,
+    python::overload_cast<>( &Component::boundaryCondition, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::boundaryCondition ),
     "The boundary condition value (if defined)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "background",
-    &Component::background,
+    python::overload_cast<>( &Component::background, python::const_ ),
+    python::overload_cast< std::optional< Background > >( &Component::background ),
     "The background function (if defined)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "channel_radii",
-    &Component::channelRadii,
+    python::overload_cast<>( &Component::channelRadii, python::const_ ),
+    python::overload_cast< ChannelRadii >( &Component::channelRadii ),
     "The channel radii"
   )
-  .def_property_readonly(
+  .def_property(
 
     "kinematics_type",
-    &Component::kinematicsType,
+    python::overload_cast<>( &Component::kinematicsType, python::const_ ),
+    python::overload_cast< Kinematics >( &Component::kinematicsType ),
     "The kinematics type applied to the channel"
   )
   .def_property_readonly(

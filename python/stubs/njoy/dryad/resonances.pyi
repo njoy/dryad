@@ -181,26 +181,41 @@ class Channel:
         """
         The background function (if defined)
         """
+    @background.setter
+    def background(self, arg1: FrohnerBackground | SammyBackground | TabulatedBackground | None) -> None:
+        ...
     @property
     def boundary_condition(self) -> float | None:
         """
         The boundary condition value (if defined)
         """
+    @boundary_condition.setter
+    def boundary_condition(self, arg1: float | None) -> None:
+        ...
     @property
     def channel_radii(self) -> ChannelRadii:
         """
         The channel radii
         """
+    @channel_radii.setter
+    def channel_radii(self, arg1: ChannelRadii) -> None:
+        ...
     @property
     def identifier(self) -> njoy.dryad.id.ChannelID:
         """
         The channel identifier
         """
+    @identifier.setter
+    def identifier(self, arg1: njoy.dryad.id.ChannelID) -> None:
+        ...
     @property
     def incident_particle_pair(self) -> ParticlePair:
         """
         The incident particle pair
         """
+    @incident_particle_pair.setter
+    def incident_particle_pair(self, arg1: ParticlePair) -> None:
+        ...
     @property
     def is_incident_channel(self) -> bool:
         """
@@ -211,16 +226,25 @@ class Channel:
         """
         The kinematics type applied to the channel
         """
+    @kinematics_type.setter
+    def kinematics_type(self, arg1: Kinematics) -> None:
+        ...
     @property
     def outgoing_particle_pair(self) -> ParticlePair | None:
         """
         The outgoing particle pair (if defined)
         """
+    @outgoing_particle_pair.setter
+    def outgoing_particle_pair(self, arg1: ParticlePair | None) -> None:
+        ...
     @property
     def q_value(self) -> float:
         """
         The q value of the transition
         """
+    @q_value.setter
+    def q_value(self, arg1: float) -> None:
+        ...
     @property
     def quantum_numbers(self) -> ChannelQuantumNumbers:
         """

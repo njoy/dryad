@@ -85,6 +85,7 @@ namespace resonances {
 
     #include "njoy/dryad/resonances/Channel/src/selectWaveNumber.hpp"
     #include "njoy/dryad/resonances/Channel/src/selectWaveFunctions.hpp"
+    #include "njoy/dryad/resonances/Channel/src/updateWaveFunctions.hpp"
     #include "njoy/dryad/resonances/Channel/src/calculateSpinFactor.hpp"
 
   public:
@@ -95,7 +96,21 @@ namespace resonances {
     /**
      *  @brief Return the channel identifier
      */
-    const id::ChannelID& identifier() const { return this->id_; }
+    const id::ChannelID& identifier() const {
+
+      return this->id_;
+    }
+
+    /**
+     *  @brief Set the channel identifier
+     *
+     *  @param id   the channel identifier
+     */
+    void identifier( id::ChannelID id ) {
+
+      this->id_ = std::move( id );
+      this->updateWaveFunctions();
+    }
 
     /**
      *  @brief Return the reaction this channel contributes to
@@ -122,11 +137,32 @@ namespace resonances {
     }
 
     /**
+     *  @brief Set the incident particle pair
+     *
+     *  @param pair   the incident particle pair
+     */
+    void incidentParticlePair( ParticlePair pair ) {
+
+      this->incident_pair_ = std::move( pair );
+    }
+
+    /**
      *  @brief Return the outgoing particle pair (if defined)
      */
     const std::optional< ParticlePair >& outgoingParticlePair() const {
 
       return this->outgoing_pair_;
+    }
+
+    /**
+     *  @brief Set the outgoing particle pair
+     *
+     *  @param pair   the outgoing particle pair
+     */
+    void outgoingParticlePair( std::optional< ParticlePair > pair ) {
+
+      this->outgoing_pair_ = std::move( pair );
+      this->updateWaveFunctions();
     }
 
     /**
@@ -143,11 +179,31 @@ namespace resonances {
     double qValue() const { return this->q_; }
 
     /**
+     *  @brief Set the q value of the transition
+     *
+     *  @param q_value   the q value
+     */
+    void qValue( double q_value ) {
+
+      this->q_ = std::move( q_value );
+    }
+
+    /**
      *  @brief Return the boundary condition value (if defined)
      */
     const std::optional< double >& boundaryCondition() const {
 
       return this->boundary_condition_;
+    }
+
+    /**
+     *  @brief Set the boundary condition value
+     *
+     *  @param boundary   the boundary condition value
+     */
+    void boundaryCondition( std::optional< double > boundary ) {
+
+      this->boundary_condition_ = std::move( boundary );
     }
 
     /**
@@ -159,11 +215,31 @@ namespace resonances {
     }
 
     /**
+     *  @brief Set the background function
+     *
+     *  @param background   the background function
+     */
+    void background( std::optional< Background > background ) {
+
+      this->background_ = std::move( background );
+    }
+
+    /**
      *  @brief Return the channel radii
      */
     const ChannelRadii& channelRadii() const {
 
       return this->radii_;
+    }
+
+    /**
+     *  @brief Set the channel radii
+     *
+     *  @param radii   the channel radii
+     */
+    void channelRadii( ChannelRadii radii ) {
+
+      this->radii_ = std::move( radii );
     }
 
     /**
@@ -174,6 +250,16 @@ namespace resonances {
       return std::visit( [] ( auto&& function ) -> Kinematics
                             { return function.kinematicsType(); },
                          this->wave_number_ );
+    }
+
+    /**
+     *  @brief Set the kinematics type
+     *
+     *  @param kinematics   the kinematics type
+     */
+    void kinematicsType( Kinematics kinematics ) {
+
+      this->wave_number_ = selectWaveNumber( kinematics );
     }
 
     /**
