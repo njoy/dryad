@@ -1,0 +1,78 @@
+#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNELS
+#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNELS
+
+// system includes
+
+// other includes
+#include "pugixml.hpp"
+#include "tools/Log.hpp"
+#include "njoy/dryad/resonances/Channel.hpp"
+#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/resonances/rmatrix/createChannel.hpp"
+#include <iostream>
+namespace njoy {
+namespace dryad {
+namespace format {
+namespace gnds {
+namespace resonances {
+namespace rmatrix {
+
+  /**
+   *  @brief Create the channels
+   *
+   *  @param[in] boundary_condition   the gnds boundary condition option
+   *  @param[in] kinematics           the kinematics type to be applied
+   *  @param[in] reactions            the resonance reaction information from the GNDS file
+   *  @param[in] spin                 the total angualr momentum value
+   *  @param[in] parity               the parity
+   *  @param[in] channels             the GNDS channels xml node
+   */
+  inline auto createChannels(
+                  const BoundaryCondition& boundary_condition,
+                  const dryad::resonances::Kinematics& kinematics,
+                  const ResonanceReactions& reactions,
+                  double spin,
+                  short parity,
+                  const pugi::xml_node& channels ) {
+
+    // check that this is a valid channel node
+    throwExceptionOnWrongNode( channels, "channels" );
+
+    std::vector< dryad::resonances::Channel > data;
+
+    // loop over the channel nodes and create Channel instances
+    for ( pugi::xml_node channel = channels.child( "channel" );
+          channel; channel = channel.next_sibling( "channel" ) ) {
+
+      data.emplace_back( createChannel( boundary_condition, kinematics, reactions,
+                                        spin, parity, std::nullopt, channel ) );
+    }
+
+    // loop over the channel instances and look for partials
+    for ( std::size_t i = 0; i < data.size(); ++i ) {
+
+      auto counter = [&] ( auto&& channel ) {
+
+        return channel.identifier() == data[i].identifier();
+      };
+
+      std::size_t total = std::count_if( data.begin(), data.end(), counter );
+      if ( total > 1 ) {
+
+        std::size_t current = std::count_if( data.begin(), std::next( data.begin(), i ) , counter );
+        id::ChannelID id( data[i].identifier().reaction(), data[i].identifier().quantumNumbers(), current );
+        data[i].identifier( id );
+      }
+    }
+
+    return data;
+  }
+
+} // lrf7 namespace
+} // resonances namespace
+} // gnds namespace
+} // format namespace
+} // dryad namespace
+} // njoy namespace
+
+#endif
