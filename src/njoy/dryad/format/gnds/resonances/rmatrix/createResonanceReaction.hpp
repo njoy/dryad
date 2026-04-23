@@ -49,7 +49,7 @@ namespace rmatrix {
     }
     else {
 
-      throw std::runtime_error( "Particle not found in PoPs" );
+      throw std::runtime_error( "Particle not found in PoPs: \'" + id.symbol() + "\'" );
     }
   }
 

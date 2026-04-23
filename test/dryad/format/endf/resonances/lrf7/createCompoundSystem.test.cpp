@@ -14,10 +14,10 @@ using namespace njoy;
 using namespace njoy::dryad;
 using namespace njoy::dryad::resonances;
 
-void verifyChunkSr88( const CompoundSystem& );
 void verifyChunkSi29( const CompoundSystem& );
 void verifyChunkCu63( const CompoundSystem& );
 void verifyChunkCl35( const CompoundSystem& );
+void verifyChunkSr88( const CompoundSystem& );
 
 SCENARIO( "createSpinGroups" ) {
 
