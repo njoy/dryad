@@ -314,6 +314,7 @@ add_cpp_test( dryad.format.gnds.resonances.rmatrix.createFormalism              
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createBackground                     dryad/format/gnds/resonances/rmatrix/createBackground.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createResonanceReaction              dryad/format/gnds/resonances/rmatrix/createResonanceReaction.test.cpp )
 add_cpp_test( dryad.format.gnds.resonances.rmatrix.createResonanceReactions             dryad/format/gnds/resonances/rmatrix/createResonanceReactions.test.cpp )
+add_cpp_test( dryad.format.gnds.resonances.rmatrix.createCompoundSystem                 dryad/format/gnds/resonances/rmatrix/createCompoundSystem.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createDebyeWallerIntegralData                   dryad/format/gnds/thermal/createDebyeWallerIntegralData.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createCoherentElasticScattering                 dryad/format/gnds/thermal/createCoherentElasticScattering.test.cpp )
 add_cpp_test( dryad.format.gnds.thermal.createIncoherentElasticScattering               dryad/format/gnds/thermal/createIncoherentElasticScattering.test.cpp )
