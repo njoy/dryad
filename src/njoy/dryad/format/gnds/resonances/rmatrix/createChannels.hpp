@@ -28,7 +28,7 @@ namespace rmatrix {
    *  @param[in] channels             the GNDS channels xml node
    */
   inline auto createChannels(
-                  const BoundaryCondition& boundary_condition,
+                  const format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   const ResonanceReactions& reactions,
                   double spin,

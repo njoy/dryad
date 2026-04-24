@@ -55,7 +55,40 @@ SCENARIO( "createCompoundSystem" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-} // SCENARIO
+
+  GIVEN( "ENDF MF2 MT151 RML data - Cu63" ) {
+
+    // Cu63 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - 2 channels, neutron only, constant boundary condition
+
+    pugi::xml_document document;
+    document.load_file( "n-029_Cu_063.endf.gnds.xml" );
+    pugi::xml_node rmatrix = document.child( "reactionSuite" ).child( "resonances" ).
+                                      child( "resolved" ).child( "RMatrix" );
+    pugi::xml_node pops = document.child( "reactionSuite" ).child( "PoPs" );
+
+    std::vector< id::ParticleID > identifiers = {
+
+      id::ParticleID( "g" ), id::ParticleID( "n" ), id::ParticleID( "Cu63" ), id::ParticleID( "Cu64[all]" )
+    };
+
+    WHEN( "an rmatrix reaction node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        id::ParticleID projectile = id::ParticleID::neutron();
+        id::ParticleID target = id::ParticleID( "Cu63" );
+        ChannelRadii radii( 6.7 );
+        auto particles = pops::createParticleDatabase( pops, identifiers, "eval" );
+
+        auto chunk = rmatrix::createCompoundSystem( projectile, target, 1e-5, 1e+5,
+                                                    particles, radii, rmatrix, "eval" );
+
+        verifyChunkCu63( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+  } // SCENARIO
 
 void verifyChunkSi29( const CompoundSystem& chunk ) {
 
@@ -65,9 +98,9 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   auto si30 = id::ParticleID( "Si30[all]" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( si30, 29.728 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( si29, 28.728 * constants::neutron_mass, 0.5, +1 ) );
+                            Particle( si30, 29.9855906151, std::nullopt, std::nullopt ) );
+  ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
+                             Particle( si29, 28.9769256994, 0.5, +1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
   ChannelRadii radii( 4.221 );
@@ -801,12 +834,12 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   auto cu64 = id::ParticleID( "Cu64[all]" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cu64, 63.389 * constants::neutron_mass, 0, +1 ) );
+                            Particle( cu64, 63.9299993782, 0, +1 ) );
   ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( cu63, 62.389 * constants::neutron_mass, 1.5, -1 ) );
+                             Particle( cu63, 62.9299988941, 1.5, -1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii( 6.7, 6.7 );
+  ChannelRadii radii( 6.7 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification

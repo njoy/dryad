@@ -32,7 +32,7 @@ namespace rmatrix {
    *  @param[in] channel              the GNDS channel xml node
    */
   inline auto createChannel(
-                  const BoundaryCondition& boundary_condition,
+                  const format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   const ResonanceReactions& reactions,
                   double spin,
@@ -80,13 +80,21 @@ namespace rmatrix {
 
     // check for override for the boundary condition value or set the value
     auto boundary = channel.attribute( "boundaryConditionValue" );
-    if ( boundary && boundary_condition == BoundaryCondition::Constant ) {
+    if ( boundary ) {
 
-      std::get< 5 >( reaction ) = boundary.as_double();
+      if ( boundary_condition == BoundaryCondition::Constant ) {
+
+        std::get< 5 >( reaction ) = boundary.as_double();
+      }
+      else {
+
+        Log::error( "A boundary condition is defined but the boundary condition type is not constant" );
+        throw std::exception();
+      }
     }
-    else if ( boundary_condition == BoundaryCondition::NegativeOrbitalMomentum ) {
+    if ( boundary_condition == BoundaryCondition::NegativeOrbitalMomentum ) {
 
-      std::get< 5 >( reaction ) = -l;
+      std::get< 5 >( reaction ) = -static_cast< double >( l );
     }
 
     // check for override for radii
