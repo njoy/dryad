@@ -47,15 +47,30 @@ namespace rmatrix {
     ResonanceReaction reaction = reactions.at( channel.attribute( "resonanceReaction" ).as_string() );
 
     // get the channel quantum numbers and create the channel ID
-    // if it is capture, set l and s to 0
     unsigned int l = channel.attribute( "L" ).as_int();
     double s = readFractionFromString( channel.attribute( "channelSpin" ).as_string() );
-    if ( std::get< 0 >( reaction ).particles().has_value() &&
+
+    // if it is an eliminated capture channel, set l and s to 0
+    if ( std::get< 6 >( reaction ) &&
+         std::get< 0 >( reaction ).particles().has_value() &&
          std::get< 0 >( reaction ).particles()->size() == 0 ) {
 
       l = 0;
       s = 0;
     }
+    else {
+
+      if ( std::get< 6 >( reaction ) &&
+           ( ( std::get< 0 >( reaction ).particles().has_value() &&
+               std::get< 0 >( reaction ).particles()->size() == 0 ) ||
+             ! std::get< 0 >( reaction ).particles().has_value() ) ) {
+
+        Log::error( "Only capture channels can be eliminated" );
+        throw std::exception();
+      }
+    }
+
+    // create the identifier
     id::ChannelID id( std::get< 0 >( reaction ),
                       dryad::resonances::ChannelQuantumNumbers( l, s, spin, parity ),
                       std::move( partial ) );

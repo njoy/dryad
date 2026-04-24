@@ -87,8 +87,9 @@ void verifyChunkWithoutAdditionalInformation( const format::gnds::resonances::rm
   CHECK( id::ParticleID::photon() == std::get< 2 >( chunk )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Al28[all]" ) == std::get< 2 >( chunk )->heavyParticle().identifier() );
   CHECK_THAT( 7725200, WithinRel( std::get< 3 >( chunk ) ) );
-  CHECK( ChannelRadii( 4.3226 ) == std::get< 4 >( chunk ) );
+  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( chunk ) );
   CHECK( std::nullopt == std::get< 5 >( chunk ) );
+  CHECK( true == std::get< 6 >( chunk ) );
 }
 
 void verifyChunkWithAdditionalInformation( const format::gnds::resonances::rmatrix::ResonanceReaction& chunk ) {
@@ -101,4 +102,5 @@ void verifyChunkWithAdditionalInformation( const format::gnds::resonances::rmatr
   CHECK_THAT( 615220, WithinRel( std::get< 3 >( chunk ) ) );
   CHECK( ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( chunk ) );
   CHECK( std::nullopt == std::get< 5 >( chunk ) );
+  CHECK( false == std::get< 6 >( chunk ) );
 }

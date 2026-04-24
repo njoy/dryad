@@ -120,8 +120,9 @@ void verifyChunk( const format::gnds::resonances::rmatrix::ResonanceReactions& c
   CHECK( id::ParticleID::photon() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Al28[all]" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 7725200, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 4.3226 ) == std::get< 4 >( reaction ) );
+  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( true == std::get< 6 >( reaction ) );
 
   reaction = chunk.at( "n + Al27" );
   CHECK( id::ReactionID( "n,Al27->n(0)" ) == std::get< 0 >( reaction ) );
@@ -132,6 +133,7 @@ void verifyChunk( const format::gnds::resonances::rmatrix::ResonanceReactions& c
   CHECK_THAT( 0, WithinRel( std::get< 3 >( reaction ) ) );
   CHECK( ChannelRadii( 4.3226 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( false == std::get< 6 >( reaction ) );
 }
 
 void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::ResonanceReactions& chunk ) {
@@ -147,6 +149,7 @@ void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::R
   CHECK_THAT( 615220, WithinRel( std::get< 3 >( reaction ) ) );
   CHECK( ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( false == std::get< 6 >( reaction ) );
 
   reaction = chunk.at( "Cl36 + photon [inclusive]" );
   CHECK( id::ReactionID( "n,Cl35->g(t)" ) == std::get< 0 >( reaction ) );
@@ -155,8 +158,9 @@ void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::R
   CHECK( id::ParticleID::photon() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Cl36[all]" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 8579907, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 4.82222 ) == std::get< 4 >( reaction ) );
+  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( true == std::get< 6 >( reaction ) );
 
   reaction = chunk.at( "n + Cl35" );
   CHECK( id::ReactionID( "n,Cl35->n(0)" ) == std::get< 0 >( reaction ) );
@@ -167,6 +171,7 @@ void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::R
   CHECK_THAT( 0, WithinRel( std::get< 3 >( reaction ) ) );
   CHECK( ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( false == std::get< 6 >( reaction ) );
 }
 
 void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceReactions& chunk ) {
@@ -181,6 +186,7 @@ void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceR
   CHECK_THAT( 176518100, WithinRel( std::get< 3 >( reaction ) ) );
   CHECK( ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( false == std::get< 6 >( reaction ) );
 
   reaction = chunk.at( "Pa232 + photon [inclusive]" );
   CHECK( id::ReactionID( "n,Pa231->g(t)" ) == std::get< 0 >( reaction ) );
@@ -189,8 +195,9 @@ void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceR
   CHECK( id::ParticleID::photon() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Pa232[all]" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 5.553e6, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
+  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( true == std::get< 6 >( reaction ) );
 
   reaction = chunk.at( "n + Pa231" );
   CHECK( id::ReactionID( "n,Pa231->n(0)" ) == std::get< 0 >( reaction ) );
@@ -201,4 +208,5 @@ void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceR
   CHECK_THAT( 0, WithinRel( std::get< 3 >( reaction ) ) );
   CHECK( ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
+  CHECK( false == std::get< 6 >( reaction ) );
 }

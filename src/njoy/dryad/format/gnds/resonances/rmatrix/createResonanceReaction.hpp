@@ -30,7 +30,8 @@ namespace rmatrix {
                                         std::optional< dryad::resonances::ParticlePair >,
                                         double,
                                         dryad::resonances::ChannelRadii,
-                                        std::optional< double > >;
+                                        std::optional< double >,
+                                        bool >;
 
   inline Particle
   retrieveParticle( const id::ParticleID& id,
@@ -129,6 +130,9 @@ namespace rmatrix {
 
       // assign the default boundary condition
       std::get< 5 >( data ) = std::nullopt;
+
+      // assign the default elimination flag
+      std::get< 6 >( data ) = false;
     }
     else {
 
@@ -160,6 +164,17 @@ namespace rmatrix {
     if ( attribute ) {
 
       std::get< 5 >( data ) = attribute.as_double();
+    }
+
+    // check for eliminated reaction
+    attribute = reaction.attribute( "eliminated" );
+    if ( attribute ) {
+
+      std::get< 6 >( data ) = attribute.as_bool();
+
+      // set the radii for the eliminated channel to 0
+      std::get< 4 >( data ).penetrabilityRadius( 0. );
+      std::get< 4 >( data ).phaseShiftRadius( 0. );
     }
 
     return data;

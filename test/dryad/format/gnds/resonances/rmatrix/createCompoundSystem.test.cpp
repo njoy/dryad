@@ -69,7 +69,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
                              Particle( si29, 28.728 * constants::neutron_mass, 0.5, +1 ) );
 
-  ChannelRadii zero_radii( 4.221 );
+  ChannelRadii zero_radii( 0., 0. );
   ChannelRadii radii( 4.221 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
