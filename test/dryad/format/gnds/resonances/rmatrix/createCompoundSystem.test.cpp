@@ -255,7 +255,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -345,7 +345,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -435,7 +435,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -556,7 +556,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -677,7 +677,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -767,7 +767,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -876,7 +876,7 @@ void verifyChunkSi29( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 1.061e7, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -934,9 +934,9 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   auto cu64 = id::ParticleID( "Cu64[all]" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cu64, 63.9299993782, 0, +1 ) );
+                            Particle( cu64, 63.9297673853, std::nullopt, std::nullopt ) );
   ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
-                             Particle( cu63, 62.9299988941, 1.5, -1 ) );
+                             Particle( cu63, 62.9295954281, 1.5, -1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
   ChannelRadii radii( 6.7 );
@@ -991,7 +991,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7916226, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1081,7 +1081,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7916226, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1171,7 +1171,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7916226, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1292,7 +1292,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7916226, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1382,7 +1382,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7916226, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1503,7 +1503,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7916226, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1566,7 +1566,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   auto s35 = id::ParticleID( "S35" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cl36, 35.9683050031, 0, +1 ) );
+                            Particle( cl36, 35.9683050031, std::nullopt, std::nullopt ) );
   ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
                              Particle( cl35, 34.9688491981, 1.5, +1 ) );
   ParticlePair proton_pair( Particle( proton, 1.00727646662, 0.5, +1 ),
@@ -1624,7 +1624,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 8579907, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1712,7 +1712,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 8579907, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -1893,7 +1893,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 8579907, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2012,7 +2012,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 8579907, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2193,7 +2193,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 8579907, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2312,7 +2312,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 8579907, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2404,7 +2404,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   auto sr89 = id::ParticleID( "Sr89[all]" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( sr89, 88.9142763083, 0, +1 ) );
+                            Particle( sr89, 88.9142763083, std::nullopt, std::nullopt ) );
   ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
                              Particle( sr88, 87.9051474067, 0, +1 ) );
 
@@ -2461,7 +2461,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2552,7 +2552,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2646,7 +2646,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2737,7 +2737,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2828,7 +2828,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -2919,7 +2919,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3010,7 +3010,7 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 6.367e6, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3071,10 +3071,10 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   auto al27 = id::ParticleID( "Al27" );
   auto al28 = id::ParticleID( "Al28[all]" );
 
-  ParticlePair photon_pair( Particle( photon, 0, 0, +1 ),
-                            Particle( al28, 0, 0, +1 ) );
+  ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                            Particle( al28, std::nullopt, std::nullopt, std::nullopt ) );
   ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
-                             Particle( al27, 26.981786496, 2.5, +1 ) );
+                             Particle( al27, 26.981786496, 2.5, std::nullopt ) );
 
   ChannelRadii zero_radii( 0., 0. );
   ChannelRadii radii1( 4.3226 );
@@ -3129,7 +3129,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3217,7 +3217,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3305,7 +3305,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3424,7 +3424,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3543,7 +3543,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3695,7 +3695,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3814,7 +3814,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -3966,7 +3966,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -4054,7 +4054,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
@@ -4173,7 +4173,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK( std::nullopt == channel0.background() );
 
   // Q value
-  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+  CHECK_THAT( 7725200, WithinRel( channel0.qValue() ) );
 
   // kinematics type
   CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );

@@ -39,18 +39,6 @@ namespace resonances {
         if ( local_particle.mass().has_value() ) {
 
           particles.back().mass( local_particle.mass() );
-          if ( local_particle.massUncertainty().has_value() ) {
-
-            particles.back().massUncertainty( local_particle.massUncertainty() );
-          }
-        }
-        if ( local_particle.nuclearMass().has_value() ) {
-
-          particles.back().nuclearMass( local_particle.nuclearMass() );
-          if ( local_particle.nuclearMassUncertainty().has_value() ) {
-
-            particles.back().nuclearMassUncertainty( local_particle.nuclearMassUncertainty() );
-          }
         }
         if ( local_particle.spin().has_value() ) {
 
@@ -61,6 +49,12 @@ namespace resonances {
           particles.back().parity( local_particle.parity() );
         }
       }
+
+      particles.back().nuclearMass( std::nullopt );
+      particles.back().energy( std::nullopt );
+      particles.back().massUncertainty( std::nullopt );
+      particles.back().nuclearMassUncertainty( std::nullopt );
+      particles.back().energyUncertainty( std::nullopt );
     }
 
     return particles;
