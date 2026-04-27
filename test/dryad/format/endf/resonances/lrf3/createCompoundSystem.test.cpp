@@ -42,6 +42,8 @@ SCENARIO( "createSpinGroups" ) {
 
 void verifyChunkAl27( const CompoundSystem& chunk ) {
 
+  // Al27 ENDF/B-VIII.1 LRF=3 resonance evaluation
+
   auto photon = id::ParticleID::photon();
   auto neutron = id::ParticleID::neutron();
   auto al27 = id::ParticleID( "Al27" );

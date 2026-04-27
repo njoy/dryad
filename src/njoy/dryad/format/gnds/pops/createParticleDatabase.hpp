@@ -180,7 +180,8 @@ namespace pops {
       }
       else {
 
-        Log::warning( "Did not find data in the PoPs GNDS node or could not derive data for particle \'{}\'" );
+        Log::warning( "Did not find data in the PoPs GNDS node or could not derive data for particle \'{}\'",
+                      id.symbol() );
       }
     }
 

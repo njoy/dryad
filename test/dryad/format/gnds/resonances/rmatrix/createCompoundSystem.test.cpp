@@ -20,6 +20,7 @@ void verifyChunkSi29( const CompoundSystem& );
 void verifyChunkCu63( const CompoundSystem& );
 void verifyChunkCl35( const CompoundSystem& );
 void verifyChunkSr88( const CompoundSystem& );
+void verifyChunkAl27( const CompoundSystem& );
 
 SCENARIO( "createCompoundSystem" ) {
 
@@ -56,7 +57,7 @@ SCENARIO( "createCompoundSystem" ) {
     } // WHEN
   } // GIVEN
 
-  GIVEN( "ENDF MF2 MT151 RML data - Cu63" ) {
+  GIVEN( "GNDS RMatrix data - Cu63" ) {
 
     // Cu63 ENDF/B-VIII.1 LRF=7 resonance evaluation
     // particular features: - 2 channels, neutron only, constant boundary condition
@@ -88,7 +89,106 @@ SCENARIO( "createCompoundSystem" ) {
       } // THEN
     } // WHEN
   } // GIVEN
-  } // SCENARIO
+
+  GIVEN( "GNDS RMatrix data - Cl35" ) {
+
+    // Cl35 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - spin groups are not unique (1- and 2- occur
+    //                        multiple times)
+
+    pugi::xml_document document;
+    document.load_file( "n-017_Cl_035.endf.gnds.xml" );
+    pugi::xml_node rmatrix = document.child( "reactionSuite" ).child( "resonances" ).
+                                      child( "resolved" ).child( "RMatrix" );
+    pugi::xml_node pops = document.child( "reactionSuite" ).child( "PoPs" );
+
+    std::vector< id::ParticleID > identifiers = {
+
+      id::ParticleID( "g" ), id::ParticleID( "n" ), id::ParticleID( "p" ), id::ParticleID( "Cl35" ),
+      id::ParticleID( "Cl36[all]" ), id::ParticleID( "S35" )
+    };
+
+    WHEN( "an rmatrix reaction node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        id::ParticleID projectile = id::ParticleID::neutron();
+        id::ParticleID target = id::ParticleID( "Cl35" );
+        ChannelRadii radii( 4.82222 );
+        auto particles = pops::createParticleDatabase( pops, identifiers, "eval" );
+
+        auto chunk = rmatrix::createCompoundSystem( projectile, target, 1e-5, 1.2e+6,
+                                                    particles, radii, rmatrix, "eval" );
+
+        verifyChunkCl35( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS RMatrix data - Sr88" ) {
+
+    // Sr88 ENDF/B-VIII.1 LRF=7 resonance evaluation
+    // particular features: - Sammy parametrisation for channel background
+
+    pugi::xml_document document;
+    document.load_file( "n-038_Sr_088.endf.gnds.xml" );
+    pugi::xml_node rmatrix = document.child( "reactionSuite" ).child( "resonances" ).
+                                      child( "resolved" ).child( "RMatrix" );
+    pugi::xml_node pops = document.child( "reactionSuite" ).child( "PoPs" );
+
+    std::vector< id::ParticleID > identifiers = {
+
+      id::ParticleID( "g" ), id::ParticleID( "n" ), id::ParticleID( "Sr88" ), id::ParticleID( "Sr89[all]" )
+    };
+
+    WHEN( "an rmatrix reaction node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        id::ParticleID projectile = id::ParticleID::neutron();
+        id::ParticleID target = id::ParticleID( "Sr88" );
+        ChannelRadii radii( 7.1 );
+        auto particles = pops::createParticleDatabase( pops, identifiers, "eval" );
+
+        auto chunk = rmatrix::createCompoundSystem( projectile, target, 1e-5, 9.5e5,
+                                                    particles, radii, rmatrix, "eval" );
+
+        verifyChunkSr88( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+
+  GIVEN( "GNDS RMatrix data - Al27" ) {
+
+    // Al27 ENDF/B-VIII.1 LRF=3 resonance evaluation
+
+    pugi::xml_document document;
+    document.load_file( "n-013_Al_027.endf.gnds.xml" );
+    pugi::xml_node rmatrix = document.child( "reactionSuite" ).child( "resonances" ).
+                                      child( "resolved" ).child( "RMatrix" );
+    pugi::xml_node pops = document.child( "reactionSuite" ).child( "PoPs" );
+
+    std::vector< id::ParticleID > identifiers = {
+
+      id::ParticleID( "g" ), id::ParticleID( "n" ), id::ParticleID( "Al27" ), id::ParticleID( "Al28[all]" )
+    };
+
+    WHEN( "an rmatrix reaction node is given" ) {
+
+      THEN( "it can be converted" ) {
+
+        id::ParticleID projectile = id::ParticleID::neutron();
+        id::ParticleID target = id::ParticleID( "Al27" );
+        ChannelRadii radii( 4.3226 );
+        auto particles = pops::createParticleDatabase( pops, identifiers, "eval" );
+
+        auto chunk = rmatrix::createCompoundSystem( projectile, target, 1e-5, 8.45e5,
+                                                    particles, radii, rmatrix, "eval" );
+        verifyChunkAl27( chunk );
+      } // THEN
+    } // WHEN
+  } // GIVEN
+} // SCENARIO
 
 void verifyChunkSi29( const CompoundSystem& chunk ) {
 
@@ -835,7 +935,7 @@ void verifyChunkCu63( const CompoundSystem& chunk ) {
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
                             Particle( cu64, 63.9299993782, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
+  ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
                              Particle( cu63, 62.9299988941, 1.5, -1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
@@ -1466,11 +1566,11 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   auto s35 = id::ParticleID( "S35" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
-  ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
-                            Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
+                            Particle( cl36, 35.9683050031, 0, +1 ) );
+  ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
+                             Particle( cl35, 34.9688491981, 1.5, +1 ) );
+  ParticlePair proton_pair( Particle( proton, 1.00727646662, 0.5, +1 ),
+                            Particle( s35, 34.9690307578, 1.5, +1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
   ChannelRadii radii1( 4.822220, 4.888750 );
@@ -1505,7 +1605,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   auto channel0 = channels[0];
-  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,0-}" ) == channel0.identifier() );
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,0-}" ) == channel0.identifier() );
   CHECK( false == channel0.isIncidentChannel() );
 
   // incident particle pair
@@ -1593,7 +1693,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   channel0 = channels[0];
-  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,1-}" ) == channel0.identifier() );
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,1-}" ) == channel0.identifier() );
   CHECK( false == channel0.isIncidentChannel() );
 
   // incident particle pair
@@ -1893,7 +1993,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   channel0 = channels[0];
-  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,2-}" ) == channel0.identifier() );
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,2-}" ) == channel0.identifier() );
   CHECK( false == channel0.isIncidentChannel() );
 
   // incident particle pair
@@ -2193,7 +2293,7 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
 
   channel0 = channels[0];
-  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{1,0,3-}" ) == channel0.identifier() );
+  CHECK( id::ChannelID( "n,Cl35->g,Cl36[all]{0,0,3-}" ) == channel0.identifier() );
   CHECK( false == channel0.isIncidentChannel() );
 
   // incident particle pair
@@ -2304,12 +2404,12 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   auto sr89 = id::ParticleID( "Sr89[all]" );
 
   ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( sr89, 88.15046 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( sr88, 87.15046 * constants::neutron_mass, 0, +1 ) );
+                            Particle( sr89, 88.9142763083, 0, +1 ) );
+  ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
+                             Particle( sr88, 87.9051474067, 0, +1 ) );
 
   ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii equal_radii( 7.1, 7.1 );
+  ChannelRadii equal_radii( 7.1 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
@@ -2962,4 +3062,1166 @@ void verifyChunkSr88( const CompoundSystem& chunk ) {
   CHECK_THAT( std::sqrt( 2.8e-1 / 2. ), WithinRel( resonances[0][72] ) );
   CHECK_THAT( std::sqrt( 5.995e+1 / 2. / channel1.penetrability( 5.2884e+5 ) ), WithinRel( resonances[1][0] ) );
   CHECK_THAT( std::sqrt( 8.750e+0 / 2. / channel1.penetrability( 9.4756e+5 ) ), WithinRel( resonances[1][72] ) );
+}
+
+void verifyChunkAl27( const CompoundSystem& chunk ) {
+
+  auto photon = id::ParticleID::photon();
+  auto neutron = id::ParticleID::neutron();
+  auto al27 = id::ParticleID( "Al27" );
+  auto al28 = id::ParticleID( "Al28[all]" );
+
+  ParticlePair photon_pair( Particle( photon, 0, 0, +1 ),
+                            Particle( al28, 0, 0, +1 ) );
+  ParticlePair neutron_pair( Particle( neutron, 1.00866491574, 0.5, +1 ),
+                             Particle( al27, 26.981786496, 2.5, +1 ) );
+
+  ChannelRadii zero_radii( 0., 0. );
+  ChannelRadii radii1( 4.3226 );
+  ChannelRadii radii2( 6.064, 6.064 );
+  ChannelRadii radii3( 4.396, 4.396 );
+
+  // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  // content verification
+  // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+  // energies
+  CHECK_THAT( 1e-5  , WithinRel( chunk.lowerEnergyLimit() ) );
+  CHECK_THAT( 845000, WithinRel( chunk.upperEnergyLimit() ) );
+
+  // spin groups
+  auto groups = chunk.spinGroups();
+  CHECK( 10 == groups.size() );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 0
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  auto spingroup = groups[0];
+  CHECK( 0 == spingroup.totalAngularMomentum() );
+  CHECK( +1 == spingroup.parity() );
+
+  // channels
+  auto channels = spingroup.channels();
+
+  CHECK( 2 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 0, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,0+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 0, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,2,0+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 0, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto table = spingroup.resonanceTable();
+  CHECK( 2 == table.numberChannels() );
+  CHECK( 2 == table.numberEnergies() );
+
+  auto energies = table.energies();
+  CHECK_THAT( 3.603444e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 5.212374e+5, WithinRel( energies[1] ) );
+
+  auto resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 8.371 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 3.348 / 2. ), WithinRel( resonances[0][1] ) );
+  CHECK_THAT( std::sqrt( 266.8 / 2. / channel1.penetrability( 3.603444e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 35913 / 2. / channel1.penetrability( 5.212374e+5 ) ), WithinRel( resonances[1][1] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 1
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[1];
+  CHECK( 1 == spingroup.totalAngularMomentum() );
+  CHECK( -1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 2 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,1-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{1,2,1-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 1, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 2 == table.numberChannels() );
+  CHECK( 10 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 5.904677e+3, WithinRel( energies[0] ) );
+  CHECK_THAT( 1.300000e+6, WithinRel( energies[9] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( .60876 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 2. / 2. ), WithinRel( resonances[0][9] ) );
+  CHECK_THAT( std::sqrt( 16.695 / 2. / channel1.penetrability( 5.904677e+3 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt(  81305 / 2. / channel1.penetrability( 1.300000e+6 ) ), WithinRel( resonances[1][9] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 2
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[2];
+  CHECK( 1 == spingroup.totalAngularMomentum() );
+  CHECK( +1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 3 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,1+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,2,1+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, channel 2: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,3,1+}" ) == channel2.identifier() );
+  CHECK( true == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 2, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 5 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 3.150492e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 6.989209e+5, WithinRel( energies[4] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 2.4354 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 1.09 / 2. ), WithinRel( resonances[0][4] ) );
+  CHECK_THAT( std::sqrt( 8154.2 / 2. / channel1.penetrability( 3.150492e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt(  53.55 / 2. / channel1.penetrability( 6.989209e+5 ) ), WithinRel( resonances[1][4] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 3.150492e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 6.989209e+5 ) ), WithinRel( resonances[2][4] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 3
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[3];
+  CHECK( 2 == spingroup.totalAngularMomentum() );
+  CHECK( -1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 3 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,2-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{1,2,2-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, channel 2: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{1,3,2-}" ) == channel2.identifier() );
+  CHECK( true == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 3, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 12 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 9.124852e+4, WithinRel( energies[0] ) );
+  CHECK_THAT( 1.100000e+6, WithinRel( energies[11] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( .367 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt(   2. / 2. ), WithinRel( resonances[0][11] ) );
+  CHECK_THAT( std::sqrt( 201.8 / 2. / channel1.penetrability( 9.124852e+4 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt(  3400 / 2. / channel1.penetrability( 1.100000e+6 ) ), WithinRel( resonances[1][11] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 9.124852e+4 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 1.100000e+6 ) ), WithinRel( resonances[2][11] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 4
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[4];
+  CHECK( 2 == spingroup.totalAngularMomentum() );
+  CHECK( +1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 4 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,2+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{0,2,2+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK_THAT( 4.3226, WithinRel( std::get< double >( channel1.channelRadii().penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == channel1.channelRadii().shiftFactorRadius() );
+  CHECK( std::nullopt == channel1.channelRadii().phaseShiftRadius() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 2: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,2,2+}" ) == channel2.identifier() );
+  CHECK( true == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, channel 3: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  auto channel3 = channels[3];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,3,2+}" ) == channel3.identifier() );
+  CHECK( true == channel3.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel3.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel3.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel3.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel3.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel3.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel3.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 4, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 4 == table.numberChannels() );
+  CHECK( 14 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( -4.585600e+6, WithinRel( energies[0] ) );
+  CHECK_THAT(  1.630000e+6, WithinRel( energies[13] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( .99675 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt(   2. / 2. ), WithinRel( resonances[0][13] ) );
+  CHECK_THAT( std::sqrt( 3291200 / 2. / channel1.penetrability( -4.585600e+6 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt(   37262 / 2. / channel1.penetrability(  1.630000e+6 ) ), WithinRel( resonances[1][13] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( -4.585600e+6 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability(  1.630000e+6 ) ), WithinRel( resonances[2][13] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( -4.585600e+6 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability(  1.630000e+6 ) ), WithinRel( resonances[3][13] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 5
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[5];
+  CHECK( 3 == spingroup.totalAngularMomentum() );
+  CHECK( -1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 3 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,3-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{1,2,3-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, channel 2: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{1,3,3-}" ) == channel2.identifier() );
+  CHECK( true == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 5, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 8 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 1.200072e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 9.483662e+5, WithinRel( energies[7] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 2.1605 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt(   1.13 / 2. ), WithinRel( resonances[0][7] ) );
+  CHECK_THAT( std::sqrt( 2815.2 / 2. / channel1.penetrability( 1.200072e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 149270 / 2. / channel1.penetrability( 9.483662e+5 ) ), WithinRel( resonances[1][7] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 1.200072e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 9.483662e+5 ) ), WithinRel( resonances[2][7] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 6
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[6];
+  CHECK( 3 == spingroup.totalAngularMomentum() );
+  CHECK( +1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 4 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 6, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,3+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 6, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{0,3,3+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK_THAT( 4.3226, WithinRel( std::get< double >( channel1.channelRadii().penetrabilityRadius() ) ) );
+  CHECK( std::nullopt == channel1.channelRadii().shiftFactorRadius() );
+  CHECK( std::nullopt == channel1.channelRadii().phaseShiftRadius() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 6, channel 2: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,2,3+}" ) == channel2.identifier() );
+  CHECK( true == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 6, channel 3: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel3 = channels[3];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,3,3+}" ) == channel3.identifier() );
+  CHECK( true == channel3.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel3.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel3.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel3.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel3.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel3.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel3.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 6, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 4 == table.numberChannels() );
+  CHECK( 19 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( -3.129100e+5, WithinRel( energies[0] ) );
+  CHECK_THAT(  1.460000e+6, WithinRel( energies[18] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( .99595 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt(     2. / 2. ), WithinRel( resonances[0][18] ) );
+  CHECK_THAT( std::sqrt( 14705 / 2. / channel1.penetrability( -3.129100e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 38615 / 2. / channel1.penetrability(  1.460000e+6 ) ), WithinRel( resonances[1][18] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( -3.129100e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability(  1.460000e+6 ) ), WithinRel( resonances[2][18] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( -3.129100e+5 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability(  1.460000e+6 ) ), WithinRel( resonances[3][18] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 7
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[7];
+  CHECK( 4 == spingroup.totalAngularMomentum() );
+  CHECK( -1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 2 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 7, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,4-}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 7, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{1,3,4-}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii2 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 7, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 2 == table.numberChannels() );
+  CHECK( 3 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 3.668482e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 8.581069e+5, WithinRel( energies[2] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 1.518 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 1.13  / 2. ), WithinRel( resonances[0][2] ) );
+  CHECK_THAT( std::sqrt( 4619 / 2. / channel1.penetrability( 3.668482e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 4380 / 2. / channel1.penetrability( 8.581069e+5 ) ), WithinRel( resonances[1][2] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 8
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[8];
+  CHECK( 4 == spingroup.totalAngularMomentum() );
+  CHECK( +1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 3 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 8, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,4+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 8, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,2,4+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 8, channel 2: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel2 = channels[2];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,3,4+}" ) == channel2.identifier() );
+  CHECK( true == channel2.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel2.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel2.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel2.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel2.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel2.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 8, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 3 == table.numberChannels() );
+  CHECK( 4 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 5.927221e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 8.635064e+5, WithinRel( energies[3] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( .35  / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 1.09 / 2. ), WithinRel( resonances[0][3] ) );
+  CHECK_THAT( std::sqrt( 0 / 2. / channel1.penetrability( 5.927221e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 0 / 2. / channel1.penetrability( 8.635064e+5 ) ), WithinRel( resonances[1][3] ) );
+  CHECK_THAT( std::sqrt(   4.4 / 2. / channel2.penetrability( 5.927221e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 83.02 / 2. / channel2.penetrability( 8.635064e+5 ) ), WithinRel( resonances[2][3] ) );
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // spin group 9
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  spingroup = groups[9];
+  CHECK( 5 == spingroup.totalAngularMomentum() );
+  CHECK( +1 == spingroup.parity() );
+
+  // channels
+  channels = spingroup.channels();
+
+  CHECK( 2 == channels.size() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 9, channel 0: capture (eliminated)
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel0 = channels[0];
+  CHECK( id::ChannelID( "n,Al27->g,Al28[all]{0,0,5+}" ) == channel0.identifier() );
+  CHECK( false == channel0.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel0.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( photon_pair == channel0.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( zero_radii == channel0.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel0.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel0.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 9, channel 1: elastic
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  channel1 = channels[1];
+  CHECK( id::ChannelID( "n,Al27->n,Al27{2,3,5+}" ) == channel1.identifier() );
+  CHECK( true == channel1.isIncidentChannel() );
+
+  // incident particle pair
+  CHECK( neutron_pair == channel1.incidentParticlePair() );
+
+  // outgoing particle pair
+  CHECK( neutron_pair == channel1.outgoingParticlePair().value() );
+
+  // radii
+  CHECK( radii3 == channel1.channelRadii() );
+
+  // boundary conditions
+  CHECK( std::nullopt == channel1.boundaryCondition() );
+
+  // background
+  CHECK( std::nullopt == channel1.background() );
+
+  // Q value
+  CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
+
+  // kinematics type
+  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+  // spin group 9, resonance table
+  // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
+
+  table = spingroup.resonanceTable();
+  CHECK( 2 == table.numberChannels() );
+  CHECK( 2 == table.numberEnergies() );
+
+  energies = table.energies();
+  CHECK_THAT( 7.063424e+5, WithinRel( energies[0] ) );
+  CHECK_THAT( 7.861062e+5, WithinRel( energies[1] ) );
+
+  resonances = table.reducedWidthAmplitudes();
+  CHECK_THAT( std::sqrt( 1.09 / 2. ), WithinRel( resonances[0][0] ) );
+  CHECK_THAT( std::sqrt( 1.09 / 2. ), WithinRel( resonances[0][1] ) );
+  CHECK_THAT( std::sqrt( 1295.8 / 2. / channel1.penetrability( 7.063424e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt(  11137 / 2. / channel1.penetrability( 7.861062e+5 ) ), WithinRel( resonances[1][1] ) );
 }
