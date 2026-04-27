@@ -25,23 +25,75 @@ namespace gnds {
 
   /**
    *  @brief Create a ReactionProduct from an GNDS product node
+   *
+   *  @param[in] reaction     the reaction identifier
+   *  @param[in] suite        the gnds xml reaction suite
+   *  @param[in] product      the gnds xml product suite
+   *  @param[in] parent       the parent reaction product
+   *  @param[in] chain        the current chain index
+   *  @param[in] normalise    the flag to indicate whether or not distributions
+   *                          need to be normalised
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ReactionProduct
-  createReactionProduct( const id::ParticleID& /* projectile */,
-                         const id::ParticleID& /* target */,
+  createReactionProduct( const id::ReactionID& reaction,
                          pugi::xml_node /* suite */,
                          pugi::xml_node product,
+                         std::optional< id::ParticleID > parent,
+                         std::size_t chain,
                          bool normalise,
                          const std::string& style = "eval" ) {
 
     // check that this is a valid product node
     throwExceptionOnWrongNode( product, "product" );
 
-    // get the secondary particle identifier and adjust as required
+    // get the reaction product id and look for the residual - if it is defined
     id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
+    if ( chain == 0 ) {
+
+      if ( reaction.residual().has_value() ) {
+
+        auto residual = reaction.residual().value();
+        if ( id.groundState() == residual.groundState() ) {
+
+          if ( id.e() == residual.e() ||
+               ( ( residual.e() == id::LevelID::all || residual.e() == id::LevelID::continuum ) && id.e() == 0 ) ) {
+
+            id = residual;
+          }
+        }
+      }
+    }
+
+    // change the product identifier to a fundamental particle if need be
+    if ( reaction.residual() != id ) {
+
+      if ( id == id::ParticleID( "H1" ) ) {
+
+        id = id::ParticleID::proton();
+      }
+      else if ( id == id::ParticleID( "H2" ) ) {
+
+        id = id::ParticleID::deuteron();
+      }
+      else if ( id == id::ParticleID( "H3" ) ) {
+
+        id = id::ParticleID::triton();
+      }
+      else if ( id == id::ParticleID( "He3" ) ) {
+
+        id = id::ParticleID::helion();
+      }
+      else if ( id == id::ParticleID( "He4" ) ) {
+
+        id = id::ParticleID::alpha();
+      }
+    }
+
+    // start reading the data
     Log::info( "Reading reaction product data for \'{}\'", id.symbol() );
 
-    // create the multiplicity
+    // get the multiplicity
     auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );
 
     // get distribution data
@@ -96,6 +148,11 @@ namespace gnds {
         }
         distribution = createIncoherentDistributionData( node );
       }
+      else if ( strcmp( node.name(), "unspecified" ) == 0 ) {
+
+        // nothing to do here
+        // placeholder if we want to assign unknown distribution type
+      }
     }
 
     // get average data
@@ -110,7 +167,9 @@ namespace gnds {
     return ReactionProduct( id, multiplicity,
                             std::move( distribution ),
                             std::move( average_cosine ),
-                            std::move( average_energy ) );
+                            std::move( average_energy ),
+                            std::move( parent ),
+                            chain );
   }
 
 } // gnds namespace

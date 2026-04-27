@@ -31,8 +31,9 @@ namespace gnds {
     if ( strcmp( reaction.name(), "reaction" ) == 0 ) {
 
       // metadata and miscellaneous information
-      int mt = adjustScatterLevel( projectile, target, reaction.attribute( "ENDF_MT" ).as_int() );
-      id::ReactionID id( projectile, target, mt );
+      int mt = reaction.attribute( "ENDF_MT" ).as_int();
+      id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+      Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
       // cross section
       auto section = reaction.child( "crossSection" );
@@ -52,7 +53,7 @@ namespace gnds {
       auto node = output.child( "products" );
       if ( node ) {
 
-        products = createReactionProducts( projectile, target, suite, node, normalise );
+        products = createReactionProducts( id, suite, node, std::nullopt, 0, normalise );
       }
 
       // special treatment for some incident electron data reactions
@@ -78,8 +79,9 @@ namespace gnds {
     else if ( strcmp( reaction.name(), "crossSectionSum" ) == 0 ) {
 
       // metadata and miscellaneous information
-      int mt = adjustScatterLevel( projectile, target, reaction.attribute( "ENDF_MT" ).as_int() );
-      id::ReactionID id( projectile, target, mt );
+      int mt = reaction.attribute( "ENDF_MT" ).as_int();
+      id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+      Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
       // Q values
       auto qvalue = reaction.child( "Q" );

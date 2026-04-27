@@ -319,7 +319,7 @@ namespace h1 {
 
     CHECK( 2 == reaction.numberProducts() );
     CHECK( 1 == reaction.numberProducts( id::ParticleID( "g" ) ) );
-    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H2" ) ) );
+    CHECK( 1 == reaction.numberProducts( id::ParticleID( "H2[all]" ) ) );
 
     auto gamma = reaction.product( id::ParticleID( "g" ) );
     CHECK( id::ParticleID( "g" ) == gamma.productIdentifier() );
@@ -368,8 +368,8 @@ namespace h1 {
     CHECK( 152 == angle.boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == angle.interpolants()[0] );
 
-    auto h2 = reaction.product( id::ParticleID( "H2" ) );
-    CHECK( id::ParticleID( "H2" ) == h2.productIdentifier() );
+    auto h2 = reaction.product( id::ParticleID( "H2[all]" ) );
+    CHECK( id::ParticleID( "H2[all]" ) == h2.productIdentifier() );
     CHECK( std::nullopt == h2.parentIdentifier() );
     CHECK( 0 == h2.chainIndex() );
     CHECK( false == h2.hasAverageCosine() );

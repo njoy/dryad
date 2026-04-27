@@ -80,7 +80,6 @@ namespace endf {
 
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-          Log::info( "Reading data for MT{}", mt );
           reactions.emplace_back( createReaction( projectile, target, material, mt, normalise ) );
         }
         else {

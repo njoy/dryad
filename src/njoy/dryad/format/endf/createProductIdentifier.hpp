@@ -26,14 +26,9 @@ namespace endf {
 
     switch ( zap ) {
 
-      case    0 : return id::ParticleID::photon();
-      case    1 : return id::ParticleID::neutron();
-      case   11 : return id::ParticleID::electron();
-      case 1001 : return id::ParticleID::proton();
-      case 1002 : return id::ParticleID::deuteron();
-      case 1003 : return id::ParticleID::triton();
-      case 2003 : return id::ParticleID::helion();
-      case 2004 : return id::ParticleID::alpha();
+      case  0 : return id::ParticleID::photon();
+      case  1 : return id::ParticleID::neutron();
+      case 11 : return id::ParticleID::electron();
       default : return createTargetIdentifier( zap, lip );
     };
   }

@@ -322,7 +322,14 @@ namespace id {
       }
       else {
 
-        return ParticleID::nuclide( this->za(), 0 );
+        if ( std::get< 0 >( entries[ this->index_ ].tuple() ) > 24 ) {
+
+          return ParticleID::nuclide( this->za(), 0 );
+        }
+        else {
+
+          return ParticleID( this->index_ );
+        }
       }
     }
 

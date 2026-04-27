@@ -50,7 +50,6 @@ namespace gnds {
       for ( pugi::xml_node reaction = primaries.child( "reaction" );
             reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
-        Log::info( "Reading data for MT{}", reaction.attribute( "ENDF_MT" ).as_string() );
         reactions.emplace_back( createReaction( projectile, target, suite, reaction, normalise, style ) );
       }
     }

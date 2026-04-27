@@ -41,6 +41,12 @@ namespace gnds {
 
       return createPolynomialMultiplicity( multiplicity );
     }
+    else if ( strcmp( child.name(), "branching1d" ) == 0 ) {
+
+      Log::info( "Photon production due to deexcitation has not been implemented yet, "
+                 "setting multiplicity to 1 for now" );
+      return 1;
+    }
     else {
 
       return createTabulatedMultiplicity( multiplicity );

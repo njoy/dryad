@@ -113,13 +113,44 @@ namespace endf {
                          const ENDFtk::section::Type< 6 >::ReactionProduct& product,
                          bool /* normalise */ ) {
 
-    // get the reaction product and look for the residual - if it is defined
+    // get the reaction product id and look for the residual - if it is defined
     id::ParticleID id = createProductIdentifier( product.productIdentifier(),
                                                  product.productModifierFlag() );
-    if ( reaction.residual().has_value() &&
-         product.productIdentifier() == reaction.residual()->za() ) {
+    if ( reaction.residual().has_value() ) {
 
-      id = reaction.residual().value();
+      auto residual = reaction.residual().value();
+      if ( id.groundState() == residual.groundState() ) {
+
+        if ( id.e() == residual.e() || ( id.e() == 0 && residual.e() > 0 ) ) {
+
+          id = residual;
+        }
+      }
+    }
+
+    // change the product identifier to a fundamental particle if need be
+    if ( reaction.residual() != id ) {
+
+      if ( id == id::ParticleID( "H1" ) ) {
+
+        id = id::ParticleID::proton();
+      }
+      else if ( id == id::ParticleID( "H2" ) ) {
+
+        id = id::ParticleID::deuteron();
+      }
+      else if ( id == id::ParticleID( "H3" ) ) {
+
+        id = id::ParticleID::triton();
+      }
+      else if ( id == id::ParticleID( "He3" ) ) {
+
+        id = id::ParticleID::helion();
+      }
+      else if ( id == id::ParticleID( "He4" ) ) {
+
+        id = id::ParticleID::alpha();
+      }
     }
 
     // read data and add the product
