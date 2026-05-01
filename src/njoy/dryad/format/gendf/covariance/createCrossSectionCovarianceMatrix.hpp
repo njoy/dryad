@@ -19,8 +19,12 @@ namespace gendf {
 namespace covariance {
 
   /**
-   *  @brief Create a cross section covariance matrix from an ENDF ReactionBlock
-   *         that defines an on-diagonal covariance matrix
+   *  @brief Create a cross section covariance matrix from a GENDF MF33 section
+   *
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] relative     the flag to indicate whether or not the covariance data is relative
+   *  @param[in] material     the unparsed ENDF material
    */
   inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
