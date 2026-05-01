@@ -262,7 +262,7 @@ add_cpp_test( dryad.format.endf.createProjectileTargetEndfFile                  
 add_cpp_test( dryad.format.endf.createThermalScatteringEndfFile                         dryad/format/endf/createThermalScatteringEndfFile.test.cpp )
 
 add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceMatrix          dryad/format/gendf/covariance/createCrossSectionCovarianceMatrix.test.cpp )
-#add_cpp_test( dryad.format.endf.covariance.createCrossSectionCovarianceData             dryad/format/endf/covariance/createCrossSectionCovarianceData.test.cpp )
+add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceData            dryad/format/gendf/covariance/createCrossSectionCovarianceData.test.cpp )
 
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
