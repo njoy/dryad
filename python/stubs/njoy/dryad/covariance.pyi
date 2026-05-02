@@ -48,6 +48,25 @@ class CrossSectionCovarianceData:
              the covariance matrices
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def from_gendf_file(projectile: njoy.dryad.id.ParticleID, target: njoy.dryad.id.ParticleID, relative: bool, filename: str) -> CrossSectionCovarianceData | None:
+        """
+        Create CrossSectionCovarianceData data from an ERRORR GENDF file
+        
+        If there are multiple materials in the GENDF file, only the first material
+        will be transformed into a ProjectileTarget.
+        
+        Parameters
+        ----------
+            projectile : njoy.dryad.id.ParticleID
+                 the projectile identifier
+            projectile : njoy.dryad.id.ParticleID
+                 the target identifier
+            relative : bool
+                 the flag to indicate whether or not the covariance data is relative
+            filename : str
+                 the GENDF file name
+        """
     def __copy__(self) -> CrossSectionCovarianceData:
         ...
     def __deepcopy__(self, arg0: dict) -> CrossSectionCovarianceData:
