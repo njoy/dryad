@@ -50,9 +50,9 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertEqual( False, chunk.is_off_diagonal )
         self.assertEqual( True, chunk.is_on_diagonal )
 
-        self.assertIsNone( chunk.standard_deviations )
-        self.assertIsNone( chunk.correlations )
-        self.assertIsNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.standard_deviations )
+        self.assertIsNotNone( chunk.correlations )
+        self.assertIsNotNone( chunk.eigenvalues )
 
         self.assertAlmostEqual(  3.350497e-07, chunk.covariances[0,0] )
         self.assertAlmostEqual(  3.086034e-07, chunk.covariances[0,1] )
@@ -253,7 +253,7 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
 
         self.assertIsNotNone( chunk.standard_deviations )
         self.assertIsNotNone( chunk.correlations )
-        self.assertIsNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.eigenvalues )
 
         self.assertAlmostEqual(  3.350497e-07, chunk.covariances[0,0] )
         self.assertAlmostEqual(  3.086034e-07, chunk.covariances[0,1] )
@@ -449,9 +449,9 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertEqual( False, submatrix.is_off_diagonal )
         self.assertEqual( True, submatrix.is_on_diagonal )
 
-        self.assertIsNone( submatrix.standard_deviations )
-        self.assertIsNone( submatrix.correlations )
-        self.assertIsNone( submatrix.eigenvalues )
+        self.assertIsNotNone( submatrix.standard_deviations )
+        self.assertIsNotNone( submatrix.correlations )
+        self.assertIsNotNone( submatrix.eigenvalues )
 
         self.assertAlmostEqual(  4.132664e-06, submatrix.covariances[0,0] )
         self.assertAlmostEqual(  3.036135e-06, submatrix.covariances[0,1] )
@@ -479,9 +479,9 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertEqual( False, submatrix.is_off_diagonal )
         self.assertEqual( True, submatrix.is_on_diagonal )
 
-        self.assertIsNone( submatrix.standard_deviations )
-        self.assertIsNone( submatrix.correlations )
-        self.assertIsNone( submatrix.eigenvalues )
+        self.assertIsNotNone( submatrix.standard_deviations )
+        self.assertIsNotNone( submatrix.correlations )
+        self.assertIsNotNone( submatrix.eigenvalues )
 
         self.assertAlmostEqual(  2.792847e-07, submatrix.covariances[0,0] )
         self.assertAlmostEqual(  2.435102e-07, submatrix.covariances[0,1] )

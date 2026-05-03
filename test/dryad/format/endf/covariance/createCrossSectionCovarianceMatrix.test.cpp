@@ -253,7 +253,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 //    } // WHEN
 //  } // GIVEN
 
-  GIVEN( "an instance of an off-diagonal ReactionBlock with a single symmetric "
+  GIVEN( "an instance of an on-diagonal ReactionBlock with a single symmetric "
          "SquareMatrix and variance scaling information" ) {
 
     using Tape = njoy::ENDFtk::tree::Tape;
@@ -310,9 +310,9 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[0].isOffDiagonal() );
         CHECK( true == chunk[0].isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk[0].standardDeviations() );
-        CHECK( std::nullopt == chunk[0].correlations() );
-        CHECK( std::nullopt == chunk[0].eigenvalues() );
+        CHECK( std::nullopt != chunk[0].standardDeviations() );
+        CHECK( std::nullopt != chunk[0].correlations() );
+        CHECK( std::nullopt != chunk[0].eigenvalues() );
 
         CHECK( 6 == chunk[0].covariances().rows() );
         CHECK( 6 ==chunk[0].covariances().cols() );
@@ -402,9 +402,9 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         CHECK( false == chunk[0].isOffDiagonal() );
         CHECK( true == chunk[0].isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk[0].standardDeviations() );
-        CHECK( std::nullopt == chunk[0].correlations() );
-        CHECK( std::nullopt == chunk[0].eigenvalues() );
+        CHECK( std::nullopt != chunk[0].standardDeviations() );
+        CHECK( std::nullopt != chunk[0].correlations() );
+        CHECK( std::nullopt != chunk[0].eigenvalues() );
 
         CHECK( 6 == chunk[0].covariances().rows() );
         CHECK( 6 ==chunk[0].covariances().cols() );

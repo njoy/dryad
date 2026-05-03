@@ -91,9 +91,9 @@ void verifyChunk( const CovarianceData& chunk ) {
   CHECK_THAT( 2e+7, WithinRel( matrix.rowMetadata().energies()[2] ) );
   CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
   CHECK( std::nullopt == matrix.varianceScaling() );
-  CHECK( std::nullopt == matrix.standardDeviations() );
-  CHECK( std::nullopt == matrix.correlations() );
-  CHECK( std::nullopt == matrix.eigenvalues() );
+  CHECK( std::nullopt != matrix.standardDeviations() );
+  CHECK( std::nullopt != matrix.correlations() );
+  CHECK( std::nullopt != matrix.eigenvalues() );
   CHECK( 2 == matrix.covariances().rows() );
   CHECK( 2 == matrix.covariances().cols() );
   CHECK( 1. == matrix.covariances()(0,0) );

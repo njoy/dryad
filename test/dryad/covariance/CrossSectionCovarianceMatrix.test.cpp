@@ -48,9 +48,9 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
       CHECK( false == chunk.isOffDiagonal() );
       CHECK( true == chunk.isOnDiagonal() );
 
-      CHECK( std::nullopt == chunk.standardDeviations() );
-      CHECK( std::nullopt == chunk.correlations() );
-      CHECK( std::nullopt == chunk.eigenvalues() );
+      CHECK( std::nullopt != chunk.standardDeviations() );
+      CHECK( std::nullopt != chunk.correlations() );
+      CHECK( std::nullopt != chunk.eigenvalues() );
 
       CHECK( 3 == chunk.covariances().rows() );
       CHECK( 3 == chunk.covariances().cols() );
@@ -63,25 +63,11 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
       CHECK( 3. == chunk.covariances()(2,0) );
       CHECK( 6. == chunk.covariances()(2,1) );
       CHECK( 9. == chunk.covariances()(2,2) );
-    } // THEN
-
-    chunk.calculateStandardDeviations();
-
-    THEN( "Standard deviations can be calculated" ) {
-
-      CHECK( std::nullopt != chunk.standardDeviations() );
 
       CHECK( 3 == chunk.standardDeviations().value().size() );
       CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
       CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
       CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
-    } // THEN
-
-    chunk.calculateCorrelations();
-
-    THEN( "Correlations can be calculated" ) {
-
-      CHECK( std::nullopt != chunk.correlations() );
 
       CHECK( 3 == chunk.correlations().value().rows() );
       CHECK( 3 == chunk.correlations().value().cols() );
@@ -94,13 +80,6 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
       CHECK( 1. == chunk.correlations().value()(2,0) );
       CHECK( 1. == chunk.correlations().value()(2,1) );
       CHECK( 1. == chunk.correlations().value()(2,2) );
-    } // THEN
-
-    chunk.calculateEigenvalues();
-
-    THEN( "Eigenvalues can be calculated" ) {
-
-      CHECK( std::nullopt != chunk.eigenvalues() );
 
       CHECK( 3 == chunk.eigenvalues().value().size() );
       CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
@@ -156,9 +135,9 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
       CHECK( false == chunk.isOffDiagonal() );
       CHECK( true == chunk.isOnDiagonal() );
 
-      CHECK( std::nullopt == chunk.standardDeviations() );
-      CHECK( std::nullopt == chunk.correlations() );
-      CHECK( std::nullopt == chunk.eigenvalues() );
+      CHECK( std::nullopt != chunk.standardDeviations() );
+      CHECK( std::nullopt != chunk.correlations() );
+      CHECK( std::nullopt != chunk.eigenvalues() );
 
       CHECK( 3 == chunk.covariances().rows() );
       CHECK( 3 == chunk.covariances().cols() );
@@ -171,25 +150,11 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
       CHECK( 3. == chunk.covariances()(2,0) );
       CHECK( 6. == chunk.covariances()(2,1) );
       CHECK( 9. == chunk.covariances()(2,2) );
-    } // THEN
-
-    chunk.calculateStandardDeviations();
-
-    THEN( "Standard deviations can be calculated" ) {
-
-     CHECK( std::nullopt != chunk.standardDeviations() );
 
      CHECK( 3 == chunk.standardDeviations().value().size() );
      CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
      CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
      CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
-    } // THEN
-
-    chunk.calculateCorrelations();
-
-    THEN( "Correlations can be calculated" ) {
-
-     CHECK( std::nullopt != chunk.correlations() );
 
      CHECK( 3 == chunk.correlations().value().rows() );
      CHECK( 3 == chunk.correlations().value().cols() );
@@ -202,13 +167,6 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
      CHECK( 1. == chunk.correlations().value()(2,0) );
      CHECK( 1. == chunk.correlations().value()(2,1) );
      CHECK( 1. == chunk.correlations().value()(2,2) );
-    } // THEN
-
-    chunk.calculateEigenvalues();
-
-    THEN( "Eigenvalues can be calculated" ) {
-
-     CHECK( std::nullopt != chunk.eigenvalues() );
 
      CHECK( 3 == chunk.eigenvalues().value().size() );
      CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );

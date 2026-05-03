@@ -49,9 +49,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk.standardDeviations() );
-        CHECK( std::nullopt == chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 3 == chunk.covariances().rows() );
         CHECK( 3 == chunk.covariances().cols() );
@@ -64,25 +64,11 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3. == chunk.covariances()(2,0) );
         CHECK( 6. == chunk.covariances()(2,1) );
         CHECK( 9. == chunk.covariances()(2,2) );
-      } // THEN
-
-      chunk.calculateStandardDeviations();
-
-      THEN( "Standard deviations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.standardDeviations() );
 
         CHECK( 3 == chunk.standardDeviations().value().size() );
         CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
         CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
         CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
-      } // THEN
-
-      chunk.calculateCorrelations();
-
-      THEN( "Correlations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.correlations() );
 
         CHECK( 3 == chunk.correlations().value().rows() );
         CHECK( 3 == chunk.correlations().value().cols() );
@@ -95,13 +81,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(2,0) );
         CHECK( 1. == chunk.correlations().value()(2,1) );
         CHECK( 1. == chunk.correlations().value()(2,2) );
-      } // THEN
-
-      chunk.calculateEigenvalues();
-
-      THEN( "Eigenvalues can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 3 == chunk.eigenvalues().value().size() );
         CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
@@ -140,7 +119,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( std::nullopt != chunk.standardDeviations() );
         CHECK( std::nullopt != chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 3 == chunk.covariances().rows() );
         CHECK( 3 == chunk.covariances().cols() );
@@ -170,13 +149,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(2,0) );
         CHECK( 1. == chunk.correlations().value()(2,1) );
         CHECK( 1. == chunk.correlations().value()(2,2) );
-      } // THEN
-
-      chunk.calculateEigenvalues();
-
-      THEN( "Eigenvalues can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 3 == chunk.eigenvalues().value().size() );
         CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
@@ -377,9 +349,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk.standardDeviations() );
-        CHECK( std::nullopt == chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 6 == chunk.covariances().rows() );
         CHECK( 6 == chunk.covariances().cols() );
@@ -419,13 +391,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 24. == chunk.covariances()(5,3) );
         CHECK( 30. == chunk.covariances()(5,4) );
         CHECK( 36. == chunk.covariances()(5,5) );
-      } // THEN
-
-      chunk.calculateStandardDeviations();
-
-      THEN( "Standard deviations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.standardDeviations() );
 
         CHECK( 6 == chunk.standardDeviations().value().size() );
         CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
@@ -434,13 +399,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK_THAT( 4., WithinRel( chunk.standardDeviations().value()[3] ) );
         CHECK_THAT( 5., WithinRel( chunk.standardDeviations().value()[4] ) );
         CHECK_THAT( 6., WithinRel( chunk.standardDeviations().value()[5] ) );
-      } // THEN
-
-      chunk.calculateCorrelations();
-
-      THEN( "Correlations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.correlations() );
 
         CHECK( 6 == chunk.correlations().value().rows() );
         CHECK( 6 == chunk.correlations().value().cols() );
@@ -480,13 +438,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(5,3) );
         CHECK( 1. == chunk.correlations().value()(5,4) );
         CHECK( 1. == chunk.correlations().value()(5,5) );
-      } // THEN
-
-      chunk.calculateEigenvalues();
-
-      THEN( "Eigenvalues can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.eigenvalues() );
 
         CHECK( 6 == chunk.eigenvalues().value().size() );
         CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
@@ -538,9 +489,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == submatrix.standardDeviations() );
-        CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.standardDeviations() );
+        CHECK( std::nullopt != submatrix.correlations() );
+        CHECK( std::nullopt != submatrix.eigenvalues() );
 
         CHECK( 2 == submatrix.covariances().rows() );
         CHECK( 2 == submatrix.covariances().cols() );
@@ -569,9 +520,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == submatrix.standardDeviations() );
-        CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.standardDeviations() );
+        CHECK( std::nullopt != submatrix.correlations() );
+        CHECK( std::nullopt != submatrix.eigenvalues() );
 
         CHECK( 3 == submatrix.covariances().rows() );
         CHECK( 3 == submatrix.covariances().cols() );
@@ -608,9 +559,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == submatrix.standardDeviations() );
-        CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.standardDeviations() );
+        CHECK( std::nullopt != submatrix.correlations() );
+        CHECK( std::nullopt != submatrix.eigenvalues() );
 
         CHECK( 6 == submatrix.covariances().rows() );
         CHECK( 6 == submatrix.covariances().cols() );
