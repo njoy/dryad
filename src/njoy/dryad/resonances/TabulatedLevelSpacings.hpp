@@ -62,7 +62,7 @@ namespace resonances {
                 using InterpolationTable::operator();
 
                 /**
-                 *  @brief  Evaluate the everage level spacing at a given energy
+                 *  @brief  Evaluate the average level spacing at a given energy
                  *
                  *  Interpolates on the tabulated grid using the interpolation rules.
                  */
