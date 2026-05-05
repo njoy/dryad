@@ -16,6 +16,7 @@ void wrapMatrix( python::module& );
 // declarations - components and modules
 void wrapAcer( python::module& );
 void wrapDryad( python::module& );
+void wrapPsychic( python::module& );
 void wrapReconr( python::module& );
 void wrapMedic( python::module& );
 
@@ -38,6 +39,9 @@ PYBIND11_MODULE( njoy, module ) {
 
   // wrap reconr
   wrapReconr( module );
+
+  // wrap psychic
+  wrapPsychic( module );
 
   // wrap medic
   wrapMedic( module );
