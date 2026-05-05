@@ -2,6 +2,7 @@
 #define NJOY_PSYCHIC_BASE_TEST
 
 // system includes
+#include <optional>
 #include <string>
 
 // other includes
