@@ -28,4 +28,4 @@
 
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
 
-#include "njoy/dryad/resonances/TabulatedLevelSpacings.hpp"
+#include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"

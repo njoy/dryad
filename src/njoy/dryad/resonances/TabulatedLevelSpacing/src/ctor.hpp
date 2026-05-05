@@ -4,7 +4,7 @@ private:
  *  @brief Private constructor
  *  @param table    the interpolation table
  */
-TabulatedLevelSpacings( InterpolationTable< double, double > table ) :
+TabulatedLevelSpacing( InterpolationTable< double, double > table ) :
     InterpolationTable( std::move( table ) ) {}
 
 public:
@@ -13,13 +13,13 @@ public:
  *  @brief Default constructor (for pybind11 purposed only)
  */
 
-TabulatedLevelSpacings() = default;
+TabulatedLevelSpacing() = default;
 
-TabulatedLevelSpacings( const TabulatedLevelSpacings& ) = default;
-TabulatedLevelSpacings( TabulatedLevelSpacings&& ) = default;
+TabulatedLevelSpacing( const TabulatedLevelSpacing& ) = default;
+TabulatedLevelSpacing( TabulatedLevelSpacing&& ) = default;
 
-TabulatedLevelSpacings& operator=( const TabulatedLevelSpacings& ) = default;
-TabulatedLevelSpacings& operator=( TabulatedLevelSpacings&& ) = default;
+TabulatedLevelSpacing& operator=( const TabulatedLevelSpacing& ) = default;
+TabulatedLevelSpacing& operator=( TabulatedLevelSpacing&& ) = default;
 
 /**
  *  @brief  Constructor
@@ -29,7 +29,7 @@ TabulatedLevelSpacings& operator=( TabulatedLevelSpacings&& ) = default;
  *  @param[in]  boundaries      the boundaries of the interpolation regions
  *  @param[in]  interpolants    the interpolation types of the interpolation regions
  */
-TabulatedLevelSpacings( std::vector< double > energies,
+TabulatedLevelSpacing( std::vector< double > energies,
                         std::vector< double > spacings,
                         std::vector< std::size_t > boundaries,
                         std::vector< InterpolationType > interpolants ) :
@@ -43,7 +43,7 @@ TabulatedLevelSpacings( std::vector< double > energies,
  *  @param[in]  spacings        the average level spacing values (eV)
  *  @param[in]  interpolant     the interpolation type (default lin-lin)
  */
-TabulatedLevelSpacings(
+TabulatedLevelSpacing(
                         std::vector< double > energies,
                         std::vector< double > spacings,
                         InterpolationType interpolant = InterpolationType::LinearLinear ) :
