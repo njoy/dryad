@@ -8,6 +8,12 @@
 namespace njoy {
 namespace constants {
 
+  // default psychic constants
+  namespace psychic {
+
+    constexpr double largest_allowed_negative_eigenvalue = -1e-10;
+  }
+
   // default linearisation tolerance and threshold
   namespace linearisation {
 
