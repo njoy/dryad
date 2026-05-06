@@ -20,10 +20,10 @@ namespace psychic {
  */
 enum class TestStatus : short {
 
-  Skipped,   /**< The test has been skipped */
   Success,   /**< The test passes successfully without issues */
   Warning,   /**< The test passed but there are issues */
-  Fail       /**< The test fails */
+  Fail,      /**< The test fails */
+  Skipped    /**< The test has been skipped */
 };
 
 } // psychic namespace

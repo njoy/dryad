@@ -59,7 +59,6 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
-    using Parent::clear;
 
     /**
      *  @brief Return the largest allowed negative eigenvalue
@@ -105,7 +104,7 @@ namespace covariance {
      *
      *  The largest negative eigenvalue is available for the Warning and Fail state.
      *
-     *  @param[in] covariance   the covariance matrix instance
+     *  @param[in] covariance   the covariance matrix instance to be tested
      */
     template < typename Covariance >
     auto operator()( const Covariance& covariance )
