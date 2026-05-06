@@ -80,16 +80,14 @@ void wrapIsPositiveSemiDefinite( python::module& module ) {
     "on-diagonal covariance matrices already requires square and symmetric matrices so\n"
     "this particular aspect is not tested here.\n\n"
     "The test returns the following status values:\n"
-    "  - Success : the on-diagonal covariance matrix is positive semi-definite\n"
-    "  - Warning : the on-diagonal covariance matrix is can be considered positive\n"
-    "              semi-definite by accepting small negative eigenvalues\n"
+    "  - Success : the covariance matrix is positive semi-definite\n"
+    "  - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues\n"
     "  - Fail : the on-diagonal covariance matrix is not positive semi-definite\n"
-    "  - Skipped : the covariance matrix provided is not on-diagonal (ie its eigenvalues)\n"
-    "              cannot be calculated\n\n"
-    "The largest negative eigenvalue is available for the Warning and Fail state.\n"
+    "  - Skipped : the covariance matrix provided is not on-diagonal \n\n"
+    "The largest negative eigenvalue is available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix\n"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
   )
   .def(
@@ -98,23 +96,7 @@ void wrapIsPositiveSemiDefinite( python::module& module ) {
     [] ( Component& self, const ProductMultiplicityCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Verify if the provided covariance matrix is positive semi-definite\n\n"
-    "A covariance matrix is positive semi-definite if it is a square symmetric matrix\n"
-    "that has eigenvalues that are larger than or equal to zero. Construction of\n"
-    "on-diagonal covariance matrices already requires square and symmetric matrices so\n"
-    "this particular aspect is not tested here.\n\n"
-    "The test returns the following status values:\n"
-    "  - Success : the on-diagonal covariance matrix is positive semi-definite\n"
-    "  - Warning : the on-diagonal covariance matrix is can be considered positive\n"
-    "              semi-definite by accepting small negative eigenvalues\n"
-    "  - Fail : the on-diagonal covariance matrix is not positive semi-definite\n"
-    "  - Skipped : the covariance matrix provided is not on-diagonal (ie its eigenvalues)\n"
-    "              cannot be calculated\n\n"
-    "The largest negative eigenvalue is available for the Warning and Fail state.\n"
-    "Parameters\n"
-    "----------\n"
-    "    covariance : njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "        the covariance matrix instance to be tested"
+    "Verify if the provided covariance matrix is positive semi-definite"
   );
 }
 

@@ -26,42 +26,22 @@ class IsPositiveSemiDefinite:
         this particular aspect is not tested here.
         
         The test returns the following status values:
-          - Success : the on-diagonal covariance matrix is positive semi-definite
-          - Warning : the on-diagonal covariance matrix is can be considered positive
-                      semi-definite by accepting small negative eigenvalues
+          - Success : the covariance matrix is positive semi-definite
+          - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues
           - Fail : the on-diagonal covariance matrix is not positive semi-definite
-          - Skipped : the covariance matrix provided is not on-diagonal (ie its eigenvalues)
-                      cannot be calculated
+          - Skipped : the covariance matrix provided is not on-diagonal 
         
         The largest negative eigenvalue is available for the Warning and Fail state.
+        
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
         """
         Verify if the provided covariance matrix is positive semi-definite
-        
-        A covariance matrix is positive semi-definite if it is a square symmetric matrix
-        that has eigenvalues that are larger than or equal to zero. Construction of
-        on-diagonal covariance matrices already requires square and symmetric matrices so
-        this particular aspect is not tested here.
-        
-        The test returns the following status values:
-          - Success : the on-diagonal covariance matrix is positive semi-definite
-          - Warning : the on-diagonal covariance matrix is can be considered positive
-                      semi-definite by accepting small negative eigenvalues
-          - Fail : the on-diagonal covariance matrix is not positive semi-definite
-          - Skipped : the covariance matrix provided is not on-diagonal (ie its eigenvalues)
-                      cannot be calculated
-        
-        The largest negative eigenvalue is available for the Warning and Fail state.
-        Parameters
-        ----------
-            covariance : njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-                the covariance matrix instance to be tested
         """
     def __init__(self, negative: float = -1e-10) -> None:
         """
