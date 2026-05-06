@@ -10,7 +10,7 @@ namespace python = pybind11;
 namespace psychic {
 
   // declarations - enumerators
-  void wrapScalingType( python::module& );
+  void wrapTestStatus( python::module& );
 
   // declarations
   void wrapCovariance( python::module& );
@@ -24,6 +24,9 @@ void wrapPsychic( python::module& module ) {
     "psychic",
     "Data verification and physics checking"
   );
+
+  // wrap enumerators
+  psychic::wrapTestStatus( submodule );
 
   // wrap components
   psychic::wrapCovariance( submodule );
