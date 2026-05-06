@@ -32,7 +32,7 @@ TabulatedAverageWidths& operator=( TabulatedAverageWidths&& ) = default;
  */
 TabulatedAverageWidths( std::vector< double > energies,
                         std::vector< double > widths,
-                        std::vector<int> dof,
+                        int dof,
                         std::vector< std::size_t > boundaries,
                         std::vector< InterpolationType > interpolants ) :
   TabulatedAverageWidths(
@@ -52,7 +52,7 @@ TabulatedAverageWidths( std::vector< double > energies,
  */
 TabulatedAverageWidths( std::vector< double > energies,
                         std::vector< double > widths,
-                        std::vector<int> dof,
+                        int dof,
                         InterpolationType interpolant = InterpolationType::LinearLinear ) :
   TabulatedAverageWidths(
       InterpolationTable< double, double >( std::move( energies ),
