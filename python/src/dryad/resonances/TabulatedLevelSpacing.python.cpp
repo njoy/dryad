@@ -77,13 +77,13 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
   .def_property_readonly(
 
     "lower_energy_limit",
-    &Component::lowerEnergyLimit
+    &Component::lowerEnergyLimit,
     "The lower energy limit"
   )
   .def_property_readonly(
 
     "upper_energy_limit",
-    &Component::upperEnergyLimit
+    &Component::upperEnergyLimit,
     "The upper energy limit"
   )
   .def(
