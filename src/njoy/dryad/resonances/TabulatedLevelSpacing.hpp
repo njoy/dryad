@@ -20,13 +20,13 @@ namespace resonances {
   class TabulatedLevelSpacing :
     protected scion::math::InterpolationTable< double, double > {
 
-    #include "njoy/dryad/resonances/TabulatedLevelSpacing/src/ctor.hpp"
-
     public:
 
       /* type aliases */
       using InterpolationTable::XType;
       using InterpolationTable::YType;
+
+      #include "njoy/dryad/resonances/TabulatedLevelSpacing/src/ctor.hpp"
 
       /* methods */
 
@@ -66,12 +66,11 @@ namespace resonances {
 
       using InterpolationTable::operator();
 
-      /**
-       *  @brief  Evaluate the average level spacing at a given energy
-       *
-       *  Interpolates on the tabulated grid using the interpolation rules.
-       */
-
+    /**
+     *  @brief Return a linearised level spacing table
+     *
+     *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
+     */
       TabulatedLevelSpacing linearise( double tolerance = constants::linearisation::tolerance ) const {
         using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
         auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
