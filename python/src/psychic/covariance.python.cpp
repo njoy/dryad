@@ -11,7 +11,7 @@ namespace psychic {
 namespace covariance {
 
   // declarations - covariance tests
-  void wrapIsPositiveSemiDefinite( python::module& );
+  void wrapPositiveSemiDefinite( python::module& );
 }
 
 void wrapCovariance( python::module& module ) {
@@ -24,7 +24,7 @@ void wrapCovariance( python::module& module ) {
   );
 
   // declarations - covariance tests
-  covariance::wrapIsPositiveSemiDefinite( submodule );
+  covariance::wrapPositiveSemiDefinite( submodule );
 }
 
 } // psychic namespace

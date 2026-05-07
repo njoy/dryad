@@ -1,34 +1,34 @@
 .. currentmodule:: njoy.psychic.covariance
 
-IsPositiveSemiDefinite
-======================
+PositiveSemiDefinite
+====================
 
 Constructor
 ~~~~~~~~~~~
 .. autosummary::
     :toctree:  generated/
 
-    IsPositiveSemiDefinite
+    PositiveSemiDefinite
 
 Read-only Attributes
 ~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
     :toctree: generated/
 
-    ~IsPositiveSemiDefinite.name
-    ~IsPositiveSemiDefinite.allowed_negative_eigen_value
+    ~PositiveSemiDefinite.name
+    ~PositiveSemiDefinite.allowed_negative_eigen_value
 
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 .. autosummary::
     :toctree: generated/
 
-    ~IsPositiveSemiDefinite.status
-    ~IsPositiveSemiDefinite.largest_negative_eigen_value
+    ~PositiveSemiDefinite.status
+    ~PositiveSemiDefinite.largest_negative_eigen_value
 
 Methods
 ~~~~~~~
 .. autosummary::
     :toctree: generated/
 
-    ~IsPositiveSemiDefinite.__call__
+    ~PositiveSemiDefinite.__call__

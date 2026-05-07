@@ -5,8 +5,8 @@ from __future__ import annotations
 import njoy.dryad.covariance
 import njoy.psychic
 import typing
-__all__: list[str] = ['IsPositiveSemiDefinite']
-class IsPositiveSemiDefinite:
+__all__: list[str] = ['PositiveSemiDefinite']
+class PositiveSemiDefinite:
     """
     Test to verify if a covariance matrix is positive semi-definite
     

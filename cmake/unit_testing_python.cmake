@@ -116,7 +116,7 @@ add_python_test( dryad.ThermalScattering                               dryad/Tes
 
 add_python_test( dryad.external.ComptonProfiles                        dryad/external/Test_ComptonProfiles.py )
 
-add_python_test( psychic.covariance.IsPositiveSemiDefinite             psychic/covariance/Test_IsPositiveSemiDefinite.py )
+add_python_test( psychic.covariance.PositiveSemiDefinite               psychic/covariance/Test_PositiveSemiDefinite.py )
 
 add_python_test( reconr.unionise_cross_sections                        reconr/Test_unionise_cross_sections.py )
 add_python_test( reconr.calculate_summation_cross_sections             reconr/Test_calculate_summation_cross_sections.py )

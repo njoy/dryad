@@ -10,14 +10,14 @@ from njoy.dryad.covariance import CrossSectionCovarianceMatrix
 from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.id import ReactionID
 from njoy.psychic import TestStatus
-from njoy.psychic.covariance import IsPositiveSemiDefinite
+from njoy.psychic.covariance import PositiveSemiDefinite
 
-class Test_IsPositiveSemiDefinite( unittest.TestCase ) :
-    """Unit test for the IsPositiveSemiDefinite class."""
+class Test_PositiveSemiDefinite( unittest.TestCase ) :
+    """Unit test for the PositiveSemiDefinite class."""
 
     def test_component( self ) :
 
-        test = IsPositiveSemiDefinite()
+        test = PositiveSemiDefinite()
 
         # positive semi-definite matrix
         matrix = CrossSectionCovarianceMatrix( CrossSectionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],

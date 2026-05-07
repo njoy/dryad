@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/psychic/covariance/IsPositiveSemiDefinite.hpp"
+#include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,10 +12,10 @@ namespace python = pybind11;
 namespace psychic {
 namespace covariance {
 
-void wrapIsPositiveSemiDefinite( python::module& module ) {
+void wrapPositiveSemiDefinite( python::module& module ) {
 
   // type aliases
-  using Component = njoy::psychic::covariance::IsPositiveSemiDefinite;
+  using Component = njoy::psychic::covariance::PositiveSemiDefinite;
   using TestStatus = njoy::psychic::TestStatus;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
   using ProductMultiplicityCovarianceMatrix = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
@@ -26,7 +26,7 @@ void wrapIsPositiveSemiDefinite( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "IsPositiveSemiDefinite",
+    "PositiveSemiDefinite",
     "Test to verify if a covariance matrix is positive semi-definite\n\n"
     "Parameters\n"
     "----------\n"

@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_ISPOSITIVESEMIDEFINITE
-#define NJOY_PSYCHIC_COVARIANCES_ISPOSITIVESEMIDEFINITE
+#ifndef NJOY_PSYCHIC_COVARIANCES_POSITIVESEMIDEFINITE
+#define NJOY_PSYCHIC_COVARIANCES_POSITIVESEMIDEFINITE
 
 // system includes
 #include <algorithm>
@@ -20,13 +20,13 @@ namespace covariance {
    *  @class
    *  @brief Test to verify if a covariance matrix is positive semi-definite
    */
-  class IsPositiveSemiDefinite : protected base::Test< IsPositiveSemiDefinite > {
+  class PositiveSemiDefinite : protected base::Test< PositiveSemiDefinite > {
 
     /* friend declarations */
-    friend class base::Test< IsPositiveSemiDefinite >;
+    friend class base::Test< PositiveSemiDefinite >;
 
     /* type aliases */
-    using Parent = base::Test< IsPositiveSemiDefinite >;
+    using Parent = base::Test< PositiveSemiDefinite >;
 
     /* fields */
 
@@ -50,9 +50,8 @@ namespace covariance {
 
     /* constructor */
 
-    IsPositiveSemiDefinite(
-        double negative = constants::psychic::largest_allowed_negative_eigenvalue ) :
-      Parent( "psychic.covariance.IsPositiveSemiDefinite" ),
+    PositiveSemiDefinite( double negative = constants::psychic::largest_allowed_negative_eigenvalue ) :
+      Parent( "psychic.covariance.PositiveSemiDefinite" ),
       allowed_negative_eigenvalue_( negative ) {}
 
     /* methods */

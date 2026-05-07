@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/psychic/covariance/IsPositiveSemiDefinite.hpp"
+#include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
 
 // other includes
 #include <iostream>
@@ -13,7 +13,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "IsPositiveSemiDefinite" ) {
+SCENARIO( "PositiveSemiDefinite" ) {
 
   GIVEN( "on-diagonal matrices covariance matrices" ) {
 
@@ -39,7 +39,7 @@ SCENARIO( "IsPositiveSemiDefinite" ) {
             2. , 4., 6.,
             3.5, 6., 9.;
 
-    njoy::psychic::covariance::IsPositiveSemiDefinite test;
+    njoy::psychic::covariance::PositiveSemiDefinite test;
 
     WHEN( "a covariance matrix that is positive semi-definite is used" ) {
 
