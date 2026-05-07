@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_TABULATEDAVERAGEWIDTHS
 
 #include <vector>
+#include "njoy/constants.hpp"
 #include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
 
@@ -24,215 +25,269 @@ namespace resonances {
    * 
    *      <Gamma_n>(E) = <Gamma_n^0>(E) * sqrt(E) * P_l(E)
    * 
-   * Units: energies in eV, widths in eV.
+   * Units: energies in eV, widths in eV. DoF is dimensionless.
    */
-  class TabulatedAverageWidths : protected scion::math::InterpolationTable< double, double > {
-    int dof_;
-    public:
+  class TabulatedAverageWidths : 
+    protected scion::math::InterpolationTable< double, double > {
+      int dof_;
+      public:
           
-      /* type aliases*/
-      using InterpolationTable::XType;
-      using InterpolationTable::YType;
+        /* type aliases*/
+        using InterpolationTable::XType;
+        using InterpolationTable::YType;
 
-      /* constructor */
-      #include "njoy/dryad/resonances/TabulatedAverageWidth/src/ctor.hpp"
+        /* constructor */
+        #include "njoy/dryad/resonances/TabulatedAverageWidths/src/ctor.hpp"
 
-      /* methods */
+        /* methods */
           
-      /**
-       *  @brief Return the energy values
-       */
-      const std::vector< double >& energies() const {
-        return this->x();
-      }
+        /**
+         *  @brief Return the energy values
+         */
+        const std::vector< double >& energies() const {
+          return this->x();
+        }
 
-      /**
-       *  @brief Return the average width values
-       */
-      const std::vector< double >& widths() const {
-        return this->y();
-      }
+        /**
+         *  @brief Return the average width values
+         */
+        const std::vector< double >& values() const {
+          return this->y();
+        }
 
-      /**
-       * @brief Return the degrees of freedom for the chi-squared distribution
-       */
-      int degreesOfFreedom() const {
-        return this->dof_;
-      }
+        /**
+         * @brief Return the degrees of freedom for the chi-squared distribution
+         */
+        int degreesOfFreedom() const {
+          return this->dof_;
+        }
 
-      /**
-       * @brief Return the lower energy limit
-       */
-      double lowerEnergyLimit() const {
-        return this->x().front();
-      }
+        /**
+         * @brief Return the lower energy limit
+         */
+        double lowerEnergyLimit() const {
+          return this->x().front();
+        }
 
-      /**
-       * @brief Return the upper energy limit
-       */
-      double upperEnergyLimit() const {
-        return this->x().back();
-      }
+        /**
+         * @brief Return the upper energy limit
+         */
+        double upperEnergyLimit() const {
+          return this->x().back();
+        }
 
           
-      using InterpolationTable::boundaries;
-      using InterpolationTable::interpolants;
-      using InterpolationTable::numberPoints;
-      using InterpolationTable::numberRegions;
-      using InterpolationTable::isLinearised;
+        using InterpolationTable::boundaries;
+        using InterpolationTable::interpolants;
+        using InterpolationTable::numberPoints;
+        using InterpolationTable::numberRegions;
+        using InterpolationTable::isLinearised;
 
-      using InterpolationTable::operator();
+        using InterpolationTable::operator();
 
-      TabulatedAverageWidths linearise( double tolerance = constants::linearisation::tolerance ) const {
-        using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
-        auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
-        return TabulatedData( std::move( table ) );
-      }
-
+        /**
+         *  @brief Return a linearised level spacing table
+         *
+         *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
+         */
+        TabulatedAverageWidths linearise( double tolerance = constants::linearisation::tolerance ) const {
+          using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+          auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+          return TabulatedAverageWidths( this->degreesOfFreedom(), std::move( table ) );
+        }
+  
+        /**
+         *  @brief Inplace scalar addition
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths& operator+=( double right ) {
+  
+          InterpolationTable::operator+=( right );
+          return *this;
+        }
+  
+        /**
+         *  @brief Inplace scalar subtraction
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths& operator-=( double right ) {
+  
+          InterpolationTable::operator-=( right );
+          return *this;
+        }
+  
+        /**
+         *  @brief Inplace scalar multiplication
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths& operator*=( double right ) {
+  
+          InterpolationTable::operator*=( right );
+          return *this;
+        }
+  
+        /**
+         *  @brief Inplace scalar division
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths& operator/=( double right ) {
+  
+          InterpolationTable::operator/=( right );
+          return *this;
+        }
+  
+        /**
+         *  @brief TabulatedAverageWidths and scalar addition
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths operator+( double right ) const {
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                         InterpolationTable::operator+( right ) );
+        }
+  
+        /**
+         *  @brief TabulatedAverageWidths and scalar subtraction
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths operator-( double right ) const {
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                         InterpolationTable::operator-( right ) );
+        }
+  
+        /**
+         *  @brief TabulatedAverageWidths and scalar multiplication
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths operator*( double right ) const {
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                         InterpolationTable::operator*( right ) );
+        }
+  
+        /**
+         *  @brief TabulatedAverageWidths and scalar division
+         *
+         *  @param[in] right    the scalar
+         */
+        TabulatedAverageWidths operator/( double right ) const {
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                         InterpolationTable::operator/( right ) );
+        }
+  
+        /**
+         *  @brief Unary minus
+         */
+        TabulatedAverageWidths operator-() const {
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                         InterpolationTable::operator-() );
+        }
+  
+        /**
+         *  @brief Inplace TabulatedAverageWidths addition
+         *
+         *  @param[in] right    the table
+         */
+        TabulatedAverageWidths& operator+=( const TabulatedAverageWidths& right ) {
+  
+          InterpolationTable::operator+=( right );
+          return *this;
+        }
+  
+        /**
+         *  @brief Inplace TabulatedAverageWidths subtraction
+         *
+         *  @param[in] right    the table
+         */
+        TabulatedAverageWidths& operator-=( const TabulatedAverageWidths& right ) {
+  
+          InterpolationTable::operator-=( right );
+          return *this;
+        }
+  
+        /**
+         *  @brief TabulatedAverageWidths and TabulatedAverageWidths addition
+         *
+         *  @param[in] right    the table
+         */
+        TabulatedAverageWidths operator+( const TabulatedAverageWidths& right ) const {
+  
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                          InterpolationTable::operator+( right ) );
+        }
+  
+        /**
+         *  @brief TabulatedAverageWidths and TabulatedAverageWidths subtraction
+         *
+         *  @param[in] right    the table
+         */
+        TabulatedAverageWidths operator-( const TabulatedAverageWidths& right ) const {
+          return TabulatedAverageWidths( this->degreesOfFreedom(),
+                                          InterpolationTable::operator-( right ) );
+        }
+  
+        /**
+         *  @brief Comparison operator: equal
+         *
+         *  @param[in] right   the object on the right hand side
+         */
+        bool operator==( const TabulatedAverageWidths& right ) const {
+  
+          return InterpolationTable::operator==( right );
+        }
+  
+        /**
+         *  @brief Comparison operator: not equal
+         *
+         *  @param[in] right   the object on the right hand side
+         */
+        bool operator!=( const TabulatedAverageWidths& right ) const {
+  
+          return ! this->operator==( right );
+        }
+      };
       /**
-       * @brief Inplace scalar addition
-       * @param[in] right     the scalar
-       */
-      TabulatedAverageWidths& operator+=( double right ) {
-        InterpolationTable::operator+=( right );
-        return *this;
-      }
-
-      /**
-       * @brief Inplace scalar subtraction
+       *  @brief Scalar and TabulatedAverageWidths addition
        *
-       *  @param[in] right    the scalar
+       *  @param[in] left    the scalar
+       *  @param[in] right   the table
        */
-      TabulatedAverageWidths& operator-=( double right ) {
-        InterpolationTable::operator-=( right );
-        return *this;
+      inline TabulatedAverageWidths operator+( double left, const TabulatedAverageWidths& right ) {
+    
+        return right + left;
       }
-
+    
       /**
-       *  @brief Inplace scalar multiplication
+       *  @brief Scalar and TabulatedAverageWidths subtraction
        *
-       *  @param[in] right    the scalar
+       *  @param[in] left    the scalar
+       *  @param[in] right   the table
        */
-      TabulatedAverageWidths& operator*=( double) {
-        InterpolationTable::operator*=( right );
+      inline TabulatedAverageWidths operator-( double left, const TabulatedAverageWidths& right ) {
+    
+        auto result = -right;
+        result += left;
+        return result;
       }
-
+    
       /**
-       *  @brief Inplace scalar division
+       *  @brief Scalar and TabulatedAverageWidths multiplication
        *
-       *  @param[in] right    the scalar
+       *  @param[in] left    the scalar
+       *  @param[in] right   the table
        */
-      TabulatedAverageWidths& operator/=( double right ) {
-
-        InterpolationTable::operator/=( right );
-        return *this;
+      inline TabulatedAverageWidths operator*( double left, const TabulatedAverageWidths& right ) {
+    
+        return right * left;
       }
-
-      /**
-       * @brief TabulatedAverageWidths and scalar addition
-       * 
-       * @param[in] right   the scalar
-       */
-      TabulatedAverageWidths operator+( double right ) const {
-        return InterpolationTable::operator+( right );
-      }
-
-      /**
-       * @brief TabulatedAverageWidths and scalar subtraction
-       * 
-       * @param[in] right   the scalar
-       */
-      TabulatedAverageWidths operator-( double right ) const {
-        return InterpolationTable::operator-( right );
-      }
-
-      /**
-       * @brief TabulatedAverageWidths and scalar multiplication
-       * 
-       * @param[in] right   the scalar
-       */
-      TabulatedAverageWidths operator*( double right ) const {
-        return InterpolationTable::operator*( right );
-      }
-
-      /**
-       * @brief TabulatedAverageWidths and scalar division
-       * 
-       * @param[in] right   the scalar
-       */
-      TabulatedAverageWidths operator/( double right ) const {
-        return InterpolationTable::operator/( right );
-      }
-
-      /**
-       * @brief Unary minus
-       */
-      TabulatedAverageWidths operator-() const {
-        return InterpolationTable::operator-();
-      }
-
-      /**
-       * @brief Inplace TabulatedAverageWidths addition
-       * 
-       * @param[in] right   the table
-       */
-      TabulatedAverageWidths& operator+=( const TabulatedAverageWidths& right) {
-        InterpolationTable::operator+=( right );
-        return *this;
-      }
-
-      /**
-       * @brief Inplace TabulatedAverageWidths subtraction
-       * 
-       * @param[in] right   the table
-       */ 
-      TabulatedAverageWidths& operator-=( const TabulatedAverageWidths& right) {
-
-        InterpolationTable::operator-=( right );
-        return *this;
-      }
-      
-      /**
-       * @brief TabulatedAverageWidths and TabulatedAverageWidths addition
-       * 
-       * 
-       * @param[in] right    the table
-       */
-      TabulatedAverageWidths operator+( const TabulatedAverageWidths& right ) const { 
-
-        return InterpolationTable::operator+( right ); 
-      }
-
-      /**
-       * @brief TabulatedAverageWidths and TabulatedAverageWidths subtraction
-       * 
-       * @param[in]     the table
-       */ 
-      TabulatedAverageWidths operator-( const TabulatedAverageWidths& right ) const { 
-
-        return InterpolationTable::operator-( right ); 
-      }
-
-      /**
-       * @brief Comparison operator: equal
-       * 
-       * @param[in] right     the object on the right hand side
-       */ 
-      bool operator==( const TabulatedAverageWidths& right )const { 
-        return InterpolationTable::operator==( right );
-      }
-      
-      /**
-       * @brief Comparison operator: not equal
-       * 
-       * @param[in] right     the object on the right hand side
-       */ 
-      bool operator!=( const TabulatedAverageWidths& right )const { 
-        return ! this->operator==( right );
-      }      
-    };
-
+    
     
 }
 }
 }
+#endif
