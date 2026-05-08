@@ -357,8 +357,9 @@ add_cpp_test( dryad.external.KleinNishina                                       
 
 # psychic tests
 
-add_cpp_test( psychic.covariance.PositiveSemiDefinite                                 psychic/covariance/PositiveSemiDefinite.test.cpp )
-add_cpp_test( psychic.covariance.BoundedCorrelations                                  psychic/covariance/BoundedCorrelations.test.cpp )
+add_cpp_test( psychic.TestStatus                                                        psychic/TestStatus.test.cpp )
+add_cpp_test( psychic.covariance.PositiveSemiDefinite                                   psychic/covariance/PositiveSemiDefinite.test.cpp )
+add_cpp_test( psychic.covariance.BoundedCorrelations                                    psychic/covariance/BoundedCorrelations.test.cpp )
 
 # reconr tests
 

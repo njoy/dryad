@@ -20,10 +20,10 @@ class TestStatus:
       Skipped
     """
     Fail: typing.ClassVar[TestStatus]  # value = <TestStatus.Fail: 2>
-    Skipped: typing.ClassVar[TestStatus]  # value = <TestStatus.Skipped: 3>
+    Skipped: typing.ClassVar[TestStatus]  # value = <TestStatus.Skipped: -1>
     Success: typing.ClassVar[TestStatus]  # value = <TestStatus.Success: 0>
     Warning: typing.ClassVar[TestStatus]  # value = <TestStatus.Warning: 1>
-    __members__: typing.ClassVar[dict[str, TestStatus]]  # value = {'Success': <TestStatus.Success: 0>, 'Warning': <TestStatus.Warning: 1>, 'Fail': <TestStatus.Fail: 2>, 'Skipped': <TestStatus.Skipped: 3>}
+    __members__: typing.ClassVar[dict[str, TestStatus]]  # value = {'Success': <TestStatus.Success: 0>, 'Warning': <TestStatus.Warning: 1>, 'Fail': <TestStatus.Fail: 2>, 'Skipped': <TestStatus.Skipped: -1>}
     def __eq__(self, other: typing.Any) -> bool:
         ...
     def __ge__(self, other: typing.Any) -> bool:
