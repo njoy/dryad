@@ -20,11 +20,16 @@ namespace psychic {
  */
 enum class TestStatus : short {
 
-  Success,   /**< The test passes successfully without issues */
-  Warning,   /**< The test passed but there are issues */
-  Fail,      /**< The test fails */
-  Skipped    /**< The test has been skipped */
+  Skipped = -1,  /**< The test has been skipped */
+  Success =  0,  /**< The test passes successfully without issues */
+  Warning =  1,  /**< The test passed but there are issues */
+  Fail    =  2   /**< The test fails */
 };
+
+inline TestStatus operator&&( const TestStatus& left, const TestStatus& right ) {
+
+  return std::max( left, right );
+}
 
 } // psychic namespace
 } // njoy namespace
