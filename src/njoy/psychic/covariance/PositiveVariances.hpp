@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_POSITIVEVARIANCES
-#define NJOY_PSYCHIC_COVARIANCES_POSITIVEVARIANCES
+#ifndef NJOY_PSYCHIC_COVARIANCE_POSITIVEVARIANCES
+#define NJOY_PSYCHIC_COVARIANCE_POSITIVEVARIANCES
 
 // system includes
 
@@ -51,6 +51,7 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
+    using Parent::clear;
 
     /**
      *  @brief Verify if the provided covariance matrix has variances that are strictly positive
@@ -58,7 +59,7 @@ namespace covariance {
      *  The test returns the following status values:
      *    - Success : all variances are strictly positive
      *    - Warning : all variances are positive
-     *    - Fail : soem of the variances seem to be negative
+     *    - Fail : some of the variances seem to be negative
      *    - Skipped : the test was skipped
      *
      *  @param[in] covariance   the covariance matrix instance to be tested

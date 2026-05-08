@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_POSITIVESEMIDEFINITE
-#define NJOY_PSYCHIC_COVARIANCES_POSITIVESEMIDEFINITE
+#ifndef NJOY_PSYCHIC_COVARIANCE_POSITIVESEMIDEFINITE
+#define NJOY_PSYCHIC_COVARIANCE_POSITIVESEMIDEFINITE
 
 // system includes
 #include <algorithm>
@@ -57,6 +57,7 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
+    using Parent::clear;
 
     /**
      *  @brief Return the largest allowed negative eigenvalue

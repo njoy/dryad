@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_BOUNDEDCORRELATIONS
-#define NJOY_PSYCHIC_COVARIANCES_BOUNDEDCORRELATIONS
+#ifndef NJOY_PSYCHIC_COVARIANCE_BOUNDEDCORRELATIONS
+#define NJOY_PSYCHIC_COVARIANCE_BOUNDEDCORRELATIONS
 
 // system includes
 
@@ -54,6 +54,7 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
+    using Parent::clear;
 
     /**
      *  @brief Return the comparison tolerance

@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_DIAGONALCORRELATIONS
-#define NJOY_PSYCHIC_COVARIANCES_DIAGONALCORRELATIONS
+#ifndef NJOY_PSYCHIC_COVARIANCE_DIAGONALCORRELATIONS
+#define NJOY_PSYCHIC_COVARIANCE_DIAGONALCORRELATIONS
 
 // system includes
 
@@ -53,6 +53,7 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
+    using Parent::clear;
 
     /**
      *  @brief Return the comparison tolerance
