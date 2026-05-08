@@ -5,7 +5,6 @@
 #include <algorithm>
 
 // other includes
-#include "scion/verification/ranges.hpp"
 #include "njoy/psychic/base/Test.hpp"
 #include "njoy/psychic/TestStatus.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
@@ -111,28 +110,17 @@ namespace covariance {
                          std::is_same_v< Covariance, dryad::covariance::ProductMultiplicityCovarianceMatrix >,
                          const std::optional< TestStatus >& > {
 
-      using namespace scion::verification;
-
       this->clear();
       if ( covariance.eigenvalues().has_value() ) {
 
-        if ( isAllLargerThanOrEqualTo( covariance.eigenvalues().value(), 0. ) ) {
+        this->status( TestStatus::Success );
 
-          this->status( TestStatus::Success );
-        }
-        else {
+        auto min = *std::min_element( covariance.eigenvalues()->begin(), covariance.eigenvalues()->end() );
+        this->largestNegativeEigenValue( min );
 
-          double eigenvalue = *std::min_element( covariance.eigenvalues()->begin(), covariance.eigenvalues()->end() );
-          this->largestNegativeEigenValue( eigenvalue );
+        if ( min < 0. ) {
 
-          if ( isAllLargerThanOrEqualTo( covariance.eigenvalues().value(), this->allowedNegativeEigenValue() ) ) {
-
-            this->status( TestStatus::Warning );
-          }
-          else {
-
-            this->status( TestStatus::Fail );
-          }
+          this->status( min < this->allowedNegativeEigenValue() ? TestStatus::Fail : TestStatus::Warning );
         }
       }
       else {
