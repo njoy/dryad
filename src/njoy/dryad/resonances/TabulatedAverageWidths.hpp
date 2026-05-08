@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_RESONANCES_TABULATEDAVERAGEWIDTHS
 
 #include <vector>
+#include <optional>
 #include "njoy/constants.hpp"
 #include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
@@ -29,7 +30,7 @@ namespace resonances {
    */
   class TabulatedAverageWidths : 
     protected scion::math::InterpolationTable< double, double > {
-      int dof_;
+      std::optional< int > dof_;
       public:
           
         /* type aliases*/
@@ -58,21 +59,21 @@ namespace resonances {
         /**
          * @brief Return the degrees of freedom for the chi-squared distribution
          */
-        int degreesOfFreedom() const {
+        const std::optional<int>& degreesOfFreedom() const {
           return this->dof_;
         }
 
         /**
          * @brief Return the lower energy limit
          */
-        double lowerEnergyLimit() const {
+        const double lowerEnergyLimit() const {
           return this->x().front();
         }
 
         /**
          * @brief Return the upper energy limit
          */
-        double upperEnergyLimit() const {
+        const double upperEnergyLimit() const {
           return this->x().back();
         }
 
@@ -285,9 +286,8 @@ namespace resonances {
     
         return right * left;
       }
-    
-    
-}
-}
-}
+
+} // namespace resonances
+} // namespace dryad
+} // namespace njoy
 #endif

@@ -5,9 +5,9 @@ private:
  *  @param  table   the interpolation table
  *  @param  dof     the degrees of freedom
  */
-TabulatedAverageWidths( int dof, 
-                        InterpolationTable< double, double > table) :
-  InterpolationTable( std::move( table ) ), dof_( dof ) {}
+TabulatedAverageWidths( std::optional< int > dof,
+                        InterpolationTable< double, double > table ) :
+  InterpolationTable( std::move( table ) ), dof_(  dof ) {}
 
 public:
 
@@ -34,7 +34,7 @@ TabulatedAverageWidths( int dof,
                         std::vector< double > widths,
                         std::vector< std::size_t > boundaries,
                         std::vector< InterpolationType > interpolants ) :
-  TabulatedAverageWidths( dof,
+  TabulatedAverageWidths( std::optional< int >( dof ),
                           InterpolationTable< double, double >( std::move( energies ),
                                                                 std::move( widths ),
                                                                 std::move( boundaries ),
@@ -53,43 +53,43 @@ TabulatedAverageWidths( int dof,
                         std::vector< double > energies,
                         std::vector< double > widths,
                         InterpolationType interpolant = InterpolationType::LinearLinear ) :
-  TabulatedAverageWidths( dof,
+  TabulatedAverageWidths( std::optional< int >( dof ),
                           InterpolationTable< double, double >( std::move( energies ),
                                                                 std::move( widths ),
-                                                                interpolant ) 
+                                                                interpolant )
                           ) {}
 
 /**
- *  @brief Constructor for a single interpolation zone with a default dof
-  *
-  *  @param[in] energies       the energy values (eV)
-  *  @param[in] widths         the average width values (eV)
-  *  @param[in] interpolant    the interpolation type (default lin-lin)
+ *  @brief Constructor with a default dof (nullopt)
+ *
+ *  @param[in] energies       the energy values (eV)
+ *  @param[in] widths         the average width values (eV)
+ *  @param[in] boundaries     the boundaries of the interpolation regions
+ *  @param[in] interpolants   the interpolation types of the interpolation regions
  */
-TabulatedAverageWidths( std::vector< double > energies,
-                        std::vector< double > widths,
-                        InterpolationType interpolant = InterpolationType::LinearLinear ) :
-  TabulatedAverageWidths( 1,
-                          InterpolationTable< double, double >( std::move( energies ),
-                                                                std::move( widths ),
-                                                                interpolant ) 
-                          ) {}
-
-
-
-/**
- *  @brief Constructor with a default dof
-  *
-  *  @param[in] energies       the energy values (eV)
-  *  @param[in] widths         the average width values (eV)
-  *  @param[in] interpolant    the interpolation type (default lin-lin)
-*/
 TabulatedAverageWidths( std::vector< double > energies,
                         std::vector< double > widths,
                         std::vector< std::size_t > boundaries,
                         std::vector< InterpolationType > interpolants ) :
-  TabulatedAverageWidths( 1,
-                          std::move( energies ),
-                          std::move( widths ),
-                          std::move( boundaries ),
-                          std::move( interpolants ) ) {}
+  TabulatedAverageWidths( std::nullopt,
+                          InterpolationTable< double, double >( std::move( energies ),
+                                                                std::move( widths ),
+                                                                std::move( boundaries ),
+                                                                std::move( interpolants ) )
+                          ) {}
+
+/**
+ *  @brief Constructor for a single interpolation zone with a default dof (nullopt)
+ *
+ *  @param[in] energies       the energy values (eV)
+ *  @param[in] widths         the average width values (eV)
+ *  @param[in] interpolant    the interpolation type (default lin-lin)
+ */
+TabulatedAverageWidths( std::vector< double > energies,
+                        std::vector< double > widths,
+                        InterpolationType interpolant = InterpolationType::LinearLinear ) :
+  TabulatedAverageWidths( std::nullopt,
+                          InterpolationTable< double, double >( std::move( energies ),
+                                                                std::move( widths ),
+                                                                interpolant )
+                          ) {}
