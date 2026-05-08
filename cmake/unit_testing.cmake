@@ -79,6 +79,7 @@ add_cpp_test( dryad.resonances.calculator.ShiftFactor                           
 add_cpp_test( dryad.resonances.calculator.ReichMoore                                    dryad/resonances/calculator/ReichMoore.test.cpp )
 add_cpp_test( dryad.resonances.SpinGroup                                                dryad/resonances/SpinGroup.test.cpp )
 add_cpp_test( dryad.resonances.CompoundSystem                                           dryad/resonances/CompoundSystem.test.cpp )
+add_cpp_test( dryad.resonances.TabulatedLevelSpacing                                    dryad/resonances/TabulatedLevelSpacing.test.cpp )
 
 add_cpp_test( dryad.thermal.TabulatedScatteringKernelFunction                           dryad/thermal/TabulatedScatteringKernelFunction.test.cpp )
 add_cpp_test( dryad.thermal.TabulatedScatteringKernel                                   dryad/thermal/TabulatedScatteringKernel.test.cpp )
