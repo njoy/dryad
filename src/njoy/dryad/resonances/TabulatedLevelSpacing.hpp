@@ -1,7 +1,10 @@
 #ifndef NJOY_DRYAD_RESONANCES_TABULATEDLEVELSPACINGS
 #define NJOY_DRYAD_RESONANCES_TABULATEDLEVELSPACINGS
 
+// system includes
 #include <vector>
+
+// other includes
 #include "njoy/constants.hpp"
 #include "njoy/dryad/InterpolationType.hpp"
 #include "scion/math/InterpolationTable.hpp"
@@ -20,217 +23,224 @@ namespace resonances {
   class TabulatedLevelSpacing :
     protected scion::math::InterpolationTable< double, double > {
 
-    public:
+  public:
 
-      /* type aliases */
-      using InterpolationTable::XType;
-      using InterpolationTable::YType;
+    /* type aliases */
+    using InterpolationTable::XType;
+    using InterpolationTable::YType;
 
-      #include "njoy/dryad/resonances/TabulatedLevelSpacing/src/ctor.hpp"
+    /* constructor */
 
-      /* methods */
+    #include "njoy/dryad/resonances/TabulatedLevelSpacing/src/ctor.hpp"
 
-      /**
-       *  @brief returns the energy values
-       */
-      const std::vector< double >& energies() const {
-        return this->x();
-      }
+    /* methods */
 
-      /**
-       *  @brief  Return the average level spacing values
-       */
-      const std::vector< double >& values() const {
-        return this->y();
-      }
+    /**
+     *  @brief returns the energy values
+     */
+    const std::vector< double >& energies() const {
 
-      /**
-       * @brief Return the lower energy limit
-       */
-      double lowerEnergyLimit() const {
-        return this->x().front();
-      }
+      return this->x();
+    }
 
-      /**
-       * @brief Return the upper energy limit
-       */
-      double upperEnergyLimit() const {
-        return this->x().back();
-      }
+    /**
+     *  @brief  Return the average level spacing values
+     */
+    const std::vector< double >& values() const {
 
-      using InterpolationTable::boundaries;
-      using InterpolationTable::interpolants;
-      using InterpolationTable::numberPoints;
-      using InterpolationTable::numberRegions;
-      using InterpolationTable::isLinearised;
+      return this->y();
+    }
 
-      using InterpolationTable::operator();
+    /**
+     * @brief Return the lower energy limit
+     */
+    double lowerEnergyLimit() const {
+
+      return this->x().front();
+    }
+
+    /**
+     * @brief Return the upper energy limit
+     */
+    double upperEnergyLimit() const {
+
+      return this->x().back();
+    }
+
+    using InterpolationTable::boundaries;
+    using InterpolationTable::interpolants;
+    using InterpolationTable::numberPoints;
+    using InterpolationTable::numberRegions;
+    using InterpolationTable::isLinearised;
+
+    using InterpolationTable::operator();
 
     /**
      *  @brief Return a linearised level spacing table
      *
      *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
      */
-      TabulatedLevelSpacing linearise( double tolerance = constants::linearisation::tolerance ) const {
-        using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
-        auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
-        return TabulatedLevelSpacing( std::move( table ) );
-      }
+    TabulatedLevelSpacing linearise( double tolerance = constants::linearisation::tolerance ) const {
 
-      /**
-       *  @brief Inplace scalar addition
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing& operator+=( double right ) {
+      using Tolerance = njoy::scion::linearisation::ToleranceConvergence< double, double >;
+      auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
+      return TabulatedLevelSpacing( std::move( table ) );
+    }
 
-        InterpolationTable::operator+=( right );
-        return *this;
-      }
+    /**
+     *  @brief Inplace scalar addition
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing& operator+=( double right ) {
 
-      /**
-       *  @brief Inplace scalar subtraction
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing& operator-=( double right ) {
+      InterpolationTable::operator+=( right );
+      return *this;
+    }
 
-        InterpolationTable::operator-=( right );
-        return *this;
-      }
+    /**
+     *  @brief Inplace scalar subtraction
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing& operator-=( double right ) {
 
-      /**
-       *  @brief Inplace scalar multiplication
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing& operator*=( double right ) {
+      InterpolationTable::operator-=( right );
+      return *this;
+    }
 
-        InterpolationTable::operator*=( right );
-        return *this;
-      }
+    /**
+     *  @brief Inplace scalar multiplication
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing& operator*=( double right ) {
 
-      /**
-       *  @brief Inplace scalar division
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing& operator/=( double right ) {
+      InterpolationTable::operator*=( right );
+      return *this;
+    }
 
-        InterpolationTable::operator/=( right );
-        return *this;
-      }
+    /**
+     *  @brief Inplace scalar division
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing& operator/=( double right ) {
 
-      /**
-       *  @brief TabulatedLevelSpacing and scalar addition
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing operator+( double right ) const {
+      InterpolationTable::operator/=( right );
+      return *this;
+    }
 
-        return InterpolationTable::operator+( right );
-      }
+    /**
+     *  @brief TabulatedLevelSpacing and scalar addition
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing operator+( double right ) const {
 
-      /**
-       *  @brief TabulatedLevelSpacing and scalar subtraction
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing operator-( double right ) const {
+      return InterpolationTable::operator+( right );
+    }
 
-        return InterpolationTable::operator-( right );
-      }
+    /**
+     *  @brief TabulatedLevelSpacing and scalar subtraction
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing operator-( double right ) const {
 
-      /**
-       *  @brief TabulatedLevelSpacing and scalar multiplication
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing operator*( double right ) const {
+      return InterpolationTable::operator-( right );
+    }
 
-        return InterpolationTable::operator*( right );
-      }
+    /**
+     *  @brief TabulatedLevelSpacing and scalar multiplication
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing operator*( double right ) const {
 
-      /**
-       *  @brief TabulatedLevelSpacing and scalar division
-       *
-       *  @param[in] right    the scalar
-       */
-      TabulatedLevelSpacing operator/( double right ) const {
+      return InterpolationTable::operator*( right );
+    }
 
-        return InterpolationTable::operator/( right );
-      }
+    /**
+     *  @brief TabulatedLevelSpacing and scalar division
+     *
+     *  @param[in] right    the scalar
+     */
+    TabulatedLevelSpacing operator/( double right ) const {
 
-      /**
-       *  @brief Unary minus
-       */
-      TabulatedLevelSpacing operator-() const {
+      return InterpolationTable::operator/( right );
+    }
 
-        return InterpolationTable::operator-();
-      }
+    /**
+     *  @brief Unary minus
+     */
+    TabulatedLevelSpacing operator-() const {
 
-      /**
-       *  @brief Inplace TabulatedLevelSpacing addition
-       *
-       *  @param[in] right    the table
-       */
-      TabulatedLevelSpacing& operator+=( const TabulatedLevelSpacing& right ) {
+      return InterpolationTable::operator-();
+    }
 
-        InterpolationTable::operator+=( right );
-        return *this;
-      }
+    /**
+     *  @brief Inplace TabulatedLevelSpacing addition
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedLevelSpacing& operator+=( const TabulatedLevelSpacing& right ) {
 
-      /**
-       *  @brief Inplace TabulatedLevelSpacing subtraction
-       *
-       *  @param[in] right    the table
-       */
-      TabulatedLevelSpacing& operator-=( const TabulatedLevelSpacing& right ) {
+      InterpolationTable::operator+=( right );
+      return *this;
+    }
 
-        InterpolationTable::operator-=( right );
-        return *this;
-      }
+    /**
+     *  @brief Inplace TabulatedLevelSpacing subtraction
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedLevelSpacing& operator-=( const TabulatedLevelSpacing& right ) {
 
-      /**
-       *  @brief TabulatedLevelSpacing and TabulatedLevelSpacing addition
-       *
-       *  @param[in] right    the table
-       */
-      TabulatedLevelSpacing operator+( const TabulatedLevelSpacing& right ) const {
+      InterpolationTable::operator-=( right );
+      return *this;
+    }
 
-        return InterpolationTable::operator+( right );
-      }
+    /**
+     *  @brief TabulatedLevelSpacing and TabulatedLevelSpacing addition
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedLevelSpacing operator+( const TabulatedLevelSpacing& right ) const {
 
-      /**
-       *  @brief TabulatedLevelSpacing and TabulatedLevelSpacing subtraction
-       *
-       *  @param[in] right    the table
-       */
-      TabulatedLevelSpacing operator-( const TabulatedLevelSpacing& right ) const {
+      return InterpolationTable::operator+( right );
+    }
 
-        return InterpolationTable::operator-( right );
-      }
+    /**
+     *  @brief TabulatedLevelSpacing and TabulatedLevelSpacing subtraction
+     *
+     *  @param[in] right    the table
+     */
+    TabulatedLevelSpacing operator-( const TabulatedLevelSpacing& right ) const {
 
-      /**
-       *  @brief Comparison operator: equal
-       *
-       *  @param[in] right   the object on the right hand side
-       */
-      bool operator==( const TabulatedLevelSpacing& right ) const {
+      return InterpolationTable::operator-( right );
+    }
 
-        return InterpolationTable::operator==( right );
-      }
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const TabulatedLevelSpacing& right ) const {
 
-      /**
-       *  @brief Comparison operator: not equal
-       *
-       *  @param[in] right   the object on the right hand side
-       */
-      bool operator!=( const TabulatedLevelSpacing& right ) const {
+      return InterpolationTable::operator==( right );
+    }
 
-        return ! this->operator==( right );
-      }
-    };
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const TabulatedLevelSpacing& right ) const {
+
+      return ! this->operator==( right );
+    }
+  };
 
   /**
    *  @brief Scalar and TabulatedLevelSpacing addition
