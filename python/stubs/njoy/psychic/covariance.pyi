@@ -5,7 +5,7 @@ from __future__ import annotations
 import njoy.dryad.covariance
 import njoy.psychic
 import typing
-__all__: list[str] = ['BoundedCorrelations', 'DiagonalCorrelations', 'PositiveSemiDefinite']
+__all__: list[str] = ['BoundedCorrelations', 'DiagonalCorrelations', 'PositiveSemiDefinite', 'PositiveVariances']
 class BoundedCorrelations:
     """
     Test to verify if all correlation values are between -1 and 1
@@ -182,6 +182,48 @@ class PositiveSemiDefinite:
     @largest_negative_eigen_value.setter
     def largest_negative_eigen_value(self, arg1: float | None) -> None:
         ...
+    @property
+    def name(self) -> str:
+        """
+        The test name
+        """
+    @property
+    def status(self) -> njoy.psychic.TestStatus | None:
+        """
+        The test status
+        """
+    @status.setter
+    def status(self, arg1: njoy.psychic.TestStatus | None) -> None:
+        ...
+class PositiveVariances:
+    """
+    Test to verify if all variances are strictly positive
+    """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has variances that are strictly positive
+        
+        The test returns the following status values:
+          - Success : all variances are strictly positive
+          - Warning : all variances are positive
+          - Fail : soem of the variances seem to be negative
+          - Skipped : the test was skipped
+        
+        Parameters
+        ----------
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                the covariance matrix instance to be tested
+        """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has variances that are strictly positive
+        """
+    def __init__(self) -> None:
+        """
+        Initialise the test
+        """
     @property
     def name(self) -> str:
         """

@@ -118,6 +118,7 @@ add_python_test( dryad.ThermalScattering                               dryad/Tes
 
 add_python_test( dryad.external.ComptonProfiles                        dryad/external/Test_ComptonProfiles.py )
 
+add_python_test( psychic.covariance.PositiveVariances                  psychic/covariance/Test_PositiveVariances.py )
 add_python_test( psychic.covariance.PositiveSemiDefinite               psychic/covariance/Test_PositiveSemiDefinite.py )
 add_python_test( psychic.covariance.BoundedCorrelations                psychic/covariance/Test_BoundedCorrelations.py )
 add_python_test( psychic.covariance.DiagonalCorrelations               psychic/covariance/Test_DiagonalCorrelations.py )
