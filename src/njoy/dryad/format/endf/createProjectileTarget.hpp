@@ -46,7 +46,7 @@ namespace endf {
     std::optional< ParticleDatabase > particles = std::nullopt;
 
     std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
-    if ( type == InteractionType::Nuclear && projectile == id::ParticleID::neutron() ) {
+    if ( type == InteractionType::Nuclear ) {
 
       resonances = resonances::createResonanceParameters( projectile, target,
                                                           material.section( 2, 151 ).parse< 2, 151 >() );
