@@ -2,3 +2,9 @@ Photoatomic data
 
 - verify that the last values of the scattering function for Compton/incoherent scattering are equal
   to the z value of the element.
+
+Covariances
+
+- verify that the ratio of the smallest to largest positive eigenvalue of the covariance matrix is larger
+  then a preset tolerance (default set to 1e-8)
+- verify summation covariances (in the same way we resolve the partials in summation reactions)
