@@ -1846,7 +1846,6 @@ SCENARIO( "TabulatedLevelSpacing" ) {
     } // WHEN
   } // GIVEN
 
-
   GIVEN( "non-linearised data with multiple regions with a jump that consist of "
          "more than 2 points" ) {
 
