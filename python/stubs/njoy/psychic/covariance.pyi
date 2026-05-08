@@ -5,7 +5,77 @@ from __future__ import annotations
 import njoy.dryad.covariance
 import njoy.psychic
 import typing
-__all__: list[str] = ['PositiveSemiDefinite']
+__all__: list[str] = ['BoundedCorrelations', 'PositiveSemiDefinite']
+class BoundedCorrelations:
+    """
+    Test to verify if all correlation values are between -1 and 1
+    
+    Parameters
+    ----------
+        tolerance : float, default 1e-10
+             the comparison tolerance
+    """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has correlations between -1 and 1
+        
+        The test returns the following status values:
+          - Success : the correlations are between -1 and 1
+          - Warning : the correlations are between -1 and 1, taking into account a tolerance
+          - Fail : the correlations matrix are outside the -1 and 1 range
+          - Skipped : the covariance matrix provided is not on-diagonal
+        
+        The smallest and largest correlation values are available for the Warning and Fail state.
+        
+        Parameters
+        ----------
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                the covariance matrix instance to be tested
+        """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has correlations between -1 and 1
+        """
+    def __init__(self, tolerance: float = 1e-10) -> None:
+        """
+        Initialise the test
+        """
+    @property
+    def largest_correlation(self) -> float | None:
+        """
+        The largest correlation value that was found
+        """
+    @largest_correlation.setter
+    def largest_correlation(self, arg1: float | None) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        The test name
+        """
+    @property
+    def smallest_correlation(self) -> float | None:
+        """
+        The smallest correlation value that was found
+        """
+    @smallest_correlation.setter
+    def smallest_correlation(self, arg1: float | None) -> None:
+        ...
+    @property
+    def status(self) -> njoy.psychic.TestStatus | None:
+        """
+        The test status
+        """
+    @status.setter
+    def status(self, arg1: njoy.psychic.TestStatus | None) -> None:
+        ...
+    @property
+    def tolerance(self) -> float:
+        """
+        The comparison tolerance
+        """
 class PositiveSemiDefinite:
     """
     Test to verify if a covariance matrix is positive semi-definite
@@ -29,7 +99,7 @@ class PositiveSemiDefinite:
           - Success : the covariance matrix is positive semi-definite
           - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues
           - Fail : the on-diagonal covariance matrix is not positive semi-definite
-          - Skipped : the covariance matrix provided is not on-diagonal 
+          - Skipped : the covariance matrix provided is not on-diagonal
         
         The largest negative eigenvalue is available for the Warning and Fail state.
         
