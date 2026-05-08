@@ -121,6 +121,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/psychic/covariance/PositiveSemiDefinite.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/psychic/covariance/BoundedCorrelations.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/psychic/covariance/DiagonalCorrelations.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/psychic/covariance/TestSuite.python.cpp
     )
 
     target_link_libraries(njoy.python PRIVATE njoy)

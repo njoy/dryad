@@ -15,6 +15,7 @@ namespace covariance {
   void wrapPositiveSemiDefinite( python::module& );
   void wrapBoundedCorrelations( python::module& );
   void wrapDiagonalCorrelations( python::module& );
+  void wrapTestSuite( python::module& );
 }
 
 void wrapCovariance( python::module& module ) {
@@ -31,6 +32,7 @@ void wrapCovariance( python::module& module ) {
   covariance::wrapPositiveSemiDefinite( submodule );
   covariance::wrapBoundedCorrelations( submodule );
   covariance::wrapDiagonalCorrelations( submodule );
+  covariance::wrapTestSuite( submodule );
 }
 
 } // psychic namespace

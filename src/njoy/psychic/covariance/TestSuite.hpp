@@ -69,10 +69,85 @@ namespace covariance {
     using Parent::status;
     using Parent::clear;
 
-    PositiveVariances& positiveVariances() { return this->positive_variances_; }
-    PositiveSemiDefinite& positiveSemiDefinite() { return this->positive_semi_definite_; }
-    BoundedCorrelations& boundedCorrelations() { return this->bounded_correlations_; }
-    DiagonalCorrelations& diagonalCorrelations() { return this->diagonal_correlations_; }
+    /**
+     *  @brief Return the positive variance test
+     */
+    const PositiveVariances& positiveVariances() const {
+
+      return this->positive_variances_;
+    }
+
+    /**
+     *  @brief Return the positive variance test
+     */
+    PositiveVariances& positiveVariances() {
+
+      return this->positive_variances_;
+    }
+
+    /**
+     *  @brief Return the positive semi-definite test
+     */
+    const PositiveSemiDefinite& positiveSemiDefinite() const {
+
+      return this->positive_semi_definite_;
+    }
+
+    /**
+     *  @brief Return the positive semi-definite test
+     */
+    PositiveSemiDefinite& positiveSemiDefinite() {
+
+      return this->positive_semi_definite_;
+    }
+
+    /**
+     *  @brief Return the correlations between -1 and 1 test
+     */
+    const BoundedCorrelations& boundedCorrelations() const {
+
+      return this->bounded_correlations_;
+    }
+
+    /**
+     *  @brief Return the correlations between -1 and 1 test
+     */
+    BoundedCorrelations& boundedCorrelations() {
+
+      return this->bounded_correlations_;
+    }
+
+    /**
+     *  @brief Return the diagonal correlations are all 1 test
+     */
+    const DiagonalCorrelations& diagonalCorrelations() const {
+
+      return this->diagonal_correlations_;
+    }
+
+    /**
+     *  @brief Return the diagonal correlations are all 1 test
+     */
+    DiagonalCorrelations& diagonalCorrelations() {
+
+      return this->diagonal_correlations_;
+    }
+
+    /**
+     *  @brief Return the comparison tolerance
+     */
+    double tolerance() const {
+
+      return this->boundedCorrelations().tolerance();
+    }
+
+    /**
+     *  @brief Return the largest allowed negative eigenvalue
+     */
+    double allowedNegativeEigenValue() const {
+
+      return this->positiveSemiDefinite().allowedNegativeEigenValue();
+    }
 
     /**
      *  @brief Perform the test suite on the provided covariance matrix

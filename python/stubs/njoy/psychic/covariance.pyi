@@ -5,7 +5,7 @@ from __future__ import annotations
 import njoy.dryad.covariance
 import njoy.psychic
 import typing
-__all__: list[str] = ['BoundedCorrelations', 'DiagonalCorrelations', 'PositiveSemiDefinite', 'PositiveVariances']
+__all__: list[str] = ['BoundedCorrelations', 'DiagonalCorrelations', 'PositiveSemiDefinite', 'PositiveVariances', 'TestSuite']
 class BoundedCorrelations:
     """
     Test to verify if all correlation values are between -1 and 1
@@ -237,3 +237,76 @@ class PositiveVariances:
     @status.setter
     def status(self, arg1: njoy.psychic.TestStatus | None) -> None:
         ...
+class TestSuite:
+    """
+    A comprehensive covariance test suite
+    
+    Parameters
+    ----------
+        tolerance : float, default 1e-10
+             the comparison tolerance
+        negative : float, default -1e-10
+             the largest allowed negative eigenvalue
+    """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Perform the test suite on the provided covariance matrix
+        
+        Parameters
+        ----------
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                the covariance matrix instance to be tested
+        """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Perform the test suite on the provided covariance matrix
+        """
+    def __init__(self, tolerance: float = 1e-10, negative: float = -1e-10) -> None:
+        """
+        Initialise the test suite
+        """
+    @property
+    def allowed_negative_eigen_value(self) -> float:
+        """
+        The largest allowed negative eigenvalue
+        """
+    @property
+    def bounded_correlations(self) -> BoundedCorrelations:
+        """
+        The correlations between -1 and 1 test
+        """
+    @property
+    def diagonal_correlations(self) -> DiagonalCorrelations:
+        """
+        The diagonal correlations are all 1 test
+        """
+    @property
+    def name(self) -> str:
+        """
+        The test name
+        """
+    @property
+    def positive_semi_definite(self) -> PositiveSemiDefinite:
+        """
+        The positive semi-definite test
+        """
+    @property
+    def positive_variances(self) -> PositiveVariances:
+        """
+        The positive variance test
+        """
+    @property
+    def status(self) -> njoy.psychic.TestStatus | None:
+        """
+        The test status
+        """
+    @status.setter
+    def status(self, arg1: njoy.psychic.TestStatus | None) -> None:
+        ...
+    @property
+    def tolerance(self) -> float:
+        """
+        The comparison tolerance
+        """

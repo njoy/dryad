@@ -44,7 +44,7 @@ namespace covariance {
 
     /* constructor */
 
-    PositiveVariances( double tolerance = constants::psychic::tolerance ) :
+    PositiveVariances() :
       Parent( "psychic.covariance.PositiveVariances" ) {}
 
     /* methods */

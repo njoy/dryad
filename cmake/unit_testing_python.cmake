@@ -122,6 +122,7 @@ add_python_test( psychic.covariance.PositiveVariances                  psychic/c
 add_python_test( psychic.covariance.PositiveSemiDefinite               psychic/covariance/Test_PositiveSemiDefinite.py )
 add_python_test( psychic.covariance.BoundedCorrelations                psychic/covariance/Test_BoundedCorrelations.py )
 add_python_test( psychic.covariance.DiagonalCorrelations               psychic/covariance/Test_DiagonalCorrelations.py )
+add_python_test( psychic.covariance.TestSuite                          psychic/covariance/Test_TestSuite.py )
 
 add_python_test( reconr.unionise_cross_sections                        reconr/Test_unionise_cross_sections.py )
 add_python_test( reconr.calculate_summation_cross_sections             reconr/Test_calculate_summation_cross_sections.py )
