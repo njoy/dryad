@@ -126,10 +126,7 @@ namespace covariance {
         if ( max > +1. ) {
 
           this->largestCorrelation( max );
-          if ( this->status() == TestStatus::Success || this->status() == TestStatus::Warning ) {
-
-            this->status( max > +1. + this->tolerance() ? TestStatus::Fail : TestStatus::Warning );
-          }
+          this->status( this->status() && max > +1. + this->tolerance() ? TestStatus::Fail : TestStatus::Warning );
         }
       }
       else {

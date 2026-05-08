@@ -116,10 +116,10 @@ namespace covariance {
         this->status( TestStatus::Success );
 
         auto min = *std::min_element( covariance.eigenvalues()->begin(), covariance.eigenvalues()->end() );
-        this->largestNegativeEigenValue( min );
 
         if ( min < 0. ) {
 
+          this->largestNegativeEigenValue( min );
           this->status( min < this->allowedNegativeEigenValue() ? TestStatus::Fail : TestStatus::Warning );
         }
       }
