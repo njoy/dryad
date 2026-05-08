@@ -83,7 +83,7 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     "  - Success : the covariance matrix is positive semi-definite\n"
     "  - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues\n"
     "  - Fail : the on-diagonal covariance matrix is not positive semi-definite\n"
-    "  - Skipped : the covariance matrix provided is not on-diagonal\n\n"
+    "  - Skipped : the test was skipped\n\n"
     "The largest negative eigenvalue is available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
