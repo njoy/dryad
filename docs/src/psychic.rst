@@ -15,3 +15,4 @@ The ``psychic`` module provides data verification and physics checking in ``njoy
 
    psychic/covariance/PositiveSemiDefinite
    psychic/covariance/BoundedCorrelations
+   psychic/covariance/DiagonalCorrelations
