@@ -27,12 +27,13 @@ namespace resonances {
    *      <Gamma_n>(E) = <Gamma_n^0>(E) * sqrt(E) * P_l(E)
    * 
    * Units: energies in eV, widths in eV. DoF is dimensionless.
+   *
    */
   class TabulatedAverageWidths : 
     protected scion::math::InterpolationTable< double, double > {
       std::optional< int > dof_;
       public:
-          
+
         /* type aliases*/
         using InterpolationTable::XType;
         using InterpolationTable::YType;
@@ -41,7 +42,7 @@ namespace resonances {
         #include "njoy/dryad/resonances/TabulatedAverageWidths/src/ctor.hpp"
 
         /* methods */
-          
+
         /**
          *  @brief Return the energy values
          */
@@ -66,18 +67,18 @@ namespace resonances {
         /**
          * @brief Return the lower energy limit
          */
-        const double lowerEnergyLimit() const {
+        double lowerEnergyLimit() const {
           return this->x().front();
         }
 
         /**
          * @brief Return the upper energy limit
          */
-        const double upperEnergyLimit() const {
+        double upperEnergyLimit() const {
           return this->x().back();
         }
 
-          
+
         using InterpolationTable::boundaries;
         using InterpolationTable::interpolants;
         using InterpolationTable::numberPoints;
@@ -96,51 +97,51 @@ namespace resonances {
           auto table = InterpolationTable::linearise( Tolerance( tolerance, constants::linearisation::threshold ) );
           return TabulatedAverageWidths( this->degreesOfFreedom(), std::move( table ) );
         }
-  
+
         /**
          *  @brief Inplace scalar addition
          *
          *  @param[in] right    the scalar
          */
         TabulatedAverageWidths& operator+=( double right ) {
-  
+
           InterpolationTable::operator+=( right );
           return *this;
         }
-  
+
         /**
          *  @brief Inplace scalar subtraction
          *
          *  @param[in] right    the scalar
          */
         TabulatedAverageWidths& operator-=( double right ) {
-  
+
           InterpolationTable::operator-=( right );
           return *this;
         }
-  
+
         /**
          *  @brief Inplace scalar multiplication
          *
          *  @param[in] right    the scalar
          */
         TabulatedAverageWidths& operator*=( double right ) {
-  
+
           InterpolationTable::operator*=( right );
           return *this;
         }
-  
+
         /**
          *  @brief Inplace scalar division
          *
          *  @param[in] right    the scalar
          */
         TabulatedAverageWidths& operator/=( double right ) {
-  
+
           InterpolationTable::operator/=( right );
           return *this;
         }
-  
+
         /**
          *  @brief TabulatedAverageWidths and scalar addition
          *
@@ -150,7 +151,7 @@ namespace resonances {
           return TabulatedAverageWidths( this->degreesOfFreedom(),
                                          InterpolationTable::operator+( right ) );
         }
-  
+
         /**
          *  @brief TabulatedAverageWidths and scalar subtraction
          *
@@ -160,7 +161,7 @@ namespace resonances {
           return TabulatedAverageWidths( this->degreesOfFreedom(),
                                          InterpolationTable::operator-( right ) );
         }
-  
+
         /**
          *  @brief TabulatedAverageWidths and scalar multiplication
          *
@@ -170,7 +171,7 @@ namespace resonances {
           return TabulatedAverageWidths( this->degreesOfFreedom(),
                                          InterpolationTable::operator*( right ) );
         }
-  
+
         /**
          *  @brief TabulatedAverageWidths and scalar division
          *
@@ -180,7 +181,7 @@ namespace resonances {
           return TabulatedAverageWidths( this->degreesOfFreedom(),
                                          InterpolationTable::operator/( right ) );
         }
-  
+
         /**
          *  @brief Unary minus
          */
@@ -188,67 +189,70 @@ namespace resonances {
           return TabulatedAverageWidths( this->degreesOfFreedom(),
                                          InterpolationTable::operator-() );
         }
-  
+
         /**
          *  @brief Inplace TabulatedAverageWidths addition
          *
          *  @param[in] right    the table
          */
         TabulatedAverageWidths& operator+=( const TabulatedAverageWidths& right ) {
-  
+
+          this->dof_ = combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() );
           InterpolationTable::operator+=( right );
           return *this;
         }
-  
+
         /**
          *  @brief Inplace TabulatedAverageWidths subtraction
          *
          *  @param[in] right    the table
          */
         TabulatedAverageWidths& operator-=( const TabulatedAverageWidths& right ) {
-  
+
+          this->dof_ = combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() );
           InterpolationTable::operator-=( right );
           return *this;
         }
-  
+
         /**
          *  @brief TabulatedAverageWidths and TabulatedAverageWidths addition
          *
          *  @param[in] right    the table
          */
         TabulatedAverageWidths operator+( const TabulatedAverageWidths& right ) const {
-  
-          return TabulatedAverageWidths( this->degreesOfFreedom(),
-                                          InterpolationTable::operator+( right ) );
+
+          return TabulatedAverageWidths( combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() ),
+                                         InterpolationTable::operator+( right ) );
         }
-  
+
         /**
          *  @brief TabulatedAverageWidths and TabulatedAverageWidths subtraction
          *
          *  @param[in] right    the table
          */
         TabulatedAverageWidths operator-( const TabulatedAverageWidths& right ) const {
-          return TabulatedAverageWidths( this->degreesOfFreedom(),
+          return TabulatedAverageWidths( combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() ),
                                           InterpolationTable::operator-( right ) );
         }
-  
+
         /**
          *  @brief Comparison operator: equal
          *
          *  @param[in] right   the object on the right hand side
          */
         bool operator==( const TabulatedAverageWidths& right ) const {
-  
-          return InterpolationTable::operator==( right );
+
+          return this->dof_ == right.dof_
+              && InterpolationTable::operator==( right );
         }
-  
+
         /**
          *  @brief Comparison operator: not equal
          *
          *  @param[in] right   the object on the right hand side
          */
         bool operator!=( const TabulatedAverageWidths& right ) const {
-  
+
           return ! this->operator==( right );
         }
       };
@@ -259,10 +263,10 @@ namespace resonances {
        *  @param[in] right   the table
        */
       inline TabulatedAverageWidths operator+( double left, const TabulatedAverageWidths& right ) {
-    
+
         return right + left;
       }
-    
+
       /**
        *  @brief Scalar and TabulatedAverageWidths subtraction
        *
@@ -270,12 +274,12 @@ namespace resonances {
        *  @param[in] right   the table
        */
       inline TabulatedAverageWidths operator-( double left, const TabulatedAverageWidths& right ) {
-    
+
         auto result = -right;
         result += left;
         return result;
       }
-    
+
       /**
        *  @brief Scalar and TabulatedAverageWidths multiplication
        *
@@ -283,7 +287,7 @@ namespace resonances {
        *  @param[in] right   the table
        */
       inline TabulatedAverageWidths operator*( double left, const TabulatedAverageWidths& right ) {
-    
+
         return right * left;
       }
 
