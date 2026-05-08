@@ -1,0 +1,92 @@
+#ifndef NJOY_PSYCHIC_COVARIANCES_POSITIVEVARIANCES
+#define NJOY_PSYCHIC_COVARIANCES_POSITIVEVARIANCES
+
+// system includes
+
+// other includes
+#include "scion/math/compare.hpp"
+#include "njoy/psychic/base/Test.hpp"
+#include "njoy/psychic/TestStatus.hpp"
+#include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
+#include "njoy/constants.hpp"
+
+namespace njoy {
+namespace psychic {
+namespace covariance {
+
+  /**
+   *  @class
+   *  @brief Test to verify if all variances are strictly positive
+   */
+  class PositiveVariances : protected base::Test< PositiveVariances > {
+
+    /* friend declarations */
+    friend class base::Test< PositiveVariances >;
+
+    /* type aliases */
+    using Parent = base::Test< PositiveVariances >;
+
+    /* fields */
+
+    // test tolerances
+
+    // test result information
+
+    /* auxiliary functions */
+
+    /**
+     *  @brief Reset the test result information
+     */
+    void reset() {}
+
+  public:
+
+    /* constructor */
+
+    PositiveVariances( double tolerance = constants::psychic::tolerance ) :
+      Parent( "psychic.covariance.PositiveVariances" ) {}
+
+    /* methods */
+
+    using Parent::name;
+    using Parent::status;
+
+    /**
+     *  @brief Verify if the provided covariance matrix has variances that are strictly positive
+     *
+     *  The test returns the following status values:
+     *    - Success : all variances are strictly positive
+     *    - Warning : all variances are positive
+     *    - Fail : soem of the variances seem to be negative
+     *    - Skipped : the test was skipped
+     *
+     *  @param[in] covariance   the covariance matrix instance to be tested
+     */
+    template < typename Covariance >
+    auto operator()( const Covariance& covariance )
+    -> std::enable_if_t< std::is_same_v< Covariance, dryad::covariance::CrossSectionCovarianceMatrix > ||
+                         std::is_same_v< Covariance, dryad::covariance::ProductMultiplicityCovarianceMatrix >,
+                         const std::optional< TestStatus >& > {
+
+      this->clear();
+      this->status( TestStatus::Success );
+
+      for ( double value : covariance.covariances().diagonal() ) {
+
+        if ( value <= 0. ) {
+
+          this->status( value < 0. ? TestStatus::Fail : TestStatus::Warning );
+          break;
+        }
+      }
+
+      return this->status();
+    }
+  };
+
+} // covariance namespace
+} // psychic namespace
+} // njoy namespace
+
+#endif

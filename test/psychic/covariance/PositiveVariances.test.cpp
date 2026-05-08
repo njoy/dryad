@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/psychic/covariance/BoundedCorrelations.hpp"
+#include "njoy/psychic/covariance/PositiveVariances.hpp"
 
 // other includes
 #include <iostream>
@@ -13,7 +13,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "BoundedCorrelations" ) {
+SCENARIO( "PositiveVariances" ) {
 
   GIVEN( "on-diagonal matrices covariance matrices" ) {
 
@@ -22,27 +22,26 @@ SCENARIO( "BoundedCorrelations" ) {
                                                             { 1e-5, 1., 1e+6, 2e+7 } );
 
     njoy::matrix::Matrix< double > success( 3, 3 );
-    success << 1., 1., 1.,
-               1., 1., 1.,
-               1., 1., 1.;
+    success << 1., 2., 3.,
+               2., 4., 6.,
+               3., 6., 9.;
 
     njoy::matrix::Matrix< double > warning( 3, 3 );
-    warning << 1., 1., 1.,
-               1., 1., 1.,
-               1., 1., 1.00000000005;
+    warning << 1., 2., 3.,
+               2., 4., 6.,
+               3., 6., 0.;
 
+    // not positive semi-definite
     njoy::matrix::Matrix< double > fail( 3, 3 );
-    fail << 1., 1., 1.,
-            1., 1., 1.,
-            1., 1., 1.5;
+    fail << 1., 2.,  3.,
+            2., 4.,  6.,
+            3., 6., -9.;
 
-    std::vector< double > deviations = { 1., 2., 3. };
+    njoy::psychic::covariance::PositiveVariances test;
 
-    njoy::psychic::covariance::BoundedCorrelations test;
+    WHEN( "a covariance matrix with strictly positive variances is used" ) {
 
-    WHEN( "a covariance matrix with all correlations between -1 and 1 is used" ) {
-
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, success );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, success );
 
       THEN( "the test returns a success" ) {
 
@@ -50,9 +49,9 @@ SCENARIO( "BoundedCorrelations" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix with all correlations between -1 and 1 (within tolerance) is used" ) {
+    WHEN( "a covariance matrix with positive variances is used" ) {
 
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, warning );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, warning );
 
       THEN( "the test returns a warning" ) {
 
@@ -60,9 +59,9 @@ SCENARIO( "BoundedCorrelations" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix with correlations outside -1 and 1 is used" ) {
+    WHEN( "a covariance matrix with negative variances is used" ) {
 
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, fail );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, fail );
 
       THEN( "the test returns a fail" ) {
 

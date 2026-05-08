@@ -40,7 +40,7 @@ SCENARIO( "DiagonalCorrelations" ) {
 
     njoy::psychic::covariance::DiagonalCorrelations test;
 
-    WHEN( "a covariance matrix that is positive semi-definite is used" ) {
+    WHEN( "a covariance matrix with all diagonal correlations equal to 1 is used" ) {
 
       njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, success );
 
@@ -50,7 +50,7 @@ SCENARIO( "DiagonalCorrelations" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix that is positive semi-definite with small negative eigenvalues is used" ) {
+    WHEN( "a covariance matrix with all diagonal correlations equal to 1 (within tolerance) is used" ) {
 
       njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, warning );
 
@@ -60,7 +60,7 @@ SCENARIO( "DiagonalCorrelations" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix that is not positive semi-definite is used" ) {
+    WHEN( "a covariance matrix with diagonal correlations that are larger than 1 is used" ) {
 
       njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, fail );
 
