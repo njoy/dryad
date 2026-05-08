@@ -96,9 +96,8 @@ namespace covariance {
      *    - Success : the on-diagonal covariance matrix is positive semi-definite
      *    - Warning : the on-diagonal covariance matrix is can be considered positive
      *                semi-definite by accepting small negative eigenvalues
-     *    - Fail : the on-diagonal covariance matrix is not positive semi-definite
-     *    - Skipped : the covariance matrix provided is not on-diagonal (ie its eigenvalues)
-     *                cannot be calculated
+     *    - Fail    : the on-diagonal covariance matrix is not positive semi-definite
+     *    - Skipped : the test was skipped
      *
      *  The largest negative eigenvalue is available for the Warning and Fail state.
      *

@@ -102,6 +102,14 @@ namespace covariance {
     /**
      *  @brief Verify if the provided covariance matrix has correlations between -1 and 1
      *
+     *  The test returns the following status values:
+     *    - Success : the correlations are between -1 and 1
+     *    - Warning : the correlations are between -1 and 1, taking into account a tolerance
+     *    - Fail : the correlations matrix are outside the -1 and 1 range
+     *    - Skipped : the test was skipped
+     *
+     *  The smallest and largest correlation values are available for the Warning and Fail state.
+     *
      *  @param[in] covariance   the covariance matrix instance to be tested
      */
     template < typename Covariance >
