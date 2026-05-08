@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
+#include "njoy/psychic/covariance/BoundedCorrelations.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,10 +12,10 @@ namespace python = pybind11;
 namespace psychic {
 namespace covariance {
 
-void wrapPositiveSemiDefinite( python::module& module ) {
+void wrapBoundedCorrelations( python::module& module ) {
 
   // type aliases
-  using Component = njoy::psychic::covariance::PositiveSemiDefinite;
+  using Component = njoy::psychic::covariance::BoundedCorrelations;
   using TestStatus = njoy::psychic::TestStatus;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
   using ProductMultiplicityCovarianceMatrix = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
@@ -26,19 +26,19 @@ void wrapPositiveSemiDefinite( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "PositiveSemiDefinite",
-    "Test to verify if a covariance matrix is positive semi-definite\n\n"
+    "BoundedCorrelations",
+    "Test to verify if all correlation values are between -1 and 1\n\n"
     "Parameters\n"
     "----------\n"
-    "    negative : float, default -1e-10\n"
-    "         the largest allowed negative eigenvalue"
+    "    tolerance : float, default 1e-10\n"
+    "         the comparison tolerance"
   );
   // wrap the component
   component
   .def(
 
     python::init< double >(),
-    python::arg( "negative" ) = njoy::constants::psychic::largest_allowed_negative_eigenvalue,
+    python::arg( "tolerance" ) = njoy::constants::psychic::tolerance,
     "Initialise the test"
   )
   .def_property_readonly(
@@ -49,9 +49,9 @@ void wrapPositiveSemiDefinite( python::module& module ) {
   )
   .def_property_readonly(
 
-    "allowed_negative_eigen_value",
-    &Component::allowedNegativeEigenValue,
-    "The largest allowed negative eigenvalue"
+    "tolerance",
+    &Component::tolerance,
+    "The comparison tolerance"
   )
   .def_property(
 
@@ -63,10 +63,17 @@ void wrapPositiveSemiDefinite( python::module& module ) {
   )
   .def_property(
 
-    "largest_negative_eigen_value",
-    python::overload_cast<>( &Component::largestNegativeEigenValue, python::const_ ),
-    python::overload_cast< std::optional< double > >( &Component::largestNegativeEigenValue ),
-    "The largest negative eigenvalue that was found"
+    "smallest_correlation",
+    python::overload_cast<>( &Component::smallestCorrelation, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::smallestCorrelation ),
+    "The smallest correlation value that was found"
+  )
+  .def_property(
+
+    "largest_correlation",
+    python::overload_cast<>( &Component::largestCorrelation, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::largestCorrelation ),
+    "The largest correlation value that was found"
   )
   .def(
 
@@ -74,17 +81,13 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     [] ( Component& self, const CrossSectionCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Verify if the provided covariance matrix is positive semi-definite\n\n"
-    "A covariance matrix is positive semi-definite if it is a square symmetric matrix\n"
-    "that has eigenvalues that are larger than or equal to zero. Construction of\n"
-    "on-diagonal covariance matrices already requires square and symmetric matrices so\n"
-    "this particular aspect is not tested here.\n\n"
+    "Verify if the provided covariance matrix has correlations between -1 and 1\n\n"
     "The test returns the following status values:\n"
-    "  - Success : the covariance matrix is positive semi-definite\n"
-    "  - Warning : the covariance matrix is can be considered positive semi-definite by accepting small negative eigenvalues\n"
-    "  - Fail : the on-diagonal covariance matrix is not positive semi-definite\n"
+    "  - Success : the correlations are between -1 and 1\n"
+    "  - Warning : the correlations are between -1 and 1, taking into account a tolerance\n"
+    "  - Fail : the correlations matrix are outside the -1 and 1 range\n"
     "  - Skipped : the covariance matrix provided is not on-diagonal\n\n"
-    "The largest negative eigenvalue is available for the Warning and Fail state.\n\n"
+    "The smallest and largest correlation values are available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
@@ -96,7 +99,7 @@ void wrapPositiveSemiDefinite( python::module& module ) {
     [] ( Component& self, const ProductMultiplicityCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Verify if the provided covariance matrix is positive semi-definite"
+    "Verify if the provided covariance matrix has correlations between -1 and 1"
   );
 }
 
