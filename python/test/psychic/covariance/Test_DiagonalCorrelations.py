@@ -19,7 +19,6 @@ class Test_DiagonalCorrelations( unittest.TestCase ) :
 
         test = DiagonalCorrelations()
 
-        # positive semi-definite matrix
         matrix = CrossSectionCovarianceMatrix( CrossSectionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
                                                                      [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                correlations = numpy.array( [ [ 1., 1., 1. ],
@@ -29,7 +28,6 @@ class Test_DiagonalCorrelations( unittest.TestCase ) :
 
         self.assertEqual( TestStatus.Success, test( matrix ) )
 
-        # considered positive semi-definite matrix but with very small negative eigenvalue
         matrix = CrossSectionCovarianceMatrix( CrossSectionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
                                                                      [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                correlations = numpy.array( [ [ 1., 1., 1. ],
@@ -39,7 +37,6 @@ class Test_DiagonalCorrelations( unittest.TestCase ) :
 
         self.assertEqual( TestStatus.Warning, test( matrix ) )
 
-        # not a positive semi-definite matrix
         matrix = CrossSectionCovarianceMatrix( CrossSectionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
                                                                      [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                correlations = numpy.array( [ [ 1., 1., 1. ],
