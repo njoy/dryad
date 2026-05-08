@@ -363,6 +363,7 @@ add_cpp_test( psychic.covariance.PositiveSemiDefinite                           
 add_cpp_test( psychic.covariance.PositiveVariances                                      psychic/covariance/PositiveVariances.test.cpp )
 add_cpp_test( psychic.covariance.BoundedCorrelations                                    psychic/covariance/BoundedCorrelations.test.cpp )
 add_cpp_test( psychic.covariance.DiagonalCorrelations                                   psychic/covariance/DiagonalCorrelations.test.cpp )
+add_cpp_test( psychic.covariance.TestSuite                                              psychic/covariance/TestSuite.test.cpp )
 
 # reconr tests
 

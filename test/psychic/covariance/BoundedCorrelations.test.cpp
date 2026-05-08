@@ -17,7 +17,7 @@ SCENARIO( "BoundedCorrelations" ) {
 
   GIVEN( "on-diagonal matrices covariance matrices" ) {
 
-    // meatdata for the covariance matrix
+    // metadata for the covariance matrix
     njoy::dryad::covariance::CrossSectionMetadata metadata( { njoy::dryad::id::ReactionID( "n,U235->n,U235" ) },
                                                             { 1e-5, 1., 1e+6, 2e+7 } );
 
