@@ -2118,5 +2118,146 @@ SCENARIO( "TabulatedAverageWidths" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+
+  GIVEN( "TabulatedAverageWidths with degrees of freedom" ) {
+    WHEN("constructed with a explicit degree of freedom value") {
+      TabulatedAverageWidths chunk( 5, 
+                                    { 1., 2., 3., 4. }, 
+                                    { 4., 3., 2., 1. });
+
+      THEN("the degrees of freedom can be returned") {
+        CHECK( 5 == chunk.degreesOfFreedom() );
+      } // THEN
+  } // WHEN
+
+    WHEN("constructed with the default degree of freedom value") {
+      TabulatedAverageWidths chunk( { 1., 2., 3., 4. }, 
+                                    { 4., 3., 2., 1. } );
+
+      THEN("the degrees of freedom can be returned") {
+        CHECK( false == chunk.degreesOfFreedom().has_value() );
+      } // THEN
+    } //WHEN
+
+    WHEN("comparing two TabulatedAverageWidths with different degrees of freedom") {
+      TabulatedAverageWidths chunk1( 5, 
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+      TabulatedAverageWidths chunk2( 2,
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+
+      THEN("the objects are not equal") {
+        CHECK( false == ( chunk1 == chunk2 ) );
+        CHECK( true == ( chunk1 != chunk2 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN("comparing two TabulatedAverageWidths with the same degrees of freedom") {
+      TabulatedAverageWidths chunk1( 5, 
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+      TabulatedAverageWidths chunk2( 5,
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+
+      THEN("the objects are equal") {
+        CHECK( true == ( chunk1 == chunk2 ) );
+        CHECK( false == ( chunk1 != chunk2 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN("comparing two TabulatedAverageWidths where one has a degree of freedom value and the other does not") {
+      TabulatedAverageWidths chunk1( 5, 
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+      TabulatedAverageWidths chunk2( { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+
+      THEN("the objects are not equal") {
+        CHECK( false == ( chunk1 == chunk2 ) );
+        CHECK( true == ( chunk1 != chunk2 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN("comparing two TabulatedAverageWidths where both have no degree of freedom value") {
+      TabulatedAverageWidths chunk1( { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+      TabulatedAverageWidths chunk2( { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+
+      THEN("the objects are equal") {
+        CHECK( true == ( chunk1 == chunk2 ) );
+        CHECK( false == ( chunk1 != chunk2 ) );
+      } // THEN
+    } // WHEN
+
+    WHEN("Performing arithmetic operations on TabulatedAverageWidths with different degrees of freedom") {
+      TabulatedAverageWidths chunk1( 5, 
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+      TabulatedAverageWidths chunk2( 2,
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+
+      TabulatedAverageWidths chunk3;
+
+      THEN("arithmetic operations cannot be performed") {
+        CHECK_THROWS( chunk1 + chunk2);
+        CHECK_THROWS( chunk1 - chunk2);
+        CHECK_THROWS( chunk2 + chunk1);
+        CHECK_THROWS( chunk2 - chunk1);
+        CHECK_THROWS( chunk1 += chunk2 );
+        CHECK_THROWS( chunk1 -= chunk2 );
+      } // THEN
+    } // WHEN
+
+     WHEN("Performing arithmetic operations on TabulatedAverageWidths where one has a degree of freedom value and the other does not") {
+      TabulatedAverageWidths chunk1( 5, 
+                                     { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+      TabulatedAverageWidths chunk2( { 1., 2., 3., 4. }, 
+                                     { 4., 3., 2., 1. } );
+
+      TabulatedAverageWidths chunk3;
+
+      THEN("arithmetic operations cannot be performed") {
+        CHECK_NOTHROW( chunk1 + chunk2);
+        CHECK_NOTHROW( chunk1 - chunk2);
+        CHECK_NOTHROW( chunk2 + chunk1);
+        CHECK_NOTHROW( chunk2 - chunk1);
+        CHECK_NOTHROW( chunk1 += chunk2 );
+        CHECK_NOTHROW( chunk1 -= chunk2 );
+        {
+          auto result1 = chunk1 + chunk2;
+          CHECK( result1.degreesOfFreedom().has_value() );
+          CHECK( 5 == result1.degreesOfFreedom() );
+
+          auto result2 = chunk2 + chunk1;
+          CHECK( result2.degreesOfFreedom().has_value() );
+          CHECK( 5 == result2.degreesOfFreedom() );
+
+          auto result3 = chunk1 - chunk2;
+          CHECK( result3.degreesOfFreedom().has_value() );
+          CHECK( 5 == result3.degreesOfFreedom() );
+
+          auto result4 = chunk2 - chunk1;
+          CHECK( result4.degreesOfFreedom().has_value() );
+          CHECK( 5 == result4.degreesOfFreedom() );
+
+          auto mut = chunk1;
+          mut += chunk2;
+          CHECK( mut.degreesOfFreedom().has_value() );
+          CHECK( 5 == mut.degreesOfFreedom() );
+
+          mut = chunk1;
+          mut -= chunk2;
+          CHECK( mut.degreesOfFreedom().has_value() );
+          CHECK( 5 == mut.degreesOfFreedom() );
+        }
+      } // THEN
+    }
+
+}
 } // SCENARIO
 
