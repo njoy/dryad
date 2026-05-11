@@ -5,8 +5,8 @@
  *  of the full matrix. When this function is called on an off diagonal matrix,
  *  the function has no effect.
  *
- *  When the absolute value of an eigenvalue is within 10 times epsilon, the eigenvalue
- *  will get set to zero exactly.
+ *  When the absolute value of an eigenvalue is equal to zero within 10 times epsilon,
+ *  the eigenvalue will get set to zero exactly.
  */
 void calculateEigenvalues() {
 
