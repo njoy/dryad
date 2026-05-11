@@ -65,6 +65,7 @@ add_python_test( dryad.resonances.FrohnerBackground                    dryad/res
 add_python_test( dryad.resonances.SammyBackground                      dryad/resonances/Test_SammyBackground.py )
 add_python_test( dryad.resonances.TabulatedBackground                  dryad/resonances/Test_TabulatedBackground.py )
 add_python_test( dryad.resonances.TabulatedLevelSpacing                dryad/resonances/Test_TabulatedLevelSpacing.py )
+add_python_test( dryad.resonances.TabulatedAverageWidths               dryad/resonances/Test_TabulatedAverageWidths.py )
 
 add_python_test( dryad.resonances.Channel                              dryad/resonances/Test_Channel.py )
 add_python_test( dryad.resonances.ResonanceTable                       dryad/resonances/Test_ResonanceTable.py )
