@@ -103,6 +103,9 @@ namespace covariance {
     /**
      *  @brief Verify if the provided covariance matrix has correlations between -1 and 1
      *
+     *  This test can be run for on-diagonal and off-diagonal covariance matrices if the
+     *  correlations are available.
+     *
      *  The test returns the following status values:
      *    - Success : the correlations are between -1 and 1
      *    - Warning : the correlations are between -1 and 1, taking into account a tolerance

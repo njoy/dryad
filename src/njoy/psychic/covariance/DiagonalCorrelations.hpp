@@ -66,6 +66,9 @@ namespace covariance {
     /**
      *  @brief Verify if the provided covariance matrix has diagonal correlations equal to 1
      *
+     *  This test can be run only for on-diagonal covariance matrices if the correlations are
+     *  available.
+     *
      *  The test returns the following status values:
      *    - Success : all diagonal correlations are equal to 1
      *    - Warning : all diagonal correlations are equal to 1, taking into account a tolerance
@@ -81,7 +84,7 @@ namespace covariance {
                          const std::optional< TestStatus >& > {
 
       this->clear();
-      if ( covariance.correlations().has_value() ) {
+      if ( covariance.isOnDiagonal() && covariance.correlations().has_value() ) {
 
         this->status( TestStatus::Success );
 

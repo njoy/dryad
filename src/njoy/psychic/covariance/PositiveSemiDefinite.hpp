@@ -88,6 +88,9 @@ namespace covariance {
     /**
      *  @brief Verify if the provided covariance matrix is positive semi-definite
      *
+     *  This test can be run only for on-diagonal covariance matrices if the eigenvalues are
+     *  available.
+     *
      *  A covariance matrix is positive semi-definite if it is a square symmetric matrix
      *  that has eigenvalues that are larger than or equal to zero. Construction of
      *  on-diagonal covariance matrices already requires square and symmetric matrices so
@@ -111,7 +114,7 @@ namespace covariance {
                          const std::optional< TestStatus >& > {
 
       this->clear();
-      if ( covariance.eigenvalues().has_value() ) {
+      if ( covariance.isOnDiagonal() && covariance.eigenvalues().has_value() ) {
 
         this->status( TestStatus::Success );
 

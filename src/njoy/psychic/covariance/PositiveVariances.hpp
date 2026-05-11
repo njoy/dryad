@@ -56,6 +56,9 @@ namespace covariance {
     /**
      *  @brief Verify if the provided covariance matrix has variances that are strictly positive
      *
+     *  This test can be run only for on-diagonal covariance matrices if the eigenvalues are
+     *  available.
+     *
      *  The test returns the following status values:
      *    - Success : all variances are strictly positive
      *    - Warning : all variances are positive
@@ -73,13 +76,20 @@ namespace covariance {
       this->clear();
       this->status( TestStatus::Success );
 
-      for ( double value : covariance.covariances().diagonal() ) {
+      if ( covariance.isOnDiagonal() ) {
 
-        if ( value <= 0. ) {
+        for ( double value : covariance.covariances().diagonal() ) {
 
-          this->status( value < 0. ? TestStatus::Fail : TestStatus::Warning );
-          break;
+          if ( value <= 0. ) {
+
+            this->status( value < 0. ? TestStatus::Fail : TestStatus::Warning );
+            break;
+          }
         }
+      }
+      else {
+
+        this->status( TestStatus::Skipped );
       }
 
       return this->status();
