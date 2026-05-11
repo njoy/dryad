@@ -21,6 +21,12 @@ namespace rmatrix {
 
   /**
    *  @brief Create the spin groups
+   *
+   *  @param[in] formalism            the r-matrix formalism
+   *  @param[in] boundary_condition   the boundary condition option read from the RMatrix node
+   *  @param[in] kinematics           the kinematics type
+   *  @param[in] reactions            the resonance reaction information read from the resonanceReactions node
+   *  @param[in] spin_groups          the GNDS spinGroups node
    */
   inline auto createSpinGroups(
                   const dryad::resonances::Formalism& formalism,

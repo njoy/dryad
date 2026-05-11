@@ -122,7 +122,7 @@ namespace lrf3 {
 
           energies.emplace_back( endfReichMooreLValue.resonanceEnergies()[i] );
           elastic_widths.emplace_back( reduced_width( endfReichMooreLValue.neutronWidths()[i],
-                                                      elastic.penetrability( energies.back() ) ) );
+                                                      elastic.penetrability( std::abs( energies.back() ) ) ) );
           capture_widths.emplace_back( reduced_width( endfReichMooreLValue.gammaWidths()[i], 1. ) );
           fission1_widths.emplace_back( reduced_width( endfReichMooreLValue.firstFissionWidths()[i], 1. ) );
           fission2_widths.emplace_back( reduced_width( endfReichMooreLValue.secondFissionWidths()[i], 1. ) );
