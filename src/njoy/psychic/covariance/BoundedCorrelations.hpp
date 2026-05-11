@@ -40,7 +40,11 @@ namespace covariance {
     /**
      *  @brief Reset the test result information
      */
-    void reset() {}
+    void reset() {
+
+      this->smallestCorrelation( std::nullopt );
+      this->largestCorrelation( std::nullopt );
+    }
 
   public:
 
