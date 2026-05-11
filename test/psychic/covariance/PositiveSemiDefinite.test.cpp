@@ -7,8 +7,6 @@ using Catch::Matchers::WithinRel;
 #include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;

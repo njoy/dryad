@@ -7,8 +7,6 @@ using Catch::Matchers::WithinRel;
 #include "njoy/psychic/TestStatus.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
 
 // convenience typedefs
 using namespace njoy::psychic;
