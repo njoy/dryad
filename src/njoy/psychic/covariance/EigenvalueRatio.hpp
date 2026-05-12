@@ -66,7 +66,7 @@ namespace covariance {
     /**
      *  @brief Return the smallest acceptable eigenvalue ratio
      */
-    double smallestAcceptableRatio() const {
+    double smallestAcceptableEigenvalueRatio() const {
 
       return this->acceptable_ratio_;
     }
@@ -162,7 +162,7 @@ namespace covariance {
           this->eigenvalueRatio( this->smallestPositiveEigenvalue().value()
                                  / this->largestPositiveEigenvalue().value() );
 
-          if ( this->eigenvalueRatio().value() < this->smallestAcceptableRatio() ) {
+          if ( this->eigenvalueRatio().value() < this->smallestAcceptableEigenvalueRatio() ) {
 
             this->status( TestStatus::Fail );
           }
