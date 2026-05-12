@@ -16,13 +16,17 @@ namespace gnds {
   /**
    *  @brief Convert a mass value from GNDS into amu
    */
-  inline void convertMass( double& xs, const std::string& unit ) {
+  inline void convertMass( double& mass, const std::string& unit ) {
 
     if ( unit != "amu" ) {
 
       if ( unit == "kg" ) {
 
-        xs /= constants::amu;
+        mass /= constants::amu;
+      }
+      else if ( unit == "nmu" ) {
+
+        mass *= constants::neutron_mass;
       }
       else {
 

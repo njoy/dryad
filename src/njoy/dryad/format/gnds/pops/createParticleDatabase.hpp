@@ -30,8 +30,6 @@ namespace pops {
     // check that this is a valid coherentPhotonScattering node
     throwExceptionOnWrongNode( pops, "PoPs" );
 
-    //! @todo how about [all]
-
     std::vector< Particle > particles;
 
     // loop over bosons
@@ -87,10 +85,7 @@ namespace pops {
           element; element = element.next_sibling( "chemicalElement" ) ) {
 
       // if the element has a mass node: make it into a Particle
-      if ( element.child( "mass" ) ) {
-
-        particles.emplace_back( createParticle( element, style ) );
-      }
+      particles.emplace_back( createParticle( element, style ) );
 
       // loop over the isotopes
       auto isotopes = element.child( "isotopes" );
@@ -109,6 +104,84 @@ namespace pops {
           particles.emplace_back( createParticle( nuclide, style ) );
           fill_missing_data( particles[index], particles.back() );
         }
+      }
+    }
+
+    return ParticleDatabase( std::move( particles ) );
+  }
+
+  /**
+   *  @brief Create a ParticleDatabase from a GNDS pops xml node
+   *         and extract/process the requested particles
+   *
+   *  @param[in] pops        the GNDS pops xml node
+   *  @param[in] particles   the particles to include
+   *  @param[in] style       the gnds style to process (default is eval)
+   */
+  inline ParticleDatabase
+  createParticleDatabase( const pugi::xml_node& pops,
+                          const std::vector< id::ParticleID >& identifiers,
+                          const std::string& style = "eval" ) {
+
+    std::vector< Particle > particles;
+    auto database = createParticleDatabase( pops, style );
+
+    for ( const auto& id : identifiers ) {
+
+      if ( database.hasParticle( id ) ) {
+
+        particles.emplace_back( database.particle( id ) );
+      }
+      else if ( ( id.e() == id::LevelID::continuum || id.e() == id::LevelID::all ) &&
+                  database.hasParticle( id.groundState() ) ) {
+
+        particles.emplace_back( database.particle( id.groundState() ) );
+        particles.back().identifier( id );
+      }
+      else if ( ( id == id::ParticleID::proton() && database.hasParticle( id::ParticleID( "H1" ) ) ) ||
+                ( id == id::ParticleID::deuteron() && database.hasParticle( id::ParticleID( "H2" ) ) )  ||
+                ( id == id::ParticleID::triton() && database.hasParticle( id::ParticleID( "H3" ) ) )  ||
+                ( id == id::ParticleID::helion() && database.hasParticle( id::ParticleID( "He3" ) ) )  ||
+                ( id == id::ParticleID::alpha() && database.hasParticle( id::ParticleID( "He4" ) ) )  ) {
+
+        id::ParticleID look_for;
+        if ( id == id::ParticleID::proton() ) {
+
+          look_for = id::ParticleID( "H1" );
+        }
+        else if ( id == id::ParticleID::deuteron() ) {
+
+          look_for = id::ParticleID( "H2" );
+        }
+        else if ( id == id::ParticleID::triton() ) {
+
+          look_for = id::ParticleID( "H3" );
+        }
+        else if ( id == id::ParticleID::helion() ) {
+
+          look_for = id::ParticleID( "He3" );
+        }
+        else if ( id == id::ParticleID::alpha() ) {
+
+          look_for = id::ParticleID( "He4" );
+        }
+
+        particles.emplace_back(  database.particle( look_for ) );
+        particles.back().identifier( id );
+        particles.back().mass( particles.back().nuclearMass() );
+        particles.back().massUncertainty( particles.back().nuclearMassUncertainty() );
+        particles.back().nuclearMass( std::nullopt );
+        particles.back().nuclearMassUncertainty( std::nullopt );
+      }
+      else if ( id.vacancies().has_value() && database.hasParticle( id::ParticleID( id.z(), 0, 0 ) ) ) {
+
+        particles.emplace_back( database.particle( id::ParticleID( id.z(), 0, 0 ) ) );
+        particles.back().identifier( id );
+      }
+      else {
+
+        Log::warning( "Did not find data in the PoPs GNDS node or could not derive data for particle \'{}\'",
+                      id.symbol() );
       }
     }
 

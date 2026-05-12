@@ -39,11 +39,6 @@ namespace gnds {
     // get the number of rows and columns
     auto columns = table.attribute( "columns" ).as_int();
     auto rows = table.attribute( "rows" ).as_int();
-    if ( columns <= 0 || rows <= 0 ) {
-
-      Log::error( "The number of rows and/or columns in the table is negative or zero" );
-      throw std::exception();
-    }
 
     // get the storage order
     auto order = table.attribute( "storageOrder" );

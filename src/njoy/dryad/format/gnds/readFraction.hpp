@@ -7,6 +7,7 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/dryad/format/gnds/readFractionFromString.hpp"
 #include "tools/Log.hpp"
 #include "tools/split.hpp"
 
@@ -31,21 +32,7 @@ namespace gnds {
     auto value = node.attribute( "value" );
     if ( value ) {
 
-      auto pieces = tools::split( value.as_string(), '/' );
-      if ( pieces.size() > 0 && pieces.size() < 3 ) {
-
-        data.first = std::stod( pieces[0].c_str() );
-        if ( pieces.size() == 2 ) {
-
-          data.first = std::stod( pieces[0].c_str() ) / std::stod( pieces[1].c_str() );
-        }
-      }
-      else {
-
-        Log::error( "The value attribute does not appear to be a proper fraction: \'{}\'",
-                    value.as_string() );
-        throw std::exception();
-      }
+      data.first = readFractionFromString( value.as_string() );
     }
     else {
 

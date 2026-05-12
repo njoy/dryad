@@ -24,6 +24,9 @@ SCENARIO( "convertMass" ) {
 
         mass = njoy::constants::amu * 1000.; format::gnds::convertMass( mass, "kg" );
         CHECK_THAT( 1000, WithinRel( mass ) );
+
+        mass = 1000.; format::gnds::convertMass( mass, "nmu" );
+        CHECK_THAT( 1000 * njoy::constants::neutron_mass, WithinRel( mass ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {

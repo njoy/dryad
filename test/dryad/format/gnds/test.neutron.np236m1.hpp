@@ -1450,13 +1450,13 @@ namespace np236m1 {
 
   void verifyParticleData( const ParticleDatabase& particles ) {
 
-    CHECK( 13 == particles.numberParticles() );
+    CHECK( 15 == particles.numberParticles() );
 
-    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "Np233" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "Np234" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "Np235" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np233[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np234[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np235[all]" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Np236" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Np236_e1" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Np236_e2" ) ) );
@@ -1464,7 +1464,9 @@ namespace np236m1 {
     CHECK( true == particles.hasParticle( id::ParticleID( "Np236_e4" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Np236_e5" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Np236_e6" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "Np237" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np236[continuum]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np236[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np237[all]" ) ) );
   }
 
   void verifyNp236m1( const ProjectileTarget& Np236m1, bool /* normalise */ ) {

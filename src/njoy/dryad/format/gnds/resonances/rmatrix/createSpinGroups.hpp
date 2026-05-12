@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATESPINGROUP
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATESPINGROUP
+#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATESPINGROUPS
+#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATESPINGROUPS
 
 // system includes
 #include <algorithm>
@@ -7,52 +7,48 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/dryad/resonances/Formalism.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createChannelData.hpp"
-#include "ENDFtk/section/2/151.hpp"
+#include "njoy/dryad/format/gnds/resonances/rmatrix/createBoundaryCondition.hpp"
+#include "njoy/dryad/format/gnds/resonances/rmatrix/createChannelData.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace format {
-namespace endf {
+namespace gnds {
 namespace resonances {
-namespace lrf7 {
+namespace rmatrix {
 
   /**
-   *  @brief Create the spin groups for LRF7 resonance parameters
-   *
-   *  @param[in] projectile   the projectile identifier
-   *  @param[in] target       the target identifier
-   *  @param[in] formalism    the formalism to be applied
-   *  @param[in] boundary     the boundary condition to be applied
-   *  @param[in] kinematics   the kinematics type to be applied
-   *  @param[in] endf         the parsed ENDF LRF7 data
+   *  @brief Create the spin groups
    */
-  inline auto createSpinGroups( const id::ParticleID& projectile,
-                                const id::ParticleID& target,
-                                const dryad::resonances::Formalism& formalism,
-                                const dryad::resonances::BoundaryCondition& boundary,
-                                const dryad::resonances::Kinematics& kinematics,
-                                const ENDFtk::section::Type< 2, 151 >::RMatrixLimited& endf ) {
+  inline auto createSpinGroups(
+                  const dryad::resonances::Formalism& formalism,
+                  const dryad::format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
+                  const dryad::resonances::Kinematics& kinematics,
+                  const dryad::format::gnds::resonances::rmatrix::ResonanceReactions& reactions,
+                  const pugi::xml_node& spin_groups ) {
+
+    // check that this is a valid spin groups node
+    throwExceptionOnWrongNode( spin_groups, "spinGroups" );
 
     std::vector< dryad::resonances::SpinGroup > groups;
 
-    // check the type of resonances
-    bool reduced_amplitudes = endf.reducedWidths();
+    // the boundary condition
+    dryad::resonances::BoundaryCondition boundary = dryad::resonances::BoundaryCondition::ShiftFactor;
+    if ( boundary_condition == dryad::format::gnds::resonances::rmatrix::BoundaryCondition::Constant ||
+         boundary_condition == dryad::format::gnds::resonances::rmatrix::BoundaryCondition::NegativeOrbitalMomentum ) {
 
-    // determine the boundary condition
-    auto boundary_condition = lrf7::createBoundaryCondition( endf.particlePairs() );
+      boundary = dryad::resonances::BoundaryCondition::Constant;
+    }
 
     // go over each spin group and collect all channel data - keep it sorted
     std::vector< dryad::resonances::SpinGroup::ChannelData > channel_data;
-    for ( const auto& group : endf.spinGroups() ) {
+    for ( pugi::xml_node group = spin_groups.child( "spinGroup" );
+          group; group = group.next_sibling( "spinGroup" ) ) {
 
       // get the channel data in this spin group
-      auto data = lrf7::createChannelData( projectile, target, boundary_condition,
-                                           kinematics, reduced_amplitudes,
-                                           endf.particlePairs(), group );
+      auto data = createChannelData( boundary_condition, kinematics, reactions, group );
 
       // add each to the final channel data, keep it sorted and consolidate duplicate channels
       for ( auto&& channel : data ) {
@@ -95,9 +91,9 @@ namespace lrf7 {
     return groups;
   }
 
-} // lrf7 namespace
+} // rmatrix namespace
 } // resonances namespace
-} // endf namespace
+} // gnds namespace
 } // format namespace
 } // dryad namespace
 } // njoy namespace

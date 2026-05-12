@@ -1879,17 +1879,17 @@ namespace li7 {
 
   void verifyParticleData( const ParticleDatabase& particles ) {
 
-    CHECK( 43 == particles.numberParticles() );
+    CHECK( 44 == particles.numberParticles() );
 
-    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "p" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "H2" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "H3" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "He4" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "He6" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "Li6" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "d" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "t" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "a" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H1[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H2[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "He6[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li6[all]" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e1" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e2" ) ) );
@@ -1923,7 +1923,8 @@ namespace li7 {
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e30" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e31" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e32" ) ) );
-    CHECK( true == particles.hasParticle( id::ParticleID( "Li8" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li8[all]" ) ) );
   }
 
   void verifyLi7( const ProjectileTarget& Li7, bool /* normalise */ ) {

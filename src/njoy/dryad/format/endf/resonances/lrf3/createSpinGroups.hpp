@@ -10,7 +10,6 @@
 #include "njoy/constants.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
 #include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/moveCaptureToFront.hpp"
 #include "njoy/dryad/format/endf/resonances/createChannelRadii.hpp"
 #include "njoy/dryad/format/endf/resonances/lrf3/createChannelData.hpp"
 #include "ENDFtk/section/2/151.hpp"

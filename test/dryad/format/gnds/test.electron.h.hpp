@@ -1066,10 +1066,12 @@ namespace endf81 {
 
   void verifyParticleData( const ParticleDatabase& particles ) {
 
-    CHECK( 2 == particles.numberParticles() );
+    CHECK( 4 == particles.numberParticles() );
 
-    CHECK( true == particles.hasParticle( id::ParticleID( "photon" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "e-" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H{1s1/2}" ) ) );
   }
 
   void verifyH0( const ProjectileTarget& H0, bool normalise ) {
