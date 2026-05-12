@@ -44,6 +44,7 @@ namespace base {
 
     /* fields - eigenvalues */
     std::optional< std::vector< double > > eigenvalues_;
+    std::optional< std::vector< matrix::Vector< double > > > eigenvectors_;
 
     /* auxiliary function */
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
@@ -139,6 +140,14 @@ namespace base {
     const std::optional< std::vector< double > >& eigenvalues() const {
 
       return this->eigenvalues_;
+    }
+
+    /**
+     *  @brief Return the eigenvectors
+     */
+    const std::optional< std::vector< matrix::Vector< double > > >& eigenvectors() const {
+
+      return this->eigenvectors_;
     }
 
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"

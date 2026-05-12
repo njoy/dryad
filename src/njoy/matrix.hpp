@@ -11,6 +11,7 @@ namespace njoy {
 namespace matrix {
 
   /* type aliases */
+  template < typename T > using Vector = Eigen::Vector< T, Eigen::Dynamic >;
   template < typename T > using Matrix = Eigen::Matrix< T, Eigen::Dynamic, Eigen::Dynamic >;
   template < typename T > using DiagonalMatrix = Eigen::DiagonalMatrix< T, Eigen::Dynamic >;
 

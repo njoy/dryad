@@ -270,6 +270,11 @@ class CrossSectionCovarianceMatrix:
         The eigenvalues
         """
     @property
+    def eigenvectors(self) -> list[numpy.ndarray[numpy.float64[m, 1]]] | None:
+        """
+        The eigenvectors
+        """
+    @property
     def has_variance_scaling(self) -> bool:
         """
         Flag indicating whether or not the covariance block has variance scaling information
@@ -535,6 +540,11 @@ class ProductMultiplicityCovarianceMatrix:
     def eigenvalues(self) -> list[float] | None:
         """
         The eigenvalues
+        """
+    @property
+    def eigenvectors(self) -> list[numpy.ndarray[numpy.float64[m, 1]]] | None:
+        """
+        The eigenvectors
         """
     @property
     def is_absolute_matrix(self) -> bool:
