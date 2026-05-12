@@ -16,7 +16,7 @@ Read-only Attributes
     :toctree: generated/
 
     ~EigenvalueRatio.name
-    ~EigenvalueRatio.tolerance
+    ~EigenvalueRatio.smallest_acceptable_eigenvalue_ratio
 
 Modifiable Attributes
 ~~~~~~~~~~~~~~~~~~~~~
