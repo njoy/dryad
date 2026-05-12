@@ -16,7 +16,9 @@ void calculateEigenvalues() {
     Eigen::SelfAdjointEigenSolver< matrix::Matrix< double > > solver( this->covariances() );
 
     std::vector< double > eigenvalues;
+    std::vector< matrix::Vector< double > > eigenvectors;
     eigenvalues.reserve( this->rowMetadata().keys().size() );
+    eigenvectors.reserve( this->rowMetadata().keys().size() );
 
     for ( const auto& value : solver.eigenvalues().reshaped() ) {
 
@@ -30,6 +32,6 @@ void calculateEigenvalues() {
       }
     }
 
-    this->eigenvalues_ = eigenvalues;
+    this->eigenvalues_ = std::move( eigenvalues );
   }
 }
