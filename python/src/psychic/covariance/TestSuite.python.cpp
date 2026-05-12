@@ -39,9 +39,10 @@ void wrapTestSuite( python::module& module ) {
   component
   .def(
 
-    python::init< double, double >(),
+    python::init< double, double, double >(),
     python::arg( "tolerance" ) = njoy::constants::psychic::tolerance,
     python::arg( "negative" ) = njoy::constants::psychic::largest_allowed_negative_eigenvalue,
+    python::arg( "ratio" ) = njoy::constants::psychic::smallest_eigenvalue_ratio,
     "Initialise the test suite"
   )
   .def_property_readonly(
@@ -61,6 +62,12 @@ void wrapTestSuite( python::module& module ) {
     "positive_semi_definite",
     python::overload_cast<>( &Component::positiveSemiDefinite, python::const_ ),
     "The positive semi-definite test"
+  )
+  .def_property_readonly(
+
+    "eigenvalue_ratio",
+    python::overload_cast<>( &Component::eigenvalueRatio, python::const_ ),
+    "The eigenvalue ratio test"
   )
   .def_property_readonly(
 
@@ -85,6 +92,12 @@ void wrapTestSuite( python::module& module ) {
     "allowed_negative_eigen_value",
     &Component::allowedNegativeEigenValue,
     "The largest allowed negative eigenvalue"
+  )
+  .def_property_readonly(
+
+    "smallest_acceptable_eigenvalue_ratio",
+    &Component::smallestAcceptableEigenvalueRatio,
+    "The  smallest acceptable eigenvalue ratio"
   )
   .def_property(
 

@@ -49,8 +49,8 @@ void wrapEigenvalueRatio( python::module& module ) {
   )
   .def_property_readonly(
 
-    "smallest_acceptable_ratio",
-    &Component::smallestAcceptableRatio,
+    "smallest_acceptable_eigenvalue_ratio",
+    &Component::smallestAcceptableEigenvalueRatio,
     "The  smallest acceptable eigenvalue ratio"
   )
   .def_property(

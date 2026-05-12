@@ -185,7 +185,7 @@ class EigenvalueRatio:
         The test name
         """
     @property
-    def smallest_acceptable_ratio(self) -> float:
+    def smallest_acceptable_eigenvalue_ratio(self) -> float:
         """
         The  smallest acceptable eigenvalue ratio
         """
@@ -340,7 +340,7 @@ class TestSuite:
         """
         Perform the test suite on the provided covariance matrix
         """
-    def __init__(self, tolerance: float = 1e-10, negative: float = -1e-10) -> None:
+    def __init__(self, tolerance: float = 1e-10, negative: float = -1e-10, ratio: float = 1e-08) -> None:
         """
         Initialise the test suite
         """
@@ -360,6 +360,11 @@ class TestSuite:
         The diagonal correlations are all 1 test
         """
     @property
+    def eigenvalue_ratio(self) -> EigenvalueRatio:
+        """
+        The eigenvalue ratio test
+        """
+    @property
     def name(self) -> str:
         """
         The test name
@@ -373,6 +378,11 @@ class TestSuite:
     def positive_variances(self) -> PositiveVariances:
         """
         The positive variance test
+        """
+    @property
+    def smallest_acceptable_eigenvalue_ratio(self) -> float:
+        """
+        The  smallest acceptable eigenvalue ratio
         """
     @property
     def status(self) -> njoy.psychic.TestStatus | None:

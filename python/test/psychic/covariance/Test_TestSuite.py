@@ -37,9 +37,10 @@ class Test_TestSuite( unittest.TestCase ) :
                                                                             [ 2.           , 4., 6.            ],
                                                                             [ 3.00000000005, 6., 9.            ] ] ) )
 
-        self.assertEqual( TestStatus.Warning, test( matrix ) )
+        self.assertEqual( TestStatus.Fail, test( matrix ) )
         self.assertEqual( TestStatus.Success, test.positive_variances.status )
         self.assertEqual( TestStatus.Warning, test.positive_semi_definite.status )
+        self.assertEqual( TestStatus.Fail, test.eigenvalue_ratio.status )
         self.assertEqual( TestStatus.Warning, test.bounded_correlations.status )
         self.assertEqual( TestStatus.Success, test.diagonal_correlations.status )
 
@@ -52,6 +53,7 @@ class Test_TestSuite( unittest.TestCase ) :
         self.assertEqual( TestStatus.Fail, test( matrix ) )
         self.assertEqual( TestStatus.Success, test.positive_variances.status )
         self.assertEqual( TestStatus.Fail, test.positive_semi_definite.status )
+        self.assertEqual( TestStatus.Success, test.eigenvalue_ratio.status )
         self.assertEqual( TestStatus.Fail, test.bounded_correlations.status )
         self.assertEqual( TestStatus.Success, test.diagonal_correlations.status )
 
