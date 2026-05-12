@@ -23,7 +23,7 @@ namespace resonances {
 namespace rmatrix {
 
   /**
-   *  @brief Create the compound system for LRF7 resonance parameters
+   *  @brief Create the compound system for rmatrix resonance parameters
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
