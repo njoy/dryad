@@ -15,23 +15,35 @@ void calculateEigenvalues() {
     // the SelfAdjointEigenSolver exploits the symmetric features of the matrix
     Eigen::SelfAdjointEigenSolver< matrix::Matrix< double > > solver( this->covariances() );
 
+    // create a vector for eigenvalues and eigenvectors
+    std::size_t size = this->rowMetadata().keys().size();
     std::vector< double > eigenvalues;
     std::vector< matrix::Vector< double > > eigenvectors;
-    eigenvalues.reserve( this->rowMetadata().keys().size() );
-    eigenvectors.reserve( this->rowMetadata().keys().size() );
+    eigenvalues.reserve( size );
+    eigenvectors.reserve( size );
 
-    for ( const auto& value : solver.eigenvalues().reshaped() ) {
+    // loop over the eigenvalues and eigenvectors
+    for ( std::size_t i = 0; i < size; ++i ) {
 
-      if ( scion::math::isCloseToZero( value, 10. * std::numeric_limits< double >::epsilon() ) ) {
+      double eigenvalue = solver.eigenvalues()(i,i);
+      if ( scion::math::isCloseToZero( eigenvalue, 10. * std::numeric_limits< double >::epsilon() ) ) {
 
-        eigenvalues.emplace_back( 0. );
+        eigenvalue = 0.;
       }
-      else {
+      eigenvalues.emplace_back( eigenvalue );
 
-        eigenvalues.emplace_back( value );
-      }
+      matrix::Vector< double > eigenvector = solver.eigenvectors().col(i);
+      eigenvectors.emplace_back( eigenvector );
     }
 
+    // reverse the order
+    std::reverse( eigenvalues.begin(), eigenvalues.end() );
+    std::reverse( eigenvectors.begin(), eigenvectors.end() );
+
+    //! @todo check efficiency compared to using std::upper_bound
+
+    // move the vectors into the fields
     this->eigenvalues_ = std::move( eigenvalues );
+    this->eigenvectors_ = std::move( eigenvectors );
   }
 }

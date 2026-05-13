@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_COVARIANCE_BASE_COVARIANCEMATRIX
 
 // system includes
+#include <algorithm>
 #include <optional>
 #include <vector>
 
