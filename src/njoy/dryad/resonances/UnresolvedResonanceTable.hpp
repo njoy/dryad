@@ -46,6 +46,13 @@ namespace resonances{
       /* methods */
 
       /**
+       * @brief return the number of channels in the table
+       */
+      int numChannels() const {
+        return this->channels_.size();
+      }
+
+      /**
        * @brief return the channel identifiers
        */
       const std::vector< id::ChannelID >& channels() const { 
@@ -59,6 +66,56 @@ namespace resonances{
       std::vector< id::ChannelID >& channels() { 
         return this->channels_;
       }
+
+      /**
+       * @brief Returns if the table has a given channel
+       */
+      bool hasChannel( const id::ChannelID& channel ) const {
+        return std::find( channels_.begin(), channels_.end(), channel ) != channels_.end();
+      }
+
+      /**
+       * @brief Return the index of a given channel
+       */
+      const std::optional< int > channelIndex( const id::ChannelID& channel ) const {
+        auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), channel );
+        if ( iter == this->channels().end() or *iter != channel ) {
+          Log::error( "Channel {} not found in table", channel );
+          throw std::exception();
+        }
+        else {
+          return std::distance( this->channels().begin(), iter );
+        }
+      }
+
+      /**
+       * @brief Return the TabulatedAverageWidths for a given channel
+       */
+      const TabulatedAverageWidths& widths( const id::ChannelID& channel ) const {
+        auto index = this->channelIndex( channel );
+        if ( ! index.has_value() ) {
+          Log::error( "Channel {} not found in table", channel );
+          throw std::exception();
+        }
+        else {
+          return this->widths()[index.value()];
+        }
+      }
+
+      /**
+      * @brief Return the TabulatedAverageWidths for a given channel
+      */
+      TabulatedAverageWidths& widths( const id::ChannelID& channel ) {
+        auto index = this->channelIndex( channel );
+        if ( ! index.has_value() ) {
+          Log::error( "Channel {} not found in table", channel );
+          throw std::exception();
+        }
+        else {
+          return this->widths()[index.value()];
+        }
+      }
+
 
       /**
        * @brief Return the average widths
@@ -88,7 +145,28 @@ namespace resonances{
         return this->spacings_;
       }
 
+      /**
+       * @brief Equality comparison
+       *
+       * @param[in] left    the object on the left hand side
+       * @param[in] right   the object on the right hand side
+       */
+      friend bool operator==( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
+        return std::tie( left.channels(), left.widths(), left.spacings() ) ==
+              std::tie( right.channels(), right.widths(), right.spacings() );
+      }
 
+      /**
+       * @brief Inequality comparison
+       *
+       * @param[in] left    the object on the left hand side
+       * @param[in] right   the object on the right hand side
+       */
+      friend bool operator!=( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
+        return ! ( left == right );
+      }
+
+    };
 } // namespace resonances
 } // namespace dryad
 } // namespace njoy
