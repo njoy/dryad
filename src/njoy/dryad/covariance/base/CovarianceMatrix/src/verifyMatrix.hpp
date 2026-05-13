@@ -61,3 +61,38 @@ static void verifyMatrix( const matrix::Matrix< double >& matrix,
     throw std::exception();
   }
 }
+
+static void verifyMatrix( const std::vector< double >& eigenvalues,
+                          const std::vector< matrix::Vector< double > >& eigenvectors,
+                          unsigned int order ) {
+
+  // check if the number of eigenvalues is non-zero
+  if ( eigenvalues.size() == 0 ) {
+
+    Log::error( "The number of eigenvalues cannot be zero" );
+    Log::info( "Number eigenvalues: {}", eigenvalues.size() );
+    Log::info( "Number eigenvectors: {}", eigenvectors.size() );
+    throw std::exception();
+  }
+
+  // check if the number of eigenvalues and eigenvectors are consistent
+  if ( eigenvalues.size() != eigenvectors.size() ) {
+
+    Log::error( "The number of eigenvalues and eigenvectors are not consistent" );
+    Log::info( "Number eigenvalues: {}", eigenvalues.size() );
+    Log::info( "Number eigenvectors: {}", eigenvectors.size() );
+    throw std::exception();
+  }
+
+  // check if the order is consistent with the size of the eigenvectors
+  for ( std::size_t i = 0; i < eigenvectors.size(); ++i ) {
+
+    if ( eigenvectors[i].rows() != order ) {
+
+      Log::error( "The order of the eigenvector with index {} and the order from the structure are not consistent", i );
+      Log::info( "Number rows: {}", eigenvectors[i].rows() );
+      Log::info( "Expected order: {}", order );
+      throw std::exception();
+    }
+  }
+}

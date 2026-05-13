@@ -11,17 +11,35 @@
  */
 void calculateCovariances() {
 
-  if ( this->isOnDiagonal() && this->correlations().has_value() ) {
+  if ( this->isOnDiagonal() ) {
 
-    auto nrows = this->rowMetadata().keys().size();
-    matrix::DiagonalMatrix< double > temporary( nrows );
-    temporary.setIdentity();
-    for ( unsigned int i = 0; i < nrows; ++i ) {
+    if ( this->correlations().has_value() ) {
 
-      temporary.diagonal()[i] = this->standardDeviations().value()[i];
+      auto nrows = this->rowMetadata().keys().size();
+      matrix::DiagonalMatrix< double > temporary( nrows );
+      temporary.setIdentity();
+      for ( unsigned int i = 0; i < nrows; ++i ) {
+
+        temporary.diagonal()[i] = this->standardDeviations().value()[i];
+      }
+
+      this->covariances_ = temporary * this->correlations().value() * temporary;
     }
+    else if ( this->eigenvalues().has_value() && this->eigenvectors().has_value() ) {
 
-    this->covariances_ = temporary * this->correlations().value() * temporary;
+      auto nrows = this->rowMetadata().keys().size();
+      auto ncols = this->eigenvalues().value().size();
+      matrix::Matrix< double > matrix( nrows, ncols );
+      matrix::DiagonalMatrix< double > lambda( ncols );
+
+      for ( unsigned int i = 0; i < ncols; ++i ) {
+
+        lambda.diagonal()[i] = this->eigenvalues().value()[i];
+        matrix.col(i) = this->eigenvectors().value()[i];
+      }
+
+      this->covariances_ = matrix * lambda * matrix.transpose();
+    }
   }
 }
 
