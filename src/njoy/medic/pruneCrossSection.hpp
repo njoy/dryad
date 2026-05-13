@@ -6,7 +6,7 @@
 
 // other includes
 #include "njoy/dryad/TabulatedCrossSection.hpp"
-#include <iostream>
+
 namespace njoy {
 namespace medic {
 
