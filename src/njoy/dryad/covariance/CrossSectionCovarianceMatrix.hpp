@@ -71,6 +71,7 @@ namespace covariance {
     using Parent::correlations;
     using Parent::eigenvalues;
     using Parent::eigenvectors;
+    using Parent::eigenvaluesAndEigenvectors;
     using Parent::calculateStandardDeviations;
     using Parent::calculateCorrelations;
     using Parent::calculateEigenvalues;

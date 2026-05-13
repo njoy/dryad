@@ -120,11 +120,74 @@ namespace base {
     }
 
     /**
+     *  @brief Return the covariance matrix
+     */
+    matrix::Matrix< double >& covariances() {
+
+      return this->covariances_;
+    }
+
+    /**
+     *  @brief Set the covariance matrix
+     *
+     *  @param[in] covariances   the covariance matrix
+     */
+    void covariances( matrix::Matrix< double > covariances ) const {
+
+      this->covariances_ = std::move( covariances );
+      if ( this->isOnDiagonal() ) {
+
+        verifyMatrix( this->covariances(), this->rowMetadata().keys().size() );
+        this->calculateCorrelations();
+        this->calculateEigenvalues();
+      }
+      else {
+
+        verifyMatrix( this->covariances(), this->rowMetadata().keys().size(),
+                      this->columnMetadata().keys().size() );
+        this->correlations( std::nullopt );
+      }
+    }
+
+    /**
      *  @brief Return the standard deviations
      */
     const std::optional< std::vector< double > >& standardDeviations() const {
 
       return this->sigmas_;
+    }
+
+    /**
+     *  @brief Return the standard deviations
+     */
+    std::optional< std::vector< double > >& standardDeviations() {
+
+      return this->sigmas_;
+    }
+
+    /**
+     *  @brief Set the standard deviations
+     *
+     *  @param[in] deviations   the standard deviations
+     */
+    void standardDeviations( std::optional< std::vector< double > > deviations ) {
+
+      if ( this->isOnDiagonal() ) {
+
+        this->sigmas_ = std::move( deviations );
+        if ( this->standardDeviations().has_value() ) {
+
+          verifyMatrix( this->standardDeviations().value(),
+                        this->correlations().value(),
+                        this->rowMetadata().keys().size() );
+          this->calculateCovariances();
+          this->calculateEigenvalues();
+        }
+      }
+      else {
+
+        throw std::runtime_error( "Standard deviations cannot be set for an off-diagonal covariance matrix" );
+      }
     }
 
     /**
@@ -136,9 +199,52 @@ namespace base {
     }
 
     /**
+     *  @brief Return the correlation matrix
+     */
+    std::optional< matrix::Matrix< double > >& correlations() {
+
+      return this->correlations_;
+    }
+
+    /**
+     *  @brief Set the correlation matrix
+     *
+     *  @param[in] correlations   the correlation matrix
+     */
+    void correlations( std::optional< matrix::Matrix< double > > correlations ) {
+
+      if ( this->isOnDiagonal() ) {
+
+        this->correlations_ = std::move( correlations );
+        if ( this->correlations().has_value() ) {
+
+
+          verifyMatrix( this->standardDeviations().value(),
+                        this->correlations().value(),
+                        this->rowMetadata().keys().size() );
+          this->calculateCovariances();
+          this->calculateEigenvalues();
+        }
+      }
+      else {
+
+        throw std::runtime_error( "Correlations cannot be set for an off-diagonal covariance matrix "
+                                  "without specifying row and column deviations" );
+      }
+    }
+
+    /**
      *  @brief Return the eigenvalues
      */
     const std::optional< std::vector< double > >& eigenvalues() const {
+
+      return this->eigenvalues_;
+    }
+
+    /**
+     *  @brief Return the eigenvalues
+     */
+    std::optional< std::vector< double > >& eigenvalues() {
 
       return this->eigenvalues_;
     }
@@ -149,6 +255,44 @@ namespace base {
     const std::optional< std::vector< matrix::Vector< double > > >& eigenvectors() const {
 
       return this->eigenvectors_;
+    }
+
+    /**
+     *  @brief Return the eigenvectors
+     */
+    std::optional< std::vector< matrix::Vector< double > > >& eigenvectors() {
+
+      return this->eigenvectors_;
+    }
+
+    /**
+     *  @brief Set the eigenvalues and eigenvectors
+     *
+     *  @param[in] eigenvalues    the eigenvalues
+     *  @param[in] eigenvectors   the eigenvectors
+     */
+    void eigenvaluesAndEigenvectors(
+             std::optional< std::vector< double > > eigenvalues,
+             std::optional< std::vector< matrix::Vector< double > > > eigenvectors ) {
+
+      if ( this->isOnDiagonal() ) {
+
+        this->eigenvalues_ = std::move( eigenvalues );
+        this->eigenvectors_ = std::move( eigenvectors );
+        if ( this->eigenvalues().has_value() && this->eigenvectors().has_value() ) {
+
+          verifyMatrix( this->eigenvalues().value(),
+                        this->eigenvectors().value(),
+                        this->rowMetadata().keys().size() );
+          this->calculateCovariances();
+          this->calculateCorrelations();
+        }
+      }
+      else {
+
+        throw std::runtime_error( "Eigenvalues and eigenvectors cannot be set for an off-diagonal "
+                                  "covariance matrix" );
+      }
     }
 
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
@@ -164,9 +308,12 @@ namespace base {
      */
     bool operator==( const CovarianceMatrix& right ) const {
 
-      return this->rowMetadata() == right.rowMetadata() &&
-             this->columnMetadata() == right.columnMetadata() &&
-             this->covariances() == right.covariances();
+      return std::tie( this->rowMetadata(), this->columnMetadata(), this->covariances(),
+                       this->standardDeviations(), this->correlations(),
+                       this->eigenvalues(), this->eigenvectors() ) ==
+             std::tie( right.rowMetadata(), right.columnMetadata(), right.covariances(),
+                       right.standardDeviations(), right.correlations(),
+                       right.eigenvalues(), right.eigenvectors() );
     }
 
     /**

@@ -102,8 +102,8 @@ SCENARIO( "CrossSectionCovarianceMatrix" ) {
     std::vector< double > deviations = { 1., 2., 3. };
     Matrix< double > correlations( 3, 3 );
     correlations << 1., 1., 1.,
-              1., 1., 1.,
-              1., 1., 1.;
+                    1., 1., 1.,
+                    1., 1., 1.;
 
     CrossSectionCovarianceMatrix chunk( std::move( metadata ), std::move( deviations ),
                                         std::move( correlations ) );
