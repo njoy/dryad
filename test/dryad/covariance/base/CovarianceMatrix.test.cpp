@@ -171,6 +171,76 @@ SCENARIO( "CovarianceMatrix" ) {
       } // THEN
     } // WHEN
 
+    WHEN( "using eigenvalues and eigenvectors for an on-diagonal matrix" ) {
+
+      Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
+
+      std::vector< double > eigenvalues = { 14. };
+      std::vector< Vector< double > > eigenvectors( 1, Vector< double >( 3 ) );
+      eigenvectors[0] << 0.2672612419124246, 0.5345224838248487, 0.8017837257372732;
+
+      CovarianceMatrix chunk( std::move( metadata ),
+                              std::move( eigenvalues ),
+                              std::move( eigenvectors ) );
+
+      THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
+
+        CHECK( 3 == chunk.rowMetadata().keys().size() );
+        CHECK( 3 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
+        CHECK( std::tuple{ 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowMetadata().keys()[2] );
+
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
+        CHECK( false == chunk.isOffDiagonal() );
+        CHECK( true == chunk.isOnDiagonal() );
+
+        CHECK( std::nullopt != chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvectors() );
+
+        CHECK( 3 == chunk.covariances().rows() );
+        CHECK( 3 == chunk.covariances().cols() );
+        CHECK_THAT( 1., WithinRel( chunk.covariances()(0,0) ) );
+        CHECK_THAT( 2., WithinRel( chunk.covariances()(0,1) ) );
+        CHECK_THAT( 3., WithinRel( chunk.covariances()(0,2) ) );
+        CHECK_THAT( 2., WithinRel( chunk.covariances()(1,0) ) );
+        CHECK_THAT( 4., WithinRel( chunk.covariances()(1,1) ) );
+        CHECK_THAT( 6., WithinRel( chunk.covariances()(1,2) ) );
+        CHECK_THAT( 3., WithinRel( chunk.covariances()(2,0) ) );
+        CHECK_THAT( 6., WithinRel( chunk.covariances()(2,1) ) );
+        CHECK_THAT( 9., WithinRel( chunk.covariances()(2,2) ) );
+
+        CHECK( 3 == chunk.standardDeviations().value().size() );
+        CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
+
+        CHECK( 3 == chunk.correlations().value().rows() );
+        CHECK( 3 == chunk.correlations().value().cols() );
+        CHECK( 1. == chunk.correlations().value()(0,0) );
+        CHECK( 1. == chunk.correlations().value()(0,1) );
+        CHECK( 1. == chunk.correlations().value()(0,2) );
+        CHECK( 1. == chunk.correlations().value()(1,0) );
+        CHECK( 1. == chunk.correlations().value()(1,1) );
+        CHECK( 1. == chunk.correlations().value()(1,2) );
+        CHECK( 1. == chunk.correlations().value()(2,0) );
+        CHECK( 1. == chunk.correlations().value()(2,1) );
+        CHECK( 1. == chunk.correlations().value()(2,2) );
+
+        CHECK( 1 == chunk.eigenvalues().value().size() );
+        CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[0] ) );
+
+        CHECK( 1 == chunk.eigenvectors().value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+      } // THEN
+    } // WHEN
+
     WHEN( "using covariance data for an off-diagonal matrix" ) {
 
       Metadata rowMetadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
