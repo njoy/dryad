@@ -1,0 +1,101 @@
+#ifndef NJOY_DRYAD_COVARIANCE_ANGULARDISTRIBUTIONMETADATA
+#define NJOY_DRYAD_COVARIANCE_ANGULARDISTRIBUTIONMETADATA
+
+// system includes
+#include <vector>
+
+// other includes
+#include "tools/Log.hpp"
+#include "njoy/dryad/id/EnergyGroup.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/dryad/covariance/base/Metadata.hpp"
+
+namespace njoy {
+namespace dryad {
+namespace covariance {
+
+  /**
+   *  @class
+   *  @brief Covariance metadata for angular distributions
+   */
+  class AngularDistributionMetadata :
+    protected base::Metadata< id::ReactionID, id::EnergyGroup, std::size_t > {
+
+    /* type aliases */
+
+    using Parent = base::Metadata< id::ReactionID, id::EnergyGroup, std::size_t >;
+
+    /* fields */
+
+    std::vector< id::ReactionID > reactions_;
+    std::vector< double > energies_;
+    std::vector< std::size_t > moments_;
+
+    /* auxiliary functions */
+
+    // blatantly taken from CrossSectionMetadata
+    #include "njoy/dryad/covariance/CrossSectionMetadata/src/generateEnergyGroups.hpp"
+
+    #include "njoy/dryad/covariance/AngularDistributionMetadata/src/generateKeys.hpp"
+    #include "njoy/dryad/covariance/AngularDistributionMetadata/src/updateMetadata.hpp"
+
+  public:
+
+    /* constructor */
+    #include "njoy/dryad/covariance/AngularDistributionMetadata/src/ctor.hpp"
+
+    /* methods */
+
+    /**
+     *  @brief Return the reaction identifiers
+     */
+    const std::vector< id::ReactionID >& reactionIdentifiers() const {
+
+      return this->reactions_;
+    }
+
+    /**
+     *  @brief Return the energy group boundaries
+     */
+    const std::vector< double >& energies() const {
+
+      return this->energies_;
+    }
+
+    /**
+     *  @brief Return the Legendre moments
+     */
+    const std::vector< std::size_t >& moments() const {
+
+      return this->moments_;
+    }
+
+    using Parent::keys;
+    using Parent::selection;
+
+    /**
+     *  @brief Comparison operator: equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator==( const AngularDistributionMetadata& right ) const {
+
+      return Parent::operator==( right );
+    }
+
+    /**
+     *  @brief Comparison operator: not equal
+     *
+     *  @param[in] right   the object on the right hand side
+     */
+    bool operator!=( const AngularDistributionMetadata& right ) const {
+
+      return ! this->operator==( right );
+    }
+  };
+
+} // covariance namespace
+} // dryad namespace
+} // njoy namespace
+
+#endif
