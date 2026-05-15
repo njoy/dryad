@@ -25,7 +25,7 @@ void calculateEigenvalues() {
     // loop over the eigenvalues and eigenvectors
     for ( std::size_t i = 0; i < size; ++i ) {
 
-      double eigenvalue = solver.eigenvalues()(i,i);
+      double eigenvalue = solver.eigenvalues()(i);
       if ( scion::math::isCloseToZero( eigenvalue, 10. * std::numeric_limits< double >::epsilon() ) ) {
 
         eigenvalue = 0.;
