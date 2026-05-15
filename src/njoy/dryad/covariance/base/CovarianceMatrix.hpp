@@ -132,7 +132,7 @@ namespace base {
      *
      *  @param[in] covariances   the covariance matrix
      */
-    void covariances( matrix::Matrix< double > covariances ) const {
+    void covariances( matrix::Matrix< double > covariances ) {
 
       this->covariances_ = std::move( covariances );
       if ( this->isOnDiagonal() ) {

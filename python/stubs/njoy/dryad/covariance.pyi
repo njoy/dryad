@@ -259,11 +259,17 @@ class CrossSectionCovarianceMatrix:
         """
         The correlation matrix
         """
+    @correlations.setter
+    def correlations(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
     @property
     def covariances(self) -> numpy.ndarray[numpy.float64[m, n]]:
         """
         The covariance matrix
         """
+    @covariances.setter
+    def covariances(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
     @property
     def eigenvalues(self) -> list[float] | None:
         """
@@ -309,6 +315,9 @@ class CrossSectionCovarianceMatrix:
         """
         The standard deviations
         """
+    @standard_deviations.setter
+    def standard_deviations(self, arg1: list[float] | None) -> None:
+        ...
     @property
     def variance_scaling(self) -> VarianceScaling | None:
         """
@@ -531,11 +540,17 @@ class ProductMultiplicityCovarianceMatrix:
         """
         The correlation matrix
         """
+    @correlations.setter
+    def correlations(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
     @property
     def covariances(self) -> numpy.ndarray[numpy.float64[m, n]]:
         """
         The covariance matrix
         """
+    @covariances.setter
+    def covariances(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
     @property
     def eigenvalues(self) -> list[float] | None:
         """
@@ -576,6 +591,9 @@ class ProductMultiplicityCovarianceMatrix:
         """
         The standard deviations
         """
+    @standard_deviations.setter
+    def standard_deviations(self, arg1: list[float] | None) -> None:
+        ...
 class ProductMultiplicityMetadata:
     """
     Covariance metadata for product multiplicities

@@ -157,7 +157,7 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
        { return self.isOnDiagonal(); },
     "Flag to indicate whether or not this covariance matrix is on-diagonal"
   )
-  .def_property_readonly(
+  .def_property(
 
     // to ensure the matrix is not copied: reference_internal is used
     // see pybind11 documentation for Eigen bindings for more information
@@ -165,22 +165,29 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "covariances",
     [] ( const Component& self ) -> decltype(auto)
        { return self.covariances(); },
+    [] ( Component& self, Matrix covariances ) -> void
+       { self.covariances( std::move( covariances ) ); },
     "The covariance matrix",
     python::return_value_policy::reference_internal
   )
-  .def_property_readonly(
+  .def_property(
 
     "standard_deviations",
     [] ( const Component& self ) -> decltype(auto)
        { return self.standardDeviations(); },
+    [] ( Component& self,
+         std::optional< std::vector< double > > deviations ) -> void
+       { self.standardDeviations( std::move( deviations ) ); },
     "The standard deviations",
     python::return_value_policy::reference_internal
   )
-  .def_property_readonly(
+  .def_property(
 
     "correlations",
     [] ( const Component& self ) -> decltype(auto)
        { return self.correlations(); },
+    [] ( Component& self, Matrix correlations ) -> void
+       { self.correlations( std::move( correlations ) ); },
     "The correlation matrix",
     python::return_value_policy::reference_internal
   )
@@ -198,6 +205,16 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     [] ( const Component& self ) -> decltype(auto)
        { return self.eigenvectors(); },
     "The eigenvectors",
+    python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "eigenvalues_and_eigenvectors",
+    [] ( Component& self,
+         std::optional< std::vector< double > > eigenvalues,
+         std::optional< std::vector< Vector< double > > > eigenvectors ) -> void
+       { self.eigenvectorsAndEigenvectors( std::move( eigenvalues ), std::move( eigenvectors ) ); },
+    "Set the eigenvalues and eigenvectors",
     python::return_value_policy::reference_internal
   )
   .def(
