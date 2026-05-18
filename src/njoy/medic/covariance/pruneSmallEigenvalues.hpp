@@ -36,7 +36,7 @@ namespace covariance {
       eigenvalues.erase( iter.base(), eigenvalues.end() );
       eigenvectors.erase( std::next( eigenvectors.begin(), eigenvalues.size() ), eigenvectors.end() );
 
-      covariance.eigenvaluesAndEigenvectors( std::move( eigenvalues ), std::move( eigenvectors ) );
+      covariance.eigendata( std::make_tuple( std::move( eigenvalues ), std::move( eigenvectors ) ) );
     }
   }
 
