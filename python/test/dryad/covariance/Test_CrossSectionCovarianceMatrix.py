@@ -44,6 +44,8 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNotNone( chunk.standard_deviations )
         self.assertIsNotNone( chunk.correlations )
         self.assertIsNotNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.eigendata[0] )
+        self.assertIsNotNone( chunk.eigendata[1] )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -72,10 +74,16 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertAlmostEqual( 14., chunk.eigenvalues[0] )
         self.assertAlmostEqual(  0., chunk.eigenvalues[1] )
         self.assertAlmostEqual(  0., chunk.eigenvalues[2] )
-
         self.assertAlmostEqual( 0.2672612419124246, chunk.eigenvectors[0][0] )
         self.assertAlmostEqual( 0.5345224838248487, chunk.eigenvectors[0][1] )
         self.assertAlmostEqual( 0.8017837257372732, chunk.eigenvectors[0][2] )
+
+        self.assertAlmostEqual( 14., chunk.eigendata[0][0] )
+        self.assertAlmostEqual(  0., chunk.eigendata[0][1] )
+        self.assertAlmostEqual(  0., chunk.eigendata[0][2] )
+        self.assertAlmostEqual( 0.2672612419124246, chunk.eigendata[1][0][0] )
+        self.assertAlmostEqual( 0.5345224838248487, chunk.eigendata[1][0][1] )
+        self.assertAlmostEqual( 0.8017837257372732, chunk.eigendata[1][0][2] )
 
         # the data is given explicitly - for a diagonal block with scaling
         chunk = CrossSectionCovarianceMatrix( CrossSectionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
@@ -115,6 +123,8 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNotNone( chunk.standard_deviations )
         self.assertIsNotNone( chunk.correlations )
         self.assertIsNotNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.eigendata[0] )
+        self.assertIsNotNone( chunk.eigendata[1] )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -143,10 +153,16 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertAlmostEqual( 14., chunk.eigenvalues[0] )
         self.assertAlmostEqual(  0., chunk.eigenvalues[1] )
         self.assertAlmostEqual(  0., chunk.eigenvalues[2] )
-
         self.assertAlmostEqual( 0.2672612419124246, chunk.eigenvectors[0][0] )
         self.assertAlmostEqual( 0.5345224838248487, chunk.eigenvectors[0][1] )
         self.assertAlmostEqual( 0.8017837257372732, chunk.eigenvectors[0][2] )
+
+        self.assertAlmostEqual( 14., chunk.eigendata[0][0] )
+        self.assertAlmostEqual(  0., chunk.eigendata[0][1] )
+        self.assertAlmostEqual(  0., chunk.eigendata[0][2] )
+        self.assertAlmostEqual( 0.2672612419124246, chunk.eigendata[1][0][0] )
+        self.assertAlmostEqual( 0.5345224838248487, chunk.eigendata[1][0][1] )
+        self.assertAlmostEqual( 0.8017837257372732, chunk.eigendata[1][0][2] )
 
     def test_off_diagonal_covariance_block( self ) :
 
@@ -189,6 +205,8 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNone( chunk.correlations )
         self.assertIsNone( chunk.eigenvalues )
         self.assertIsNone( chunk.eigenvectors )
+        self.assertIsNone( chunk.eigendata[0] )
+        self.assertIsNone( chunk.eigendata[1] )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -211,6 +229,8 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         chunk.calculate_eigenvalues()
         self.assertIsNone( chunk.eigenvalues )
         self.assertIsNone( chunk.eigenvectors )
+        self.assertIsNone( chunk.eigendata[0] )
+        self.assertIsNone( chunk.eigendata[1] )
 
 if __name__ == '__main__' :
 
