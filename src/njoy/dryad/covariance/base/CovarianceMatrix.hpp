@@ -27,6 +27,10 @@ namespace base {
     using Key = std::tuple< Ts... >;
     using Selection = std::tuple< std::optional< Ts >... >;
 
+    using Eigenvalues = std::optional< std::vector< double > >;
+    using Eigenvectors = std::optional< std::vector< matrix::Vector< double > > >;
+    using Eigendata = std::tuple< Eigenvalues, Eigenvectors >;
+
   private:
 
     /* fields - row and column metadata */
@@ -43,14 +47,12 @@ namespace base {
     std::optional< std::vector< double > > sigmas_;
     std::optional< matrix::Matrix< double > > correlations_;
 
-    /* fields - eigenvalues */
-    std::optional< std::vector< double > > eigenvalues_;
-    std::optional< std::vector< matrix::Vector< double > > > eigenvectors_;
+    /* fields - eigenvalues and eigenvectors */
+    Eigendata eigendata_;
 
     /* auxiliary function */
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
-    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
 
   public:
 
@@ -238,7 +240,7 @@ namespace base {
      */
     const std::optional< std::vector< double > >& eigenvalues() const {
 
-      return this->eigenvalues_;
+      return std::get< 0 >( this->eigendata_ );
     }
 
     /**
@@ -246,7 +248,7 @@ namespace base {
      */
     std::optional< std::vector< double > >& eigenvalues() {
 
-      return this->eigenvalues_;
+      return std::get< 0 >( this->eigendata_ );
     }
 
     /**
@@ -254,7 +256,7 @@ namespace base {
      */
     const std::optional< std::vector< matrix::Vector< double > > >& eigenvectors() const {
 
-      return this->eigenvectors_;
+      return std::get< 1 >( this->eigendata_ );
     }
 
     /**
@@ -262,7 +264,23 @@ namespace base {
      */
     std::optional< std::vector< matrix::Vector< double > > >& eigenvectors() {
 
-      return this->eigenvectors_;
+      return std::get< 1 >( this->eigendata_ );
+    }
+
+    /**
+     *  @brief Return the eigenvalues and eigenvectors
+     */
+    const Eigendata& eigendata() const {
+
+      return this->eigendata_;
+    }
+
+    /**
+     *  @brief Return the eigenvalues and eigenvectors
+     */
+    Eigendata& eigendata() {
+
+      return this->eigendata_;
     }
 
     /**
@@ -271,14 +289,11 @@ namespace base {
      *  @param[in] eigenvalues    the eigenvalues
      *  @param[in] eigenvectors   the eigenvectors
      */
-    void eigenvaluesAndEigenvectors(
-             std::optional< std::vector< double > > eigenvalues,
-             std::optional< std::vector< matrix::Vector< double > > > eigenvectors ) {
+    void eigendata( Eigendata eigendata ) {
 
       if ( this->isOnDiagonal() ) {
 
-        this->eigenvalues_ = std::move( eigenvalues );
-        this->eigenvectors_ = std::move( eigenvectors );
+        this->eigendata_ = std::move( eigendata );
         if ( this->eigenvalues().has_value() && this->eigenvectors().has_value() ) {
 
           verifyMatrix( this->eigenvalues().value(),
@@ -295,6 +310,7 @@ namespace base {
       }
     }
 
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateCorrelations.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateEigenvalues.hpp"
