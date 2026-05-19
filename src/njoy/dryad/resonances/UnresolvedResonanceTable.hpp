@@ -29,78 +29,79 @@ namespace resonances{
 
       private:
 
-      std::vector< id::ChannelID > channels_;
-      std::vector< TabulatedAverageWidths > widths_;
-      TabulatedLevelSpacing spacings_;
+        std::vector< id::ChannelID > channels_;
+        std::vector< TabulatedAverageWidths > widths_;
+        TabulatedLevelSpacing spacings_;
 
-       /* auxiliary functions */
-       #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/processTable.hpp"
+        /* auxiliary functions */
+        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/processTable.hpp"
+        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/verifyTable.hpp"
 
 
     
 
-    public:
-      /* constructor */
-      #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/ctor.hpp"
+      public:
+        /* constructor */
+        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/ctor.hpp"
 
-      /* methods */
+        /* methods */
 
-      /**
-       * @brief return the number of channels in the table
-       */
-      int numChannels() const {
-        return this->channels_.size();
-      }
-
-      /**
-       * @brief return the channel identifiers
-       */
-      const std::vector< id::ChannelID >& channels() const { 
-        return this->channels_; 
-      }
-
-      /**
-       * @brief Return the channel identifiers
-       */
-
-      std::vector< id::ChannelID >& channels() { 
-        return this->channels_;
-      }
-
-      /**
-       * @brief Returns if the table has a given channel
-       */
-      bool hasChannel( const id::ChannelID& channel ) const {
-        return std::find( channels_.begin(), channels_.end(), channel ) != channels_.end();
-      }
-
-      /**
-       * @brief Return the index of a given channel
-       */
-      const std::optional< int > channelIndex( const id::ChannelID& channel ) const {
-        auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), channel );
-        if ( iter == this->channels().end() or *iter != channel ) {
-          Log::error( "Channel {} not found in table", channel );
-          throw std::exception();
+        /**
+        * @brief return the number of channels in the table
+        */
+        int numberChannels() const {
+          return this->channels_.size();
         }
-        else {
-          return std::distance( this->channels().begin(), iter );
-        }
-      }
 
-      /**
-       * @brief Return the TabulatedAverageWidths for a given channel
-       */
-      const TabulatedAverageWidths& widths( const id::ChannelID& channel ) const {
-        auto index = this->channelIndex( channel );
-        if ( ! index.has_value() ) {
-          Log::error( "Channel {} not found in table", channel );
-          throw std::exception();
+        /**
+        * @brief return the channel identifiers
+        */
+        const std::vector< id::ChannelID >& channels() const { 
+          return this->channels_; 
         }
-        else {
-          return this->widths()[index.value()];
+
+        /**
+        * @brief Return the channel identifiers
+        */
+
+        std::vector< id::ChannelID >& channels() { 
+          return this->channels_;
         }
-      }
+
+        /**
+        * @brief Returns if the table has a given channel
+        */
+        bool hasChannel( const id::ChannelID& channel ) const {
+          return std::find( channels_.begin(), channels_.end(), channel ) != channels_.end();
+        }
+
+        /**
+        * @brief Return the index of a given channel
+        */
+        const std::optional< int > channelIndex( const id::ChannelID& channel ) const {
+          auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), channel );
+          if ( iter == this->channels().end() or *iter != channel ) {
+            Log::error( "Channel {} not found in table", channel.symbol() );
+            throw std::exception();
+          }
+          else {
+            return std::distance( this->channels().begin(), iter );
+          }
+        }
+
+        /**
+        * @brief Return the TabulatedAverageWidths for a given channel
+        */
+        const TabulatedAverageWidths& widths( const id::ChannelID& channel ) const {
+          auto index = this->channelIndex( channel );
+          if ( ! index.has_value() ) {
+            Log::error( "Channel {} not found in table", channel.symbol() );
+            throw std::exception();
+          }
+          else {
+            return this->widths()[index.value()];
+          }
+        }
 
       /**
       * @brief Return the TabulatedAverageWidths for a given channel
@@ -108,7 +109,7 @@ namespace resonances{
       TabulatedAverageWidths& widths( const id::ChannelID& channel ) {
         auto index = this->channelIndex( channel );
         if ( ! index.has_value() ) {
-          Log::error( "Channel {} not found in table", channel );
+          Log::error( "Channel {} not found in table", channel.symbol() );
           throw std::exception();
         }
         else {
@@ -116,55 +117,54 @@ namespace resonances{
         }
       }
 
+        /**
+        * @brief Return the average widths
+        */
+        const std::vector< TabulatedAverageWidths >& widths() const {
+          return this->widths_;
+        }
 
-      /**
-       * @brief Return the average widths
-       */
-      const std::vector< TabulatedAverageWidths >& widths() const {
-        return this->widths_;
-      }
+        /**
+        * @brief Return the average widths
+        */
+        std::vector< TabulatedAverageWidths >& widths() {
+          return this->widths_;
+        }
 
-      /**
-       * @brief Return the average widths
-       */
-      std::vector< TabulatedAverageWidths >& widths() {
-        return this->widths_;
-      }
+        /**
+        * @brief Return the level spacings
+        */
+        const TabulatedLevelSpacing& spacings() const {
+          return this->spacings_;
+        }
 
-      /**
-       * @brief Return the level spacings
-       */
-      const TabulatedLevelSpacing& spacings() const {
-        return this->spacings_;
-      }
+        /**
+        * @brief Return the level spacings
+        */
+        TabulatedLevelSpacing& spacings() {
+          return this->spacings_;
+        }
 
-      /**
-       * @brief Return the level spacings
-       */
-      TabulatedLevelSpacing& spacings() {
-        return this->spacings_;
-      }
+        /**
+        * @brief Equality comparison
+        *
+        * @param[in] left    the object on the left hand side
+        * @param[in] right   the object on the right hand side
+        */
+        friend bool operator==( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
+          return std::tie( left.channels(), left.widths(), left.spacings() ) ==
+                 std::tie( right.channels(), right.widths(), right.spacings() );
+        }
 
-      /**
-       * @brief Equality comparison
-       *
-       * @param[in] left    the object on the left hand side
-       * @param[in] right   the object on the right hand side
-       */
-      friend bool operator==( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
-        return std::tie( left.channels(), left.widths(), left.spacings() ) ==
-              std::tie( right.channels(), right.widths(), right.spacings() );
-      }
-
-      /**
-       * @brief Inequality comparison
-       *
-       * @param[in] left    the object on the left hand side
-       * @param[in] right   the object on the right hand side
-       */
-      friend bool operator!=( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
-        return ! ( left == right );
-      }
+        /**
+        * @brief Inequality comparison
+        *
+        * @param[in] left    the object on the left hand side
+        * @param[in] right   the object on the right hand side
+        */
+        friend bool operator!=( const UnresolvedResonanceTable& left, const UnresolvedResonanceTable& right ) {
+          return ! ( left == right );
+        }
 
     };
 } // namespace resonances

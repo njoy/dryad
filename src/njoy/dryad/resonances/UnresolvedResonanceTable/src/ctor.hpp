@@ -43,7 +43,9 @@ public:
                             std::vector< double > spacingValues,
                             std::vector< std::vector< double > > widthValues,
                             const std::vector< std::optional< int > >& dofs = {} ) :
-    UnresolvedResonanceTable( channels,
-                            buildWidths( channels, energies, widthValues, dofs ),
-                            TabulatedLevelSpacing( energies, spacingValues ) ) {}
+    UnresolvedResonanceTable( 
+                             ( verifyTable( channels, energies, spacingValues, widthValues ), channels),
+                             buildWidths( channels, energies, widthValues, dofs ),
+                             TabulatedLevelSpacing( energies, spacingValues ) ) {}
+
                                            
