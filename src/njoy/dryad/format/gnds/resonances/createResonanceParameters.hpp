@@ -25,6 +25,7 @@ namespace resonances {
    *  @param[in] target       the target identifier
    *  @param[in] pops         the global particle database
    *  @param[in] resonances   the GNDS resonances node
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline std::optional< dryad::resonances::ResonanceParameters >
   createResonanceParameters( const id::ParticleID& projectile,
@@ -109,7 +110,7 @@ namespace resonances {
       convertEnergy( upper, unit );
 
       Log::info( "Reading unresolved resonance region between {} and {} eV", lower, upper );
-      Log::info( "  Unresolved resonance parameters are currently uinsupported, skipping" );
+      Log::info( "  Unresolved resonance parameters are currently unsupported, skipping" );
     }
 
     if ( resolved.size() != 0 ) {

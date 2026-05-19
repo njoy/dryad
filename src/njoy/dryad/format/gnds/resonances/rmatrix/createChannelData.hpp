@@ -92,7 +92,7 @@ namespace rmatrix {
 
           auto to_reduced_width = [&] ( auto&& width, auto&& energy ) {
 
-            double penetrability = channels[current].penetrability( std::abs( energy ) );
+            double penetrability = channels[current].penetrability( energy );
             return ( width < 0. ? -1. : +1. ) *
                    std::sqrt( 0.5 * std::abs( width ) / penetrability );
           };

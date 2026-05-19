@@ -47,7 +47,7 @@ namespace lrf7 {
         }
         else {
 
-          double penetrability = spingroup.channels()[i].penetrability( std::abs( energies[j] ) );
+          double penetrability = spingroup.channels()[i].penetrability( energies[j] );
           double sign = widths[i][j] < 0. ? -1. : +1.;
           parameters[j][i] = sign * 2. * penetrability * widths[i][j] * widths[i][j];
         }

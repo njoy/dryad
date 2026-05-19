@@ -630,12 +630,12 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   resonances = table.reducedWidthAmplitudes();
   CHECK_THAT( std::sqrt( .99675 / 2. ), WithinRel( resonances[0][0] ) );
   CHECK_THAT( std::sqrt(   2. / 2. ), WithinRel( resonances[0][13] ) );
-  CHECK_THAT( std::sqrt( 3291200 / 2. / channel1.penetrability( 4.585600e+6 ) ), WithinRel( resonances[1][0] ) );
-  CHECK_THAT( std::sqrt(   37262 / 2. / channel1.penetrability( 1.630000e+6 ) ), WithinRel( resonances[1][13] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 4.585600e+6 ) ), WithinRel( resonances[2][0] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 1.630000e+6 ) ), WithinRel( resonances[2][13] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( 4.585600e+6 ) ), WithinRel( resonances[3][0] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( 1.630000e+6 ) ), WithinRel( resonances[3][13] ) );
+  CHECK_THAT( std::sqrt( 3291200 / 2. / channel1.penetrability( -4.585600e+6 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt(   37262 / 2. / channel1.penetrability(  1.630000e+6 ) ), WithinRel( resonances[1][13] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( -4.585600e+6 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability(  1.630000e+6 ) ), WithinRel( resonances[2][13] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( -4.585600e+6 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability(  1.630000e+6 ) ), WithinRel( resonances[3][13] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 5
@@ -901,12 +901,12 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   resonances = table.reducedWidthAmplitudes();
   CHECK_THAT( std::sqrt( .99595 / 2. ), WithinRel( resonances[0][0] ) );
   CHECK_THAT( std::sqrt(     2. / 2. ), WithinRel( resonances[0][18] ) );
-  CHECK_THAT( std::sqrt( 14705 / 2. / channel1.penetrability( 3.129100e+5 ) ), WithinRel( resonances[1][0] ) );
-  CHECK_THAT( std::sqrt( 38615 / 2. / channel1.penetrability( 1.460000e+6 ) ), WithinRel( resonances[1][18] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 3.129100e+5 ) ), WithinRel( resonances[2][0] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( 1.460000e+6 ) ), WithinRel( resonances[2][18] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( 3.129100e+5 ) ), WithinRel( resonances[3][0] ) );
-  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( 1.460000e+6 ) ), WithinRel( resonances[3][18] ) );
+  CHECK_THAT( std::sqrt( 14705 / 2. / channel1.penetrability( -3.129100e+5 ) ), WithinRel( resonances[1][0] ) );
+  CHECK_THAT( std::sqrt( 38615 / 2. / channel1.penetrability(  1.460000e+6 ) ), WithinRel( resonances[1][18] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability( -3.129100e+5 ) ), WithinRel( resonances[2][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel2.penetrability(  1.460000e+6 ) ), WithinRel( resonances[2][18] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability( -3.129100e+5 ) ), WithinRel( resonances[3][0] ) );
+  CHECK_THAT( std::sqrt( 0. / 2. / channel3.penetrability(  1.460000e+6 ) ), WithinRel( resonances[3][18] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 7
