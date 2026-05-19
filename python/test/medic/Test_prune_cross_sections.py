@@ -1,6 +1,5 @@
 # standard imports
 import unittest
-import sys
 
 # third party imports
 

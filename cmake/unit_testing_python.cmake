@@ -130,3 +130,4 @@ add_python_test( reconr.calculate_summation_cross_sections             reconr/Te
 
 add_python_test( medic.prune_cross_section                             medic/Test_prune_cross_section.py )
 add_python_test( medic.prune_cross_sections                            medic/Test_prune_cross_sections.py )
+add_python_test( medic.covariance.prune_small_eigenvalues              medic/covariance/Test_prune_small_eigenvalues.py )

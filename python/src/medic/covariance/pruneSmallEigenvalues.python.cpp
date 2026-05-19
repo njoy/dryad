@@ -22,7 +22,8 @@ namespace covariance {
     .def(
 
       "prune_small_eigenvalues",
-      python::overload_cast< CrossSectionCovarianceMatrix >( &njoy::medic::covariance::pruneSmallEigenvalues ),
+      [] ( double eigenvalue, CrossSectionCovarianceMatrix& covariance ) -> void
+         { return njoy::medic::covariance::pruneSmallEigenvalues( eigenvalue, covariance ); },
       python::arg( "eigenvalue" ),
       python::arg( "covariance" ),
       "Prune eigenvalues below a given value from the covariance matrix\n\n"
@@ -36,7 +37,8 @@ namespace covariance {
     .def(
 
       "prune_small_eigenvalues",
-      python::overload_cast< ProductMultiplicityCovarianceMatrix >( &njoy::medic::covariance::pruneSmallEigenvalues ),
+      [] ( double eigenvalue, ProductMultiplicityCovarianceMatrix& covariance ) -> void
+         { return njoy::medic::covariance::pruneSmallEigenvalues( eigenvalue, covariance ); },
       python::arg( "eigenvalue" ),
       python::arg( "covariance" ),
       "Prune eigenvalues below a given value from the covariance matrix"
