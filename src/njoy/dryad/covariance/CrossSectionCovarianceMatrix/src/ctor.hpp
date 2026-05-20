@@ -92,7 +92,7 @@ CrossSectionCovarianceMatrix( CrossSectionMetadata rowMetadata,
  *
  *  @param[in] metadata       the row and column metadata
  *  @param[in] eigenvalues    the eigenvalues
- *  @param[in] eigenvectors   the associated eigenvalues
+ *  @param[in] eigenvectors   the associated eigenvectors
  *  @param[in] relative       the relative covariance flag
  *  @param[in] scaling        the variance scaling information (default is none)
  */
