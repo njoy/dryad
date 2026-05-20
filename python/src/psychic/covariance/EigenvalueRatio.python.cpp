@@ -77,7 +77,7 @@ void wrapEigenvalueRatio( python::module& module ) {
   )
   .def_property(
 
-    "eigenvalue_tatio",
+    "eigenvalue_ratio",
     python::overload_cast<>( &Component::eigenvalueRatio, python::const_ ),
     python::overload_cast< std::optional< double > >( &Component::eigenvalueRatio ),
     "The positive eigenvalue ratio"

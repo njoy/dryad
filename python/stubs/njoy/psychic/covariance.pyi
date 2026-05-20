@@ -164,12 +164,12 @@ class EigenvalueRatio:
         Initialise the test
         """
     @property
-    def eigenvalue_tatio(self) -> float | None:
+    def eigenvalue_ratio(self) -> float | None:
         """
         The positive eigenvalue ratio
         """
-    @eigenvalue_tatio.setter
-    def eigenvalue_tatio(self, arg1: float | None) -> None:
+    @eigenvalue_ratio.setter
+    def eigenvalue_ratio(self, arg1: float | None) -> None:
         ...
     @property
     def largest_positive_eigenvalue(self) -> float | None:
