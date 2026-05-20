@@ -324,6 +324,8 @@ class TestSuite:
              the comparison tolerance
         negative : float, default -1e-10
              the largest allowed negative eigenvalue
+        ratio : float, default 1e-8
+             the smallest allowable positive eigenvalue ratio
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
