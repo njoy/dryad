@@ -262,6 +262,10 @@ add_cpp_test( dryad.format.endf.createAtomicRelaxationEndfFile                  
 add_cpp_test( dryad.format.endf.createProjectileTargetEndfFile                          dryad/format/endf/createProjectileTargetEndfFile.test.cpp )
 add_cpp_test( dryad.format.endf.createThermalScatteringEndfFile                         dryad/format/endf/createThermalScatteringEndfFile.test.cpp )
 
+add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceMatrix          dryad/format/gendf/covariance/createCrossSectionCovarianceMatrix.test.cpp )
+add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceData            dryad/format/gendf/covariance/createCrossSectionCovarianceData.test.cpp )
+add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceDataFromFile    dryad/format/gendf/covariance/createCrossSectionCovarianceDataFromFile.test.cpp )
+
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
 add_cpp_test( dryad.format.gnds.convertCrossSection                                     dryad/format/gnds/convertCrossSection.test.cpp )
@@ -352,6 +356,16 @@ add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                 
 add_cpp_test( dryad.external.ComptonProfiles                                            dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                               dryad/external/KleinNishina.test.cpp )
 
+# psychic tests
+
+add_cpp_test( psychic.TestStatus                                                        psychic/TestStatus.test.cpp )
+add_cpp_test( psychic.covariance.PositiveSemiDefinite                                   psychic/covariance/PositiveSemiDefinite.test.cpp )
+add_cpp_test( psychic.covariance.PositiveVariances                                      psychic/covariance/PositiveVariances.test.cpp )
+add_cpp_test( psychic.covariance.EigenvalueRatio                                        psychic/covariance/EigenvalueRatio.test.cpp )
+add_cpp_test( psychic.covariance.BoundedCorrelations                                    psychic/covariance/BoundedCorrelations.test.cpp )
+add_cpp_test( psychic.covariance.DiagonalCorrelations                                   psychic/covariance/DiagonalCorrelations.test.cpp )
+add_cpp_test( psychic.covariance.TestSuite                                              psychic/covariance/TestSuite.test.cpp )
+
 # reconr tests
 
 add_cpp_test( reconr.unioniseCrossSections                                              reconr/unioniseCrossSections.test.cpp )
@@ -361,6 +375,7 @@ add_cpp_test( reconr.calculateSummationCrossSections                            
 
 add_cpp_test( medic.pruneCrossSection                                                   medic/pruneCrossSection.test.cpp )
 add_cpp_test( medic.pruneCrossSections                                                  medic/pruneCrossSections.test.cpp )
+add_cpp_test( medic.covariance.pruneSmallEigenvalues                                    medic/covariance/pruneSmallEigenvalues.test.cpp )
 
 # acer tests
 

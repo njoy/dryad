@@ -7,7 +7,7 @@ import njoy.dryad.id
 import numpy
 import pybind11_stubgen.typing_ext
 import typing
-__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedRadius', 'TabulatedWaveFunction']
+__all__: list[str] = ['BoundaryCondition', 'Channel', 'ChannelQuantumNumbers', 'ChannelRadii', 'CompoundSystem', 'CoulombPenetrability', 'CoulombPhaseShift', 'CoulombPhaseShiftDifference', 'CoulombShiftFactor', 'Formalism', 'FrohnerBackground', 'HardSpherePenetrability', 'HardSpherePhaseShift', 'HardSphereShiftFactor', 'Kinematics', 'ParticlePair', 'ResonanceParameters', 'ResonanceTable', 'SammyBackground', 'SpinGroup', 'TabulatedBackground', 'TabulatedLevelSpacing', 'TabulatedRadius', 'TabulatedWaveFunction']
 class BoundaryCondition:
     """
     The boundary condition options
@@ -1516,6 +1516,146 @@ class TabulatedBackground:
     def values(self) -> list[complex]:
         """
         The background values
+        """
+class TabulatedLevelSpacing:
+    """
+    A level spacing table
+    """
+    __hash__: typing.ClassVar[None] = None
+    @typing.overload
+    def __add__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    @typing.overload
+    def __add__(self, arg0: TabulatedLevelSpacing) -> TabulatedLevelSpacing:
+        ...
+    def __call__(self, energy: float) -> float:
+        """
+        Evaluate the table for a given energy value
+        
+        Arguments:
+            self      the table
+            energy    the energy value
+        """
+    def __copy__(self) -> TabulatedLevelSpacing:
+        ...
+    def __deepcopy__(self, arg0: dict) -> TabulatedLevelSpacing:
+        ...
+    def __eq__(self, arg0: TabulatedLevelSpacing) -> bool:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    @typing.overload
+    def __iadd__(self, arg0: TabulatedLevelSpacing) -> TabulatedLevelSpacing:
+        ...
+    def __imul__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[njoy.dryad.InterpolationType]) -> None:
+        """
+        Initialise the level spacing table
+        
+        Arguments:
+            self           the level spacing table
+            energies       the energy values
+            values         the level spacing values
+            boundaries     the boundaries of the interpolation regions
+            interpolants   the interpolation types of the interpolation regions,
+                           see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __init__(self, energies: list[float], values: list[float], interpolant: njoy.dryad.InterpolationType = ...) -> None:
+        """
+        Initialise the level spacing table
+        
+        Arguments:
+            self           the level spacing table
+            energies       the energy values
+            values         the level spacing values
+            interpolant    the interpolation type (default lin-lin),
+                           see InterpolationType for all interpolation types
+        """
+    @typing.overload
+    def __isub__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    @typing.overload
+    def __isub__(self, arg0: TabulatedLevelSpacing) -> TabulatedLevelSpacing:
+        ...
+    def __itruediv__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    def __mul__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    def __ne__(self, arg0: TabulatedLevelSpacing) -> bool:
+        ...
+    def __neg__(self) -> TabulatedLevelSpacing:
+        ...
+    def __radd__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    def __rmul__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    def __rsub__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    @typing.overload
+    def __sub__(self, arg0: TabulatedLevelSpacing) -> TabulatedLevelSpacing:
+        ...
+    def __truediv__(self, arg0: float) -> TabulatedLevelSpacing:
+        ...
+    def linearise(self, tolerance: float = 0.001) -> TabulatedLevelSpacing:
+        """
+        Linearise the table
+        
+        Parameters
+        ----------
+            tolerance : float, default 0.001
+                 the linearisation tolerance
+        """
+    @property
+    def boundaries(self) -> list[int]:
+        """
+        The boundaries of the interpolation regions
+        """
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy values
+        """
+    @property
+    def interpolants(self) -> list[njoy.dryad.InterpolationType]:
+        """
+        The interpolation types of the interpolation regions
+        """
+    @property
+    def is_linearised(self) -> bool:
+        """
+        Flag indicating whether or not the table is linearised
+        """
+    @property
+    def lower_energy_limit(self) -> float:
+        """
+        The lower energy limit
+        """
+    @property
+    def number_points(self) -> int:
+        """
+        The number of points in the table
+        """
+    @property
+    def number_regions(self) -> int:
+        """
+        The number of interpolation regions in the table
+        """
+    @property
+    def upper_energy_limit(self) -> float:
+        """
+        The upper energy limit
+        """
+    @property
+    def values(self) -> list[float]:
+        """
+        The level spacing values
         """
 class TabulatedRadius:
     """

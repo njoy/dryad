@@ -23,7 +23,7 @@ namespace rmatrix {
    *  @param[in] boundary_condition   the gnds boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
    *  @param[in] reactions            the resonance reaction information from the GNDS file
-   *  @param[in] spin                 the total angualr momentum value
+   *  @param[in] spin                 the total angular momentum value
    *  @param[in] parity               the parity
    *  @param[in] channels             the GNDS channels xml node
    */
@@ -68,7 +68,7 @@ namespace rmatrix {
     return data;
   }
 
-} // lrf7 namespace
+} // rmatrix namespace
 } // resonances namespace
 } // gnds namespace
 } // format namespace

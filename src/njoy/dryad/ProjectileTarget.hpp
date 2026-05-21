@@ -402,6 +402,9 @@ namespace dryad {
      */
     void resolvePartialIdentifiers() {
 
+      //! @todo verify that there are no cyclical dependencies
+      //!       an algorithm that finds cycles in a graph can be useful here
+
       for ( auto& reaction : this->reactions() ) {
 
         if ( reaction.isSummationReaction() ) {

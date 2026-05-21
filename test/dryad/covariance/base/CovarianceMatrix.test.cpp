@@ -49,9 +49,12 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk.standardDeviations() );
-        CHECK( std::nullopt == chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
 
         CHECK( 3 == chunk.covariances().rows() );
         CHECK( 3 == chunk.covariances().cols() );
@@ -64,25 +67,11 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 3. == chunk.covariances()(2,0) );
         CHECK( 6. == chunk.covariances()(2,1) );
         CHECK( 9. == chunk.covariances()(2,2) );
-      } // THEN
-
-      chunk.calculateStandardDeviations();
-
-      THEN( "Standard deviations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.standardDeviations() );
 
         CHECK( 3 == chunk.standardDeviations().value().size() );
         CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
         CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
         CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
-      } // THEN
-
-      chunk.calculateCorrelations();
-
-      THEN( "Correlations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.correlations() );
 
         CHECK( 3 == chunk.correlations().value().rows() );
         CHECK( 3 == chunk.correlations().value().cols() );
@@ -95,18 +84,25 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(2,0) );
         CHECK( 1. == chunk.correlations().value()(2,1) );
         CHECK( 1. == chunk.correlations().value()(2,2) );
-      } // THEN
 
-      chunk.calculateEigenvalues();
-
-      THEN( "Eigenvalues can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.eigenvalues() );
-
+        // eigenvector result provided by numpy
         CHECK( 3 == chunk.eigenvalues().value().size() );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
-        CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[2] ) );
+        CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[0] ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[2], 1e-12 ) );
+        CHECK( 3 == chunk.eigenvectors().value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+
+        CHECK( 3 == std::get< 0 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 14., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[0] ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[1], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[2], 1e-12 ) );
+        CHECK( 3 == std::get< 1 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](2) ) );
       } // THEN
     } // WHEN
 
@@ -140,7 +136,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( std::nullopt != chunk.standardDeviations() );
         CHECK( std::nullopt != chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
 
         CHECK( 3 == chunk.covariances().rows() );
         CHECK( 3 == chunk.covariances().cols() );
@@ -170,18 +169,103 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(2,0) );
         CHECK( 1. == chunk.correlations().value()(2,1) );
         CHECK( 1. == chunk.correlations().value()(2,2) );
-      } // THEN
 
-      chunk.calculateEigenvalues();
-
-      THEN( "Eigenvalues can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.eigenvalues() );
-
+        // eigenvector result provided by numpy
         CHECK( 3 == chunk.eigenvalues().value().size() );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
-        CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[2] ) );
+        CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[0] ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[2], 1e-12 ) );
+        CHECK( 3 == chunk.eigenvectors().value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+
+        CHECK( 3 == std::get< 0 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 14., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[0] ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[1], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[2], 1e-12 ) );
+        CHECK( 3 == std::get< 1 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](2) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "using eigenvalues and eigenvectors for an on-diagonal matrix" ) {
+
+      Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
+
+      std::vector< double > eigenvalues = { 14. };
+      std::vector< Vector< double > > eigenvectors( 1, Vector< double >( 3 ) );
+      eigenvectors[0] << 0.2672612419124246, 0.5345224838248487, 0.8017837257372732;
+
+      CovarianceMatrix chunk( std::move( metadata ),
+                              std::move( eigenvalues ),
+                              std::move( eigenvectors ) );
+
+      THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
+
+        CHECK( 3 == chunk.rowMetadata().keys().size() );
+        CHECK( 3 == chunk.columnMetadata().keys().size() );
+        CHECK( chunk.rowMetadata() == chunk.columnMetadata() );
+        CHECK( std::tuple{ 0 } == chunk.rowMetadata().keys()[0] );
+        CHECK( std::tuple{ 1 } == chunk.rowMetadata().keys()[1] );
+        CHECK( std::tuple{ 2 } == chunk.rowMetadata().keys()[2] );
+
+        CHECK( true == chunk.isRelativeMatrix() );
+        CHECK( false == chunk.isAbsoluteMatrix() );
+        CHECK( false == chunk.isOffDiagonal() );
+        CHECK( true == chunk.isOnDiagonal() );
+
+        CHECK( std::nullopt != chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
+
+        CHECK( 3 == chunk.covariances().rows() );
+        CHECK( 3 == chunk.covariances().cols() );
+        CHECK_THAT( 1., WithinRel( chunk.covariances()(0,0) ) );
+        CHECK_THAT( 2., WithinRel( chunk.covariances()(0,1) ) );
+        CHECK_THAT( 3., WithinRel( chunk.covariances()(0,2) ) );
+        CHECK_THAT( 2., WithinRel( chunk.covariances()(1,0) ) );
+        CHECK_THAT( 4., WithinRel( chunk.covariances()(1,1) ) );
+        CHECK_THAT( 6., WithinRel( chunk.covariances()(1,2) ) );
+        CHECK_THAT( 3., WithinRel( chunk.covariances()(2,0) ) );
+        CHECK_THAT( 6., WithinRel( chunk.covariances()(2,1) ) );
+        CHECK_THAT( 9., WithinRel( chunk.covariances()(2,2) ) );
+
+        CHECK( 3 == chunk.standardDeviations().value().size() );
+        CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
+        CHECK_THAT( 2., WithinRel( chunk.standardDeviations().value()[1] ) );
+        CHECK_THAT( 3., WithinRel( chunk.standardDeviations().value()[2] ) );
+
+        CHECK( 3 == chunk.correlations().value().rows() );
+        CHECK( 3 == chunk.correlations().value().cols() );
+        CHECK( 1. == chunk.correlations().value()(0,0) );
+        CHECK( 1. == chunk.correlations().value()(0,1) );
+        CHECK( 1. == chunk.correlations().value()(0,2) );
+        CHECK( 1. == chunk.correlations().value()(1,0) );
+        CHECK( 1. == chunk.correlations().value()(1,1) );
+        CHECK( 1. == chunk.correlations().value()(1,2) );
+        CHECK( 1. == chunk.correlations().value()(2,0) );
+        CHECK( 1. == chunk.correlations().value()(2,1) );
+        CHECK( 1. == chunk.correlations().value()(2,2) );
+
+        CHECK( 1 == chunk.eigenvalues().value().size() );
+        CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[0] ) );
+        CHECK( 1 == chunk.eigenvectors().value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+
+        CHECK( 1 == std::get< 0 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 14., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[0] ) );
+        CHECK( 1 == std::get< 1 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 0.2672612419124246, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](0) ) );
+        CHECK_THAT( 0.5345224838248487, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](1) ) );
+        CHECK_THAT( 0.8017837257372732, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](2) ) );
       } // THEN
     } // WHEN
 
@@ -201,7 +285,6 @@ SCENARIO( "CovarianceMatrix" ) {
 
       THEN( "a CovarianceMatrix can be constructed and members can be tested" ) {
 
-
         CHECK( 3 == chunk.rowMetadata().keys().size() );
         CHECK( 2 == chunk.columnMetadata().keys().size() );
         CHECK( chunk.rowMetadata() != chunk.columnMetadata() );
@@ -219,6 +302,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt == chunk.correlations() );
         CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt == chunk.eigenvectors() );
+        CHECK( std::nullopt == std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt == std::get< 1 >( chunk.eigendata() ) );
 
         CHECK( 3 == chunk.covariances().rows() );
         CHECK( 2 == chunk.covariances().cols() );
@@ -260,6 +346,9 @@ SCENARIO( "CovarianceMatrix" ) {
       THEN( "Eigenvalues cannot be calculated" ) {
 
         CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt == chunk.eigenvectors() );
+        CHECK( std::nullopt == std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt == std::get< 1 >( chunk.eigendata() ) );
       } // THEN
     } // WHEN
 
@@ -301,6 +390,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt == chunk.standardDeviations() );
         CHECK( std::nullopt != chunk.correlations() );
         CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt == chunk.eigenvectors() );
+        CHECK( std::nullopt == std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt == std::get< 1 >( chunk.eigendata() ) );
 
         CHECK( 3 == chunk.covariances().rows() );
         CHECK( 2 == chunk.covariances().cols() );
@@ -333,6 +425,9 @@ SCENARIO( "CovarianceMatrix" ) {
       THEN( "Eigenvalues cannot be calculated" ) {
 
         CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt == chunk.eigenvectors() );
+        CHECK( std::nullopt == std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt == std::get< 1 >( chunk.eigendata() ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -377,9 +472,12 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == chunk.isOffDiagonal() );
         CHECK( true == chunk.isOnDiagonal() );
 
-        CHECK( std::nullopt == chunk.standardDeviations() );
-        CHECK( std::nullopt == chunk.correlations() );
-        CHECK( std::nullopt == chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.standardDeviations() );
+        CHECK( std::nullopt != chunk.correlations() );
+        CHECK( std::nullopt != chunk.eigenvalues() );
+        CHECK( std::nullopt != chunk.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
 
         CHECK( 6 == chunk.covariances().rows() );
         CHECK( 6 == chunk.covariances().cols() );
@@ -419,13 +517,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 24. == chunk.covariances()(5,3) );
         CHECK( 30. == chunk.covariances()(5,4) );
         CHECK( 36. == chunk.covariances()(5,5) );
-      } // THEN
-
-      chunk.calculateStandardDeviations();
-
-      THEN( "Standard deviations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.standardDeviations() );
 
         CHECK( 6 == chunk.standardDeviations().value().size() );
         CHECK_THAT( 1., WithinRel( chunk.standardDeviations().value()[0] ) );
@@ -434,13 +525,6 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK_THAT( 4., WithinRel( chunk.standardDeviations().value()[3] ) );
         CHECK_THAT( 5., WithinRel( chunk.standardDeviations().value()[4] ) );
         CHECK_THAT( 6., WithinRel( chunk.standardDeviations().value()[5] ) );
-      } // THEN
-
-      chunk.calculateCorrelations();
-
-      THEN( "Correlations can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.correlations() );
 
         CHECK( 6 == chunk.correlations().value().rows() );
         CHECK( 6 == chunk.correlations().value().cols() );
@@ -480,21 +564,37 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(5,3) );
         CHECK( 1. == chunk.correlations().value()(5,4) );
         CHECK( 1. == chunk.correlations().value()(5,5) );
-      } // THEN
 
-      chunk.calculateEigenvalues();
-
-      THEN( "Eigenvalues can be calculated" ) {
-
-        CHECK( std::nullopt != chunk.eigenvalues() );
-
+        // eigenvector result provided by numpy
         CHECK( 6 == chunk.eigenvalues().value().size() );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[0], 1e-12 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[2], 1e-12 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[3], 1e-12 ) );
-        CHECK_THAT( 0., WithinAbs( chunk.eigenvalues().value()[4], 1e-12 ) );
-        CHECK_THAT( 91., WithinRel( chunk.eigenvalues().value()[5] ) );
+        CHECK_THAT( 91., WithinRel( chunk.eigenvalues().value()[0] ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[1], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[2], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[3], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[4], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( chunk.eigenvalues().value()[5], 1e-12 ) );
+        CHECK( 6 == chunk.eigenvectors().value().size() );
+        CHECK_THAT( 0.10482848367219190, WithinRel( chunk.eigenvectors().value()[0](0) ) );
+        CHECK_THAT( 0.20965696734438344, WithinRel( chunk.eigenvectors().value()[0](1) ) );
+        CHECK_THAT( 0.31448545101657550, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+        CHECK_THAT( 0.41931393468876743, WithinRel( chunk.eigenvectors().value()[0](3) ) );
+        CHECK_THAT( 0.52414241836095900, WithinRel( chunk.eigenvectors().value()[0](4) ) );
+        CHECK_THAT( 0.62897090203315100, WithinRel( chunk.eigenvectors().value()[0](5) ) );
+
+        CHECK( 6 == std::get< 0 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 91., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[0] ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[1], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[2], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[3], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[4], 1e-12 ) );
+        CHECK_THAT(  0., WithinAbs( std::get< 0 >( chunk.eigendata() ).value()[5], 1e-12 ) );
+        CHECK( 6 == std::get< 1 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 0.10482848367219190, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](0) ) );
+        CHECK_THAT( 0.20965696734438344, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](1) ) );
+        CHECK_THAT( 0.31448545101657550, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](2) ) );
+        CHECK_THAT( 0.41931393468876743, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](3) ) );
+        CHECK_THAT( 0.52414241836095900, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](4) ) );
+        CHECK_THAT( 0.62897090203315100, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](5) ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -538,9 +638,12 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == submatrix.standardDeviations() );
-        CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.standardDeviations() );
+        CHECK( std::nullopt != submatrix.correlations() );
+        CHECK( std::nullopt != submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK( 2 == submatrix.covariances().rows() );
         CHECK( 2 == submatrix.covariances().cols() );
@@ -569,9 +672,12 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == submatrix.standardDeviations() );
-        CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.standardDeviations() );
+        CHECK( std::nullopt != submatrix.correlations() );
+        CHECK( std::nullopt != submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK( 3 == submatrix.covariances().rows() );
         CHECK( 3 == submatrix.covariances().cols() );
@@ -608,9 +714,12 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( false == submatrix.isOffDiagonal() );
         CHECK( true == submatrix.isOnDiagonal() );
 
-        CHECK( std::nullopt == submatrix.standardDeviations() );
-        CHECK( std::nullopt == submatrix.correlations() );
-        CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.standardDeviations() );
+        CHECK( std::nullopt != submatrix.correlations() );
+        CHECK( std::nullopt != submatrix.eigenvalues() );
+        CHECK( std::nullopt != submatrix.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK( 6 == submatrix.covariances().rows() );
         CHECK( 6 == submatrix.covariances().cols() );
@@ -678,6 +787,9 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt == submatrix.standardDeviations() );
         CHECK( std::nullopt == submatrix.correlations() );
         CHECK( std::nullopt == submatrix.eigenvalues() );
+        CHECK( std::nullopt == submatrix.eigenvectors() );
+        CHECK( std::nullopt == std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt == std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK( 3 == submatrix.covariances().rows() );
         CHECK( 3 == submatrix.covariances().cols() );

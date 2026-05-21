@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATERESONANCEPARAMETERS
 
 // system includes
+#include <optional>
 #include <vector>
 
 // other includes
@@ -63,7 +64,7 @@ namespace resonances {
           }
           default : {
 
-            Log::info( "  Resolved formalism {} is currently uinsupported, skipping", range.representation() );
+            Log::info( "  Resolved formalism {} is currently unsupported, skipping", range.representation() );
             continue;
           }
         }
@@ -71,7 +72,7 @@ namespace resonances {
       else {
 
         Log::info( "Reading unresolved resonance region between {} and {} eV", lower, upper );
-        Log::info( "  Unresolved formalism {} is currently uinsupported, skipping", range.representation() );
+        Log::info( "  Unresolved formalism {} is currently unsupported, skipping", range.representation() );
       }
     }
 

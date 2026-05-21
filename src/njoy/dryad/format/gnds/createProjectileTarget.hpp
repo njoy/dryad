@@ -12,6 +12,7 @@
 #include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
 #include "njoy/dryad/format/gnds/createInteractionType.hpp"
 #include "njoy/dryad/format/gnds/pops/createParticleDatabase.hpp"
+#include "njoy/dryad/format/gnds/resonances/createResonanceParameters.hpp"
 #include "njoy/dryad/format/collectParticleIdentifiers.hpp"
 #include "njoy/dryad/format/gnds/createReactions.hpp"
 #include "njoy/dryad/format/gnds/covariance/createCovarianceData.hpp"
@@ -43,6 +44,9 @@ namespace gnds {
 
     if ( suite ) {
 
+      auto resonances = suite.child( "resonances" );
+      auto pops = suite.child( "PoPs" );
+
       id::ParticleID projectile = createParticleIdentifier( suite.attribute( "projectile" ).as_string() );
       id::ParticleID target( suite.attribute( "target" ).as_string() );
       InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
@@ -50,9 +54,14 @@ namespace gnds {
       std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
 
       std::vector< id::ParticleID > identifiers = collectParticleIdentifiers( reactions );
-      std::optional< ParticleDatabase > particles = pops::createParticleDatabase( suite.child( "PoPs" ), identifiers, style );
+      std::optional< ParticleDatabase > particles = pops::createParticleDatabase( pops, identifiers, style );
 
-      std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
+      std::optional< dryad::resonances::ResonanceParameters > parameters = std::nullopt;
+      if ( resonances ) {
+
+        parameters = resonances::createResonanceParameters( projectile, target, particles.value(),
+                                                          resonances, style );
+      }
 
       std::optional< dryad::covariance::CovarianceData > covariances = std::nullopt;
       if ( covsuite ) {
@@ -62,7 +71,7 @@ namespace gnds {
 
       return ProjectileTarget( std::move( projectile ), std::move( target ),
                                type, std::move( reactions ), std::move( particles ),
-                               std::move( resonances ), std::move( covariances ) );
+                               std::move( parameters ), std::move( covariances ) );
     }
     else {
 

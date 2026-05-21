@@ -11,7 +11,8 @@ dryad documentation
    :maxdepth: 1
    :caption: Modules:
 
-   dryad/dryad
+   dryad
+   psychic
 
 
 

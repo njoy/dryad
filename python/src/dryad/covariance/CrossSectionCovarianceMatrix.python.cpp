@@ -21,6 +21,7 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
   using ReactionID = njoy::dryad::id::ReactionID;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using Matrix = njoy::matrix::Matrix< double >;
+  using Vector = njoy::matrix::Vector< double >;
   using VarianceScaling = njoy::dryad::covariance::VarianceScaling;
 
   // wrap views created by this component
@@ -37,7 +38,9 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
   component
   .def(
 
-    python::init< CrossSectionMetadata, Matrix, bool,
+    python::init< CrossSectionMetadata,
+                  Matrix,
+                  bool,
                   std::optional< VarianceScaling > >(),
     python::arg( "metadata" ),
     python::arg( "covariances" ),
@@ -53,7 +56,10 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
   )
   .def(
 
-    python::init< CrossSectionMetadata, CrossSectionMetadata, Matrix, bool >(),
+    python::init< CrossSectionMetadata,
+                  CrossSectionMetadata,
+                  Matrix,
+                  bool >(),
     python::arg( "row_metadata" ), python::arg( "column_metadata" ),
     python::arg( "covariances" ), python::arg( "relative" ) = true,
     "Initialise an off-diagonal cross section covariance matrix\n\n"
@@ -67,7 +73,9 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
   .def(
 
     python::init< CrossSectionMetadata,
-                  std::vector< double >, Matrix, bool,
+                  std::vector< double >,
+                  Matrix,
+                  bool,
                   std::optional< VarianceScaling > >(),
     python::arg( "metadata" ), python::arg( "deviations" ),
     python::arg( "correlations" ), python::arg( "relative" ) = true,
@@ -100,6 +108,26 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "    column_deviations  the standard deviations to be applied to each column\n"
     "    correlations       the correlation matrix\n"
     "    relative           the relative covariance flag (default is true)"
+  )
+  .def(
+
+    python::init< CrossSectionMetadata,
+                  std::vector< double >,
+                  std::vector< Vector >,
+                  bool,
+                  std::optional< VarianceScaling > >(),
+    python::arg( "metadata" ), python::arg( "eigenvalues" ),
+    python::arg( "eigenvectors" ), python::arg( "relative" ) = true,
+    python::arg( "scaling" ) = std::nullopt,
+    "Initialise an on-diagonal cross section covariance matrix using eigenvalues\n"
+    "and eigenvectors\n\n"
+    "Arguments:\n"
+    "    self           the covariance matrix\n"
+    "    metadata       the row and column metadata\n"
+    "    eigenvalues    the eigenvalues\n"
+    "    eigenvectors   the associated eigenvectors\n"
+    "    relative       the relative covariance flag (default is true)\n"
+    "    scaling        the variance scaling information (default is none)"
   )
   .def_property_readonly(
 
@@ -157,7 +185,7 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
        { return self.isOnDiagonal(); },
     "Flag to indicate whether or not this covariance matrix is on-diagonal"
   )
-  .def_property_readonly(
+  .def_property(
 
     // to ensure the matrix is not copied: reference_internal is used
     // see pybind11 documentation for Eigen bindings for more information
@@ -165,22 +193,29 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "covariances",
     [] ( const Component& self ) -> decltype(auto)
        { return self.covariances(); },
+    [] ( Component& self, Matrix covariances ) -> void
+       { self.covariances( std::move( covariances ) ); },
     "The covariance matrix",
     python::return_value_policy::reference_internal
   )
-  .def_property_readonly(
+  .def_property(
 
     "standard_deviations",
     [] ( const Component& self ) -> decltype(auto)
        { return self.standardDeviations(); },
+    [] ( Component& self,
+         std::optional< std::vector< double > > deviations ) -> void
+       { self.standardDeviations( std::move( deviations ) ); },
     "The standard deviations",
     python::return_value_policy::reference_internal
   )
-  .def_property_readonly(
+  .def_property(
 
     "correlations",
     [] ( const Component& self ) -> decltype(auto)
        { return self.correlations(); },
+    [] ( Component& self, Matrix correlations ) -> void
+       { self.correlations( std::move( correlations ) ); },
     "The correlation matrix",
     python::return_value_policy::reference_internal
   )
@@ -191,6 +226,58 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
        { return self.eigenvalues(); },
     "The eigenvalues",
     python::return_value_policy::reference_internal
+  )
+  .def_property_readonly(
+
+    "eigenvectors",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.eigenvectors(); },
+    "The eigenvectors",
+    python::return_value_policy::reference_internal
+  )
+  .def_property(
+
+    "eigendata",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.eigendata(); },
+    [] ( Component& self,
+         std::tuple< std::optional< std::vector< double > >,
+                     std::optional< std::vector< Vector > > > eigendata ) -> void
+       { self.eigendata( std::move( eigendata ) ); },
+    "The eigenvalues and eigenvectors",
+    python::return_value_policy::reference_internal
+  )
+  .def(
+
+    "calculate_covariances",
+    [] ( Component& self )
+       { return self.calculateCovariances(); },
+    "Calculate the covariances (for on diagonal blocks)\n\n"
+    "The covariances can be calculated without input of the standard\n"
+    "deviations for blocks on the diagonal of the matrix.\n\n"
+    "When this method is called on an off diagonal block, the method has no effect.\n\n"
+    "When this method is called on a block that has no correlations, the method\n"
+    "has no effect."
+  )
+  .def(
+
+    "calculate_covariances",
+    [] ( Component& self,
+         const std::vector< double >& row,
+         const std::vector< double >& column )
+       { return self.calculateCovariances( row, column ); },
+    python::arg( "row_deviations" ), python::arg( "column_deviations" ),
+    "Calculate the covariances (for off diagonal matrices)\n\n"
+    "The covariances can only be calculated with input of the standard deviations\n"
+    "for blocks that are off diagonal in the matrix. Standard deviations will not\n"
+    "be stored.\n\n"
+    "When this method is called on a block that has no correlations, the method\n"
+    "has no effect.\n"
+    "Standard deviations will not be stored.\n\n"
+    "Arguments:\n"
+    "    self                the covariance matrix\n"
+    "    row_deviations      the standard deviations to be applied to each row\n"
+    "    column_deviations   the standard deviations to be applied to each column"
   )
   .def(
 
@@ -217,7 +304,8 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
   .def(
 
     "calculate_correlations",
-    [] ( Component& self, const std::vector< double >& row,
+    [] ( Component& self,
+         const std::vector< double >& row,
          const std::vector< double >& column )
        { return self.calculateCorrelations( row, column ); },
     python::arg( "row_deviations" ), python::arg( "column_deviations" ),

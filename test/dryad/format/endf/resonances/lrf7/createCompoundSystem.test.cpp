@@ -2079,13 +2079,13 @@ void verifyChunkCl35( const CompoundSystem& chunk ) {
   CHECK_THAT( std::sqrt( 0.53401 / 2. ), WithinRel( resonances[0][0] ) );
   CHECK_THAT( std::sqrt( 0.860 / 2. ), WithinRel( resonances[0][94] ) );
   CHECK_THAT( std::sqrt( 3.820180e+4 / 2. / channel1.penetrability( -3.369334e+5 ) ), WithinRel( resonances[1][0] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel1.penetrability( 1.441365e+6 ) ), WithinRel( resonances[1][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel1.penetrability(  1.441365e+6 ) ), WithinRel( resonances[1][94] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel3.penetrability( -3.369334e+5 ) ), WithinRel( resonances[2][0] ) );
   CHECK_THAT( std::sqrt( 1.608740e+3 / 2. / channel3.penetrability( 1.441365e+6 ) ), WithinRel( resonances[2][94] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( -3.369334e+5 ) ), WithinRel( resonances[3][0] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability( 1.441365e+6 ) ), WithinRel( resonances[3][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel2.penetrability(  1.441365e+6 ) ), WithinRel( resonances[3][94] ) );
   CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( -3.369334e+5 ) ), WithinRel( resonances[4][0] ) );
-  CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability( 1.441365e+6 ) ), WithinRel( resonances[4][94] ) );
+  CHECK_THAT( std::sqrt( 0.0 / 2. / channel4.penetrability(  1.441365e+6 ) ), WithinRel( resonances[4][94] ) );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // spin group 4

@@ -57,13 +57,18 @@ namespace rmatrix {
   /**
    *  @brief Create the information for a resonance reaction
    *
-   *  @param[in] reaction   the GNDS resonanceReaction node
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] reaction     the GNDS resonanceReaction node
+   *  @param[in] particles    the particle data from the global and local pops
+   *  @param[in] radii        the previously read channel radii
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ResonanceReaction
   createResonanceReaction( const id::ParticleID& projectile,
                            const id::ParticleID& target,
                            const pugi::xml_node& reaction,
-                           const std::vector< Particle > particles,
+                           const std::vector< Particle >& particles,
                            const dryad::resonances::ChannelRadii& radii,
                            const std::string& style = "eval" ) {
 

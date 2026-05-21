@@ -21,7 +21,9 @@ namespace rmatrix {
   /**
    *  @brief Create the particle identifiers for resonance particles
    *
-   *  @param[in] reactions   the GNDS resonanceReactions node
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] reactions    the GNDS resonanceReactions node
    */
   inline std::vector< id::ParticleID >
   createParticleIdentifiers( const id::ParticleID& projectile,

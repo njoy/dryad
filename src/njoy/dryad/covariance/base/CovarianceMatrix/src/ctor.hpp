@@ -30,13 +30,14 @@ CovarianceMatrix( Metadata metadata,
     correlations_( std::nullopt ) {
 
   verifyMatrix( this->covariances(), this->rowMetadata().keys().size() );
+  this->calculateCorrelations();
+  this->calculateEigenvalues();
 }
 
 /**
  *  @brief Constructor for an on-diagonal correlation matrix (relative or absolute)
  *
  *  @param[in] metadata       the metadata from which the keys are derived
- *  @param[in] keys           the row and column keys
  *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
  *  @param[in] relative       the relative covariance flag
@@ -55,6 +56,31 @@ CovarianceMatrix( Metadata metadata,
                 this->correlations().value(),
                 this->rowMetadata().keys().size() );
   this->calculateCovariances();
+  this->calculateEigenvalues();
+}
+
+/**
+ *  @brief Constructor using eigenvalues and eigenvectors (relative or absolute)
+ *
+ *  @param[in] metadata       the metadata from which the keys are derived
+ *  @param[in] eigenvalues    the eigenvalues
+ *  @param[in] eigenvectors   the associated eigenvalues
+ *  @param[in] relative       the relative covariance flag
+ */
+CovarianceMatrix( Metadata metadata,
+                  std::vector< double > eigenvalues,
+                  std::vector< matrix::Vector< double > > eigenvectors,
+                  bool relative = true ) :
+    row_metadata_( std::move( metadata ) ),
+    column_metadata_( std::nullopt ),
+    relative_( relative ),
+    eigendata_( std::make_tuple( std::move( eigenvalues ), std::move( eigenvectors ) ) ) {
+
+  verifyMatrix( this->eigenvalues().value(),
+                this->eigenvectors().value(),
+                this->rowMetadata().keys().size() );
+  this->calculateCovariances();
+  this->calculateCorrelations();
 }
 
 /**
