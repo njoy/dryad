@@ -33,4 +33,4 @@ AngularDistributionMetadata( std::vector< id::ReactionID > reactions,
     Parent( generateKeys( reactions, energies, moments ) ),
     reactions_( std::move( reactions ) ),
     energies_( std::move( energies ) ),
-    energies_( std::move( moments ) ) {}
+    moments_( std::move( moments ) ) {}

@@ -42,6 +42,7 @@ add_cpp_test( dryad.covariance.base.CovarianceMatrix                            
 add_cpp_test( dryad.covariance.VarianceScaling                                          dryad/covariance/VarianceScaling.test.cpp )
 add_cpp_test( dryad.covariance.CrossSectionMetadata                                     dryad/covariance/CrossSectionMetadata.test.cpp )
 add_cpp_test( dryad.covariance.CrossSectionCovarianceMatrix                             dryad/covariance/CrossSectionCovarianceMatrix.test.cpp )
+add_cpp_test( dryad.covariance.AngularDistributionMetadata                              dryad/covariance/AngularDistributionMetadata.test.cpp )
 add_cpp_test( dryad.covariance.ProductMultiplicityMetadata                              dryad/covariance/ProductMultiplicityMetadata.test.cpp )
 add_cpp_test( dryad.covariance.ProductMultiplicityCovarianceMatrix                      dryad/covariance/ProductMultiplicityCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.covariance.LinearCombinationCovariance                              dryad/covariance/LinearCombinationCovariance.test.cpp )
