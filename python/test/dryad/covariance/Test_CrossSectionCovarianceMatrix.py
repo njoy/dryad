@@ -2,9 +2,9 @@
 import unittest
 
 # third party imports
+import numpy
 
 # local imports
-import numpy
 from njoy.dryad.covariance import CrossSectionCovarianceMatrix
 from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.covariance import ScalingType

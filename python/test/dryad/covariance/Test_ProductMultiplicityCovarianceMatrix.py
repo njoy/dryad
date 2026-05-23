@@ -2,9 +2,9 @@
 import unittest
 
 # third party imports
+import numpy
 
 # local imports
-import numpy
 from njoy.dryad.covariance import ProductMultiplicityMetadata
 from njoy.dryad.covariance import ProductMultiplicityCovarianceMatrix
 from njoy.dryad.id import ParticleID

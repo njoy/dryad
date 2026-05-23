@@ -4,7 +4,6 @@ import unittest
 # third party imports
 
 # local imports
-import numpy
 from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.id import ReactionID
 from njoy.dryad.id import EnergyGroup

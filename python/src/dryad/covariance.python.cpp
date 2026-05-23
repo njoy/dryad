@@ -19,6 +19,7 @@ namespace covariance {
   // declarations - covariance components
   void wrapCrossSectionMetadata( python::module& );
   void wrapCrossSectionCovarianceMatrix( python::module& );
+  void wrapAngularDistributionMetadata( python::module& );
   void wrapProductMultiplicityMetadata( python::module& );
   void wrapProductMultiplicityCovarianceMatrix( python::module& );
   void wrapLinearCombinationCovariance( python::module& );
@@ -44,6 +45,7 @@ void wrapCovariance( python::module& module ) {
   // declarations - covariance components
   covariance::wrapCrossSectionMetadata( submodule );
   covariance::wrapCrossSectionCovarianceMatrix( submodule );
+  covariance::wrapAngularDistributionMetadata( submodule );
   covariance::wrapProductMultiplicityMetadata( submodule );
   covariance::wrapProductMultiplicityCovarianceMatrix( submodule );
   covariance::wrapLinearCombinationCovariance( submodule );

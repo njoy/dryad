@@ -4,7 +4,6 @@ import unittest
 # third party imports
 
 # local imports
-import numpy
 from njoy.dryad.covariance import ProductMultiplicityMetadata
 from njoy.dryad.id import ParticleID
 from njoy.dryad.id import ReactionID

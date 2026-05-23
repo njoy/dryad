@@ -57,6 +57,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/VarianceScaling.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CrossSectionMetadata.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/CrossSectionCovarianceMatrix.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/AngularDistributionMetadata.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ProductMultiplicityMetadata.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/ProductMultiplicityCovarianceMatrix.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/covariance/LinearCombinationCovariance.python.cpp
