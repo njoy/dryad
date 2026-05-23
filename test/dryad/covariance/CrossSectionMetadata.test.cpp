@@ -13,7 +13,7 @@ using Catch::Matchers::WithinAbs;
 using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "Metadata" ) {
+SCENARIO( "CrossSectionMetadata" ) {
 
   GIVEN( "valid metadata for a covariance matrix for cross sections" ) {
 

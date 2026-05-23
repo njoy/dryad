@@ -14,7 +14,7 @@ using namespace njoy::matrix;
 using namespace njoy::dryad;
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "CovarianceMatrix" ) {
+SCENARIO( "ProductMultiplicityCovarianceMatrix" ) {
 
   GIVEN( "valid covariance data for product multiplicities" ) {
 
