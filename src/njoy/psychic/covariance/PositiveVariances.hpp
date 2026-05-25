@@ -8,6 +8,7 @@
 #include "njoy/psychic/base/Test.hpp"
 #include "njoy/psychic/TestStatus.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/AngularDistributionCovarianceMatrix.hpp"
 #include "njoy/dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
 #include "njoy/constants.hpp"
 
@@ -70,6 +71,7 @@ namespace covariance {
     template < typename Covariance >
     auto operator()( const Covariance& covariance )
     -> std::enable_if_t< std::is_same_v< Covariance, dryad::covariance::CrossSectionCovarianceMatrix > ||
+                         std::is_same_v< Covariance, dryad::covariance::AngularDistributionCovarianceMatrix > ||
                          std::is_same_v< Covariance, dryad::covariance::ProductMultiplicityCovarianceMatrix >,
                          const std::optional< TestStatus >& > {
 
