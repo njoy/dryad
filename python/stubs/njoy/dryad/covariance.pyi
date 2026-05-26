@@ -5,7 +5,280 @@ from __future__ import annotations
 import njoy.dryad.id
 import numpy
 import typing
-__all__: list[str] = ['CovarianceData', 'CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+__all__: list[str] = ['AngularDistributionCovarianceMatrix', 'AngularDistributionMetadata', 'CovarianceData', 'CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+class AngularDistributionCovarianceMatrix:
+    """
+    A covariance matrix for angular distributions
+    """
+    def __copy__(self) -> AngularDistributionCovarianceMatrix:
+        ...
+    def __deepcopy__(self, arg0: dict) -> AngularDistributionCovarianceMatrix:
+        ...
+    @typing.overload
+    def __init__(self, metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise an on-diagonal angular distribution covariance matrix
+        
+        Arguments:
+            self          the covariance matrix
+            metadata      the row and column metadata
+            covariances   the covariance matrix
+            relative      the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise an off-diagonal angular distribution covariance matrix
+        
+        Arguments:
+            self             the covariance matrix
+            row_metadata     the row metadata
+            column_metadata  the column metadata
+            covariances      the covariance matrix
+            relative         the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, metadata: AngularDistributionMetadata, deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise an on-diagonal angular distribution correlation matrix
+        
+        Arguments:
+            self           the covariance matrix
+            metadata       the row and column metadata
+            deviations     the standard deviations
+            correlations   the correlation matrix
+            relative       the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+        """
+        Initialise an off-diagonal angular distribution correlation matrix
+        
+        Arguments:
+            self               the covariance matrix
+            row_metadata       the row metadata
+            column_metadata    the column metadata
+            row_deviations     the standard deviations to be applied to each row
+            column_deviations  the standard deviations to be applied to each column
+            correlations       the correlation matrix
+            relative           the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def __init__(self, metadata: AngularDistributionMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True) -> None:
+        """
+        Initialise an on-diagonal angular distribution covariance matrix using eigenvalues
+        and eigenvectors
+        
+        Arguments:
+            self           the covariance matrix
+            metadata       the row and column metadata
+            eigenvalues    the eigenvalues
+            eigenvectors   the associated eigenvectors
+            relative       the relative covariance flag (default is true)
+        """
+    @typing.overload
+    def calculate_correlations(self) -> None:
+        """
+        Calculate the correlations (for on diagonal matrices)
+        
+        The correlations can be calculated without input of the standard
+        deviations for matrices on the diagonal of the full matrix. Standard
+        deviations will be calculated and stored as well.
+        When this method is called on an off diagonal matrix, the method has
+        no effect.
+        """
+    @typing.overload
+    def calculate_correlations(self, row_deviations: list[float], column_deviations: list[float]) -> None:
+        """
+        Calculate the correlations (for off diagonal matrices)
+        
+        The correlations can only be calculated with input of the standard deviations
+        for covariance matrices that are off diagonal in the full covariance matrix.
+        Standard deviations will not be stored.
+        
+        Arguments:
+            self                the covariance matrix
+            row_deviations      the standard deviations to be applied to each row
+            column_deviations   the standard deviations to be applied to each column
+        """
+    @typing.overload
+    def calculate_covariances(self) -> None:
+        """
+        Calculate the covariances (for on diagonal blocks)
+        
+        The covariances can be calculated without input of the standard
+        deviations for blocks on the diagonal of the matrix.
+        
+        When this method is called on an off diagonal block, the method has no effect.
+        
+        When this method is called on a block that has no correlations, the method
+        has no effect.
+        """
+    @typing.overload
+    def calculate_covariances(self, row_deviations: list[float], column_deviations: list[float]) -> None:
+        """
+        Calculate the covariances (for off diagonal matrices)
+        
+        The covariances can only be calculated with input of the standard deviations
+        for blocks that are off diagonal in the matrix. Standard deviations will not
+        be stored.
+        
+        When this method is called on a block that has no correlations, the method
+        has no effect.
+        Standard deviations will not be stored.
+        
+        Arguments:
+            self                the covariance matrix
+            row_deviations      the standard deviations to be applied to each row
+            column_deviations   the standard deviations to be applied to each column
+        """
+    def calculate_eigenvalues(self) -> None:
+        """
+        Calculate the eigenvalues from the covariances
+        
+        The eigenvalues can only be calculated from matrices on the diagonal
+        of the full matrix. When this function is called on an off diagonal matrix,
+        the function has no effect.
+        """
+    def calculate_standard_deviations(self) -> None:
+        """
+        Calculate the standard deviations from the covariances
+        
+        The standard deviations can only be calculated from covariance matrices on the
+        diagonal of the full covariance matrix. When this function is called on an
+        off diagonal matrix, the function has no effect.
+        """
+    @typing.overload
+    def extract(self, reaction: njoy.dryad.id.ReactionID | None, moment: int | None, group: njoy.dryad.id.EnergyGroup | None) -> AngularDistributionCovarianceMatrix:
+        ...
+    @typing.overload
+    def extract(self, row_reaction: njoy.dryad.id.ReactionID | None, row_moment: int | None, row_group: njoy.dryad.id.EnergyGroup | None, col_reaction: njoy.dryad.id.ReactionID | None, col_moment: int | None, col_group: njoy.dryad.id.EnergyGroup | None) -> AngularDistributionCovarianceMatrix:
+        ...
+    @property
+    def column_metadata(self) -> AngularDistributionMetadata:
+        """
+        The column metadata
+        """
+    @property
+    def correlations(self) -> numpy.ndarray[numpy.float64[m, n]] | None:
+        """
+        The correlation matrix
+        """
+    @correlations.setter
+    def correlations(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
+    @property
+    def covariances(self) -> numpy.ndarray[numpy.float64[m, n]]:
+        """
+        The covariance matrix
+        """
+    @covariances.setter
+    def covariances(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
+    @property
+    def eigendata(self) -> tuple[list[float] | None, list[numpy.ndarray[numpy.float64[m, 1]]] | None]:
+        """
+        The eigenvalues and eigenvectors
+        """
+    @eigendata.setter
+    def eigendata(self, arg1: tuple[list[float] | None, list[numpy.ndarray[numpy.float64[m, 1]]] | None]) -> None:
+        ...
+    @property
+    def eigenvalues(self) -> list[float] | None:
+        """
+        The eigenvalues
+        """
+    @property
+    def eigenvectors(self) -> list[numpy.ndarray[numpy.float64[m, 1]]] | None:
+        """
+        The eigenvectors
+        """
+    @property
+    def is_absolute_matrix(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is absolute or not
+        """
+    @property
+    def is_off_diagonal(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is off-diagonal
+        """
+    @property
+    def is_on_diagonal(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is on-diagonal
+        """
+    @property
+    def is_relative_matrix(self) -> bool:
+        """
+        Flag to indicate whether or not this covariance matrix is relative or not
+        """
+    @property
+    def row_metadata(self) -> AngularDistributionMetadata:
+        """
+        The row metadata
+        """
+    @property
+    def standard_deviations(self) -> list[float] | None:
+        """
+        The standard deviations
+        """
+    @standard_deviations.setter
+    def standard_deviations(self, arg1: list[float] | None) -> None:
+        ...
+class AngularDistributionMetadata:
+    """
+    Covariance metadata for angular distributions
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> AngularDistributionMetadata:
+        ...
+    def __deepcopy__(self, arg0: dict) -> AngularDistributionMetadata:
+        ...
+    def __eq__(self, arg0: AngularDistributionMetadata) -> bool:
+        ...
+    @typing.overload
+    def __init__(self, reactions: list[njoy.dryad.id.ReactionID], moments: list[int], energies: list[float]) -> None:
+        """
+        Initialise the angular distribution covariance metadata
+        
+        Arguments:
+            self          the covariance metadata
+            reactions     the reaction identifiers
+            moments       the Legendre moments
+            energies      the group structure
+        """
+    @typing.overload
+    def __init__(self, keys: list[tuple[njoy.dryad.id.ReactionID, int, njoy.dryad.id.EnergyGroup]]) -> None:
+        """
+        Initialise the angular distribution covariance metadata
+        
+        Arguments:
+            self   the covariance metadata
+            keys   the metadata keys
+        """
+    def __ne__(self, arg0: AngularDistributionMetadata) -> bool:
+        ...
+    @property
+    def energies(self) -> list[float]:
+        """
+        The energy group boundaries
+        """
+    @property
+    def keys(self) -> list[tuple[njoy.dryad.id.ReactionID, int, njoy.dryad.id.EnergyGroup]]:
+        """
+        The metadata keys
+        """
+    @property
+    def moments(self) -> list[int]:
+        """
+        The Legendre moments
+        """
+    @property
+    def reaction_identifiers(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reaction identifiers
+        """
 class CovarianceData:
     """
     The covariance data
@@ -60,7 +333,7 @@ class CrossSectionCovarianceData:
         ----------
             projectile : njoy.dryad.id.ParticleID
                  the projectile identifier
-            projectile : njoy.dryad.id.ParticleID
+            target : njoy.dryad.id.ParticleID
                  the target identifier
             relative : bool
                  the flag to indicate whether or not the covariance data is relative

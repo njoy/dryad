@@ -135,7 +135,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
     "         the projectile identifier\n"
-    "    projectile : njoy.dryad.id.ParticleID\n"
+    "    target : njoy.dryad.id.ParticleID\n"
     "         the target identifier\n"
     "    relative : bool\n"
     "         the flag to indicate whether or not the covariance data is relative\n"

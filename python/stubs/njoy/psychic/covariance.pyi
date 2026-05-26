@@ -34,6 +34,11 @@ class BoundedCorrelations:
                 the covariance matrix instance to be tested
         """
     @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has correlations between -1 and 1
+        """
+    @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
         """
         Verify if the provided covariance matrix has correlations between -1 and 1
@@ -102,6 +107,11 @@ class DiagonalCorrelations:
                 the covariance matrix instance to be tested
         """
     @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has diagonal correlations equal to 1
+        """
+    @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
         """
         Verify if the provided covariance matrix has diagonal correlations equal to 1
@@ -153,6 +163,11 @@ class EigenvalueRatio:
         ----------
             covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
+        """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has a reasonable eigenvalue ratio
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -238,6 +253,11 @@ class PositiveSemiDefinite:
                 the covariance matrix instance to be tested
         """
     @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix is positive semi-definite
+        """
+    @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
         """
         Verify if the provided covariance matrix is positive semi-definite
@@ -293,6 +313,11 @@ class PositiveVariances:
                 the covariance matrix instance to be tested
         """
     @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has variances that are strictly positive
+        """
+    @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
         """
         Verify if the provided covariance matrix has variances that are strictly positive
@@ -336,6 +361,11 @@ class TestSuite:
         ----------
             covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
+        """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Perform the test suite on the provided covariance matrix
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
