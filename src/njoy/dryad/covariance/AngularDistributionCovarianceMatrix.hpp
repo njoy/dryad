@@ -22,12 +22,12 @@ namespace covariance {
    */
   class AngularDistributionCovarianceMatrix :
     protected base::CovarianceMatrix< AngularDistributionMetadata,
-                                      id::ReactionID, id::EnergyGroup, std::size_t > {
+                                      id::ReactionID, std::size_t, id::EnergyGroup > {
 
     /* type aliases */
 
     using Parent = base::CovarianceMatrix< AngularDistributionMetadata,
-                                           id::ReactionID, id::EnergyGroup, std::size_t >;
+                                           id::ReactionID, std::size_t, id::EnergyGroup >;
 
     /* fields */
 

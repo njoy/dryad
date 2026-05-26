@@ -41,41 +41,41 @@ class Test_AngularDistributionMetadata( unittest.TestCase ) :
         self.assertEqual( 4, chunk.moments[3] )
 
         self.assertEqual( 16, len( chunk.keys ) )
-        self.assertEqual( ( reaction1, group1, 1 ), chunk.keys[0] )
-        self.assertEqual( ( reaction1, group1, 2 ), chunk.keys[1] )
-        self.assertEqual( ( reaction1, group1, 3 ), chunk.keys[2] )
-        self.assertEqual( ( reaction1, group1, 4 ), chunk.keys[3] )
-        self.assertEqual( ( reaction1, group2, 1 ), chunk.keys[4] )
-        self.assertEqual( ( reaction1, group2, 2 ), chunk.keys[5] )
-        self.assertEqual( ( reaction1, group2, 3 ), chunk.keys[6] )
-        self.assertEqual( ( reaction1, group2, 4 ), chunk.keys[7] )
-        self.assertEqual( ( reaction2, group1, 1 ), chunk.keys[8] )
-        self.assertEqual( ( reaction2, group1, 2 ), chunk.keys[9] )
-        self.assertEqual( ( reaction2, group1, 3 ), chunk.keys[10] )
-        self.assertEqual( ( reaction2, group1, 4 ), chunk.keys[11] )
-        self.assertEqual( ( reaction2, group2, 1 ), chunk.keys[12] )
-        self.assertEqual( ( reaction2, group2, 2 ), chunk.keys[13] )
-        self.assertEqual( ( reaction2, group2, 3 ), chunk.keys[14] )
-        self.assertEqual( ( reaction2, group2, 4 ), chunk.keys[15] )
+        self.assertEqual( ( reaction1, 1, group1 ), chunk.keys[0] )
+        self.assertEqual( ( reaction1, 1, group2 ), chunk.keys[1] )
+        self.assertEqual( ( reaction1, 2, group1 ), chunk.keys[2] )
+        self.assertEqual( ( reaction1, 2, group2 ), chunk.keys[3] )
+        self.assertEqual( ( reaction1, 3, group1 ), chunk.keys[4] )
+        self.assertEqual( ( reaction1, 3, group2 ), chunk.keys[5] )
+        self.assertEqual( ( reaction1, 4, group1 ), chunk.keys[6] )
+        self.assertEqual( ( reaction1, 4, group2 ), chunk.keys[7] )
+        self.assertEqual( ( reaction2, 1, group1 ), chunk.keys[8] )
+        self.assertEqual( ( reaction2, 1, group2 ), chunk.keys[9] )
+        self.assertEqual( ( reaction2, 2, group1 ), chunk.keys[10] )
+        self.assertEqual( ( reaction2, 2, group2 ), chunk.keys[11] )
+        self.assertEqual( ( reaction2, 3, group1 ), chunk.keys[12] )
+        self.assertEqual( ( reaction2, 3, group2 ), chunk.keys[13] )
+        self.assertEqual( ( reaction2, 4, group1 ), chunk.keys[14] )
+        self.assertEqual( ( reaction2, 4, group2 ), chunk.keys[15] )
 
         # valid keys
         chunk = AngularDistributionMetadata(
-                    keys = [ ( reaction1, group1, 1 ),
-                             ( reaction1, group1, 2 ),
-                             ( reaction1, group1, 3 ),
-                             ( reaction1, group1, 4 ),
-                             ( reaction1, group2, 1 ),
-                             ( reaction1, group2, 2 ),
-                             ( reaction1, group2, 3 ),
-                             ( reaction1, group2, 4 ),
-                             ( reaction2, group1, 1 ),
-                             ( reaction2, group1, 2 ),
-                             ( reaction2, group1, 3 ),
-                             ( reaction2, group1, 4 ),
-                             ( reaction2, group2, 1 ),
-                             ( reaction2, group2, 2 ),
-                             ( reaction2, group2, 3 ),
-                             ( reaction2, group2, 4 ) ] )
+                    keys = [ ( reaction1, 1, group1 ),
+                             ( reaction1, 1, group2 ),
+                             ( reaction1, 2, group1 ),
+                             ( reaction1, 2, group2 ),
+                             ( reaction1, 3, group1 ),
+                             ( reaction1, 3, group2 ),
+                             ( reaction1, 4, group1 ),
+                             ( reaction1, 4, group2 ),
+                             ( reaction2, 1, group1 ),
+                             ( reaction2, 1, group2 ),
+                             ( reaction2, 2, group1 ),
+                             ( reaction2, 2, group2 ),
+                             ( reaction2, 3, group1 ),
+                             ( reaction2, 3, group2 ),
+                             ( reaction2, 4, group1 ),
+                             ( reaction2, 4, group2 ) ] )
 
         # verify content
         self.assertEqual( 2, len( chunk.reaction_identifiers ) )
@@ -94,22 +94,22 @@ class Test_AngularDistributionMetadata( unittest.TestCase ) :
         self.assertEqual( 4, chunk.moments[3] )
 
         self.assertEqual( 16, len( chunk.keys ) )
-        self.assertEqual( ( reaction1, group1, 1 ), chunk.keys[0] )
-        self.assertEqual( ( reaction1, group1, 2 ), chunk.keys[1] )
-        self.assertEqual( ( reaction1, group1, 3 ), chunk.keys[2] )
-        self.assertEqual( ( reaction1, group1, 4 ), chunk.keys[3] )
-        self.assertEqual( ( reaction1, group2, 1 ), chunk.keys[4] )
-        self.assertEqual( ( reaction1, group2, 2 ), chunk.keys[5] )
-        self.assertEqual( ( reaction1, group2, 3 ), chunk.keys[6] )
-        self.assertEqual( ( reaction1, group2, 4 ), chunk.keys[7] )
-        self.assertEqual( ( reaction2, group1, 1 ), chunk.keys[8] )
-        self.assertEqual( ( reaction2, group1, 2 ), chunk.keys[9] )
-        self.assertEqual( ( reaction2, group1, 3 ), chunk.keys[10] )
-        self.assertEqual( ( reaction2, group1, 4 ), chunk.keys[11] )
-        self.assertEqual( ( reaction2, group2, 1 ), chunk.keys[12] )
-        self.assertEqual( ( reaction2, group2, 2 ), chunk.keys[13] )
-        self.assertEqual( ( reaction2, group2, 3 ), chunk.keys[14] )
-        self.assertEqual( ( reaction2, group2, 4 ), chunk.keys[15] )
+        self.assertEqual( ( reaction1, 1, group1 ), chunk.keys[0] )
+        self.assertEqual( ( reaction1, 1, group2 ), chunk.keys[1] )
+        self.assertEqual( ( reaction1, 2, group1 ), chunk.keys[2] )
+        self.assertEqual( ( reaction1, 2, group2 ), chunk.keys[3] )
+        self.assertEqual( ( reaction1, 3, group1 ), chunk.keys[4] )
+        self.assertEqual( ( reaction1, 3, group2 ), chunk.keys[5] )
+        self.assertEqual( ( reaction1, 4, group1 ), chunk.keys[6] )
+        self.assertEqual( ( reaction1, 4, group2 ), chunk.keys[7] )
+        self.assertEqual( ( reaction2, 1, group1 ), chunk.keys[8] )
+        self.assertEqual( ( reaction2, 1, group2 ), chunk.keys[9] )
+        self.assertEqual( ( reaction2, 2, group1 ), chunk.keys[10] )
+        self.assertEqual( ( reaction2, 2, group2 ), chunk.keys[11] )
+        self.assertEqual( ( reaction2, 3, group1 ), chunk.keys[12] )
+        self.assertEqual( ( reaction2, 3, group2 ), chunk.keys[13] )
+        self.assertEqual( ( reaction2, 4, group1 ), chunk.keys[14] )
+        self.assertEqual( ( reaction2, 4, group2 ), chunk.keys[15] )
 
 if __name__ == '__main__' :
 

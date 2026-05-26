@@ -308,29 +308,29 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
 
     "extract",
     python::overload_cast< const std::optional< ReactionID >&,
-                           const std::optional< EnergyGroup >&,
-                           const std::optional< std::size_t >& >
+                           const std::optional< std::size_t >&,
+                           const std::optional< EnergyGroup >& >
     ( &Component::extract, python::const_ ),
     python::arg( "reaction" ),
-    python::arg( "group" ),
-    python::arg( "moment" )
+    python::arg( "moment" ),
+    python::arg( "group" )
   )
   .def(
 
     "extract",
     python::overload_cast< const std::optional< ReactionID >&,
-                           const std::optional< EnergyGroup >&,
                            const std::optional< std::size_t >&,
-                           const std::optional< ReactionID >&,
                            const std::optional< EnergyGroup >&,
-                           const std::optional< std::size_t >& >
+                           const std::optional< ReactionID >&,
+                           const std::optional< std::size_t >&,
+                           const std::optional< EnergyGroup >& >
     ( &Component::extract, python::const_ ),
     python::arg( "row_reaction" ),
-    python::arg( "row_group" ),
     python::arg( "row_moment" ),
+    python::arg( "row_group" ),
     python::arg( "col_reaction" ),
-    python::arg( "col_group" ),
-    python::arg( "col_moment" )
+    python::arg( "col_moment" ),
+    python::arg( "col_group" )
   );
 
   // add standard copy definitions

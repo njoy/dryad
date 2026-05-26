@@ -24,13 +24,13 @@ AngularDistributionMetadata( std::vector< Key > keys ) :
  *  @brief Constructor
  *
  *  @param[in] reactions   the reaction identifiers
- *  @param[in] energies    the energy boundary values
  *  @param[in] moments     the Legendre moment values
+ *  @param[in] energies    the energy boundary values
  */
 AngularDistributionMetadata( std::vector< id::ReactionID > reactions,
-                             std::vector< double > energies,
-                             std::vector< std::size_t > moments ) :
-    Parent( generateKeys( reactions, energies, moments ) ),
+                             std::vector< std::size_t > moments,
+                             std::vector< double > energies ) :
+    Parent( generateKeys( reactions, moments, energies ) ),
     reactions_( std::move( reactions ) ),
-    energies_( std::move( energies ) ),
-    moments_( std::move( moments ) ) {}
+    moments_( std::move( moments ) ),
+    energies_( std::move( energies ) ) {}

@@ -19,17 +19,17 @@ namespace covariance {
    *  @brief Covariance metadata for angular distributions
    */
   class AngularDistributionMetadata :
-    protected base::Metadata< id::ReactionID, id::EnergyGroup, std::size_t > {
+    protected base::Metadata< id::ReactionID, std::size_t, id::EnergyGroup > {
 
     /* type aliases */
 
-    using Parent = base::Metadata< id::ReactionID, id::EnergyGroup, std::size_t >;
+    using Parent = base::Metadata< id::ReactionID, std::size_t, id::EnergyGroup >;
 
     /* fields */
 
     std::vector< id::ReactionID > reactions_;
-    std::vector< double > energies_;
     std::vector< std::size_t > moments_;
+    std::vector< double > energies_;
 
     /* auxiliary functions */
 
@@ -55,19 +55,19 @@ namespace covariance {
     }
 
     /**
-     *  @brief Return the energy group boundaries
-     */
-    const std::vector< double >& energies() const {
-
-      return this->energies_;
-    }
-
-    /**
      *  @brief Return the Legendre moments
      */
     const std::vector< std::size_t >& moments() const {
 
       return this->moments_;
+    }
+
+    /**
+     *  @brief Return the energy group boundaries
+     */
+    const std::vector< double >& energies() const {
+
+      return this->energies_;
     }
 
     using Parent::keys;

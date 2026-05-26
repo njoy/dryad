@@ -4,10 +4,10 @@
  */
 AngularDistributionCovarianceMatrix
 extract( const std::optional< id::ReactionID >& reaction,
-         const std::optional< id::EnergyGroup >& group,
-         const std::optional< std::size_t >& moment ) const {
+         const std::optional< std::size_t >& moment,
+         const std::optional< id::EnergyGroup >& group ) const {
 
-  return Parent::extract( reaction, group, moment );
+  return Parent::extract( reaction, moment, group );
 }
 
 /**
@@ -16,12 +16,12 @@ extract( const std::optional< id::ReactionID >& reaction,
  */
 AngularDistributionCovarianceMatrix
 extract( const std::optional< id::ReactionID >& rowReaction,
-         const std::optional< id::EnergyGroup >& rowGroup,
          const std::optional< std::size_t >& rowMoment,
+         const std::optional< id::EnergyGroup >& rowGroup,
          const std::optional< id::ReactionID >& colReaction,
-         const std::optional< id::EnergyGroup >& colGroup,
-         const std::optional< std::size_t >& colMoment ) const {
+         const std::optional< std::size_t >& colMoment,
+         const std::optional< id::EnergyGroup >& colGroup ) const {
 
-  return Parent::extract( rowReaction, rowGroup, rowMoment,
-                          colReaction, colGroup, colMoment );
+  return Parent::extract( rowReaction, rowMoment, rowGroup,
+                          colReaction, colMoment, colGroup );
 }

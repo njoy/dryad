@@ -16,8 +16,8 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
 
         # the data is given explicitly - for a diagonal block
         chunk = AngularDistributionCovarianceMatrix( AngularDistributionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
-                                                                                  [ 1e-5, 1., 1e+6, 2e+7 ],
-                                                                                  [ 1 ] ),
+                                                                                  [ 1 ],
+                                                                                  [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                               covariances = numpy.array( [ [ 1., 2., 3. ],
                                                                            [ 2., 4., 6. ],
                                                                            [ 3., 6., 9. ] ] ) )
@@ -87,11 +87,11 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
 
         # the data is given explicitly
         chunk = AngularDistributionCovarianceMatrix( row_metadata = AngularDistributionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
-                                                                                                 [ 1e-5, 1., 1e+6, 2e+7 ],
-                                                                                                 [ 1 ] ),
+                                                                                                 [ 1 ],
+                                                                                                 [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                      column_metadata = AngularDistributionMetadata( [ ReactionID( 'n,U235->fission(t)' ) ],
-                                                                                                    [ 1e-5, 2., 2e+7 ],
-                                                                                                    [ 2 ] ),
+                                                                                                    [ 2 ],
+                                                                                                    [ 1e-5, 2., 2e+7 ] ),
                                                      covariances = numpy.array( [ [ 1., 2. ],
                                                                                   [ 2., 4. ],
                                                                                   [ 3., 6. ] ] ) )

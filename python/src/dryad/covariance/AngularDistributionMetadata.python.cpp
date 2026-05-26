@@ -19,7 +19,7 @@ void wrapAngularDistributionMetadata( python::module& module ) {
   using Component = njoy::dryad::covariance::AngularDistributionMetadata;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
-  using Key = std::tuple< ReactionID, EnergyGroup, std::size_t >;
+  using Key = std::tuple< ReactionID, std::size_t, EnergyGroup >;
 
   // wrap views created by this component
 
@@ -28,7 +28,7 @@ void wrapAngularDistributionMetadata( python::module& module ) {
 
     module,
     "AngularDistributionMetadata",
-    "Covariance metadata for angualr distributions"
+    "Covariance metadata for angular distributions"
   );
 
   // wrap the component
@@ -36,16 +36,17 @@ void wrapAngularDistributionMetadata( python::module& module ) {
   .def(
 
     python::init< std::vector< ReactionID >,
-                  std::vector< double >,
-                  std::vector< std::size_t > >(),
-    python::arg( "reactions" ), python::arg( "energies" ),
+                  std::vector< std::size_t >,
+                  std::vector< double > >(),
+    python::arg( "reactions" ), 
     python::arg( "moments" ),
+    python::arg( "energies" ),
     "Initialise the angular distribution covariance metadata\n\n"
     "Arguments:\n"
     "    self          the covariance metadata\n"
     "    reactions     the reaction identifiers\n"
-    "    energies      the group structure\n"
-    "    moments       the Legendre moments"
+    "    moments       the Legendre moments\n"
+    "    energies      the group structure"
   )
   .def(
 
@@ -64,15 +65,15 @@ void wrapAngularDistributionMetadata( python::module& module ) {
   )
   .def_property_readonly(
 
-    "energies",
-    &Component::energies,
-    "The energy group boundaries"
-  )
-  .def_property_readonly(
-
     "moments",
     &Component::moments,
     "The Legendre moments"
+  )
+  .def_property_readonly(
+
+    "energies",
+    &Component::energies,
+    "The energy group boundaries"
   )
   .def_property_readonly(
 
