@@ -33,7 +33,7 @@ void wrapTabulatedAverageWidths( python::module& module ) {
   component
   .def(
 
-    python::init< int ,
+    python::init< int,
                   std::vector< double >,
                   std::vector< double >,
                   std::vector< std::size_t >,
