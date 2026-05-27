@@ -8,11 +8,15 @@
 #include <vector>
 
 // other includes
+#include "tools/Log.hpp"
 #include "tools/overload.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/id/ReactionID.hpp"
 
 namespace njoy {
 namespace dryad {
 namespace covariance {
+namespace base {
 
   /**
    *  @class
@@ -150,7 +154,7 @@ namespace covariance {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const CrossSectionCovarianceData& right ) const {
+    bool operator==( const CovarianceData& right ) const {
 
       return this->covariances() == right.covariances();
     }
@@ -160,12 +164,13 @@ namespace covariance {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const CrossSectionCovarianceData& right ) const {
+    bool operator!=( const CovarianceData& right ) const {
 
       return ! this->operator==( right );
     }
   };
 
+} // base namespace
 } // covariance namespace
 } // dryad namespace
 } // njoy namespace

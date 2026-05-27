@@ -46,31 +46,36 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
   .def_property_readonly(
 
     "number_reactions",
-    &Component::numberReactions,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.numberReactions(); },
     "The number of reactions for which covariance data is available"
   )
   .def_property_readonly(
 
     "number_covariance_matrices",
-    &Component::numberCovarianceMatrices,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.numberCovarianceMatrices(); },
     "The number of covariance blocks"
   )
   .def_property_readonly(
 
     "reaction_identifiers",
-    &Component::reactionIdentifiers,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.reactionIdentifiers(); },
     "The reaction identifiers for which covariance data is available"
   )
   .def_property_readonly(
 
     "covariances",
-    &Component::covariances,
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.covariances(); },
     "The covariance data"
   )
   .def(
 
     "has_covariance_matrix",
-    python::overload_cast< const ReactionID&, const ReactionID& >( &Component::hasCovarianceMatrix, python::const_ ),
+    [] ( const Component& self, const ReactionID& row, const ReactionID& column ) -> decltype(auto)
+       { return self.hasCovarianceMatrix( row, column ); },
     python::arg( "row" ), python::arg( "column" ),
     "Return whether or not a given reaction pair has covariance data\n\n"
     "Parameters\n"
@@ -83,7 +88,8 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
   .def(
 
     "has_covariance_matrix",
-    python::overload_cast< const ReactionID& >( &Component::hasCovarianceMatrix, python::const_ ),
+    [] ( const Component& self, const ReactionID& id ) -> decltype(auto)
+       { return self.hasCovarianceMatrix( id ); },
     python::arg( "id" ),
     "Return whether or not a given reaction has covariance data\n\n"
     "Parameters\n"
@@ -94,7 +100,8 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
   .def(
 
     "covariance_matrix",
-    python::overload_cast< const ReactionID&, const ReactionID& >( &Component::covarianceMatrix, python::const_ ),
+    [] ( const Component& self, const ReactionID& row, const ReactionID& column ) -> decltype(auto)
+       { return self.covarianceMatrix( row, column ); },
     python::arg( "row" ), python::arg( "column" ),
     "Return the covariance data for a row and column reaction pair\n\n"
     "Parameters\n"
@@ -108,7 +115,8 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
   .def(
 
     "covariance_matrix",
-    python::overload_cast< const ReactionID& >( &Component::covarianceMatrix, python::const_ ),
+    [] ( const Component& self, const ReactionID& id ) -> decltype(auto)
+       { return self.covarianceMatrix( id ); },
     python::arg( "id" ),
     "Return the covariance data for a reaction\n\n"
     "Parameters\n"
