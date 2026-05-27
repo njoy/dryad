@@ -166,7 +166,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
     auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-010_Ne_022.endf" );
     auto material = tape.materials().front();
     auto section = material.file( 34 ).section( 2 ).parse< 34 >();
-    ExplicitCovariance covariance = section.reactions()[0].legendreBlocks().front().data()[1];
+    ExplicitCovariance covariance = section.reactions()[0].legendreBlocks()[1].data()[0];
 
     WHEN( "constructing covariance matrices" ) {
 

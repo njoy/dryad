@@ -67,8 +67,10 @@ namespace covariance {
         decltype(auto) block = std::get< ENDFtk::section::CovariancePairs >( covariance );
 
         rowStructure = createVector( block.firstArrayEnergies() );
-        columnStructure = createVector( block.firstArrayEnergies() );
-        on_diagonal = on_diagonal && ( rowStructure == columnStructure );
+        if ( ! on_diagonal ) {
+
+          columnStructure = rowStructure;
+        }
         matrix = createMatrix( block );
         break;
       }
