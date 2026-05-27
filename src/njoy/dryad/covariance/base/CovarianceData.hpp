@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEDATA
-#define NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEDATA
+#ifndef NJOY_DRYAD_COVARIANCE_BASE_COVARIANCEDATA
+#define NJOY_DRYAD_COVARIANCE_BASE_COVARIANCEDATA
 
 // system includes
 #include <algorithm>
@@ -9,8 +9,6 @@
 
 // other includes
 #include "tools/overload.hpp"
-#include "njoy/dryad/covariance/LinearCombinationCovariance.hpp"
-#include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -18,14 +16,17 @@ namespace covariance {
 
   /**
    *  @class
-   *  @brief The cross section covariance data
+   *  @brief A covariance data base class
+   * 
+   *  This base class stores covariance matrices for the principal reaction dimension, and 
+   *  assumes that every matrix uses only a single reaction value.
    */
-  class CrossSectionCovarianceData {
+  template < typename CovarianceMatrix, typename Derived >
+  class CovarianceData {
 
   public:
 
-    using Covariance = std::variant< covariance::CrossSectionCovarianceMatrix,
-                                     std::vector< covariance::CrossSectionCovarianceMatrix > >;
+    using Covariance = std::variant< CovarianceMatrix, std::vector< CovarianceMatrix > >;
 
   private:
 
@@ -36,15 +37,15 @@ namespace covariance {
 
     /* auxiliary functions */
 
-    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/generateCovariances.hpp"
-    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/iterator.hpp"
-    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/compare.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceData/src/generateCovariances.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceData/src/iterator.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceData/src/compare.hpp"
 
   public:
 
     /* constructor */
 
-    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/ctor.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceData/src/ctor.hpp"
 
     /* methods */
 
