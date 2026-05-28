@@ -5,7 +5,93 @@ from __future__ import annotations
 import njoy.dryad.id
 import numpy
 import typing
-__all__: list[str] = ['AngularDistributionCovarianceMatrix', 'AngularDistributionMetadata', 'CovarianceData', 'CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+__all__: list[str] = ['AngularDistributionCovarianceData', 'AngularDistributionCovarianceMatrix', 'AngularDistributionMetadata', 'CovarianceData', 'CrossSectionCovarianceData', 'CrossSectionCovarianceMatrix', 'CrossSectionMetadata', 'LinearCombinationCovariance', 'ProductMultiplicityCovarianceMatrix', 'ProductMultiplicityMetadata', 'ScalingType', 'VarianceScaling']
+class AngularDistributionCovarianceData:
+    """
+    The angular distribution covariance data
+    
+    Parameters
+    ----------
+        matrices : list of njoy.dryad.covariance. 
+             the covariance matrices
+    """
+    __hash__: typing.ClassVar[None] = None
+    def __copy__(self) -> AngularDistributionCovarianceData:
+        ...
+    def __deepcopy__(self, arg0: dict) -> AngularDistributionCovarianceData:
+        ...
+    def __eq__(self, arg0: AngularDistributionCovarianceData) -> bool:
+        ...
+    def __init__(self, matrices: list[AngularDistributionCovarianceMatrix]) -> None:
+        """
+        Initialise the covariance data
+        """
+    def __ne__(self, arg0: AngularDistributionCovarianceData) -> bool:
+        ...
+    @typing.overload
+    def covariance_matrix(self, row: njoy.dryad.id.ReactionID, column: njoy.dryad.id.ReactionID) -> AngularDistributionCovarianceMatrix | list[AngularDistributionCovarianceMatrix]:
+        """
+        Return the covariance data for a row and column reaction pair
+        
+        Parameters
+        ----------
+            row : njoy.dryad.id.ReactionID
+                 the row reaction identifier
+            column : njoy.dryad.id.ReactionID
+                 the column reaction identifier
+        """
+    @typing.overload
+    def covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> AngularDistributionCovarianceMatrix | list[AngularDistributionCovarianceMatrix]:
+        """
+        Return the covariance data for a reaction
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                 the reaction identifier
+        """
+    @typing.overload
+    def has_covariance_matrix(self, row: njoy.dryad.id.ReactionID, column: njoy.dryad.id.ReactionID) -> bool:
+        """
+        Return whether or not a given reaction pair has covariance data
+        
+        Parameters
+        ----------
+            row : njoy.dryad.id.ReactionID
+                 the row reaction identifier
+            column : njoy.dryad.id.ReactionID
+                 the column reaction identifier
+        """
+    @typing.overload
+    def has_covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> bool:
+        """
+        Return whether or not a given reaction has covariance data
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ReactionID
+                 the reaction identifier
+        """
+    @property
+    def covariances(self) -> list[AngularDistributionCovarianceMatrix | list[AngularDistributionCovarianceMatrix]]:
+        """
+        The covariance data
+        """
+    @property
+    def number_covariance_matrices(self) -> int:
+        """
+        The number of covariance blocks
+        """
+    @property
+    def number_reactions(self) -> int:
+        """
+        The number of reactions for which covariance data is available
+        """
+    @property
+    def reaction_identifiers(self) -> list[njoy.dryad.id.ReactionID]:
+        """
+        The reaction identifiers for which covariance data is available
+        """
 class AngularDistributionCovarianceMatrix:
     """
     A covariance matrix for angular distributions
@@ -246,6 +332,17 @@ class AngularDistributionMetadata:
             self          the covariance metadata
             reactions     the reaction identifiers
             moments       the Legendre moments
+            energies      the group structure
+        """
+    @typing.overload
+    def __init__(self, reaction: njoy.dryad.id.ReactionID, moment: int, energies: list[float]) -> None:
+        """
+        Initialise the angular distribution covariance metadata
+        
+        Arguments:
+            self          the covariance metadata
+            reaction      the reaction identifier
+            moment        the Legendre moment
             energies      the group structure
         """
     @typing.overload

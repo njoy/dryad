@@ -49,6 +49,7 @@ add_python_test( dryad.covariance.ProductMultiplicityMetadata          dryad/cov
 add_python_test( dryad.covariance.ProductMultiplicityCovarianceMatrix  dryad/covariance/Test_ProductMultiplicityCovarianceMatrix.py )
 add_python_test( dryad.covariance.LinearCombinationCovariance          dryad/covariance/Test_LinearCombinationCovariance.py )
 add_python_test( dryad.covariance.CrossSectionCovarianceData           dryad/covariance/Test_CrossSectionCovarianceData.py )
+add_python_test( dryad.covariance.AngularDistributionCovarianceData    dryad/covariance/Test_AngularDistributionCovarianceData.py )
 add_python_test( dryad.covariance.CovarianceData                       dryad/covariance/Test_CovarianceData.py )
 
 add_python_test( dryad.resonances.ParticlePair                         dryad/resonances/Test_ParticlePair.py )
