@@ -52,6 +52,16 @@ namespace covariance {
       return this->frame_;
     }
 
+    /**
+     *  @brief Set the reference frame
+     *
+     *  @param frame   the reference frame of the covariance data
+     */
+    void frame( ReferenceFrame frame ) {
+
+      this->frame_ = std::move( frame );
+    }
+
     using Parent::rowMetadata;
     using Parent::columnMetadata;
     using Parent::isRelativeMatrix;

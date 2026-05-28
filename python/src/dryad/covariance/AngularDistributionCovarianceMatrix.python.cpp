@@ -145,10 +145,11 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    eigenvectors   the associated eigenvectors\n"
     "    relative       the relative covariance flag (default is true)"
   )
-  .def_property_readonly(
+  .def_property(
 
     "frame",
     python::overload_cast<>( &Component::frame, python::const_ ),
+    python::overload_cast< ReferenceFrame >( &Component::frame ),
     "The reference frame"
   )
   .def_property_readonly(
