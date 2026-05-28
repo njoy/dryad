@@ -29,5 +29,5 @@ UnresolvedSpinGroup( std::vector< Channel > channels,
                   channels_( std::move( channels ) ),
                   table_( std::move( resonances ) ) {
   this->processChannels();
-  verifySpinGroup( this->channels(), this->resonancesTable() );
+  verifySpinGroup( this->channels(), this->resonanceTable() );
   }

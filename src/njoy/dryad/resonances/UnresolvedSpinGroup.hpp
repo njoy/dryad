@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_UNRESOLVEDSPINGROUP
-#define NJOY_DRYAD_UNRESOLVEDSPINGROUP
+#ifndef NJOY_DRYAD_RESONANCES_UNRESOLVEDSPINGROUP
+#define NJOY_DRYAD_RESONANCES_UNRESOLVEDSPINGROUP
 
 // system includes
 #include <vector>
@@ -136,7 +136,7 @@ namespace resonances {
         /**
          * @brief Return whether or not the channels in the spin group have backgrounds
          */
-        bool hasBackgrounds() const {
+        bool hasChannelsWithBackgrounds() const {
           return std::any_of( this->channels().begin(), this->channels().end(),
                               [] ( auto&& channel ) {
 

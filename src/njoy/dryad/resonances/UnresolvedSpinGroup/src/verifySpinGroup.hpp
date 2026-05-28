@@ -1,7 +1,7 @@
 static void verifySpinGroup( const std::vector< Channel >& channels,
                              const UnresolvedResonanceTable& table ) {
 
-  int nc = channels.size();
+  std::size_t nc = channels.size();
   if ( nc == 0 ) {
 
     Log::error( " At least one channel must be present in a spin group." );
