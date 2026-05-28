@@ -24,10 +24,10 @@ SCENARIO( "AngularDistributionCovarianceData" ) {
       id::ReactionID elastic( "n,H1->n(0)" );
       id::ReactionID inelastic( "n,H1->n(1)" );
 
-      AngularDistributionMetadata metadata11( { elastic }, { 1 }, { 1e-5, 1., 2e+7 } );
-      AngularDistributionMetadata metadata12r( { elastic }, { 1 }, { 1e-5, 0.5, 1., 5., 2e+7 } );
-      AngularDistributionMetadata metadata12c( { inelastic }, { 2 }, { 1e-5, 2e+7 } );
-      AngularDistributionMetadata metadata22( { inelastic }, { 2 }, { 1e-5, 1., 1e+6, 2e+7 } );
+      AngularDistributionMetadata metadata11( elastic, 1, { 1e-5, 1., 2e+7 } );
+      AngularDistributionMetadata metadata12r( elastic, 1, { 1e-5, 0.5, 1., 5., 2e+7 } );
+      AngularDistributionMetadata metadata12c( inelastic, 2, { 1e-5, 2e+7 } );
+      AngularDistributionMetadata metadata22( inelastic, 2, { 1e-5, 1., 1e+6, 2e+7 } );
 
       Matrix< double > matrix11( 2, 2 );
       matrix11 << 1., 2.,
@@ -63,10 +63,10 @@ SCENARIO( "AngularDistributionCovarianceData" ) {
 
       id::ReactionID elastic( "n,H1->n(0)" );
       id::ReactionID inelastic( "n,H1->n(1)" );
-      AngularDistributionMetadata metadata11( { elastic }, { 1 }, { 1e-5, 1., 2e+7 } );
-      AngularDistributionMetadata metadata12r( { elastic }, { 1 }, { 1e-5, 0.5, 1., 5., 2e+7 } );
-      AngularDistributionMetadata metadata12c( { inelastic }, { 2 }, { 1e-5, 2e+7 } );
-      AngularDistributionMetadata metadata22( { inelastic }, { 2 }, { 1e-5, 1., 1e+6, 2e+7 } );
+      AngularDistributionMetadata metadata11( elastic, 1, { 1e-5, 1., 2e+7 } );
+      AngularDistributionMetadata metadata12r( elastic, 1, { 1e-5, 0.5, 1., 5., 2e+7 } );
+      AngularDistributionMetadata metadata12c( inelastic, 2, { 1e-5, 2e+7 } );
+      AngularDistributionMetadata metadata22( inelastic, 2, { 1e-5, 1., 1e+6, 2e+7 } );
       Matrix< double > matrix11( 2, 2 );
       matrix11 << 1., 2.,
                   2., 3.;

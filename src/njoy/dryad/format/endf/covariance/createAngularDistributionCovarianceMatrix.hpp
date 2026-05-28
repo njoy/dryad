@@ -19,11 +19,11 @@ namespace endf {
 namespace covariance {
 
   /**
-   *  @brief Create an angular distribution covariance matrix from an ENDF explicit 
+   *  @brief Create an angular distribution covariance matrix from an ENDF explicit
    *         covariance component
-   * 
+   *
    *  For ENDF angular distribution matrices, only LB = 0, 1, 2, 5 and 6 are allowed.
-   *  
+   *
    *  @param[in] rowReaction      the row reaction identifier
    *  @param[in] columnReaction   the column reaction identifier
    *  @param[in] rowMoment        the row Legendre moment
@@ -107,14 +107,14 @@ namespace covariance {
 
     if ( on_diagonal ) {
 
-      return CovarianceMatrix( Metadata( { rowReaction }, { rowMoment }, std::move( rowStructure ) ),
+      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                std::move( matrix ),
                                relative );
     }
     else {
 
-      return CovarianceMatrix( Metadata( { rowReaction }, { rowMoment }, std::move( rowStructure ) ),
-                               Metadata( { columnReaction }, { columnMoment }, std::move( columnStructure ) ),
+      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+                               Metadata( columnReaction, columnMoment, std::move( columnStructure ) ),
                                std::move( matrix ),
                                relative );
     }
