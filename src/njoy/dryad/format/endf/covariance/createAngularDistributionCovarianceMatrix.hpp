@@ -28,6 +28,7 @@ namespace covariance {
    *  @param[in] columnReaction   the column reaction identifier
    *  @param[in] rowMoment        the row Legendre moment
    *  @param[in] columnMoment     the column Legendre moment
+   *  @param[in] frame            the reference frame
    *  @param[in] covariance       the ENDF explicit covariance matrix component
    */
   inline dryad::covariance::AngularDistributionCovarianceMatrix
@@ -36,6 +37,7 @@ namespace covariance {
       const dryad::id::ReactionID& columnReaction,
       std::size_t rowMoment,
       std::size_t columnMoment,
+      ReferenceFrame frame,
       const ENDFtk::section::ExplicitCovariance& covariance ) {
 
     using Metadata = dryad::covariance::AngularDistributionMetadata;
@@ -109,14 +111,16 @@ namespace covariance {
 
       return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                std::move( matrix ),
-                               relative );
+                               relative,
+                               std::move( frame ) );
     }
     else {
 
       return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                Metadata( columnReaction, columnMoment, std::move( columnStructure ) ),
                                std::move( matrix ),
-                               relative );
+                               relative,
+                               std::move( frame ) );
     }
   }
 

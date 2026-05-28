@@ -28,7 +28,8 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
                                      matrix::Matrix< double > covariances,
                                      bool relative = true,
                                      std::optional< ReferenceFrame > frame = std::nullopt ) :
-  Parent( std::move( metadata ), std::move( covariances ), relative ) {}
+  Parent( std::move( metadata ), std::move( covariances ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor for an off-diagonal angular distribution covariance matrix
@@ -45,7 +46,8 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata rowMetadata,
                                      bool relative = true,
                                      std::optional< ReferenceFrame > frame = std::nullopt ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
-          std::move( covariances ), relative ) {}
+          std::move( covariances ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor for an on-diagonal angular distribution correlation matrix
@@ -62,7 +64,8 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
                                      bool relative = true,
                                      std::optional< ReferenceFrame > frame = std::nullopt ) :
   Parent( std::move( metadata ), std::move( deviations ),
-          std::move( correlations ), relative ) {}
+          std::move( correlations ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor for an off-diagonal angular distribution correlation matrix
@@ -84,7 +87,8 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata rowMetadata,
                                      std::optional< ReferenceFrame > frame = std::nullopt ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           rowDeviations, columnDeviations,
-          std::move( correlations ), relative ) {}
+          std::move( correlations ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor using eigenvalues and eigenvectors for an on-diagonal
@@ -102,4 +106,5 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
                                      bool relative = true,
                                      std::optional< ReferenceFrame > frame = std::nullopt ) :
   Parent( std::move( metadata ), std::move( eigenvalues ),
-          std::move( eigenvectors ), relative ) {}
+          std::move( eigenvectors ), relative ),
+  frame_( std::move( frame ) ) {}
