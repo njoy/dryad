@@ -290,6 +290,9 @@ class AngularDistributionCovarianceMatrix:
         """
         The reference frame
         """
+    @frame.setter
+    def frame(self, arg1: njoy.dryad.ReferenceFrame) -> None:
+        ...
     @property
     def is_absolute_matrix(self) -> bool:
         """
