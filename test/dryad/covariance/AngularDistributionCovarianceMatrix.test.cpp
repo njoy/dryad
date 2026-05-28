@@ -18,8 +18,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid covariance data for an on-diagonal covariance matrix" ) {
 
-    AngularDistributionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
-                                          { 1 },
+    AngularDistributionMetadata metadata( id::ReactionID( "n,U235->n,U235" ),
+                                          1,
                                           { 1e-5, 1., 1e+6, 2e+7 } );
 
     Matrix< double > matrix( 3, 3 );
@@ -41,6 +41,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
       CHECK( 1 == chunk.rowMetadata().moments().size() );
       CHECK( 1 == chunk.rowMetadata().moments()[0] );
       CHECK( chunk.columnMetadata() == chunk.rowMetadata() );
+
+      CHECK( std::nullopt == chunk.frame() );
 
       CHECK( true == chunk.isRelativeMatrix() );
       CHECK( false == chunk.isAbsoluteMatrix() );
@@ -106,8 +108,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid correlation data for an on-diagonal covariance matrix" ) {
 
-    AngularDistributionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
-                                          { 1 },
+    AngularDistributionMetadata metadata( id::ReactionID( "n,U235->n,U235" ),
+                                          1,
                                           { 1e-5, 1., 1e+6, 2e+7 } );
 
     std::vector< double > deviations = { 1., 2., 3. };
@@ -131,6 +133,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
       CHECK( 1 == chunk.rowMetadata().moments().size() );
       CHECK( 1 == chunk.rowMetadata().moments()[0] );
       CHECK( chunk.columnMetadata() == chunk.rowMetadata() );
+
+      CHECK( std::nullopt == chunk.frame() );
 
       CHECK( true == chunk.isRelativeMatrix() );
       CHECK( false == chunk.isAbsoluteMatrix() );
@@ -196,8 +200,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid eigenvalues and eigenvectors for an on-diagonal covariance matrix" ) {
 
-    AngularDistributionMetadata metadata( { id::ReactionID( "n,U235->n,U235" ) },
-                                          { 1 },
+    AngularDistributionMetadata metadata( id::ReactionID( "n,U235->n,U235" ),
+                                          1,
                                           { 1e-5, 1., 1e+6, 2e+7 } );
 
     std::vector< double > eigenvalues = { 14. };
@@ -219,6 +223,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
       CHECK( 1 == chunk.rowMetadata().moments().size() );
       CHECK( 1 == chunk.rowMetadata().moments()[0] );
       CHECK( chunk.columnMetadata() == chunk.rowMetadata() );
+
+      CHECK( std::nullopt == chunk.frame() );
 
       CHECK( true == chunk.isRelativeMatrix() );
       CHECK( false == chunk.isAbsoluteMatrix() );
@@ -279,11 +285,11 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid data for an off-diagonal covariance matrix" ) {
 
-    AngularDistributionMetadata rowMetadata( { id::ReactionID( "n,U235->n,U235" ) },
-                                             { 1 },
+    AngularDistributionMetadata rowMetadata( id::ReactionID( "n,U235->n,U235" ),
+                                             1,
                                              { 1e-5, 1., 1e+6, 2e+7 } );
-    AngularDistributionMetadata columnMetadata( { id::ReactionID( "n,U235->fission(t)" ) },
-                                                { 2 },
+    AngularDistributionMetadata columnMetadata( id::ReactionID( "n,U235->fission(t)" ),
+                                                2,
                                                 { 1e-5, 2., 2e+7 } );
 
     Matrix< double > matrix( 3, 2 );
@@ -317,6 +323,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
       CHECK_THAT( 2e+7, WithinRel( chunk.columnMetadata().energies()[2] ) );
       CHECK( 1 == chunk.columnMetadata().moments().size() );
       CHECK( 2 == chunk.columnMetadata().moments()[0] );
+
+      CHECK( std::nullopt == chunk.frame() );
 
       CHECK( true == chunk.isRelativeMatrix() );
       CHECK( false == chunk.isAbsoluteMatrix() );

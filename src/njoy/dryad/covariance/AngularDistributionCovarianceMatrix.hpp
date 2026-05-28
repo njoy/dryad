@@ -7,6 +7,7 @@
 
 // other includes
 #include "tools/Log.hpp"
+#include "njoy/dryad/ReferenceFrame.hpp"
 #include "njoy/dryad/id/EnergyGroup.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/AngularDistributionMetadata.hpp"
@@ -31,6 +32,8 @@ namespace covariance {
 
     /* fields */
 
+    std::optional< ReferenceFrame > frame_;
+
     /* auxiliary functions */
 
   public:
@@ -40,6 +43,14 @@ namespace covariance {
     #include "njoy/dryad/covariance/AngularDistributionCovarianceMatrix/src/ctor.hpp"
 
     /* methods */
+
+    /**
+     *  @brief Return the reference frame
+     */
+    const std::optional< ReferenceFrame >& frame() const {
+
+      return this->frame_;
+    }
 
     using Parent::rowMetadata;
     using Parent::columnMetadata;

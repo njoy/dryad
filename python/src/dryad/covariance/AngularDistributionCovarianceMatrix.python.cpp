@@ -18,6 +18,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::covariance::AngularDistributionCovarianceMatrix;
   using AngularDistributionMetadata = njoy::dryad::covariance::AngularDistributionMetadata;
+  using ReferenceFrame = njoy::dryad::ReferenceFrame;
   using EnergyGroup = njoy::dryad::id::EnergyGroup;
   using ReactionID = njoy::dryad::id::ReactionID;
   using Matrix = njoy::matrix::Matrix< double >;
@@ -39,48 +40,61 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
 
     python::init< AngularDistributionMetadata,
                   Matrix,
-                  bool >(),
-    python::arg( "metadata" ), python::arg( "covariances" ),
+                  bool,
+                  std::optional< ReferenceFrame > >(),
+    python::arg( "metadata" ),
+    python::arg( "covariances" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = std::nullopt,
     "Initialise an on-diagonal angular distribution covariance matrix\n\n"
     "Arguments:\n"
     "    self          the covariance matrix\n"
     "    metadata      the row and column metadata\n"
     "    covariances   the covariance matrix\n"
-    "    relative      the relative covariance flag (default is true)"
+    "    relative      the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the distribution data (default is None)"
   )
   .def(
 
     python::init< AngularDistributionMetadata,
                   AngularDistributionMetadata,
-                  Matrix, bool >(),
+                  Matrix,
+                  bool,
+                  std::optional< ReferenceFrame > >(),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = std::nullopt,
     "Initialise an off-diagonal angular distribution covariance matrix\n\n"
     "Arguments:\n"
     "    self             the covariance matrix\n"
     "    row_metadata     the row metadata\n"
     "    column_metadata  the column metadata\n"
     "    covariances      the covariance matrix\n"
-    "    relative         the relative covariance flag (default is true)"
+    "    relative         the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the distribution data (default is None)"
   )
   .def(
 
     python::init< AngularDistributionMetadata,
                   std::vector< double >,
                   Matrix,
-                  bool >(),
-    python::arg( "metadata" ), python::arg( "deviations" ),
-    python::arg( "correlations" ), python::arg( "relative" ) = true,
+                  bool,
+                  std::optional< ReferenceFrame > >(),
+    python::arg( "metadata" ),
+    python::arg( "deviations" ),
+    python::arg( "correlations" ),
+    python::arg( "relative" ) = true,
+    python::arg( "frame" ) = std::nullopt,
     "Initialise an on-diagonal angular distribution correlation matrix\n\n"
     "Arguments:\n"
     "    self           the covariance matrix\n"
     "    metadata       the row and column metadata\n"
     "    deviations     the standard deviations\n"
     "    correlations   the correlation matrix\n"
-    "    relative       the relative covariance flag (default is true)"
+    "    relative       the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the distribution data (default is None)"
   )
   .def(
 
@@ -88,10 +102,16 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
                   AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< double >,
-                  Matrix, bool >(),
-    python::arg( "row_metadata" ), python::arg( "column_metadata" ),
-    python::arg( "row_deviations" ), python::arg( "column_deviations" ),
-    python::arg( "correlations" ), python::arg( "relative" ) = true,
+                  Matrix,
+                  bool,
+                  std::optional< ReferenceFrame > >(),
+    python::arg( "row_metadata" ),
+    python::arg( "column_metadata" ),
+    python::arg( "row_deviations" ),
+    python::arg( "column_deviations" ),
+    python::arg( "correlations" ),
+    python::arg( "relative" ) = true,
+    python::arg( "frame" ) = std::nullopt,
     "Initialise an off-diagonal angular distribution correlation matrix\n\n"
     "Arguments:\n"
     "    self               the covariance matrix\n"
@@ -100,16 +120,21 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    row_deviations     the standard deviations to be applied to each row\n"
     "    column_deviations  the standard deviations to be applied to each column\n"
     "    correlations       the correlation matrix\n"
-    "    relative           the relative covariance flag (default is true)"
+    "    relative           the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the distribution data (default is None)"
   )
   .def(
 
     python::init< AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< Vector >,
-                  bool >(),
-    python::arg( "metadata" ), python::arg( "eigenvalues" ),
-    python::arg( "eigenvectors" ), python::arg( "relative" ) = true,
+                  bool,
+                  std::optional< ReferenceFrame > >(),
+    python::arg( "metadata" ),
+    python::arg( "eigenvalues" ),
+    python::arg( "eigenvectors" ),
+    python::arg( "relative" ) = true,
+    python::arg( "frame" ) = std::nullopt,
     "Initialise an on-diagonal angular distribution covariance matrix using eigenvalues\n"
     "and eigenvectors\n\n"
     "Arguments:\n"
@@ -117,7 +142,14 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    metadata       the row and column metadata\n"
     "    eigenvalues    the eigenvalues\n"
     "    eigenvectors   the associated eigenvectors\n"
-    "    relative       the relative covariance flag (default is true)"
+    "    relative       the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the distribution data (default is None)"
+  )
+  .def_property_readonly(
+
+    "frame",
+    python::overload_cast<>( &Component::frame, python::const_ ),
+    "The reference frame"
   )
   .def_property_readonly(
 

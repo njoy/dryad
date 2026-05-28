@@ -34,6 +34,8 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
         self.assertEqual( 1, len( chunk.row_metadata.moments ) )
         self.assertEqual( 1, chunk.row_metadata.moments[0] )
 
+        self.assertIsNone( chunk.frame )
+
         self.assertEqual( True, chunk.is_relative_matrix )
         self.assertEqual( False, chunk.is_absolute_matrix )
         self.assertEqual( False, chunk.is_off_diagonal )
@@ -117,6 +119,8 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.column_metadata.energies[2] )
         self.assertEqual( 1, len( chunk.column_metadata.moments ) )
         self.assertEqual( 2, chunk.column_metadata.moments[0] )
+
+        self.assertIsNone( chunk.frame )
 
         self.assertEqual( True, chunk.is_relative_matrix )
         self.assertEqual( False, chunk.is_absolute_matrix )
