@@ -136,7 +136,7 @@ namespace resonances {
         /**
          * @brief Return whether or not the channels in the spin group have backgrounds
          */
-        bool hasChannelsWithBackgrounds() const {
+        bool hasChannelsWithBackground() const {
           return std::any_of( this->channels().begin(), this->channels().end(),
                               [] ( auto&& channel ) {
 
