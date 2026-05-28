@@ -32,7 +32,7 @@ namespace covariance {
 
     /* fields */
 
-    std::optional< ReferenceFrame > frame_;
+    ReferenceFrame frame_;
 
     /* auxiliary functions */
 
@@ -47,7 +47,7 @@ namespace covariance {
     /**
      *  @brief Return the reference frame
      */
-    const std::optional< ReferenceFrame >& frame() const {
+    const ReferenceFrame& frame() const {
 
       return this->frame_;
     }

@@ -24,20 +24,20 @@ namespace covariance {
    *
    *  For ENDF angular distribution matrices, only LB = 0, 1, 2, 5 and 6 are allowed.
    *
+   *  @param[in] frame            the reference frame
    *  @param[in] rowReaction      the row reaction identifier
    *  @param[in] columnReaction   the column reaction identifier
    *  @param[in] rowMoment        the row Legendre moment
    *  @param[in] columnMoment     the column Legendre moment
-   *  @param[in] frame            the reference frame
    *  @param[in] covariance       the ENDF explicit covariance matrix component
    */
   inline dryad::covariance::AngularDistributionCovarianceMatrix
   createAngularDistributionCovarianceMatrix(
+      const ReferenceFrame& frame,
       const dryad::id::ReactionID& rowReaction,
       const dryad::id::ReactionID& columnReaction,
       std::size_t rowMoment,
       std::size_t columnMoment,
-      ReferenceFrame frame,
       const ENDFtk::section::ExplicitCovariance& covariance ) {
 
     using Metadata = dryad::covariance::AngularDistributionMetadata;
@@ -109,18 +109,17 @@ namespace covariance {
 
     if ( on_diagonal ) {
 
-      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ), Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                std::move( matrix ),
-                               relative,
-                               std::move( frame ) );
+                               relative );
     }
     else {
 
-      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ),
+                               Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                Metadata( columnReaction, columnMoment, std::move( columnStructure ) ),
                                std::move( matrix ),
-                               relative,
-                               std::move( frame ) );
+                               relative );
     }
   }
 

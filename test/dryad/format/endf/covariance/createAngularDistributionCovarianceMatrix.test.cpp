@@ -32,7 +32,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
       std::size_t moment = 1;
 
       auto chunk = format::endf::covariance::createAngularDistributionCovarianceMatrix(
-                     reaction, reaction, 1, 1, ReferenceFrame::CentreOfMass, covariance );
+                     ReferenceFrame::CentreOfMass, reaction, reaction, 1, 1, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
 
@@ -177,7 +177,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
       std::size_t columnMoment = 2;
 
       auto chunk = format::endf::covariance::createAngularDistributionCovarianceMatrix(
-                     reaction, reaction, rowMoment, columnMoment, ReferenceFrame::CentreOfMass, covariance );
+                     ReferenceFrame::CentreOfMass, reaction, reaction, rowMoment, columnMoment, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
 
