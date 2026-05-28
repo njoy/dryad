@@ -1,12 +1,12 @@
-#ifndef NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEDATA
-#define NJOY_DRYAD_COVARIANCE_CROSSSECTIONCOVARIANCEDATA
+#ifndef NJOY_DRYAD_COVARIANCE_ANGULARDISTRIBUTIONCOVARIANCEDATA
+#define NJOY_DRYAD_COVARIANCE_ANGULARDISTRIBUTIONCOVARIANCEDATA
 
 // system includes
 #include <vector>
 
 // other includes
 #include "njoy/dryad/covariance/base/CovarianceData.hpp"
-#include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/AngularDistributionCovarianceMatrix.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -16,31 +16,35 @@ namespace covariance {
    *  @class
    *  @brief Cross section covariance data
    */
-  class CrossSectionCovarianceData :
-      protected base::CovarianceData< CrossSectionCovarianceMatrix, CrossSectionCovarianceData > {
+  class AngularDistributionCovarianceData :
+      protected base::CovarianceData< AngularDistributionCovarianceMatrix, AngularDistributionCovarianceData > {
 
     /* friend declarations */
 
-    friend class base::CovarianceData< CrossSectionCovarianceMatrix, CrossSectionCovarianceData >;
+    friend class base::CovarianceData< AngularDistributionCovarianceMatrix, AngularDistributionCovarianceData >;
 
     /* type aliases */
 
-    using Parent = base::CovarianceData< CrossSectionCovarianceMatrix, CrossSectionCovarianceData >;
+    using Parent = base::CovarianceData< AngularDistributionCovarianceMatrix, AngularDistributionCovarianceData >;
 
     /* fields */
 
     /* auxiliary functions */
 
-    static void sort( std::vector< CrossSectionCovarianceMatrix >& submatrices ) {
+    static void sort( std::vector< AngularDistributionCovarianceMatrix >& submatrices ) {
 
       std::sort( submatrices.begin(), submatrices.end(),
                  [] ( auto&& left, auto&& right )
                     { return std::tie( left.rowMetadata().reactionIdentifiers().front(),
                                        left.columnMetadata().reactionIdentifiers().front(),
+                                       left.rowMetadata().moments(),
+                                       left.columnMetadata().moments(),
                                        left.rowMetadata().energies(),
                                        left.columnMetadata().energies() ) <
                              std::tie( right.rowMetadata().reactionIdentifiers().front(),
                                        right.columnMetadata().reactionIdentifiers().front(),
+                                       right.rowMetadata().moments(),
+                                       right.columnMetadata().moments(),
                                        right.rowMetadata().energies(),
                                        right.columnMetadata().energies() ); } );
     }
@@ -49,7 +53,7 @@ namespace covariance {
 
     /* constructor */
 
-    #include "njoy/dryad/covariance/CrossSectionCovarianceData/src/ctor.hpp"
+    #include "njoy/dryad/covariance/AngularDistributionCovarianceData/src/ctor.hpp"
 
     /* methods */
 
@@ -65,7 +69,7 @@ namespace covariance {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator==( const CrossSectionCovarianceData& right ) const {
+    bool operator==( const AngularDistributionCovarianceData& right ) const {
 
       return Parent::operator==( right );
     }
@@ -75,7 +79,7 @@ namespace covariance {
      *
      *  @param[in] right   the object on the right hand side
      */
-    bool operator!=( const CrossSectionCovarianceData& right ) const {
+    bool operator!=( const AngularDistributionCovarianceData& right ) const {
 
       return Parent::operator!=( right );
     }
