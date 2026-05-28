@@ -154,6 +154,32 @@ namespace resonances {
         //
         // void crossSections( std::vector< double >& energies,
         //                     std::map< id::ReactionID, std::vector< double > >& xs );
+
+        /**
+         * @brief Equality comparison
+         * 
+         * @param[in] left   the object on the left-hand-side
+         * 
+         * @param[in] right  the object on the right-hand-side
+         */
+        friend bool operator==( const UnresolvedSpinGroup& left,
+                                const UnresolvedSpinGroup& right ) {
+
+          return std::tie( left.channels(), left.resonanceTable() ) ==
+                 std::tie( right.channels(), right.resonanceTable() );
+        }
+
+        /**
+         * @brief Inequality comparison
+         * 
+         * @param[in] left   the object on the left-hand-side
+         * 
+         * @param[in] right  the object on the right-hand-side
+         */
+        friend bool operator!=( const UnresolvedSpinGroup& left,
+                                const UnresolvedSpinGroup& right ) {
+          return ! ( left == right );
+        }
   };
 
         
