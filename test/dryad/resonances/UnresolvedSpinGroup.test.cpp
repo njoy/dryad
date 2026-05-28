@@ -7,8 +7,6 @@ using Catch::Matchers::WithinRel;
 #include "njoy/dryad/resonances/UnresolvedSpinGroup.hpp"
 
 // other includes
-#include "njoy/dryad/resonances/TabulatedLevelSpacing.hpp"
-#include "njoy/dryad/resonances/TabulatedAverageWidths.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
