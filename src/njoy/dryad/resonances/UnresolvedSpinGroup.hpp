@@ -20,7 +20,7 @@ namespace resonances {
    *       unresolved resonance range.
    */
 
-   class UnresolvedSpinGroup {
+  class UnresolvedSpinGroup {
     private:
 
       // TODO: URR-specific calculator and sampler types, once their interfaces are settled. Something like:
@@ -36,8 +36,8 @@ namespace resonances {
       // Sampler sampler_;
 
       /* auxiliary functions */
-      //#include "njoy/dryad/resonances/UnresolvedSpinGroup/src/processChannels.hpp"
-      //#include "njoy/dryad/resonances/UnresolvedSpinGroup/src/verifySpinGroup.hpp"
+      #include "njoy/dryad/resonances/UnresolvedSpinGroup/src/processChannels.hpp"
+      #include "njoy/dryad/resonances/UnresolvedSpinGroup/src/verifySpinGroup.hpp"
 
       public:
 
@@ -130,7 +130,7 @@ namespace resonances {
          * @brief Return the kinematics type of the spin group
          */
         Kinematics kinematicsType() const {
-          return this->channels().front().kinematics();
+          return this->channels().front().kinematicsType();
         }
 
         /**
@@ -154,6 +154,7 @@ namespace resonances {
         //
         // void crossSections( std::vector< double >& energies,
         //                     std::map< id::ReactionID, std::vector< double > >& xs );
+  };
 
         
 
