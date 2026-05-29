@@ -29,7 +29,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "The angular distribution covariance data\n\n"
     "Parameters\n"
     "----------\n"
-    "    matrices : list of njoy.dryad.covariance. \n"
+    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceData \n"
     "         the covariance matrices"
   );
 
