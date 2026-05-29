@@ -7,7 +7,7 @@ private:
  */
 TabulatedAverageWidths( std::optional< int > dof,
                         InterpolationTable< double, double > table ) :
-  InterpolationTable( std::move( table ) ), dof_(  dof ) {}
+  InterpolationTable( std::move( table ) ), degrees_freedom_(  dof ) {}
 
 
 public:

@@ -31,7 +31,7 @@ namespace resonances {
    */
   class TabulatedAverageWidths : 
     protected scion::math::InterpolationTable< double, double > {
-      std::optional< int > dof_;
+      std::optional< int > degrees_freedom_;
       public:
 
         /* type aliases*/
@@ -64,7 +64,7 @@ namespace resonances {
          * @brief Return the degrees of freedom for the chi-squared distribution
          */
         const std::optional<int>& degreesOfFreedom() const {
-          return this->dof_;
+          return this->degrees_freedom_;
         }
 
         /**
@@ -200,7 +200,7 @@ namespace resonances {
          */
         TabulatedAverageWidths& operator+=( const TabulatedAverageWidths& right ) {
 
-          this->dof_ = combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() );
+          this->degrees_freedom_ = combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() );
           InterpolationTable::operator+=( right );
           return *this;
         }
@@ -212,7 +212,7 @@ namespace resonances {
          */
         TabulatedAverageWidths& operator-=( const TabulatedAverageWidths& right ) {
 
-          this->dof_ = combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() );
+          this->degrees_freedom_ = combineDoF( this->degreesOfFreedom(), right.degreesOfFreedom() );
           InterpolationTable::operator-=( right );
           return *this;
         }
@@ -245,7 +245,7 @@ namespace resonances {
          */
         bool operator==( const TabulatedAverageWidths& right ) const {
 
-          return this->dof_ == right.dof_
+          return this->degrees_freedom_ == right.degrees_freedom_
               && InterpolationTable::operator==( right );
         }
 
