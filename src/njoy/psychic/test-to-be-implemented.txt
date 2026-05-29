@@ -5,6 +5,9 @@ Photoatomic data
 
 Covariances
 
-- verify that the ratio of the smallest to largest positive eigenvalue of the covariance matrix is larger
-  then a preset tolerance (default set to 1e-8)
 - verify summation covariances (in the same way we resolve the partials in summation reactions)
+
+Fission Q values
+
+- check for unphysical values of the fission Q value data to avoid the issue of ENDF/B-VII.1 (values
+  were given in MeV instead of eV)

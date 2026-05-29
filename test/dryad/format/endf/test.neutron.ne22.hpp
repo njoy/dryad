@@ -516,6 +516,7 @@ namespace ne22 {
     CHECK( 21 == matrices.size() );
 
     auto matrix = matrices[0];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -532,6 +533,7 @@ namespace ne22 {
     CHECK(  1.402580e-2 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[1];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -554,6 +556,7 @@ namespace ne22 {
     CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[2];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -570,12 +573,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  9.280390e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  4.003050e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  4.003050e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  5.173480e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[3];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -592,12 +596,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  2.390450e-1 == matrix.covariances()( 0, 0) );
+    CHECK( -3.115410e-2 == matrix.covariances()( 0, 8) );
+    CHECK( -3.115410e-2 == matrix.covariances()( 8, 0) );
+    CHECK( -1.294910e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[4];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -614,12 +619,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  2.976840e-1 == matrix.covariances()( 0, 0) );
+    CHECK(  1.016920e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  1.016920e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  1.380130e-2 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[5];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -636,12 +642,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  7.168980e-2 == matrix.covariances()( 0, 0) );
+    CHECK( -1.229440e-1 == matrix.covariances()( 0, 8) );
+    CHECK( -1.229440e-1 == matrix.covariances()( 8, 0) );
+    CHECK( -4.624270e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[6];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -652,12 +659,13 @@ namespace ne22 {
     CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK(  6.461320e-1 == matrix.covariances()( 0, 0) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  1.402580e-2 == matrix.covariances()( 8, 8) );
+    CHECK(  8.228060e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  1.831640e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  1.831640e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  6.716340e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[7];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -674,12 +682,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  3.415830e-2 == matrix.covariances()( 0, 0) );
+    CHECK( -2.681660e-3 == matrix.covariances()( 0, 8) );
+    CHECK( -2.681660e-3 == matrix.covariances()( 8, 0) );
+    CHECK(  2.627130e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[8];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -696,12 +705,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK( -1.247560e-1 == matrix.covariances()( 0, 0) );
+    CHECK(  1.026980e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  1.026980e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  1.418250e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[9];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -718,12 +728,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK( -4.701100e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  4.330050e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  4.330050e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  1.334910e-2 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[10];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -740,12 +751,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  5.913020e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  4.700340e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  4.700340e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  5.403800e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[11];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -756,12 +768,13 @@ namespace ne22 {
     CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK(  6.461320e-1 == matrix.covariances()( 0, 0) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  1.402580e-2 == matrix.covariances()( 8, 8) );
+    CHECK(  6.408760e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  9.136090e-3 == matrix.covariances()( 0, 8) );
+    CHECK(  9.136090e-3 == matrix.covariances()( 8, 0) );
+    CHECK(  4.462820e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[12];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -778,12 +791,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK( -9.277740e-3 == matrix.covariances()( 0, 0) );
+    CHECK(  3.179460e-3 == matrix.covariances()( 0, 8) );
+    CHECK(  3.179460e-3 == matrix.covariances()( 8, 0) );
+    CHECK( -9.136080e-4 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[13];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -800,12 +814,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  1.123890e-1 == matrix.covariances()( 0, 0) );
+    CHECK(  2.973450e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  2.973450e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  3.524320e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[14];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -822,12 +837,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  4.052250e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  7.925030e-3 == matrix.covariances()( 0, 8) );
+    CHECK(  7.925030e-3 == matrix.covariances()( 8, 0) );
+    CHECK( -6.764580e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[15];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -838,12 +854,13 @@ namespace ne22 {
     CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK(  6.461320e-1 == matrix.covariances()( 0, 0) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  1.402580e-2 == matrix.covariances()( 8, 8) );
+    CHECK(  3.293190e-1 == matrix.covariances()( 0, 0) );
+    CHECK( -1.920330e-2 == matrix.covariances()( 0, 8) );
+    CHECK( -1.920330e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  4.164310e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[16];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -860,12 +877,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  1.939020e-1 == matrix.covariances()( 0, 0) );
+    CHECK( -5.247920e-2 == matrix.covariances()( 0, 8) );
+    CHECK( -5.247920e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  7.030260e-3 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[17];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -882,12 +900,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK( -6.077330e-2 == matrix.covariances()( 0, 0) );
+    CHECK( -1.028040e-1 == matrix.covariances()( 0, 8) );
+    CHECK( -1.028040e-1 == matrix.covariances()( 8, 0) );
+    CHECK(  1.366060e-2 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[18];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -898,12 +917,13 @@ namespace ne22 {
     CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK(  6.461320e-1 == matrix.covariances()( 0, 0) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  1.402580e-2 == matrix.covariances()( 8, 8) );
+    CHECK(  2.495290e-1 == matrix.covariances()( 0, 0) );
+    CHECK(  2.131720e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  2.131720e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  3.725310e-2 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[19];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -920,12 +940,13 @@ namespace ne22 {
     CHECK_THAT( 2.0e+8, WithinRel( matrix.columnMetadata().energies().back() ) );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK( -1.917260e-2 == matrix.covariances()( 0, 0) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  2.804280e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  8.603500e-3 == matrix.covariances()( 8, 8) );
+    CHECK(  3.741020e-2 == matrix.covariances()( 0, 0) );
+    CHECK( -6.477740e-2 == matrix.covariances()( 0, 8) );
+    CHECK( -6.477740e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  2.388810e-2 == matrix.covariances()( 8, 8) );
 
     matrix = matrices[20];
+    CHECK( ReferenceFrame::CentreOfMass == matrix.frame() );
     CHECK( 1 == matrix.rowMetadata().reactionIdentifiers().size() );
     CHECK( id::ReactionID( "n,Ne22->n(0)" ) == matrix.rowMetadata().reactionIdentifiers()[0] );
     CHECK( 1 == matrix.rowMetadata().moments().size() );
@@ -936,10 +957,10 @@ namespace ne22 {
     CHECK( matrix.columnMetadata() == matrix.rowMetadata() );
     CHECK( 9 == matrix.covariances().rows() );
     CHECK( 9 == matrix.covariances().cols() );
-//    CHECK(  6.461320e-1 == matrix.covariances()( 0, 0) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 0, 8) );
-//    CHECK(  7.195770e-2 == matrix.covariances()( 8, 0) );
-//    CHECK(  1.402580e-2 == matrix.covariances()( 8, 8) );
+    CHECK(  6.676800e-2 == matrix.covariances()( 0, 0) );
+    CHECK(  1.830770e-2 == matrix.covariances()( 0, 8) );
+    CHECK(  1.830770e-2 == matrix.covariances()( 8, 0) );
+    CHECK(  5.335100e-2 == matrix.covariances()( 8, 8) );
   }
 
   void verifyNe22( const ProjectileTarget& Ne22, bool /* normalise */ ) {
