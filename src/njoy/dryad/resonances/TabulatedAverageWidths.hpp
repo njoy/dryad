@@ -38,6 +38,9 @@ namespace resonances {
         using InterpolationTable::XType;
         using InterpolationTable::YType;
 
+        /* auxiliary functions */
+        #include "njoy/dryad/resonances/TabulatedAverageWidths/src/combineDoF.hpp"
+
         /* constructor */
         #include "njoy/dryad/resonances/TabulatedAverageWidths/src/ctor.hpp"
 
