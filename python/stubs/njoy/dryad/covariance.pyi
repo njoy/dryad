@@ -13,7 +13,7 @@ class AngularDistributionCovarianceData:
     
     Parameters
     ----------
-        matrices : list of njoy.dryad.covariance. 
+        matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceData 
              the covariance matrices
     """
     __hash__: typing.ClassVar[None] = None
@@ -398,6 +398,8 @@ class CovarianceData:
     ----------
         xs : njoy.dryad.covariance.CrossSectionCovarianceData 
              the cross section covariance data
+        angular : njoy.dryad.covariance.AngularDistributionCovarianceData 
+             the angular distribution covariance data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CovarianceData:
@@ -406,16 +408,26 @@ class CovarianceData:
         ...
     def __eq__(self, arg0: CovarianceData) -> bool:
         ...
-    def __init__(self, xs: CrossSectionCovarianceData | None) -> None:
+    def __init__(self, xs: CrossSectionCovarianceData | None, angular: AngularDistributionCovarianceData | None) -> None:
         """
         Initialise the covariance data
         """
     def __ne__(self, arg0: CovarianceData) -> bool:
         ...
     @property
+    def angular_distribution(self) -> AngularDistributionCovarianceData | None:
+        """
+        The angular distribution covariances
+        """
+    @property
     def cross_section(self) -> CrossSectionCovarianceData | None:
         """
         The cross section covariances
+        """
+    @property
+    def has_angular_distribution_covariances(self) -> bool:
+        """
+        Return whether or not there are angular distribution covariances
         """
     @property
     def has_cross_section_covariances(self) -> bool:

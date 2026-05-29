@@ -3,9 +3,11 @@
 
 // system includes
 #include <optional>
+#include <tuple>
 
 // other includes
 #include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/covariance/AngularDistributionCovarianceData.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -20,6 +22,7 @@ namespace covariance {
     /* fields */
 
     std::optional< CrossSectionCovarianceData > xs_;
+    std::optional< AngularDistributionCovarianceData > angular_;
 
     /* auxiliary functions */
 
@@ -56,13 +59,38 @@ namespace covariance {
     }
 
     /**
+     *  @brief Return the angular distribution covariances
+     */
+    const std::optional< AngularDistributionCovarianceData >& angularDistribution() const {
+
+      return this->angular_;
+    }
+
+    /**
+     *  @brief Return the angular distribution covariances
+     */
+    std::optional< AngularDistributionCovarianceData >& angularDistribution() {
+
+      return this->angular_;
+    }
+
+    /**
+     *  @brief Return whether or not there are angular distribution covariances
+     */
+    bool hasAngularDistributionCovariances() const {
+
+      return this->angularDistribution().has_value();
+    }
+
+    /**
      *  @brief Comparison operator: equal
      *
      *  @param[in] right   the object on the right hand side
      */
     bool operator==( const CovarianceData& right ) const {
 
-      return this->crossSection() == right.crossSection();
+      return std::tie( this->crossSection(), this->angularDistribution() ) ==
+             std::tie( right.crossSection(), right.angularDistribution() );
     }
 
     /**

@@ -14,5 +14,7 @@ CovarianceData& operator=( CovarianceData&& ) = default;
  *
  *  @param matrices   the covariance matrices
  */
-CovarianceData( std::optional< covariance::CrossSectionCovarianceData > xs ) :
-  xs_( std::move( xs ) ) {}
+CovarianceData( std::optional< covariance::CrossSectionCovarianceData > xs,
+                std::optional< covariance::AngularDistributionCovarianceData > angular ) :
+  xs_( std::move( xs ) ) ,
+  angular_( std::move( angular ) ) {}

@@ -462,6 +462,8 @@ namespace h1 {
 
     CHECK( std::nullopt != H1.covarianceData()->crossSection() );
     verifyCrossSectionCovariances( H1.covarianceData()->crossSection().value() );
+
+    CHECK( std::nullopt == H1.covarianceData()->angularDistribution() );
   }
 
 } // namespace h1

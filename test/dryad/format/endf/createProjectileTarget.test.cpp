@@ -50,6 +50,22 @@ SCENARIO( "createProjectileTarget" ) {
         neutron::li7::verifyLi7( second, true );
       } // THEN
     } // WHEN
+
+    WHEN( "a single ENDF material is given with angular covariances" ) {
+
+      using Tape = njoy::ENDFtk::tree::Tape;
+      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-010_Ne_022.endf" );
+      auto material = tape.materials().front();
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget first = format::endf::createProjectileTarget( material, false );
+        ProjectileTarget second = format::endf::createProjectileTarget( material, true );
+
+        neutron::ne22::verifyNe22( first, false );
+        neutron::ne22::verifyNe22( second, true );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "ENDF materials - incident neutrons - metastable target" ) {
