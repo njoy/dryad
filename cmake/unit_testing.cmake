@@ -219,6 +219,7 @@ add_cpp_test( dryad.format.endf.covariance.createVarianceScaling                
 add_cpp_test( dryad.format.endf.covariance.createCrossSectionCovarianceMatrix           dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.format.endf.covariance.createCrossSectionCovarianceData             dryad/format/endf/covariance/createCrossSectionCovarianceData.test.cpp )
 add_cpp_test( dryad.format.endf.covariance.createAngularDistributionCovarianceMatrix    dryad/format/endf/covariance/createAngularDistributionCovarianceMatrix.test.cpp )
+add_cpp_test( dryad.format.endf.covariance.createAngularDistributionCovarianceData      dryad/format/endf/covariance/createAngularDistributionCovarianceData.test.cpp )
 add_cpp_test( dryad.format.endf.covariance.createCovarianceData                         dryad/format/endf/covariance/createCovarianceData.test.cpp )
 add_cpp_test( dryad.format.endf.createTabulatedCrossSection                             dryad/format/endf/createTabulatedCrossSection.test.cpp )
 add_cpp_test( dryad.format.endf.createPolynomialMultiplicity                            dryad/format/endf/createPolynomialMultiplicity.test.cpp )
