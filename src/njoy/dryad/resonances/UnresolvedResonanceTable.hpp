@@ -36,6 +36,8 @@ namespace resonances{
         /* auxiliary functions */
         #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/processTable.hpp"
         #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/verifyTable.hpp"
+        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/buildWidths.hpp"
+        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/unifyEnergyGrids.hpp"
 
 
     

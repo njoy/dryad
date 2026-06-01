@@ -16,6 +16,113 @@ using namespace njoy::dryad::resonances;
 
 SCENARIO( "UnresolvedResonanceTable" ) {
 
+  GIVEN( "pre-built tabulated objects - ordered channels" ) {
+
+    std::vector< id::ChannelID > channels = {
+
+      id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+      id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" )
+    };
+    std::vector< TabulatedAverageWidths > widths = {
+
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } ),
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } )
+    };
+    TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+    THEN( "an UnresolvedResonanceTable can be constructed from pre-built tabulated objects" ) {
+
+      UnresolvedResonanceTable table( std::move( channels ),
+                                      std::move( widths ),
+                                      std::move( spacings ) );
+
+      CHECK( 2 == table.numberChannels() );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+      CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
+
+      TabulatedAverageWidths expectedWidths0( { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } );
+      TabulatedAverageWidths expectedWidths1( { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } );
+      CHECK( expectedWidths0 == table.widths()[0] );
+      CHECK( expectedWidths1 == table.widths()[1] );
+
+      TabulatedLevelSpacing expectedSpacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+      CHECK( expectedSpacings == table.spacings() );
+
+      // construction via either ctor should produce the same table
+      UnresolvedResonanceTable rawTable( { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+                                          id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) },
+                                        { 1., 2., 3., 4. },
+                                        { 10., 11., 12., 13. },
+                                        { { 0.11, 0.12, 0.13, 0.14 },
+                                          { 0.21, 0.22, 0.23, 0.24 } } );
+      CHECK( rawTable == table );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "pre-built tabulated objects - unordered channels" ) {
+
+    std::vector< id::ChannelID > channels = {
+
+      id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ),
+      id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" )
+    };
+    std::vector< TabulatedAverageWidths > widths = {
+
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } ),
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } )
+    };
+    TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+    THEN( "the channels and widths get sorted on construction" ) {
+
+      UnresolvedResonanceTable table( std::move( channels ),
+                                      std::move( widths ),
+                                      std::move( spacings ) );
+
+      CHECK( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) == table.channels()[0] );
+      CHECK( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) == table.channels()[1] );
+
+      CHECK( 0 == table.channelIndex( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ).value() );
+      CHECK( 1 == table.channelIndex( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ).value() );
+
+      TabulatedAverageWidths expectedWidths0( { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } );
+      TabulatedAverageWidths expectedWidths1( { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } );
+      CHECK( expectedWidths0 == table.widths()[0] );
+      CHECK( expectedWidths1 == table.widths()[1] );
+
+      CHECK( expectedWidths0 == table.widths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
+      CHECK( expectedWidths1 == table.widths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
+    } // THEN
+  } // GIVEN
+
+  GIVEN( "pre-built tabulated objects with degrees of freedom" ) {
+
+    std::vector< id::ChannelID > channels = {
+
+      id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+      id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" )
+    };
+    std::vector< TabulatedAverageWidths > widths = {
+
+      TabulatedAverageWidths( 1, { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } ),
+      TabulatedAverageWidths( 2, { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } )
+    };
+    TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+    THEN( "the degrees of freedom on the average widths are preserved" ) {
+
+      UnresolvedResonanceTable table( std::move( channels ),
+                                      std::move( widths ),
+                                      std::move( spacings ) );
+
+      TabulatedAverageWidths expectedWidths0( 1, { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } );
+      TabulatedAverageWidths expectedWidths1( 2, { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } );
+      CHECK( expectedWidths0 == table.widths()[0] );
+      CHECK( expectedWidths1 == table.widths()[1] );
+    } // THEN
+  } // GIVEN
+
   GIVEN( "valid data for an UnresolvedResonanceTable involving multiple channels - fully ordered" ) {
 
     std::vector< id::ChannelID > channels = {
