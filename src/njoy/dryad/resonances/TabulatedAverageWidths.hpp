@@ -14,6 +14,7 @@ namespace resonances {
    *  @brief  A tabulated average width <Gamma_c>(E) for a single channel,
    *          together with the degrees of freedom for its chi-squared
    *          distribution
+   * 
    * Stores the average partial widths as a function of energy for one
    * reaction channel, as given in ENDF MF2/LRU=2, along with the integer
    * degrees of freedom for the chi-squared distribution for ladder generation:
@@ -24,7 +25,10 @@ namespace resonances {
    * For the elastic channel, the stored value is the reduced neutron width
    * <Gamma_n^0> as given in ENDF. The physical neutron width at energy E is:
    * 
-   *      <Gamma_n>(E) = <Gamma_n^0>(E) * sqrt(E) * P_l(E)
+   *      <Gamma_n>(E) = <Gamma_n^0>(E) * sqrt(E/E0) * P_l(E)
+   * 
+   * where E0 is the reference energy (E0=1 eV), and P_l(E) is the neutron 
+   * penetrability factor for orbital angular momentum l.
    * 
    * Units: energies in eV, widths in eV. DoF is dimensionless.
    *
@@ -91,7 +95,7 @@ namespace resonances {
         using InterpolationTable::operator();
 
         /**
-         *  @brief Return a linearised level spacing table
+         *  @brief Return a linearised average width table
          *
          *  @param[in] tolerance   the linearisation tolerance (default: 0.1 %)
          */
