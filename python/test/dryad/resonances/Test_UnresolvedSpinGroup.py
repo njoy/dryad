@@ -178,7 +178,6 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                     channels = channels,
                     level_spacings = spacings, 
                     average_widths = widths )
-
         # sorted channels
         chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table )
 
