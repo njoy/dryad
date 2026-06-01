@@ -169,10 +169,10 @@ class Test_UnresolvedSpinGroup( unittest.TestCase ) :
                    TabulatedAverageWidths( energies, [ 0.41, 0.42, 0.43, 0.44 ] ),
                   ]
 
-        table = UnresolvedResonanceTable( channels = channels,
-                                          level_spacings = spacings,
-                                          average_widths = widths )
-
+        table = UnresolvedResonanceTable(
+                    channels = channels,
+                    level_spacings = spacings, 
+                    average_widths = widths )
         # sorted channels
         chunk = UnresolvedSpinGroup( [ capture, elastic, inelastic, proton ], table )
 
