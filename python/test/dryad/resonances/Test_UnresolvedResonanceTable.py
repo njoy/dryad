@@ -38,6 +38,83 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
     self.assertEqual( energies, table.widths_for_channel( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ).energies )
     self.assertEqual( energies, table.widths_for_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ).energies )
 
+  def test_component_from_tabulated( self ):
+
+    energies = [ 1., 2., 3., 4. ]
+    channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ]
+    widths = [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+               TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ) ]
+    spacings = TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] )
+
+    table = UnresolvedResonanceTable( channels, widths, spacings )
+
+    self.assertEqual( 2, table.number_channels )
+    self.assertEqual( channels[0], table.channels[0] )
+    self.assertEqual( channels[1], table.channels[1] )
+
+    self.assertEqual( energies, table.spacings.energies )
+    self.assertEqual( [ 10., 11., 12., 13. ], table.spacings.values )
+
+    self.assertEqual( energies, table.widths[0].energies )
+    self.assertEqual( energies, table.widths[1].energies )
+    self.assertEqual( [ 0.11, 0.12, 0.13, 0.14 ], table.widths[0].values )
+    self.assertEqual( [ 0.21, 0.22, 0.23, 0.24 ], table.widths[1].values )
+
+    self.assertEqual( [ 0.11, 0.12, 0.13, 0.14 ],
+                      table.widths_for_channel( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ).values )
+    self.assertEqual( [ 0.21, 0.22, 0.23, 0.24 ],
+                      table.widths_for_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ).values )
+
+    raw_table = UnresolvedResonanceTable( channels = channels,
+                                          energies = energies,
+                                          spacing_values = [ 10., 11., 12., 13. ],
+                                          width_values = [ [ 0.11, 0.12, 0.13, 0.14 ],
+                                                           [ 0.21, 0.22, 0.23, 0.24 ] ] )
+    self.assertEqual( raw_table, table )
+
+    unsorted_channels = [ ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ),
+                          ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ]
+    unsorted_widths = [ TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
+                        TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ) ]
+    spacings2 = TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] )
+    sorted_table = UnresolvedResonanceTable( unsorted_channels, unsorted_widths, spacings2 )
+
+    self.assertEqual( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ), sorted_table.channels[0] )
+    self.assertEqual( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ), sorted_table.channels[1] )
+    self.assertEqual( [ 0.11, 0.12, 0.13, 0.14 ], sorted_table.widths[0].values )
+    self.assertEqual( [ 0.21, 0.22, 0.23, 0.24 ], sorted_table.widths[1].values )
+
+    widths_with_dof = [ TabulatedAverageWidths( 1, energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+                        TabulatedAverageWidths( 2, energies, [ 0.21, 0.22, 0.23, 0.24 ] ) ]
+    spacings3 = TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] )
+    dof_table = UnresolvedResonanceTable( channels, widths_with_dof, spacings3 )
+
+    expected_widths0 = TabulatedAverageWidths( 1, energies, [ 0.11, 0.12, 0.13, 0.14 ] )
+    expected_widths1 = TabulatedAverageWidths( 2, energies, [ 0.21, 0.22, 0.23, 0.24 ] )
+    self.assertEqual( expected_widths0, dof_table.widths[0] )
+    self.assertEqual( expected_widths1, dof_table.widths[1] )
+
+  def test_grid_unification( self ):
+
+    channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ]
+
+    widths = [ TabulatedAverageWidths( 1, [ 1., 2., 3., 4. ], [ 1., 2., 3., 4. ] ),
+               TabulatedAverageWidths( 1, [ 1., 2.5, 4. ], [ 1., 1., 1. ] ) ]
+    spacings = TabulatedLevelSpacing( [ 1., 2., 3., 4. ], [ 10., 20., 30., 40. ] )
+
+    table = UnresolvedResonanceTable( channels, widths, spacings )
+
+    union_grid = [ 1., 2., 2.5, 3., 4. ]
+    self.assertEqual( union_grid, table.spacings.energies )
+    self.assertEqual( union_grid, table.widths[0].energies )
+    self.assertEqual( union_grid, table.widths[1].energies )
+
+    self.assertEqual( [ 10., 20., 25., 30., 40. ], table.spacings.values )
+    self.assertEqual( [ 1., 2., 2.5, 3., 4. ], table.widths[0].values )
+    self.assertEqual( [ 1., 1., 1., 1., 1. ], table.widths[1].values )
+
   def test_equality( self ):
     
     left = UnresolvedResonanceTable( channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
@@ -142,8 +219,36 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
 
         widths = table.widths_for_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) )
 
+    # ---- Tabulated ctor failure cases ----
 
+    energies = [ 1., 2., 3., 4. ]
 
+    # channel count and widths count do not match
+    with self.assertRaises( Exception ) :
+
+        table = UnresolvedResonanceTable(
+            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ],
+            [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+              TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ) ],
+            TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] ) )
+
+    # empty channels
+    with self.assertRaises( Exception ) :
+
+        table = UnresolvedResonanceTable(
+            [],
+            [],
+            TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] ) )
+
+    # two adjacent channels share the same identifier
+    with self.assertRaises( Exception ) :
+
+        table = UnresolvedResonanceTable(
+            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+              ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ],
+            [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
+              TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ) ],
+            TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] ) )
 
 
 if __name__ == '__main__':

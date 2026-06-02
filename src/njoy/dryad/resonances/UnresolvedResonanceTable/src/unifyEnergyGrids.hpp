@@ -24,9 +24,9 @@ static void unifyEnergyGrids( std::vector< TabulatedAverageWidths >& widths, Tab
   spacings = TabulatedLevelSpacing( unionGrid, spacingValues );
 
   for ( auto& width : widths ) {
-    std::vector< double > widthValues(width.energies().size());
-    for ( size_t i = 0; i < width.energies().size(); ++i ) {
-      widthValues[i] = width( width.energies()[i] );
+    std::vector< double > widthValues(unionGrid.size());
+    for ( size_t i = 0; i < unionGrid.size(); ++i ) {
+      widthValues[i] = width( unionGrid[i] );
     }
     if ( width.degreesOfFreedom().has_value() ) {
       width = TabulatedAverageWidths( width.degreesOfFreedom().value(), unionGrid, widthValues);

@@ -35,6 +35,24 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
   // wrap the component
   component
   .def(
+    
+
+    python::init< std::vector< ChannelID >,
+                  std::vector<TabulatedAverageWidths>,
+                  TabulatedLevelSpacing >(),
+    python::arg( "channels" ), python::arg( "average_widths" ),
+    python::arg( "level_spacings" ),
+    "Initialise the table\n\n"
+    "The channels do not have to be sorted (they will be sorted upon\n"
+    "construction). The shared energy grid is used to construct the\n"
+    "level spacing table and the average width tables.\n\n"
+    "Arguments:\n"
+    "    self             the table\n"
+    "    channels         the channel identifiers (nc values)\n"
+    "    average_widths   the average widths for all channels\n"
+    "    level_spacings   the level spacings"
+  )
+  .def(
 
     python::init< std::vector< ChannelID >,
                   std::vector< double >,
