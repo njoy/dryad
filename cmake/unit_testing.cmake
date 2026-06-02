@@ -27,6 +27,9 @@ endfunction()
 
 message( STATUS "Adding njoy C++ unit testing" )
 
+# njoy tests
+
+add_cpp_test( configuration                                                             configuration.test.cpp )
 add_cpp_test( matrix                                                                    matrix.test.cpp )
 
 # dryad tests
