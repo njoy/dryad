@@ -3,7 +3,14 @@
 
 // system includes
 #include <cstdlib>
+
+#if __has_include(<filesystem>) && (__cplusplus >= 201703L)
 #include <filesystem>
+namespace filesystem = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace filesystem = std::experimental::filesystem;
+#endif
 
 // other includes
 #include "tools/Configuration.hpp"
@@ -17,7 +24,7 @@ static tools::Configuration& configuration() {
 
   if ( const char* njoy_datapath = std::getenv( "NJOY_DATAPATH" ) ) {
 
-    std::filesystem::path path( njoy_datapath );
+    filesystem::path path( njoy_datapath );
     path /= "njoy.config";
     return tools::Configuration::getInstance( path.string() );
   }

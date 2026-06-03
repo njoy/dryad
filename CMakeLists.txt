@@ -83,6 +83,10 @@ target_link_libraries( njoy
     njoy::ENDFtk
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9)
+   target_link_libraries(njoy INTERFACE stdc++fs)
+endif()
+
 if(MSVC)
   add_compile_options(/bigobj)
   target_link_options(njoy INTERFACE "/STACK:8388608")
