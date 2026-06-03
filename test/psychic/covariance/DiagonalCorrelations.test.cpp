@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
+#include "njoy/psychic/covariance/DiagonalCorrelations.hpp"
 
 // other includes
 #include <iostream>
@@ -13,7 +13,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "PositiveSemiDefinite" ) {
+SCENARIO( "DiagonalCorrelations" ) {
 
   GIVEN( "on-diagonal matrices covariance matrices" ) {
 
@@ -21,29 +21,28 @@ SCENARIO( "PositiveSemiDefinite" ) {
     njoy::dryad::covariance::CrossSectionMetadata metadata( { njoy::dryad::id::ReactionID( "n,U235->n,U235" ) },
                                                             { 1e-5, 1., 1e+6, 2e+7 } );
 
-    // positive semi-definite
     njoy::matrix::Matrix< double > success( 3, 3 );
-    success << 1., 2., 3.,
-               2., 4., 6.,
-               3., 6., 9.;
+    success << 1., 1., 1.,
+               1., 1., 1.,
+               1., 1., 1.;
 
-    // positive semi-definite with very small eigenvalues
     njoy::matrix::Matrix< double > warning( 3, 3 );
-    warning << 1.           , 2., 3.00000000005,
-               2.           , 4., 6.,
-               3.00000000005, 6., 9.;
+    warning << 1., 1., 1.,
+               1., 1., 1.,
+               1., 1., 1.00000000005;
 
-    // not positive semi-definite
     njoy::matrix::Matrix< double > fail( 3, 3 );
-    fail << 1. , 2., 3.5,
-            2. , 4., 6.,
-            3.5, 6., 9.;
+    fail << 1., 1., 1.,
+            1., 1., 1.,
+            1., 1., 1.5;
 
-    njoy::psychic::covariance::PositiveSemiDefinite test;
+    std::vector< double > deviations = { 1., 2., 3. };
 
-    WHEN( "a covariance matrix that is positive semi-definite is used" ) {
+    njoy::psychic::covariance::DiagonalCorrelations test;
 
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, success );
+    WHEN( "a covariance matrix with all diagonal correlations equal to 1 is used" ) {
+
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, success );
 
       THEN( "the test returns a success" ) {
 
@@ -51,9 +50,9 @@ SCENARIO( "PositiveSemiDefinite" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix that is positive semi-definite with small negative eigenvalues is used" ) {
+    WHEN( "a covariance matrix with all diagonal correlations equal to 1 (within tolerance) is used" ) {
 
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, warning );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, warning );
 
       THEN( "the test returns a warning" ) {
 
@@ -61,9 +60,9 @@ SCENARIO( "PositiveSemiDefinite" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix that is not positive semi-definite is used" ) {
+    WHEN( "a covariance matrix with diagonal correlations that are larger than 1 is used" ) {
 
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, fail );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, fail );
 
       THEN( "the test returns a fail" ) {
 

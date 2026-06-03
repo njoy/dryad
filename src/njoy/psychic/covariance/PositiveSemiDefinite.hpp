@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_POSITIVESEMIDEFINITE
-#define NJOY_PSYCHIC_COVARIANCES_POSITIVESEMIDEFINITE
+#ifndef NJOY_PSYCHIC_COVARIANCE_POSITIVESEMIDEFINITE
+#define NJOY_PSYCHIC_COVARIANCE_POSITIVESEMIDEFINITE
 
 // system includes
 #include <algorithm>
@@ -57,6 +57,7 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
+    using Parent::clear;
 
     /**
      *  @brief Return the largest allowed negative eigenvalue
@@ -87,6 +88,9 @@ namespace covariance {
     /**
      *  @brief Verify if the provided covariance matrix is positive semi-definite
      *
+     *  This test can be run only for on-diagonal covariance matrices if the eigenvalues are
+     *  available.
+     *
      *  A covariance matrix is positive semi-definite if it is a square symmetric matrix
      *  that has eigenvalues that are larger than or equal to zero. Construction of
      *  on-diagonal covariance matrices already requires square and symmetric matrices so
@@ -96,9 +100,8 @@ namespace covariance {
      *    - Success : the on-diagonal covariance matrix is positive semi-definite
      *    - Warning : the on-diagonal covariance matrix is can be considered positive
      *                semi-definite by accepting small negative eigenvalues
-     *    - Fail : the on-diagonal covariance matrix is not positive semi-definite
-     *    - Skipped : the covariance matrix provided is not on-diagonal (ie its eigenvalues)
-     *                cannot be calculated
+     *    - Fail    : the on-diagonal covariance matrix is not positive semi-definite
+     *    - Skipped : the test was skipped
      *
      *  The largest negative eigenvalue is available for the Warning and Fail state.
      *
@@ -111,7 +114,7 @@ namespace covariance {
                          const std::optional< TestStatus >& > {
 
       this->clear();
-      if ( covariance.eigenvalues().has_value() ) {
+      if ( covariance.isOnDiagonal() && covariance.eigenvalues().has_value() ) {
 
         this->status( TestStatus::Success );
 

@@ -1,5 +1,5 @@
-#ifndef NJOY_PSYCHIC_COVARIANCES_BOUNDEDCORRELATIONS
-#define NJOY_PSYCHIC_COVARIANCES_BOUNDEDCORRELATIONS
+#ifndef NJOY_PSYCHIC_COVARIANCE_BOUNDEDCORRELATIONS
+#define NJOY_PSYCHIC_COVARIANCE_BOUNDEDCORRELATIONS
 
 // system includes
 
@@ -40,7 +40,11 @@ namespace covariance {
     /**
      *  @brief Reset the test result information
      */
-    void reset() {}
+    void reset() {
+
+      this->smallestCorrelation( std::nullopt );
+      this->largestCorrelation( std::nullopt );
+    }
 
   public:
 
@@ -54,6 +58,7 @@ namespace covariance {
 
     using Parent::name;
     using Parent::status;
+    using Parent::clear;
 
     /**
      *  @brief Return the comparison tolerance
@@ -101,6 +106,17 @@ namespace covariance {
 
     /**
      *  @brief Verify if the provided covariance matrix has correlations between -1 and 1
+     *
+     *  This test can be run for on-diagonal and off-diagonal covariance matrices if the
+     *  correlations are available.
+     *
+     *  The test returns the following status values:
+     *    - Success : the correlations are between -1 and 1
+     *    - Warning : the correlations are between -1 and 1, taking into account a tolerance
+     *    - Fail : the correlations matrix are outside the -1 and 1 range
+     *    - Skipped : the test was skipped
+     *
+     *  The smallest and largest correlation values are available for the Warning and Fail state.
      *
      *  @param[in] covariance   the covariance matrix instance to be tested
      */

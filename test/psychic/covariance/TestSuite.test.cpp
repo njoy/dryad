@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
+#include "njoy/psychic/covariance/TestSuite.hpp"
 
 // other includes
 #include <iostream>
@@ -13,7 +13,7 @@ using Catch::Matchers::WithinRel;
 // convenience typedefs
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "PositiveSemiDefinite" ) {
+SCENARIO( "TestSuite" ) {
 
   GIVEN( "on-diagonal matrices covariance matrices" ) {
 
@@ -39,7 +39,7 @@ SCENARIO( "PositiveSemiDefinite" ) {
             2. , 4., 6.,
             3.5, 6., 9.;
 
-    njoy::psychic::covariance::PositiveSemiDefinite test;
+    njoy::psychic::covariance::TestSuite test;
 
     WHEN( "a covariance matrix that is positive semi-definite is used" ) {
 
@@ -48,6 +48,10 @@ SCENARIO( "PositiveSemiDefinite" ) {
       THEN( "the test returns a success" ) {
 
         CHECK( njoy::psychic::TestStatus::Success == test( matrix ) );
+        CHECK( njoy::psychic::TestStatus::Success == test.positiveVariances().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.positiveSemiDefinite().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.boundedCorrelations().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.diagonalCorrelations().status() );
       } // THEN
     } // WHEN
 
@@ -58,6 +62,10 @@ SCENARIO( "PositiveSemiDefinite" ) {
       THEN( "the test returns a warning" ) {
 
         CHECK( njoy::psychic::TestStatus::Warning == test( matrix ) );
+        CHECK( njoy::psychic::TestStatus::Success == test.positiveVariances().status() );
+        CHECK( njoy::psychic::TestStatus::Warning == test.positiveSemiDefinite().status() );
+        CHECK( njoy::psychic::TestStatus::Warning == test.boundedCorrelations().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.diagonalCorrelations().status() );
       } // THEN
     } // WHEN
 
@@ -68,6 +76,10 @@ SCENARIO( "PositiveSemiDefinite" ) {
       THEN( "the test returns a fail" ) {
 
         CHECK( njoy::psychic::TestStatus::Fail == test( matrix ) );
+        CHECK( njoy::psychic::TestStatus::Success == test.positiveVariances().status() );
+        CHECK( njoy::psychic::TestStatus::Fail == test.positiveSemiDefinite().status() );
+        CHECK( njoy::psychic::TestStatus::Fail == test.boundedCorrelations().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.diagonalCorrelations().status() );
       } // THEN
     } // WHEN
   } // GIVEN

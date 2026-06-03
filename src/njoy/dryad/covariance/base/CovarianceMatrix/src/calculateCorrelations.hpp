@@ -5,6 +5,9 @@
  *  deviations for matrices on the diagonal of the full matrix. Standard
  *  deviations will be calculated and stored as well.
  *
+ *  When a diagonal correlation value is equal to one within 10 times epsilon,
+ *  the diagonal correlation value will get set to one exactly.
+ *
  *  When this method is called on an off diagonal matrix, the method has
  *  no effect.
  */
@@ -26,7 +29,26 @@ void calculateCorrelations() {
       }
     }
 
-    this->correlations_ = temporary * this->covariances() * temporary;
+    matrix::Matrix< double > correlations = temporary * this->covariances() * temporary;
+    for ( unsigned int i = 0; i < nrows; ++i ) {
+
+      for ( unsigned int j = i + 1; j < nrows; ++j ) {
+
+        if ( scion::math::isClose( 1., correlations(i,j), 10. * std::numeric_limits< double >::epsilon() ) ) {
+
+          correlations(i,j) = 1.;
+          correlations(j,i) = 1.;
+        }
+        else if ( scion::math::isClose( -1., correlations(i,j), 10. * std::numeric_limits< double >::epsilon() ) ) {
+
+          correlations(i,j) = -1.;
+          correlations(j,i) = -1.;
+        }
+      }
+      correlations(i,i) = 1.;
+    }
+
+    this->correlations_ = std::move( correlations );
   }
 }
 
@@ -73,5 +95,21 @@ void calculateCorrelations( const std::vector< double >& rowDeviations,
     }
   }
 
-  this->correlations_ = left * this->covariances() * right;
+  matrix::Matrix< double > correlations = left * this->covariances() * right;
+  for ( unsigned int i = 0; i < nrows; ++i ) {
+
+    for ( unsigned int j = 0; j < ncols; ++j ) {
+
+      if ( scion::math::isClose( 1., correlations(i,j), 10. * std::numeric_limits< double >::epsilon() ) ) {
+
+        correlations(i,j) = 1.;
+      }
+      else if ( scion::math::isClose( -1., correlations(i,j), 10. * std::numeric_limits< double >::epsilon() ) ) {
+
+        correlations(i,j) = -1.;
+      }
+    }
+  }
+
+  this->correlations_ = std::move( correlations );
 }

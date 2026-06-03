@@ -10,14 +10,14 @@ from njoy.dryad.covariance import CrossSectionCovarianceMatrix
 from njoy.dryad.covariance import CrossSectionMetadata
 from njoy.dryad.id import ReactionID
 from njoy.psychic import TestStatus
-from njoy.psychic.covariance import BoundedCorrelations
+from njoy.psychic.covariance import DiagonalCorrelations
 
-class Test_BoundedCorrelations( unittest.TestCase ) :
-    """Unit test for the BoundedCorrelations class."""
+class Test_DiagonalCorrelations( unittest.TestCase ) :
+    """Unit test for the DiagonalCorrelations class."""
 
     def test_component( self ) :
 
-        test = BoundedCorrelations()
+        test = DiagonalCorrelations()
 
         matrix = CrossSectionCovarianceMatrix( CrossSectionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
                                                                      [ 1e-5, 1., 1e+6, 2e+7 ] ),

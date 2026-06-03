@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/psychic/covariance/BoundedCorrelations.hpp"
+#include "njoy/psychic/covariance/DiagonalCorrelations.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,10 +12,10 @@ namespace python = pybind11;
 namespace psychic {
 namespace covariance {
 
-void wrapBoundedCorrelations( python::module& module ) {
+void wrapDiagonalCorrelations( python::module& module ) {
 
   // type aliases
-  using Component = njoy::psychic::covariance::BoundedCorrelations;
+  using Component = njoy::psychic::covariance::DiagonalCorrelations;
   using TestStatus = njoy::psychic::TestStatus;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
   using ProductMultiplicityCovarianceMatrix = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
@@ -26,8 +26,8 @@ void wrapBoundedCorrelations( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "BoundedCorrelations",
-    "Test to verify if all correlation values are between -1 and 1\n\n"
+    "DiagonalCorrelations",
+    "Test to verify if all diagonal correlation values are equal to 1\n\n"
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 1e-10\n"
@@ -61,33 +61,18 @@ void wrapBoundedCorrelations( python::module& module ) {
        { self.status( std::move( status ) ); },
     "The test status"
   )
-  .def_property(
-
-    "smallest_correlation",
-    python::overload_cast<>( &Component::smallestCorrelation, python::const_ ),
-    python::overload_cast< std::optional< double > >( &Component::smallestCorrelation ),
-    "The smallest correlation value that was found"
-  )
-  .def_property(
-
-    "largest_correlation",
-    python::overload_cast<>( &Component::largestCorrelation, python::const_ ),
-    python::overload_cast< std::optional< double > >( &Component::largestCorrelation ),
-    "The largest correlation value that was found"
-  )
   .def(
 
     "__call__",
     [] ( Component& self, const CrossSectionCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Verify if the provided covariance matrix has correlations between -1 and 1\n\n"
+    "Verify if the provided covariance matrix has diagonal correlations equal to 1\n\n"
     "The test returns the following status values:\n"
-    "  - Success : the correlations are between -1 and 1\n"
-    "  - Warning : the correlations are between -1 and 1, taking into account a tolerance\n"
-    "  - Fail : the correlations matrix are outside the -1 and 1 range\n"
+    "  - Success : all diagonal correlations are equal to 1\n"
+    "  - Warning : all diagonal correlations are equal to 1, taking into account a tolerance\n"
+    "  - Fail : not all diagonal correlations are equal to 1\n"
     "  - Skipped : the test was skipped\n\n"
-    "The smallest and largest correlation values are available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
@@ -99,7 +84,7 @@ void wrapBoundedCorrelations( python::module& module ) {
     [] ( Component& self, const ProductMultiplicityCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Verify if the provided covariance matrix has correlations between -1 and 1"
+    "Verify if the provided covariance matrix has diagonal correlations equal to 1"
   );
 }
 
