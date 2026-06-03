@@ -23,13 +23,16 @@ namespace resonances {
 namespace rmatrix {
 
   /**
-   *  @brief Create the compound system for LRF7 resonance parameters
+   *  @brief Create the compound system for rmatrix resonance parameters
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] lower        the lower energy limit
    *  @param[in] upper        the upper energy limit
-   *  @param[in] endf         the parsed ENDF LRF7 data
+   *  @param[in] pops         the particle database read from the file
+   *  @param[in] radii        the channel radii read from the file
+   *  @param[in] rmatrix      the GNDS rmatrix xml node
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline auto createCompoundSystem( const id::ParticleID& projectile,
                                     const id::ParticleID& target,

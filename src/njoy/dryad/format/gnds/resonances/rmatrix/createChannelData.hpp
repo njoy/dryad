@@ -27,7 +27,6 @@ namespace rmatrix {
    *
    *  @param[in] boundary_condition   the gnds boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
-   *  @param[in] reduced_amplitudes   flag to indicate whether or not the widths are reduced or not
    *  @param[in] reactions            the resonance reaction information from the GNDS file
    *  @param[in] group                the GNDS spin group xml node
    */
@@ -119,7 +118,7 @@ namespace rmatrix {
     return channel_data;
   }
 
-} // lrf7 namespace
+} // rmatrix namespace
 } // resonances namespace
 } // gnds namespace
 } // format namespace

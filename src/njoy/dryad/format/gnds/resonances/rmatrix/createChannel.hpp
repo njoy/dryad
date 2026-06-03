@@ -27,7 +27,7 @@ namespace rmatrix {
    *  @param[in] boundary_condition   the gnds boundary condition option
    *  @param[in] kinematics           the kinematics type to be applied
    *  @param[in] reactions            the resonance reaction information from the GNDS file
-   *  @param[in] spin                 the total angualr momentum value
+   *  @param[in] spin                 the total angular momentum value
    *  @param[in] parity               the parity
    *  @param[in] channel              the GNDS channel xml node
    */
@@ -88,7 +88,8 @@ namespace rmatrix {
       }
       else {
 
-        Log::error( "A boundary condition is defined but the boundary condition type is not constant" );
+        Log::error( "A boundaryConditionValue attribute is defined for a channel node, but the "
+                    "boundary condition type set on the RMatrix node is not constant" );
         throw std::exception();
       }
     }
@@ -126,7 +127,7 @@ namespace rmatrix {
                                        std::move( background ) );
   }
 
-} // lrf7 namespace
+} // rmatrix namespace
 } // resonances namespace
 } // gnds namespace
 } // format namespace

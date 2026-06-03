@@ -21,7 +21,12 @@ namespace rmatrix {
   /**
    *  @brief Create the information for all resonance reactions
    *
-   *  @param[in] reactions   the GNDS resonanceReactions node
+   *  @param[in] projectile   the projectile identifier
+   *  @param[in] target       the target identifier
+   *  @param[in] reactions    the GNDS resonanceReactions node
+   *  @param[in] particles    the particle data from the global and local pops
+   *  @param[in] radii        the previously read channel radii
+   *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ResonanceReactions
   createResonanceReactions( const id::ParticleID& projectile,
