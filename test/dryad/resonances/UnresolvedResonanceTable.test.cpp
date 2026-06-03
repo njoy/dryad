@@ -435,4 +435,30 @@ SCENARIO( "UnresolvedResonanceTable" ) {
       } // THEN
     } // WHEN
   } // GIVEN
+GIVEN( "valid data where channels share an (L, J) group but differ in channel spin" ) {
+
+    std::vector< id::ChannelID > channels = {
+
+      id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ),
+      id::ChannelID( "n,U235->n,U235_e1{1,3/2,1/2-}" )
+    };
+    std::vector< double > energies = { 1., 2., 3., 4. };
+    std::vector< double > spacingValues = { 10., 11., 12., 13. };
+    std::vector< std::vector< double > > widthValues = {
+
+      { 0.11, 0.12, 0.13, 0.14 },
+      { 0.21, 0.22, 0.23, 0.24 }
+    };
+
+    THEN( "an UnresolvedResonanceTable can be constructed: channels in an (L, J) "
+          "group may differ in channel spin s" ) {
+
+      UnresolvedResonanceTable table( std::move( channels ),
+                                      std::move( energies ),
+                                      std::move( spacingValues ),
+                                      std::move( widthValues ) );
+
+      CHECK( 2 == table.numberChannels() );
+    } // THEN
+  } // GIVEN
 } // SCENARIO

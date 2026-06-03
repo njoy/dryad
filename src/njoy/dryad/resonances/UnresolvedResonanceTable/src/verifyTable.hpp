@@ -88,4 +88,17 @@ static void verifyTable( const std::vector< id::ChannelID >& channels,
     throw std::exception();
   }
 
+  const auto& reference = channels.front().quantumNumbers();
+  for ( const auto& channel : channels ) {
+    const auto& numbers = channel.quantumNumbers();
+    if ( numbers.totalAngularMomentum() != reference.totalAngularMomentum() || 
+         numbers.parity() != reference.parity() ||
+         numbers.orbitalAngularMomentum() != reference.orbitalAngularMomentum() ) {
+      Log::error( "All channels in UnresolvedResonanceTable must belong to the same Jpi spin group" );
+      Log::info( "Reference Channel: \'{}\'", channels.front().symbol() );
+      Log::info( "Conflicting Channel: \'{}\'",  channel.symbol() ); 
+      throw std::exception(); 
+    }
+  }
+
 }
