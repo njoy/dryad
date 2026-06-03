@@ -5,6 +5,7 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
+#include "njoy/dryad/format/gendf/covariance/createCrossSectionCovarianceDataFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -16,6 +17,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
 
   // type aliases
   using Component = njoy::dryad::covariance::CrossSectionCovarianceData;
+  using ParticleID = njoy::dryad::id::ParticleID;
   using ReactionID = njoy::dryad::id::ReactionID;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
 
@@ -114,6 +116,31 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "    id : njoy.dryad.id.ReactionID\n"
     "         the reaction identifier",
     python::return_value_policy::reference_internal
+  )
+  .def_static(
+
+    "from_gendf_file",
+    [] ( const ParticleID& projectile, const ParticleID& target,
+         bool relative, const std::string& filename ) -> decltype(auto) {
+
+      return njoy::dryad::format::gendf::covariance::createCrossSectionCovarianceDataFromFile(
+                 projectile, target, relative, filename );
+    },
+    python::arg( "projectile" ), python::arg( "target" ),
+    python::arg( "relative" ), python::arg( "filename" ),
+    "Create CrossSectionCovarianceData data from an ERRORR GENDF file\n\n"
+    "If there are multiple materials in the GENDF file, only the first material\n"
+    "will be transformed into a ProjectileTarget.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "         the projectile identifier\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "         the target identifier\n"
+    "    relative : bool\n"
+    "         the flag to indicate whether or not the covariance data is relative\n"
+    "    filename : str\n"
+    "         the GENDF file name"
   );
 
   // add standard equality comparison definitions
