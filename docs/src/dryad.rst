@@ -1,67 +1,67 @@
 dryad
 =====
 
-The ``dryad`` module contains the data structures used throughout ``njoy``.
+The ``dryad`` module conta ins the data structures used throughout ``njoy``.
 
 .. toctree::
    :maxdepth: 1
    :caption: Data representation basics and theory:
 
-   basics/tabulated
+   dryad/basics/tabulated
 
 .. toctree::
    :maxdepth: 1
    :caption: Enumerators:
 
-   InterpolationType
+   dryad/InterpolationType
 
 .. toctree::
    :maxdepth: 1
    :caption: Base Modules:
 
-   id
+   dryad/id
 
 .. toctree::
    :maxdepth: 1
    :caption: Particle Database:
 
-   Particle
-   ParticleDatabase
+   dryad/Particle
+   dryad/ParticleDatabase
 
 .. toctree::
    :maxdepth: 1
    :caption: Atomic Modules:
 
-   AtomicRelaxation
-   atomic
+   dryad/AtomicRelaxation
+   dryad/atomic
 
 .. toctree::
    :maxdepth: 1
    :caption: Incident particle data
 
-   ReactionProduct
+   dryad/ReactionProduct
 
 .. toctree::
    :maxdepth: 1
    :caption: Resonance data
 
-   resonances
+   dryad/resonances
 
 .. toctree::
    :maxdepth: 1
    :caption: Distribution Types
 
-   distributions
+   dryad/distributions
 
 .. toctree::
    :maxdepth: 1
    :caption: Thermal scattering data
 
-   ThermalScattering
-   thermal
+   dryad/ThermalScattering
+   dryad/thermal
 
 .. toctree::
    :maxdepth: 1
    :caption: External data and models
 
-   external
+   dryad/external

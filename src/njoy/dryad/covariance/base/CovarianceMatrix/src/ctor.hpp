@@ -30,6 +30,8 @@ CovarianceMatrix( Metadata metadata,
     correlations_( std::nullopt ) {
 
   verifyMatrix( this->covariances(), this->rowMetadata().keys().size() );
+  this->calculateCorrelations();
+  this->calculateEigenvalues();
 }
 
 /**
@@ -55,6 +57,7 @@ CovarianceMatrix( Metadata metadata,
                 this->correlations().value(),
                 this->rowMetadata().keys().size() );
   this->calculateCovariances();
+  this->calculateEigenvalues();
 }
 
 /**

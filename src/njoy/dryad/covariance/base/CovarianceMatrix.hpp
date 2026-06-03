@@ -6,6 +6,7 @@
 #include <vector>
 
 // other includes
+#include "scion/math/compare.hpp"
 #include "tools/Log.hpp"
 #include "njoy/matrix.hpp"
 

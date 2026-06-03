@@ -41,9 +41,9 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertEqual( False, chunk.is_off_diagonal )
         self.assertEqual( True, chunk.is_on_diagonal )
 
-        self.assertIsNone( chunk.standard_deviations )
-        self.assertIsNone( chunk.correlations )
-        self.assertIsNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.standard_deviations )
+        self.assertIsNotNone( chunk.correlations )
+        self.assertIsNotNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )
@@ -111,9 +111,9 @@ class Test_CrossSectionCovarianceMatrix( unittest.TestCase ) :
         self.assertEqual( False, chunk.is_off_diagonal )
         self.assertEqual( True, chunk.is_on_diagonal )
 
-        self.assertIsNone( chunk.standard_deviations )
-        self.assertIsNone( chunk.correlations )
-        self.assertIsNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.standard_deviations )
+        self.assertIsNotNone( chunk.correlations )
+        self.assertIsNotNone( chunk.eigenvalues )
 
         self.assertAlmostEqual( 1., chunk.covariances[0,0] )
         self.assertAlmostEqual( 2., chunk.covariances[0,1] )

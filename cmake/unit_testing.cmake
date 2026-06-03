@@ -356,6 +356,12 @@ add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                 
 add_cpp_test( dryad.external.ComptonProfiles                                            dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                               dryad/external/KleinNishina.test.cpp )
 
+# psychic tests
+
+add_cpp_test( psychic.TestStatus                                                        psychic/TestStatus.test.cpp )
+add_cpp_test( psychic.covariance.PositiveSemiDefinite                                   psychic/covariance/PositiveSemiDefinite.test.cpp )
+add_cpp_test( psychic.covariance.BoundedCorrelations                                    psychic/covariance/BoundedCorrelations.test.cpp )
+
 # reconr tests
 
 add_cpp_test( reconr.unioniseCrossSections                                              reconr/unioniseCrossSections.test.cpp )
