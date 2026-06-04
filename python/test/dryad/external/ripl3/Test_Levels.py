@@ -78,11 +78,20 @@ class Test_Levels( unittest.TestCase ) :
 
     def test_non_existent_particle( self ) :
 
+        u214 = ParticleID( 'U214' )
         u235 = ParticleID( 'U235' )
 
         with self.assertRaises( Exception ) :
 
+            Levels.level( u214 )
+
+        try :
+
             Levels.level( u235 )
+
+        except :
+
+            self.fail( 'There should not be an exception' )
 
 if __name__ == '__main__' :
 

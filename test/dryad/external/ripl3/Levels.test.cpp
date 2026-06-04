@@ -84,9 +84,11 @@ SCENARIO( "Levels" ) {
 
     THEN( "requesting a non-existent particle throws an exception" ) {
 
+      id::ParticleID u214( "U214" ); // first available is U215
       id::ParticleID u235( "U235" );
 
-      CHECK_THROWS( Levels::level( u235 ) );
+      CHECK_THROWS( Levels::level( u214 ) );
+      CHECK_NOTHROW( Levels::level( u235 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO
