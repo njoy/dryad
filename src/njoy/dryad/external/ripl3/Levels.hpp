@@ -5,7 +5,6 @@
 #include <filesystem>
 #include <map>
 #include <stdexcept>
-#include <iostream>
 
 // other includes
 #include "tools/Log.hpp"
