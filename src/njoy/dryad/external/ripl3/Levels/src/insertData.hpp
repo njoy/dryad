@@ -88,7 +88,6 @@ static void insertData( int z ) {
         Gamma::read( begin, end, Nf, Eg, Pg, Pe, ICC );
       }
 
-      std::cout << "adding nuclide " << particle.symbol() << std::endl;
       Levels::levels_[ particle ] = { particle, Elv,
                                       s < 0 ? std::nullopt : std::make_optional( s ),
                                       p == 0 ? std::nullopt : std::make_optional( p ),

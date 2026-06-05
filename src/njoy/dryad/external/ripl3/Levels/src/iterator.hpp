@@ -9,7 +9,7 @@ static auto iterator( const id::ParticleID& id ) {
                                id.z(),
                                [] ( auto&& left, auto&& right )
                                   { return left.first.z() < right; } );
-      if ( iter == Levels::levels_.end() || iter->first.z() != id.z() ) {
+      if ( iter == Levels::levels_.end() || iter->first != id ) {
 
         Levels::insertData( id.z() );
         iter = Levels::levels_.find( id );
