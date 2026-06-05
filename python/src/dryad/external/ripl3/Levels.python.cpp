@@ -36,13 +36,26 @@ void wrapLevels( python::module& module ) {
   component
   .def_static(
 
-    "level",
-    []( const ParticleID& id ) -> decltype(auto) {
+    "size",
+    &Component::size,
+    "Return the current size of the RIPL-3 levels data"
+  )
+  .def_static(
 
-      return Component::level( id );
-    },
+    "has_particle",
+    &Component::hasParticle,
     python::arg( "id" ),
-    python::return_value_policy::reference,
+    "Verify whether or not a given particle is present\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ParticleID\n"
+    "         the particle identifier"
+  )
+  .def_static(
+
+    "level",
+    &Component::level,
+    python::arg( "id" ),
     "Retrieve a level entry for a given particle\n\n"
     "Parameters\n"
     "----------\n"

@@ -91,7 +91,6 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM" OR CMAKE_CXX_COMPILER_ID MATCHES "
    target_link_libraries(njoy INTERFACE stdc++fs)
 endif()
 
-
 if(MSVC)
   add_compile_options(/bigobj)
   target_link_options(njoy INTERFACE "/STACK:8388608")
