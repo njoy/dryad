@@ -4,17 +4,17 @@ static void insertData( int z ) {
   if ( ! Levels::ripl3_levels_datapath_.has_value() ) {
 
     std::string config = configuration().get( "ripl3_levels" );
-    std::filesystem::path path( config );
+    filesystem::path path( config );
     if ( ! path.is_absolute() ) {
 
-      path = std::filesystem::path( std::getenv( "NJOY_DATAPATH" ) );
+      path = filesystem::path( std::getenv( "NJOY_DATAPATH" ) );
       path /= config;
     }
     Levels::ripl3_levels_datapath_ = path.string();
   }
 
   // open the ripl-3 file
-  std::filesystem::path path( ripl3_levels_datapath_.value() );
+  filesystem::path path( ripl3_levels_datapath_.value() );
   std::string file = z < 10 ? "z00" : z < 100 ? "z0" : "z";
   file += std::to_string( z ) + ".dat";
   path /= file;
