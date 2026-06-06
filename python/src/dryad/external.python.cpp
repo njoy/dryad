@@ -15,6 +15,9 @@ namespace external {
 
   // ripl3 data
   void wrapRipl3( python::module& );
+
+  // ame data
+  void wrapAme( python::module& );
 }
 
 void wrapExternal( python::module& module ) {
@@ -31,6 +34,9 @@ void wrapExternal( python::module& module ) {
 
   // ripl3
   external::wrapRipl3( submodule );
+
+  // Ame
+  external::wrapAme( submodule );
 }
 
 } // dryad namespace
