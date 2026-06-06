@@ -42,8 +42,8 @@ void wrapLevels( python::module& module ) {
   )
   .def_static(
 
-    "has_particle",
-    &Component::hasParticle,
+    "has_entry",
+    &Component::hasEntry,
     python::arg( "id" ),
     "Verify whether or not a given particle is present\n\n"
     "Parameters\n"
@@ -53,8 +53,8 @@ void wrapLevels( python::module& module ) {
   )
   .def_static(
 
-    "level",
-    &Component::level,
+    "entry",
+    &Component::entry,
     python::arg( "id" ),
     "Retrieve a level entry for a given particle\n\n"
     "Parameters\n"

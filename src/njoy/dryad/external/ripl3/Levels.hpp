@@ -55,7 +55,7 @@ namespace ripl3 {
     /* auxiliary functions */
 
     #include "njoy/dryad/external/ripl3/Levels/src/iterator.hpp"
-    #include "njoy/dryad/external/ripl3/Levels/src/insertData.hpp"
+    #include "njoy/dryad/external/ripl3/Levels/src/loadData.hpp"
 
   public:
 
@@ -74,7 +74,7 @@ namespace ripl3 {
      *
      *  @param[in] id   the particle identifier
      */
-    static bool hasParticle( const id::ParticleID& id ) {
+    static bool hasEntry( const id::ParticleID& id ) {
 
       return iterator( id ) == Levels::levels_.end();
     }
@@ -84,7 +84,7 @@ namespace ripl3 {
      *
      *  @param[in] id   the particle identifier
      */
-    static const LevelEntry& level( const id::ParticleID& id ) {
+    static const LevelEntry& entry( const id::ParticleID& id ) {
 
       auto iter = iterator( id );
       if ( iter == Levels::levels_.end() ) {

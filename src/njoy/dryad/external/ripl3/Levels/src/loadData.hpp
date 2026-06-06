@@ -1,4 +1,4 @@
-static void insertData( int z ) {
+static void loadData( int z ) {
 
   // set the absolute datapath if we haven't already
   if ( ! Levels::ripl3_levels_datapath_.has_value() ) {
