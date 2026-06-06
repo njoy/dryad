@@ -58,11 +58,15 @@ namespace ame {
     /**
      *  @brief Constructor
      *
-     *  @param[in] id          the particle identifier
-     *  @param[in] energy      the level energy (default is none)
-     *  @param[in] spin        the level spin (default is none)
-     *  @param[in] parity      the parity (default is none)
-     *  @param[in] halfLife    the half-life (default is none)
+     *  @param[in] id                              the particle identifier
+     *  @param[in] mass_excess                     the mass excess (default is none)
+     *  @param[in] mass_excess_uncertainty         the mass excess uncertainty (default is none)
+     *  @param[in] binding_energy                  the binding energy per nucleon (default is none)
+     *  @param[in] binding_energy_uncertainty      the binding energy uncertainty (default is none)
+     *  @param[in] beta_decay_energy               the beta decay energy (default is none)
+     *  @param[in] beta_decay_energy_uncertainty   the beta decay energy uncertainty (default is none)
+     *  @param[in] mass                            the atomic mass (default is none)
+     *  @param[in] mass_uncertainty                the atomic mass uncertainty (default is none)
      */
     MassEntry( id::ParticleID id,
                std::optional< double > mass_excess = std::nullopt,
@@ -80,8 +84,8 @@ namespace ame {
       binding_energy_uncertainty_( std::move( binding_energy_uncertainty ) ),
       beta_decay_energy_( std::move( beta_decay_energy ) ),
       beta_decay_energy_uncertainty_( std::move( beta_decay_energy_uncertainty ) ),
-      atomic_mass_( std::move( atomic_mass ) ),
-      atomic_mass_uncertainty_( std::move( atomic_mass_uncertainty ) ) {}
+      atomic_mass_( std::move( mass ) ),
+      atomic_mass_uncertainty_( std::move( mass_uncertainty ) ) {}
 
     /* methods */
 
@@ -180,7 +184,7 @@ namespace ame {
      */
     const std::optional< double >& betaDecayEnergy() const {
 
-      return this->binding_energy_;
+      return this->beta_decay_energy_;
     }
 
     /**
@@ -208,7 +212,7 @@ namespace ame {
      */
     void betaDecayEnergyUncertainty( std::optional< double > decay_energy_uncertainty ) {
 
-      this->beta_decay_energy_uncertainty_ = std::move( decay_energy_uncertainty_ );
+      this->beta_decay_energy_uncertainty_ = std::move( decay_energy_uncertainty );
     }
 
     /**
