@@ -14,7 +14,7 @@ using namespace njoy::dryad::external::ripl3;
 
 SCENARIO( "Levels" ) {
 
-  GIVEN( "the Levels static repository" ) {
+  GIVEN( "the ripl-3 discrete level data in Levels" ) {
 
     THEN( "predefined particles can be retrieved" ) {
 

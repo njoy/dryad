@@ -33,7 +33,7 @@ namespace ame {
     /* auxiliary functions */
 
     #include "njoy/dryad/external/ame/Masses/src/iterator.hpp"
-    #include "njoy/dryad/external/ame/Masses/src/insertData.hpp"
+    #include "njoy/dryad/external/ame/Masses/src/loadData.hpp"
 
   public:
 
@@ -44,7 +44,7 @@ namespace ame {
      */
     static std::size_t size() {
 
-      return Masses::levels_.size();
+      return Masses::masses_.size();
     }
 
     /**
@@ -52,9 +52,9 @@ namespace ame {
      *
      *  @param[in] id   the particle identifier
      */
-    static bool hasParticle( const id::ParticleID& id ) {
+    static bool hasEntry( const id::ParticleID& id ) {
 
-      return iterator( id ) == Masses::levels_.end();
+      return iterator( id ) == Masses::masses_.end();
     }
 
     /**
@@ -62,10 +62,10 @@ namespace ame {
      *
      *  @param[in] id   the particle identifier
      */
-    static const MassEntry& level( const id::ParticleID& id ) {
+    static const MassEntry& entry( const id::ParticleID& id ) {
 
       auto iter = iterator( id.groundState() );
-      if ( iter == Masses::levels_.end() ) {
+      if ( iter == Masses::masses_.end() ) {
 
         throw std::out_of_range( "Particle not found in the AME2020 masses" );
       }
