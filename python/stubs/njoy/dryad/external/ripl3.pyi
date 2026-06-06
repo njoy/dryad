@@ -95,9 +95,9 @@ class Levels:
     database.
     """
     @staticmethod
-    def has_particle(id: njoy.dryad.id.ParticleID) -> bool:
+    def entry(id: njoy.dryad.id.ParticleID) -> LevelEntry:
         """
-        Verify whether or not a given particle is present
+        Retrieve a level entry for a given particle
         
         Parameters
         ----------
@@ -105,9 +105,9 @@ class Levels:
                  the particle identifier
         """
     @staticmethod
-    def level(id: njoy.dryad.id.ParticleID) -> LevelEntry:
+    def has_entry(id: njoy.dryad.id.ParticleID) -> bool:
         """
-        Retrieve a level entry for a given particle
+        Verify whether or not a given particle is present
         
         Parameters
         ----------
