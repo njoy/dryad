@@ -2,9 +2,16 @@
 #define NJOY_DRYAD_EXTERNAL_RIPL3_LEVELS
 
 // system includes
-#include <filesystem>
 #include <map>
 #include <stdexcept>
+
+#if __has_include(<filesystem>) && (__cplusplus >= 201703L)
+#include <filesystem>
+namespace filesystem = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace filesystem = std::experimental::filesystem;
+#endif
 
 // other includes
 #include "tools/Log.hpp"
