@@ -34,9 +34,7 @@ namespace endf {
                                                const std::string& filename ) {
 
     int zaid = za;
-    double awr = tsl.documentation().awr().has_value()
-                 ? tsl.documentation().awr().value()
-                 : 0.;
+    double awr = 0.;
     int lrp = -1;
     int lfi = 0;
     int nlib = tsl.documentation().library().has_value()

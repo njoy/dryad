@@ -63,7 +63,6 @@ namespace li7inli7d {
       "                                                                  \n"
       " -----------------------------------------------------------------\n";
 
-    CHECK( std::nullopt == documentation.awr() );
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
     CHECK( std::nullopt == documentation.description() );

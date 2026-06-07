@@ -105,7 +105,6 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
                          { 3.337757e-3, 1.178474e-2, 3.861519e-2, 3.861519e-2 } } } );
 
     ThermalScattering tsl( std::move( coherent ), std::nullopt );
-    tsl.documentation().awr( 8.93478 );
     tsl.documentation().library( 0 );
     tsl.documentation().version( std::make_pair( 8, 1 ) );
     tsl.documentation().description( std::move( description ) );
@@ -189,7 +188,6 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
                     4.623738, 5.276127, 6.583171, 7.891981 } } );
 
     ThermalScattering tsl( std::nullopt, std::move( incoherent ) );
-    tsl.documentation().awr( 90.436 );
     tsl.documentation().library( 0 );
     tsl.documentation().version( std::make_pair( 8, 1 ) );
     tsl.documentation().description( std::move( description ) );
@@ -293,7 +291,6 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
                     5.276127 } } );
 
     ThermalScattering tsl( std::move( coherent ), std::move( incoherent ) );
-    tsl.documentation().awr( 8.93478 );
     tsl.documentation().library( 0 );
     tsl.documentation().version( std::make_pair( 8, 1 ) );
     tsl.documentation().description( std::move( description ) );
@@ -315,7 +312,7 @@ std::string chunkWithCoherentElasticAndInelastic() {
   return
 
     "Thermal scattering data                                              0 0  0     \n"
-    " 1.260000+2 8.934780+0         -1          0          0          0  26 1451     \n"
+    " 1.260000+2 0.000000+0         -1          0          0          0  26 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6  26 1451     \n"
     " 1.000000+0 0.000000+0          1          0         12          8  26 1451     \n"
     " 0.000000+0 0.000000+0          0          0         63          2  26 1451     \n"
@@ -386,7 +383,7 @@ std::string chunkWithCoherentElasticAndInelastic() {
     "                                7          2         15          0  26 1451     \n"
     "                                                                    26 1  0     \n"
     "                                                                    26 0  0     \n"
-    " 1.260000+2 8.934780+0          1          0          0          0  26 7  2     \n"
+    " 1.260000+2 0.000000+0          1          0          0          0  26 7  2     \n"
     " 2.936000+2 0.000000+0          5          0          1          4  26 7  2     \n"
     "          4          1                                              26 7  2     \n"
     " 3.706719-3 3.757353-3 4.942291-3 1.386287-2 5.572434-1 8.406348-2  26 7  2     \n"
@@ -411,7 +408,7 @@ std::string chunkWithIncoherentElasticAndInelastic() {
 
   return
     "Thermal scattering data                                              0 0  0     \n"
-    " 1.580000+2 9.043600+1         -1          0          0          0  58 1451     \n"
+    " 1.580000+2 0.000000+0         -1          0          0          0  58 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6  58 1451     \n"
     " 1.000000+0 0.000000+0          1          0         12          8  58 1451     \n"
     " 0.000000+0 0.000000+0          0          0         57          2  58 1451     \n"
@@ -476,7 +473,7 @@ std::string chunkWithIncoherentElasticAndInelastic() {
     "                                7          2          6          0  58 1451     \n"
     "                                                                    58 1  0     \n"
     "                                                                    58 0  0     \n"
-    " 1.580000+2 9.043600+1          2          0          0          0  58 7  2     \n"
+    " 1.580000+2 0.000000+0          2          0          0          0  58 7  2     \n"
     " 6.337872+0 0.000000+0          0          0          1          8  58 7  2     \n"
     "          8          2                                              58 7  2     \n"
     " 2.960000+2 2.013538+0 4.000000+2 2.677764+0 5.000000+2 3.323456+0  58 7  2     \n"
@@ -493,7 +490,7 @@ std::string chunkWithMixedElasticAndInelastic() {
   return
 
     "Thermal scattering data                                              0 0  0     \n"
-    " 1.260000+2 8.934780+0         -1          0          0          0  26 1451     \n"
+    " 1.260000+2 0.000000+0         -1          0          0          0  26 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6  26 1451     \n"
     " 1.000000+0 0.000000+0          1          0         12          8  26 1451     \n"
     " 0.000000+0 0.000000+0          0          0         63          2  26 1451     \n"
@@ -564,7 +561,7 @@ std::string chunkWithMixedElasticAndInelastic() {
     "                                7          2         19          0  26 1451     \n"
     "                                                                    26 1  0     \n"
     "                                                                    26 0  0     \n"
-    " 1.260000+2 8.934780+0          3          0          0          0  26 7  2     \n"
+    " 1.260000+2 0.000000+0          3          0          0          0  26 7  2     \n"
     " 2.936000+2 0.000000+0          5          0          1          4  26 7  2     \n"
     "          4          1                                              26 7  2     \n"
     " 3.706719-3 3.757353-3 4.942291-3 1.386287-2 5.572434-1 8.406348-2  26 7  2     \n"
