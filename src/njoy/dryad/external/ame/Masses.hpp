@@ -2,8 +2,15 @@
 #define NJOY_DRYAD_EXTERNAL_AME_MASSES
 
 // system includes
-#include <filesystem>
 #include <map>
+
+#if __has_include(<filesystem>) && (__cplusplus >= 201703L)
+#include <filesystem>
+namespace filesystem = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace filesystem = std::experimental::filesystem;
+#endif
 
 // other includes
 #include "tools/Log.hpp"

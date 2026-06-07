@@ -3,7 +3,6 @@
 
 // system includes
 #include <map>
-#include <stdexcept>
 
 #if __has_include(<filesystem>) && (__cplusplus >= 201703L)
 #include <filesystem>
