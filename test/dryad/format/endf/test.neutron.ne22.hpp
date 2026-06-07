@@ -492,10 +492,41 @@ namespace ne22 {
       " Uniform Energy Grid for ALL MT-------------------------------No  \n"
       " Delete Section if Cross Section =0 at All Energies-----------Yes \n";
 
-    CHECK( 21.80247 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 0 ) == documentation.version() );
     CHECK( description == documentation.description() );
+  }
+
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Ne22" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID::neutron() == particle.identifier() );
+    CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "Ne22" ) );
+    CHECK( id::ParticleID( "Ne22" ) == particle.identifier() );
+    CHECK_THAT( 21.80247 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0. , WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
   void verifyAngularDistributionCovariances( const covariance::AngularDistributionCovarianceData& angle ) {
@@ -972,7 +1003,8 @@ namespace ne22 {
 
     CHECK( InteractionType::Nuclear == Ne22.interactionType() );
 
-    CHECK( std::nullopt == Ne22.particleData() );
+    CHECK( std::nullopt != Ne22.particleData() );
+    verifyParticleDatabase( Ne22.particleData().value() );
 
     CHECK( std::nullopt == Ne22.resonances() );
 

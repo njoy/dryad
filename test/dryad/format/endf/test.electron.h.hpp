@@ -139,12 +139,10 @@ namespace endf80 {
         "==================================================================\n"
         " **************** Program DICTIN (VERSION 2017-1) ****************\n";
 
-    CHECK( .9992414 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 0 ) == documentation.version() );
     CHECK( description == documentation.description() );
   }
-
 } // namespace endf80
 
 namespace endf81 {
@@ -296,13 +294,43 @@ namespace endf81 {
       " ***************** Program FIXUP (Version 2023-2) ****************\n"
       " **************** Program DICTIN (VERSION 2023-1) ****************\n";
 
-    CHECK( .9992414 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );
   }
-
 } // namespace endf81
+
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "e-" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "e-" ) );
+    CHECK( id::ParticleID::electron() == particle.identifier() );
+    CHECK_THAT( 5.438673e-4 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "H" ) );
+    CHECK( id::ParticleID( "H" ) == particle.identifier() );
+    CHECK_THAT( .9992414 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0. , WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+  }
 
   void verifyTotalReaction( const Reaction& reaction ) {
 
@@ -1048,6 +1076,9 @@ namespace endf81 {
 
     CHECK( InteractionType::Atomic == H0.interactionType() );
 
+    CHECK( std::nullopt != H0.particleData() );
+    verifyParticleDatabase( H0.particleData().value() );
+
     CHECK( std::nullopt == H0.resonances() );
 
     CHECK( true == H0.hasReaction( id::ReactionID( "e-,H->total[atomic]" ) ) );
@@ -1110,12 +1141,8 @@ namespace endf81 {
     deficit = H0.reaction( id::ReactionID( "e-,H->e-,H[deficit-scattering]" ) );
     verifyElasticDeficitReaction( deficit );
 
-    CHECK( std::nullopt == H0.particleData() );
-
-    CHECK( std::nullopt == H0.resonances() );
-
     CHECK( std::nullopt == H0.covarianceData() );
   }
 
-} // namespace ho
+} // namespace h0
 } // namespace electron

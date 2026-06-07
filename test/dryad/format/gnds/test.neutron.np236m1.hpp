@@ -111,7 +111,6 @@ namespace np236m1 {
         " Uniform Energy Grid for ALL MT-------------------------------No  \n"
         " Delete Section if Cross Section =0 at All Energies-----------Yes \n";
 
-    CHECK( std::nullopt == documentation.awr() );
     CHECK( std::nullopt == documentation.library() );
     CHECK( std::nullopt == documentation.version() );
     CHECK( std::nullopt == documentation.description() );

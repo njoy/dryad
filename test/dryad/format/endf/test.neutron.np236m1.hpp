@@ -111,10 +111,41 @@ namespace np236m1 {
         " Uniform Energy Grid for ALL MT-------------------------------No  \n"
         " Delete Section if Cross Section =0 at All Energies-----------Yes \n";
 
-    CHECK( 234.0190 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );
+  }
+
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Np236_e2" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID::neutron() == particle.identifier() );
+    CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "Np236_e2" ) );
+    CHECK( id::ParticleID( "Np236_e2" ) == particle.identifier() );
+    CHECK_THAT( 234.019 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 60000. , WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {
@@ -1490,6 +1521,9 @@ namespace np236m1 {
 
     CHECK( InteractionType::Nuclear == Np236m1.interactionType() );
 
+    CHECK( std::nullopt != Np236m1.particleData() );
+    verifyParticleDatabase( Np236m1.particleData().value() );
+
     CHECK( std::nullopt == Np236m1.resonances() );
 
     CHECK( true == Np236m1.hasReaction( id::ReactionID( "n,Np236_e2->total" ) ) );
@@ -1601,10 +1635,6 @@ namespace np236m1 {
 
     capture = Np236m1.reaction( id::ReactionID( "n,Np236_e2->g,Np237[all]" ) );
     verifyCaptureReaction( capture );
-
-    CHECK( std::nullopt == Np236m1.particleData() );
-
-    CHECK( std::nullopt == Np236m1.resonances() );
 
     CHECK( std::nullopt == Np236m1.covarianceData() );
   }

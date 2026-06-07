@@ -310,10 +310,16 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
                 {}, 2.224648e+6, 2.224648e+6 )
     };
 
-    ProjectileTarget transport( id::ParticleID::neutron(), id::ParticleID( "H1" ),
+    id::ParticleID projectile( "n" );
+    id::ParticleID target( "H1" );
+    ParticleDatabase particles( { { projectile, njoy::constants::neutron_mass },
+                                  { target, 9.991673e-1 * njoy::constants::neutron_mass,
+                                    std::nullopt, std::nullopt, 0. } } );
+
+    ProjectileTarget transport( projectile, target,
                                 InteractionType::Nuclear,
-                                std::move( reactions ) );
-    transport.documentation().awr( .9991673 );
+                                std::move( reactions ),
+                                std::move( particles ) );
     transport.documentation().library( 0 );
     transport.documentation().version( std::make_pair( 8, 0 ) );
     transport.documentation().description( std::move( description ) );
@@ -436,6 +442,12 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
         " Allow Insertion of Energy Points-----------------------------No  \n"
         " Uniform Energy Grid for ALL MT-------------------------------No  \n"
         " Delete Section if Cross Section =0 at All Energies-----------Yes \n";
+
+    id::ParticleID projectile( "n" );
+    id::ParticleID target( "Np236_e2" );
+    ParticleDatabase particles( { { projectile, njoy::constants::neutron_mass },
+                                  { target, 234.019 * njoy::constants::neutron_mass,
+                                    std::nullopt, std::nullopt, 60000. } } );
 
     std::vector< Reaction > reactions = {
 
@@ -1031,8 +1043,8 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
 
     ProjectileTarget transport( id::ParticleID::neutron(), id::ParticleID( "Np236_e2" ),
                                 InteractionType::Nuclear,
-                                std::move( reactions ) );
-    transport.documentation().awr( 234.0190 );
+                                std::move( reactions ),
+                                std::move( particles ) );
     transport.documentation().library( 0 );
     transport.documentation().version( std::make_pair( 8, 1 ) );
     transport.documentation().description( std::move( description ) );
@@ -1055,7 +1067,7 @@ std::string chunkForGroundState() {
     "n+H1 data                                                            0 0  0     \n"
     " 1.001000+3 9.991673-1         -1          0          0          0 125 1451     \n"
     " 0.000000+0 0.000000+0          0          0          0          6 125 1451     \n"
-    " 0.000000+0 2.000000+7          0          0         10          8 125 1451     \n"
+    " 1.000000+0 2.000000+7          0          0         10          8 125 1451     \n"
     " 0.000000+0 0.000000+0          0          0         87          4 125 1451     \n"
     "  1-H -  1 LANL       EVAL-JUL16 G.M.Hale                          125 1451     \n"
     " NDS 148, 1 (2018)    DIST-FEB18                       20170124    125 1451     \n"
@@ -1325,8 +1337,8 @@ std::string chunkForMetastableState() {
   return
     "n+Np236_e2 data                                                      0 0  0     \n"
     " 9.323600+4 2.340190+2         -1          0          0          09344 1451     \n"
-    " 0.000000+0 0.000000+0          2          0          0          69344 1451     \n"
-    " 0.000000+0 2.000000+7          1          0         10          89344 1451     \n"
+    " 6.000000+4 0.000000+0          2          0          0          69344 1451     \n"
+    " 1.000000+0 2.000000+7          1          0         10          89344 1451     \n"
     " 0.000000+0 0.000000+0          0          0        104         169344 1451     \n"
     " 93-Np-236M LANL      EVAL-JAN17 T. Kawano, P.Talou               9344 1451     \n"
     " NDS 148, 1 (2018)    DIST-AUG24 REV1-NOV19            20240830   9344 1451     \n"

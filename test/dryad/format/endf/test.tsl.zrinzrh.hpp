@@ -64,7 +64,6 @@ namespace zrinzrh {
       "    LA-12639-MS (ENDF-356) March 1994.                            \n"
       "                                                                  \n";
 
-    CHECK( 90.436 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );

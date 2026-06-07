@@ -70,7 +70,6 @@ namespace bemetal {
       "                                                                  \n"
       " -----------------------------------------------------------------\n";
 
-    CHECK( 8.93478 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 1 ) == documentation.version() );
     CHECK( description == documentation.description() );

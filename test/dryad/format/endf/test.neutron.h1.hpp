@@ -94,10 +94,41 @@ namespace h1 {
       "analyses,\" Nuclear Data Sheets, 109, 2812 (2008).                 \n"
       " **************************************************************** \n";
 
-    CHECK( .9991673 == documentation.awr() );
     CHECK( 0 == documentation.library() );
     CHECK( std::make_pair( 8, 0 ) == documentation.version() );
     CHECK( description == documentation.description() );
+  }
+
+  void verifyParticleDatabase( const ParticleDatabase& particles ) {
+
+    using namespace njoy::constants;
+
+    CHECK( 2 == particles.numberParticles() );
+
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
+
+    auto particle = particles.particle( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID::neutron() == particle.identifier() );
+    CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "H1" ) );
+    CHECK( id::ParticleID( "H1" ) == particle.identifier() );
+    CHECK_THAT( 9.991673e-1 * neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK( std::nullopt == particle.spin() );
+    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0. , WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
   }
 
   void verifyTotalReaction( const Reaction& reaction ) {
@@ -427,6 +458,9 @@ namespace h1 {
 
     CHECK( InteractionType::Nuclear == H1.interactionType() );
 
+    CHECK( std::nullopt != H1.particleData() );
+    verifyParticleDatabase( H1.particleData().value() );
+
     CHECK( std::nullopt == H1.resonances() );
 
     CHECK( true == H1.hasReaction( id::ReactionID( "n,H1->total" ) ) );
@@ -453,10 +487,6 @@ namespace h1 {
 
     capture = H1.reaction( id::ReactionID( "n,H1->g,H2[all]" ) );
     verifyCaptureReaction( capture );
-
-    CHECK( std::nullopt == H1.particleData() );
-
-    CHECK( std::nullopt == H1.resonances() );
 
     CHECK( std::nullopt != H1.covarianceData() );
 
