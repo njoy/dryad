@@ -12,7 +12,7 @@
 #include "njoy/dryad/format/endf/createInteractionType.hpp"
 #include "njoy/dryad/format/endf/createReactions.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
-#include "njoy/dryad/format/endf/createParticleDatabase.hpp"
+#include "njoy/dryad/format/endf/createParticles.hpp"
 #include "njoy/dryad/format/endf/resonances/createResonanceParameters.hpp"
 #include "njoy/dryad/format/endf/covariance/createCovarianceData.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
@@ -42,7 +42,7 @@ namespace endf {
     id::ParticleID target = createTargetIdentifier( information.ZA(), information.excitedLevel() );
     InteractionType type = createInteractionType( information.subLibrary() );
 
-    ParticleDatabase particles = createParticleDatabase( projectile, target, information );
+    std::vector< Particle > particles = createParticles( projectile, target, information );
 
     std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
 
@@ -53,11 +53,13 @@ namespace endf {
                                                           material.section( 2, 151 ).parse< 2, 151 >() );
     }
 
+    ParticleDatabase database( std::move( particles ) );
+
     std::optional< dryad::covariance::CovarianceData > covariances = covariance::createCovarianceData( projectile, target, material );
 
     return ProjectileTarget( std::move( documentation ), std::move( projectile ),
                              std::move( target ), type, std::move( reactions ),
-                             std::move( particles ), std::move( resonances ),
+                             std::move( database ), std::move( resonances ),
                              std::move( covariances ) );
   }
 

@@ -4,18 +4,19 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createParticleDatabase.hpp"
+#include "njoy/dryad/format/endf/createParticles.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::constants;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
 
-SCENARIO( "createParticleDatabase" ) {
+SCENARIO( "createParticles" ) {
 
   GIVEN( "ENDF materials - incident neutrons - stable target" ) {
 
@@ -30,97 +31,29 @@ SCENARIO( "createParticleDatabase" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
-        ParticleDatabase particles = format::endf::createParticleDatabase( projectile, target, information );
-        neutron::h1::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
+        auto particles = format::endf::createParticles( projectile, target, information );
 
-    WHEN( "a single ENDF material is given with lumped covariance reactions" ) {
+        CHECK( 2 == particles.size() );
 
-      using Tape = njoy::ENDFtk::tree::Tape;
-      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-003_Li_007.endf" );
-      auto material = tape.materials().front();
-      auto information = material.section( 1, 451 ).parse< 1, 451 >();
+        CHECK( id::ParticleID::neutron() == particles[0].identifier() );
+        CHECK_THAT( neutron_mass, WithinRel( particles[0].mass().value() ) );
+        CHECK( std::nullopt == particles[0].spin() );
+        CHECK( std::nullopt == particles[0].parity() );
+        CHECK( std::nullopt == particles[0].energy() );
+        CHECK( std::nullopt == particles[0].nuclearMass() );
+        CHECK( std::nullopt == particles[0].massUncertainty() );
+        CHECK( std::nullopt == particles[0].nuclearMassUncertainty() );
+        CHECK( std::nullopt == particles[0].energyUncertainty() );
 
-      THEN( "it can be converted" ) {
-
-        id::ParticleID projectile( "n" );
-        id::ParticleID target( "Li7" );
-        ParticleDatabase particles = format::endf::createParticleDatabase( projectile, target, information );
-        neutron::li7::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-
-    WHEN( "a single ENDF material is given with angular covariances" ) {
-
-      using Tape = njoy::ENDFtk::tree::Tape;
-      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-010_Ne_022.endf" );
-      auto material = tape.materials().front();
-      auto information = material.section( 1, 451 ).parse< 1, 451 >();
-
-      THEN( "it can be converted" ) {
-
-        id::ParticleID projectile( "n" );
-        id::ParticleID target( "Ne22" );
-        ParticleDatabase particles = format::endf::createParticleDatabase( projectile, target, information );
-        neutron::ne22::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "ENDF materials - incident neutrons - metastable target" ) {
-
-    WHEN( "a single ENDF material is given" ) {
-
-      using Tape = njoy::ENDFtk::tree::Tape;
-      auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "n-093_Np_236m1.endf" );
-      auto material = tape.materials().front();
-      auto information = material.section( 1, 451 ).parse< 1, 451 >();
-
-      THEN( "it can be converted" ) {
-
-        id::ParticleID projectile( "n" );
-        id::ParticleID target( "Np236_e2" );
-        ParticleDatabase particles = format::endf::createParticleDatabase( projectile, target, information );
-        neutron::np236m1::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "ENDF materials - electro-atomic" ) {
-
-    using Tape = njoy::ENDFtk::tree::Tape;
-    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "e-001_H_000.endf" );
-    auto material = tape.materials().front();
-    auto information = material.section( 1, 451 ).parse< 1, 451 >();
-
-    WHEN( "a single ENDF materials is given" ) {
-
-      THEN( "it can be converted" ) {
-
-        id::ParticleID projectile( "e-" );
-        id::ParticleID target( "H" );
-        ParticleDatabase particles = format::endf::createParticleDatabase( projectile, target, information );
-        electron::h0::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "ENDF materials - photo-atomic" ) {
-
-    using Tape = njoy::ENDFtk::tree::Tape;
-    auto tape = njoy::ENDFtk::tree::fromFile< Tape >( "photoat-001_H_000.endf" );
-    auto material = tape.materials().front();
-    auto information = material.section( 1, 451 ).parse< 1, 451 >();
-
-    WHEN( "a single ENDF materials is given" ) {
-
-      THEN( "it can be converted" ) {
-
-        id::ParticleID projectile( "g" );
-        id::ParticleID target( "H" );
-        ParticleDatabase particles = format::endf::createParticleDatabase( projectile, target, information );
-        photoatomic::h0::verifyParticleDatabase( particles );
+        CHECK( id::ParticleID( "H1" ) == particles[1].identifier() );
+        CHECK_THAT( 9.991673e-1 * neutron_mass, WithinRel( particles[1].mass().value() ) );
+        CHECK( std::nullopt == particles[1].spin() );
+        CHECK( std::nullopt == particles[1].parity() );
+        CHECK_THAT( 0. , WithinRel( particles[1].energy().value() ) );
+        CHECK( std::nullopt == particles[1].nuclearMass() );
+        CHECK( std::nullopt == particles[1].massUncertainty() );
+        CHECK( std::nullopt == particles[1].nuclearMassUncertainty() );
+        CHECK( std::nullopt == particles[1].energyUncertainty() );
       } // THEN
     } // WHEN
   } // GIVEN

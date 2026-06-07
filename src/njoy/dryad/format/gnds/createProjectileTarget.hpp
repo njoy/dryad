@@ -60,7 +60,7 @@ namespace gnds {
       if ( resonances ) {
 
         parameters = resonances::createResonanceParameters( projectile, target, particles.value(),
-                                                          resonances, style );
+                                                            resonances, style );
       }
 
       std::optional< dryad::covariance::CovarianceData > covariances = std::nullopt;

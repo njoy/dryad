@@ -26,7 +26,8 @@ namespace endf {
    *  @param[in] multiplicity    the multiplicity of the target
    *  @param[in, out] products   the current set of reaction products
    */
-  inline void addProduct( const id::ParticleID& particle, int multiplicity,
+  inline void addProduct( const id::ParticleID& particle,
+                          int multiplicity,
                           std::vector< ReactionProduct >& products ) {
 
     auto iter = std::find_if( products.begin(), products.end(),

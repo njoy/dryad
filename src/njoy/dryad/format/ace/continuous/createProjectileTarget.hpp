@@ -9,7 +9,7 @@
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
 #include "njoy/dryad/format/ace/createProjectileIdentifier.hpp"
-#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
+#include "njoy/dryad/format/ace/createParticles.hpp"
 #include "njoy/dryad/format/ace/continuous/createReactions.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
 
@@ -31,12 +31,14 @@ namespace continuous {
 
     auto projectile = createProjectileIdentifier( table.ZAID() );
     auto target = id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
-    auto particles = createParticleDatabase( projectile, target, table );
+    auto particles = createParticles( projectile, target, table );
+    auto reactions = createReactions( projectile, target, table, normalise );
+
     return ProjectileTarget( projectile,
                              target,
                              InteractionType::Nuclear,
-                             createReactions( projectile, target, table, normalise ),
-                             std::move( particles ) );
+                             std::move( reactions ),
+                             ParticleDatabase( std::move( particles ) ) );
   }
 
 } // continuous namespace

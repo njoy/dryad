@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
+#include "njoy/dryad/format/ace/createParticles.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -14,14 +14,11 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::constants;
 
 // include common test verification functions
-#include "continuous/test_verification_functions.hpp"
-#include "electroatomic/test_verification_functions.hpp"
-#include "photoatomic/test_verification_functions.hpp"
-#include "photonuclear/test_verification_functions.hpp"
 
-SCENARIO( "createParticleDatabase" ) {
+SCENARIO( "createParticles" ) {
 
   GIVEN( "instances of ContinuousEnergyTable" ) {
 
@@ -33,66 +30,29 @@ SCENARIO( "createParticleDatabase" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
-        ParticleDatabase particles = format::ace::createParticleDatabase( projectile, target, table );
-        continuous::lib81::h1::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-  } // GIVEN
+        auto particles = format::ace::createParticles( projectile, target, table );
 
-  GIVEN( "instances of PhotoatomicTable" ) {
+        CHECK( 2 == particles.size() );
 
-    WHEN( "an mcplib84 formatted table is given" ) {
+        CHECK( id::ParticleID::neutron() == particles[0].identifier() );
+        CHECK( std::nullopt == particles[0].mass() );
+        CHECK( std::nullopt == particles[0].spin() );
+        CHECK( std::nullopt == particles[0].parity() );
+        CHECK( std::nullopt == particles[0].energy() );
+        CHECK( std::nullopt == particles[0].nuclearMass() );
+        CHECK( std::nullopt == particles[0].massUncertainty() );
+        CHECK( std::nullopt == particles[0].nuclearMassUncertainty() );
+        CHECK( std::nullopt == particles[0].energyUncertainty() );
 
-      njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
-
-      THEN( "a ProjectileTarget can be derived" ) {
-
-        id::ParticleID projectile( "g" );
-        id::ParticleID target( "H" );
-        ParticleDatabase particles = format::ace::createParticleDatabase( projectile, target, table );
-        photoatomic::mcplib84::h::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-
-    WHEN( "an eprdata12 formatted table is given" ) {
-
-      njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
-
-      THEN( "a ProjectileTarget can be derived" ) {
-
-        id::ParticleID projectile( "e-" );
-        id::ParticleID target( "H" );
-        ParticleDatabase particles = format::ace::createParticleDatabase( projectile, target, table );
-        electroatomic::eprdata12::h::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-
-    WHEN( "an eprdata14 formatted table is given" ) {
-
-      njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.14p" ) );
-
-      THEN( "a ProjectileTarget can be derived" ) {
-
-        id::ParticleID projectile( "e-" );
-        id::ParticleID target( "H" );
-        ParticleDatabase particles = format::ace::createParticleDatabase( projectile, target, table );
-        electroatomic::eprdata14::h::verifyParticleDatabase( particles );
-      } // THEN
-    } // WHEN
-  } // GIVEN
-
-  GIVEN( "instances of PhotonuclearTable" ) {
-
-    WHEN( "an la150u formatted table is given" ) {
-
-      njoy::ACEtk::PhotonuclearTable table( njoy::ACEtk::fromFile( "6012.24u" ) );
-
-      THEN( "a ProjectileTarget can be derived" ) {
-
-        id::ParticleID projectile( "g" );
-        id::ParticleID target( "C12" );
-        ParticleDatabase particles = format::ace::createParticleDatabase( projectile, target, table );
-        photonuclear::la150u::c12::verifyParticleDatabase( particles );
+        CHECK( id::ParticleID( "H1" ) == particles[1].identifier() );
+        CHECK_THAT( 0.999167 * neutron_mass, WithinRel( particles[1].mass().value() ) );
+        CHECK( std::nullopt == particles[1].spin() );
+        CHECK( std::nullopt == particles[1].parity() );
+        CHECK( std::nullopt == particles[1].energy() );
+        CHECK( std::nullopt == particles[1].nuclearMass() );
+        CHECK( std::nullopt == particles[1].massUncertainty() );
+        CHECK( std::nullopt == particles[1].nuclearMassUncertainty() );
+        CHECK( std::nullopt == particles[1].energyUncertainty() );
       } // THEN
     } // WHEN
   } // GIVEN

@@ -1,11 +1,12 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPARTICLEDATABASE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEPARTICLEDATABASE
+#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPARTICLES
+#define NJOY_DRYAD_FORMAT_ENDF_CREATEPARTICLES
 
 // system includes
+#include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/ParticleDatabase.hpp"
+#include "njoy/dryad/Particle.hpp"
 #include "njoy/constants.hpp"
 #include "ENDFtk/section/1/451.hpp"
 
@@ -15,18 +16,16 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create a ParticleDatabase instance from a parsed MF1 MT451 section
+   *  @brief Create Particle instances from a parsed MF1 MT451 section
    *
    *  @param[in] projectile    the projectile identifier
    *  @param[in] target        the target identifier
    *  @param[in] information   the parsed MF1 MT451 section
    */
-  inline ParticleDatabase
-  createParticleDatabase( const id::ParticleID& projectile,
-                          const id::ParticleID& target,
-                          const ENDFtk::section::Type< 1, 451 >& information ) {
-
-    Log::info( "Initialising particle database" );
+  inline std::vector< Particle >
+  createParticles( const id::ParticleID& projectile,
+                   const id::ParticleID& target,
+                   const ENDFtk::section::Type< 1, 451 >& information ) {
 
     std::vector< Particle > particles;
     particles.emplace_back( projectile,
@@ -40,7 +39,7 @@ namespace endf {
                             std::nullopt,
                             information.excitationEnergy() );
 
-    return ParticleDatabase( std::move( particles ) );
+    return particles;
   }
 
 } // endf namespace

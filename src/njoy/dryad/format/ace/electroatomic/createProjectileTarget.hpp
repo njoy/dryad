@@ -8,7 +8,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
-#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
+#include "njoy/dryad/format/ace/createParticles.hpp"
 #include "njoy/dryad/format/ace/electroatomic/createReactions.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
@@ -30,12 +30,14 @@ namespace electroatomic {
 
     auto projectile = id::ParticleID::electron();
     auto target = createTargetIdentifier( table.ZAID() );
-    auto particles = createParticleDatabase( projectile, target, table );
+    auto particles = createParticles( projectile, target, table );
+    auto reactions = createReactions( projectile, target, table );
+
     return ProjectileTarget( projectile,
                              target,
                              InteractionType::Atomic,
-                             createReactions( projectile, target, table ),
-                             std::move( particles ) );
+                             std::move( reactions ),
+                             ParticleDatabase( std::move( particles ) ) );
   }
 
 } // electroatomic namespace

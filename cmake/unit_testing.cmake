@@ -164,7 +164,7 @@ add_cpp_test( dryad.format.ace.photoatomic.createPartialReactionIdentifiers     
 add_cpp_test( dryad.format.ace.photoatomic.createTabulatedCrossSections                 dryad/format/ace/photoatomic/createTabulatedCrossSections.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createReactionProducts                       dryad/format/ace/photoatomic/createReactionProducts.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createReactions                              dryad/format/ace/photoatomic/createReactions.test.cpp )
-add_cpp_test( dryad.format.ace.createParticleDatabase                                   dryad/format/ace/createParticleDatabase.test.cpp )
+add_cpp_test( dryad.format.ace.createParticles                                          dryad/format/ace/createParticles.test.cpp )
 add_cpp_test( dryad.format.ace.photoatomic.createProjectileTarget                       dryad/format/ace/photoatomic/createProjectileTarget.test.cpp )
 add_cpp_test( dryad.format.ace.createProjectileTargetFromFile                           dryad/format/ace/createProjectileTargetFromFile.test.cpp )
 
@@ -243,7 +243,7 @@ add_cpp_test( dryad.format.endf.createReactionProducts                          
 add_cpp_test( dryad.format.endf.createReaction                                          dryad/format/endf/createReaction.test.cpp )
 add_cpp_test( dryad.format.endf.createReactions                                         dryad/format/endf/createReactions.test.cpp )
 add_cpp_test( dryad.format.endf.createDocumentation                                     dryad/format/endf/createDocumentation.test.cpp )
-add_cpp_test( dryad.format.endf.createParticleDatabase                                  dryad/format/endf/createParticleDatabase.test.cpp )
+add_cpp_test( dryad.format.endf.createParticles                                         dryad/format/endf/createParticles.test.cpp )
 add_cpp_test( dryad.format.endf.createProjectileTarget                                  dryad/format/endf/createProjectileTarget.test.cpp )
 add_cpp_test( dryad.format.endf.createProjectileTargetFromFile                          dryad/format/endf/createProjectileTargetFromFile.test.cpp )
 add_cpp_test( dryad.format.endf.createAtomicRelaxation                                  dryad/format/endf/createAtomicRelaxation.test.cpp )
