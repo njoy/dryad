@@ -16,9 +16,6 @@ namespace dryad {
    */
   class Documentation {
 
-    //! @todo remove once we get the particle database
-    std::optional< double > awr_;
-
     /* fields */
     std::optional< int > library_;
     std::optional< std::pair< int, int > > version_;
@@ -28,25 +25,30 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/Documentation/src/ctor.hpp"
-
     /**
-     *  @brief Return the awr (temporary)
+     *  @brief Default constructor (for pybind11 purposes only)
      */
-    const std::optional< double >& awr() const {
+    Documentation() = default;
 
-      return this->awr_;
-    }
+    Documentation( const Documentation& ) = default;
+    Documentation( Documentation&& ) = default;
+
+    Documentation& operator=( const Documentation& ) = default;
+    Documentation& operator=( Documentation&& ) = default;
 
     /**
-     *  @brief Set the awr
+     *  @brief Constructor
      *
-     *  @param[in] awr   the awr
+     *  @param[in] library       the library number
+     *  @param[in] version       the version numbers (major and minor)
+     *  @param[in] description   the description
      */
-    void awr( std::optional< double > awr ) {
-
-      this->awr_ = std::move( awr );
-    }
+    Documentation( std::optional< int > library,
+                   std::optional< std::pair< int, int > > version,
+                   std::optional< std::string > description ) :
+        library_( std::move( library ) ),
+        version_( std::move( version ) ),
+        description_( std::move( description ) ) {}
 
     /**
      *  @brief Return the library
@@ -109,10 +111,8 @@ namespace dryad {
      */
     bool operator==( const Documentation& right ) const {
 
-      return this->awr() == right.awr() &&
-             this->library() == right.library() &&
-             this->version() == right.version() &&
-             this->description() == right.description();
+      return std::tie( this->library(), this->version(), this->description() ) ==
+             std::tie( right.library(), right.version(), right.description() );
     }
 
     /**
