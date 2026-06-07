@@ -4,7 +4,7 @@ Atomic mass evaluation data
 from __future__ import annotations
 import njoy.dryad.id
 import typing
-__all__: list[str] = ['MassEntry']
+__all__: list[str] = ['MassEntry', 'Masses']
 class MassEntry:
     """
     Mass entry information from the Atomic Mass Evaluation
@@ -123,3 +123,34 @@ class MassEntry:
     @mass_excess_uncertainty.setter
     def mass_excess_uncertainty(self, arg1: float | None) -> None:
         ...
+class Masses:
+    """
+    RIPL-3 level data
+    
+    The Masses class allows a user to interact with the AME2020 mass data.
+    """
+    @staticmethod
+    def entry(id: njoy.dryad.id.ParticleID) -> MassEntry:
+        """
+        Retrieve a mass entry for a given particle
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @staticmethod
+    def has_entry(id: njoy.dryad.id.ParticleID) -> bool:
+        """
+        Verify whether or not a given particle is present
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @staticmethod
+    def size() -> int:
+        """
+        Return the current size of the AME2020 mass data
+        """

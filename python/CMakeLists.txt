@@ -111,7 +111,7 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ComptonProfiles.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame/MassEntry.python.cpp
-#        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame/Levels.python.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ame/Masses.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ripl3.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ripl3/LevelEntry.python.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/dryad/external/ripl3/Levels.python.cpp

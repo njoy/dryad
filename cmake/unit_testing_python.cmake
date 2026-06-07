@@ -123,6 +123,7 @@ add_python_test( dryad.external.ComptonProfiles                        dryad/ext
 add_python_test( dryad.external.ripl3.LevelEntry                       dryad/external/ripl3/Test_LevelEntry.py )
 add_python_test( dryad.external.ripl3.Levels                           dryad/external/ripl3/Test_Levels.py )
 add_python_test( dryad.external.ame.MassEntry                          dryad/external/ame/Test_MassEntry.py )
+add_python_test( dryad.external.ame.Masses                             dryad/external/ame/Test_Masses.py )
 
 add_python_test( psychic.covariance.PositiveVariances                  psychic/covariance/Test_PositiveVariances.py )
 add_python_test( psychic.covariance.PositiveSemiDefinite               psychic/covariance/Test_PositiveSemiDefinite.py )

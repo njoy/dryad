@@ -13,7 +13,7 @@ namespace ame {
 
   // declarations - components
   void wrapMassEntry( python::module& );
-//  void wrapMasses( python::module& );
+  void wrapMasses( python::module& );
 } // ame namespace
 
 void wrapAme( python::module& module ) {
@@ -27,7 +27,7 @@ void wrapAme( python::module& module ) {
 
   // components
   external::ame::wrapMassEntry( submodule );
-//  external::ame::wrapMasses( submodule );
+  external::ame::wrapMasses( submodule );
 }
 
 } // external namespace
