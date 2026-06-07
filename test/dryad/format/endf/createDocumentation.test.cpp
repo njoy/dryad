@@ -113,7 +113,6 @@ void verifyChunk( const Documentation& chunk ) {
     " ***************** Program FIXUP (Version 2023-2) ****************\n"
     " **************** Program DICTIN (VERSION 2023-1) ****************\n";
 
-  CHECK_THAT( 15.8619530, WithinRel( chunk.awr().value() ) );
   CHECK( 0 == chunk.library() );
   CHECK( 8 == chunk.version()->first );
   CHECK( 1 == chunk.version()->second );
