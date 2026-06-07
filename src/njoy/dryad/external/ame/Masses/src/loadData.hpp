@@ -22,64 +22,58 @@ static void loadData() {
   file.resize( file_size / sizeof( char ) );
   in.read( &( file[ 0 ] ), file_size );
 
-//  // fortran statements
-//  using namespace njoy::tools::disco;
-//  using Identification = Record< Character< 5 >, Integer< 5 >, Integer< 5 >, Integer< 5 >,
-//                                 Integer< 5 >, Integer< 5 >, Integer< 5 >, Real< 12 >, Real< 12 > >;
-//  using Level = Record< Integer< 3 >, Column< 1 >, Real< 10 >, Column< 1 >, Real< 5 >,
-//                        Integer< 3 >, Column< 1 >, Real< 10 >, Integer< 3 > >;
-//  using Gamma = Record< Column< 39 >, Integer< 4 >, Column< 1 >, Real< 10 >,
-//                        Column< 1 >, Real< 10 >, Column< 1 >, Real< 10 >,
-//                        Column< 1 >, Real< 10 > >;
-//
-//  // parse the file and get the data we need
-//  auto begin = file.begin();
-//  auto end = file.end();
-//  while ( begin != end ) {
-//
-//    std::string symb;
-//    int a, z, Nol, Nog, Nmax, Nc;
-//    double Sn, Sp;
-//    Identification::read( begin, end, symb, a, z, Nol, Nog, Nmax, Nc, Sn, Sp );
-//
-//    int za = z * 1000 + a;
-//    Sn *= constants::mega;
-//    Sp *= constants::mega;
-//
-//    if ( Nol < 0 ) {
-//
-//      Log::error( "Number of levels for isotope {} in ripl-3 levels file is less than zero", symb );
-//      throw std::exception();
-//    }
-//
-//    std::size_t number_levels = static_cast< std::size_t >( Nol );
-//    for ( std::size_t i = 0; i < number_levels; ++i ) {
-//
-//      int N1, p, Ng;
-//      double Elv, s, Thalf;
-//      Level::read( begin, end, N1, Elv, s, p, Thalf, Ng );
-//
-//      id::ParticleID particle = id::ParticleID::nuclide( za, N1 - 1 );
-//      Elv *= constants::mega;
-//
-//      if ( Ng < 0 ) {
-//
-//        Log::error( "Number of gammas for isotope {} and level index {} in ripl-3 levels file is less than zero", symb, N1 );
-//        throw std::exception();
-//      }
-//
-//      std::size_t number_gammas = static_cast< std::size_t >( Ng );
-//      for ( std::size_t j = 0; j < number_gammas; ++j ) {
-//
-//        int Nf;
-//        double Eg, Pg, Pe, ICC;
-//        Gamma::read( begin, end, Nf, Eg, Pg, Pe, ICC );
-//      }
-//
-//      Levels::levels_[ particle ] = { particle, Elv,
-//                                      s < 0 ? std::nullopt : std::make_optional( s ),
-//                                      p == 0 ? std::nullopt : std::make_optional( p ),
-//                                      Thalf < 0 ? std::nullopt : std::make_optional( Thalf ) };
-//    }
-//  }
+  // fortran statements
+  using namespace njoy::tools::disco;
+  using Entry = Record< Column< 9 >, Integer< 5 >, Integer< 5 >, Column< 9 >,
+                        Real< 14 >, Real< 12 >, Real< 13 >, Column< 1 >, Real< 10 >,
+                        Column< 3 >, Character< 24 >,
+                        Column< 1 >, Integer< 3 >, Column< 1 >, Real< 13 >, Real< 12 > >;
+  using Beta = Record< Real< 13 >, Real< 11 > >;
+
+  // parse the file and get the data we need
+  auto begin = file.begin();
+  auto end = file.end();
+
+  // skip 38 lines (skip past the neutron data)
+  for ( std::size_t i = 0; i < 37; ++i ) {
+
+    begin = std::find( begin, end, '\n' );
+    ++begin;
+  }
+  std::replace( begin, end, '#', ' ' );
+
+  // read all entries
+  while ( begin != end ) {
+
+    int z, a, m;
+    double excess, binding, beta, mass;
+    double unc_excess, unc_binding, unc_beta, unc_mass;
+    std::string beta_string;
+    Entry::read( begin, end, z, a, excess, unc_excess, binding, unc_binding,
+                 beta_string, m, mass, unc_mass );
+
+    int za = z * 1000 + a;
+    excess *= constants::kilo;
+    unc_excess *= constants::kilo;
+    binding *= constants::kilo;
+    unc_binding *= constants::kilo;
+    mass = m + mass * constants::micro;
+    unc_mass *= constants::micro;
+
+    bool has_beta = std::find( beta_string.begin(), beta_string.end(), '*' ) == beta_string.end();
+    if ( has_beta ) {
+
+      auto iter = beta_string.begin();
+      Beta::read( iter, beta_string.end(), beta, unc_beta );
+      beta *= constants::kilo;
+      unc_beta *= constants::kilo;
+    }
+
+    id::ParticleID particle = id::ParticleID::nuclide( za, 0 );
+    Masses::masses_[ particle ] = { particle,
+                                    excess, unc_excess, binding, unc_binding,
+                                    has_beta ? std::make_optional( beta ) : std::nullopt,
+                                    has_beta ? std::make_optional( unc_beta ) : std::nullopt,
+                                    mass, unc_mass };
+  }
 }
