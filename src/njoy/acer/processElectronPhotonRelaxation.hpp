@@ -85,10 +85,10 @@ namespace acer {
     decltype(auto) photon = photoatomic.reaction( incoherent_id ).product( projectile ).distributionData().value();
     bool relativistic = std::visit( hasRelativisticSubshells, photon );
 
-    unsigned int z = photoatomic.targetIdentifier().z();
+    unsigned int z = target.z();
     ACEtk::Table::Header header( std::to_string( z * 1000 ) + '.' + std::to_string( number ) + 'p',
-                                 photoatomic.documentation().awr().value(), 0.,
-                                 std::move( date ), std::move( title ), std::to_string( z * 100 ) );
+                                 photoatomic.particleData()->particle( target ).mass().value() / constants::neutron_mass,
+                                 0., std::move( date ), std::move( title ), std::to_string( z * 100 ) );
     std::vector< unsigned int > za = {};
     std::vector< double > awr = {};
 

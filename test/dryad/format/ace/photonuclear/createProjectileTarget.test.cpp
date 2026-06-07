@@ -28,7 +28,6 @@ SCENARIO( "createProjectileTarget" ) {
 
         ProjectileTarget C12 = format::ace::photonuclear::createProjectileTarget( table, false );
 
-        CHECK( std::nullopt == C12.documentation().awr() );
         CHECK( std::nullopt == C12.documentation().library() );
         CHECK( std::nullopt == C12.documentation().version() );
         CHECK( std::nullopt == C12.documentation().description() );

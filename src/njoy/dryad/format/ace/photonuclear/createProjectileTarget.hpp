@@ -8,6 +8,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
+#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
 #include "njoy/dryad/format/ace/photonuclear/createReactions.hpp"
 #include "ACEtk/PhotonuclearTable.hpp"
 
@@ -29,10 +30,12 @@ namespace photonuclear {
 
     auto projectile = id::ParticleID::photon();
     auto target = id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
+    auto particles = createParticleDatabase( projectile, target, table );
     return ProjectileTarget( projectile,
                              target,
                              InteractionType::Nuclear,
-                             createReactions( projectile, target, table, normalise ) );
+                             createReactions( projectile, target, table, normalise ),
+                             std::move( particles ) );
   }
 
 } // photonuclear namespace

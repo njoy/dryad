@@ -12,6 +12,7 @@
 #include "njoy/dryad/format/endf/createInteractionType.hpp"
 #include "njoy/dryad/format/endf/createReactions.hpp"
 #include "njoy/dryad/format/endf/createDocumentation.hpp"
+#include "njoy/dryad/format/endf/createParticleDatabase.hpp"
 #include "njoy/dryad/format/endf/resonances/createResonanceParameters.hpp"
 #include "njoy/dryad/format/endf/covariance/createCovarianceData.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
@@ -41,9 +42,9 @@ namespace endf {
     id::ParticleID target = createTargetIdentifier( information.ZA(), information.excitedLevel() );
     InteractionType type = createInteractionType( information.subLibrary() );
 
-    std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
+    ParticleDatabase particles = createParticleDatabase( projectile, target, information );
 
-    std::optional< ParticleDatabase > particles = std::nullopt;
+    std::vector< Reaction > reactions = createReactions( projectile, target, material, normalise );
 
     std::optional< dryad::resonances::ResonanceParameters > resonances = std::nullopt;
     if ( type == InteractionType::Nuclear ) {
