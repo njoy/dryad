@@ -18,6 +18,12 @@ namespace endf {
   /**
    *  @brief Create Particle instances from a parsed MF1 MT451 section
    *
+   *  The projectile and target mass values are available in MF1 MT451 but they are in
+   *  in neutron mass units so it must be converted to atomic mass units.
+   *
+   *  Particle instances are sorted in order of the particle identifier before returning
+   *  the vector.
+   *
    *  @param[in] projectile    the projectile identifier
    *  @param[in] target        the target identifier
    *  @param[in] information   the parsed MF1 MT451 section
