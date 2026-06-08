@@ -19,6 +19,13 @@ namespace ace {
   /**
    *  @brief Create Particle instances from an ACE table
    *
+   *  Since no mass information for the projectile is available in the ACE file, it is
+   *  set to std::nullopt. The mass value for the target is the AWR in neutron mass
+   *  units so it must be converted to atomic mass units.
+   *
+   *  Particle instances are sorted in order of the particle identifier before returning
+   *  the vector.
+   *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
    *  @param[in] table        the ace table
