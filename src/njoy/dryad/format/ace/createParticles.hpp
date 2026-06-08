@@ -2,6 +2,7 @@
 #define NJOY_DRYAD_FORMAT_ACE_CREATEPARTICLES
 
 // system includes
+#include <variant>
 #include <vector>
 
 // other includes
@@ -37,6 +38,8 @@ namespace ace {
     particles.emplace_back( target,
                             std::visit( getAtomicWeightRatio, table.header() )
                             * constants::neutron_mass );
+    std::sort( particles.begin(), particles.end(),
+               [] ( auto&& left, auto&& right ) { return left.identifier() < right.identifier(); } );
 
     return particles;
   }

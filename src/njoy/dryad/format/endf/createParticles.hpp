@@ -38,6 +38,8 @@ namespace endf {
                             std::nullopt,
                             std::nullopt,
                             information.excitationEnergy() );
+    std::sort( particles.begin(), particles.end(),
+               [] ( auto&& left, auto&& right ) { return left.identifier() < right.identifier(); } );
 
     return particles;
   }
