@@ -77,7 +77,7 @@ namespace resonances {
     /**
      * @brief Return the degrees of freedom
      */
-    const std::optional<int>& degreesOfFreedom() const {
+    const std::optional< int >& degreesOfFreedom() const {
 
       return this->degrees_freedom_;
     }
@@ -85,9 +85,17 @@ namespace resonances {
     /**
      * @brief Return the degrees of freedom
      */
-    std::optional<int>& degreesOfFreedom() {
+    std::optional< int >& degreesOfFreedom() {
 
       return this->degrees_freedom_;
+    }
+
+    /**
+     * @brief Set the degrees of freedom
+     */
+    void degreesOfFreedom( std::optional< int > dof ) {
+
+      this->degrees_freedom_ = std::move( dof );
     }
 
     /**

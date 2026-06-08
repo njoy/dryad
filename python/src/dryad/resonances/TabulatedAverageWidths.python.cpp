@@ -82,10 +82,10 @@ void wrapTabulatedAverageWidths( python::module& module ) {
     "    interpolant    the interpolation type (default lin-lin),\n"
     "                   see InterpolationType for all interpolation types"
   )
-  .def_property_readonly(
-
+  .def_property(
     "degrees_of_freedom",
     python::overload_cast<>( &Component::degreesOfFreedom, python::const_ ),
+    python::overload_cast< std::optional< int > >( &Component::degreesOfFreedom ),
     "The degrees of freedom"
   )
   .def_property_readonly(
