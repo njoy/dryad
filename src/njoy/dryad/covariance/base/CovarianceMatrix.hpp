@@ -307,6 +307,7 @@ namespace base {
         this->eigendata_ = std::move( eigendata );
         if ( this->eigenvalues().has_value() && this->eigenvectors().has_value() ) {
 
+          this->sortEigenvalues();
           verifyMatrix( this->eigenvalues().value(),
                         this->eigenvectors().value(),
                         this->rowMetadata().keys().size() );

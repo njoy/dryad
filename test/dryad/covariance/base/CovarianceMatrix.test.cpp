@@ -266,7 +266,7 @@ SCENARIO( "CovarianceMatrix" ) {
 
         CHECK( 2 == std::get< 0 >( chunk.eigendata() ).value().size() );
         CHECK_THAT( 14., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[0] ) );
-        CHECK_THAT( 14., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[1] ) );
+        CHECK_THAT( 0., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[1] ) );
         CHECK( 2 == std::get< 1 >( chunk.eigendata() ).value().size() );
         CHECK_THAT( 0.2672612419124246, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](0) ) );
         CHECK_THAT( 0.5345224838248487, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](1) ) );
