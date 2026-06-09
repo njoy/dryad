@@ -77,6 +77,7 @@ CovarianceMatrix( Metadata metadata,
     eigenvalues_( std::move( eigenvalues ) ),
     eigenvectors_( std::move( eigenvectors ) ) {
 
+  this->sortEigenvalues();
   verifyMatrix( this->eigenvalues().value(),
                 this->eigenvectors().value(),
                 this->rowMetadata().keys().size() );
