@@ -6,6 +6,7 @@
 
 // other includes
 #include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/constants.hpp"
 
 namespace njoy {
 namespace dryad {
@@ -91,6 +92,62 @@ namespace dryad {
       energy_uncertainty_( std::move( energyUncertainty ) ),
       spin_( std::move( spin ) ),
       parity_( std::move( parity ) ) {}
+
+    /* predefined particles and static functions to create them */
+
+    static Particle photon() {
+
+      return Particle( id::ParticleID::photon(), 0., 1.0, -1,
+                       std::nullopt, std::nullopt, 0. );
+    };
+
+    static Particle electron() {
+
+      return Particle( id::ParticleID::electron(), constants::electron_mass, std::nullopt, std::nullopt,
+                       std::nullopt, std::nullopt, constants::electron_mass_uncertainty );
+    };
+
+    static Particle positron() {
+
+      return Particle( id::ParticleID::positron(), constants::electron_mass, std::nullopt, std::nullopt,
+                       std::nullopt, std::nullopt, constants::electron_mass_uncertainty );
+    };
+
+    static Particle neutron() {
+
+      return Particle( id::ParticleID::neutron(), constants::neutron_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::neutron_mass_uncertainty );
+    };
+
+    static Particle proton() {
+
+      return Particle( id::ParticleID::proton(), constants::proton_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::proton_mass_uncertainty );
+    };
+
+    static Particle deuteron() {
+
+      return Particle( id::ParticleID::deuteron(), constants::deuteron_mass, 1.0, +1,
+                       std::nullopt, std::nullopt, constants::deuteron_mass_uncertainty );
+    };
+
+    static Particle triton() {
+
+      return Particle( id::ParticleID::triton(), constants::triton_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::triton_mass_uncertainty );
+    };
+
+    static Particle helion() {
+
+      return Particle( id::ParticleID::helion(), constants::helion_mass, 0.5, +1,
+                       std::nullopt, std::nullopt, constants::helion_mass_uncertainty );
+    };
+
+    static Particle alpha() {
+
+      return Particle( id::ParticleID::alpha(), constants::alpha_mass, 0.0, +1,
+                       std::nullopt, std::nullopt, constants::alpha_mass_uncertainty );
+    };
 
     /**
      *  @brief Return the particle identifier

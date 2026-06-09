@@ -885,6 +885,51 @@ class Particle:
             the uncertainty on the ecited level energy value (default: None)
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def alpha() -> Particle:
+        """
+        The particle instance for alphas
+        """
+    @staticmethod
+    def deuteron() -> Particle:
+        """
+        The particle instance for deuterons
+        """
+    @staticmethod
+    def electron() -> Particle:
+        """
+        The particle instance for electrons
+        """
+    @staticmethod
+    def helion() -> Particle:
+        """
+        The particle instance for helions
+        """
+    @staticmethod
+    def neutron() -> Particle:
+        """
+        The particle instance for neutrons
+        """
+    @staticmethod
+    def photon() -> Particle:
+        """
+        The particle instance for photons
+        """
+    @staticmethod
+    def positron() -> Particle:
+        """
+        The particle instance for positrons
+        """
+    @staticmethod
+    def proton() -> Particle:
+        """
+        The particle instance for protons
+        """
+    @staticmethod
+    def triton() -> Particle:
+        """
+        The particle instance for tritons
+        """
     def __copy__(self) -> Particle:
         ...
     def __deepcopy__(self, arg0: dict) -> Particle:

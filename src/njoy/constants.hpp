@@ -62,24 +62,28 @@ namespace constants {
   constexpr double epsilon0 = 8.8541878188e-12;
 
   // CODATA 2018 - particle mass in amu
+  // constexpr double electron_mass = 5.48579909065e-4;
   // constexpr double neutron_mass  = 1.008664915950;
   // constexpr double proton_mass   = 1.007276466621;
   // constexpr double deuteron_mass = 2.013553212745;
   // constexpr double triton_mass   = 3.015500716210;
   // constexpr double helion_mass   = 3.014932247175;
   // constexpr double alpha_mass    = 4.001506179127;
-  // CODATA 2022 - particle mass in amu
+  // CODATA 2022 - particle mass and uncertainty in amu
+  constexpr double electron_mass = 5.485799090441e-4;
   constexpr double neutron_mass  = 1.008664916060;
   constexpr double proton_mass   = 1.0072764665789;
   constexpr double deuteron_mass = 2.013553212544;
   constexpr double triton_mass   = 3.015500715970;
   constexpr double helion_mass   = 3.014932246932;
   constexpr double alpha_mass    = 4.001506179129;
-
-  // CODATA 2018 - electron mass in amu
-  // constexpr double electron_mass = 5.48579909065e-4;
-  // CODATA 2022 - electron mass in amu
-  constexpr double electron_mass = 5.485799090441e-4;
+  constexpr double electron_mass_uncertainty = 0.000000000097e-4;
+  constexpr double neutron_mass_uncertainty  = 0.00000000040;
+  constexpr double proton_mass_uncertainty   = 0.0000000000083;
+  constexpr double deuteron_mass_uncertainty = 0.000000000015;
+  constexpr double triton_mass_uncertainty   = 0.00000000010;
+  constexpr double helion_mass_uncertainty   = 0.000000000074;
+  constexpr double alpha_mass_uncertainty    = 0.000000000062;
 
   // CODATA 2018 - classical electron radius in m
   // constexpr double electron_radius = 2.8179403262e-15;
