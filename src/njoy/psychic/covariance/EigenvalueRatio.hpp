@@ -153,9 +153,9 @@ namespace covariance {
 
         decltype(auto) eigenvalues = covariance.eigenvalues().value();
         auto iter = std::upper_bound( eigenvalues.rbegin(), eigenvalues.rend(), 0. );
-        if ( iter.base() != eigenvalues.end() ) {
+        if ( iter != eigenvalues.rend() ) {
 
-          this->smallestPositiveEigenvalue( *( iter.base() ) );
+          this->smallestPositiveEigenvalue( *iter );
           this->largestPositiveEigenvalue( eigenvalues.front() );
           this->eigenvalueRatio( this->smallestPositiveEigenvalue().value()
                                  / this->largestPositiveEigenvalue().value() );
