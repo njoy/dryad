@@ -4,11 +4,13 @@
 // system includes
 #include <algorithm>
 #include <optional>
+#include <numeric>
 #include <vector>
 
 // other includes
 #include "scion/math/compare.hpp"
 #include "tools/Log.hpp"
+#include "tools/apply_permutation.hpp"
 #include "njoy/matrix.hpp"
 
 namespace njoy {
@@ -19,6 +21,14 @@ namespace base {
   /**
    *  @class
    *  @brief A base class representing a covariance matrix
+   *
+   *  For on-diagonal covariance matrice, the following data is always available
+   *  (regardless of how the covariance matrix instance was constructed):
+   *  - the covariance matrix
+   *  - the standard deviations and correlation matrix
+   *  - the eigenvalues and eigenvectors
+   *
+   *  Eigenvalues (and assocaited eigenvectors) are store in descending order.
    */
   template < typename Metadata, typename... Ts >
   class CovarianceMatrix {
@@ -53,6 +63,7 @@ namespace base {
     /* auxiliary function */
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/sortEigenvalues.hpp"
 
   public:
 
