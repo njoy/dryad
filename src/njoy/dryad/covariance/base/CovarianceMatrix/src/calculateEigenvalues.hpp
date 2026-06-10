@@ -1,9 +1,9 @@
 /**
- *  @brief Calculate the eigenvalues from the covariances
+ *  @brief Calculate the eigenvalues and eigenvectors from the covariances
  *
- *  The eigenvalues can only be calculated from matrices on the diagonal
- *  of the full matrix. When this function is called on an off diagonal matrix,
- *  the function has no effect.
+ *  The eigenvalues and eigenvectors can only be calculated from matrices on the
+ *  diagonal of the full matrix. When this function is called on an off diagonal
+ *  matrix, the function has no effect.
  *
  *  When the absolute value of an eigenvalue is equal to zero within 10 times epsilon,
  *  the eigenvalue will get set to zero exactly.
@@ -13,6 +13,7 @@ void calculateEigenvalues() {
   if ( this->isOnDiagonal() ) {
 
     // the SelfAdjointEigenSolver exploits the symmetric features of the matrix
+    // eigenvalues are returned in ascending order
     Eigen::SelfAdjointEigenSolver< matrix::Matrix< double > > solver( this->covariances() );
 
     // create a vector for eigenvalues and eigenvectors
@@ -43,7 +44,7 @@ void calculateEigenvalues() {
     //! @todo check efficiency compared to using std::upper_bound
 
     // move the vectors into the fields
-    this->eigenvalues_ = std::move( eigenvalues );
-    this->eigenvectors_ = std::move( eigenvectors );
+    this->eigenvalues() = std::move( eigenvalues );
+    this->eigenvectors() = std::move( eigenvectors );
   }
 }

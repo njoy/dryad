@@ -74,8 +74,7 @@ CovarianceMatrix( Metadata metadata,
     row_metadata_( std::move( metadata ) ),
     column_metadata_( std::nullopt ),
     relative_( relative ),
-    eigenvalues_( std::move( eigenvalues ) ),
-    eigenvectors_( std::move( eigenvectors ) ) {
+    eigendata_( std::make_tuple( std::move( eigenvalues ), std::move( eigenvectors ) ) ) {
 
   this->sortEigenvalues();
   verifyMatrix( this->eigenvalues().value(),

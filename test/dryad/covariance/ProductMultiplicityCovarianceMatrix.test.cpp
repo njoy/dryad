@@ -64,6 +64,8 @@ SCENARIO( "CovarianceMatrix" ) {
       CHECK( std::nullopt != chunk.correlations() );
       CHECK( std::nullopt != chunk.eigenvalues() );
       CHECK( std::nullopt != chunk.eigenvectors() );
+      CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+      CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
 
       CHECK_THAT(  3.350497e-07, WithinRel( chunk.covariances()(0,0) ) );
       CHECK_THAT(  3.086034e-07, WithinRel( chunk.covariances()(0,1) ) );
@@ -352,6 +354,8 @@ SCENARIO( "CovarianceMatrix" ) {
       CHECK( std::nullopt != chunk.correlations() );
       CHECK( std::nullopt != chunk.eigenvalues() );
       CHECK( std::nullopt != chunk.eigenvectors() );
+      CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+      CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
 
       CHECK( 8 == chunk.covariances().rows() );
       CHECK( 8 == chunk.covariances().cols() );
@@ -640,6 +644,8 @@ SCENARIO( "CovarianceMatrix" ) {
       CHECK( std::nullopt != chunk.correlations() );
       CHECK( std::nullopt != chunk.eigenvalues() );
       CHECK( std::nullopt != chunk.eigenvectors() );
+      CHECK( std::nullopt != std::get< 0 >( chunk.eigendata() ) );
+      CHECK( std::nullopt != std::get< 1 >( chunk.eigendata() ) );
 
       CHECK( 8 == chunk.covariances().rows() );
       CHECK( 8 == chunk.covariances().cols() );
@@ -913,6 +919,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt != submatrix.correlations() );
         CHECK( std::nullopt != submatrix.eigenvalues() );
         CHECK( std::nullopt != submatrix.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK_THAT(  4.132664e-06, WithinRel( submatrix.covariances()(0,0) ) );
         CHECK_THAT(  3.036135e-06, WithinRel( submatrix.covariances()(0,1) ) );
@@ -948,6 +956,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt != submatrix.correlations() );
         CHECK( std::nullopt != submatrix.eigenvalues() );
         CHECK( std::nullopt != submatrix.eigenvectors() );
+        CHECK( std::nullopt != std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt != std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK_THAT(  2.792847e-07, WithinRel( submatrix.covariances()(0,0) ) );
         CHECK_THAT(  2.435102e-07, WithinRel( submatrix.covariances()(0,1) ) );
@@ -1006,6 +1016,8 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( std::nullopt == submatrix.correlations() );
         CHECK( std::nullopt == submatrix.eigenvalues() );
         CHECK( std::nullopt == submatrix.eigenvectors() );
+        CHECK( std::nullopt == std::get< 0 >( submatrix.eigendata() ) );
+        CHECK( std::nullopt == std::get< 1 >( submatrix.eigendata() ) );
 
         CHECK_THAT(  1.186658e-07, WithinRel( submatrix.covariances()(0,0) ) );
         CHECK_THAT(  1.953402e-07, WithinRel( submatrix.covariances()(0,1) ) );

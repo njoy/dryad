@@ -203,6 +203,20 @@ class CrossSectionCovarianceMatrix:
             relative           the relative covariance flag (default is true)
         """
     @typing.overload
+    def __init__(self, metadata: CrossSectionMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True, scaling: VarianceScaling | None = None) -> None:
+        """
+        Initialise an on-diagonal cross section covariance matrix using eigenvalues
+        and eigenvectors
+        
+        Arguments:
+            self           the covariance matrix
+            metadata       the row and column metadata
+            eigenvalues    the eigenvalues
+            eigenvectors   the associated eigenvectors
+            relative       the relative covariance flag (default is true)
+            scaling        the variance scaling information (default is none)
+        """
+    @typing.overload
     def calculate_correlations(self) -> None:
         """
         Calculate the correlations (for on diagonal matrices)
@@ -220,6 +234,37 @@ class CrossSectionCovarianceMatrix:
         
         The correlations can only be calculated with input of the standard deviations
         for covariance matrices that are off diagonal in the full covariance matrix.
+        Standard deviations will not be stored.
+        
+        Arguments:
+            self                the covariance matrix
+            row_deviations      the standard deviations to be applied to each row
+            column_deviations   the standard deviations to be applied to each column
+        """
+    @typing.overload
+    def calculate_covariances(self) -> None:
+        """
+        Calculate the covariances (for on diagonal blocks)
+        
+        The covariances can be calculated without input of the standard
+        deviations for blocks on the diagonal of the matrix.
+        
+        When this method is called on an off diagonal block, the method has no effect.
+        
+        When this method is called on a block that has no correlations, the method
+        has no effect.
+        """
+    @typing.overload
+    def calculate_covariances(self, row_deviations: list[float], column_deviations: list[float]) -> None:
+        """
+        Calculate the covariances (for off diagonal matrices)
+        
+        The covariances can only be calculated with input of the standard deviations
+        for blocks that are off diagonal in the matrix. Standard deviations will not
+        be stored.
+        
+        When this method is called on a block that has no correlations, the method
+        has no effect.
         Standard deviations will not be stored.
         
         Arguments:
@@ -259,11 +304,25 @@ class CrossSectionCovarianceMatrix:
         """
         The correlation matrix
         """
+    @correlations.setter
+    def correlations(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
     @property
     def covariances(self) -> numpy.ndarray[numpy.float64[m, n]]:
         """
         The covariance matrix
         """
+    @covariances.setter
+    def covariances(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
+    @property
+    def eigendata(self) -> tuple[list[float] | None, list[numpy.ndarray[numpy.float64[m, 1]]] | None]:
+        """
+        The eigenvalues and eigenvectors
+        """
+    @eigendata.setter
+    def eigendata(self, arg1: tuple[list[float] | None, list[numpy.ndarray[numpy.float64[m, 1]]] | None]) -> None:
+        ...
     @property
     def eigenvalues(self) -> list[float] | None:
         """
@@ -309,6 +368,9 @@ class CrossSectionCovarianceMatrix:
         """
         The standard deviations
         """
+    @standard_deviations.setter
+    def standard_deviations(self, arg1: list[float] | None) -> None:
+        ...
     @property
     def variance_scaling(self) -> VarianceScaling | None:
         """
@@ -475,6 +537,19 @@ class ProductMultiplicityCovarianceMatrix:
             relative           the relative covariance flag (default is true)
         """
     @typing.overload
+    def __init__(self, metadata: ProductMultiplicityMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True) -> None:
+        """
+        Initialise an on-diagonal product multiplicity covariance matrix using eigenvalues
+        and eigenvectors
+        
+        Arguments:
+            self           the covariance matrix
+            metadata       the row and column metadata
+            eigenvalues    the eigenvalues
+            eigenvectors   the associated eigenvectors
+            relative       the relative covariance flag (default is true)
+        """
+    @typing.overload
     def calculate_correlations(self) -> None:
         """
         Calculate the correlations (for on diagonal matrices)
@@ -492,6 +567,37 @@ class ProductMultiplicityCovarianceMatrix:
         
         The correlations can only be calculated with input of the standard deviations
         for covariance matrices that are off diagonal in the full covariance matrix.
+        Standard deviations will not be stored.
+        
+        Arguments:
+            self                the covariance matrix
+            row_deviations      the standard deviations to be applied to each row
+            column_deviations   the standard deviations to be applied to each column
+        """
+    @typing.overload
+    def calculate_covariances(self) -> None:
+        """
+        Calculate the covariances (for on diagonal blocks)
+        
+        The covariances can be calculated without input of the standard
+        deviations for blocks on the diagonal of the matrix.
+        
+        When this method is called on an off diagonal block, the method has no effect.
+        
+        When this method is called on a block that has no correlations, the method
+        has no effect.
+        """
+    @typing.overload
+    def calculate_covariances(self, row_deviations: list[float], column_deviations: list[float]) -> None:
+        """
+        Calculate the covariances (for off diagonal matrices)
+        
+        The covariances can only be calculated with input of the standard deviations
+        for blocks that are off diagonal in the matrix. Standard deviations will not
+        be stored.
+        
+        When this method is called on a block that has no correlations, the method
+        has no effect.
         Standard deviations will not be stored.
         
         Arguments:
@@ -531,11 +637,25 @@ class ProductMultiplicityCovarianceMatrix:
         """
         The correlation matrix
         """
+    @correlations.setter
+    def correlations(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
     @property
     def covariances(self) -> numpy.ndarray[numpy.float64[m, n]]:
         """
         The covariance matrix
         """
+    @covariances.setter
+    def covariances(self, arg1: numpy.ndarray[numpy.float64[m, n]]) -> None:
+        ...
+    @property
+    def eigendata(self) -> tuple[list[float] | None, list[numpy.ndarray[numpy.float64[m, 1]]] | None]:
+        """
+        The eigenvalues and eigenvectors
+        """
+    @eigendata.setter
+    def eigendata(self, arg1: tuple[list[float] | None, list[numpy.ndarray[numpy.float64[m, 1]]] | None]) -> None:
+        ...
     @property
     def eigenvalues(self) -> list[float] | None:
         """
@@ -576,6 +696,9 @@ class ProductMultiplicityCovarianceMatrix:
         """
         The standard deviations
         """
+    @standard_deviations.setter
+    def standard_deviations(self, arg1: list[float] | None) -> None:
+        ...
 class ProductMultiplicityMetadata:
     """
     Covariance metadata for product multiplicities

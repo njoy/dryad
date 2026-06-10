@@ -164,12 +164,12 @@ class EigenvalueRatio:
         Initialise the test
         """
     @property
-    def eigenvalue_tatio(self) -> float | None:
+    def eigenvalue_ratio(self) -> float | None:
         """
         The positive eigenvalue ratio
         """
-    @eigenvalue_tatio.setter
-    def eigenvalue_tatio(self, arg1: float | None) -> None:
+    @eigenvalue_ratio.setter
+    def eigenvalue_ratio(self, arg1: float | None) -> None:
         ...
     @property
     def largest_positive_eigenvalue(self) -> float | None:
@@ -324,6 +324,8 @@ class TestSuite:
              the comparison tolerance
         negative : float, default -1e-10
              the largest allowed negative eigenvalue
+        ratio : float, default 1e-8
+             the smallest allowable positive eigenvalue ratio
     """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:

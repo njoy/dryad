@@ -54,6 +54,8 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNotNone( chunk.correlations )
         self.assertIsNotNone( chunk.eigenvalues )
         self.assertIsNotNone( chunk.eigenvectors )
+        self.assertIsNotNone( chunk.eigendata[0] )
+        self.assertIsNotNone( chunk.eigendata[1] )
 
         self.assertAlmostEqual(  3.350497e-07, chunk.covariances[0,0] )
         self.assertAlmostEqual(  3.086034e-07, chunk.covariances[0,1] )
@@ -317,6 +319,8 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNotNone( chunk.standard_deviations )
         self.assertIsNotNone( chunk.correlations )
         self.assertIsNotNone( chunk.eigenvalues )
+        self.assertIsNotNone( chunk.eigendata[0] )
+        self.assertIsNotNone( chunk.eigendata[1] )
 
         self.assertAlmostEqual(  3.350497e-07, chunk.covariances[0,0] )
         self.assertAlmostEqual(  3.086034e-07, chunk.covariances[0,1] )
@@ -580,6 +584,8 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNotNone( submatrix.correlations )
         self.assertIsNotNone( submatrix.eigenvalues )
         self.assertIsNotNone( submatrix.eigenvectors )
+        self.assertIsNotNone( submatrix.eigendata[0] )
+        self.assertIsNotNone( submatrix.eigendata[1] )
 
         self.assertAlmostEqual(  4.132664e-06, submatrix.covariances[0,0] )
         self.assertAlmostEqual(  3.036135e-06, submatrix.covariances[0,1] )
@@ -611,6 +617,8 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNotNone( submatrix.correlations )
         self.assertIsNotNone( submatrix.eigenvalues )
         self.assertIsNotNone( submatrix.eigenvectors )
+        self.assertIsNotNone( submatrix.eigendata[0] )
+        self.assertIsNotNone( submatrix.eigendata[1] )
 
         self.assertAlmostEqual(  2.792847e-07, submatrix.covariances[0,0] )
         self.assertAlmostEqual(  2.435102e-07, submatrix.covariances[0,1] )
@@ -664,6 +672,8 @@ class Test_ProductMultiplicityCovarianceMatrix( unittest.TestCase ) :
         self.assertIsNone( submatrix.standard_deviations )
         self.assertIsNone( submatrix.correlations )
         self.assertIsNone( submatrix.eigenvalues )
+        self.assertIsNone( submatrix.eigendata[0] )
+        self.assertIsNone( submatrix.eigendata[1] )
 
         self.assertAlmostEqual(  1.186658e-07, submatrix.covariances[0,0] )
         self.assertAlmostEqual(  1.953402e-07, submatrix.covariances[0,1] )

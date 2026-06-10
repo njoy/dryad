@@ -33,7 +33,9 @@ void wrapTestSuite( python::module& module ) {
     "    tolerance : float, default 1e-10\n"
     "         the comparison tolerance\n"
     "    negative : float, default -1e-10\n"
-    "         the largest allowed negative eigenvalue"
+    "         the largest allowed negative eigenvalue\n"
+    "    ratio : float, default 1e-8\n"
+    "         the smallest allowable positive eigenvalue ratio"
   );
   // wrap the component
   component
