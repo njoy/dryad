@@ -37,7 +37,7 @@ void calculateEigenvalues() {
       eigenvectors.emplace_back( eigenvector );
     }
 
-    // reverse the order
+    // reverse the order (eigenvalues are stored in descending order)
     std::reverse( eigenvalues.begin(), eigenvalues.end() );
     std::reverse( eigenvectors.begin(), eigenvectors.end() );
 
