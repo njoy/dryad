@@ -33,7 +33,7 @@ namespace resonances {
     // ENDF-6 Formats Manual, CSEWG Document ENDF-102, NNDC, Brookhaven National Laboratory
     // https://www.nndc.bnl.gov/endf
 
-    double a = ( 0.123 * std::pow( awri, 1. / 3. ) + 0.08 ) * constants::deca;
+    double a = ( 0.123 * std::pow( awri * constants::neutron_mass, 1. / 3. ) + 0.08 ) * constants::deca;
 
     if ( nro.has_value() ) {
 
