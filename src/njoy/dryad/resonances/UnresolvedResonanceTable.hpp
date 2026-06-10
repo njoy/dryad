@@ -59,7 +59,7 @@ namespace resonances{
         * @brief return the channel identifiers
         */
         const std::vector< id::ChannelID >& channels() const { 
-          return this->channels_; 
+          return this->channels_;
         }
 
         /**
@@ -82,7 +82,7 @@ namespace resonances{
         */
         const std::optional< int > channelIndex( const id::ChannelID& channel ) const {
           auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), channel );
-          if ( iter == this->channels().end() or *iter != channel ) {
+          if ( iter == this->channels().end() || *iter != channel ) {
             Log::error( "Channel {} not found in table", channel.symbol() );
             throw std::exception();
           }

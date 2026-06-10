@@ -10,8 +10,8 @@ static void processTable( std::vector< id::ChannelID >& channels,
   std::sort( order.begin(), order.end(),
               [&] ( auto i, auto j ) { return channels[i] < channels[j]; } );
 
-  auto orderCopy = order;
-  tools::apply_permutation( channels, order );
-  tools::apply_permutation( widths,   orderCopy );
+
+  std::sort( channels.begin(), channels.end() );
+  tools::apply_permutation( widths,   order );
   
 }

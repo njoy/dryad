@@ -29,23 +29,4 @@ public:
     verifyTable( this->channels_, this->widths_, this->spacings_);
   }
 
-  /**
-   * @brief Construct level spacing and average widths tables from a common energy grid
-   *
-   * @param[in] channels        the channel identifiers (nc values)
-   * @param[in] energies        the shared energy grid (ne values)
-   * @param[in] spacingValues   level spacings on the energy grid (ne values)
-   * @param[in] widthValues     average widths on the energy grid (nc x ne values)
-   * @param[in] dofs            optional degrees of freedom per channel
-   */
-  UnresolvedResonanceTable( std::vector< id::ChannelID > channels,
-                            std::vector< double > energies,
-                            std::vector< double > spacingValues,
-                            std::vector< std::vector< double > > widthValues,
-                            const std::vector< std::optional< int > >& dofs = {} ) :
-    UnresolvedResonanceTable( 
-                             ( verifyTable( channels, energies, spacingValues, widthValues ), channels),
-                             buildWidths( channels, energies, widthValues, dofs ),
-                             TabulatedLevelSpacing( energies, spacingValues ) ) {}
-
                                            
