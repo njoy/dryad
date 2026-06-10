@@ -891,6 +891,26 @@ class Particle:
         The default particle instance for alphas
         """
     @staticmethod
+    def default_particle(id: id.ParticleID) -> Particle:
+        """
+        The default particle instance for a given particle identifier
+        
+        This function creates a default particle instance for the given particle
+        identifier. When relevant, the discrete level energies and spins-parity pairs
+        from RIPL-3 and the atomic masses from AME-2020 are used.
+        
+        When more sources for the particle data become available, this function will
+        provide options to select data from.
+        
+        When an atomic identifier (either with or without vacancies) is used, the
+        elemental particle instance will be returned.
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @staticmethod
     def deuteron() -> Particle:
         """
         The default particle instance for deuterons
@@ -1032,6 +1052,8 @@ class ParticleDatabase:
     ----------
         particles : list of njoy.dryad.Particle
              the particle information
+        identifiers : list of njoy.dryad.id.ParticleID
+             the particle identifiers
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ParticleDatabase:
@@ -1040,7 +1062,13 @@ class ParticleDatabase:
         ...
     def __eq__(self, arg0: ParticleDatabase) -> bool:
         ...
+    @typing.overload
     def __init__(self, particles: list[Particle]) -> None:
+        """
+        Initialise the particle database
+        """
+    @typing.overload
+    def __init__(self, identifiers: list[id.ParticleID]) -> None:
         """
         Initialise the particle database
         """
