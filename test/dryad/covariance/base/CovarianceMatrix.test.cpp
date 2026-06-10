@@ -195,9 +195,10 @@ SCENARIO( "CovarianceMatrix" ) {
 
       Metadata metadata( { Key{ 0 }, Key{ 1 }, Key{ 2 } } );
 
-      std::vector< double > eigenvalues = { 14. };
-      std::vector< Vector< double > > eigenvectors( 1, Vector< double >( 3 ) );
-      eigenvectors[0] << 0.2672612419124246, 0.5345224838248487, 0.8017837257372732;
+      std::vector< double > eigenvalues = { 0., 14. };
+      std::vector< Vector< double > > eigenvectors( 2, Vector< double >( 3 ) );
+      eigenvectors[0] << 0, 0, 0;
+      eigenvectors[1] << 0.2672612419124246, 0.5345224838248487, 0.8017837257372732;
 
       CovarianceMatrix chunk( std::move( metadata ),
                               std::move( eigenvalues ),
@@ -253,19 +254,26 @@ SCENARIO( "CovarianceMatrix" ) {
         CHECK( 1. == chunk.correlations().value()(2,1) );
         CHECK( 1. == chunk.correlations().value()(2,2) );
 
-        CHECK( 1 == chunk.eigenvalues().value().size() );
+        CHECK( 2 == chunk.eigenvalues().value().size() );
         CHECK_THAT( 14., WithinRel( chunk.eigenvalues().value()[0] ) );
-        CHECK( 1 == chunk.eigenvectors().value().size() );
+        CHECK( 2 == chunk.eigenvectors().value().size() );
         CHECK_THAT( 0.2672612419124246, WithinRel( chunk.eigenvectors().value()[0](0) ) );
         CHECK_THAT( 0.5345224838248487, WithinRel( chunk.eigenvectors().value()[0](1) ) );
         CHECK_THAT( 0.8017837257372732, WithinRel( chunk.eigenvectors().value()[0](2) ) );
+        CHECK_THAT( 0., WithinRel( chunk.eigenvectors().value()[1](0) ) );
+        CHECK_THAT( 0., WithinRel( chunk.eigenvectors().value()[1](1) ) );
+        CHECK_THAT( 0., WithinRel( chunk.eigenvectors().value()[1](2) ) );
 
-        CHECK( 1 == std::get< 0 >( chunk.eigendata() ).value().size() );
+        CHECK( 2 == std::get< 0 >( chunk.eigendata() ).value().size() );
         CHECK_THAT( 14., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[0] ) );
-        CHECK( 1 == std::get< 1 >( chunk.eigendata() ).value().size() );
+        CHECK_THAT( 0., WithinRel( std::get< 0 >( chunk.eigendata() ).value()[1] ) );
+        CHECK( 2 == std::get< 1 >( chunk.eigendata() ).value().size() );
         CHECK_THAT( 0.2672612419124246, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](0) ) );
         CHECK_THAT( 0.5345224838248487, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](1) ) );
         CHECK_THAT( 0.8017837257372732, WithinRel( std::get< 1 >( chunk.eigendata() ).value()[0](2) ) );
+        CHECK_THAT( 0., WithinRel( std::get< 1 >( chunk.eigendata() ).value()[1](0) ) );
+        CHECK_THAT( 0., WithinRel( std::get< 1 >( chunk.eigendata() ).value()[1](1) ) );
+        CHECK_THAT( 0., WithinRel( std::get< 1 >( chunk.eigendata() ).value()[1](2) ) );
       } // THEN
     } // WHEN
 

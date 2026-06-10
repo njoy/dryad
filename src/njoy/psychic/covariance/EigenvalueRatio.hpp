@@ -153,14 +153,12 @@ namespace covariance {
 
         this->status( TestStatus::Success );
 
-        auto eigenvalues = covariance.eigenvalues().value();
-        std::sort( eigenvalues.begin(), eigenvalues.end() );
-
-        auto iter = std::upper_bound( eigenvalues.begin(), eigenvalues.end(), 0. );
-        if ( iter != eigenvalues.end() ) {
+        decltype(auto) eigenvalues = covariance.eigenvalues().value();
+        auto iter = std::upper_bound( eigenvalues.rbegin(), eigenvalues.rend(), 0. );
+        if ( iter != eigenvalues.rend() ) {
 
           this->smallestPositiveEigenvalue( *iter );
-          this->largestPositiveEigenvalue( eigenvalues.back() );
+          this->largestPositiveEigenvalue( eigenvalues.front() );
           this->eigenvalueRatio( this->smallestPositiveEigenvalue().value()
                                  / this->largestPositiveEigenvalue().value() );
 
