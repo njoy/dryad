@@ -888,47 +888,47 @@ class Particle:
     @staticmethod
     def alpha() -> Particle:
         """
-        The particle instance for alphas
+        The default particle instance for alphas
         """
     @staticmethod
     def deuteron() -> Particle:
         """
-        The particle instance for deuterons
+        The default particle instance for deuterons
         """
     @staticmethod
     def electron() -> Particle:
         """
-        The particle instance for electrons
+        The default particle instance for electrons
         """
     @staticmethod
     def helion() -> Particle:
         """
-        The particle instance for helions
+        The default particle instance for helions
         """
     @staticmethod
     def neutron() -> Particle:
         """
-        The particle instance for neutrons
+        The default particle instance for neutrons
         """
     @staticmethod
     def photon() -> Particle:
         """
-        The particle instance for photons
+        The default particle instance for photons
         """
     @staticmethod
     def positron() -> Particle:
         """
-        The particle instance for positrons
+        The default particle instance for positrons
         """
     @staticmethod
     def proton() -> Particle:
         """
-        The particle instance for protons
+        The default particle instance for protons
         """
     @staticmethod
     def triton() -> Particle:
         """
-        The particle instance for tritons
+        The default particle instance for tritons
         """
     def __copy__(self) -> Particle:
         ...

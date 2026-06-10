@@ -82,15 +82,15 @@ void wrapParticle( python::module& module ) {
     python::arg( "energy_uncertainty" ) = std::nullopt,
     "Initialise the particle information"
   )
-  .def_static( "photon",   &Component::photon,   "The particle instance for photons" )
-  .def_static( "electron", &Component::electron, "The particle instance for electrons" )
-  .def_static( "positron", &Component::positron, "The particle instance for positrons" )
-  .def_static( "neutron",  &Component::neutron,  "The particle instance for neutrons" )
-  .def_static( "proton",   &Component::proton,   "The particle instance for protons" )
-  .def_static( "deuteron", &Component::deuteron, "The particle instance for deuterons" )
-  .def_static( "triton",   &Component::triton,   "The particle instance for tritons" )
-  .def_static( "helion",   &Component::helion,   "The particle instance for helions" )
-  .def_static( "alpha",    &Component::alpha,    "The particle instance for alphas" )
+  .def_static( "photon",   &Component::photon,   "The default particle instance for photons" )
+  .def_static( "electron", &Component::electron, "The default particle instance for electrons" )
+  .def_static( "positron", &Component::positron, "The default particle instance for positrons" )
+  .def_static( "neutron",  &Component::neutron,  "The default particle instance for neutrons" )
+  .def_static( "proton",   &Component::proton,   "The default particle instance for protons" )
+  .def_static( "deuteron", &Component::deuteron, "The default particle instance for deuterons" )
+  .def_static( "triton",   &Component::triton,   "The default particle instance for tritons" )
+  .def_static( "helion",   &Component::helion,   "The default particle instance for helions" )
+  .def_static( "alpha",    &Component::alpha,    "The default particle instance for alphas" )
   .def_property(
 
     "identifier",
