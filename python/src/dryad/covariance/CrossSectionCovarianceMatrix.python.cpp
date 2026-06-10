@@ -192,6 +192,14 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "The eigenvalues",
     python::return_value_policy::reference_internal
   )
+  .def_property_readonly(
+
+    "eigenvectors",
+    [] ( const Component& self ) -> decltype(auto)
+       { return self.eigenvectors(); },
+    "The eigenvectors",
+    python::return_value_policy::reference_internal
+  )
   .def(
 
     "calculate_standard_deviations",

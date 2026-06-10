@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/psychic/covariance/DiagonalCorrelations.hpp"
+#include "njoy/psychic/covariance/EigenvalueRatio.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;
 
-SCENARIO( "DiagonalCorrelations" ) {
+SCENARIO( "EigenvalueRatio" ) {
 
   GIVEN( "on-diagonal matrices covariance matrices" ) {
 
@@ -26,27 +26,20 @@ SCENARIO( "DiagonalCorrelations" ) {
                                                                 { 1e-5, 1., 1e+6, 2e+7 } );
 
     njoy::matrix::Matrix< double > success( 3, 3 );
-    success << 1., 1., 1.,
-               1., 1., 1.,
-               1., 1., 1.;
-
-    njoy::matrix::Matrix< double > warning( 3, 3 );
-    warning << 1., 1., 1.,
-               1., 1., 1.,
-               1., 1., 1.00000000005;
+    success << 100.,  0.,  0.,
+                 0., 50.,  0.,
+                 0.,  0., 10.;
 
     njoy::matrix::Matrix< double > fail( 3, 3 );
-    fail << 1., 1., 1.,
-            1., 1., 1.,
-            1., 1., 1.5;
+    fail <<   1.,  0.,    0.,
+              0.,  1.,    0.,
+              0.,  0., 1e-10;
 
-    std::vector< double > deviations = { 1., 2., 3. };
+    njoy::psychic::covariance::EigenvalueRatio test;
 
-    njoy::psychic::covariance::DiagonalCorrelations test;
+    WHEN( "a covariance matrix with an eigenvalue ratio of 10" ) {
 
-    WHEN( "a covariance matrix with all diagonal correlations equal to 1 is used" ) {
-
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, success );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, success );
 
       THEN( "the test returns a success" ) {
 
@@ -54,23 +47,13 @@ SCENARIO( "DiagonalCorrelations" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "a covariance matrix with all diagonal correlations equal to 1 (within tolerance) is used" ) {
+    WHEN( "a covariance matrix with an eigenvalue ratio of 1e-10" ) {
 
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, warning );
-
-      THEN( "the test returns a warning" ) {
-
-        CHECK( njoy::psychic::TestStatus::Warning == test( matrix ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "a covariance matrix with diagonal correlations that are larger than 1 is used" ) {
-
-      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, deviations, fail );
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( metadata, fail );
 
       THEN( "the test returns a fail" ) {
 
-        CHECK( njoy::psychic::TestStatus::Fail == test( matrix ) );
+        CHECK( njoy::psychic::TestStatus::Fail == test( matrix ).value() );
       } // THEN
     } // WHEN
 

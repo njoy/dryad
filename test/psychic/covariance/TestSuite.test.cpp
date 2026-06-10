@@ -7,8 +7,6 @@ using Catch::Matchers::WithinRel;
 #include "njoy/psychic/covariance/TestSuite.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;
@@ -50,6 +48,7 @@ SCENARIO( "TestSuite" ) {
         CHECK( njoy::psychic::TestStatus::Success == test( matrix ) );
         CHECK( njoy::psychic::TestStatus::Success == test.positiveVariances().status() );
         CHECK( njoy::psychic::TestStatus::Success == test.positiveSemiDefinite().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.eigenvalueRatio().status() );
         CHECK( njoy::psychic::TestStatus::Success == test.boundedCorrelations().status() );
         CHECK( njoy::psychic::TestStatus::Success == test.diagonalCorrelations().status() );
       } // THEN
@@ -61,9 +60,10 @@ SCENARIO( "TestSuite" ) {
 
       THEN( "the test returns a warning" ) {
 
-        CHECK( njoy::psychic::TestStatus::Warning == test( matrix ) );
+        CHECK( njoy::psychic::TestStatus::Fail == test( matrix ) );
         CHECK( njoy::psychic::TestStatus::Success == test.positiveVariances().status() );
         CHECK( njoy::psychic::TestStatus::Warning == test.positiveSemiDefinite().status() );
+        CHECK( njoy::psychic::TestStatus::Fail == test.eigenvalueRatio().status() );
         CHECK( njoy::psychic::TestStatus::Warning == test.boundedCorrelations().status() );
         CHECK( njoy::psychic::TestStatus::Success == test.diagonalCorrelations().status() );
       } // THEN
@@ -78,6 +78,7 @@ SCENARIO( "TestSuite" ) {
         CHECK( njoy::psychic::TestStatus::Fail == test( matrix ) );
         CHECK( njoy::psychic::TestStatus::Success == test.positiveVariances().status() );
         CHECK( njoy::psychic::TestStatus::Fail == test.positiveSemiDefinite().status() );
+        CHECK( njoy::psychic::TestStatus::Success == test.eigenvalueRatio().status() );
         CHECK( njoy::psychic::TestStatus::Fail == test.boundedCorrelations().status() );
         CHECK( njoy::psychic::TestStatus::Success == test.diagonalCorrelations().status() );
       } // THEN

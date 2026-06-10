@@ -8,6 +8,7 @@
 #include "njoy/psychic/TestStatus.hpp"
 #include "njoy/psychic/covariance/TestSuite.hpp"
 #include "njoy/psychic/covariance/PositiveVariances.hpp"
+#include "njoy/psychic/covariance/EigenvalueRatio.hpp"
 #include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
 #include "njoy/psychic/covariance/BoundedCorrelations.hpp"
 #include "njoy/psychic/covariance/DiagonalCorrelations.hpp"
@@ -35,6 +36,7 @@ namespace covariance {
 
     PositiveVariances positive_variances_;
     PositiveSemiDefinite positive_semi_definite_;
+    EigenvalueRatio eigenvalue_ratio_;
     BoundedCorrelations bounded_correlations_;
     DiagonalCorrelations diagonal_correlations_;
 
@@ -56,10 +58,12 @@ namespace covariance {
     /* constructor */
 
     TestSuite( double tolerance = constants::psychic::tolerance,
-               double negative = constants::psychic::largest_allowed_negative_eigenvalue ) :
+               double negative = constants::psychic::largest_allowed_negative_eigenvalue,
+               double ratio = njoy::constants::psychic::smallest_eigenvalue_ratio ) :
       Parent( "psychic.covariance.TestSuite" ),
       positive_variances_(),
       positive_semi_definite_( negative ),
+      eigenvalue_ratio_( ratio ),
       bounded_correlations_( tolerance ),
       diagonal_correlations_( tolerance ) {}
 
@@ -99,6 +103,22 @@ namespace covariance {
     PositiveSemiDefinite& positiveSemiDefinite() {
 
       return this->positive_semi_definite_;
+    }
+
+    /**
+     *  @brief Return the eigenvalue ratio test
+     */
+    const EigenvalueRatio& eigenvalueRatio() const {
+
+      return this->eigenvalue_ratio_;
+    }
+
+    /**
+     *  @brief Return the eigenvalue ratio test
+     */
+    EigenvalueRatio& eigenvalueRatio() {
+
+      return this->eigenvalue_ratio_;
     }
 
     /**
@@ -150,6 +170,14 @@ namespace covariance {
     }
 
     /**
+     *  @brief Return the smallest acceptable eigenvalue ratio
+     */
+    double smallestAcceptableEigenvalueRatio() const {
+
+      return this->eigenvalueRatio().smallestAcceptableEigenvalueRatio();
+    }
+
+    /**
      *  @brief Perform the test suite on the provided covariance matrix
      *
      *  @param[in] covariance   the covariance matrix instance to be tested
@@ -163,6 +191,7 @@ namespace covariance {
       this->clear();
       this->status( this->positiveVariances()( covariance ).value() );
       this->status( this->positiveSemiDefinite()( covariance ).value() && this->status().value() );
+      this->status( this->eigenvalueRatio()( covariance ).value() && this->status().value() );
       this->status( this->boundedCorrelations()( covariance ).value() && this->status().value() );
       this->status( this->diagonalCorrelations()( covariance ).value() && this->status().value() );
 

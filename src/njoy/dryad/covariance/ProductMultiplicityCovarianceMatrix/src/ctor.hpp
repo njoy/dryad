@@ -77,3 +77,19 @@ ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata rowMetadata,
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           rowDeviations, columnDeviations,
           std::move( correlations ), relative ) {}
+
+/**
+ *  @brief Constructor using eigenvalues and eigenvectors for an on-diagonal
+ *         product multiplicity covariance matrix
+ *
+ *  @param[in] metadata       the row and column metadata
+ *  @param[in] eigenvalues    the eigenvalues
+ *  @param[in] eigenvectors   the associated eigenvalues
+ *  @param[in] relative       the relative covariance flag
+ */
+ProductMultiplicityCovarianceMatrix( ProductMultiplicityMetadata metadata,
+                                     std::vector< double > eigenvalues,
+                                     std::vector< matrix::Vector< double > > eigenvectors,
+                                     bool relative = true ) :
+  Parent( std::move( metadata ), std::move( eigenvalues ),
+          std::move( eigenvectors ), relative ) {}

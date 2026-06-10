@@ -2,12 +2,15 @@
 #define NJOY_DRYAD_COVARIANCE_BASE_COVARIANCEMATRIX
 
 // system includes
+#include <algorithm>
 #include <optional>
+#include <numeric>
 #include <vector>
 
 // other includes
 #include "scion/math/compare.hpp"
 #include "tools/Log.hpp"
+#include "tools/apply_permutation.hpp"
 #include "njoy/matrix.hpp"
 
 namespace njoy {
@@ -18,6 +21,14 @@ namespace base {
   /**
    *  @class
    *  @brief A base class representing a covariance matrix
+   *
+   *  For on-diagonal covariance matrice, the following data is always available
+   *  (regardless of how the covariance matrix instance was constructed):
+   *  - the covariance matrix
+   *  - the standard deviations and correlation matrix
+   *  - the eigenvalues and eigenvectors
+   *
+   *  Eigenvalues (and assocaited eigenvectors) are store in descending order.
    */
   template < typename Metadata, typename... Ts >
   class CovarianceMatrix {
@@ -44,11 +55,13 @@ namespace base {
 
     /* fields - eigenvalues */
     std::optional< std::vector< double > > eigenvalues_;
+    std::optional< std::vector< matrix::Vector< double > > > eigenvectors_;
 
     /* auxiliary function */
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyMatrix.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/verifyStandardDeviations.hpp"
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateCovariances.hpp"
+    #include "njoy/dryad/covariance/base/CovarianceMatrix/src/sortEigenvalues.hpp"
 
   public:
 
@@ -139,6 +152,14 @@ namespace base {
     const std::optional< std::vector< double > >& eigenvalues() const {
 
       return this->eigenvalues_;
+    }
+
+    /**
+     *  @brief Return the eigenvectors
+     */
+    const std::optional< std::vector< matrix::Vector< double > > >& eigenvectors() const {
+
+      return this->eigenvectors_;
     }
 
     #include "njoy/dryad/covariance/base/CovarianceMatrix/src/calculateStandardDeviations.hpp"

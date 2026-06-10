@@ -7,8 +7,6 @@ using Catch::Matchers::WithinRel;
 #include "njoy/psychic/covariance/PositiveSemiDefinite.hpp"
 
 // other includes
-#include <iostream>
-#include <iomanip>
 
 // convenience typedefs
 using namespace njoy::dryad::covariance;
@@ -20,6 +18,12 @@ SCENARIO( "PositiveSemiDefinite" ) {
     // metadata for the covariance matrix
     njoy::dryad::covariance::CrossSectionMetadata metadata( { njoy::dryad::id::ReactionID( "n,U235->n,U235" ) },
                                                             { 1e-5, 1., 1e+6, 2e+7 } );
+
+    // metadata for the off-diagonal covariance matrix
+    njoy::dryad::covariance::CrossSectionMetadata row_metadata( { njoy::dryad::id::ReactionID( "n,U235->n,U235" ), },
+                                                                { 1e-5, 1., 1e+6, 2e+7 } );
+    njoy::dryad::covariance::CrossSectionMetadata col_metadata( { njoy::dryad::id::ReactionID( "n,U235->g,U236" ), },
+                                                                { 1e-5, 1., 1e+6, 2e+7 } );
 
     // positive semi-definite
     njoy::matrix::Matrix< double > success( 3, 3 );
@@ -68,6 +72,16 @@ SCENARIO( "PositiveSemiDefinite" ) {
       THEN( "the test returns a fail" ) {
 
         CHECK( njoy::psychic::TestStatus::Fail == test( matrix ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "an off-diagonal covariance matrix is used" ) {
+
+      njoy::dryad::covariance::CrossSectionCovarianceMatrix matrix( row_metadata, col_metadata, success );
+
+      THEN( "the test is skipped" ) {
+
+        CHECK( njoy::psychic::TestStatus::Skipped == test( matrix ) );
       } // THEN
     } // WHEN
   } // GIVEN

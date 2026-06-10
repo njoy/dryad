@@ -5,7 +5,7 @@ from __future__ import annotations
 import njoy.dryad.covariance
 import njoy.psychic
 import typing
-__all__: list[str] = ['BoundedCorrelations', 'DiagonalCorrelations', 'PositiveSemiDefinite', 'PositiveVariances', 'TestSuite']
+__all__: list[str] = ['BoundedCorrelations', 'DiagonalCorrelations', 'EigenvalueRatio', 'PositiveSemiDefinite', 'PositiveVariances', 'TestSuite']
 class BoundedCorrelations:
     """
     Test to verify if all correlation values are between -1 and 1
@@ -128,6 +128,83 @@ class DiagonalCorrelations:
         """
         The comparison tolerance
         """
+class EigenvalueRatio:
+    """
+    Test to verify if the positive eigenvalue ratio looks reasonable
+    
+    Parameters
+    ----------
+        ratio : float, default 1e-8
+             the smallest allowable positive eigenvalue ratio
+    """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.CrossSectionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has a reasonable eigenvalue ratio
+        
+        The test returns the following status values:
+          - Success : the eigenvalue ratio is larger than or equal to the tolerance
+          - Fail    : the eigenvalue ratio is smaller than the tolerance
+          - Skipped : the test was skipped
+        
+        The smallest and largest positive eigenvalue and their ratio is always available.
+        
+        Parameters
+        ----------
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                the covariance matrix instance to be tested
+        """
+    @typing.overload
+    def __call__(self, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> njoy.psychic.TestStatus | None:
+        """
+        Verify if the provided covariance matrix has a reasonable eigenvalue ratio
+        """
+    def __init__(self, ratio: float = 1e-08) -> None:
+        """
+        Initialise the test
+        """
+    @property
+    def eigenvalue_tatio(self) -> float | None:
+        """
+        The positive eigenvalue ratio
+        """
+    @eigenvalue_tatio.setter
+    def eigenvalue_tatio(self, arg1: float | None) -> None:
+        ...
+    @property
+    def largest_positive_eigenvalue(self) -> float | None:
+        """
+        The largest positive eigenvalue that was found
+        """
+    @largest_positive_eigenvalue.setter
+    def largest_positive_eigenvalue(self, arg1: float | None) -> None:
+        ...
+    @property
+    def name(self) -> str:
+        """
+        The test name
+        """
+    @property
+    def smallest_acceptable_eigenvalue_ratio(self) -> float:
+        """
+        The  smallest acceptable eigenvalue ratio
+        """
+    @property
+    def smallest_positive_eigenvalue(self) -> float | None:
+        """
+        The smallest positive eigenvalue that was found
+        """
+    @smallest_positive_eigenvalue.setter
+    def smallest_positive_eigenvalue(self, arg1: float | None) -> None:
+        ...
+    @property
+    def status(self) -> njoy.psychic.TestStatus | None:
+        """
+        The test status
+        """
+    @status.setter
+    def status(self, arg1: njoy.psychic.TestStatus | None) -> None:
+        ...
 class PositiveSemiDefinite:
     """
     Test to verify if a covariance matrix is positive semi-definite
@@ -263,7 +340,7 @@ class TestSuite:
         """
         Perform the test suite on the provided covariance matrix
         """
-    def __init__(self, tolerance: float = 1e-10, negative: float = -1e-10) -> None:
+    def __init__(self, tolerance: float = 1e-10, negative: float = -1e-10, ratio: float = 1e-08) -> None:
         """
         Initialise the test suite
         """
@@ -283,6 +360,11 @@ class TestSuite:
         The diagonal correlations are all 1 test
         """
     @property
+    def eigenvalue_ratio(self) -> EigenvalueRatio:
+        """
+        The eigenvalue ratio test
+        """
+    @property
     def name(self) -> str:
         """
         The test name
@@ -296,6 +378,11 @@ class TestSuite:
     def positive_variances(self) -> PositiveVariances:
         """
         The positive variance test
+        """
+    @property
+    def smallest_acceptable_eigenvalue_ratio(self) -> float:
+        """
+        The  smallest acceptable eigenvalue ratio
         """
     @property
     def status(self) -> njoy.psychic.TestStatus | None:

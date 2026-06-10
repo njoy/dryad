@@ -85,3 +85,22 @@ CrossSectionCovarianceMatrix( CrossSectionMetadata rowMetadata,
           rowDeviations, columnDeviations,
           std::move( correlations ), relative ),
   scaling_( std::nullopt ) {}
+
+/**
+ *  @brief Constructor using eigenvalues and eigenvectors for an on-diagonal
+ *         cross section covariance matrix
+ *
+ *  @param[in] metadata       the row and column metadata
+ *  @param[in] eigenvalues    the eigenvalues
+ *  @param[in] eigenvectors   the associated eigenvalues
+ *  @param[in] relative       the relative covariance flag
+ *  @param[in] scaling        the variance scaling information (default is none)
+ */
+CrossSectionCovarianceMatrix( CrossSectionMetadata metadata,
+                              std::vector< double > eigenvalues,
+                              std::vector< matrix::Vector< double > > eigenvectors,
+                              bool relative = true,
+                              std::optional< VarianceScaling > scaling = std::nullopt ) :
+  Parent( std::move( metadata ), std::move( eigenvalues ),
+          std::move( eigenvectors ), relative ),
+  scaling_( std::move( scaling ) ) {}

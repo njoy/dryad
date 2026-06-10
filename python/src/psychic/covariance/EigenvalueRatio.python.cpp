@@ -4,7 +4,7 @@
 
 // local includes
 #include "dryad/definitions.hpp"
-#include "njoy/psychic/covariance/TestSuite.hpp"
+#include "njoy/psychic/covariance/EigenvalueRatio.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -12,10 +12,10 @@ namespace python = pybind11;
 namespace psychic {
 namespace covariance {
 
-void wrapTestSuite( python::module& module ) {
+void wrapEigenvalueRatio( python::module& module ) {
 
   // type aliases
-  using Component = njoy::psychic::covariance::TestSuite;
+  using Component = njoy::psychic::covariance::EigenvalueRatio;
   using TestStatus = njoy::psychic::TestStatus;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
   using ProductMultiplicityCovarianceMatrix = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
@@ -26,72 +26,26 @@ void wrapTestSuite( python::module& module ) {
   python::class_< Component > component(
 
     module,
-    "TestSuite",
-    "A comprehensive covariance test suite\n\n"
+    "EigenvalueRatio",
+    "Test to verify if the positive eigenvalue ratio looks reasonable\n\n"
     "Parameters\n"
     "----------\n"
-    "    tolerance : float, default 1e-10\n"
-    "         the comparison tolerance\n"
-    "    negative : float, default -1e-10\n"
-    "         the largest allowed negative eigenvalue"
+    "    ratio : float, default 1e-8\n"
+    "         the smallest allowable positive eigenvalue ratio"
   );
   // wrap the component
   component
   .def(
 
-    python::init< double, double, double >(),
-    python::arg( "tolerance" ) = njoy::constants::psychic::tolerance,
-    python::arg( "negative" ) = njoy::constants::psychic::largest_allowed_negative_eigenvalue,
+    python::init< double >(),
     python::arg( "ratio" ) = njoy::constants::psychic::smallest_eigenvalue_ratio,
-    "Initialise the test suite"
+    "Initialise the test"
   )
   .def_property_readonly(
 
     "name",
     [] ( const Component& self ) { return self.name(); },
     "The test name"
-  )
-  .def_property_readonly(
-
-    "positive_variances",
-    python::overload_cast<>( &Component::positiveVariances, python::const_ ),
-    "The positive variance test"
-  )
-  .def_property_readonly(
-
-    "positive_semi_definite",
-    python::overload_cast<>( &Component::positiveSemiDefinite, python::const_ ),
-    "The positive semi-definite test"
-  )
-  .def_property_readonly(
-
-    "eigenvalue_ratio",
-    python::overload_cast<>( &Component::eigenvalueRatio, python::const_ ),
-    "The eigenvalue ratio test"
-  )
-  .def_property_readonly(
-
-    "bounded_correlations",
-    python::overload_cast<>( &Component::boundedCorrelations, python::const_ ),
-    "The correlations between -1 and 1 test"
-  )
-  .def_property_readonly(
-
-    "diagonal_correlations",
-    python::overload_cast<>( &Component::diagonalCorrelations, python::const_ ),
-    "The diagonal correlations are all 1 test"
-  )
-  .def_property_readonly(
-
-    "tolerance",
-    &Component::tolerance,
-    "The comparison tolerance"
-  )
-  .def_property_readonly(
-
-    "allowed_negative_eigen_value",
-    &Component::allowedNegativeEigenValue,
-    "The largest allowed negative eigenvalue"
   )
   .def_property_readonly(
 
@@ -107,13 +61,39 @@ void wrapTestSuite( python::module& module ) {
        { self.status( std::move( status ) ); },
     "The test status"
   )
+  .def_property(
+
+    "smallest_positive_eigenvalue",
+    python::overload_cast<>( &Component::smallestPositiveEigenvalue, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::smallestPositiveEigenvalue ),
+    "The smallest positive eigenvalue that was found"
+  )
+  .def_property(
+
+    "largest_positive_eigenvalue",
+    python::overload_cast<>( &Component::largestPositiveEigenvalue, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::largestPositiveEigenvalue ),
+    "The largest positive eigenvalue that was found"
+  )
+  .def_property(
+
+    "eigenvalue_tatio",
+    python::overload_cast<>( &Component::eigenvalueRatio, python::const_ ),
+    python::overload_cast< std::optional< double > >( &Component::eigenvalueRatio ),
+    "The positive eigenvalue ratio"
+  )
   .def(
 
     "__call__",
     [] ( Component& self, const CrossSectionCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Perform the test suite on the provided covariance matrix\n\n"
+    "Verify if the provided covariance matrix has a reasonable eigenvalue ratio\n\n"
+    "The test returns the following status values:\n"
+    "  - Success : the eigenvalue ratio is larger than or equal to the tolerance\n"
+    "  - Fail    : the eigenvalue ratio is smaller than the tolerance\n"
+    "  - Skipped : the test was skipped\n\n"
+    "The smallest and largest positive eigenvalue and their ratio is always available.\n\n"
     "Parameters\n"
     "----------\n"
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
@@ -125,7 +105,7 @@ void wrapTestSuite( python::module& module ) {
     [] ( Component& self, const ProductMultiplicityCovarianceMatrix& covariance ) -> decltype(auto)
        { return self( covariance ); },
     python::arg( "covariance" ),
-    "Perform the test suite on the provided covariance matrix"
+    "Verify if the provided covariance matrix has a reasonable eigenvalue ratio"
   );
 }
 
