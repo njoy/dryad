@@ -44,6 +44,12 @@ SCENARIO( "Masses" ) {
       CHECK_THAT( 0.00000000006, WithinRel( entry.atomicMassUncertainty().value() ) );
 
       CHECK( 3557 == Masses::size() );
+
+      CHECK( true == Masses::hasEntry( id::ParticleID( "H1" ) ) );
+      CHECK( true == Masses::hasEntry( id::ParticleID( "U235" ) ) );
+      CHECK( true == Masses::hasEntry( id::ParticleID( "U235_e1" ) ) );
+      CHECK( true == Masses::hasEntry( id::ParticleID( "H1_e1" ) ) );
+      CHECK( false == Masses::hasEntry( id::ParticleID( "H20" ) ) );
     } // THEN
 
     THEN( "requesting a non-existent particle throws an exception" ) {

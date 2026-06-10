@@ -75,7 +75,7 @@ namespace ripl3 {
      */
     static bool hasEntry( const id::ParticleID& id ) {
 
-      return iterator( id ) == Levels::levels_.end();
+      return iterator( id ) != Levels::levels_.end();
     }
 
     /**

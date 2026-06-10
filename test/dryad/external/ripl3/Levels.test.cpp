@@ -485,6 +485,9 @@ SCENARIO( "Levels" ) {
 
       data = Levels::entry( id::ParticleID( "Og294" ) );
       CHECK( 177427 == Levels::size() );
+
+      CHECK( true == Levels::hasEntry( id::ParticleID( "U235" ) ) );
+      CHECK( false == Levels::hasEntry( id::ParticleID( "U214" ) ) );
     } // THEN
 
     THEN( "requesting a non-existent particle throws an exception" ) {
