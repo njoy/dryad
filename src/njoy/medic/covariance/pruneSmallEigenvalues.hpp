@@ -29,14 +29,23 @@ namespace covariance {
     if ( covariance.isOnDiagonal() &&
          covariance.eigenvalues().has_value() && covariance.eigenvectors().has_value() ) {
 
-      std::vector< double > eigenvalues = covariance.eigenvalues().value();
-      std::vector< matrix::Vector< double > > eigenvectors = covariance.eigenvectors().value();
+      decltype(auto) eigenvalues = covariance.eigenvalues().value();
+      decltype(auto) eigenvectors = covariance.eigenvectors().value();
 
       auto iter = std::lower_bound( eigenvalues.rbegin(), eigenvalues.rend(), eigenvalue );
-      eigenvalues.erase( iter.base(), eigenvalues.end() );
-      eigenvectors.erase( std::next( eigenvectors.begin(), eigenvalues.size() ), eigenvectors.end() );
+      if ( iter != eigenvalues.rend() ) {
 
-      covariance.eigendata( std::make_tuple( std::move( eigenvalues ), std::move( eigenvectors ) ) );
+        eigenvalues.erase( iter.base(), eigenvalues.end() );
+        eigenvectors.erase( std::next( eigenvectors.begin(), eigenvalues.size() ), eigenvectors.end() );
+        covariance.calculateCovariances();
+        covariance.calculateCorrelations();
+      }
+      else {
+
+        Log::error( "Pruning the eigenvalues would cause there to be no eigenvalues left" );
+        Log::info( "Check eigenvalue threshold" );
+        throw std::exception();
+      }
     }
   }
 
