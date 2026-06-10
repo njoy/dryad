@@ -21,7 +21,7 @@ trigger_ci_downstream:
 
   trigger:
     project: NJOY/common_ci
-    branch: main
+    branch: clone_and_run_data_test
     strategy: depend
 
   variables:
