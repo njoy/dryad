@@ -270,6 +270,9 @@ add_cpp_test( dryad.format.endf.createThermalScatteringEndfFile                 
 add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceMatrix          dryad/format/gendf/covariance/createCrossSectionCovarianceMatrix.test.cpp )
 add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceData            dryad/format/gendf/covariance/createCrossSectionCovarianceData.test.cpp )
 add_cpp_test( dryad.format.gendf.covariance.createCrossSectionCovarianceDataFromFile    dryad/format/gendf/covariance/createCrossSectionCovarianceDataFromFile.test.cpp )
+add_cpp_test( dryad.format.gendf.covariance.createAngularDistributionCovarianceMatrix          dryad/format/gendf/covariance/createAngularDistributionCovarianceMatrix.test.cpp )
+add_cpp_test( dryad.format.gendf.covariance.createAngularDistributionCovarianceData            dryad/format/gendf/covariance/createAngularDistributionCovarianceData.test.cpp )
+add_cpp_test( dryad.format.gendf.covariance.createAngularDistributionCovarianceDataFromFile    dryad/format/gendf/covariance/createAngularDistributionCovarianceDataFromFile.test.cpp )
 
 add_cpp_test( dryad.format.gnds.convertEnergy                                           dryad/format/gnds/convertEnergy.test.cpp )
 add_cpp_test( dryad.format.gnds.convertEnergies                                         dryad/format/gnds/convertEnergies.test.cpp )
