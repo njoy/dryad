@@ -41,66 +41,66 @@ SCENARIO( "Particle" ) {
 
     THEN( "a Particle can be constructed using data" ) {
 
-      Particle neutron( neutronID, neutronMass,
-                        neutronSpin, neutronParity );
+      Particle particle( neutronID, neutronMass,
+                         neutronSpin, neutronParity );
 
-      CHECK( id::ParticleID::neutron() == neutron.identifier() );
-      CHECK_THAT( 1.008664, WithinRel( neutron.mass().value() ) );
-      CHECK_THAT( 0.5, WithinRel( neutron.spin().value() ) );
-      CHECK( 0.0 == neutron.charge() );
-      CHECK( 0 == neutron.excitedState() );
-      CHECK( +1 == neutron.parity().value() );
-      CHECK( std::nullopt == neutron.energy() );
-      CHECK( std::nullopt == neutron.nuclearMass() );
-      CHECK( std::nullopt == neutron.massUncertainty() );
-      CHECK( std::nullopt == neutron.nuclearMassUncertainty() );
-      CHECK( std::nullopt == neutron.energyUncertainty() );
+      CHECK( id::ParticleID::neutron() == particle.identifier() );
+      CHECK_THAT( 1.008664, WithinRel( particle.mass().value() ) );
+      CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+      CHECK( 0.0 == particle.charge() );
+      CHECK( 0 == particle.excitedState() );
+      CHECK( +1 == particle.parity().value() );
+      CHECK( std::nullopt == particle.energy() );
+      CHECK( std::nullopt == particle.nuclearMass() );
+      CHECK( std::nullopt == particle.massUncertainty() );
+      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+      CHECK( std::nullopt == particle.energyUncertainty() );
 
-      Particle proton( protonID, protonMass,
-                       protonSpin, protonParity );
+      particle = Particle( protonID, protonMass,
+                           protonSpin, protonParity );
 
-      CHECK( id::ParticleID::proton() == proton.identifier() );
-      CHECK_THAT( 1.007276, WithinRel( proton.mass().value() ) );
-      CHECK_THAT( 0.5, WithinRel( proton.spin().value() ) );
-      CHECK( 1 == proton.charge() );
-      CHECK( 0 == proton.excitedState() );
-      CHECK( +1 == proton.parity().value() );
-      CHECK( std::nullopt == proton.energy() );
-      CHECK( std::nullopt == proton.nuclearMass() );
-      CHECK( std::nullopt == proton.massUncertainty() );
-      CHECK( std::nullopt == proton.nuclearMassUncertainty() );
-      CHECK( std::nullopt == proton.energyUncertainty() );
+      CHECK( id::ParticleID::proton() == particle.identifier() );
+      CHECK_THAT( 1.007276, WithinRel( particle.mass().value() ) );
+      CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+      CHECK( 1 == particle.charge() );
+      CHECK( 0 == particle.excitedState() );
+      CHECK( +1 == particle.parity().value() );
+      CHECK( std::nullopt == particle.energy() );
+      CHECK( std::nullopt == particle.nuclearMass() );
+      CHECK( std::nullopt == particle.massUncertainty() );
+      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+      CHECK( std::nullopt == particle.energyUncertainty() );
 
-      Particle u235( u235ID, u235Mass, u235Spin, u235Parity, u235Energy );
+      particle = Particle( u235ID, u235Mass, u235Spin, u235Parity, u235Energy );
 
-      CHECK( id::ParticleID( "U235" ) == u235.identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( u235.mass().value() ) );
-      CHECK_THAT( 0., WithinRel( u235.spin().value() ) );
-      CHECK( 92 == u235.charge() );
-      CHECK( 0 == u235.excitedState() );
-      CHECK( +1 == u235.parity().value() );
-      CHECK( 0.0 == u235.energy() );
-      CHECK( std::nullopt == u235.nuclearMass() );
-      CHECK( std::nullopt == u235.massUncertainty() );
-      CHECK( std::nullopt == u235.nuclearMassUncertainty() );
-      CHECK( std::nullopt == u235.energyUncertainty() );
+      CHECK( id::ParticleID( "U235" ) == particle.identifier() );
+      CHECK_THAT( 235.0439299, WithinRel( particle.mass().value() ) );
+      CHECK_THAT( 0., WithinRel( particle.spin().value() ) );
+      CHECK( 92 == particle.charge() );
+      CHECK( 0 == particle.excitedState() );
+      CHECK( +1 == particle.parity().value() );
+      CHECK( 0.0 == particle.energy() );
+      CHECK( std::nullopt == particle.nuclearMass() );
+      CHECK( std::nullopt == particle.massUncertainty() );
+      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+      CHECK( std::nullopt == particle.energyUncertainty() );
 
-      Particle u235_e1( u235e1ID, u235Mass, u235Spin, u235Parity,
-                        u235e1Energy, std::nullopt, std::nullopt,
-                        std::nullopt, u235e1EnergyUncertainty );
+      particle = Particle( u235e1ID, u235Mass, u235Spin, u235Parity,
+                           u235e1Energy, std::nullopt, std::nullopt,
+                           std::nullopt, u235e1EnergyUncertainty );
 
-      CHECK( id::ParticleID( "U235_e1" ) == u235_e1.identifier() );
-      CHECK_THAT( 235.0439299, WithinRel( u235_e1.mass().value() ) );
-      CHECK_THAT( 0., WithinRel( u235_e1.spin().value() ) );
-      CHECK( 92 == u235_e1.charge() );
-      CHECK( 1 == u235_e1.excitedState() );
-      CHECK( +1 == u235_e1.parity().value() );
-      CHECK( 1e+6 == u235_e1.energy() );
-      CHECK( std::nullopt == u235_e1.nuclearMass() );
-      CHECK( std::nullopt == u235_e1.massUncertainty() );
-      CHECK( std::nullopt == u235_e1.nuclearMassUncertainty() );
-      CHECK( std::nullopt != u235_e1.energyUncertainty() );
-      CHECK_THAT( 1e+3, WithinRel( u235_e1.energyUncertainty().value() ) );
+      CHECK( id::ParticleID( "U235_e1" ) == particle.identifier() );
+      CHECK_THAT( 235.0439299, WithinRel( particle.mass().value() ) );
+      CHECK_THAT( 0., WithinRel( particle.spin().value() ) );
+      CHECK( 92 == particle.charge() );
+      CHECK( 1 == particle.excitedState() );
+      CHECK( +1 == particle.parity().value() );
+      CHECK( 1e+6 == particle.energy() );
+      CHECK( std::nullopt == particle.nuclearMass() );
+      CHECK( std::nullopt == particle.massUncertainty() );
+      CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+      CHECK( std::nullopt != particle.energyUncertainty() );
+      CHECK_THAT( 1e+3, WithinRel( particle.energyUncertainty().value() ) );
     } // THEN
 
     THEN( "a Particle can be constructed using static functions" ) {

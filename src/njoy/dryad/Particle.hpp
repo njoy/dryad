@@ -179,7 +179,7 @@ namespace dryad {
     };
 
     /**
-     *  @brief The default particle instance for a particle
+     *  @brief The default particle instance for a given particle identifier
      *
      *  This function creates a default particle instance for the given particle
      *  identifier. When relevant, the discrete level energies and spins-parity pairs
