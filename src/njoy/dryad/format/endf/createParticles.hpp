@@ -44,8 +44,11 @@ namespace endf {
     particles.emplace_back( Particle::defaultParticle( target ) );
     particles.back().mass( information.atomicWeightRatio() * constants::neutron_mass );
     particles.back().massUncertainty( std::nullopt );
-    particles.back().energy( information.excitationEnergy() );
-    particles.back().energyUncertainty( std::nullopt );
+    if ( target.a() != 0 ) {
+
+      particles.back().energy( information.excitationEnergy() );
+      particles.back().energyUncertainty( std::nullopt );
+    }
 
     // sort for later searching
     std::sort( particles.begin(), particles.end(),
