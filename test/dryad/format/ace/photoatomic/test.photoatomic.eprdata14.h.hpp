@@ -15,12 +15,12 @@ namespace h {
 
     auto particle = particles.particle( id::ParticleID( "g" ) );
     CHECK( id::ParticleID::photon() == particle.identifier() );
-    CHECK( std::nullopt == particle.mass() );
-    CHECK( std::nullopt == particle.spin() );
-    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0., WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 1.0, WithinRel( particle.spin().value() ) );
+    CHECK( -1 == particle.parity().value() );
     CHECK( std::nullopt == particle.energy() );
     CHECK( std::nullopt == particle.nuclearMass() );
-    CHECK( std::nullopt == particle.massUncertainty() );
+    CHECK_THAT( 0., WithinRel( particle.massUncertainty().value() ) );
     CHECK( std::nullopt == particle.nuclearMassUncertainty() );
     CHECK( std::nullopt == particle.energyUncertainty() );
 

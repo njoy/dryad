@@ -128,19 +128,22 @@ namespace np236m1 {
     auto particle = particles.particle( id::ParticleID( "n" ) );
     CHECK( id::ParticleID::neutron() == particle.identifier() );
     CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
-    CHECK( std::nullopt == particle.spin() );
-    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
     CHECK( std::nullopt == particle.energy() );
     CHECK( std::nullopt == particle.nuclearMass() );
     CHECK( std::nullopt == particle.massUncertainty() );
     CHECK( std::nullopt == particle.nuclearMassUncertainty() );
     CHECK( std::nullopt == particle.energyUncertainty() );
 
+    // note: RIPL-3 has the first excited state at 60000 eV while the second excited
+    //       is at 231000 eV so the LIS value in the ENDF file may be wrong
+
     particle = particles.particle( id::ParticleID( "Np236_e2" ) );
     CHECK( id::ParticleID( "Np236_e2" ) == particle.identifier() );
     CHECK_THAT( 234.019 * neutron_mass, WithinRel( particle.mass().value() ) );
-    CHECK( std::nullopt == particle.spin() );
-    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 3.0, WithinRel( particle.spin().value() ) );
+    CHECK( -1 == particle.parity().value() );
     CHECK_THAT( 60000. , WithinRel( particle.energy().value() ) );
     CHECK( std::nullopt == particle.nuclearMass() );
     CHECK( std::nullopt == particle.massUncertainty() );

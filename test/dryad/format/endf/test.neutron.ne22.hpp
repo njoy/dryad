@@ -509,8 +509,8 @@ namespace ne22 {
     auto particle = particles.particle( id::ParticleID( "n" ) );
     CHECK( id::ParticleID::neutron() == particle.identifier() );
     CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
-    CHECK( std::nullopt == particle.spin() );
-    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
     CHECK( std::nullopt == particle.energy() );
     CHECK( std::nullopt == particle.nuclearMass() );
     CHECK( std::nullopt == particle.massUncertainty() );
@@ -520,8 +520,8 @@ namespace ne22 {
     particle = particles.particle( id::ParticleID( "Ne22" ) );
     CHECK( id::ParticleID( "Ne22" ) == particle.identifier() );
     CHECK_THAT( 21.80247 * neutron_mass, WithinRel( particle.mass().value() ) );
-    CHECK( std::nullopt == particle.spin() );
-    CHECK( std::nullopt == particle.parity() );
+    CHECK_THAT( 0.0, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
     CHECK_THAT( 0. , WithinRel( particle.energy().value() ) );
     CHECK( std::nullopt == particle.nuclearMass() );
     CHECK( std::nullopt == particle.massUncertainty() );
