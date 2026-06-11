@@ -52,28 +52,6 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
     "    average_widths   the average widths for all channels\n"
     "    level_spacings   the level spacings"
   )
-  .def(
-
-    python::init< std::vector< ChannelID >,
-                  std::vector< double >,
-                  std::vector< double >,
-                  std::vector< std::vector< double > >,
-                  std::vector< std::optional< int > > >(),
-    python::arg( "channels" ), python::arg( "energies" ),
-    python::arg( "spacing_values" ), python::arg( "width_values" ),
-    python::arg( "dofs" ) = std::vector< std::optional< int > >{},
-    "Initialise the table\n\n"
-    "The channels do not have to be sorted (they will be sorted upon\n"
-    "construction). The shared energy grid is used to construct the\n"
-    "level spacing table and the average width tables.\n\n"
-    "Arguments:\n"
-    "    self             the table\n"
-    "    channels         the channel identifiers (nc values)\n"
-    "    energies         the shared energy grid (ne values)\n"
-    "    spacing_values   the level spacings on the energy grid (ne values)\n"
-    "    width_values     the average widths on the energy grid (nc arrays of ne values)\n"
-    "    dofs             optional degrees of freedom per channel"
-  )
   .def_property_readonly(
 
     "channels",
@@ -104,16 +82,6 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
     &Component::hasChannel,
     python::arg( "channel" ),
     "Return whether or not a channel is present\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    channel   the channel identifier"
-  )
-  .def(
-
-    "channel_index",
-    &Component::channelIndex,
-    python::arg( "channel" ),
-    "Return the index of a given channel\n\n"
     "Arguments:\n"
     "    self      the table\n"
     "    channel   the channel identifier"

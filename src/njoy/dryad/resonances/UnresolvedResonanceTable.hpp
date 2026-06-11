@@ -36,7 +36,7 @@ namespace resonances{
         /* auxiliary functions */
         #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/processTable.hpp"
         #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/verifyTable.hpp"
-        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/buildWidths.hpp"
+        #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/iterator.hpp"
         #include "njoy/dryad/resonances/UnresolvedResonanceTable/src/unifyEnergyGrids.hpp"
 
 
@@ -78,46 +78,30 @@ namespace resonances{
         }
 
         /**
-        * @brief Return the index of a given channel
+        * @brief Return the TabulatedAverageWidths for a given channel
         */
-        const std::optional< int > channelIndex( const id::ChannelID& channel ) const {
-          auto iter = std::lower_bound( this->channels().begin(), this->channels().end(), channel );
-          if ( iter == this->channels().end() || *iter != channel ) {
+        const TabulatedAverageWidths& widths( const id::ChannelID& channel ) const {
+          auto iter = this->iterator( channel );
+          if ( iter == this->channels().cend() || *iter != channel ) {
             Log::error( "Channel {} not found in table", channel.symbol() );
             throw std::exception();
           }
-          else {
-            return std::distance( this->channels().begin(), iter );
-          }
+          return this->widths()[ std::distance( this->channels().cbegin(), iter ) ];
         }
 
         /**
         * @brief Return the TabulatedAverageWidths for a given channel
         */
-        const TabulatedAverageWidths& widths( const id::ChannelID& channel ) const {
-          auto index = this->channelIndex( channel );
-          if ( ! index.has_value() ) {
+        TabulatedAverageWidths& widths( const id::ChannelID& channel ) {
+          auto iter = this->iterator( channel );
+          if ( iter == this->channels().cend() || *iter != channel ) {
             Log::error( "Channel {} not found in table", channel.symbol() );
             throw std::exception();
           }
           else {
-            return this->widths()[index.value()];
+            return this->widths()[ std::distance( this->channels().cbegin(), iter ) ];
           }
         }
-
-      /**
-      * @brief Return the TabulatedAverageWidths for a given channel
-      */
-      TabulatedAverageWidths& widths( const id::ChannelID& channel ) {
-        auto index = this->channelIndex( channel );
-        if ( ! index.has_value() ) {
-          Log::error( "Channel {} not found in table", channel.symbol() );
-          throw std::exception();
-        }
-        else {
-          return this->widths()[index.value()];
-        }
-      }
 
         /**
         * @brief Return the average widths
