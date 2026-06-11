@@ -4,13 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createParticles.hpp"
+#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
-#include "ACEtk/PhotoatomicTable.hpp"
-#include "ACEtk/PhotonuclearTable.hpp"
+#include "njoy/dryad/format/ace/continuous/createReactions.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
@@ -28,33 +27,63 @@ SCENARIO( "createParticles" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        using namespace njoy;
+        using namespace njoy::constants;
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
-        auto particles = format::ace::createParticles( projectile, target, table );
+        auto reactions = format::ace::continuous::createReactions( projectile, target, table, false );
+        auto particles = format::ace::createParticleDatabase( target, reactions, table );
 
-        CHECK( 2 == particles.size() );
+        CHECK( 4 == particles.numberParticles() );
 
-        CHECK( id::ParticleID::neutron() == particles[0].identifier() );
-        CHECK_THAT( constants::neutron_mass, WithinRel( particles[0].mass().value() ) );
-        CHECK_THAT( 0.5, WithinRel( particles[0].spin().value() ) );
-        CHECK( +1 == particles[0].parity().value() );
-        CHECK( std::nullopt == particles[0].energy() );
-        CHECK( std::nullopt == particles[0].nuclearMass() );
-        CHECK_THAT( constants::neutron_mass_uncertainty, WithinRel( particles[0].massUncertainty().value() ) );
-        CHECK( std::nullopt == particles[0].nuclearMassUncertainty() );
-        CHECK( std::nullopt == particles[0].energyUncertainty() );
+        CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
+        CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+        CHECK( true == particles.hasParticle( id::ParticleID( "H1" ) ) );
+        CHECK( true == particles.hasParticle( id::ParticleID( "H2[all]" ) ) );
 
-        CHECK( id::ParticleID( "H1" ) == particles[1].identifier() );
-        CHECK_THAT( 0.999167 * neutron_mass, WithinRel( particles[1].mass().value() ) );
-        CHECK_THAT( 0.5, WithinRel( particles[1].spin().value() ) );
-        CHECK( +1 == particles[1].parity().value() );
-        CHECK_THAT( 0., WithinRel( particles[1].energy().value() ) );
-        CHECK( std::nullopt == particles[1].nuclearMass() );
-        CHECK( std::nullopt == particles[1].massUncertainty() );
-        CHECK( std::nullopt == particles[1].nuclearMassUncertainty() );
-        CHECK( std::nullopt == particles[1].energyUncertainty() );
+        auto particle = particles.particle( id::ParticleID( "g" ) );
+        CHECK( id::ParticleID::photon() == particle.identifier() );
+        CHECK_THAT( 0., WithinRel( particle.mass().value() ) );
+        CHECK_THAT( 1.0, WithinRel( particle.spin().value() ) );
+        CHECK( -1 == particle.parity().value() );
+        CHECK( std::nullopt == particle.energy() );
+        CHECK( std::nullopt == particle.nuclearMass() );
+        CHECK_THAT( 0., WithinRel( particle.massUncertainty().value() ) );
+        CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+        CHECK( std::nullopt == particle.energyUncertainty() );
+
+        particle = particles.particle( id::ParticleID( "n" ) );
+        CHECK( id::ParticleID::neutron() == particle.identifier() );
+        CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+        CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+        CHECK( +1 == particle.parity().value() );
+        CHECK( std::nullopt == particle.energy() );
+        CHECK( std::nullopt == particle.nuclearMass() );
+        CHECK_THAT( neutron_mass_uncertainty, WithinRel( particle.massUncertainty().value() ) );
+        CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+        CHECK( std::nullopt == particle.energyUncertainty() );
+
+        particle = particles.particle( id::ParticleID( "H1" ) );
+        CHECK( id::ParticleID( "H1" ) == particle.identifier() );
+        CHECK_THAT( 0.999167 * neutron_mass, WithinRel( particle.mass().value() ) );
+        CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+        CHECK( +1 == particle.parity().value() );
+        CHECK_THAT( 0., WithinRel( particle.energy().value() ) );
+        CHECK( std::nullopt == particle.nuclearMass() );
+        CHECK( std::nullopt == particle.massUncertainty() );
+        CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+        CHECK( std::nullopt == particle.energyUncertainty() );
+
+        particle = particles.particle( id::ParticleID( "H2[all]" ) );
+        CHECK( id::ParticleID( "H2[all]" ) == particle.identifier() );
+        CHECK_THAT( 2.014101777844, WithinRel( particle.mass().value() ) );
+        CHECK( std::nullopt == particle.spin() );
+        CHECK( std::nullopt == particle.parity() );
+        CHECK( std::nullopt == particle.energy() );
+        CHECK( std::nullopt == particle.nuclearMass() );
+        CHECK_THAT( 0.000000000015, WithinRel( particle.massUncertainty().value() ) );
+        CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+        CHECK( std::nullopt == particle.energyUncertainty() );
       } // THEN
     } // WHEN
   } // GIVEN

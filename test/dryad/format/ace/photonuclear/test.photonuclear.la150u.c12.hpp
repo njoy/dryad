@@ -8,9 +8,13 @@ namespace c12 {
 
     using namespace njoy::constants;
 
-    CHECK( 2 == particles.numberParticles() );
+    CHECK( 6 == particles.numberParticles() );
 
     CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "p" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "B11" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "C11" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "C12" ) ) );
 
     auto particle = particles.particle( id::ParticleID( "g" ) );
@@ -21,6 +25,50 @@ namespace c12 {
     CHECK( std::nullopt == particle.energy() );
     CHECK( std::nullopt == particle.nuclearMass() );
     CHECK_THAT( 0., WithinRel( particle.massUncertainty().value() ) );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "n" ) );
+    CHECK( id::ParticleID::neutron() == particle.identifier() );
+    CHECK_THAT( neutron_mass, WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK_THAT( neutron_mass_uncertainty, WithinRel( particle.massUncertainty().value() ) );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "p" ) );
+    CHECK( id::ParticleID::proton() == particle.identifier() );
+    CHECK_THAT( proton_mass, WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 0.5, WithinRel( particle.spin().value() ) );
+    CHECK( +1 == particle.parity().value() );
+    CHECK( std::nullopt == particle.energy() );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK_THAT( proton_mass_uncertainty, WithinRel( particle.massUncertainty().value() ) );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "B11" ) );
+    CHECK( id::ParticleID( "B11" ) == particle.identifier() );
+    CHECK_THAT( 11.009305166, WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 1.5, WithinRel( particle.spin().value() ) );
+    CHECK( -1 == particle.parity().value() );
+    CHECK_THAT( 0., WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK_THAT( 0.000000013, WithinRel( particle.massUncertainty().value() ) );
+    CHECK( std::nullopt == particle.nuclearMassUncertainty() );
+    CHECK( std::nullopt == particle.energyUncertainty() );
+
+    particle = particles.particle( id::ParticleID( "C11" ) );
+    CHECK( id::ParticleID( "C11" ) == particle.identifier() );
+    CHECK_THAT( 11.011432597, WithinRel( particle.mass().value() ) );
+    CHECK_THAT( 1.5, WithinRel( particle.spin().value() ) );
+    CHECK( -1 == particle.parity().value() );
+    CHECK_THAT( 0., WithinRel( particle.energy().value() ) );
+    CHECK( std::nullopt == particle.nuclearMass() );
+    CHECK_THAT( 0.000000064, WithinRel( particle.massUncertainty().value() ) );
     CHECK( std::nullopt == particle.nuclearMassUncertainty() );
     CHECK( std::nullopt == particle.energyUncertainty() );
 

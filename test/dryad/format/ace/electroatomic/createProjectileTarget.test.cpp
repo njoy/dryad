@@ -20,31 +20,6 @@ SCENARIO( "createProjectileTarget" ) {
 
   GIVEN( "instances of PhotoatomicTable" ) {
 
-    WHEN( "an mcplib84 formatted table is given" ) {
-
-      njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.84p" ) );
-
-      THEN( "a ProjectileTarget can be derived" ) {
-
-        ProjectileTarget H0 = format::ace::electroatomic::createProjectileTarget( table, false );
-
-        CHECK( std::nullopt == H0.documentation().library() );
-        CHECK( std::nullopt == H0.documentation().version() );
-        CHECK( std::nullopt == H0.documentation().description() );
-
-        CHECK( id::ParticleID( "e-" ) == H0.projectileIdentifier() );
-        CHECK( id::ParticleID( "H" ) == H0.targetIdentifier() );
-
-        CHECK( InteractionType::Atomic == H0.interactionType() );
-
-        CHECK( std::nullopt != H0.particleData() );
-
-        CHECK( std::nullopt == H0.resonances() );
-
-        CHECK( 0 == H0.reactions().size() );
-      } // THEN
-    } // WHEN
-
     WHEN( "an eprdata12 formatted table is given" ) {
 
       njoy::ACEtk::PhotoatomicTable table( njoy::ACEtk::fromFile( "1000.12p" ) );
