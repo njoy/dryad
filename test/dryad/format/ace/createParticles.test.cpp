@@ -28,6 +28,8 @@ SCENARIO( "createParticles" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
+        using namespace njoy;
+
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
         auto particles = format::ace::createParticles( projectile, target, table );
@@ -35,20 +37,20 @@ SCENARIO( "createParticles" ) {
         CHECK( 2 == particles.size() );
 
         CHECK( id::ParticleID::neutron() == particles[0].identifier() );
-        CHECK( std::nullopt == particles[0].mass() );
-        CHECK( std::nullopt == particles[0].spin() );
-        CHECK( std::nullopt == particles[0].parity() );
+        CHECK_THAT( constants::neutron_mass, WithinRel( particles[0].mass().value() ) );
+        CHECK_THAT( 0.5, WithinRel( particles[0].spin().value() ) );
+        CHECK( +1 == particles[0].parity().value() );
         CHECK( std::nullopt == particles[0].energy() );
         CHECK( std::nullopt == particles[0].nuclearMass() );
-        CHECK( std::nullopt == particles[0].massUncertainty() );
+        CHECK_THAT( constants::neutron_mass_uncertainty, WithinRel( particles[0].massUncertainty().value() ) );
         CHECK( std::nullopt == particles[0].nuclearMassUncertainty() );
         CHECK( std::nullopt == particles[0].energyUncertainty() );
 
         CHECK( id::ParticleID( "H1" ) == particles[1].identifier() );
         CHECK_THAT( 0.999167 * neutron_mass, WithinRel( particles[1].mass().value() ) );
-        CHECK( std::nullopt == particles[1].spin() );
-        CHECK( std::nullopt == particles[1].parity() );
-        CHECK( std::nullopt == particles[1].energy() );
+        CHECK_THAT( 0.5, WithinRel( particles[1].spin().value() ) );
+        CHECK( +1 == particles[1].parity().value() );
+        CHECK_THAT( 0., WithinRel( particles[1].energy().value() ) );
         CHECK( std::nullopt == particles[1].nuclearMass() );
         CHECK( std::nullopt == particles[1].massUncertainty() );
         CHECK( std::nullopt == particles[1].nuclearMassUncertainty() );

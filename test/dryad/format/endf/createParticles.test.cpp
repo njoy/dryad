@@ -37,8 +37,8 @@ SCENARIO( "createParticles" ) {
 
         CHECK( id::ParticleID::neutron() == particles[0].identifier() );
         CHECK_THAT( neutron_mass, WithinRel( particles[0].mass().value() ) );
-        CHECK( std::nullopt == particles[0].spin() );
-        CHECK( std::nullopt == particles[0].parity() );
+        CHECK_THAT( 0.5, WithinRel( particles[0].spin().value() ) );
+        CHECK( +1 == particles[0].parity().value() );
         CHECK( std::nullopt == particles[0].energy() );
         CHECK( std::nullopt == particles[0].nuclearMass() );
         CHECK( std::nullopt == particles[0].massUncertainty() );
@@ -47,9 +47,9 @@ SCENARIO( "createParticles" ) {
 
         CHECK( id::ParticleID( "H1" ) == particles[1].identifier() );
         CHECK_THAT( 9.991673e-1 * neutron_mass, WithinRel( particles[1].mass().value() ) );
-        CHECK( std::nullopt == particles[1].spin() );
-        CHECK( std::nullopt == particles[1].parity() );
-        CHECK_THAT( 0. , WithinRel( particles[1].energy().value() ) );
+        CHECK_THAT( 0.5, WithinRel( particles[1].spin().value() ) );
+        CHECK( +1 == particles[1].parity().value() );
+        CHECK_THAT( 0., WithinRel( particles[1].energy().value() ) );
         CHECK( std::nullopt == particles[1].nuclearMass() );
         CHECK( std::nullopt == particles[1].massUncertainty() );
         CHECK( std::nullopt == particles[1].nuclearMassUncertainty() );

@@ -35,16 +35,19 @@ namespace ace {
                    const id::ParticleID& target,
                    const Table& table ) {
 
-    auto getAtomicWeightRatio = [] ( auto&& header ) {
-
-      return header.atomicWeightRatio();
-    };
-
     std::vector< Particle > particles;
-    particles.emplace_back( projectile );
-    particles.emplace_back( target,
-                            std::visit( getAtomicWeightRatio, table.header() )
-                            * constants::neutron_mass );
+
+    // add projectile default data
+    particles.emplace_back( Particle::defaultParticle( projectile ) );
+
+    // add target default data and override mass and uncertainty
+    particles.emplace_back( Particle::defaultParticle( target ) );
+    double mass = std::visit( [] ( auto&& header ) { return header.atomicWeightRatio(); },
+                              table.header() );
+    particles.back().mass( mass * constants::neutron_mass );
+    particles.back().massUncertainty( std::nullopt );
+
+    // sort for later searching
     std::sort( particles.begin(), particles.end(),
                [] ( auto&& left, auto&& right ) { return left.identifier() < right.identifier(); } );
 

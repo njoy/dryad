@@ -34,16 +34,20 @@ namespace endf {
                    const ENDFtk::section::Type< 1, 451 >& information ) {
 
     std::vector< Particle > particles;
-    particles.emplace_back( projectile,
-                            information.projectileAtomicMassRatio() * constants::neutron_mass,
-                            std::nullopt,
-                            std::nullopt,
-                            std::nullopt );
-    particles.emplace_back( target,
-                            information.atomicWeightRatio() * constants::neutron_mass,
-                            std::nullopt,
-                            std::nullopt,
-                            information.excitationEnergy() );
+
+    // add projectile default data and override mass and uncertainty
+    particles.emplace_back( Particle::defaultParticle( projectile ) );
+    particles.back().mass( information.projectileAtomicMassRatio() * constants::neutron_mass );
+    particles.back().massUncertainty( std::nullopt );
+
+    // add target default data and override mass, energy and uncertainties
+    particles.emplace_back( Particle::defaultParticle( target ) );
+    particles.back().mass( information.atomicWeightRatio() * constants::neutron_mass );
+    particles.back().massUncertainty( std::nullopt );
+    particles.back().energy( information.excitationEnergy() );
+    particles.back().energyUncertainty( std::nullopt );
+
+    // sort for later searching
     std::sort( particles.begin(), particles.end(),
                [] ( auto&& left, auto&& right ) { return left.identifier() < right.identifier(); } );
 
