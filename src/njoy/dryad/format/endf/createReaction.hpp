@@ -25,6 +25,7 @@ namespace endf {
    *
    *  @param[in] projectile   the projectile identifier
    *  @param[in] target       the target identifier
+   *  @param[in] masses       the particle mass values
    *  @param[in] material     the unparsed ENDF material
    *  @param[in] mt           the MT number to process
    *  @param[in] normalise    the flag to indicate whether or not distributions
@@ -34,9 +35,10 @@ namespace endf {
                            const id::ParticleID& target,
                            const ENDFtk::tree::Material& material,
                            int mt,
-                           bool normalise ) {
+                           bool normalise,
+                           std::map< id::ParticleID, double >& masses ) {
 
-    // metadata and miscellaneous information
+                            // metadata and miscellaneous information
     id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
     Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
@@ -53,7 +55,7 @@ namespace endf {
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 
         // reaction products
-        std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise );
+        std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise, masses );
 
         // Q values
         if ( mt == 18 ) {
@@ -102,7 +104,7 @@ namespace endf {
       std::optional< double > reaction_q = std::nullopt;
 
       // reaction products
-      std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise );
+      std::vector< ReactionProduct > products = createReactionProducts( id, material, mt, normalise, masses );
 
       if ( endf::ReactionInformation::isPrimary( material, mt ) ) {
 

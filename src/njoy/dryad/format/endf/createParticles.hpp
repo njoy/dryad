@@ -6,7 +6,8 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/Particle.hpp"
+#include "njoy/dryad/ParticleDatabase.hpp"
+#include "njoy/dryad/format/collectParticleIdentifiers.hpp"
 #include "njoy/constants.hpp"
 #include "ENDFtk/section/1/451.hpp"
 
@@ -16,43 +17,53 @@ namespace format {
 namespace endf {
 
   /**
-   *  @brief Create Particle instances from a parsed MF1 MT451 section
+   *  @brief Create a ParticleDatabase
    *
    *  The projectile and target mass values are available in MF1 MT451 but they are in
    *  in neutron mass units so it must be converted to atomic mass units.
-   *
-   *  Particle instances are sorted in order of the particle identifier before returning
-   *  the vector.
    *
    *  @param[in] projectile    the projectile identifier
    *  @param[in] target        the target identifier
    *  @param[in] information   the parsed MF1 MT451 section
    */
-  inline std::vector< Particle >
-  createParticles( const id::ParticleID& projectile,
-                   const id::ParticleID& target,
-                   const ENDFtk::section::Type< 1, 451 >& information ) {
+  inline ParticleDatabase
+  createParticleDatabase( const id::ParticleID& projectile,
+                          const id::ParticleID& target,
+                          const std::vector< Reaction >& reactions,
+                          const ENDFtk::section::Type< 1, 451 >& information,
+                          std::map< id::ParticleID, double >& masses ) {
 
-    std::vector< Particle > particles;
+    ParticleDatabase particles( collectParticleIdentifiers( reactions ) );
 
-    // add projectile default data and override mass and uncertainty
-    particles.emplace_back( Particle::defaultParticle( projectile ) );
-    particles.back().mass( information.projectileAtomicMassRatio() * constants::neutron_mass );
-    particles.back().massUncertainty( std::nullopt );
+    // update the mass of the projectile
+    decltype(auto) projectile_entry = particles.particle( projectile );
+    projectile_entry.mass( information.projectileAtomicMassRatio() * constants::neutron_mass );
+    projectile_entry.massUncertainty( std::nullopt );
 
-    // add target default data and override mass, energy and uncertainties
-    particles.emplace_back( Particle::defaultParticle( target ) );
-    particles.back().mass( information.atomicWeightRatio() * constants::neutron_mass );
-    particles.back().massUncertainty( std::nullopt );
+    // update the mass of the target
+    decltype(auto) target_entry = particles.particle( target );
+    target_entry.mass( information.atomicWeightRatio() * constants::neutron_mass );
+    target_entry.massUncertainty( std::nullopt );
     if ( target.a() != 0 ) {
 
-      particles.back().energy( information.excitationEnergy() );
-      particles.back().energyUncertainty( std::nullopt );
+      target_entry.energy( information.excitationEnergy() );
+      target_entry.energyUncertainty( std::nullopt );
     }
 
-    // sort for later searching
-    std::sort( particles.begin(), particles.end(),
-               [] ( auto&& left, auto&& right ) { return left.identifier() < right.identifier(); } );
+    // update the mass for products that were in MF6
+    masses[ target.groundState() ] = target_entry.mass().value();
+    for ( auto& entry : particles.particles() ) {
+
+      if ( entry.identifier() != projectile && entry.identifier() != target ) {
+
+        auto iter = masses.find( entry.identifier().groundState() );
+        if ( iter != masses.end() ) {
+
+          entry.mass( iter->second );
+          entry.massUncertainty( std::nullopt );
+        }
+      }
+    }
 
     return particles;
   }

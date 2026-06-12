@@ -62,11 +62,12 @@ namespace endf {
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
-  std::vector< Reaction >
+  inline std::vector< Reaction >
   createReactions( const id::ParticleID& projectile,
                    const id::ParticleID& target,
                    const ENDFtk::tree::Material& material,
-                   bool normalise ) {
+                   bool normalise,
+                   std::map< id::ParticleID, double >& masses ) {
 
     std::vector< Reaction > reactions;
     if ( material.hasFile( 3 ) || material.hasFile( 23 ) ) {
@@ -80,7 +81,7 @@ namespace endf {
 
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-          reactions.emplace_back( createReaction( projectile, target, material, mt, normalise ) );
+          reactions.emplace_back( createReaction( projectile, target, material, mt, normalise, masses ) );
         }
         else {
 
