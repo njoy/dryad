@@ -324,10 +324,52 @@ namespace li7 {
 
     using namespace njoy::constants;
 
-    CHECK( 2 == particles.numberParticles() );
+    CHECK( 44 == particles.numberParticles() );
 
+    CHECK( true == particles.hasParticle( id::ParticleID( "g" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "n" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "d" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "t" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "a" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H1[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "H2[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "He6[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li6[all]" ) ) );
     CHECK( true == particles.hasParticle( id::ParticleID( "Li7" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e1" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e2" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e3" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e4" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e5" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e6" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e7" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e8" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e9" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e10" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e11" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e12" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e13" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e14" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e15" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e16" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e17" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e18" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e19" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e20" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e21" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e22" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e23" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e24" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e25" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e26" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e27" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e28" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e29" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e30" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e31" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7_e32" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li7[all]" ) ) );
+    CHECK( true == particles.hasParticle( id::ParticleID( "Li8[all]" ) ) );
 
     auto particle = particles.particle( id::ParticleID( "n" ) );
     CHECK( id::ParticleID::neutron() == particle.identifier() );
