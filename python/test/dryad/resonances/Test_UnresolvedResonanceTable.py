@@ -180,6 +180,53 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
 
         widths = table.widths_for_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) )
 
+  def test_spin_group( self ) :
+
+    energies = [ 1., 2., 3., 4. ]
+    spacings = TabulatedLevelSpacing( energies, [ 10., 11., 12., 13. ] )
+
+    def widths( n ) :
+        return [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] )
+                 for _ in range( n ) ]
+
+    # channels sharing the same (L, J, parity) may be combined, regardless of
+    # channel spin s
+    table = UnresolvedResonanceTable(
+        [ ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' ),
+          ChannelID( 'n,U235->n,U235_e1{1,3/2,1/2-}' ),
+          ChannelID( 'n,U235->n,U235_e1{1,1/2,1/2-}' ) ],
+        widths( 3 ),
+        spacings )
+
+    self.assertEqual( 3, table.number_channels )
+
+    # share L and parity, differ in total angular momentum J
+    with self.assertRaises( Exception ) :
+
+        table = UnresolvedResonanceTable(
+            [ ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' ),
+              ChannelID( 'n,U235->n,U235{1,1/2,3/2-}' ) ],
+            widths( 2 ),
+            spacings )
+
+    # share J and parity, differ in orbital angular momentum L
+    with self.assertRaises( Exception ) :
+
+        table = UnresolvedResonanceTable(
+            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+              ChannelID( 'n,U235->n,U235{2,3/2,1/2+}' ) ],
+            widths( 2 ),
+            spacings )
+
+    # share J, differ in parity (and therefore in L)
+    with self.assertRaises( Exception ) :
+
+        table = UnresolvedResonanceTable(
+            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
+              ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' ) ],
+            widths( 2 ),
+            spacings )
+
 
 if __name__ == '__main__':
   unittest.main()

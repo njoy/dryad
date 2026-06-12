@@ -245,6 +245,36 @@ SCENARIO( "UnresolvedResonanceTable" ) {
     } // THEN
   } // GIVEN
 
+  GIVEN( "valid data where several channels share the same (L, J, parity) spin group" ) {
+
+    std::vector< id::ChannelID > channels = {
+
+      id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ),
+      id::ChannelID( "n,U235->n,U235_e1{1,3/2,1/2-}" ),
+      id::ChannelID( "n,U235->n,U235_e1{1,1/2,1/2-}" )
+    };
+    std::vector< TabulatedAverageWidths > widths = {
+
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } ),
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.21, 0.22, 0.23, 0.24 } ),
+      TabulatedAverageWidths( { 1., 2., 3., 4. }, { 0.31, 0.32, 0.33, 0.34 } )
+    };
+    TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
+
+    THEN( "an UnresolvedResonanceTable can be constructed: any number of channels "
+          "sharing the same (L, J, parity) may be combined, regardless of channel spin s" ) {
+
+      UnresolvedResonanceTable table( std::move( channels ),
+                                      std::move( widths ),
+                                      std::move( spacings ) );
+
+      CHECK( 3 == table.numberChannels() );
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ) ) );
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{1,3/2,1/2-}" ) ) );
+      CHECK( true == table.hasChannel( id::ChannelID( "n,U235->n,U235_e1{1,1/2,1/2-}" ) ) );
+    } // THEN
+  } // GIVEN
+
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of UnresolvedResonanceTable are given" ) {
@@ -330,6 +360,45 @@ SCENARIO( "UnresolvedResonanceTable" ) {
         CHECK_THROWS( UnresolvedResonanceTable(
           { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
             id::ChannelID( "n,U235->n,U235_e1{1,1/2,3/2-}" ) },
+          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
+            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
+          TabulatedLevelSpacing( energies, spacingValues ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the channels share L and parity but differ in total angular momentum J" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( UnresolvedResonanceTable(
+          { id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ),
+            id::ChannelID( "n,U235->n,U235{1,1/2,3/2-}" ) },
+          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
+            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
+          TabulatedLevelSpacing( energies, spacingValues ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the channels share J and parity but differ in orbital angular momentum L" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( UnresolvedResonanceTable(
+          { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+            id::ChannelID( "n,U235->n,U235{2,3/2,1/2+}" ) },
+          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
+            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
+          TabulatedLevelSpacing( energies, spacingValues ) ) );
+      } // THEN
+    } // WHEN
+
+    WHEN( "the channels share J but differ in parity (and therefore in L)" ) {
+
+      THEN( "an exception is thrown" ) {
+
+        CHECK_THROWS( UnresolvedResonanceTable(
+          { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
+            id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ) },
           { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
             TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
           TabulatedLevelSpacing( energies, spacingValues ) ) );
