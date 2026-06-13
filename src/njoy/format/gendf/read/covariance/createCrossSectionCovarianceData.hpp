@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
-#define NJOY_DRYAD_FORMAT_GENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
+#ifndef NJOY_FORMAT_GENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
+#define NJOY_FORMAT_GENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
 
 // system includes
 #include <optional>
@@ -8,15 +8,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
-#include "njoy/dryad/format/gendf/covariance/createCrossSectionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/format/gendf/read/covariance/createCrossSectionCovarianceMatrix.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
 #include "ENDFtk/GMaterial.hpp"
 #include "ENDFtk/tree/GMaterial.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gendf {
+namespace read {
 namespace covariance {
 
   /**
@@ -28,8 +28,8 @@ namespace covariance {
    *  @param[in] material     the unparsed ENDF material
    */
   inline std::optional< dryad::covariance::CrossSectionCovarianceData >
-  createCrossSectionCovarianceData( const id::ParticleID& projectile,
-                                    const id::ParticleID& target,
+  createCrossSectionCovarianceData( const dryad::id::ParticleID& projectile,
+                                    const dryad::id::ParticleID& target,
                                     bool relative,
                                     const ENDFtk::tree::GMaterial& material ) {
 
@@ -74,9 +74,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gendf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
