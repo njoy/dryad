@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATECOHERENTELASTICSCATTERING
-#define NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATECOHERENTELASTICSCATTERING
+#ifndef NJOY_FORMAT_GNDS_READ_THERMAL_CREATECOHERENTELASTICSCATTERING
+#define NJOY_FORMAT_GNDS_READ_THERMAL_CREATECOHERENTELASTICSCATTERING
 
 // system includes
 #include <vector>
@@ -8,16 +8,16 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/thermal/CoherentElasticScattering.hpp"
-#include "njoy/dryad/format/gnds/convertTemperatures.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/readArray.hpp"
-#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/gnds/read/convertTemperatures.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/readArray.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace thermal {
 
   /**
@@ -87,9 +87,9 @@ namespace thermal {
   }
 
 } // thermal namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

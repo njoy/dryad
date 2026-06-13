@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/thermal/createCoherentElasticScattering.hpp"
+#include "njoy/format/gnds/read/thermal/createCoherentElasticScattering.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
-void verifyChunk( const CoherentElasticScattering& );
+void verifyChunk( const thermal::CoherentElasticScattering& );
 
 SCENARIO( "createCoherentElasticScattering" ) {
 
@@ -30,7 +30,7 @@ SCENARIO( "createCoherentElasticScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::thermal::createCoherentElasticScattering( coherent );
+        auto chunk = gnds::read::thermal::createCoherentElasticScattering( coherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -38,7 +38,7 @@ SCENARIO( "createCoherentElasticScattering" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const CoherentElasticScattering& chunk ) {
+void verifyChunk( const thermal::CoherentElasticScattering& chunk ) {
 
 
   CHECK( 11 == chunk.numberModeratorTemperatures() );

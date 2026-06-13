@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATETABULATEDDEBYEWALLERINTEGRAL
-#define NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATETABULATEDDEBYEWALLERINTEGRAL
+#ifndef NJOY_FORMAT_GNDS_READ_THERMAL_CREATETABULATEDDEBYEWALLERINTEGRAL
+#define NJOY_FORMAT_GNDS_READ_THERMAL_CREATETABULATEDDEBYEWALLERINTEGRAL
 
 // system includes
 #include <vector>
@@ -7,16 +7,16 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertTemperatures.hpp"
-#include "njoy/dryad/format/gnds/convertInverseEnergies.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
+#include "njoy/format/gnds/read/convertTemperatures.hpp"
+#include "njoy/format/gnds/read/convertInverseEnergies.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace thermal {
 
   /**
@@ -91,9 +91,9 @@ namespace thermal {
   }
 
 } // thermal namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

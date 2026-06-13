@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/thermal/createIncoherentElasticScattering.hpp"
+#include "njoy/format/gnds/read/thermal/createIncoherentElasticScattering.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
-void verifyChunk( const IncoherentElasticScattering& );
+void verifyChunk( const thermal::IncoherentElasticScattering& );
 
 SCENARIO( "createIncoherentElasticScattering" ) {
 
@@ -30,7 +30,7 @@ SCENARIO( "createIncoherentElasticScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::thermal::createIncoherentElasticScattering( incoherent );
+        auto chunk = gnds::read::thermal::createIncoherentElasticScattering( incoherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -38,7 +38,7 @@ SCENARIO( "createIncoherentElasticScattering" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const IncoherentElasticScattering& chunk ) {
+void verifyChunk( const thermal::IncoherentElasticScattering& chunk ) {
 
   CHECK_THAT( 6.337872, WithinRel( chunk.boundCrossSection() ) );
 

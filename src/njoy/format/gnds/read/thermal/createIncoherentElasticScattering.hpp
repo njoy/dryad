@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATEINCOHERENTELASTICSCATTERING
-#define NJOY_DRYAD_FORMAT_GNDS_THERMAL_CREATEINCOHERENTELASTICSCATTERING
+#ifndef NJOY_FORMAT_GNDS_READ_THERMAL_CREATEINCOHERENTELASTICSCATTERING
+#define NJOY_FORMAT_GNDS_READ_THERMAL_CREATEINCOHERENTELASTICSCATTERING
 
 // system includes
 #include <vector>
@@ -8,13 +8,13 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/thermal/IncoherentElasticScattering.hpp"
-#include "njoy/dryad/format/gnds/thermal/createDebyeWallerIntegralData.hpp"
-#include "njoy/dryad/format/gnds/convertCrossSection.hpp"
+#include "njoy/format/gnds/read/thermal/createDebyeWallerIntegralData.hpp"
+#include "njoy/format/gnds/read/convertCrossSection.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace thermal {
 
   /**
@@ -43,9 +43,9 @@ namespace thermal {
   }
 
 } // thermal namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
