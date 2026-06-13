@@ -2,17 +2,17 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readAxes.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Axes& );
-void verifyChunkWithIndex2( const format::gnds::Axes& );
-void verifyChunkWithGrid( const format::gnds::Axes& );
+void verifyChunk( const gnds::read::Axes& );
+void verifyChunkWithIndex2( const gnds::read::Axes& );
+void verifyChunkWithGrid( const gnds::read::Axes& );
 
 SCENARIO( "readAxes" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "readAxes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readAxes( axes );
+        auto chunk = gnds::read::readAxes( axes );
 
         verifyChunk( chunk );
       } // THEN
@@ -44,7 +44,7 @@ SCENARIO( "readAxes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readAxes( axes );
+        auto chunk = gnds::read::readAxes( axes );
 
         verifyChunkWithIndex2( chunk );
       } // THEN
@@ -54,8 +54,8 @@ SCENARIO( "readAxes" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readAxes( reactions ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readAxes( reactions.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readAxes( reactions ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readAxes( reactions.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
@@ -75,7 +75,7 @@ SCENARIO( "readAxes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readAxes( axes );
+        auto chunk = gnds::read::readAxes( axes );
 
         verifyChunkWithGrid( chunk );
       } // THEN
@@ -85,14 +85,14 @@ SCENARIO( "readAxes" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readAxes( node ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readAxes( node.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readAxes( node ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readAxes( node.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Axes& chunk ) {
+void verifyChunk( const gnds::read::Axes& chunk ) {
 
   CHECK( 2 == chunk.size() );
   CHECK( 1  == std::get< 0 >( chunk[0] ).value() );
@@ -103,7 +103,7 @@ void verifyChunk( const format::gnds::Axes& chunk ) {
   CHECK( std::nullopt == std::get< 2 >( chunk[1] ) );
 }
 
-void verifyChunkWithIndex2( const format::gnds::Axes& chunk ) {
+void verifyChunkWithIndex2( const gnds::read::Axes& chunk ) {
 
   CHECK( 3 == chunk.size() );
   CHECK( 2  == std::get< 0 >( chunk[0] ).value() );
@@ -117,7 +117,7 @@ void verifyChunkWithIndex2( const format::gnds::Axes& chunk ) {
   CHECK( std::nullopt == std::get< 2 >( chunk[2] ) );
 }
 
-void verifyChunkWithGrid( const format::gnds::Axes& chunk ) {
+void verifyChunkWithGrid( const gnds::read::Axes& chunk ) {
 
   CHECK( 3 == chunk.size() );
 

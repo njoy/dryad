@@ -2,15 +2,15 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readAxis.hpp"
+#include "njoy/format/gnds/read/readAxis.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Axis& );
+void verifyChunk( const gnds::read::Axis& );
 
 SCENARIO( "readAxis" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "readAxis" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readAxis( axis );
+        auto chunk = gnds::read::readAxis( axis );
 
         verifyChunk( chunk );
       } // THEN
@@ -38,14 +38,14 @@ SCENARIO( "readAxis" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readAxis( axes ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readAxis( axes.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readAxis( axes ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readAxis( axes.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Axis& chunk ) {
+void verifyChunk( const gnds::read::Axis& chunk ) {
 
   CHECK( 1    == chunk.first );
   CHECK( "eV"  == chunk.second );

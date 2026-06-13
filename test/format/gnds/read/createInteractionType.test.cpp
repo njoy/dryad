@@ -4,11 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createInteractionType.hpp"
+#include "njoy/format/gnds/read/createInteractionType.hpp"
 
 // other includes
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 SCENARIO( "createInteractionType" ) {
@@ -19,13 +20,13 @@ SCENARIO( "createInteractionType" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( InteractionType::Nuclear == format::gnds::createInteractionType( "nuclear" ) );
-        CHECK( InteractionType::Atomic == format::gnds::createInteractionType( "atomic" ) );
+        CHECK( InteractionType::Nuclear == gnds::read::createInteractionType( "nuclear" ) );
+        CHECK( InteractionType::Atomic == gnds::read::createInteractionType( "atomic" ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported value" ) {
 
-        CHECK_THROWS( format::gnds::createInteractionType( "unsupported" ) );
+        CHECK_THROWS( gnds::read::createInteractionType( "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN

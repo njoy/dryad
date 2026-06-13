@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READCOLUMNHEADERS
-#define NJOY_DRYAD_FORMAT_GNDS_READCOLUMNHEADERS
+#ifndef NJOY_FORMAT_GNDS_READ_READCOLUMNHEADERS
+#define NJOY_FORMAT_GNDS_READ_READCOLUMNHEADERS
 
 // system includes
 #include <algorithm>
@@ -7,14 +7,14 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/readColumn.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readColumn.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Headers = std::vector< std::tuple< int,
                                            std::string,
@@ -41,9 +41,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

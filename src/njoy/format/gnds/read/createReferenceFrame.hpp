@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEREFERENCEFRAME
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEREFERENCEFRAME
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEREFERENCEFRAME
+#define NJOY_FORMAT_GNDS_READ_CREATEREFERENCEFRAME
 
 // system includes
 #include <vector>
@@ -9,22 +9,22 @@
 #include "njoy/dryad/ReferenceFrame.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create the reference frame from a GNDS string
    */
-  inline ReferenceFrame createReferenceFrame( const std::string& frame ) {
+  inline dryad::ReferenceFrame createReferenceFrame( const std::string& frame ) {
 
     if ( frame == "lab" ) {
 
-      return ReferenceFrame::Laboratory;
+      return dryad::ReferenceFrame::Laboratory;
     }
     else if ( frame == "centerOfMass" ) {
 
-      return ReferenceFrame::CentreOfMass;
+      return dryad::ReferenceFrame::CentreOfMass;
     }
     else {
 
@@ -33,9 +33,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

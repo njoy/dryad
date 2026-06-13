@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEINTERACTIONTYPE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEINTERACTIONTYPE
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEINTERACTIONTYPE
+#define NJOY_FORMAT_GNDS_READ_CREATEINTERACTIONTYPE
 
 // system includes
 #include <vector>
@@ -9,22 +9,22 @@
 #include "njoy/dryad/InteractionType.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create the interpolation type from a GNDS string value
    */
-  inline InteractionType createInteractionType( const std::string& type ) {
+  inline dryad::InteractionType createInteractionType( const std::string& type ) {
 
     if ( type == "nuclear" ) {
 
-      return InteractionType::Nuclear;
+      return dryad::InteractionType::Nuclear;
     }
     else if ( type == "atomic" ) {
 
-      return InteractionType::Atomic;
+      return dryad::InteractionType::Atomic;
     }
     else {
 
@@ -33,9 +33,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

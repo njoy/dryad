@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATESTORAGEORDER
-#define NJOY_DRYAD_FORMAT_GNDS_CREATESTORAGEORDER
+#ifndef NJOY_FORMAT_GNDS_READ_CREATESTORAGEORDER
+#define NJOY_FORMAT_GNDS_READ_CREATESTORAGEORDER
 
 // system includes
 #include <vector>
@@ -8,9 +8,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   enum class StorageOrder : short {
 
@@ -21,15 +21,15 @@ namespace gnds {
   /**
    *  @brief Create the storage order from a GNDS string
    */
-  inline StorageOrder createStorageOrder( const std::string& order ) {
+  inline dryad::StorageOrder createStorageOrder( const std::string& order ) {
 
     if ( order == "row-major" ) {
 
-      return StorageOrder::RowMajor;
+      return dryad::StorageOrder::RowMajor;
     }
     else if ( order == "column-major" ) {
 
-      return StorageOrder::ColumnMajor;
+      return dryad::StorageOrder::ColumnMajor;
     }
     else {
 
@@ -38,9 +38,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEINTERPOLATIONTYPE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEINTERPOLATIONTYPE
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEINTERPOLATIONTYPE
+#define NJOY_FORMAT_GNDS_READ_CREATEINTERPOLATIONTYPE
 
 // system includes
 #include <vector>
@@ -9,35 +9,35 @@
 #include "njoy/dryad/InterpolationType.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create the interpolation type from a GNDS string value
    */
-  inline InterpolationType createInterpolationType( const std::string& type ) {
+  inline dryad::InterpolationType createInterpolationType( const std::string& type ) {
 
     // when no interpolation type is given, assume lin-lin
     if ( type == "" || type == "lin-lin" ) {
 
-      return InterpolationType::LinearLinear;
+      return dryad::InterpolationType::LinearLinear;
     }
     else if ( type == "flat" ) {
 
-      return InterpolationType::Histogram;
+      return dryad::InterpolationType::Histogram;
     }
     else if ( type == "log-log" ) {
 
-      return InterpolationType::LogLog;
+      return dryad::InterpolationType::LogLog;
     }
     else if ( type == "lin-log" ) {
 
-      return InterpolationType::LinearLog;
+      return dryad::InterpolationType::LinearLog;
     }
     else if ( type == "log-lin" ) {
 
-      return InterpolationType::LogLinear;
+      return dryad::InterpolationType::LogLinear;
     }
     else {
 
@@ -46,9 +46,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

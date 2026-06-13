@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READAXES
-#define NJOY_DRYAD_FORMAT_GNDS_READAXES
+#ifndef NJOY_FORMAT_GNDS_READ_READAXES
+#define NJOY_FORMAT_GNDS_READ_READAXES
 
 // system includes
 #include <vector>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/readAxis.hpp"
-#include "njoy/dryad/format/gnds/readGrid.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readAxis.hpp"
+#include "njoy/format/gnds/read/readGrid.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Axes = std::vector< std::tuple< std::optional< int >,
                                         std::optional< std::string >,
@@ -51,9 +51,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

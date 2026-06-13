@@ -2,15 +2,15 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readColumn.hpp"
+#include "njoy/format/gnds/read/readColumn.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Column& );
+void verifyChunk( const gnds::read::Column& );
 
 SCENARIO( "readAxis" ) {
 
@@ -30,7 +30,7 @@ SCENARIO( "readAxis" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readColumn( column );
+        auto chunk = gnds::read::readColumn( column );
 
         verifyChunk( chunk );
       } // THEN
@@ -40,14 +40,14 @@ SCENARIO( "readAxis" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readColumn( headers ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readColumn( headers.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readColumn( headers ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readColumn( headers.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Column& chunk ) {
+void verifyChunk( const gnds::read::Column& chunk ) {
 
   CHECK( 0        == std::get< 0 >( chunk ) );
   CHECK( "energy" == std::get< 1 >( chunk ) );

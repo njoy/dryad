@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_THROWEXCEPTIONONWRONGNODE
-#define NJOY_DRYAD_FORMAT_GNDS_THROWEXCEPTIONONWRONGNODE
+#ifndef NJOY_FORMAT_GNDS_READ_THROWEXCEPTIONONWRONGNODE
+#define NJOY_FORMAT_GNDS_READ_THROWEXCEPTIONONWRONGNODE
 
 // system includes
 
@@ -8,9 +8,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Throw a node exception
@@ -33,9 +33,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

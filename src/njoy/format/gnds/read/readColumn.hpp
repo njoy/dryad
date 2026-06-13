@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READCOLUMN
-#define NJOY_DRYAD_FORMAT_GNDS_READCOLUMN
+#ifndef NJOY_FORMAT_GNDS_READ_READCOLUMN
+#define NJOY_FORMAT_GNDS_READ_READCOLUMN
 
 // system includes
 #include <optional>
@@ -7,13 +7,13 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Column = std::tuple< int, std::string, std::optional< std::string > >;
 
@@ -33,9 +33,9 @@ namespace gnds {
              unit ? std::make_optional( unit.as_string() ) : std::nullopt };
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

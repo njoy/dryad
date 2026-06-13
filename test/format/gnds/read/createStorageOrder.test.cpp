@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createStorageOrder.hpp"
+#include "njoy/format/gnds/read/createStorageOrder.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createStorageOrder" ) {
 
@@ -19,13 +19,13 @@ SCENARIO( "createStorageOrder" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( format::gnds::StorageOrder::RowMajor == format::gnds::createStorageOrder( "row-major" ) );
-        CHECK( format::gnds::StorageOrder::ColumnMajor == format::gnds::createStorageOrder( "column-major" ) );
+        CHECK( gnds::read::StorageOrder::RowMajor == gnds::read::createStorageOrder( "row-major" ) );
+        CHECK( gnds::read::StorageOrder::ColumnMajor == gnds::read::createStorageOrder( "column-major" ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported value" ) {
 
-        CHECK_THROWS( format::gnds::createStorageOrder( "other-order" ) );
+        CHECK_THROWS( gnds::read::createStorageOrder( "other-order" ) );
       } // THEN
     } // WHEN
   } // GIVEN

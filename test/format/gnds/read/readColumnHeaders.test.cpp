@@ -2,15 +2,15 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readColumnHeaders.hpp"
+#include "njoy/format/gnds/read/readColumnHeaders.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Headers& );
+void verifyChunk( const gnds::read::Headers& );
 
 SCENARIO( "readColumnHeaders" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "readColumnHeaders" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readColumnHeaders( headers );
+        auto chunk = gnds::read::readColumnHeaders( headers );
 
         verifyChunk( chunk );
       } // THEN
@@ -39,14 +39,14 @@ SCENARIO( "readColumnHeaders" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readColumnHeaders( table ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readColumnHeaders( table.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readColumnHeaders( table ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readColumnHeaders( table.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Headers& chunk ) {
+void verifyChunk( const gnds::read::Headers& chunk ) {
 
   CHECK( 3 == chunk.size() );
   CHECK( 0  == std::get< 0 >( chunk[0] ) );
