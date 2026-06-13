@@ -2,13 +2,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
-using ReactionInformation = njoy::dryad::format::endf::ReactionInformation;
+using ReactionInformation = njoy::format::endf::ReactionInformation;
 
 SCENARIO( "ReactionInformation" ) {
 
