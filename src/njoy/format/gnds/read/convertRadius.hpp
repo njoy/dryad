@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTRADIUS
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTRADIUS
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTRADIUS
+#define NJOY_FORMAT_GNDS_READ_CONVERTRADIUS
 
 // system includes
 #include <vector>
@@ -9,9 +9,9 @@
 #include "njoy/constants.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert a radius value from GNDS into fm
@@ -27,15 +27,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert radius with unit \'{}\' to fm, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

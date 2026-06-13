@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertTemperature.hpp"
+#include "njoy/format/gnds/read/convertTemperature.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertTemperature" ) {
 
@@ -19,17 +19,19 @@ SCENARIO( "convertTemperature" ) {
 
       THEN( "it can be converted" ) {
 
-        double temperature = 1000.; format::gnds::convertTemperature( temperature, "K" );
+        double temperature = 1000.;
+        gnds::read::convertTemperature( temperature, "K" );
         CHECK( 1000. == temperature );
 
-        temperature = 1000.; format::gnds::convertTemperature( temperature, "degrees C" );
+        temperature = 1000.;
+        gnds::read::convertTemperature( temperature, "degrees C" );
         CHECK( 1273.15 == temperature );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         double temperature = 1000.;
-        CHECK_THROWS( format::gnds::convertTemperature( temperature, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertTemperature( temperature, "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN

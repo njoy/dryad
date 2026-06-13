@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTTEMPERATURE
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTTEMPERATURE
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTTEMPERATURE
+#define NJOY_FORMAT_GNDS_READ_CONVERTTEMPERATURE
 
 // system includes
 #include <vector>
@@ -9,9 +9,9 @@
 #include "njoy/constants.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert a temperature value from GNDS into K
@@ -30,15 +30,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert temperature with unit \'{}\' to K, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

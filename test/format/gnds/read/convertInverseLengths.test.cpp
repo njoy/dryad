@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertInverseLengths.hpp"
+#include "njoy/format/gnds/read/convertInverseLengths.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertInverseLengths" ) {
 
@@ -20,7 +20,7 @@ SCENARIO( "convertInverseLengths" ) {
       THEN( "it can be converted" ) {
 
         std::vector< double > x = { 1., 1000. };
-        format::gnds::convertInverseLengths( x, "1/Ang" );
+        gnds::read::convertInverseLengths( x, "1/Ang" );
         CHECK( 2 == x.size() );
         CHECK(    1. == x[0] );
         CHECK( 1000. == x[1] );
@@ -29,7 +29,7 @@ SCENARIO( "convertInverseLengths" ) {
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         std::vector< double > x = { 1., 1000. };
-        CHECK_THROWS( format::gnds::convertInverseLengths( x, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertInverseLengths( x, "unsupported" ) );
         CHECK( 2 == x.size() );
       } // THEN
     } // WHEN

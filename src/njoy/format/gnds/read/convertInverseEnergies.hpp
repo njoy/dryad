@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTINVERSEENERGIES
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTINVERSEENERGIES
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTINVERSEENERGIES
+#define NJOY_FORMAT_GNDS_READ_CONVERTINVERSEENERGIES
 
 // system includes
 #include <algorithm>
@@ -10,9 +10,9 @@
 #include "njoy/constants.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert an inverse energy range from GNDS into 1/eV
@@ -32,15 +32,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert inverse energy with unit \'{}\' to 1/eV, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

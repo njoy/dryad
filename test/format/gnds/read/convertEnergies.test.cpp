@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertEnergies" ) {
 
@@ -20,13 +20,13 @@ SCENARIO( "convertEnergies" ) {
       THEN( "it can be converted" ) {
 
         std::vector< double > energies = { 1., 1000. };
-        format::gnds::convertEnergies( energies, "eV" );
+        gnds::read::convertEnergies( energies, "eV" );
         CHECK( 2 == energies.size() );
         CHECK(    1. == energies[0] );
         CHECK( 1000. == energies[1] );
 
         energies = { 1., 1000. };
-        format::gnds::convertEnergies( energies, "MeV" );
+        gnds::read::convertEnergies( energies, "MeV" );
         CHECK( 2 == energies.size() );
         CHECK( 1e+6 == energies[0] );
         CHECK( 1e+9 == energies[1] );
@@ -35,7 +35,7 @@ SCENARIO( "convertEnergies" ) {
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         std::vector< double > energies = { 1., 1000. };
-        CHECK_THROWS( format::gnds::convertEnergies( energies, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertEnergies( energies, "unsupported" ) );
         CHECK( 2 == energies.size() );
       } // THEN
     } // WHEN

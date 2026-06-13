@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertTemperatures.hpp"
+#include "njoy/format/gnds/read/convertTemperatures.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertTemperatures" ) {
 
@@ -20,13 +20,13 @@ SCENARIO( "convertTemperatures" ) {
       THEN( "it can be converted" ) {
 
         std::vector< double > temperatures = { 1., 1000. };
-        format::gnds::convertTemperatures( temperatures, "K" );
+        gnds::read::convertTemperatures( temperatures, "K" );
         CHECK( 2 == temperatures.size() );
         CHECK(    1. == temperatures[0] );
         CHECK( 1000. == temperatures[1] );
 
         temperatures = { 1., 1000. };
-        format::gnds::convertTemperatures( temperatures, "degrees C" );
+        gnds::read::convertTemperatures( temperatures, "degrees C" );
         CHECK( 2 == temperatures.size() );
         CHECK(  274.15 == temperatures[0] );
         CHECK( 1273.15 == temperatures[1] );
@@ -35,7 +35,7 @@ SCENARIO( "convertTemperatures" ) {
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         std::vector< double > temperatures = { 1., 1000. };
-        CHECK_THROWS( format::gnds::convertTemperatures( temperatures, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertTemperatures( temperatures, "unsupported" ) );
         CHECK( 2 == temperatures.size() );
       } // THEN
     } // WHEN

@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertCrossSections.hpp"
+#include "njoy/format/gnds/read/convertCrossSections.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertCrossSections" ) {
 
@@ -20,13 +20,13 @@ SCENARIO( "convertCrossSections" ) {
       THEN( "it can be converted" ) {
 
         std::vector< double > xs = { 1., 1000. };
-        format::gnds::convertCrossSections( xs, "b" );
+        gnds::read::convertCrossSections( xs, "b" );
         CHECK( 2 == xs.size() );
         CHECK(    1. == xs[0] );
         CHECK( 1000. == xs[1] );
 
         xs = { 1., 1000. };
-        format::gnds::convertCrossSections( xs, "Mb" );
+        gnds::read::convertCrossSections( xs, "Mb" );
         CHECK( 2 == xs.size() );
         CHECK(  1e+6 == xs[0] );
         CHECK(  1e+9 == xs[1] );
@@ -35,7 +35,7 @@ SCENARIO( "convertCrossSections" ) {
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         std::vector< double > xs = { 1., 1000. };
-        CHECK_THROWS( format::gnds::convertCrossSections( xs, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertCrossSections( xs, "unsupported" ) );
         CHECK( 2 == xs.size() );
       } // THEN
     } // WHEN

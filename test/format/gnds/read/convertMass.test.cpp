@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertMass.hpp"
+#include "njoy/format/gnds/read/convertMass.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertMass" ) {
 
@@ -19,20 +19,23 @@ SCENARIO( "convertMass" ) {
 
       THEN( "it can be converted" ) {
 
-        double mass = 1000.; format::gnds::convertMass( mass, "amu" );
+        double mass = 1000.;
+        gnds::read::convertMass( mass, "amu" );
         CHECK( 1000. == mass );
 
-        mass = njoy::constants::amu * 1000.; format::gnds::convertMass( mass, "kg" );
+        mass = njoy::constants::amu * 1000.;
+        gnds::read::convertMass( mass, "kg" );
         CHECK_THAT( 1000, WithinRel( mass ) );
 
-        mass = 1000.; format::gnds::convertMass( mass, "nmu" );
+        mass = 1000.;
+        gnds::read::convertMass( mass, "nmu" );
         CHECK_THAT( 1000 * njoy::constants::neutron_mass, WithinRel( mass ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         double mass = 1000.;
-        CHECK_THROWS( format::gnds::convertMass( mass, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertMass( mass, "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN

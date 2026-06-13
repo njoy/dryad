@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTINVERSELENGTHS
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTINVERSELENGTHS
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTINVERSELENGTHS
+#define NJOY_FORMAT_GNDS_READ_CONVERTINVERSELENGTHS
 
 // system includes
 #include <vector>
@@ -8,9 +8,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert an inverse length range from GNDS into Angstrom
@@ -23,14 +23,14 @@ namespace gnds {
     if ( unit != "1/Ang" ) {
 
       Log::error( "Cannot convert energy with unit \'{}\' to 1/Ang, "
-                  "contact dryad developers", unit );
+                  "contact njoy developers", unit );
       throw std::exception();
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

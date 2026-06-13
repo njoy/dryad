@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTCROSSSECTIONS
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTCROSSSECTIONS
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTCROSSSECTIONS
+#define NJOY_FORMAT_GNDS_READ_CONVERTCROSSSECTIONS
 
 // system includes
 #include <algorithm>
@@ -10,9 +10,9 @@
 #include "njoy/constants.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert a cross section range from GNDS into b
@@ -29,15 +29,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert cross section with unit \'{}\' to b, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

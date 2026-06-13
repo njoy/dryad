@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertInverseEnergySquared.hpp"
+#include "njoy/format/gnds/read/convertInverseEnergySquared.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertInverseEnergySquared" ) {
 
@@ -19,17 +19,19 @@ SCENARIO( "convertInverseEnergySquared" ) {
 
       THEN( "it can be converted" ) {
 
-        double energy = 1000.; format::gnds::convertInverseEnergySquared( energy, "1/eV**2" );
+        double energy = 1000.;
+        gnds::read::convertInverseEnergySquared( energy, "1/eV**2" );
         CHECK( 1000. == energy );
 
-        energy = 1000.; format::gnds::convertInverseEnergySquared( energy, "1/MeV**2" );
+        energy = 1000.;
+        gnds::read::convertInverseEnergySquared( energy, "1/MeV**2" );
         CHECK( 1e-9 == energy );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         double energy = 1000.;
-        CHECK_THROWS( format::gnds::convertInverseEnergySquared( energy, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertInverseEnergySquared( energy, "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN

@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertRadius.hpp"
+#include "njoy/format/gnds/read/convertRadius.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertRadius" ) {
 
@@ -19,17 +19,19 @@ SCENARIO( "convertRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        double radius = 1000.; format::gnds::convertRadius( radius, "fm" );
+        double radius = 1000.;
+        gnds::read::convertRadius( radius, "fm" );
         CHECK( 1000. == radius );
 
-        radius = 1000.; format::gnds::convertRadius( radius, "nm" );
+        radius = 1000.;
+        gnds::read::convertRadius( radius, "nm" );
         CHECK( 1e+9 == radius );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         double radius = 1000.;
-        CHECK_THROWS( format::gnds::convertRadius( radius, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertRadius( radius, "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN

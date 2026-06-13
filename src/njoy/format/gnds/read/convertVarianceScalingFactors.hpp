@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTVARIANCESCALINGFACTORS
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTVARIANCESCALINGFACTORS
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTVARIANCESCALINGFACTORS
+#define NJOY_FORMAT_GNDS_READ_CONVERTVARIANCESCALINGFACTORS
 
 // system includes
 #include <algorithm>
@@ -9,9 +9,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert a variance scaling factor range from GNDS into b**2
@@ -28,15 +28,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert variance scaling factor with unit \'{}\' to b**2, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

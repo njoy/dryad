@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTMASS
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTMASS
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTMASS
+#define NJOY_FORMAT_GNDS_READ_CONVERTMASS
 
 // system includes
 #include <vector>
@@ -9,9 +9,9 @@
 #include "njoy/constants.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert a mass value from GNDS into amu
@@ -31,15 +31,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert mass with unit \'{}\' to amu, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

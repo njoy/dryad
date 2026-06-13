@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CONVERTENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_CONVERTENERGY
+#ifndef NJOY_FORMAT_GNDS_READ_CONVERTENERGY
+#define NJOY_FORMAT_GNDS_READ_CONVERTENERGY
 
 // system includes
 #include <vector>
@@ -9,9 +9,9 @@
 #include "njoy/constants.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert an energy value from GNDS into eV
@@ -27,15 +27,15 @@ namespace gnds {
       else {
 
         Log::error( "Cannot convert energy with unit \'{}\' to eV, "
-                    "contact dryad developers", unit );
+                    "contact njoy developers", unit );
         throw std::exception();
       }
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

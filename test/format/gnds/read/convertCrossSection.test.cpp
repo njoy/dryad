@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/convertCrossSection.hpp"
+#include "njoy/format/gnds/read/convertCrossSection.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "convertCrossSection" ) {
 
@@ -19,17 +19,19 @@ SCENARIO( "convertCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        double xs = 1000.; format::gnds::convertCrossSection( xs, "b" );
+        double xs = 1000.;
+        gnds::read::convertCrossSection( xs, "b" );
         CHECK( 1000. == xs );
 
-        xs = 1000.; format::gnds::convertCrossSection( xs, "Mb" );
+        xs = 1000.;
+        gnds::read::convertCrossSection( xs, "Mb" );
         CHECK( 1000e+6 == xs );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported unit" ) {
 
         double xs = 1000.;
-        CHECK_THROWS( format::gnds::convertCrossSection( xs, "unsupported" ) );
+        CHECK_THROWS( gnds::read::convertCrossSection( xs, "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN
