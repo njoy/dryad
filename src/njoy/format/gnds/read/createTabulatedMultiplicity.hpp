@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDMULTIPLICITY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDMULTIPLICITY
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDMULTIPLICITY
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDMULTIPLICITY
 
 // system includes
 #include <vector>
@@ -7,27 +7,27 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TabulatedMultiplicity from a GNDS multiplicity node
    */
-  inline TabulatedMultiplicity
+  inline dryad::TabulatedMultiplicity
   createTabulatedMultiplicity( const pugi::xml_node& multiplicity,
                                const std::string& style = "eval" ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     // check that this is a valid multiplicity node
     throwExceptionOnWrongNode( multiplicity, "multiplicity" );
@@ -94,14 +94,14 @@ namespace gnds {
       throw std::exception();
     }
 
-    return TabulatedMultiplicity(
+    return dryad::TabulatedMultiplicity(
              std::move( energies ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

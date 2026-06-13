@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDANGULARDISTRIBUTION
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDANGULARDISTRIBUTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTION
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDANGULARDISTRIBUTION
 
 // system includes
 #include <vector>
@@ -7,15 +7,15 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TabulatedAngularDistribution from a GNDS XYs1d node
@@ -23,7 +23,7 @@ namespace gnds {
    *  @todo is it possible to have a regions1d version?
    */
   inline std::pair< std::optional< double >,
-                    TabulatedAngularDistribution >
+                    dryad::TabulatedAngularDistribution >
   createTabulatedAngularDistribution( pugi::xml_node node, const Axes& units,
                                       bool normalise ) {
 
@@ -31,7 +31,7 @@ namespace gnds {
     std::vector< double > cosines;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
@@ -62,15 +62,15 @@ namespace gnds {
     }
 
     return { std::move( outer ),
-             TabulatedAngularDistribution(
+             dryad::TabulatedAngularDistribution(
                std::move( cosines ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ),
                normalise ) };
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

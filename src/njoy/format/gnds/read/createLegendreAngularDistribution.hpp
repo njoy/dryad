@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATELEGENDREANGULARDISTRIBUTION
-#define NJOY_DRYAD_FORMAT_GNDS_CREATELEGENDREANGULARDISTRIBUTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATELEGENDREANGULARDISTRIBUTION
+#define NJOY_FORMAT_GNDS_READ_CREATELEGENDREANGULARDISTRIBUTION
 
 // system includes
 #include <vector>
@@ -7,21 +7,21 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/readLegendre.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/readLegendre.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a LegendreAngularDistribution from a GNDS legendre node
    */
   inline std::pair< std::optional< double >,
-                    LegendreAngularDistribution >
+                    dryad::LegendreAngularDistribution >
   createLegendreAngularDistribution( pugi::xml_node legendre, const Axes& units,
                                      bool normalise ) {
 
@@ -39,12 +39,12 @@ namespace gnds {
     }
 
     return { std::move( data.first ),
-             LegendreAngularDistribution( std::move( data.second ), normalise ) };
+             dryad::LegendreAngularDistribution( std::move( data.second ), normalise ) };
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

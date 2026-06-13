@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETHERMALSCATTERINGFROMFILE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETHERMALSCATTERINGFROMFILE
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETHERMALSCATTERINGFROMFILE
+#define NJOY_FORMAT_GNDS_READ_CREATETHERMALSCATTERINGFROMFILE
 
 // system includes
 #include <vector>
@@ -7,12 +7,12 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
-#include "njoy/dryad/format/gnds/createThermalScattering.hpp"
+#include "njoy/format/gnds/read/createThermalScattering.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a ThermalScattering instance from a GNDS file
@@ -20,7 +20,7 @@ namespace gnds {
    *  @param[in] filename   the GNDS file name
    *  @param[in] style      the gnds style to process (default is eval)
    */
-  inline ThermalScattering
+  inline dryad::ThermalScattering
   createThermalScatteringFromFile( const std::string& filename,
                                    const std::string& style = "eval" ) {
 
@@ -40,9 +40,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPOLYNOMIALMULTIPLICITY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEPOLYNOMIALMULTIPLICITY
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEPOLYNOMIALMULTIPLICITY
+#define NJOY_FORMAT_GNDS_READ_CREATEPOLYNOMIALMULTIPLICITY
 
 // system includes
 #include <vector>
@@ -7,19 +7,19 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/readPolynomial1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
+#include "njoy/format/gnds/read/readPolynomial1d.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a PolynomialMultiplicity from a GNDS multiplicity node
    */
-  inline PolynomialMultiplicity
+  inline dryad::PolynomialMultiplicity
   createPolynomialMultiplicity( const pugi::xml_node& multiplicity,
                                 const std::string& style = "eval" ) {
 
@@ -61,13 +61,13 @@ namespace gnds {
       throw std::exception();
     }
 
-    return PolynomialMultiplicity( std::move( lower ), std::move( upper ),
-                                   std::move( coefficients ) );
+    return dryad::PolynomialMultiplicity( std::move( lower ), std::move( upper ),
+                                          std::move( coefficients ) );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

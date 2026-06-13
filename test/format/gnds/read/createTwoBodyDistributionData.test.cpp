@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTwoBodyDistributionData.hpp"
+#include "njoy/format/gnds/read/createTwoBodyDistributionData.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunkLegendre( const TwoBodyDistributionData& );
 void verifyChunkTabulated( const TwoBodyDistributionData&, bool );
@@ -34,8 +35,8 @@ SCENARIO( "createTwoBodyDistributionData" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::createTwoBodyDistributionData( twobody, false );
-        auto chunk2 = format::gnds::createTwoBodyDistributionData( twobody, true );
+        auto chunk1 = gnds::read::createTwoBodyDistributionData( twobody, false );
+        auto chunk2 = gnds::read::createTwoBodyDistributionData( twobody, true );
 
         verifyChunkLegendre( chunk1 );
         verifyChunkLegendre( chunk2 );
@@ -61,8 +62,8 @@ SCENARIO( "createTwoBodyDistributionData" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::createTwoBodyDistributionData( twobody, false );
-        auto chunk2 = format::gnds::createTwoBodyDistributionData( twobody, true );
+        auto chunk1 = gnds::read::createTwoBodyDistributionData( twobody, false );
+        auto chunk2 = gnds::read::createTwoBodyDistributionData( twobody, true );
 
         verifyChunkTabulated( chunk1, false );
         verifyChunkTabulated( chunk2, true );

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEINIncoherentDistributionData
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEINIncoherentDistributionData
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEINIncoherentDistributionData
+#define NJOY_FORMAT_GNDS_READ_CREATEINIncoherentDistributionData
 
 // system includes
 #include <vector>
@@ -7,19 +7,19 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
 #include "njoy/dryad/IncoherentDistributionData.hpp"
+#include "njoy/format/gnds/read/createReferenceFrame.hpp"
+#include "njoy/format/gnds/read/createTabulatedScatteringFunctionFromNodes.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a IncoherentDistributionData from a GNDS coherentPhotonScattering node
    */
-  inline IncoherentDistributionData
+  inline dryad::IncoherentDistributionData
   createIncoherentDistributionData( const pugi::xml_node& incoherent ) {
 
     // check that this is a valid coherentPhotonScattering node
@@ -31,13 +31,13 @@ namespace gnds {
     auto node = incoherent.child( "scatteringFactor" ).first_child();
     auto function = createTabulatedScatteringFunctionFromNodes( node );
 
-    return IncoherentDistributionData( std::move( frame ),
-                                       std::move( function ) );
+    return dryad::IncoherentDistributionData( std::move( frame ),
+                                              std::move( function ) );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

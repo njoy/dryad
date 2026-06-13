@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createThermalScattering.hpp"
+#include "njoy/format/gnds/read/createThermalScattering.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -26,7 +27,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::gnds::createThermalScattering( document );
+        ThermalScattering chunk = gnds::read::createThermalScattering( document );
 
         tsl::bemetal::verifyBeMetal( chunk );
       } // THEN
@@ -42,7 +43,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::gnds::createThermalScattering( document );
+        ThermalScattering chunk = gnds::read::createThermalScattering( document );
 
         tsl::zrinzrh::verifyZrInZrH( chunk );
       } // THEN
@@ -58,7 +59,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::gnds::createThermalScattering( document );
+        ThermalScattering chunk = gnds::read::createThermalScattering( document );
 
         tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN

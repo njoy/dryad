@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEMULTIPLICITY
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEMULTIPLICITY
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEMULTIPLICITY
+#define NJOY_FORMAT_GNDS_READ_CREATEMULTIPLICITY
 
 // system includes
 #include <variant>
@@ -8,15 +8,15 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/createPolynomialMultiplicity.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedMultiplicity.hpp"
-#include "njoy/dryad/format/gnds/readConstant1d.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/createPolynomialMultiplicity.hpp"
+#include "njoy/format/gnds/read/createTabulatedMultiplicity.hpp"
+#include "njoy/format/gnds/read/readConstant1d.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create an integer, tabulated or polynomial multiplicity from a GNDS multiplicity node
@@ -24,7 +24,7 @@ namespace gnds {
    *  @param[in] multiplicity   the GNDS multiplicity node
    *  @param[in] style          the style to be extracted (default is "eval")
    */
-  inline std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >
+  inline std::variant< int, dryad::TabulatedMultiplicity, dryad::PolynomialMultiplicity >
   createMultiplicity( pugi::xml_node multiplicity, const std::string& style = "eval" ) {
 
     // check that this is a valid multiplicity node
@@ -53,9 +53,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

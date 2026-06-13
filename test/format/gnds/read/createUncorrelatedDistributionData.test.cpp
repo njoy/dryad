@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createUncorrelatedDistributionData.hpp"
+#include "njoy/format/gnds/read/createUncorrelatedDistributionData.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const UncorrelatedDistributionData&, bool );
 
@@ -33,8 +34,8 @@ SCENARIO( "createUncorrelatedDistributionData" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::createUncorrelatedDistributionData( uncorrelated, false );
-        auto chunk2 = format::gnds::createUncorrelatedDistributionData( uncorrelated, true );
+        auto chunk1 = gnds::read::createUncorrelatedDistributionData( uncorrelated, false );
+        auto chunk2 = gnds::read::createUncorrelatedDistributionData( uncorrelated, true );
 
         verifyChunk( chunk1, false );
         verifyChunk( chunk2, true );

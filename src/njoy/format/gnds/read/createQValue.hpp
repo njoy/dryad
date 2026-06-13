@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEQVALUE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEQVALUE
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEQVALUE
+#define NJOY_FORMAT_GNDS_READ_CREATEQVALUE
 
 // system includes
 #include <variant>
@@ -7,15 +7,14 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedMultiplicity.hpp"
-#include "njoy/dryad/format/gnds/readConstant1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readConstant1d.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a Q value from a GNDS q node
@@ -40,9 +39,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

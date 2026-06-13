@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETHERMALSCATTERING
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETHERMALSCATTERING
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETHERMALSCATTERING
+#define NJOY_FORMAT_GNDS_READ_CREATETHERMALSCATTERING
 
 // system includes
 #include <vector>
@@ -7,14 +7,14 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/thermal/createCoherentElasticScattering.hpp"
-#include "njoy/dryad/format/gnds/thermal/createIncoherentElasticScattering.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
+#include "njoy/format/gnds/read/thermal/createCoherentElasticScattering.hpp"
+#include "njoy/format/gnds/read/thermal/createIncoherentElasticScattering.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a ThermalScattering instance from a GNDS xml document
@@ -22,7 +22,7 @@ namespace gnds {
    *  @param[in] document   the GNDS xml document
    *  @param[in] style      the gnds style to process (default is eval)
    */
-  inline ThermalScattering
+  inline dryad::ThermalScattering
   createThermalScattering( const pugi::xml_document& document,
                            const std::string& style = "eval" ) {
 
@@ -50,7 +50,7 @@ namespace gnds {
         }
       }
 
-      return ThermalScattering( std::move( coherent ), std::move( incoherent ) );
+      return dryad::ThermalScattering( std::move( coherent ), std::move( incoherent ) );
     }
     else {
 
@@ -59,9 +59,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTabulatedMultiplicity.hpp"
+#include "njoy/format/gnds/read/createTabulatedMultiplicity.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyFissionChunk( const TabulatedMultiplicity& );
 
@@ -30,7 +31,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createTabulatedMultiplicity( multiplicity );
+        auto chunk = gnds::read::createTabulatedMultiplicity( multiplicity );
 
         verifyFissionChunk( chunk );
       } // THEN

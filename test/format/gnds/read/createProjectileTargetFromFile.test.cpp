@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createProjectileTargetFromFile.hpp"
+#include "njoy/format/gnds/read/createProjectileTargetFromFile.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -23,8 +24,8 @@ SCENARIO( "projectileTargetFromFile" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTargetFromFile( "n-001_H_001.endf.gnds.xml", false );
-        ProjectileTarget second = format::gnds::createProjectileTargetFromFile( "n-001_H_001.endf.gnds.xml", true );
+        ProjectileTarget first = gnds::read::createProjectileTargetFromFile( "n-001_H_001.endf.gnds.xml", false );
+        ProjectileTarget second = gnds::read::createProjectileTargetFromFile( "n-001_H_001.endf.gnds.xml", true );
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
@@ -35,8 +36,8 @@ SCENARIO( "projectileTargetFromFile" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTargetFromFile( "n-003_Li_007.endf.gnds.xml", false );
-        ProjectileTarget second = format::gnds::createProjectileTargetFromFile( "n-003_Li_007.endf.gnds.xml", true );
+        ProjectileTarget first = gnds::read::createProjectileTargetFromFile( "n-003_Li_007.endf.gnds.xml", false );
+        ProjectileTarget second = gnds::read::createProjectileTargetFromFile( "n-003_Li_007.endf.gnds.xml", true );
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
@@ -50,8 +51,8 @@ SCENARIO( "projectileTargetFromFile" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTargetFromFile( "n-093_Np_236m1.endf.gnds.xml", false );
-        ProjectileTarget second = format::gnds::createProjectileTargetFromFile( "n-093_Np_236m1.endf.gnds.xml", true );
+        ProjectileTarget first = gnds::read::createProjectileTargetFromFile( "n-093_Np_236m1.endf.gnds.xml", false );
+        ProjectileTarget second = gnds::read::createProjectileTargetFromFile( "n-093_Np_236m1.endf.gnds.xml", true );
 
         neutron::np236m1::verifyNp236m1( first, false );
         neutron::np236m1::verifyNp236m1( second, true );
@@ -65,8 +66,8 @@ SCENARIO( "projectileTargetFromFile" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTargetFromFile( "e-001_H_000.endf.gnds.xml", false );
-        ProjectileTarget second = format::gnds::createProjectileTargetFromFile( "e-001_H_000.endf.gnds.xml", true );
+        ProjectileTarget first = gnds::read::createProjectileTargetFromFile( "e-001_H_000.endf.gnds.xml", false );
+        ProjectileTarget second = gnds::read::createProjectileTargetFromFile( "e-001_H_000.endf.gnds.xml", true );
 
         electron::h0::endf81::verifyDocumentation( first.documentation() );
         electron::h0::endf81::verifyDocumentation( second.documentation() );
@@ -83,8 +84,8 @@ SCENARIO( "projectileTargetFromFile" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTargetFromFile( "photoat-001_H_000.endf.gnds.xml", false );
-        ProjectileTarget second = format::gnds::createProjectileTargetFromFile( "photoat-001_H_000.endf.gnds.xml", true );
+        ProjectileTarget first = gnds::read::createProjectileTargetFromFile( "photoat-001_H_000.endf.gnds.xml", false );
+        ProjectileTarget second = gnds::read::createProjectileTargetFromFile( "photoat-001_H_000.endf.gnds.xml", true );
 
         photoatomic::h0::verifyH0( first, false );
         photoatomic::h0::verifyH0( second, true );

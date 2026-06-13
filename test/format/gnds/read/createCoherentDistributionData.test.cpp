@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createCoherentDistributionData.hpp"
+#include "njoy/format/gnds/read/createCoherentDistributionData.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const CoherentDistributionData& );
 
@@ -30,7 +31,7 @@ SCENARIO( "createCoherentDistributionData" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createCoherentDistributionData( coherent );
+        auto chunk = gnds::read::createCoherentDistributionData( coherent );
 
         verifyChunk( chunk );
       } // THEN

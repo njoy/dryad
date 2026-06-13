@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEREACTIONS
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEREACTIONS
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEREACTIONS
+#define NJOY_FORMAT_GNDS_READ_CREATEREACTIONS
 
 // system includes
 #include <algorithm>
@@ -8,13 +8,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createReaction.hpp"
 #include "njoy/dryad/Reaction.hpp"
+#include "njoy/format/gnds/read/createReaction.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create every Reaction from a GNDS reaction suite
@@ -26,15 +26,16 @@ namespace gnds {
    *                          need to be normalised
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  inline std::vector< Reaction >
-  createReactions( const id::ParticleID& projectile, const id::ParticleID& target,
+  inline std::vector< dryad::Reaction >
+  createReactions( const dryad::id::ParticleID& projectile,
+                   const dryad::id::ParticleID& target,
                    pugi::xml_node suite, bool normalise,
                    const std::string& style = "eval" ) {
 
     // check that this is a valid reaction node
     throwExceptionOnWrongNode( suite, "reactionSuite" );
 
-    std::vector< Reaction > reactions;
+    std::vector< dryad::Reaction > reactions;
 
     // get the children that contain the reaction data
     // there are primary reactions, summation reactions and incomplete reactions
@@ -71,7 +72,7 @@ namespace gnds {
 
       // loop over reaction nodes
      for ( pugi::xml_node reaction = incomplete.child( "reaction" );
-            reaction; reaction = reaction.next_sibling( "reaction" ) ) {
+           reaction; reaction = reaction.next_sibling( "reaction" ) ) {
 
         int mt = reaction.attribute( "ENDF_MT" ).as_int();
         if ( ( mt < 203 ) || ( mt > 207 ) ) {
@@ -92,29 +93,30 @@ namespace gnds {
                            < right.identifier().reactionType().mt(); } );
 
     // calculate deficit reaction for elastic scattering in electro-atomic data
-    if ( projectile == id::ParticleID::electron() ) {
+    if ( projectile ==  dryad::id::ParticleID::electron() ) {
 
         auto total = std::find_if( reactions.begin(), reactions.end(),
                                    [] ( const auto& reaction )
                                       { return reaction.identifier().reactionType()
-                                               == id::ReactionType( "total-scattering" ); } );
+                                               ==  dryad::id::ReactionType( "total-scattering" ); } );
         auto partial = std::find_if( reactions.begin(), reactions.end(),
                                      [] ( const auto& reaction )
                                         { return reaction.identifier().reactionType()
-                                                 == id::ReactionType( "large-angle-scattering" ); } );
-      TabulatedCrossSection deficit = total->crossSection().linearise();
+                                                 ==  dryad::id::ReactionType( "large-angle-scattering" ); } );
+      dryad::TabulatedCrossSection deficit = total->crossSection().linearise();
       deficit -= partial->crossSection().linearise();
 
-      reactions.emplace_back( Reaction( id::ReactionID( projectile, target, id::ReactionType( "deficit-scattering" ) ),
-                                        deficit, {}, std::nullopt, 0. ) );
+      reactions.emplace_back( dryad::Reaction( dryad::id::ReactionID( projectile, target,
+                                                                      dryad::id::ReactionType( "deficit-scattering" ) ),
+                                               deficit, {}, std::nullopt, 0. ) );
     }
 
     return reactions;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

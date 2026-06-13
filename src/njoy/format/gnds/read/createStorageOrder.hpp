@@ -21,15 +21,15 @@ namespace read {
   /**
    *  @brief Create the storage order from a GNDS string
    */
-  inline dryad::StorageOrder createStorageOrder( const std::string& order ) {
+  inline StorageOrder createStorageOrder( const std::string& order ) {
 
     if ( order == "row-major" ) {
 
-      return dryad::StorageOrder::RowMajor;
+      return StorageOrder::RowMajor;
     }
     else if ( order == "column-major" ) {
 
-      return dryad::StorageOrder::ColumnMajor;
+      return StorageOrder::ColumnMajor;
     }
     else {
 

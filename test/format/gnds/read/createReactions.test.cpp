@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createReactions.hpp"
+#include "njoy/format/gnds/read/createReactions.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -29,8 +30,8 @@ SCENARIO( "createReactions" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
-        std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
-        std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
+        std::vector< Reaction > reactions1 = gnds::read::createReactions( projectile, target, suite, false );
+        std::vector< Reaction > reactions2 = gnds::read::createReactions( projectile, target, suite, true );
 
         CHECK( 3 == reactions1.size() );
         auto total = reactions1[0];
@@ -60,8 +61,8 @@ SCENARIO( "createReactions" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Li7" );
-        std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
-        std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
+        std::vector< Reaction > reactions1 = gnds::read::createReactions( projectile, target, suite, false );
+        std::vector< Reaction > reactions2 = gnds::read::createReactions( projectile, target, suite, true );
 
         CHECK( 49 == reactions1.size() );
         auto total = reactions1[0];
@@ -130,8 +131,8 @@ SCENARIO( "createReactions" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Np236_e2" );
-        std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
-        std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
+        std::vector< Reaction > reactions1 = gnds::read::createReactions( projectile, target, suite, false );
+        std::vector< Reaction > reactions2 = gnds::read::createReactions( projectile, target, suite, true );
 
         CHECK( 15 == reactions1.size() );
         auto total = reactions1[0];
@@ -212,8 +213,8 @@ SCENARIO( "createReactions" ) {
 
         id::ParticleID projectile( "e-" );
         id::ParticleID target( "H" );
-        std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
-        std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
+        std::vector< Reaction > reactions1 = gnds::read::createReactions( projectile, target, suite, false );
+        std::vector< Reaction > reactions2 = gnds::read::createReactions( projectile, target, suite, true );
 
         CHECK( 8 == reactions1.size() );
         auto total = reactions1[0];
@@ -266,8 +267,8 @@ SCENARIO( "createReactions" ) {
 
         id::ParticleID projectile( "g" );
         id::ParticleID target( "H" );
-        std::vector< Reaction > reactions1 = format::gnds::createReactions( projectile, target, suite, false );
-        std::vector< Reaction > reactions2 = format::gnds::createReactions( projectile, target, suite, true );
+        std::vector< Reaction > reactions1 = gnds::read::createReactions( projectile, target, suite, false );
+        std::vector< Reaction > reactions2 = gnds::read::createReactions( projectile, target, suite, true );
 
         CHECK( 8 == reactions1.size() );
         auto total = reactions1[0];

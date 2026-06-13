@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDENERGYDISTRIBUTION
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDENERGYDISTRIBUTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDENERGYDISTRIBUTION
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDENERGYDISTRIBUTION
 
 // system includes
 #include <vector>
@@ -7,16 +7,16 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
 #include "njoy/dryad/TabulatedEnergyDistribution.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TabulatedEnergyDistribution from a GNDS XYs1d node
@@ -24,7 +24,7 @@ namespace gnds {
    *  @todo is it possible to have a regions1d version?
    */
   inline std::pair< std::optional< double >,
-                    TabulatedEnergyDistribution >
+                    dryad::TabulatedEnergyDistribution >
   createTabulatedEnergyDistribution( pugi::xml_node node, const Axes& units,
                                      bool normalise ) {
 
@@ -32,7 +32,7 @@ namespace gnds {
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
@@ -107,15 +107,15 @@ namespace gnds {
     }
 
     return { std::move( outer ),
-             TabulatedEnergyDistribution(
+             dryad::TabulatedEnergyDistribution(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ),
                normalise ) };
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

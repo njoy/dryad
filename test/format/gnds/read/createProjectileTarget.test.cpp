@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createProjectileTarget.hpp"
+#include "njoy/format/gnds/read/createProjectileTarget.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -26,8 +27,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
+        ProjectileTarget first = gnds::read::createProjectileTarget( document, "", false );
+        ProjectileTarget second = gnds::read::createProjectileTarget( document, "", true );
 
         neutron::h1::verifyH1( first, false );
         neutron::h1::verifyH1( second, true );
@@ -41,8 +42,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
+        ProjectileTarget first = gnds::read::createProjectileTarget( document, "", false );
+        ProjectileTarget second = gnds::read::createProjectileTarget( document, "", true );
 
         neutron::li7::verifyLi7( first, false );
         neutron::li7::verifyLi7( second, true );
@@ -59,8 +60,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
+        ProjectileTarget first = gnds::read::createProjectileTarget( document, "", false );
+        ProjectileTarget second = gnds::read::createProjectileTarget( document, "", true );
 
         neutron::np236m1::verifyNp236m1( first, false );
         neutron::np236m1::verifyNp236m1( second, true );
@@ -77,8 +78,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
+        ProjectileTarget first = gnds::read::createProjectileTarget( document, "", false );
+        ProjectileTarget second = gnds::read::createProjectileTarget( document, "", true );
 
         electron::h0::endf81::verifyDocumentation( first.documentation() );
         electron::h0::endf81::verifyDocumentation( second.documentation() );
@@ -98,8 +99,8 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "it can be converted" ) {
 
-        ProjectileTarget first = format::gnds::createProjectileTarget( document, "", false );
-        ProjectileTarget second = format::gnds::createProjectileTarget( document, "", true );
+        ProjectileTarget first = gnds::read::createProjectileTarget( document, "", false );
+        ProjectileTarget second = gnds::read::createProjectileTarget( document, "", true );
 
         photoatomic::h0::verifyH0( first, false );
         photoatomic::h0::verifyH0( second, true );

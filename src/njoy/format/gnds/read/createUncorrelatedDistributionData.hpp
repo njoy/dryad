@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEUNCORRELATEDDISTRIBUTIONDATA
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEUNCORRELATEDDISTRIBUTIONDATA
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEUNCORRELATEDDISTRIBUTIONDATA
+#define NJOY_FORMAT_GNDS_READ_CREATEUNCORRELATEDDISTRIBUTIONDATA
 
 // system includes
 #include <vector>
@@ -7,22 +7,22 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
-#include "njoy/dryad/format/gnds/createLegendreAngularDistribution.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedAngularDistribution.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedEnergyDistribution.hpp"
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/UncorrelatedDistributionData.hpp"
+#include "njoy/format/gnds/read/createReferenceFrame.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createTabulatedEnergyDistribution.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a UncorrelatedDistributionData from a GNDS uncorrelated node
    */
-  inline UncorrelatedDistributionData
+  inline dryad::UncorrelatedDistributionData
   createUncorrelatedDistributionData( const pugi::xml_node& uncorrelated,
                                       bool normalise ) {
 
@@ -34,13 +34,13 @@ namespace gnds {
 
     // get the angular data
     auto angle = uncorrelated.child( "angle" );
-    UncorrelatedDistributionData::AngularDistributions angular;
+    dryad::UncorrelatedDistributionData::AngularDistributions angular;
     if ( angle ) {
 
       auto node = angle.first_child();
       if ( strcmp( node.name(), "isotropic2d" ) == 0 ) {
 
-        angular = IsotropicAngularDistributions();
+        angular = dryad::IsotropicAngularDistributions();
       }
       else if ( strcmp( node.name(), "XYs2d" ) == 0 ) {
 
@@ -55,7 +55,7 @@ namespace gnds {
           std::vector< double > grid;
           if ( strcmp( function.name(), "Legendre" ) == 0 ) {
 
-            std::vector< LegendreAngularDistribution > distributions;
+            std::vector< dryad::LegendreAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
               auto legendre = createLegendreAngularDistribution( function, units, normalise );
@@ -63,11 +63,11 @@ namespace gnds {
               distributions.emplace_back( std::move( legendre.second ) );
             }
 
-            angular = LegendreAngularDistributions( std::move( grid ), std::move( distributions ) );
+            angular = dryad::LegendreAngularDistributions( std::move( grid ), std::move( distributions ) );
           }
           else {
 
-            std::vector< TabulatedAngularDistribution > distributions;
+            std::vector< dryad::TabulatedAngularDistribution > distributions;
             for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
 
               auto tabulated = createTabulatedAngularDistribution( function, units, normalise );
@@ -75,7 +75,7 @@ namespace gnds {
               distributions.emplace_back( std::move( tabulated.second ) );
             }
 
-            angular = TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) );
+            angular = dryad::TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) );
           }
         }
         else {
@@ -100,7 +100,7 @@ namespace gnds {
 
     // get the energy data
     auto energy = uncorrelated.child( "energy" );
-    UncorrelatedDistributionData::EnergyDistributions energyd;
+    dryad::UncorrelatedDistributionData::EnergyDistributions energyd;
     if ( energy ) {
 
       auto node = energy.first_child();
@@ -113,7 +113,7 @@ namespace gnds {
         auto function = node.child( "function1ds" ).first_child();
 
         std::vector< double > grid;
-        std::vector< TabulatedEnergyDistribution > distributions;
+        std::vector< dryad::TabulatedEnergyDistribution > distributions;
         for ( ; function; function = function.next_sibling() ) {
 
           auto tabulated = createTabulatedEnergyDistribution( function, units, normalise );
@@ -121,7 +121,7 @@ namespace gnds {
           distributions.emplace_back( std::move( tabulated.second ) );
         }
 
-        energyd = TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
+        energyd = dryad::TabulatedEnergyDistributions( std::move( grid ), std::move( distributions ) );
       }
       else if ( strcmp( node.name(), "evaporation" ) == 0 ) {
 
@@ -155,12 +155,12 @@ namespace gnds {
       }
     }
 
-    return UncorrelatedDistributionData( std::move( frame ), std::move( angular ), std::move( energyd ) );
+    return dryad::UncorrelatedDistributionData( std::move( frame ), std::move( angular ), std::move( energyd ) );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

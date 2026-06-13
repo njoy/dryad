@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATECOHERENTDISTRIBUTIONDATA
-#define NJOY_DRYAD_FORMAT_GNDS_CREATECOHERENTDISTRIBUTIONDATA
+#ifndef NJOY_FORMAT_GNDS_READ_CREATECOHERENTDISTRIBUTIONDATA
+#define NJOY_FORMAT_GNDS_READ_CREATECOHERENTDISTRIBUTIONDATA
 
 // system includes
 #include <vector>
@@ -7,20 +7,20 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedFormFactorFromNodes.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
 #include "njoy/dryad/CoherentDistributionData.hpp"
+#include "njoy/format/gnds/read/createReferenceFrame.hpp"
+#include "njoy/format/gnds/read/createTabulatedFormFactorFromNodes.hpp"
+#include "njoy/format/gnds/read/createTabulatedScatteringFunctionFromNodes.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a CoherentDistributionData from a GNDS coherentPhotonScattering node
    */
-  inline CoherentDistributionData
+  inline dryad::CoherentDistributionData
   createCoherentDistributionData( const pugi::xml_node& coherent ) {
 
     // check that this is a valid coherentPhotonScattering node
@@ -31,8 +31,8 @@ namespace gnds {
 
     auto node = coherent.child( "formFactor" ).first_child();
     auto function = createTabulatedScatteringFunctionFromNodes( node );
-    std::optional< TabulatedFormFactor > real = std::nullopt;
-    std::optional< TabulatedFormFactor > imaginary = std::nullopt;
+    std::optional< dryad::TabulatedFormFactor > real = std::nullopt;
+    std::optional< dryad::TabulatedFormFactor > imaginary = std::nullopt;
 
     node = coherent.child( "realAnomalousFactor" ).first_child();
     if ( node ) {
@@ -48,21 +48,21 @@ namespace gnds {
 
     if ( real.has_value() || imaginary.has_value() ) {
 
-      return CoherentDistributionData( std::move( frame ),
-                                       std::move( function ),
-                                       std::move( real.value() ),
-                                       std::move( imaginary.value() ) );
+      return dryad::CoherentDistributionData( std::move( frame ),
+                                              std::move( function ),
+                                              std::move( real.value() ),
+                                              std::move( imaginary.value() ) );
     }
     else {
 
-      return CoherentDistributionData( std::move( frame ),
-                                       std::move( function ) );
+      return dryad::CoherentDistributionData( std::move( frame ),
+                                              std::move( function ) );
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

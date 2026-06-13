@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDCROSSSECTION
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDCROSSSECTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDCROSSSECTION
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDCROSSSECTION
 
 // system includes
 #include <vector>
@@ -7,27 +7,27 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/format/gnds/convertCrossSections.hpp"
 #include "njoy/dryad/TabulatedCrossSection.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/convertCrossSections.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS XYs1d or regions1d node
    */
-  inline TabulatedCrossSection
+  inline dryad::TabulatedCrossSection
   createTabulatedCrossSectionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
@@ -92,7 +92,7 @@ namespace gnds {
       throw std::exception();
     }
 
-    return TabulatedCrossSection(
+    return dryad::TabulatedCrossSection(
              std::move( energies ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }
@@ -100,7 +100,7 @@ namespace gnds {
   /**
    *  @brief Create a TabulatedCrossSection from a GNDS cross section node
    */
-  static TabulatedCrossSection
+  static dryad::TabulatedCrossSection
   createTabulatedCrossSection( const pugi::xml_node& xs,
                                const std::string& style = "eval" ) {
 
@@ -125,7 +125,7 @@ namespace gnds {
       std::vector< double > energies;
       std::vector< double > values;
       std::vector< std::size_t > boundaries;
-      std::vector< InterpolationType > interpolants;
+      std::vector< dryad::InterpolationType > interpolants;
 
       // get the resolved background data
       auto resolved = node.child( "background" ).child( "resolvedRegion" );
@@ -196,14 +196,14 @@ namespace gnds {
         }
       }
 
-      return TabulatedCrossSection(
+      return dryad::TabulatedCrossSection(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
     else if ( strcmp( node.name(), "CoulombPlusNuclearElastic" ) == 0 ) {
 
       Log::info( "CoulombPlusNuclearElastic is currently unsupported" );
-      return TabulatedCrossSection( { 1e-5, 20. }, { 0., 0. } );
+      return dryad::TabulatedCrossSection( { 1e-5, 20. }, { 0., 0. } );
     }
     else {
 
@@ -213,9 +213,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

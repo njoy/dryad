@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTabulatedAverageEnergy.hpp"
+#include "njoy/format/gnds/read/createTabulatedAverageEnergy.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const TabulatedAverageEnergy& );
 
@@ -30,7 +31,7 @@ SCENARIO( "createTabulatedAverageEnergy" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createTabulatedAverageEnergy( average );
+        auto chunk = gnds::read::createTabulatedAverageEnergy( average );
 
         verifyChunk( chunk );
       } // THEN

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEATOMICRELAXATIONFROMFILE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEATOMICRELAXATIONFROMFILE
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEATOMICRELAXATIONFROMFILE
+#define NJOY_FORMAT_GNDS_READ_CREATEATOMICRELAXATIONFROMFILE
 
 // system includes
 #include <vector>
@@ -7,12 +7,12 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
-#include "njoy/dryad/format/gnds/createAtomicRelaxation.hpp"
+#include "njoy/format/gnds/read/createAtomicRelaxation.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create an AtomicRelaxation from a GNDS xml file
@@ -21,8 +21,8 @@ namespace gnds {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  inline AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
-                                                          bool normalise ) {
+  inline dryad::AtomicRelaxation
+  createAtomicRelaxationFromFile( const std::string& filename, bool normalise ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
@@ -40,9 +40,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_PROCESSEXTERNALFILES
-#define NJOY_DRYAD_FORMAT_GNDS_PROCESSEXTERNALFILES
+#ifndef NJOY_FORMAT_GNDS_READ_PROCESSEXTERNALFILES
+#define NJOY_FORMAT_GNDS_READ_PROCESSEXTERNALFILES
 
 // system includes
 
@@ -8,9 +8,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   template < typename Functor >
   void traverseNodesAndApply( pugi::xml_node node, Functor function ) {
@@ -129,9 +129,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

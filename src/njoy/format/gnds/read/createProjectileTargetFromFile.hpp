@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPROJECTILETARGETFROMFILE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEPROJECTILETARGETFROMFILE
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEPROJECTILETARGETFROMFILE
+#define NJOY_FORMAT_GNDS_READ_CREATEPROJECTILETARGETFROMFILE
 
 // system includes
 #include <vector>
@@ -7,12 +7,12 @@
 // other includes
 #include "pugixml.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
-#include "njoy/dryad/format/gnds/createProjectileTarget.hpp"
+#include "njoy/format/gnds/read/createProjectileTarget.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create an ProjectileTarget from a GNDS file
@@ -21,8 +21,8 @@ namespace gnds {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  inline ProjectileTarget createProjectileTargetFromFile( const std::string& filename,
-                                                          bool normalise ) {
+  inline dryad::ProjectileTarget
+  createProjectileTargetFromFile( const std::string& filename, bool normalise ) {
 
     Log::info( "Reading GNDS file \'{}\'", filename );
 
@@ -53,9 +53,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

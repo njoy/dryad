@@ -4,11 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
+#include "njoy/format/gnds/read/createParticleIdentifier.hpp"
 
 // other includes
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 SCENARIO( "createParticleIdentifier" ) {
@@ -19,8 +20,8 @@ SCENARIO( "createParticleIdentifier" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( id::ParticleID( "g" ) == format::gnds::createParticleIdentifier( "photon" ) );
-        CHECK( id::ParticleID( "n" ) == format::gnds::createParticleIdentifier( "n" ) );
+        CHECK( id::ParticleID( "g" ) == gnds::read::createParticleIdentifier( "photon" ) );
+        CHECK( id::ParticleID( "n" ) == gnds::read::createParticleIdentifier( "n" ) );
       } // THEN
     } // WHEN
   } // GIVEN

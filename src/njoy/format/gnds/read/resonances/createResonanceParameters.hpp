@@ -28,9 +28,9 @@ namespace resonances {
    *  @param[in] style        the gnds style to process (default is eval)
    */
   inline std::optional< dryad::resonances::ResonanceParameters >
-  createResonanceParameters( const id::ParticleID& projectile,
-                             const id::ParticleID& target,
-                             const ParticleDatabase& pops,
+  createResonanceParameters( const dryad::id::ParticleID& projectile,
+                             const dryad::id::ParticleID& target,
+                             const dryad::ParticleDatabase& pops,
                              const pugi::xml_node& resonances,
                              const std::string& style = "eval" ) {
 

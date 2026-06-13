@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETWOBODYDISTRIBUTIONDATA
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETWOBODYDISTRIBUTIONDATA
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETWOBODYDISTRIBUTIONDATA
+#define NJOY_FORMAT_GNDS_READ_CREATETWOBODYDISTRIBUTIONDATA
 
 // system includes
 #include <vector>
@@ -7,20 +7,20 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createReferenceFrame.hpp"
-#include "njoy/dryad/format/gnds/createLegendreAngularDistribution.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TwoBodyDistributionData.hpp"
+#include "njoy/format/gnds/read/createReferenceFrame.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TwoBodyDistributionData from a GNDS angularTwoBody node
    */
-  inline TwoBodyDistributionData
+  inline dryad::TwoBodyDistributionData
   createTwoBodyDistributionData( const pugi::xml_node& twobody,
                                  bool normalise ) {
 
@@ -44,7 +44,7 @@ namespace gnds {
         std::vector< double > grid;
         if ( strcmp( function.name(), "Legendre" ) == 0 ) {
 
-          std::vector< LegendreAngularDistribution > distributions;
+          std::vector< dryad::LegendreAngularDistribution > distributions;
           for ( ; function; function = function.next_sibling( "Legendre" ) ) {
 
             auto legendre = createLegendreAngularDistribution( function, units, normalise );
@@ -52,13 +52,13 @@ namespace gnds {
             distributions.emplace_back( std::move( legendre.second ) );
           }
 
-          return TwoBodyDistributionData(
+          return dryad::TwoBodyDistributionData(
                    std::move( frame ),
-                   LegendreAngularDistributions( std::move( grid ), std::move( distributions ) ) );
+                   dryad::LegendreAngularDistributions( std::move( grid ), std::move( distributions ) ) );
         }
         else {
 
-          std::vector< TabulatedAngularDistribution > distributions;
+          std::vector< dryad::TabulatedAngularDistribution > distributions;
           for ( ; function; function = function.next_sibling( "XYs1d" ) ) {
 
             auto tabulated = createTabulatedAngularDistribution( function, units, normalise );
@@ -66,9 +66,9 @@ namespace gnds {
             distributions.emplace_back( std::move( tabulated.second ) );
           }
 
-          return TwoBodyDistributionData(
+          return dryad::TwoBodyDistributionData(
                    std::move( frame ),
-                   TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) ) );
+                   dryad::TabulatedAngularDistributions( std::move( grid ), std::move( distributions ) ) );
         }
       }
       else {
@@ -79,7 +79,7 @@ namespace gnds {
     }
     else if ( strcmp( node.name(), "isotropic2d" ) == 0 ) {
 
-      return TwoBodyDistributionData( std::move( frame ), IsotropicAngularDistributions() );
+      return dryad::TwoBodyDistributionData( std::move( frame ), dryad::IsotropicAngularDistributions() );
     }
     else if ( strcmp( node.name(), "regions1d" ) == 0 ) {
 
@@ -95,9 +95,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

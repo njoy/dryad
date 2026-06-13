@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEREACTIONPRODUCTS
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEREACTIONPRODUCTS
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEREACTIONPRODUCTS
+#define NJOY_FORMAT_GNDS_READ_CREATEREACTIONPRODUCTS
 
 // system includes
 #include <vector>
@@ -7,13 +7,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createReactionProduct.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
+#include "njoy/format/gnds/read/createReactionProduct.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Add a placeholder reaction product if it is not present yet
@@ -22,8 +22,8 @@ namespace gnds {
    *  @param[in] multiplicity    the multiplicity of the target
    *  @param[in, out] products   the current set of reaction products
    */
-  inline void addProduct( const id::ParticleID& particle, int multiplicity,
-                          std::vector< ReactionProduct >& products ) {
+  inline void addProduct( const dryad::id::ParticleID& particle, int multiplicity,
+                          std::vector< dryad::ReactionProduct >& products ) {
 
     auto iter = std::find_if( products.begin(), products.end(),
                               [&particle] ( auto&& product )
@@ -48,11 +48,11 @@ namespace gnds {
    *                          need to be normalised
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  inline std::vector< ReactionProduct >
-  createReactionProducts( const id::ReactionID& reaction,
+  inline std::vector< dryad::ReactionProduct >
+  createReactionProducts( const dryad::id::ReactionID& reaction,
                           pugi::xml_node suite,
                           pugi::xml_node products,
-                          std::optional< id::ParticleID > parent,
+                          std::optional< dryad::id::ParticleID > parent,
                           std::size_t chain,
                           bool normalise,
                           const std::string& style = "eval" ) {
@@ -61,7 +61,7 @@ namespace gnds {
     throwExceptionOnWrongNode( products, "products" );
 
     // loop over product children
-    std::vector< ReactionProduct > data;
+    std::vector< dryad::ReactionProduct > data;
     for ( pugi::xml_node product = products.child( "product" ); product;
           product = product.next_sibling( "product" ) ) {
 
@@ -84,7 +84,7 @@ namespace gnds {
       if ( reaction.particles()->size() == 0 ) {
 
         // add photons as an expected reaction product
-        addProduct( id::ParticleID::photon(), 1, data );
+        addProduct( dryad::id::ParticleID::photon(), 1, data );
       }
       else {
 
@@ -105,9 +105,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

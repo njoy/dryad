@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEATOMICRELAXATION
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEATOMICRELAXATION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEATOMICRELAXATION
+#define NJOY_FORMAT_GNDS_READ_CREATEATOMICRELAXATION
 
 // system includes
 #include <vector>
@@ -7,13 +7,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
+#include "njoy/format/gnds/read/atomic/createElectronSubshellConfiguration.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create an AtomicRelaxation from a GNDS xml document
@@ -22,8 +22,8 @@ namespace gnds {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  inline AtomicRelaxation createAtomicRelaxation( const pugi::xml_document& document,
-                                                  bool normalise ) {
+  inline dryad::AtomicRelaxation
+  createAtomicRelaxation( const pugi::xml_document& document, bool normalise ) {
 
     //! @todo verify validity of the file
 
@@ -32,17 +32,17 @@ namespace gnds {
 
     if ( element ) {
 
-      id::ElementID id( element.attribute( "Z" ).as_int() );
+      dryad::id::ElementID id( element.attribute( "Z" ).as_int() );
 
       std::vector< dryad::atomic::ElectronSubshellConfiguration > subshells;
       pugi::xml_node shells = element.child( "atomic" ).child( "configurations" );
       for ( pugi::xml_node subshell = shells.child( "configuration" );
             subshell; subshell = subshell.next_sibling(  "configuration"  ) ) {
 
-        subshells.emplace_back( gnds::atomic::createElectronSubshellConfiguration( id, subshell, normalise ) );
+        subshells.emplace_back( atomic::createElectronSubshellConfiguration( id, subshell, normalise ) );
       }
 
-      return AtomicRelaxation( std::move( id ), std::move( subshells ) );
+      return dryad::AtomicRelaxation( std::move( id ), std::move( subshells ) );
     }
     else {
 
@@ -51,9 +51,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

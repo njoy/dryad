@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createAtomicRelaxation.hpp"
+#include "njoy/format/gnds/read/createAtomicRelaxation.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const AtomicRelaxation&, bool );
 
@@ -25,8 +26,8 @@ SCENARIO( "createAtomicRelaxation" ) {
 
       THEN( "it can be converted" ) {
 
-        AtomicRelaxation oxygen1 = format::gnds::createAtomicRelaxation( document, false );
-        AtomicRelaxation oxygen2 = format::gnds::createAtomicRelaxation( document, true );
+        AtomicRelaxation oxygen1 = gnds::read::createAtomicRelaxation( document, false );
+        AtomicRelaxation oxygen2 = gnds::read::createAtomicRelaxation( document, true );
 
         verifyChunk( oxygen1, false );
         verifyChunk( oxygen2, true );

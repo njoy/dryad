@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createMultiplicity.hpp"
+#include "njoy/format/gnds/read/createMultiplicity.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 using Multiplicity = std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >;
 
@@ -33,7 +34,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createMultiplicity( multiplicity );
+        auto chunk = gnds::read::createMultiplicity( multiplicity );
 
         verifyConstantChunk( chunk );
       } // THEN
@@ -54,7 +55,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createMultiplicity( multiplicity );
+        auto chunk = gnds::read::createMultiplicity( multiplicity );
 
         verifyTabulatedChunk( chunk );
       } // THEN
@@ -75,7 +76,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createMultiplicity( multiplicity );
+        auto chunk = gnds::read::createMultiplicity( multiplicity );
 
         verifyPolynomialChunk( chunk );
       } // THEN

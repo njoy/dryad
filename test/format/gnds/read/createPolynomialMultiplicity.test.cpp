@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createPolynomialMultiplicity.hpp"
+#include "njoy/format/gnds/read/createPolynomialMultiplicity.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyFissionChunk( const PolynomialMultiplicity& );
 
@@ -30,7 +31,7 @@ SCENARIO( "createPolynomialMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createPolynomialMultiplicity( multiplicity );
+        auto chunk = gnds::read::createPolynomialMultiplicity( multiplicity );
 
         verifyFissionChunk( chunk );
       } // THEN

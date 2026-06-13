@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPROJECTILETARGET
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEPROJECTILETARGET
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEPROJECTILETARGET
+#define NJOY_FORMAT_GNDS_READ_CREATEPROJECTILETARGET
 
 // system includes
 #include <vector>
@@ -7,21 +7,21 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/processExternalFiles.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
-#include "njoy/dryad/format/gnds/createInteractionType.hpp"
-#include "njoy/dryad/format/gnds/pops/createParticleDatabase.hpp"
-#include "njoy/dryad/format/gnds/resonances/createResonanceParameters.hpp"
-#include "njoy/dryad/format/collectParticleIdentifiers.hpp"
-#include "njoy/dryad/format/gnds/createReactions.hpp"
-#include "njoy/dryad/format/gnds/covariance/createCovarianceData.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
+#include "njoy/format/collectParticleIdentifiers.hpp"
+#include "njoy/format/gnds/read/processExternalFiles.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/createParticleIdentifier.hpp"
+#include "njoy/format/gnds/read/createInteractionType.hpp"
+#include "njoy/format/gnds/read/pops/createParticleDatabase.hpp"
+#include "njoy/format/gnds/read/resonances/createResonanceParameters.hpp"
+#include "njoy/format/gnds/read/createReactions.hpp"
+#include "njoy/format/gnds/read/covariance/createCovarianceData.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a ProjectileTarget from a GNDS xml document
@@ -32,7 +32,7 @@ namespace gnds {
    *                          need to be normalised
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  inline ProjectileTarget
+  inline dryad::ProjectileTarget
   createProjectileTarget( pugi::xml_document& document,
                           const std::string& path,
                           bool normalise,
@@ -47,14 +47,14 @@ namespace gnds {
       auto resonances = suite.child( "resonances" );
       auto pops = suite.child( "PoPs" );
 
-      id::ParticleID projectile = createParticleIdentifier( suite.attribute( "projectile" ).as_string() );
-      id::ParticleID target( suite.attribute( "target" ).as_string() );
-      InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
+      dryad::id::ParticleID projectile = createParticleIdentifier( suite.attribute( "projectile" ).as_string() );
+      dryad::id::ParticleID target( suite.attribute( "target" ).as_string() );
+      dryad::InteractionType type = createInteractionType( suite.attribute( "interaction" ).as_string() );
 
-      std::vector< Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
+      std::vector< dryad::Reaction > reactions = createReactions( projectile, target, suite, normalise, style );
 
-      std::vector< id::ParticleID > identifiers = collectParticleIdentifiers( reactions );
-      std::optional< ParticleDatabase > particles = pops::createParticleDatabase( pops, identifiers, style );
+      std::vector< dryad::id::ParticleID > identifiers = collectParticleIdentifiers( reactions );
+      std::optional< dryad::ParticleDatabase > particles = pops::createParticleDatabase( pops, identifiers, style );
 
       std::optional< dryad::resonances::ResonanceParameters > parameters = std::nullopt;
       if ( resonances ) {
@@ -69,9 +69,9 @@ namespace gnds {
         covariances = covariance::createCovarianceData( projectile, target, covsuite );
       }
 
-      return ProjectileTarget( std::move( projectile ), std::move( target ),
-                               type, std::move( reactions ), std::move( particles ),
-                               std::move( parameters ), std::move( covariances ) );
+      return dryad::ProjectileTarget( std::move( projectile ), std::move( target ),
+                                      type, std::move( reactions ), std::move( particles ),
+                                      std::move( parameters ), std::move( covariances ) );
     }
     else {
 
@@ -80,9 +80,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

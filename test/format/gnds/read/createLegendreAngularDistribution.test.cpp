@@ -4,14 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createLegendreAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createLegendreAngularDistribution.hpp"
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const std::pair< std::optional< double >, LegendreAngularDistribution >& );
 
@@ -28,15 +29,15 @@ SCENARIO( "createLegendreAngularDistribution" ) {
                                    child( "distribution" ).child( "angularTwoBody" ).
                                    child( "XYs2d" );
 
-    auto axes = format::gnds::readAxes( node.child( "axes" ) );
+    auto axes = gnds::read::readAxes( node.child( "axes" ) );
     pugi::xml_node legendre = node.child( "function1ds" ).child( "Legendre" );
 
     WHEN( "a single average energy node is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::createLegendreAngularDistribution( legendre, axes, false );
-        auto chunk2 = format::gnds::createLegendreAngularDistribution( legendre, axes, true );
+        auto chunk1 = gnds::read::createLegendreAngularDistribution( legendre, axes, false );
+        auto chunk2 = gnds::read::createLegendreAngularDistribution( legendre, axes, true );
 
         //! @todo we need an unnormalised GNDS snippet
         verifyChunk( chunk1 );

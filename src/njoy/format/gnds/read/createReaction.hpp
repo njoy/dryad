@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEREACTION
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEREACTION
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEREACTION
+#define NJOY_FORMAT_GNDS_READ_CREATEREACTION
 
 // system includes
 #include <vector>
@@ -7,24 +7,26 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/adjustScatterLevel.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
-#include "njoy/dryad/format/gnds/createQValue.hpp"
-#include "njoy/dryad/format/gnds/createReactionProducts.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedCrossSection.hpp"
 #include "njoy/dryad/Reaction.hpp"
+#include "njoy/format/adjustScatterLevel.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
+#include "njoy/format/gnds/read/createQValue.hpp"
+#include "njoy/format/gnds/read/createReactionProducts.hpp"
+#include "njoy/format/gnds/read/createTabulatedCrossSection.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a Reaction from GNDS node (reaction or crossSectionSum)
    */
-  inline Reaction
-  createReaction( const id::ParticleID& projectile, const id::ParticleID& target,
-                  pugi::xml_node suite, pugi::xml_node reaction,
+  inline dryad::Reaction
+  createReaction( const dryad::id::ParticleID& projectile,
+                  const dryad::id::ParticleID& target,
+                  pugi::xml_node suite,
+                  pugi::xml_node reaction,
                   bool normalise,
                   const std::string& style = "eval" ) {
 
@@ -32,12 +34,12 @@ namespace gnds {
 
       // metadata and miscellaneous information
       int mt = reaction.attribute( "ENDF_MT" ).as_int();
-      id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+      dryad::id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
       Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
       // cross section
       auto section = reaction.child( "crossSection" );
-      TabulatedCrossSection xs = createTabulatedCrossSection( section, style );
+      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section, style );
 
       // Q values
       auto output = reaction.child( "outputChannel" );
@@ -49,7 +51,7 @@ namespace gnds {
       }
 
       // reaction products
-      std::vector< ReactionProduct > products;
+      std::vector< dryad::ReactionProduct > products;
       auto node = output.child( "products" );
       if ( node ) {
 
@@ -57,30 +59,30 @@ namespace gnds {
       }
 
       // special treatment for some incident electron data reactions
-      if ( projectile == id::ParticleID::electron() ) {
+      if ( projectile == dryad::id::ParticleID::electron() ) {
 
-        if ( id.reactionType() == id::ReactionType( projectile, 526 ) ) {
+        if ( id.reactionType() == dryad::id::ReactionType( projectile, 526 ) ) {
 
           // GNDS classifies total elastic as a primary reaction
           // but we classify it as a summation with a deficit reaction
-          std::vector< id::ReactionID > partials = { id::ReactionID( projectile, target, "large-angle-scattering" ),
-                                                     id::ReactionID( projectile, target, "deficit-scattering" ) };
+          std::vector< dryad::id::ReactionID > partials = { dryad::id::ReactionID( projectile, target, "large-angle-scattering" ),
+                                                            dryad::id::ReactionID( projectile, target, "deficit-scattering" ) };
 
           // return the reaction data
-          return Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
+          return dryad::Reaction( std::move( id ), std::move( partials ), std::move( xs ) );
         }
       }
 
       // return the reaction data
-      return Reaction( std::move( id ), std::move( xs ),
-                       std::move( products ), std::move( mass_q ),
-                       std::move( reaction_q ) );
+      return dryad::Reaction( std::move( id ), std::move( xs ),
+                              std::move( products ), std::move( mass_q ),
+                              std::move( reaction_q ) );
     }
     else if ( strcmp( reaction.name(), "crossSectionSum" ) == 0 ) {
 
       // metadata and miscellaneous information
       int mt = reaction.attribute( "ENDF_MT" ).as_int();
-      id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+      dryad::id::ReactionID id( projectile, target, adjustScatterLevel( projectile, target, mt ) );
       Log::info( "Reading data for \'{}\' - MT{}", id.symbol(), mt );
 
       // Q values
@@ -91,7 +93,7 @@ namespace gnds {
       }
 
       // partial identifiers
-      std::vector< id::ReactionID > partials;
+      std::vector< dryad::id::ReactionID > partials;
       auto summands = reaction.child( "summands" );
       for ( pugi::xml_node partial = summands.child( "add" );
             partial; partial = partial.next_sibling( "add" ) ) {
@@ -102,24 +104,24 @@ namespace gnds {
       }
 
       // special treatment for some incident electron data reactions
-      if ( projectile == id::ParticleID( "e-" ) ) {
+      if ( projectile == dryad::id::ParticleID( "e-" ) ) {
 
-        if ( id == id::ReactionID( projectile, target, 501 ) ) {
+        if ( id == dryad::id::ReactionID( projectile, target, 501 ) ) {
 
           // replace 526 by 525 and -526
-          auto total_elastic = id::ReactionID( projectile, target, 526 );
+          auto total_elastic = dryad::id::ReactionID( projectile, target, 526 );
           auto iter = std::find( partials.begin(), partials.end(), total_elastic );
-          *iter = id::ReactionID( projectile, target, 525 );
-          partials.insert( iter + 1, id::ReactionID( projectile, target, "deficit-scattering" ) );
+          *iter = dryad::id::ReactionID( projectile, target, 525 );
+          partials.insert( iter + 1, dryad::id::ReactionID( projectile, target, "deficit-scattering" ) );
         }
       }
 
       // cross section
       auto section = reaction.child( "crossSection" );
-      TabulatedCrossSection xs = createTabulatedCrossSection( section );
+      dryad::TabulatedCrossSection xs = createTabulatedCrossSection( section );
 
       // return the reaction data
-      return Reaction( std::move( id ), std::move( partials ), std::move( xs ), {} );
+      return dryad::Reaction( std::move( id ), std::move( partials ), std::move( xs ), {} );
     }
     else {
 
@@ -128,9 +130,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

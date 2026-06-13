@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTabulatedFormFactorFromNodes.hpp"
+#include "njoy/format/gnds/read/createTabulatedFormFactorFromNodes.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const TabulatedFormFactor& );
 
@@ -31,7 +32,7 @@ SCENARIO( "createTabulatedFormFactorFromNodes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createTabulatedFormFactorFromNodes( node );
+        auto chunk = gnds::read::createTabulatedFormFactorFromNodes( node );
 
         verifyChunk( chunk );
       } // THEN

@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTabulatedCrossSection.hpp"
+#include "njoy/format/gnds/read/createTabulatedCrossSection.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyNeutronChunk( const TabulatedCrossSection& );
 void verifyElectronChunk( const TabulatedCrossSection& );
@@ -29,7 +30,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createTabulatedCrossSection( xs );
+        auto chunk = gnds::read::createTabulatedCrossSection( xs );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -48,7 +49,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createTabulatedCrossSection( xs );
+        auto chunk = gnds::read::createTabulatedCrossSection( xs );
 
         verifyElectronChunk( chunk );
       } // THEN

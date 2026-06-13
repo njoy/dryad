@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDSCATTERINGFUNCTIONFROMNODES
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDSCATTERINGFUNCTIONFROMNODES
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDSCATTERINGFUNCTIONFROMNODES
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDSCATTERINGFUNCTIONFROMNODES
 
 // system includes
 #include <vector>
@@ -7,26 +7,26 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertInverseLengths.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
+#include "njoy/format/gnds/read/convertInverseLengths.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from a GNDS scattering function node
    */
-  inline TabulatedScatteringFunction
+  inline dryad::TabulatedScatteringFunction
   createTabulatedScatteringFunctionFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > x;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
@@ -89,14 +89,14 @@ namespace gnds {
       throw std::exception();
     }
 
-    return TabulatedScatteringFunction(
+    return dryad::TabulatedScatteringFunction(
              std::move( x ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

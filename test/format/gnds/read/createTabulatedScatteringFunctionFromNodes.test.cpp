@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTabulatedScatteringFunctionFromNodes.hpp"
+#include "njoy/format/gnds/read/createTabulatedScatteringFunctionFromNodes.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const TabulatedScatteringFunction& );
 
@@ -31,7 +32,7 @@ SCENARIO( "createTabulatedScatteringFunctionFromNodes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::createTabulatedScatteringFunctionFromNodes( node );
+        auto chunk = gnds::read::createTabulatedScatteringFunctionFromNodes( node );
 
         verifyChunk( chunk );
       } // THEN

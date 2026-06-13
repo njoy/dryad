@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESOLVELINK
-#define NJOY_DRYAD_FORMAT_GNDS_RESOLVELINK
+#ifndef NJOY_FORMAT_GNDS_READ_RESOLVELINK
+#define NJOY_FORMAT_GNDS_READ_RESOLVELINK
 
 // system includes
 #include <sstream>
@@ -11,9 +11,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert the shape
@@ -117,9 +117,9 @@ namespace gnds {
     return node;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

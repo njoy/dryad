@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEREACTIONPRODUCT
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEREACTIONPRODUCT
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEREACTIONPRODUCT
+#define NJOY_FORMAT_GNDS_READ_CREATEREACTIONPRODUCT
 
 // system includes
 #include <vector>
@@ -7,21 +7,21 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/createParticleIdentifier.hpp"
-#include "njoy/dryad/format/gnds/createMultiplicity.hpp"
-#include "njoy/dryad/format/gnds/createTwoBodyDistributionData.hpp"
-#include "njoy/dryad/format/gnds/createUncorrelatedDistributionData.hpp"
-#include "njoy/dryad/format/gnds/createCoherentDistributionData.hpp"
-#include "njoy/dryad/format/gnds/createIncoherentDistributionData.hpp"
-#include "njoy/dryad/format/gnds/createTabulatedAverageEnergy.hpp"
-#include "njoy/dryad/format/gnds/resolveLink.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/createParticleIdentifier.hpp"
+#include "njoy/format/gnds/read/createMultiplicity.hpp"
+#include "njoy/format/gnds/read/createTwoBodyDistributionData.hpp"
+#include "njoy/format/gnds/read/createUncorrelatedDistributionData.hpp"
+#include "njoy/format/gnds/read/createCoherentDistributionData.hpp"
+#include "njoy/format/gnds/read/createIncoherentDistributionData.hpp"
+#include "njoy/format/gnds/read/createTabulatedAverageEnergy.hpp"
+#include "njoy/format/gnds/read/resolveLink.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a ReactionProduct from an GNDS product node
@@ -35,11 +35,11 @@ namespace gnds {
    *                          need to be normalised
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  inline ReactionProduct
-  createReactionProduct( const id::ReactionID& reaction,
+  inline dryad::ReactionProduct
+  createReactionProduct( const dryad::id::ReactionID& reaction,
                          pugi::xml_node /* suite */,
                          pugi::xml_node product,
-                         std::optional< id::ParticleID > parent,
+                         std::optional< dryad::id::ParticleID > parent,
                          std::size_t chain,
                          bool normalise,
                          const std::string& style = "eval" ) {
@@ -48,7 +48,7 @@ namespace gnds {
     throwExceptionOnWrongNode( product, "product" );
 
     // get the reaction product id and look for the residual - if it is defined
-    id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
+    dryad::id::ParticleID id = createParticleIdentifier( product.attribute( "pid" ).as_string() );
     if ( chain == 0 ) {
 
       if ( reaction.residual().has_value() ) {
@@ -57,7 +57,8 @@ namespace gnds {
         if ( id.groundState() == residual.groundState() ) {
 
           if ( id.e() == residual.e() ||
-               ( ( residual.e() == id::LevelID::all || residual.e() == id::LevelID::continuum ) && id.e() == 0 ) ) {
+               ( ( residual.e() == dryad::id::LevelID::all ||
+                   residual.e() == dryad::id::LevelID::continuum ) && id.e() == 0 ) ) {
 
             id = residual;
           }
@@ -68,25 +69,25 @@ namespace gnds {
     // change the product identifier to a fundamental particle if need be
     if ( reaction.residual() != id ) {
 
-      if ( id == id::ParticleID( "H1" ) ) {
+      if ( id == dryad::id::ParticleID( "H1" ) ) {
 
-        id = id::ParticleID::proton();
+        id = dryad::id::ParticleID::proton();
       }
-      else if ( id == id::ParticleID( "H2" ) ) {
+      else if ( id == dryad::id::ParticleID( "H2" ) ) {
 
-        id = id::ParticleID::deuteron();
+        id = dryad::id::ParticleID::deuteron();
       }
-      else if ( id == id::ParticleID( "H3" ) ) {
+      else if ( id == dryad::id::ParticleID( "H3" ) ) {
 
-        id = id::ParticleID::triton();
+        id = dryad::id::ParticleID::triton();
       }
-      else if ( id == id::ParticleID( "He3" ) ) {
+      else if ( id == dryad::id::ParticleID( "He3" ) ) {
 
-        id = id::ParticleID::helion();
+        id = dryad::id::ParticleID::helion();
       }
-      else if ( id == id::ParticleID( "He4" ) ) {
+      else if ( id == dryad::id::ParticleID( "He4" ) ) {
 
-        id = id::ParticleID::alpha();
+        id = dryad::id::ParticleID::alpha();
       }
     }
 
@@ -97,7 +98,7 @@ namespace gnds {
     auto multiplicity = createMultiplicity( product.child( "multiplicity" ), style );
 
     // get distribution data
-    std::optional< ReactionProduct::DistributionData > distribution = std::nullopt;
+    std::optional< dryad::ReactionProduct::DistributionData > distribution = std::nullopt;
     auto node = product.child( "distribution" );
     if ( node ) {
 
@@ -156,25 +157,25 @@ namespace gnds {
     }
 
     // get average data
-    std::optional< TabulatedAverageCosine > average_cosine = std::nullopt;
-    std::optional< TabulatedAverageEnergy > average_energy = std::nullopt;
+    std::optional< dryad::TabulatedAverageCosine > average_cosine = std::nullopt;
+    std::optional< dryad::TabulatedAverageEnergy > average_energy = std::nullopt;
     node = product.child( "averageProductEnergy" );
     if ( node ) {
 
       average_energy = createTabulatedAverageEnergy( node );
     }
 
-    return ReactionProduct( id, multiplicity,
-                            std::move( distribution ),
-                            std::move( average_cosine ),
-                            std::move( average_energy ),
-                            std::move( parent ),
-                            chain );
+    return dryad::ReactionProduct( id, multiplicity,
+                                   std::move( distribution ),
+                                   std::move( average_cosine ),
+                                   std::move( average_energy ),
+                                   std::move( parent ),
+                                   chain );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

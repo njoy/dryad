@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDFORMFACTORFROMNODES
-#define NJOY_DRYAD_FORMAT_GNDS_CREATETABULATEDFORMFACTORFROMNODES
+#ifndef NJOY_FORMAT_GNDS_READ_CREATETABULATEDFORMFACTORFROMNODES
+#define NJOY_FORMAT_GNDS_READ_CREATETABULATEDFORMFACTORFROMNODES
 
 // system includes
 #include <vector>
@@ -7,26 +7,26 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
 #include "njoy/dryad/TabulatedFormFactor.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create a TabulatedFormFactor from a GNDS form factor node
    */
-  inline TabulatedFormFactor
+  inline dryad::TabulatedFormFactor
   createTabulatedFormFactorFromNodes( const pugi::xml_node& node ) {
 
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
@@ -89,14 +89,14 @@ namespace gnds {
       throw std::exception();
     }
 
-    return TabulatedFormFactor(
+    return dryad::TabulatedFormFactor(
              std::move( energies ), std::move( values ),
              std::move( boundaries ), std::move( interpolants ) );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

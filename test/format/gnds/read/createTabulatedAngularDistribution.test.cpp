@@ -4,14 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/createTabulatedAngularDistribution.hpp"
+#include "njoy/format/gnds/read/createTabulatedAngularDistribution.hpp"
 
 // other includes
-#include "njoy/dryad/format/gnds/readAxes.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const std::pair< std::optional< double >,
                                    TabulatedAngularDistribution >&, bool );
@@ -31,15 +32,15 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
                                    child( "distribution" ).child( "angularTwoBody" ).
                                    child( "XYs2d" );
 
-    auto axes = format::gnds::readAxes( node.child( "axes" ) );
+    auto axes = gnds::read::readAxes( node.child( "axes" ) );
     pugi::xml_node xys1d = node.child( "function1ds" ).child( "XYs1d" );
 
     WHEN( "a single two body data node is given" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::createTabulatedAngularDistribution( xys1d, axes, false );
-        auto chunk2 = format::gnds::createTabulatedAngularDistribution( xys1d, axes, true );
+        auto chunk1 = gnds::read::createTabulatedAngularDistribution( xys1d, axes, false );
+        auto chunk2 = gnds::read::createTabulatedAngularDistribution( xys1d, axes, true );
 
         verifyChunk( chunk1, false );
         verifyChunk( chunk2, true );
