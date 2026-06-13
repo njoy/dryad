@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/collectParticleIdentifiers.hpp"
+#include "njoy/format/collectParticleIdentifiers.hpp"
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/createReactions.hpp"
+#include "njoy/format/gnds/read/createReactions.hpp"
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 SCENARIO( "collectParticleIdentifiers" ) {
@@ -25,11 +26,11 @@ SCENARIO( "collectParticleIdentifiers" ) {
 
       id::ParticleID projectile( "n" );
       id::ParticleID target( "Sr88" );
-      std::vector< Reaction > reactions = format::gnds::createReactions( projectile, target, suite, false );
+      std::vector< Reaction > reactions = gnds::read::createReactions( projectile, target, suite, false );
 
       THEN( "the particle identifiers can be collected" ) {
 
-        auto chunk = format::collectParticleIdentifiers( reactions );
+        auto chunk = collectParticleIdentifiers( reactions );
 
         CHECK( 41 == chunk.size() );
         CHECK( id::ParticleID( "g" )                == chunk[0] );

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_COLLECTPARTICLEIDENTIFIERS
-#define NJOY_DRYAD_FORMAT_COLLECTPARTICLEIDENTIFIERS
+#ifndef NJOY_FORMAT_COLLECTPARTICLEIDENTIFIERS
+#define NJOY_FORMAT_COLLECTPARTICLEIDENTIFIERS
 
 // system includes
 #include <algorithm>
@@ -10,7 +10,6 @@
 #include "njoy/dryad/Reaction.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 
   /**
@@ -18,10 +17,10 @@ namespace format {
    *
    *  @param[in] reactions   the reactions
    */
-  inline std::vector< id::ParticleID >
-  collectParticleIdentifiers( const std::vector< Reaction >& reactions ) {
+  inline std::vector< dryad::id::ParticleID >
+  collectParticleIdentifiers( const std::vector< dryad::Reaction >& reactions ) {
 
-    std::vector< id::ParticleID > identifiers;
+    std::vector< dryad::id::ParticleID > identifiers;
 
     for ( const auto& reaction : reactions ) {
 
@@ -39,7 +38,7 @@ namespace format {
         }
         else {
 
-          identifiers.emplace_back( id::ParticleID::photon() );
+          identifiers.emplace_back( dryad::id::ParticleID::photon() );
         }
 
         for ( const auto& product : reaction.products() ) {
@@ -57,7 +56,6 @@ namespace format {
   };
 
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
