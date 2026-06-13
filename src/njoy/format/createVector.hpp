@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_CREATEVECTOR
-#define NJOY_DRYAD_FORMAT_CREATEVECTOR
+#ifndef NJOY_FORMAT_CREATEVECTOR
+#define NJOY_FORMAT_CREATEVECTOR
 
 // system includes
 #include <vector>
@@ -9,7 +9,6 @@
 #include "tools/std20/ranges.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 
   /**
@@ -28,7 +27,6 @@ namespace format {
   }
 
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

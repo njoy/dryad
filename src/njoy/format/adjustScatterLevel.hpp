@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ADJUSTSCATTERLEVEL
-#define NJOY_DRYAD_FORMAT_ADJUSTSCATTERLEVEL
+#ifndef NJOY_FORMAT_ADJUSTSCATTERLEVEL
+#define NJOY_FORMAT_ADJUSTSCATTERLEVEL
 
 // system includes
 
@@ -8,7 +8,6 @@
 #include "njoy/dryad/id/ReactionID.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 
   /**
@@ -18,14 +17,14 @@ namespace format {
    *  @param[in] target       the target identifier
    *  @param[in] mt           the mt number to adjust
    */
-  inline int adjustScatterLevel( const id::ParticleID& projectile,
-                                 const id::ParticleID& target,
+  inline int adjustScatterLevel( const dryad::id::ParticleID& projectile,
+                                 const dryad::id::ParticleID& target,
                                  int mt ) {
 
-    if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
+    if ( target.e() > 0 && projectile != dryad::id::ParticleID::photon() ) {
 
-      int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
-      int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+      int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
+      int elastic = dryad::id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
       if ( mt > ground && mt <= elastic ) {
 
         return mt - 1;
@@ -35,7 +34,6 @@ namespace format {
   };
 
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

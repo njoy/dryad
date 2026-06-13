@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/adjustScatterLevel.hpp"
+#include "njoy/format/adjustScatterLevel.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "adjustScatterLevel" ) {
 
@@ -23,19 +24,19 @@ SCENARIO( "adjustScatterLevel" ) {
 
       THEN( "the elastic mt can be adjusted" ) {
 
-        CHECK(  1 == format::adjustScatterLevel( neutron, am242_e0, 1 ) );
-        CHECK(  2 == format::adjustScatterLevel( neutron, am242_e0, 2 ) );
-        CHECK( 51 == format::adjustScatterLevel( neutron, am242_e0, 51 ) );
-        CHECK( 52 == format::adjustScatterLevel( neutron, am242_e0, 52 ) );
-        CHECK( 53 == format::adjustScatterLevel( neutron, am242_e0, 53 ) );
-        CHECK( 54 == format::adjustScatterLevel( neutron, am242_e0, 54 ) );
+        CHECK(  1 == adjustScatterLevel( neutron, am242_e0, 1 ) );
+        CHECK(  2 == adjustScatterLevel( neutron, am242_e0, 2 ) );
+        CHECK( 51 == adjustScatterLevel( neutron, am242_e0, 51 ) );
+        CHECK( 52 == adjustScatterLevel( neutron, am242_e0, 52 ) );
+        CHECK( 53 == adjustScatterLevel( neutron, am242_e0, 53 ) );
+        CHECK( 54 == adjustScatterLevel( neutron, am242_e0, 54 ) );
 
-        CHECK(  1 == format::adjustScatterLevel( neutron, am242_e2, 1 ) );
-        CHECK( 50 == format::adjustScatterLevel( neutron, am242_e2, 51 ) );
-        CHECK( 51 == format::adjustScatterLevel( neutron, am242_e2, 52 ) );
-        CHECK(  2 == format::adjustScatterLevel( neutron, am242_e2, 2 ) );
-        CHECK( 53 == format::adjustScatterLevel( neutron, am242_e2, 53 ) );
-        CHECK( 54 == format::adjustScatterLevel( neutron, am242_e2, 54 ) );
+        CHECK(  1 == adjustScatterLevel( neutron, am242_e2, 1 ) );
+        CHECK( 50 == adjustScatterLevel( neutron, am242_e2, 51 ) );
+        CHECK( 51 == adjustScatterLevel( neutron, am242_e2, 52 ) );
+        CHECK(  2 == adjustScatterLevel( neutron, am242_e2, 2 ) );
+        CHECK( 53 == adjustScatterLevel( neutron, am242_e2, 53 ) );
+        CHECK( 54 == adjustScatterLevel( neutron, am242_e2, 54 ) );
       } // THEN
     } // WHEN
   } // GIVEN
