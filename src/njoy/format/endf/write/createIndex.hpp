@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEENDFINDEX
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEENDFINDEX
+#ifndef NJOY_FORMAT_ENDF_WRITE_CREATEINDEX
+#define NJOY_FORMAT_ENDF_WRITE_CREATEINDEX
 
 // system includes
 #include <vector>
@@ -8,13 +8,14 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
+namespace endf {
+namespace write {
 
   /**
    *  @brief Create an one-based index from a zero-based index
    */
-  inline long createEndfIndex( int index ) {
+  inline long createIndex( int index ) {
 
     if ( index < 0 ) {
 
@@ -24,8 +25,9 @@ namespace format {
     return static_cast< long >( index ) + 1;
   }
 
+} // write namespace
+} // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

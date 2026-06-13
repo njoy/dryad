@@ -4,18 +4,18 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfResonanceParameters.hpp"
+#include "njoy/format/endf/write/resonances/lrf7/createResonanceParameters.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
 std::string chunkWithReducedWidthAmplitudes();
 std::string chunkWithFullWidths();
 
-SCENARIO( "createEndfResonanceParameters" ) {
+SCENARIO( "createResonanceParameters" ) {
 
   GIVEN( "valid data for resonance parameters" ) {
 
@@ -27,33 +27,33 @@ SCENARIO( "createEndfResonanceParameters" ) {
       auto cu63 = id::ParticleID( "Cu63" );
       auto cu64 = id::ParticleID( "Cu64[all]" );
 
-      ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                                Particle( cu64, 63.389 * njoy::constants::neutron_mass, 0, +1 ) );
-      ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
-                                 Particle( cu63, 62.389 * njoy::constants::neutron_mass, 1.5, -1 ) );
+      resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                            Particle( cu64, 63.389 * njoy::constants::neutron_mass, 0, +1 ) );
+      resonances::ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                                             Particle( cu63, 62.389 * njoy::constants::neutron_mass, 1.5, -1 ) );
 
-      ChannelRadii zero_radii( 0., 0. );
-      ChannelRadii radii( 6.7, 6.7 );
+      resonances::ChannelRadii zero_radii( 0., 0. );
+      resonances::ChannelRadii radii( 6.7, 6.7 );
 
-      SpinGroup group( { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
-                           neutron_pair, photon_pair, 0., 0, zero_radii },
-                         { id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
-                           neutron_pair, neutron_pair, 0., -1, radii },
-                         { id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ),
-                           neutron_pair, neutron_pair, 0., -1, radii } },
-                       { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
-                           id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
-                           id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ) },
-                         { -3.811148e+3, 2.993903e+5 },
-                         { { 1., 2. },
-                           { 1.1, -2.1 },
-                           { 1.2, 2.2 } } },
-                       Formalism::ReichMoore,
-                       BoundaryCondition::ShiftFactor );
+      resonances::SpinGroup group( { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii },
+                                     { id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ),
+                                       neutron_pair, neutron_pair, 0., -1, radii } },
+                                   { { id::ChannelID( "n,Cu63->g,Cu64[all]{0,0,1+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,1,1+}" ),
+                                       id::ChannelID( "n,Cu63->n,Cu63{1,2,1+}" ) },
+                                     { -3.811148e+3, 2.993903e+5 },
+                                     { { 1., 2. },
+                                       { 1.1, -2.1 },
+                                       { 1.2, 2.2 } } },
+                                   resonances::Formalism::ReichMoore,
+                                   resonances::BoundaryCondition::ShiftFactor );
 
       THEN( "it can be converted to ENDF using reduced width amplitudes" ) {
 
-        auto data = format::endf::resonances::lrf7::createEndfResonanceParameters( group, true );
+        auto data = endf::write::resonances::lrf7::createResonanceParameters( group, true );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -64,7 +64,7 @@ SCENARIO( "createEndfResonanceParameters" ) {
 
       THEN( "it can be converted to ENDF using full widths" ) {
 
-        auto data = format::endf::resonances::lrf7::createEndfResonanceParameters( group, false );
+        auto data = endf::write::resonances::lrf7::createResonanceParameters( group, false );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

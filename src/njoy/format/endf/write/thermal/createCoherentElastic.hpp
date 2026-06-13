@@ -1,19 +1,19 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_THERMAL_CREATEENDFCOHERENTELASTIC
-#define NJOY_DRYAD_FORMAT_ENDF_THERMAL_CREATEENDFCOHERENTELASTIC
+#ifndef NJOY_FORMAT_ENDF_WRITE_THERMAL_CREATECOHERENTELASTIC
+#define NJOY_FORMAT_ENDF_WRITE_THERMAL_CREATECOHERENTELASTIC
 
 // system includes
 #include <vector>
 
 // other includes
 #include "njoy/dryad/thermal/CoherentElasticScattering.hpp"
-#include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
-#include "njoy/dryad/format/endf/createEndfBoundaries.hpp"
+#include "njoy/format/endf/write/createInterpolants.hpp"
+#include "njoy/format/endf/write/createBoundaries.hpp"
 #include "ENDFtk/section/7/2.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace thermal {
 
   /**
@@ -23,7 +23,7 @@ namespace thermal {
    *  @param[in] coherent   the coherent elastic data
    */
   inline ENDFtk::section::Type< 7, 2 >::CoherentElastic
-  createEndfCoherentElastic( const dryad::thermal::CoherentElasticScattering& coherent ) {
+  createCoherentElastic( const dryad::thermal::CoherentElasticScattering& coherent ) {
 
     //! @todo verify that all temperatures have the same Bragg edge energies
 
@@ -47,9 +47,9 @@ namespace thermal {
   }
 
 } // thermal namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

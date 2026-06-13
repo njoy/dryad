@@ -4,16 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
+#include "njoy/format/endf/write/createFile23Section.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 std::string chunk();
 
-SCENARIO( "createEndfFile23Section" ) {
+SCENARIO( "createFile23Section" ) {
 
   GIVEN( "valid data for a reaction" ) {
 
@@ -38,7 +39,7 @@ SCENARIO( "createEndfFile23Section" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::createEndfFile23Section( awr, reaction );
+        auto data = endf::write::createFile23Section( awr, reaction );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

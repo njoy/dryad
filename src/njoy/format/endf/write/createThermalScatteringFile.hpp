@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETHERMALSCATTERINGENDFFILE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETHERMALSCATTERINGENDFFILE
+#ifndef NJOY_FORMAT_ENDF_WRITE_CREATETHERMALSCATTERINGFILE
+#define NJOY_FORMAT_ENDF_WRITE_CREATETHERMALSCATTERINGFILE
 
 // system includes
 #include <fstream>
@@ -7,18 +7,17 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/thermal/createEndfCoherentElastic.hpp"
-#include "njoy/dryad/format/endf/thermal/createEndfIncoherentElastic.hpp"
-#include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
+#include "njoy/format/endf/write/thermal/createCoherentElastic.hpp"
+#include "njoy/format/endf/write/thermal/createIncoherentElastic.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 #include "ENDFtk/tree/updateDirectory.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 
   /**
    *  @brief Create an ENDF thermal scattering file
@@ -28,10 +27,10 @@ namespace endf {
    *  @param[in] mat        the ENDF mat number
    *  @param[in] filename   the file name for the ENDF file
    */
-  inline void createThermalScatteringEndfFile( const ThermalScattering& tsl,
-                                               int za,
-                                               int mat,
-                                               const std::string& filename ) {
+  inline void createThermalScatteringFile( const dryad::ThermalScattering& tsl,
+                                           int za,
+                                           int mat,
+                                           const std::string& filename ) {
 
     int zaid = za;
     double awr = 0.;
@@ -82,22 +81,22 @@ namespace endf {
         ENDFtk::section::Type< 7, 2 >
         elastic( zaid, awr,
                  ENDFtk::section::Type< 7, 2 >::MixedElastic(
-                   thermal::createEndfCoherentElastic( tsl.coherentElasticScattering().value() ),
-                   thermal::createEndfIncoherentElastic( tsl.incoherentElasticScattering().value() ) ) );
+                   thermal::createCoherentElastic( tsl.coherentElasticScattering().value() ),
+                   thermal::createIncoherentElastic( tsl.incoherentElasticScattering().value() ) ) );
         material.insert( elastic );
       }
       else if ( tsl.hasCoherentElasticScattering() ) {
 
         ENDFtk::section::Type< 7, 2 >
         elastic( zaid, awr,
-                 thermal::createEndfCoherentElastic( tsl.coherentElasticScattering().value() ) );
+                 thermal::createCoherentElastic( tsl.coherentElasticScattering().value() ) );
         material.insert( elastic );
       }
       else {
 
         ENDFtk::section::Type< 7, 2 >
         elastic( zaid, awr,
-                 thermal::createEndfIncoherentElastic( tsl.incoherentElasticScattering().value() ) );
+                 thermal::createIncoherentElastic( tsl.incoherentElasticScattering().value() ) );
         material.insert( elastic );
       }
     }
@@ -122,9 +121,9 @@ namespace endf {
     out.close();
   }
 
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

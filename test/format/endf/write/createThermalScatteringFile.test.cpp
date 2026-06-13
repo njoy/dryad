@@ -4,21 +4,21 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createThermalScatteringEndfFile.hpp"
+#include "njoy/format/endf/write/createThermalScatteringFile.hpp"
 
 // other includes
 #include <cstdio>
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
 std::string chunkWithCoherentElasticAndInelastic();
 std::string chunkWithIncoherentElasticAndInelastic();
 std::string chunkWithMixedElasticAndInelastic();
 std::string readContentFromFile( const std::string& );
 
-SCENARIO( "createThermalScatteringEndfFile" ) {
+SCENARIO( "createThermalScatteringFile" ) {
 
   // Note: these tests are spliced together from existing files and fictitious
   //       data. none of these are realistic data.
@@ -90,7 +90,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
       "                                                                  \n"
       " -----------------------------------------------------------------\n";
 
-    CoherentElasticScattering
+    thermal::CoherentElasticScattering
     coherent( { { 293.6, { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
                          { 3.757353e-3, 1.386287e-2, 8.406348e-2, 8.406348e-2 } },
                 {  400., { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
@@ -112,7 +112,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "dshflkadsjhflahlfblsdakfbleauflkdnclsne.endf";
-      format::endf::createThermalScatteringEndfFile( tsl, 126, 26, filename );
+      endf::write::createThermalScatteringFile( tsl, 126, 26, filename );
 
       CHECK( chunkWithCoherentElasticAndInelastic() == readContentFromFile( filename ) );
 
@@ -181,7 +181,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
       "    LA-12639-MS (ENDF-356) March 1994.                            \n"
       "                                                                  \n";
 
-    IncoherentElasticScattering
+    thermal::IncoherentElasticScattering
     incoherent( 6.337872,
                 { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                   { 2.013538, 2.677764, 3.323456, 3.972601,
@@ -195,7 +195,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "jadngjndvkajeakjselkfasjdbbfakjbflakwlrec.endf";
-      format::endf::createThermalScatteringEndfFile( tsl, 158, 58, filename );
+      endf::write::createThermalScatteringFile( tsl, 158, 58, filename );
 
       CHECK( chunkWithIncoherentElasticAndInelastic() == readContentFromFile( filename ) );
 
@@ -270,7 +270,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
       "                                                                  \n"
       " -----------------------------------------------------------------\n";
 
-    CoherentElasticScattering
+    thermal::CoherentElasticScattering
     coherent( { { 293.6, { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
                          { 3.757353e-3, 1.386287e-2, 8.406348e-2, 8.406348e-2 } },
                 {  400., { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
@@ -284,7 +284,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
                 {  800., { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
                          { 3.337757e-3, 1.178474e-2, 3.861519e-2, 3.861519e-2 } } } );
 
-    IncoherentElasticScattering
+    thermal::IncoherentElasticScattering
     incoherent( 6.337872,
                 { { 293.6, 400, 500, 600, 800 },
                   { 2.013538, 2.677764, 3.323456, 3.972601,
@@ -298,7 +298,7 @@ SCENARIO( "createThermalScatteringEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "ecueiohfcieruhfcalmxemhaioehfmoiehfxoa.endf";
-      format::endf::createThermalScatteringEndfFile( tsl, 126, 26, filename );
+      endf::write::createThermalScatteringFile( tsl, 126, 26, filename );
 
       CHECK( chunkWithMixedElasticAndInelastic() == readContentFromFile( filename ) );
 

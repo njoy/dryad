@@ -4,18 +4,18 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfBackgroundChannels.hpp"
+#include "njoy/format/endf/write/resonances/lrf7/createBackgroundChannels.hpp"
 
 // other includes
 #include "njoy/constants.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
 std::string chunk();
 
-SCENARIO( "createEndfBackgroundChannels" ) {
+SCENARIO( "createBackgroundChannels" ) {
 
   GIVEN( "valid data for a spin group with background elements" ) {
 
@@ -28,31 +28,31 @@ SCENARIO( "createEndfBackgroundChannels" ) {
       auto sr88 = id::ParticleID( "Sr88" );
       auto sr89 = id::ParticleID( "Sr89[all]" );
 
-      ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                                Particle( sr89, 88.15046 * njoy::constants::neutron_mass, 0, +1 ) );
-      ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
-                                 Particle( sr88, 87.15046 * njoy::constants::neutron_mass, 0, +1 ) );
+      resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                            Particle( sr89, 88.15046 * njoy::constants::neutron_mass, 0, +1 ) );
+      resonances::ParticlePair neutron_pair( Particle( neutron, njoy::constants::neutron_mass, 0.5, +1 ),
+                                             Particle( sr88, 87.15046 * njoy::constants::neutron_mass, 0, +1 ) );
 
-      ChannelRadii zero_radii( 0., 0. );
-      ChannelRadii equal_radii( 7.1, 7.1 );
+      resonances::ChannelRadii zero_radii( 0., 0. );
+      resonances::ChannelRadii equal_radii( 7.1, 7.1 );
 
-      SpinGroup group( { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
-                           neutron_pair, photon_pair, 0., 0, zero_radii },
-                         { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ),
-                           neutron_pair, neutron_pair, 0., -1, equal_radii,
-                           Kinematics::NonRelativistic,
-                           SammyBackground( { 0.45, 3.2e-7, 0. }, { 0.075, 0. }, 0., 9.55e+5 ) } },
-                       { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
-                           id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ) },
-                         { 1.241000e+4, 8.331700e+5 },
-                         { { 1., 2. },
-                           { 1.1, 2.1 } } },
-                       Formalism::ReichMoore,
-                       BoundaryCondition::ShiftFactor );
+      resonances::SpinGroup group( { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
+                                       neutron_pair, photon_pair, 0., 0, zero_radii },
+                                     { id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ),
+                                       neutron_pair, neutron_pair, 0., -1, equal_radii,
+                                       resonances::Kinematics::NonRelativistic,
+                                       resonances::SammyBackground( { 0.45, 3.2e-7, 0. }, { 0.075, 0. }, 0., 9.55e+5 ) } },
+                                   { { id::ChannelID( "n,Sr88->g,Sr89[all]{0,0,1/2-}" ),
+                                       id::ChannelID( "n,Sr88->n,Sr88{1,1/2,1/2-}" ) },
+                                     { 1.241000e+4, 8.331700e+5 },
+                                     { { 1., 2. },
+                                       { 1.1, 2.1 } } },
+                                   resonances::Formalism::ReichMoore,
+                                   resonances::BoundaryCondition::ShiftFactor );
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::resonances::lrf7::createEndfBackgroundChannels( group );
+        auto data = endf::write::resonances::lrf7::createBackgroundChannels( group );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

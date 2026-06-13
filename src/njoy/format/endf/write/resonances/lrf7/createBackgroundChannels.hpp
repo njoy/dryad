@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFBACKGROUNDCHANNELS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFBACKGROUNDCHANNELS
+#ifndef NJOY_FORMAT_ENDF_WRITE_RESONANCES_LRF7_CREATEBACKGROUNDCHANNELS
+#define NJOY_FORMAT_ENDF_WRITE_RESONANCES_LRF7_CREATEBACKGROUNDCHANNELS
 
 // system includes
 #include <algorithm>
@@ -9,14 +9,14 @@
 #include "tools/Log.hpp"
 #include "tools/overload.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
-#include "njoy/dryad/format/endf/createEndfBoundaries.hpp"
+#include "njoy/format/endf/write/createInterpolants.hpp"
+#include "njoy/format/endf/write/createBoundaries.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace resonances {
 namespace lrf7 {
 
@@ -26,7 +26,7 @@ namespace lrf7 {
    *  @param[in] spingroup   the spin group
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels
-  createEndfBackgroundChannels( const dryad::resonances::SpinGroup& spingroup ) {
+  createBackgroundChannels( const dryad::resonances::SpinGroup& spingroup ) {
 
     using BackgroundChannels = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundChannels;
     using BackgroundRMatrix = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::BackgroundRMatrix;
@@ -59,8 +59,8 @@ namespace lrf7 {
         },
         [&] ( const njoy::dryad::resonances::TabulatedBackground& bckg ) -> BackgroundRMatrix {
 
-          auto boundaries = createEndfBoundaries( bckg.boundaries() );
-          auto interpolants = createEndfInterpolants( bckg.interpolants() );
+          auto boundaries = createBoundaries( bckg.boundaries() );
+          auto interpolants = createInterpolants( bckg.interpolants() );
           auto energies = bckg.energies();
           auto values = bckg.values();
           return TabulatedBackgroundRMatrix( i + 1,
@@ -83,9 +83,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,19 +4,19 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/atomic/createEndfSubshellData.hpp"
+#include "njoy/format/endf/write/atomic/createSubshellData.hpp"
 
 // other includes
 #include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::atomic;
+using namespace njoy::format;
 
 std::string chunk();
 std::string chunkWithoutTransitions();
 
-SCENARIO( "createEndfSubshellData" ) {
+SCENARIO( "createSubshellData" ) {
 
   GIVEN( "valid data for a subshell configuration without transitions" ) {
 
@@ -28,12 +28,12 @@ SCENARIO( "createEndfSubshellData" ) {
       double energy = 28.48;
       double population = 2.;
 
-      ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
-                                           std::move( population ) );
+      atomic::ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
+                                                   std::move( population ) );
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::atomic::createEndfSubshellData( chunk );
+        auto data = endf::write::atomic::createSubshellData( chunk );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );
@@ -53,29 +53,29 @@ SCENARIO( "createEndfSubshellData" ) {
       id::ElectronSubshellID id( "K" );
       double energy = 538;
       double population = 2.;
-      std::vector< RadiativeTransitionData > radiative = {
+      std::vector< atomic::RadiativeTransitionData > radiative = {
 
-        RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
-        RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 )
+        atomic::RadiativeTransitionData( id::ElectronSubshellID( "L2" ), 0.00190768, 523.09 ),
+        atomic::RadiativeTransitionData( id::ElectronSubshellID( "L3" ), 0.00380027, 523.13 )
       };
-      std::vector< NonRadiativeTransitionData > nonradiative = {
+      std::vector< atomic::NonRadiativeTransitionData > nonradiative = {
 
-        NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
-        NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
-        NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
-        NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
-        NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
-        NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 )
+        atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L1" ), 0.178644, 478.82 ),
+        atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L2" ), 0.116224, 493.86 ),
+        atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L1" ), id::ElectronSubshellID( "L3" ), 0.230418, 493.9 ),
+        atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L2" ), 0.0110822, 508.9 ),
+        atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L2" ), id::ElectronSubshellID( "L3" ), 0.291115, 508.94 ),
+        atomic::NonRadiativeTransitionData( id::ElectronSubshellID( "L3" ), id::ElectronSubshellID( "L3" ), 0.166809, 508.98 )
       };
 
-      ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
-                                           std::move( population ),
-                                           std::move( radiative ),
-                                           std::move( nonradiative ) );
+      atomic::ElectronSubshellConfiguration chunk( std::move( id ), std::move( energy ),
+                                                   std::move( population ),
+                                                   std::move( radiative ),
+                                                   std::move( nonradiative ) );
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::atomic::createEndfSubshellData( chunk );
+        auto data = endf::write::atomic::createSubshellData( chunk );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

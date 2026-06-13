@@ -4,14 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
+#include "njoy/format/endf/write/createSublibraryType.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createEndfSublibraryType" ) {
+SCENARIO( "createSublibraryType" ) {
 
   GIVEN( "interaction types and projectile identifiers" ) {
 
@@ -19,20 +20,20 @@ SCENARIO( "createEndfSublibraryType" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( 0     == format::endf::createEndfSublibraryType( id::ParticleID::photon(), InteractionType::Nuclear ) );
-        CHECK( 3     == format::endf::createEndfSublibraryType( id::ParticleID::photon(), InteractionType::Atomic ) );
-        CHECK( 10    == format::endf::createEndfSublibraryType( id::ParticleID::neutron(), InteractionType::Nuclear ) );
-        CHECK( 113   == format::endf::createEndfSublibraryType( id::ParticleID::electron(), InteractionType::Atomic ) );
-        CHECK( 10010 == format::endf::createEndfSublibraryType( id::ParticleID::proton(), InteractionType::Nuclear ) );
-        CHECK( 10020 == format::endf::createEndfSublibraryType( id::ParticleID::deuteron(), InteractionType::Nuclear ) );
-        CHECK( 10030 == format::endf::createEndfSublibraryType( id::ParticleID::triton(), InteractionType::Nuclear ) );
-        CHECK( 20030 == format::endf::createEndfSublibraryType( id::ParticleID::helion(), InteractionType::Nuclear ) );
-        CHECK( 20040 == format::endf::createEndfSublibraryType( id::ParticleID::alpha(), InteractionType::Nuclear ) );
+        CHECK( 0     == endf::write::createSublibraryType( id::ParticleID::photon(), InteractionType::Nuclear ) );
+        CHECK( 3     == endf::write::createSublibraryType( id::ParticleID::photon(), InteractionType::Atomic ) );
+        CHECK( 10    == endf::write::createSublibraryType( id::ParticleID::neutron(), InteractionType::Nuclear ) );
+        CHECK( 113   == endf::write::createSublibraryType( id::ParticleID::electron(), InteractionType::Atomic ) );
+        CHECK( 10010 == endf::write::createSublibraryType( id::ParticleID::proton(), InteractionType::Nuclear ) );
+        CHECK( 10020 == endf::write::createSublibraryType( id::ParticleID::deuteron(), InteractionType::Nuclear ) );
+        CHECK( 10030 == endf::write::createSublibraryType( id::ParticleID::triton(), InteractionType::Nuclear ) );
+        CHECK( 20030 == endf::write::createSublibraryType( id::ParticleID::helion(), InteractionType::Nuclear ) );
+        CHECK( 20040 == endf::write::createSublibraryType( id::ParticleID::alpha(), InteractionType::Nuclear ) );
       } // THEN
 
       THEN( "an exception is thrown for projectiles and interaction types not supported by ENDF" ) {
 
-        CHECK_THROWS( format::endf::createEndfSublibraryType( id::ParticleID::neutron(), InteractionType::Atomic ) );
+        CHECK_THROWS( endf::write::createSublibraryType( id::ParticleID::neutron(), InteractionType::Atomic ) );
       } // THEN
     } // WHEN
   } // GIVEN

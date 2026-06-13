@@ -4,18 +4,18 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/thermal/createEndfCoherentElastic.hpp"
+#include "njoy/format/endf/write/thermal/createCoherentElastic.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
 std::string chunk();
 
-SCENARIO( "createEndfCoherentElastic" ) {
+SCENARIO( "createCoherentElastic" ) {
 
   GIVEN( "valid data for coherent elastic scattering" ) {
 
@@ -23,7 +23,7 @@ SCENARIO( "createEndfCoherentElastic" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      CoherentElasticScattering
+      thermal::CoherentElasticScattering
       coherent( { { 293.6, { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
                            { 3.757353e-3, 1.386287e-2, 8.406348e-2, 8.406348e-2 } },
                   {  400., { 3.706719e-3, 4.942291e-3, 5.572434e-1, 5. },
@@ -39,7 +39,7 @@ SCENARIO( "createEndfCoherentElastic" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::thermal::createEndfCoherentElastic( coherent );
+        auto data = endf::write::thermal::createCoherentElastic( coherent );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

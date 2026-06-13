@@ -4,14 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
+#include "njoy/format/endf/write/createInterpolants.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createEndfInterpolants" ) {
+SCENARIO( "createInterpolants" ) {
 
   GIVEN( "dryad interpolation types" ) {
 
@@ -24,7 +25,7 @@ SCENARIO( "createEndfInterpolants" ) {
                                                           InterpolationType::LinearLog,
                                                           InterpolationType::LogLinear,
                                                           InterpolationType::LogLog };
-        std::vector< long > converted = format::endf::createEndfInterpolants( interpolants );
+        std::vector< long > converted = endf::write::createInterpolants( interpolants );
 
         CHECK( 1 == converted[0] );
         CHECK( 2 == converted[1] );

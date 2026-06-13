@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPROJECTILETARGETENDFFILE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEPROJECTILETARGETENDFFILE
+#ifndef NJOY_FORMAT_ENDF_WRITE_CREATEPROJECTILETARGETFILE
+#define NJOY_FORMAT_ENDF_WRITE_CREATEPROJECTILETARGETFILE
 
 // system includes
 #include <fstream>
@@ -7,21 +7,20 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
-#include "njoy/dryad/format/endf/createEndfFile2Section151.hpp"
-#include "njoy/dryad/format/endf/createEndfFile3Section.hpp"
-#include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
-#include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/constants.hpp"
+#include "njoy/format/endf/write/createSublibraryType.hpp"
+#include "njoy/format/endf/write/createFile2Section151.hpp"
+#include "njoy/format/endf/write/createFile3Section.hpp"
+#include "njoy/format/endf/write/createFile23Section.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 #include "ENDFtk/tree/updateDirectory.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 
   /**
    *  @brief Create an ENDF incident particle file
@@ -31,10 +30,10 @@ namespace endf {
    *  @param[in] filename                 the file name for the ENDF file
    *  @param[in] reducedWidthAmplitudes   if there are resonances, use reduced width amplitudes
    */
-  inline void createProjectileTargetEndfFile( const ProjectileTarget& transport,
-                                              int mat,
-                                              const std::string& filename,
-                                              bool reducedWidthAmplitudes = true ) {
+  inline void createProjectileTargetFile( const dryad::ProjectileTarget& transport,
+                                          int mat,
+                                          const std::string& filename,
+                                          bool reducedWidthAmplitudes = true ) {
 
     auto projectile = transport.projectileIdentifier();
     auto target = transport.targetIdentifier();
@@ -65,7 +64,7 @@ namespace endf {
     int lrel = transport.documentation().version().has_value()
                ? transport.documentation().version()->second
                : 0;
-    int nsub = createEndfSublibraryType( projectile,
+    int nsub = createSublibraryType( projectile,
                                          transport.interactionType() );
     int nver = transport.documentation().version().has_value()
                ? transport.documentation().version()->first
@@ -89,21 +88,21 @@ namespace endf {
     //! @todo if lrp=0, should write a 'special case' MF2
     if ( transport.resonances().has_value() ) {
 
-      material.insert( createEndfFile2Section151( awr, transport.resonances().value(),
+      material.insert( createFile2Section151( awr, transport.resonances().value(),
                                                   reducedWidthAmplitudes ) );
     }
 
     for ( const auto& reaction : transport.reactions() ) {
 
-      if ( transport.interactionType() == InteractionType::Nuclear ) {
+      if ( transport.interactionType() == dryad::InteractionType::Nuclear ) {
 
-        material.insert( createEndfFile3Section( awr, reaction ) );
+        material.insert( createFile3Section( awr, reaction ) );
       }
       else {
 
-        if ( reaction.identifier().reactionType() != id::ReactionType( "deficit-scattering" ) ) {
+        if ( reaction.identifier().reactionType() != dryad::id::ReactionType( "deficit-scattering" ) ) {
 
-          material.insert( createEndfFile23Section( awr, reaction ) );
+          material.insert( createFile23Section( awr, reaction ) );
         }
       }
     }
@@ -121,9 +120,9 @@ namespace endf {
     out.close();
   }
 
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFRMATRIXLIMITED
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFRMATRIXLIMITED
+#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATERMATRIXLIMITED
+#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATERMATRIXLIMITED
 
 // system includes
 #include <algorithm>
@@ -7,16 +7,17 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfParticlePairs.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfResonanceChannels.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfResonanceParameters.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createEndfBackgroundChannels.hpp"
+#include "njoy/dryad/resonances/CompoundSystem.hpp"
+#include "njoy/format/endf/write/resonances/lrf7/createParticlePairs.hpp"
+#include "njoy/format/endf/write/resonances/lrf7/createResonanceChannels.hpp"
+#include "njoy/format/endf/write/resonances/lrf7/createResonanceParameters.hpp"
+#include "njoy/format/endf/write/resonances/lrf7/createBackgroundChannels.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace resonances {
 namespace lrf7 {
 
@@ -27,10 +28,10 @@ namespace lrf7 {
    *  @param[in] reducedWidthAmplitudes   use reduced width amplitudes
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited
-  createEndfRMatrixLimited( const dryad::resonances::CompoundSystem& compound,
-                            bool reducedWidthAmplitudes = true ) {
+  createRMatrixLimited( const dryad::resonances::CompoundSystem& compound,
+                        bool reducedWidthAmplitudes = true ) {
 
-    using SpinGroup     = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup;
+    using SpinGroup      = ENDFtk::section::Type< 2, 151 >::RMatrixLimited::SpinGroup;
     using RMatrixLimited = ENDFtk::section::Type< 2, 151 >::RMatrixLimited;
 
     // flag for reduced widths
@@ -50,19 +51,19 @@ namespace lrf7 {
       krm = 4;
     }
 
-    auto pairs = resonances::lrf7::createEndfParticlePairs( compound );
+    auto pairs = resonances::lrf7::createParticlePairs( compound );
     std::vector< SpinGroup > groups;
     for ( const auto& group : compound.spinGroups() ) {
 
       if ( group.hasChannelsWithBackground() ) {
 
-        groups.emplace_back( createEndfResonanceChannels( group, pairs ),
-                             createEndfResonanceParameters( group, reducedWidthAmplitudes ),
-                             createEndfBackgroundChannels( group ) );
+        groups.emplace_back( createResonanceChannels( group, pairs ),
+                             createResonanceParameters( group, reducedWidthAmplitudes ),
+                             createBackgroundChannels( group ) );
       } else {
 
-        groups.emplace_back( createEndfResonanceChannels( group, pairs ),
-                             createEndfResonanceParameters( group, reducedWidthAmplitudes ) );
+        groups.emplace_back( createResonanceChannels( group, pairs ),
+                             createResonanceParameters( group, reducedWidthAmplitudes ) );
       }
     }
 
@@ -72,9 +73,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

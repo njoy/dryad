@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEATOMICRELAXATIONENDFFILE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEATOMICRELAXATIONENDFFILE
+#ifndef NJOY_FORMAT_ENDF_WRITE_CREATEATOMICRELAXATIONFILE
+#define NJOY_FORMAT_ENDF_WRITE_CREATEATOMICRELAXATIONFILE
 
 // system includes
 #include <fstream>
@@ -7,17 +7,16 @@
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/atomic/createEndfSubshellData.hpp"
-#include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
+#include "njoy/format/endf/write/atomic/createSubshellData.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 #include "ENDFtk/tree/updateDirectory.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 
   /**
    *  @brief Create an ENDF atomic relaxation file
@@ -26,9 +25,9 @@ namespace endf {
    *  @param[in] mat          the ENDF mat number
    *  @param[in] filename     the file name for the ENDF file
    */
-  inline void createAtomicRelaxationEndfFile( const AtomicRelaxation& relaxation,
-                                              int mat,
-                                              const std::string& filename ) {
+  inline void createAtomicRelaxationFile( const dryad::AtomicRelaxation& relaxation,
+                                          int mat,
+                                          const std::string& filename ) {
 
     int zaid = relaxation.elementIdentifier().number() * 1000;
     double awr = 0.;
@@ -68,7 +67,7 @@ namespace endf {
     std::vector< ENDFtk::section::Type< 28 >::SubshellData > subshells;
     for ( const auto& subshell : relaxation.subshells() ) {
 
-      subshells.emplace_back( atomic::createEndfSubshellData( subshell ) );
+      subshells.emplace_back( atomic::createSubshellData( subshell ) );
     }
 
     ENDFtk::section::Type< 28 >
@@ -89,9 +88,9 @@ namespace endf {
     out.close();
   }
 
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

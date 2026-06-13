@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEENDFSUBLIBRARYTYPE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEENDFSUBLIBRARYTYPE
+#ifndef NJOY_FORMAT_ENDF_WRITE_CREATESUBLIBRARYTYPE
+#define NJOY_FORMAT_ENDF_WRITE_CREATESUBLIBRARYTYPE
 
 // system includes
 
@@ -9,27 +9,27 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 
   /**
    *  @brief Create the ENDF sublibrary type based on the interaction
    *         type and projectile type
    */
-  inline int createEndfSublibraryType( const id::ParticleID& projectile,
-                                       const InteractionType& interaction ) {
+  inline int createSublibraryType( const dryad::id::ParticleID& projectile,
+                                   const dryad::InteractionType& interaction ) {
 
-    if ( interaction == InteractionType::Atomic ) {
+    if ( interaction == dryad::InteractionType::Atomic ) {
 
-      if ( ( projectile != id::ParticleID::photon() ) &&
-           ( projectile != id::ParticleID::electron() ) ) {
+      if ( ( projectile != dryad::id::ParticleID::photon() ) &&
+           ( projectile != dryad::id::ParticleID::electron() ) ) {
 
         Log::error( "The ENDF format only handles atomic interactions for photons "
                     "and electrons. Found atomic data for {}", projectile.symbol() );
         throw std::exception();
       }
-      return projectile == id::ParticleID::photon() ? 3 : 113;
+      return projectile == dryad::id::ParticleID::photon() ? 3 : 113;
     }
     else {
 
@@ -37,9 +37,9 @@ namespace endf {
     }
   }
 
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

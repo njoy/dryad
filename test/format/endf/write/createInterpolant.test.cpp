@@ -4,14 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createEndfInterpolant.hpp"
+#include "njoy/format/endf/write/createInterpolant.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createEndfInterpolant" ) {
+SCENARIO( "createInterpolant" ) {
 
   GIVEN( "dryad interpolation types" ) {
 
@@ -19,11 +20,11 @@ SCENARIO( "createEndfInterpolant" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( 1 == format::endf::createEndfInterpolant( InterpolationType::Histogram    ) );
-        CHECK( 2 == format::endf::createEndfInterpolant( InterpolationType::LinearLinear ) );
-        CHECK( 3 == format::endf::createEndfInterpolant( InterpolationType::LinearLog    ) );
-        CHECK( 4 == format::endf::createEndfInterpolant( InterpolationType::LogLinear    ) );
-        CHECK( 5 == format::endf::createEndfInterpolant( InterpolationType::LogLog       ) );
+        CHECK( 1 == endf::write::createInterpolant( InterpolationType::Histogram    ) );
+        CHECK( 2 == endf::write::createInterpolant( InterpolationType::LinearLinear ) );
+        CHECK( 3 == endf::write::createInterpolant( InterpolationType::LinearLog    ) );
+        CHECK( 4 == endf::write::createInterpolant( InterpolationType::LogLinear    ) );
+        CHECK( 5 == endf::write::createInterpolant( InterpolationType::LogLog       ) );
       } // THEN
     } // WHEN
   } // GIVEN

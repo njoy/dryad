@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEENDFELECTRONSUBSHELLID
-#define NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEENDFELECTRONSUBSHELLID
+#ifndef NJOY_FORMAT_ENDF_WRITE_ATOMIC_CREATEELECTRONSUBSHELLID
+#define NJOY_FORMAT_ENDF_WRITE_ATOMIC_CREATEELECTRONSUBSHELLID
 
 // system includes
 #include <vector>
@@ -9,9 +9,9 @@
 #include "njoy/dryad/id/ElectronSubshellID.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace atomic {
 
   /**
@@ -19,15 +19,15 @@ namespace atomic {
    *
    *  @param[in] subshell   the subshell identifier
    */
-  inline unsigned int createEndfSubshellDesignator( const id::ElectronSubshellID& id ) {
+  inline unsigned int createSubshellDesignator( const dryad::id::ElectronSubshellID& id ) {
 
-    return id.mt().value() - id::ElectronSubshellID::K + 1;
+    return id.mt().value() - dryad::id::ElectronSubshellID::K + 1;
   }
 
 } // atomic namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

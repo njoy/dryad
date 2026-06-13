@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEENDFSUBSHELLDATA
-#define NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEENDFSUBSHELLDATA
+#ifndef NJOY_FORMAT_ENDF_WRITE_ATOMIC_CREATESUBSHELLDATA
+#define NJOY_FORMAT_ENDF_WRITE_ATOMIC_CREATESUBSHELLDATA
 
 // system includes
 #include <vector>
@@ -7,13 +7,13 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
-#include "njoy/dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
+#include "njoy/format/endf/write/atomic/createSubshellDesignator.hpp"
 #include "ENDFtk/section/28.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace atomic {
 
   /**
@@ -22,9 +22,9 @@ namespace atomic {
    *  @param[in] subshell    the subshell data
    */
   inline ENDFtk::section::Type< 28 >::SubshellData
-  createEndfSubshellData( const dryad::atomic::ElectronSubshellConfiguration& subshell ) {
+  createSubshellData( const dryad::atomic::ElectronSubshellConfiguration& subshell ) {
 
-    unsigned int designator = createEndfSubshellDesignator( subshell.identifier() );
+    unsigned int designator = createSubshellDesignator( subshell.identifier() );
     double energy = subshell.bindingEnergy();
     double population = subshell.population();
     if ( subshell.numberTransitions() == 0 ) {
@@ -39,15 +39,15 @@ namespace atomic {
       std::vector< double > energies;
       for ( const auto& transition : subshell.radiativeTransitions() ) {
 
-        originating.emplace_back( createEndfSubshellDesignator( transition.originatingShell() ) );
+        originating.emplace_back( createSubshellDesignator( transition.originatingShell() ) );
         emitting.emplace_back( 0 );
         probabilities.emplace_back( transition.probability() );
         energies.emplace_back( transition.energy().has_value() ? transition.energy().value() : 0. );
       }
       for ( const auto& transition : subshell.nonRadiativeTransitions() ) {
 
-        originating.emplace_back( createEndfSubshellDesignator( transition.originatingShell() ) );
-        emitting.emplace_back( createEndfSubshellDesignator( transition.emittingShell() ) );
+        originating.emplace_back( createSubshellDesignator( transition.originatingShell() ) );
+        emitting.emplace_back( createSubshellDesignator( transition.emittingShell() ) );
         probabilities.emplace_back( transition.probability() );
         energies.emplace_back( transition.energy().has_value() ? transition.energy().value() : 0. );
       }
@@ -61,9 +61,9 @@ namespace atomic {
   }
 
 } // atomic namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

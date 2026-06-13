@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFPPAIR
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFPPAIR
+#ifndef NJOY_FORMAT_ENDF_WRITE_RESONANCES_LRF7_CREATEPPAIR
+#define NJOY_FORMAT_ENDF_WRITE_RESONANCES_LRF7_CREATEPPAIR
 
 // system includes
 #include <algorithm>
@@ -11,9 +11,9 @@
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace resonances {
 namespace lrf7 {
 
@@ -23,7 +23,7 @@ namespace lrf7 {
    *  @param[in] compound   the compound system
    */
   inline ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs
-  createEndfParticlePairs( const dryad::resonances::CompoundSystem& compound ) {
+  createParticlePairs( const dryad::resonances::CompoundSystem& compound ) {
 
     std::vector< double > ma, mb, za, zb, ia, ib, q, pa, pb;
     std::vector< int > pnt, shf, mt;
@@ -40,7 +40,7 @@ namespace lrf7 {
           throw std::exception();
         }
 
-        int mt_number = channel.reaction().reactionType() == id::ReactionType::elastic( incident )
+        int mt_number = channel.reaction().reactionType() == dryad::id::ReactionType::elastic( incident )
                           ? 2
                           : channel.reaction().mt().value();
 
@@ -67,7 +67,7 @@ namespace lrf7 {
 
           // if fission (no outgoing) or capture (photon in outgoing pp), then PNT=-1
           pnt.push_back( outgoing.has_value()
-                           ? outgoing.value().lightParticle().identifier() == id::ParticleID::photon()
+                           ? outgoing.value().lightParticle().identifier() == dryad::id::ParticleID::photon()
                                ? -1
                                : +1
                            : -1 );
@@ -92,9 +92,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createEndfIndex.hpp"
+#include "njoy/format/endf/write/createIndex.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "boundaries" ) {
 
@@ -19,17 +19,17 @@ SCENARIO( "boundaries" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( 1 == format::createEndfIndex( 0 ) );
-        CHECK( 2 == format::createEndfIndex( 1 ) );
-        CHECK( 3 == format::createEndfIndex( 2 ) );
-        CHECK( 4 == format::createEndfIndex( 3 ) );
-        CHECK( 5 == format::createEndfIndex( 4 ) );
-        CHECK( 6 == format::createEndfIndex( 5 ) );
+        CHECK( 1 == endf::write::createIndex( 0 ) );
+        CHECK( 2 == endf::write::createIndex( 1 ) );
+        CHECK( 3 == endf::write::createIndex( 2 ) );
+        CHECK( 4 == endf::write::createIndex( 3 ) );
+        CHECK( 5 == endf::write::createIndex( 4 ) );
+        CHECK( 6 == endf::write::createIndex( 5 ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid boundary index" ) {
 
-        CHECK_THROWS( format::createEndfIndex( -1 ) );
+        CHECK_THROWS( endf::write::createIndex( -1 ) );
       } // THEN
     } // WHEN
   } // GIVEN

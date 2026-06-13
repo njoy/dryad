@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFRESONCHANNELS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEENDFRESONCHANNELS
+#ifndef NJOY_FORMAT_ENDF_WRITE_RESONANCES_LRF7_CREATERESONCHANNELS
+#define NJOY_FORMAT_ENDF_WRITE_RESONANCES_LRF7_CREATERESONCHANNELS
 
 // system includes
 #include <algorithm>
@@ -13,9 +13,9 @@
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 namespace resonances {
 namespace lrf7 {
 
@@ -25,8 +25,8 @@ namespace lrf7 {
    *  @param[in] group       the spin group
    *  @param[in] endfPairs   the ENDF particle pairs
    */
-  inline auto createEndfResonanceChannels( const dryad::resonances::SpinGroup& group,
-                                           const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
+  inline auto createResonanceChannels( const dryad::resonances::SpinGroup& group,
+                                       const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
     double aj = group.totalAngularMomentum() * group.parity();
     double parity = aj == 0. ? group.parity() : 0.;
@@ -55,7 +55,7 @@ namespace lrf7 {
     for ( const auto& channel : group.channels() ) {
 
       auto iter = std::find( endfPairs.MT().begin(), endfPairs.MT().end(),
-                             channel.reaction().reactionType() == id::ReactionType::elastic( incident )
+                             channel.reaction().reactionType() == dryad::id::ReactionType::elastic( incident )
                                ? 2
                                : channel.reaction().mt().value() );
       std::size_t index = std::distance( endfPairs.MT().begin(), iter ) + 1;
@@ -88,9 +88,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEENDFFILE3SECTION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEENDFFILE3SECTION
+#ifndef NJOY_FORMAT_ENDF_WRITE_CREATEFILE3SECTION
+#define NJOY_FORMAT_ENDF_WRITE_CREATEFILE3SECTION
 
 // system includes
 #include <vector>
@@ -7,14 +7,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/Reaction.hpp"
-#include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
-#include "njoy/dryad/format/endf/createEndfBoundaries.hpp"
+#include "njoy/format/endf/write/createInterpolants.hpp"
+#include "njoy/format/endf/write/createBoundaries.hpp"
 #include "ENDFtk/section/3.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace write {
 
   /**
    *  @brief Create an ENDF MF3 section object from a Reaction object
@@ -22,18 +22,18 @@ namespace endf {
    *  @param[in] reaction   the reaction data
    */
   inline ENDFtk::section::Type< 3 >
-  createEndfFile3Section( double awr,
-                          const dryad::Reaction& reaction ) {
+  createFile3Section( double awr,
+                      const dryad::Reaction& reaction ) {
 
     auto projectile = reaction.identifier().projectile();
     auto target = reaction.identifier().target();
 
     auto adjust_scatter_level = [&projectile, &target] ( int mt ) {
 
-      int elastic = id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
-      if ( target.e() > 0 && projectile != id::ParticleID::photon() ) {
+      int elastic = dryad::id::ReactionID( projectile, target, 2 ).reactionType().mt().value();
+      if ( target.e() > 0 && projectile != dryad::id::ParticleID::photon() ) {
 
-        int ground = id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
+        int ground = dryad::id::ReactionID( projectile, target.groundState(), 2 ).reactionType().mt().value();
         if ( mt >= ground && mt < elastic ) {
 
           return mt + 1;
@@ -56,23 +56,23 @@ namespace endf {
                 ? reaction.reactionQValue().value()
                 : 0;
     long lr = 0;
-    std::vector< long > boundaries = createEndfBoundaries( reaction.crossSection().boundaries() );
-    std::vector< long > interpolants = createEndfInterpolants( reaction.crossSection().interpolants() );
+    std::vector< long > boundaries = createBoundaries( reaction.crossSection().boundaries() );
+    std::vector< long > interpolants = createInterpolants( reaction.crossSection().interpolants() );
     std::vector< double > energies = reaction.crossSection().energies();
     std::vector< double > xs = reaction.crossSection().values();
 
     //! @todo clean up jumps in the boundaries?
 
     return ENDFtk::section::Type< 3 >( mt, target.za(), awr, qm, qi, lr,
-                                      std::move( boundaries ),
-                                      std::move( interpolants ),
-                                      std::move( energies ),
-                                      std::move( xs ) );
+                                       std::move( boundaries ),
+                                       std::move( interpolants ),
+                                       std::move( energies ),
+                                       std::move( xs ) );
   }
 
+} // write namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

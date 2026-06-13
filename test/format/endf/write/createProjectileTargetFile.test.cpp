@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"
+#include "njoy/format/endf/write/createProjectileTargetFile.hpp"
 
 // other includes
 #include <cstdio>
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 std::string chunkForGroundState();
 std::string chunkForMetastableState();
@@ -19,7 +20,7 @@ std::string readContentFromFile( const std::string& );
 
 //! @todo test Resonance File writing
 
-SCENARIO( "createAtomicRelaxationEndfFile" ) {
+SCENARIO( "createAtomicRelaxationFile" ) {
 
   GIVEN( "projectile-target data - incident neutrons for a ground state target" ) {
 
@@ -327,7 +328,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "kjlaksdhlwaekhfvbnlkrfdgjghldkjghladkjfgh.endf";
-      format::endf::createProjectileTargetEndfFile( transport, 125, filename );
+      endf::write::createProjectileTargetFile( transport, 125, filename );
 
       CHECK( chunkForGroundState() == readContentFromFile( filename ) );
 
@@ -1052,7 +1053,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "apiehjcvuhrtoiahmxuherotalcnhoeureitcnisunhflk.endf";
-      format::endf::createProjectileTargetEndfFile( transport, 9344, filename );
+      endf::write::createProjectileTargetFile( transport, 9344, filename );
 
       CHECK( chunkForMetastableState() == readContentFromFile( filename ) );
 

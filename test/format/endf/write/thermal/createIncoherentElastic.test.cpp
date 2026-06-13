@@ -4,18 +4,18 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/thermal/createEndfIncoherentElastic.hpp"
+#include "njoy/format/endf/write/thermal/createIncoherentElastic.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
 std::string chunk();
 
-SCENARIO( "createEndfIncoherentElastic" ) {
+SCENARIO( "createIncoherentElastic" ) {
 
   GIVEN( "valid data for incoherent elastic scattering" ) {
 
@@ -23,7 +23,7 @@ SCENARIO( "createEndfIncoherentElastic" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      IncoherentElasticScattering
+      thermal::IncoherentElasticScattering
       incoherent( 6.337872,
                   { { 296, 400, 500, 600, 700, 800, 1000, 1200 },
                     { 2.013538, 2.677764, 3.323456, 3.972601,
@@ -31,7 +31,7 @@ SCENARIO( "createEndfIncoherentElastic" ) {
 
       THEN( "it can be converted to ENDF" ) {
 
-        auto data = format::endf::thermal::createEndfIncoherentElastic( incoherent );
+        auto data = endf::write::thermal::createIncoherentElastic( incoherent );
 
         std::string buffer;
         auto output = std::back_inserter( buffer );

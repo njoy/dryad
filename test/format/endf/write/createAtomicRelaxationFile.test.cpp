@@ -4,18 +4,19 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
+#include "njoy/format/endf/write/createAtomicRelaxationFile.hpp"
 
 // other includes
 #include <cstdio>
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 std::string chunk();
 std::string readContentFromFile( const std::string& );
 
-SCENARIO( "createAtomicRelaxationEndfFile" ) {
+SCENARIO( "createAtomicRelaxationFile" ) {
 
   GIVEN( "Atomic relaxation data" ) {
 
@@ -125,7 +126,7 @@ SCENARIO( "createAtomicRelaxationEndfFile" ) {
     THEN( "it can be converted to an ENDF material" ) {
 
       std::string filename = "ercoiuryqncoieruycoeurcowureugcregrygrcyg.endf";
-      format::endf::createAtomicRelaxationEndfFile( relaxation, 800, filename );
+      endf::write::createAtomicRelaxationFile( relaxation, 800, filename );
 
       CHECK( chunk() == readContentFromFile( filename ) );
 
