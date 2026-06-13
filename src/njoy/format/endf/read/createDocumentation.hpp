@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_DOCUMENTATION
-#define NJOY_DRYAD_FORMAT_ENDF_DOCUMENTATION
+#ifndef NJOY_FORMAT_ENDF_READ_DOCUMENTATION
+#define NJOY_FORMAT_ENDF_READ_DOCUMENTATION
 
 // system includes
 
@@ -9,28 +9,28 @@
 #include "ENDFtk/section/1/451.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a Documentation instance from a parsed MF1 MT451 section
    *
    *  @param[in] information   the parsed MF1 MT451 section
    */
-  inline Documentation
+  inline dryad::Documentation
   createDocumentation( const ENDFtk::section::Type< 1, 451 >& information ) {
 
     Log::info( "Reading documentation" );
-    return Documentation( information.libraryType(),
-                          std::make_pair( information.versionNumber(),
-                                          information.releaseNumber() ),
-                          information.description() );
+    return dryad::Documentation( information.libraryType(),
+                                 std::make_pair( information.versionNumber(),
+                                                 information.releaseNumber() ),
+                                 information.description() );
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

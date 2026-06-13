@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/thermal/createDebyeWallerIntegralData.hpp"
+#include "njoy/format/endf/read/thermal/createDebyeWallerIntegralData.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
-void verifyChunk( const DebyeWallerIntegralData& );
+void verifyChunk( const thermal::DebyeWallerIntegralData& );
 
 SCENARIO( "createDebyeWallerIntegralData" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "createDebyeWallerIntegralData" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::thermal::createDebyeWallerIntegralData( incoherent );
+        auto chunk = endf::read::thermal::createDebyeWallerIntegralData( incoherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,7 +36,7 @@ SCENARIO( "createDebyeWallerIntegralData" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const DebyeWallerIntegralData& chunk ) {
+void verifyChunk( const thermal::DebyeWallerIntegralData& chunk ) {
 
   CHECK( 8 == chunk.temperatures().size() );
   CHECK( 8 == chunk.values().size() );

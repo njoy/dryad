@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPRODUCTID
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEPRODUCTID
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEPRODUCTID
+#define NJOY_FORMAT_ENDF_READ_CREATEPRODUCTID
 
 // system includes
 #include <vector>
@@ -7,12 +7,12 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
-#include "njoy/dryad/format/endf/createTargetIdentifier.hpp"
+#include "njoy/format/endf/read/createTargetIdentifier.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create the product identifier
@@ -22,20 +22,20 @@ namespace endf {
    *  @param[in] multiple   flag to indicate whether or not there is multiple
    *                        emission of the product
    */
-  inline id::ParticleID createProductIdentifier( int zap, int lip ) {
+  inline dryad::id::ParticleID createProductIdentifier( int zap, int lip ) {
 
     switch ( zap ) {
 
-      case  0 : return id::ParticleID::photon();
-      case  1 : return id::ParticleID::neutron();
-      case 11 : return id::ParticleID::electron();
+      case  0 : return dryad::id::ParticleID::photon();
+      case  1 : return dryad::id::ParticleID::neutron();
+      case 11 : return dryad::id::ParticleID::electron();
       default : return createTargetIdentifier( zap, lip );
     };
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

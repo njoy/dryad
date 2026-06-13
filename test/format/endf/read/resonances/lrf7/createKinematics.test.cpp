@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createKinematics.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createKinematics.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
 SCENARIO( "createKinematics" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "createKinematics" ) {
       THEN( "the formalism can be derived" ) {
 
         CHECK( resonances::Kinematics::NonRelativistic
-               == format::endf::resonances::lrf7::createKinematics( parameters ) );
+               == endf::read::resonances::lrf7::createKinematics( parameters ) );
       } // THEN
     } // WHEN
   } // GIVEN

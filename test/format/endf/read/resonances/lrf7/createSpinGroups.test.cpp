@@ -4,18 +4,18 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createSpinGroups.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createSpinGroups.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
-#include <iostream>
-// convenience typedefs
-using namespace njoy;
-using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
 
-void verifyChunkCu63( const std::vector< SpinGroup >& );
-void verifyChunkCl35( const std::vector< SpinGroup >& );
+// convenience typedefs
+using namespace njoy::dryad;
+using namespace njoy::format;
+using namespace njoy::constants;
+
+void verifyChunkCu63( const std::vector< resonances::SpinGroup >& );
+void verifyChunkCl35( const std::vector< resonances::SpinGroup >& );
 
 SCENARIO( "createSpinGroups" ) {
 
@@ -38,10 +38,10 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cu63" );
-        auto formalism = Formalism::ReichMoore;
-        auto boundary = BoundaryCondition::Constant;
-        auto kinematics = Kinematics::NonRelativistic;
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target,
+        auto formalism = resonances::Formalism::ReichMoore;
+        auto boundary = resonances::BoundaryCondition::Constant;
+        auto kinematics = resonances::Kinematics::NonRelativistic;
+        auto chunk = endf::read::resonances::lrf7::createSpinGroups( projectile, target,
                                                                        formalism, boundary,
                                                                        kinematics, parameters );
 
@@ -69,10 +69,10 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Cl35" );
-        auto formalism = Formalism::ReichMoore;
-        auto boundary = BoundaryCondition::ShiftFactor;
-        auto kinematics = Kinematics::NonRelativistic;
-        auto chunk = format::endf::resonances::lrf7::createSpinGroups( projectile, target,
+        auto formalism = resonances::Formalism::ReichMoore;
+        auto boundary = resonances::BoundaryCondition::ShiftFactor;
+        auto kinematics = resonances::Kinematics::NonRelativistic;
+        auto chunk = endf::read::resonances::lrf7::createSpinGroups( projectile, target,
                                                                        formalism, boundary,
                                                                        kinematics, parameters );
 
@@ -82,20 +82,20 @@ SCENARIO( "createSpinGroups" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
+void verifyChunkCu63( const std::vector< resonances::SpinGroup >& chunk ) {
 
   auto photon = id::ParticleID::photon();
   auto neutron = id::ParticleID::neutron();
   auto cu63 = id::ParticleID( "Cu63" );
   auto cu64 = id::ParticleID( "Cu64[all]" );
 
-  ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cu64, 63.389 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( cu63, 62.389 * constants::neutron_mass, 1.5, -1 ) );
+  resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                        Particle( cu64, 63.389 * neutron_mass, 0, +1 ) );
+  resonances::ParticlePair neutron_pair( Particle( neutron, neutron_mass, 0.5, +1 ),
+                                         Particle( cu63, 62.389 * neutron_mass, 1.5, -1 ) );
 
-  ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii( 6.7, 6.7 );
+  resonances::ChannelRadii zero_radii( 0., 0. );
+  resonances::ChannelRadii radii( 6.7, 6.7 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
@@ -143,7 +143,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 1: elastic
@@ -172,7 +172,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, resonance table
@@ -231,7 +231,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 1: elastic
@@ -260,7 +260,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, resonance table
@@ -319,7 +319,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 1: elastic
@@ -348,7 +348,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 2: elastic
@@ -377,7 +377,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, resonance table
@@ -438,7 +438,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 1: elastic
@@ -467,7 +467,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, resonance table
@@ -526,7 +526,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 1: elastic
@@ -555,7 +555,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 2: elastic
@@ -584,7 +584,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, resonance table
@@ -645,7 +645,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 1: elastic
@@ -674,7 +674,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, resonance table
@@ -695,7 +695,7 @@ void verifyChunkCu63( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( std::sqrt( 9.099094e+2 / 2. / channel1.penetrability( 3.006336e+5 ) ),WithinRel( resonances[1][176] ) );
 }
 
-void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
+void verifyChunkCl35( const std::vector< resonances::SpinGroup >& chunk ) {
 
   auto photon = id::ParticleID::photon();
   auto neutron = id::ParticleID::neutron();
@@ -704,16 +704,16 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   auto cl36 = id::ParticleID( "Cl36[all]" );
   auto s35 = id::ParticleID( "S35" );
 
-  ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
-                            Particle( cl36, 35.65932 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( cl35, 34.66845 * constants::neutron_mass, 1.5, +1 ) );
-  ParticlePair proton_pair( Particle( proton, .9986235 * constants::neutron_mass, 0.5, +1 ),
-                            Particle( s35, 34.66863 * constants::neutron_mass, 1.5, +1 ) );
+  resonances::ParticlePair photon_pair( Particle( photon, 0, 1, +1 ),
+                                        Particle( cl36, 35.65932 * neutron_mass, 0, +1 ) );
+  resonances::ParticlePair neutron_pair( Particle( neutron, neutron_mass, 0.5, +1 ),
+                                         Particle( cl35, 34.66845 * neutron_mass, 1.5, +1 ) );
+  resonances::ParticlePair proton_pair( Particle( proton, .9986235 * neutron_mass, 0.5, +1 ),
+                                        Particle( s35, 34.66863 * neutron_mass, 1.5, +1 ) );
 
-  ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 4.822220, 4.888750 );
-  ChannelRadii radii2( 4.822220, 3.667980 );
+  resonances::ChannelRadii zero_radii( 0., 0. );
+  resonances::ChannelRadii radii1( 4.822220, 4.888750 );
+  resonances::ChannelRadii radii2( 4.822220, 3.667980 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
@@ -761,7 +761,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 1: elastic
@@ -790,7 +790,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, resonance table
@@ -849,7 +849,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 1: elastic
@@ -878,7 +878,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 2: elastic
@@ -907,7 +907,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0, WithinRel( channel3.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel3.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel3.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 3: proton emission
@@ -936,7 +936,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 4: proton emission
@@ -965,7 +965,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel4.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel4.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, resonance table
@@ -1030,7 +1030,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 1: elastic
@@ -1059,7 +1059,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 2: proton emission
@@ -1088,7 +1088,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, resonance table
@@ -1149,7 +1149,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 1: elastic
@@ -1178,7 +1178,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 2: elastic
@@ -1207,7 +1207,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel3.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel3.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 3: proton emission
@@ -1236,7 +1236,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 4: proton emission
@@ -1265,7 +1265,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel4.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel4.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel4.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, resonance table
@@ -1330,7 +1330,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 1: elastic
@@ -1359,7 +1359,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 2: proton emission
@@ -1388,7 +1388,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, resonance table
@@ -1449,7 +1449,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, channel 1: elastic
@@ -1478,7 +1478,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, channel 2: proton emission
@@ -1507,7 +1507,7 @@ void verifyChunkCl35( const std::vector< SpinGroup >& chunk ) {
   CHECK_THAT( 615220, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, resonance table

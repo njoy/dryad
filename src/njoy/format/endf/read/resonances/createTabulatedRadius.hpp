@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATETABULATEDRADIUS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATETABULATEDRADIUS
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_CREATETABULATEDRADIUS
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_CREATETABULATEDRADIUS
 
 // system includes
 #include <vector>
@@ -7,16 +7,16 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/resonances/TabulatedRadius.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 
   /**
@@ -49,9 +49,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

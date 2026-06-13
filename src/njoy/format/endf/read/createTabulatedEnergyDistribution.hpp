@@ -1,39 +1,39 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDENERGYDISTRIBUTION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDENERGYDISTRIBUTION
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETABULATEDENERGYDISTRIBUTION
+#define NJOY_FORMAT_ENDF_READ_CREATETABULATEDENERGYDISTRIBUTION
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/TabulatedEnergyDistribution.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/6.hpp"
 #include "ENDFtk/section/26.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF6 LAW = 1
    *         LegendreCoefficients entry
    */
-  inline TabulatedEnergyDistribution
+  inline dryad::TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(
     const ENDFtk::section::Type< 6 >::ContinuumEnergyAngle::LegendreCoefficients& distribution,
-    const InterpolationType& interpolant,
+    const dryad::InterpolationType& interpolant,
     bool normalise ) {
 
     try {
 
       auto energies = createVector( distribution.energies() );
       auto values = createVector( distribution.totalEmissionProbabilities() );
-      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
-                                          interpolant, normalise );
+      return dryad::TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
+                                                 interpolant, normalise );
     }
     catch ( ... ) {
 
@@ -46,10 +46,10 @@ namespace endf {
    *  @brief Create a TabulatedEnergyDistribution from a parsed ENDF MF26 LAW = 1
    *         LegendreCoefficients entry (with NA = 0)
    */
-  TabulatedEnergyDistribution
+  inline dryad::TabulatedEnergyDistribution
   createTabulatedEnergyDistribution(
     const ENDFtk::section::Type< 26 >::ContinuumEnergyAngle::LegendreCoefficients& distribution,
-    const InterpolationType& interpolant,
+    const dryad::InterpolationType& interpolant,
     bool normalise ) {
 
     if ( distribution.numberAngularParameters() != 0 ) {
@@ -63,8 +63,8 @@ namespace endf {
 
       auto energies = createVector( distribution.energies() );
       auto values = createVector( distribution.totalEmissionProbabilities() );
-      return TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
-                                          interpolant, normalise );
+      return dryad::TabulatedEnergyDistribution( std::move( energies ), std::move( values ),
+                                                 interpolant, normalise );
     }
     catch ( ... ) {
 
@@ -73,9 +73,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

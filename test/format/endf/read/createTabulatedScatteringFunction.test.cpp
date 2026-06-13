@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedScatteringFunction.hpp"
+#include "njoy/format/endf/read/createTabulatedScatteringFunction.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const TabulatedScatteringFunction& );
 
@@ -26,7 +27,7 @@ SCENARIO( "createTabulatedScatteringFunction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedScatteringFunction( section );
+        auto chunk = endf::read::createTabulatedScatteringFunction( section );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,7 +37,7 @@ SCENARIO( "createTabulatedScatteringFunction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedScatteringFunction( section.parse< 27 >() );
+        auto chunk = endf::read::createTabulatedScatteringFunction( section.parse< 27 >() );
 
         verifyChunk( chunk );
       } // THEN

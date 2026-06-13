@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createReferenceFrame.hpp"
+#include "njoy/format/endf/read/createReferenceFrame.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createReferenceFrame" ) {
 
@@ -19,14 +20,14 @@ SCENARIO( "createReferenceFrame" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( ReferenceFrame::Laboratory   == format::endf::createReferenceFrame( 1 ) );
-        CHECK( ReferenceFrame::CentreOfMass == format::endf::createReferenceFrame( 2 ) );
+        CHECK( ReferenceFrame::Laboratory   == endf::read::createReferenceFrame( 1 ) );
+        CHECK( ReferenceFrame::CentreOfMass == endf::read::createReferenceFrame( 2 ) );
       } // THEN
 
       THEN( "an exception is thrown for an unknown or unsupported type" ) {
 
-        CHECK_THROWS( format::endf::createReferenceFrame( 0 ) );
-        CHECK_THROWS( format::endf::createReferenceFrame( 3 ) );
+        CHECK_THROWS( endf::read::createReferenceFrame( 0 ) );
+        CHECK_THROWS( endf::read::createReferenceFrame( 3 ) );
       } // THEN
     } // WHEN
   } // GIVEN

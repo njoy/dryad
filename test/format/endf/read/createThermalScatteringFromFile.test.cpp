@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
+#include "njoy/format/endf/read/createThermalScatteringFromFile.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -23,7 +24,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::endf::createThermalScatteringFromFile( "tsl-Be-metal.endf" );
+        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( "tsl-Be-metal.endf" );
 
         tsl::bemetal::verifyBeMetal( chunk );
       } // THEN
@@ -36,7 +37,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::endf::createThermalScatteringFromFile( "tsl-ZrinZrH.endf" );
+        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( "tsl-ZrinZrH.endf" );
 
         tsl::zrinzrh::verifyZrInZrH( chunk );
       } // THEN
@@ -49,7 +50,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::endf::createThermalScatteringFromFile( "tsl-7Liin7LiD-mixed.endf" );
+        ThermalScattering chunk = endf::read::createThermalScatteringFromFile( "tsl-7Liin7LiD-mixed.endf" );
 
         tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN

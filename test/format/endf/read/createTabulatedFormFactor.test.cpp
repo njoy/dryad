@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedFormFactor.hpp"
+#include "njoy/format/endf/read/createTabulatedFormFactor.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const TabulatedFormFactor& );
 
@@ -26,7 +27,7 @@ SCENARIO( "createTabulatedFormFactor" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedFormFactor( section );
+        auto chunk = endf::read::createTabulatedFormFactor( section );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,7 +37,7 @@ SCENARIO( "createTabulatedFormFactor" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedFormFactor( section.parse< 27 >() );
+        auto chunk = endf::read::createTabulatedFormFactor( section.parse< 27 >() );
 
         verifyChunk( chunk );
       } // THEN

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPARTICLES
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEPARTICLES
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEPARTICLES
+#define NJOY_FORMAT_ENDF_READ_CREATEPARTICLES
 
 // system includes
 #include <vector>
@@ -7,14 +7,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
-#include "njoy/dryad/format/collectParticleIdentifiers.hpp"
+#include "njoy/format/collectParticleIdentifiers.hpp"
 #include "njoy/constants.hpp"
 #include "ENDFtk/section/1/451.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a ParticleDatabase
@@ -26,14 +26,14 @@ namespace endf {
    *  @param[in] target        the target identifier
    *  @param[in] information   the parsed MF1 MT451 section
    */
-  inline ParticleDatabase
-  createParticleDatabase( const id::ParticleID& projectile,
-                          const id::ParticleID& target,
-                          const std::vector< Reaction >& reactions,
+  inline dryad::ParticleDatabase
+  createParticleDatabase( const dryad::id::ParticleID& projectile,
+                          const dryad::id::ParticleID& target,
+                          const std::vector< dryad::Reaction >& reactions,
                           const ENDFtk::section::Type< 1, 451 >& information,
-                          std::map< id::ParticleID, double >& masses ) {
+                          std::map< dryad::id::ParticleID, double >& masses ) {
 
-    ParticleDatabase particles( collectParticleIdentifiers( reactions ) );
+    dryad::ParticleDatabase particles( collectParticleIdentifiers( reactions ) );
 
     // update the mass of the projectile
     decltype(auto) projectile_entry = particles.particle( projectile );
@@ -68,9 +68,9 @@ namespace endf {
     return particles;
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

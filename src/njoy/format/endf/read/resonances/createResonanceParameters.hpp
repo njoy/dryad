@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATERESONANCEPARAMETERS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATERESONANCEPARAMETERS
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_CREATERESONANCEPARAMETERS
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_CREATERESONANCEPARAMETERS
 
 // system includes
 #include <optional>
@@ -8,15 +8,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
-#include "njoy/dryad/format/endf/resonances/createTabulatedRadius.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf3/createCompoundSystem.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createCompoundSystem.hpp"
+#include "njoy/format/endf/read/resonances/createTabulatedRadius.hpp"
+#include "njoy/format/endf/read/resonances/lrf3/createCompoundSystem.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createCompoundSystem.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 
   /**
@@ -27,8 +27,8 @@ namespace resonances {
    *  @param[in] section      the parsed MF2 MT151 section
    */
   inline std::optional< dryad::resonances::ResonanceParameters >
-  createResonanceParameters( const id::ParticleID& projectile,
-                             const id::ParticleID& target,
+  createResonanceParameters( const dryad::id::ParticleID& projectile,
+                             const dryad::id::ParticleID& target,
                              const ENDFtk::section::Type< 2, 151 >& section ) {
 
     std::vector< dryad::resonances::CompoundSystem > resolved;
@@ -87,9 +87,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

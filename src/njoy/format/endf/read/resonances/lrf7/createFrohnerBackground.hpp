@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEFROHNERBACKGROUND
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEFROHNERBACKGROUND
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEFROHNERBACKGROUND
+#define NJOY_FORMAT_ENDF_READ_CREATEFROHNERBACKGROUND
 
 // system includes
 #include <vector>
@@ -10,9 +10,9 @@
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -44,9 +44,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

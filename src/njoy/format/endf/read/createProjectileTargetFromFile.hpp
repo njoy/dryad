@@ -1,17 +1,17 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPROJECTILETARGETFROMFILE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEPROJECTILETARGETFROMFILE
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEPROJECTILETARGETFROMFILE
+#define NJOY_FORMAT_ENDF_READ_CREATEPROJECTILETARGETFROMFILE
 
 // system includes
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
-#include "njoy/dryad/format/endf/createProjectileTarget.hpp"
+#include "njoy/format/endf/read/createProjectileTarget.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a ProjectileTarget from an ENDF file
@@ -23,7 +23,7 @@ namespace endf {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  inline ProjectileTarget
+  inline dryad::ProjectileTarget
   createProjectileTargetFromFile( const std::string& filename, bool normalise ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
@@ -32,9 +32,9 @@ namespace endf {
     return createProjectileTarget( tape.materials().front(), normalise );
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

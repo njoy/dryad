@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/createTabulatedRadius.hpp"
+#include "njoy/format/endf/read/resonances/createTabulatedRadius.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
-void verifyChunk( const TabulatedRadius& );
+void verifyChunk( const resonances::TabulatedRadius& );
 
 SCENARIO( "createTabulatedRadius" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "createTabulatedRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::resonances::createTabulatedRadius( radius );
+        auto chunk = endf::read::resonances::createTabulatedRadius( radius );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,7 +36,7 @@ SCENARIO( "createTabulatedRadius" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const TabulatedRadius& chunk ) {
+void verifyChunk( const resonances::TabulatedRadius& chunk ) {
 
   CHECK( true == chunk.isLinearised() );
   CHECK( 50 == chunk.numberPoints() );

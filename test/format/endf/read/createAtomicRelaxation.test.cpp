@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createAtomicRelaxation.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxation.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const AtomicRelaxation&, bool );
 
@@ -26,8 +27,8 @@ SCENARIO( "createAtomicRelaxation" ) {
 
       THEN( "it can be converted" ) {
 
-        AtomicRelaxation oxygen1 = format::endf::createAtomicRelaxation( material, false );
-        AtomicRelaxation oxygen2 = format::endf::createAtomicRelaxation( material, true );
+        AtomicRelaxation oxygen1 = endf::read::createAtomicRelaxation( material, false );
+        AtomicRelaxation oxygen2 = endf::read::createAtomicRelaxation( material, true );
 
         verifyChunk( oxygen1, false );
         verifyChunk( oxygen2, true );

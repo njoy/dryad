@@ -5,13 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/endf/covariance/createAngularDistributionCovarianceData.hpp"
+#include "njoy/format/endf/read/covariance/createAngularDistributionCovarianceData.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::ENDFtk;
 
 // include common test verification functions
@@ -32,7 +33,7 @@ SCENARIO( "createAngularDistributionCovarianceData" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Ne22" );
         std::optional< covariance::AngularDistributionCovarianceData > covariances =
-        format::endf::covariance::createAngularDistributionCovarianceData( projectile, target, material );
+        endf::read::covariance::createAngularDistributionCovarianceData( projectile, target, material );
 
         neutron::ne22::verifyAngularDistributionCovariances( covariances.value() );
       } // THEN

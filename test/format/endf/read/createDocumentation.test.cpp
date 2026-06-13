@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createDocumentation.hpp"
+#include "njoy/format/endf/read/createDocumentation.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const Documentation& );
 
@@ -26,7 +27,7 @@ SCENARIO( "createDocumentation" ) {
 
       THEN( "it can be converted" ) {
 
-        Documentation chunk = format::endf::createDocumentation( mf1mt451 );
+        Documentation chunk = endf::read::createDocumentation( mf1mt451 );
 
         verifyChunk( chunk );
       } // THEN

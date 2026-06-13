@@ -1,19 +1,19 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
-#define NJOY_DRYAD_FORMAT_ENDF_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
+#ifndef NJOY_FORMAT_ENDF_READ_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
+#define NJOY_FORMAT_ENDF_READ_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/atomic/createElectronSubshellID.hpp"
 #include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "njoy/format/endf/read/atomic/createElectronSubshellID.hpp"
 #include "ENDFtk/section/28.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace atomic {
 
   /**
@@ -27,7 +27,7 @@ namespace atomic {
   createElectronSubshellConfiguration( const ENDFtk::section::Type< 28 >::SubshellData& subshell,
                                        bool normalise ) {
 
-    id::ElectronSubshellID identifier = createElectronSubshellID( subshell.subshellDesignator() );
+    dryad::id::ElectronSubshellID identifier = createElectronSubshellID( subshell.subshellDesignator() );
     double energy = subshell.subshellBindingEnergy();
     double population = subshell.numberSubshellElectrons();
     if ( subshell.numberTransitions() == 0 ) {
@@ -63,9 +63,9 @@ namespace atomic {
   }
 
 } // atomic namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

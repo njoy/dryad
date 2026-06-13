@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETARGETID
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETARGETID
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETARGETID
+#define NJOY_FORMAT_ENDF_READ_CREATETARGETID
 
 // system includes
 #include <vector>
@@ -9,28 +9,28 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create the target identifier
    */
-  inline id::ParticleID createTargetIdentifier( int za, int level ) {
+  inline dryad::id::ParticleID createTargetIdentifier( int za, int level ) {
 
     if ( za == 1 ) {
 
-      return id::ParticleID::neutron();
+      return dryad::id::ParticleID::neutron();
     }
     else {
 
-      return id::ParticleID::nuclide( za, level );
+      return dryad::id::ParticleID::nuclide( za, level );
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

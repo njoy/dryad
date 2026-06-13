@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATECHANNELS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATECHANNELS
+#ifndef NJOY_FORMAT_ENDF_read_RESONANCES_LRF7_CREATECHANNELS
+#define NJOY_FORMAT_ENDF_read_RESONANCES_LRF7_CREATECHANNELS
 
 // system includes
 #include <vector>
@@ -8,17 +8,17 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/BoundaryCondition.hpp"
 #include "njoy/dryad/resonances/Channel.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createFrohnerBackground.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createSammyBackground.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createTabulatedBackground.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createParticlePairs.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createFrohnerBackground.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createSammyBackground.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createTabulatedBackground.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -33,8 +33,8 @@ namespace lrf7 {
    *  @param[in] endfChannels         the parsed ENDF channels
    */
   inline auto createChannels(
-                  const id::ParticleID& projectile,
-                  const id::ParticleID& target,
+                  const dryad::id::ParticleID& projectile,
+                  const dryad::id::ParticleID& target,
                   const dryad::resonances::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs,
@@ -113,7 +113,7 @@ namespace lrf7 {
         }
       }
 
-      channels.emplace_back( id::ChannelID( id::ReactionID( projectile, target, endfPairs.MT()[index] ),
+      channels.emplace_back( dryad::id::ChannelID( dryad::id::ReactionID( projectile, target, endfPairs.MT()[index] ),
                                             dryad::resonances::ChannelQuantumNumbers( endfChannels.orbitalMomentumValues()[i],
                                                                                       endfChannels.channelSpinValues()[i],
                                                                                       spin, parity ),
@@ -139,7 +139,7 @@ namespace lrf7 {
       if ( total > 1 ) {
 
         std::size_t current = std::count_if( channels.begin(), std::next( channels.begin(), i ) , counter );
-        id::ChannelID id( channels[i].identifier().reaction(), channels[i].identifier().quantumNumbers(), current );
+        dryad::id::ChannelID id( channels[i].identifier().reaction(), channels[i].identifier().quantumNumbers(), current );
         channels[i].identifier( id );
       }
     }
@@ -149,9 +149,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

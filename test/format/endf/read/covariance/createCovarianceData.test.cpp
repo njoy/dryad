@@ -5,13 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/endf/covariance/createCovarianceData.hpp"
+#include "njoy/format/endf/read/covariance/createCovarianceData.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::ENDFtk;
 
 // include common test verification functions
@@ -33,7 +34,7 @@ SCENARIO( "createCovarianceData" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
         std::optional< covariance::CovarianceData > covariances =
-        format::endf::covariance::createCovarianceData( projectile, target, material );
+        endf::read::covariance::createCovarianceData( projectile, target, material );
 
         neutron::h1::verifyCrossSectionCovariances( covariances.value().crossSection().value() );
       } // THEN
@@ -54,7 +55,7 @@ SCENARIO( "createCovarianceData" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Li7" );
         std::optional< covariance::CovarianceData > covariances =
-        format::endf::covariance::createCovarianceData( projectile, target, material );
+        endf::read::covariance::createCovarianceData( projectile, target, material );
 
         neutron::li7::verifyCrossSectionCovariances( covariances.value().crossSection().value() );
       } // THEN

@@ -1,35 +1,35 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETHERMALSCATTERING
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETHERMALSCATTERING
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETHERMALSCATTERING
+#define NJOY_FORMAT_ENDF_READ_CREATETHERMALSCATTERING
 
 // system includes
 
 // other includes
 #include "tools/Log.hpp"
 #include "tools/overload.hpp"
-#include "njoy/dryad/format/endf/thermal/createCoherentElasticScattering.hpp"
-#include "njoy/dryad/format/endf/thermal/createIncoherentElasticScattering.hpp"
-#include "njoy/dryad/format/endf/createDocumentation.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
+#include "njoy/format/endf/read/thermal/createCoherentElasticScattering.hpp"
+#include "njoy/format/endf/read/thermal/createIncoherentElasticScattering.hpp"
+#include "njoy/format/endf/read/createDocumentation.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a ThermalScattering instance from an unparsed ENDF material
    *
    *  @param[in] material    the unparsed ENDF material
    */
-  inline ThermalScattering
+  inline dryad::ThermalScattering
   createThermalScattering( const ENDFtk::tree::Material& material ) {
 
     if ( material.hasSection( 7, 2 ) || material.hasSection( 7, 4 ) ) {
 
       auto information = material.section( 1, 451 ).parse< 1, 451 >();
-      Documentation documentation = createDocumentation( information );
+      dryad::Documentation documentation = createDocumentation( information );
 
       std::optional< dryad::thermal::CoherentElasticScattering > coherent = std::nullopt;
       std::optional< dryad::thermal::IncoherentElasticScattering > incoherent = std::nullopt;
@@ -78,9 +78,9 @@ namespace endf {
         incoherent = std::visit( createIncoherentElastic, section.scatteringLaw() );
       }
 
-      return ThermalScattering( std::move( documentation ),
-                                std::move( coherent ),
-                                std::move( incoherent ) );
+      return dryad::ThermalScattering( std::move( documentation ),
+                                       std::move( coherent ),
+                                       std::move( incoherent ) );
     }
     else {
 
@@ -89,9 +89,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

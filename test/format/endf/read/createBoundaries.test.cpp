@@ -4,12 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createBoundaries" ) {
 
@@ -20,7 +20,7 @@ SCENARIO( "createBoundaries" ) {
       THEN( "it can be converted" ) {
 
         std::vector< int > boundaries = { 1, 2, 3, 4, 5 };
-        std::vector< std::size_t > converted = format::endf::createBoundaries( boundaries );
+        std::vector< std::size_t > converted = endf::read::createBoundaries( boundaries );
 
         CHECK( 0 == converted[0] );
         CHECK( 1 == converted[1] );
@@ -33,8 +33,8 @@ SCENARIO( "createBoundaries" ) {
 
         std::vector< int > zero = { 0 };
         std::vector< int > negative = { -1 };
-        CHECK_THROWS( format::endf::createBoundaries( zero ) );
-        CHECK_THROWS( format::endf::createBoundaries( negative ) );
+        CHECK_THROWS( endf::read::createBoundaries( zero ) );
+        CHECK_THROWS( endf::read::createBoundaries( negative ) );
       } // THEN
     } // WHEN
   } // GIVEN

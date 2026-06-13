@@ -1,18 +1,18 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF3_CREATECOMPOUNDSYSTEM
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF3_CREATECOMPOUNDSYSTEM
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF3_CREATECOMPOUNDSYSTEM
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF3_CREATECOMPOUNDSYSTEM
 
 // system includes
 
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/CompoundSystem.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf3/createSpinGroups.hpp"
+#include "njoy/format/endf/read/resonances/lrf3/createSpinGroups.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf3 {
 
@@ -27,8 +27,8 @@ namespace lrf3 {
    *  @param[in] nro          the energy dependent scattering radius (if defined, given in fm)
    *  @param[in] endf         the parsed ENDF LRF3 data
    */
-  inline auto createCompoundSystem( const id::ParticleID& projectile,
-                                    const id::ParticleID& target,
+  inline auto createCompoundSystem( const dryad::id::ParticleID& projectile,
+                                    const dryad::id::ParticleID& target,
                                     double lower,
                                     double upper,
                                     int naps,
@@ -42,9 +42,9 @@ namespace lrf3 {
 
 } // lrf3 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

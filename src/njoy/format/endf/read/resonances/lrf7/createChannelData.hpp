@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATECHANNELDATA
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATECHANNELDATA
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATECHANNELDATA
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATECHANNELDATA
 
 // system includes
 #include <algorithm>
@@ -8,14 +8,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createChannels.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createChannels.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -31,8 +31,8 @@ namespace lrf7 {
    *  @param[in] endfSpinGroup        the parsed ENDF spin group
    */
   inline auto createChannelData(
-                  const id::ParticleID& projectile,
-                  const id::ParticleID& target,
+                  const dryad::id::ParticleID& projectile,
+                  const dryad::id::ParticleID& target,
                   const dryad::resonances::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   bool reduced_amplitudes,
@@ -90,7 +90,7 @@ namespace lrf7 {
 
       auto id = channels[i].identifier();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
-      auto is_capture = id.reaction().reactionType() == id::ReactionType( "capture" );
+      auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
 
       if ( amplitudes.size() > 0 || is_elastic || is_capture ) {
 
@@ -104,9 +104,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

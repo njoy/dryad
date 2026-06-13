@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createReactionProduct.hpp"
+#include "njoy/format/endf/read/createReactionProduct.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyElectronlargeAngleElasticElectronProduct( const ReactionProduct&, bool );
 void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct&, bool );
@@ -37,20 +38,20 @@ SCENARIO( "createReactionProduct" ) {
         id::ReactionID bremsstrahlung_id( "e-,H->bremsstrahlung" );
 
         auto product = elastic.reactionProducts()[0];
-        ReactionProduct electron_elastic1 = format::endf::createReactionProduct( elastic_id, product, 525, false );
-        ReactionProduct electron_elastic2 = format::endf::createReactionProduct( elastic_id, product, 525, true );
+        ReactionProduct electron_elastic1 = endf::read::createReactionProduct( elastic_id, product, 525, false );
+        ReactionProduct electron_elastic2 = endf::read::createReactionProduct( elastic_id, product, 525, true );
         verifyElectronlargeAngleElasticElectronProduct( electron_elastic1, false );
         verifyElectronlargeAngleElasticElectronProduct( electron_elastic2, true );
 
         product = bremsstrahlung.reactionProducts()[0];
-        ReactionProduct photon_bremsstrahlung1 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, false );
-        ReactionProduct photon_bremsstrahlung2 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, true );
+        ReactionProduct photon_bremsstrahlung1 = endf::read::createReactionProduct( bremsstrahlung_id, product, 527, false );
+        ReactionProduct photon_bremsstrahlung2 = endf::read::createReactionProduct( bremsstrahlung_id, product, 527, true );
         verifyElectronBremsstrahlungPhotonProduct( photon_bremsstrahlung1, false );
         verifyElectronBremsstrahlungPhotonProduct( photon_bremsstrahlung2, true );
 
         product = bremsstrahlung.reactionProducts()[1];
-        ReactionProduct electron_bremsstrahlung1 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, false );
-        ReactionProduct electron_bremsstrahlung2 = format::endf::createReactionProduct( bremsstrahlung_id, product, 527, true );
+        ReactionProduct electron_bremsstrahlung1 = endf::read::createReactionProduct( bremsstrahlung_id, product, 527, false );
+        ReactionProduct electron_bremsstrahlung2 = endf::read::createReactionProduct( bremsstrahlung_id, product, 527, true );
         verifyElectronBremsstrahlungElectronProduct( electron_bremsstrahlung1 );
         verifyElectronBremsstrahlungElectronProduct( electron_bremsstrahlung2 );
       } // THEN
@@ -74,13 +75,13 @@ SCENARIO( "createReactionProduct" ) {
 
         id::ReactionID reaction( "g,H->coherent" );
 
-        ReactionProduct coherent_product1 = format::endf::createReactionProduct( reaction, coherent, real, imaginary, 502, false );
-        ReactionProduct coherent_product2 = format::endf::createReactionProduct( reaction, coherent, real, imaginary, 502, true );
+        ReactionProduct coherent_product1 = endf::read::createReactionProduct( reaction, coherent, real, imaginary, 502, false );
+        ReactionProduct coherent_product2 = endf::read::createReactionProduct( reaction, coherent, real, imaginary, 502, true );
         verifyPhotonCoherentProduct( coherent_product1 );
         verifyPhotonCoherentProduct( coherent_product2 );
 
-        ReactionProduct incoherent_product1 = format::endf::createReactionProduct( reaction, incoherent, 504, false );
-        ReactionProduct incoherent_product2 = format::endf::createReactionProduct( reaction, incoherent, 504, false );
+        ReactionProduct incoherent_product1 = endf::read::createReactionProduct( reaction, incoherent, 504, false );
+        ReactionProduct incoherent_product2 = endf::read::createReactionProduct( reaction, incoherent, 504, false );
         verifyPhotonIncoherentProduct( incoherent_product1 );
         verifyPhotonIncoherentProduct( incoherent_product2 );
       } // THEN

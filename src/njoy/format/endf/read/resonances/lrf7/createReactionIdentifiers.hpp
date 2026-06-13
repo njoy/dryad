@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEREACTIONIDENTIFIERS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEREACTIONIDENTIFIERS
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATEREACTIONIDENTIFIERS
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATEREACTIONIDENTIFIERS
 
 // system includes
 #include <vector>
@@ -10,9 +10,9 @@
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -24,11 +24,11 @@ namespace lrf7 {
    *  @param[in] endfPairs    the parsed ENDF particle pairs
    */
   inline auto createReactionIdentifiers(
-                  const id::ParticleID& projectile,
-                  const id::ParticleID& target,
+                  const dryad::id::ParticleID& projectile,
+                  const dryad::id::ParticleID& target,
                   const ENDFtk::section::Type< 2, 151 >::RMatrixLimited::ParticlePairs& endfPairs ) {
 
-    std::vector< id::ReactionID > reactions;
+    std::vector< dryad::id::ReactionID > reactions;
     for ( const auto& mt : endfPairs.MT() ) {
 
       reactions.emplace_back( projectile, target, mt );
@@ -38,9 +38,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

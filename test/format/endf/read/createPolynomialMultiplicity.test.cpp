@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createPolynomialMultiplicity.hpp"
+#include "njoy/format/endf/read/createPolynomialMultiplicity.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyFissionChunk( const PolynomialMultiplicity& );
 
@@ -27,7 +28,7 @@ SCENARIO( "createPolynomialMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createPolynomialMultiplicity( 1e-5, 2e+7, multiplicity );
+        auto chunk = endf::read::createPolynomialMultiplicity( 1e-5, 2e+7, multiplicity );
 
         verifyFissionChunk( chunk );
       } // THEN

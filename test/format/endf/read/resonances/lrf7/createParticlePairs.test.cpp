@@ -4,17 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createParticlePairs.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createParticlePairs.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
-using namespace njoy;
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
+using namespace njoy::constants;
 
-void verifyChunk( const std::vector< std::optional< ParticlePair > >& );
+void verifyChunk( const std::vector< std::optional< resonances::ParticlePair > >& );
 
 SCENARIO( "createParticlePairs" ) {
 
@@ -33,7 +33,7 @@ SCENARIO( "createParticlePairs" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createParticlePairs( projectile, target, pairs );
+        auto chunk = endf::read::resonances::lrf7::createParticlePairs( projectile, target, pairs );
 
         verifyChunk( chunk );
       } // THEN
@@ -41,7 +41,7 @@ SCENARIO( "createParticlePairs" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const std::vector< std::optional< ParticlePair > >& chunk ) {
+void verifyChunk( const std::vector< std::optional< resonances::ParticlePair > >& chunk ) {
 
   CHECK( 3 == chunk.size() );
   // g,Cl36[all]
@@ -52,29 +52,29 @@ void verifyChunk( const std::vector< std::optional< ParticlePair > >& chunk ) {
   CHECK( +1 == chunk[0]->lightParticle().parity() );
   CHECK( id::ParticleID( "Cl36[all]" ) == chunk[0]->heavyParticle().identifier() );
   CHECK( 17 == chunk[0]->heavyParticle().charge() );
-  CHECK( 35.65932 * constants::neutron_mass == chunk[0]->heavyParticle().mass() );
+  CHECK( 35.65932 * neutron_mass == chunk[0]->heavyParticle().mass() );
   CHECK( 0 == chunk[0]->heavyParticle().spin() );
   CHECK( +1 == chunk[0]->heavyParticle().parity() );
   // n,Cl35
   CHECK( id::ParticleID::neutron() == chunk[1]->lightParticle().identifier() );
   CHECK( 0 == chunk[1]->lightParticle().charge() );
-  CHECK( constants::neutron_mass == chunk[1]->lightParticle().mass() );
+  CHECK( neutron_mass == chunk[1]->lightParticle().mass() );
   CHECK( 0.5 == chunk[1]->lightParticle().spin() );
   CHECK( +1 == chunk[1]->lightParticle().parity() );
   CHECK( id::ParticleID( "Cl35" ) == chunk[1]->heavyParticle().identifier() );
   CHECK( 17 == chunk[1]->heavyParticle().charge() );
-  CHECK( 34.66845 * constants::neutron_mass == chunk[1]->heavyParticle().mass() );
+  CHECK( 34.66845 * neutron_mass == chunk[1]->heavyParticle().mass() );
   CHECK( 1.5 == chunk[1]->heavyParticle().spin() );
   CHECK( +1 == chunk[1]->heavyParticle().parity() );
   // p,S35
   CHECK( id::ParticleID::proton() == chunk[2]->lightParticle().identifier() );
   CHECK( 1 == chunk[2]->lightParticle().charge() );
-  CHECK( .9986235 * constants::neutron_mass == chunk[2]->lightParticle().mass() );
+  CHECK( .9986235 * neutron_mass == chunk[2]->lightParticle().mass() );
   CHECK( 0.5 == chunk[2]->lightParticle().spin() );
   CHECK( +1 == chunk[2]->lightParticle().parity() );
   CHECK( id::ParticleID( "S35" ) == chunk[2]->heavyParticle().identifier() );
   CHECK( 16 == chunk[2]->heavyParticle().charge() );
-  CHECK( 34.66863 * constants::neutron_mass == chunk[2]->heavyParticle().mass() );
+  CHECK( 34.66863 * neutron_mass == chunk[2]->heavyParticle().mass() );
   CHECK( 1.5 == chunk[2]->heavyParticle().spin() );
   CHECK( +1 == chunk[2]->heavyParticle().parity() );
 }

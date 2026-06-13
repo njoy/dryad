@@ -1,21 +1,21 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDBACKGROUND
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDBACKGROUND
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETABULATEDBACKGROUND
+#define NJOY_FORMAT_ENDF_READ_CREATETABULATEDBACKGROUND
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/resonances/TabulatedBackground.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -48,9 +48,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

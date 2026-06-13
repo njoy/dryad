@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createThermalScattering.hpp"
+#include "njoy/format/endf/read/createThermalScattering.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -27,7 +28,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::endf::createThermalScattering( material );
+        ThermalScattering chunk = endf::read::createThermalScattering( material );
 
         tsl::bemetal::verifyBeMetal( chunk );
       } // THEN
@@ -44,7 +45,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::endf::createThermalScattering( material );
+        ThermalScattering chunk = endf::read::createThermalScattering( material );
 
         tsl::zrinzrh::verifyZrInZrH( chunk );
       } // THEN
@@ -61,7 +62,7 @@ SCENARIO( "createThermalScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        ThermalScattering chunk = format::endf::createThermalScattering( material );
+        ThermalScattering chunk = endf::read::createThermalScattering( material );
 
         tsl::li7inli7d::verifyLi7InLi7D( chunk );
       } // THEN

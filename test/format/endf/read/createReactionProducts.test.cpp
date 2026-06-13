@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createReactionProducts.hpp"
+#include "njoy/format/endf/read/createReactionProducts.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyElectronBremsstrahlungPhotonProduct( const ReactionProduct&, bool );
 void verifyElectronBremsstrahlungElectronProduct( const ReactionProduct& );
@@ -33,8 +34,8 @@ SCENARIO( "createReactionProducts" ) {
         id::ReactionID reaction( "e-,H->bremsstrahlung" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< ReactionProduct > products1 = format::endf::createReactionProducts( reaction, material, 527, false, masses );
-        std::vector< ReactionProduct > products2 = format::endf::createReactionProducts( reaction, material, 527, true, masses );
+        std::vector< ReactionProduct > products1 = endf::read::createReactionProducts( reaction, material, 527, false, masses );
+        std::vector< ReactionProduct > products2 = endf::read::createReactionProducts( reaction, material, 527, true, masses );
 
         CHECK( 3 == products1.size() );
         verifyElectronBremsstrahlungPhotonProduct( products1[0], false );
@@ -62,8 +63,8 @@ SCENARIO( "createReactionProducts" ) {
         id::ReactionID reaction( "g,H->coherent" );
         std::map< id::ParticleID, double > masses;
 
-        std::vector< ReactionProduct > products1 = format::endf::createReactionProducts( reaction, material, 502, false, masses );
-        std::vector< ReactionProduct > products2 = format::endf::createReactionProducts( reaction, material, 502, true, masses );
+        std::vector< ReactionProduct > products1 = endf::read::createReactionProducts( reaction, material, 502, false, masses );
+        std::vector< ReactionProduct > products2 = endf::read::createReactionProducts( reaction, material, 502, true, masses );
 
         CHECK( 2 == products1.size() );
         verifyPhotonCoherentProduct( products1[0] );

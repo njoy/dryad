@@ -1,26 +1,26 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEPOLYNOMIALMULTIPLICITY
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEPOLYNOMIALMULTIPLICITY
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEPOLYNOMIALMULTIPLICITY
+#define NJOY_FORMAT_ENDF_READ_CREATEPOLYNOMIALMULTIPLICITY
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/1/PolynomialMultiplicity.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a PolynomialMultiplicity from a parsed ENDF multiplicity
    */
-  inline PolynomialMultiplicity
+  inline dryad::PolynomialMultiplicity
   createPolynomialMultiplicity( double lower, double upper,
                                 const ENDFtk::section::PolynomialMultiplicity& multiplicity ) {
 
@@ -28,7 +28,7 @@ namespace endf {
 
       Log::info( "Reading multiplicity data" );
       auto coefficients = createVector( multiplicity.coefficients() );
-      return PolynomialMultiplicity(
+      return dryad::PolynomialMultiplicity(
                std::move( lower ), std::move( upper ),
                std::move( coefficients ) );
     }
@@ -39,9 +39,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

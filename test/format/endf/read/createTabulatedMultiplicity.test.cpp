@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedMultiplicity.hpp"
+#include "njoy/format/endf/read/createTabulatedMultiplicity.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyFissionChunk( const TabulatedMultiplicity& );
 void verifyNeutronChunk( const TabulatedMultiplicity& );
@@ -29,7 +30,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity );
+        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity );
 
         verifyFissionChunk( chunk );
       } // THEN
@@ -47,7 +48,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity );
+        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -65,7 +66,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedMultiplicity( multiplicity );
+        auto chunk = endf::read::createTabulatedMultiplicity( multiplicity );
 
         verifyElectronChunk( chunk );
       } // THEN

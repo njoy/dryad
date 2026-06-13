@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEMATRIX
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEMATRIX
+#ifndef NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEMATRIX
+#define NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEMATRIX
 
 // system includes
 
@@ -10,9 +10,9 @@
 #include "njoy/matrix.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace covariance {
 
   /**
@@ -179,9 +179,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

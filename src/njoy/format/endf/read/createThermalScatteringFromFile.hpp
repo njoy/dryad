@@ -1,17 +1,17 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETHERMALSCATTERINGFROMFILE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETHERMALSCATTERINGFROMFILE
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETHERMALSCATTERINGFROMFILE
+#define NJOY_FORMAT_ENDF_READ_CREATETHERMALSCATTERINGFROMFILE
 
 // system includes
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
-#include "njoy/dryad/format/endf/createThermalScattering.hpp"
+#include "njoy/format/endf/read/createThermalScattering.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a ThermalScattering instance from an ENDF file
@@ -21,7 +21,7 @@ namespace endf {
    *
    *  @param[in] filename    the ENDF file name
    */
-  inline ThermalScattering
+  inline dryad::ThermalScattering
   createThermalScatteringFromFile( const std::string& filename ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
@@ -30,9 +30,9 @@ namespace endf {
     return createThermalScattering( tape.materials().front() );
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -5,13 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/endf/covariance/createAngularDistributionCovarianceMatrix.hpp"
+#include "njoy/format/endf/read/covariance/createAngularDistributionCovarianceMatrix.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::ENDFtk;
 using ExplicitCovariance = section::ExplicitCovariance;
 
@@ -31,7 +32,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
       id::ReactionID reaction( "n,Ne22->n(0)" );
       std::size_t moment = 1;
 
-      auto chunk = format::endf::covariance::createAngularDistributionCovarianceMatrix(
+      auto chunk = endf::read::covariance::createAngularDistributionCovarianceMatrix(
                      ReferenceFrame::CentreOfMass, reaction, reaction, 1, 1, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
@@ -176,7 +177,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
       std::size_t rowMoment = 1;
       std::size_t columnMoment = 2;
 
-      auto chunk = format::endf::covariance::createAngularDistributionCovarianceMatrix(
+      auto chunk = endf::read::covariance::createAngularDistributionCovarianceMatrix(
                      ReferenceFrame::CentreOfMass, reaction, reaction, rowMoment, columnMoment, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {

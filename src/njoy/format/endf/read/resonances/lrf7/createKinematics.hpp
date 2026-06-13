@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEKINEMATICS
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATEKINEMATICS
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATEKINEMATICS
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATEKINEMATICS
 
 // system includes
 #include <vector>
@@ -10,9 +10,9 @@
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -30,9 +30,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

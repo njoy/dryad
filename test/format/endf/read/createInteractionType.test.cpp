@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createInteractionType.hpp"
+#include "njoy/format/endf/read/createInteractionType.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createInteractionType" ) {
 
@@ -19,21 +20,21 @@ SCENARIO( "createInteractionType" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 0 ) );
-        CHECK( InteractionType::Atomic == format::endf::createInteractionType( 3 ) );
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 10 ) );
-        CHECK( InteractionType::Atomic == format::endf::createInteractionType( 113 ) );
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 10010 ) );
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 10020 ) );
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 10030 ) );
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 20030 ) );
-        CHECK( InteractionType::Nuclear == format::endf::createInteractionType( 20040 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 0 ) );
+        CHECK( InteractionType::Atomic == endf::read::createInteractionType( 3 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 10 ) );
+        CHECK( InteractionType::Atomic == endf::read::createInteractionType( 113 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 10010 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 10020 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 10030 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 20030 ) );
+        CHECK( InteractionType::Nuclear == endf::read::createInteractionType( 20040 ) );
       } // THEN
 
       THEN( "an exception is thrown for an unknown or unsupported sublibrary type" ) {
 
-        CHECK_THROWS( format::endf::createInteractionType( 1 ) );
-        CHECK_THROWS( format::endf::createInteractionType( 40090 ) );
+        CHECK_THROWS( endf::read::createInteractionType( 1 ) );
+        CHECK_THROWS( endf::read::createInteractionType( 40090 ) );
       } // THEN
     } // WHEN
   } // GIVEN

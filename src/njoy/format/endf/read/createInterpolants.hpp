@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEINTERPOLANTS
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEINTERPOLANTS
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEINTERPOLANTS
+#define NJOY_FORMAT_ENDF_READ_CREATEINTERPOLANTS
 
 // system includes
 #include <algorithm>
@@ -9,12 +9,12 @@
 #include "tools/Log.hpp"
 #include "tools/std20/ranges.hpp"
 #include "njoy/dryad/InterpolationType.hpp"
-#include "njoy/dryad/format/endf/createInterpolant.hpp"
+#include "njoy/format/endf/read/createInterpolant.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Convert a range of ENDF interpolation type
@@ -22,17 +22,17 @@ namespace endf {
   template < typename Range >
   auto createInterpolants( const Range& interpolants )
   -> std::enable_if_t< njoy::tools::std20::ranges::range< Range >,
-                       std::vector< InterpolationType > > {
+                       std::vector< dryad::InterpolationType > > {
 
-    std::vector< InterpolationType > converted( interpolants.size() );
+    std::vector< dryad::InterpolationType > converted( interpolants.size() );
     std::transform( interpolants.begin(), interpolants.end(),
                     converted.begin(), &createInterpolant );
     return converted;
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createReactionIdentifiers.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createReactionIdentifiers.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const std::vector< id::ReactionID >& );
 
@@ -31,7 +32,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Cl35" );
-        auto chunk = format::endf::resonances::lrf7::createReactionIdentifiers( projectile, target, pairs );
+        auto chunk = endf::read::resonances::lrf7::createReactionIdentifiers( projectile, target, pairs );
 
         verifyChunk( chunk );
       } // THEN

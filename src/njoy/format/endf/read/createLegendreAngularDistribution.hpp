@@ -1,27 +1,27 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATELEGENDREANGULARDISTRIBUTION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATELEGENDREANGULARDISTRIBUTION
+#ifndef NJOY_FORMAT_ENDF_READ_CREATELEGENDREANGULARDISTRIBUTION
+#define NJOY_FORMAT_ENDF_READ_CREATELEGENDREANGULARDISTRIBUTION
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/6.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a LegendreAngularDistribution from a range of coefficients
    */
   template < typename Range >
-  LegendreAngularDistribution
+  dryad::LegendreAngularDistribution
   createLegendreAngularDistribution( const Range& range, bool addOrderZero,
                                      bool normalise ) {
 
@@ -38,7 +38,7 @@ namespace endf {
 
         coefficients[index] *= 0.5 * ( 2 * index + 1 );
       }
-      return LegendreAngularDistribution( std::move( coefficients ), normalise );
+      return dryad::LegendreAngularDistribution( std::move( coefficients ), normalise );
     }
     catch ( ... ) {
 
@@ -47,9 +47,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

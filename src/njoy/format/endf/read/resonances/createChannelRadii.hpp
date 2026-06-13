@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATECHANNELRADII
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_CREATECHANNELRADII
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_CREATECHANNELRADII
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_CREATECHANNELRADII
 
 // system includes
 #include <vector>
@@ -11,9 +11,9 @@
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 
   /**
@@ -70,9 +70,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

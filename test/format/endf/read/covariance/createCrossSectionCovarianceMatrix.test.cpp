@@ -5,13 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.hpp"
+#include "njoy/format/endf/read/covariance/createCrossSectionCovarianceMatrix.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::ENDFtk;
 using ReactionBlock = section::ReactionBlock;
 
@@ -30,7 +31,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 //      id::ParticleID target = "F19";
 //      id::ReactionID reaction = "4";
 //
-//      auto chunk = format::endf::covariance::createCrossSectionCovarianceMatrix(
+//      auto chunk = endf::read::covariance::createCrossSectionCovarianceMatrix(
 //                     projectile, target, reaction, covariance );
 //
 //      THEN( "a matrix can be created and members can be tested" ) {
@@ -165,7 +166,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 //      id::ParticleID target = "F19";
 //      id::ReactionID reaction = "4";
 //
-//      auto chunk = format::endf::covariance::createCrossSectionCovarianceMatrix(
+//      auto chunk = endf::read::covariance::createCrossSectionCovarianceMatrix(
 //                     projectile, target, reaction, covariance );
 //
 //      THEN( "a matrix can be created and members can be tested" ) {
@@ -266,7 +267,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 
       id::ReactionID reaction( "n,F19->2n,F18[all]" );
 
-      auto chunk = format::endf::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = endf::read::covariance::createCrossSectionCovarianceMatrix(
                      reaction, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
@@ -374,7 +375,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
 
       id::ReactionID reaction( "n,F19->d,O18[all]" );
 
-      auto chunk = format::endf::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = endf::read::covariance::createCrossSectionCovarianceMatrix(
                      reaction, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
@@ -467,7 +468,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
       id::ReactionID rowReaction( "n,F19->n,F19[all]" );
       id::ReactionID columnReaction( "n,F19->2n,F18[all]" );
 
-      auto chunk = format::endf::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = endf::read::covariance::createCrossSectionCovarianceMatrix(
                      rowReaction, columnReaction, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
@@ -570,7 +571,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
       id::ReactionID rowReaction( "n,Ne22->2n,Ne21[all]" );
       id::ReactionID columnReaction( "n,Ne22->n,Ne22_e1" );
 
-      auto chunk = format::endf::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = endf::read::covariance::createCrossSectionCovarianceMatrix(
                      rowReaction, columnReaction, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {

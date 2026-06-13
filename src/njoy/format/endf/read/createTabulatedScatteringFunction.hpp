@@ -1,27 +1,27 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDSCATTERINGFUNCTION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDSCATTERINGFUNCTION
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETABULATEDSCATTERINGFUNCTION
+#define NJOY_FORMAT_ENDF_READ_CREATETABULATEDSCATTERINGFUNCTION
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/TabulatedScatteringFunction.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/27.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a TabulatedScatteringFunction from a parsed ENDF section
    */
-  inline TabulatedScatteringFunction
+  inline dryad::TabulatedScatteringFunction
   createTabulatedScatteringFunction( const ENDFtk::section::Type< 27 >& section ) {
 
     if ( ( section.sectionNumber() != 502 ) && ( section.sectionNumber() != 504 ) ) {
@@ -38,7 +38,7 @@ namespace endf {
       auto values = createVector( section.H() );
       auto boundaries = createBoundaries( section.boundaries() );
       auto interpolants = createInterpolants( section.interpolants() );
-      return TabulatedScatteringFunction(
+      return dryad::TabulatedScatteringFunction(
                std::move( x ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -52,7 +52,7 @@ namespace endf {
   /**
    *  @brief Create a TabulatedScatteringFunction from an unparsed ENDF section
    */
-  TabulatedScatteringFunction
+  inline dryad::TabulatedScatteringFunction
   createTabulatedScatteringFunction( const ENDFtk::tree::Section& tree ) {
 
     if ( tree.fileNumber() == 27 ) {
@@ -68,9 +68,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

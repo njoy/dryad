@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createMultiplicity.hpp"
+#include "njoy/format/endf/read/createMultiplicity.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using Multiplicity = std::variant< int, TabulatedMultiplicity, PolynomialMultiplicity >;
 
 void verifyFissionPolynomialChunk( const Multiplicity& );
@@ -31,7 +32,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createMultiplicity( multiplicity );
+        auto chunk = endf::read::createMultiplicity( multiplicity );
 
         verifyNeutronConstantChunk( chunk );
       } // THEN
@@ -49,7 +50,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createMultiplicity( 1e-5, 2e+7, multiplicity );
+        auto chunk = endf::read::createMultiplicity( 1e-5, 2e+7, multiplicity );
 
         verifyFissionPolynomialChunk( chunk );
       } // THEN
@@ -67,7 +68,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createMultiplicity( 1e-5, 2e+7, multiplicity );
+        auto chunk = endf::read::createMultiplicity( 1e-5, 2e+7, multiplicity );
 
         verifyFissionTabulatedChunk( chunk );
       } // THEN
@@ -86,7 +87,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createMultiplicity( constant );
+        auto chunk = endf::read::createMultiplicity( constant );
 
         verifyNeutronConstantChunk( chunk );
       } // THEN
@@ -96,7 +97,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createMultiplicity( tabulated );
+        auto chunk = endf::read::createMultiplicity( tabulated );
 
         verifyNeutronTabulatedChunk( chunk );
       } // THEN
@@ -114,7 +115,7 @@ SCENARIO( "createMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createMultiplicity( constant );
+        auto chunk = endf::read::createMultiplicity( constant );
 
         verifyElectronConstantChunk( chunk );
       } // THEN

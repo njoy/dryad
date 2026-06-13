@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATECOMPLEXBREAKUPPARTICLES
-#define NJOY_DRYAD_FORMAT_ENDF_CREATECOMPLEXBREAKUPPARTICLES
+#ifndef NJOY_FORMAT_ENDF_READ_CREATECOMPLEXBREAKUPPARTICLES
+#define NJOY_FORMAT_ENDF_READ_CREATECOMPLEXBREAKUPPARTICLES
 
 // system includes
 #include <map>
@@ -9,9 +9,9 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create the complex breakup particles for a residual and
@@ -20,77 +20,77 @@ namespace endf {
    *  @param[in] residual          the residual particle
    *  @param[in] complex_breakup   the complex breakup flag
    */
-  inline std::map< id::ParticleID, std::size_t >
-  createComplexBreakUpParticles( const id::ParticleID residual,
+  inline std::map< dryad::id::ParticleID, std::size_t >
+  createComplexBreakUpParticles( const dryad::id::ParticleID residual,
                                  int complex_breakup ) {
 
     // create the complex breakup particles
-    std::map< id::ParticleID, std::size_t > particles;
+    std::map< dryad::id::ParticleID, std::size_t > particles;
     switch ( complex_breakup ) {
 
       case 22 : {
 
-        particles = { { id::ParticleID::alpha(), 1 } };
+        particles = { { dryad::id::ParticleID::alpha(), 1 } };
         break;
       }
       case 23 : {
 
-        particles = { { id::ParticleID::alpha(), 3 } };
+        particles = { { dryad::id::ParticleID::alpha(), 3 } };
         break;
       }
       case 24 : {
 
-        particles = { { id::ParticleID::neutron(), 1 },
-                      { id::ParticleID::alpha(), 1 } };
+        particles = { { dryad::id::ParticleID::neutron(), 1 },
+                      { dryad::id::ParticleID::alpha(), 1 } };
         break;
       }
       case 25 : {
 
-        particles = { { id::ParticleID::neutron(), 2 },
-                      { id::ParticleID::alpha(), 1 } };
+        particles = { { dryad::id::ParticleID::neutron(), 2 },
+                      { dryad::id::ParticleID::alpha(), 1 } };
         break;
       }
       case 28 : {
 
-        particles = { { id::ParticleID::proton(), 1 } };
+        particles = { { dryad::id::ParticleID::proton(), 1 } };
         break;
       }
       case 29 : {
 
-        particles = { { id::ParticleID::alpha(), 2 } };
+        particles = { { dryad::id::ParticleID::alpha(), 2 } };
         break;
       }
       case 30 : {
 
-        particles = { { id::ParticleID::neutron(), 1 },
-                      { id::ParticleID::alpha(), 2 } };
+        particles = { { dryad::id::ParticleID::neutron(), 1 },
+                      { dryad::id::ParticleID::alpha(), 2 } };
         break;
       }
       case 32 : {
 
-        particles = { { id::ParticleID::deuteron(), 1 } };
+        particles = { { dryad::id::ParticleID::deuteron(), 1 } };
         break;
       }
       case 33 : {
 
-        particles = { { id::ParticleID::triton(), 1 } };
+        particles = { { dryad::id::ParticleID::triton(), 1 } };
         break;
       }
       case 34 : {
 
-        particles = { { id::ParticleID::helion(), 1 } };
+        particles = { { dryad::id::ParticleID::helion(), 1 } };
         break;
       }
       case 35 : {
 
-        particles = { { id::ParticleID::deuteron(), 1 },
-                      { id::ParticleID::alpha(), 2 } };
+        particles = { { dryad::id::ParticleID::deuteron(), 1 },
+                      { dryad::id::ParticleID::alpha(), 2 } };
         break;
       }
       case 36 : {
 
-        particles = { { id::ParticleID::triton(), 1 },
-                      { id::ParticleID::alpha(), 2 } };
+        particles = { { dryad::id::ParticleID::triton(), 1 },
+                      { dryad::id::ParticleID::alpha(), 2 } };
         break;
       }
       default : {
@@ -124,37 +124,37 @@ namespace endf {
 
           case 1 : {
 
-            particles[ id::ParticleID::neutron() ] += 1;
+            particles[ dryad::id::ParticleID::neutron() ] += 1;
             break;
           }
           case 1001 : {
 
-            particles[ id::ParticleID::proton() ] += 1;
+            particles[ dryad::id::ParticleID::proton() ] += 1;
             break;
           }
           case 1002 : {
 
-            particles[ id::ParticleID::deuteron() ] += 1;
+            particles[ dryad::id::ParticleID::deuteron() ] += 1;
             break;
           }
           case 1003 : {
 
-            particles[ id::ParticleID::triton() ] += 1;
+            particles[ dryad::id::ParticleID::triton() ] += 1;
             break;
           }
           case 2003 : {
 
-            particles[ id::ParticleID::helion() ] += 1;
+            particles[ dryad::id::ParticleID::helion() ] += 1;
             break;
           }
           case 2004 : {
 
-            particles[ id::ParticleID::alpha() ] += 1;
+            particles[ dryad::id::ParticleID::alpha() ] += 1;
             break;
           }
           default : {
 
-            particles[ id::ParticleID::nuclide( remainder, id::LevelID::all ) ] += 1;
+            particles[ dryad::id::ParticleID::nuclide( remainder, dryad::id::LevelID::all ) ] += 1;
             break;
           }
         }
@@ -164,9 +164,9 @@ namespace endf {
     return particles;
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

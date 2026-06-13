@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATESPINGROUP
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF7_CREATESPINGROUP
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATESPINGROUP
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF7_CREATESPINGROUP
 
 // system includes
 #include <algorithm>
@@ -8,15 +8,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createChannelData.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createBoundaryCondition.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createChannelData.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf7 {
 
@@ -30,8 +30,8 @@ namespace lrf7 {
    *  @param[in] kinematics   the kinematics type to be applied
    *  @param[in] endf         the parsed ENDF LRF7 data
    */
-  inline auto createSpinGroups( const id::ParticleID& projectile,
-                                const id::ParticleID& target,
+  inline auto createSpinGroups( const dryad::id::ParticleID& projectile,
+                                const dryad::id::ParticleID& target,
                                 const dryad::resonances::Formalism& formalism,
                                 const dryad::resonances::BoundaryCondition& boundary,
                                 const dryad::resonances::Kinematics& kinematics,
@@ -97,9 +97,9 @@ namespace lrf7 {
 
 } // lrf7 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

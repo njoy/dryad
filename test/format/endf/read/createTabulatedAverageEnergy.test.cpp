@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedAverageEnergy.hpp"
+#include "njoy/format/endf/read/createTabulatedAverageEnergy.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyElectronChunk( const TabulatedAverageEnergy& );
 
@@ -29,7 +30,7 @@ SCENARIO( "createTabulatedAverageEnergy" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedAverageEnergy( distribution );
+        auto chunk = endf::read::createTabulatedAverageEnergy( distribution );
 
         verifyElectronChunk( chunk );
       } // THEN

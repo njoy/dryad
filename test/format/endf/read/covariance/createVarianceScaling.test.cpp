@@ -5,13 +5,14 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/endf/covariance/createVarianceScaling.hpp"
+#include "njoy/format/endf/read/covariance/createVarianceScaling.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::ENDFtk;
 using CovariancePairs = section::CovariancePairs;
 using VarianceScaling = covariance::VarianceScaling;
@@ -29,7 +30,7 @@ SCENARIO( "createVarianceScaling" ) {
 
     WHEN( "creating a VarianceScaling from the CovariancePairs instance" ) {
 
-      auto chunk = format::endf::covariance::createVarianceScaling( covariance );
+      auto chunk = endf::read::covariance::createVarianceScaling( covariance );
 
       THEN( "a VarianceScaling instance can be created and members can be tested" ) {
 
@@ -81,7 +82,7 @@ SCENARIO( "createVarianceScaling" ) {
 
       THEN( "an exception should be thrown" ) {
 
-        CHECK_THROWS( format::endf::covariance::createVarianceScaling( covariance ) );
+        CHECK_THROWS( endf::read::covariance::createVarianceScaling( covariance ) );
       } // THEN
     } // WHEN
   } // GIVEN

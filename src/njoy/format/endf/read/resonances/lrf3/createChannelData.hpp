@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF3_CREATECHANNELDATA
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF3_CREATECHANNELDATA
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF3_CREATECHANNELDATA
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF3_CREATECHANNELDATA
 
 // system includes
 #include <algorithm>
@@ -10,14 +10,14 @@
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/id/ChannelID.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/createChannelRadii.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/resonances/createChannelRadii.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf3 {
 
@@ -68,8 +68,8 @@ namespace lrf3 {
    *  @param[in] endfReichMooreLValue   the parsed ENDF Reich-Moore l-value data
    */
   inline auto createChannelData(
-                  const id::ParticleID& projectile,
-                  const id::ParticleID& target,
+                  const dryad::id::ParticleID& projectile,
+                  const dryad::id::ParticleID& target,
                   const dryad::resonances::ParticlePair& incident,
                   int naps,
                   const std::optional< dryad::resonances::TabulatedRadius >& nro,
@@ -103,7 +103,7 @@ namespace lrf3 {
     for ( double j : jvalues ) {
 
       // elastic channel
-      id::ChannelID elastic_id( id::ReactionID( projectile, target, 2 ),
+      dryad::id::ChannelID elastic_id( dryad::id::ReactionID( projectile, target, 2 ),
                                 retrieveQuantumNumber( l, j, available ) );
       dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
 
@@ -134,8 +134,8 @@ namespace lrf3 {
 
       // treat capture
       dryad::resonances::ChannelQuantumNumbers other( 0, 0, std::abs( j ), l%2 == 0 ? +1 : -1 );
-      id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
-      dryad::resonances::ParticlePair capture_pair( { id::ParticleID::photon(), 0., 0., +1 },
+      dryad::id::ChannelID capture_id( dryad::id::ReactionID( projectile, target, 102 ), other );
+      dryad::resonances::ParticlePair capture_pair( { dryad::id::ParticleID::photon(), 0., 0., +1 },
                                                     { capture_id.reaction().residual().value(), 0., 0., +1 } );
       dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, zero_radii );
       channel_data.emplace_back( std::move( capture ), dryad::resonances::ResonanceTable{ { capture_id }, energies, std::move( capture_widths ) } );
@@ -146,8 +146,8 @@ namespace lrf3 {
       bool has_fission2 = std::any_of( fission2_widths.begin(), fission2_widths.end(), is_non_zero );
       if ( has_fission1 && has_fission2 ) {
 
-        id::ChannelID fission1_id( id::ReactionID( projectile, target, 18 ), other, 0 );
-        id::ChannelID fission2_id( id::ReactionID( projectile, target, 18 ), other, 1 );
+        dryad::id::ChannelID fission1_id( dryad::id::ReactionID( projectile, target, 18 ), other, 0 );
+        dryad::id::ChannelID fission2_id( dryad::id::ReactionID( projectile, target, 18 ), other, 1 );
         dryad::resonances::Channel fission1( fission1_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
         dryad::resonances::Channel fission2( fission2_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
         channel_data.emplace_back( std::move( fission1 ), dryad::resonances::ResonanceTable{ { fission1_id }, energies, std::move( fission1_widths ) } );
@@ -156,7 +156,7 @@ namespace lrf3 {
       }
       else if ( has_fission1 || has_fission2 ) {
 
-        id::ChannelID fission_id( id::ReactionID( projectile, target, 18 ), other );
+        dryad::id::ChannelID fission_id( dryad::id::ReactionID( projectile, target, 18 ), other );
         dryad::resonances::Channel fission( fission_id, incident, std::nullopt, 0., std::nullopt, zero_radii );
         if ( has_fission1 ) {
 
@@ -174,9 +174,9 @@ namespace lrf3 {
 
 } // lrf3 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

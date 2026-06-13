@@ -4,17 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createSammyBackground.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createSammyBackground.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
-using namespace njoy;
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
-void verifyChunk( const dryad::resonances::SammyBackground& );
+void verifyChunk( const resonances::SammyBackground& );
 
 SCENARIO( "createParticlePairs" ) {
 
@@ -32,7 +31,7 @@ SCENARIO( "createParticlePairs" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::resonances::lrf7::createSammyBackground( background );
+        auto chunk = endf::read::resonances::lrf7::createSammyBackground( background );
 
         verifyChunk( chunk );
       } // THEN
@@ -40,7 +39,7 @@ SCENARIO( "createParticlePairs" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const dryad::resonances::SammyBackground& chunk ) {
+void verifyChunk( const resonances::SammyBackground& chunk ) {
 
   CHECK_THAT( -0.043, WithinRel( chunk.polynomialCoefficients()[0] ) );
   CHECK_THAT( 2.8e-8, WithinRel( chunk.polynomialCoefficients()[1] ) );

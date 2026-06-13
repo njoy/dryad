@@ -1,24 +1,24 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEREACTIONPRODUCTS
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEREACTIONPRODUCTS
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEREACTIONPRODUCTS
+#define NJOY_FORMAT_ENDF_READ_CREATEREACTIONPRODUCTS
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/endf/createComplexBreakUpParticles.hpp"
-#include "njoy/dryad/format/endf/createMultiplicity.hpp"
-#include "njoy/dryad/format/endf/createReactionProduct.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
+#include "njoy/format/endf/read/createComplexBreakUpParticles.hpp"
+#include "njoy/format/endf/read/createMultiplicity.hpp"
+#include "njoy/format/endf/read/createReactionProduct.hpp"
 #include "njoy/constants.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Add a placeholder reaction product if it is not present yet
@@ -27,9 +27,9 @@ namespace endf {
    *  @param[in] multiplicity    the multiplicity of the target
    *  @param[in, out] products   the current set of reaction products
    */
-  inline void addProduct( const id::ParticleID& particle,
+  inline void addProduct( const dryad::id::ParticleID& particle,
                           int multiplicity,
-                          std::vector< ReactionProduct >& products ) {
+                          std::vector< dryad::ReactionProduct >& products ) {
 
     auto iter = std::find_if( products.begin(), products.end(),
                               [&particle] ( auto&& product )
@@ -51,14 +51,14 @@ namespace endf {
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
-  inline std::vector< ReactionProduct >
-  createReactionProducts( const id::ReactionID& reaction,
+  inline std::vector< dryad::ReactionProduct >
+  createReactionProducts( const dryad::id::ReactionID& reaction,
                           const ENDFtk::tree::Material& material,
                           int mt,
                           bool normalise,
-                          std::map< id::ParticleID, double >& masses ) {
+                          std::map< dryad::id::ParticleID, double >& masses ) {
 
-    std::vector< ReactionProduct > products;
+    std::vector< dryad::ReactionProduct > products;
 
     if ( material.hasSection( 3, mt ) ) {
 
@@ -152,7 +152,7 @@ namespace endf {
               products.emplace_back( createReactionProduct( reaction, product, normalise ) );
 
               auto id = products.back().productIdentifier().groundState();
-              if ( id != id::ParticleID::photon() ) {
+              if ( id != dryad::id::ParticleID::photon() ) {
 
                 // for photons, the mass value is actually the energy of the primary photon
                 // so we skip those
@@ -257,7 +257,7 @@ namespace endf {
       if ( reaction.particles()->size() == 0 ) {
 
         // add photons as an expected reaction product if it is not there yet
-        addProduct( id::ParticleID::photon(), 1, products );
+        addProduct( dryad::id::ParticleID::photon(), 1, products );
       }
       else {
 
@@ -282,9 +282,9 @@ namespace endf {
     return products;
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEINTERPOLANT
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEINTERPOLANT
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEINTERPOLANT
+#define NJOY_FORMAT_ENDF_READ_CREATEINTERPOLANT
 
 // system includes
 #include <vector>
@@ -9,22 +9,23 @@
 #include "njoy/dryad/InterpolationType.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create an interpolation type from an ENDF interpolation type
    */
-  inline InterpolationType createInterpolant( int interpolant ) {
+  inline dryad::InterpolationType
+  createInterpolant( int interpolant ) {
 
     switch ( interpolant ) {
 
-      case 1 : return InterpolationType::Histogram;
-      case 2 : return InterpolationType::LinearLinear;
-      case 3 : return InterpolationType::LinearLog;
-      case 4 : return InterpolationType::LogLinear;
-      case 5 : return InterpolationType::LogLog;
+      case 1 : return dryad::InterpolationType::Histogram;
+      case 2 : return dryad::InterpolationType::LinearLinear;
+      case 3 : return dryad::InterpolationType::LinearLog;
+      case 4 : return dryad::InterpolationType::LogLinear;
+      case 5 : return dryad::InterpolationType::LogLog;
       default : {
 
         Log::error( "Cannot convert or handle ENDF interpolation type {}",
@@ -34,9 +35,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEINTERACTIONTYPE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEINTERACTIONTYPE
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEINTERACTIONTYPE
+#define NJOY_FORMAT_ENDF_READ_CREATEINTERACTIONTYPE
 
 // system includes
 #include <vector>
@@ -9,26 +9,27 @@
 #include "njoy/dryad/InteractionType.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create the interaction type based of the sublibrary value
    */
-  inline InteractionType createInteractionType( int sublibrary ) {
+  inline dryad::InteractionType
+  createInteractionType( int sublibrary ) {
 
     switch ( sublibrary ) {
 
-      case     0 : return InteractionType::Nuclear;
-      case     3 : return InteractionType::Atomic;
-      case    10 : return InteractionType::Nuclear;
-      case   113 : return InteractionType::Atomic;
-      case 10010 : return InteractionType::Nuclear;
-      case 10020 : return InteractionType::Nuclear;
-      case 10030 : return InteractionType::Nuclear;
-      case 20030 : return InteractionType::Nuclear;
-      case 20040 : return InteractionType::Nuclear;
+      case     0 : return dryad::InteractionType::Nuclear;
+      case     3 : return dryad::InteractionType::Atomic;
+      case    10 : return dryad::InteractionType::Nuclear;
+      case   113 : return dryad::InteractionType::Atomic;
+      case 10010 : return dryad::InteractionType::Nuclear;
+      case 10020 : return dryad::InteractionType::Nuclear;
+      case 10030 : return dryad::InteractionType::Nuclear;
+      case 20030 : return dryad::InteractionType::Nuclear;
+      case 20040 : return dryad::InteractionType::Nuclear;
       default : {
 
         Log::error( "ENDF sublibrary {} does not define projectile-target data",
@@ -38,9 +39,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

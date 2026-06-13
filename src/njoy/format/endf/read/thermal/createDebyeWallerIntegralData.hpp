@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_THERMAL_CREATEDEBYEWALLERINTEGRALDATA
-#define NJOY_DRYAD_FORMAT_ENDF_THERMAL_CREATEDEBYEWALLERINTEGRALDATA
+#ifndef NJOY_FORMAT_ENDF_READ_THERMAL_CREATEDEBYEWALLERINTEGRALDATA
+#define NJOY_FORMAT_ENDF_READ_THERMAL_CREATEDEBYEWALLERINTEGRALDATA
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/thermal/DebyeWallerIntegralData.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ENDFtk/section/7/2.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace thermal {
 
   /**
@@ -23,9 +23,8 @@ namespace thermal {
    *
    *  @param[in] incoherent   the incoherent elastic thermal scattering component
    */
-  dryad::thermal::DebyeWallerIntegralData
-  createDebyeWallerIntegralData(
-      const ENDFtk::section::Type< 7, 2 >::IncoherentElastic& incoherent ) {
+  inline dryad::thermal::DebyeWallerIntegralData
+  createDebyeWallerIntegralData( const ENDFtk::section::Type< 7, 2 >::IncoherentElastic& incoherent ) {
 
     try {
 
@@ -42,9 +41,9 @@ namespace thermal {
   }
 
 } // thermal namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

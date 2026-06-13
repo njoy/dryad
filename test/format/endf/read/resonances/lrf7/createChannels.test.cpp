@@ -4,19 +4,19 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createChannels.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createChannels.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createBoundaryCondition.hpp"
 
 // convenience typedefs
-using namespace njoy;
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
+using namespace njoy::constants;
 
-void verifyChunk( const std::vector< Channel >& );
-void verifyChunkWithBackground( const std::vector< Channel >& );
+void verifyChunk( const std::vector< resonances::Channel >& );
+void verifyChunkWithBackground( const std::vector< resonances::Channel >& );
 
 SCENARIO( "createChannels" ) {
 
@@ -37,9 +37,9 @@ SCENARIO( "createChannels" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Cl35" );
-        auto boundary_condition = format::endf::resonances::lrf7::createBoundaryCondition( pairs );
-        auto kinematics = Kinematics::NonRelativistic;
-        auto chunk = format::endf::resonances::lrf7::createChannels(
+        auto boundary_condition = endf::read::resonances::lrf7::createBoundaryCondition( pairs );
+        auto kinematics = resonances::Kinematics::NonRelativistic;
+        auto chunk = endf::read::resonances::lrf7::createChannels(
                        projectile, target, boundary_condition, kinematics, pairs, channels, background );
 
         verifyChunk( chunk );
@@ -64,9 +64,9 @@ SCENARIO( "createChannels" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Sr88" );
-        auto boundary_condition = format::endf::resonances::lrf7::createBoundaryCondition( pairs );
-        auto kinematics = Kinematics::NonRelativistic;
-        auto chunk = format::endf::resonances::lrf7::createChannels(
+        auto boundary_condition = endf::read::resonances::lrf7::createBoundaryCondition( pairs );
+        auto kinematics = resonances::Kinematics::NonRelativistic;
+        auto chunk = endf::read::resonances::lrf7::createChannels(
                        projectile, target, boundary_condition, kinematics, pairs, channels, background );
 
         verifyChunkWithBackground( chunk );
@@ -75,7 +75,7 @@ SCENARIO( "createChannels" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const std::vector< Channel >& chunk ) {
+void verifyChunk( const std::vector< resonances::Channel >& chunk ) {
 
   CHECK( 3 == chunk.size() );
 
@@ -83,12 +83,12 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   auto incident = chunk[0].incidentParticlePair();
   CHECK( id::ParticleID::neutron() == incident.lightParticle().identifier() );
   CHECK( 0 == incident.lightParticle().charge() );
-  CHECK( constants::neutron_mass == incident.lightParticle().mass() );
+  CHECK( neutron_mass == incident.lightParticle().mass() );
   CHECK( 0.5 == incident.lightParticle().spin() );
   CHECK( +1 == incident.lightParticle().parity() );
   CHECK( id::ParticleID( "Cl35" ) == incident.heavyParticle().identifier() );
   CHECK( 17 == incident.heavyParticle().charge() );
-  CHECK( 34.66845 * constants::neutron_mass == incident.heavyParticle().mass() );
+  CHECK( 34.66845 * neutron_mass == incident.heavyParticle().mass() );
   CHECK( 1.5 == incident.heavyParticle().spin() );
   CHECK( +1 == incident.heavyParticle().parity() );
   auto outgoing = chunk[0].outgoingParticlePair().value();
@@ -99,7 +99,7 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK( +1 == outgoing.lightParticle().parity() );
   CHECK( id::ParticleID( "Cl36[all]" ) == outgoing.heavyParticle().identifier() );
   CHECK( 17 == outgoing.heavyParticle().charge() );
-  CHECK( 35.65932 * constants::neutron_mass == outgoing.heavyParticle().mass() );
+  CHECK( 35.65932 * neutron_mass == outgoing.heavyParticle().mass() );
   CHECK( 0 == outgoing.heavyParticle().spin() );
   CHECK( +1 == outgoing.heavyParticle().parity() );
   CHECK( false == chunk[0].isIncidentChannel() );
@@ -109,29 +109,29 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK_THAT( 0., WithinRel( std::get<double>( chunk[0].channelRadii().penetrabilityRadius() ) ) );
   CHECK( std::nullopt == chunk[0].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 0., WithinRel( std::get<double>( chunk[0].channelRadii().phaseShiftRadius().value() ) ) );
-  CHECK( Kinematics::NonRelativistic == chunk[0].kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk[0].kinematicsType() );
 
   CHECK( id::ChannelID( "n,Cl35->n,Cl35{0,1,1+}" ) == chunk[1].identifier() );
   incident = chunk[1].incidentParticlePair();
   CHECK( id::ParticleID::neutron() == incident.lightParticle().identifier() );
   CHECK( 0 == incident.lightParticle().charge() );
-  CHECK( constants::neutron_mass == incident.lightParticle().mass() );
+  CHECK( neutron_mass == incident.lightParticle().mass() );
   CHECK( 0.5 == incident.lightParticle().spin() );
   CHECK( +1 == incident.lightParticle().parity() );
   CHECK( id::ParticleID( "Cl35" ) == incident.heavyParticle().identifier() );
   CHECK( 17 == incident.heavyParticle().charge() );
-  CHECK( 34.66845 * constants::neutron_mass == incident.heavyParticle().mass() );
+  CHECK( 34.66845 * neutron_mass == incident.heavyParticle().mass() );
   CHECK( 1.5 == incident.heavyParticle().spin() );
   CHECK( +1 == incident.heavyParticle().parity() );
   outgoing = chunk[1].outgoingParticlePair().value();
   CHECK( id::ParticleID::neutron() == outgoing.lightParticle().identifier() );
   CHECK( 0 == outgoing.lightParticle().charge() );
-  CHECK( constants::neutron_mass == outgoing.lightParticle().mass() );
+  CHECK( neutron_mass == outgoing.lightParticle().mass() );
   CHECK( 0.5 == outgoing.lightParticle().spin() );
   CHECK( +1 == outgoing.lightParticle().parity() );
   CHECK( id::ParticleID( "Cl35" ) == outgoing.heavyParticle().identifier() );
   CHECK( 17 == outgoing.heavyParticle().charge() );
-  CHECK( 34.66845 * constants::neutron_mass == outgoing.heavyParticle().mass() );
+  CHECK( 34.66845 * neutron_mass == outgoing.heavyParticle().mass() );
   CHECK( 1.5 == outgoing.heavyParticle().spin() );
   CHECK( +1 == outgoing.heavyParticle().parity() );
   CHECK( true == chunk[1].isIncidentChannel() );
@@ -141,29 +141,29 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK_THAT( 4.82222, WithinRel( std::get<double>( chunk[1].channelRadii().penetrabilityRadius() ) ) );
   CHECK( std::nullopt == chunk[1].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 3.66798, WithinRel( std::get<double>( chunk[1].channelRadii().phaseShiftRadius().value() ) ) );
-  CHECK( Kinematics::NonRelativistic == chunk[1].kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk[1].kinematicsType() );
 
   CHECK( id::ChannelID( "n,Cl35->p,S35{0,1,1+}" ) == chunk[2].identifier() );
   incident = chunk[2].incidentParticlePair();
   CHECK( id::ParticleID::neutron() == incident.lightParticle().identifier() );
   CHECK( 0 == incident.lightParticle().charge() );
-  CHECK( constants::neutron_mass == incident.lightParticle().mass() );
+  CHECK( neutron_mass == incident.lightParticle().mass() );
   CHECK( 0.5 == incident.lightParticle().spin() );
   CHECK( +1 == incident.lightParticle().parity() );
   CHECK( id::ParticleID( "Cl35" ) == incident.heavyParticle().identifier() );
   CHECK( 17 == incident.heavyParticle().charge() );
-  CHECK( 34.66845 * constants::neutron_mass == incident.heavyParticle().mass() );
+  CHECK( 34.66845 * neutron_mass == incident.heavyParticle().mass() );
   CHECK( 1.5 == incident.heavyParticle().spin() );
   CHECK( +1 == incident.heavyParticle().parity() );
   outgoing = chunk[2].outgoingParticlePair().value();
   CHECK( id::ParticleID::proton() == outgoing.lightParticle().identifier() );
   CHECK( 1 == outgoing.lightParticle().charge() );
-  CHECK( .9986235 * constants::neutron_mass == outgoing.lightParticle().mass() );
+  CHECK( .9986235 * neutron_mass == outgoing.lightParticle().mass() );
   CHECK( 0.5 == outgoing.lightParticle().spin() );
   CHECK( +1 == outgoing.lightParticle().parity() );
   CHECK( id::ParticleID( "S35" ) == outgoing.heavyParticle().identifier() );
   CHECK( 16 == outgoing.heavyParticle().charge() );
-  CHECK( 34.66863 * constants::neutron_mass == outgoing.heavyParticle().mass() );
+  CHECK( 34.66863 * neutron_mass == outgoing.heavyParticle().mass() );
   CHECK( 1.5 == outgoing.heavyParticle().spin() );
   CHECK( +1 == outgoing.heavyParticle().parity() );
   CHECK( false == chunk[2].isIncidentChannel() );
@@ -173,10 +173,10 @@ void verifyChunk( const std::vector< Channel >& chunk ) {
   CHECK_THAT( 4.82222, WithinRel( std::get<double>( chunk[2].channelRadii().penetrabilityRadius() ) ) );
   CHECK( std::nullopt == chunk[2].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 3.66798, WithinRel( std::get<double>( chunk[2].channelRadii().phaseShiftRadius().value() ) ) );
-  CHECK( Kinematics::NonRelativistic == chunk[2].kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk[2].kinematicsType() );
 }
 
-void verifyChunkWithBackground( const std::vector< Channel >& chunk ) {
+void verifyChunkWithBackground( const std::vector< resonances::Channel >& chunk ) {
 
   CHECK( 2 == chunk.size() );
 
@@ -184,12 +184,12 @@ void verifyChunkWithBackground( const std::vector< Channel >& chunk ) {
   auto incident = chunk[0].incidentParticlePair();
   CHECK( id::ParticleID::neutron() == incident.lightParticle().identifier() );
   CHECK( 0 == incident.lightParticle().charge() );
-  CHECK( constants::neutron_mass == incident.lightParticle().mass() );
+  CHECK( neutron_mass == incident.lightParticle().mass() );
   CHECK( 0.5 == incident.lightParticle().spin() );
   CHECK( +1 == incident.lightParticle().parity() );
   CHECK( id::ParticleID( "Sr88" ) == incident.heavyParticle().identifier() );
   CHECK( 38 == incident.heavyParticle().charge() );
-  CHECK( 87.15046 * constants::neutron_mass == incident.heavyParticle().mass() );
+  CHECK( 87.15046 * neutron_mass == incident.heavyParticle().mass() );
   CHECK( 0 == incident.heavyParticle().spin() );
   CHECK( +1 == incident.heavyParticle().parity() );
   auto outgoing = chunk[0].outgoingParticlePair().value();
@@ -200,7 +200,7 @@ void verifyChunkWithBackground( const std::vector< Channel >& chunk ) {
   CHECK( +1 == outgoing.lightParticle().parity() );
   CHECK( id::ParticleID( "Sr89[all]" ) == outgoing.heavyParticle().identifier() );
   CHECK( 38 == outgoing.heavyParticle().charge() );
-  CHECK( 88.15046 * constants::neutron_mass == outgoing.heavyParticle().mass() );
+  CHECK( 88.15046 * neutron_mass == outgoing.heavyParticle().mass() );
   CHECK( 0 == outgoing.heavyParticle().spin() );
   CHECK( +1 == outgoing.heavyParticle().parity() );
   CHECK( false == chunk[0].isIncidentChannel() );
@@ -210,29 +210,29 @@ void verifyChunkWithBackground( const std::vector< Channel >& chunk ) {
   CHECK_THAT( 0., WithinRel( std::get<double>( chunk[0].channelRadii().penetrabilityRadius() ) ) );
   CHECK( std::nullopt == chunk[0].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 0., WithinRel( std::get<double>( chunk[0].channelRadii().phaseShiftRadius().value() ) ) );
-  CHECK( Kinematics::NonRelativistic == chunk[0].kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk[0].kinematicsType() );
 
   CHECK( id::ChannelID( "n,Sr88->n,Sr88{0,1/2,1/2+}" ) == chunk[1].identifier() );
   incident = chunk[1].incidentParticlePair();
   CHECK( id::ParticleID::neutron() == incident.lightParticle().identifier() );
   CHECK( 0 == incident.lightParticle().charge() );
-  CHECK( constants::neutron_mass == incident.lightParticle().mass() );
+  CHECK( neutron_mass == incident.lightParticle().mass() );
   CHECK( 0.5 == incident.lightParticle().spin() );
   CHECK( +1 == incident.lightParticle().parity() );
   CHECK( id::ParticleID( "Sr88" ) == incident.heavyParticle().identifier() );
   CHECK( 38 == incident.heavyParticle().charge() );
-  CHECK( 87.15046 * constants::neutron_mass == incident.heavyParticle().mass() );
+  CHECK( 87.15046 * neutron_mass == incident.heavyParticle().mass() );
   CHECK( 0 == incident.heavyParticle().spin() );
   CHECK( +1 == incident.heavyParticle().parity() );
   outgoing = chunk[1].outgoingParticlePair().value();
   CHECK( id::ParticleID::neutron() == outgoing.lightParticle().identifier() );
   CHECK( 0 == outgoing.lightParticle().charge() );
-  CHECK( constants::neutron_mass == outgoing.lightParticle().mass() );
+  CHECK( neutron_mass == outgoing.lightParticle().mass() );
   CHECK( 0.5 == outgoing.lightParticle().spin() );
   CHECK( +1 == outgoing.lightParticle().parity() );
   CHECK( id::ParticleID( "Sr88" ) == outgoing.heavyParticle().identifier() );
   CHECK( 38 == outgoing.heavyParticle().charge() );
-  CHECK( 87.15046 * constants::neutron_mass == outgoing.heavyParticle().mass() );
+  CHECK( 87.15046 * neutron_mass == outgoing.heavyParticle().mass() );
   CHECK( 0 == outgoing.heavyParticle().spin() );
   CHECK( +1 == outgoing.heavyParticle().parity() );
   CHECK( true == chunk[1].isIncidentChannel() );
@@ -241,9 +241,9 @@ void verifyChunkWithBackground( const std::vector< Channel >& chunk ) {
   CHECK_THAT( 7.1, WithinRel( std::get<double>( chunk[1].channelRadii().penetrabilityRadius() ) ) );
   CHECK( std::nullopt == chunk[1].channelRadii().shiftFactorRadius() );
   CHECK_THAT( 6.8, WithinRel( std::get<double>( chunk[1].channelRadii().phaseShiftRadius().value() ) ) );
-  CHECK( Kinematics::NonRelativistic == chunk[1].kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == chunk[1].kinematicsType() );
   CHECK( std::nullopt != chunk[1].background() );
-  auto background = std::get< SammyBackground >( chunk[1].background().value() );
+  auto background = std::get< resonances::SammyBackground >( chunk[1].background().value() );
   CHECK_THAT( -0.043, WithinRel( background.polynomialCoefficients()[0] ) );
   CHECK_THAT( 2.8e-8, WithinRel( background.polynomialCoefficients()[1] ) );
   CHECK_THAT( 0.    , WithinRel( background.polynomialCoefficients()[2] ) );

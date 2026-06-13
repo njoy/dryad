@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createBoundaryCondition.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createBoundaryCondition.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
 SCENARIO( "createBoundaryCondition" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "createBoundaryCondition" ) {
       THEN( "the boundary condition can be derived" ) {
 
         CHECK( resonances::BoundaryCondition::ShiftFactor
-               == format::endf::resonances::lrf7::createBoundaryCondition( pairs ) );
+               == endf::read::resonances::lrf7::createBoundaryCondition( pairs ) );
       } // THEN
     } // WHEN
   } // GIVEN
@@ -48,7 +48,7 @@ SCENARIO( "createBoundaryCondition" ) {
       THEN( "the boundary condition can be derived" ) {
 
         CHECK( resonances::BoundaryCondition::Constant
-               == format::endf::resonances::lrf7::createBoundaryCondition( pairs ) );
+               == endf::read::resonances::lrf7::createBoundaryCondition( pairs ) );
       } // THEN
     } // WHEN
   } // GIVEN

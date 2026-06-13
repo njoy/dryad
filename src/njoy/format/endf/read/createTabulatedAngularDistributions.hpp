@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDANGULARDISTRIBUTIONS
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDANGULARDISTRIBUTIONS
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETABULATEDANGULARDISTRIBUTIONS
+#define NJOY_FORMAT_ENDF_READ_CREATETABULATEDANGULARDISTRIBUTIONS
 
 // system includes
 #include <vector>
@@ -7,17 +7,17 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
-#include "njoy/dryad/format/endf/createTabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
+#include "njoy/format/endf/read/createTabulatedAngularDistribution.hpp"
 #include "ENDFtk/section/26.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a TabulatedAngularDistributions instance from a parsed
@@ -27,7 +27,7 @@ namespace endf {
    *  @param[in] normalise      the flag to indicate whether or not distributions
    *                            need to be normalised
    */
-  inline TabulatedAngularDistributions
+  inline dryad::TabulatedAngularDistributions
   createTabulatedAngularDistributions(
       const ENDFtk::section::Type< 4 >::TabulatedDistributions& distribution,
       bool normalise ) {
@@ -35,7 +35,7 @@ namespace endf {
     try {
 
       auto energies = createVector( distribution.incidentEnergies() );
-      std::vector< TabulatedAngularDistribution > distributions;
+      std::vector< dryad::TabulatedAngularDistribution > distributions;
       distributions.reserve( energies.size() );
       for ( auto&& table : distribution.angularDistributions() ) {
 
@@ -43,7 +43,7 @@ namespace endf {
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );
-      return TabulatedAngularDistributions(
+      return dryad::TabulatedAngularDistributions(
                std::move( energies ), std::move( distributions ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -62,7 +62,7 @@ namespace endf {
    *  @param[in] normalise      the flag to indicate whether or not distributions
    *                            need to be normalised
    */
-  inline TabulatedAngularDistributions
+  inline dryad::TabulatedAngularDistributions
   createTabulatedAngularDistributions(
       const ENDFtk::section::Type< 26 >::DiscreteTwoBodyScattering& distribution,
       bool normalise ) {
@@ -70,7 +70,7 @@ namespace endf {
     try {
 
       auto energies = createVector( distribution.incidentEnergies() );
-      std::vector< TabulatedAngularDistribution > distributions;
+      std::vector< dryad::TabulatedAngularDistribution > distributions;
       distributions.reserve( energies.size() );
       for ( auto&& table : distribution.distributions() ) {
 
@@ -78,7 +78,7 @@ namespace endf {
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );
-      return TabulatedAngularDistributions(
+      return dryad::TabulatedAngularDistributions(
                std::move( energies ), std::move( distributions ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -89,9 +89,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

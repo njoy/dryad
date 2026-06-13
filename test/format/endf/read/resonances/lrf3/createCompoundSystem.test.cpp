@@ -4,17 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf3/createCompoundSystem.hpp"
+#include "njoy/format/endf/read/resonances/lrf3/createCompoundSystem.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
-using namespace njoy;
+using namespace njoy::format;
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::constants;
 
-void verifyChunkAl27( const CompoundSystem& );
+void verifyChunkAl27( const resonances::CompoundSystem& );
 
 SCENARIO( "createSpinGroups" ) {
 
@@ -32,7 +32,7 @@ SCENARIO( "createSpinGroups" ) {
 
         id::ParticleID projectile = id::ParticleID::neutron();
         id::ParticleID target = id::ParticleID( "Al27" );
-        auto chunk = format::endf::resonances::lrf3::createCompoundSystem( projectile, target, 1e-5, 845000, 1, std::nullopt, parameters );
+        auto chunk = endf::read::resonances::lrf3::createCompoundSystem( projectile, target, 1e-5, 845000, 1, std::nullopt, parameters );
 
         verifyChunkAl27( chunk );
       } // THEN
@@ -40,7 +40,7 @@ SCENARIO( "createSpinGroups" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkAl27( const CompoundSystem& chunk ) {
+void verifyChunkAl27( const resonances::CompoundSystem& chunk ) {
 
   // Al27 ENDF/B-VIII.1 LRF=3 resonance evaluation
 
@@ -49,15 +49,15 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   auto al27 = id::ParticleID( "Al27" );
   auto al28 = id::ParticleID( "Al28[all]" );
 
-  ParticlePair photon_pair( Particle( photon, 0, 0, +1 ),
-                            Particle( al28, 0 * constants::neutron_mass, 0, +1 ) );
-  ParticlePair neutron_pair( Particle( neutron, constants::neutron_mass, 0.5, +1 ),
-                             Particle( al27, 26.75 * constants::neutron_mass, 2.5, +1 ) );
+  resonances::ParticlePair photon_pair( Particle( photon, 0, 0, +1 ),
+                            Particle( al28, 0 * neutron_mass, 0, +1 ) );
+  resonances::ParticlePair neutron_pair( Particle( neutron, neutron_mass, 0.5, +1 ),
+                             Particle( al27, 26.75 * neutron_mass, 2.5, +1 ) );
 
-  ChannelRadii zero_radii( 0., 0. );
-  ChannelRadii radii1( 4.3226 );
-  ChannelRadii radii2( 6.064 );
-  ChannelRadii radii3( 4.396 );
+  resonances::ChannelRadii zero_radii( 0., 0. );
+  resonances::ChannelRadii radii1( 4.3226 );
+  resonances::ChannelRadii radii2( 6.064 );
+  resonances::ChannelRadii radii3( 4.396 );
 
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   // content verification
@@ -110,7 +110,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, channel 1: elastic
@@ -139,7 +139,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 0, resonance table
@@ -198,7 +198,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, channel 1: elastic
@@ -227,7 +227,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 1, resonance table
@@ -286,7 +286,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 1: elastic
@@ -315,7 +315,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, channel 2: elastic
@@ -344,7 +344,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 2, resonance table
@@ -405,7 +405,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 1: elastic
@@ -434,7 +434,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, channel 2: elastic
@@ -463,7 +463,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 3, resonance table
@@ -524,7 +524,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 1: elastic
@@ -555,7 +555,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 2: elastic
@@ -584,7 +584,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, channel 3: elastic
@@ -613,7 +613,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel3.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel3.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 4, resonance table
@@ -676,7 +676,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, channel 1: elastic
@@ -705,7 +705,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, channel 2: elastic
@@ -734,7 +734,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 5, resonance table
@@ -795,7 +795,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, channel 1: elastic
@@ -826,7 +826,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, channel 2: elastic
@@ -855,7 +855,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, channel 3: elastic
@@ -884,7 +884,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel3.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel3.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel3.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 6, resonance table
@@ -947,7 +947,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 7, channel 1: elastic
@@ -976,7 +976,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 7, resonance table
@@ -1035,7 +1035,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 8, channel 1: elastic
@@ -1064,7 +1064,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 8, channel 2: elastic
@@ -1093,7 +1093,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel2.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel2.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel2.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 8, resonance table
@@ -1154,7 +1154,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel0.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel0.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel0.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 9, channel 1: elastic
@@ -1183,7 +1183,7 @@ void verifyChunkAl27( const CompoundSystem& chunk ) {
   CHECK_THAT( 0.0, WithinRel( channel1.qValue() ) );
 
   // kinematics type
-  CHECK( Kinematics::NonRelativistic == channel1.kinematicsType() );
+  CHECK( resonances::Kinematics::NonRelativistic == channel1.kinematicsType() );
 
   // - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - * - *
   // spin group 9, resonance table

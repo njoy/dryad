@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEREFERENCEFRAME
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEREFERENCEFRAME
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEREFERENCEFRAME
+#define NJOY_FORMAT_ENDF_READ_CREATEREFERENCEFRAME
 
 // system includes
 #include <vector>
@@ -9,19 +9,19 @@
 #include "njoy/dryad/ReferenceFrame.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a reference frame from an ENDF reference frame value
    */
-  inline ReferenceFrame createReferenceFrame( int lct ) {
+  inline dryad::ReferenceFrame createReferenceFrame( int lct ) {
 
     switch ( lct ) {
 
-      case 1 : return ReferenceFrame::Laboratory;
-      case 2 : return ReferenceFrame::CentreOfMass;
+      case 1 : return dryad::ReferenceFrame::Laboratory;
+      case 2 : return dryad::ReferenceFrame::CentreOfMass;
       default : {
 
         Log::error( "Cannot convert or handle ENDF reference frame value {}", lct );
@@ -30,9 +30,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

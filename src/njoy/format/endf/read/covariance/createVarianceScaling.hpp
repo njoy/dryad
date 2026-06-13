@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEVARIANCESCALING
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEVARIANCESCALING
+#ifndef NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEVARIANCESCALING
+#define NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEVARIANCESCALING
 
 // system includes
 
@@ -9,13 +9,13 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/VarianceScaling.hpp"
-#include "njoy/dryad/format/createVector.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ENDFtk/section/CovariancePairs.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace covariance {
 
   /**
@@ -47,9 +47,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

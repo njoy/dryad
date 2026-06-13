@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createLegendreAngularDistributions.hpp"
+#include "njoy/format/endf/read/createLegendreAngularDistributions.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyChunk( const LegendreAngularDistributions& );
 
@@ -29,8 +30,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::endf::createLegendreAngularDistributions( distribution, false );
-        auto chunk2 = format::endf::createLegendreAngularDistributions( distribution, true );
+        auto chunk1 = endf::read::createLegendreAngularDistributions( distribution, false );
+        auto chunk2 = endf::read::createLegendreAngularDistributions( distribution, true );
 
         verifyChunk( chunk1 );
         verifyChunk( chunk2 );

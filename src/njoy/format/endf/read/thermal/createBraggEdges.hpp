@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_THERMAL_CREATEBRAGGEDGES
-#define NJOY_DRYAD_FORMAT_ENDF_THERMAL_CREATEBRAGGEDGES
+#ifndef NJOY_FORMAT_ENDF_READ_THERMAL_CREATEBRAGGEDGES
+#define NJOY_FORMAT_ENDF_READ_THERMAL_CREATEBRAGGEDGES
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/thermal/BraggEdgeData.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ENDFtk/section/7/2.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace thermal {
 
   /**
@@ -23,9 +23,8 @@ namespace thermal {
    *
    *  @param[in] coherent   the coherent elastic thermal scattering component
    */
-  std::vector< dryad::thermal::BraggEdgeData >
-  createBraggEdges(
-      const ENDFtk::section::Type< 7, 2 >::CoherentElastic& coherent ) {
+  inline std::vector< dryad::thermal::BraggEdgeData >
+  createBraggEdges( const ENDFtk::section::Type< 7, 2 >::CoherentElastic& coherent ) {
 
     try {
 
@@ -50,9 +49,9 @@ namespace thermal {
   }
 
 } // thermal namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

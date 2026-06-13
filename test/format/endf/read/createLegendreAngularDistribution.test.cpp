@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createLegendreAngularDistribution.hpp"
+#include "njoy/format/endf/read/createLegendreAngularDistribution.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyMF4Chunk( const LegendreAngularDistribution& );
 void verifyMF6LAW1Chunk( const LegendreAngularDistribution&, bool );
@@ -32,8 +33,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
       THEN( "it can be converted" ) {
 
         auto coefficients = distribution.angularDistributions()[0].coefficients();
-        auto chunk1 = format::endf::createLegendreAngularDistribution( coefficients, true, false );
-        auto chunk2 = format::endf::createLegendreAngularDistribution( coefficients, true, true );
+        auto chunk1 = endf::read::createLegendreAngularDistribution( coefficients, true, false );
+        auto chunk2 = endf::read::createLegendreAngularDistribution( coefficients, true, true );
 
         verifyMF4Chunk( chunk1 );
         verifyMF4Chunk( chunk2 );
@@ -58,8 +59,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
       THEN( "it can be converted" ) {
 
         auto coefficients = entry.coefficients()[0];
-        auto chunk1 = format::endf::createLegendreAngularDistribution( coefficients, false, false );
-        auto chunk2 = format::endf::createLegendreAngularDistribution( coefficients, false, true );
+        auto chunk1 = endf::read::createLegendreAngularDistribution( coefficients, false, false );
+        auto chunk2 = endf::read::createLegendreAngularDistribution( coefficients, false, true );
 
         verifyMF6LAW1Chunk( chunk1, false );
         verifyMF6LAW1Chunk( chunk2, true );
@@ -83,8 +84,8 @@ SCENARIO( "createLegendreAngularDistribution" ) {
       THEN( "it can be converted" ) {
 
         auto coefficients = entry.coefficients();
-        auto chunk1 = format::endf::createLegendreAngularDistribution( coefficients, true, false );
-        auto chunk2 = format::endf::createLegendreAngularDistribution( coefficients, true, true );
+        auto chunk1 = endf::read::createLegendreAngularDistribution( coefficients, true, false );
+        auto chunk2 = endf::read::createLegendreAngularDistribution( coefficients, true, true );
 
         verifyMF6LAW2Chunk( chunk1 );
         verifyMF6LAW2Chunk( chunk2 );

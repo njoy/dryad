@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/thermal/createCoherentElasticScattering.hpp"
+#include "njoy/format/endf/read/thermal/createCoherentElasticScattering.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
-void verifyChunk( const CoherentElasticScattering& );
+void verifyChunk( const thermal::CoherentElasticScattering& );
 
 SCENARIO( "createCoherentElasticScattering" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "createCoherentElasticScattering" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::thermal::createCoherentElasticScattering( coherent );
+        auto chunk = endf::read::thermal::createCoherentElasticScattering( coherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,7 +36,7 @@ SCENARIO( "createCoherentElasticScattering" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const CoherentElasticScattering& chunk ) {
+void verifyChunk( const thermal::CoherentElasticScattering& chunk ) {
 
   CHECK( 11 == chunk.numberModeratorTemperatures() );
   CHECK_THAT(   77, WithinRel( chunk.braggEdges()[0].temperature() ) );

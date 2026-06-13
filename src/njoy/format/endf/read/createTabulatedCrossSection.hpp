@@ -1,23 +1,23 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDCROSSSECTION
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDCROSSSECTION
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETABULATEDCROSSSECTION
+#define NJOY_FORMAT_ENDF_READ_CREATETABULATEDCROSSSECTION
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/TabulatedCrossSection.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/3.hpp"
 #include "ENDFtk/section/23.hpp"
 #include "ENDFtk/tree/Section.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a TabulatedCrossSection from a parsed ENDF section
@@ -26,7 +26,7 @@ namespace endf {
   auto createTabulatedCrossSection( const Section& section )
   -> std::enable_if_t< ( std::is_same_v< Section, ENDFtk::section::Type< 3 > > ||
                          std::is_same_v< Section, ENDFtk::section::Type< 23 > > ),
-                       TabulatedCrossSection > {
+                       dryad::TabulatedCrossSection > {
 
     try {
 
@@ -35,7 +35,7 @@ namespace endf {
       auto values = createVector( section.crossSections() );
       auto boundaries = createBoundaries( section.boundaries() );
       auto interpolants = createInterpolants( section.interpolants() );
-      return TabulatedCrossSection(
+      return dryad::TabulatedCrossSection(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -49,7 +49,7 @@ namespace endf {
   /**
    *  @brief Create a TabulatedCrossSection from an unparsed ENDF section
    */
-  TabulatedCrossSection
+  inline dryad::TabulatedCrossSection
   createTabulatedCrossSection( const ENDFtk::tree::Section& tree ) {
 
     switch ( tree.fileNumber() ) {
@@ -66,9 +66,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedAngularDistribution.hpp"
+#include "njoy/format/endf/read/createTabulatedAngularDistribution.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
@@ -16,6 +16,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyNeutronChunk1( const TabulatedAngularDistribution& );
 void verifyNeutronChunk2( const TabulatedAngularDistribution&, bool );
@@ -38,8 +39,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
       THEN( "it can be converted" ) {
 
         auto table = distribution.angularDistributions().back();
-        auto chunk1 = format::endf::createTabulatedAngularDistribution( table, false );
-        auto chunk2 = format::endf::createTabulatedAngularDistribution( table, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistribution( table, false );
+        auto chunk2 = endf::read::createTabulatedAngularDistribution( table, true );
 
         verifyNeutronChunkMF4( chunk1, false );
         verifyNeutronChunkMF4( chunk2, true );
@@ -62,8 +63,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
       THEN( "it can be converted" ) {
 
         auto table = std::get< TabulatedDistribution >( distribution.distributions()[0] );
-        auto chunk1 = format::endf::createTabulatedAngularDistribution( table, false );
-        auto chunk2 = format::endf::createTabulatedAngularDistribution( table, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistribution( table, false );
+        auto chunk2 = endf::read::createTabulatedAngularDistribution( table, true );
 
         verifyNeutronChunk1( chunk1 );
         verifyNeutronChunk1( chunk2 );
@@ -86,8 +87,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
       THEN( "it can be converted" ) {
 
         auto table = std::get< TabulatedDistribution >( distribution.distributions()[1] );
-        auto chunk1 = format::endf::createTabulatedAngularDistribution( table, false );
-        auto chunk2 = format::endf::createTabulatedAngularDistribution( table, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistribution( table, false );
+        auto chunk2 = endf::read::createTabulatedAngularDistribution( table, true );
 
         verifyNeutronChunk2( chunk1, false );
         verifyNeutronChunk2( chunk2, true );
@@ -108,8 +109,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::endf::createTabulatedAngularDistribution( distribution.distributions()[0], false );
-        auto chunk2 = format::endf::createTabulatedAngularDistribution( distribution.distributions()[0], true );
+        auto chunk1 = endf::read::createTabulatedAngularDistribution( distribution.distributions()[0], false );
+        auto chunk2 = endf::read::createTabulatedAngularDistribution( distribution.distributions()[0], true );
 
         verifyElectronChunk( chunk1, false );
         verifyElectronChunk( chunk2, true );

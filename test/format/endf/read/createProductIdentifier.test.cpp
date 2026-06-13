@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createProductIdentifier.hpp"
+#include "njoy/format/endf/read/createProductIdentifier.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createProductIdentifier" ) {
 
@@ -19,15 +20,15 @@ SCENARIO( "createProductIdentifier" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( id::ParticleID( "g" ) == format::endf::createProductIdentifier( 0, 0 ) );
-        CHECK( id::ParticleID( "n" ) == format::endf::createProductIdentifier( 1, 0 ) );
-        CHECK( id::ParticleID( "e-" ) == format::endf::createProductIdentifier( 11, 0 ) );
-        CHECK( id::ParticleID( "H1" ) == format::endf::createProductIdentifier( 1001, 0 ) );
-        CHECK( id::ParticleID( "H2" ) == format::endf::createProductIdentifier( 1002, 0 ) );
-        CHECK( id::ParticleID( "H3" ) == format::endf::createProductIdentifier( 1003, 0 ) );
-        CHECK( id::ParticleID( "He3" ) == format::endf::createProductIdentifier( 2003, 0 ) );
-        CHECK( id::ParticleID( "He4" ) == format::endf::createProductIdentifier( 2004, 0 ) );
-        CHECK( id::ParticleID( "Al27_e1" ) == format::endf::createProductIdentifier( 13027, 1 ) );
+        CHECK( id::ParticleID( "g" ) == endf::read::createProductIdentifier( 0, 0 ) );
+        CHECK( id::ParticleID( "n" ) == endf::read::createProductIdentifier( 1, 0 ) );
+        CHECK( id::ParticleID( "e-" ) == endf::read::createProductIdentifier( 11, 0 ) );
+        CHECK( id::ParticleID( "H1" ) == endf::read::createProductIdentifier( 1001, 0 ) );
+        CHECK( id::ParticleID( "H2" ) == endf::read::createProductIdentifier( 1002, 0 ) );
+        CHECK( id::ParticleID( "H3" ) == endf::read::createProductIdentifier( 1003, 0 ) );
+        CHECK( id::ParticleID( "He3" ) == endf::read::createProductIdentifier( 2003, 0 ) );
+        CHECK( id::ParticleID( "He4" ) == endf::read::createProductIdentifier( 2004, 0 ) );
+        CHECK( id::ParticleID( "Al27_e1" ) == endf::read::createProductIdentifier( 13027, 1 ) );
       } // THEN
     } // WHEN
   } // GIVEN

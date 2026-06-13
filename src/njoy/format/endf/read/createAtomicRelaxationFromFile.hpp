@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEATOMICRELAXATIONFROMFILE
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEATOMICRELAXATIONFROMFILE
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEATOMICRELAXATIONFROMFILE
+#define NJOY_FORMAT_ENDF_READ_CREATEATOMICRELAXATIONFROMFILE
 
 // system includes
 #include <vector>
@@ -7,12 +7,12 @@
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
-#include "njoy/dryad/format/endf/createAtomicRelaxation.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxation.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create an AtomicRelaxation from an ENDF file
@@ -24,8 +24,8 @@ namespace endf {
    *  @param[in] normalise   option to indicate whether or not to normalise
    *                         all probability data
    */
-  inline AtomicRelaxation createAtomicRelaxationFromFile( const std::string& filename,
-                                                          bool normalise ) {
+  inline dryad::AtomicRelaxation
+  createAtomicRelaxationFromFile( const std::string& filename, bool normalise ) {
 
     Log::info( "Reading ENDF file \'{}\'", filename );
 
@@ -33,9 +33,9 @@ namespace endf {
     return createAtomicRelaxation( tape.materials().front(), normalise );
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

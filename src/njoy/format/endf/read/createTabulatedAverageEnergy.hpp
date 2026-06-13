@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDAVERAGEENERGY
-#define NJOY_DRYAD_FORMAT_ENDF_CREATETABULATEDAVERAGEENERGY
+#ifndef NJOY_FORMAT_ENDF_READ_CREATETABULATEDAVERAGEENERGY
+#define NJOY_FORMAT_ENDF_READ_CREATETABULATEDAVERAGEENERGY
 
 // system includes
 #include <vector>
@@ -7,22 +7,22 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
 #include "njoy/dryad/TabulatedAverageEnergy.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 #include "ENDFtk/section/26.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a TabulatedAverageEnergy from a parsed ENDF MF26
    *         energy transfer component
    */
-  inline TabulatedAverageEnergy
+  inline dryad::TabulatedAverageEnergy
   createTabulatedAverageEnergy( const ENDFtk::section::Type< 26 >::EnergyTransfer& transfer ) {
 
     try {
@@ -36,7 +36,7 @@ namespace endf {
                       values.begin(), std::minus{} );
       auto boundaries = createBoundaries( transfer.boundaries() );
       auto interpolants = createInterpolants( transfer.interpolants() );
-      return TabulatedAverageEnergy(
+      return dryad::TabulatedAverageEnergy(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -47,9 +47,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

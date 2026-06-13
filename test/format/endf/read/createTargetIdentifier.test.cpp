@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTargetIdentifier.hpp"
+#include "njoy/format/endf/read/createTargetIdentifier.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createTargetIdentifier" ) {
 
@@ -19,7 +20,7 @@ SCENARIO( "createTargetIdentifier" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( id::ParticleID( "H1_e1" ) == format::endf::createTargetIdentifier( 1001, 1 ) );
+        CHECK( id::ParticleID( "H1_e1" ) == endf::read::createTargetIdentifier( 1001, 1 ) );
       } // THEN
     } // WHEN
   } // GIVEN

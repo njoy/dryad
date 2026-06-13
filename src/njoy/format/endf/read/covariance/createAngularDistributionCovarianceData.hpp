@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEDATA
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEDATA
+#ifndef NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEDATA
+#define NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEDATA
 
 // system includes
 #include <optional>
@@ -8,16 +8,16 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/covariance/AngularDistributionCovarianceData.hpp"
-#include "njoy/dryad/format/endf/covariance/createAngularDistributionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
-#include "njoy/dryad/format/endf/createReferenceFrame.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
+#include "njoy/format/endf/read/covariance/createAngularDistributionCovarianceMatrix.hpp"
+#include "njoy/format/endf/read/createReferenceFrame.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace covariance {
 
   /**
@@ -28,9 +28,9 @@ namespace covariance {
    *  @param[in] material     the unparsed ENDF material
    */
   inline std::optional< dryad::covariance::AngularDistributionCovarianceData >
-  createAngularDistributionCovarianceData( const id::ParticleID& projectile,
-                                    const id::ParticleID& target,
-                                    const ENDFtk::tree::Material& material ) {
+  createAngularDistributionCovarianceData( const dryad::id::ParticleID& projectile,
+                                           const dryad::id::ParticleID& target,
+                                           const ENDFtk::tree::Material& material ) {
 
     std::optional< dryad::covariance::AngularDistributionCovarianceData > covariances = std::nullopt;
 
@@ -46,7 +46,7 @@ namespace covariance {
 
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-          id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+          dryad::id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
 
           auto section = material.section( 34, mt ).parse< 34 >();
           for ( const auto& block : section.reactions() ) {
@@ -56,8 +56,8 @@ namespace covariance {
 
             if ( mat1 == 0 || mat1 == mat ) {
 
-              id::ReactionID column = id::ReactionID( projectile, target,
-                                                      adjustScatterLevel( projectile, target, mt1 ) );
+              dryad::id::ReactionID column = dryad::id::ReactionID( projectile, target,
+                                                             adjustScatterLevel( projectile, target, mt1 ) );
 
               for ( const auto& legendre : block.legendreBlocks() ) {
 
@@ -106,7 +106,7 @@ namespace covariance {
 
                   for ( const auto& matrix : legendre.data() ) {
 
-                    ReferenceFrame frame = createReferenceFrame( endf_frame );
+                    dryad::ReferenceFrame frame = createReferenceFrame( endf_frame );
                     matrices.emplace_back( createAngularDistributionCovarianceMatrix( frame, row, column, l1, l2, matrix ) );
                   }
                 }
@@ -136,9 +136,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

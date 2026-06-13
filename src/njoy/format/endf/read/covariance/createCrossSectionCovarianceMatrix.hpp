@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#ifndef NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#define NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
 
 // system includes
 
@@ -9,15 +9,15 @@
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/CrossSectionMetadata.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/covariance/createMatrix.hpp"
-#include "njoy/dryad/format/endf/covariance/createVarianceScaling.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/covariance/createMatrix.hpp"
+#include "njoy/format/endf/read/covariance/createVarianceScaling.hpp"
 #include "ENDFtk/section/ReactionBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace covariance {
 
   /**
@@ -240,9 +240,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

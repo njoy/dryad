@@ -4,17 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/resonances/lrf7/createFrohnerBackground.hpp"
+#include "njoy/format/endf/read/resonances/lrf7/createFrohnerBackground.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
-using namespace njoy;
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
-void verifyChunk( const dryad::resonances::FrohnerBackground& );
+void verifyChunk( const resonances::FrohnerBackground& );
 
 SCENARIO( "createParticlePairs" ) {
 
@@ -38,7 +37,7 @@ SCENARIO( "createParticlePairs" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::resonances::lrf7::createFrohnerBackground( background );
+        auto chunk = endf::read::resonances::lrf7::createFrohnerBackground( background );
 
         verifyChunk( chunk );
       } // THEN
@@ -46,7 +45,7 @@ SCENARIO( "createParticlePairs" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const dryad::resonances::FrohnerBackground& chunk ) {
+void verifyChunk( const resonances::FrohnerBackground& chunk ) {
 
   CHECK_THAT( 1.    , WithinRel( chunk.distantLevelParameter() ) );
   CHECK_THAT( 2.    , WithinRel( chunk.poleStrength() ) );

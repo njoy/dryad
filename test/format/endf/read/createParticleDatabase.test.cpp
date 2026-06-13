@@ -4,14 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createParticles.hpp"
+#include "njoy/format/endf/read/createParticleDatabase.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createReactions.hpp"
+#include "njoy/format/endf/read/createReactions.hpp"
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::constants;
 
 // include common test verification functions
@@ -33,8 +34,8 @@ SCENARIO( "createParticles" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
         std::map< id::ParticleID, double > masses;
-        auto reactions = format::endf::createReactions( projectile, target, material, false, masses );
-        auto particles = format::endf::createParticleDatabase( projectile, target, reactions, information, masses );
+        auto reactions = endf::read::createReactions( projectile, target, material, false, masses );
+        auto particles = endf::read::createParticleDatabase( projectile, target, reactions, information, masses );
 
         CHECK( 4 == particles.numberParticles() );
 

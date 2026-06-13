@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEMATRIX
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEMATRIX
+#ifndef NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEMATRIX
+#define NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATEANGULARDISTRIBUTIONCOVARIANCEMATRIX
 
 // system includes
 
@@ -8,14 +8,14 @@
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/AngularDistributionMetadata.hpp"
 #include "njoy/dryad/covariance/AngularDistributionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/covariance/createMatrix.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/covariance/createMatrix.hpp"
 #include "ENDFtk/section/ExplicitCovariance.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace covariance {
 
   /**
@@ -33,7 +33,7 @@ namespace covariance {
    */
   inline dryad::covariance::AngularDistributionCovarianceMatrix
   createAngularDistributionCovarianceMatrix(
-      const ReferenceFrame& frame,
+      const dryad::ReferenceFrame& frame,
       const dryad::id::ReactionID& rowReaction,
       const dryad::id::ReactionID& columnReaction,
       std::size_t rowMoment,
@@ -124,9 +124,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

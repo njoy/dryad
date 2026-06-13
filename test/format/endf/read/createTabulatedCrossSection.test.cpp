@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedCrossSection.hpp"
+#include "njoy/format/endf/read/createTabulatedCrossSection.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyNeutronChunk( const TabulatedCrossSection& );
 void verifyElectronChunk( const TabulatedCrossSection& );
@@ -27,7 +28,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedCrossSection( section );
+        auto chunk = endf::read::createTabulatedCrossSection( section );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -37,7 +38,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedCrossSection( section.parse< 3 >() );
+        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 3 >() );
 
         verifyNeutronChunk( chunk );
       } // THEN
@@ -54,7 +55,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedCrossSection( section );
+        auto chunk = endf::read::createTabulatedCrossSection( section );
 
         verifyElectronChunk( chunk );
       } // THEN
@@ -64,7 +65,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::createTabulatedCrossSection( section.parse< 23 >() );
+        auto chunk = endf::read::createTabulatedCrossSection( section.parse< 23 >() );
 
         verifyElectronChunk( chunk );
       } // THEN

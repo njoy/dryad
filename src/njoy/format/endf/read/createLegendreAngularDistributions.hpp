@@ -1,28 +1,28 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATELEGENDREANGULARDISTRIBUTIONS
-#define NJOY_DRYAD_FORMAT_ENDF_CREATELEGENDREANGULARDISTRIBUTIONS
+#ifndef NJOY_FORMAT_ENDF_READ_CREATELEGENDREANGULARDISTRIBUTIONS
+#define NJOY_FORMAT_ENDF_READ_CREATELEGENDREANGULARDISTRIBUTIONS
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/createBoundaries.hpp"
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
-#include "njoy/dryad/format/endf/createLegendreAngularDistribution.hpp"
 #include "njoy/dryad/LegendreAngularDistributions.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createBoundaries.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
+#include "njoy/format/endf/read/createLegendreAngularDistribution.hpp"
 #include "ENDFtk/section/4.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create a LegendreAngularDistributions instance from a parsed
    *         ENDF MF4 section
    */
-  inline LegendreAngularDistributions
+  inline dryad::LegendreAngularDistributions
   createLegendreAngularDistributions(
       const ENDFtk::section::Type< 4 >::LegendreDistributions& distribution,
       bool ) {
@@ -33,7 +33,7 @@ namespace endf {
     try {
 
       auto energies = createVector( distribution.incidentEnergies() );
-      std::vector< LegendreAngularDistribution > distributions;
+      std::vector< dryad::LegendreAngularDistribution > distributions;
       distributions.reserve( energies.size() );
       for ( auto&& entry : distribution.angularDistributions() ) {
 
@@ -41,7 +41,7 @@ namespace endf {
       }
       auto boundaries = createBoundaries( distribution.boundaries() );
       auto interpolants = createInterpolants( distribution.interpolants() );
-      return LegendreAngularDistributions(
+      return dryad::LegendreAngularDistributions(
                std::move( energies ), std::move( distributions ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -52,9 +52,9 @@ namespace endf {
     }
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

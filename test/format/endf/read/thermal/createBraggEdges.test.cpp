@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/thermal/createBraggEdges.hpp"
+#include "njoy/format/endf/read/thermal/createBraggEdges.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::thermal;
+using namespace njoy::format;
 
-void verifyChunk( const std::vector< BraggEdgeData >& );
+void verifyChunk( const std::vector< thermal::BraggEdgeData >& );
 
 SCENARIO( "createBraggEdges" ) {
 
@@ -28,7 +28,7 @@ SCENARIO( "createBraggEdges" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::endf::thermal::createBraggEdges( coherent );
+        auto chunk = endf::read::thermal::createBraggEdges( coherent );
 
         verifyChunk( chunk );
       } // THEN
@@ -36,7 +36,7 @@ SCENARIO( "createBraggEdges" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const std::vector< BraggEdgeData >& chunk ) {
+void verifyChunk( const std::vector< thermal::BraggEdgeData >& chunk ) {
 
   CHECK( 11 == chunk.size() );
   CHECK_THAT(   77, WithinRel( chunk[0].temperature() ) );

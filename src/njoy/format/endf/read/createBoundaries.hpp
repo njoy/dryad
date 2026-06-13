@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_CREATEBOUNDARIES
-#define NJOY_DRYAD_FORMAT_ENDF_CREATEBOUNDARIES
+#ifndef NJOY_FORMAT_ENDF_READ_CREATEBOUNDARIES
+#define NJOY_FORMAT_ENDF_READ_CREATEBOUNDARIES
 
 // system includes
 #include <algorithm>
@@ -8,12 +8,12 @@
 // other includes
 #include "tools/Log.hpp"
 #include "tools/std20/ranges.hpp"
-#include "njoy/dryad/format/createIndex.hpp"
+#include "njoy/format/createIndex.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 
   /**
    *  @brief Create boundary indices from ENDF boundary indices
@@ -29,9 +29,9 @@ namespace endf {
     return converted;
   }
 
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

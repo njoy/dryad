@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedAngularDistributions.hpp"
+#include "njoy/format/endf/read/createTabulatedAngularDistributions.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyNeutronMF4LTT2Chunk( const TabulatedAngularDistributions&, bool );
 void verifyElectronChunk( const TabulatedAngularDistributions&, bool );
@@ -30,8 +31,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::endf::createTabulatedAngularDistributions( distribution, false );
-        auto chunk2 = format::endf::createTabulatedAngularDistributions( distribution, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistributions( distribution, false );
+        auto chunk2 = endf::read::createTabulatedAngularDistributions( distribution, true );
 
         verifyNeutronMF4LTT2Chunk( chunk1, false );
         verifyNeutronMF4LTT2Chunk( chunk2, true );
@@ -52,8 +53,8 @@ SCENARIO( "createTabulatedAngularDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::endf::createTabulatedAngularDistributions( distribution, false );
-        auto chunk2 = format::endf::createTabulatedAngularDistributions( distribution, true );
+        auto chunk1 = endf::read::createTabulatedAngularDistributions( distribution, false );
+        auto chunk2 = endf::read::createTabulatedAngularDistributions( distribution, true );
 
         verifyElectronChunk( chunk1, false );
         verifyElectronChunk( chunk2, true );

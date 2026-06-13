@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createTabulatedEnergyDistribution.hpp"
+#include "njoy/format/endf/read/createTabulatedEnergyDistribution.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyElectronChunk( const TabulatedEnergyDistribution&, bool );
 
@@ -29,9 +30,9 @@ SCENARIO( "createTabulatedEnergyDistribution" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::endf::createTabulatedEnergyDistribution( distribution.distributions()[0],
+        auto chunk1 = endf::read::createTabulatedEnergyDistribution( distribution.distributions()[0],
                                                                        InterpolationType::LinearLinear, false );
-        auto chunk2 = format::endf::createTabulatedEnergyDistribution( distribution.distributions()[0],
+        auto chunk2 = endf::read::createTabulatedEnergyDistribution( distribution.distributions()[0],
                                                                        InterpolationType::LinearLinear, true );
 
         verifyElectronChunk( chunk1, false );

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF3_CREATESPINGROUP
-#define NJOY_DRYAD_FORMAT_ENDF_RESONANCES_LRF3_CREATESPINGROUP
+#ifndef NJOY_FORMAT_ENDF_READ_RESONANCES_LRF3_CREATESPINGROUP
+#define NJOY_FORMAT_ENDF_READ_RESONANCES_LRF3_CREATESPINGROUP
 
 // system includes
 #include <algorithm>
@@ -9,15 +9,15 @@
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/endf/resonances/createChannelRadii.hpp"
-#include "njoy/dryad/format/endf/resonances/lrf3/createChannelData.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/resonances/createChannelRadii.hpp"
+#include "njoy/format/endf/read/resonances/lrf3/createChannelData.hpp"
 #include "ENDFtk/section/2/151.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace resonances {
 namespace lrf3 {
 
@@ -30,8 +30,8 @@ namespace lrf3 {
    *  @param[in] nro          the energy dependent scattering radius (if defined, given in fm)
    *  @param[in] endf         the parsed ENDF LRF3 data
    */
-  inline auto createSpinGroups( const id::ParticleID& projectile,
-                                const id::ParticleID& target,
+  inline auto createSpinGroups( const dryad::id::ParticleID& projectile,
+                                const dryad::id::ParticleID& target,
                                 int naps,
                                 const std::optional< dryad::resonances::TabulatedRadius >& nro,
                                 const ENDFtk::section::Type< 2, 151 >::ReichMoore& endf ) {
@@ -109,7 +109,7 @@ namespace lrf3 {
       }
 
       // add an empty elastic channel
-      id::ChannelID elastic_id( id::ReactionID( projectile, target, 2 ), numbers );
+      dryad::id::ChannelID elastic_id( dryad::id::ReactionID( projectile, target, 2 ), numbers );
       dryad::resonances::Channel elastic( elastic_id, incident, incident, 0., std::nullopt, radii );
       auto iter = std::lower_bound( channel_data.begin(), channel_data.end(),
                                     elastic_id, compare  );
@@ -121,11 +121,11 @@ namespace lrf3 {
                                getJpi( *iter ),
                                [&] ( auto&& left, auto&& right )
                                    { return getJpi( left ) < right; } );
-      if ( iter->first.outgoingParticlePair()->lightParticle().identifier() != id::ParticleID::photon() ) {
+      if ( iter->first.outgoingParticlePair()->lightParticle().identifier() != dryad::id::ParticleID::photon() ) {
 
         dryad::resonances::ChannelQuantumNumbers other( 0, 0, numbers.totalAngularMomentum(), numbers.parity() );
-        id::ChannelID capture_id( id::ReactionID( projectile, target, 102 ), other );
-        dryad::resonances::ParticlePair capture_pair( { id::ParticleID::photon(), 0., 0., +1 },
+        dryad::id::ChannelID capture_id( dryad::id::ReactionID( projectile, target, 102 ), other );
+        dryad::resonances::ParticlePair capture_pair( { dryad::id::ParticleID::photon(), 0., 0., +1 },
                                                       { capture_id.reaction().residual().value(), 0., 0., +1 } );
         dryad::resonances::Channel capture( capture_id, incident, capture_pair, 0., std::nullopt, radii );
         channel_data.emplace( iter, std::move( capture ), dryad::resonances::ResonanceTable{ { capture_id }, {}, {} } );
@@ -153,9 +153,9 @@ namespace lrf3 {
 
 } // lrf3 namespace
 } // resonances namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

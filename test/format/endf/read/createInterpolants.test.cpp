@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/createInterpolants.hpp"
+#include "njoy/format/endf/read/createInterpolants.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createInterpolants" ) {
 
@@ -20,7 +21,7 @@ SCENARIO( "createInterpolants" ) {
       THEN( "it can be converted" ) {
 
         std::vector< std::size_t > interpolants = { 1, 2, 3, 4, 5 };
-        std::vector< InterpolationType > converted = format::endf::createInterpolants( interpolants );
+        std::vector< InterpolationType > converted = endf::read::createInterpolants( interpolants );
 
         CHECK( InterpolationType::Histogram    == converted[0] );
         CHECK( InterpolationType::LinearLinear == converted[1] );
@@ -32,7 +33,7 @@ SCENARIO( "createInterpolants" ) {
       THEN( "an exception is thrown for an unknown or unsupported type" ) {
 
         std::vector< int > interpolants = { 0, 1, 2, 3, 4, 5, 6 };
-        CHECK_THROWS( format::endf::createInterpolants( interpolants ) );
+        CHECK_THROWS( endf::read::createInterpolants( interpolants ) );
       } // THEN
     } // WHEN
   } // GIVEN

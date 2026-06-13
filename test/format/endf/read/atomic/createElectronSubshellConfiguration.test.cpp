@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
+#include "njoy/format/endf/read/atomic/createElectronSubshellConfiguration.hpp"
 
 // other includes
 #include "ENDFtk/tree/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration&, bool );
 void verifyCopperChunk( const atomic::ElectronSubshellConfiguration&, bool );
@@ -28,8 +29,8 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
       THEN( "it can be converted" ) {
 
         auto subshell = section.subshells()[0];
-        auto chunk1 = format::endf::atomic::createElectronSubshellConfiguration( subshell, false );
-        auto chunk2 = format::endf::atomic::createElectronSubshellConfiguration( subshell, true );
+        auto chunk1 = endf::read::atomic::createElectronSubshellConfiguration( subshell, false );
+        auto chunk2 = endf::read::atomic::createElectronSubshellConfiguration( subshell, true );
 
         verifyOxygenChunk( chunk1, false );
         verifyOxygenChunk( chunk2, true );
@@ -48,8 +49,8 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
       THEN( "it can be converted" ) {
 
         auto subshell = section.subshells()[0];
-        auto chunk1 = format::endf::atomic::createElectronSubshellConfiguration( subshell, false );
-        auto chunk2 = format::endf::atomic::createElectronSubshellConfiguration( subshell, true );
+        auto chunk1 = endf::read::atomic::createElectronSubshellConfiguration( subshell, false );
+        auto chunk2 = endf::read::atomic::createElectronSubshellConfiguration( subshell, true );
 
         verifyCopperChunk( chunk1, false );
         verifyCopperChunk( chunk2, true );

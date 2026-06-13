@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
-#define NJOY_DRYAD_FORMAT_ENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
+#ifndef NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
+#define NJOY_FORMAT_ENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATA
 
 // system includes
 #include <optional>
@@ -8,15 +8,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
-#include "njoy/dryad/format/endf/covariance/createCrossSectionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
+#include "njoy/format/endf/read/covariance/createCrossSectionCovarianceMatrix.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
+namespace read {
 namespace covariance {
 
   /**
@@ -27,8 +27,8 @@ namespace covariance {
    *  @param[in] material     the unparsed ENDF material
    */
   inline std::optional< dryad::covariance::CrossSectionCovarianceData >
-  createCrossSectionCovarianceData( const id::ParticleID& projectile,
-                                    const id::ParticleID& target,
+  createCrossSectionCovarianceData( const dryad::id::ParticleID& projectile,
+                                    const dryad::id::ParticleID& target,
                                     const ENDFtk::tree::Material& material ) {
 
     std::optional< dryad::covariance::CrossSectionCovarianceData > covariances = std::nullopt;
@@ -45,7 +45,7 @@ namespace covariance {
 
         if ( ! endf::ReactionInformation::isDerived( mt ) ) {
 
-          id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+          dryad::id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
 
           auto section = material.section( 33, mt ).parse< 33 >();
           for ( const auto& block : section.reactions() ) {
@@ -57,7 +57,7 @@ namespace covariance {
 
               if ( mat1 == 0 || mat1 == mat ) {
 
-                id::ReactionID column = id::ReactionID( projectile, target, adjustScatterLevel( projectile, target, mt1 ) );
+                dryad::id::ReactionID column = dryad::id::ReactionID( projectile, target, adjustScatterLevel( projectile, target, mt1 ) );
                 if ( row == column ) {
 
                   Log::info( "Reading data for MT{}", mt );
@@ -97,9 +97,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
