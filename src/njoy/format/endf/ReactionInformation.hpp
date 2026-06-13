@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ENDF_REACTIONINFORMATION
-#define NJOY_DRYAD_FORMAT_ENDF_REACTIONINFORMATION
+#ifndef NJOY_FORMAT_ENDF_REACTIONINFORMATION
+#define NJOY_FORMAT_ENDF_REACTIONINFORMATION
 
 // system includes
 #include <map>
@@ -7,12 +7,11 @@
 
 // other includes
 #include "njoy/dryad/id/ReactionID.hpp"
-#include "njoy/dryad/format/adjustScatterLevel.hpp"
+#include "njoy/format/adjustScatterLevel.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace endf {
 
@@ -296,13 +295,13 @@ namespace endf {
      *  @param[in] mf           the MF number
      *  @param[in] mt           the MT number
      */
-    static std::vector< id::ReactionID >
-    partials( const id::ParticleID& projectile,
-              const id::ParticleID& target,
+    static std::vector< dryad::id::ReactionID >
+    partials( const dryad::id::ParticleID& projectile,
+              const dryad::id::ParticleID& target,
               const ENDFtk::tree::Material& material,
               int mf, int mt ) {
 
-      std::vector< id::ReactionID > partials;
+      std::vector< dryad::id::ReactionID > partials;
 
       if ( mf == 3 && mt == 1 ) {
 
@@ -311,7 +310,7 @@ namespace endf {
 
           if ( isPrimary( material, number ) ) {
 
-            partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, number ) );
+            partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, number ) );
           }
         }
       }
@@ -324,7 +323,7 @@ namespace endf {
 
             if ( isPrimary( material, number ) ) {
 
-              partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, number ) );
+              partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, number ) );
             }
           }
         }
@@ -336,7 +335,7 @@ namespace endf {
 
           if ( section.lumpedCovarianceIndex() == mt ) {
 
-            partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, section.MT() ) );
+            partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, section.MT() ) );
           }
         }
         std::sort( partials.begin(), partials.end() );
@@ -348,20 +347,20 @@ namespace endf {
 
           if ( material.hasSection( mf, number ) ) {
 
-            partials.emplace_back( projectile, target, adjustScatterLevel( projectile, target, number ) );
+            partials.emplace_back( projectile, target, njoy::format::adjustScatterLevel( projectile, target, number ) );
           }
         }
 
-        if ( projectile == id::ParticleID::electron() ) {
+        if ( projectile == dryad::id::ParticleID::electron() ) {
 
           // add deficiency mt number for total elastic in electro-atomic data
-          id::ReactionID large_angle( projectile, target, "large-angle-scattering" );
+          dryad::id::ReactionID large_angle( projectile, target, "large-angle-scattering" );
           auto iter = std::lower_bound( partials.begin(), partials.end(), large_angle );
           if ( iter != partials.end() ) {
 
             if ( *iter == large_angle ) {
 
-              partials.insert( iter + 1, id::ReactionID( projectile, target, "deficit-scattering" ) );
+              partials.insert( iter + 1, dryad::id::ReactionID( projectile, target, "deficit-scattering" ) );
             }
           }
         }
@@ -372,7 +371,6 @@ namespace endf {
 
 } // endf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

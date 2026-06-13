@@ -1,5 +1,3 @@
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
-
 #include "njoy/dryad/format/endf/createInterpolant.hpp"
 #include "njoy/dryad/format/endf/createBoundaries.hpp"
 #include "njoy/dryad/format/endf/createInterpolants.hpp"
@@ -59,20 +57,3 @@
 #include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
 #include "njoy/dryad/format/endf/createThermalScattering.hpp"
 #include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
-
-#include "njoy/dryad/format/endf/createEndfInterpolant.hpp"
-#include "njoy/dryad/format/endf/createEndfBoundaries.hpp"
-#include "njoy/dryad/format/endf/createEndfInterpolants.hpp"
-#include "njoy/dryad/format/endf/createEndfSublibraryType.hpp"
-
-#include "njoy/dryad/format/endf/createEndfFile3Section.hpp"
-#include "njoy/dryad/format/endf/createEndfFile23Section.hpp"
-#include "njoy/dryad/format/endf/createEndfIndex.hpp"
-
-#include "njoy/dryad/format/endf/atomic/createEndfSubshellDesignator.hpp"
-#include "njoy/dryad/format/endf/atomic/createEndfSubshellData.hpp"
-#include "njoy/dryad/format/endf/atomic/createElectronSubshellID.hpp"
-#include "njoy/dryad/format/endf/atomic/createElectronSubshellConfiguration.hpp"
-
-#include "njoy/dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
-#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"
