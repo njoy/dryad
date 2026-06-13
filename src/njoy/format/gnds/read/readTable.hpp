@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READTABLE
-#define NJOY_DRYAD_FORMAT_GNDS_READTABLE
+#ifndef NJOY_FORMAT_GNDS_READ_READTABLE
+#define NJOY_FORMAT_GNDS_READ_READTABLE
 
 // system includes
 #include <optional>
@@ -7,19 +7,19 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/createStorageOrder.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/gnds/readColumnHeaders.hpp"
-#include "njoy/dryad/format/gnds/readData.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/gnds/read/createStorageOrder.hpp"
+#include "njoy/format/gnds/read/readColumnHeaders.hpp"
+#include "njoy/format/gnds/read/readData.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 #include "tools/std20/views.hpp"
 #include "tools/std23/views.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Table = std::vector< std::tuple< std::string,
                                          std::vector< double >,
@@ -91,9 +91,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

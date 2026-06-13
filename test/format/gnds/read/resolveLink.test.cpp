@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resolveLink.hpp"
+#include "njoy/format/gnds/read/resolveLink.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "resolveLink" ) {
 
@@ -31,7 +31,7 @@ SCENARIO( "resolveLink" ) {
 
       THEN( "it can be resolved" ) {
 
-        auto chunk = format::gnds::resolveLink( link );
+        auto chunk = gnds::read::resolveLink( link );
 
         CHECK( target == chunk );
         CHECK( target.name() == chunk.name() );
@@ -54,7 +54,7 @@ SCENARIO( "resolveLink" ) {
 
       THEN( "it can be resolved" ) {
 
-        auto chunk = format::gnds::resolveLink( link );
+        auto chunk = gnds::read::resolveLink( link );
 
         CHECK( target == chunk );
         CHECK( target.name() == chunk.name() );
@@ -82,7 +82,7 @@ SCENARIO( "resolveLink" ) {
 
       THEN( "it can be resolved" ) {
 
-        auto chunk = format::gnds::resolveLink( link );
+        auto chunk = gnds::read::resolveLink( link );
 
         CHECK( target == chunk );
         CHECK( target.name() == chunk.name() );
@@ -110,7 +110,7 @@ SCENARIO( "resolveLink" ) {
 
       THEN( "it can be resolved" ) {
 
-        auto chunk = format::gnds::resolveLink( link );
+        auto chunk = gnds::read::resolveLink( link );
 
         CHECK( target == chunk );
         CHECK( target.name() == chunk.name() );

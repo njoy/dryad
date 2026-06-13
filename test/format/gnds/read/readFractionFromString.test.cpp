@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readFractionFromString.hpp"
+#include "njoy/format/gnds/read/readFractionFromString.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "readFractionFromString" ) {
 
@@ -18,12 +18,12 @@ SCENARIO( "readFractionFromString" ) {
 
     THEN( "they can be converted" ) {
 
-      CHECK_THAT( 0.5, WithinRel( format::gnds::readFractionFromString( "1/2" ) ) );
-      CHECK_THAT( 0.5, WithinRel( format::gnds::readFractionFromString( " 1 / 2 " ) ) );
-      CHECK_THAT( 0.5, WithinRel( format::gnds::readFractionFromString( "1 / 2" ) ) );
-      CHECK_THAT( 2.0, WithinRel( format::gnds::readFractionFromString( "2" ) ) );
+      CHECK_THAT( 0.5, WithinRel( gnds::read::readFractionFromString( "1/2" ) ) );
+      CHECK_THAT( 0.5, WithinRel( gnds::read::readFractionFromString( " 1 / 2 " ) ) );
+      CHECK_THAT( 0.5, WithinRel( gnds::read::readFractionFromString( "1 / 2" ) ) );
+      CHECK_THAT( 2.0, WithinRel( gnds::read::readFractionFromString( "2" ) ) );
 
-      CHECK_THROWS( format::gnds::readFractionFromString( "1/2/3" ) );
+      CHECK_THROWS( gnds::read::readFractionFromString( "1/2/3" ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

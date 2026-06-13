@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readTable.hpp"
+#include "njoy/format/gnds/read/readTable.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Table& );
+void verifyChunk( const gnds::read::Table& );
 
 SCENARIO( "readTable" ) {
 
@@ -31,7 +31,7 @@ SCENARIO( "readTable" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readTable( table );
+        auto chunk = gnds::read::readTable( table );
 
         verifyChunk( chunk );
       } // THEN
@@ -41,14 +41,14 @@ SCENARIO( "readTable" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readTable( parameters ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readTable( parameters.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readTable( parameters ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readTable( parameters.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Table& chunk ) {
+void verifyChunk( const gnds::read::Table& chunk ) {
 
   CHECK( 3 == chunk.size() );
 

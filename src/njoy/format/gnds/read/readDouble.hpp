@@ -1,18 +1,18 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READDOUBLE
-#define NJOY_DRYAD_FORMAT_GNDS_READDOUBLE
+#ifndef NJOY_FORMAT_GNDS_READ_READDOUBLE
+#define NJOY_FORMAT_GNDS_READ_READDOUBLE
 
 // system includes
 #include <optional>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Double = std::pair< double, std::optional< std::string > >;
 
@@ -49,9 +49,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

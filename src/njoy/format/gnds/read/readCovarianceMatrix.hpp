@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READCOVARIANCEMATRIX
-#define NJOY_DRYAD_FORMAT_GNDS_READCOVARIANCEMATRIX
+#ifndef NJOY_FORMAT_GNDS_READ_READCOVARIANCEMATRIX
+#define NJOY_FORMAT_GNDS_READ_READCOVARIANCEMATRIX
 
 // system includes
 #include <optional>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/readArray.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/readArray.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using CovarianceMatrix = std::tuple< bool, std::vector< double >, std::vector< double >,
                                        matrix::Matrix< double >,
@@ -52,9 +52,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

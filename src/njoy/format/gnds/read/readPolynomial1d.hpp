@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READPOLYNOMIAL1D
-#define NJOY_DRYAD_FORMAT_GNDS_READPOLYNOMIAL1D
+#ifndef NJOY_FORMAT_GNDS_READ_READPOLYNOMIAL1D
+#define NJOY_FORMAT_GNDS_READ_READPOLYNOMIAL1D
 
 // system includes
 #include <optional>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/readValues.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/readValues.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Polynomial1d = std::tuple< std::optional< double >, std::optional< std::string >,
                                    double, double, std::vector< double >,
@@ -98,9 +98,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

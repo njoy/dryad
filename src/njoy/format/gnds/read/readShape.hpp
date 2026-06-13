@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READSHAPE
-#define NJOY_DRYAD_FORMAT_GNDS_READSHAPE
+#ifndef NJOY_FORMAT_GNDS_READ_READSHAPE
+#define NJOY_FORMAT_GNDS_READ_READSHAPE
 
 // system includes
 #include <sstream>
@@ -10,9 +10,9 @@
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Convert the shape
@@ -49,9 +49,9 @@ namespace gnds {
     return ints;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

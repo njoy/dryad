@@ -1,19 +1,19 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READCONSTANT1D
-#define NJOY_DRYAD_FORMAT_GNDS_READCONSTANT1D
+#ifndef NJOY_FORMAT_GNDS_READ_READCONSTANT1D
+#define NJOY_FORMAT_GNDS_READ_READCONSTANT1D
 
 // system includes
 #include <vector>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using RealConstant1d = std::pair< double, std::string >;
   using IntegerConstant1d = std::pair< int, std::string >;
@@ -62,9 +62,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

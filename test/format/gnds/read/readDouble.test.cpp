@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readDouble.hpp"
+#include "njoy/format/gnds/read/readDouble.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunkWithoutUnit( const format::gnds::Double& );
-void verifyChunkWithUnit( const format::gnds::Double& );
+void verifyChunkWithoutUnit( const gnds::read::Double& );
+void verifyChunkWithUnit( const gnds::read::Double& );
 
 SCENARIO( "readLegendre" ) {
 
@@ -34,8 +34,8 @@ SCENARIO( "readLegendre" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk_without_unit = format::gnds::readDouble( without_unit );
-        auto chunk_with_unit = format::gnds::readDouble( with_unit );
+        auto chunk_without_unit = gnds::read::readDouble( without_unit );
+        auto chunk_with_unit = gnds::read::readDouble( with_unit );
 
         verifyChunkWithoutUnit( chunk_without_unit );
         verifyChunkWithUnit( chunk_with_unit );
@@ -46,20 +46,20 @@ SCENARIO( "readLegendre" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readDouble( external ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readDouble( external.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readDouble( external ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readDouble( external.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithoutUnit( const format::gnds::Double& chunk ) {
+void verifyChunkWithoutUnit( const gnds::read::Double& chunk ) {
 
   CHECK_THAT( -0.043, WithinRel( chunk.first ) );
   CHECK( std::nullopt == chunk.second );
 }
 
-void verifyChunkWithUnit( const format::gnds::Double& chunk ) {
+void verifyChunkWithUnit( const gnds::read::Double& chunk ) {
 
   CHECK_THAT( 2.8e-8, WithinRel( chunk.first ) );
   CHECK( "1/eV" == chunk.second );

@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READFRACTION
-#define NJOY_DRYAD_FORMAT_GNDS_READFRACTION
+#ifndef NJOY_FORMAT_GNDS_READ_READFRACTION
+#define NJOY_FORMAT_GNDS_READ_READFRACTION
 
 // system includes
 #include <optional>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/readFractionFromString.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readFractionFromString.hpp"
 #include "tools/Log.hpp"
 #include "tools/split.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Fraction = std::pair< double, std::optional< std::string > >;
 
@@ -51,9 +51,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

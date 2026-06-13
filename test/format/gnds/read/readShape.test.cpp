@@ -2,13 +2,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readShape.hpp"
+#include "njoy/format/gnds/read/readShape.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "readShape" ) {
 
@@ -18,7 +18,7 @@ SCENARIO( "readShape" ) {
 
       THEN( "it can be converted" ) {
 
-        std::vector<  std::size_t > shape = format::gnds::readShape( "2,3,4" );
+        std::vector<  std::size_t > shape = gnds::read::readShape( "2,3,4" );
 
         CHECK( 3 == shape.size() );
         CHECK( 2 == shape[0] );
@@ -31,8 +31,8 @@ SCENARIO( "readShape" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readShape( "2,a,4" ) ); // cannot be converted to int
-        CHECK_THROWS( format::gnds::readShape( "2,-3,4" ) ); // negative int
+        CHECK_THROWS( gnds::read::readShape( "2,a,4" ) ); // cannot be converted to int
+        CHECK_THROWS( gnds::read::readShape( "2,-3,4" ) ); // negative int
       } // THEN
     } // WHEN
   } // GIVEN

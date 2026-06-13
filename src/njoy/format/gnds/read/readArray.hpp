@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READARRAY
-#define NJOY_DRYAD_FORMAT_GNDS_READARRAY
+#ifndef NJOY_FORMAT_GNDS_READ_READARRAY
+#define NJOY_FORMAT_GNDS_READ_READARRAY
 
 // system includes
 #include <optional>
@@ -8,17 +8,17 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/createStorageOrder.hpp"
-#include "njoy/dryad/format/gnds/readShape.hpp"
-#include "njoy/dryad/format/gnds/readValues.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/createStorageOrder.hpp"
+#include "njoy/format/gnds/read/readShape.hpp"
+#include "njoy/format/gnds/read/readValues.hpp"
 #include "njoy/matrix.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Read data from a GNDS array node
@@ -159,9 +159,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

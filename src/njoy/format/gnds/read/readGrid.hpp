@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READGRID
-#define NJOY_DRYAD_FORMAT_GNDS_READGRID
+#ifndef NJOY_FORMAT_GNDS_READ_READGRID
+#define NJOY_FORMAT_GNDS_READ_READGRID
 
 // system includes
 #include <optional>
@@ -7,15 +7,15 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/readValues.hpp"
-#include "njoy/dryad/format/gnds/resolveLink.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readValues.hpp"
+#include "njoy/format/gnds/read/resolveLink.hpp"
 #include "tools/Log.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using Grid = std::tuple< std::optional< int >,
                            std::optional< std::string >,
@@ -52,9 +52,9 @@ namespace gnds {
              readValues( values ) };
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readGrid.hpp"
+#include "njoy/format/gnds/read/readGrid.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Grid&, int index );
+void verifyChunk( const gnds::read::Grid&, int index );
 
 SCENARIO( "readAxes" ) {
 
@@ -31,7 +31,7 @@ SCENARIO( "readAxes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readGrid( grid );
+        auto chunk = gnds::read::readGrid( grid );
 
         verifyChunk( chunk, 2 );
       } // THEN
@@ -43,7 +43,7 @@ SCENARIO( "readAxes" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readGrid( grid );
+        auto chunk = gnds::read::readGrid( grid );
 
         verifyChunk( chunk, 1 );
       } // THEN
@@ -53,14 +53,14 @@ SCENARIO( "readAxes" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readGrid( axes ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readGrid( axes.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readGrid( axes ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readGrid( axes.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Grid& chunk, int index ) {
+void verifyChunk( const gnds::read::Grid& chunk, int index ) {
 
   CHECK( index == std::get< 0 >( chunk ) );
   CHECK( "eV"  == std::get< 1 >( chunk ) );

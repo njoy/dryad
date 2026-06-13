@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READFRACTIONFROMSTRING
-#define NJOY_DRYAD_FORMAT_GNDS_READFRACTIONFROMSTRING
+#ifndef NJOY_FORMAT_GNDS_READ_READFRACTIONFROMSTRING
+#define NJOY_FORMAT_GNDS_READ_READFRACTIONFROMSTRING
 
 // system includes
 
@@ -8,9 +8,9 @@
 #include "tools/split.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Read a fraction from a string
@@ -37,9 +37,9 @@ namespace gnds {
     }
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

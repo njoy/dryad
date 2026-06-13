@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readInteger.hpp"
+#include "njoy/format/gnds/read/readInteger.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunkWithoutUnit( const format::gnds::Integer& );
-void verifyChunkWithUnit( const format::gnds::Integer& );
+void verifyChunkWithoutUnit( const gnds::read::Integer& );
+void verifyChunkWithUnit( const gnds::read::Integer& );
 
 SCENARIO( "readInteger" ) {
 
@@ -31,8 +31,8 @@ SCENARIO( "readInteger" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk_without_unit = format::gnds::readInteger( without_unit );
-        auto chunk_with_unit = format::gnds::readInteger( with_unit );
+        auto chunk_without_unit = gnds::read::readInteger( without_unit );
+        auto chunk_with_unit = gnds::read::readInteger( with_unit );
 
         verifyChunkWithoutUnit( chunk_without_unit );
         verifyChunkWithUnit( chunk_with_unit );
@@ -43,20 +43,20 @@ SCENARIO( "readInteger" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readInteger( external ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readInteger( external.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readInteger( external ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readInteger( external.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithoutUnit( const format::gnds::Integer& chunk ) {
+void verifyChunkWithoutUnit( const gnds::read::Integer& chunk ) {
 
   CHECK( 1 == chunk.first );
   CHECK( std::nullopt == chunk.second );
 }
 
-void verifyChunkWithUnit( const format::gnds::Integer& chunk ) {
+void verifyChunkWithUnit( const gnds::read::Integer& chunk ) {
 
   CHECK( 0 == chunk.first );
   CHECK( "e" == chunk.second );

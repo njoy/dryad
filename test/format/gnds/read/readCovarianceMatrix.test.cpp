@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
+#include "njoy/format/gnds/read/readCovarianceMatrix.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyFissionChunk( const format::gnds::CovarianceMatrix& );
+void verifyFissionChunk( const gnds::read::CovarianceMatrix& );
 
 SCENARIO( "readCovarianceMatrix" ) {
 
@@ -30,7 +30,7 @@ SCENARIO( "readCovarianceMatrix" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readCovarianceMatrix( covariance );
+        auto chunk = gnds::read::readCovarianceMatrix( covariance );
 
         CHECK( true == std::get< 0 >( chunk ) );
 
@@ -91,7 +91,7 @@ SCENARIO( "readCovarianceMatrix" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readCovarianceMatrix( covariance );
+        auto chunk = gnds::read::readCovarianceMatrix( covariance );
 
         CHECK( true == std::get< 0 >( chunk ) );
 
@@ -165,7 +165,7 @@ SCENARIO( "readCovarianceMatrix" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readCovarianceMatrix( covariance );
+        auto chunk = gnds::read::readCovarianceMatrix( covariance );
 
         CHECK( true == std::get< 0 >( chunk ) );
 
@@ -236,8 +236,8 @@ SCENARIO( "readCovarianceMatrix" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readAxis( sections ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readAxis( sections.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readAxis( sections ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readAxis( sections.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN

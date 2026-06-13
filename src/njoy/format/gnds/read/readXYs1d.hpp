@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READXYS1D
-#define NJOY_DRYAD_FORMAT_GNDS_READXYS1D
+#ifndef NJOY_FORMAT_GNDS_READ_READXYS1D
+#define NJOY_FORMAT_GNDS_READ_READXYS1D
 
 // system includes
 #include <optional>
@@ -7,17 +7,17 @@
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/readValues.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/readValues.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/Log.hpp"
 #include "tools/std20/views.hpp"
 #include "tools/std23/views.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   using XYs1d = std::tuple< std::optional< double >, std::optional< std::string >,
                             std::vector< double >, std::string,
@@ -117,9 +117,9 @@ namespace gnds {
     return data;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

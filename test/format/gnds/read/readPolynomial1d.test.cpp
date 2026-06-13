@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readPolynomial1d.hpp"
+#include "njoy/format/gnds/read/readPolynomial1d.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Polynomial1d& );
+void verifyChunk( const gnds::read::Polynomial1d& );
 
 SCENARIO( "readPolynomial1d" ) {
 
@@ -30,7 +30,7 @@ SCENARIO( "readPolynomial1d" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readPolynomial1d( polynomial1d );
+        auto chunk = gnds::read::readPolynomial1d( polynomial1d );
 
         verifyChunk( chunk );
       } // THEN
@@ -40,14 +40,14 @@ SCENARIO( "readPolynomial1d" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readPolynomial1d( polynomial1d.child( "values" ) ) );    // wrong node
-        CHECK_THROWS( format::gnds::readPolynomial1d( polynomial1d.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readPolynomial1d( polynomial1d.child( "values" ) ) );    // wrong node
+        CHECK_THROWS( gnds::read::readPolynomial1d( polynomial1d.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Polynomial1d& chunk ) {
+void verifyChunk( const gnds::read::Polynomial1d& chunk ) {
 
   // outer domain value and unit
   CHECK( std::nullopt == std::get< 0 >( chunk ) );

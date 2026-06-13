@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readLegendre.hpp"
+#include "njoy/format/gnds/read/readLegendre.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::Legendre& );
+void verifyChunk( const gnds::read::Legendre& );
 
 SCENARIO( "readLegendre" ) {
 
@@ -32,7 +32,7 @@ SCENARIO( "readLegendre" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readLegendre( legendre );
+        auto chunk = gnds::read::readLegendre( legendre );
 
         verifyChunk( chunk );
       } // THEN
@@ -42,14 +42,14 @@ SCENARIO( "readLegendre" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readLegendre( legendre.child( "values" ) ) );    // wrong node
-        CHECK_THROWS( format::gnds::readLegendre( legendre.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readLegendre( legendre.child( "values" ) ) );    // wrong node
+        CHECK_THROWS( gnds::read::readLegendre( legendre.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::Legendre& chunk ) {
+void verifyChunk( const gnds::read::Legendre& chunk ) {
 
   // outer domain value and unit
   CHECK( 1e-5 == chunk.first );

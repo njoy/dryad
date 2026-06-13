@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::XYs1d& );
-void verifyChunkWithOuterDomain( const format::gnds::XYs1d& );
+void verifyChunk( const gnds::read::XYs1d& );
+void verifyChunkWithOuterDomain( const gnds::read::XYs1d& );
 
 SCENARIO( "readXYs1D" ) {
 
@@ -30,7 +30,7 @@ SCENARIO( "readXYs1D" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readXYs1D( xys1d );
+        auto chunk = gnds::read::readXYs1D( xys1d );
 
         verifyChunk( chunk );
       } // THEN
@@ -40,14 +40,14 @@ SCENARIO( "readXYs1D" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readXYs1D( reactions ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readXYs1D( reactions.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readXYs1D( reactions ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readXYs1D( reactions.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::XYs1d& chunk ) {
+void verifyChunk( const gnds::read::XYs1d& chunk ) {
 
   // outer domain value and unit
   CHECK( std::nullopt == std::get< 0 >( chunk ) );

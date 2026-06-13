@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readString.hpp"
+#include "njoy/format/gnds/read/readString.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunkWithUnit( const format::gnds::String& );
+void verifyChunkWithUnit( const gnds::read::String& );
 
 SCENARIO( "readString" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "readString" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk_with_unit = format::gnds::readString( with_unit );
+        auto chunk_with_unit = gnds::read::readString( with_unit );
 
         verifyChunkWithUnit( chunk_with_unit );
       } // THEN
@@ -39,14 +39,14 @@ SCENARIO( "readString" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readString( external ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readString( external.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readString( external ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readString( external.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkWithUnit( const format::gnds::String& chunk ) {
+void verifyChunkWithUnit( const gnds::read::String& chunk ) {
 
   CHECK( "stable" == chunk.first );
   CHECK( "s" == chunk.second );

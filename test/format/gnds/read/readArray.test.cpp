@@ -4,14 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readArray.hpp"
+#include "njoy/format/gnds/read/readArray.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::matrix;
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyDiagonalChunk( const Matrix< double >& );
 void verifyLowerSymmetricChunk( const Matrix< double >& );
@@ -33,7 +33,7 @@ SCENARIO( "readArray" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readArray( array );
+        auto chunk = gnds::read::readArray( array );
 
         verifyDiagonalChunk( chunk );
       } // THEN
@@ -43,8 +43,8 @@ SCENARIO( "readArray" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readArray( gridded ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readArray( gridded.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readArray( gridded ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readArray( gridded.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
@@ -64,7 +64,7 @@ SCENARIO( "readArray" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::readArray( array );
+        auto chunk = gnds::read::readArray( array );
 
         verifyLowerSymmetricChunk( chunk );
       } // THEN
@@ -74,8 +74,8 @@ SCENARIO( "readArray" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readArray( gridded ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readArray( gridded.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readArray( gridded ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readArray( gridded.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_READDATA
-#define NJOY_DRYAD_FORMAT_GNDS_READDATA
+#ifndef NJOY_FORMAT_GNDS_READ_READDATA
+#define NJOY_FORMAT_GNDS_READ_READDATA
 
 // system includes
 #include <vector>
@@ -7,13 +7,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
 #include "tools/disco/FreeFormatReal.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Read data from a GNDS table data node
@@ -31,7 +31,7 @@ namespace gnds {
 
       if ( strcmp( sep.as_string(), "whiteSpace" ) != 0 ) {
 
-        Log::error( "Cannot handle separator \'{}\', contact a developer", 
+        Log::error( "Cannot handle separator \'{}\', contact a developer",
                     sep.as_string() );
       }
     }
@@ -52,9 +52,9 @@ namespace gnds {
     return values;
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/readFraction.hpp"
+#include "njoy/format/gnds/read/readFraction.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
-void verifyChunkUsingNoFraction( const format::gnds::Fraction& );
-void verifyChunkUsingFraction( const format::gnds::Fraction& );
+void verifyChunkUsingNoFraction( const gnds::read::Fraction& );
+void verifyChunkUsingFraction( const gnds::read::Fraction& );
 
 SCENARIO( "readFraction" ) {
 
@@ -34,8 +34,8 @@ SCENARIO( "readFraction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk_with_no_fraction = format::gnds::readFraction( without_fraction );
-        auto chunk_with_fraction = format::gnds::readFraction( with_fraction );
+        auto chunk_with_no_fraction = gnds::read::readFraction( without_fraction );
+        auto chunk_with_fraction = gnds::read::readFraction( with_fraction );
 
         verifyChunkUsingNoFraction( chunk_with_no_fraction );
         verifyChunkUsingFraction( chunk_with_fraction );
@@ -46,20 +46,20 @@ SCENARIO( "readFraction" ) {
 
       THEN( "exceptions are thrown" ) {
 
-        CHECK_THROWS( format::gnds::readFraction( photon ) );                      // wrong node
-        CHECK_THROWS( format::gnds::readFraction( photon.child( "undefined" ) ) ); // undefined node
+        CHECK_THROWS( gnds::read::readFraction( photon ) );                      // wrong node
+        CHECK_THROWS( gnds::read::readFraction( photon.child( "undefined" ) ) ); // undefined node
       } // THEN
     } // WHEN
   } // GIVEN
 } // SCENARIO
 
-void verifyChunkUsingNoFraction( const format::gnds::Fraction& chunk ) {
+void verifyChunkUsingNoFraction( const gnds::read::Fraction& chunk ) {
 
   CHECK_THAT( 1., WithinRel( chunk.first ) );
   CHECK( "hbar" == chunk.second );
 }
 
-void verifyChunkUsingFraction( const format::gnds::Fraction& chunk ) {
+void verifyChunkUsingFraction( const gnds::read::Fraction& chunk ) {
 
   CHECK( 0.5 == chunk.first );
   CHECK( "hbar" == chunk.second );
