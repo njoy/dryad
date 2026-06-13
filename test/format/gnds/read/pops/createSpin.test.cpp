@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/pops/createSpin.hpp"
+#include "njoy/format/gnds/read/pops/createSpin.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createSpin" ) {
 
@@ -27,7 +27,7 @@ SCENARIO( "createSpin" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createSpin( spin, "eval" );
+        auto chunk = gnds::read::pops::createSpin( spin, "eval" );
 
         CHECK( 0.5 == chunk );
       } // THEN

@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/pops/createParity.hpp"
+#include "njoy/format/gnds/read/pops/createParity.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createParity" ) {
 
@@ -27,7 +27,7 @@ SCENARIO( "createParity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createParity( parity, "eval" );
+        auto chunk = gnds::read::pops::createParity( parity, "eval" );
 
         CHECK( 1 == chunk );
       } // THEN

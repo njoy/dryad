@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_POPS_CREATEMASS
-#define NJOY_DRYAD_FORMAT_GNDS_POPS_CREATEMASS
+#ifndef NJOY_FORMAT_GNDS_READ_POPS_CREATEMASS
+#define NJOY_FORMAT_GNDS_READ_POPS_CREATEMASS
 
 // system includes
 #include <tuple>
@@ -7,13 +7,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/readDouble.hpp"
-#include "njoy/dryad/format/gnds/convertMass.hpp"
+#include "njoy/format/gnds/read/readDouble.hpp"
+#include "njoy/format/gnds/read/convertMass.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace pops {
 
   /**
@@ -41,9 +41,9 @@ namespace pops {
   }
 
 } // pops namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

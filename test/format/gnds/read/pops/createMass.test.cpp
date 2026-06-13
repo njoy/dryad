@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/pops/createMass.hpp"
+#include "njoy/format/gnds/read/pops/createMass.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createMass" ) {
 
@@ -27,7 +27,7 @@ SCENARIO( "createMass" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createMass( mass, "eval" );
+        auto chunk = gnds::read::pops::createMass( mass, "eval" );
 
         CHECK_THAT( 1.00866491574, WithinRel( chunk.value() ) );
       } // THEN

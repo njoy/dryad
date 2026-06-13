@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/pops/createEnergy.hpp"
+#include "njoy/format/gnds/read/pops/createEnergy.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
-using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createEnergy" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "createEnergy" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createEnergy( energy, "eval" );
+        auto chunk = gnds::read::pops::createEnergy( energy, "eval" );
 
         CHECK_THAT( 0., WithinRel( chunk.value() ) );
       } // THEN

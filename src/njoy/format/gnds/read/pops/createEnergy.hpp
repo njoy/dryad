@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_POPS_CREATEENERGY
-#define NJOY_DRYAD_FORMAT_GNDS_POPS_CREATEENERGY
+#ifndef NJOY_FORMAT_GNDS_READ_POPS_CREATEENERGY
+#define NJOY_FORMAT_GNDS_READ_POPS_CREATEENERGY
 
 // system includes
 #include <tuple>
@@ -7,13 +7,13 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/readDouble.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/format/gnds/read/readDouble.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace pops {
 
   /**
@@ -41,9 +41,9 @@ namespace pops {
   }
 
 } // pops namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

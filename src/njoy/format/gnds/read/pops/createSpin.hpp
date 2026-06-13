@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_POPS_CREATESPIN
-#define NJOY_DRYAD_FORMAT_GNDS_POPS_CREATESPIN
+#ifndef NJOY_FORMAT_GNDS_READ_POPS_CREATESPIN
+#define NJOY_FORMAT_GNDS_READ_POPS_CREATESPIN
 
 // system includes
 #include <tuple>
@@ -7,12 +7,12 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/readFraction.hpp"
+#include "njoy/format/gnds/read/readFraction.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace pops {
 
   /**
@@ -48,9 +48,9 @@ namespace pops {
   }
 
 } // pops namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

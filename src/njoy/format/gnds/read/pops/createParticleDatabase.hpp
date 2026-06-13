@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPARTICLEDATABASE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEPARTICLEDATABASE
+#ifndef NJOY_FORMAT_GNDS_READ_POPS_CREATEPARTICLEDATABASE
+#define NJOY_FORMAT_GNDS_READ_POPS_CREATEPARTICLEDATABASE
 
 // system includes
 #include <vector>
@@ -9,12 +9,12 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/Particle.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
-#include "njoy/dryad/format/gnds/pops/createParticle.hpp"
+#include "njoy/format/gnds/read/pops/createParticle.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace pops {
 
   /**
@@ -23,14 +23,14 @@ namespace pops {
    *  @param[in] pops    the GNDS pops xml node
    *  @param[in] style   the gnds style to process (default is eval)
    */
-  inline ParticleDatabase
+  inline dryad::ParticleDatabase
   createParticleDatabase( const pugi::xml_node& pops,
                           const std::string& style = "eval" ) {
 
     // check that this is a valid coherentPhotonScattering node
     throwExceptionOnWrongNode( pops, "PoPs" );
 
-    std::vector< Particle > particles;
+    std::vector< dryad::Particle > particles;
 
     // loop over bosons
     auto bosons = pops.child( "gaugeBosons" );
@@ -107,7 +107,7 @@ namespace pops {
       }
     }
 
-    return ParticleDatabase( std::move( particles ) );
+    return dryad::ParticleDatabase( std::move( particles ) );
   }
 
   /**
@@ -118,12 +118,12 @@ namespace pops {
    *  @param[in] particles   the particles to include
    *  @param[in] style       the gnds style to process (default is eval)
    */
-  inline ParticleDatabase
+  inline dryad::ParticleDatabase
   createParticleDatabase( const pugi::xml_node& pops,
-                          const std::vector< id::ParticleID >& identifiers,
+                          const std::vector< dryad::id::ParticleID >& identifiers,
                           const std::string& style = "eval" ) {
 
-    std::vector< Particle > particles;
+    std::vector< dryad::Particle > particles;
     auto database = createParticleDatabase( pops, style );
 
     for ( const auto& id : identifiers ) {
@@ -132,38 +132,38 @@ namespace pops {
 
         particles.emplace_back( database.particle( id ) );
       }
-      else if ( ( id.e() == id::LevelID::continuum || id.e() == id::LevelID::all ) &&
+      else if ( ( id.e() == dryad::id::LevelID::continuum || id.e() == dryad::id::LevelID::all ) &&
                   database.hasParticle( id.groundState() ) ) {
 
         particles.emplace_back( database.particle( id.groundState() ) );
         particles.back().identifier( id );
       }
-      else if ( ( id == id::ParticleID::proton() && database.hasParticle( id::ParticleID( "H1" ) ) ) ||
-                ( id == id::ParticleID::deuteron() && database.hasParticle( id::ParticleID( "H2" ) ) )  ||
-                ( id == id::ParticleID::triton() && database.hasParticle( id::ParticleID( "H3" ) ) )  ||
-                ( id == id::ParticleID::helion() && database.hasParticle( id::ParticleID( "He3" ) ) )  ||
-                ( id == id::ParticleID::alpha() && database.hasParticle( id::ParticleID( "He4" ) ) )  ) {
+      else if ( ( id == dryad::id::ParticleID::proton() && database.hasParticle( dryad::id::ParticleID( "H1" ) ) ) ||
+                ( id == dryad::id::ParticleID::deuteron() && database.hasParticle( dryad::id::ParticleID( "H2" ) ) )  ||
+                ( id == dryad::id::ParticleID::triton() && database.hasParticle( dryad::id::ParticleID( "H3" ) ) )  ||
+                ( id == dryad::id::ParticleID::helion() && database.hasParticle( dryad::id::ParticleID( "He3" ) ) )  ||
+                ( id == dryad::id::ParticleID::alpha() && database.hasParticle( dryad::id::ParticleID( "He4" ) ) )  ) {
 
-        id::ParticleID look_for;
-        if ( id == id::ParticleID::proton() ) {
+        dryad::id::ParticleID look_for;
+        if ( id == dryad::id::ParticleID::proton() ) {
 
-          look_for = id::ParticleID( "H1" );
+          look_for = dryad::id::ParticleID( "H1" );
         }
-        else if ( id == id::ParticleID::deuteron() ) {
+        else if ( id == dryad::id::ParticleID::deuteron() ) {
 
-          look_for = id::ParticleID( "H2" );
+          look_for = dryad::id::ParticleID( "H2" );
         }
-        else if ( id == id::ParticleID::triton() ) {
+        else if ( id == dryad::id::ParticleID::triton() ) {
 
-          look_for = id::ParticleID( "H3" );
+          look_for = dryad::id::ParticleID( "H3" );
         }
-        else if ( id == id::ParticleID::helion() ) {
+        else if ( id == dryad::id::ParticleID::helion() ) {
 
-          look_for = id::ParticleID( "He3" );
+          look_for = dryad::id::ParticleID( "He3" );
         }
-        else if ( id == id::ParticleID::alpha() ) {
+        else if ( id == dryad::id::ParticleID::alpha() ) {
 
-          look_for = id::ParticleID( "He4" );
+          look_for = dryad::id::ParticleID( "He4" );
         }
 
         particles.emplace_back(  database.particle( look_for ) );
@@ -173,9 +173,9 @@ namespace pops {
         particles.back().nuclearMass( std::nullopt );
         particles.back().nuclearMassUncertainty( std::nullopt );
       }
-      else if ( id.vacancies().has_value() && database.hasParticle( id::ParticleID( id.z(), 0, 0 ) ) ) {
+      else if ( id.vacancies().has_value() && database.hasParticle( dryad::id::ParticleID( id.z(), 0, 0 ) ) ) {
 
-        particles.emplace_back( database.particle( id::ParticleID( id.z(), 0, 0 ) ) );
+        particles.emplace_back( database.particle( dryad::id::ParticleID( id.z(), 0, 0 ) ) );
         particles.back().identifier( id );
       }
       else {
@@ -185,13 +185,13 @@ namespace pops {
       }
     }
 
-    return ParticleDatabase( std::move( particles ) );
+    return dryad::ParticleDatabase( std::move( particles ) );
   }
 
 } // pops namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

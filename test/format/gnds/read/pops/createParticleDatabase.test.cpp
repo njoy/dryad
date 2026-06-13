@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/pops/createParticleDatabase.hpp"
+#include "njoy/format/gnds/read/pops/createParticleDatabase.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 SCENARIO( "createParticleDatabase" ) {
@@ -43,7 +44,7 @@ SCENARIO( "createParticleDatabase" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createParticleDatabase( pops, "eval" );
+        auto chunk = gnds::read::pops::createParticleDatabase( pops, "eval" );
 
         CHECK( 45 == chunk.numberParticles() );
 
@@ -120,7 +121,7 @@ SCENARIO( "createParticleDatabase" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createParticleDatabase( pops, particles, "eval" );
+        auto chunk = gnds::read::pops::createParticleDatabase( pops, particles, "eval" );
 
         CHECK( 41 == chunk.numberParticles() );
 

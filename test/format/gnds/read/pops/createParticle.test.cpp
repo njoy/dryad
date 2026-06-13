@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/pops/createParticle.hpp"
+#include "njoy/format/gnds/read/pops/createParticle.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 SCENARIO( "createParticle" ) {
@@ -35,7 +36,7 @@ SCENARIO( "createParticle" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::pops::createParticle( boson, "eval" );
+        auto chunk = gnds::read::pops::createParticle( boson, "eval" );
 
         CHECK( id::ParticleID::photon() == chunk.identifier() );
         CHECK_THAT( 0., WithinRel( chunk.mass().value() ) );
@@ -47,7 +48,7 @@ SCENARIO( "createParticle" ) {
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
         CHECK( std::nullopt == chunk.energyUncertainty() );
 
-        chunk = format::gnds::pops::createParticle( baryon, "eval" );
+        chunk = gnds::read::pops::createParticle( baryon, "eval" );
 
         CHECK( id::ParticleID::neutron() == chunk.identifier() );
         CHECK_THAT( 1.00866491574, WithinRel( chunk.mass().value() ) );
@@ -59,7 +60,7 @@ SCENARIO( "createParticle" ) {
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
         CHECK( std::nullopt == chunk.energyUncertainty() );
 
-        chunk = format::gnds::pops::createParticle( nuclide, "eval" );
+        chunk = gnds::read::pops::createParticle( nuclide, "eval" );
 
         CHECK( id::ParticleID( "H1" ) == chunk.identifier() );
         CHECK_THAT( 1.00782503223, WithinRel( chunk.mass().value() ) );
@@ -71,7 +72,7 @@ SCENARIO( "createParticle" ) {
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
         CHECK( std::nullopt == chunk.energyUncertainty() );
 
-        chunk = format::gnds::pops::createParticle( nuclid_no_mass, "eval" );
+        chunk = gnds::read::pops::createParticle( nuclid_no_mass, "eval" );
 
         CHECK( id::ParticleID( "Kr84" ) == chunk.identifier() );
         CHECK( std::nullopt == chunk.mass() );
@@ -83,7 +84,7 @@ SCENARIO( "createParticle" ) {
         CHECK( std::nullopt == chunk.nuclearMassUncertainty() );
         CHECK( std::nullopt == chunk.energyUncertainty() );
 
-        chunk = format::gnds::pops::createParticle( element, "eval" );
+        chunk = gnds::read::pops::createParticle( element, "eval" );
 
         CHECK( id::ParticleID( "H" ) == chunk.identifier() );
         CHECK( std::nullopt == chunk.mass() );

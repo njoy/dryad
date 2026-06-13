@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPARTICLE
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEPARTICLE
+#ifndef NJOY_FORMAT_GNDS_READ_POPS_CREATEPARTICLE
+#define NJOY_FORMAT_GNDS_READ_POPS_CREATEPARTICLE
 
 // system includes
 #include <vector>
@@ -9,15 +9,15 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/Particle.hpp"
-#include "njoy/dryad/format/gnds/pops/createMass.hpp"
-#include "njoy/dryad/format/gnds/pops/createEnergy.hpp"
-#include "njoy/dryad/format/gnds/pops/createSpin.hpp"
-#include "njoy/dryad/format/gnds/pops/createParity.hpp"
+#include "njoy/format/gnds/read/pops/createMass.hpp"
+#include "njoy/format/gnds/read/pops/createEnergy.hpp"
+#include "njoy/format/gnds/read/pops/createSpin.hpp"
+#include "njoy/format/gnds/read/pops/createParity.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace pops {
 
   /**
@@ -26,10 +26,10 @@ namespace pops {
    *  @param[in] node    the GNDS xml node
    *  @param[in] style   the gnds style to process (default is eval)
    */
-  inline Particle createParticle( const pugi::xml_node& node,
-                                  const std::string& style = "eval" ) {
+  inline dryad::Particle createParticle( const pugi::xml_node& node,
+                                         const std::string& style = "eval" ) {
 
-    id::ParticleID id;
+    dryad::id::ParticleID id;
     std::optional< double > mass;
     std::optional< double > nuclear_mass;
     std::optional< double > energy;
@@ -41,7 +41,7 @@ namespace pops {
 
     if ( strcmp( node.name(), "nuclide" ) == 0 ) {
 
-      id = id::ParticleID( node.attribute( "id" ).as_string() );
+      id = dryad::id::ParticleID( node.attribute( "id" ).as_string() );
       auto child = node.child( "mass" );
       mass = child ? createMass( child, style ) : std::nullopt;
 
@@ -59,7 +59,7 @@ namespace pops {
               strcmp( node.name(), "baryon" ) == 0 ||
               strcmp( node.name(), "lepton" ) == 0 ) {
 
-      id = id::ParticleID( node.attribute( "id" ).as_string() );
+      id = dryad::id::ParticleID( node.attribute( "id" ).as_string() );
 
       auto child = node.child( "mass" );
       mass = child ? createMass( child, style ) : std::nullopt;
@@ -70,7 +70,7 @@ namespace pops {
     }
     else if ( strcmp( node.name(), "chemicalElement" ) == 0 ) {
 
-      id = id::ParticleID( node.attribute( "symbol" ).as_string() );
+      id = dryad::id::ParticleID( node.attribute( "symbol" ).as_string() );
 
       auto child = node.child( "mass" );
       mass = child ? createMass( child, style ) : std::nullopt;
@@ -82,15 +82,15 @@ namespace pops {
       throw std::exception();
     }
 
-    return Particle( std::move( id ), std::move( mass ), std::move( spin ), std::move( parity ),
-                     std::move( energy ), std::move( nuclear_mass ), std::move( mass_uncertainty ),
-                     std::move( nuclear_mass_uncertainty ), std::move( energy_uncertainty ) );
+    return dryad::Particle( std::move( id ), std::move( mass ), std::move( spin ), std::move( parity ),
+                            std::move( energy ), std::move( nuclear_mass ), std::move( mass_uncertainty ),
+                            std::move( nuclear_mass_uncertainty ), std::move( energy_uncertainty ) );
   }
 
 } // pops namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

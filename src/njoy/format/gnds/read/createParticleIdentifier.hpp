@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_CREATEPARTICLEID
-#define NJOY_DRYAD_FORMAT_GNDS_CREATEPARTICLEID
+#ifndef NJOY_FORMAT_GNDS_READ_CREATEPARTICLEID
+#define NJOY_FORMAT_GNDS_READ_CREATEPARTICLEID
 
 // system includes
 #include <vector>
@@ -9,26 +9,26 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 
   /**
    *  @brief Create the particle identifier
    */
-  inline id::ParticleID createParticleIdentifier( const char* str ) {
+  inline dryad::id::ParticleID createParticleIdentifier( const char* str ) {
 
     std::string pid( str );
     if ( pid == "photon" ) {
 
       pid = "g";
     }
-    return id::ParticleID( pid );
+    return dryad::id::ParticleID( pid );
   }
 
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
