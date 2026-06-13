@@ -5,7 +5,7 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceData.hpp"
-#include "njoy/dryad/format/gendf/covariance/createCrossSectionCovarianceDataFromFile.hpp"
+#include "njoy/format/gendf/read/covariance/createCrossSectionCovarianceDataFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -131,7 +131,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     [] ( const ParticleID& projectile, const ParticleID& target,
          bool relative, const std::string& filename ) -> decltype(auto) {
 
-      return njoy::dryad::format::gendf::covariance::createCrossSectionCovarianceDataFromFile(
+      return njoy::format::gendf::read::covariance::createCrossSectionCovarianceDataFromFile(
                  projectile, target, relative, filename );
     },
     python::arg( "projectile" ), python::arg( "target" ),
