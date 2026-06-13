@@ -4,15 +4,15 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
+#include "njoy/format/gnds/read/resonances/createRadius.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
-using Radius = std::variant< double, TabulatedRadius >;
+using namespace njoy::format;
+using Radius = std::variant< double, resonances::TabulatedRadius >;
 
 void verifyEnergyDependentScatteringRadiusChunk( const Radius& );
 void verifyConstantScatteringRadiusChunk( const Radius& );
@@ -32,7 +32,7 @@ SCENARIO( "createRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::resonances::createRadius( radius );
+        auto chunk = gnds::read::resonances::createRadius( radius );
 
         verifyEnergyDependentScatteringRadiusChunk( chunk );
       } // THEN
@@ -50,7 +50,7 @@ SCENARIO( "createRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::resonances::createRadius( radius );
+        auto chunk = gnds::read::resonances::createRadius( radius );
 
         verifyConstantScatteringRadiusChunk( chunk );
       } // THEN
@@ -74,7 +74,7 @@ SCENARIO( "createRadius" ) {
       THEN( "it can be converted" ) {
 
         // the scattering and hard sphere radius are the same for this channel
-        auto chunk = format::gnds::resonances::createRadius( radius );
+        auto chunk = gnds::read::resonances::createRadius( radius );
 
         verifyConstantHardSphereRadiusChunk( chunk );
       } // THEN
@@ -97,7 +97,7 @@ SCENARIO( "createRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::resonances::createRadius( radius );
+        auto chunk = gnds::read::resonances::createRadius( radius );
 
         // the scattering and hard sphere radius are the same for this channel
         verifyConstantHardSphereRadiusChunk( chunk );
@@ -108,9 +108,9 @@ SCENARIO( "createRadius" ) {
 
 void verifyEnergyDependentScatteringRadiusChunk( const Radius& chunk ) {
 
-  CHECK( true == std::holds_alternative< TabulatedRadius >( chunk ) );
+  CHECK( true == std::holds_alternative< resonances::TabulatedRadius >( chunk ) );
 
-  auto radius = std::get< TabulatedRadius >( chunk );
+  auto radius = std::get< resonances::TabulatedRadius >( chunk );
   CHECK( true == radius.isLinearised() );
   CHECK( 50 == radius.numberPoints() );
   CHECK( 1 == radius.numberRegions() );

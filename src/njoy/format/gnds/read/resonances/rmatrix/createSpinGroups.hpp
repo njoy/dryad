@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATESPINGROUPS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATESPINGROUPS
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATESPINGROUPS
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATESPINGROUPS
 
 // system includes
 #include <algorithm>
@@ -9,13 +9,13 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/Formalism.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createBoundaryCondition.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createChannelData.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createBoundaryCondition.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createChannelData.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -30,9 +30,9 @@ namespace rmatrix {
    */
   inline auto createSpinGroups(
                   const dryad::resonances::Formalism& formalism,
-                  const dryad::format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
+                  const read::resonances::rmatrix::BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
-                  const dryad::format::gnds::resonances::rmatrix::ResonanceReactions& reactions,
+                  const read::resonances::rmatrix::ResonanceReactions& reactions,
                   const pugi::xml_node& spin_groups ) {
 
     // check that this is a valid spin groups node
@@ -42,8 +42,8 @@ namespace rmatrix {
 
     // the boundary condition
     dryad::resonances::BoundaryCondition boundary = dryad::resonances::BoundaryCondition::ShiftFactor;
-    if ( boundary_condition == dryad::format::gnds::resonances::rmatrix::BoundaryCondition::Constant ||
-         boundary_condition == dryad::format::gnds::resonances::rmatrix::BoundaryCondition::NegativeOrbitalMomentum ) {
+    if ( boundary_condition == read::resonances::rmatrix::BoundaryCondition::Constant ||
+         boundary_condition == read::resonances::rmatrix::BoundaryCondition::NegativeOrbitalMomentum ) {
 
       boundary = dryad::resonances::BoundaryCondition::Constant;
     }
@@ -99,9 +99,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERESONANCEPARAMETERS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERESONANCEPARAMETERS
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_CREATERESONANCEPARAMETERS
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_CREATERESONANCEPARAMETERS
 
 // system includes
 #include <optional>
@@ -8,14 +8,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/ResonanceParameters.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
-#include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createCompoundSystem.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
+#include "njoy/format/gnds/read/resonances/createRadius.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createCompoundSystem.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 
   /**
@@ -124,9 +124,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

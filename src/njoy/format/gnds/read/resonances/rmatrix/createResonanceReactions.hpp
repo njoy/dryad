@@ -1,18 +1,18 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATERESONANCEREACTIONS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATERESONANCEREACTIONS
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATERESONANCEREACTIONS
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATERESONANCEREACTIONS
 
 // system includes
 #include <map>
 
 // other includes
 #include "pugixml.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createResonanceReaction.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createResonanceReaction.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -29,10 +29,10 @@ namespace rmatrix {
    *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ResonanceReactions
-  createResonanceReactions( const id::ParticleID& projectile,
-                            const id::ParticleID& target,
+  createResonanceReactions( const dryad::id::ParticleID& projectile,
+                            const dryad::id::ParticleID& target,
                             const pugi::xml_node& reactions,
-                            const std::vector< Particle >& particles,
+                            const std::vector< dryad::Particle >& particles,
                             const dryad::resonances::ChannelRadii& radii,
                             const std::string& style = "eval" ) {
 
@@ -55,9 +55,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

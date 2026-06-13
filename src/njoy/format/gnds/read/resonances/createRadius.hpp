@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERADIUS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERADIUS
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_CREATERADIUS
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_CREATERADIUS
 
 // system includes
 #include <variant>
@@ -7,15 +7,15 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
-#include "njoy/dryad/format/gnds/readConstant1d.hpp"
-#include "njoy/dryad/format/gnds/convertRadius.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/resonances/createTabulatedRadius.hpp"
+#include "njoy/format/gnds/read/readConstant1d.hpp"
+#include "njoy/format/gnds/read/convertRadius.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 
   /**
@@ -51,9 +51,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif //NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATERADIUS

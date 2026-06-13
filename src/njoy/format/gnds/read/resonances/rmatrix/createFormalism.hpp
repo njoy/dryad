@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATEFORMALISM
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATEFORMALISM
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATEFORMALISM
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATEFORMALISM
 
 // system includes
 
@@ -8,9 +8,9 @@
 #include "njoy/dryad/resonances/Formalism.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -36,9 +36,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

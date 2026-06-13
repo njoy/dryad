@@ -4,16 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/createTabulatedRadius.hpp"
+#include "njoy/format/gnds/read/resonances/createTabulatedRadius.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
-void verifyChunk( const TabulatedRadius& );
+void verifyChunk( const resonances::TabulatedRadius& );
 
 SCENARIO( "createTabulatedRadius" ) {
 
@@ -29,7 +29,7 @@ SCENARIO( "createTabulatedRadius" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::resonances::createTabulatedRadius( radius );
+        auto chunk = gnds::read::resonances::createTabulatedRadius( radius );
 
         verifyChunk( chunk );
       } // THEN
@@ -37,7 +37,7 @@ SCENARIO( "createTabulatedRadius" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const TabulatedRadius& chunk ) {
+void verifyChunk( const resonances::TabulatedRadius& chunk ) {
 
   CHECK( true == chunk.isLinearised() );
   CHECK( 50 == chunk.numberPoints() );

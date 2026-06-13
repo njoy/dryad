@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATERESONANCEREACTION
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATERESONANCEREACTION
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATERESONANCEREACTION
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATERESONANCEREACTION
 
 // system includes
 #include <algorithm>
@@ -11,16 +11,16 @@
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/resonances/ParticlePair.hpp"
 #include "njoy/dryad/resonances/ChannelRadii.hpp"
-#include "njoy/dryad/format/adjustScatterLevel.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/resolveLink.hpp"
-#include "njoy/dryad/format/gnds/createQValue.hpp"
-#include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
+#include "njoy/format/adjustScatterLevel.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/resolveLink.hpp"
+#include "njoy/format/gnds/read/createQValue.hpp"
+#include "njoy/format/gnds/read/resonances/createRadius.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -33,9 +33,9 @@ namespace rmatrix {
                                         std::optional< double >,
                                         bool >;
 
-  inline Particle
-  retrieveParticle( const id::ParticleID& id,
-                    const std::vector< Particle >& particles ) {
+  inline dryad::Particle
+  retrieveParticle( const dryad::id::ParticleID& id,
+                    const std::vector< dryad::Particle >& particles ) {
 
     // lambda to find a particle in a sorted vector
     auto compare = [&] ( auto&& particle ) {
@@ -65,10 +65,10 @@ namespace rmatrix {
    *  @param[in] style        the gnds style to process (default is eval)
    */
   inline ResonanceReaction
-  createResonanceReaction( const id::ParticleID& projectile,
-                           const id::ParticleID& target,
+  createResonanceReaction( const dryad::id::ParticleID& projectile,
+                           const dryad::id::ParticleID& target,
                            const pugi::xml_node& reaction,
-                           const std::vector< Particle >& particles,
+                           const std::vector< dryad::Particle >& particles,
                            const dryad::resonances::ChannelRadii& radii,
                            const std::string& style = "eval" ) {
 
@@ -96,26 +96,26 @@ namespace rmatrix {
       // create the outgoing particle type
       if ( std::get< 0 >( data ).particles().has_value() ) {
 
-        id::ParticleID ejectile( reaction.attribute( "ejectile" ).as_string() );
-        if ( ejectile == id::ParticleID( "H1" ) ) {
+        dryad::id::ParticleID ejectile( reaction.attribute( "ejectile" ).as_string() );
+        if ( ejectile == dryad::id::ParticleID( "H1" ) ) {
 
-          ejectile = id::ParticleID::proton();
+          ejectile = dryad::id::ParticleID::proton();
         }
-        else if ( ejectile == id::ParticleID( "H2" ) ) {
+        else if ( ejectile == dryad::id::ParticleID( "H2" ) ) {
 
-          ejectile = id::ParticleID::deuteron();
+          ejectile = dryad::id::ParticleID::deuteron();
         }
-        else if ( ejectile == id::ParticleID( "H3" ) ) {
+        else if ( ejectile == dryad::id::ParticleID( "H3" ) ) {
 
-          ejectile = id::ParticleID::triton();
+          ejectile = dryad::id::ParticleID::triton();
         }
-        else if ( ejectile == id::ParticleID( "He3" ) ) {
+        else if ( ejectile == dryad::id::ParticleID( "He3" ) ) {
 
-          ejectile = id::ParticleID::helion();
+          ejectile = dryad::id::ParticleID::helion();
         }
-        else if ( ejectile == id::ParticleID( "He4" ) ) {
+        else if ( ejectile == dryad::id::ParticleID( "He4" ) ) {
 
-          ejectile = id::ParticleID::alpha();
+          ejectile = dryad::id::ParticleID::alpha();
         }
         std::get< 2 >( data ) = dryad::resonances::ParticlePair(
                                   retrieveParticle( ejectile, particles ),
@@ -187,9 +187,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

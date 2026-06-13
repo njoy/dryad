@@ -4,17 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createBackground.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createBackground.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
-using Background = std::variant< FrohnerBackground,
-                                 SammyBackground,
-                                 TabulatedBackground >;
+using namespace njoy::format;
+using Background = std::variant< resonances::FrohnerBackground,
+                                 resonances::SammyBackground,
+                                 resonances::TabulatedBackground >;
 
 void verifySammyBackgroundChunk( const Background& );
 
@@ -35,7 +35,7 @@ SCENARIO( "createBackground" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::resonances::createBackground( external );
+        auto chunk = gnds::read::resonances::rmatrix::createBackground( external );
 
         verifySammyBackgroundChunk( chunk );
       } // THEN
@@ -45,9 +45,9 @@ SCENARIO( "createBackground" ) {
 
 void verifySammyBackgroundChunk( const Background& chunk ) {
 
-  CHECK( true == std::holds_alternative< SammyBackground >( chunk ) );
+  CHECK( true == std::holds_alternative< resonances::SammyBackground >( chunk ) );
 
-  auto background = std::get< SammyBackground >( chunk );
+  auto background = std::get< resonances::SammyBackground >( chunk );
   CHECK_THAT( -0.043, WithinRel( background.polynomialCoefficients()[0] ) );
   CHECK_THAT( 2.8e-8, WithinRel( background.polynomialCoefficients()[1] ) );
   CHECK_THAT( 0.    , WithinRel( background.polynomialCoefficients()[2] ) );

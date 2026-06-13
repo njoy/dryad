@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECOMPOUNDSYSTEM
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECOMPOUNDSYSTEM
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECOMPOUNDSYSTEM
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECOMPOUNDSYSTEM
 
 // system includes
 
@@ -7,18 +7,18 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/CompoundSystem.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
-#include "njoy/dryad/format/gnds/pops/createParticleDatabase.hpp"
-#include "njoy/dryad/format/gnds/resonances/createParticles.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createParticleIdentifiers.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createResonanceReactions.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createBoundaryCondition.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createFormalism.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createSpinGroups.hpp"
+#include "njoy/format/gnds/read/pops/createParticleDatabase.hpp"
+#include "njoy/format/gnds/read/resonances/createParticles.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createParticleIdentifiers.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createResonanceReactions.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createBoundaryCondition.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createFormalism.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createSpinGroups.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -34,11 +34,11 @@ namespace rmatrix {
    *  @param[in] rmatrix      the GNDS rmatrix xml node
    *  @param[in] style        the gnds style to process (default is eval)
    */
-  inline auto createCompoundSystem( const id::ParticleID& projectile,
-                                    const id::ParticleID& target,
+  inline auto createCompoundSystem( const dryad::id::ParticleID& projectile,
+                                    const dryad::id::ParticleID& target,
                                     double lower,
                                     double upper,
-                                    const ParticleDatabase& pops,
+                                    const dryad::ParticleDatabase& pops,
                                     const dryad::resonances::ChannelRadii& radii,
                                     const pugi::xml_node& rmatrix,
                                     const std::string& style = "eval" ) {
@@ -51,7 +51,7 @@ namespace rmatrix {
     auto boundary = createBoundaryCondition( rmatrix.attribute( "boundaryCondition" ).as_string() );
 
     auto identifiers = createParticleIdentifiers( projectile, target, rmatrix.child( "resonanceReactions" ) );
-    ParticleDatabase local;
+    dryad::ParticleDatabase local;
     auto node = rmatrix.child( "PoPs" );
     if ( node ) {
 
@@ -70,9 +70,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

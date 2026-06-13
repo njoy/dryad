@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATEBACKGROUND
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATEBACKGROUND
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATEBACKGROUND
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATEBACKGROUND
 
 // system includes
 #include <variant>
@@ -7,19 +7,20 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/readDouble.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
-#include "njoy/dryad/format/gnds/convertInverseEnergy.hpp"
-#include "njoy/dryad/format/gnds/convertInverseEnergySquared.hpp"
 #include "njoy/dryad/resonances/FrohnerBackground.hpp"
 #include "njoy/dryad/resonances/SammyBackground.hpp"
 #include "njoy/dryad/resonances/TabulatedBackground.hpp"
+#include "njoy/format/gnds/read/readDouble.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
+#include "njoy/format/gnds/read/convertInverseEnergy.hpp"
+#include "njoy/format/gnds/read/convertInverseEnergySquared.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
+namespace rmatrix {
 
   /**
    *  @brief Create a SammyBackground from a GNDS externalRMatrix node
@@ -88,10 +89,11 @@ namespace resonances {
     }
   }
 
+} // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,19 +1,19 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATEPARTICLES
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATEPARTICLES
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_CREATEPARTICLES
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_CREATEPARTICLES
 
 // system includes
 
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/pops/createParticleDatabase.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/format/gnds/read/pops/createParticleDatabase.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 
   /**
@@ -23,13 +23,13 @@ namespace resonances {
    *  @param[in] local         the local particle data
    *  @param[in] identifiers   the particle identifiers used in the resonance data
    */
-  inline std::vector< Particle >
-  createParticles( const ParticleDatabase& global,
-                   const ParticleDatabase& local,
-                   const std::vector< id::ParticleID >& identifiers ) {
+  inline std::vector< dryad::Particle >
+  createParticles( const dryad::ParticleDatabase& global,
+                   const dryad::ParticleDatabase& local,
+                   const std::vector< dryad::id::ParticleID >& identifiers ) {
 
     // loop over the particle identifiers
-    std::vector< Particle > particles;
+    std::vector< dryad::Particle > particles;
     for ( const auto& id : identifiers ) {
 
       particles.emplace_back( global.particle( id ) );
@@ -61,9 +61,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNELDATA
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNELDATA
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECHANNELDATA
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECHANNELDATA
 
 // system includes
 #include <algorithm>
@@ -9,16 +9,16 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/SpinGroup.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/format/gnds/readTable.hpp"
-#include "njoy/dryad/format/gnds/readFractionFromString.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createChannels.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/readTable.hpp"
+#include "njoy/format/gnds/read/readFractionFromString.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createChannels.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -31,9 +31,9 @@ namespace rmatrix {
    *  @param[in] group                the GNDS spin group xml node
    */
   inline auto createChannelData(
-                  const dryad::format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
+                  const BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
-                  const dryad::format::gnds::resonances::rmatrix::ResonanceReactions& reactions,
+                  const ResonanceReactions& reactions,
                   const pugi::xml_node& group ) {
 
     // check that this is a valid resonanceReaction node
@@ -104,7 +104,7 @@ namespace rmatrix {
 
       auto id = channels[current].identifier();
       auto is_elastic = id.reaction().target() == id.reaction().residual();
-      auto is_capture = id.reaction().reactionType() == id::ReactionType( "capture" );
+      auto is_capture = id.reaction().reactionType() == dryad::id::ReactionType( "capture" );
 
       if ( amplitudes.size() > 0 || is_elastic || is_capture ) {
 
@@ -120,9 +120,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

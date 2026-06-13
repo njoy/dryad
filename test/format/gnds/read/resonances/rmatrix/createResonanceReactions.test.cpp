@@ -4,18 +4,18 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createResonanceReactions.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createResonanceReactions.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
-using namespace njoy::dryad::resonances;
+using namespace njoy::format;
 
-void verifyChunk( const format::gnds::resonances::rmatrix::ResonanceReactions& );
-void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::ResonanceReactions& );
-void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceReactions& );
+void verifyChunk( const gnds::read::resonances::rmatrix::ResonanceReactions& );
+void verifyChunkWithChargedParticles( const gnds::read::resonances::rmatrix::ResonanceReactions& );
+void verifyChunkWithFission( const gnds::read::resonances::rmatrix::ResonanceReactions& );
 
 SCENARIO( "createResonanceReactions" ) {
 
@@ -37,10 +37,10 @@ SCENARIO( "createResonanceReactions" ) {
                                               Particle( id::ParticleID::neutron(), 1, .5, +1 ),
                                               Particle( id::ParticleID( "Al27" ), 27, 1.5, +1 ),
                                               Particle( id::ParticleID( "Al28[all]" ), 28, 2.5, +1 ) };
-        ChannelRadii radii( 4.3226 );
+        resonances::ChannelRadii radii( 4.3226 );
         std::string style = "eval";
 
-        auto chunk = format::gnds::resonances::rmatrix::createResonanceReactions( projectile, target, reactions,
+        auto chunk = gnds::read::resonances::rmatrix::createResonanceReactions( projectile, target, reactions,
                                                                                   particles, radii, style );
 
         verifyChunk( chunk );
@@ -68,10 +68,10 @@ SCENARIO( "createResonanceReactions" ) {
                                               Particle( id::ParticleID( "Cl35" ), 35, 1.5, +1 ),
                                               Particle( id::ParticleID( "Cl36[all]" ), 36, 1.5, +1 ),
                                               Particle( id::ParticleID( "S35" ), 35.1, 2.5, +1 ) };
-        ChannelRadii radii( 4.82222 );
+        resonances::ChannelRadii radii( 4.82222 );
         std::string style = "eval";
 
-        auto chunk = format::gnds::resonances::rmatrix::createResonanceReactions( projectile, target, reactions,
+        auto chunk = gnds::read::resonances::rmatrix::createResonanceReactions( projectile, target, reactions,
                                                                                   particles, radii, style );
 
         verifyChunkWithChargedParticles( chunk );
@@ -97,10 +97,10 @@ SCENARIO( "createResonanceReactions" ) {
                                               Particle( id::ParticleID::neutron(), 1, .5, +1 ),
                                               Particle( id::ParticleID( "Pa231" ), 231, 1.5, +1 ),
                                               Particle( id::ParticleID( "Pa232[all]" ), 232, 1.5, +1 ) };
-        ChannelRadii radii( 10.4 );
+        resonances::ChannelRadii radii( 10.4 );
         std::string style = "eval";
 
-        auto chunk = format::gnds::resonances::rmatrix::createResonanceReactions( projectile, target, reactions,
+        auto chunk = gnds::read::resonances::rmatrix::createResonanceReactions( projectile, target, reactions,
                                                                                   particles, radii, style );
 
         verifyChunkWithFission( chunk );
@@ -109,7 +109,7 @@ SCENARIO( "createResonanceReactions" ) {
   } // GIVEN
 } // SCENARIO
 
-void verifyChunk( const format::gnds::resonances::rmatrix::ResonanceReactions& chunk ) {
+void verifyChunk( const gnds::read::resonances::rmatrix::ResonanceReactions& chunk ) {
 
   CHECK( 2 == chunk.size() );
 
@@ -120,7 +120,7 @@ void verifyChunk( const format::gnds::resonances::rmatrix::ResonanceReactions& c
   CHECK( id::ParticleID::photon() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Al28[all]" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 7725200, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( true == std::get< 6 >( reaction ) );
 
@@ -131,12 +131,12 @@ void verifyChunk( const format::gnds::resonances::rmatrix::ResonanceReactions& c
   CHECK( id::ParticleID::neutron() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Al27" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 0, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 4.3226 ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 4.3226 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( false == std::get< 6 >( reaction ) );
 }
 
-void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::ResonanceReactions& chunk ) {
+void verifyChunkWithChargedParticles( const gnds::read::resonances::rmatrix::ResonanceReactions& chunk ) {
 
   CHECK( 3 == chunk.size() );
 
@@ -147,7 +147,7 @@ void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::R
   CHECK( id::ParticleID::proton() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "S35" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 615220, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( false == std::get< 6 >( reaction ) );
 
@@ -158,7 +158,7 @@ void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::R
   CHECK( id::ParticleID::photon() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Cl36[all]" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 8579907, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( true == std::get< 6 >( reaction ) );
 
@@ -169,12 +169,12 @@ void verifyChunkWithChargedParticles( const format::gnds::resonances::rmatrix::R
   CHECK( id::ParticleID::neutron() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Cl35" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 0, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 4.82222, 4.88875 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( false == std::get< 6 >( reaction ) );
 }
 
-void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceReactions& chunk ) {
+void verifyChunkWithFission( const gnds::read::resonances::rmatrix::ResonanceReactions& chunk ) {
 
   CHECK( 3 == chunk.size() );
 
@@ -184,7 +184,7 @@ void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceR
   CHECK( id::ParticleID( "Pa231" ) == std::get< 1 >( reaction ).heavyParticle().identifier() );
   CHECK( std::nullopt == std::get< 2 >( reaction ) );
   CHECK_THAT( 176518100, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( false == std::get< 6 >( reaction ) );
 
@@ -195,7 +195,7 @@ void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceR
   CHECK( id::ParticleID::photon() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Pa232[all]" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 5.553e6, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 0., 0. ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( true == std::get< 6 >( reaction ) );
 
@@ -206,7 +206,7 @@ void verifyChunkWithFission( const format::gnds::resonances::rmatrix::ResonanceR
   CHECK( id::ParticleID::neutron() == std::get< 2 >( reaction )->lightParticle().identifier() );
   CHECK( id::ParticleID( "Pa231" ) == std::get< 2 >( reaction )->heavyParticle().identifier() );
   CHECK_THAT( 0, WithinRel( std::get< 3 >( reaction ) ) );
-  CHECK( ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
+  CHECK( resonances::ChannelRadii( 10.4 ) == std::get< 4 >( reaction ) );
   CHECK( std::nullopt == std::get< 5 >( reaction ) );
   CHECK( false == std::get< 6 >( reaction ) );
 }

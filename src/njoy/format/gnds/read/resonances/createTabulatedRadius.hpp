@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATETABULATEDRADIUS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_CREATETABULATEDRADIUS
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_CREATETABULATEDRADIUS
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_CREATETABULATEDRADIUS
 
 // system includes
 #include <vector>
@@ -7,16 +7,16 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/createInterpolationType.hpp"
-#include "njoy/dryad/format/gnds/readXYs1d.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/format/gnds/convertRadii.hpp"
 #include "njoy/dryad/resonances/TabulatedRadius.hpp"
+#include "njoy/format/gnds/read/createInterpolationType.hpp"
+#include "njoy/format/gnds/read/readXYs1d.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/convertRadii.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 
   /**
@@ -30,7 +30,7 @@ namespace resonances {
     std::vector< double > energies;
     std::vector< double > values;
     std::vector< std::size_t > boundaries;
-    std::vector< InterpolationType > interpolants;
+    std::vector< dryad::InterpolationType > interpolants;
 
     if ( strcmp( node.name(), "XYs1d" ) == 0 ) {
 
@@ -101,9 +101,9 @@ namespace resonances {
   }
 
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

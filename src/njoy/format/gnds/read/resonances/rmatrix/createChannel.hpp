@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNEL
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNEL
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECHANNEL
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECHANNEL
 
 // system includes
 
@@ -7,17 +7,17 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/Channel.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/readFractionFromString.hpp"
-#include "njoy/dryad/format/gnds/resonances/createRadius.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createBackground.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createBoundaryCondition.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createResonanceReactions.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/readFractionFromString.hpp"
+#include "njoy/format/gnds/read/resonances/createRadius.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createBackground.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createBoundaryCondition.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createResonanceReactions.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -32,7 +32,7 @@ namespace rmatrix {
    *  @param[in] channel              the GNDS channel xml node
    */
   inline auto createChannel(
-                  const format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
+                  const BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   const ResonanceReactions& reactions,
                   double spin,
@@ -71,9 +71,9 @@ namespace rmatrix {
     }
 
     // create the identifier
-    id::ChannelID id( std::get< 0 >( reaction ),
-                      dryad::resonances::ChannelQuantumNumbers( l, s, spin, parity ),
-                      std::move( partial ) );
+    dryad::id::ChannelID id( std::get< 0 >( reaction ),
+                             dryad::resonances::ChannelQuantumNumbers( l, s, spin, parity ),
+                             std::move( partial ) );
 
     // optional background element
     std::optional< dryad::resonances::Channel::Background > background = std::nullopt;
@@ -129,9 +129,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

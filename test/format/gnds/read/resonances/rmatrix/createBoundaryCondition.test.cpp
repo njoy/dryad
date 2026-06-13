@@ -4,13 +4,12 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createBoundaryCondition.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createBoundaryCondition.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad;
-using namespace njoy::dryad::format::gnds::resonances::rmatrix;
+using namespace njoy::format::gnds::read::resonances::rmatrix;
 
 SCENARIO( "createBoundaryCondition" ) {
 

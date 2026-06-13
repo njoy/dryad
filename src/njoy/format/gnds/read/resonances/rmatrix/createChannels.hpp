@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNELS
-#define NJOY_DRYAD_FORMAT_GNDS_RESONANCES_RMATRIX_CREATECHANNELS
+#ifndef NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECHANNELS
+#define NJOY_FORMAT_GNDS_READ_RESONANCES_RMATRIX_CREATECHANNELS
 
 // system includes
 
@@ -7,13 +7,13 @@
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
 #include "njoy/dryad/resonances/Channel.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createChannel.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createChannel.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace resonances {
 namespace rmatrix {
 
@@ -28,7 +28,7 @@ namespace rmatrix {
    *  @param[in] channels             the GNDS channels xml node
    */
   inline auto createChannels(
-                  const format::gnds::resonances::rmatrix::BoundaryCondition& boundary_condition,
+                  const BoundaryCondition& boundary_condition,
                   const dryad::resonances::Kinematics& kinematics,
                   const ResonanceReactions& reactions,
                   double spin,
@@ -60,7 +60,7 @@ namespace rmatrix {
       if ( total > 1 ) {
 
         std::size_t current = std::count_if( data.begin(), std::next( data.begin(), i ) , counter );
-        id::ChannelID id( data[i].identifier().reaction(), data[i].identifier().quantumNumbers(), current );
+        dryad::id::ChannelID id( data[i].identifier().reaction(), data[i].identifier().quantumNumbers(), current );
         data[i].identifier( id );
       }
     }
@@ -70,9 +70,9 @@ namespace rmatrix {
 
 } // rmatrix namespace
 } // resonances namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

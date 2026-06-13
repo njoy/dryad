@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/resonances/rmatrix/createFormalism.hpp"
+#include "njoy/format/gnds/read/resonances/rmatrix/createFormalism.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createFormalism" ) {
 
@@ -19,13 +20,13 @@ SCENARIO( "createFormalism" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( resonances::Formalism::ReichMoore == format::gnds::resonances::rmatrix::createFormalism( "ReichMoore" ) );
-        CHECK( resonances::Formalism::GeneralRMatrix == format::gnds::resonances::rmatrix::createFormalism( "FullRMatrix" ) );
+        CHECK( resonances::Formalism::ReichMoore == gnds::read::resonances::rmatrix::createFormalism( "ReichMoore" ) );
+        CHECK( resonances::Formalism::GeneralRMatrix == gnds::read::resonances::rmatrix::createFormalism( "FullRMatrix" ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported value" ) {
 
-        CHECK_THROWS( format::gnds::resonances::rmatrix::createFormalism( "com" ) );
+        CHECK_THROWS( gnds::read::resonances::rmatrix::createFormalism( "com" ) );
       } // THEN
     } // WHEN
   } // GIVEN
