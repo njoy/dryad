@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECOVARIANCEDATA
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECOVARIANCEDATA
+#ifndef NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATECOVARIANCEDATA
+#define NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATECOVARIANCEDATA
 
 // system includes
 
@@ -9,13 +9,13 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/CovarianceData.hpp"
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
-#include "njoy/dryad/format/gnds/covariance/createCrossSectionCovarianceMatrix.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
+#include "njoy/format/gnds/read/covariance/createCrossSectionCovarianceMatrix.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace covariance {
 
   /**
@@ -64,7 +64,7 @@ namespace covariance {
         }
       }
 
-      if ( ! endf::ReactionInformation::isDerived( reaction ) ) {
+      if ( ! dryad::format::endf::ReactionInformation::isDerived( reaction ) ) {
 
         if ( type == 33 ) {
 
@@ -106,9 +106,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

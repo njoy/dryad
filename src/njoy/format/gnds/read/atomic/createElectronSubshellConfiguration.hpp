@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
-#define NJOY_DRYAD_FORMAT_GNDS_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
+#ifndef NJOY_FORMAT_GNDS_READ_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
+#define NJOY_FORMAT_GNDS_READ_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
 
 // system includes
 #include <vector>
@@ -10,12 +10,12 @@
 #include "njoy/dryad/id/ElementID.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
-#include "njoy/dryad/format/gnds/convertEnergy.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace atomic {
 
   /**
@@ -27,12 +27,12 @@ namespace atomic {
    *                             all probability data
    */
   inline dryad::atomic::ElectronSubshellConfiguration
-  createElectronSubshellConfiguration( const id::ElementID& element,
+  createElectronSubshellConfiguration( const dryad::id::ElementID& element,
                                        const pugi::xml_node& configuration,
                                        bool normalise ) {
 
     // shell id and population are attributes on the configuration node
-    id::ElectronSubshellID identifier( configuration.attribute( "subshell" ).as_string() );
+    dryad::id::ElectronSubshellID identifier( configuration.attribute( "subshell" ).as_string() );
     double population = configuration.attribute( "electronNumber" ).as_double();
 
     // energy and unit are attributes on the double node in the bindingEnergy node
@@ -71,7 +71,7 @@ namespace atomic {
         if ( products.find_child_by_attribute( "pid", "photon" ) ) {
 
           // get the originating shell id
-          id::ParticleID pid( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+          dryad::id::ParticleID pid( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
           if ( ! pid.vacancies().has_value() || pid.vacancies()->size() != 1 ) {
 
             Log::error( "The particle identifier \'{}\' does not define an atom with an electron vacancy",
@@ -85,7 +85,7 @@ namespace atomic {
         else if ( products.find_child_by_attribute( "pid", "e-" ) ) {
 
           // get the originating and emitting shell id
-          id::ParticleID pid( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+          dryad::id::ParticleID pid( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
           if ( ! pid.vacancies().has_value() || pid.vacancies()->size() != 2 ) {
 
             Log::error( "The particle identifier \'{}\' does not define an atom with two electron vacancies",
@@ -111,9 +111,9 @@ namespace atomic {
   }
 
 } // atomic namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

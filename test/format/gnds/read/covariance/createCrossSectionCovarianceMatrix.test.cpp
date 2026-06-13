@@ -5,11 +5,12 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/covariance/createCrossSectionCovarianceMatrix.hpp"
+#include "njoy/format/gnds/read/covariance/createCrossSectionCovarianceMatrix.hpp"
 
 // other includes
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 SCENARIO( "createCrossSectionCovarianceMatrix" ) {
@@ -27,7 +28,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
       id::ParticleID projectile( "n" );
       id::ParticleID target( "F19" );
 
-      auto chunk = format::gnds::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = gnds::read::covariance::createCrossSectionCovarianceMatrix(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
@@ -135,7 +136,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
       id::ParticleID projectile( "n" );
       id::ParticleID target( "F19" );
 
-      auto chunk = format::gnds::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = gnds::read::covariance::createCrossSectionCovarianceMatrix(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
@@ -227,7 +228,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
       id::ParticleID projectile( "n" );
       id::ParticleID target( "F19" );
 
-      auto chunk = format::gnds::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = gnds::read::covariance::createCrossSectionCovarianceMatrix(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {
@@ -329,7 +330,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
       id::ParticleID projectile( "n" );
       id::ParticleID target( "Ne22" );
 
-      auto chunk = format::gnds::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = gnds::read::covariance::createCrossSectionCovarianceMatrix(
                      projectile, target, covariance );
 
       THEN( "a CovarianceBlock can be created and members can be tested" ) {

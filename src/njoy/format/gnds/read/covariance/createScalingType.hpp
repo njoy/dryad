@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATESCALINGTYPE
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATESCALINGTYPE
+#ifndef NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATESCALINGTYPE
+#define NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATESCALINGTYPE
 
 // system includes
 #include <vector>
@@ -10,9 +10,9 @@
 #include "njoy/dryad/covariance/ScalingType.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace covariance {
 
   /**
@@ -36,9 +36,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

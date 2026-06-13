@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/atomic/createElectronSubshellConfiguration.hpp"
+#include "njoy/format/gnds/read/atomic/createElectronSubshellConfiguration.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyOxygenChunk( const atomic::ElectronSubshellConfiguration&, bool );
 void verifyCopperChunk( const atomic::ElectronSubshellConfiguration&, bool );
@@ -29,8 +30,8 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration, false );
-        auto chunk2 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration, true );
+        auto chunk1 = gnds::read::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration, false );
+        auto chunk2 = gnds::read::atomic::createElectronSubshellConfiguration( id::ElementID( 8 ), configuration, true );
 
         verifyOxygenChunk( chunk1, false );
         verifyOxygenChunk( chunk2, true );
@@ -50,8 +51,8 @@ SCENARIO( "createElectronSubshellConfiguration" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk1 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration, false );
-        auto chunk2 = format::gnds::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration, true );
+        auto chunk1 = gnds::read::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration, false );
+        auto chunk2 = gnds::read::atomic::createElectronSubshellConfiguration( id::ElementID( 29 ), configuration, true );
 
         verifyCopperChunk( chunk1, false );
         verifyCopperChunk( chunk2, true );

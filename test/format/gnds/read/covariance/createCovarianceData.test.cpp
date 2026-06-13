@@ -5,11 +5,12 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/covariance/createCovarianceData.hpp"
+#include "njoy/format/gnds/read/covariance/createCovarianceData.hpp"
 
 // other includes
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 // include common test verification functions
@@ -31,7 +32,7 @@ SCENARIO( "createCovarianceData" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
         std::optional< covariance::CovarianceData > covariances =
-        format::gnds::covariance::createCovarianceData( projectile, target, node );
+        gnds::read::covariance::createCovarianceData( projectile, target, node );
 
         neutron::h1::verifyCrossSectionCovariances( covariances.value().crossSection().value() );
       } // THEN
@@ -52,7 +53,7 @@ SCENARIO( "createCovarianceData" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "Li7" );
         std::optional< covariance::CovarianceData > covariances =
-        format::gnds::covariance::createCovarianceData( projectile, target, node );
+        gnds::read::covariance::createCovarianceData( projectile, target, node );
 
         neutron::li7::verifyCrossSectionCovariances( covariances.value().crossSection().value() );
       } // THEN

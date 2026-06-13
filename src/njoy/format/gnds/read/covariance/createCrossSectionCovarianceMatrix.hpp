@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#ifndef NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#define NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
 
 // system includes
 
@@ -9,14 +9,14 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/id/ReactionID.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/adjustScatterLevel.hpp"
-#include "njoy/dryad/format/gnds/readCovarianceMatrix.hpp"
-#include "njoy/dryad/format/gnds/covariance/createVarianceScaling.hpp"
+#include "njoy/format/adjustScatterLevel.hpp"
+#include "njoy/format/gnds/read/readCovarianceMatrix.hpp"
+#include "njoy/format/gnds/read/covariance/createVarianceScaling.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace covariance {
 
   /**
@@ -51,7 +51,8 @@ namespace covariance {
       reaction.erase( reaction.begin(),
                       std::find( reaction.begin(), reaction.end(), ',' ) + 1 );
       auto mt = adjustScatterLevel( projectile, target, std::stoi( reaction ) );
-      rowReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, mt ) );
+      rowReaction = dryad::id::ReactionID( projectile, target,
+                                           dryad::id::ReactionType( projectile, mt ) );
     }
     else {
 
@@ -68,7 +69,8 @@ namespace covariance {
         std::string reaction = column.attribute( "ENDF_MFMT" ).as_string();
         reaction.erase( reaction.begin(),
                         std::find( reaction.begin(), reaction.end(), ',' ) + 1 );
-        columnReaction = id::ReactionID( projectile, target, id::ReactionType( projectile, std::stoi( reaction ) ) );
+        columnReaction = dryad::id::ReactionID( projectile, target,
+                                                dryad::id::ReactionType( projectile, std::stoi( reaction ) ) );
       }
       else {
 
@@ -168,9 +170,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

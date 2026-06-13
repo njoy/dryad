@@ -4,13 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/covariance/createScalingType.hpp"
+#include "njoy/format/gnds/read/covariance/createScalingType.hpp"
 
 // other includes
 
 // convenience typedefs
-using namespace njoy::dryad::covariance;
-using namespace njoy::dryad::format::gnds;
+using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createScalingType" ) {
 
@@ -20,13 +20,13 @@ SCENARIO( "createScalingType" ) {
 
       THEN( "it can be converted" ) {
 
-        CHECK( ScalingType::Direct == covariance::createScalingType( "direct" ) );
-        CHECK( ScalingType::Inverse == covariance::createScalingType( "inverse" ) );
+        CHECK( covariance::ScalingType::Direct == gnds::read::covariance::createScalingType( "direct" ) );
+        CHECK( covariance::ScalingType::Inverse == gnds::read::covariance::createScalingType( "inverse" ) );
       } // THEN
 
       THEN( "an exception is thrown for an invalid or unsupported value" ) {
 
-        CHECK_THROWS( covariance::createScalingType( "unsupported" ) );
+        CHECK_THROWS( gnds::read::covariance::createScalingType( "unsupported" ) );
       } // THEN
     } // WHEN
   } // GIVEN

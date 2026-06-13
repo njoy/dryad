@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATEVARIANCESCALING
-#define NJOY_DRYAD_FORMAT_GNDS_COVARIANCE_CREATEVARIANCESCALING
+#ifndef NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATEVARIANCESCALING
+#define NJOY_FORMAT_GNDS_READ_COVARIANCE_CREATEVARIANCESCALING
 
 // system includes
 #include <vector>
@@ -7,18 +7,18 @@
 // other includes
 #include "pugixml.hpp"
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/gnds/throwExceptionOnWrongNode.hpp"
-#include "njoy/dryad/format/gnds/covariance/createScalingType.hpp"
-#include "njoy/dryad/format/gnds/readAxes.hpp"
-#include "njoy/dryad/format/gnds/readArray.hpp"
-#include "njoy/dryad/format/gnds/convertEnergies.hpp"
-#include "njoy/dryad/format/gnds/convertVarianceScalingFactors.hpp"
 #include "njoy/dryad/covariance/VarianceScaling.hpp"
+#include "njoy/format/gnds/read/throwExceptionOnWrongNode.hpp"
+#include "njoy/format/gnds/read/covariance/createScalingType.hpp"
+#include "njoy/format/gnds/read/readAxes.hpp"
+#include "njoy/format/gnds/read/readArray.hpp"
+#include "njoy/format/gnds/read/convertEnergies.hpp"
+#include "njoy/format/gnds/read/convertVarianceScalingFactors.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gnds {
+namespace read {
 namespace covariance {
 
   /**
@@ -57,9 +57,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gnds namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

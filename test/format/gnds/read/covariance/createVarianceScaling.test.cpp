@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/gnds/covariance/createVarianceScaling.hpp"
+#include "njoy/format/gnds/read/covariance/createVarianceScaling.hpp"
 
 // other includes
 #include "pugixml.hpp"
 
 // convenience typedefs
+using namespace njoy::format;
 using namespace njoy::dryad;
 
 void verifyFissionChunk( const covariance::VarianceScaling& );
@@ -28,7 +29,7 @@ SCENARIO( "createTabulatedMultiplicity" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::gnds::covariance::createVarianceScaling( scaling );
+        auto chunk = gnds::read::covariance::createVarianceScaling( scaling );
 
         CHECK( 12 == chunk.numberGroups() );
 
