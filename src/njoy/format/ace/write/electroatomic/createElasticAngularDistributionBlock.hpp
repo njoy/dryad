@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEELASTICANGULARDISTRIBUTIONBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEELASTICANGULARDISTRIBUTIONBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEELASTICANGULARDISTRIBUTIONBLOCK
+#define NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEELASTICANGULARDISTRIBUTIONBLOCK
 
 // system includes
 #include <algorithm>
@@ -12,9 +12,9 @@
 #include "ACEtk/electroatomic/ElasticAngularDistributionBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace electroatomic {
 
   /**
@@ -26,7 +26,7 @@ namespace electroatomic {
    *  @param[in] electroatomic   the electroatomic data
    */
   inline njoy::ACEtk::electroatomic::ElasticAngularDistributionBlock
-  createAceElasticAngularDistributionBlock( const ProjectileTarget& electroatomic ) {
+  createElasticAngularDistributionBlock( const dryad::ProjectileTarget& electroatomic ) {
 
     // identifiers
     decltype(auto) projectile = electroatomic.projectileIdentifier();
@@ -69,9 +69,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEFLUORESCENDATABLOCK
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEFLUORESCENDATABLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEFLUORESCENDATABLOCK
+#define NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEFLUORESCENDATABLOCK
 
 // system includes
 #include <algorithm>
@@ -13,9 +13,9 @@
 #include "ACEtk/photoatomic/FluorescenceDataBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace photoatomic {
 
   /**
@@ -40,8 +40,8 @@ namespace photoatomic {
    *  @param[in] relaxation    the atomic relaxation data
    */
   inline njoy::ACEtk::photoatomic::FluorescenceDataBlock
-  createAceFluorescenceDataBlock( const ProjectileTarget& photoatomic,
-                                  const AtomicRelaxation& relaxation ) {
+  createFluorescenceDataBlock( const dryad::ProjectileTarget& photoatomic,
+                               const dryad::AtomicRelaxation& relaxation ) {
 
     // the data to be put in the block
     std::vector< double > edges;
@@ -56,17 +56,17 @@ namespace photoatomic {
     };
 
     // common identifiers
-    id::ParticleID projectile = photoatomic.projectileIdentifier();
-    id::ParticleID target = photoatomic.targetIdentifier();
-    id::ElectronSubshellID k( "K" );
-    id::ElectronSubshellID l1( "L1" );
-    id::ElectronSubshellID l2( "L2" );
-    id::ElectronSubshellID l3( "L3" );
-    id::ElectronSubshellID m1( "M1" );
-    id::ElectronSubshellID m5( "M5" );
-    id::ElectronSubshellID n1( "N1" );
-    id::ElectronSubshellID q13( "Q13" );
-    id::ReactionID total_ionisation( projectile, target, 522 );
+    dryad::id::ParticleID projectile = photoatomic.projectileIdentifier();
+    dryad::id::ParticleID target = photoatomic.targetIdentifier();
+    dryad::id::ElectronSubshellID k( "K" );
+    dryad::id::ElectronSubshellID l1( "L1" );
+    dryad::id::ElectronSubshellID l2( "L2" );
+    dryad::id::ElectronSubshellID l3( "L3" );
+    dryad::id::ElectronSubshellID m1( "M1" );
+    dryad::id::ElectronSubshellID m5( "M5" );
+    dryad::id::ElectronSubshellID n1( "N1" );
+    dryad::id::ElectronSubshellID q13( "Q13" );
+    dryad::id::ReactionID total_ionisation( projectile, target, 522 );
 
     // a few booleans
     auto has_k = relaxation.hasSubshell( k );
@@ -82,7 +82,7 @@ namespace photoatomic {
     double l_edge = ( l1_edge + l2_edge + l3_edge ) / 3.;
 
     // search for the edges in the total ionisation xs and calculate low/high
-    auto calculate_edge_ratio = [] ( double edge, const TabulatedCrossSection& xs ) {
+    auto calculate_edge_ratio = [] ( double edge, const dryad::TabulatedCrossSection& xs ) {
 
       for ( std::size_t index : xs.boundaries() ) {
 
@@ -218,9 +218,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

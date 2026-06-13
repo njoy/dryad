@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEPRINCIPALCROSSSECTIONBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEPRINCIPALCROSSSECTIONBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEPRINCIPALCROSSSECTIONBLOCK
+#define NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEPRINCIPALCROSSSECTIONBLOCK
 
 // system includes
 #include <algorithm>
@@ -10,9 +10,9 @@
 #include "ACEtk/photoatomic/PrincipalCrossSectionBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace photoatomic {
 
   /**
@@ -24,7 +24,7 @@ namespace photoatomic {
    *  @param[in] photoatomic   the photoatomic data
    */
   inline njoy::ACEtk::photoatomic::PrincipalCrossSectionBlock
-  createAcePrincipalCrossSectionBlock( const ProjectileTarget& photoatomic ) {
+  createPrincipalCrossSectionBlock( const dryad::ProjectileTarget& photoatomic ) {
 
     // energy is converted to MeV
 
@@ -73,9 +73,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

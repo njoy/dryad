@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEEXCITATIONBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEEXCITATIONBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEEXCITATIONBLOCK
+#define NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEEXCITATIONBLOCK
 
 // system includes
 #include <algorithm>
@@ -12,9 +12,9 @@
 #include "ACEtk/electroatomic/ExcitationBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace electroatomic {
 
   /**
@@ -26,7 +26,7 @@ namespace electroatomic {
    *  @param[in] electroatomic   the electroatomic data
    */
   inline njoy::ACEtk::electroatomic::ExcitationBlock
-  createAceExcitationBlock( const ProjectileTarget& electroatomic ) {
+  createExcitationBlock( const dryad::ProjectileTarget& electroatomic ) {
 
     // energy is converted to MeV
     auto convertEnergy = [] ( auto&& energy ) {
@@ -52,9 +52,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

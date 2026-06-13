@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEHEATINGNUMBERSBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEHEATINGNUMBERSBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEHEATINGNUMBERSBLOCK
+#define NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEHEATINGNUMBERSBLOCK
 
 // system includes
 #include <algorithm>
@@ -12,14 +12,14 @@
 #include "ACEtk/photoatomic/HeatingNumbersBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace photoatomic {
 
-  inline TabulatedAverageEnergy
-  calculateAverageFluorescenceEnergy( const ProjectileTarget& photoatomic,
-                                      const AtomicRelaxation& relaxation ) {
+  inline dryad::TabulatedAverageEnergy
+  calculateAverageFluorescenceEnergy( const dryad::ProjectileTarget& photoatomic,
+                                      const dryad::AtomicRelaxation& relaxation ) {
 
     std::vector< double > energies = photoatomic.reactions().front().crossSection().energies();
     std::vector< double > fluorescence( energies.size(), 0. );
@@ -30,14 +30,14 @@ namespace photoatomic {
     dryad::id::ReactionID totalionisation_id( projectile, target, dryad::id::ReactionType( projectile, 522 ) );
 
     // electron subshell identifiers
-    id::ElectronSubshellID k( "K" );
-    id::ElectronSubshellID l1( "L1" );
-    id::ElectronSubshellID l2( "L2" );
-    id::ElectronSubshellID l3( "L3" );
-    id::ElectronSubshellID m1( "M1" );
-    id::ElectronSubshellID m5( "M5" );
-    id::ElectronSubshellID n1( "N1" );
-    id::ElectronSubshellID q13( "Q13" );
+    dryad::id::ElectronSubshellID k( "K" );
+    dryad::id::ElectronSubshellID l1( "L1" );
+    dryad::id::ElectronSubshellID l2( "L2" );
+    dryad::id::ElectronSubshellID l3( "L3" );
+    dryad::id::ElectronSubshellID m1( "M1" );
+    dryad::id::ElectronSubshellID m5( "M5" );
+    dryad::id::ElectronSubshellID n1( "N1" );
+    dryad::id::ElectronSubshellID q13( "Q13" );
 
     // a few booleans
     auto has_k = relaxation.hasSubshell( k );
@@ -53,7 +53,7 @@ namespace photoatomic {
     double l_edge = ( l1_edge + l2_edge + l3_edge ) / 3.;
 
     // search for the edges in the total ionisation xs and calculate low/high
-    auto calculate_edge_ratio = [] ( double edge, const TabulatedCrossSection& xs ) {
+    auto calculate_edge_ratio = [] ( double edge, const dryad::TabulatedCrossSection& xs ) {
 
       for ( std::size_t index : xs.boundaries() ) {
 
@@ -133,7 +133,7 @@ namespace photoatomic {
       }
     }
 
-    return TabulatedAverageEnergy( std::move( energies ), std::move( fluorescence ) );
+    return dryad::TabulatedAverageEnergy( std::move( energies ), std::move( fluorescence ) );
   }
 
   /**
@@ -146,8 +146,8 @@ namespace photoatomic {
    *  @param[in] relaxation    the atomic relaxation data
    */
   inline njoy::ACEtk::photoatomic::HeatingNumbersBlock
-  createAceHeatingNumbersBlock( const ProjectileTarget& photoatomic,
-                                const AtomicRelaxation& relaxation ) {
+  createHeatingNumbersBlock( const dryad::ProjectileTarget& photoatomic,
+                             const dryad::AtomicRelaxation& relaxation ) {
 
     // identifiers
     decltype(auto) projectile = photoatomic.projectileIdentifier();
@@ -165,7 +165,7 @@ namespace photoatomic {
 
     // get the incident energy data
     decltype(auto) energies = photoatomic.reactions().front().crossSection().energies();
-    TabulatedAverageEnergy incident( energies, energies );
+    dryad::TabulatedAverageEnergy incident( energies, energies );
 
     // calculate the average energy deposition for incoherent scattering
     double qvalue = 0.;
@@ -187,8 +187,8 @@ namespace photoatomic {
     auto totalionisation_heat = incident + qvalue - totalionisation_average;
 
     // calculate the total cross section value
-    TabulatedCrossSection total = coherent.crossSection() + incoherent.crossSection() +
-                                  pairproduction.crossSection() + totalionisation.crossSection();
+    dryad::TabulatedCrossSection total = coherent.crossSection() + incoherent.crossSection() +
+                                         pairproduction.crossSection() + totalionisation.crossSection();
 
     // calculate heating numbers
     std::vector< double > heating( energies.size() );
@@ -204,9 +204,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

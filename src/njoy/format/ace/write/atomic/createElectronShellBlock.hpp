@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ATOMIC_CREATEACEELECTRONSHELLBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_ATOMIC_CREATEACEELECTRONSHELLBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_ATOMIC_CREATEACEELECTRONSHELLBLOCK
+#define NJOY_FORMAT_ACE_WRITE_ATOMIC_CREATEACEELECTRONSHELLBLOCK
 
 // system includes
 #include <algorithm>
@@ -12,9 +12,9 @@
 #include "ACEtk/electroatomic/ElectronShellBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace atomic {
 
   /**
@@ -36,8 +36,8 @@ namespace atomic {
    *  @param[in] relaxation     the atomic relaxation data
    */
   inline njoy::ACEtk::electroatomic::ElectronShellBlock
-  createAceElectronShellBlock( bool relativistic,
-                               const AtomicRelaxation& relaxation ) {
+  createElectronShellBlock( bool relativistic,
+                            const dryad::AtomicRelaxation& relaxation ) {
 
     std::vector< double > electrons;
     std::vector< double > binding_energies;
@@ -93,9 +93,9 @@ namespace atomic {
   }
 
 } // atomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

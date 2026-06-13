@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEELASTICCROSSSECTIONBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEELASTICCROSSSECTIONBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEELASTICCROSSSECTIONBLOCK
+#define NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEELASTICCROSSSECTIONBLOCK
 
 // system includes
 #include <algorithm>
@@ -11,9 +11,9 @@
 #include "ACEtk/electroatomic/ElasticCrossSectionBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace electroatomic {
 
   /**
@@ -25,7 +25,7 @@ namespace electroatomic {
    *  @param[in] electroatomic   the electroatomic data
    */
   inline std::optional< njoy::ACEtk::electroatomic::ElasticCrossSectionBlock >
-  createAceElasticCrossSectionBlock( const ProjectileTarget& electroatomic ) {
+  createElasticCrossSectionBlock( const dryad::ProjectileTarget& electroatomic ) {
 
     // identifiers
     decltype(auto) projectile = electroatomic.projectileIdentifier();
@@ -86,9 +86,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

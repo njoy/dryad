@@ -4,30 +4,31 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createAceFluorescenceDataBlock.hpp"
+#include "njoy/format/ace/write/photoatomic/createFluorescenceDataBlock.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createAceFluorescenceDataBlock" ) {
+SCENARIO( "createFluorescenceDataBlock" ) {
 
   GIVEN( "instances of ProjectileTarget and AtomicRelaxation with z < 12" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
       THEN( "the ace block can be generated and is empty" ) {
 
-        auto block = format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createFluorescenceDataBlock( photoatomic, atomic );
 
         CHECK( 0 == block.NFLO() );
       } // THEN
@@ -38,15 +39,15 @@ SCENARIO( "createAceFluorescenceDataBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createFluorescenceDataBlock( photoatomic, atomic );
 
         CHECK( 4 == block.NFLO() );
         CHECK( 4 == block.fluorescenceEdgeEnergies().size() );
@@ -81,15 +82,15 @@ SCENARIO( "createAceFluorescenceDataBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createFluorescenceDataBlock( photoatomic, atomic );
 
         CHECK( 5 == block.NFLO() );
         CHECK( 5 == block.fluorescenceEdgeEnergies().size() );
@@ -128,15 +129,15 @@ SCENARIO( "createAceFluorescenceDataBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceFluorescenceDataBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createFluorescenceDataBlock( photoatomic, atomic );
 
         CHECK( 6 == block.NFLO() );
         CHECK( 6 == block.fluorescenceEdgeEnergies().size() );

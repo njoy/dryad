@@ -4,29 +4,30 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createAceComptonProfileBlock.hpp"
+#include "njoy/format/ace/write/photoatomic/createComptonProfileBlock.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 #include "njoy/dryad/external/ComptonProfiles.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createAceComptonProfileBlock" ) {
+SCENARIO( "createComptonProfileBlock" ) {
 
   GIVEN( "instances of ProjectileTarget" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       external::ComptonProfiles::apply( photoatomic, true );
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceComptonProfileBlock( photoatomic );
+        auto block = ace::write::photoatomic::createComptonProfileBlock( photoatomic );
 
         CHECK( 1 == block.numberElectronShells() );
 

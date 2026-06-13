@@ -4,31 +4,32 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createAceHeatingNumbersBlock.hpp"
+#include "njoy/format/ace/write/photoatomic/createHeatingNumbersBlock.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createAceHeatingNumbersBlock" ) {
+SCENARIO( "createHeatingNumbersBlock" ) {
 
   GIVEN( "instances of ProjectileTarget and AtomicRelaxation with z < 12" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-001_H_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated and is empty" ) {
 
-        auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 2021 == block.NES() );
 
@@ -41,16 +42,16 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-029_Cu_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-029_Cu_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 7314 == block.NES() );
 
@@ -63,16 +64,16 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-032_Ge_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-032_Ge_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 8513 == block.NES() );
 
@@ -85,16 +86,16 @@ SCENARIO( "createAceHeatingNumbersBlock" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-094_Pu_000.endf", true );
       atomic.calculateTransitionEnergies();
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-094_Pu_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
       photoatomic.calculateAverageEnergy();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceHeatingNumbersBlock( photoatomic, atomic );
+        auto block = ace::write::photoatomic::createHeatingNumbersBlock( photoatomic, atomic );
 
         CHECK( 12396 == block.NES() );
 

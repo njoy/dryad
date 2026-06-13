@@ -4,26 +4,27 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/atomic/createAceElectronShellBlock.hpp"
+#include "njoy/format/ace/write/atomic/createElectronShellBlock.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createAceElectronShellBlock" ) {
+SCENARIO( "createElectronShellBlock" ) {
 
   GIVEN( "instances of ProjectileTarget" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto atomic = format::endf::createAtomicRelaxationFromFile( "atom-008_O_000.endf", true );
+      auto atomic = endf::read::createAtomicRelaxationFromFile( "atom-008_O_000.endf", true );
       atomic.calculateTransitionEnergies();
 
       THEN( "the ace block can be generated for relativistic shelld" ) {
 
-        auto block = format::ace::atomic::createAceElectronShellBlock( true, atomic );
+        auto block = ace::write::atomic::createElectronShellBlock( true, atomic );
 
         CHECK( 4 == block.numberElectronShells() );
 
@@ -43,7 +44,7 @@ SCENARIO( "createAceElectronShellBlock" ) {
 
       THEN( "the ace block can be generated for non-relativistic shelld" ) {
 
-        auto block = format::ace::atomic::createAceElectronShellBlock( false, atomic );
+        auto block = ace::write::atomic::createElectronShellBlock( false, atomic );
 
         CHECK( 3 == block.numberElectronShells() );
 

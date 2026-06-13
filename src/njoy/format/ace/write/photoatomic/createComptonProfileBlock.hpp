@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACECOMPTONPROFILE
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACECOMPTONPROFILE
+#ifndef NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACECOMPTONPROFILE
+#define NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACECOMPTONPROFILE
 
 // system includes
 #include <algorithm>
@@ -10,9 +10,9 @@
 #include "ACEtk/photoatomic/ComptonProfileBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace photoatomic {
 
   /**
@@ -26,7 +26,7 @@ namespace photoatomic {
    *  @param[in] photoatomic   the photoatomic data
    */
   inline njoy::ACEtk::photoatomic::ComptonProfileBlock
-  createAceComptonProfileBlock( const ProjectileTarget& photoatomic ) {
+  createComptonProfileBlock( const dryad::ProjectileTarget& photoatomic ) {
 
     decltype(auto) projectile = photoatomic.projectileIdentifier();
     decltype(auto) target = photoatomic.targetIdentifier();
@@ -64,9 +64,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

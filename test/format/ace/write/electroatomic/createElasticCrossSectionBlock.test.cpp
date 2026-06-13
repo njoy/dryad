@@ -4,27 +4,28 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/electroatomic/createAceElasticCrossSectionBlock.hpp"
+#include "njoy/format/ace/write/electroatomic/createElasticCrossSectionBlock.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createAceElasticCrossSectionBlock" ) {
+SCENARIO( "createElasticCrossSectionBlock" ) {
 
   GIVEN( "instances of ProjectileTarget" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto electroatomic = format::endf::createProjectileTargetFromFile( "e-001_H_000.endf", true );
+      auto electroatomic = endf::read::createProjectileTargetFromFile( "e-001_H_000.endf", true );
       electroatomic.unioniseCrossSections();
       electroatomic.calculateSummationCrossSections();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::electroatomic::createAceElasticCrossSectionBlock( electroatomic );
+        auto block = ace::write::electroatomic::createElasticCrossSectionBlock( electroatomic );
 
         CHECK( 349 == block->numberEnergyPoints() );
         CHECK( 349 == block->transport().size() );

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEPHOTOELECTRICCROSSSECTIONBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEACEPHOTOELECTRICCROSSSECTIONBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEPHOTOELECTRICCROSSSECTIONBLOCK
+#define NJOY_FORMAT_ACE_WRITE_PHOTOATOMIC_CREATEACEPHOTOELECTRICCROSSSECTIONBLOCK
 
 // system includes
 #include <algorithm>
@@ -10,9 +10,9 @@
 #include "ACEtk/photoatomic/PhotoelectricCrossSectionBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace photoatomic {
 
   /**
@@ -24,7 +24,7 @@ namespace photoatomic {
    *  @param[in] photoatomic   the photoatomic data
    */
   inline njoy::ACEtk::photoatomic::PhotoelectricCrossSectionBlock
-  createAcePhotoelectricCrossSectionBlock( const ProjectileTarget& photoatomic ) {
+  createPhotoelectricCrossSectionBlock( const dryad::ProjectileTarget& photoatomic ) {
 
     // photoatomic data is stored as log values, except when the value
     // is exactly 0 (in which case it is zero). If the value is exactly 1,
@@ -55,9 +55,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

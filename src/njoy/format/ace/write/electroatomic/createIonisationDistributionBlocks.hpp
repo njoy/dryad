@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEIONISATIONDISTRIBUTIONBLOCKS
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEACEIONISATIONDISTRIBUTIONBLOCKS
+#ifndef NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEIONISATIONDISTRIBUTIONBLOCKS
+#define NJOY_FORMAT_ACE_WRITE_ELECTROATOMIC_CREATEACEIONISATIONDISTRIBUTIONBLOCKS
 
 // system includes
 #include <algorithm>
@@ -12,9 +12,9 @@
 #include "ACEtk/electroatomic/EnergyDistributionBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace electroatomic {
 
   /**
@@ -26,7 +26,7 @@ namespace electroatomic {
    *  @param[in] electroatomic   the electroatomic data
    */
   inline std::vector< njoy::ACEtk::electroatomic::EnergyDistributionBlock >
-  createAceIonisationDistributionBlocks( const ProjectileTarget& electroatomic ) {
+  createIonisationDistributionBlocks( const dryad::ProjectileTarget& electroatomic ) {
 
     // energy is converted to MeV
     auto convertEnergy = [] ( auto&& energy ) {
@@ -77,9 +77,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

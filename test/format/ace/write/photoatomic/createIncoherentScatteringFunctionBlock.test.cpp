@@ -4,27 +4,28 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createAceIncoherentScatteringFunctionBlock.hpp"
+#include "njoy/format/ace/write/photoatomic/createIncoherentScatteringFunctionBlock.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
-SCENARIO( "createAceIncoherentScatteringFunctionBlock" ) {
+SCENARIO( "createIncoherentScatteringFunctionBlock" ) {
 
   GIVEN( "instances of ProjectileTarget" ) {
 
     WHEN( "correct data is given" ) {
 
-      auto photoatomic = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
+      auto photoatomic = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", true );
       photoatomic.unioniseCrossSections();
       photoatomic.calculateSummationCrossSections();
 
       THEN( "the ace block can be generated" ) {
 
-        auto block = format::ace::photoatomic::createAceIncoherentScatteringFunctionBlock( photoatomic );
+        auto block = ace::write::photoatomic::createIncoherentScatteringFunctionBlock( photoatomic );
 
         CHECK( 398 == block.numberValues() );
         CHECK( 398 == block.momentum().size() );

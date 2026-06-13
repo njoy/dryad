@@ -7,11 +7,12 @@ using Catch::Matchers::WithinRel;
 #include "njoy/dryad/external/ComptonProfiles.hpp"
 
 // other includes
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
 using namespace njoy::dryad::external;
+using namespace njoy::format;
 
 void verifyBiggsMendelsohnMann( const std::vector< TabulatedComptonProfile >&, bool );
 void verifyProjectileTargetHasNoProfiles( const ProjectileTarget& );
@@ -43,11 +44,11 @@ SCENARIO( "ComptonProfiles" ) {
 
     THEN( "Biggs, Mendelsohn and Mann profiles can be added" ) {
 
-      auto chunk1 = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      auto chunk1 = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
       verifyProjectileTargetHasNoProfiles( chunk1 );
       external::ComptonProfiles::apply( chunk1, false );
 
-      auto chunk2 = format::endf::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
+      auto chunk2 = endf::read::createProjectileTargetFromFile( "photoat-001_H_000.endf", false );
       verifyProjectileTargetHasNoProfiles( chunk2 );
       external::ComptonProfiles::apply( chunk2, true );
 

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ATOMIC_CREATEACEELECTRONSUBSHELLBLOCK
-#define NJOY_DRYAD_FORMAT_ACE_ATOMIC_CREATEACEELECTRONSUBSHELLBLOCK
+#ifndef NJOY_FORMAT_ACE_WRITE_ATOMIC_CREATEACEELECTRONSUBSHELLBLOCK
+#define NJOY_FORMAT_ACE_WRITE_ATOMIC_CREATEACEELECTRONSUBSHELLBLOCK
 
 // system includes
 #include <algorithm>
@@ -11,9 +11,9 @@
 #include "ACEtk/electroatomic/ElectronSubshellBlock.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace write {
 namespace atomic {
 
   /**
@@ -26,7 +26,7 @@ namespace atomic {
    *  @param[in] relaxation   the atomic relaxation data
    */
   inline njoy::ACEtk::electroatomic::ElectronSubshellBlock
-  createAceElectronSubshellBlock( const AtomicRelaxation& relaxation ) {
+  createElectronSubshellBlock( const dryad::AtomicRelaxation& relaxation ) {
 
     constexpr unsigned int offset = 533;
 
@@ -59,9 +59,9 @@ namespace atomic {
   }
 
 } // atomic namespace
+} // write namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif
