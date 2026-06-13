@@ -5,12 +5,13 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/gendf/covariance/createCrossSectionCovarianceDataFromFile.hpp"
+#include "njoy/format/gendf/read/covariance/createCrossSectionCovarianceDataFromFile.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createCrossSectionCovarianceDataFromFile" ) {
 
@@ -18,7 +19,7 @@ SCENARIO( "createCrossSectionCovarianceDataFromFile" ) {
 
     WHEN( "constructing covariance matrices" ) {
 
-      auto chunk = format::gendf::covariance::createCrossSectionCovarianceDataFromFile(
+      auto chunk = gendf::read::covariance::createCrossSectionCovarianceDataFromFile(
                        id::ParticleID( "n" ), id::ParticleID( "U235" ),
                        true, "n-092_U_235.covariances.gendf" );
 

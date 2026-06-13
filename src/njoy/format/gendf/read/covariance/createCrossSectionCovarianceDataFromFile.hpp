@@ -1,17 +1,17 @@
-#ifndef NJOY_DRYAD_FORMAT_GENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATAFROMFILE
-#define NJOY_DRYAD_FORMAT_GENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATAFROMFILE
+#ifndef NJOY_FORMAT_GENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATAFROMFILE
+#define NJOY_FORMAT_GENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEDATAFROMFILE
 
 // system includes
 
 // other includes
 #include "ENDFtk/tree/GTape.hpp"
 #include "ENDFtk/tree/fromFile.hpp"
-#include "njoy/dryad/format/gendf/covariance/createCrossSectionCovarianceData.hpp"
+#include "njoy/format/gendf/read/covariance/createCrossSectionCovarianceData.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gendf {
+namespace read {
 namespace covariance {
 
   /**
@@ -26,8 +26,8 @@ namespace covariance {
    *  @param[in] filename     the GENDF file name
    */
   inline std::optional< dryad::covariance::CrossSectionCovarianceData >
-  createCrossSectionCovarianceDataFromFile( const id::ParticleID& projectile,
-                                            const id::ParticleID& target,
+  createCrossSectionCovarianceDataFromFile( const dryad::id::ParticleID& projectile,
+                                            const dryad::id::ParticleID& target,
                                             bool relative,
                                             const std::string& filename ) {
 
@@ -38,9 +38,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gendf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

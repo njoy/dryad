@@ -64,7 +64,7 @@ namespace covariance {
         }
       }
 
-      if ( ! dryad::format::endf::ReactionInformation::isDerived( reaction ) ) {
+      if ( ! endf::ReactionInformation::isDerived( reaction ) ) {
 
         if ( type == 33 ) {
 

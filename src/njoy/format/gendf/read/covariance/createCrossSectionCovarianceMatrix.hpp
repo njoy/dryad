@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_GENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
-#define NJOY_DRYAD_FORMAT_GENDF_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#ifndef NJOY_FORMAT_GENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
+#define NJOY_FORMAT_GENDF_READ_COVARIANCE_CREATECROSSSECTIONCOVARIANCEMATRIX
 
 // system includes
 
@@ -8,14 +8,14 @@
 #include "njoy/dryad/id/ParticleID.hpp"
 #include "njoy/dryad/covariance/CrossSectionMetadata.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
-#include "njoy/dryad/format/createVector.hpp"
-#include "njoy/dryad/format/adjustScatterLevel.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/adjustScatterLevel.hpp"
 #include "ENDFtk/gsection/33g.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace gendf {
+namespace read {
 namespace covariance {
 
   /**
@@ -28,7 +28,8 @@ namespace covariance {
    */
   inline std::vector< dryad::covariance::CrossSectionCovarianceMatrix >
   createCrossSectionCovarianceMatrix(
-      id::ParticleID projectile, id::ParticleID target,
+      dryad::id::ParticleID projectile,
+      dryad::id::ParticleID target,
       std::vector< double > boundaries, bool relative,
       ENDFtk::section::GType< 33 >& section ) {
 
@@ -42,7 +43,7 @@ namespace covariance {
                  mt, lumped );
     }
 
-    id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
+    dryad::id::ReactionID row( projectile, target, adjustScatterLevel( projectile, target, mt ) );
     for ( int column_mt : section.secondaryReactions() ) {
 
       decltype(auto) data = section.covariance( column_mt );
@@ -67,7 +68,7 @@ namespace covariance {
       else {
 
         Log::info( "Reading cross term for MT{} and MT{}", mt, column_mt );
-        id::ReactionID column( projectile, target, adjustScatterLevel( projectile, target, column_mt ) );
+        dryad::id::ReactionID column( projectile, target, adjustScatterLevel( projectile, target, column_mt ) );
         covariances.emplace_back( CrossSectionMetadata( { row }, boundaries ),
                                   CrossSectionMetadata( { column }, boundaries ),
                                   std::move( matrix ), relative );
@@ -78,9 +79,9 @@ namespace covariance {
   }
 
 } // covariance namespace
+} // read namespace
 } // gendf namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

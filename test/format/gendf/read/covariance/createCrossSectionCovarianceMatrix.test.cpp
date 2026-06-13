@@ -5,7 +5,7 @@ using Catch::Matchers::WithinRel;
 using Catch::Matchers::WithinAbs;
 
 // what we are testing
-#include "njoy/dryad/format/gendf/covariance/createCrossSectionCovarianceMatrix.hpp"
+#include "njoy/format/gendf/read/covariance/createCrossSectionCovarianceMatrix.hpp"
 
 // other includes
 #include "ENDFtk/tree/GTape.hpp"
@@ -13,6 +13,7 @@ using Catch::Matchers::WithinAbs;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::ENDFtk;
 
 SCENARIO( "createCrossSectionCovarianceMatrix" ) {
@@ -39,7 +40,7 @@ SCENARIO( "createCrossSectionCovarianceMatrix" ) {
         1.700000e+7
       };
 
-      auto chunk = format::gendf::covariance::createCrossSectionCovarianceMatrix(
+      auto chunk = gendf::read::covariance::createCrossSectionCovarianceMatrix(
                      projectile, target, boundaries, relative, section );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
