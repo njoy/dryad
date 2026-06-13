@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/continuous/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/continuous/createProjectileTarget.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -26,7 +27,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H1 = format::ace::continuous::createProjectileTarget( table, false );
+        ProjectileTarget H1 = ace::read::continuous::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H1.documentation().library() );
         CHECK( std::nullopt == H1.documentation().version() );

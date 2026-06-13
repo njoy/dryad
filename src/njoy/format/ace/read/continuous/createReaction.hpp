@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEREACTION
-#define NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEREACTION
+#ifndef NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATEREACTION
+#define NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATEREACTION
 
 // system includes
 #include <vector>
@@ -8,14 +8,14 @@
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
 #include "njoy/dryad/Reaction.hpp"
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
-#include "njoy/dryad/format/ace/continuous/createTabulatedCrossSection.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
+#include "njoy/format/ace/read/continuous/createTabulatedCrossSection.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace continuous {
 
   /**
@@ -28,9 +28,9 @@ namespace continuous {
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
-  inline Reaction
-  createReaction( const id::ParticleID& projectile,
-                  const id::ParticleID& target,
+  inline dryad::Reaction
+  createReaction( const dryad::id::ParticleID& projectile,
+                  const dryad::id::ParticleID& target,
                   const ACEtk::ContinuousEnergyTable& table,
                   std::size_t index,
                   bool /* normalise */ ) {
@@ -44,15 +44,15 @@ namespace continuous {
       qValue = table.reactionQValueBlock().QValue( index ) * constants::mega;
     }
 
-    return Reaction( id::ReactionID( projectile, target, mt ),
-                     continuous::createTabulatedCrossSection( table, index ),
-                     {}, std::nullopt, std::move( qValue ) );
+    return dryad::Reaction( dryad::id::ReactionID( projectile, target, mt ),
+                            continuous::createTabulatedCrossSection( table, index ),
+                            {}, std::nullopt, std::move( qValue ) );
   }
 
 } // continuous namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

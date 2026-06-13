@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEREACTIONS
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEREACTIONS
+#ifndef NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATEREACTIONS
+#define NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATEREACTIONS
 
 // system includes
 #include <vector>
@@ -7,16 +7,16 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/Reaction.hpp"
-#include "njoy/dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
-#include "njoy/dryad/format/ace/electroatomic/createPartialReactionIdentifiers.hpp"
-#include "njoy/dryad/format/ace/electroatomic/createTabulatedCrossSections.hpp"
-#include "njoy/dryad/format/ace/electroatomic/createReactionProducts.hpp"
+#include "njoy/format/ace/read/electroatomic/createReactionIdentifiers.hpp"
+#include "njoy/format/ace/read/electroatomic/createPartialReactionIdentifiers.hpp"
+#include "njoy/format/ace/read/electroatomic/createTabulatedCrossSections.hpp"
+#include "njoy/format/ace/read/electroatomic/createReactionProducts.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace electroatomic {
 
   /**
@@ -26,12 +26,12 @@ namespace electroatomic {
    *  @param[in] target       the target identifier
    *  @param[in] table        the ace table
    */
-  inline std::vector< Reaction >
-  createReactions( const id::ParticleID& projectile,
-                   const id::ParticleID& target,
+  inline std::vector< dryad::Reaction >
+  createReactions( const dryad::id::ParticleID& projectile,
+                   const dryad::id::ParticleID& target,
                    const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< Reaction > reactions;
+    std::vector< dryad::Reaction > reactions;
 
     auto identifiers = createReactionIdentifiers( projectile, target, table );
     auto partialIdentifiers = createPartialReactionIdentifiers( projectile, target, table );
@@ -57,9 +57,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

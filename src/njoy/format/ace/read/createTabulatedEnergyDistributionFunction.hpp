@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CREATETABULATEDENERGYDISTRIBUTIONFUNCTION
-#define NJOY_DRYAD_FORMAT_ACE_CREATETABULATEDENERGYDISTRIBUTIONFUNCTION
+#ifndef NJOY_FORMAT_ACE_READ_CREATETABULATEDENERGYDISTRIBUTIONFUNCTION
+#define NJOY_FORMAT_ACE_READ_CREATETABULATEDENERGYDISTRIBUTIONFUNCTION
 
 // system includes
 #include <vector>
@@ -7,21 +7,21 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ACEtk/electroatomic/TabulatedEnergyDistribution.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 
   /**
    *  @brief Create a TabulatedEnergyDistributionFunction from ACE data
    *
    *  @param[in] distribution   the electroatomic tabulated energy distribution
    */
-  inline TabulatedEnergyDistributionFunction
+  inline dryad::TabulatedEnergyDistributionFunction
   createTabulatedEnergyDistributionFunction(
       const njoy::ACEtk::electroatomic::TabulatedEnergyDistribution& distribution ) {
 
@@ -36,8 +36,8 @@ namespace ace {
       std::transform( energies.begin(), energies.end(), energies.begin(), convertEnergy );
       auto values = createVector( distribution.cdf() );
       std::vector< std::size_t > boundaries = { energies.size() - 1 };
-      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
-      return TabulatedEnergyDistributionFunction(
+      std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
+      return dryad::TabulatedEnergyDistributionFunction(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -49,9 +49,9 @@ namespace ace {
     }
   }
 
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

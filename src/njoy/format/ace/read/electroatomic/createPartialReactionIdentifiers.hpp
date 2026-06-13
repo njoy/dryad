@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEPARTIALREACTIONNUMBERS
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEPARTIALREACTIONNUMBERS
+#ifndef NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATEPARTIALREACTIONNUMBERS
+#define NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATEPARTIALREACTIONNUMBERS
 
 // system includes
 #include <vector>
@@ -10,9 +10,9 @@
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace electroatomic {
 
   /**
@@ -22,12 +22,12 @@ namespace electroatomic {
    *  @param[in] target       the target identifier
    *  @param[in] table        the ace table
    */
-  inline std::vector< std::vector< id::ReactionID > >
-  createPartialReactionIdentifiers( const id::ParticleID& projectile,
-                                    const id::ParticleID& target,
+  inline std::vector< std::vector< dryad::id::ReactionID > >
+  createPartialReactionIdentifiers( const dryad::id::ParticleID& projectile,
+                                    const dryad::id::ParticleID& target,
                                     const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< std::vector< id::ReactionID > > partials;
+    std::vector< std::vector< dryad::id::ReactionID > > partials;
 
     if ( table.electronPhotonRelaxationFormat() > 0 ) {
 
@@ -41,19 +41,19 @@ namespace electroatomic {
         for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
           // partial: subshell ionisation - MT534 and up
-          partials.back().emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
+          partials.back().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 534 + index - 1 ) );
         }
       }
       else {
 
-        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 522 ) );
+        partials.front().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 522 ) );
       }
 
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // large angle elastic - MT525
         partials.push_back( {} );
-        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 525 ) );
+        partials.front().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 525 ) );
       }
 
       // total elastic - MT526
@@ -61,28 +61,28 @@ namespace electroatomic {
       if ( table.electronPhotonRelaxationFormat() > 2 ) {
 
         // partial: large angle elastic - MT525
-        partials.back().emplace_back( projectile, target, id::ReactionType( projectile, 525 ) );
+        partials.back().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 525 ) );
         // partial: elastic deficit
-        partials.back().emplace_back( projectile, target, id::ReactionType( "deficit-scattering" ) );
+        partials.back().emplace_back( projectile, target, dryad::id::ReactionType( "deficit-scattering" ) );
       }
       else {
 
-        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 526 ) );
+        partials.front().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 526 ) );
       }
 
       // bremsstrahlung - MT527
       partials.push_back( {} );
-      partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 527 ) );
+      partials.front().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 527 ) );
 
       // excitation - MT528
       partials.push_back( {} );
-      partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 528 ) );
+      partials.front().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 528 ) );
 
       for ( std::size_t index = 1; index <= table.numberElectronSubshells(); ++index ) {
 
         // subshell ionisation - MT534 and up
         partials.push_back( {} );
-        partials.front().emplace_back( projectile, target, id::ReactionType( projectile, 534 + index - 1 ) );
+        partials.front().emplace_back( projectile, target, dryad::id::ReactionType( projectile, 534 + index - 1 ) );
       }
 
       // eprdata14 and higher has large angle and total elastic -> add deficit elastic
@@ -90,7 +90,7 @@ namespace electroatomic {
 
         // elastic deficit
         partials.push_back( {} );
-        partials.front().emplace_back( projectile, target, id::ReactionType( "deficit-scattering" ) );
+        partials.front().emplace_back( projectile, target, dryad::id::ReactionType( "deficit-scattering" ) );
       }
     }
 
@@ -98,9 +98,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

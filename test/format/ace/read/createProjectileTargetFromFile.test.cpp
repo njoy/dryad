@@ -4,12 +4,13 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
+#include "njoy/format/ace/read/createProjectileTargetFromFile.hpp"
 
 // other includes
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "electroatomic/test_verification_functions.hpp"
@@ -23,7 +24,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        auto targets = format::ace::createProjectileTargetFromFile( "1000.84p", false );
+        auto targets = ace::read::createProjectileTargetFromFile( "1000.84p", false );
 
         CHECK( true == std::holds_alternative< ProjectileTarget >( targets ) );
         auto H0_pa = std::get< ProjectileTarget >( targets );
@@ -84,7 +85,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        auto targets = format::ace::createProjectileTargetFromFile( "1000.12p", false );
+        auto targets = ace::read::createProjectileTargetFromFile( "1000.12p", false );
 
         CHECK( true == std::holds_alternative< std::pair< ProjectileTarget, ProjectileTarget > >( targets ) );
         auto H0_pa = std::get< std::pair< ProjectileTarget, ProjectileTarget > >( targets ).first;
@@ -212,7 +213,7 @@ SCENARIO( "createProjectileTargetFromFile" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        auto targets = format::ace::createProjectileTargetFromFile( "1000.14p", false );
+        auto targets = ace::read::createProjectileTargetFromFile( "1000.14p", false );
 
         CHECK( true == std::holds_alternative< std::pair< ProjectileTarget, ProjectileTarget > >( targets ) );
         auto H0_pa = std::get< std::pair< ProjectileTarget, ProjectileTarget > >( targets ).first;

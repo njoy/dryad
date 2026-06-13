@@ -4,16 +4,17 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/electroatomic/createPdfFromCdf.hpp"
+#include "njoy/format/ace/read/electroatomic/createPdfFromCdf.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
-#include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
-#include "njoy/dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
+#include "njoy/format/ace/read/createTabulatedAngularDistributionFunction.hpp"
+#include "njoy/format/ace/read/createTabulatedEnergyDistributionFunction.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createPdfFromCdf" ) {
 
@@ -24,11 +25,11 @@ SCENARIO( "createPdfFromCdf" ) {
     WHEN( "an elastic angular cdf from eprdata14 is given" ) {
 
       auto distribution = table.electronElasticAngularDistributionBlock().value().distributions()[0];
-      auto cdf = format::ace::createTabulatedAngularDistributionFunction( distribution );
+      auto cdf = ace::read::createTabulatedAngularDistributionFunction( distribution );
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto pdf = format::ace::electroatomic::createPdfFromCdf( cdf );
+        auto pdf = ace::read::electroatomic::createPdfFromCdf( cdf );
 
         CHECK_THAT( -1.      , WithinRel( pdf.lowerCosineLimit() ) );
         CHECK_THAT(  0.999999, WithinRel( pdf.upperCosineLimit() ) );
@@ -51,11 +52,11 @@ SCENARIO( "createPdfFromCdf" ) {
     WHEN( "an elastic angular cdf from eprdata14 is given" ) {
 
       auto distribution = table.bremsstrahlungEnergyDistributionBlock().value().distributions()[0];
-      auto cdf = format::ace::createTabulatedEnergyDistributionFunction( distribution );
+      auto cdf = ace::read::createTabulatedEnergyDistributionFunction( distribution );
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto pdf = format::ace::electroatomic::createPdfFromCdf( cdf );
+        auto pdf = ace::read::electroatomic::createPdfFromCdf( cdf );
 
         CHECK_THAT(  0.09999999999999999, WithinRel( pdf.lowerEnergyLimit() ) );
         CHECK_THAT( 10.                 , WithinRel( pdf.upperEnergyLimit() ) );

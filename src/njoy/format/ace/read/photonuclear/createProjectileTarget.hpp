@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTONUCLEAR_CREATEPROJECTILETARGET
-#define NJOY_DRYAD_FORMAT_ACE_PHOTONUCLEAR_CREATEPROJECTILETARGET
+#ifndef NJOY_FORMAT_ACE_READ_PHOTONUCLEAR_CREATEPROJECTILETARGET
+#define NJOY_FORMAT_ACE_READ_PHOTONUCLEAR_CREATEPROJECTILETARGET
 
 // system includes
 #include <vector>
@@ -7,15 +7,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/createTargetIdentifier.hpp"
-#include "njoy/dryad/format/ace/photonuclear/createReactions.hpp"
-#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
+#include "njoy/format/ace/read/createTargetIdentifier.hpp"
+#include "njoy/format/ace/read/photonuclear/createReactions.hpp"
+#include "njoy/format/ace/read/createParticleDatabase.hpp"
 #include "ACEtk/PhotonuclearTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace photonuclear {
 
   /**
@@ -25,25 +25,25 @@ namespace photonuclear {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  inline ProjectileTarget
+  inline dryad::ProjectileTarget
   createProjectileTarget( const ACEtk::PhotonuclearTable& table, bool normalise ) {
 
-    auto projectile = id::ParticleID::photon();
-    auto target = id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
+    auto projectile = dryad::id::ParticleID::photon();
+    auto target = dryad::id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
     auto reactions = createReactions( projectile, target, table, normalise );
     auto particles = createParticleDatabase( target, reactions, table );
 
-    return ProjectileTarget( projectile,
-                             target,
-                             InteractionType::Nuclear,
-                             std::move( reactions ),
-                             std::move( particles ) );
+    return dryad::ProjectileTarget( projectile,
+                                    target,
+                                    dryad::InteractionType::Nuclear,
+                                    std::move( reactions ),
+                                    std::move( particles ) );
   }
 
 } // photonuclear namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

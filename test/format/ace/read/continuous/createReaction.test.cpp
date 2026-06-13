@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/continuous/createReaction.hpp"
+#include "njoy/format/ace/read/continuous/createReaction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -29,7 +30,7 @@ SCENARIO( "createReaction" ) {
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
 
-        Reaction capture = format::ace::continuous::createReaction( projectile, target, table, 1, false );
+        Reaction capture = ace::read::continuous::createReaction( projectile, target, table, 1, false );
         continuous::lib81::h1::verifyCaptureReaction( capture );
       } // THEN
     } // WHEN

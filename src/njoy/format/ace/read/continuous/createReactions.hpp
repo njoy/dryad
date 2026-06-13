@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEREACTIONS
-#define NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEREACTIONS
+#ifndef NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATEREACTIONS
+#define NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATEREACTIONS
 
 // system includes
 #include <vector>
@@ -7,16 +7,16 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/Reaction.hpp"
-#include "njoy/dryad/format/endf/ReactionInformation.hpp"
-#include "njoy/dryad/format/ace/continuous/createReaction.hpp"
-#include "njoy/dryad/format/ace/continuous/createElasticTabulatedCrossSection.hpp"
-#include "njoy/dryad/format/ace/continuous/createTotalTabulatedCrossSection.hpp"
+#include "njoy/format/endf/ReactionInformation.hpp"
+#include "njoy/format/ace/read/continuous/createReaction.hpp"
+#include "njoy/format/ace/read/continuous/createElasticTabulatedCrossSection.hpp"
+#include "njoy/format/ace/read/continuous/createTotalTabulatedCrossSection.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace continuous {
 
   /**
@@ -28,14 +28,14 @@ namespace continuous {
    *  @param[in] normalise    the flag to indicate whether or not distributions
    *                          need to be normalised
    */
-  inline std::vector< Reaction >
-  createReactions( const id::ParticleID& projectile,
-                   const id::ParticleID& target,
+  inline std::vector< dryad::Reaction >
+  createReactions( const dryad::id::ParticleID& projectile,
+                   const dryad::id::ParticleID& target,
                    const ACEtk::ContinuousEnergyTable& table,
                    bool normalise ) {
 
-    std::vector< Reaction > reactions;
-    std::vector< id::ReactionID > identifiers;
+    std::vector< dryad::Reaction > reactions;
+    std::vector< dryad::id::ReactionID > identifiers;
 
     // reactions are ordered in an ACE file:
     // - first all primary reactions
@@ -54,9 +54,9 @@ namespace continuous {
 
     // elastic scattering
     Log::info( "Reading data for MT2" );
-    reactions.emplace_back( id::ReactionID( projectile, target, 2 ),
+    reactions.emplace_back( dryad::id::ReactionID( projectile, target, 2 ),
                             createElasticTabulatedCrossSection( table ),
-                            std::vector< ReactionProduct >{},
+                            std::vector< dryad::ReactionProduct >{},
                             std::nullopt, std::make_optional( 0. ),
                             normalise );
     identifiers.emplace_back( reactions.back().identifier() );
@@ -71,7 +71,7 @@ namespace continuous {
     // add the total reaction
     Log::info( "Reading data for MT1" );
     reactions.emplace( reactions.begin(),
-                       id::ReactionID( projectile, target, 1 ),
+                       dryad::id::ReactionID( projectile, target, 1 ),
                        std::move( identifiers ),
                        createTotalTabulatedCrossSection( table ) );
 
@@ -86,9 +86,9 @@ namespace continuous {
   }
 
 } // continuous namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

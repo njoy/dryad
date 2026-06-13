@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createPartialReactionIdentifiers.hpp"
+#include "njoy/format/ace/read/photoatomic/createPartialReactionIdentifiers.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createPartialReactionNumbers" ) {
 
@@ -25,7 +26,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
       THEN( "reaction partials can be derived" ) {
 
-        auto partials = format::ace::photoatomic::createPartialReactionIdentifiers( g, H, table );
+        auto partials = ace::read::photoatomic::createPartialReactionIdentifiers( g, H, table );
 
         CHECK( 5 == partials.size() );
 
@@ -53,7 +54,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
       THEN( "reaction partials can be derived" ) {
 
-        auto partials = format::ace::photoatomic::createPartialReactionIdentifiers( g, H, table );
+        auto partials = ace::read::photoatomic::createPartialReactionIdentifiers( g, H, table );
 
         CHECK( 6 == partials.size() );
 
@@ -84,7 +85,7 @@ SCENARIO( "createPartialReactionNumbers" ) {
 
       THEN( "reaction partials can be derived" ) {
 
-        auto partials = format::ace::photoatomic::createPartialReactionIdentifiers( g, H, table );
+        auto partials = ace::read::photoatomic::createPartialReactionIdentifiers( g, H, table );
 
         CHECK( 6 == partials.size() );
 

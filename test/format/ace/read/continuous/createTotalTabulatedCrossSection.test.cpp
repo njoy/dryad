@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/continuous/createTotalTabulatedCrossSection.hpp"
+#include "njoy/format/ace/read/continuous/createTotalTabulatedCrossSection.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createTabulatedCrossSection" ) {
 
@@ -23,7 +24,7 @@ SCENARIO( "createTabulatedCrossSection" ) {
 
       THEN( "tabulated cross sections can be derived" ) {
 
-        auto xs = format::ace::continuous::createTotalTabulatedCrossSection( table );
+        auto xs = ace::read::continuous::createTotalTabulatedCrossSection( table );
 
         CHECK_THAT( 1e-5, WithinRel( xs.lowerEnergyLimit() ) );
         CHECK_THAT( 2e+7, WithinRel( xs.upperEnergyLimit() ) );

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEREACTIONPRODUCTS
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATEREACTIONPRODUCTS
+#ifndef NJOY_FORMAT_ACE_READ_PHOTOATOMIC_CREATEREACTIONPRODUCTS
+#define NJOY_FORMAT_ACE_READ_PHOTOATOMIC_CREATEREACTIONPRODUCTS
 
 // system includes
 #include <vector>
@@ -7,14 +7,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/ReactionProduct.hpp"
-#include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
-#include "njoy/dryad/format/ace/photoatomic/createTabulatedComptonProfiles.hpp"
+#include "njoy/format/ace/read/createTabulatedScatteringFunction.hpp"
+#include "njoy/format/ace/read/photoatomic/createTabulatedComptonProfiles.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace photoatomic {
 
   /**
@@ -22,10 +22,10 @@ namespace photoatomic {
    *
    *  @param[in] table   the ace table
    */
-  inline std::vector< std::vector< ReactionProduct > >
+  inline std::vector< std::vector< dryad::ReactionProduct > >
   createReactionProducts( const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< std::vector< ReactionProduct > > products;
+    std::vector< std::vector< dryad::ReactionProduct > > products;
 
     // total - MT501
     products.push_back( {} );
@@ -33,21 +33,21 @@ namespace photoatomic {
     // coherent scattering - MT502
     products.push_back( {} );
     products.back().emplace_back(
-      id::ParticleID( "g" ), 1,
-      CoherentDistributionData( ReferenceFrame::CentreOfMass,
-                                createTabulatedScatteringFunction( table.coherentFormFactorBlock() ) ) );
+      dryad::id::ParticleID::photon(), 1,
+      dryad::CoherentDistributionData( dryad::ReferenceFrame::CentreOfMass,
+                                       createTabulatedScatteringFunction( table.coherentFormFactorBlock() ) ) );
 
     // incoherent scattering - MT504
     products.push_back( {} );
     products.back().emplace_back(
-      id::ParticleID( "g" ), 1,
-      IncoherentDistributionData( ReferenceFrame::CentreOfMass,
-                                  createTabulatedScatteringFunction( table.incoherentScatteringFunctionBlock() ),
-                                  table.comptonProfileBlock().has_value()
-                                    ? std::make_optional( createTabulatedComptonProfiles(
-                                                              table.comptonProfileBlock().value(),
-                                                              table.Z() ) )
-                                    : std::nullopt ) );
+      dryad::id::ParticleID::photon(), 1,
+      dryad::IncoherentDistributionData( dryad::ReferenceFrame::CentreOfMass,
+                                         createTabulatedScatteringFunction( table.incoherentScatteringFunctionBlock() ),
+                                         table.comptonProfileBlock().has_value()
+                                           ? std::make_optional( createTabulatedComptonProfiles(
+                                                                     table.comptonProfileBlock().value(),
+                                                                     table.Z() ) )
+                                           : std::nullopt ) );
 
     // pair production - MT516 (sum of MT515 and MT517)
     products.push_back( {} );
@@ -67,9 +67,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEPDFFROMCDF
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATEPDFFROMCDF
+#ifndef NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATEPDFFROMCDF
+#define NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATEPDFFROMCDF
 
 // system includes
 #include <vector>
@@ -10,9 +10,9 @@
 #include "njoy/dryad/TabulatedEnergyDistributionFunction.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace electroatomic {
 
   /**
@@ -20,11 +20,11 @@ namespace electroatomic {
    *
    *  @param[in] cdf   the tabulated cdf from which to calculate a pdf
    */
-  inline TabulatedAngularDistributionFunction
-  createPdfFromCdf( const TabulatedAngularDistributionFunction& cdf ) {
+  inline dryad::TabulatedAngularDistributionFunction
+  createPdfFromCdf( const dryad::TabulatedAngularDistributionFunction& cdf ) {
 
     if ( ( cdf.numberRegions() != 1 ) ||
-         ( cdf.interpolants().front() != InterpolationType::LinearLinear ) ) {
+         ( cdf.interpolants().front() != dryad::InterpolationType::LinearLinear ) ) {
 
       Log::error( "Transforming a cdf into a pdf for a multi-region or non-linearised "
                   "cdf is not implemented yet." );
@@ -44,8 +44,8 @@ namespace electroatomic {
         values.push_back( probability );
       }
       std::vector< std::size_t > boundaries = { cosines.size() - 1 };
-      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
-      return TabulatedAngularDistributionFunction(
+      std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
+      return dryad::TabulatedAngularDistributionFunction(
                std::move( cosines ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -59,11 +59,11 @@ namespace electroatomic {
   /**
    *  @brief Create a pdf from a cdf
    */
-  inline TabulatedEnergyDistributionFunction
-  createPdfFromCdf( const TabulatedEnergyDistributionFunction& cdf ) {
+  inline dryad::TabulatedEnergyDistributionFunction
+  createPdfFromCdf( const dryad::TabulatedEnergyDistributionFunction& cdf ) {
 
     if ( ( cdf.numberRegions() != 1 ) ||
-         ( cdf.interpolants().front() != InterpolationType::LinearLinear ) ) {
+         ( cdf.interpolants().front() != dryad::InterpolationType::LinearLinear ) ) {
 
       Log::error( "Transforming a cdf into a pdf for a multi-region or non-linearised "
                   "cdf is not implemented yet." );
@@ -83,8 +83,8 @@ namespace electroatomic {
         values.push_back( probability );
       }
       std::vector< std::size_t > boundaries = { energies.size() - 1 };
-      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
-      return TabulatedEnergyDistributionFunction(
+      std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
+      return dryad::TabulatedEnergyDistributionFunction(
                std::move( energies ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -96,9 +96,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

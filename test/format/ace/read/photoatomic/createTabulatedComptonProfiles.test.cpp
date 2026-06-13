@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createTabulatedComptonProfiles.hpp"
+#include "njoy/format/ace/read/photoatomic/createTabulatedComptonProfiles.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createTabulatedComptonProfiles" ) {
 
@@ -25,7 +26,7 @@ SCENARIO( "createTabulatedComptonProfiles" ) {
 
       THEN( "Compton profiles can be derived" ) {
 
-        auto chunk = format::ace::photoatomic::createTabulatedComptonProfiles( profiles, 1 );
+        auto chunk = ace::read::photoatomic::createTabulatedComptonProfiles( profiles, 1 );
 
         CHECK( 1 == chunk.size() );
 

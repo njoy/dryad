@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATETABULATEDECOMPTONPROFILE
-#define NJOY_DRYAD_FORMAT_ACE_PHOTOATOMIC_CREATETABULATEDECOMPTONPROFILE
+#ifndef NJOY_FORMAT_ACE_READ_PHOTOATOMIC_CREATETABULATEDECOMPTONPROFILE
+#define NJOY_FORMAT_ACE_READ_PHOTOATOMIC_CREATETABULATEDECOMPTONPROFILE
 
 // system includes
 #include <vector>
@@ -7,15 +7,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/TabulatedComptonProfile.hpp"
-#include "njoy/dryad/format/endf/createInterpolant.hpp"
+#include "njoy/format/createVector.hpp"
+#include "njoy/format/endf/read/createInterpolant.hpp"
 #include "ACEtk/photoatomic/ComptonProfile.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace photoatomic {
 
   /**
@@ -24,9 +24,9 @@ namespace photoatomic {
    *  @param[in] subshellIdentifier   the subshell identifier
    *  @param[in] profile              a Compton profile instance
    */
-  inline TabulatedComptonProfile
+  inline dryad::TabulatedComptonProfile
   createTabulatedComptonProfile(
-      id::ElectronSubshellID subshellIdentifier,
+      dryad::id::ElectronSubshellID subshellIdentifier,
       const njoy::ACEtk::photoatomic::ComptonProfile& profile ) {
 
     try {
@@ -35,13 +35,13 @@ namespace photoatomic {
       auto pdf = createVector( profile.pdf() );
       auto cdf = createVector( profile.cdf() );
       std::vector< std::size_t > boundaries = { momentum.size() - 1 };
-      std::vector< InterpolationType > interpolants = { endf::createInterpolant( profile.interpolation() ) };
-      return TabulatedComptonProfile(
+      std::vector< dryad::InterpolationType > interpolants = { endf::read::createInterpolant( profile.interpolation() ) };
+      return dryad::TabulatedComptonProfile(
                std::move( subshellIdentifier ),
-               TabulatedComptonProfileFunction(
+               dryad::TabulatedComptonProfileFunction(
                  momentum, std::move( pdf ),
                  boundaries, interpolants ),
-               TabulatedComptonProfileFunction(
+               dryad::TabulatedComptonProfileFunction(
                  momentum, std::move( cdf ),
                  boundaries, interpolants ) );
     }
@@ -53,9 +53,9 @@ namespace photoatomic {
   }
 
 } // photoatomic namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

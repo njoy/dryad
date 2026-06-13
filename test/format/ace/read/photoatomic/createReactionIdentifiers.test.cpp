@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createReactionIdentifiers.hpp"
+#include "njoy/format/ace/read/photoatomic/createReactionIdentifiers.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createReactionIdentifiers" ) {
 
@@ -25,7 +26,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::photoatomic::createReactionIdentifiers( g, H, table );
+        auto numbers = ace::read::photoatomic::createReactionIdentifiers( g, H, table );
 
         CHECK( 5 == numbers.size() );
 
@@ -45,7 +46,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::photoatomic::createReactionIdentifiers( g, H, table );
+        auto numbers = ace::read::photoatomic::createReactionIdentifiers( g, H, table );
 
         CHECK( 6 == numbers.size() );
 
@@ -66,7 +67,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::photoatomic::createReactionIdentifiers( g, H, table );
+        auto numbers = ace::read::photoatomic::createReactionIdentifiers( g, H, table );
 
         CHECK( 6 == numbers.size() );
 

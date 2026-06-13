@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/electroatomic/createReactionIdentifiers.hpp"
+#include "njoy/format/ace/read/electroatomic/createReactionIdentifiers.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createReactionIdentifiers" ) {
 
@@ -25,7 +26,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::electroatomic::createReactionIdentifiers( e, H, table );
+        auto numbers = ace::read::electroatomic::createReactionIdentifiers( e, H, table );
 
         CHECK( 0 == numbers.size() );
       } // THEN
@@ -39,7 +40,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::electroatomic::createReactionIdentifiers( e, H, table );
+        auto numbers = ace::read::electroatomic::createReactionIdentifiers( e, H, table );
 
         CHECK( 6 == numbers.size() );
 
@@ -60,7 +61,7 @@ SCENARIO( "createReactionIdentifiers" ) {
 
       THEN( "reaction numbers can be derived" ) {
 
-        auto numbers = format::ace::electroatomic::createReactionIdentifiers( e, H, table );
+        auto numbers = ace::read::electroatomic::createReactionIdentifiers( e, H, table );
 
         CHECK( 8 == numbers.size() );
 

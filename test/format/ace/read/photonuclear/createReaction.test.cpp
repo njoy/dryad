@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photonuclear/createReaction.hpp"
+#include "njoy/format/ace/read/photonuclear/createReaction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -29,13 +30,13 @@ SCENARIO( "createReaction" ) {
         id::ParticleID projectile( "g" );
         id::ParticleID target( "C12" );
 
-        auto anything = format::ace::photonuclear::createReaction( projectile, target, table, 1, false );
+        auto anything = ace::read::photonuclear::createReaction( projectile, target, table, 1, false );
         photonuclear::la150u::c12::verifyAnythingReaction( anything );
 
-        auto neutron = format::ace::photonuclear::createReaction( projectile, target, table, 2, false );
+        auto neutron = ace::read::photonuclear::createReaction( projectile, target, table, 2, false );
         photonuclear::la150u::c12::verifyNeutronReaction( neutron );
 
-        auto proton = format::ace::photonuclear::createReaction( projectile, target, table, 3, false );
+        auto proton = ace::read::photonuclear::createReaction( projectile, target, table, 3, false );
         photonuclear::la150u::c12::verifyProtonReaction( proton );
       } // THEN
     } // WHEN

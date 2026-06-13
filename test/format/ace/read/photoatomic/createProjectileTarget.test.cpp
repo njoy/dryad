@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/photoatomic/createProjectileTarget.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -26,7 +27,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
+        ProjectileTarget H0 = ace::read::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().library() );
         CHECK( std::nullopt == H0.documentation().version() );
@@ -89,7 +90,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
+        ProjectileTarget H0 = ace::read::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().library() );
         CHECK( std::nullopt == H0.documentation().version() );
@@ -159,7 +160,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget H0 = format::ace::photoatomic::createProjectileTarget( table, false );
+        ProjectileTarget H0 = ace::read::photoatomic::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == H0.documentation().library() );
         CHECK( std::nullopt == H0.documentation().version() );

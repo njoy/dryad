@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATETOTALTABULATEDCROSSSECTION
-#define NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATETOTALTABULATEDCROSSSECTION
+#ifndef NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATETOTALTABULATEDCROSSSECTION
+#define NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATETOTALTABULATEDCROSSSECTION
 
 // system includes
 #include <vector>
@@ -7,14 +7,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/TabulatedCrossSection.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ACEtk/PhotonuclearTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace continuous {
 
   /**
@@ -23,7 +23,7 @@ namespace continuous {
    *  @param[in] table   the ace table
    */
   template < typename Table >
-  TabulatedCrossSection
+  dryad::TabulatedCrossSection
   createTotalTabulatedCrossSection( const Table& table ) {
 
     // function to convert MeV to eV
@@ -38,13 +38,13 @@ namespace continuous {
     auto values = createVector( table.principalCrossSectionBlock().total() );
 
     // return cross section (ACE cross sections are always linearised)
-    return TabulatedCrossSection( std::move( energies ), std::move( values ) );
+    return dryad::TabulatedCrossSection( std::move( energies ), std::move( values ) );
   }
 
 } // continuous namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

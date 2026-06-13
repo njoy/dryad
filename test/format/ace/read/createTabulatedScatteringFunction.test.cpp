@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createTabulatedScatteringFunction.hpp"
+#include "njoy/format/ace/read/createTabulatedScatteringFunction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 void verifyCoherentChunk( const TabulatedScatteringFunction& );
 void verifyIncoherentChunk( const TabulatedScatteringFunction& );
@@ -29,7 +30,7 @@ SCENARIO( "createTabulatedScatteringFunction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::ace::createTabulatedScatteringFunction( coherent );
+        auto chunk = ace::read::createTabulatedScatteringFunction( coherent );
 
         verifyCoherentChunk( chunk );
       } // THEN
@@ -39,7 +40,7 @@ SCENARIO( "createTabulatedScatteringFunction" ) {
 
       THEN( "it can be converted" ) {
 
-        auto chunk = format::ace::createTabulatedScatteringFunction( incoherent );
+        auto chunk = ace::read::createTabulatedScatteringFunction( incoherent );
 
         verifyIncoherentChunk( chunk );
       } // THEN

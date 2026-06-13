@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createTabulatedCrossSections.hpp"
+#include "njoy/format/ace/read/photoatomic/createTabulatedCrossSections.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createTabulatedCrossSections" ) {
 
@@ -23,7 +24,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
 
       THEN( "tabulated cross sections can be derived" ) {
 
-        auto xs = format::ace::photoatomic::createTabulatedCrossSections( table );
+        auto xs = ace::read::photoatomic::createTabulatedCrossSections( table );
 
         CHECK( 5 == xs.size() );
 
@@ -121,7 +122,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
 
       THEN( "tabulated cross sections can be derived" ) {
 
-        auto xs = format::ace::photoatomic::createTabulatedCrossSections( table );
+        auto xs = ace::read::photoatomic::createTabulatedCrossSections( table );
 
         CHECK( 6 == xs.size() );
 
@@ -236,7 +237,7 @@ SCENARIO( "createTabulatedCrossSections" ) {
 
       THEN( "tabulated cross sections can be derived" ) {
 
-        auto xs = format::ace::photoatomic::createTabulatedCrossSections( table );
+        auto xs = ace::read::photoatomic::createTabulatedCrossSections( table );
 
         CHECK( 6 == xs.size() );
 

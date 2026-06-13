@@ -4,13 +4,14 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photonuclear/createReactions.hpp"
+#include "njoy/format/ace/read/photonuclear/createReactions.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -27,7 +28,7 @@ SCENARIO( "createReactions" ) {
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::photonuclear::createReactions( g, C12, table, false );
+        auto reactions = ace::read::photonuclear::createReactions( g, C12, table, false );
 
         CHECK( 4 == reactions.size() );
 

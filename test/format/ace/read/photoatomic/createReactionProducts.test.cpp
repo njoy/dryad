@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photoatomic/createReactionProducts.hpp"
+#include "njoy/format/ace/read/photoatomic/createReactionProducts.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createReactionProducts" ) {
 
@@ -23,7 +24,7 @@ SCENARIO( "createReactionProducts" ) {
 
       THEN( "reaction products can be derived" ) {
 
-        auto products = format::ace::photoatomic::createReactionProducts( table );
+        auto products = ace::read::photoatomic::createReactionProducts( table );
 
         CHECK( 5 == products.size() );
 
@@ -102,7 +103,7 @@ SCENARIO( "createReactionProducts" ) {
 
       THEN( "reaction products can be derived" ) {
 
-        auto products = format::ace::photoatomic::createReactionProducts( table );
+        auto products = ace::read::photoatomic::createReactionProducts( table );
 
         CHECK( 6 == products.size() );
 
@@ -183,7 +184,7 @@ SCENARIO( "createReactionProducts" ) {
 
       THEN( "reaction products can be derived" ) {
 
-        auto products = format::ace::photoatomic::createReactionProducts( table );
+        auto products = ace::read::photoatomic::createReactionProducts( table );
 
         CHECK( 6 == products.size() );
 

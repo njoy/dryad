@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/photonuclear/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/photonuclear/createProjectileTarget.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -26,7 +27,7 @@ SCENARIO( "createProjectileTarget" ) {
 
       THEN( "a ProjectileTarget can be derived" ) {
 
-        ProjectileTarget C12 = format::ace::photonuclear::createProjectileTarget( table, false );
+        ProjectileTarget C12 = ace::read::photonuclear::createProjectileTarget( table, false );
 
         CHECK( std::nullopt == C12.documentation().library() );
         CHECK( std::nullopt == C12.documentation().version() );

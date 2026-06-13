@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CREATEPARTICLES
-#define NJOY_DRYAD_FORMAT_ACE_CREATEPARTICLES
+#ifndef NJOY_FORMAT_ACE_READ_CREATEPARTICLEDATABASE
+#define NJOY_FORMAT_ACE_READ_CREATEPARTICLEDATABASE
 
 // system includes
 #include <variant>
@@ -9,12 +9,12 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/ParticleDatabase.hpp"
 #include "njoy/dryad/Reaction.hpp"
-#include "njoy/dryad/format/collectParticleIdentifiers.hpp"
+#include "njoy/format/collectParticleIdentifiers.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 
   /**
    *  @brief Create the ParticleDatabase from an ACE table
@@ -30,12 +30,12 @@ namespace ace {
    *  @param[in] reactions    the reactions defined in the ace table
    *  @param[in] table        the ace table
    */
-  template < typename Table > ParticleDatabase
-  createParticleDatabase( const id::ParticleID& target,
-                          const std::vector< Reaction >& reactions,
+  template < typename Table > dryad::ParticleDatabase
+  createParticleDatabase( const dryad::id::ParticleID& target,
+                          const std::vector< dryad::Reaction >& reactions,
                           const Table& table ) {
 
-    ParticleDatabase particles( collectParticleIdentifiers( reactions ) );
+    dryad::ParticleDatabase particles( collectParticleIdentifiers( reactions ) );
     double mass = std::visit( [] ( auto&& header ) { return header.atomicWeightRatio(); },
                               table.header() );
     decltype(auto) entry = particles.particle( target );
@@ -45,9 +45,9 @@ namespace ace {
     return particles;
   }
 
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

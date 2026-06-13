@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATETABULATEDCROSSSECTIONS
-#define NJOY_DRYAD_FORMAT_ACE_ELECTROATOMIC_CREATETABULATEDCROSSSECTIONS
+#ifndef NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATETABULATEDCROSSSECTIONS
+#define NJOY_FORMAT_ACE_READ_ELECTROATOMIC_CREATETABULATEDCROSSSECTIONS
 
 // system includes
 #include <vector>
@@ -7,14 +7,14 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/constants.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/TabulatedCrossSection.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ACEtk/PhotoatomicTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace electroatomic {
 
   /**
@@ -22,10 +22,10 @@ namespace electroatomic {
    *
    *  @param[in] table   the ace table
    */
-  inline std::vector< TabulatedCrossSection >
+  inline std::vector< dryad::TabulatedCrossSection >
   createTabulatedCrossSections( const ACEtk::PhotoatomicTable& table ) {
 
-    std::vector< TabulatedCrossSection > xs;
+    std::vector< dryad::TabulatedCrossSection > xs;
 
     auto convertEnergy = [] ( auto&& energy ) {
 
@@ -90,9 +90,9 @@ namespace electroatomic {
   }
 
 } // electroatomic namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

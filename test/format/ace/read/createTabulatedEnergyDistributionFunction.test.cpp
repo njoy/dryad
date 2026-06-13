@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createTabulatedEnergyDistributionFunction.hpp"
+#include "njoy/format/ace/read/createTabulatedEnergyDistributionFunction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createTabulatedEnergyDistributionFunction" ) {
 
@@ -25,7 +26,7 @@ SCENARIO( "createTabulatedEnergyDistributionFunction" ) {
 
       THEN( "a cdf can be derived" ) {
 
-        auto cdf = format::ace::createTabulatedEnergyDistributionFunction( distribution );
+        auto cdf = ace::read::createTabulatedEnergyDistributionFunction( distribution );
 
         CHECK_THAT(  0.09999999999999999, WithinRel( cdf.lowerEnergyLimit() ) );
         CHECK_THAT( 10.                 , WithinRel( cdf.upperEnergyLimit() ) );

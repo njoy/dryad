@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEPROJECTILETARGET
-#define NJOY_DRYAD_FORMAT_ACE_CONTINUOUS_CREATEPROJECTILETARGET
+#ifndef NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATEPROJECTILETARGET
+#define NJOY_FORMAT_ACE_READ_CONTINUOUS_CREATEPROJECTILETARGET
 
 // system includes
 #include <vector>
@@ -7,15 +7,15 @@
 // other includes
 #include "tools/Log.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/createProjectileIdentifier.hpp"
-#include "njoy/dryad/format/ace/continuous/createReactions.hpp"
-#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
+#include "njoy/format/ace/read/createProjectileIdentifier.hpp"
+#include "njoy/format/ace/read/continuous/createReactions.hpp"
+#include "njoy/format/ace/read/createParticleDatabase.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 namespace continuous {
 
   /**
@@ -25,25 +25,25 @@ namespace continuous {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  inline ProjectileTarget
+  inline dryad::ProjectileTarget
   createProjectileTarget( const ACEtk::ContinuousEnergyTable& table, bool normalise ) {
 
     auto projectile = createProjectileIdentifier( table.ZAID() );
-    auto target = id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
+    auto target = dryad::id::ParticleID::nuclide( table.Z() * 1000 + table.A(), table.S() );
     auto reactions = createReactions( projectile, target, table, normalise );
     auto particles = createParticleDatabase( target, reactions, table );
 
-    return ProjectileTarget( projectile,
-                             target,
-                             InteractionType::Nuclear,
-                             std::move( reactions ),
-                             std::move( particles ) );
+    return dryad::ProjectileTarget( projectile,
+                                    target,
+                                    dryad::InteractionType::Nuclear,
+                                    std::move( reactions ),
+                                    std::move( particles ) );
   }
 
 } // continuous namespace
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

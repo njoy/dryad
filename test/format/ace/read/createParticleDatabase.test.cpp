@@ -4,15 +4,16 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createParticleDatabase.hpp"
+#include "njoy/format/ace/read/createParticleDatabase.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
 #include "ACEtk/ContinuousEnergyTable.hpp"
-#include "njoy/dryad/format/ace/continuous/createReactions.hpp"
+#include "njoy/format/ace/read/continuous/createReactions.hpp"
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 using namespace njoy::constants;
 
 // include common test verification functions
@@ -31,8 +32,8 @@ SCENARIO( "createParticles" ) {
 
         id::ParticleID projectile( "n" );
         id::ParticleID target( "H1" );
-        auto reactions = format::ace::continuous::createReactions( projectile, target, table, false );
-        auto particles = format::ace::createParticleDatabase( target, reactions, table );
+        auto reactions = ace::read::continuous::createReactions( projectile, target, table, false );
+        auto particles = ace::read::createParticleDatabase( target, reactions, table );
 
         CHECK( 4 == particles.numberParticles() );
 

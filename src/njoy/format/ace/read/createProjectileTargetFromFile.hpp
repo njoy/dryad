@@ -1,20 +1,20 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CREATEPROJECTILETARGETFROMFILE
-#define NJOY_DRYAD_FORMAT_ACE_CREATEPROJECTILETARGETFROMFILE
+#ifndef NJOY_FORMAT_ACE_READ_CREATEPROJECTILETARGETFROMFILE
+#define NJOY_FORMAT_ACE_READ_CREATEPROJECTILETARGETFROMFILE
 
 // system includes
 
 // other includes
 #include "ACEtk/fromFile.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/continuous/createProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/electroatomic/createProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/photoatomic/createProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/photonuclear/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/continuous/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/electroatomic/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/photoatomic/createProjectileTarget.hpp"
+#include "njoy/format/ace/read/photonuclear/createProjectileTarget.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 
   /**
    *  @brief Create a ProjectileTarget from an ACE file
@@ -27,7 +27,8 @@ namespace ace {
    *  @param[in] normalise   the flag to indicate whether or not distributions
    *                         need to be normalised
    */
-  inline std::variant< ProjectileTarget, std::pair< ProjectileTarget, ProjectileTarget > >
+  inline std::variant< dryad::ProjectileTarget,
+                       std::pair< dryad::ProjectileTarget, dryad::ProjectileTarget > >
   createProjectileTargetFromFile( const std::string& filename, bool normalise ) {
 
     Log::info( "Reading ACE file \'{}\'", filename );
@@ -73,9 +74,9 @@ namespace ace {
     }
   }
 
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

@@ -1,26 +1,26 @@
-#ifndef NJOY_DRYAD_FORMAT_ACE_CREATETABULATEDANGULARDISTRIBUTIONFUNCTION
-#define NJOY_DRYAD_FORMAT_ACE_CREATETABULATEDANGULARDISTRIBUTIONFUNCTION
+#ifndef NJOY_FORMAT_ACE_READ_CREATETABULATEDANGULARDISTRIBUTIONFUNCTION
+#define NJOY_FORMAT_ACE_READ_CREATETABULATEDANGULARDISTRIBUTIONFUNCTION
 
 // system includes
 #include <vector>
 
 // other includes
 #include "tools/Log.hpp"
-#include "njoy/dryad/format/createVector.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
+#include "njoy/format/createVector.hpp"
 #include "ACEtk/electroatomic/TabulatedAngularDistribution.hpp"
 
 namespace njoy {
-namespace dryad {
 namespace format {
 namespace ace {
+namespace read {
 
   /**
    *  @brief Create a TabulatedAngularDistributionFunction from ACE data
    *
    *  @param[in] distribution   the electroatomic tabulated angular distribution
    */
-  inline TabulatedAngularDistributionFunction
+  inline dryad::TabulatedAngularDistributionFunction
   createTabulatedAngularDistributionFunction(
       const njoy::ACEtk::electroatomic::TabulatedAngularDistribution& distribution ) {
 
@@ -29,8 +29,8 @@ namespace ace {
       auto cosines = createVector( distribution.cosines() );
       auto values = createVector( distribution.cdf() );
       std::vector< std::size_t > boundaries = { cosines.size() - 1 };
-      std::vector< InterpolationType > interpolants = { InterpolationType::LinearLinear };
-      return TabulatedAngularDistributionFunction(
+      std::vector< dryad::InterpolationType > interpolants = { dryad::InterpolationType::LinearLinear };
+      return dryad::TabulatedAngularDistributionFunction(
                std::move( cosines ), std::move( values ),
                std::move( boundaries ), std::move( interpolants ) );
     }
@@ -42,9 +42,9 @@ namespace ace {
     }
   }
 
+} // read namespace
 } // ace namespace
 } // format namespace
-} // dryad namespace
 } // njoy namespace
 
 #endif

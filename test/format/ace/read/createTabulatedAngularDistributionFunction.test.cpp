@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/createTabulatedAngularDistributionFunction.hpp"
+#include "njoy/format/ace/read/createTabulatedAngularDistributionFunction.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 SCENARIO( "createTabulatedAngularDistributionFunction" ) {
 
@@ -25,7 +26,7 @@ SCENARIO( "createTabulatedAngularDistributionFunction" ) {
 
       THEN( "a cdf can be derived" ) {
 
-        auto cdf = format::ace::createTabulatedAngularDistributionFunction( distribution );
+        auto cdf = ace::read::createTabulatedAngularDistributionFunction( distribution );
 
         CHECK_THAT( -1.      , WithinRel( cdf.lowerCosineLimit() ) );
         CHECK_THAT(  0.999999, WithinRel( cdf.upperCosineLimit() ) );

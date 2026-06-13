@@ -4,7 +4,7 @@
 using Catch::Matchers::WithinRel;
 
 // what we are testing
-#include "njoy/dryad/format/ace/electroatomic/createReactions.hpp"
+#include "njoy/format/ace/read/electroatomic/createReactions.hpp"
 
 // other includes
 #include "ACEtk/fromFile.hpp"
@@ -12,6 +12,7 @@ using Catch::Matchers::WithinRel;
 
 // convenience typedefs
 using namespace njoy::dryad;
+using namespace njoy::format;
 
 // include common test verification functions
 #include "test_verification_functions.hpp"
@@ -28,7 +29,7 @@ SCENARIO( "createReactions" ) {
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::electroatomic::createReactions( e, H, table );
+        auto reactions = ace::read::electroatomic::createReactions( e, H, table );
 
         CHECK( 0 == reactions.size() );
       } // THEN
@@ -42,7 +43,7 @@ SCENARIO( "createReactions" ) {
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::electroatomic::createReactions( e, H, table );
+        auto reactions = ace::read::electroatomic::createReactions( e, H, table );
 
         CHECK( 6 == reactions.size() );
 
@@ -74,7 +75,7 @@ SCENARIO( "createReactions" ) {
 
       THEN( "reactions can be derived" ) {
 
-        auto reactions = format::ace::electroatomic::createReactions( e, H, table );
+        auto reactions = ace::read::electroatomic::createReactions( e, H, table );
 
         CHECK( 8 == reactions.size() );
 
