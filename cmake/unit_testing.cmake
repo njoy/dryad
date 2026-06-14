@@ -398,6 +398,9 @@ add_cpp_test( format.gnds.read.createThermalScatteringFromFile                  
 
 add_cpp_test( format.gnds.write.toString                                               format/gnds/write/toString.test.cpp )
 add_cpp_test( format.gnds.write.insertDouble                                           format/gnds/write/insertDouble.test.cpp )
+add_cpp_test( format.gnds.write.insertInteger                                          format/gnds/write/insertInteger.test.cpp )
+add_cpp_test( format.gnds.write.insertFraction                                         format/gnds/write/insertFraction.test.cpp )
+add_cpp_test( format.gnds.write.insertString                                           format/gnds/write/insertString.test.cpp )
 
 add_cpp_test( dryad.external.ComptonProfiles                                           dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                              dryad/external/KleinNishina.test.cpp )
