@@ -5,7 +5,7 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/covariance/AngularDistributionCovarianceData.hpp"
-#include "njoy/dryad/format/gendf/covariance/createAngularDistributionCovarianceDataFromFile.hpp"
+#include "njoy/format/gendf/read/covariance/createAngularDistributionCovarianceDataFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -132,7 +132,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     [] ( const ParticleID& projectile, const ParticleID& target, const ReferenceFrame& frame,
          const std::string& filename ) -> decltype(auto) {
 
-      return njoy::dryad::format::gendf::covariance::createAngularDistributionCovarianceDataFromFile(
+      return njoy::format::gendf::read::covariance::createAngularDistributionCovarianceDataFromFile(
                  projectile, target, frame, filename );
     },
     python::arg( "projectile" ), python::arg( "target" ),

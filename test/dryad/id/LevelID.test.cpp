@@ -119,7 +119,7 @@ SCENARIO( "LevelID" ) {
 
       CHECK_THROWS( LevelID( "not an level symbol" ) );
       CHECK_THROWS( LevelID( -1 ) );
-      CHECK_THROWS( LevelID( 152 ) );
+      CHECK_THROWS( LevelID( 1000 ) );
     } // THEN
   } // GIVEN
 } // SCENARIO

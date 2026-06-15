@@ -6,10 +6,10 @@
 #include "dryad/definitions.hpp"
 #include "njoy/constants.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
-#include "njoy/dryad/format/ace/createProjectileTargetFromFile.hpp"
-#include "njoy/dryad/format/endf/createProjectileTargetFromFile.hpp"
-#include "njoy/dryad/format/endf/createProjectileTargetEndfFile.hpp"
-#include "njoy/dryad/format/gnds/createProjectileTargetFromFile.hpp"
+#include "njoy/format/ace/read/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/read/createProjectileTargetFromFile.hpp"
+#include "njoy/format/endf/write/createProjectileTargetFile.hpp"
+#include "njoy/format/gnds/read/createProjectileTargetFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -236,7 +236,7 @@ void wrapProjectileTarget( python::module& module ) {
     "from_endf_file",
     [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
 
-      return njoy::dryad::format::endf::createProjectileTargetFromFile( filename, normalise );
+      return njoy::format::endf::read::createProjectileTargetFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create ProjectileTarget data from an ENDF file\n\n"
@@ -252,7 +252,7 @@ void wrapProjectileTarget( python::module& module ) {
     "from_gnds_file",
     [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createProjectileTargetFromFile( filename, normalise );
+      return njoy::format::gnds::read::createProjectileTargetFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create ProjectileTarget data from a GNDS file\n\n"
@@ -266,7 +266,7 @@ void wrapProjectileTarget( python::module& module ) {
     "from_ace_file",
     [] ( const std::string& filename, bool normalise ) -> decltype(auto) {
 
-      return njoy::dryad::format::ace::createProjectileTargetFromFile( filename, normalise );
+      return njoy::format::ace::read::createProjectileTargetFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create ProjectileTarget data from an ACE file\n\n"
@@ -284,8 +284,8 @@ void wrapProjectileTarget( python::module& module ) {
     [] ( const Component& self, int mat, const std::string& filename,
          bool use_reduced_width_amplitudes ) {
 
-      njoy::dryad::format::endf::createProjectileTargetEndfFile( self, mat, filename,
-                                                                 use_reduced_width_amplitudes );
+      njoy::format::endf::write::createProjectileTargetFile( self, mat, filename,
+                                                             use_reduced_width_amplitudes );
     },
     python::arg( "mat" ), python::arg( "filename" ),
     python::arg( "use_reduced_width_amplitudes" ) = true,

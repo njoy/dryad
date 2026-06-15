@@ -1,0 +1,119 @@
+#ifndef NJOY_FORMAT_GNDS_READ_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
+#define NJOY_FORMAT_GNDS_READ_ATOMIC_CREATEELECTRONSUBSHELLCONFIGURATION
+
+// system includes
+#include <vector>
+
+// other includes
+#include "pugixml.hpp"
+#include "tools/Log.hpp"
+#include "njoy/dryad/id/ElementID.hpp"
+#include "njoy/dryad/id/ParticleID.hpp"
+#include "njoy/dryad/atomic/ElectronSubshellConfiguration.hpp"
+#include "njoy/format/gnds/read/convertEnergy.hpp"
+
+namespace njoy {
+namespace format {
+namespace gnds {
+namespace read {
+namespace atomic {
+
+  /**
+   *  @brief Create an ElectronSubshellConfiguration from a GNDS configuration node
+   *
+   *  @param[in] element         the element for which we are reading data
+   *  @param[in] configuration   the configuration xml element
+   *  @param[in] normalise       option to indicate whether or not to normalise
+   *                             all probability data
+   */
+  inline dryad::atomic::ElectronSubshellConfiguration
+  createElectronSubshellConfiguration( const dryad::id::ElementID& element,
+                                       const pugi::xml_node& configuration,
+                                       bool normalise ) {
+
+    // shell id and population are attributes on the configuration node
+    dryad::id::ElectronSubshellID identifier( configuration.attribute( "subshell" ).as_string() );
+    double population = configuration.attribute( "electronNumber" ).as_double();
+
+    // energy and unit are attributes on the double node in the bindingEnergy node
+    //! @todo we do not verify the eval style
+    pugi::xml_node node = configuration.child( "bindingEnergy" ).child( "double" );
+    double energy = node.attribute( "value" ).as_double();
+    convertEnergy( energy, node.attribute( "unit" ).as_string() );
+
+    // look for transitions
+    pugi::xml_node decay = configuration.child( "decayData" );
+    if ( ! decay ) {
+
+      return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population );
+    }
+    else {
+
+      pugi::xml_node modes = decay.child( "decayModes" );
+
+      std::vector< dryad::atomic::RadiativeTransitionData > radiative;
+      std::vector< dryad::atomic::NonRadiativeTransitionData > nonradiative;
+
+      for ( pugi::xml_node mode = modes.child( "decayMode" ); mode; mode = mode.next_sibling(  "decayMode"  ) ) {
+
+        // transition probability is an attribute on the double node in the probability node
+        double probability = mode.child( "probability" ).child( "double" ).attribute( "value" ).as_double();
+
+        // helper lambda function
+        auto isVacancyProduct = [&element] ( pugi::xml_node product ) {
+
+          std::string string( product.attribute( "pid" ).as_string() );
+          return string.find( element.symbol() ) != std::string::npos;
+        };
+
+        // go to the products and see if we have a radiative or non-radiative transition
+        pugi::xml_node products = mode.child( "decayPath" ).child( "decay" ).child( "products" );
+        if ( products.find_child_by_attribute( "pid", "photon" ) ) {
+
+          // get the originating shell id
+          dryad::id::ParticleID pid( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+          if ( ! pid.vacancies().has_value() || pid.vacancies()->size() != 1 ) {
+
+            Log::error( "The particle identifier \'{}\' does not define an atom with an electron vacancy",
+                        products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+            throw std::exception();
+          }
+
+          // GNDS does not store the transition energy
+          radiative.emplace_back( pid.vacancies()->front(), probability );
+        }
+        else if ( products.find_child_by_attribute( "pid", "e-" ) ) {
+
+          // get the originating and emitting shell id
+          dryad::id::ParticleID pid( products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+          if ( ! pid.vacancies().has_value() || pid.vacancies()->size() != 2 ) {
+
+            Log::error( "The particle identifier \'{}\' does not define an atom with two electron vacancies",
+                        products.find_child( isVacancyProduct ).attribute( "pid" ).as_string() );
+            throw std::exception();
+          }
+
+          // GNDS does not store the transition energy
+          nonradiative.emplace_back( pid.vacancies()->front(), pid.vacancies()->back(), probability );
+        }
+        else {
+
+          Log::error( "Could not determine if the transition is radiative or non-radiative" );
+          throw std::exception();
+        }
+      }
+
+      return dryad::atomic::ElectronSubshellConfiguration( identifier, energy, population,
+                                                           std::move( radiative ),
+                                                           std::move( nonradiative ),
+                                                           normalise );
+    }
+  }
+
+} // atomic namespace
+} // read namespace
+} // gnds namespace
+} // format namespace
+} // njoy namespace
+
+#endif

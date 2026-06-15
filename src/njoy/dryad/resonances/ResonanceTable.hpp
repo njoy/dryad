@@ -3,6 +3,7 @@
 
 // system includes
 #include <algorithm>
+#include <numeric>
 #include <vector>
 
 // other includes

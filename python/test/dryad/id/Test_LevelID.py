@@ -88,7 +88,7 @@ class Test_LevelID( unittest.TestCase ) :
         # illegal values
         with self.assertRaises( ValueError ) : id = LevelID( 'not a valid level number' )
         with self.assertRaises( ValueError ) : id = LevelID( -1 )
-        with self.assertRaises( ValueError ) : id = LevelID( 152 )
+        with self.assertRaises( ValueError ) : id = LevelID( 1000 )
 
 if __name__ == '__main__' :
 

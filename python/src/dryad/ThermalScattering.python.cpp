@@ -5,9 +5,9 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
-#include "njoy/dryad/format/endf/createThermalScatteringFromFile.hpp"
-#include "njoy/dryad/format/endf/createThermalScatteringEndfFile.hpp"
-#include "njoy/dryad/format/gnds/createThermalScatteringFromFile.hpp"
+#include "njoy/format/endf/read/createThermalScatteringFromFile.hpp"
+#include "njoy/format/endf/write/createThermalScatteringFile.hpp"
+#include "njoy/format/gnds/read/createThermalScatteringFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -110,7 +110,7 @@ void wrapThermalScattering( python::module& module ) {
     "from_endf_file",
     [] ( const std::string& filename ) -> decltype(auto) {
 
-      return njoy::dryad::format::endf::createThermalScatteringFromFile( filename );
+      return njoy::format::endf::read::createThermalScatteringFromFile( filename );
     },
     python::arg( "filename" ),
     "Create ThermalScattering data from an ENDF file\n\n"
@@ -126,7 +126,7 @@ void wrapThermalScattering( python::module& module ) {
     "from_gnds_file",
     [] ( const std::string& filename, const std::string& style ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createThermalScatteringFromFile( filename, style );
+      return njoy::format::gnds::read::createThermalScatteringFromFile( filename, style );
     },
     python::arg( "filename" ), python::arg( "style" ) = "eval",
     "Create ThermalScattering data from a GNDS file\n\n"
@@ -142,7 +142,7 @@ void wrapThermalScattering( python::module& module ) {
     "to_endf_file",
     [] ( const Component& self, int za, int mat, const std::string& filename ) {
 
-      njoy::dryad::format::endf::createThermalScatteringEndfFile( self, za, mat, filename );
+      njoy::format::endf::write::createThermalScatteringFile( self, za, mat, filename );
     },
     python::arg( "za" ), python::arg( "mat" ), python::arg( "filename" ),
     "Write the ThermalScattering data to an ENDF file\n\n"

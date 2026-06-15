@@ -19,7 +19,6 @@ SCENARIO( "Documentation" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      std::optional< double > awr = 15.8619530;
       std::optional< int > library = 0;
       std::optional< std::pair< int, int > > version = std::make_pair( 8, 1 );
       std::optional< std::string > description =
@@ -34,8 +33,9 @@ SCENARIO( "Documentation" ) {
         "to the ENDF-6 Format.                                             \n"
         "==================================================================\n";
 
-      Documentation chunk( std::move( awr ), std::move( library ),
-                           std::move( version ), std::move( description ) );
+      Documentation chunk( std::move( library ),
+                           std::move( version ),
+                           std::move( description ) );
 
       THEN( "Documentation can be constructed and members can be tested" ) {
 
@@ -48,7 +48,7 @@ SCENARIO( "Documentation" ) {
 
     WHEN( "an instance of Documentation is given" ) {
 
-      Documentation chunk( 15.8619530, 0, std::make_pair( 8, 1 ),
+      Documentation chunk( 0, std::make_pair( 8, 1 ),
                            "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
                            " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
                            "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
@@ -59,20 +59,6 @@ SCENARIO( "Documentation" ) {
                            "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
                            "to the ENDF-6 Format.                                             \n"
                            "==================================================================\n" );
-
-      THEN( "the awr can be changed" ) {
-
-        double newawr = 25.;
-        double original = 15.8619530;
-
-        chunk.awr( newawr );
-
-        CHECK( newawr == chunk.awr() );
-
-        chunk.awr( original );
-
-        verifyChunk( chunk );
-      } // THEN
 
       THEN( "the library can be changed" ) {
 
@@ -133,7 +119,7 @@ SCENARIO( "Documentation" ) {
 
     WHEN( "two instances of Documentation are given" ) {
 
-      Documentation left( 15.8619530, 0, std::make_pair( 8, 1 ),
+      Documentation left( 0, std::make_pair( 8, 1 ),
                           "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
                           " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
                           "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
@@ -144,7 +130,7 @@ SCENARIO( "Documentation" ) {
                           "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
                           "to the ENDF-6 Format.                                             \n"
                           "==================================================================\n" );
-      Documentation equal( 15.8619530, 0, std::make_pair( 8, 1 ),
+      Documentation equal( 0, std::make_pair( 8, 1 ),
                            "  8-O -  0 NDS,IAEA   Eval-Aug23 D.E.Cullen                       \n"
                            " NDS-IAEA-224         DIST-AUG24 REV1-NOV23            20240830   \n"
                            "---- ENDF/B-VIII.1    MATERIAL  800         REVISION 1            \n"
@@ -155,7 +141,7 @@ SCENARIO( "Documentation" ) {
                            "ENDF-6 Format. Translated from the Livermore ENDL format          \n"
                            "to the ENDF-6 Format.                                             \n"
                            "==================================================================\n" );
-      Documentation different( 15.8619530, 0, std::make_pair( 8, 1 ),
+      Documentation different( 0, std::make_pair( 8, 1 ),
                                "this is different                                                 \n" );
 
       THEN( "they can be compared" ) {
@@ -186,7 +172,6 @@ void verifyChunk( const Documentation& chunk ) {
     "to the ENDF-6 Format.                                             \n"
     "==================================================================\n";
 
-  CHECK( 15.8619530 == chunk.awr() );
   CHECK( 0 == chunk.library() );
   CHECK( 8 == chunk.version()->first );
   CHECK( 1 == chunk.version()->second );

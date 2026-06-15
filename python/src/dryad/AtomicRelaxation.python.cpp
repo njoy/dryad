@@ -5,9 +5,9 @@
 // local includes
 #include "dryad/definitions.hpp"
 #include "njoy/dryad/AtomicRelaxation.hpp"
-#include "njoy/dryad/format/endf/createAtomicRelaxationFromFile.hpp"
-#include "njoy/dryad/format/endf/createAtomicRelaxationEndfFile.hpp"
-#include "njoy/dryad/format/gnds/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/read/createAtomicRelaxationFromFile.hpp"
+#include "njoy/format/endf/write/createAtomicRelaxationFile.hpp"
+#include "njoy/format/gnds/read/createAtomicRelaxationFromFile.hpp"
 
 // namespace aliases
 namespace python = pybind11;
@@ -126,7 +126,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "from_endf_file",
     [] ( const std::string& filename, bool normalise = false ) -> decltype(auto) {
 
-      return njoy::dryad::format::endf::createAtomicRelaxationFromFile( filename, normalise );
+      return njoy::format::endf::read::createAtomicRelaxationFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from an ENDF file\n\n"
@@ -145,7 +145,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "from_gnds_file",
     [] ( const std::string& filename, bool normalise = false ) -> decltype(auto) {
 
-      return njoy::dryad::format::gnds::createAtomicRelaxationFromFile( filename, normalise );
+      return njoy::format::gnds::read::createAtomicRelaxationFromFile( filename, normalise );
     },
     python::arg( "filename" ), python::arg( "normalise" ) = false,
     "Create AtomicRelaxation data from a GNDS file\n\n"
@@ -162,7 +162,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "to_endf_file",
     [] ( const Component& self, int mat, const std::string& filename ) {
 
-      njoy::dryad::format::endf::createAtomicRelaxationEndfFile( self, mat, filename );
+      njoy::format::endf::write::createAtomicRelaxationFile( self, mat, filename );
     },
     python::arg( "mat" ), python::arg( "filename" ),
     "Write the AtomicRelaxation data to an ENDF file\n\n"

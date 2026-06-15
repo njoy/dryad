@@ -11,3 +11,7 @@ Fission Q values
 
 - check for unphysical values of the fission Q value data to avoid the issue of ENDF/B-VII.1 (values
   were given in MeV instead of eV)
+
+Cross sections
+
+- verify energy range of elastic versus all other cross sections

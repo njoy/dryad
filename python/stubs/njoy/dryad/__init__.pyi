@@ -281,6 +281,15 @@ class DistributionDataType:
 class Documentation:
     """
     Documentation associated to the dryad data
+    
+    Parameters
+    ----------
+        library : int
+             the library number
+        version : list of int
+             the version numbers (major and minor)
+        description : str
+             the description
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Documentation:
@@ -289,26 +298,11 @@ class Documentation:
         ...
     def __eq__(self, arg0: Documentation) -> bool:
         ...
-    def __init__(self, awr: float | None, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
+    def __init__(self, library: int | None, version: tuple[int, int] | None, description: str | None) -> None:
         """
         Initialise the documentation
-        
-        Arguments:
-            self          the documentation
-            awr           the atomic weight ratio
-            library       the library number
-            version       the version number
-            description   the description
         """
     def __ne__(self, arg0: Documentation) -> bool:
-        ...
-    @property
-    def awr(self) -> float | None:
-        """
-        The atomic weight ratio
-        """
-    @awr.setter
-    def awr(self, arg1: float | None) -> None:
         ...
     @property
     def description(self) -> str | None:
@@ -891,6 +885,71 @@ class Particle:
             the uncertainty on the ecited level energy value (default: None)
     """
     __hash__: typing.ClassVar[None] = None
+    @staticmethod
+    def alpha() -> Particle:
+        """
+        The default particle instance for alphas
+        """
+    @staticmethod
+    def default_particle(id: id.ParticleID) -> Particle:
+        """
+        The default particle instance for a given particle identifier
+        
+        This function creates a default particle instance for the given particle
+        identifier. When relevant, the discrete level energies and spins-parity pairs
+        from RIPL-3 and the atomic masses from AME-2020 are used.
+        
+        When more sources for the particle data become available, this function will
+        provide options to select data from.
+        
+        When an atomic identifier (either with or without vacancies) is used, the
+        elemental particle instance will be returned.
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @staticmethod
+    def deuteron() -> Particle:
+        """
+        The default particle instance for deuterons
+        """
+    @staticmethod
+    def electron() -> Particle:
+        """
+        The default particle instance for electrons
+        """
+    @staticmethod
+    def helion() -> Particle:
+        """
+        The default particle instance for helions
+        """
+    @staticmethod
+    def neutron() -> Particle:
+        """
+        The default particle instance for neutrons
+        """
+    @staticmethod
+    def photon() -> Particle:
+        """
+        The default particle instance for photons
+        """
+    @staticmethod
+    def positron() -> Particle:
+        """
+        The default particle instance for positrons
+        """
+    @staticmethod
+    def proton() -> Particle:
+        """
+        The default particle instance for protons
+        """
+    @staticmethod
+    def triton() -> Particle:
+        """
+        The default particle instance for tritons
+        """
     def __copy__(self) -> Particle:
         ...
     def __deepcopy__(self, arg0: dict) -> Particle:
@@ -993,6 +1052,8 @@ class ParticleDatabase:
     ----------
         particles : list of njoy.dryad.Particle
              the particle information
+        identifiers : list of njoy.dryad.id.ParticleID
+             the particle identifiers
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ParticleDatabase:
@@ -1001,7 +1062,13 @@ class ParticleDatabase:
         ...
     def __eq__(self, arg0: ParticleDatabase) -> bool:
         ...
+    @typing.overload
     def __init__(self, particles: list[Particle]) -> None:
+        """
+        Initialise the particle database
+        """
+    @typing.overload
+    def __init__(self, identifiers: list[id.ParticleID]) -> None:
         """
         Initialise the particle database
         """

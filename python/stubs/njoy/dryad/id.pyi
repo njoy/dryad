@@ -314,8 +314,8 @@ class LevelID:
     """
     The level identifier
     """
-    all: typing.ClassVar[int] = 151
-    continuum: typing.ClassVar[int] = 150
+    all: typing.ClassVar[int] = 999
+    continuum: typing.ClassVar[int] = 998
     def __copy__(self) -> LevelID:
         ...
     def __deepcopy__(self, arg0: dict) -> LevelID:
