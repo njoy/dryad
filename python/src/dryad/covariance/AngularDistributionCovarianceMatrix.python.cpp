@@ -40,27 +40,32 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
 
     python::init< ReferenceFrame,
                   AngularDistributionMetadata,
-                  Matrix >(),
+                  Matrix,
+                  bool >(),
     python::arg( "frame" ),
     python::arg( "metadata" ),
     python::arg( "covariances" ),
+    python::arg( "relative" ) = true,
     "Initialise an on-diagonal angular distribution covariance matrix\n\n"
     "Arguments:\n"
     "    self          the covariance matrix\n"
     "    frame         the reference frame of the covariance data\n"
     "    metadata      the row and column metadata\n"
     "    covariances   the covariance matrix\n"
+    "    relative      the relative covariance flag (default is true)"
   )
   .def(
 
     python::init< ReferenceFrame,
                   AngularDistributionMetadata,
                   AngularDistributionMetadata,
-                  Matrix >(),
+                  Matrix,
+                  bool >(),
     python::arg( "frame" ),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "covariances" ),
+    python::arg( "relative" ) = true,
     "Initialise an off-diagonal angular distribution covariance matrix\n\n"
     "Arguments:\n"
     "    self             the covariance matrix\n"
@@ -68,17 +73,20 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    row_metadata     the row metadata\n"
     "    column_metadata  the column metadata\n"
     "    covariances      the covariance matrix\n"
+    "    relative         the relative covariance flag (default is true)"
   )
   .def(
 
     python::init< ReferenceFrame,
                   AngularDistributionMetadata,
                   std::vector< double >,
-                  Matrix >(),
+                  Matrix,
+                  bool >(),
     python::arg( "frame" ),
     python::arg( "metadata" ),
     python::arg( "deviations" ),
     python::arg( "correlations" ),
+    python::arg( "relative" ) = true,
     "Initialise an on-diagonal angular distribution correlation matrix\n\n"
     "Arguments:\n"
     "    self           the covariance matrix\n"
@@ -86,6 +94,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    metadata       the row and column metadata\n"
     "    deviations     the standard deviations\n"
     "    correlations   the correlation matrix\n"
+    "    relative       the relative covariance flag (default is true)"
   )
   .def(
 
@@ -94,13 +103,15 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
                   AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< double >,
-                  Matrix >(),
+                  Matrix,
+                  bool >(),
     python::arg( "frame" ),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "row_deviations" ),
     python::arg( "column_deviations" ),
     python::arg( "correlations" ),
+    python::arg( "relative" ) = true,
     "Initialise an off-diagonal angular distribution correlation matrix\n\n"
     "Arguments:\n"
     "    self               the covariance matrix\n"
@@ -110,17 +121,20 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    row_deviations     the standard deviations to be applied to each row\n"
     "    column_deviations  the standard deviations to be applied to each column\n"
     "    correlations       the correlation matrix\n"
+    "    relative           the relative covariance flag (default is true)"
   )
   .def(
 
     python::init< ReferenceFrame,
                   AngularDistributionMetadata,
                   std::vector< double >,
-                  std::vector< Vector > >(),
+                  std::vector< Vector >,
+                  bool >(),
     python::arg( "frame" ),
     python::arg( "metadata" ),
     python::arg( "eigenvalues" ),
     python::arg( "eigenvectors" ),
+    python::arg( "relative" ) = true,
     "Initialise an on-diagonal angular distribution covariance matrix using eigenvalues\n"
     "and eigenvectors\n\n"
     "Arguments:\n"
@@ -129,6 +143,7 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
     "    metadata       the row and column metadata\n"
     "    eigenvalues    the eigenvalues\n"
     "    eigenvectors   the associated eigenvectors\n"
+    "    relative       the relative covariance flag (default is true)"
   )
   .def_property(
 
