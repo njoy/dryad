@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_RESONANCES_COH3_ASYMPT
-#define NJOY_DRYAD_RESONANCES_COH3_ASYMPT
+#ifndef NJOY_DRYAD_RESONANCES_COULOMB_COH3_ASYMPT
+#define NJOY_DRYAD_RESONANCES_COULOMB_COH3_ASYMPT
 
 /******************************************************************************/
 /*  asympt.cpp                                                                */

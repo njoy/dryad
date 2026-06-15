@@ -1,5 +1,5 @@
-#ifndef NJOY_DRYAD_CREATEINDEX
-#define NJOY_DRYAD_CREATEINDEX
+#ifndef NJOY_FORMAT_CREATEINDEX
+#define NJOY_FORMAT_CREATEINDEX
 
 // system includes
 #include <vector>

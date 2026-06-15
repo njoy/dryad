@@ -1,5 +1,5 @@
-#ifndef NJOY_ELEMENTARY_LEVELID
-#define NJOY_ELEMENTARY_LEVELID
+#ifndef NJOY_DRYAD_ID_LEVELID
+#define NJOY_DRYAD_ID_LEVELID
 
 // system includes
 #include <string>
