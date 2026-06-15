@@ -36,9 +36,9 @@ namespace write {
 
       node.append_attribute( "label" ) = std::move( label.value() );
     }
-    if ( numerator == denominator ) {
+    if ( denominator == 1 || numerator == 0 ) {
 
-      node.append_attribute( "value" ) = "1";
+      node.append_attribute( "value" ) = std::to_string( numerator );
     }
     else {
 

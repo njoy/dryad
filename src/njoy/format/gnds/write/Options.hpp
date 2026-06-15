@@ -15,6 +15,16 @@ namespace write {
    */
   struct Options {
 
+    // default units
+    std::string default_charge_unit = "e";
+    std::string default_energy_unit = "eV";
+    std::string default_mass_unit = "amu";
+
+    // units to be used
+    std::string charge_unit = "e";
+    std::string energy_unit = "eV";
+    std::string mass_unit = "amu";
+
     // precision: number of digits used to print numbers
     //            for floating point numbers: the number of digits after the
     //            decimal point is equal to precision - 1

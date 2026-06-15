@@ -27,7 +27,7 @@ SCENARIO( "insertFraction" ) {
       auto node3 = gnds::write::insertFraction( parent, options, 1, 2, std::nullopt, "hbar" );
       auto node4 = gnds::write::insertFraction( parent, options, 1, 2, "spin", "hbar" );
 
-      auto node5 = gnds::write::insertFraction( parent, options, 2, 2, std::nullopt, std::nullopt );
+      auto node5 = gnds::write::insertFraction( parent, options, 2, 1, std::nullopt, std::nullopt );
 
       CHECK( 0 == strcmp( "fraction", node2.name() ) );
       CHECK( false == node2.attribute( "value" ).empty() );
@@ -55,7 +55,7 @@ SCENARIO( "insertFraction" ) {
       CHECK( false == node5.attribute( "value" ).empty() );
       CHECK(  true == node5.attribute( "label" ).empty() );
       CHECK(  true == node5.attribute( "unit" ).empty() );
-      CHECK( 0 == strcmp( "1", node5.attribute( "value" ).as_string() ) );
+      CHECK( 0 == strcmp( "2", node5.attribute( "value" ).as_string() ) );
     } // THEN
   } // GIVEN
 } // SCENARIO
