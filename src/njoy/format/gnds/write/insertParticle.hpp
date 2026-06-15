@@ -70,7 +70,7 @@ namespace write {
       if ( std::modf( particle.spin().value(), &half ) == 0. ) {
 
         // a is a full integer
-        insertFraction( spin, options, static_cast< int >( half ), 1, style, std::nullopt );
+        insertFraction( spin, options, static_cast< int >( half ), 1, style, "hbar" );
       }
       else {
 
@@ -82,7 +82,7 @@ namespace write {
     if ( particle.parity().has_value() ) {
 
       auto parity = node.append_child( "parity" );
-      insertInteger( parity, options, particle.parity().value(), style, "e" );
+      insertInteger( parity, options, particle.parity().value(), style, std::nullopt );
     }
 
     auto charge = node.append_child( "charge" );
