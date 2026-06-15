@@ -107,7 +107,6 @@ class Test_CrossSectionCovarianceData( unittest.TestCase ) :
                                                                     [ 2., 3. ] ] ) ) ] ),
                     angular = AngularDistributionCovarianceData(
                                 [ AngularDistributionCovarianceMatrix(
-                                    ReferenceFrame.Laboratory,
                                     AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 10., 2e+7 ] ),
                                                                  numpy.array( [ [ 1., 2., 3. ],
                                                                                 [ 2., 4., 5. ],

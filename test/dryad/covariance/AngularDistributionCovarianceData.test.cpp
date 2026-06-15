@@ -21,8 +21,6 @@ SCENARIO( "AngularDistributionCovarianceData" ) {
 
     WHEN( "the data is given explicitly" ) {
 
-      ReferenceFrame frame = ReferenceFrame::Laboratory;
-
       id::ReactionID elastic( "n,H1->n(0)" );
       id::ReactionID inelastic( "n,H1->n(1)" );
 
@@ -48,9 +46,9 @@ SCENARIO( "AngularDistributionCovarianceData" ) {
 
       std::vector< covariance::AngularDistributionCovarianceMatrix > matrices = {
 
-        AngularDistributionCovarianceMatrix( frame, std::move( metadata22 ), std::move( matrix22 ) ),
-        AngularDistributionCovarianceMatrix( frame, std::move( metadata12r ), std::move( metadata12c ), std::move( matrix12 ) ),
-        AngularDistributionCovarianceMatrix( frame, std::move( metadata11 ), std::move( matrix11 ) )
+        AngularDistributionCovarianceMatrix( std::move( metadata22 ), std::move( matrix22 ) ),
+        AngularDistributionCovarianceMatrix( std::move( metadata12r ), std::move( metadata12c ), std::move( matrix12 ) ),
+        AngularDistributionCovarianceMatrix( std::move( metadata11 ), std::move( matrix11 ) )
       };
 
       AngularDistributionCovarianceData chunk( std::move( matrices ) );
@@ -62,8 +60,6 @@ SCENARIO( "AngularDistributionCovarianceData" ) {
   GIVEN( "comparison operators" ) {
 
     WHEN( "two instances of AngularDistributionCovarianceData are given" ) {
-
-      ReferenceFrame frame = ReferenceFrame::Laboratory;
 
       id::ReactionID elastic( "n,H1->n(0)" );
       id::ReactionID inelastic( "n,H1->n(1)" );
@@ -86,19 +82,19 @@ SCENARIO( "AngularDistributionCovarianceData" ) {
 
       AngularDistributionCovarianceData left(
 
-        { AngularDistributionCovarianceMatrix( frame, metadata22, matrix22 ),
-          AngularDistributionCovarianceMatrix( frame, metadata12r, metadata12c,  matrix12 ),
-          AngularDistributionCovarianceMatrix( frame, metadata11, matrix11 ) }
+        { AngularDistributionCovarianceMatrix( metadata22, matrix22 ),
+          AngularDistributionCovarianceMatrix( metadata12r, metadata12c,  matrix12 ),
+          AngularDistributionCovarianceMatrix( metadata11, matrix11 ) }
       );
       AngularDistributionCovarianceData equal(
 
-        { AngularDistributionCovarianceMatrix( frame, metadata22, matrix22 ),
-          AngularDistributionCovarianceMatrix( frame, metadata12r, metadata12c,  matrix12 ),
-          AngularDistributionCovarianceMatrix( frame, metadata11, matrix11 ) }
+        { AngularDistributionCovarianceMatrix( metadata22, matrix22 ),
+          AngularDistributionCovarianceMatrix( metadata12r, metadata12c,  matrix12 ),
+          AngularDistributionCovarianceMatrix( metadata11, matrix11 ) }
       );
       AngularDistributionCovarianceData different(
 
-        { AngularDistributionCovarianceMatrix( frame, metadata22, matrix22 ) }
+        { AngularDistributionCovarianceMatrix( metadata22, matrix22 ) }
       );
 
       THEN( "they can be compared" ) {

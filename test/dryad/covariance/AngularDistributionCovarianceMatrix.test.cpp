@@ -18,8 +18,6 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid covariance data for an on-diagonal covariance matrix" ) {
 
-    ReferenceFrame frame = ReferenceFrame::Laboratory;
-
     AngularDistributionMetadata metadata( id::ReactionID( "n,U235->n,U235" ),
                                           1,
                                           { 1e-5, 1., 1e+6, 2e+7 } );
@@ -29,9 +27,8 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
               2., 4., 6.,
               3., 6., 9.;
 
-    AngularDistributionCovarianceMatrix chunk( std::move( frame ),
-                                               std::move( metadata ),
-                                               std::move( matrix ) );
+    AngularDistributionCovarianceMatrix chunk( std::move( metadata ),
+                                               std::move( matrix ));
 
     THEN( "a AngularDistributionCovarianceMatrix can be constructed and members can be tested" ) {
 
@@ -112,8 +109,6 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid correlation data for an on-diagonal covariance matrix" ) {
 
-    ReferenceFrame frame = ReferenceFrame::Laboratory;
-
     AngularDistributionMetadata metadata( id::ReactionID( "n,U235->n,U235" ),
                                           1,
                                           { 1e-5, 1., 1e+6, 2e+7 } );
@@ -124,8 +119,7 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
                     1., 1., 1.,
                     1., 1., 1.;
 
-    AngularDistributionCovarianceMatrix chunk( std::move( frame ),
-                                               std::move( metadata ),
+    AngularDistributionCovarianceMatrix chunk( std::move( metadata ),
                                                std::move( deviations ),
                                                std::move( correlations ) );
 
@@ -208,8 +202,6 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid eigenvalues and eigenvectors for an on-diagonal covariance matrix" ) {
 
-    ReferenceFrame frame = ReferenceFrame::Laboratory;
-
     AngularDistributionMetadata metadata( id::ReactionID( "n,U235->n,U235" ),
                                           1,
                                           { 1e-5, 1., 1e+6, 2e+7 } );
@@ -218,8 +210,7 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
     std::vector< Vector< double > > eigenvectors( 1, Vector< double >( 3 ) );
     eigenvectors[0] << 0.2672612419124246, 0.5345224838248487, 0.8017837257372732;
 
-    AngularDistributionCovarianceMatrix chunk( std::move( frame ),
-                                               std::move( metadata ),
+    AngularDistributionCovarianceMatrix chunk( std::move( metadata ),
                                                std::move( eigenvalues ),
                                                std::move( eigenvectors ) );
 
@@ -297,8 +288,6 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
 
   GIVEN( "valid data for an off-diagonal covariance matrix" ) {
 
-    ReferenceFrame frame = ReferenceFrame::Laboratory;
-
     AngularDistributionMetadata rowMetadata( id::ReactionID( "n,U235->n,U235" ),
                                              1,
                                              { 1e-5, 1., 1e+6, 2e+7 } );
@@ -311,8 +300,7 @@ SCENARIO( "AngularDistributionCovarianceMatrix" ) {
               2., 4.,
               3., 6.;
 
-    AngularDistributionCovarianceMatrix chunk( std::move( frame ),
-                                               std::move( rowMetadata ),
+    AngularDistributionCovarianceMatrix chunk( std::move( rowMetadata ),
                                                std::move( columnMetadata ),
                                                std::move( matrix ) );
 

@@ -184,19 +184,16 @@ class Test_AngularDistributionCovarianceData( unittest.TestCase ) :
 
         # the data is given explicitly
         chunk = AngularDistributionCovarianceData(
-                  matrices = [ AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                    AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 2e+7 ] ),
+                  matrices = [ AngularDistributionCovarianceMatrix( AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 2e+7 ] ),
                                                                     numpy.array( [ [ 1., 2. ],
                                                                                    [ 2., 3. ] ] ) ),
-                               AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                    AngularDistributionMetadata( elastic, 1, [ 1e-5, 0.5, 1., 5., 2e+7 ] ),
+                               AngularDistributionCovarianceMatrix( AngularDistributionMetadata( elastic, 1, [ 1e-5, 0.5, 1., 5., 2e+7 ] ),
                                                                     AngularDistributionMetadata( inelastic, 2, [ 1e-5, 2e+7 ] ),
                                                                     numpy.array( [ [ 1. ],
                                                                                    [ 2.],
                                                                                    [ 3.],
                                                                                    [ 4.] ] ) ),
-                               AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                    AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
+                               AngularDistributionCovarianceMatrix( AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                                     numpy.array( [ [ 1., 2., 3. ],
                                                                                    [ 2., 4., 6. ],
                                                                                    [ 3., 6., 9. ] ] ) )
@@ -210,44 +207,37 @@ class Test_AngularDistributionCovarianceData( unittest.TestCase ) :
         inelastic = ReactionID( 'n,H1->n(1)' )
 
         left = AngularDistributionCovarianceData(
-                 matrices = [ AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                   AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 2e+7 ] ),
+                 matrices = [ AngularDistributionCovarianceMatrix( AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 2e+7 ] ),
                                                                    numpy.array( [ [ 1., 2. ],
                                                                                   [ 2., 3. ] ] ) ),
-                              AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                   AngularDistributionMetadata( elastic, 1, [ 1e-5, 0.5, 1., 5., 2e+7 ] ),
+                              AngularDistributionCovarianceMatrix( AngularDistributionMetadata( elastic, 1, [ 1e-5, 0.5, 1., 5., 2e+7 ] ),
                                                                    AngularDistributionMetadata( inelastic, 2, [ 1e-5, 2e+7 ] ),
                                                                    numpy.array( [ [ 1. ],
                                                                                   [ 2.],
                                                                                   [ 3.],
                                                                                   [ 4.] ] ) ),
-                              AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                   AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
+                              AngularDistributionCovarianceMatrix( AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                                    numpy.array( [ [ 1., 2., 3. ],
                                                                                   [ 2., 4., 6. ],
                                                                                   [ 3., 6., 9. ] ] ) )
                             ] )
         equal = AngularDistributionCovarianceData(
-                  matrices = [ AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                    AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 2e+7 ] ),
+                  matrices = [ AngularDistributionCovarianceMatrix( AngularDistributionMetadata( elastic, 1, [ 1e-5, 1., 2e+7 ] ),
                                                                     numpy.array( [ [ 1., 2. ],
                                                                                    [ 2., 3. ] ] ) ),
-                               AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                    AngularDistributionMetadata( elastic, 1, [ 1e-5, 0.5, 1., 5., 2e+7 ] ),
+                               AngularDistributionCovarianceMatrix( AngularDistributionMetadata( elastic, 1, [ 1e-5, 0.5, 1., 5., 2e+7 ] ),
                                                                     AngularDistributionMetadata( inelastic, 2, [ 1e-5, 2e+7 ] ),
                                                                     numpy.array( [ [ 1. ],
                                                                                    [ 2.],
                                                                                    [ 3.],
                                                                                    [ 4.] ] ) ),
-                               AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                    AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
+                               AngularDistributionCovarianceMatrix( AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                                     numpy.array( [ [ 1., 2., 3. ],
                                                                                    [ 2., 4., 6. ],
                                                                                    [ 3., 6., 9. ] ] ) )
                              ] )
         different = AngularDistributionCovarianceData(
-                      matrices = [ AngularDistributionCovarianceMatrix( ReferenceFrame.Laboratory,
-                                                                        AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
+                      matrices = [ AngularDistributionCovarianceMatrix( AngularDistributionMetadata( inelastic, 2, [ 1e-5, 1., 1e+6, 2e+7 ] ),
                                                                         numpy.array( [ [ 1., 2., 3. ],
                                                                                        [ 2., 4., 6. ],
                                                                                        [ 3., 6., 9. ] ] ) )

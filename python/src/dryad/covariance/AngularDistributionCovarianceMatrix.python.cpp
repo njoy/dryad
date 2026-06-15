@@ -38,112 +38,112 @@ void wrapAngularDistributionCovarianceMatrix( python::module& module ) {
   component
   .def(
 
-    python::init< ReferenceFrame,
-                  AngularDistributionMetadata,
+    python::init< AngularDistributionMetadata,
                   Matrix,
-                  bool >(),
-    python::arg( "frame" ),
+                  bool,
+                  ReferenceFrame >(),
     python::arg( "metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an on-diagonal angular distribution covariance matrix\n\n"
     "Arguments:\n"
     "    self          the covariance matrix\n"
-    "    frame         the reference frame of the covariance data\n"
     "    metadata      the row and column metadata\n"
     "    covariances   the covariance matrix\n"
-    "    relative      the relative covariance flag (default is true)"
+    "    relative      the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the covariance data (default is Lab)"
   )
   .def(
 
-    python::init< ReferenceFrame,
-                  AngularDistributionMetadata,
+    python::init< AngularDistributionMetadata,
                   AngularDistributionMetadata,
                   Matrix,
-                  bool >(),
-    python::arg( "frame" ),
+                  bool,
+                  ReferenceFrame >(),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "covariances" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an off-diagonal angular distribution covariance matrix\n\n"
     "Arguments:\n"
     "    self             the covariance matrix\n"
-    "    frame            the reference frame of the covariance data\n"
     "    row_metadata     the row metadata\n"
     "    column_metadata  the column metadata\n"
     "    covariances      the covariance matrix\n"
-    "    relative         the relative covariance flag (default is true)"
+    "    relative         the relative covariance flag (default is true)\n"
+    "    frame            the reference frame of the covariance data (default is Lab)"
   )
   .def(
 
-    python::init< ReferenceFrame,
-                  AngularDistributionMetadata,
+    python::init< AngularDistributionMetadata,
                   std::vector< double >,
                   Matrix,
-                  bool >(),
-    python::arg( "frame" ),
+                  bool,
+                  ReferenceFrame >(),
     python::arg( "metadata" ),
     python::arg( "deviations" ),
     python::arg( "correlations" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an on-diagonal angular distribution correlation matrix\n\n"
     "Arguments:\n"
     "    self           the covariance matrix\n"
-    "    frame         the reference frame of the covariance data\n"
     "    metadata       the row and column metadata\n"
     "    deviations     the standard deviations\n"
     "    correlations   the correlation matrix\n"
-    "    relative       the relative covariance flag (default is true)"
+    "    relative       the relative covariance flag (default is true)\n"
+    "    frame          the reference frame of the covariance data (default is Lab)"
   )
   .def(
 
-    python::init< ReferenceFrame,
-                  AngularDistributionMetadata,
+    python::init< AngularDistributionMetadata,
                   AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< double >,
                   Matrix,
-                  bool >(),
-    python::arg( "frame" ),
+                  bool,
+                  ReferenceFrame >(),
     python::arg( "row_metadata" ),
     python::arg( "column_metadata" ),
     python::arg( "row_deviations" ),
     python::arg( "column_deviations" ),
     python::arg( "correlations" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an off-diagonal angular distribution correlation matrix\n\n"
     "Arguments:\n"
     "    self               the covariance matrix\n"
-    "    frame         the reference frame of the covariance data\n"
     "    row_metadata       the row metadata\n"
     "    column_metadata    the column metadata\n"
     "    row_deviations     the standard deviations to be applied to each row\n"
     "    column_deviations  the standard deviations to be applied to each column\n"
     "    correlations       the correlation matrix\n"
-    "    relative           the relative covariance flag (default is true)"
+    "    relative           the relative covariance flag (default is true)\n"
+    "    frame              the reference frame of the covariance data (default is Lab)"
   )
   .def(
 
-    python::init< ReferenceFrame,
-                  AngularDistributionMetadata,
+    python::init< AngularDistributionMetadata,
                   std::vector< double >,
                   std::vector< Vector >,
-                  bool >(),
-    python::arg( "frame" ),
+                  bool,
+                  ReferenceFrame >(),
     python::arg( "metadata" ),
     python::arg( "eigenvalues" ),
     python::arg( "eigenvectors" ),
     python::arg( "relative" ) = true,
+    python::arg( "frame" ) = ReferenceFrame::Laboratory,
     "Initialise an on-diagonal angular distribution covariance matrix using eigenvalues\n"
     "and eigenvectors\n\n"
     "Arguments:\n"
     "    self           the covariance matrix\n"
-    "    frame         the reference frame of the covariance data\n"
     "    metadata       the row and column metadata\n"
     "    eigenvalues    the eigenvalues\n"
     "    eigenvectors   the associated eigenvectors\n"
-    "    relative       the relative covariance flag (default is true)"
+    "    relative       the relative covariance flag (default is true)\n"
+    "    frame         the reference frame of the covariance data (default is Lab)"
   )
   .def_property(
 

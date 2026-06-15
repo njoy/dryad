@@ -60,19 +60,19 @@ namespace covariance {
     if ( row_moment == col_moment ) {
 
       Log::info( "Reading data for MT{} P{}", mt, row_moment );
-      covariances.emplace_back( frame, 
-                                AngularDistributionMetadata( { row }, { row_moment }, boundaries ),
+      covariances.emplace_back( AngularDistributionMetadata( { row }, { row_moment }, boundaries ),
                                 std::move( matrix ), 
-                                relative);
+                                relative,
+                                frame );
     }
     else {
 
       Log::info( "Reading data for MT{} cross term for P{} and P{}", mt, row_moment, col_moment );
-      covariances.emplace_back( frame, 
-                                AngularDistributionMetadata( { row }, { row_moment }, boundaries ),
+      covariances.emplace_back( AngularDistributionMetadata( { row }, { row_moment }, boundaries ),
                                 AngularDistributionMetadata( { row }, { col_moment }, boundaries ),
                                 std::move( matrix ), 
-                                relative);
+                                relative,
+                                frame );
     }
 
     return covariances;
