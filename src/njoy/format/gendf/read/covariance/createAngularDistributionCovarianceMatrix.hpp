@@ -56,21 +56,21 @@ namespace covariance {
 
     using AngularDistributionMetadata = dryad::covariance::AngularDistributionMetadata;
 
-    std::size_t row_moment = static_cast< std::size_t >( section.primaryLegendre() );
-    std::size_t col_moment = static_cast< std::size_t >( section.secondaryLegendre() );
-    if ( row_moment == col_moment ) {
+    std::vector< std::size_t > row_moment = { static_cast< std::size_t >( section.primaryLegendre() ) };
+    std::vector< std::size_t > col_moment = { static_cast< std::size_t >( section.secondaryLegendre() ) };
+    if ( row_moment.front() == col_moment.front() ) {
 
-      Log::info( "Reading data for MT{} P{}", mt, row_moment );
-      covariances.emplace_back( AngularDistributionMetadata( { row }, { row_moment }, boundaries ),
+      Log::info( "Reading data for MT{} P{}", mt, row_moment.front() );
+      covariances.emplace_back( AngularDistributionMetadata( { row }, std::move( row_moment ), boundaries ),
                                 std::move( matrix ),
                                 relative,
                                 frame );
     }
     else {
 
-      Log::info( "Reading data for MT{} cross term for P{} and P{}", mt, row_moment, col_moment );
-      covariances.emplace_back( AngularDistributionMetadata( { row }, { row_moment }, boundaries ),
-                                AngularDistributionMetadata( { row }, { col_moment }, boundaries ),
+      Log::info( "Reading data for MT{} cross term for P{} and P{}", mt, row_moment.front(), col_moment.front() );
+      covariances.emplace_back( AngularDistributionMetadata( { row }, std::move( row_moment ), boundaries ),
+                                AngularDistributionMetadata( { row }, std::move( col_moment ), boundaries ),
                                 std::move( matrix ),
                                 relative,
                                 frame );
