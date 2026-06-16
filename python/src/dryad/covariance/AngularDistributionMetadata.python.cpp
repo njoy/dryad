@@ -80,7 +80,7 @@ void wrapAngularDistributionMetadata( python::module& module ) {
 
     "moments",
     &Component::moments,
-    "The Legendre moments"
+    "The Legendre moment orders"
   )
   .def_property_readonly(
 

@@ -1,3 +1,10 @@
+/**
+ *  @brief Reconstruct metadata from keys
+ *
+ *  This method extracts the unique reactions and energy groups from the keys.
+ *  This function relies on the fact that tuple keys are lexographically sorted
+ *  (as implemented by the operator< on std::tuple).
+ */
 void updateMetadata() {
 
   //! @todo once we move to c++23, use ranges instead of for loops

@@ -20,6 +20,9 @@ namespace covariance {
   /**
    *  @class
    *  @brief A covariance matrix for angular distributions
+   *
+   *  This covariance matrix uses 3 dimensions as follows (from outer to inner
+   *  dimension): the reactions, the Legendre moments and the energy groups.
    */
   class AngularDistributionCovarianceMatrix :
     protected base::CovarianceMatrix< AngularDistributionMetadata,
