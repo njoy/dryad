@@ -18,6 +18,7 @@ void wrapBoundedCorrelations( python::module& module ) {
   using Component = njoy::psychic::covariance::BoundedCorrelations;
   using TestStatus = njoy::psychic::TestStatus;
   using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
+  using AngularDistributionCovarianceMatrix = njoy::dryad::covariance::AngularDistributionCovarianceMatrix;
   using ProductMultiplicityCovarianceMatrix = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
 
   // wrap views created by this component
@@ -92,6 +93,14 @@ void wrapBoundedCorrelations( python::module& module ) {
     "----------\n"
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
     "        the covariance matrix instance to be tested"
+  )
+  .def(
+
+    "__call__",
+    [] ( Component& self, const AngularDistributionCovarianceMatrix& covariance ) -> decltype(auto)
+       { return self( covariance ); },
+    python::arg( "covariance" ),
+    "Verify if the provided covariance matrix has correlations between -1 and 1"
   )
   .def(
 

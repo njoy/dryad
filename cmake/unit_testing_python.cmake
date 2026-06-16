@@ -43,6 +43,8 @@ add_python_test( dryad.atomic.ElectronSubshellConfiguration            dryad/ato
 add_python_test( dryad.covariance.VarianceScaling                      dryad/covariance/Test_VarianceScaling.py )
 add_python_test( dryad.covariance.CrossSectionMetadata                 dryad/covariance/Test_CrossSectionMetadata.py )
 add_python_test( dryad.covariance.CrossSectionCovarianceMatrix         dryad/covariance/Test_CrossSectionCovarianceMatrix.py )
+add_python_test( dryad.covariance.AngularDistributionMetadata          dryad/covariance/Test_AngularDistributionMetadata.py )
+add_python_test( dryad.covariance.AngularDistributionCovarianceMatrix  dryad/covariance/Test_AngularDistributionCovarianceMatrix.py )
 add_python_test( dryad.covariance.ProductMultiplicityMetadata          dryad/covariance/Test_ProductMultiplicityMetadata.py )
 add_python_test( dryad.covariance.ProductMultiplicityCovarianceMatrix  dryad/covariance/Test_ProductMultiplicityCovarianceMatrix.py )
 add_python_test( dryad.covariance.LinearCombinationCovariance          dryad/covariance/Test_LinearCombinationCovariance.py )

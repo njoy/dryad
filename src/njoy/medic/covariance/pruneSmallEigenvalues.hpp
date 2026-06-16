@@ -7,6 +7,7 @@
 // other includes
 #include "njoy/matrix.hpp"
 #include "njoy/dryad/covariance/CrossSectionCovarianceMatrix.hpp"
+#include "njoy/dryad/covariance/AngularDistributionCovarianceMatrix.hpp"
 #include "njoy/dryad/covariance/ProductMultiplicityCovarianceMatrix.hpp"
 
 namespace njoy {
@@ -23,6 +24,7 @@ namespace covariance {
   auto pruneSmallEigenvalues( double eigenvalue,
                               Covariance& covariance )
   -> std::enable_if_t< std::is_same_v< Covariance, dryad::covariance::CrossSectionCovarianceMatrix > ||
+                       std::is_same_v< Covariance, dryad::covariance::AngularDistributionCovarianceMatrix > ||
                        std::is_same_v< Covariance, dryad::covariance::ProductMultiplicityCovarianceMatrix >,
                        void > {
 

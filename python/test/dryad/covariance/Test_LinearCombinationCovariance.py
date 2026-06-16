@@ -5,8 +5,6 @@ import unittest
 
 # local imports
 from njoy.dryad.id import ReactionID
-from njoy.dryad.id import ReactionType
-from njoy.dryad.id import ParticleID
 from njoy.dryad.covariance import LinearCombinationCovariance
 
 class Test_LinearCombinationCovariance( unittest.TestCase ) :

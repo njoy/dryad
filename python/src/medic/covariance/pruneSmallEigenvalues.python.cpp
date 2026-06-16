@@ -15,6 +15,7 @@ namespace covariance {
 
     // type aliases
     using CrossSectionCovarianceMatrix = njoy::dryad::covariance::CrossSectionCovarianceMatrix;
+    using AngularDistributionCovarianceMatrix = njoy::dryad::covariance::AngularDistributionCovarianceMatrix;
     using ProductMultiplicityCovarianceMatrix = njoy::dryad::covariance::ProductMultiplicityCovarianceMatrix;
 
     // wrap the function
@@ -33,6 +34,15 @@ namespace covariance {
       "        the smallest allowed eigenvalue\n"
       "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
       "        the covariance matrix to be modified"
+    )
+    .def(
+
+      "prune_small_eigenvalues",
+      [] ( double eigenvalue, AngularDistributionCovarianceMatrix& covariance ) -> void
+         { return njoy::medic::covariance::pruneSmallEigenvalues( eigenvalue, covariance ); },
+      python::arg( "eigenvalue" ),
+      python::arg( "covariance" ),
+      "Prune eigenvalues below a given value from the covariance matrix"
     )
     .def(
 
