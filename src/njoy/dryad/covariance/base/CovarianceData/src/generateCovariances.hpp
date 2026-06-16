@@ -1,5 +1,5 @@
 static std::pair< std::vector< id::ReactionID >, std::vector< Covariance > >
-generateCovariances( std::vector< covariance::CrossSectionCovarianceMatrix > submatrices ) {
+generateCovariances( std::vector< CovarianceMatrix > submatrices ) {
 
   // we are assuming the following:
   //   - all submatrices are for a single ProjectileTarget
@@ -9,16 +9,7 @@ generateCovariances( std::vector< covariance::CrossSectionCovarianceMatrix > sub
   std::vector< id::ReactionID > reactions;
   std::vector< Covariance > covariances;
 
-  std::sort( submatrices.begin(), submatrices.end(),
-             [] ( auto&& left, auto&& right )
-                { return std::tie( left.rowMetadata().reactionIdentifiers().front(),
-                                   left.columnMetadata().reactionIdentifiers().front(),
-                                   left.rowMetadata().energies(),
-                                   left.columnMetadata().energies() ) <
-                         std::tie( right.rowMetadata().reactionIdentifiers().front(),
-                                   right.columnMetadata().reactionIdentifiers().front(),
-                                   right.rowMetadata().energies(),
-                                   right.columnMetadata().energies() ); } );
+  Derived::sort( submatrices );
 
   auto add_reaction = [] ( std::vector< id::ReactionID >& reactions, const id::ReactionID& id ) {
 
@@ -47,7 +38,7 @@ generateCovariances( std::vector< covariance::CrossSectionCovarianceMatrix > sub
     auto size = std::distance( iter, next );
     if ( size > 1 ) {
 
-      std::vector< covariance::CrossSectionCovarianceMatrix > entries;
+      std::vector< CovarianceMatrix > entries;
       entries.reserve( size );
       std::move( iter, next, std::back_inserter( entries ) );
 

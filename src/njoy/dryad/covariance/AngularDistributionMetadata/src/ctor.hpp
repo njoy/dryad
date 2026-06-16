@@ -34,3 +34,17 @@ AngularDistributionMetadata( std::vector< id::ReactionID > reactions,
     reactions_( std::move( reactions ) ),
     moments_( std::move( moments ) ),
     energies_( std::move( energies ) ) {}
+
+/**
+ *  @brief Constructor for a single reaction and moment
+ *
+ *  @param[in] reaction   the reaction identifier
+ *  @param[in] moment     the Legendre moment value
+ *  @param[in] energies   the energy boundary values
+ */
+AngularDistributionMetadata( id::ReactionID reaction,
+                             std::size_t moment,
+                             std::vector< double > energies ) :
+    AngularDistributionMetadata( std::vector< id::ReactionID >{ std::move( reaction ) },
+                                 std::vector< std::size_t >{ std::move( moment ) },
+                                 std::move( energies ) ) {}

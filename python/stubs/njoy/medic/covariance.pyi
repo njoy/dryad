@@ -18,6 +18,11 @@ def prune_small_eigenvalues(eigenvalue: float, covariance: njoy.dryad.covariance
             the covariance matrix to be modified
     """
 @typing.overload
+def prune_small_eigenvalues(eigenvalue: float, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> None:
+    """
+    Prune eigenvalues below a given value from the covariance matrix
+    """
+@typing.overload
 def prune_small_eigenvalues(eigenvalue: float, covariance: njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix) -> None:
     """
     Prune eigenvalues below a given value from the covariance matrix

@@ -38,7 +38,7 @@ void wrapAngularDistributionMetadata( python::module& module ) {
     python::init< std::vector< ReactionID >,
                   std::vector< std::size_t >,
                   std::vector< double > >(),
-    python::arg( "reactions" ), 
+    python::arg( "reactions" ),
     python::arg( "moments" ),
     python::arg( "energies" ),
     "Initialise the angular distribution covariance metadata\n\n"
@@ -46,6 +46,19 @@ void wrapAngularDistributionMetadata( python::module& module ) {
     "    self          the covariance metadata\n"
     "    reactions     the reaction identifiers\n"
     "    moments       the Legendre moments\n"
+    "    energies      the group structure"
+  )
+  .def(
+
+    python::init< ReactionID,
+                  std::size_t,
+                  std::vector< double > >(),
+    python::arg( "reaction" ), python::arg( "moment" ), python::arg( "energies" ),
+    "Initialise the angular distribution covariance metadata\n\n"
+    "Arguments:\n"
+    "    self          the covariance metadata\n"
+    "    reaction      the reaction identifier\n"
+    "    moment        the Legendre moment\n"
     "    energies      the group structure"
   )
   .def(
