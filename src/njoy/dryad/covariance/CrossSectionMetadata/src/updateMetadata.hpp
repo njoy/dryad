@@ -1,5 +1,7 @@
 void updateMetadata() {
 
+  //! @todo once we move to c++23, use ranges instead of for loops
+
   // get all the energy groups in the metadata
   auto group = std::get< 1 >( this->keys().front() );
   auto iter = std::find_if( this->keys().begin() + 1, this->keys().end(),
@@ -12,8 +14,9 @@ void updateMetadata() {
 
   // calculate stride on the reaction dimension and loop
   auto stride = this->energies_.size() - 1;
+  this->reactions_.resize( this->keys().size() / stride );
   for ( unsigned int i = 0; i < this->keys().size(); i = i + stride ) {
 
-    this->reactions_.emplace_back( std::get< 0 >( this->keys()[i] ) );
+    this->reactions_[ i / stride ] = std::get< 0 >( this->keys()[i] );
   }
 }
