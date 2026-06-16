@@ -49,7 +49,7 @@ generateCovariances( std::vector< CovarianceMatrix > submatrices ) {
       covariances.emplace_back( std::move( *iter ) );
     }
 
-    iter = submatrices.erase( iter, next );
+    iter = next;
   }
 
   return std::make_pair( std::move( reactions ), std::move( covariances ) );
