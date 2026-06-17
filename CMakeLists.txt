@@ -97,6 +97,18 @@ if(MSVC)
 endif()
 
 
+########################################################################
+# NJOY_DATAPATH MACRO
+########################################################################
+
+set( NJOY_DATAPATH "" CACHE STRING "Path to NJOY data directory" )
+if ( NJOY_DATAPATH )
+    target_compile_definitions( njoy INTERFACE
+    NJOY_DATAPATH="${NJOY_DATAPATH}"
+)
+endif()
+
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # njoy : python bindings
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

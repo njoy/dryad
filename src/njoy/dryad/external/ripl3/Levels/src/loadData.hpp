@@ -7,7 +7,7 @@ static void loadData( int z ) {
     filesystem::path path( config );
     if ( ! path.is_absolute() ) {
 
-      path = filesystem::path( std::getenv( "NJOY_DATAPATH" ) );
+      path = filesystem::path( datapath() );
       path /= config;
     }
     Levels::ripl3_levels_datapath_ = path.string();
