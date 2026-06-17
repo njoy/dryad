@@ -51,7 +51,7 @@ namespace resonances{
         /**
         * @brief return the number of channels in the table
         */
-        int numberChannels() const {
+        std::size_t numberChannels() const {
           return this->channels_.size();
         }
 
@@ -74,13 +74,14 @@ namespace resonances{
         * @brief Returns if the table has a given channel
         */
         bool hasChannel( const id::ChannelID& channel ) const {
-          return std::find( channels_.begin(), channels_.end(), channel ) != channels_.end();
+            auto iter = this->iterator( channel );
+            return iter != this->channels().end() && iter->symbol() == channel;
         }
 
         /**
         * @brief Return the TabulatedAverageWidths for a given channel
         */
-        const TabulatedAverageWidths& widths( const id::ChannelID& channel ) const {
+        const TabulatedAverageWidths& channelWidths( const id::ChannelID& channel ) const {
           auto iter = this->iterator( channel );
           if ( iter == this->channels().cend() || *iter != channel ) {
             Log::error( "Channel {} not found in table", channel.symbol() );
@@ -92,7 +93,7 @@ namespace resonances{
         /**
         * @brief Return the TabulatedAverageWidths for a given channel
         */
-        TabulatedAverageWidths& widths( const id::ChannelID& channel ) {
+        TabulatedAverageWidths& channelWidths( const id::ChannelID& channel ) {
           auto iter = this->iterator( channel );
           if ( iter == this->channels().cend() || *iter != channel ) {
             Log::error( "Channel {} not found in table", channel.symbol() );

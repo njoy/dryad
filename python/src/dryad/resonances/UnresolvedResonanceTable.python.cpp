@@ -88,8 +88,8 @@ void wrapUnresolvedResonanceTable( python::module& module ) {
   )
   .def(
 
-    "widths_for_channel",
-    python::overload_cast< const ChannelID& >( &Component::widths, python::const_ ),
+    "channel_widths",
+    python::overload_cast< const ChannelID& >( &Component::channelWidths, python::const_ ),
     python::arg( "channel" ),
     "Return the average widths for a given channel\n\n"
     "Arguments:\n"

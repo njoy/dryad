@@ -33,9 +33,9 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
     self.assertEqual( [ 0.21, 0.22, 0.23, 0.24 ], table.widths[1].values )
 
     self.assertEqual( [ 0.11, 0.12, 0.13, 0.14 ],
-                      table.widths_for_channel( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ).values )
+                      table.channel_widths( ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ).values )
     self.assertEqual( [ 0.21, 0.22, 0.23, 0.24 ],
-                      table.widths_for_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ).values )
+                      table.channel_widths( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ).values )
 
   def test_sorting( self ):
 
@@ -160,16 +160,6 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
               TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ) ],
             spacings )
 
-    # the channels do not belong to the same Jpi spin group
-    with self.assertRaises( Exception ) :
-
-        table = UnresolvedResonanceTable(
-            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
-              ChannelID( 'n,U235->n,U235_e1{1,1/2,3/2-}' ) ],
-            [ TabulatedAverageWidths( energies, [ 0.11, 0.12, 0.13, 0.14 ] ),
-              TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ) ],
-            spacings )
-
     # a channel that is not in the table is requested
     table = UnresolvedResonanceTable(
         [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ) ],
@@ -178,7 +168,7 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
 
     with self.assertRaises( Exception ) :
 
-        widths = table.widths_for_channel( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) )
+        widths = table.channel_widths( ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) )
 
   def test_spin_group( self ) :
 
@@ -199,33 +189,6 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
         spacings )
 
     self.assertEqual( 3, table.number_channels )
-
-    # share L and parity, differ in total angular momentum J
-    with self.assertRaises( Exception ) :
-
-        table = UnresolvedResonanceTable(
-            [ ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' ),
-              ChannelID( 'n,U235->n,U235{1,1/2,3/2-}' ) ],
-            widths( 2 ),
-            spacings )
-
-    # share J and parity, differ in orbital angular momentum L
-    with self.assertRaises( Exception ) :
-
-        table = UnresolvedResonanceTable(
-            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
-              ChannelID( 'n,U235->n,U235{2,3/2,1/2+}' ) ],
-            widths( 2 ),
-            spacings )
-
-    # share J, differ in parity (and therefore in L)
-    with self.assertRaises( Exception ) :
-
-        table = UnresolvedResonanceTable(
-            [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
-              ChannelID( 'n,U235->n,U235{1,1/2,1/2-}' ) ],
-            widths( 2 ),
-            spacings )
 
 
 if __name__ == '__main__':

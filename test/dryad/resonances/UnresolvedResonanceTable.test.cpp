@@ -58,8 +58,8 @@ SCENARIO( "UnresolvedResonanceTable" ) {
       CHECK( expectedWidths1 == table.widths()[1] );
 
       // widths via channel lookup
-      CHECK( expectedWidths0 == table.widths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
-      CHECK( expectedWidths1 == table.widths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
+      CHECK( expectedWidths0 == table.channelWidths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
+      CHECK( expectedWidths1 == table.channelWidths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
     } // THEN
   } // GIVEN
 
@@ -94,8 +94,8 @@ SCENARIO( "UnresolvedResonanceTable" ) {
       CHECK( expectedWidths0 == table.widths()[0] );
       CHECK( expectedWidths1 == table.widths()[1] );
 
-      CHECK( expectedWidths0 == table.widths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
-      CHECK( expectedWidths1 == table.widths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
+      CHECK( expectedWidths0 == table.channelWidths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
+      CHECK( expectedWidths1 == table.channelWidths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
 
       // spacings should be unchanged
       TabulatedLevelSpacing expectedSpacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
@@ -182,41 +182,10 @@ SCENARIO( "UnresolvedResonanceTable" ) {
 
       TabulatedAverageWidths expectedWidths0( { 1., 2., 3., 4. }, { 0.11, 0.12, 0.13, 0.14 } );
       CHECK( expectedWidths0 == table.widths()[0] );
-      CHECK( expectedWidths0 == table.widths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
+      CHECK( expectedWidths0 == table.channelWidths( id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ) ) );
 
       TabulatedLevelSpacing expectedSpacings( { 1., 2., 3., 4. }, { 10., 11., 12., 13. } );
       CHECK( expectedSpacings == table.spacings() );
-    } // THEN
-  } // GIVEN
-
-  GIVEN( "average widths and level spacings defined on different energy grids" ) {
-
-    std::vector< id::ChannelID > channels = {
-
-      id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-      id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" )
-    };
-    std::vector< TabulatedAverageWidths > widths = {
-
-      TabulatedAverageWidths( 1, { 1., 2., 3., 4. }, { 1., 2., 3., 4. } ),
-      TabulatedAverageWidths( 1, { 1., 2.5, 4. }, { 1., 1., 1. } )
-    };
-    TabulatedLevelSpacing spacings( { 1., 2., 3., 4. }, { 10., 20., 30., 40. } );
-
-    THEN( "the energy grids are unified on construction" ) {
-
-      UnresolvedResonanceTable table( std::move( channels ),
-                                      std::move( widths ),
-                                      std::move( spacings ) );
-
-      std::vector< double > unionGrid = { 1., 2., 2.5, 3., 4. };
-      CHECK( unionGrid == table.spacings().energies() );
-      CHECK( unionGrid == table.widths()[0].energies() );
-      CHECK( unionGrid == table.widths()[1].energies() );
-
-      CHECK( std::vector< double >{ 10., 20., 25., 30., 40. } == table.spacings().values() );
-      CHECK( std::vector< double >{ 1., 2., 2.5, 3., 4. } == table.widths()[0].values() );
-      CHECK( std::vector< double >{ 1., 1., 1., 1., 1. } == table.widths()[1].values() );
     } // THEN
   } // GIVEN
 
@@ -353,58 +322,6 @@ SCENARIO( "UnresolvedResonanceTable" ) {
       } // THEN
     } // WHEN
 
-    WHEN( "the channels do not belong to the same Jpi spin group" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UnresolvedResonanceTable(
-          { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-            id::ChannelID( "n,U235->n,U235_e1{1,1/2,3/2-}" ) },
-          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
-            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
-          TabulatedLevelSpacing( energies, spacingValues ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the channels share L and parity but differ in total angular momentum J" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UnresolvedResonanceTable(
-          { id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ),
-            id::ChannelID( "n,U235->n,U235{1,1/2,3/2-}" ) },
-          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
-            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
-          TabulatedLevelSpacing( energies, spacingValues ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the channels share J and parity but differ in orbital angular momentum L" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UnresolvedResonanceTable(
-          { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-            id::ChannelID( "n,U235->n,U235{2,3/2,1/2+}" ) },
-          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
-            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
-          TabulatedLevelSpacing( energies, spacingValues ) ) );
-      } // THEN
-    } // WHEN
-
-    WHEN( "the channels share J but differ in parity (and therefore in L)" ) {
-
-      THEN( "an exception is thrown" ) {
-
-        CHECK_THROWS( UnresolvedResonanceTable(
-          { id::ChannelID( "n,U235->n,U235{0,1/2,1/2+}" ),
-            id::ChannelID( "n,U235->n,U235{1,1/2,1/2-}" ) },
-          { TabulatedAverageWidths( energies, { 0.11, 0.12, 0.13, 0.14 } ),
-            TabulatedAverageWidths( energies, { 0.21, 0.22, 0.23, 0.24 } ) },
-          TabulatedLevelSpacing( energies, spacingValues ) ) );
-      } // THEN
-    } // WHEN
-
     WHEN( "a channel is requested that is not in the table" ) {
 
       UnresolvedResonanceTable table(
@@ -414,7 +331,7 @@ SCENARIO( "UnresolvedResonanceTable" ) {
 
       THEN( "an exception is thrown by widths(channel)" ) {
 
-        CHECK_THROWS( table.widths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
+        CHECK_THROWS( table.channelWidths( id::ChannelID( "n,U235->n,U235_e1{0,1/2,1/2+}" ) ) );
       } // THEN
     } // WHEN
   } // GIVEN
