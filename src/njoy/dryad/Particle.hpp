@@ -230,10 +230,10 @@ namespace dryad {
      */
     friend bool operator==( const Particle& left, const Particle& right ) {
 
-      return std::tie( left.identifier(), left.mass_, left.nuclear_mass_, left.energy_,
+      return std::tie( left.identifier(), left.mass(), left.nuclearMass(), left.energy(),
                        left.massUncertainty(), left.nuclearMassUncertainty(),
                        left.energyUncertainty(), left.spin(), left.parity() ) ==
-             std::tie( right.identifier(), right.mass_, right.nuclear_mass_, right.energy_,
+             std::tie( right.identifier(), right.mass(), right.nuclearMass(), right.energy(),
                        right.massUncertainty(), right.nuclearMassUncertainty(),
                        right.energyUncertainty(), right.spin(), right.parity() );
     }
