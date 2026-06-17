@@ -4,7 +4,7 @@
  */
 class Entry {
 
-  // short has a max value of 255
+  // we need at least 999 as the max value so short is sufficient
 
   /* fields */
   short number_;
