@@ -52,15 +52,15 @@ SCENARIO( "ParticleID" ) {
       CHECK( false == ParticleID::isRegistered( "H1" ) );
       CHECK( false == ParticleID::isRegistered( "H1_e0" ) );
       CHECK( false == ParticleID::isRegistered( "H1_e10" ) );
-      CHECK( false == ParticleID::isRegistered( "H1_e150" ) );
-      CHECK( false == ParticleID::isRegistered( "H1_e151" ) );
+      CHECK( false == ParticleID::isRegistered( "H1_e998" ) );
+      CHECK( false == ParticleID::isRegistered( "H1_e999" ) );
       CHECK( false == ParticleID::isRegistered( "H1[continuum]" ) );
       CHECK( false == ParticleID::isRegistered( "H1[all]" ) );
       CHECK( false == ParticleID::isRegistered( "H2" ) );
       CHECK( false == ParticleID::isRegistered( "H2_e0" ) );
       CHECK( false == ParticleID::isRegistered( "H2_e10" ) );
-      CHECK( false == ParticleID::isRegistered( "H2_e150" ) );
-      CHECK( false == ParticleID::isRegistered( "H2_e151" ) );
+      CHECK( false == ParticleID::isRegistered( "H2_e998" ) );
+      CHECK( false == ParticleID::isRegistered( "H2_e999" ) );
       CHECK( false == ParticleID::isRegistered( "H2[continuum]" ) );
       CHECK( false == ParticleID::isRegistered( "H2[all]" ) );
       CHECK( false == ParticleID::isRegistered( "U236_e10" ) );
@@ -517,7 +517,7 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 3 == ParticleID::size() ); // H1[continuum] already registered
 
-      id = ParticleID( "H1_e150" );
+      id = ParticleID( "H1_e998" );
       CHECK( "H1[continuum]" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 1 == id.a() );
@@ -557,7 +557,7 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 4 == ParticleID::size() ); // H2[continuum] already registered
 
-      id = ParticleID( "H2_e150" );
+      id = ParticleID( "H2_e998" );
       CHECK( "H2[continuum]" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 2 == id.a() );
@@ -597,7 +597,7 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 5 == ParticleID::size() ); // H1[all] already registered
 
-      id = ParticleID( "H1_e151" );
+      id = ParticleID( "H1_e999" );
       CHECK( "H1[all]" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 1 == id.a() );
@@ -637,7 +637,7 @@ SCENARIO( "ParticleID" ) {
 
       CHECK( size + 6 == ParticleID::size() ); // H2[all] already registered
 
-      id = ParticleID( "H2_e151" );
+      id = ParticleID( "H2_e999" );
       CHECK( "H2[all]" == id.symbol() );
       CHECK( 1 == id.z() );
       CHECK( 2 == id.a() );
@@ -982,12 +982,12 @@ SCENARIO( "ParticleID" ) {
       CHECK( true == ParticleID::isRegistered( "H1" ) );
       CHECK( true == ParticleID::isRegistered( "H1_e0" ) );
       CHECK( true == ParticleID::isRegistered( "H1_e10" ) );
-      CHECK( true == ParticleID::isRegistered( "H1_e150" ) );
-      CHECK( true == ParticleID::isRegistered( "H1_e151" ) );
+      CHECK( true == ParticleID::isRegistered( "H1_e998" ) );
+      CHECK( true == ParticleID::isRegistered( "H1_e999" ) );
       CHECK( true == ParticleID::isRegistered( "H1[continuum]" ) );
       CHECK( true == ParticleID::isRegistered( "H1[all]" ) );
-      CHECK( true == ParticleID::isRegistered( "H2_e150" ) );
-      CHECK( true == ParticleID::isRegistered( "H2_e151" ) );
+      CHECK( true == ParticleID::isRegistered( "H2_e998" ) );
+      CHECK( true == ParticleID::isRegistered( "H2_e999" ) );
       CHECK( true == ParticleID::isRegistered( "H2[continuum]" ) );
       CHECK( true == ParticleID::isRegistered( "H2[all]" ) );
       CHECK( true == ParticleID::isRegistered( "U236_e10" ) );
@@ -1123,7 +1123,7 @@ SCENARIO( "ParticleID" ) {
       CHECK_THROWS( ParticleID( "not a particle symbol" ) );
       CHECK_THROWS( ParticleID( "H_e0" ) );
       CHECK_THROWS( ParticleID( "H_e1" ) );
-      CHECK_THROWS( ParticleID( "H1_e152" ) );
+      CHECK_THROWS( ParticleID( "H1_e1000" ) );
       CHECK_THROWS( ParticleID( "H{4p}" ) );   // non-relativistic vacancy is not allowed
     } // THEN
   } // GIVEN

@@ -5,7 +5,19 @@
 #include <map>
 #include <stdexcept>
 
+#if __has_include(<filesystem>) && (__cplusplus >= 201703L)
+#include <filesystem>
+namespace filesystem = std::filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
+namespace filesystem = std::experimental::filesystem;
+#endif
+
 // other includes
+#include "tools/Log.hpp"
+#include "tools/disco.hpp"
+#include "njoy/configuration.hpp"
+#include "njoy/constants.hpp"
 #include "njoy/dryad/external/ripl3/LevelEntry.hpp"
 #include "njoy/dryad/id/ParticleID.hpp"
 
@@ -25,9 +37,13 @@ namespace ripl3 {
 
     /* fields */
 
+    static inline std::optional< std::string > ripl3_levels_datapath_;
+
     static inline std::map< id::ParticleID, LevelEntry > levels_ = {
 
       { id::ParticleID::photon(), { id::ParticleID::photon(), std::nullopt, 1.0, -1, std::nullopt } },
+      { id::ParticleID::electron(), { id::ParticleID::electron(), std::nullopt, std::nullopt, std::nullopt, std::nullopt } },
+      { id::ParticleID::positron(), { id::ParticleID::positron(), std::nullopt, std::nullopt, std::nullopt, std::nullopt } },
       { id::ParticleID::neutron(), { id::ParticleID::neutron(), std::nullopt, 0.5, 1, std::nullopt } },
       { id::ParticleID::proton(), { id::ParticleID::proton(), std::nullopt, 0.5, 1, std::nullopt } },
       { id::ParticleID::deuteron(), { id::ParticleID::deuteron(), std::nullopt, 1.0, 1, std::nullopt } },
@@ -38,9 +54,30 @@ namespace ripl3 {
 
     /* auxiliary functions */
 
+    #include "njoy/dryad/external/ripl3/Levels/src/iterator.hpp"
+    #include "njoy/dryad/external/ripl3/Levels/src/insertData.hpp"
+
   public:
 
     /* methods */
+
+    /**
+     *  @brief Return the current size of the RIPL-3 levels data
+     */
+    static std::size_t size() {
+
+      return Levels::levels_.size();
+    }
+
+    /**
+     *  @brief Verify whether or not a given particle is present
+     *
+     *  @param[in] id   the particle identifier
+     */
+    static bool hasParticle( const id::ParticleID& id ) {
+
+      return iterator( id ) == Levels::levels_.end();
+    }
 
     /**
      *  @brief Retrieve a level entry for a given particle
@@ -49,12 +86,12 @@ namespace ripl3 {
      */
     static const LevelEntry& level( const id::ParticleID& id ) {
 
-      auto it = Levels::levels_.find( id );
-      if ( it == Levels::levels_.end() ) {
+      auto iter = iterator( id );
+      if ( iter == Levels::levels_.end() ) {
 
         throw std::out_of_range( "Particle not found in RIPL-3 levels database" );
       }
-      return it->second;
+      return iter->second;
     }
   };
 

@@ -95,6 +95,16 @@ class Levels:
     database.
     """
     @staticmethod
+    def has_particle(id: njoy.dryad.id.ParticleID) -> bool:
+        """
+        Verify whether or not a given particle is present
+        
+        Parameters
+        ----------
+            id : njoy.dryad.id.ParticleID
+                 the particle identifier
+        """
+    @staticmethod
     def level(id: njoy.dryad.id.ParticleID) -> LevelEntry:
         """
         Retrieve a level entry for a given particle
@@ -103,4 +113,9 @@ class Levels:
         ----------
             id : njoy.dryad.id.ParticleID
                  the particle identifier
+        """
+    @staticmethod
+    def size() -> int:
+        """
+        Return the current size of the RIPL-3 levels data
         """
