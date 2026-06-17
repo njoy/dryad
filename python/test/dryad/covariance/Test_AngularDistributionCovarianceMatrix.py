@@ -8,6 +8,7 @@ import numpy
 from njoy.dryad.covariance import AngularDistributionCovarianceMatrix
 from njoy.dryad.covariance import AngularDistributionMetadata
 from njoy.dryad.id import ReactionID
+from njoy.dryad import ReferenceFrame
 
 class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
     """Unit test for the AngularDistributionCovarianceMatrix class."""
@@ -15,12 +16,14 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
     def test_diagonal_covariance_block( self ) :
 
         # the data is given explicitly - for a diagonal block
-        chunk = AngularDistributionCovarianceMatrix( AngularDistributionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
-                                                                                  [ 1 ],
-                                                                                  [ 1e-5, 1., 1e+6, 2e+7 ] ),
-                                              covariances = numpy.array( [ [ 1., 2., 3. ],
-                                                                           [ 2., 4., 6. ],
-                                                                           [ 3., 6., 9. ] ] ) )
+        chunk = AngularDistributionCovarianceMatrix(
+                    frame = ReferenceFrame.Laboratory,
+                    metadata = AngularDistributionMetadata( ReactionID( 'n,U235->n,U235' ),
+                                                            1,
+                                                            [ 1e-5, 1., 1e+6, 2e+7 ] ),
+                    covariances = numpy.array( [ [ 1., 2., 3. ],
+                                                 [ 2., 4., 6. ],
+                                                 [ 3., 6., 9. ] ] ) )
 
         # verify content
         self.assertEqual( chunk.row_metadata, chunk.column_metadata )
@@ -33,6 +36,8 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.row_metadata.energies[3] )
         self.assertEqual( 1, len( chunk.row_metadata.moments ) )
         self.assertEqual( 1, chunk.row_metadata.moments[0] )
+
+        self.assertEqual( ReferenceFrame.Laboratory, chunk.frame )
 
         self.assertEqual( True, chunk.is_relative_matrix )
         self.assertEqual( False, chunk.is_absolute_matrix )
@@ -86,15 +91,17 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
     def test_off_diagonal_covariance_block( self ) :
 
         # the data is given explicitly
-        chunk = AngularDistributionCovarianceMatrix( row_metadata = AngularDistributionMetadata( [ ReactionID( 'n,U235->n,U235' ) ],
-                                                                                                 [ 1 ],
-                                                                                                 [ 1e-5, 1., 1e+6, 2e+7 ] ),
-                                                     column_metadata = AngularDistributionMetadata( [ ReactionID( 'n,U235->fission(t)' ) ],
-                                                                                                    [ 2 ],
-                                                                                                    [ 1e-5, 2., 2e+7 ] ),
-                                                     covariances = numpy.array( [ [ 1., 2. ],
-                                                                                  [ 2., 4. ],
-                                                                                  [ 3., 6. ] ] ) )
+        chunk = AngularDistributionCovarianceMatrix(
+                    frame = ReferenceFrame.Laboratory,
+                    row_metadata = AngularDistributionMetadata( ReactionID( 'n,U235->n,U235' ),
+                                                                1,
+                                                                [ 1e-5, 1., 1e+6, 2e+7 ] ),
+                    column_metadata = AngularDistributionMetadata( ReactionID( 'n,U235->fission(t)' ),
+                                                                   2,
+                                                                   [ 1e-5, 2., 2e+7 ] ),
+                    covariances = numpy.array( [ [ 1., 2. ],
+                                                 [ 2., 4. ],
+                                                 [ 3., 6. ] ] ) )
 
         # verify content
         self.assertNotEqual( chunk.row_metadata, chunk.column_metadata )
@@ -117,6 +124,8 @@ class Test_AngularDistributionCovarianceMatrix( unittest.TestCase ) :
         self.assertAlmostEqual( 2e+7, chunk.column_metadata.energies[2] )
         self.assertEqual( 1, len( chunk.column_metadata.moments ) )
         self.assertEqual( 2, chunk.column_metadata.moments[0] )
+
+        self.assertEqual( ReferenceFrame.Laboratory, chunk.frame )
 
         self.assertEqual( True, chunk.is_relative_matrix )
         self.assertEqual( False, chunk.is_absolute_matrix )

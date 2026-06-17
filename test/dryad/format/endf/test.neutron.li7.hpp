@@ -2010,6 +2010,8 @@ namespace li7 {
 
     CHECK( std::nullopt != Li7.covarianceData()->crossSection() );
     verifyCrossSectionCovariances( Li7.covarianceData()->crossSection().value() );
+
+    CHECK( std::nullopt == Li7.covarianceData()->angularDistribution() );
   }
 
 } // namespace li7

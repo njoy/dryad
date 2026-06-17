@@ -17,6 +17,7 @@ void wrapCovarianceData( python::module& module ) {
   // type aliases
   using Component = njoy::dryad::covariance::CovarianceData;
   using CrossSectionCovarianceData = njoy::dryad::covariance::CrossSectionCovarianceData;
+  using AngularDistributionCovarianceData = njoy::dryad::covariance::AngularDistributionCovarianceData;
 
   // wrap views created by this component
 
@@ -29,15 +30,19 @@ void wrapCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    xs : njoy.dryad.covariance.CrossSectionCovarianceData \n"
-    "         the cross section covariance data"
+    "         the cross section covariance data\n"
+    "    angular : njoy.dryad.covariance.AngularDistributionCovarianceData \n"
+    "         the angular distribution covariance data"
   );
 
   // wrap the component
   component
   .def(
 
-    python::init< std::optional< CrossSectionCovarianceData > >(),
+    python::init< std::optional< CrossSectionCovarianceData >,
+                  std::optional< AngularDistributionCovarianceData > >(),
     python::arg( "xs" ),
+    python::arg( "angular" ),
     "Initialise the covariance data\n"
   )
   .def_property_readonly(
@@ -48,9 +53,21 @@ void wrapCovarianceData( python::module& module ) {
   )
   .def_property_readonly(
 
+    "has_angular_distribution_covariances",
+    &Component::hasAngularDistributionCovariances,
+    "Return whether or not there are angular distribution covariances"
+  )
+  .def_property_readonly(
+
     "cross_section",
     python::overload_cast<>( &Component::crossSection, python::const_ ),
     "The cross section covariances"
+  )
+  .def_property_readonly(
+
+    "angular_distribution",
+    python::overload_cast<>( &Component::angularDistribution, python::const_ ),
+    "The angular distribution covariances"
   );
 
   // add standard equality comparison definitions

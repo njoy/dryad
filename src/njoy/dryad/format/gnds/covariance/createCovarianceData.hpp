@@ -102,7 +102,7 @@ namespace covariance {
       xs = dryad::covariance::CrossSectionCovarianceData( std::move( xs_covariances ) );
     }
 
-    return dryad::covariance::CovarianceData( std::move( xs ) );
+    return dryad::covariance::CovarianceData( std::move( xs ), std::nullopt );
   }
 
 } // covariance namespace

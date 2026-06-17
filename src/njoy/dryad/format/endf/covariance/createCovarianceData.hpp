@@ -9,6 +9,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/covariance/CovarianceData.hpp"
 #include "njoy/dryad/format/endf/covariance/createCrossSectionCovarianceData.hpp"
+#include "njoy/dryad/format/endf/covariance/createAngularDistributionCovarianceData.hpp"
 #include "ENDFtk/Material.hpp"
 #include "ENDFtk/tree/Material.hpp"
 
@@ -33,9 +34,12 @@ namespace covariance {
     std::optional< dryad::covariance::CrossSectionCovarianceData > xs =
     createCrossSectionCovarianceData( projectile, target, material );
 
-    if ( xs.has_value() ) {
+    std::optional< dryad::covariance::AngularDistributionCovarianceData > angular =
+    createAngularDistributionCovarianceData( projectile, target, material );
 
-      return dryad::covariance::CovarianceData( std::move( xs ) );
+    if ( xs.has_value() || angular.has_value() ) {
+
+      return dryad::covariance::CovarianceData( std::move( xs ), std::move( angular ) );
     }
     else {
 

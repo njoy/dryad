@@ -1,7 +1,7 @@
 private:
 
-AngularDistributionCovarianceMatrix( Parent&& base ) :
-  Parent( std::move( base ) ) {}
+AngularDistributionCovarianceMatrix( Parent&& base, ReferenceFrame frame ) :
+  Parent( std::move( base ) ), frame_( std::move( frame ) ) {}
 
 public:
 
@@ -19,48 +19,58 @@ AngularDistributionCovarianceMatrix& operator=( AngularDistributionCovarianceMat
 /**
  *  @brief Constructor for an on-diagonal angular distribution covariance matrix
  *
+ *  @param[in] frame         the reference frame of the covariance data
  *  @param[in] metadata      the row and column metadata
  *  @param[in] covariances   the covariance matrix
  *  @param[in] relative      the relative covariance flag (default is true)
  */
-AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
+AngularDistributionCovarianceMatrix( ReferenceFrame frame,
+                                     AngularDistributionMetadata metadata,
                                      matrix::Matrix< double > covariances,
                                      bool relative = true ) :
-  Parent( std::move( metadata ), std::move( covariances ), relative ) {}
+  Parent( std::move( metadata ), std::move( covariances ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor for an off-diagonal angular distribution covariance matrix
  *
+ *  @param[in] frame            the reference frame of the covariance data
  *  @param[in] rowMetadata      the row metadata
  *  @param[in] columnMetadata   the column metadata
  *  @param[in] covariances      the covariance matrix
  *  @param[in] relative         the relative covariance flag (default is true)
  */
-AngularDistributionCovarianceMatrix( AngularDistributionMetadata rowMetadata,
+AngularDistributionCovarianceMatrix( ReferenceFrame frame,
+                                     AngularDistributionMetadata rowMetadata,
                                      AngularDistributionMetadata columnMetadata,
                                      matrix::Matrix< double > covariances,
                                      bool relative = true ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
-          std::move( covariances ), relative ) {}
+          std::move( covariances ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor for an on-diagonal angular distribution correlation matrix
  *
+ *  @param[in] frame          the reference frame of the covariance data
  *  @param[in] metadata       the row and column metadata
  *  @param[in] deviations     the standard deviations
  *  @param[in] correlations   the correlation matrix
  *  @param[in] relative       the relative covariance flag (default is true)
  */
-AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
+AngularDistributionCovarianceMatrix( ReferenceFrame frame,
+                                     AngularDistributionMetadata metadata,
                                      std::vector< double > deviations,
                                      matrix::Matrix< double > correlations,
                                      bool relative = true ) :
   Parent( std::move( metadata ), std::move( deviations ),
-          std::move( correlations ), relative ) {}
+          std::move( correlations ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor for an off-diagonal angular distribution correlation matrix
  *
+ *  @param[in] frame              the reference frame of the covariance data
  *  @param[in] rowMetadata        the row metadata
  *  @param[in] columnMetadata     the column metadata
  *  @param[in] rowDeviations      the standard deviations to be applied to each row
@@ -68,7 +78,8 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
  *  @param[in] correlations       the correlation matrix
  *  @param[in] relative           the relative covariance flag (default is true)
  */
-AngularDistributionCovarianceMatrix( AngularDistributionMetadata rowMetadata,
+AngularDistributionCovarianceMatrix( ReferenceFrame frame,
+                                     AngularDistributionMetadata rowMetadata,
                                      AngularDistributionMetadata columnMetadata,
                                      const std::vector< double >& rowDeviations,
                                      const std::vector< double >& columnDeviations,
@@ -76,20 +87,24 @@ AngularDistributionCovarianceMatrix( AngularDistributionMetadata rowMetadata,
                                      bool relative = true ) :
   Parent( std::move( rowMetadata ), std::move( columnMetadata ),
           rowDeviations, columnDeviations,
-          std::move( correlations ), relative ) {}
+          std::move( correlations ), relative ),
+  frame_( std::move( frame ) ) {}
 
 /**
  *  @brief Constructor using eigenvalues and eigenvectors for an on-diagonal
  *         angular distribution covariance matrix
  *
+ *  @param[in] frame         the reference frame of the covariance data
  *  @param[in] metadata       the row and column metadata
  *  @param[in] eigenvalues    the eigenvalues
  *  @param[in] eigenvectors   the associated eigenvectors
  *  @param[in] relative       the relative covariance flag
  */
-AngularDistributionCovarianceMatrix( AngularDistributionMetadata metadata,
+AngularDistributionCovarianceMatrix( ReferenceFrame frame,
+                                     AngularDistributionMetadata metadata,
                                      std::vector< double > eigenvalues,
                                      std::vector< matrix::Vector< double > > eigenvectors,
                                      bool relative = true ) :
   Parent( std::move( metadata ), std::move( eigenvalues ),
-          std::move( eigenvectors ), relative ) {}
+          std::move( eigenvectors ), relative ),
+  frame_( std::move( frame ) ) {}

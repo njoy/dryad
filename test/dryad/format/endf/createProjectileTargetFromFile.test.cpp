@@ -42,6 +42,18 @@ SCENARIO( "projectileTarget" ) {
         neutron::li7::verifyLi7( second, true );
       } // THEN
     } // WHEN
+
+    WHEN( "a single ENDF material is given with angular distribution covariances" ) {
+
+      THEN( "it can be converted" ) {
+
+        ProjectileTarget first = format::endf::createProjectileTargetFromFile( "n-010_Ne_022.endf", false );
+        ProjectileTarget second = format::endf::createProjectileTargetFromFile( "n-010_Ne_022.endf", true );
+
+        neutron::ne22::verifyNe22( first, false );
+        neutron::ne22::verifyNe22( second, true );
+      } // THEN
+    } // WHEN
   } // GIVEN
 
   GIVEN( "ENDF materials - incident neutrons" ) {

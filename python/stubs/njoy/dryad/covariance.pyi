@@ -2,6 +2,7 @@
 Covariance data components
 """
 from __future__ import annotations
+import njoy.dryad
 import njoy.dryad.id
 import numpy
 import typing
@@ -12,7 +13,7 @@ class AngularDistributionCovarianceData:
     
     Parameters
     ----------
-        matrices : list of njoy.dryad.covariance. 
+        matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceData 
              the covariance matrices
     """
     __hash__: typing.ClassVar[None] = None
@@ -101,47 +102,51 @@ class AngularDistributionCovarianceMatrix:
     def __deepcopy__(self, arg0: dict) -> AngularDistributionCovarianceMatrix:
         ...
     @typing.overload
-    def __init__(self, metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an on-diagonal angular distribution covariance matrix
         
         Arguments:
             self          the covariance matrix
+            frame         the reference frame of the covariance data
             metadata      the row and column metadata
             covariances   the covariance matrix
             relative      the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, covariances: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an off-diagonal angular distribution covariance matrix
         
         Arguments:
             self             the covariance matrix
+            frame            the reference frame of the covariance data
             row_metadata     the row metadata
             column_metadata  the column metadata
             covariances      the covariance matrix
             relative         the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, metadata: AngularDistributionMetadata, deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, metadata: AngularDistributionMetadata, deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an on-diagonal angular distribution correlation matrix
         
         Arguments:
             self           the covariance matrix
+            frame         the reference frame of the covariance data
             metadata       the row and column metadata
             deviations     the standard deviations
             correlations   the correlation matrix
             relative       the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, row_metadata: AngularDistributionMetadata, column_metadata: AngularDistributionMetadata, row_deviations: list[float], column_deviations: list[float], correlations: numpy.ndarray[numpy.float64[m, n]], relative: bool = True) -> None:
         """
         Initialise an off-diagonal angular distribution correlation matrix
         
         Arguments:
             self               the covariance matrix
+            frame         the reference frame of the covariance data
             row_metadata       the row metadata
             column_metadata    the column metadata
             row_deviations     the standard deviations to be applied to each row
@@ -150,13 +155,14 @@ class AngularDistributionCovarianceMatrix:
             relative           the relative covariance flag (default is true)
         """
     @typing.overload
-    def __init__(self, metadata: AngularDistributionMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True) -> None:
+    def __init__(self, frame: njoy.dryad.ReferenceFrame, metadata: AngularDistributionMetadata, eigenvalues: list[float], eigenvectors: list[numpy.ndarray[numpy.float64[m, 1]]], relative: bool = True) -> None:
         """
         Initialise an on-diagonal angular distribution covariance matrix using eigenvalues
         and eigenvectors
         
         Arguments:
             self           the covariance matrix
+            frame         the reference frame of the covariance data
             metadata       the row and column metadata
             eigenvalues    the eigenvalues
             eigenvectors   the associated eigenvectors
@@ -280,6 +286,14 @@ class AngularDistributionCovarianceMatrix:
         The eigenvectors
         """
     @property
+    def frame(self) -> njoy.dryad.ReferenceFrame:
+        """
+        The reference frame
+        """
+    @frame.setter
+    def frame(self, arg1: njoy.dryad.ReferenceFrame) -> None:
+        ...
+    @property
     def is_absolute_matrix(self) -> bool:
         """
         Flag to indicate whether or not this covariance matrix is absolute or not
@@ -384,6 +398,8 @@ class CovarianceData:
     ----------
         xs : njoy.dryad.covariance.CrossSectionCovarianceData 
              the cross section covariance data
+        angular : njoy.dryad.covariance.AngularDistributionCovarianceData 
+             the angular distribution covariance data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CovarianceData:
@@ -392,16 +408,26 @@ class CovarianceData:
         ...
     def __eq__(self, arg0: CovarianceData) -> bool:
         ...
-    def __init__(self, xs: CrossSectionCovarianceData | None) -> None:
+    def __init__(self, xs: CrossSectionCovarianceData | None, angular: AngularDistributionCovarianceData | None) -> None:
         """
         Initialise the covariance data
         """
     def __ne__(self, arg0: CovarianceData) -> bool:
         ...
     @property
+    def angular_distribution(self) -> AngularDistributionCovarianceData | None:
+        """
+        The angular distribution covariances
+        """
+    @property
     def cross_section(self) -> CrossSectionCovarianceData | None:
         """
         The cross section covariances
+        """
+    @property
+    def has_angular_distribution_covariances(self) -> bool:
+        """
+        Return whether or not there are angular distribution covariances
         """
     @property
     def has_cross_section_covariances(self) -> bool:

@@ -32,7 +32,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
       std::size_t moment = 1;
 
       auto chunk = format::endf::covariance::createAngularDistributionCovarianceMatrix(
-                     reaction, reaction, 1, 1, covariance );
+                     ReferenceFrame::CentreOfMass, reaction, reaction, 1, 1, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
 
@@ -53,6 +53,8 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
         CHECK_THAT( 5.6e+6, WithinRel( chunk.rowMetadata().energies()[7] ) );
         CHECK_THAT( 6.2e+6, WithinRel( chunk.rowMetadata().energies()[8] ) );
         CHECK_THAT( 2.0e+8, WithinRel( chunk.rowMetadata().energies()[9] ) );
+
+        CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );
@@ -175,7 +177,7 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
       std::size_t columnMoment = 2;
 
       auto chunk = format::endf::covariance::createAngularDistributionCovarianceMatrix(
-                     reaction, reaction, rowMoment, columnMoment, covariance );
+                     ReferenceFrame::CentreOfMass, reaction, reaction, rowMoment, columnMoment, covariance );
 
       THEN( "covariance matrices can be created and members can be tested" ) {
 
@@ -212,6 +214,8 @@ SCENARIO( "createAngularDistributionCovarianceMatrix" ) {
         CHECK_THAT( 5.6e+6, WithinRel( chunk.columnMetadata().energies()[7] ) );
         CHECK_THAT( 6.2e+6, WithinRel( chunk.columnMetadata().energies()[8] ) );
         CHECK_THAT( 2.0e+8, WithinRel( chunk.columnMetadata().energies()[9] ) );
+
+        CHECK( ReferenceFrame::CentreOfMass == chunk.frame() );
 
         CHECK( true == chunk.isRelativeMatrix() );
         CHECK( false == chunk.isAbsoluteMatrix() );

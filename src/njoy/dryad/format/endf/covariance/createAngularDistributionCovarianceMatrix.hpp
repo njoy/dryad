@@ -24,6 +24,7 @@ namespace covariance {
    *
    *  For ENDF angular distribution matrices, only LB = 0, 1, 2, 5 and 6 are allowed.
    *
+   *  @param[in] frame            the reference frame
    *  @param[in] rowReaction      the row reaction identifier
    *  @param[in] columnReaction   the column reaction identifier
    *  @param[in] rowMoment        the row Legendre moment
@@ -32,6 +33,7 @@ namespace covariance {
    */
   inline dryad::covariance::AngularDistributionCovarianceMatrix
   createAngularDistributionCovarianceMatrix(
+      const ReferenceFrame& frame,
       const dryad::id::ReactionID& rowReaction,
       const dryad::id::ReactionID& columnReaction,
       std::size_t rowMoment,
@@ -107,13 +109,14 @@ namespace covariance {
 
     if ( on_diagonal ) {
 
-      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ), Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                std::move( matrix ),
                                relative );
     }
     else {
 
-      return CovarianceMatrix( Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
+      return CovarianceMatrix( std::move( frame ),
+                               Metadata( rowReaction, rowMoment, std::move( rowStructure ) ),
                                Metadata( columnReaction, columnMoment, std::move( columnStructure ) ),
                                std::move( matrix ),
                                relative );
