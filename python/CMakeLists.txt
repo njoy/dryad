@@ -136,17 +136,19 @@ if(njoy.python)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/psychic/covariance/TestSuite.python.cpp
     )
 
-    target_link_libraries(njoy.python PRIVATE njoy)
+    target_link_libraries( njoy.python PRIVATE njoy )
     target_include_directories( njoy.python PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src )
     set_target_properties( njoy.python PROPERTIES CXX_VISIBILITY_PRESET hidden)
     set_target_properties( njoy.python PROPERTIES OUTPUT_NAME njoy )
-    set_target_properties( njoy.python PROPERTIES LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_CURRENT_BINARY_DIR})
-    set_target_properties( njoy.python PROPERTIES COMPILE_DEFINITIONS "PYBIND11" )
+    set_target_properties( njoy.python PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} )
     set_target_properties( njoy.python PROPERTIES POSITION_INDEPENDENT_CODE ON )
     # add all .so's that are installed with mcatk to the installed library rpath
     set_target_properties( njoy.python PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
     # add all .so's that are linked to at build time to the installed library rpath
     set_target_properties( njoy.python PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
+    if ( NJOY_DATAPATH )
+      target_compile_definitions( njoy.python PRIVATE NJOY_DATAPATH="${NJOY_DATAPATH}" )
+    endif()
 
     set(PyVersion "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
     set( py_library_install_prefix ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/python${PyVersion}/site-packages )

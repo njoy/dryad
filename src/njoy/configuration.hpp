@@ -28,10 +28,19 @@ static tools::Configuration& configuration() {
     path /= "njoy.config";
     return tools::Configuration::getInstance( path.string() );
   }
+#ifdef NJOY_DATAPATH
+  else {
+
+    filesystem::path path( NJOY_DATAPATH );
+    path /= "njoy.config";
+    return tools::Configuration::getInstance( path.string() );
+  }
+#else
   else {
 
     throw std::runtime_error( "The NJOY_DATAPATH environmental variable is not set." );
   }
+#endif
 }
 
 } // njoy namespace
