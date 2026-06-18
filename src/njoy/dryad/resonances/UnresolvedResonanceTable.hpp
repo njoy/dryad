@@ -74,7 +74,7 @@ namespace resonances{
         */
         bool hasChannel( const id::ChannelID& channel ) const {
             auto iter = this->iterator( channel );
-            return iter != this->channels().end() && iter->symbol() == channel;
+            return iter != this->channels().end() && *iter == channel;
         }
 
         /**
@@ -93,14 +93,8 @@ namespace resonances{
         * @brief Return the TabulatedAverageWidths for a given channel
         */
         TabulatedAverageWidths& channelWidths( const id::ChannelID& channel ) {
-          auto iter = this->iterator( channel );
-          if ( iter == this->channels().cend() || *iter != channel ) {
-            Log::error( "Channel {} not found in table", channel.symbol() );
-            throw std::exception();
-          }
-          else {
-            return this->widths()[ std::distance( this->channels().cbegin(), iter ) ];
-          }
+
+          return const_cast< TabulatedAverageWidths& > ( const_cast< const UnresolvedResonanceTable& >( *this ).channelWidths( channel ) );
         }
 
         /**
