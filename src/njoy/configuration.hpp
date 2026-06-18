@@ -17,6 +17,9 @@ namespace filesystem = std::experimental::filesystem;
 
 namespace njoy {
 
+/**
+ *  @brief Return the NJOY data path
+ */
 static std::string datapath() {
 
   if ( const char* njoy_datapath = std::getenv( "NJOY_DATAPATH" ) ) {

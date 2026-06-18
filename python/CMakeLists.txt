@@ -146,9 +146,6 @@ if(njoy.python)
     set_target_properties( njoy.python PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
     # add all .so's that are linked to at build time to the installed library rpath
     set_target_properties( njoy.python PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
-    if ( NJOY_DATAPATH )
-      target_compile_definitions( njoy.python PRIVATE NJOY_DATAPATH="${NJOY_DATAPATH}" )
-    endif()
 
     set(PyVersion "${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}")
     set( py_library_install_prefix ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/python${PyVersion}/site-packages )
