@@ -42,8 +42,7 @@ static tools::Configuration& configuration() {
   filesystem::path path( datapath() );
   path /= "njoy.config";
   return tools::Configuration::getInstance( path.string() );
-
-  }
+}
 
 } // njoy namespace
 
