@@ -39,6 +39,8 @@ cmake_dependent_option(
 
 option( njoy.installation "Install njoy" OFF )
 
+set( NJOY_DATAPATH "" CACHE STRING "Path to NJOY data directory" )
+
 ########################################################################
 # Dependencies
 ########################################################################
