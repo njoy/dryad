@@ -14,11 +14,13 @@ namespace resonances {
 
   class UnresolvedChannel {
 
-    public:
 
     private:
 
       Channel channel_;
+
+
+    public:
 
       /**
        *  @brief Return the underlying channel
@@ -42,6 +44,14 @@ namespace resonances {
       const id::ReactionID& reaction() const {
 
         return this->channel_.reaction();
+      }
+
+      /**
+       *  @brief Return the wave number at a specific energy
+       */
+      const double waveNumber( double energy ) {
+
+        return this->channel_.waveNumber( energy );
       }
 
 
