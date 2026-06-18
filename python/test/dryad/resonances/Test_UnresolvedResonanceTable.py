@@ -83,26 +83,6 @@ class Test_UnresolvedResonanceTable( unittest.TestCase ):
     self.assertEqual( TabulatedAverageWidths( energies, [ 0.21, 0.22, 0.23, 0.24 ] ),
                       mixed_table.widths[1] )
 
-  def test_grid_unification( self ):
-
-    channels = [ ChannelID( 'n,U235->n,U235{0,1/2,1/2+}' ),
-                 ChannelID( 'n,U235->n,U235_e1{0,1/2,1/2+}' ) ]
-
-    widths = [ TabulatedAverageWidths( 1, [ 1., 2., 3., 4. ], [ 1., 2., 3., 4. ] ),
-               TabulatedAverageWidths( 1, [ 1., 2.5, 4. ], [ 1., 1., 1. ] ) ]
-    spacings = TabulatedLevelSpacing( [ 1., 2., 3., 4. ], [ 10., 20., 30., 40. ] )
-
-    table = UnresolvedResonanceTable( channels, widths, spacings )
-
-    union_grid = [ 1., 2., 2.5, 3., 4. ]
-    self.assertEqual( union_grid, table.spacings.energies )
-    self.assertEqual( union_grid, table.widths[0].energies )
-    self.assertEqual( union_grid, table.widths[1].energies )
-
-    self.assertEqual( [ 10., 20., 25., 30., 40. ], table.spacings.values )
-    self.assertEqual( [ 1., 2., 2.5, 3., 4. ], table.widths[0].values )
-    self.assertEqual( [ 1., 1., 1., 1., 1. ], table.widths[1].values )
-
   def test_equality( self ):
 
     energies = [ 1., 2., 3., 4. ]

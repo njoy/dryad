@@ -25,7 +25,6 @@ public:
   widths_( std::move( widths ) ),
   spacings_( std::move( spacings ) ) {
     processTable( this->channels_, this->widths_ );
-    unifyEnergyGrids( this->widths_, this->spacings_ );
     verifyTable( this->channels_, this->widths_, this->spacings_);
   }
 
