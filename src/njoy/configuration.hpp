@@ -17,31 +17,30 @@ namespace filesystem = std::experimental::filesystem;
 
 namespace njoy {
 
+static std::string datapath() {
+
+  if ( const char* njoy_datapath = std::getenv( "NJOY_DATAPATH" ) ) {
+
+    return njoy_datapath;
+  }
+#ifdef NJOY_DATAPATH
+  return NJOY_DATAPATH;
+#else
+  throw std::runtime_error( "NJOY_DATAPATH is not set as an environment variable "
+                            "and was not defined at build time." );
+#endif
+}
+
 /**
  *  @brief Return the NJOY configuration data
  */
 static tools::Configuration& configuration() {
 
-  if ( const char* njoy_datapath = std::getenv( "NJOY_DATAPATH" ) ) {
+  filesystem::path path( datapath() );
+  path /= "njoy.config";
+  return tools::Configuration::getInstance( path.string() );
 
-    filesystem::path path( njoy_datapath );
-    path /= "njoy.config";
-    return tools::Configuration::getInstance( path.string() );
   }
-#ifdef NJOY_DATAPATH
-  else {
-
-    filesystem::path path( NJOY_DATAPATH );
-    path /= "njoy.config";
-    return tools::Configuration::getInstance( path.string() );
-  }
-#else
-  else {
-
-    throw std::runtime_error( "The NJOY_DATAPATH environmental variable is not set." );
-  }
-#endif
-}
 
 } // njoy namespace
 
