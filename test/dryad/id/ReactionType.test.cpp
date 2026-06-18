@@ -435,7 +435,7 @@ SCENARIO( "ReactionType" ) {
 
       // tests for other reaction types
       id = ReactionType( 4 );
-      CHECK( 10151 == id.number() );
+      CHECK( 10999 == id.number() );
       CHECK( 4 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "n(t)" == id.symbol() );
@@ -451,7 +451,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "U238[all]" ) == id.resolve( n, u238 ) );
 
       id = ReactionType( 91 );
-      CHECK( 10150 == id.number() );
+      CHECK( 10998 == id.number() );
       CHECK( 91 == id.mt() );
       CHECK( nuclear == id.interactionType() );
       CHECK( "n(c)" == id.symbol() );
@@ -481,7 +481,7 @@ SCENARIO( "ReactionType" ) {
       CHECK( ParticleID( "U237" ) == id.resolve( n, u238 ) );
 
 //      id = ReactionType( 199 );
-//      CHECK( 1000230151 == id.number() );
+//      CHECK( 1000230999 == id.number() );
 //      CHECK( 199 == id.mt() );
 //      CHECK( nuclear == id.interactionType() );
 //      CHECK( "3n2pa(t)" == id.symbol() );
@@ -496,7 +496,7 @@ SCENARIO( "ReactionType" ) {
 //
 //      // large internal id number - long on Windows is narrow
 //      id = ReactionType( 109 );
-//      CHECK( 3000000151 == id.number() );
+//      CHECK( 3000000999 == id.number() );
 //      CHECK( 109 == id.mt() );
 //      CHECK( nuclear == id.interactionType() );
 //      CHECK( "3a(t)" == id.symbol() );
@@ -509,7 +509,7 @@ SCENARIO( "ReactionType" ) {
 //
 //      // large internal id number - long on Windows is narrow
 //      id = ReactionType( 23 );
-//      CHECK( 3000010151 == id.number() );
+//      CHECK( 3000010999 == id.number() );
 //      CHECK( 23 == id.mt() );
 //      CHECK( nuclear == id.interactionType() );
 //      CHECK( "n3a(t)" == id.symbol() );

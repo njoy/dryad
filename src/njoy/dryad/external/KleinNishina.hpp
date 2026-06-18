@@ -5,8 +5,7 @@
 
 // other includes
 #include "njoy/constants.hpp"
-#include <iostream>
-#include <iomanip>
+
 namespace njoy {
 namespace dryad {
 namespace external {

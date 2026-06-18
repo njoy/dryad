@@ -27,6 +27,9 @@ endfunction()
 
 message( STATUS "Adding njoy C++ unit testing" )
 
+# njoy tests
+
+add_cpp_test( configuration                                                             configuration.test.cpp )
 add_cpp_test( matrix                                                                    matrix.test.cpp )
 
 # dryad tests
@@ -361,6 +364,8 @@ add_cpp_test( dryad.format.gnds.createThermalScatteringFromFile                 
 
 add_cpp_test( dryad.external.ComptonProfiles                                            dryad/external/ComptonProfiles.test.cpp )
 add_cpp_test( dryad.external.KleinNishina                                               dryad/external/KleinNishina.test.cpp )
+add_cpp_test( dryad.external.ripl3.LevelEntry                                           dryad/external/ripl3/LevelEntry.test.cpp )
+add_cpp_test( dryad.external.ripl3.Levels                                               dryad/external/ripl3/Levels.test.cpp )
 
 # psychic tests
 

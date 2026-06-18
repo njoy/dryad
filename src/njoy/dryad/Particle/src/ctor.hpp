@@ -32,11 +32,12 @@ Particle( id::ParticleID id,
           std::optional< double > nuclearMassUncertainty = std::nullopt,
           std::optional< double > energyUncertainty = std::nullopt ) :
   identifier_( std::move( id ) ),
-  mass_( mass ),
-  nuclear_mass_( nuclearMass ),
-  energy_( energy ),
+  mass_( std::move( mass ) ),
+  nuclear_mass_( std::move( nuclearMass ) ),
+  energy_( std::move( energy ) ),
   mass_uncertainty_( std::move( massUncertainty ) ),
   nuclear_mass_uncertainty_( std::move( nuclearMassUncertainty ) ),
   energy_uncertainty_( std::move( energyUncertainty ) ),
-  spin_( spin ), parity_( parity ) {}
+  spin_( std::move( spin ) ),
+  parity_( std::move( parity ) ) {}
 
