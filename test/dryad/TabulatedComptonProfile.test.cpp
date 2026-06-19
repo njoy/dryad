@@ -154,8 +154,8 @@ void verifyChunk( const TabulatedComptonProfile& chunk, bool normalise ) {
   CHECK_THAT( 0.5  / normalisation, WithinRel( chunk( 0.5 ) ) );
   CHECK_THAT( 1.75 / normalisation, WithinRel( chunk( 1.75 ) ) );
 
-  // average cosine
-  CHECK_THAT( 8. / 3. / normalisation, WithinRel( chunk.averageMomentum() ) );
+  // average momentum - always the mean value even for unnormalised distributions
+  CHECK_THAT( 8. / 3. / 2., WithinRel( chunk.averageMomentum() ) );
 
   // linearisation
   auto linear = chunk.linearise();

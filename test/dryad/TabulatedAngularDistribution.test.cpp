@@ -149,8 +149,8 @@ void verifyChunk( const TabulatedAngularDistribution& chunk, bool normalise ) {
   CHECK_THAT( 0.5  / normalisation, WithinRel( chunk( -0.5 ) ) );
   CHECK_THAT( 1.75 / normalisation, WithinRel( chunk(  0.75 ) ) );
 
-  // average cosine
-  CHECK_THAT( 2. / 3. / normalisation, WithinRel( chunk.averageCosine() ) );
+  // average cosine - always the mean value even for unnormalised distributions
+  CHECK_THAT( 2. / 3. / 2., WithinRel( chunk.averageCosine() ) );
 
   // linearisation
   auto linear = chunk.linearise();

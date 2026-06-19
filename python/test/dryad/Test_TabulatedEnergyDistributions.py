@@ -93,7 +93,7 @@ class Test_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 0.5   / normalisation, chunk( 2.5, 3. ) )
             self.assertAlmostEqual( 0.58  / normalisation, chunk( 3.5, 3. ) )
 
-            # verify average energies
+            # verify average energies - always the mean value even for unnormalised distributions
             energies = chunk.average_energies
             self.assertAlmostEqual( 1., energies.lower_energy_limit )
             self.assertAlmostEqual( 4., energies.upper_energy_limit )
@@ -107,10 +107,10 @@ class Test_TabulatedEnergyDistributions( unittest.TestCase ) :
             self.assertAlmostEqual( 2., energies.energies[1] )
             self.assertAlmostEqual( 3., energies.energies[2] )
             self.assertAlmostEqual( 4., energies.energies[3] )
-            self.assertAlmostEqual( 2. * 2.           / normalisation, energies.values[0] )
-            self.assertAlmostEqual( 2. * 1184. / 600. / normalisation, energies.values[1] )
-            self.assertAlmostEqual( 2. * 1216. / 600. / normalisation, energies.values[2] )
-            self.assertAlmostEqual( 2. * 2.4          / normalisation, energies.values[3] )
+            self.assertAlmostEqual( 2. * 2.           / 2., energies.values[0] )
+            self.assertAlmostEqual( 2. * 1184. / 600. / 2., energies.values[1] )
+            self.assertAlmostEqual( 2. * 1216. / 600. / 2., energies.values[2] )
+            self.assertAlmostEqual( 2. * 2.4          / 2., energies.values[3] )
             self.assertEqual( 3, energies.boundaries[0] )
             self.assertEqual( InterpolationType.LinearLinear, energies.interpolants[0] )
             self.assertEqual( True, energies.is_linearised )

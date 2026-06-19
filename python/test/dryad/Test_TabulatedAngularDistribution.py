@@ -85,8 +85,8 @@ class Test_TabulatedAngularDistribution( unittest.TestCase ) :
             self.assertAlmostEqual( 0.5  / normalisation, chunk( cosine = -0.5 ) )
             self.assertAlmostEqual( 1.75 / normalisation, chunk( cosine = 0.75 ) )
 
-            # verify average cosine
-            self.assertAlmostEqual( 2. / 3. / normalisation, chunk.average_cosine )
+            # verify average cosine - always the mean value even for unnormalised distributions
+            self.assertAlmostEqual( 2. / 3. / 2., chunk.average_cosine )
 
             # verify linearisation
             linear = chunk.linearise()

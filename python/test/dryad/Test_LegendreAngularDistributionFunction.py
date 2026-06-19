@@ -33,7 +33,7 @@ class Test_LegendreAngularDistributionFunction( unittest.TestCase ) :
 
             # verify integration
             self.assertAlmostEqual(  -62./3., chunk.integral )
-            self.assertAlmostEqual( 146./15., chunk.mean )
+            self.assertAlmostEqual( 146./15. / (-62./3.), chunk.mean )
 
             # verify linearisation
             linear = chunk.linearise( 0.01 )
