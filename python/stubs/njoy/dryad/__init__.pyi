@@ -2396,6 +2396,19 @@ class TabulatedAverageCosine:
 class TabulatedAverageEnergy:
     """
     An average reaction product energy table
+    
+    Parameters
+    ----------
+        energies : list of float
+             The energy values
+        values : list of float
+             The average energy values
+        boundaries : list of int, optional
+             The boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+             The interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+             The interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2408,9 +2421,10 @@ class TabulatedAverageEnergy:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                 The energy value
         """
     def __copy__(self) -> TabulatedAverageEnergy:
         ...
@@ -2429,27 +2443,12 @@ class TabulatedAverageEnergy:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the average reaction product energy table
-        
-        Arguments:
-            self           the average reaction product energy table
-            energies       the energy values
-            values         the average energy values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the average reaction product energy table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the average reaction product energy table
-        
-        Arguments:
-            self           the average reaction product energy table
-            energies       the energy values
-            values         the average energy values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the average reaction product energy table with a single interpolation region
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageEnergy:
@@ -2802,6 +2801,19 @@ class TabulatedComptonProfileFunction:
 class TabulatedCrossSection:
     """
     A cross section table
+    
+    Parameters
+    ----------
+        energies : list of float
+             the energy values
+        values : list of float
+             the cross section values
+        boundaries : list of int
+             the boundaries of the interpolation regions
+        interpolants : list of njoy.dryad.InterpolationType
+             the interpolation types of the interpolation regions
+        interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear
+             the interpolation type (default lin-lin)
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2814,9 +2826,10 @@ class TabulatedCrossSection:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                the energy value
         """
     def __copy__(self) -> TabulatedCrossSection:
         ...
@@ -2835,27 +2848,12 @@ class TabulatedCrossSection:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the cross section table
-        
-        Arguments:
-            self           the cross section table
-            energies       the energy values
-            values         the cross section values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the cross section table with multiple interpolation zones
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the cross section table
-        
-        Arguments:
-            self           the cross section table
-            energies       the energy values
-            values         the cross section values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the cross section table with a single interpolation zone
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedCrossSection:

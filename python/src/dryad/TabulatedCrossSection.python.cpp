@@ -24,7 +24,19 @@ void wrapTabulatedCrossSection( python::module& module ) {
 
     module,
     "TabulatedCrossSection",
-    "A cross section table"
+    "A cross section table\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "         the energy values\n"
+    "    values : list of float\n"
+    "         the cross section values\n"
+    "    boundaries : list of int\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
+    "         the interpolation type (default lin-lin)"
   );
 
   // wrap the component
@@ -36,14 +48,7 @@ void wrapTabulatedCrossSection( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the cross section table\n\n"
-    "Arguments:\n"
-    "    self           the cross section table\n"
-    "    energies       the energy values\n"
-    "    values         the cross section values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the cross section table with multiple interpolation zones"
   )
   .def(
 
@@ -51,13 +56,7 @@ void wrapTabulatedCrossSection( python::module& module ) {
                   InterpolationType >(),
     python::arg( "energies" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the cross section table\n\n"
-    "Arguments:\n"
-    "    self           the cross section table\n"
-    "    energies       the energy values\n"
-    "    values         the cross section values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the cross section table with a single interpolation zone"
   )
   .def_property_readonly(
 
@@ -90,9 +89,10 @@ void wrapTabulatedCrossSection( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the table for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions
