@@ -6,7 +6,6 @@
 
 // other includes
 #include "njoy/constants.hpp"
-#include "njoy/dryad/InterpolationType.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "scion/math/LegendreSeries.hpp"
 
