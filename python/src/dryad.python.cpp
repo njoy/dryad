@@ -43,6 +43,7 @@ namespace dryad {
 
   // declarations - components
   void wrapIsotropicAngularDistributions( python::module& );
+  void wrapIsotropicAngularDistributionFunction( python::module& );
   void wrapLegendreAngularDistributionFunction( python::module& );
   void wrapLegendreAngularDistribution( python::module& );
   void wrapLegendreAngularDistributions( python::module& );
@@ -121,6 +122,7 @@ void wrapDryad( python::module& module ) {
   dryad::wrapTabulatedAverageCosine( submodule );
   dryad::wrapTabulatedAverageEnergy( submodule );
   dryad::wrapIsotropicAngularDistributions( submodule );
+  dryad::wrapIsotropicAngularDistributionFunction( submodule );
   dryad::wrapTabulatedAngularDistributionFunction( submodule );
   dryad::wrapTabulatedAngularDistribution( submodule );
   dryad::wrapTabulatedAngularDistributions( submodule );

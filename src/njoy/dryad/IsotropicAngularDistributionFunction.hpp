@@ -37,11 +37,11 @@ namespace dryad {
     /**
      *  @brief Evaluate the function
      *
-     *  @param[in] x   the cosine value
+     *  @param[in] cosine   the cosine value
      */
-    double evaluate( const double& x ) const {
+    double evaluate( double cosine ) const {
 
-      return this->isInside( x ) ? 0.5 : 0.0;
+      return this->isInside( cosine ) ? 0.5 : 0.0;
     }
 
   public:
@@ -80,7 +80,7 @@ namespace dryad {
     using Parent::operator();
 
     /**
-     *  @brief Return the integral of the distribution
+     *  @brief Return the integral of the distribution function over its domain
      */
     constexpr double integral() const {
 
@@ -88,7 +88,7 @@ namespace dryad {
     }
 
     /**
-     *  @brief Return the average cosine
+     *  @brief Return the mean value of the distribution function over its domain
      */
     constexpr double mean() const {
 

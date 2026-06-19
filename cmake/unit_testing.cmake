@@ -113,6 +113,7 @@ add_cpp_test( dryad.TabulatedAverageEnergy                                      
 add_cpp_test( dryad.LegendreAngularDistributionFunction                                dryad/LegendreAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.LegendreAngularDistribution                                        dryad/LegendreAngularDistribution.test.cpp )
 add_cpp_test( dryad.LegendreAngularDistributions                                       dryad/LegendreAngularDistributions.test.cpp )
+add_cpp_test( dryad.IsotropicAngularDistributionFunction                               dryad/IsotropicAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.TabulatedAngularDistributionFunction                               dryad/TabulatedAngularDistributionFunction.test.cpp )
 add_cpp_test( dryad.TabulatedAngularDistribution                                       dryad/TabulatedAngularDistribution.test.cpp )
 add_cpp_test( dryad.TabulatedAngularDistributions                                      dryad/TabulatedAngularDistributions.test.cpp )
