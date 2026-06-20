@@ -32,7 +32,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
     "The angular distribution covariance data\n\n"
     "Parameters\n"
     "----------\n"
-    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceData \n"
+    "    matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceMatrix\n"
     "         the covariance matrices"
   );
 
@@ -42,7 +42,7 @@ void wrapAngularDistributionCovarianceData( python::module& module ) {
 
     python::init< std::vector< AngularDistributionCovarianceMatrix > >(),
     python::arg( "matrices" ),
-    "Initialise the covariance data\n"
+    "Initialise the angular distribution covariance data"
   )
   .def_property_readonly(
 

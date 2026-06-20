@@ -66,7 +66,7 @@ void wrapElectronSubshellConfiguration( python::module& module ) {
     python::arg( "radiative" ) = std::vector< RadiativeTransitionData >{},
     python::arg( "non_radiative" ) = std::vector< NonRadiativeTransitionData >{},
     python::arg( "normalise" ) = false,
-    ""
+    "Initialise the electron subshell configuration"
   )
   .def_property(
 

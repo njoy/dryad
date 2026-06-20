@@ -31,7 +31,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "The cross section covariance data\n\n"
     "Parameters\n"
     "----------\n"
-    "    matrices : list of njoy.dryad.covariance. \n"
+    "    matrices : list of njoy.dryad.covariance.CrossSectionCovarianceMatrix\n"
     "         the covariance matrices"
   );
 
@@ -41,7 +41,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
 
     python::init< std::vector< CrossSectionCovarianceMatrix > >(),
     python::arg( "matrices" ),
-    "Initialise the covariance data\n"
+    "Initialise the cross section covariance data"
   )
   .def_property_readonly(
 

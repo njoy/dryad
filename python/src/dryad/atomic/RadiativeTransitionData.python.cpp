@@ -49,7 +49,7 @@ void wrapRadiativeTransitionData( python::module& module ) {
     python::init< ElectronSubshellID, double, std::optional< double > >(),
     python::arg( "originating_shell" ), python::arg( "probability" ),
     python::arg( "energy" ) = std::nullopt,
-    ""
+    "Initialise the radiative transition data"
   )
   .def_property_readonly(
 

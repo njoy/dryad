@@ -43,7 +43,7 @@ void wrapCovarianceData( python::module& module ) {
                   std::optional< AngularDistributionCovarianceData > >(),
     python::arg( "xs" ),
     python::arg( "angular" ),
-    "Initialise the covariance data\n"
+    "Initialise the covariance data"
   )
   .def_property_readonly(
 

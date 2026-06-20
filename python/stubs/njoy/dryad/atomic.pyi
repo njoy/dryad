@@ -45,7 +45,9 @@ class ElectronSubshellConfiguration:
     def __eq__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     def __init__(self, id: njoy.dryad.id.ElectronSubshellID, energy: float, population: float, radiative: list[RadiativeTransitionData] = [], non_radiative: list[NonRadiativeTransitionData] = [], normalise: bool = False) -> None:
-        ...
+        """
+        Initialise the electron subshell configuration
+        """
     def __ne__(self, arg0: ElectronSubshellConfiguration) -> bool:
         ...
     def has_non_radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID) -> bool:
@@ -239,7 +241,9 @@ class NonRadiativeTransitionData:
     def __eq__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
-        ...
+        """
+        Initialise the non-radiative transition data
+        """
     def __ne__(self, arg0: NonRadiativeTransitionData) -> bool:
         ...
     @property
@@ -308,7 +312,9 @@ class RadiativeTransitionData:
     def __eq__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     def __init__(self, originating_shell: njoy.dryad.id.ElectronSubshellID, probability: float, energy: float | None = None) -> None:
-        ...
+        """
+        Initialise the radiative transition data
+        """
     def __ne__(self, arg0: RadiativeTransitionData) -> bool:
         ...
     @property

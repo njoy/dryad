@@ -23,14 +23,18 @@ void wrapScalingType( python::module& module ) {
 
     module,
     "ScalingType",
-    "The variance scaling type",
+    "The variance scaling type\n\n"
+    "This enum is used to differentiate variance scaling types. We currently\n"
+    "distinguish two types of scaling: inverse and direct proportional.",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Inverse",  Component::Inverse )
-  .value( "Direct",   Component::Direct );
+  .value( "Inverse",  Component::Inverse,
+          "The variance of group j is inversely proportional to the width of group j" )
+  .value( "Direct",   Component::Direct,
+          "The variance of group j is directly proportional to the width of group j" );
 }
 
 } // covariance namespace
