@@ -33,7 +33,34 @@ void wrapChannel( python::module& module ) {
 
     module,
     "Channel",
-    "A resonance reaction channel"
+    "A resonance reaction channel\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    identifier : njoy.dryad.id.ChannelID\n"
+    "         the channel identifier\n"
+    "    incident : njoy.dryad.resonances.ParticlePair\n"
+    "         the current incident particle pair\n"
+    "    outgoing : njoy.dryad.resonances.ParticlePair, optional\n"
+    "         the outgoing particle pair\n"
+    "    q_value : float\n"
+    "         the Q value associated with the transition from the incident to\n"
+    "         the outgoing particle pair\n"
+    "    boundary : float, optional\n"
+    "         the boundary condition\n"
+    "    radii : njoy.dryad.resonances.ChannelRadii\n"
+    "         the channel radii for the calculation of the wave functions\n"
+    "    kinematics : njoy.dryad.resonances.Kinematics, default=Kinematics.NonRelativistic\n"
+    "         the kinematics type applied to the channel\n"
+    "    background : Channel.Background, optional\n"
+    "         the background function\n"
+    "    penetrability : Channel.Penetrability, optional\n"
+    "         the penetrability of the channel\n"
+    "    shift_factor : Channel.ShiftFactor, optional\n"
+    "         the shift factor of the channel\n"
+    "    phase_shift : Channel.PhaseShift, optional\n"
+    "         the phase shift of the channel\n"
+    "    phase_shift_difference : Channel.PhaseShiftDifference, optional\n"
+    "         the phase shift difference of the channel"
    );
 
   // wrap the component
@@ -58,22 +85,7 @@ void wrapChannel( python::module& module ) {
     python::arg( "kinematics" ), python::arg( "background" ),
     python::arg( "penetrability" ), python::arg( "shift_factor" ),
     python::arg( "phase_shift" ), python::arg( "phase_shift_difference" ),
-    "Initialise the channel\n\n"
-    "Arguments:\n"
-    "    self                     the channel\n"
-    "    identifier               the channel identifier\n"
-    "    incident                 the current incident particle pair\n"
-    "    outgoing                 the outgoing particle pair\n"
-    "    q_value                  the Q value associated with the transition from\n"
-    "                             the incident to the outgoing particle pair\n"
-    "    boundary                 the boundary condition\n"
-    "    radii                    the channel radii for the calculation of the\n"
-    "                             wave functions\n"
-    "    kinematics               the kinematics type applied to the channel\n"
-    "    penetrability            the penetrability of the channel\n"
-    "    shift_factor             the shift factor of the channel\n"
-    "    phase_shift              the phase shift of the channel\n"
-    "    phase_shift_difference   the phase shift difference of the channel"
+    "Initialise the channel with explicit wave functions"
   )
   .def(
 
@@ -86,23 +98,11 @@ void wrapChannel( python::module& module ) {
                   Kinematics,
                   std::optional< Background > >(),
     python::arg( "identifier" ), python::arg( "incident" ),
-    python::arg( "outgoing" ), python::arg( "qValue" ),
+    python::arg( "outgoing" ), python::arg( "q_value" ),
     python::arg( "boundary" ), python::arg( "radii" ),
     python::arg( "kinematics" ) = Kinematics::NonRelativistic,
     python::arg( "background" ) = std::nullopt,
-    "Initialise the channel\n\n"
-    "Arguments:\n"
-    "    self         the channel\n"
-    "    identifier   the channel identifier\n"
-    "    incident     the current incident particle pair\n"
-    "    outgoing     the outgoing particle pair\n"
-    "    q_value      the Q value associated with the transition from\n"
-    "                 the incident to the outgoing particle pair\n"
-    "    boundary     the boundary condition\n"
-    "    radii        the channel radii for the calculation of the\n"
-    "                 wave functions\n"
-    "    kinematics   the kinematics type applied to the channel (default is\n"
-    "                 non-relativistic)"
+    "Initialise the channel"
   )
   .def_property(
 
@@ -141,7 +141,7 @@ void wrapChannel( python::module& module ) {
 
     "is_incident_channel",
     &Component::isIncidentChannel,
-    "Flag to indicate whether or not the channel is an incident channel"
+    "The flag to indicate whether or not the channel is an incident channel"
   )
   .def_property(
 
@@ -198,9 +198,10 @@ void wrapChannel( python::module& module ) {
     "    energy * ratio + q < 0.0\n"
     "where energy is the incident energy, ratio is the mass ratio M / ( m + M )\n"
     "for the incident particle pair and q is the Q value for this channel.\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy to be tested"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy to be tested"
   )
   .def(
 
@@ -208,9 +209,10 @@ void wrapChannel( python::module& module ) {
     &Component::waveNumber,
     python::arg( "energy" ),
     "Calculate the channel wave number (given in fm^-1) at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy (given in eV)"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy (given in eV)"
   )
   .def(
 
@@ -225,9 +227,10 @@ void wrapChannel( python::module& module ) {
     "particle pair, mu is the reduced mass of the particle pair, hbar is the\n"
     "Planck constant, k is the wave number and epsilon0 is the vacuum\n"
     "permittivity.\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy (given in eV)"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy (given in eV)"
   )
   .def(
 
@@ -235,9 +238,10 @@ void wrapChannel( python::module& module ) {
     &Component::penetrability,
     python::arg( "energy" ),
     "Calculate the penetrability for the channel at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy (given in eV)"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy (given in eV)"
   )
   .def(
 
@@ -245,9 +249,10 @@ void wrapChannel( python::module& module ) {
     &Component::shiftFactor,
     python::arg( "energy" ),
     "Calculate the shift factor for the channel at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy (given in eV)"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy (given in eV)"
   )
   .def(
 
@@ -255,9 +260,10 @@ void wrapChannel( python::module& module ) {
     &Component::phaseShift,
     python::arg( "energy" ),
     "Calculate the phase shift for the channel at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy (given in eV)"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy (given in eV)"
   )
   .def(
 
@@ -265,9 +271,10 @@ void wrapChannel( python::module& module ) {
     &Component::phaseShiftDifference,
     python::arg( "energy" ),
     "Calculate the phase shift difference for the channel at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the channel\n"
-    "    energy   the energy (given in eV)"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy (given in eV)"
   );
 
   // add standard equality comparison definitions
