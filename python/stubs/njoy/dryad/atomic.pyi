@@ -24,17 +24,17 @@ class ElectronSubshellConfiguration:
     Parameters
     ----------
         id : njoy.dryad.id.ElectronSubshellID  
-               the electron subshell identifier
+              the electron subshell identifier
         energy : float     
-               the electron subshell binding energy
+              the electron subshell binding energy
         population : float  
-               the electron subshell population when the atom is neutral
+              the electron subshell population when the atom is neutral
         radiative : list of RadiativeTransitionData, default [] 
-               the radiative transitions that are available (default: an empty list)
+              the radiative transitions that are available (default: an empty list)
         nonradiative : list of NonRadiativeTransitionData, default [] 
-               the non-radiative transitions that are available (default: an empty list)
+              the non-radiative transitions that are available (default: an empty list)
         normalise : bool, default false  
-               option to indicate whether or not to normalise all probability data (default: no normalisation)
+              option to indicate whether or not to normalise all probability data (default: no normalisation)
     
     """
     __hash__: typing.ClassVar[None] = None
@@ -57,10 +57,10 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
             emitting_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the emitted electron originated
+                the identifier of the subshell from which the emitted electron originated
         """
     def has_radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID) -> bool:
         """
@@ -69,8 +69,8 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
         """
     def non_radiative_probability(self, first: njoy.dryad.id.ElectronSubshellID, last: njoy.dryad.id.ElectronSubshellID) -> float:
         """
@@ -79,9 +79,9 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             first : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the first subshell in the range
+                the identifier of the first subshell in the range
             last : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the last subshell in the range (included)
+                the identifier of the last subshell in the range (included)
         """
     def non_radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID, emitting_shell: njoy.dryad.id.ElectronSubshellID) -> NonRadiativeTransitionData:
         """
@@ -90,10 +90,10 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
             emitting_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the emitted electron originated
+                the identifier of the subshell from which the emitted electron originated
         """
     def normalise(self) -> None:
         """
@@ -106,9 +106,9 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             first : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the first subshell in the range
+                the identifier of the first subshell in the range
             last : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the last subshell in the range (included)
+                the identifier of the last subshell in the range (included)
         """
     def radiative_transition(self, originating_shell: njoy.dryad.id.ElectronSubshellID) -> RadiativeTransitionData:
         """
@@ -117,8 +117,8 @@ class ElectronSubshellConfiguration:
         Parameters
         ----------
             originating_shell : njoy.dryad.id.ElectronSubshellID
-                 the identifier of the subshell from which the
-                 vacancy filling electron originated
+                the identifier of the subshell from which the
+                vacancy filling electron originated
         """
     @property
     def average_non_radiative_energy(self) -> float:
@@ -296,12 +296,12 @@ class RadiativeTransitionData:
     Parameters
     ----------
         originating_shell : njoy.dryad.id.ElectronSubshellID 
-             the identifier of the subshell from which the
-             vacancy filling electron originated
+            the identifier of the subshell from which the
+            vacancy filling electron originated
         probability : float
-             the probability of the transition
+            the probability of the transition
         energy : float,  default None
-             the energy of the emitted photon (default: undefined)
+            the energy of the emitted photon (default: undefined)
     
     """
     __hash__: typing.ClassVar[None] = None

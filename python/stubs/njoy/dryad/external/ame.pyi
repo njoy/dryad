@@ -20,7 +20,7 @@ class MassEntry:
     Parameters
     ----------
         id : njoy.dryad.id.ParticleID
-             the particle identifier
+            the particle identifier
         mass_excess : float, default None
             the mass excess (default: None)
         mass_excess_uncertainty : float, default None
@@ -137,7 +137,7 @@ class Masses:
         Parameters
         ----------
             id : njoy.dryad.id.ParticleID
-                 the particle identifier
+                the particle identifier
         """
     @staticmethod
     def has_entry(id: njoy.dryad.id.ParticleID) -> bool:
@@ -147,7 +147,7 @@ class Masses:
         Parameters
         ----------
             id : njoy.dryad.id.ParticleID
-                 the particle identifier
+                the particle identifier
         """
     @staticmethod
     def size() -> int:

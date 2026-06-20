@@ -36,11 +36,11 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    frame : njoy.dryad.ReferenceFrame\n"
-    "         the reference frame of the distribution data\n"
+    "        the reference frame of the distribution data\n"
     "    scattering : njoy.dryad.TabulatedScatteringFunction\n"
-    "         the scattering function\n"
+    "        the scattering function\n"
     "    profiles : list of njoy.dryad.TabulatedComptonProfile\n"
-    "         the optional Compton profiles"
+    "        the optional Compton profiles"
   );
 
   // wrap the component
@@ -104,11 +104,11 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "Parameters \n"
     "---------- \n"
     "    energy : float \n"
-    "         the incident energy\n"
+    "        the incident energy\n"
     "    energies : list of float \n"
-    "         the incident energies\n"
+    "        the incident energies\n"
     "    tolerance : float \n"
-    "         the integration tolerance (default: 1e-8)"
+    "        the integration tolerance (default: 1e-8)"
   )
   .def(
 

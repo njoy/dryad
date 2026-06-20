@@ -12,11 +12,11 @@ def prune_cross_section(lower_energy: float, upper_energy: float, xs: njoy.dryad
     Parameters
     ----------
         lower_energy : float
-             the new lower energy limit
+            the new lower energy limit
         upper_energy : float
-             the new upper energy limit
+            the new upper energy limit
         xs : njoy.dryad.TabulatedCrossSection
-             the cross section table to be modified
+            the cross section table to be modified
     """
 def prune_cross_sections(lower_energy: float, upper_energy: float, pt: njoy.dryad.ProjectileTarget) -> None:
     """
@@ -25,9 +25,9 @@ def prune_cross_sections(lower_energy: float, upper_energy: float, pt: njoy.drya
     Parameters
     ----------
         lower_energy : float
-             the new lower energy limit
+            the new lower energy limit
         upper_energy : float
-             the new upper energy limit
+            the new upper energy limit
         pt : njoy.dryad.ProjectileTarget
-             the projectile-target data to be modified
+            the projectile-target data to be modified
     """

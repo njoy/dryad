@@ -14,7 +14,7 @@ class AngularDistributionCovarianceData:
     Parameters
     ----------
         matrices : list of njoy.dryad.covariance.AngularDistributionCovarianceMatrix
-             the covariance matrices
+            the covariance matrices
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -28,13 +28,13 @@ class AngularDistributionCovarianceData:
         Parameters
         ----------
             projectile : njoy.dryad.id.ParticleID
-                 the projectile identifier
+                the projectile identifier
             target : njoy.dryad.id.ParticleID
-                 the target identifier
+                the target identifier
             frame : njoy.dryad.ReferenceFrame
-                 the reference frame of the projectile target
+                the reference frame of the projectile target
             filename : str
-                 the GENDF file name
+                the GENDF file name
         """
     def __copy__(self) -> AngularDistributionCovarianceData:
         ...
@@ -56,9 +56,9 @@ class AngularDistributionCovarianceData:
         Parameters
         ----------
             row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
+                the row reaction identifier
             column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
+                the column reaction identifier
         """
     @typing.overload
     def covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> AngularDistributionCovarianceMatrix | list[AngularDistributionCovarianceMatrix]:
@@ -68,7 +68,7 @@ class AngularDistributionCovarianceData:
         Parameters
         ----------
             id : njoy.dryad.id.ReactionID
-                 the reaction identifier
+                the reaction identifier
         """
     @typing.overload
     def has_covariance_matrix(self, row: njoy.dryad.id.ReactionID, column: njoy.dryad.id.ReactionID) -> bool:
@@ -78,9 +78,9 @@ class AngularDistributionCovarianceData:
         Parameters
         ----------
             row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
+                the row reaction identifier
             column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
+                the column reaction identifier
         """
     @typing.overload
     def has_covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> bool:
@@ -90,7 +90,7 @@ class AngularDistributionCovarianceData:
         Parameters
         ----------
             id : njoy.dryad.id.ReactionID
-                 the reaction identifier
+                the reaction identifier
         """
     @property
     def covariances(self) -> list[AngularDistributionCovarianceMatrix | list[AngularDistributionCovarianceMatrix]]:
@@ -122,29 +122,29 @@ class AngularDistributionCovarianceMatrix:
     Parameters
     ----------
         metadata : njoy.dryad.covariance.AngularDistributionMetadata
-             the row and column metadata (on-diagonal)
+            the row and column metadata (on-diagonal)
         row_metadata : njoy.dryad.covariance.AngularDistributionMetadata
-             the row metadata (off-diagonal)
+            the row metadata (off-diagonal)
         column_metadata : njoy.dryad.covariance.AngularDistributionMetadata
-             the column metadata (off-diagonal)
+            the column metadata (off-diagonal)
         covariances : array-like
-             the covariance matrix
+            the covariance matrix
         deviations : list of float
-             the standard deviations (on-diagonal)
+            the standard deviations (on-diagonal)
         row_deviations : list of float
-             the standard deviations to be applied to each row (off-diagonal)
+            the standard deviations to be applied to each row (off-diagonal)
         column_deviations : list of float
-             the standard deviations to be applied to each column (off-diagonal)
+            the standard deviations to be applied to each column (off-diagonal)
         correlations : array-like
-             the correlation matrix
+            the correlation matrix
         eigenvalues : list of float
-             the eigenvalues
+            the eigenvalues
         eigenvectors : list of array-like
-             the associated eigenvectors
+            the associated eigenvectors
         relative : bool, default True
-             the relative covariance flag
+            the relative covariance flag
         frame : njoy.dryad.ReferenceFrame, default Laboratory
-             the reference frame of the covariance data
+            the reference frame of the covariance data
     """
     def __copy__(self) -> AngularDistributionCovarianceMatrix:
         ...
@@ -200,9 +200,9 @@ class AngularDistributionCovarianceMatrix:
         Parameters
         ----------
             row_deviations : list of float
-                 the standard deviations to be applied to each row
+                the standard deviations to be applied to each row
             column_deviations : list of float
-                 the standard deviations to be applied to each column
+                the standard deviations to be applied to each column
         """
     @typing.overload
     def calculate_covariances(self) -> None:
@@ -232,9 +232,9 @@ class AngularDistributionCovarianceMatrix:
         Parameters
         ----------
             row_deviations : list of float
-                 the standard deviations to be applied to each row
+                the standard deviations to be applied to each row
             column_deviations : list of float
-                 the standard deviations to be applied to each column
+                the standard deviations to be applied to each column
         """
     def calculate_eigenvalues(self) -> None:
         """
@@ -260,11 +260,11 @@ class AngularDistributionCovarianceMatrix:
         Parameters
         ----------
             reaction : njoy.dryad.id.ReactionID or None
-                 the reaction identifier to extract
+                the reaction identifier to extract
             moment : int or None
-                 the Legendre moment to extract
+                the Legendre moment to extract
             group : njoy.dryad.id.EnergyGroup or None
-                 the energy group to extract
+                the energy group to extract
         """
     @typing.overload
     def extract(self, row_reaction: njoy.dryad.id.ReactionID | None, row_moment: int | None, row_group: njoy.dryad.id.EnergyGroup | None, col_reaction: njoy.dryad.id.ReactionID | None, col_moment: int | None, col_group: njoy.dryad.id.EnergyGroup | None) -> AngularDistributionCovarianceMatrix:
@@ -274,17 +274,17 @@ class AngularDistributionCovarianceMatrix:
         Parameters
         ----------
             row_reaction : njoy.dryad.id.ReactionID or None
-                 the row reaction identifier to extract
+                the row reaction identifier to extract
             row_moment : int or None
-                 the row Legendre moment to extract
+                the row Legendre moment to extract
             row_group : njoy.dryad.id.EnergyGroup or None
-                 the row energy group to extract
+                the row energy group to extract
             col_reaction : njoy.dryad.id.ReactionID or None
-                 the column reaction identifier to extract
+                the column reaction identifier to extract
             col_moment : int or None
-                 the column Legendre moment to extract
+                the column Legendre moment to extract
             col_group : njoy.dryad.id.EnergyGroup or None
-                 the column energy group to extract
+                the column energy group to extract
         """
     @property
     def column_metadata(self) -> AngularDistributionMetadata:
@@ -373,17 +373,17 @@ class AngularDistributionMetadata:
     Parameters
     ----------
         reactions : list of njoy.dryad.id.ReactionID
-             the reaction identifiers
+            the reaction identifiers
         reaction : njoy.dryad.id.ReactionID
-             the reaction identifier (single reaction constructor)
+            the reaction identifier (single reaction constructor)
         moments : list of int
-             the Legendre moment values
+            the Legendre moment values
         moment : int
-             the Legendre moment value (single moment constructor)
+            the Legendre moment value (single moment constructor)
         energies : list of float
-             the energy boundary values
+            the energy boundary values
         keys : list of tuple
-             the metadata keys (tuples of ReactionID, moment, EnergyGroup)
+            the metadata keys (tuples of ReactionID, moment, EnergyGroup)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> AngularDistributionMetadata:
@@ -437,9 +437,9 @@ class CovarianceData:
     Parameters
     ----------
         xs : njoy.dryad.covariance.CrossSectionCovarianceData 
-             the cross section covariance data
+            the cross section covariance data
         angular : njoy.dryad.covariance.AngularDistributionCovarianceData 
-             the angular distribution covariance data
+            the angular distribution covariance data
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CovarianceData:
@@ -481,7 +481,7 @@ class CrossSectionCovarianceData:
     Parameters
     ----------
         matrices : list of njoy.dryad.covariance.CrossSectionCovarianceMatrix
-             the covariance matrices
+            the covariance matrices
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -495,13 +495,13 @@ class CrossSectionCovarianceData:
         Parameters
         ----------
             projectile : njoy.dryad.id.ParticleID
-                 the projectile identifier
+                the projectile identifier
             target : njoy.dryad.id.ParticleID
-                 the target identifier
+                the target identifier
             relative : bool
-                 the flag to indicate whether or not the covariance data is relative
+                the flag to indicate whether or not the covariance data is relative
             filename : str
-                 the GENDF file name
+                the GENDF file name
         """
     def __copy__(self) -> CrossSectionCovarianceData:
         ...
@@ -523,9 +523,9 @@ class CrossSectionCovarianceData:
         Parameters
         ----------
             row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
+                the row reaction identifier
             column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
+                the column reaction identifier
         """
     @typing.overload
     def covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> CrossSectionCovarianceMatrix | list[CrossSectionCovarianceMatrix]:
@@ -535,7 +535,7 @@ class CrossSectionCovarianceData:
         Parameters
         ----------
             id : njoy.dryad.id.ReactionID
-                 the reaction identifier
+                the reaction identifier
         """
     @typing.overload
     def has_covariance_matrix(self, row: njoy.dryad.id.ReactionID, column: njoy.dryad.id.ReactionID) -> bool:
@@ -545,9 +545,9 @@ class CrossSectionCovarianceData:
         Parameters
         ----------
             row : njoy.dryad.id.ReactionID
-                 the row reaction identifier
+                the row reaction identifier
             column : njoy.dryad.id.ReactionID
-                 the column reaction identifier
+                the column reaction identifier
         """
     @typing.overload
     def has_covariance_matrix(self, id: njoy.dryad.id.ReactionID) -> bool:
@@ -557,7 +557,7 @@ class CrossSectionCovarianceData:
         Parameters
         ----------
             id : njoy.dryad.id.ReactionID
-                 the reaction identifier
+                the reaction identifier
         """
     @property
     def covariances(self) -> list[CrossSectionCovarianceMatrix | list[CrossSectionCovarianceMatrix]]:
@@ -589,29 +589,29 @@ class CrossSectionCovarianceMatrix:
     Parameters
     ----------
         metadata : njoy.dryad.covariance.CrossSectionMetadata
-             the row and column metadata (on-diagonal)
+            the row and column metadata (on-diagonal)
         row_metadata : njoy.dryad.covariance.CrossSectionMetadata
-             the row metadata (off-diagonal)
+            the row metadata (off-diagonal)
         column_metadata : njoy.dryad.covariance.CrossSectionMetadata
-             the column metadata (off-diagonal)
+            the column metadata (off-diagonal)
         covariances : array-like
-             the covariance matrix
+            the covariance matrix
         deviations : list of float
-             the standard deviations (on-diagonal)
+            the standard deviations (on-diagonal)
         row_deviations : list of float
-             the standard deviations to be applied to each row (off-diagonal)
+            the standard deviations to be applied to each row (off-diagonal)
         column_deviations : list of float
-             the standard deviations to be applied to each column (off-diagonal)
+            the standard deviations to be applied to each column (off-diagonal)
         correlations : array-like
-             the correlation matrix
+            the correlation matrix
         eigenvalues : list of float
-             the eigenvalues
+            the eigenvalues
         eigenvectors : list of array-like
-             the associated eigenvectors
+            the associated eigenvectors
         relative : bool, default True
-             the relative covariance flag
+            the relative covariance flag
         scaling : njoy.dryad.covariance.VarianceScaling or None, default None
-             the variance scaling information
+            the variance scaling information
     """
     def __copy__(self) -> CrossSectionCovarianceMatrix:
         ...
@@ -667,9 +667,9 @@ class CrossSectionCovarianceMatrix:
         Parameters
         ----------
             row_deviations : list of float
-                 the standard deviations to be applied to each row
+                the standard deviations to be applied to each row
             column_deviations : list of float
-                 the standard deviations to be applied to each column
+                the standard deviations to be applied to each column
         """
     @typing.overload
     def calculate_covariances(self) -> None:
@@ -699,9 +699,9 @@ class CrossSectionCovarianceMatrix:
         Parameters
         ----------
             row_deviations : list of float
-                 the standard deviations to be applied to each row
+                the standard deviations to be applied to each row
             column_deviations : list of float
-                 the standard deviations to be applied to each column
+                the standard deviations to be applied to each column
         """
     def calculate_eigenvalues(self) -> None:
         """
@@ -727,9 +727,9 @@ class CrossSectionCovarianceMatrix:
         Parameters
         ----------
             reaction : njoy.dryad.id.ReactionID or None
-                 the reaction identifier to extract
+                the reaction identifier to extract
             group : njoy.dryad.id.EnergyGroup or None
-                 the energy group to extract
+                the energy group to extract
         """
     @typing.overload
     def extract(self, row_reaction: njoy.dryad.id.ReactionID | None, row_group: njoy.dryad.id.EnergyGroup | None, col_reaction: njoy.dryad.id.ReactionID | None, col_group: njoy.dryad.id.EnergyGroup | None) -> CrossSectionCovarianceMatrix:
@@ -739,13 +739,13 @@ class CrossSectionCovarianceMatrix:
         Parameters
         ----------
             row_reaction : njoy.dryad.id.ReactionID or None
-                 the row reaction identifier to extract
+                the row reaction identifier to extract
             row_group : njoy.dryad.id.EnergyGroup or None
-                 the row energy group to extract
+                the row energy group to extract
             col_reaction : njoy.dryad.id.ReactionID or None
-                 the column reaction identifier to extract
+                the column reaction identifier to extract
             col_group : njoy.dryad.id.EnergyGroup or None
-                 the column energy group to extract
+                the column energy group to extract
         """
     @property
     def column_metadata(self) -> CrossSectionMetadata:
@@ -839,13 +839,13 @@ class CrossSectionMetadata:
     Parameters
     ----------
         reactions : list of njoy.dryad.id.ReactionID
-             the reaction identifiers
+            the reaction identifiers
         reaction : njoy.dryad.id.ReactionID
-             the reaction identifier (single reaction constructor)
+            the reaction identifier (single reaction constructor)
         energies : list of float
-             the energy boundary values
+            the energy boundary values
         keys : list of tuple
-             the metadata keys (tuples of ReactionID, EnergyGroup)
+            the metadata keys (tuples of ReactionID, EnergyGroup)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CrossSectionMetadata:
@@ -937,27 +937,27 @@ class ProductMultiplicityCovarianceMatrix:
     Parameters
     ----------
         metadata : njoy.dryad.covariance.ProductMultiplicityMetadata
-             the row and column metadata (on-diagonal)
+            the row and column metadata (on-diagonal)
         row_metadata : njoy.dryad.covariance.ProductMultiplicityMetadata
-             the row metadata (off-diagonal)
+            the row metadata (off-diagonal)
         column_metadata : njoy.dryad.covariance.ProductMultiplicityMetadata
-             the column metadata (off-diagonal)
+            the column metadata (off-diagonal)
         covariances : array-like
-             the covariance matrix
+            the covariance matrix
         deviations : list of float
-             the standard deviations (on-diagonal)
+            the standard deviations (on-diagonal)
         row_deviations : list of float
-             the standard deviations to be applied to each row (off-diagonal)
+            the standard deviations to be applied to each row (off-diagonal)
         column_deviations : list of float
-             the standard deviations to be applied to each column (off-diagonal)
+            the standard deviations to be applied to each column (off-diagonal)
         correlations : array-like
-             the correlation matrix
+            the correlation matrix
         eigenvalues : list of float
-             the eigenvalues
+            the eigenvalues
         eigenvectors : list of array-like
-             the associated eigenvectors
+            the associated eigenvectors
         relative : bool, default True
-             the relative covariance flag
+            the relative covariance flag
     """
     def __copy__(self) -> ProductMultiplicityCovarianceMatrix:
         ...
@@ -1013,9 +1013,9 @@ class ProductMultiplicityCovarianceMatrix:
         Parameters
         ----------
             row_deviations : list of float
-                 the standard deviations to be applied to each row
+                the standard deviations to be applied to each row
             column_deviations : list of float
-                 the standard deviations to be applied to each column
+                the standard deviations to be applied to each column
         """
     @typing.overload
     def calculate_covariances(self) -> None:
@@ -1045,9 +1045,9 @@ class ProductMultiplicityCovarianceMatrix:
         Parameters
         ----------
             row_deviations : list of float
-                 the standard deviations to be applied to each row
+                the standard deviations to be applied to each row
             column_deviations : list of float
-                 the standard deviations to be applied to each column
+                the standard deviations to be applied to each column
         """
     def calculate_eigenvalues(self) -> None:
         """
@@ -1073,11 +1073,11 @@ class ProductMultiplicityCovarianceMatrix:
         Parameters
         ----------
             reaction : njoy.dryad.id.ReactionID or None
-                 the reaction identifier to extract
+                the reaction identifier to extract
             group : njoy.dryad.id.EnergyGroup or None
-                 the energy group to extract
+                the energy group to extract
             product : njoy.dryad.id.ParticleID or None
-                 the product identifier to extract
+                the product identifier to extract
         """
     @typing.overload
     def extract(self, row_reaction: njoy.dryad.id.ReactionID | None, row_group: njoy.dryad.id.EnergyGroup | None, row_product: njoy.dryad.id.ParticleID | None, col_reaction: njoy.dryad.id.ReactionID | None, col_group: njoy.dryad.id.EnergyGroup | None, col_product: njoy.dryad.id.ParticleID | None) -> ProductMultiplicityCovarianceMatrix:
@@ -1087,17 +1087,17 @@ class ProductMultiplicityCovarianceMatrix:
         Parameters
         ----------
             row_reaction : njoy.dryad.id.ReactionID or None
-                 the row reaction identifier to extract
+                the row reaction identifier to extract
             row_group : njoy.dryad.id.EnergyGroup or None
-                 the row energy group to extract
+                the row energy group to extract
             row_product : njoy.dryad.id.ParticleID or None
-                 the row product identifier to extract
+                the row product identifier to extract
             col_reaction : njoy.dryad.id.ReactionID or None
-                 the column reaction identifier to extract
+                the column reaction identifier to extract
             col_group : njoy.dryad.id.EnergyGroup or None
-                 the column energy group to extract
+                the column energy group to extract
             col_product : njoy.dryad.id.ParticleID or None
-                 the column product identifier to extract
+                the column product identifier to extract
         """
     @property
     def column_metadata(self) -> ProductMultiplicityMetadata:
@@ -1178,13 +1178,13 @@ class ProductMultiplicityMetadata:
     Parameters
     ----------
         reactions : list of njoy.dryad.id.ReactionID
-             the reaction identifiers
+            the reaction identifiers
         energies : list of float
-             the energy boundary values
+            the energy boundary values
         products : list of njoy.dryad.id.ParticleID
-             the product identifiers
+            the product identifiers
         keys : list of tuple
-             the metadata keys (tuples of ReactionID, EnergyGroup, ParticleID)
+            the metadata keys (tuples of ReactionID, EnergyGroup, ParticleID)
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ProductMultiplicityMetadata:
@@ -1288,11 +1288,11 @@ class VarianceScaling:
     Parameters
     ----------
         type : njoy.dryad.covariance.ScalingType
-             the scaling procedure type
+            the scaling procedure type
         energies : list of float
-             the energy boundary values
+            the energy boundary values
         factors : list of float
-             the scaling factor values
+            the scaling factor values
     """
     def __copy__(self) -> VarianceScaling:
         ...

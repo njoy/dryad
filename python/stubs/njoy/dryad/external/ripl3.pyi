@@ -24,7 +24,7 @@ class LevelEntry:
     Parameters
     ----------
         id : njoy.dryad.id.ParticleID
-             the particle identifier
+            the particle identifier
         energy : float, default None
             the level energy (default: None)
         spin : float, default None
@@ -102,7 +102,7 @@ class Levels:
         Parameters
         ----------
             id : njoy.dryad.id.ParticleID
-                 the particle identifier
+                the particle identifier
         """
     @staticmethod
     def has_entry(id: njoy.dryad.id.ParticleID) -> bool:
@@ -112,7 +112,7 @@ class Levels:
         Parameters
         ----------
             id : njoy.dryad.id.ParticleID
-                 the particle identifier
+                the particle identifier
         """
     @staticmethod
     def size() -> int:

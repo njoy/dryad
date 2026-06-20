@@ -29,9 +29,9 @@ void wrapKinematics( python::module& module ) {
     "Values\n"
     "------\n"
     "    NonRelativistic : 0\n"
-    "         use non-relativistic kinematics\n"
+    "        use non-relativistic kinematics\n"
     "    Relativistic : 1\n"
-    "         use relativistic kinematics",
+    "        use relativistic kinematics",
     python::arithmetic()
   );
 

@@ -15,13 +15,13 @@ class ChannelID:
     Parameters
     ----------
         reaction : njoy.dryad.id.ReactionID
-             the reaction
+            the reaction
         quantum_numbers : njoy.dryad.resonances.ChannelQuantumNumbers
-             the channel quantum numbers
+            the channel quantum numbers
         partial : int, optional
-             the optional partial index
+            the optional partial index
         symbol : str
-             the channel symbol
+            the channel symbol
     """
     def __copy__(self) -> ChannelID:
         ...
@@ -79,14 +79,14 @@ class ChannelID:
         """
 class ElectronSubshellID:
     """
-    The electron subshell identifier
+    The electron subshell identifier, with associated symbol and aliases
     
     Parameters
     ----------
         number : int 
-             the subshell number
+            the subshell number
         string : str 
-             the subshell symbol, name or alternative name
+            the subshell symbol, name or alternative name
     
     """
     K: typing.ClassVar[int] = 534
@@ -209,14 +209,17 @@ class ElectronSubshellID:
         """
 class ElementID:
     """
-    The element identifier
+    The element identifier, with associated element symbol, name and aliases
+    
+    Comparison operators are provided using the logical order given by the
+    element number.
     
     Parameters
     ----------
         number : int
-             the element number
+            the element number
         string : str
-             the element symbol, name or alternative name
+            the element symbol, name or alternative name
     """
     def __copy__(self) -> ElementID:
         ...
@@ -274,9 +277,9 @@ class EnergyGroup:
     Parameters
     ----------
         lower : float
-             the lower energy value of the group
+            the lower energy value of the group
         upper : float
-             the upper energy value of the group
+            the upper energy value of the group
     """
     def __copy__(self) -> EnergyGroup:
         ...
@@ -314,14 +317,17 @@ class EnergyGroup:
         """
 class LevelID:
     """
-    The level identifier
+    The excited state or level identifier
+    
+    Comparison operators are provided using the logical order given by the
+    level number.
     
     Parameters
     ----------
         number : int
-             the level number
+            the level number
         string : str
-             the level symbol
+            the level symbol
     """
     all: typing.ClassVar[int] = 999
     continuum: typing.ClassVar[int] = 998
@@ -371,11 +377,10 @@ class LevelID:
         """
 class ParticleID:
     """
-    The particle identifier
+    The particle identifier, with associated symbol and aliases
     
     Comparison operators are provided using the logical order given by the
-    element number. A hash function and override for std::hash is also
-    provided.
+    element number.
     
     For more information on how to create instances of ParticleID, see the
     Jupyter notebook dryad-identifiers.ipynb under python/examples.
@@ -383,17 +388,17 @@ class ParticleID:
     Parameters
     ----------
         element_identifier : njoy.dryad.id.ElementID 
-                the particle element 
+               the particle element 
         mass : int 
-                the particle mass number 
+               the particle mass number 
         level_identifier : njoy.dryad.id.LevelID 
-                he particle level 
+               he particle level 
         vacancy_identifier : njoy.dryad.id.ElectronSubshellID 
-             the identifier of the subshell with an electron vacancy 
+            the identifier of the subshell with an electron vacancy 
         vacancy_identifiers : list of njoy.dryad.id.ElectronSubshellID 
-             the identifiers of the subshells with electron vacancies 
+            the identifiers of the subshells with electron vacancies 
         string : str 
-             Initialise the particle identifier with the particle symbol, name or alternative 
+            Initialise the particle identifier with the particle symbol, name or alternative 
     
     """
     @staticmethod
@@ -429,9 +434,9 @@ class ParticleID:
         Parameters
         ----------
             za : int 
-                 the za number of the nuclide 
+                the za number of the nuclide 
             level : int, default 0 
-                 the level number of the nuclide. the default value 0 indicates the ground state
+                the level number of the nuclide. the default value 0 indicates the ground state
         """
     @staticmethod
     def photon() -> ParticleID:
@@ -538,18 +543,18 @@ class ParticleID:
         """
 class ReactionID:
     """
-    The reaction identifier
+    The reaction identifier, with associated symbols, aliases, particles, etc.
     
     Parameters
     ----------
         projectile : njoy.dryad.id.ParticleID
-             the projectile
+            the projectile
         target : njoy.dryad.id.ParticleID
-             the target
+            the target
         type : njoy.dryad.id.ReactionType or int or str
-             the reaction type, mt number, or string representing the reaction type
+            the reaction type, mt number, or string representing the reaction type
         symbol : str
-             the reaction symbol
+            the reaction symbol
     """
     def __copy__(self) -> ReactionID:
         ...
@@ -642,7 +647,7 @@ class ReactionID:
         """
 class ReactionType:
     """
-    The reaction type
+    The reaction types, with associated symbol, aliases, particles, etc.
     
     The ReactionType can be used to identify reaction types. For the moment, only
     registered types can be used. In the future, we will extend this so that users
@@ -654,15 +659,15 @@ class ReactionType:
     Parameters
     ----------
         mt : int
-             the mt number
+            the mt number
         projectile : njoy.dryad.id.ParticleID
-             the projectile
+            the projectile
         level : int, default=0
-             the level number of the target or residual
+            the level number of the target or residual
         particles : dict
-             the outgoing particles (excluding the residual)
+            the outgoing particles (excluding the residual)
         string : str
-             the reaction type string
+            the reaction type string
     """
     @staticmethod
     def elastic(projectile: ParticleID, level: int = 0) -> ReactionType:
@@ -672,9 +677,9 @@ class ReactionType:
         Parameters
         ----------
             projectile : njoy.dryad.id.ParticleID
-                 the projectile
+                the projectile
             level : int, default=0
-                 the level number of the target
+                the level number of the target
         """
     @staticmethod
     def size() -> int:
@@ -689,7 +694,7 @@ class ReactionType:
         Parameters
         ----------
             type : njoy.dryad.InteractionType, default=InteractionType.Nuclear
-                 the interaction type (nuclear or atomic)
+                the interaction type (nuclear or atomic)
         """
     def __copy__(self) -> ReactionType:
         ...
@@ -742,9 +747,9 @@ class ReactionType:
         Parameters
         ----------
             projectile : njoy.dryad.id.ParticleID
-                 the projectile
+                the projectile
             target : njoy.dryad.id.ParticleID
-                 the target
+                the target
         """
     @property
     def interaction_type(self) -> njoy.dryad.InteractionType:

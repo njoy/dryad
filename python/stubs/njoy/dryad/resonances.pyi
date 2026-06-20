@@ -18,9 +18,9 @@ class BoundaryCondition:
     Values
     ------
         ShiftFactor : 1
-             eliminate the energy dependent shift factor (L = iP)
+            eliminate the energy dependent shift factor (L = iP)
         Constant : 2
-             use a constant boundary condition
+            use a constant boundary condition
     
     Members:
     
@@ -72,30 +72,30 @@ class Channel:
     Parameters
     ----------
         identifier : njoy.dryad.id.ChannelID
-             the channel identifier
+            the channel identifier
         incident : njoy.dryad.resonances.ParticlePair
-             the current incident particle pair
+            the current incident particle pair
         outgoing : njoy.dryad.resonances.ParticlePair, optional
-             the outgoing particle pair
+            the outgoing particle pair
         q_value : float
-             the Q value associated with the transition from the incident to
-             the outgoing particle pair
+            the Q value associated with the transition from the incident to
+            the outgoing particle pair
         boundary : float, optional
-             the boundary condition
+            the boundary condition
         radii : njoy.dryad.resonances.ChannelRadii
-             the channel radii for the calculation of the wave functions
+            the channel radii for the calculation of the wave functions
         kinematics : njoy.dryad.resonances.Kinematics, default=Kinematics.NonRelativistic
-             the kinematics type applied to the channel
+            the kinematics type applied to the channel
         background : Channel.Background, optional
-             the background function
+            the background function
         penetrability : Channel.Penetrability, optional
-             the penetrability of the channel
+            the penetrability of the channel
         shift_factor : Channel.ShiftFactor, optional
-             the shift factor of the channel
+            the shift factor of the channel
         phase_shift : Channel.PhaseShift, optional
-             the phase shift of the channel
+            the phase shift of the channel
         phase_shift_difference : Channel.PhaseShiftDifference, optional
-             the phase shift difference of the channel
+            the phase shift difference of the channel
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> Channel:
@@ -128,7 +128,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy to be tested
+                the energy to be tested
         """
     def penetrability(self, energy: float) -> float:
         """
@@ -137,7 +137,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy (given in eV)
+                the energy (given in eV)
         """
     def phase_shift(self, energy: float) -> float:
         """
@@ -146,7 +146,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy (given in eV)
+                the energy (given in eV)
         """
     def phase_shift_difference(self, energy: float) -> float:
         """
@@ -155,7 +155,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy (given in eV)
+                the energy (given in eV)
         """
     def shift_factor(self, energy: float) -> float:
         """
@@ -164,7 +164,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy (given in eV)
+                the energy (given in eV)
         """
     def sommerfeld_parameter(self, energy: float) -> float:
         """
@@ -181,7 +181,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy (given in eV)
+                the energy (given in eV)
         """
     def wave_number(self, energy: float) -> float:
         """
@@ -190,7 +190,7 @@ class Channel:
         Parameters
         ----------
             energy : float
-                 the energy (given in eV)
+                the energy (given in eV)
         """
     @property
     def background(self) -> FrohnerBackground | SammyBackground | TabulatedBackground | None:
@@ -294,15 +294,15 @@ class ChannelQuantumNumbers:
     Parameters
     ----------
         l : int
-             the orbital angular momentum
+            the orbital angular momentum
         s : float
-             the channel spin
+            the channel spin
         J : float
-             the total angular momentum
+            the total angular momentum
         parity : int
-             the parity (+1 or -1)
+            the parity (+1 or -1)
         parity : int
-             the parity (+1 or -1)
+            the parity (+1 or -1)
     """
     __hash__: typing.ClassVar[None] = None
     @staticmethod
@@ -313,11 +313,11 @@ class ChannelQuantumNumbers:
         Parameters
         ----------
             i : float
-                 the spin of the incident particle
+                the spin of the incident particle
             I : float
-                 the spin of the target nucleus
+                the spin of the target nucleus
             lmax : int
-                 the max value of the orbital angular momentum
+                the max value of the orbital angular momentum
         """
     @staticmethod
     def allowed_channel_spin_values(i: float, I: float) -> list[float]:
@@ -331,9 +331,9 @@ class ChannelQuantumNumbers:
         Parameters
         ----------
             i : float
-                 the spin of the incident particle
+                the spin of the incident particle
             I : float
-                 the spin of the target nucleus
+                the spin of the target nucleus
         """
     @staticmethod
     @typing.overload
@@ -344,11 +344,11 @@ class ChannelQuantumNumbers:
         Parameters
         ----------
             l : int
-                 the orbital angular momentum
+                the orbital angular momentum
             i : float
-                 the spin of the incident particle
+                the spin of the incident particle
             I : float
-                 the spin of the target nucleus
+                the spin of the target nucleus
         """
     @staticmethod
     @typing.overload
@@ -364,9 +364,9 @@ class ChannelQuantumNumbers:
         Parameters
         ----------
             l : int
-                 the orbital angular momentum
+                the orbital angular momentum
             s : float
-                 the channel spin
+                the channel spin
         """
     def __copy__(self) -> ChannelQuantumNumbers:
         ...
@@ -453,7 +453,7 @@ class ChannelRadii:
         Parameters
         ----------
             energy : float
-                 the energy for which the radius must be given
+                the energy for which the radius must be given
         """
     def calculate_phase_shift_radius(self, energy: float) -> float:
         """
@@ -462,7 +462,7 @@ class ChannelRadii:
         Parameters
         ----------
             energy : float
-                 the energy for which the radius must be given
+                the energy for which the radius must be given
         """
     def calculate_shift_factor_radius(self, energy: float) -> float:
         """
@@ -471,7 +471,7 @@ class ChannelRadii:
         Parameters
         ----------
             energy : float
-                 the energy for which the radius must be given
+                the energy for which the radius must be given
         """
     @property
     def has_phase_shift_radius(self) -> bool:
@@ -514,11 +514,11 @@ class CompoundSystem:
     Parameters
     ----------
         lower_energy : float
-             the lower energy limit for the compound system
+            the lower energy limit for the compound system
         upper_energy : float
-             the upper energy limit for the compound system
+            the upper energy limit for the compound system
         spin_groups : list of njoy.dryad.resonances.SpinGroup
-             the spin groups that make up the compound system
+            the spin groups that make up the compound system
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> CompoundSystem:
@@ -541,7 +541,7 @@ class CompoundSystem:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     @typing.overload
     def cross_sections(self, energies: list[float]) -> dict[njoy.dryad.id.ReactionID, list[float]]:
@@ -551,7 +551,7 @@ class CompoundSystem:
         Parameters
         ----------
             energies : list of float
-                 the energy values
+                the energy values
         """
     @property
     def lower_energy_limit(self) -> float:
@@ -589,7 +589,7 @@ class CoulombPenetrability:
     Parameters
     ----------
         orbital_angular_momentum : int
-             the orbital angular momentum quantum number (l value)
+            the orbital angular momentum quantum number (l value)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float, eta: float) -> float:
@@ -599,9 +599,9 @@ class CoulombPenetrability:
         Parameters
         ----------
             ratio : float
-                 the ratio rho = k*a (wave number times channel radius)
+                the ratio rho = k*a (wave number times channel radius)
             eta : float
-                 the Coulomb parameter
+                the Coulomb parameter
         """
     def __copy__(self) -> CoulombPenetrability:
         ...
@@ -627,7 +627,7 @@ class CoulombPhaseShift:
     Parameters
     ----------
         orbital_angular_momentum : int
-             the orbital angular momentum quantum number (l value)
+            the orbital angular momentum quantum number (l value)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float, eta: float) -> float:
@@ -637,9 +637,9 @@ class CoulombPhaseShift:
         Parameters
         ----------
             ratio : float
-                 the ratio rho = k*a (wave number times channel radius)
+                the ratio rho = k*a (wave number times channel radius)
             eta : float
-                 the Coulomb parameter
+                the Coulomb parameter
         """
     def __copy__(self) -> CoulombPhaseShift:
         ...
@@ -696,15 +696,10 @@ class CoulombShiftFactor:
     """
     Coulomb shift factor functions
     
-    The CoulombShiftFactor evaluates the Coulomb shift factor S_l(rho, eta)
-    as a function of the ratio rho = k*a and the Coulomb parameter eta, where
-    k is the wave number and a is the channel radius. The shift factor is used
-    in R-matrix resonance theory for charged particle reactions.
-    
     Parameters
     ----------
         orbital_angular_momentum : int
-             the orbital angular momentum quantum number (l value)
+            the orbital angular momentum quantum number (l value)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float, eta: float) -> float:
@@ -714,9 +709,9 @@ class CoulombShiftFactor:
         Parameters
         ----------
             ratio : float
-                 the ratio rho = k*a (wave number times channel radius)
+                the ratio rho = k*a (wave number times channel radius)
             eta : float
-                 the Coulomb parameter
+                the Coulomb parameter
         """
     def __copy__(self) -> CoulombShiftFactor:
         ...
@@ -745,9 +740,9 @@ class Formalism:
     Values
     ------
         ReichMoore : 1
-             the Reich-Moore formalism using a single eliminated capture channel
+            the Reich-Moore formalism using a single eliminated capture channel
         GeneralRMatrix : 2
-             the general R-matrix formalism
+            the general R-matrix formalism
     
     Members:
     
@@ -819,15 +814,15 @@ class FrohnerBackground:
         Parameters
         ----------
             distant_level_parameter : float
-               the distant level parameter
+                the distant level parameter
             pole_strength : list of float
-               the pole strength
+                the pole strength
             average_radiation_width : float
-               the average radiation width
+                the average radiation width
             lower_singularity : float
-               the lower logarithmic singularity values
+                the lower logarithmic singularity values
             upper_singularity : float
-               the upper logarithmic singularity values
+                the upper logarithmic singularity values
         """
     def __ne__(self, arg0: FrohnerBackground) -> bool:
         ...
@@ -863,7 +858,7 @@ class HardSpherePenetrability:
     Parameters
     ----------
         orbital_angular_momentum : int
-             the orbital angular momentum quantum number (l = 0 to 5)
+            the orbital angular momentum quantum number (l = 0 to 5)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -873,7 +868,7 @@ class HardSpherePenetrability:
         Parameters
         ----------
             ratio : float
-                 the ratio rho = k*a (wave number times channel radius)
+                the ratio rho = k*a (wave number times channel radius)
         """
     def __copy__(self) -> HardSpherePenetrability:
         ...
@@ -899,7 +894,7 @@ class HardSpherePhaseShift:
     Parameters
     ----------
         orbital_angular_momentum : int
-             the orbital angular momentum quantum number (l = 0 to 5)
+            the orbital angular momentum quantum number (l = 0 to 5)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -909,7 +904,7 @@ class HardSpherePhaseShift:
         Parameters
         ----------
             ratio : float
-                 the ratio rho = k*a (wave number times channel radius)
+                the ratio rho = k*a (wave number times channel radius)
         """
     def __copy__(self) -> HardSpherePhaseShift:
         ...
@@ -932,15 +927,10 @@ class HardSphereShiftFactor:
     """
     Hard sphere shift factor functions
     
-    The HardSphereShiftFactor evaluates the hard sphere shift factor S_l(rho)
-    as a function of the ratio rho = k*a, where k is the wave number and a is
-    the channel radius. The shift factor is used in R-matrix resonance theory
-    to compute penetrabilities and phase shifts.
-    
     Parameters
     ----------
         orbital_angular_momentum : int
-             the orbital angular momentum quantum number (l = 0 to 5)
+            the orbital angular momentum quantum number (l = 0 to 5)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, ratio: float) -> float:
@@ -950,7 +940,7 @@ class HardSphereShiftFactor:
         Parameters
         ----------
             ratio : float
-                 the ratio rho = k*a (wave number times channel radius)
+                the ratio rho = k*a (wave number times channel radius)
         """
     def __copy__(self) -> HardSphereShiftFactor:
         ...
@@ -979,9 +969,9 @@ class Kinematics:
     Values
     ------
         NonRelativistic : 0
-             use non-relativistic kinematics
+            use non-relativistic kinematics
         Relativistic : 1
-             use relativistic kinematics
+            use relativistic kinematics
     
     Members:
     
@@ -1042,9 +1032,9 @@ class ParticlePair:
     Parameters
     ----------
         light_particle : njoy.dryad.Particle
-             the light particle
+            the light particle
         heavy_particle : njoy.dryad.Particle
-             the heavy particle
+            the heavy particle
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ParticlePair:
@@ -1096,7 +1086,7 @@ class ResonanceParameters:
     Parameters
     ----------
         resolved : list of njoy.dryad.resonances.CompoundSystem, optional
-             the resolved resonance compound systems
+            the resolved resonance compound systems
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> ResonanceParameters:
@@ -1138,11 +1128,11 @@ class ResonanceTable:
     Parameters
     ----------
         channels : list of njoy.dryad.id.ChannelID or njoy.dryad.id.ChannelID
-             the channel identifiers (nc values for multiple channels, single channel)
+            the channel identifiers (nc values for multiple channels, single channel)
         energies : list of float
-             the level energies (ne values)
+            the level energies (ne values)
         amplitudes : list of list of float or list of float
-             the reduced width amplitudes (nc arrays of ne values, or single array of ne values)
+            the reduced width amplitudes (nc arrays of ne values, or single array of ne values)
     """
     __hash__: typing.ClassVar[None] = None
     def __add__(self, arg0: ResonanceTable) -> ResonanceTable:
@@ -1224,13 +1214,13 @@ class SammyBackground:
     Parameters
     ----------
         polynomial_coefficients : list of float
-             the coefficients of the polynomial term (order 2)
+            the coefficients of the polynomial term (order 2)
         logarithmic_coefficients : list of float
-             the coefficients of the logarithmic term (order 1)
+            the coefficients of the logarithmic term (order 1)
         lower_singularity : float
-             the lower logarithmic singularity value (eV)
+            the lower logarithmic singularity value (eV)
         upper_singularity : float
-             the upper logarithmic singularity value (eV)
+            the upper logarithmic singularity value (eV)
     """
     __hash__: typing.ClassVar[None] = None
     def __call__(self, energy: float) -> float:
@@ -1292,13 +1282,13 @@ class SpinGroup:
     Parameters
     ----------
         channels : list of njoy.dryad.resonances.Channel or list of tuple, optional
-             the channels in the spin group or channel data pairs
+            the channels in the spin group or channel data pairs
         resonances : njoy.dryad.resonances.ResonanceTable, optional
-             the resonance table of the spin group
+            the resonance table of the spin group
         formalism : njoy.dryad.resonances.Formalism
-             the r matrix formalism option to be applied
+            the r matrix formalism option to be applied
         boundary : njoy.dryad.resonances.BoundaryCondition
-             the boundary condition option to be applied
+            the boundary condition option to be applied
     """
     __hash__: typing.ClassVar[None] = None
     def __copy__(self) -> SpinGroup:
@@ -1335,7 +1325,7 @@ class SpinGroup:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     @typing.overload
     def cross_sections(self, energies: list[float]) -> dict[njoy.dryad.id.ReactionID, list[float]]:
@@ -1345,7 +1335,7 @@ class SpinGroup:
         Parameters
         ----------
             energies : list of float
-                 the energy values
+                the energy values
         """
     def r_l_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
         """
@@ -1358,7 +1348,7 @@ class SpinGroup:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     def t_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
         """
@@ -1372,7 +1362,7 @@ class SpinGroup:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     def u_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
         """
@@ -1385,7 +1375,7 @@ class SpinGroup:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     def w_matrix(self, energy: float) -> numpy.ndarray[numpy.complex128[m, n]]:
         """
@@ -1400,7 +1390,7 @@ class SpinGroup:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     @property
     def boundary_condition(self) -> BoundaryCondition:
@@ -1457,18 +1447,21 @@ class TabulatedBackground:
     """
     A channel background using tabulated data
     
+    The energy values are given in eV and the background values
+    are dimensionless complex values.
+    
     Parameters
     ----------
         energies : list of float
-             the energy values
+            the energy values
         values : list of complex
-             the background values
+            the background values
         boundaries : list of int, optional
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType, optional
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
-             the interpolation type for single-region tables
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1545,7 +1538,7 @@ class TabulatedBackground:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1601,15 +1594,15 @@ class TabulatedLevelSpacing:
     Parameters
     ----------
         energies : list of float
-             the energy values
+            the energy values
         values : list of float
-             the level spacing values
+            the level spacing values
         boundaries : list of int, optional
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType, optional
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
-             the interpolation type for single-region tables
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1625,7 +1618,7 @@ class TabulatedLevelSpacing:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     def __copy__(self) -> TabulatedLevelSpacing:
         ...
@@ -1686,7 +1679,7 @@ class TabulatedLevelSpacing:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1737,18 +1730,20 @@ class TabulatedRadius:
     """
     A radius table
     
+    The radius is given in femto meters (fm).
+    
     Parameters
     ----------
         energies : list of float
-             the energy values
+            the energy values
         values : list of float
-             the radius values
+            the radius values
         boundaries : list of int, optional
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType, optional
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
-             the interpolation type for single-region tables
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1764,7 +1759,7 @@ class TabulatedRadius:
         Parameters
         ----------
             energy : float
-                 the energy value
+                the energy value
         """
     def __copy__(self) -> TabulatedRadius:
         ...
@@ -1825,7 +1820,7 @@ class TabulatedRadius:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:
@@ -1879,15 +1874,15 @@ class TabulatedWaveFunction:
     Parameters
     ----------
         ratios : list of float
-             the ratio values
+            the ratio values
         values : list of float
-             the wave function values
+            the wave function values
         boundaries : list of int, optional
-             the boundaries of the interpolation regions
+            the boundaries of the interpolation regions
         interpolants : list of njoy.dryad.InterpolationType, optional
-             the interpolation types of the interpolation regions
+            the interpolation types of the interpolation regions
         interpolant : njoy.dryad.InterpolationType, default=LinearLinear
-             the interpolation type for single-region tables
+            the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -1903,7 +1898,7 @@ class TabulatedWaveFunction:
         Parameters
         ----------
             ratio : float
-                 the ratio value
+                the ratio value
         """
     def __copy__(self) -> TabulatedWaveFunction:
         ...
@@ -1964,7 +1959,7 @@ class TabulatedWaveFunction:
         Parameters
         ----------
             tolerance : float, default 0.001
-                 the linearisation tolerance
+                the linearisation tolerance
         """
     @property
     def boundaries(self) -> list[int]:

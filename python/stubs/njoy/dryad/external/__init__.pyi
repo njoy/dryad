@@ -30,10 +30,10 @@ class ComptonProfiles:
         Parameters
         ----------
             pt : njoy.dryad.ProjectileTarget
-                 the projectile-target data to be modified
+                the projectile-target data to be modified
             normalise : bool, default false
-                 option to indicate whether or not to normalise
-                 all probability data (default: no normalisation)
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
         """
     @staticmethod
     def biggs_mendelsohn_mann_profiles(z: int, normalise: bool = False) -> list[njoy.dryad.TabulatedComptonProfile]:
@@ -43,10 +43,10 @@ class ComptonProfiles:
         Parameters
         ----------
             z : int
-                 the z number of the atom
+                the z number of the atom
             normalise : bool, default false
-                 option to indicate whether or not to normalise
-                 all probability data (default: no normalisation)
+                option to indicate whether or not to normalise
+                all probability data (default: no normalisation)
         """
     @staticmethod
     def biggs_mendelsohn_mann_subshell_identifiers(z: int) -> list[njoy.dryad.id.ElectronSubshellID]:
@@ -57,5 +57,5 @@ class ComptonProfiles:
         Parameters
         ----------
             z : int
-                 the z number of the atom
+                the z number of the atom
         """
