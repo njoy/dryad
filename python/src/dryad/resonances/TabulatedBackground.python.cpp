@@ -26,6 +26,8 @@ void wrapTabulatedBackground( python::module& module ) {
     module,
     "TabulatedBackground",
     "A channel background using tabulated data\n\n"
+    "The energy values are given in eV and the background values\n"
+    "are dimensionless complex values.\n\n"
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"

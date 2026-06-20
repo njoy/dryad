@@ -27,7 +27,7 @@ void wrapReactionID( python::module& module ) {
 
     module,
     "ReactionID",
-    "The reaction identifier\n\n"
+    "The reaction identifier, with associated symbols, aliases, particles, etc.\n\n"
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"

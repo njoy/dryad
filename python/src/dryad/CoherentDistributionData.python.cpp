@@ -27,11 +27,15 @@ void wrapCoherentDistributionData( python::module& module ) {
     module,
     "CoherentDistributionData",
     "The distribution data for coherent scattering in photoatomic interactions\n\n"
+    "This representation is only available for a photoatomic ProjectileTarget.\n\n"
     "In this representation, a scattering function S(x,Z) and two optional form factor\n"
     "functions are defined which together with the Thompson cross section determine the\n"
-    "double differential cross section.\n\n"
-    "This corresponds with the coherent scattering function data given in MF27 MT502 and\n"
-    "the form factors in MF27 MT505 and MT506.\n\n"
+    "double differential cross section. The optional form factors are the real and\n"
+    "complex part of the anomalous form factor. These are defined as optional because\n"
+    "photoatomic MCNP data files produced in 2024 or earlier do not contain these form\n"
+    "factors even though the photoatomic ENDF evaluations define them.\n\n"
+    "This corresponds with the coherent scattering function data given in\n"
+    "MF27 MT502 and the form factors in MF27 MT505 and MT506.\n\n"
     "Parameters\n"
     "----------\n"
     "    frame : njoy.dryad.ReferenceFrame\n"

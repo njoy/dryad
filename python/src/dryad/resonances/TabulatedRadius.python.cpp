@@ -26,6 +26,7 @@ void wrapTabulatedRadius( python::module& module ) {
     module,
     "TabulatedRadius",
     "A radius table\n\n"
+    "The radius is given in femto meters (fm).\n\n"
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"

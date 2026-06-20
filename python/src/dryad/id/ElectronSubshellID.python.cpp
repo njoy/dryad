@@ -25,7 +25,7 @@ void wrapElectronSubshellID( python::module& module ) {
 
     module,
     "ElectronSubshellID",
-    "The electron subshell identifier\n\n"
+    "The electron subshell identifier, with associated symbol and aliases\n\n"
     "Parameters\n"
     "----------\n"
     "    number : int \n"

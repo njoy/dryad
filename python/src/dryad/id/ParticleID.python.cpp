@@ -28,10 +28,9 @@ void wrapParticleID( python::module& module ) {
 
     module,
     "ParticleID",
-    "The particle identifier\n\n"
+    "The particle identifier, with associated symbol and aliases\n\n"
     "Comparison operators are provided using the logical order given by the\n"
-    "element number. A hash function and override for std::hash is also\n"
-    "provided.\n\n"
+    "element number.\n\n"
     "For more information on how to create instances of ParticleID, see the\n"
     "Jupyter notebook dryad-identifiers.ipynb under python/examples.\n\n"
     "Parameters\n"

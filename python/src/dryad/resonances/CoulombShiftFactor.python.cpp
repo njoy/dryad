@@ -27,10 +27,6 @@ void wrapCoulombShiftFactor( python::module& module ) {
     module,
     "CoulombShiftFactor",
     "Coulomb shift factor functions\n\n"
-    "The CoulombShiftFactor evaluates the Coulomb shift factor S_l(rho, eta)\n"
-    "as a function of the ratio rho = k*a and the Coulomb parameter eta, where\n"
-    "k is the wave number and a is the channel radius. The shift factor is used\n"
-    "in R-matrix resonance theory for charged particle reactions.\n\n"
     "Parameters\n"
     "----------\n"
     "    orbital_angular_momentum : int\n"

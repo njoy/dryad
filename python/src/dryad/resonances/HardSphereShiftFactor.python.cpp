@@ -25,10 +25,6 @@ void wrapHardSphereShiftFactor( python::module& module ) {
     module,
     "HardSphereShiftFactor",
     "Hard sphere shift factor functions\n\n"
-    "The HardSphereShiftFactor evaluates the hard sphere shift factor S_l(rho)\n"
-    "as a function of the ratio rho = k*a, where k is the wave number and a is\n"
-    "the channel radius. The shift factor is used in R-matrix resonance theory\n"
-    "to compute penetrabilities and phase shifts.\n\n"
     "Parameters\n"
     "----------\n"
     "    orbital_angular_momentum : int\n"

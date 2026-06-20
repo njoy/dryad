@@ -25,7 +25,9 @@ void wrapElementID( python::module& module ) {
 
     module,
     "ElementID",
-    "The element identifier\n\n"
+    "The element identifier, with associated element symbol, name and aliases\n\n"
+    "Comparison operators are provided using the logical order given by the\n"
+    "element number.\n\n"
     "Parameters\n"
     "----------\n"
     "    number : int\n"

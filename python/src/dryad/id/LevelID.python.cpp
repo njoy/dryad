@@ -25,7 +25,9 @@ void wrapLevelID( python::module& module ) {
 
     module,
     "LevelID",
-    "The level identifier\n\n"
+    "The excited state or level identifier\n\n"
+    "Comparison operators are provided using the logical order given by the\n"
+    "level number.\n\n"
     "Parameters\n"
     "----------\n"
     "    number : int\n"

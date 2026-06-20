@@ -28,7 +28,7 @@ void wrapReactionType( python::module& module ) {
 
     module,
     "ReactionType",
-    "The reaction type\n\n"
+    "The reaction types, with associated symbol, aliases, particles, etc.\n\n"
     "The ReactionType can be used to identify reaction types. For the moment, only\n"
     "registered types can be used. In the future, we will extend this so that users\n"
     "can create types other than the ones currently registered.\n\n"
