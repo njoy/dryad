@@ -32,7 +32,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    matrices : list of njoy.dryad.covariance.CrossSectionCovarianceMatrix\n"
-    "         the covariance matrices"
+    "        the covariance matrices"
   );
 
   // wrap the component
@@ -81,9 +81,9 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row : njoy.dryad.id.ReactionID\n"
-    "         the row reaction identifier\n"
+    "        the row reaction identifier\n"
     "    column : njoy.dryad.id.ReactionID\n"
-    "         the column reaction identifier"
+    "        the column reaction identifier"
   )
   .def(
 
@@ -95,7 +95,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier"
+    "        the reaction identifier"
   )
   .def(
 
@@ -107,9 +107,9 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row : njoy.dryad.id.ReactionID\n"
-    "         the row reaction identifier\n"
+    "        the row reaction identifier\n"
     "    column : njoy.dryad.id.ReactionID\n"
-    "         the column reaction identifier",
+    "        the column reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -122,7 +122,7 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier",
+    "        the reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def_static(
@@ -142,13 +142,13 @@ void wrapCrossSectionCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile identifier\n"
+    "        the projectile identifier\n"
     "    target : njoy.dryad.id.ParticleID\n"
-    "         the target identifier\n"
+    "        the target identifier\n"
     "    relative : bool\n"
-    "         the flag to indicate whether or not the covariance data is relative\n"
+    "        the flag to indicate whether or not the covariance data is relative\n"
     "    filename : str\n"
-    "         the GENDF file name"
+    "        the GENDF file name"
   );
 
   // add standard equality comparison definitions

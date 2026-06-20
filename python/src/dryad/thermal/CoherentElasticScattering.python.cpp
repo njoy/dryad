@@ -29,7 +29,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    bragg_edges : list of njoy.dryad.thermal.BraggEdgeData\n"
-    "         the Bragg edge data"
+    "        the Bragg edge data"
   );
 
   // wrap the component
@@ -68,7 +68,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "         the temperature"
+    "        the temperature"
   )
   .def(
 
@@ -79,7 +79,7 @@ void wrapCoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "         the temperature",
+    "        the temperature",
     python::return_value_policy::reference_internal
   );
 

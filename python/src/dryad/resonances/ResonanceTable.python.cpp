@@ -33,11 +33,11 @@ void wrapResonanceTable( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    channels : list of njoy.dryad.id.ChannelID or njoy.dryad.id.ChannelID\n"
-    "         the channel identifiers (nc values for multiple channels, single channel)\n"
+    "        the channel identifiers (nc values for multiple channels, single channel)\n"
     "    energies : list of float\n"
-    "         the level energies (ne values)\n"
+    "        the level energies (ne values)\n"
     "    amplitudes : list of list of float or list of float\n"
-    "         the reduced width amplitudes (nc arrays of ne values, or single array of ne values)"
+    "        the reduced width amplitudes (nc arrays of ne values, or single array of ne values)"
    );
 
   // wrap the component

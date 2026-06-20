@@ -34,11 +34,11 @@ void wrapVarianceScaling( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    type : njoy.dryad.covariance.ScalingType\n"
-    "         the scaling procedure type\n"
+    "        the scaling procedure type\n"
     "    energies : list of float\n"
-    "         the energy boundary values\n"
+    "        the energy boundary values\n"
     "    factors : list of float\n"
-    "         the scaling factor values"
+    "        the scaling factor values"
   );
 
   // wrap the component

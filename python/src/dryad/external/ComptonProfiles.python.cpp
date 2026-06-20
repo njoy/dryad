@@ -48,7 +48,7 @@ void wrapComptonProfiles( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    z : int\n"
-    "         the z number of the atom"
+    "        the z number of the atom"
   )
   .def_static(
 
@@ -59,10 +59,10 @@ void wrapComptonProfiles( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    z : int\n"
-    "         the z number of the atom\n"
+    "        the z number of the atom\n"
     "    normalise : bool, default false\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def_static(
 
@@ -73,10 +73,10 @@ void wrapComptonProfiles( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    pt : njoy.dryad.ProjectileTarget\n"
-    "         the projectile-target data to be modified\n"
+    "        the projectile-target data to be modified\n"
     "    normalise : bool, default false\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 }
 

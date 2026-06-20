@@ -28,15 +28,15 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    inverse_lengths : list of float\n"
-    "         the inverse length values\n"
+    "        the inverse length values\n"
     "    values : list of float\n"
-    "         the scattering function values\n"
+    "        the scattering function values\n"
     "    boundaries : list of int, optional\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of InterpolationType, optional\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : InterpolationType, default=LinearLinear\n"
-    "         the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -91,9 +91,9 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the incident photon energy\n"
+    "        the incident photon energy\n"
     "    cosine : float\n"
-    "         the outgoing photon cosine"
+    "        the outgoing photon cosine"
   )
   .def(
 
@@ -105,7 +105,7 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    inverse_length : float\n"
-    "         the inverse length value"
+    "        the inverse length value"
   )
   .def(
 
@@ -117,9 +117,9 @@ void wrapTabulatedScatteringFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the incident photon energy\n"
+    "        the incident photon energy\n"
     "    cosine : float\n"
-    "         the outgoing photon cosine"
+    "        the outgoing photon cosine"
   );
 
   // add standard equality comparison definitions

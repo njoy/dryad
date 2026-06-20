@@ -31,11 +31,11 @@ namespace covariance {
       "Parameters\n"
       "----------\n"
       "    eigenvalue : float\n"
-      "         the smallest allowed eigenvalue\n"
+      "        the smallest allowed eigenvalue\n"
       "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
       "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
       "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix"
-      "         the covariance matrix to be modified"
+      "        the covariance matrix to be modified"
     )
     .def(
 

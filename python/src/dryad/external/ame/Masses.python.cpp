@@ -48,7 +48,7 @@ void wrapMasses( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier"
+    "        the particle identifier"
   )
   .def_static(
 
@@ -59,7 +59,7 @@ void wrapMasses( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ParticleID\n"
-    "         the particle identifier"
+    "        the particle identifier"
   );
 }
 

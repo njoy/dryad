@@ -30,9 +30,9 @@ namespace reconr {
       "Parameters\n"
       "----------\n"
       "    pt : njoy.dryad.ProjectileTarget\n"
-      "         the projectile-target data to be modified\n"
+      "        the projectile-target data to be modified\n"
       "    tolerance : float, default 0.001\n"
-      "         the linearisation tolerance (default: 0.1%)"
+      "        the linearisation tolerance (default: 0.1%)"
     );
   }
 } // reconr namespace

@@ -35,13 +35,13 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    channels : list of njoy.dryad.resonances.Channel or list of tuple, optional\n"
-    "         the channels in the spin group or channel data pairs\n"
+    "        the channels in the spin group or channel data pairs\n"
     "    resonances : njoy.dryad.resonances.ResonanceTable, optional\n"
-    "         the resonance table of the spin group\n"
+    "        the resonance table of the spin group\n"
     "    formalism : njoy.dryad.resonances.Formalism\n"
-    "         the r matrix formalism option to be applied\n"
+    "        the r matrix formalism option to be applied\n"
     "    boundary : njoy.dryad.resonances.BoundaryCondition\n"
-    "         the boundary condition option to be applied"
+    "        the boundary condition option to be applied"
    );
 
   // wrap the component
@@ -139,7 +139,7 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def(
 
@@ -155,7 +155,7 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values"
+    "        the energy values"
   )
   .def(
 
@@ -169,7 +169,7 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def(
 
@@ -184,7 +184,7 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def(
 
@@ -200,7 +200,7 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def(
 
@@ -214,7 +214,7 @@ void wrapSpinGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   );
 
   // add standard comparison definitions

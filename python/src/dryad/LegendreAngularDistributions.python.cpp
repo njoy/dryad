@@ -30,18 +30,18 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    grid : list of float\n"
-    "         the grid values\n"
+    "        the grid values\n"
     "    distributions : list of njoy.dryad.LegendreAngularDistribution\n"
-    "         the angular distributions\n"
+    "        the angular distributions\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)\n"
+    "        the interpolation type (default lin-lin)\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -92,9 +92,9 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    value : float\n"
-    "         the grid value\n"
+    "        the grid value\n"
     "    cosine : float\n"
-    "         the cosine value"
+    "        the cosine value"
   )
   .def(
 
@@ -118,10 +118,10 @@ void wrapLegendreAngularDistributions( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
+    "        the linearisation tolerance\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

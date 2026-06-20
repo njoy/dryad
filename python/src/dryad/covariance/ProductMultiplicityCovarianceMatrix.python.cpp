@@ -35,27 +35,27 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    metadata : njoy.dryad.covariance.ProductMultiplicityMetadata\n"
-    "         the row and column metadata (on-diagonal)\n"
+    "        the row and column metadata (on-diagonal)\n"
     "    row_metadata : njoy.dryad.covariance.ProductMultiplicityMetadata\n"
-    "         the row metadata (off-diagonal)\n"
+    "        the row metadata (off-diagonal)\n"
     "    column_metadata : njoy.dryad.covariance.ProductMultiplicityMetadata\n"
-    "         the column metadata (off-diagonal)\n"
+    "        the column metadata (off-diagonal)\n"
     "    covariances : array-like\n"
-    "         the covariance matrix\n"
+    "        the covariance matrix\n"
     "    deviations : list of float\n"
-    "         the standard deviations (on-diagonal)\n"
+    "        the standard deviations (on-diagonal)\n"
     "    row_deviations : list of float\n"
-    "         the standard deviations to be applied to each row (off-diagonal)\n"
+    "        the standard deviations to be applied to each row (off-diagonal)\n"
     "    column_deviations : list of float\n"
-    "         the standard deviations to be applied to each column (off-diagonal)\n"
+    "        the standard deviations to be applied to each column (off-diagonal)\n"
     "    correlations : array-like\n"
-    "         the correlation matrix\n"
+    "        the correlation matrix\n"
     "    eigenvalues : list of float\n"
-    "         the eigenvalues\n"
+    "        the eigenvalues\n"
     "    eigenvectors : list of array-like\n"
-    "         the associated eigenvectors\n"
+    "        the associated eigenvectors\n"
     "    relative : bool, default True\n"
-    "         the relative covariance flag"
+    "        the relative covariance flag"
   );
 
   // wrap the component
@@ -245,9 +245,9 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row_deviations : list of float\n"
-    "         the standard deviations to be applied to each row\n"
+    "        the standard deviations to be applied to each row\n"
     "    column_deviations : list of float\n"
-    "         the standard deviations to be applied to each column"
+    "        the standard deviations to be applied to each column"
   )
   .def(
 
@@ -286,9 +286,9 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row_deviations : list of float\n"
-    "         the standard deviations to be applied to each row\n"
+    "        the standard deviations to be applied to each row\n"
     "    column_deviations : list of float\n"
-    "         the standard deviations to be applied to each column"
+    "        the standard deviations to be applied to each column"
   )
   .def(
 
@@ -314,11 +314,11 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    reaction : njoy.dryad.id.ReactionID or None\n"
-    "         the reaction identifier to extract\n"
+    "        the reaction identifier to extract\n"
     "    group : njoy.dryad.id.EnergyGroup or None\n"
-    "         the energy group to extract\n"
+    "        the energy group to extract\n"
     "    product : njoy.dryad.id.ParticleID or None\n"
-    "         the product identifier to extract"
+    "        the product identifier to extract"
   )
   .def(
 
@@ -340,17 +340,17 @@ void wrapProductMultiplicityCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row_reaction : njoy.dryad.id.ReactionID or None\n"
-    "         the row reaction identifier to extract\n"
+    "        the row reaction identifier to extract\n"
     "    row_group : njoy.dryad.id.EnergyGroup or None\n"
-    "         the row energy group to extract\n"
+    "        the row energy group to extract\n"
     "    row_product : njoy.dryad.id.ParticleID or None\n"
-    "         the row product identifier to extract\n"
+    "        the row product identifier to extract\n"
     "    col_reaction : njoy.dryad.id.ReactionID or None\n"
-    "         the column reaction identifier to extract\n"
+    "        the column reaction identifier to extract\n"
     "    col_group : njoy.dryad.id.EnergyGroup or None\n"
-    "         the column energy group to extract\n"
+    "        the column energy group to extract\n"
     "    col_product : njoy.dryad.id.ParticleID or None\n"
-    "         the column product identifier to extract"
+    "        the column product identifier to extract"
   );
 
   // add standard copy definitions

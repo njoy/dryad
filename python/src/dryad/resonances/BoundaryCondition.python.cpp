@@ -29,9 +29,9 @@ void wrapBoundaryCondition( python::module& module ) {
     "Values\n"
     "------\n"
     "    ShiftFactor : 1\n"
-    "         eliminate the energy dependent shift factor (L = iP)\n"
+    "        eliminate the energy dependent shift factor (L = iP)\n"
     "    Constant : 2\n"
-    "         use a constant boundary condition",
+    "        use a constant boundary condition",
     python::arithmetic()
   );
 

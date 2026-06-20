@@ -32,13 +32,13 @@ void wrapCrossSectionMetadata( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    reactions : list of njoy.dryad.id.ReactionID\n"
-    "         the reaction identifiers\n"
+    "        the reaction identifiers\n"
     "    reaction : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier (single reaction constructor)\n"
+    "        the reaction identifier (single reaction constructor)\n"
     "    energies : list of float\n"
-    "         the energy boundary values\n"
+    "        the energy boundary values\n"
     "    keys : list of tuple\n"
-    "         the metadata keys (tuples of ReactionID, EnergyGroup)"
+    "        the metadata keys (tuples of ReactionID, EnergyGroup)"
   );
 
   // wrap the component
@@ -55,7 +55,7 @@ void wrapCrossSectionMetadata( python::module& module ) {
 
     python::init< ReactionID,
                   std::vector< double > >(),
-    python::arg( "reaction" ), 
+    python::arg( "reaction" ),
     python::arg( "energies" ),
     "Initialise the cross section covariance metadata for a single reaction"
   )

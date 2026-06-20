@@ -28,7 +28,7 @@ void wrapHardSphereShiftFactor( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    orbital_angular_momentum : int\n"
-    "         the orbital angular momentum quantum number (l = 0 to 5)"
+    "        the orbital angular momentum quantum number (l = 0 to 5)"
    );
 
   // wrap the component
@@ -55,7 +55,7 @@ void wrapHardSphereShiftFactor( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    ratio : float\n"
-    "         the ratio rho = k*a (wave number times channel radius)"
+    "        the ratio rho = k*a (wave number times channel radius)"
   );
 
   // add standard equality comparison definitions

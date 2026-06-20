@@ -39,13 +39,13 @@ void wrapCoherentDistributionData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    frame : njoy.dryad.ReferenceFrame\n"
-    "         the reference frame of the distribution data\n"
+    "        the reference frame of the distribution data\n"
     "    scattering : njoy.dryad.TabulatedScatteringFunction\n"
-    "         the scattering function\n"
+    "        the scattering function\n"
     "    real : njoy.dryad.TabulatedFormFactor\n"
-    "         the real part of the anomalous form factor\n"
+    "        the real part of the anomalous form factor\n"
     "    imaginary : njoy.dryad.TabulatedFormFactor\n"
-    "         the imaginary part of the anomalous form factor"
+    "        the imaginary part of the anomalous form factor"
   );
 
   // wrap the component

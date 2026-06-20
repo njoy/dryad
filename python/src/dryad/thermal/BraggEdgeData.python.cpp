@@ -30,11 +30,11 @@ void wrapBraggEdgeData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    temperature : float\n"
-    "         the temperature\n"
+    "        the temperature\n"
     "    energies : list of float\n"
-    "         the temperature\n"
+    "        the temperature\n"
     "    values : list of float\n"
-    "         the structure factor values"
+    "        the structure factor values"
   );
 
   // wrap the component

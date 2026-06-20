@@ -33,13 +33,13 @@ void wrapChannelID( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    reaction : njoy.dryad.id.ReactionID\n"
-    "         the reaction\n"
+    "        the reaction\n"
     "    quantum_numbers : njoy.dryad.resonances.ChannelQuantumNumbers\n"
-    "         the channel quantum numbers\n"
+    "        the channel quantum numbers\n"
     "    partial : int, optional\n"
-    "         the optional partial index\n"
+    "        the optional partial index\n"
     "    symbol : str\n"
-    "         the channel symbol"
+    "        the channel symbol"
   );
 
   // wrap the component

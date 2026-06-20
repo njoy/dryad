@@ -31,9 +31,9 @@ void wrapLevelID( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    number : int\n"
-    "         the level number\n"
+    "        the level number\n"
     "    string : str\n"
-    "         the level symbol"
+    "        the level symbol"
   );
 
   // wrap the component

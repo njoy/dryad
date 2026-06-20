@@ -29,15 +29,15 @@ void wrapTabulatedWaveFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    ratios : list of float\n"
-    "         the ratio values\n"
+    "        the ratio values\n"
     "    values : list of float\n"
-    "         the wave function values\n"
+    "        the wave function values\n"
     "    boundaries : list of int, optional\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
-    "         the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -95,7 +95,7 @@ void wrapTabulatedWaveFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    ratio : float\n"
-    "         the ratio value"
+    "        the ratio value"
   );
 
   // add standard equality comparison definitions

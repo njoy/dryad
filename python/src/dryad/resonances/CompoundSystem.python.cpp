@@ -30,11 +30,11 @@ void wrapCompoundSystem( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    lower_energy : float\n"
-    "         the lower energy limit for the compound system\n"
+    "        the lower energy limit for the compound system\n"
     "    upper_energy : float\n"
-    "         the upper energy limit for the compound system\n"
+    "        the upper energy limit for the compound system\n"
     "    spin_groups : list of njoy.dryad.resonances.SpinGroup\n"
-    "         the spin groups that make up the compound system"
+    "        the spin groups that make up the compound system"
    );
 
   // wrap the component
@@ -88,7 +88,7 @@ void wrapCompoundSystem( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def(
 
@@ -104,7 +104,7 @@ void wrapCompoundSystem( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values"
+    "        the energy values"
   );
 
   // add standard comparison definitions

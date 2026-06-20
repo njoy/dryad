@@ -34,9 +34,9 @@ namespace reconr {
       "Parameters\n"
       "----------\n"
       "    pt : njoy.dryad.ProjectileTarget\n"
-      "         the projectile-target data to be modified\n"
+      "        the projectile-target data to be modified\n"
       "    exclude_summation : bool, default False\n"
-      "         option to exclude summation reactions in the unionisation"
+      "        option to exclude summation reactions in the unionisation"
     );
   }
 } // reconr namespace

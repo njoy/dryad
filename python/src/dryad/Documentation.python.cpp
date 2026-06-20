@@ -27,11 +27,11 @@ void wrapDocumentation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    library : int, optional\n"
-    "         the library number\n"
+    "        the library number\n"
     "    version : tuple of int, optional\n"
-    "         the version numbers (major and minor)\n"
+    "        the version numbers (major and minor)\n"
     "    description : str, optional\n"
-    "         the description"
+    "        the description"
    );
 
   // wrap the component

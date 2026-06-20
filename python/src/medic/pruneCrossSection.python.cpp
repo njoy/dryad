@@ -27,11 +27,11 @@ namespace medic {
       "Parameters\n"
       "----------\n"
       "    lower_energy : float\n"
-      "         the new lower energy limit\n"
+      "        the new lower energy limit\n"
       "    upper_energy : float\n"
-      "         the new upper energy limit\n"
+      "        the new upper energy limit\n"
       "    xs : njoy.dryad.TabulatedCrossSection\n"
-      "         the cross section table to be modified"
+      "        the cross section table to be modified"
     );
   }
 } // medic namespace

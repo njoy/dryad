@@ -29,9 +29,9 @@ void wrapIncoherentElasticScattering( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    xs : float\n"
-    "         the bound atom cross section\n"
+    "        the bound atom cross section\n"
     "    debye_waller_integral : njoy.dryad.thermal.DebyeWallerIntegralData\n"
-    "         the Debye-Waller integral data"
+    "        the Debye-Waller integral data"
   );
 
   // wrap the component

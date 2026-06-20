@@ -32,7 +32,7 @@ void wrapEigenvalueRatio( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    ratio : float, default 1e-8\n"
-    "         the smallest allowable positive eigenvalue ratio"
+    "        the smallest allowable positive eigenvalue ratio"
   );
   // wrap the component
   component
@@ -100,7 +100,7 @@ void wrapEigenvalueRatio( python::module& module ) {
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
     "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
     "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "         the covariance matrix instance to be tested"
+    "        the covariance matrix instance to be tested"
   )
   .def(
 

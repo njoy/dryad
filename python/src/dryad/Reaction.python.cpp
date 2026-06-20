@@ -31,20 +31,20 @@ void wrapReaction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier\n"
+    "        the reaction identifier\n"
     "    xs : njoy.dryad.TabulatedCrossSection\n"
-    "         the cross section of the reaction\n"
+    "        the cross section of the reaction\n"
     "    products : list of njoy.dryad.ReactionProduct, default []\n"
-    "         the reaction products\n"
+    "        the reaction products\n"
     "    mass_q : float, default None\n"
-    "         the mass difference Q value (default: None)\n"
+    "        the mass difference Q value (default: None)\n"
     "    reaction_q : float, default None\n"
-    "         the reaction Q value (default: None)\n"
+    "        the reaction Q value (default: None)\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)\n\n"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)\n\n"
     "    partials : list of njoy.dryad.id.ReactionID\n"
-    "         the identifiers of the partials of the reaction"
+    "        the identifiers of the partials of the reaction"
   );
 
   // wrap the component
@@ -180,7 +180,7 @@ void wrapReaction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    type : njoy.dryad.id.ParticleID\n"
-    "         the reaction product type"
+    "        the reaction product type"
   )
   .def(
 
@@ -192,9 +192,9 @@ void wrapReaction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    type : njoy.dryad.id.ParticleID\n"
-    "         the reaction product type\n"
+    "        the reaction product type\n"
     "    chain : int\n"
-    "         the reaction product chain index"
+    "        the reaction product chain index"
   )
   .def(
 
@@ -206,9 +206,9 @@ void wrapReaction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    type : njoy.dryad.id.ParticleID\n"
-    "         the reaction product type\n"
+    "        the reaction product type\n"
     "    index : int, default 0\n"
-    "         the reaction product index",
+    "        the reaction product index",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -222,11 +222,11 @@ void wrapReaction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    type : njoy.dryad.id.ParticleID\n"
-    "         the reaction product type\n"
+    "        the reaction product type\n"
     "    chain : int\n"
-    "         the reaction product chain index\n"
+    "        the reaction product chain index\n"
     "    index : int\n"
-    "         the reaction product index",
+    "        the reaction product index",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -244,7 +244,7 @@ void wrapReaction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 1e-8\n"
-    "         the integration tolerance"
+    "        the integration tolerance"
   );
 
   // add standard equality comparison definitions

@@ -29,9 +29,9 @@ void wrapEnergyGroup( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    lower : float\n"
-    "         the lower energy value of the group\n"
+    "        the lower energy value of the group\n"
     "    upper : float\n"
-    "         the upper energy value of the group"
+    "        the upper energy value of the group"
   );
 
   // wrap the component

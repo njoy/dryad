@@ -27,11 +27,11 @@ namespace medic {
       "Parameters\n"
       "----------\n"
       "    lower_energy : float\n"
-      "         the new lower energy limit\n"
+      "        the new lower energy limit\n"
       "    upper_energy : float\n"
-      "         the new upper energy limit\n"
+      "        the new upper energy limit\n"
       "    pt : njoy.dryad.ProjectileTarget\n"
-      "         the projectile-target data to be modified"
+      "        the projectile-target data to be modified"
     );
   }
 } // medic namespace

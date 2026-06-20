@@ -38,11 +38,11 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    coefficients : list of float\n"
-    "         the coefficients of the Legendre series (from\n"
-    "         lowest to highest order coefficient)\n"
+    "        the coefficients of the Legendre series (from\n"
+    "        lowest to highest order coefficient)\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def_property_readonly(
 
@@ -72,7 +72,7 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    cosine : float\n"
-    "         the cosine value"
+    "        the cosine value"
   )
   .def(
 
@@ -96,10 +96,10 @@ void wrapLegendreAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
+    "        the linearisation tolerance\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

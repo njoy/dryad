@@ -97,7 +97,7 @@ void wrapChannelRadii( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy for which the radius must be given"
+    "        the energy for which the radius must be given"
   )
   .def(
 
@@ -108,7 +108,7 @@ void wrapChannelRadii( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy for which the radius must be given"
+    "        the energy for which the radius must be given"
   )
   .def(
 
@@ -119,7 +119,7 @@ void wrapChannelRadii( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy for which the radius must be given"
+    "        the energy for which the radius must be given"
   );
 
   // add standard equality comparison definitions

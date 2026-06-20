@@ -33,13 +33,13 @@ void wrapProductMultiplicityMetadata( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    reactions : list of njoy.dryad.id.ReactionID\n"
-    "         the reaction identifiers\n"
+    "        the reaction identifiers\n"
     "    energies : list of float\n"
-    "         the energy boundary values\n"
+    "        the energy boundary values\n"
     "    products : list of njoy.dryad.id.ParticleID\n"
-    "         the product identifiers\n"
+    "        the product identifiers\n"
     "    keys : list of tuple\n"
-    "         the metadata keys (tuples of ReactionID, EnergyGroup, ParticleID)"
+    "        the metadata keys (tuples of ReactionID, EnergyGroup, ParticleID)"
   );
 
   // wrap the component

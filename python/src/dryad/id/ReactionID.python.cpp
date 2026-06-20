@@ -31,13 +31,13 @@ void wrapReactionID( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile\n"
+    "        the projectile\n"
     "    target : njoy.dryad.id.ParticleID\n"
-    "         the target\n"
+    "        the target\n"
     "    type : njoy.dryad.id.ReactionType or int or str\n"
-    "         the reaction type, mt number, or string representing the reaction type\n"
+    "        the reaction type, mt number, or string representing the reaction type\n"
     "    symbol : str\n"
-    "         the reaction symbol"
+    "        the reaction symbol"
   );
 
   // wrap the component

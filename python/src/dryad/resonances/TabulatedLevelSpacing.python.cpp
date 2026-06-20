@@ -12,8 +12,8 @@ namespace python = pybind11;
 namespace dryad {
 namespace resonances {
 
-void wrapTabulatedLevelSpacing( python::module& module ) {  
-    
+void wrapTabulatedLevelSpacing( python::module& module ) {
+
   // type aliases
   using Component = njoy::dryad::resonances::TabulatedLevelSpacing;
   using InterpolationType = njoy::dryad::InterpolationType;
@@ -30,15 +30,15 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values\n"
+    "        the energy values\n"
     "    values : list of float\n"
-    "         the level spacing values\n"
+    "        the level spacing values\n"
     "    boundaries : list of int, optional\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
-    "         the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -96,7 +96,7 @@ void wrapTabulatedLevelSpacing( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

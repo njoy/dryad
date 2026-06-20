@@ -29,9 +29,9 @@ void wrapFormalism( python::module& module ) {
     "Values\n"
     "------\n"
     "    ReichMoore : 1\n"
-    "         the Reich-Moore formalism using a single eliminated capture channel\n"
+    "        the Reich-Moore formalism using a single eliminated capture channel\n"
     "    GeneralRMatrix : 2\n"
-    "         the general R-matrix formalism",
+    "        the general R-matrix formalism",
     python::arithmetic()
   );
 

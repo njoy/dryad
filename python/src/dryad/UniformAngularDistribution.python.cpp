@@ -32,9 +32,9 @@ void wrapUniformAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    cosines : list of float\n"
-    "         the cosine values\n"
+    "        the cosine values\n"
     "    type : njoy.dryad.UniformDistributionType\n"
-    "         the uniform distribution type"
+    "        the uniform distribution type"
   );
 
   // wrap the component

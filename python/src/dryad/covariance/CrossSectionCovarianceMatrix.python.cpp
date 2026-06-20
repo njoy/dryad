@@ -37,29 +37,29 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    metadata : njoy.dryad.covariance.CrossSectionMetadata\n"
-    "         the row and column metadata (on-diagonal)\n"
+    "        the row and column metadata (on-diagonal)\n"
     "    row_metadata : njoy.dryad.covariance.CrossSectionMetadata\n"
-    "         the row metadata (off-diagonal)\n"
+    "        the row metadata (off-diagonal)\n"
     "    column_metadata : njoy.dryad.covariance.CrossSectionMetadata\n"
-    "         the column metadata (off-diagonal)\n"
+    "        the column metadata (off-diagonal)\n"
     "    covariances : array-like\n"
-    "         the covariance matrix\n"
+    "        the covariance matrix\n"
     "    deviations : list of float\n"
-    "         the standard deviations (on-diagonal)\n"
+    "        the standard deviations (on-diagonal)\n"
     "    row_deviations : list of float\n"
-    "         the standard deviations to be applied to each row (off-diagonal)\n"
+    "        the standard deviations to be applied to each row (off-diagonal)\n"
     "    column_deviations : list of float\n"
-    "         the standard deviations to be applied to each column (off-diagonal)\n"
+    "        the standard deviations to be applied to each column (off-diagonal)\n"
     "    correlations : array-like\n"
-    "         the correlation matrix\n"
+    "        the correlation matrix\n"
     "    eigenvalues : list of float\n"
-    "         the eigenvalues\n"
+    "        the eigenvalues\n"
     "    eigenvectors : list of array-like\n"
-    "         the associated eigenvectors\n"
+    "        the associated eigenvectors\n"
     "    relative : bool, default True\n"
-    "         the relative covariance flag\n"
+    "        the relative covariance flag\n"
     "    scaling : njoy.dryad.covariance.VarianceScaling or None, default None\n"
-    "         the variance scaling information"
+    "        the variance scaling information"
   );
 
   // wrap the component
@@ -270,9 +270,9 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row_deviations : list of float\n"
-    "         the standard deviations to be applied to each row\n"
+    "        the standard deviations to be applied to each row\n"
     "    column_deviations : list of float\n"
-    "         the standard deviations to be applied to each column"
+    "        the standard deviations to be applied to each column"
   )
   .def(
 
@@ -311,9 +311,9 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row_deviations : list of float\n"
-    "         the standard deviations to be applied to each row\n"
+    "        the standard deviations to be applied to each row\n"
     "    column_deviations : list of float\n"
-    "         the standard deviations to be applied to each column"
+    "        the standard deviations to be applied to each column"
   )
   .def(
 
@@ -337,9 +337,9 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    reaction : njoy.dryad.id.ReactionID or None\n"
-    "         the reaction identifier to extract\n"
+    "        the reaction identifier to extract\n"
     "    group : njoy.dryad.id.EnergyGroup or None\n"
-    "         the energy group to extract"
+    "        the energy group to extract"
   )
   .def(
 
@@ -357,13 +357,13 @@ void wrapCrossSectionCovarianceMatrix( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    row_reaction : njoy.dryad.id.ReactionID or None\n"
-    "         the row reaction identifier to extract\n"
+    "        the row reaction identifier to extract\n"
     "    row_group : njoy.dryad.id.EnergyGroup or None\n"
-    "         the row energy group to extract\n"
+    "        the row energy group to extract\n"
     "    col_reaction : njoy.dryad.id.ReactionID or None\n"
-    "         the column reaction identifier to extract\n"
+    "        the column reaction identifier to extract\n"
     "    col_group : njoy.dryad.id.EnergyGroup or None\n"
-    "         the column energy group to extract"
+    "        the column energy group to extract"
   );
 
   // add standard copy definitions

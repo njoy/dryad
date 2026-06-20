@@ -28,9 +28,9 @@ void wrapUniformEnergyDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values\n"
+    "        the energy values\n"
     "    type : njoy.dryad.UniformDistributionType\n"
-    "         the uniform distribution type"
+    "        the uniform distribution type"
   );
 
   // wrap the component

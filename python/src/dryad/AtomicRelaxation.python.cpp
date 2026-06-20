@@ -33,14 +33,14 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    documentation : njoy.dryad.Documentation\n"
-    "         the documentation\n"
+    "        the documentation\n"
     "    element : njoy.dryad.id.ElementID\n"
-    "         the element identifier\n"
+    "        the element identifier\n"
     "    subshells : list of njoy.dryad.atomic.ElectronSubshellConfiguration\n"
-    "         the electron subshell configuration data\n"
+    "        the electron subshell configuration data\n"
     "    normalise : bool, default false\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -95,7 +95,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    identifier : njoy.dryad.id.ElectronSubshellID\n"
-    "         the electron subshell identifier"
+    "        the electron subshell identifier"
   )
   .def(
 
@@ -106,7 +106,7 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    identifier : njoy.dryad.id.ElectronSubshellID\n"
-    "         the electron subshell identifier",
+    "        the electron subshell identifier",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -135,10 +135,10 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : str\n"
-    "         the ENDF file name\n"
+    "        the ENDF file name\n"
     "    normalise : bool, default false\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def_static(
 
@@ -152,10 +152,10 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : str\n"
-    "         the GNDS file name\n"
+    "        the GNDS file name\n"
     "    normalise : bool, default false\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   )
   .def(
 
@@ -169,9 +169,9 @@ void wrapAtomicRelaxation( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    mat : int\n"
-    "         the ENDF mat number to be used\n"
+    "        the ENDF mat number to be used\n"
     "    filename : str\n"
-    "         the ENDF file name"
+    "        the ENDF file name"
   );
 
   // add standard equality comparison definitions

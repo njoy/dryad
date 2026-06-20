@@ -36,9 +36,9 @@ void wrapParticlePair( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    light_particle : njoy.dryad.Particle\n"
-    "         the light particle\n"
+    "        the light particle\n"
     "    heavy_particle : njoy.dryad.Particle\n"
-    "         the heavy particle"
+    "        the heavy particle"
    );
 
   // wrap the component

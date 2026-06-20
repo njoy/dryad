@@ -32,17 +32,17 @@ void wrapAngularDistributionMetadata( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    reactions : list of njoy.dryad.id.ReactionID\n"
-    "         the reaction identifiers\n"
+    "        the reaction identifiers\n"
     "    reaction : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier (single reaction constructor)\n"
+    "        the reaction identifier (single reaction constructor)\n"
     "    moments : list of int\n"
-    "         the Legendre moment values\n"
+    "        the Legendre moment values\n"
     "    moment : int\n"
-    "         the Legendre moment value (single moment constructor)\n"
+    "        the Legendre moment value (single moment constructor)\n"
     "    energies : list of float\n"
-    "         the energy boundary values\n"
+    "        the energy boundary values\n"
     "    keys : list of tuple\n"
-    "         the metadata keys (tuples of ReactionID, moment, EnergyGroup)"
+    "        the metadata keys (tuples of ReactionID, moment, EnergyGroup)"
   );
 
   // wrap the component

@@ -34,13 +34,13 @@ void wrapSammyBackground( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    polynomial_coefficients : list of float\n"
-    "         the coefficients of the polynomial term (order 2)\n"
+    "        the coefficients of the polynomial term (order 2)\n"
     "    logarithmic_coefficients : list of float\n"
-    "         the coefficients of the logarithmic term (order 1)\n"
+    "        the coefficients of the logarithmic term (order 1)\n"
     "    lower_singularity : float\n"
-    "         the lower logarithmic singularity value (eV)\n"
+    "        the lower logarithmic singularity value (eV)\n"
     "    upper_singularity : float\n"
-    "         the upper logarithmic singularity value (eV)"
+    "        the upper logarithmic singularity value (eV)"
    );
 
   // wrap the component

@@ -68,7 +68,7 @@ void wrapPositiveVariances( python::module& module ) {
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
     "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
     "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "         the covariance matrix instance to be tested"
+    "        the covariance matrix instance to be tested"
   )
   .def(
 

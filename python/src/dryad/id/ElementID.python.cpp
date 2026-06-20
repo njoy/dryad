@@ -31,9 +31,9 @@ void wrapElementID( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    number : int\n"
-    "         the element number\n"
+    "        the element number\n"
     "    string : str\n"
-    "         the element symbol, name or alternative name"
+    "        the element symbol, name or alternative name"
   );
 
   // wrap the component

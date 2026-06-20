@@ -28,15 +28,15 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values\n"
+    "        the energy values\n"
     "    values : list of float\n"
-    "         the probability values\n"
+    "        the probability values\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)"
+    "        the interpolation type (default lin-lin)"
   );
 
   // wrap the component
@@ -92,7 +92,7 @@ void wrapTabulatedEnergyDistributionFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def_property_readonly(
 

@@ -40,24 +40,24 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    documentation : njoy.dryad.Documentation, optional\n"
-    "         the documentation\n"
+    "        the documentation\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile identifier\n"
+    "        the projectile identifier\n"
     "    target : njoy.dryad.id.ParticleID\n"
-    "         the target identifier\n"
+    "        the target identifier\n"
     "    type : njoy.dryad.InteractionType\n"
-    "         the interaction type\n"
+    "        the interaction type\n"
     "    reactions : list of njoy.dryad.Reaction\n"
-    "         the reaction data\n"
+    "        the reaction data\n"
     "    particles : njoy.dryad.ParticleDatabase, default None\n"
-    "         the optional particle data\n"
+    "        the optional particle data\n"
     "    resonances : njoy.dryad.resonances.ResonanceParameters, default None\n"
-    "         the optional resonance parameters\n"
+    "        the optional resonance parameters\n"
     "    covariances : njoy.dryad.covariance.CovarianceData, default None\n"
-    "         the optional covariance data\n"
+    "        the optional covariance data\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   );
 
   // wrap the component
@@ -166,7 +166,7 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier"
+    "        the reaction identifier"
   )
   .def(
 
@@ -177,7 +177,7 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    id : njoy.dryad.id.ReactionID\n"
-    "         the reaction identifier",
+    "        the reaction identifier",
     python::return_value_policy::reference_internal
   )
   .def_property(
@@ -196,7 +196,7 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 1e-8\n"
-    "         the integration tolerance"
+    "        the integration tolerance"
   )
   .def(
 
@@ -214,7 +214,7 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    exclude_summation : bool, default False\n"
-    "         option to exclude summation reactions in the unionisation"
+    "        option to exclude summation reactions in the unionisation"
   )
   .def(
 
@@ -225,7 +225,7 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance"
+    "        the linearisation tolerance"
   )
   .def(
 
@@ -247,10 +247,10 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : str\n"
-    "         the ENDF file name\n"
+    "        the ENDF file name\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   )
   .def_static(
 
@@ -264,10 +264,10 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : str\n"
-    "         the GNDS file name\n"
+    "        the GNDS file name\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   )
   .def_static(
 
@@ -284,10 +284,10 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    filename : str\n"
-    "         the ACE file name\n"
+    "        the ACE file name\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data"
   )
   .def(
 
@@ -304,11 +304,11 @@ void wrapProjectileTarget( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    mat : int\n"
-    "         the ENDF mat number to be used\n"
+    "        the ENDF mat number to be used\n"
     "    filename : str\n"
-    "         the ENDF file name\n"
+    "        the ENDF file name\n"
     "    use_reduced_width_amplitudes : bool, default True\n"
-    "         if there are resonances, use reduced width amplitudes"
+    "        if there are resonances, use reduced width amplitudes"
   );
 
   // add standard equality comparison definitions

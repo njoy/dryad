@@ -30,7 +30,7 @@ void wrapCoulombPenetrability( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    orbital_angular_momentum : int\n"
-    "         the orbital angular momentum quantum number (l value)"
+    "        the orbital angular momentum quantum number (l value)"
    );
 
   // wrap the component
@@ -57,9 +57,9 @@ void wrapCoulombPenetrability( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    ratio : float\n"
-    "         the ratio rho = k*a (wave number times channel radius)\n"
+    "        the ratio rho = k*a (wave number times channel radius)\n"
     "    eta : float\n"
-    "         the Coulomb parameter"
+    "        the Coulomb parameter"
   );
 
   // add standard equality comparison definitions

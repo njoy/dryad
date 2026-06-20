@@ -27,12 +27,12 @@ void wrapPolynomialMultiplicity( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    lower : float\n"
-    "         the lower limit of the domain\n"
+    "        the lower limit of the domain\n"
     "    upper : float\n"
-    "         the upper limit of the domain\n"
+    "        the upper limit of the domain\n"
     "    coefficients : list of float\n"
-    "         the coefficients of the polynomial series (from\n"
-    "         lowest to highest order coefficient)"
+    "        the coefficients of the polynomial series (from\n"
+    "        lowest to highest order coefficient)"
   );
 
   // wrap the component
@@ -66,7 +66,7 @@ void wrapPolynomialMultiplicity( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

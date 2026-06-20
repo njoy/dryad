@@ -32,7 +32,7 @@ void wrapBoundedCorrelations( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 1e-10\n"
-    "         the comparison tolerance"
+    "        the comparison tolerance"
   );
   // wrap the component
   component
@@ -94,7 +94,7 @@ void wrapBoundedCorrelations( python::module& module ) {
     "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
     "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
     "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "         the covariance matrix instance to be tested"
+    "        the covariance matrix instance to be tested"
   )
   .def(
 

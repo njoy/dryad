@@ -39,13 +39,13 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    frame : njoy.dryad.ReferenceFrame\n"
-    "         the reference frame of the distribution data\n"
+    "        the reference frame of the distribution data\n"
     "    angle : njoy.dryad.IsotropicAngularDistributions, njoy.dryad.LegendreAngularDistributions, or njoy.dryad.TabulatedAngularDistributions\n"
-    "         the angular distributions\n"
+    "        the angular distributions\n"
     "    energy : njoy.dryad.MultiEnergyDistributions or njoy.dryad.TabulatedEnergyDistributions\n"
-    "         the energy distributions\n"
+    "        the energy distributions\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise all probability data"
+    "        option to indicate whether or not to normalise all probability data"
   );
 
   // wrap the component

@@ -37,15 +37,15 @@ void wrapReactionType( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    mt : int\n"
-    "         the mt number\n"
+    "        the mt number\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile\n"
+    "        the projectile\n"
     "    level : int, default=0\n"
-    "         the level number of the target or residual\n"
+    "        the level number of the target or residual\n"
     "    particles : dict\n"
-    "         the outgoing particles (excluding the residual)\n"
+    "        the outgoing particles (excluding the residual)\n"
     "    string : str\n"
-    "         the reaction type string"
+    "        the reaction type string"
   );
 
   // wrap the component
@@ -84,7 +84,7 @@ void wrapReactionType( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    type : njoy.dryad.InteractionType, default=InteractionType.Nuclear\n"
-    "         the interaction type (nuclear or atomic)"
+    "        the interaction type (nuclear or atomic)"
   )
   .def_static(
 
@@ -96,9 +96,9 @@ void wrapReactionType( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile\n"
+    "        the projectile\n"
     "    level : int, default=0\n"
-    "         the level number of the target"
+    "        the level number of the target"
   )
   .def_static(
 
@@ -160,9 +160,9 @@ void wrapReactionType( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    projectile : njoy.dryad.id.ParticleID\n"
-    "         the projectile\n"
+    "        the projectile\n"
     "    target : njoy.dryad.id.ParticleID\n"
-    "         the target"
+    "        the target"
   )
   .def(
 

@@ -32,15 +32,15 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    l : int\n"
-    "         the orbital angular momentum\n"
+    "        the orbital angular momentum\n"
     "    s : float\n"
-    "         the channel spin\n"
+    "        the channel spin\n"
     "    J : float\n"
-    "         the total angular momentum\n"
+    "        the total angular momentum\n"
     "    parity : int\n"
-    "         the parity (+1 or -1)\n"
+    "        the parity (+1 or -1)\n"
     "    parity : int\n"
-    "         the parity (+1 or -1)"
+    "        the parity (+1 or -1)"
    );
 
   // wrap the component
@@ -94,9 +94,9 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    i : float\n"
-    "         the spin of the incident particle\n"
+    "        the spin of the incident particle\n"
     "    I : float\n"
-    "         the spin of the target nucleus"
+    "        the spin of the target nucleus"
 
   )
   .def_static(
@@ -108,11 +108,11 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    l : int\n"
-    "         the orbital angular momentum\n"
+    "        the orbital angular momentum\n"
     "    i : float\n"
-    "         the spin of the incident particle\n"
+    "        the spin of the incident particle\n"
     "    I : float\n"
-    "         the spin of the target nucleus"
+    "        the spin of the target nucleus"
   )
   .def_static(
 
@@ -127,9 +127,9 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    l : int\n"
-    "         the orbital angular momentum\n"
+    "        the orbital angular momentum\n"
     "    s : float\n"
-    "         the channel spin"
+    "        the channel spin"
 
   )
   .def_static(
@@ -141,11 +141,11 @@ void wrapChannelQuantumNumbers( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    i : float\n"
-    "         the spin of the incident particle\n"
+    "        the spin of the incident particle\n"
     "    I : float\n"
-    "         the spin of the target nucleus\n"
+    "        the spin of the target nucleus\n"
     "    lmax : int\n"
-    "         the max value of the orbital angular momentum"
+    "        the max value of the orbital angular momentum"
 
   );
 

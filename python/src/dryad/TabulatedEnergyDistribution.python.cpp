@@ -29,22 +29,22 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values\n"
+    "        the energy values\n"
     "    values : list of float\n"
-    "         the probability values\n"
+    "        the probability values\n"
     "    boundaries : list of int\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of njoy.dryad.InterpolationType\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
-    "         the interpolation type (default lin-lin)\n"
+    "        the interpolation type (default lin-lin)\n"
     "    pdf : njoy.dryad.TabulatedEnergyDistributionFunction\n"
-    "         the probability distribution function\n"
+    "        the probability distribution function\n"
     "    cdf : njoy.dryad.TabulatedEnergyDistributionFunction\n"
-    "         the cumulative distribution function\n"
+    "        the cumulative distribution function\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -128,7 +128,7 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   )
   .def(
 
@@ -152,10 +152,10 @@ void wrapTabulatedEnergyDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    tolerance : float, default 0.001\n"
-    "         the linearisation tolerance\n"
+    "        the linearisation tolerance\n"
     "    normalise : bool, default False\n"
-    "         option to indicate whether or not to normalise\n"
-    "         all probability data (default: no normalisation)"
+    "        option to indicate whether or not to normalise\n"
+    "        all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

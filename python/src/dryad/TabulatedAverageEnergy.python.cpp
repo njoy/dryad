@@ -28,15 +28,15 @@ void wrapTabulatedAverageEnergy( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energies : list of float\n"
-    "         the energy values\n"
+    "        the energy values\n"
     "    values : list of float\n"
-    "         the average energy values\n"
+    "        the average energy values\n"
     "    boundaries : list of int, optional\n"
-    "         the boundaries of the interpolation regions\n"
+    "        the boundaries of the interpolation regions\n"
     "    interpolants : list of InterpolationType, optional\n"
-    "         the interpolation types of the interpolation regions\n"
+    "        the interpolation types of the interpolation regions\n"
     "    interpolant : InterpolationType, default=LinearLinear\n"
-    "         the interpolation type for single-region tables"
+    "        the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -92,7 +92,7 @@ void wrapTabulatedAverageEnergy( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy value"
+    "        the energy value"
   );
 
   // add standard equality comparison definitions

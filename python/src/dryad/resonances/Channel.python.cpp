@@ -37,30 +37,30 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    identifier : njoy.dryad.id.ChannelID\n"
-    "         the channel identifier\n"
+    "        the channel identifier\n"
     "    incident : njoy.dryad.resonances.ParticlePair\n"
-    "         the current incident particle pair\n"
+    "        the current incident particle pair\n"
     "    outgoing : njoy.dryad.resonances.ParticlePair, optional\n"
-    "         the outgoing particle pair\n"
+    "        the outgoing particle pair\n"
     "    q_value : float\n"
-    "         the Q value associated with the transition from the incident to\n"
-    "         the outgoing particle pair\n"
+    "        the Q value associated with the transition from the incident to\n"
+    "        the outgoing particle pair\n"
     "    boundary : float, optional\n"
-    "         the boundary condition\n"
+    "        the boundary condition\n"
     "    radii : njoy.dryad.resonances.ChannelRadii\n"
-    "         the channel radii for the calculation of the wave functions\n"
+    "        the channel radii for the calculation of the wave functions\n"
     "    kinematics : njoy.dryad.resonances.Kinematics, default=Kinematics.NonRelativistic\n"
-    "         the kinematics type applied to the channel\n"
+    "        the kinematics type applied to the channel\n"
     "    background : Channel.Background, optional\n"
-    "         the background function\n"
+    "        the background function\n"
     "    penetrability : Channel.Penetrability, optional\n"
-    "         the penetrability of the channel\n"
+    "        the penetrability of the channel\n"
     "    shift_factor : Channel.ShiftFactor, optional\n"
-    "         the shift factor of the channel\n"
+    "        the shift factor of the channel\n"
     "    phase_shift : Channel.PhaseShift, optional\n"
-    "         the phase shift of the channel\n"
+    "        the phase shift of the channel\n"
     "    phase_shift_difference : Channel.PhaseShiftDifference, optional\n"
-    "         the phase shift difference of the channel"
+    "        the phase shift difference of the channel"
    );
 
   // wrap the component
@@ -201,7 +201,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy to be tested"
+    "        the energy to be tested"
   )
   .def(
 
@@ -212,7 +212,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy (given in eV)"
+    "        the energy (given in eV)"
   )
   .def(
 
@@ -230,7 +230,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy (given in eV)"
+    "        the energy (given in eV)"
   )
   .def(
 
@@ -241,7 +241,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy (given in eV)"
+    "        the energy (given in eV)"
   )
   .def(
 
@@ -252,7 +252,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy (given in eV)"
+    "        the energy (given in eV)"
   )
   .def(
 
@@ -263,7 +263,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy (given in eV)"
+    "        the energy (given in eV)"
   )
   .def(
 
@@ -274,7 +274,7 @@ void wrapChannel( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    energy : float\n"
-    "         the energy (given in eV)"
+    "        the energy (given in eV)"
   );
 
   // add standard equality comparison definitions

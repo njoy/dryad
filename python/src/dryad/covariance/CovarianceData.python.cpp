@@ -30,9 +30,9 @@ void wrapCovarianceData( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    xs : njoy.dryad.covariance.CrossSectionCovarianceData \n"
-    "         the cross section covariance data\n"
+    "        the cross section covariance data\n"
     "    angular : njoy.dryad.covariance.AngularDistributionCovarianceData \n"
-    "         the angular distribution covariance data"
+    "        the angular distribution covariance data"
   );
 
   // wrap the component
