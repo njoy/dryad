@@ -36,11 +36,11 @@
 #include "njoy/dryad/TabulatedFormFactor.hpp"
 #include "njoy/dryad/PolynomialMultiplicity.hpp"
 #include "njoy/dryad/TabulatedMultiplicity.hpp"
+#include "njoy/dryad/IsotropicAngularDistributionFunction.hpp"
 #include "njoy/dryad/IsotropicAngularDistributions.hpp"
 #include "njoy/dryad/LegendreAngularDistributionFunction.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
 #include "njoy/dryad/LegendreAngularDistributions.hpp"
-#include "njoy/dryad/IsotropicAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistributionFunction.hpp"
 #include "njoy/dryad/TabulatedAngularDistribution.hpp"
 #include "njoy/dryad/TabulatedAngularDistributions.hpp"
@@ -72,7 +72,3 @@
 #include "njoy/dryad/AtomicRelaxation.hpp"
 #include "njoy/dryad/ProjectileTarget.hpp"
 #include "njoy/dryad/ThermalScattering.hpp"
-
-// formats
-#include "njoy/dryad/format/endf.hpp"
-#include "njoy/dryad/format/gnds.hpp"

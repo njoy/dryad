@@ -38,6 +38,14 @@ namespace dryad {
     // LegendreAngularDistribution needs access to protected functions
     friend LegendreAngularDistribution;
 
+    /**
+     *  @brief Private constructor
+     *
+     *  @param series   the series expansion
+     */
+    LegendreAngularDistributionFunction( LegendreSeries< double, double > table ) :
+      LegendreSeries( std::move( table ) ) {}
+
   protected:
 
     /**
@@ -79,7 +87,25 @@ namespace dryad {
 
     /* constructor */
 
-    #include "njoy/dryad/LegendreAngularDistributionFunction/src/ctor.hpp"
+    /**
+     *  @brief Default constructor (for pybind11 purposes only)
+     */
+    LegendreAngularDistributionFunction() = default;
+
+    LegendreAngularDistributionFunction( const LegendreAngularDistributionFunction& ) = default;
+    LegendreAngularDistributionFunction( LegendreAngularDistributionFunction&& ) = default;
+
+    LegendreAngularDistributionFunction& operator=( const LegendreAngularDistributionFunction& ) = default;
+    LegendreAngularDistributionFunction& operator=( LegendreAngularDistributionFunction&& ) = default;
+
+    /**
+     *  @brief Constructor
+     *
+     *  @param coefficients   the coefficients of the Legendre series (from
+     *                        lowest to highest order coefficient)
+     */
+    LegendreAngularDistributionFunction( std::vector< double > coefficients ) :
+      LegendreSeries( std::move( coefficients ) ) {}
 
     /* methods */
 
