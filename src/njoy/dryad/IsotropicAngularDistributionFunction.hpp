@@ -25,14 +25,14 @@ namespace dryad {
           IsotropicAngularDistributionFunction, double, double > {
 
     /* friend declarations */
+
     friend class scion::math::OneDimensionalFunctionBase<
         IsotropicAngularDistributionFunction, double, double >;
 
     /* type aliases */
+
     using Parent = scion::math::OneDimensionalFunctionBase<
         IsotropicAngularDistributionFunction, double, double >;
-
-  private:
 
     /**
      *  @brief Evaluate the function
