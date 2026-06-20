@@ -69,7 +69,7 @@ void wrapReactionProduct( python::module& module ) {
     python::arg( "parent" ) = std::nullopt,
     python::arg( "chain" ) = 0,
     python::arg( "normalise" ) = false,
-    "Initialise the reaction"
+    "Initialise the reaction product"
   )
   .def_property(
 

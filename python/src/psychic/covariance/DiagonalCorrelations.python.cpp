@@ -76,8 +76,10 @@ void wrapDiagonalCorrelations( python::module& module ) {
     "  - Skipped : the test was skipped\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "        the covariance matrix instance to be tested"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
+    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
+    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "         the covariance matrix instance to be tested"
   )
   .def(
 

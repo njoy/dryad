@@ -22,14 +22,18 @@ void wrapUniformDistributionType( python::module& module ) {
 
     module,
     "UniformDistributionType",
-    "The uniform distribution type",
+    "The uniform distribution type\n\n"
+    "This enum is used to differentiate uniform distribution types, either discrete\n"
+    "values or intervals.",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "Discrete",  Component::Discrete )
-  .value( "Interval", Component::Interval );
+  .value( "Discrete",  Component::Discrete,
+          "The uniform distribution is given for discrete values" )
+  .value( "Interval", Component::Interval,
+          "The uniform distribution is given for intervals" );
 }
 
 } // dryad namespace

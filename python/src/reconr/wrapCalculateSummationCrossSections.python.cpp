@@ -23,12 +23,16 @@ namespace reconr {
       &njoy::reconr::calculateSummationCrossSections,
       python::arg( "pt" ),
       python::arg( "tolerance" ) = njoy::constants::linearisation::tolerance,
+      "Calculate summation cross sections\n\n"
       "This function recalculates the cross section of all summation reactions of\n"
       "a ProjectileTarget instance. It does so by linearising the cross sections of\n"
       "the partials (if required) and summing them together.\n\n"
-      "Arguments:\n"
-      "    pt          the projectile-target data to be modified\n"
-      "    tolerance   the linearisation tolerance (default: 0.1%)"
+      "Parameters\n"
+      "----------\n"
+      "    pt : njoy.dryad.ProjectileTarget\n"
+      "         the projectile-target data to be modified\n"
+      "    tolerance : float, default 0.001\n"
+      "         the linearisation tolerance (default: 0.1%)"
     );
   }
 } // reconr namespace

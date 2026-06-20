@@ -37,9 +37,9 @@ void wrapTabulatedAngularDistributionFunction( python::module& module ) {
     "         the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
     "         the interpolation type (default lin-lin)\n"
-    "    normalise : bool, default false\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise\n"
+    "         all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -95,7 +95,7 @@ void wrapTabulatedAngularDistributionFunction( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    cosine : float\n"
-    "        the cosine value"
+    "         the cosine value"
   )
   .def_property_readonly(
 

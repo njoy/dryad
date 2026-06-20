@@ -23,7 +23,16 @@ void wrapPolynomialMultiplicity( python::module& module ) {
 
     module,
     "PolynomialMultiplicity",
-    "A multiplicity given as a polynomial series"
+    "A multiplicity given as a polynomial series\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    lower : float\n"
+    "         the lower limit of the domain\n"
+    "    upper : float\n"
+    "         the upper limit of the domain\n"
+    "    coefficients : list of float\n"
+    "         the coefficients of the polynomial series (from\n"
+    "         lowest to highest order coefficient)"
   );
 
   // wrap the component
@@ -33,13 +42,7 @@ void wrapPolynomialMultiplicity( python::module& module ) {
     python::init< double, double, std::vector< double > >(),
     python::arg( "lower" ), python::arg( "upper" ),
     python::arg( "coefficients" ),
-    "Initialise the multiplicity table\n\n"
-    "Arguments:\n"
-    "    self           the multiplicity\n"
-    "    lower          the lower limit of the domain\n"
-    "    upper          the upper limit of the domain\n"
-    "    coefficients   the coefficients of the polynomial series (from\n"
-    "                   lowest to highest order coefficient)"
+    "Initialise the polynomial multiplicity"
   )
   .def_property_readonly(
 
@@ -60,9 +63,10 @@ void wrapPolynomialMultiplicity( python::module& module ) {
        { return self( energy ); },
     python::arg( "energy" ),
     "Evaluate the multiplicity for a given energy value\n\n"
-    "Arguments:\n"
-    "    self      the multiplicity\n"
-    "    energy    the energy value"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   );
 
   // add standard equality comparison definitions

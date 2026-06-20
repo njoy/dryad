@@ -27,7 +27,24 @@ void wrapReaction( python::module& module ) {
 
     module,
     "Reaction",
-    "The data associated to a single reaction"
+    "The data associated to a single reaction\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    id : njoy.dryad.id.ReactionID\n"
+    "         the reaction identifier\n"
+    "    xs : njoy.dryad.TabulatedCrossSection\n"
+    "         the cross section of the reaction\n"
+    "    products : list of njoy.dryad.ReactionProduct, default []\n"
+    "         the reaction products\n"
+    "    mass_q : float, default None\n"
+    "         the mass difference Q value (default: None)\n"
+    "    reaction_q : float, default None\n"
+    "         the reaction Q value (default: None)\n"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise\n"
+    "         all probability data (default: no normalisation)\n\n"
+    "    partials : list of njoy.dryad.id.ReactionID\n"
+    "         the identifiers of the partials of the reaction"
   );
 
   // wrap the component
@@ -43,16 +60,7 @@ void wrapReaction( python::module& module ) {
     python::arg( "mass_q" ) = std::nullopt,
     python::arg( "reaction_q" ) = std::nullopt,
     python::arg( "normalise" ) = false,
-    "Initialise a primary reaction\n\n"
-    "Arguments:\n"
-    "    self         the reaction\n"
-    "    id           the reaction identifier\n"
-    "    xs           the cross section of the reaction\n"
-    "    products     the reaction products\n"
-    "    mass_q       the mass difference Q value (optional)\n"
-    "    reaction_q   the reaction Q value (optional)\n"
-    "    normalise    option to indicate whether or not to normalise\n"
-    "                 all probability data (default: no normalisation)"
+    "Initialise a primary reaction"
   )
   .def(
 
@@ -67,16 +75,7 @@ void wrapReaction( python::module& module ) {
     "Initialise a summation reaction\n\n"
     "Summation reactions do not have Q values associated to them. A cross section\n"
     "weighted Q value could be calculated using the partial reactions making\n"
-    "up the summation reaction.\n\n"
-    "Arguments:\n"
-    "    self        the reaction\n"
-    "    id          the reaction identifier\n"
-    "    partials    the identifiers of the partials of the reaction\n"
-    "    xs          the cross section of the reaction\n"
-    "    products    the reaction products associated to the summation reaction\n"
-    "                (defaults to no reaction products)\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "up the summation reaction."
   )
   .def_property(
 
@@ -178,9 +177,10 @@ void wrapReaction( python::module& module ) {
     python::overload_cast< const ParticleID& >( &Component::hasProduct, python::const_ ),
     python::arg( "type" ),
     "Return whether or not a reaction product type is present regardless of chain index\n\n"
-    "Arguments:\n"
-    "    self   the reaction\n"
-    "    type   the reaction product type"
+    "Parameters\n"
+    "----------\n"
+    "    type : njoy.dryad.id.ParticleID\n"
+    "         the reaction product type"
   )
   .def(
 
@@ -189,10 +189,12 @@ void wrapReaction( python::module& module ) {
     python::arg( "type" ),
     python::arg( "chain" ),
     "Return whether or not a reaction product type is present for a given chain index\n\n"
-    "Arguments:\n"
-    "    self    the reaction\n"
-    "    type    the reaction product type\n"
-    "    chain   the reaction product chain index"
+    "Parameters\n"
+    "----------\n"
+    "    type : njoy.dryad.id.ParticleID\n"
+    "         the reaction product type\n"
+    "    chain : int\n"
+    "         the reaction product chain index"
   )
   .def(
 
@@ -201,10 +203,12 @@ void wrapReaction( python::module& module ) {
     python::arg( "type" ),
     python::arg( "index" ) = 0,
     "Return a reaction product with a given type and index regardless of the chain index\n\n"
-    "Arguments:\n"
-    "    self    the reaction\n"
-    "    type    the reaction product type\n"
-    "    index   the reaction product index (default is zero)",
+    "Parameters\n"
+    "----------\n"
+    "    type : njoy.dryad.id.ParticleID\n"
+    "         the reaction product type\n"
+    "    index : int, default 0\n"
+    "         the reaction product index",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -215,11 +219,14 @@ void wrapReaction( python::module& module ) {
     python::arg( "chain" ),
     python::arg( "index" ),
     "Return a reaction product with a given type, chain index and index\n\n"
-    "Arguments:\n"
-    "    self    the reaction\n"
-    "    type    the reaction product type\n"
-    "    chain   the reaction product chain index\n"
-    "    index   the reaction product index",
+    "Parameters\n"
+    "----------\n"
+    "    type : njoy.dryad.id.ParticleID\n"
+    "         the reaction product type\n"
+    "    chain : int\n"
+    "         the reaction product chain index\n"
+    "    index : int\n"
+    "         the reaction product index",
     python::return_value_policy::reference_internal
   )
   .def(
@@ -234,9 +241,10 @@ void wrapReaction( python::module& module ) {
     &Component::calculateAverageEnergy,
     python::arg( "tolerance" ) = njoy::constants::integration::tolerance,
     "Calculate average outgoing energies for all reaction products\n\n"
-    "Arguments:\n"
-    "    self         the reaction\n"
-    "    tolerance    the integration tolerance (default: 1e-8)"
+    "Parameters\n"
+    "----------\n"
+    "    tolerance : float, default 1e-8\n"
+    "         the integration tolerance"
   );
 
   // add standard equality comparison definitions

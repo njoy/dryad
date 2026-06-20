@@ -24,7 +24,17 @@ void wrapUniformAngularDistribution( python::module& module ) {
 
     module,
     "UniformAngularDistribution",
-    "A uniform or equally probable angular distribution"
+    "A uniform or equally probable angular distribution\n\n"
+    "The uniform distribution can be defined for discrete values\n"
+    "(e.g. as used in inelastic thermal scattering ACE files) or\n"
+    "cosine intervals (e.g. as used in older incident neutron ACE\n"
+    "files).\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    cosines : list of float\n"
+    "         the cosine values\n"
+    "    type : njoy.dryad.UniformDistributionType\n"
+    "         the uniform distribution type"
   );
 
   // wrap the component
@@ -33,11 +43,7 @@ void wrapUniformAngularDistribution( python::module& module ) {
 
     python::init< std::vector< double >, UniformDistributionType >(),
     python::arg( "cosines" ), python::arg( "type" ),
-    "Initialise the angular distribution\n\n"
-    "Arguments:\n"
-    "    self       the angular distribution\n"
-    "    cosines    the cosine values\n"
-    "    type       the uniform distribution type"
+    "Initialise the angular distribution"
   )
   .def_property_readonly(
 

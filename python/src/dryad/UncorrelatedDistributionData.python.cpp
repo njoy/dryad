@@ -35,7 +35,17 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
     "data. For reaction products given in MF6, this corresponds to LAW = 1 (continuum\n"
     "energy-angle distributions) in which the angular dependence is fully isotropic.\n"
     "This is also the representation for Brehmstrahlung and excitation data in MF26\n"
-    "for electro-atomic interactions."
+    "for electro-atomic interactions.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
+    "         the reference frame of the distribution data\n"
+    "    angle : njoy.dryad.IsotropicAngularDistributions, njoy.dryad.LegendreAngularDistributions, or njoy.dryad.TabulatedAngularDistributions\n"
+    "         the angular distributions\n"
+    "    energy : njoy.dryad.MultiEnergyDistributions or njoy.dryad.TabulatedEnergyDistributions\n"
+    "         the energy distributions\n"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise all probability data"
   );
 
   // wrap the component
@@ -46,14 +56,7 @@ void wrapUncorrelatedDistributionData( python::module& module ) {
                   bool >(),
     python::arg( "frame" ), python::arg( "angle" ), python::arg( "energy" ),
     python::arg( "normalise" ) = false,
-    "Initialise the uncorrelated distribution data\n\n"
-    "Arguments:\n"
-    "    self        the reaction product distribution data\n"
-    "    frame       the reference frame of the distribution data\n"
-    "    angle       the angular distributions\n"
-    "    energy      the energy distributions\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Initialise the uncorrelated distribution data"
   )
   .def_property_readonly(
 

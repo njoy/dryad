@@ -38,9 +38,13 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "         the interpolation types of the interpolation regions\n"
     "    interpolant : njoy.dryad.InterpolationType, default njoy.dryad.InterpolationType.LinearLinear\n"
     "         the interpolation type (default lin-lin)\n"
-    "    normalise : bool, default false\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "    pdf : njoy.dryad.TabulatedAngularDistributionFunction\n"
+    "         the probability distribution function\n"
+    "    cdf : njoy.dryad.TabulatedAngularDistributionFunction\n"
+    "         the cumulative distribution function\n"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise\n"
+    "         all probability data (default: no normalisation)"
   );
 
   // wrap the component
@@ -64,6 +68,19 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
     python::arg( "normalise" ) = false,
     "Initialise the angular distribution with a single interpolation zone"
+  )
+  .def(
+
+    python::init< njoy::dryad::TabulatedAngularDistributionFunction, bool >(),
+    python::arg( "pdf" ), python::arg( "normalise" ) = false,
+    "Initialise the angular distribution using a pdf"
+  )
+  .def(
+
+    python::init< njoy::dryad::TabulatedAngularDistributionFunction,
+                  njoy::dryad::TabulatedAngularDistributionFunction >(),
+    python::arg( "pdf" ), python::arg( "cdf" ),
+    "Initialise the angular distribution using a pdf and cdf"
   )
   .def_property_readonly(
 
@@ -111,7 +128,7 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "Parameters\n"
     "----------\n"
     "    cosine : float\n"
-    "        the cosine value"
+    "         the cosine value"
   )
   .def(
 
@@ -136,9 +153,9 @@ void wrapTabulatedAngularDistribution( python::module& module ) {
     "----------\n"
     "    tolerance : float, default 0.001\n"
     "         the linearisation tolerance\n"
-    "    normalise : bool, default false\n"
-    "        option to indicate whether or not to normalise\n"
-    "        all probability data (default: no normalisation)"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise\n"
+    "         all probability data (default: no normalisation)"
   );
 
   // add standard equality comparison definitions

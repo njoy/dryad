@@ -35,7 +35,7 @@ void wrapTabulatedAverageCosine( python::module& module ) {
     "         the boundaries of the interpolation regions\n"
     "    interpolants : list of InterpolationType, optional\n"
     "         the interpolation types of the interpolation regions\n"
-    "    interpolant : InterpolationType, default LinearLinear\n"
+    "    interpolant : InterpolationType, default=LinearLinear\n"
     "         the interpolation type for single-region tables"
   );
 

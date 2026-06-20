@@ -33,7 +33,15 @@ void wrapTwoBodyDistributionData( python::module& module ) {
     "scattering data given in MF4 (none of these will have corresponding MF5\n"
     "data). In the more general MF6 representation, this corresponds with\n"
     "LAW = 2 (discrete two-body scattering). This is also the representation for\n"
-    "elastic scattering data in MF26 for electro-atomic interactions."
+    "elastic scattering data in MF26 for electro-atomic interactions.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
+    "         the reference frame of the distribution data\n"
+    "    angle : njoy.dryad.IsotropicAngularDistributions, njoy.dryad.LegendreAngularDistributions, or njoy.dryad.TabulatedAngularDistributions\n"
+    "         the angular distributions\n"
+    "    normalise : bool, default False\n"
+    "         option to indicate whether or not to normalise all probability data"
   );
 
   // wrap the component
@@ -44,13 +52,7 @@ void wrapTwoBodyDistributionData( python::module& module ) {
                   bool >(),
     python::arg( "frame" ), python::arg( "angle" ),
     python::arg( "normalise" ) = false,
-    "Initialise the two-body distribution data\n\n"
-    "Arguments:\n"
-    "    self        the reaction product distribution data\n"
-    "    frame       the reference frame of the distribution data\n"
-    "    angle       the angular distributions\n"
-    "    normalise   option to indicate whether or not to normalise\n"
-    "                all probability data (default: no normalisation)"
+    "Initialise the two-body distribution data"
   )
   .def_property_readonly(
 

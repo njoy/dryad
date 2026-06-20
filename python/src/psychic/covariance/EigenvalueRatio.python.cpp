@@ -97,8 +97,10 @@ void wrapEigenvalueRatio( python::module& module ) {
     "The smallest and largest positive eigenvalue and their ratio is always available.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "        the covariance matrix instance to be tested"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
+    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
+    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "         the covariance matrix instance to be tested"
   )
   .def(
 

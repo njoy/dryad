@@ -24,7 +24,13 @@ void wrapUniformEnergyDistribution( python::module& module ) {
 
     module,
     "UniformEnergyDistribution",
-    "A uniform or equally probably energy distribution"
+    "A uniform or equally probable energy distribution\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "         the energy values\n"
+    "    type : njoy.dryad.UniformDistributionType\n"
+    "         the uniform distribution type"
   );
 
   // wrap the component
@@ -33,11 +39,7 @@ void wrapUniformEnergyDistribution( python::module& module ) {
 
     python::init< std::vector< double >, UniformDistributionType >(),
     python::arg( "energies" ), python::arg( "type" ),
-    "Initialise the energy distribution\n\n"
-    "Arguments:\n"
-    "    self       the energy distribution\n"
-    "    energies   the energy values\n"
-    "    type       the uniform distribution type"
+    "Initialise the energy distribution"
   )
   .def_property_readonly(
 

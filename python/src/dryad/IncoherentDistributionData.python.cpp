@@ -33,13 +33,13 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "differential cross section.\n\n"
     "This corresponds with the incoherent scattering function data given in MF27 MT504,\n"
     "supplemented with optional external Compton profile data. \n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    frame : njoy.dryad.ReferenceFrame \n"
+    "Parameters\n"
+    "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
     "         the reference frame of the distribution data\n"
-    "    scattering : njoy.dryad.TabulatedScatteringFunction \n"
-    "         the scatteirng function \n"
-    "    profiles : list of njoy.dryad.TabulatedCOmptonProfile \n"
+    "    scattering : njoy.dryad.TabulatedScatteringFunction\n"
+    "         the scattering function\n"
+    "    profiles : list of njoy.dryad.TabulatedComptonProfile\n"
     "         the optional Compton profiles"
   );
 
@@ -51,7 +51,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
                   std::optional< std::vector< TabulatedComptonProfile > > >(),
     python::arg( "frame" ), python::arg( "scattering" ),
     python::arg( "profiles" ) = std::nullopt,
-    ""
+    "Initialise the incoherent distribution data"
   )
   .def_property_readonly(
 
@@ -80,7 +80,7 @@ void wrapIncoherentDistributionData( python::module& module ) {
     "compton_profiles",
     python::overload_cast<>( &Component::comptonProfiles, python::const_ ),
     python::overload_cast< std::optional< std::vector< TabulatedComptonProfile > > >( &Component::comptonProfiles ),
-    "The compton profiles"
+    "The Compton profiles"
   )
   .def_property_readonly(
 

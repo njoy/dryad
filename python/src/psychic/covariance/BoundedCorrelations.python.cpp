@@ -91,8 +91,10 @@ void wrapBoundedCorrelations( python::module& module ) {
     "The smallest and largest correlation values are available for the Warning and Fail state.\n\n"
     "Parameters\n"
     "----------\n"
-    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
-    "        the covariance matrix instance to be tested"
+    "    covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,\n"
+    "                 njoy.dryad.covariance.AngularDistributionCovarianceMatrix or\n"
+    "                 njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix\n"
+    "         the covariance matrix instance to be tested"
   )
   .def(
 
