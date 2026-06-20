@@ -27,7 +27,17 @@ void wrapResonanceTable( python::module& module ) {
     "ResonanceTable",
     "A table of parameters for a set of channels\n\n"
     "The table contains level energies and reduced width amplitudes,\n"
-    "all given as column data."
+    "all given as column data.\n\n"
+    "The energies and channels do not have to be sorted (they will be sorted\n"
+    "upon construction).\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    channels : list of njoy.dryad.id.ChannelID or njoy.dryad.id.ChannelID\n"
+    "         the channel identifiers (nc values for multiple channels, single channel)\n"
+    "    energies : list of float\n"
+    "         the level energies (ne values)\n"
+    "    amplitudes : list of list of float or list of float\n"
+    "         the reduced width amplitudes (nc arrays of ne values, or single array of ne values)"
    );
 
   // wrap the component
@@ -39,14 +49,7 @@ void wrapResonanceTable( python::module& module ) {
                   std::vector< std::vector< double > > >(),
     python::arg( "channels" ), python::arg( "energies" ),
     python::arg( "amplitudes" ),
-    "Initialise the table\n\n"
-    "The energies and channels do not have to be sorted (they will be sorted\n"
-    "upon construction).\n\n"
-    "Arguments:\n"
-    "    self         the table\n"
-    "    channels     the channel identifiers (nc values)\n"
-    "    energies     the level energies (ne values)\n"
-    "    amplitudes   the reduced width amplitudes (nc arrays of ne values)"
+    "Initialise the table with multiple channels"
   )
   .def(
 
@@ -55,31 +58,19 @@ void wrapResonanceTable( python::module& module ) {
                   std::vector< double > >(),
     python::arg( "channel" ), python::arg( "energies" ),
     python::arg( "amplitudes" ),
-    "Initialise the table\n\n"
-    "The energies do not have to be sorted (they will be sorted upon construction).\n\n"
-    "Arguments:\n"
-    "    self         the table\n"
-    "    channel      the channel identifier\n"
-    "    energies     the level energies\n"
-    "    amplitudes   the reduced width amplitudes"
+    "Initialise the table with a single channel"
   )
   .def(
 
     python::init< std::vector< ChannelID > >(),
     python::arg( "channels" ),
-    "Initialise an empty table\n\n"
-    "Arguments:\n"
-    "    self         the table\n"
-    "    channels     the channel identifiers (nc values)"
+    "Initialise an empty table with multiple channels"
   )
   .def(
 
     python::init< ChannelID >(),
     python::arg( "channel" ),
-    "Initialise an empty table\n\n"
-    "Arguments:\n"
-    "    self         the table\n"
-    "    channel      the channel identifier"
+    "Initialise an empty table with a single channel"
   )
   .def_property_readonly(
 
@@ -116,20 +107,14 @@ void wrapResonanceTable( python::module& module ) {
     "has_channel",
     &Component::hasChannel,
     python::arg( "channel" ),
-    "Return whether or not a channel is present\n\n"
-    "Arguments:\n"
-    "    self      the table\n"
-    "    channel   the channel identifier"
+    "Return whether or not a channel is present"
   )
   .def(
 
     "has_energy",
     &Component::hasEnergy,
     python::arg( "energy" ),
-    "Return whether or not an energy is present\n\n"
-    "Arguments:\n"
-    "    self     the table\n"
-    "    energy   the energy value"
+    "Return whether or not an energy is present"
   )
   .def( python::self += python::self )
   .def( python::self + python::self );

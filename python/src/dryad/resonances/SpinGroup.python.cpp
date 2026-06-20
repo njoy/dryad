@@ -31,7 +31,17 @@ void wrapSpinGroup( python::module& module ) {
 
     module,
     "SpinGroup",
-    "A spin group corresponding to a Jpi quantum number set"
+    "A spin group corresponding to a Jpi quantum number set\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    channels : list of njoy.dryad.resonances.Channel or list of tuple, optional\n"
+    "         the channels in the spin group or channel data pairs\n"
+    "    resonances : njoy.dryad.resonances.ResonanceTable, optional\n"
+    "         the resonance table of the spin group\n"
+    "    formalism : njoy.dryad.resonances.Formalism\n"
+    "         the r matrix formalism option to be applied\n"
+    "    boundary : njoy.dryad.resonances.BoundaryCondition\n"
+    "         the boundary condition option to be applied"
    );
 
   // wrap the component
@@ -42,16 +52,10 @@ void wrapSpinGroup( python::module& module ) {
                   Formalism, BoundaryCondition >(),
     python::arg( "channels" ), python::arg( "resonances" ),
     python::arg( "formalism" ), python::arg( "boundary" ),
-    "Initialise the spin group\n\n"
+    "Initialise the spin group with separate channels and resonance table\n\n"
     "If the channels are not sorted, they will get sorted through the order\n"
     "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
-    "sorting order).\n\n"
-    "Arguments:\n"
-    "    self         the spin group\n"
-    "    channels     the channels in the spin group\n"
-    "    resonances   the resonance table of the spin group\n"
-    "    formalism    the r matrix formalism option to be applied\n"
-    "    boundary     the boundary condition option to be applied"
+    "sorting order)."
   )
   .def(
 
@@ -60,15 +64,10 @@ void wrapSpinGroup( python::module& module ) {
     python::arg( "channels" ),
     python::arg( "formalism" ),
     python::arg( "boundary" ),
-    "Initialise the spin group\n\n"
+    "Initialise the spin group with channel data pairs\n\n"
     "If the channels are not sorted, they will get sorted through the order\n"
     "of the channel identifier (which uses a Jpi,l,s,reaction,partial lexographical\n"
-    "sorting order).\n\n"
-    "Arguments:\n"
-    "    self       the spin group\n"
-    "    channels   the channel data in the spin group\n"
-    "    formalism    the r matrix formalism option to be applied\n"
-    "    boundary     the boundary condition option to be applied"
+    "sorting order)."
   )
   .def_property(
 
@@ -137,9 +136,10 @@ void wrapSpinGroup( python::module& module ) {
     },
     python::arg( "energy" ),
     "Calculate the cross section values at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the energy"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   )
   .def(
 
@@ -152,9 +152,10 @@ void wrapSpinGroup( python::module& module ) {
     },
     python::arg( "energies" ),
     "Calculate the cross section values for a list of energies\n\n"
-    "Arguments:\n"
-    "    self      the spin group\n"
-    "    energies  the list of energies"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "         the energy values"
   )
   .def(
 
@@ -165,9 +166,10 @@ void wrapSpinGroup( python::module& module ) {
     "The R_L matrix is defined as ( 1 - RL )^-1 R in which R is the\n"
     "R matrix and L is a diagonal matrix defined as S - B + iP with\n"
     "S the shift factor and B the boundary condition of the channel.\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the energy"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   )
   .def(
 
@@ -179,9 +181,10 @@ void wrapSpinGroup( python::module& module ) {
     "P is a diagonal matrix of the penetrabilities of each channel, R is the\n"
     "R matrix and L is a diagonal matrix defined as S - B + iP with S the shift\n"
     "factor and B the boundary condition of the channel.\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the energy"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   )
   .def(
 
@@ -194,9 +197,10 @@ void wrapSpinGroup( python::module& module ) {
     "each channel, R is the R matrix and L is a diagonal matrix defined as\n"
     "S - B + iP with S the shift factor and B the boundary condition of the\n"
     "channel.\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the energy"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   )
   .def(
 
@@ -207,9 +211,10 @@ void wrapSpinGroup( python::module& module ) {
     "The U or S matrix is defined as omega W omega in which omega is a diagonal\n"
     "matrix equal to exp( i ( w - phi ) ) with w the Coulomb phase shift difference\n"
     "and phi the phase shift.\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the energy"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   );
 
   // add standard comparison definitions

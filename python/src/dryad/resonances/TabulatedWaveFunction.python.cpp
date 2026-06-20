@@ -25,7 +25,19 @@ void wrapTabulatedWaveFunction( python::module& module ) {
 
     module,
     "TabulatedWaveFunction",
-    "A tabulated function representing penetrability, shift or phase shift"
+    "A tabulated function representing penetrability, shift or phase shift\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    ratios : list of float\n"
+    "         the ratio values\n"
+    "    values : list of float\n"
+    "         the wave function values\n"
+    "    boundaries : list of int, optional\n"
+    "         the boundaries of the interpolation regions\n"
+    "    interpolants : list of njoy.dryad.InterpolationType, optional\n"
+    "         the interpolation types of the interpolation regions\n"
+    "    interpolant : njoy.dryad.InterpolationType, default=LinearLinear\n"
+    "         the interpolation type for single-region tables"
   );
 
   // wrap the component
@@ -38,14 +50,7 @@ void wrapTabulatedWaveFunction( python::module& module ) {
                   std::vector< InterpolationType > >(),
     python::arg( "ratios" ), python::arg( "values" ),
     python::arg( "boundaries" ), python::arg( "interpolants" ),
-    "Initialise the wave function table\n\n"
-    "Arguments:\n"
-    "    self           the wave function table\n"
-    "    ratios.        the ratio values\n"
-    "    values         the wave function values\n"
-    "    boundaries     the boundaries of the interpolation regions\n"
-    "    interpolants   the interpolation types of the interpolation regions,\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the wave function table with multiple interpolation regions"
   )
   .def(
 
@@ -54,13 +59,7 @@ void wrapTabulatedWaveFunction( python::module& module ) {
                   InterpolationType >(),
     python::arg( "ratios" ), python::arg( "values" ),
     python::arg( "interpolant" ) = InterpolationType::LinearLinear,
-    "Initialise the radius table\n\n"
-    "Arguments:\n"
-    "    self           the radius table\n"
-    "    ratios         the ratio values\n"
-    "    values         the wave function values\n"
-    "    interpolant    the interpolation type (default lin-lin),\n"
-    "                   see InterpolationType for all interpolation types"
+    "Initialise the wave function table with a single interpolation region"
   )
   .def_property_readonly(
 
@@ -93,9 +92,10 @@ void wrapTabulatedWaveFunction( python::module& module ) {
        { return self( ratio ); },
     python::arg( "ratio" ),
     "Evaluate the table for a given ratio value\n\n"
-    "Arguments:\n"
-    "    self    the table\n"
-    "    ratio   the ratio value"
+    "Parameters\n"
+    "----------\n"
+    "    ratio : float\n"
+    "         the ratio value"
   );
 
   // add standard equality comparison definitions

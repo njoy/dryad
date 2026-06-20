@@ -30,7 +30,17 @@ void wrapSammyBackground( python::module& module ) {
     "term. It is characterised by 7 parameters: 3 coefficients of the\n"
     "polymonial term (R0, R1 and R2), 2 constants for the logarithmic\n"
     "term (S0 and S1) and 2 logarithmic singularity values (Ed and Eu,\n"
-    "given in eV)\n"
+    "given in eV).\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    polynomial_coefficients : list of float\n"
+    "         the coefficients of the polynomial term (order 2)\n"
+    "    logarithmic_coefficients : list of float\n"
+    "         the coefficients of the logarithmic term (order 1)\n"
+    "    lower_singularity : float\n"
+    "         the lower logarithmic singularity value (eV)\n"
+    "    upper_singularity : float\n"
+    "         the upper logarithmic singularity value (eV)"
    );
 
   // wrap the component
