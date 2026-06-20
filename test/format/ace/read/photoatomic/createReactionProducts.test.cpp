@@ -45,7 +45,7 @@ SCENARIO( "createReactionProducts" ) {
         auto coherent = std::get< CoherentDistributionData >( products[1][0].distributionData().value() );
         CHECK( DistributionDataType::Coherent == coherent.type() );
         CHECK( ReferenceFrame::CentreOfMass == coherent.frame() );
-        CHECK( false == coherent.hasAnomolousFormFactor() );
+        CHECK( false == coherent.hasAnomalousFormFactor() );
         CHECK_THAT( 0., WithinRel( coherent.scatteringFunction().lowerInverseLengthLimit() ) );
         CHECK_THAT( 6., WithinRel( coherent.scatteringFunction().upperInverseLengthLimit() ) );
         CHECK( 55 == coherent.scatteringFunction().inverseLengths().size() );
@@ -59,8 +59,8 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( 54 == coherent.scatteringFunction().boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == coherent.scatteringFunction().interpolants()[0] );
         CHECK( true == coherent.scatteringFunction().isLinearised() );
-        CHECK( std::nullopt == coherent.realAnomolousFormFactor() );
-        CHECK( std::nullopt == coherent.imaginaryAnomolousFormFactor() );
+        CHECK( std::nullopt == coherent.realAnomalousFormFactor() );
+        CHECK( std::nullopt == coherent.imaginaryAnomalousFormFactor() );
 
         CHECK( 1 == products[2].size() );
         CHECK( id::ParticleID( "g" ) == products[2][0].productIdentifier() );
@@ -124,7 +124,7 @@ SCENARIO( "createReactionProducts" ) {
         auto coherent = std::get< CoherentDistributionData >( products[1][0].distributionData().value() );
         CHECK( DistributionDataType::Coherent == coherent.type() );
         CHECK( ReferenceFrame::CentreOfMass == coherent.frame() );
-        CHECK( false == coherent.hasAnomolousFormFactor() );
+        CHECK( false == coherent.hasAnomalousFormFactor() );
         CHECK_THAT(   0., WithinRel( coherent.scatteringFunction().lowerInverseLengthLimit() ) );
         CHECK_THAT( 1e+9, WithinRel( coherent.scatteringFunction().upperInverseLengthLimit() ) );
         CHECK( 90 == coherent.scatteringFunction().inverseLengths().size() );
@@ -138,8 +138,8 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( 89 == coherent.scatteringFunction().boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == coherent.scatteringFunction().interpolants()[0] );
         CHECK( true == coherent.scatteringFunction().isLinearised() );
-        CHECK( std::nullopt == coherent.realAnomolousFormFactor() );
-        CHECK( std::nullopt == coherent.imaginaryAnomolousFormFactor() );
+        CHECK( std::nullopt == coherent.realAnomalousFormFactor() );
+        CHECK( std::nullopt == coherent.imaginaryAnomalousFormFactor() );
 
         CHECK( 1 == products[2].size() );
         CHECK( id::ParticleID( "g" ) == products[2][0].productIdentifier() );
@@ -205,7 +205,7 @@ SCENARIO( "createReactionProducts" ) {
         auto coherent = std::get< CoherentDistributionData >( products[1][0].distributionData().value() );
         CHECK( DistributionDataType::Coherent == coherent.type() );
         CHECK( ReferenceFrame::CentreOfMass == coherent.frame() );
-        CHECK( false == coherent.hasAnomolousFormFactor() );
+        CHECK( false == coherent.hasAnomalousFormFactor() );
         CHECK_THAT(   0., WithinRel( coherent.scatteringFunction().lowerInverseLengthLimit() ) );
         CHECK_THAT( 1e+9, WithinRel( coherent.scatteringFunction().upperInverseLengthLimit() ) );
         CHECK( 90 == coherent.scatteringFunction().inverseLengths().size() );
@@ -219,8 +219,8 @@ SCENARIO( "createReactionProducts" ) {
         CHECK( 89 == coherent.scatteringFunction().boundaries()[0] );
         CHECK( InterpolationType::LinearLinear == coherent.scatteringFunction().interpolants()[0] );
         CHECK( true == coherent.scatteringFunction().isLinearised() );
-        CHECK( std::nullopt == coherent.realAnomolousFormFactor() );
-        CHECK( std::nullopt == coherent.imaginaryAnomolousFormFactor() );
+        CHECK( std::nullopt == coherent.realAnomalousFormFactor() );
+        CHECK( std::nullopt == coherent.imaginaryAnomalousFormFactor() );
 
         CHECK( 1 == products[2].size() );
         CHECK( id::ParticleID( "g" ) == products[2][0].productIdentifier() );

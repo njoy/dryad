@@ -32,16 +32,16 @@ void wrapCoherentDistributionData( python::module& module ) {
     "double differential cross section.\n\n"
     "This corresponds with the coherent scattering function data given in MF27 MT502 and\n"
     "the form factors in MF27 MT505 and MT506.\n\n"
-    "Parameters \n"
-    "---------- \n"
-    "    frame : njoy.dryad.ReferenceFrame \n"
+    "Parameters\n"
+    "----------\n"
+    "    frame : njoy.dryad.ReferenceFrame\n"
     "         the reference frame of the distribution data\n"
-    "    scattering : njoy.dryad.TabulatedScatteringFunction \n"
-    "         the scatteirng function \n"
-    "    real : njoy.dryad.TabulatedFormFactor \n "
-    "         the real part of the anamolous form factor\n"
-    "    imaginary : njoy.dryad.TabulatedFormFactor \n"
-    "         the imaginary part of the anamolous form factor\n"
+    "    scattering : njoy.dryad.TabulatedScatteringFunction\n"
+    "         the scattering function\n"
+    "    real : njoy.dryad.TabulatedFormFactor\n"
+    "         the real part of the anomalous form factor\n"
+    "    imaginary : njoy.dryad.TabulatedFormFactor\n"
+    "         the imaginary part of the anomalous form factor"
   );
 
   // wrap the component
@@ -50,7 +50,7 @@ void wrapCoherentDistributionData( python::module& module ) {
 
     python::init< ReferenceFrame, TabulatedScatteringFunction >(),
     python::arg( "frame" ), python::arg( "scattering" ),
-    "Initialise the coherent distribution data without anomolous form factors"
+    "Initialise the coherent distribution data without anomalous form factors"
   )
   .def(
 
@@ -58,7 +58,7 @@ void wrapCoherentDistributionData( python::module& module ) {
                   TabulatedFormFactor, TabulatedFormFactor >(),
     python::arg( "frame" ), python::arg( "scattering" ),
     python::arg( "real" ), python::arg( "imaginary" ),
-    "Initialise the coherent distribution data with anomolous form factors"
+    "Initialise the coherent distribution data with anomalous form factors"
   )
   .def_property_readonly(
 
@@ -77,9 +77,9 @@ void wrapCoherentDistributionData( python::module& module ) {
   )
   .def_property_readonly(
 
-    "has_anomolous_form_factor",
-    &Component::hasAnomolousFormFactor,
-    "Flag indicating whether or not the coherent distribution data has an anomolous\n"
+    "has_anomalous_form_factor",
+    &Component::hasAnomalousFormFactor,
+    "Flag indicating whether or not the coherent distribution data has an anomalous\n"
     "form factor"
   )
   .def_property(
@@ -91,17 +91,17 @@ void wrapCoherentDistributionData( python::module& module ) {
   )
   .def_property(
 
-    "real_anomolous_form_factor",
-    python::overload_cast<>( &Component::realAnomolousFormFactor, python::const_ ),
-    python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::realAnomolousFormFactor ),
-    "The real part of the anomolous form factor"
+    "real_anomalous_form_factor",
+    python::overload_cast<>( &Component::realAnomalousFormFactor, python::const_ ),
+    python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::realAnomalousFormFactor ),
+    "The real part of the anomalous form factor"
   )
   .def_property(
 
-    "imaginary_anomolous_form_factor",
-    python::overload_cast<>( &Component::imaginaryAnomolousFormFactor, python::const_ ),
-    python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::imaginaryAnomolousFormFactor ),
-    "The imaginary part of the anomolous form factor"
+    "imaginary_anomalous_form_factor",
+    python::overload_cast<>( &Component::imaginaryAnomalousFormFactor, python::const_ ),
+    python::overload_cast< std::optional< TabulatedFormFactor > >( &Component::imaginaryAnomalousFormFactor ),
+    "The imaginary part of the anomalous form factor"
   );
 
   // add standard equality comparison definitions

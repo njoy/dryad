@@ -5,8 +5,8 @@ private:
  *
  *  @param frame        the reference frame of the distribution data
  *  @param scattering   the scattering function
- *  @param real         the optional real part of the anamolous form factor
- *  @param imaginary    the optional imaginary part of the anamolous form factor
+ *  @param real         the optional real part of the anomalous form factor
+ *  @param imaginary    the optional imaginary part of the anomalous form factor
  */
 CoherentDistributionData( ReferenceFrame&& frame,
                           TabulatedScatteringFunction&& scattering,
@@ -44,8 +44,8 @@ CoherentDistributionData( ReferenceFrame frame,
  *
  *  @param frame        the reference frame of the distribution data
  *  @param scattering   the scattering function
- *  @param real         the real part of the anamolous form factor
- *  @param imaginary    the imaginary part of the anamolous form factor
+ *  @param real         the real part of the anomalous form factor
+ *  @param imaginary    the imaginary part of the anomalous form factor
  */
 CoherentDistributionData( ReferenceFrame frame,
                           TabulatedScatteringFunction scattering,

@@ -137,7 +137,7 @@ namespace h {
     auto data = std::get< CoherentDistributionData >( reaction.products()[0].distributionData().value() );
     CHECK( DistributionDataType::Coherent == data.type() );
     CHECK( ReferenceFrame::CentreOfMass == data.frame() );
-    CHECK( false == data.hasAnomolousFormFactor() );
+    CHECK( false == data.hasAnomalousFormFactor() );
     CHECK_THAT( 0., WithinRel( data.scatteringFunction().lowerInverseLengthLimit() ) );
     CHECK_THAT( 6., WithinRel( data.scatteringFunction().upperInverseLengthLimit() ) );
     CHECK( 55 == data.scatteringFunction().inverseLengths().size() );
@@ -151,8 +151,8 @@ namespace h {
     CHECK( 54 == data.scatteringFunction().boundaries()[0] );
     CHECK( InterpolationType::LinearLinear == data.scatteringFunction().interpolants()[0] );
     CHECK( true == data.scatteringFunction().isLinearised() );
-    CHECK( std::nullopt == data.realAnomolousFormFactor() );
-    CHECK( std::nullopt == data.imaginaryAnomolousFormFactor() );
+    CHECK( std::nullopt == data.realAnomalousFormFactor() );
+    CHECK( std::nullopt == data.imaginaryAnomalousFormFactor() );
   }
 
   void verifyIncoherentReaction( const Reaction& reaction ) {
