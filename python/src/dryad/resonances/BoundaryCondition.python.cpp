@@ -23,14 +23,24 @@ void wrapBoundaryCondition( python::module& module ) {
 
     module,
     "BoundaryCondition",
-    "The boundary condition options",
+    "The boundary condition options for resonance reconstruction\n\n"
+    "This enum differentiates between boundary condition options in resonance\n"
+    "reconstruction calculations.\n\n"
+    "Values\n"
+    "------\n"
+    "    ShiftFactor : 1\n"
+    "         eliminate the energy dependent shift factor (L = iP)\n"
+    "    Constant : 2\n"
+    "         use a constant boundary condition",
     python::arithmetic()
   );
 
   // wrap the component
   component
-  .value( "ShiftFactor", Component::ShiftFactor )
-  .value( "Constant", Component::Constant );
+  .value( "ShiftFactor", Component::ShiftFactor,
+          "Eliminate energy dependent shift factor so L = iP" )
+  .value( "Constant", Component::Constant,
+          "Use constant boundary condition" );
 }
 
 } // resonances namespace

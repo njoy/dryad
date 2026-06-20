@@ -26,7 +26,15 @@ void wrapCompoundSystem( python::module& module ) {
 
     module,
     "CompoundSystem",
-    "The compound nucleus system"
+    "The compound nucleus system for resonance reconstruction\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    lower_energy : float\n"
+    "         the lower energy limit for the compound system\n"
+    "    upper_energy : float\n"
+    "         the upper energy limit for the compound system\n"
+    "    spin_groups : list of njoy.dryad.resonances.SpinGroup\n"
+    "         the spin groups that make up the compound system"
    );
 
   // wrap the component
@@ -37,12 +45,7 @@ void wrapCompoundSystem( python::module& module ) {
     python::arg( "lower_energy" ),
     python::arg( "upper_energy" ),
     python::arg( "spin_groups" ),
-    "Initialise the spin group\n\n"
-    "Arguments:\n"
-    "    self           the compound system\n"
-    "    lower_energy   the lower energy limit for the compound system\n"
-    "    upper_energy   the upper energy limit for the compound system\n"
-    "    spin_groups    the spin groups that make up the compound system"
+    "Initialise the compound system"
   )
   .def_property(
 
@@ -82,9 +85,10 @@ void wrapCompoundSystem( python::module& module ) {
     },
     python::arg( "energy" ),
     "Calculate the cross section values at a given energy\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the energy"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy value"
   )
   .def(
 
@@ -97,9 +101,10 @@ void wrapCompoundSystem( python::module& module ) {
     },
     python::arg( "energies" ),
     "Calculate the cross section values for a list of energies\n\n"
-    "Arguments:\n"
-    "    self     the spin group\n"
-    "    energy   the list of energies"
+    "Parameters\n"
+    "----------\n"
+    "    energies : list of float\n"
+    "         the energy values"
   );
 
   // add standard comparison definitions

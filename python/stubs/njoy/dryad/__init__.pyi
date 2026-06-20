@@ -2256,6 +2256,19 @@ class TabulatedAngularDistributions:
 class TabulatedAverageCosine:
     """
     An average cosine table
+    
+    Parameters
+    ----------
+        energies : list of float
+             the energy values
+        values : list of float
+             the average cosine values
+        boundaries : list of int, optional
+             the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+             the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default LinearLinear
+             the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2268,9 +2281,10 @@ class TabulatedAverageCosine:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                 the energy value
         """
     def __copy__(self) -> TabulatedAverageCosine:
         ...
@@ -2289,27 +2303,12 @@ class TabulatedAverageCosine:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the average cosine table
-        
-        Arguments:
-            self           the average cosine table
-            energies       the energy values
-            values         the average cosine values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the average cosine table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the average cosine table
-        
-        Arguments:
-            self           the average cosine table
-            energies       the energy values
-            values         the average energy values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the average cosine table with single interpolation type
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedAverageCosine:
@@ -2400,15 +2399,15 @@ class TabulatedAverageEnergy:
     Parameters
     ----------
         energies : list of float
-             The energy values
+             the energy values
         values : list of float
-             The average energy values
+             the average energy values
         boundaries : list of int, optional
-             The boundaries of the interpolation regions
+             the boundaries of the interpolation regions
         interpolants : list of InterpolationType, optional
-             The interpolation types of the interpolation regions
+             the interpolation types of the interpolation regions
         interpolant : InterpolationType, default=LinearLinear
-             The interpolation type for single-region tables
+             the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -2424,7 +2423,7 @@ class TabulatedAverageEnergy:
         Parameters
         ----------
             energy : float
-                 The energy value
+                 the energy value
         """
     def __copy__(self) -> TabulatedAverageEnergy:
         ...
@@ -3294,6 +3293,19 @@ class TabulatedEnergyDistributions:
 class TabulatedFormFactor:
     """
     A form factor table
+    
+    Parameters
+    ----------
+        energies : list of float
+             the energy values
+        values : list of float
+             the form factor values
+        boundaries : list of int, optional
+             the boundaries of the interpolation regions
+        interpolants : list of InterpolationType, optional
+             the interpolation types of the interpolation regions
+        interpolant : InterpolationType, default=LinearLinear
+             the interpolation type for single-region tables
     """
     __hash__: typing.ClassVar[None] = None
     @typing.overload
@@ -3306,9 +3318,10 @@ class TabulatedFormFactor:
         """
         Evaluate the table for a given energy value
         
-        Arguments:
-            self      the table
-            energy    the energy value
+        Parameters
+        ----------
+            energy : float
+                 the energy value
         """
     def __copy__(self) -> TabulatedFormFactor:
         ...
@@ -3327,27 +3340,12 @@ class TabulatedFormFactor:
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], boundaries: list[int], interpolants: list[InterpolationType]) -> None:
         """
-        Initialise the form factor table
-        
-        Arguments:
-            self           the form factor table
-            energies       the energy values
-            values         the form factor values
-            boundaries     the boundaries of the interpolation regions
-            interpolants   the interpolation types of the interpolation regions,
-                           see InterpolationType for all interpolation types
+        Initialise the form factor table with multiple interpolation regions
         """
     @typing.overload
     def __init__(self, energies: list[float], values: list[float], interpolant: InterpolationType = ...) -> None:
         """
-        Initialise the form factor table
-        
-        Arguments:
-            self           the form factor table
-            energies       the energy values
-            values         the form factor values
-            interpolant    the interpolation type (default lin-lin),
-                           see InterpolationType for all interpolation types
+        Initialise the form factor table with a single interpolation region
         """
     @typing.overload
     def __isub__(self, arg0: float) -> TabulatedFormFactor:

@@ -26,7 +26,11 @@ void wrapCoulombPenetrability( python::module& module ) {
 
     module,
     "CoulombPenetrability",
-    "Coulomb penetrability functions"
+    "Coulomb penetrability functions\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    orbital_angular_momentum : int\n"
+    "         the orbital angular momentum quantum number (l value)"
    );
 
   // wrap the component
@@ -35,16 +39,13 @@ void wrapCoulombPenetrability( python::module& module ) {
 
     python::init< unsigned int >(),
     python::arg( "orbital_angular_momentum" ),
-    "Initialise the Coulomb penetrability function\n\n"
-    "Arguments:\n"
-    "    self                       the function\n"
-    "    orbital_angular_momentum   the value of the orbital momentum"
+    "Initialise the Coulomb penetrability function"
   )
   .def_property_readonly(
 
     "orbital_angular_momentum",
     &Component::orbitalAngularMomentum,
-    "The value of the orbital angular momentum"
+    "The orbital angular momentum quantum number (l value)"
   )
   .def(
 
@@ -52,11 +53,13 @@ void wrapCoulombPenetrability( python::module& module ) {
     [] ( const Component& self, double ratio, double eta ) -> decltype(auto)
        { return self( ratio, eta ); },
     python::arg( "ratio" ), python::arg( "eta" ),
-    "Evaluate the penetrability for a given ratio and eta value\n\n"
-    "Arguments:\n"
-    "    self    the penetrability function\n"
-    "    ratio   the ratio value\n"
-    "    eta     the eta value"
+    "Evaluate the penetrability for given ratio and eta values\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    ratio : float\n"
+    "         the ratio rho = k*a (wave number times channel radius)\n"
+    "    eta : float\n"
+    "         the Coulomb parameter"
   );
 
   // add standard equality comparison definitions

@@ -38,21 +38,14 @@ void wrapChannelRadii( python::module& module ) {
 
     python::init< Radius >(),
     python::arg( "radius" ),
-    "Initialise the channel radii\n\n"
-    "Arguments:\n"
-    "    self     the radii\n"
-    "    radius   the channel radius to be used for P, S and phi"
+    "Initialise the channel radii with a single radius"
   )
   .def(
 
     python::init< Radius, Radius >(),
     python::arg( "true_radius" ),
     python::arg( "effective_radius" ),
-    "Initialise the channel radii\n\n"
-    "Arguments:\n"
-    "    self               the radii\n"
-    "    true_radius        the channel radius to be used for P and S\n"
-    "    effective_radius   the channel radius to be used for phi"
+    "Initialise the channel radii with true and effective radii"
   )
   .def(
 
@@ -60,12 +53,7 @@ void wrapChannelRadii( python::module& module ) {
     python::arg( "penetrability" ),
     python::arg( "shift_factor" ),
     python::arg( "phase_shift" ),
-    "Initialise the channel radii\n\n"
-    "Arguments:\n"
-    "    self                  the radii\n"
-    "    penetrability         the channel radius to be used for P\n"
-    "    shift_factor          the channel radius to be used for S\n"
-    "    phase_shift           the channel radius to be used for phi"
+    "Initialise the channel radii with separate radii for P, S, and phi"
   )
   .def_property_readonly(
 
@@ -106,9 +94,10 @@ void wrapChannelRadii( python::module& module ) {
     &Component::calculatePenetrabilityRadius,
     python::arg( "energy" ),
     "Return the channel radius for the penetrability P\n\n"
-    "Arguments:\n"
-    "    self     the radii\n"
-    "    energy   the energy for which the radius must be given"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy for which the radius must be given"
   )
   .def(
 
@@ -116,9 +105,10 @@ void wrapChannelRadii( python::module& module ) {
     &Component::calculateShiftFactorRadius,
     python::arg( "energy" ),
     "Return the channel radius for the shift factor S\n\n"
-    "Arguments:\n"
-    "    self     the radii\n"
-    "    energy   the energy for which the radius must be given"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy for which the radius must be given"
   )
   .def(
 
@@ -126,9 +116,10 @@ void wrapChannelRadii( python::module& module ) {
     &Component::calculatePhaseShiftRadius,
     python::arg( "energy" ),
     "Return the channel radius for the phase shift phi\n\n"
-    "Arguments:\n"
-    "    self     the radii\n"
-    "    energy   the energy for which the radius must be given"
+    "Parameters\n"
+    "----------\n"
+    "    energy : float\n"
+    "         the energy for which the radius must be given"
   );
 
   // add standard equality comparison definitions

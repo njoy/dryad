@@ -26,7 +26,15 @@ void wrapCoulombShiftFactor( python::module& module ) {
 
     module,
     "CoulombShiftFactor",
-    "Coulomb shift factor functions"
+    "Coulomb shift factor functions\n\n"
+    "The CoulombShiftFactor evaluates the Coulomb shift factor S_l(rho, eta)\n"
+    "as a function of the ratio rho = k*a and the Coulomb parameter eta, where\n"
+    "k is the wave number and a is the channel radius. The shift factor is used\n"
+    "in R-matrix resonance theory for charged particle reactions.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    orbital_angular_momentum : int\n"
+    "         the orbital angular momentum quantum number (l value)"
    );
 
   // wrap the component
@@ -35,16 +43,13 @@ void wrapCoulombShiftFactor( python::module& module ) {
 
     python::init< unsigned int >(),
     python::arg( "orbital_angular_momentum" ),
-    "Initialise the Coulomb shift factor function\n\n"
-    "Arguments:\n"
-    "    self                       the function\n"
-    "    orbital_angular_momentum   the value of the orbital momentum"
+    "Initialise the Coulomb shift factor function with a single value"
   )
   .def_property_readonly(
 
     "orbital_angular_momentum",
     &Component::orbitalAngularMomentum,
-    "The value of the orbital angular momentum"
+    "The orbital angular momentum quantum number (l value)"
   )
   .def(
 
@@ -52,11 +57,13 @@ void wrapCoulombShiftFactor( python::module& module ) {
     [] ( const Component& self, double ratio, double eta ) -> decltype(auto)
        { return self( ratio, eta ); },
     python::arg( "ratio" ), python::arg( "eta" ),
-    "Evaluate the shift factor for a given ratio and eta value\n\n"
-    "Arguments:\n"
-    "    self    the shift factor function\n"
-    "    ratio   the ratio value\n"
-    "    eta     the eta value"
+    "Evaluate the shift factor for given ratio and eta values\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    ratio : float\n"
+    "         the ratio rho = k*a (wave number times channel radius)\n"
+    "    eta : float\n"
+    "         the Coulomb parameter"
   );
 
   // add standard equality comparison definitions

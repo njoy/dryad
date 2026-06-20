@@ -24,7 +24,11 @@ void wrapHardSpherePhaseShift( python::module& module ) {
 
     module,
     "HardSpherePhaseShift",
-    "Hard sphere phase shift functions"
+    "Hard sphere phase shift functions\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    orbital_angular_momentum : int\n"
+    "         the orbital angular momentum quantum number (l = 0 to 5)"
    );
 
   // wrap the component
@@ -33,16 +37,13 @@ void wrapHardSpherePhaseShift( python::module& module ) {
 
     python::init< unsigned int >(),
     python::arg( "orbital_angular_momentum" ),
-    "Initialise the hard sphere phase shift function\n\n"
-    "Arguments:\n"
-    "    self                       the function\n"
-    "    orbital_angular_momentum   the value of the orbital momentum"
+    "Initialise the hard sphere phase shift function"
   )
   .def_property_readonly(
 
     "orbital_angular_momentum",
     &Component::orbitalAngularMomentum,
-    "The value of the orbital angular momentum"
+    "The orbital angular momentum quantum number (l value)"
   )
   .def(
 
@@ -51,9 +52,10 @@ void wrapHardSpherePhaseShift( python::module& module ) {
        { return self( ratio ); },
     python::arg( "ratio" ),
     "Evaluate the phase shift for a given ratio value\n\n"
-    "Arguments:\n"
-    "    self    the phase shift function\n"
-    "    ratio   the ratio value"
+    "Parameters\n"
+    "----------\n"
+    "    ratio : float\n"
+    "         the ratio rho = k*a (wave number times channel radius)"
   );
 
   // add standard equality comparison definitions
