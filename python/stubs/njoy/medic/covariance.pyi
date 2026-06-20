@@ -13,9 +13,10 @@ def prune_small_eigenvalues(eigenvalue: float, covariance: njoy.dryad.covariance
     Parameters
     ----------
         eigenvalue : float
-            the smallest allowed eigenvalue
-        covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-            the covariance matrix to be modified
+             the smallest allowed eigenvalue
+        covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                     njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                     njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix         the covariance matrix to be modified
     """
 @typing.overload
 def prune_small_eigenvalues(eigenvalue: float, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> None:

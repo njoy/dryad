@@ -30,8 +30,10 @@ class BoundedCorrelations:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-                the covariance matrix instance to be tested
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                 the covariance matrix instance to be tested
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -103,8 +105,10 @@ class DiagonalCorrelations:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-                the covariance matrix instance to be tested
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                 the covariance matrix instance to be tested
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -161,8 +165,10 @@ class EigenvalueRatio:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-                the covariance matrix instance to be tested
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                 the covariance matrix instance to be tested
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -249,8 +255,10 @@ class PositiveSemiDefinite:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-                the covariance matrix instance to be tested
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                 the covariance matrix instance to be tested
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -304,13 +312,15 @@ class PositiveVariances:
         The test returns the following status values:
           - Success : all variances are strictly positive
           - Warning : all variances are positive
-          - Fail : soem of the variances seem to be negative
+          - Fail : some of the variances seem to be negative
           - Skipped : the test was skipped
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
-                the covariance matrix instance to be tested
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+                 the covariance matrix instance to be tested
         """
     @typing.overload
     def __call__(self, covariance: njoy.dryad.covariance.AngularDistributionCovarianceMatrix) -> njoy.psychic.TestStatus | None:
@@ -359,7 +369,9 @@ class TestSuite:
         
         Parameters
         ----------
-            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix, njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
+            covariance : njoy.dryad.covariance.CrossSectionCovarianceMatrix,
+                         njoy.dryad.covariance.AngularDistributionCovarianceMatrix or
+                         njoy.dryad.covariance.ProductMultiplicityCovarianceMatrix
                 the covariance matrix instance to be tested
         """
     @typing.overload
