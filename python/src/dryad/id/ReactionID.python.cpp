@@ -27,7 +27,17 @@ void wrapReactionID( python::module& module ) {
 
     module,
     "ReactionID",
-    "The reaction identifier"
+    "The reaction identifier\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    projectile : njoy.dryad.id.ParticleID\n"
+    "         the projectile\n"
+    "    target : njoy.dryad.id.ParticleID\n"
+    "         the target\n"
+    "    type : njoy.dryad.id.ReactionType or int or str\n"
+    "         the reaction type, mt number, or string representing the reaction type\n"
+    "    symbol : str\n"
+    "         the reaction symbol"
   );
 
   // wrap the component
@@ -38,24 +48,14 @@ void wrapReactionID( python::module& module ) {
                   const ReactionType& >(),
     python::arg( "projectile" ), python::arg( "target" ),
     python::arg( "type" ),
-    "Initialise the reaction identifier\n\n"
-    "Arguments:\n"
-    "    self         the reaction identifier\n"
-    "    projectile   the projectile\n"
-    "    target       the target\n"
-    "    type         the reaction type"
+    "Initialise the reaction identifier with a projectile, target and reaction type"
   )
   .def(
 
     python::init< const ParticleID&, const ParticleID&, int >(),
     python::arg( "projectile" ), python::arg( "target" ),
     python::arg( "mt" ),
-    "Initialise the reaction identifier\n\n"
-    "Arguments:\n"
-    "    self         the reaction identifier\n"
-    "    projectile   the projectile\n"
-    "    target       the target\n"
-    "    mt           the mt number"
+    "Initialise the reaction identifier with a projectile, target and mt number"
   )
   .def(
 
@@ -63,21 +63,13 @@ void wrapReactionID( python::module& module ) {
                   const std::string& >(),
     python::arg( "projectile" ), python::arg( "target" ),
     python::arg( "type" ),
-    "Initialise the reaction identifier\n\n"
-    "Arguments:\n"
-    "    self         the reaction identifier\n"
-    "    projectile   the projectile\n"
-    "    target       the target\n"
-    "    type         the string representing the reaction type"
+    "Initialise the reaction identifier with an reaction type string"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "symbol" ),
-    "Initialise the reaction identifier\n\n"
-    "Arguments:\n"
-    "    self     the reaction identifier\n"
-    "    symbol   the reaction symbol"
+    "Initialise the reaction identifier from a symbol string"
   )
   .def_property_readonly(
 

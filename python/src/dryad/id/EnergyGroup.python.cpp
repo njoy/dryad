@@ -25,7 +25,13 @@ void wrapEnergyGroup( python::module& module ) {
 
     module,
     "EnergyGroup",
-    "An energy group defined by two energy values"
+    "An energy group defined by two energy values\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    lower : float\n"
+    "         the lower energy value of the group\n"
+    "    upper : float\n"
+    "         the upper energy value of the group"
   );
 
   // wrap the component
@@ -34,11 +40,7 @@ void wrapEnergyGroup( python::module& module ) {
 
     python::init< double, double >(),
     python::arg( "lower" ), python::arg( "upper" ),
-    "Initialise the energy\n\n"
-    "Arguments:\n"
-    "    self    the identifier\n"
-    "    lower   the lower energy value of the group\n"
-    "    upper   the upper energy value of the group"
+    "Initialise the energy group"
   )
   .def_property_readonly(
 

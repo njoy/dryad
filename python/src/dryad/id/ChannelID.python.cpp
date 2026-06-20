@@ -29,7 +29,17 @@ void wrapChannelID( python::module& module ) {
     "ChannelID",
     "The channel identifier, with associated reaction and quantum numbers\n\n"
     "When using comparison on the channel identifier, we use a Jpi,l,s,reaction,partial\n"
-    "ordering."
+    "ordering.\n\n"
+    "Parameters\n"
+    "----------\n"
+    "    reaction : njoy.dryad.id.ReactionID\n"
+    "         the reaction\n"
+    "    quantum_numbers : njoy.dryad.resonances.ChannelQuantumNumbers\n"
+    "         the channel quantum numbers\n"
+    "    partial : int, optional\n"
+    "         the optional partial index\n"
+    "    symbol : str\n"
+    "         the channel symbol"
   );
 
   // wrap the component
@@ -40,21 +50,13 @@ void wrapChannelID( python::module& module ) {
                   const std::optional< std::size_t >& >(),
     python::arg( "reaction" ), python::arg( "quantum_numbers" ),
     python::arg( "partial" ) = std::nullopt,
-    "Initialise the channel identifier\n\n"
-    "Arguments:\n"
-    "    self              the channel identifier\n"
-    "    reaction          the reaction\n"
-    "    quantum_numbers   the channel quantum numbers\n"
-    "    partial           the optional partial index"
+    "Initialise the channel identifier with a reaction and quantum numbers"
   )
   .def(
 
     python::init< const std::string& >(),
     python::arg( "symbol" ),
-    "Initialise the channel identifier\n\n"
-    "Arguments:\n"
-    "    self     the channel identifier\n"
-    "    symbol   the channel symbol"
+    "Initialise the channel identifier from a symbol string"
   )
   .def_property_readonly(
 
