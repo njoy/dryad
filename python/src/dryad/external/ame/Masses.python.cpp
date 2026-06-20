@@ -27,7 +27,7 @@ void wrapMasses( python::module& module ) {
 
     module,
     "Masses",
-    "RIPL-3 level data\n\n"
+    "AME2020 mass data\n\n"
     "The Masses class allows a user to interact with the AME2020 mass data."
   );
 

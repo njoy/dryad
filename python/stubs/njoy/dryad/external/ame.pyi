@@ -125,7 +125,7 @@ class MassEntry:
         ...
 class Masses:
     """
-    RIPL-3 level data
+    AME2020 mass data
     
     The Masses class allows a user to interact with the AME2020 mass data.
     """
