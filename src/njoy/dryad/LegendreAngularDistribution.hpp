@@ -27,14 +27,6 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    /**
-     *  @brief Calculate the cdf from the pdf
-     */
-    void calculateCdf() {
-
-      this->cdf_ = this->pdf().primitive( -1. );
-    }
-
   public:
 
     /* type aliases */
@@ -69,9 +61,9 @@ namespace dryad {
 
       if ( normalise ) {
 
-        this->pdf_.normalise();
+        this->pdf().normalise();
       }
-      this->calculateCdf();
+      this->cdf() = this->pdf().cdf();
     }
 
     /* methods */
@@ -93,9 +85,25 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the probability distribution function (pdf) of the distribution
+     */
+    LegendreAngularDistributionFunction& pdf() {
+
+      return this->pdf_;
+    }
+
+    /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
     const LegendreAngularDistributionFunction& cdf() const {
+
+      return this->cdf_;
+    }
+
+    /**
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
+     */
+    LegendreAngularDistributionFunction& cdf() {
 
       return this->cdf_;
     }
@@ -115,8 +123,8 @@ namespace dryad {
      */
     void normalise() {
 
-      this->pdf_.normalise();
-      this->calculateCdf();
+      this->pdf().normalise();
+      this->cdf() = this->pdf().cdf();
     }
 
     /**
