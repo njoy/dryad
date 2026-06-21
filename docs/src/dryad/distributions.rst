@@ -13,6 +13,7 @@ General information about distributions
     distributions/TabulatedAngularDistributions
     distributions/TabulatedAngularDistribution
     distributions/TabulatedAngularDistributionFunction
+    distributions/MixedAngularDistribution
 
 .. toctree::
     :maxdepth: 1

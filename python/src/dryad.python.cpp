@@ -51,6 +51,7 @@ namespace dryad {
   void wrapTabulatedAngularDistribution( python::module& );
   void wrapTabulatedAngularDistributions( python::module& );
   void wrapMixedAngularDistribution( python::module& );
+  void wrapMixedAngularDistributions( python::module& );
   void wrapTabulatedComptonProfileFunction( python::module& );
   void wrapTabulatedComptonProfile( python::module& );
   void wrapUniformAngularDistribution( python::module& );
@@ -128,6 +129,7 @@ void wrapDryad( python::module& module ) {
   dryad::wrapTabulatedAngularDistribution( submodule );
   dryad::wrapTabulatedAngularDistributions( submodule );
   dryad::wrapMixedAngularDistribution( submodule );
+  dryad::wrapMixedAngularDistributions( submodule );
   dryad::wrapTabulatedComptonProfileFunction( submodule );
   dryad::wrapTabulatedComptonProfile( submodule );
   dryad::wrapLegendreAngularDistributionFunction( submodule );
