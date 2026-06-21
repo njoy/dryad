@@ -936,9 +936,9 @@ class MixedAngularDistribution:
     
     Parameters
     ----------
-        function : njoy.dryad.IsotropicAngularDistributionFunction,
-                   njoy.dryad.LegendreAngularDistributionFunction or
-                   njoy.dryad.TabulatedAngularDistributionFunction
+        function : Union[njoy.dryad.IsotropicAngularDistributionFunction,
+                   njoy.dryad.LegendreAngularDistributionFunction,
+                   njoy.dryad.TabulatedAngularDistributionFunction]
             the distribution function
         normalise : bool, default False
             option to indicate whether or not to normalise
