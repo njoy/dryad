@@ -26,22 +26,6 @@ namespace dryad {
 
     /* auxiliary functions */
 
-    /**
-     *  @brief Calculate the cdf from the pdf
-     */
-    void calculateCdf( bool set_cdf_to_one = false ) {
-
-      std::vector< double > cdf = this->pdf().cumulativeIntegral();
-      if ( set_cdf_to_one ) {
-
-        cdf.back() = 1.;
-      }
-      this->cdf_ = TabulatedAngularDistributionFunction( this->pdf().cosines(),
-                                                         std::move( cdf ),
-                                                         this->pdf().boundaries(),
-                                                         this->pdf().interpolants() );
-    }
-
   public:
 
     /* type aliases */
@@ -88,7 +72,7 @@ namespace dryad {
       }
       else {
 
-        this->calculateCdf();
+        this->cdf_ = this->pdf_.cdf();
       }
     }
 
@@ -115,7 +99,7 @@ namespace dryad {
       }
       else {
 
-        this->calculateCdf();
+        this->cdf_ = this->pdf_.cdf();
       }
     }
 
@@ -136,7 +120,7 @@ namespace dryad {
       }
       else {
 
-        this->calculateCdf();
+        this->cdf() = this->pdf().cdf();
       }
     }
 
@@ -193,9 +177,25 @@ namespace dryad {
     }
 
     /**
+     *  @brief Return the probability distribution function (pdf) of the distribution
+     */
+    TabulatedAngularDistributionFunction& pdf() {
+
+      return this->pdf_;
+    }
+
+    /**
      *  @brief Return the cumulative distribution function (cdf) of the distribution
      */
     const TabulatedAngularDistributionFunction& cdf() const {
+
+      return this->cdf_;
+    }
+
+    /**
+     *  @brief Return the cumulative distribution function (cdf) of the distribution
+     */
+    TabulatedAngularDistributionFunction& cdf() {
 
       return this->cdf_;
     }
@@ -215,8 +215,8 @@ namespace dryad {
      */
     void normalise() {
 
-      this->pdf_.normalise();
-      this->calculateCdf( true );
+      this->pdf().normalise();
+      this->cdf() = this->pdf().cdf( true );
     }
 
     /**

@@ -12,8 +12,10 @@
 namespace njoy {
 namespace dryad {
 
-  // forward declaration LegendreAngularDistributionFunction
+  // forward declarations
   class LegendreAngularDistributionFunction;
+  class TabulatedAngularDistribution;
+  class MixedAngularDistribution;
 
   /**
    *  @class
@@ -25,6 +27,8 @@ namespace dryad {
     /* friend declaration */
 
     friend LegendreAngularDistributionFunction;
+    friend TabulatedAngularDistribution;
+    friend MixedAngularDistribution;
 
     /* constructor */
 
@@ -35,6 +39,22 @@ namespace dryad {
      */
     TabulatedAngularDistributionFunction( InterpolationTable< double, double > table ) :
       InterpolationTable( std::move( table ) ) {}
+
+  protected:
+
+    /**
+     *  @brief Calculate a cdf from the distribution function
+     */
+    TabulatedAngularDistributionFunction cdf( bool set_cdf_to_one = false ) const {
+
+      std::vector< double > cdf = this->cumulativeIntegral();
+      if ( set_cdf_to_one ) {
+
+        cdf.back() = 1.;
+      }
+      return TabulatedAngularDistributionFunction( this->cosines(), std::move( cdf ),
+                                                   this->boundaries(), this->interpolants() );
+    }
 
   public:
 

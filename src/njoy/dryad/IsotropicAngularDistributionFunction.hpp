@@ -12,6 +12,9 @@
 namespace njoy {
 namespace dryad {
 
+  // forward declarations
+  class MixedAngularDistribution;
+
   /**
    *  @class
    *  @brief An isotropic angular distribution function
@@ -28,6 +31,7 @@ namespace dryad {
 
     friend class scion::math::OneDimensionalFunctionBase<
         IsotropicAngularDistributionFunction, double, double >;
+    friend MixedAngularDistribution;
 
     /* type aliases */
 
@@ -42,6 +46,16 @@ namespace dryad {
     double evaluate( double cosine ) const {
 
       return this->isInside( cosine ) ? 0.5 : 0.0;
+    }
+
+  protected:
+
+    /**
+     *  @brief Calculate a cdf from the distribution function
+     */
+    TabulatedAngularDistributionFunction cdf() const {
+
+      return TabulatedAngularDistributionFunction( { -1., 1. }, { 0., 1. } );
     }
 
   public:

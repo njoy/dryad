@@ -12,8 +12,9 @@
 namespace njoy {
 namespace dryad {
 
-  // forward declaration LegendreAngularDistribution
+  // forward declarations
   class LegendreAngularDistribution;
+  class MixedAngularDistribution;
 
   /**
    *  @class
@@ -35,8 +36,8 @@ namespace dryad {
 
     /* friend declarations */
 
-    // LegendreAngularDistribution needs access to protected functions
     friend LegendreAngularDistribution;
+    friend MixedAngularDistribution;
 
     /**
      *  @brief Private constructor
@@ -49,34 +50,11 @@ namespace dryad {
   protected:
 
     /**
-     *  @brief Calculate the roots of the function so that f(x) = a
-     *
-     *  @param[in] a   the value of a (default is zero)
+     *  @brief Calculate a cdf from the distribution function
      */
-    std::vector< double > roots( double a = 0. ) const {
+    LegendreAngularDistributionFunction cdf() const {
 
-      std::vector< double > roots = LegendreSeries::roots( a );
-      roots.erase( roots.begin(), std::lower_bound( roots.begin(), roots.end(), -1. ) );
-      roots.erase( std::upper_bound( roots.begin(), roots.end(), +1. ), roots.end() );
-      return roots;
-    }
-
-    /**
-     *  @brief Return the derivative
-     */
-    LegendreAngularDistributionFunction derivative() const {
-
-      return LegendreSeries::derivative();
-    }
-
-    /**
-     *  @brief Return the primitive (or antiderivative)
-     *
-     *  @param[in] left    the left bound of the integral (default = 0)
-     */
-    LegendreAngularDistributionFunction primitive( double left = 0. ) const {
-
-      return LegendreSeries::primitive( left );
+      return LegendreSeries::primitive( -1. );
     }
 
   public:
