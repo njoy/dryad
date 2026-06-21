@@ -25,16 +25,27 @@ void wrapIsotropicAngularDistributionFunction( python::module& module ) {
     "IsotropicAngularDistributionFunction",
     "An isotropic angular distribution function\n\n"
     "In this distribution, all cosines are equally probable. The equivalent\n"
-    "tabulated distribution is 0.5 on the [-1, 1] domain and the equivalent\n"
-    "Legendre distribution uses 0.5 as the P0 coefficient."
+    "normalised tabulated distribution is 0.5 on the [-1, 1] domain and the\n"
+    "equivalent Legendre distribution uses 0.5 as the P0 coefficient."
    );
 
   // wrap the component
   component
   .def(
 
-    python::init<>(),
+    python::init< double >(),
+    python::arg( "value" ) = 0.5,
     "Initialise the isotropic angular distribution"
+    "Parameters\n"
+    "----------\n"
+    "    value : float, default 0.5\n"
+    "        the value of the distribution (0.5 for a normalised distribution)"
+  )
+  .def_property_readonly(
+
+    "value",
+    python::overload_cast<>( &Component::value, python::const_ ),
+    "The value of the distribution"
   )
   .def_property_readonly(
 
