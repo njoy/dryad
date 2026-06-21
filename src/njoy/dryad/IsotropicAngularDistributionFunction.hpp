@@ -61,7 +61,7 @@ namespace dryad {
      */
     TabulatedAngularDistributionFunction cdf() const {
 
-      return TabulatedAngularDistributionFunction( { -1., 1. }, { 0., 1. } );
+      return TabulatedAngularDistributionFunction( { -1., 1. }, { 0., this->integral() } );
     }
 
   public:

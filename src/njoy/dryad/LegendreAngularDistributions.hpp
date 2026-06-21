@@ -96,6 +96,11 @@ namespace dryad {
 
     /**
      *  @brief Normalise the distributions
+     *
+     *  Note: all distributions should have the same integral over their domain
+     *        to avoid changing the full distribution (ie the normalisation moves
+     *        every distribution up or down by the same amount to avoid changing
+     *        the full distribution shape).
      */
     void normalise() {
 

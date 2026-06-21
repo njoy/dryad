@@ -100,7 +100,11 @@ void wrapTabulatedEnergyDistributions( python::module& module ) {
 
     "normalise",
     &Component::normalise,
-    "Normalise the distributions"
+    "Normalise the distributions\n\n"
+    "Note: all distributions should have the same integral over their domain\n"
+    "      to avoid changing the full distribution (ie the normalisation moves\n"
+    "      every distribution up or down by the same amount to avoid changing\n"
+    "      the full distribution shape)."
   )
   .def_property_readonly(
 
