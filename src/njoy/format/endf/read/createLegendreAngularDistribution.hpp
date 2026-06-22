@@ -8,8 +8,7 @@
 #include "tools/Log.hpp"
 #include "njoy/dryad/LegendreAngularDistribution.hpp"
 #include "njoy/format/createVector.hpp"
-#include "njoy/format/endf/read/createBoundaries.hpp"
-#include "njoy/format/endf/read/createInterpolants.hpp"
+#include "njoy/format/convertLegendreMoments.hpp"
 #include "ENDFtk/section/6.hpp"
 
 namespace njoy {
@@ -18,7 +17,7 @@ namespace endf {
 namespace read {
 
   /**
-   *  @brief Create a LegendreAngularDistribution from a range of coefficients
+   *  @brief Create a LegendreAngularDistribution from a range of moments
    */
   template < typename Range >
   dryad::LegendreAngularDistribution
@@ -28,21 +27,17 @@ namespace read {
     try {
 
       auto coefficients = createVector( range );
-      std::size_t index = 0;
       if ( addOrderZero ) {
 
-        coefficients.insert( coefficients.begin(), 0.5 );
-        index = 1;
+        coefficients.insert( coefficients.begin(), 1. );
       }
-      for ( ; index < coefficients.size(); ++index ) {
+      convertLegendreMoments( coefficients );
 
-        coefficients[index] *= 0.5 * ( 2 * index + 1 );
-      }
       return dryad::LegendreAngularDistribution( std::move( coefficients ), normalise );
     }
     catch ( ... ) {
 
-      Log::info( "Error encountered while creating an energy distribution table" );
+      Log::info( "Error encountered while creating a Legendre angular distribution" );
       throw;
     }
   }
